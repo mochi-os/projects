@@ -2568,3 +2568,386 @@ def action_repositories_merge(a):
 	if result == None:
 		return {"data": {"success": False, "error": "Could not perform merge"}}
 	return {"data": result}
+
+# Search for projects in the directory
+def action_search(a):
+	if not a.user.identity.id:
+		a.error(401, "Not logged in")
+		return
+
+	search = a.input("search")
+	if not search:
+		a.error(400, "No search entered")
+		return
+
+	results = []
+
+	# Check if search term is an entity ID (49-51 word characters)
+	if mochi.valid(search, "entity"):
+		entry = mochi.directory.get(search)
+		if entry and entry.get("class") == "project":
+			results.append(entry)
+
+	# Check if search term is a fingerprint (9 alphanumeric, with or without hyphens)
+	fingerprint = search.replace("-", "")
+	if mochi.valid(fingerprint, "fingerprint"):
+		# Search directory by fingerprint
+		all_projects = mochi.directory.search("project", "", False)
+		for entry in all_projects:
+			entry_fp = entry.get("fingerprint", "").replace("-", "")
+			if entry_fp == fingerprint:
+				# Avoid duplicates if already found by ID
+				found = False
+				for r in results:
+					if r.get("id") == entry.get("id"):
+						found = True
+						break
+				if not found:
+					results.append(entry)
+				break
+
+	# Check if search term is a URL (e.g., https://example.com/projects/ENTITY_ID)
+	if search.startswith("http://") or search.startswith("https://"):
+		url = search
+		if "/projects/" in url:
+			parts = url.split("/projects/", 1)
+			project_path = parts[1]
+			# Handle query parameter format: ?project=ENTITY_ID
+			if project_path.startswith("?project="):
+				project_id = project_path[9:]
+				if "&" in project_id:
+					project_id = project_id.split("&")[0]
+				if "#" in project_id:
+					project_id = project_id.split("#")[0]
+			else:
+				# Path format: /projects/ENTITY_ID or /projects/ENTITY_ID/...
+				project_id = project_path.split("/")[0] if "/" in project_path else project_path
+				if "?" in project_id:
+					project_id = project_id.split("?")[0]
+				if "#" in project_id:
+					project_id = project_id.split("#")[0]
+
+			if mochi.valid(project_id, "entity"):
+				entry = mochi.directory.get(project_id)
+				if entry and entry.get("class") == "project":
+					# Avoid duplicates
+					found = False
+					for r in results:
+						if r.get("id") == entry.get("id"):
+							found = True
+							break
+					if not found:
+						results.append(entry)
+			# Try as fingerprint
+			elif mochi.valid(project_id, "fingerprint"):
+				all_projects = mochi.directory.search("project", "", False)
+				for entry in all_projects:
+					entry_fp = entry.get("fingerprint", "").replace("-", "")
+					if entry_fp == project_id.replace("-", ""):
+						found = False
+						for r in results:
+							if r.get("id") == entry.get("id"):
+								found = True
+								break
+						if not found:
+							results.append(entry)
+						break
+
+	# Also search by name
+	name_results = mochi.directory.search("project", search, False)
+	for entry in name_results:
+		# Avoid duplicates
+		found = False
+		for r in results:
+			if r.get("id") == entry.get("id"):
+				found = True
+				break
+		if not found:
+			results.append(entry)
+
+	return {"data": results}
+
+
+# ============================================================================
+# Remote Projects (Subscribe/Bookmark)
+# ============================================================================
+
+# Helper to create P2P message headers
+def p2p_headers(from_id, to_id, event):
+	return {
+		"from": from_id,
+		"to": to_id,
+		"service": "projects",
+		"event": event
+	}
+
+# Probe a remote project by URL without subscribing
+def action_probe(a):
+	if not a.user.identity.id:
+		a.error(401, "Not logged in")
+		return
+
+	url = a.input("url")
+	if not url:
+		a.error(400, "No URL provided")
+		return
+
+	# Parse URL to extract server and project ID
+	# Expected formats:
+	#   https://example.com/projects/ENTITY_ID
+	#   http://example.com/projects/ENTITY_ID
+	#   example.com/projects/ENTITY_ID
+	server = ""
+	project_id = ""
+	protocol = "https://"
+
+	# Extract and preserve protocol prefix
+	if url.startswith("https://"):
+		protocol = "https://"
+		url = url[8:]
+	elif url.startswith("http://"):
+		protocol = "http://"
+		url = url[7:]
+
+	# Split by /projects/ to get server and project ID
+	if "/projects/" in url:
+		parts = url.split("/projects/", 1)
+		server = protocol + parts[0]
+		# Project ID is everything after /projects/ up to next / or end
+		project_path = parts[1]
+		if "/" in project_path:
+			project_id = project_path.split("/")[0]
+		else:
+			project_id = project_path
+	else:
+		a.error(400, "Invalid URL format. Expected: https://server/projects/PROJECT_ID")
+		return
+
+	if not server or server == protocol:
+		a.error(400, "Could not extract server from URL")
+		return
+
+	if not project_id or not mochi.valid(project_id, "entity"):
+		a.error(400, "Could not extract valid project ID from URL")
+		return
+
+	peer = mochi.remote.peer(server)
+	if not peer:
+		a.error(502, "Unable to connect to server")
+		return
+	response = mochi.remote.request(project_id, "projects", "info", {"project": project_id}, peer)
+	if response.get("error"):
+		a.error(response.get("code", 404), response["error"])
+		return
+
+	# Return project info as a directory-like entry
+	return {"data": {
+		"id": project_id,
+		"name": response.get("name", ""),
+		"description": response.get("description", ""),
+		"prefix": response.get("prefix", "PROJ"),
+		"fingerprint": response.get("fingerprint", ""),
+		"class": "project",
+		"server": server,
+		"remote": True
+	}}
+
+# Subscribe to a remote project
+def action_subscribe(a):
+	if not a.user.identity.id:
+		a.error(401, "Not logged in")
+		return
+	user_id = a.user.identity.id
+
+	project_id = a.input("project")
+	server = a.input("server")
+	if not mochi.valid(project_id, "entity"):
+		a.error(400, "Invalid project ID")
+		return
+
+	# Check if already subscribed
+	existing = mochi.db.row("select id, owner from projects where id=?", project_id)
+	if existing:
+		if existing["owner"] == 1:
+			a.error(400, "You own this project")
+			return
+		# Already subscribed, just return success
+		return {"data": {"fingerprint": mochi.entity.fingerprint(project_id)}}
+
+	# Get project info from remote or directory
+	if server:
+		peer = mochi.remote.peer(server)
+		if not peer:
+			a.error(502, "Unable to connect to server")
+			return
+		response = mochi.remote.request(project_id, "projects", "info", {"project": project_id}, peer)
+		if response.get("error"):
+			a.error(response.get("code", 404), response["error"])
+			return
+		project_name = response.get("name", "")
+		project_desc = response.get("description", "")
+		project_prefix = response.get("prefix", "PROJ")
+	else:
+		# Use directory lookup when no server specified
+		directory = mochi.directory.get(project_id)
+		if directory == None or len(directory) == 0:
+			a.error(404, "Unable to find project in directory")
+			return
+		project_name = directory.get("name", "")
+		project_desc = ""
+		project_prefix = "PROJ"
+
+	now = mochi.time.now()
+	fp = mochi.entity.fingerprint(project_id) or ""
+
+	# Insert the remote project
+	mochi.db.execute(
+		"insert into projects (id, name, description, prefix, counter, owner, server, created, updated) values (?, ?, ?, ?, 0, 0, ?, ?, ?)",
+		project_id, project_name, project_desc, project_prefix, server or "", now, now
+	)
+
+	# Send P2P subscribe message to project owner
+	mochi.message.send(p2p_headers(user_id, project_id, "subscribe"), {"name": a.user.identity.name})
+
+	return {"data": {"fingerprint": fp}}
+
+# Unsubscribe from a remote project
+def action_unsubscribe(a):
+	if not a.user.identity.id:
+		a.error(401, "Not logged in")
+		return
+	user_id = a.user.identity.id
+
+	project_id = a.input("project")
+	if not mochi.valid(project_id, "entity") and not mochi.valid(project_id, "fingerprint"):
+		a.error(400, "Invalid project ID")
+		return
+
+	# Look up by ID or fingerprint
+	project = mochi.db.row("select * from projects where id=?", project_id)
+	if not project:
+		# Try fingerprint lookup
+		projects = mochi.db.rows("select * from projects where owner=0")
+		for p in projects:
+			fp = mochi.entity.fingerprint(p["id"]) or ""
+			if fp.replace("-", "") == project_id.replace("-", ""):
+				project = p
+				project_id = p["id"]
+				break
+
+	if not project:
+		a.error(404, "Project not found")
+		return
+
+	if project["owner"] == 1:
+		a.error(400, "You own this project")
+		return
+
+	# Delete all local data for this remote project
+	objects = mochi.db.rows("select id from objects where project=?", project_id)
+	for obj in objects:
+		mochi.db.execute("delete from watchers where object=?", obj["id"])
+		mochi.db.execute("delete from activity where object=?", obj["id"])
+		mochi.db.execute("delete from comments where object=?", obj["id"])
+		mochi.db.execute("delete from \"values\" where object=?", obj["id"])
+		mochi.db.execute("delete from links where source=? or target=?", obj["id"], obj["id"])
+
+	mochi.db.execute("delete from objects where project=?", project_id)
+	mochi.db.execute("delete from options where project=?", project_id)
+	mochi.db.execute("delete from fields where project=?", project_id)
+	mochi.db.execute("delete from hierarchy where project=?", project_id)
+	mochi.db.execute("delete from types where project=?", project_id)
+	mochi.db.execute("delete from views where project=?", project_id)
+	mochi.db.execute("delete from subscribers where project=?", project_id)
+	mochi.db.execute("delete from projects where id=?", project_id)
+
+	# Send P2P unsubscribe message
+	mochi.message.send(p2p_headers(user_id, project_id, "unsubscribe"), {})
+
+	return {"data": {"success": True}}
+
+# Add a bookmark to a remote project (view-only, no P2P subscription)
+def action_bookmark_add(a):
+	if not a.user.identity.id:
+		a.error(401, "Not logged in")
+		return
+
+	project_id = a.input("project")
+	server = a.input("server")
+
+	if not project_id:
+		a.error(400, "Project ID is required")
+		return
+
+	if not mochi.valid(project_id, "entity"):
+		a.error(400, "Invalid project ID")
+		return
+
+	# Check if already exists
+	existing = mochi.db.row("select id, owner from projects where id=?", project_id)
+	if existing:
+		if existing["owner"] == 1:
+			a.error(400, "You own this project")
+			return
+		# Already bookmarked/subscribed
+		return {"data": {"existing": True, "id": project_id}}
+
+	# Fetch project info from remote
+	peer = mochi.remote.peer(server) if server else None
+	response = mochi.remote.request(project_id, "projects", "info", {"project": project_id}, peer)
+	if response.get("error"):
+		a.error(response.get("code", 404), response["error"])
+		return
+
+	project_name = response.get("name", "Unknown")
+	project_desc = response.get("description", "")
+	project_prefix = response.get("prefix", "PROJ")
+	now = mochi.time.now()
+
+	# Insert as bookmarked project (owner=0, no P2P message sent)
+	mochi.db.execute(
+		"insert into projects (id, name, description, prefix, counter, owner, server, created, updated) values (?, ?, ?, ?, 0, 0, ?, ?, ?)",
+		project_id, project_name, project_desc, project_prefix, server or "", now, now
+	)
+
+	return {"data": {"id": project_id, "name": project_name}}
+
+# Remove a bookmark
+def action_bookmark_remove(a):
+	if not a.user.identity.id:
+		a.error(401, "Not logged in")
+		return
+
+	project_id = a.input("project")
+	if not project_id:
+		a.error(400, "Project ID is required")
+		return
+
+	project = mochi.db.row("select * from projects where id=?", project_id)
+	if not project:
+		a.error(404, "Project not found")
+		return
+
+	if project["owner"] == 1:
+		a.error(400, "Cannot remove owned project as bookmark")
+		return
+
+	# Delete all local data for this bookmarked project
+	objects = mochi.db.rows("select id from objects where project=?", project_id)
+	for obj in objects:
+		mochi.db.execute("delete from watchers where object=?", obj["id"])
+		mochi.db.execute("delete from activity where object=?", obj["id"])
+		mochi.db.execute("delete from comments where object=?", obj["id"])
+		mochi.db.execute("delete from \"values\" where object=?", obj["id"])
+		mochi.db.execute("delete from links where source=? or target=?", obj["id"], obj["id"])
+
+	mochi.db.execute("delete from objects where project=?", project_id)
+	mochi.db.execute("delete from options where project=?", project_id)
+	mochi.db.execute("delete from fields where project=?", project_id)
+	mochi.db.execute("delete from hierarchy where project=?", project_id)
+	mochi.db.execute("delete from types where project=?", project_id)
+	mochi.db.execute("delete from views where project=?", project_id)
+	mochi.db.execute("delete from subscribers where project=?", project_id)
+	mochi.db.execute("delete from projects where id=?", project_id)
+
+	return {"data": {"removed": project_id}}

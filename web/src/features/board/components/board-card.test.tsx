@@ -1,12 +1,14 @@
 // Tests for BoardCard component
 import { describe, it, expect, vi } from "vitest";
-import { render, screen, fireEvent } from "@/test/test-utils";
-import { BoardCard } from "./board-card";
 import {
+  render,
+  screen,
+  fireEvent,
   createMockObject,
   createMockField,
   createMockOption,
 } from "@/test/test-utils";
+import { BoardCard } from "./board-card";
 
 describe("BoardCard", () => {
   const defaultProps = {

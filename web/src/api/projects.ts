@@ -817,6 +817,68 @@ const projectsApi = {
       { source, target, message },
     );
   },
+
+  // ============================================================================
+  // Remote Projects (Subscribe/Bookmark)
+  // ============================================================================
+
+  // Probe a remote project by URL
+  probe: async (
+    url: string,
+  ): Promise<{
+    data: {
+      id: string;
+      name: string;
+      description: string;
+      prefix: string;
+      fingerprint: string;
+      class: string;
+      server: string;
+      remote: boolean;
+    };
+  }> => {
+    return projectsRequest.post(endpoints.projects.probe, { url });
+  },
+
+  // Subscribe to a remote project
+  subscribe: async (
+    projectId: string,
+    server?: string,
+  ): Promise<{ data: { fingerprint: string } }> => {
+    return projectsRequest.post(endpoints.projects.subscribe, {
+      project: projectId,
+      server,
+    });
+  },
+
+  // Unsubscribe from a remote project
+  unsubscribe: async (
+    projectId: string,
+  ): Promise<{ data: { success: boolean } }> => {
+    return projectsRequest.post(endpoints.projects.unsubscribe, {
+      project: projectId,
+    });
+  },
+
+  // Add a bookmark to a remote project
+  bookmarkAdd: async (
+    projectId: string,
+    server?: string,
+  ): Promise<{ data: { id: string; name: string; existing?: boolean } }> => {
+    return projectsRequest.post(endpoints.projects.bookmarkAdd, {
+      project: projectId,
+      server,
+    });
+  },
+
+  // Remove a bookmark
+  bookmarkRemove: async (
+    projectId: string,
+  ): Promise<{ data: { removed: string } }> => {
+    return projectsRequest.post(endpoints.projects.bookmarkRemove, {
+      project: projectId,
+    });
+  },
 };
 
 export default projectsApi;

@@ -1,8 +1,7 @@
 // Tests for ViewTabs component
 import { describe, it, expect, vi } from "vitest";
-import { render, screen, fireEvent } from "@/test/test-utils";
+import { render, screen, fireEvent, createMockView } from "@/test/test-utils";
 import { ViewTabs } from "./view-tabs";
-import { createMockView } from "@/test/test-utils";
 
 describe("ViewTabs", () => {
   const boardView = createMockView({ id: "board", name: "Board", viewtype: "board" });

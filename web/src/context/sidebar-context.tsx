@@ -6,6 +6,9 @@ interface SidebarContextType {
   createDialogOpen: boolean;
   openCreateDialog: () => void;
   closeCreateDialog: () => void;
+  searchDialogOpen: boolean;
+  openSearchDialog: () => void;
+  closeSearchDialog: () => void;
 }
 
 const SidebarContext = createContext<SidebarContextType | null>(null);
@@ -15,9 +18,12 @@ export function SidebarProvider({ children }: { children: ReactNode }) {
   const projectId = (params as { projectId?: string }).projectId;
 
   const [createDialogOpen, setCreateDialogOpen] = useState(false);
+  const [searchDialogOpen, setSearchDialogOpen] = useState(false);
 
   const openCreateDialog = () => setCreateDialogOpen(true);
   const closeCreateDialog = () => setCreateDialogOpen(false);
+  const openSearchDialog = () => setSearchDialogOpen(true);
+  const closeSearchDialog = () => setSearchDialogOpen(false);
 
   return (
     <SidebarContext.Provider
@@ -26,6 +32,9 @@ export function SidebarProvider({ children }: { children: ReactNode }) {
         createDialogOpen,
         openCreateDialog,
         closeCreateDialog,
+        searchDialogOpen,
+        openSearchDialog,
+        closeSearchDialog,
       }}
     >
       {children}

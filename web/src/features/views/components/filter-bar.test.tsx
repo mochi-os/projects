@@ -1,8 +1,12 @@
 // Tests for FilterBar component
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { render, screen, fireEvent } from "@/test/test-utils";
+import {
+  render,
+  screen,
+  fireEvent,
+  createMockProjectDetails,
+} from "@/test/test-utils";
 import { FilterBar, type FilterState } from "./filter-bar";
-import { createMockProjectDetails } from "@/test/test-utils";
 
 describe("FilterBar", () => {
   const mockProject = createMockProjectDetails();

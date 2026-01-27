@@ -25,6 +25,7 @@
 	"actions": {
 		"": {"file": "web/dist/index.html"},
 		"new": {"file": "web/dist/index.html"},
+		"search": {"file": "web/dist/index.html"},
 		"assets": {"files": "web/dist/assets", "public": true},
 		"images": {"files": "web/dist/images", "public": true},
 
@@ -32,6 +33,12 @@
 		"-/create": {"function": "action_project_create"},
 		"-/templates": {"function": "action_templates"},
 		"-/templates/object": {"function": "action_object_templates"},
+		"directory/search": {"function": "action_search"},
+		"probe": {"function": "action_probe"},
+		"subscribe": {"function": "action_subscribe"},
+		"unsubscribe": {"function": "action_unsubscribe"},
+		"bookmark/add": {"function": "action_bookmark_add"},
+		"bookmark/remove": {"function": "action_bookmark_remove"},
 
 		":project": {"file": "web/dist/index.html"},
 		":project/design": {"file": "web/dist/index.html"},

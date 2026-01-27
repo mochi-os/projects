@@ -6,6 +6,12 @@ const endpoints = {
     create: "-/create",
     templates: "-/templates",
     objectTemplates: "-/templates/object",
+    search: "directory/search",
+    probe: "probe",
+    subscribe: "subscribe",
+    unsubscribe: "unsubscribe",
+    bookmarkAdd: "bookmark/add",
+    bookmarkRemove: "bookmark/remove",
 
     // Entity-level endpoints (use /-/ separator)
     info: (projectId: string) => `${projectId}/-/info`,

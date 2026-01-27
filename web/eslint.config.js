@@ -12,7 +12,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 export default defineConfig(
-  { ignores: ["dist", "src/components/ui"] },
+  { ignores: ["dist", "src/components/ui", "vitest.config.ts", "coverage"] },
   {
     extends: [
       js.configs.recommended,

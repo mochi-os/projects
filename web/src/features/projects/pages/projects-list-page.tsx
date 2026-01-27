@@ -30,7 +30,7 @@ export function ProjectsListPage() {
   return (
     <>
       <PageHeader
-        title="All projects"
+        title="Projects"
         icon={<FolderKanban className="size-4 md:size-5" />}
       />
       <Main>

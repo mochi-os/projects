@@ -3,8 +3,15 @@
 
 import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { X, Eye, EyeOff, Loader2, Trash2 } from "lucide-react";
-import { Button, Textarea, ConfirmDialog } from "@mochi/common";
+import { X, Eye, EyeOff, Loader2, Trash2, MessageSquare, Activity } from "lucide-react";
+import { 
+  Button, 
+  Textarea, 
+  ConfirmDialog,
+  Section,
+  FieldRow,
+  DataChip,
+} from "@mochi/common";
 import projectsApi from "@/api/projects";
 import type { ProjectDetails } from "@/types";
 import { FieldEditor } from "./field-editor";
@@ -84,8 +91,9 @@ export function ObjectDetailPanel({
 
   if (isLoading) {
     return (
-      <div className="w-96 border-l bg-background flex items-center justify-center">
+      <div className="w-96 border-l bg-background flex flex-col items-center justify-center">
         <Loader2 className="size-6 animate-spin text-muted-foreground" />
+        <span className="text-xs text-muted-foreground mt-2">Loading details...</span>
       </div>
     );
   }
@@ -98,7 +106,7 @@ export function ObjectDetailPanel({
             <X className="size-4" />
           </Button>
         </div>
-        <div className="text-destructive text-sm">
+        <div className="text-destructive text-sm bg-destructive/10 p-3 rounded-md">
           {error instanceof Error ? error.message : "Failed to load object"}
         </div>
       </div>
@@ -122,21 +130,23 @@ export function ObjectDetailPanel({
   };
 
   return (
-    <div className="w-96 border-l bg-background flex flex-col h-full overflow-hidden">
+    <div className="w-96 border-l bg-background flex flex-col h-full overflow-hidden shadow-2xl">
       {/* Header */}
-      <div className="flex items-center justify-between p-4 border-b shrink-0">
-        <div className="text-sm text-muted-foreground font-medium">
-          {object.readable}
+      <div className="flex items-center justify-between p-4 border-b shrink-0 bg-muted/20">
+        <div className="flex items-center gap-2">
+           <DataChip value={object.readable} copyable={false} chipClassName="bg-primary/10 border-primary/20 text-primary font-bold text-[11px]" />
         </div>
         <div className="flex items-center gap-1">
           <Button
             variant="ghost"
             size="icon"
+            className="h-8 w-8"
             onClick={() => watchMutation.mutate(data.watching)}
             disabled={watchMutation.isPending}
+            title={data.watching ? "Stop watching" : "Watch"}
           >
             {data.watching ? (
-              <Eye className="size-4" />
+              <Eye className="size-4 text-primary" />
             ) : (
               <EyeOff className="size-4" />
             )}
@@ -144,21 +154,23 @@ export function ObjectDetailPanel({
           <Button
             variant="ghost"
             size="icon"
-            className="text-destructive"
+            className="h-8 w-8 text-muted-foreground hover:text-destructive hover:bg-destructive/10"
             onClick={() => setShowDeleteDialog(true)}
+            title="Delete item"
           >
             <Trash2 className="size-4" />
           </Button>
-          <Button variant="ghost" size="icon" onClick={onClose}>
+          <div className="w-px h-4 bg-border mx-1" />
+          <Button variant="ghost" size="icon" className="h-8 w-8" onClick={onClose}>
             <X className="size-4" />
           </Button>
         </div>
       </div>
 
       {/* Content */}
-      <div className="flex-1 overflow-y-auto">
-        {/* Title */}
-        <div className="p-4 border-b">
+      <div className="flex-1 overflow-y-auto space-y-px">
+        {/* Title Section */}
+        <div className="p-4 bg-background">
           {editingTitle ? (
             <Textarea
               value={titleValue}
@@ -173,12 +185,12 @@ export function ObjectDetailPanel({
                   setEditingTitle(false);
                 }
               }}
-              className="text-lg font-semibold resize-none"
+              className="text-lg font-bold resize-none min-h-[80px]"
               autoFocus
             />
           ) : (
             <h2
-              className="text-lg font-semibold cursor-pointer hover:text-primary"
+              className="text-lg font-bold cursor-pointer hover:text-primary transition-colors leading-tight"
               onClick={() => {
                 setTitleValue(data.values.title || "");
                 setEditingTitle(true);
@@ -189,75 +201,90 @@ export function ObjectDetailPanel({
           )}
         </div>
 
-        {/* Fields */}
-        <div className="p-4 space-y-4 border-b">
-          {typeFields
-            .filter(
-              (f) =>
-                f.id !== "title" &&
-                !["repository", "source_branch", "target_branch"].includes(
-                  f.id,
-                ),
-            )
-            .map((field) => (
-              <FieldEditor
-                key={field.id}
-                field={field}
-                value={data.values[field.id] || ""}
-                options={typeOptions[field.id] || []}
-                onChange={(value) => handleFieldChange(field.id, value)}
-                disabled={updateValueMutation.isPending}
-              />
-            ))}
-        </div>
+        {/* Fields Section */}
+        <Section 
+          title="Properties" 
+          className="rounded-none border-x-0 border-t-0 shadow-none" 
+          contentClassName="py-0 px-4"
+        >
+          <div className="divide-y-0">
+            {typeFields
+              .filter(
+                (f) =>
+                  f.id !== "title" &&
+                  !["repository", "source_branch", "target_branch"].includes(
+                    f.id,
+                  ),
+              )
+              .map((field) => (
+                <FieldRow key={field.id} label={field.name} className="py-3 grid-cols-[100px_1fr] gap-2">
+                  <div className="w-full">
+                    <FieldEditor
+                      field={field}
+                      value={data.values[field.id] || ""}
+                      options={typeOptions[field.id] || []}
+                      onChange={(value) => handleFieldChange(field.id, value)}
+                      disabled={updateValueMutation.isPending}
+                      hideLabel // I'll add this prop to FieldEditor or just use unique styling
+                    />
+                  </div>
+                </FieldRow>
+              ))}
+          </div>
+        </Section>
 
-        {/* Pull Request Panel - shown if object has PR-related fields */}
+        {/* Pull Request Panel */}
         {(data.values.repository ||
           typeFields.some((f) => f.id === "repository")) && (
-          <div className="p-4 border-b">
+          <Section 
+            title="Development" 
+            className="rounded-none border-x-0 border-t-0 shadow-none"
+            contentClassName="p-4"
+          >
             <PrPanel
               values={data.values}
               onValueChange={handleFieldChange}
               objectTitle={title}
               objectReadable={object.readable}
             />
-          </div>
+          </Section>
         )}
 
-        {/* Tabs */}
-        <div className="border-b">
-          <div className="flex">
+        {/* Tabs for Comments/Activity */}
+        <div className="bg-background flex flex-col min-h-[400px]">
+          <div className="flex border-b sticky top-0 bg-background z-10 px-4">
             <button
-              className={`flex-1 py-2 text-sm font-medium border-b-2 ${
+              className={`flex items-center gap-2 py-3 px-4 text-xs font-bold uppercase tracking-wider border-b-2 transition-all ${
                 activeTab === "comments"
                   ? "border-primary text-primary"
-                  : "border-transparent text-muted-foreground hover:text-foreground"
+                  : "border-transparent text-muted-foreground hover:text-foreground hover:bg-muted/30"
               }`}
               onClick={() => setActiveTab("comments")}
             >
+              <MessageSquare className="size-3.5" />
               Comments
             </button>
             <button
-              className={`flex-1 py-2 text-sm font-medium border-b-2 ${
+              className={`flex items-center gap-2 py-3 px-4 text-xs font-bold uppercase tracking-wider border-b-2 transition-all ${
                 activeTab === "activity"
                   ? "border-primary text-primary"
-                  : "border-transparent text-muted-foreground hover:text-foreground"
+                  : "border-transparent text-muted-foreground hover:text-foreground hover:bg-muted/30"
               }`}
               onClick={() => setActiveTab("activity")}
             >
+              <Activity className="size-3.5" />
               Activity
             </button>
           </div>
-        </div>
 
-        {/* Tab content */}
-        <div className="p-4">
-          {activeTab === "comments" && (
-            <CommentList projectId={projectId} objectId={objectId} />
-          )}
-          {activeTab === "activity" && (
-            <ActivityList projectId={projectId} objectId={objectId} />
-          )}
+          <div className="p-4 flex-1">
+            {activeTab === "comments" && (
+              <CommentList projectId={projectId} objectId={objectId} />
+            )}
+            {activeTab === "activity" && (
+              <ActivityList projectId={projectId} objectId={objectId} />
+            )}
+          </div>
         </div>
       </div>
 

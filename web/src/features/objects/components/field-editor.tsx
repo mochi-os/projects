@@ -27,7 +27,8 @@ export function FieldEditor({
   options,
   onChange,
   disabled,
-}: FieldEditorProps) {
+  hideLabel,
+}: FieldEditorProps & { hideLabel?: boolean }) {
   const [localValue, setLocalValue] = useState(value);
 
   const handleBlur = () => {
@@ -37,11 +38,12 @@ export function FieldEditor({
   };
 
   const renderEditor = () => {
+    // ... same logic
     switch (field.fieldtype) {
       case "enum":
         return (
           <Select value={value} onValueChange={onChange} disabled={disabled}>
-            <SelectTrigger>
+            <SelectTrigger className="h-9">
               <SelectValue placeholder="Select..." />
             </SelectTrigger>
             <SelectContent>
@@ -70,6 +72,7 @@ export function FieldEditor({
             onBlur={handleBlur}
             disabled={disabled}
             rows={3}
+            className="min-h-[80px]"
           />
         );
 
@@ -81,6 +84,7 @@ export function FieldEditor({
             onChange={(e) => setLocalValue(e.target.value)}
             onBlur={handleBlur}
             disabled={disabled}
+            className="h-9"
           />
         );
 
@@ -94,12 +98,11 @@ export function FieldEditor({
               onChange(e.target.value);
             }}
             disabled={disabled}
+            className="h-9"
           />
         );
 
       case "user":
-        // For now, just show a text input
-        // TODO: Add user picker
         return (
           <Input
             value={localValue}
@@ -107,6 +110,7 @@ export function FieldEditor({
             onBlur={handleBlur}
             disabled={disabled}
             placeholder="User ID"
+            className="h-9"
           />
         );
 
@@ -117,10 +121,13 @@ export function FieldEditor({
             onChange={(e) => setLocalValue(e.target.value)}
             onBlur={handleBlur}
             disabled={disabled}
+            className="h-9"
           />
         );
     }
   };
+
+  if (hideLabel) return renderEditor();
 
   return (
     <div className="space-y-1.5">

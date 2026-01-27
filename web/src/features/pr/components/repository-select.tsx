@@ -1,21 +1,21 @@
 // Mochi Projects: Repository select component
 // Copyright Alistair Cunningham 2026
 
-import { useQuery } from '@tanstack/react-query'
+import { useQuery } from "@tanstack/react-query";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@mochi/common'
-import { GitBranch } from 'lucide-react'
-import projectsApi from '@/api/projects'
+} from "@mochi/common";
+import { GitBranch } from "lucide-react";
+import projectsApi from "@/api/projects";
 
 interface RepositorySelectProps {
-  value: string
-  onChange: (value: string) => void
-  disabled?: boolean
+  value: string;
+  onChange: (value: string) => void;
+  disabled?: boolean;
 }
 
 export function RepositorySelect({
@@ -24,17 +24,21 @@ export function RepositorySelect({
   disabled,
 }: RepositorySelectProps) {
   const { data, isLoading } = useQuery({
-    queryKey: ['repositories'],
+    queryKey: ["repositories"],
     queryFn: async () => {
-      const response = await projectsApi.listRepositories()
-      return response.data.repositories
+      const response = await projectsApi.listRepositories();
+      return response.data.repositories;
     },
-  })
+  });
 
-  const repositories = data || []
+  const repositories = data || [];
 
   return (
-    <Select value={value} onValueChange={onChange} disabled={disabled || isLoading}>
+    <Select
+      value={value}
+      onValueChange={onChange}
+      disabled={disabled || isLoading}
+    >
       <SelectTrigger className="w-full">
         <div className="flex items-center gap-2">
           <GitBranch className="size-4 text-muted-foreground" />
@@ -54,5 +58,5 @@ export function RepositorySelect({
         )}
       </SelectContent>
     </Select>
-  )
+  );
 }

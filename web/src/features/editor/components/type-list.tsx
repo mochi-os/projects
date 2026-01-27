@@ -1,17 +1,17 @@
 // Mochi Projects: Type list component for design editor
 // Copyright Alistair Cunningham 2026
 
-import { useState } from 'react'
-import { Plus, Trash2 } from 'lucide-react'
-import { Button, cn, ConfirmDialog } from '@mochi/common'
-import type { ProjectType } from '@/types'
+import { useState } from "react";
+import { Plus, Trash2 } from "lucide-react";
+import { Button, cn, ConfirmDialog } from "@mochi/common";
+import type { ProjectType } from "@/types";
 
 interface TypeListProps {
-  types: ProjectType[]
-  selectedTypeId: string | null
-  onSelectType: (typeId: string) => void
-  onAddType: () => void
-  onDeleteType: (typeId: string) => void
+  types: ProjectType[];
+  selectedTypeId: string | null;
+  onSelectType: (typeId: string) => void;
+  onAddType: () => void;
+  onDeleteType: (typeId: string) => void;
 }
 
 export function TypeList({
@@ -21,8 +21,8 @@ export function TypeList({
   onAddType,
   onDeleteType,
 }: TypeListProps) {
-  const [deleteTypeId, setDeleteTypeId] = useState<string | null>(null)
-  const deleteType = types.find((t) => t.id === deleteTypeId)
+  const [deleteTypeId, setDeleteTypeId] = useState<string | null>(null);
+  const deleteType = types.find((t) => t.id === deleteTypeId);
 
   return (
     <div className="space-y-2">
@@ -37,10 +37,10 @@ export function TypeList({
           <div
             key={type.id}
             className={cn(
-              'flex items-center justify-between px-2 py-1.5 rounded text-sm cursor-pointer',
+              "flex items-center justify-between px-2 py-1.5 rounded text-sm cursor-pointer",
               selectedTypeId === type.id
-                ? 'bg-primary text-primary-foreground'
-                : 'hover:bg-muted'
+                ? "bg-primary text-primary-foreground"
+                : "hover:bg-muted",
             )}
             onClick={() => onSelectType(type.id)}
           >
@@ -49,14 +49,14 @@ export function TypeList({
               variant="ghost"
               size="sm"
               className={cn(
-                'size-6 p-0',
+                "size-6 p-0",
                 selectedTypeId === type.id
-                  ? 'hover:bg-primary-foreground/20'
-                  : 'hover:bg-destructive/20'
+                  ? "hover:bg-primary-foreground/20"
+                  : "hover:bg-destructive/20",
               )}
               onClick={(e) => {
-                e.stopPropagation()
-                setDeleteTypeId(type.id)
+                e.stopPropagation();
+                setDeleteTypeId(type.id);
               }}
             >
               <Trash2 className="size-3" />
@@ -77,11 +77,11 @@ export function TypeList({
         destructive
         handleConfirm={() => {
           if (deleteTypeId) {
-            onDeleteType(deleteTypeId)
-            setDeleteTypeId(null)
+            onDeleteType(deleteTypeId);
+            setDeleteTypeId(null);
           }
         }}
       />
     </div>
-  )
+  );
 }

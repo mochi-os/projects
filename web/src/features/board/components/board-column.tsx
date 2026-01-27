@@ -1,23 +1,23 @@
 // Mochi Projects: Board column component
 // Copyright Alistair Cunningham 2026
 
-import { useState } from 'react'
-import { cn } from '@mochi/common'
-import { Plus } from 'lucide-react'
-import { BoardCard } from './board-card'
-import type { ProjectObject, ProjectField, FieldOption } from '@/types'
+import { useState } from "react";
+import { cn } from "@mochi/common";
+import { Plus } from "lucide-react";
+import { BoardCard } from "./board-card";
+import type { ProjectObject, ProjectField, FieldOption } from "@/types";
 
 interface BoardColumnProps {
-  id: string
-  name: string
-  colour?: string
-  objects: ProjectObject[]
-  fields: ProjectField[]
-  options: Record<string, FieldOption[]>
-  prefix: string
-  onCardClick?: (object: ProjectObject) => void
-  onCreateClick?: () => void
-  onDrop?: (objectId: string, columnId: string) => void
+  id: string;
+  name: string;
+  colour?: string;
+  objects: ProjectObject[];
+  fields: ProjectField[];
+  options: Record<string, FieldOption[]>;
+  prefix: string;
+  onCardClick?: (object: ProjectObject) => void;
+  onCreateClick?: () => void;
+  onDrop?: (objectId: string, columnId: string) => void;
 }
 
 export function BoardColumn({
@@ -32,33 +32,33 @@ export function BoardColumn({
   onCreateClick,
   onDrop,
 }: BoardColumnProps) {
-  const [isDragOver, setIsDragOver] = useState(false)
+  const [isDragOver, setIsDragOver] = useState(false);
 
   const handleDragOver = (e: React.DragEvent) => {
-    e.preventDefault()
-    e.dataTransfer.dropEffect = 'move'
-    setIsDragOver(true)
-  }
+    e.preventDefault();
+    e.dataTransfer.dropEffect = "move";
+    setIsDragOver(true);
+  };
 
   const handleDragLeave = () => {
-    setIsDragOver(false)
-  }
+    setIsDragOver(false);
+  };
 
   const handleDrop = (e: React.DragEvent) => {
-    e.preventDefault()
-    setIsDragOver(false)
-    const objectId = e.dataTransfer.getData('text/plain')
+    e.preventDefault();
+    setIsDragOver(false);
+    const objectId = e.dataTransfer.getData("text/plain");
     if (objectId && onDrop) {
-      onDrop(objectId, id)
+      onDrop(objectId, id);
     }
-  }
+  };
 
   return (
     <div
       className={cn(
-        'flex flex-col w-72 shrink-0 rounded-lg',
-        'bg-muted/30 border',
-        isDragOver && 'border-primary bg-primary/5'
+        "flex flex-col w-72 shrink-0 rounded-lg",
+        "bg-muted/30 border",
+        isDragOver && "border-primary bg-primary/5",
       )}
       onDragOver={handleDragOver}
       onDragLeave={handleDragLeave}
@@ -108,5 +108,5 @@ export function BoardColumn({
         )}
       </div>
     </div>
-  )
+  );
 }

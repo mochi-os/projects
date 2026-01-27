@@ -1,6 +1,6 @@
-@import 'tailwindcss';
-@import 'tw-animate-css';
-@import '../../../../../lib/common/src/styles/theme.css';
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "../../../../../lib/common/src/styles/theme.css";
 
 /* Include lib/common components in Tailwind's content scan */
 @source "../../../../../lib/common/src/**/*.{ts,tsx}";
@@ -33,7 +33,7 @@
 
   /* Cursor pointer for buttons */
   button:not(:disabled),
-  [role='button']:not(:disabled) {
+  [role="button"]:not(:disabled) {
     cursor: pointer;
   }
 

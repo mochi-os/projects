@@ -1,52 +1,52 @@
 // Mochi Projects: Option editor component
 // Copyright Alistair Cunningham 2026
 
-import { useState, useEffect } from 'react'
-import { Input, Label } from '@mochi/common'
-import type { FieldOption } from '@/types'
+import { useState, useEffect } from "react";
+import { Input, Label } from "@mochi/common";
+import type { FieldOption } from "@/types";
 
 const PRESET_COLOURS = [
-  '#94a3b8', // slate
-  '#64748b', // slate darker
-  '#f87171', // red
-  '#fb923c', // orange
-  '#fbbf24', // amber
-  '#a3e635', // lime
-  '#4ade80', // green
-  '#2dd4bf', // teal
-  '#22d3ee', // cyan
-  '#60a5fa', // blue
-  '#818cf8', // indigo
-  '#a78bfa', // violet
-  '#e879f9', // fuchsia
-  '#f472b6', // pink
-]
+  "#94a3b8", // slate
+  "#64748b", // slate darker
+  "#f87171", // red
+  "#fb923c", // orange
+  "#fbbf24", // amber
+  "#a3e635", // lime
+  "#4ade80", // green
+  "#2dd4bf", // teal
+  "#22d3ee", // cyan
+  "#60a5fa", // blue
+  "#818cf8", // indigo
+  "#a78bfa", // violet
+  "#e879f9", // fuchsia
+  "#f472b6", // pink
+];
 
 interface OptionEditorProps {
-  option: FieldOption
-  onUpdate: (updates: { name?: string; colour?: string }) => void
+  option: FieldOption;
+  onUpdate: (updates: { name?: string; colour?: string }) => void;
 }
 
 export function OptionEditor({ option, onUpdate }: OptionEditorProps) {
-  const [name, setName] = useState(option.name)
-  const [colour, setColour] = useState(option.colour)
+  const [name, setName] = useState(option.name);
+  const [colour, setColour] = useState(option.colour);
 
   // Reset state when option changes
   useEffect(() => {
-    setName(option.name)
-    setColour(option.colour)
-  }, [option.id, option.name, option.colour])
+    setName(option.name);
+    setColour(option.colour);
+  }, [option.id, option.name, option.colour]);
 
   const handleNameBlur = () => {
     if (name.trim() && name !== option.name) {
-      onUpdate({ name: name.trim() })
+      onUpdate({ name: name.trim() });
     }
-  }
+  };
 
   const handleColourChange = (newColour: string) => {
-    setColour(newColour)
-    onUpdate({ colour: newColour })
-  }
+    setColour(newColour);
+    onUpdate({ colour: newColour });
+  };
 
   return (
     <div className="space-y-4 p-4 border rounded-lg">
@@ -59,7 +59,7 @@ export function OptionEditor({ option, onUpdate }: OptionEditorProps) {
           value={name}
           onChange={(e) => setName(e.target.value)}
           onBlur={handleNameBlur}
-          onKeyDown={(e) => e.key === 'Enter' && handleNameBlur()}
+          onKeyDown={(e) => e.key === "Enter" && handleNameBlur()}
         />
       </div>
 
@@ -72,8 +72,8 @@ export function OptionEditor({ option, onUpdate }: OptionEditorProps) {
               type="button"
               className={`size-6 rounded-full border-2 transition-transform hover:scale-110 ${
                 colour === presetColour
-                  ? 'border-foreground'
-                  : 'border-transparent'
+                  ? "border-foreground"
+                  : "border-transparent"
               }`}
               style={{ backgroundColor: presetColour }}
               onClick={() => handleColourChange(presetColour)}
@@ -105,5 +105,5 @@ export function OptionEditor({ option, onUpdate }: OptionEditorProps) {
         <span className="text-sm">Preview: {name}</span>
       </div>
     </div>
-  )
+  );
 }

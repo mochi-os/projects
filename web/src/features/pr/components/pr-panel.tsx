@@ -1,84 +1,93 @@
 // Mochi Projects: Pull request panel component
 // Copyright Alistair Cunningham 2026
 
-import { useState, useEffect } from 'react'
-import { useQuery } from '@tanstack/react-query'
-import { ArrowRight, GitPullRequest } from 'lucide-react'
-import { Label } from '@mochi/common'
-import projectsApi from '@/api/projects'
-import { RepositorySelect } from './repository-select'
-import { BranchSelect } from './branch-select'
-import { MergeStatus } from './merge-status'
-import { DiffStats } from './diff-stats'
-import { ConflictList } from './conflict-list'
-import { MergeButton, ViewDiffLink } from './merge-button'
+import { useState, useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { ArrowRight, GitPullRequest } from "lucide-react";
+import { Label } from "@mochi/common";
+import projectsApi from "@/api/projects";
+import { RepositorySelect } from "./repository-select";
+import { BranchSelect } from "./branch-select";
+import { MergeStatus } from "./merge-status";
+import { DiffStats } from "./diff-stats";
+import { ConflictList } from "./conflict-list";
+import { MergeButton, ViewDiffLink } from "./merge-button";
 
 interface PrPanelProps {
-  values: Record<string, string>
-  onValueChange: (field: string, value: string) => void
-  objectTitle?: string
-  objectReadable?: string
-  readOnly?: boolean
+  values: Record<string, string>;
+  onValueChange: (field: string, value: string) => void;
+  objectTitle?: string;
+  objectReadable?: string;
+  readOnly?: boolean;
 }
 
 export function PrPanel({
   values,
   onValueChange,
-  objectTitle = '',
-  objectReadable = '',
+  objectTitle = "",
+  objectReadable = "",
   readOnly,
 }: PrPanelProps) {
-  const [repoId, setRepoId] = useState(values.repository || '')
-  const [sourceBranch, setSourceBranch] = useState(values.source_branch || '')
-  const [targetBranch, setTargetBranch] = useState(values.target_branch || '')
-  const [merged, setMerged] = useState(values.status === 'merged')
+  const [repoId, setRepoId] = useState(values.repository || "");
+  const [sourceBranch, setSourceBranch] = useState(values.source_branch || "");
+  const [targetBranch, setTargetBranch] = useState(values.target_branch || "");
+  const [merged, setMerged] = useState(values.status === "merged");
 
   useEffect(() => {
-    if (values.repository !== repoId) setRepoId(values.repository || '')
+    if (values.repository !== repoId) setRepoId(values.repository || "");
     if (values.source_branch !== sourceBranch)
-      setSourceBranch(values.source_branch || '')
+      setSourceBranch(values.source_branch || "");
     if (values.target_branch !== targetBranch)
-      setTargetBranch(values.target_branch || '')
-    setMerged(values.status === 'merged')
-  }, [values.repository, values.source_branch, values.target_branch, values.status])
+      setTargetBranch(values.target_branch || "");
+    setMerged(values.status === "merged");
+  }, [
+    values.repository,
+    values.source_branch,
+    values.target_branch,
+    values.status,
+  ]);
 
   // Fetch merge check status
   const { data: mergeCheck } = useQuery({
-    queryKey: ['merge-check', repoId, sourceBranch, targetBranch],
+    queryKey: ["merge-check", repoId, sourceBranch, targetBranch],
     queryFn: async () => {
-      const response = await projectsApi.checkMerge(repoId, sourceBranch, targetBranch)
-      return response.data
+      const response = await projectsApi.checkMerge(
+        repoId,
+        sourceBranch,
+        targetBranch,
+      );
+      return response.data;
     },
     enabled: !!repoId && !!sourceBranch && !!targetBranch && !merged,
-  })
+  });
 
   const handleRepoChange = (value: string) => {
-    setRepoId(value)
-    setSourceBranch('')
-    setTargetBranch('')
-    onValueChange('repository', value)
-    onValueChange('source_branch', '')
-    onValueChange('target_branch', '')
-  }
+    setRepoId(value);
+    setSourceBranch("");
+    setTargetBranch("");
+    onValueChange("repository", value);
+    onValueChange("source_branch", "");
+    onValueChange("target_branch", "");
+  };
 
   const handleSourceChange = (value: string) => {
-    setSourceBranch(value)
-    onValueChange('source_branch', value)
-  }
+    setSourceBranch(value);
+    onValueChange("source_branch", value);
+  };
 
   const handleTargetChange = (value: string) => {
-    setTargetBranch(value)
-    onValueChange('target_branch', value)
-  }
+    setTargetBranch(value);
+    onValueChange("target_branch", value);
+  };
 
   const handleMergeComplete = () => {
-    setMerged(true)
-    onValueChange('status', 'merged')
-  }
+    setMerged(true);
+    onValueChange("status", "merged");
+  };
 
-  const canMerge = mergeCheck?.can_merge ?? false
-  const conflicts = mergeCheck?.conflicts ?? []
-  const isMerged = merged || values.status === 'merged'
+  const canMerge = mergeCheck?.can_merge ?? false;
+  const conflicts = mergeCheck?.conflicts ?? [];
+  const isMerged = merged || values.status === "merged";
 
   return (
     <div className="space-y-4">
@@ -174,5 +183,5 @@ export function PrPanel({
         </div>
       )}
     </div>
-  )
+  );
 }

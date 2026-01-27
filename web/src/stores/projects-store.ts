@@ -1,12 +1,12 @@
-import { create } from 'zustand'
-import type { Project } from '@/types'
-import projectsApi from '@/api/projects'
+import { create } from "zustand";
+import type { Project } from "@/types";
+import projectsApi from "@/api/projects";
 
 interface ProjectsState {
-  projects: Project[]
-  isLoading: boolean
-  error: string | null
-  refresh: () => Promise<void>
+  projects: Project[];
+  isLoading: boolean;
+  error: string | null;
+  refresh: () => Promise<void>;
 }
 
 export const useProjectsStore = create<ProjectsState>()((set) => ({
@@ -15,13 +15,13 @@ export const useProjectsStore = create<ProjectsState>()((set) => ({
   error: null,
 
   refresh: async () => {
-    set({ isLoading: true, error: null })
+    set({ isLoading: true, error: null });
     try {
-      const response = await projectsApi.list()
-      const projects = response.data?.projects ?? []
-      set({ projects, isLoading: false })
-    } catch (error) {
-      set({ error: 'Failed to load projects', isLoading: false })
+      const response = await projectsApi.list();
+      const projects = response.data?.projects ?? [];
+      set({ projects, isLoading: false });
+    } catch (_err) {
+      set({ error: "Failed to load projects", isLoading: false });
     }
   },
-}))
+}));

@@ -1,6 +1,6 @@
-import { createFileRoute } from '@tanstack/react-router'
-import { MaintenanceError } from '@mochi/common'
+import { createFileRoute } from "@tanstack/react-router";
+import { MaintenanceError } from "@mochi/common";
 
-export const Route = createFileRoute('/(errors)/503')({
+export const Route = createFileRoute("/(errors)/503")({
   component: MaintenanceError,
-})
+});

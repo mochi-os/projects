@@ -1,1 +1,1 @@
-export { ProjectsListPage } from './projects-list-page'
+export { ProjectsListPage } from "./projects-list-page";

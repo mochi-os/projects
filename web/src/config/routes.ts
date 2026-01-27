@@ -1,7 +1,7 @@
 export const APP_ROUTES = {
   PROJECTS: {
-    LIST: '/',
+    LIST: "/",
     VIEW: (id: string) => `/${id}`,
-    NEW: '/new',
+    NEW: "/new",
   },
-}
+};

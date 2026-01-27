@@ -1,23 +1,23 @@
-import { createContext, useContext, useState, type ReactNode } from 'react'
-import { useParams } from '@tanstack/react-router'
+import { createContext, useContext, useState, type ReactNode } from "react";
+import { useParams } from "@tanstack/react-router";
 
 interface SidebarContextType {
-  projectId: string | undefined
-  createDialogOpen: boolean
-  openCreateDialog: () => void
-  closeCreateDialog: () => void
+  projectId: string | undefined;
+  createDialogOpen: boolean;
+  openCreateDialog: () => void;
+  closeCreateDialog: () => void;
 }
 
-const SidebarContext = createContext<SidebarContextType | null>(null)
+const SidebarContext = createContext<SidebarContextType | null>(null);
 
 export function SidebarProvider({ children }: { children: ReactNode }) {
-  const params = useParams({ strict: false })
-  const projectId = (params as { projectId?: string }).projectId
+  const params = useParams({ strict: false });
+  const projectId = (params as { projectId?: string }).projectId;
 
-  const [createDialogOpen, setCreateDialogOpen] = useState(false)
+  const [createDialogOpen, setCreateDialogOpen] = useState(false);
 
-  const openCreateDialog = () => setCreateDialogOpen(true)
-  const closeCreateDialog = () => setCreateDialogOpen(false)
+  const openCreateDialog = () => setCreateDialogOpen(true);
+  const closeCreateDialog = () => setCreateDialogOpen(false);
 
   return (
     <SidebarContext.Provider
@@ -30,13 +30,13 @@ export function SidebarProvider({ children }: { children: ReactNode }) {
     >
       {children}
     </SidebarContext.Provider>
-  )
+  );
 }
 
 export function useSidebarContext() {
-  const context = useContext(SidebarContext)
+  const context = useContext(SidebarContext);
   if (!context) {
-    throw new Error('useSidebarContext must be used within a SidebarProvider')
+    throw new Error("useSidebarContext must be used within a SidebarProvider");
   }
-  return context
+  return context;
 }

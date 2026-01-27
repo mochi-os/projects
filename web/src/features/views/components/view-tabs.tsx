@@ -1,15 +1,15 @@
 // Mochi Projects: View tabs component
 // Copyright Alistair Cunningham 2026
 
-import { cn } from '@mochi/common'
-import { LayoutGrid, List, Plus } from 'lucide-react'
-import type { ProjectView } from '@/types'
+import { cn } from "@mochi/common";
+import { LayoutGrid, List, Plus } from "lucide-react";
+import type { ProjectView } from "@/types";
 
 interface ViewTabsProps {
-  views: ProjectView[]
-  activeViewId: string
-  onViewChange: (viewId: string) => void
-  onAddView?: () => void
+  views: ProjectView[];
+  activeViewId: string;
+  onViewChange: (viewId: string) => void;
+  onAddView?: () => void;
 }
 
 export function ViewTabs({
@@ -20,13 +20,13 @@ export function ViewTabs({
 }: ViewTabsProps) {
   const getViewIcon = (viewtype: string) => {
     switch (viewtype) {
-      case 'list':
-        return <List className="size-4" />
-      case 'board':
+      case "list":
+        return <List className="size-4" />;
+      case "board":
       default:
-        return <LayoutGrid className="size-4" />
+        return <LayoutGrid className="size-4" />;
     }
-  }
+  };
 
   return (
     <div className="flex items-center gap-1 border-b border-border">
@@ -35,10 +35,10 @@ export function ViewTabs({
           key={view.id}
           onClick={() => onViewChange(view.id)}
           className={cn(
-            'flex items-center gap-2 px-3 py-2 text-sm font-medium border-b-2 -mb-px transition-colors',
+            "flex items-center gap-2 px-3 py-2 text-sm font-medium border-b-2 -mb-px transition-colors",
             activeViewId === view.id
-              ? 'border-primary text-foreground'
-              : 'border-transparent text-muted-foreground hover:text-foreground hover:border-muted-foreground/50'
+              ? "border-primary text-foreground"
+              : "border-transparent text-muted-foreground hover:text-foreground hover:border-muted-foreground/50",
           )}
         >
           {getViewIcon(view.viewtype)}
@@ -55,5 +55,5 @@ export function ViewTabs({
         </button>
       )}
     </div>
-  )
+  );
 }

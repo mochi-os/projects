@@ -1,6 +1,6 @@
-import { createFileRoute } from '@tanstack/react-router'
-import { ForbiddenError } from '@mochi/common'
+import { createFileRoute } from "@tanstack/react-router";
+import { ForbiddenError } from "@mochi/common";
 
-export const Route = createFileRoute('/(errors)/403')({
+export const Route = createFileRoute("/(errors)/403")({
   component: ForbiddenError,
-})
+});

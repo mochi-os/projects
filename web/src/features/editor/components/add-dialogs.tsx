@@ -1,7 +1,7 @@
 // Mochi Projects: Add dialogs for design editor
 // Copyright Alistair Cunningham 2026
 
-import { useState } from 'react'
+import { useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -11,26 +11,30 @@ import {
   Button,
   Input,
   Label,
-} from '@mochi/common'
+} from "@mochi/common";
 
 // Add Type Dialog
 interface AddTypeDialogProps {
-  open: boolean
-  onOpenChange: (open: boolean) => void
-  onAdd: (name: string) => void
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  onAdd: (name: string) => void;
 }
 
-export function AddTypeDialog({ open, onOpenChange, onAdd }: AddTypeDialogProps) {
-  const [name, setName] = useState('')
+export function AddTypeDialog({
+  open,
+  onOpenChange,
+  onAdd,
+}: AddTypeDialogProps) {
+  const [name, setName] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
     if (name.trim()) {
-      onAdd(name.trim())
-      setName('')
-      onOpenChange(false)
+      onAdd(name.trim());
+      setName("");
+      onOpenChange(false);
     }
-  }
+  };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -52,7 +56,11 @@ export function AddTypeDialog({ open, onOpenChange, onAdd }: AddTypeDialogProps)
             </div>
           </div>
           <DialogFooter>
-            <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => onOpenChange(false)}
+            >
               Cancel
             </Button>
             <Button type="submit" disabled={!name.trim()}>
@@ -62,38 +70,42 @@ export function AddTypeDialog({ open, onOpenChange, onAdd }: AddTypeDialogProps)
         </form>
       </DialogContent>
     </Dialog>
-  )
+  );
 }
 
 // Add Field Dialog
 interface AddFieldDialogProps {
-  open: boolean
-  onOpenChange: (open: boolean) => void
-  onAdd: (name: string, fieldtype: string) => void
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  onAdd: (name: string, fieldtype: string) => void;
 }
 
 const FIELD_TYPES = [
-  { id: 'text', name: 'Text' },
-  { id: 'number', name: 'Number' },
-  { id: 'date', name: 'Date' },
-  { id: 'enum', name: 'Select' },
-  { id: 'user', name: 'User' },
-  { id: 'checkbox', name: 'Checkbox' },
-]
+  { id: "text", name: "Text" },
+  { id: "number", name: "Number" },
+  { id: "date", name: "Date" },
+  { id: "enum", name: "Select" },
+  { id: "user", name: "User" },
+  { id: "checkbox", name: "Checkbox" },
+];
 
-export function AddFieldDialog({ open, onOpenChange, onAdd }: AddFieldDialogProps) {
-  const [name, setName] = useState('')
-  const [fieldtype, setFieldtype] = useState('text')
+export function AddFieldDialog({
+  open,
+  onOpenChange,
+  onAdd,
+}: AddFieldDialogProps) {
+  const [name, setName] = useState("");
+  const [fieldtype, setFieldtype] = useState("text");
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
     if (name.trim()) {
-      onAdd(name.trim(), fieldtype)
-      setName('')
-      setFieldtype('text')
-      onOpenChange(false)
+      onAdd(name.trim(), fieldtype);
+      setName("");
+      setFieldtype("text");
+      onOpenChange(false);
     }
-  }
+  };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -130,7 +142,11 @@ export function AddFieldDialog({ open, onOpenChange, onAdd }: AddFieldDialogProp
             </div>
           </div>
           <DialogFooter>
-            <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => onOpenChange(false)}
+            >
               Cancel
             </Button>
             <Button type="submit" disabled={!name.trim()}>
@@ -140,38 +156,44 @@ export function AddFieldDialog({ open, onOpenChange, onAdd }: AddFieldDialogProp
         </form>
       </DialogContent>
     </Dialog>
-  )
+  );
 }
 
 // Add Option Dialog
 interface AddOptionDialogProps {
-  open: boolean
-  onOpenChange: (open: boolean) => void
-  onAdd: (name: string, colour: string) => void
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  onAdd: (name: string, colour: string) => void;
 }
 
 const DEFAULT_COLOURS = [
-  '#94a3b8',
-  '#f87171',
-  '#fbbf24',
-  '#4ade80',
-  '#60a5fa',
-  '#a78bfa',
-]
+  "#94a3b8",
+  "#f87171",
+  "#fbbf24",
+  "#4ade80",
+  "#60a5fa",
+  "#a78bfa",
+];
 
-export function AddOptionDialog({ open, onOpenChange, onAdd }: AddOptionDialogProps) {
-  const [name, setName] = useState('')
-  const [colour, setColour] = useState(DEFAULT_COLOURS[0])
+export function AddOptionDialog({
+  open,
+  onOpenChange,
+  onAdd,
+}: AddOptionDialogProps) {
+  const [name, setName] = useState("");
+  const [colour, setColour] = useState(DEFAULT_COLOURS[0]);
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
     if (name.trim()) {
-      onAdd(name.trim(), colour)
-      setName('')
-      setColour(DEFAULT_COLOURS[Math.floor(Math.random() * DEFAULT_COLOURS.length)])
-      onOpenChange(false)
+      onAdd(name.trim(), colour);
+      setName("");
+      setColour(
+        DEFAULT_COLOURS[Math.floor(Math.random() * DEFAULT_COLOURS.length)],
+      );
+      onOpenChange(false);
     }
-  }
+  };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -199,7 +221,7 @@ export function AddOptionDialog({ open, onOpenChange, onAdd }: AddOptionDialogPr
                     key={c}
                     type="button"
                     className={`size-8 rounded-full border-2 ${
-                      colour === c ? 'border-foreground' : 'border-transparent'
+                      colour === c ? "border-foreground" : "border-transparent"
                     }`}
                     style={{ backgroundColor: c }}
                     onClick={() => setColour(c)}
@@ -212,11 +234,15 @@ export function AddOptionDialog({ open, onOpenChange, onAdd }: AddOptionDialogPr
                 className="size-4 rounded-full"
                 style={{ backgroundColor: colour }}
               />
-              <span className="text-sm">Preview: {name || 'Option name'}</span>
+              <span className="text-sm">Preview: {name || "Option name"}</span>
             </div>
           </div>
           <DialogFooter>
-            <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => onOpenChange(false)}
+            >
               Cancel
             </Button>
             <Button type="submit" disabled={!name.trim()}>
@@ -226,29 +252,33 @@ export function AddOptionDialog({ open, onOpenChange, onAdd }: AddOptionDialogPr
         </form>
       </DialogContent>
     </Dialog>
-  )
+  );
 }
 
 // Add View Dialog
 interface AddViewDialogProps {
-  open: boolean
-  onOpenChange: (open: boolean) => void
-  onAdd: (name: string, viewtype: string) => void
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  onAdd: (name: string, viewtype: string) => void;
 }
 
-export function AddViewDialog({ open, onOpenChange, onAdd }: AddViewDialogProps) {
-  const [name, setName] = useState('')
-  const [viewtype, setViewtype] = useState('board')
+export function AddViewDialog({
+  open,
+  onOpenChange,
+  onAdd,
+}: AddViewDialogProps) {
+  const [name, setName] = useState("");
+  const [viewtype, setViewtype] = useState("board");
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
     if (name.trim()) {
-      onAdd(name.trim(), viewtype)
-      setName('')
-      setViewtype('board')
-      onOpenChange(false)
+      onAdd(name.trim(), viewtype);
+      setName("");
+      setViewtype("board");
+      onOpenChange(false);
     }
-  }
+  };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -282,7 +312,11 @@ export function AddViewDialog({ open, onOpenChange, onAdd }: AddViewDialogProps)
             </div>
           </div>
           <DialogFooter>
-            <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => onOpenChange(false)}
+            >
               Cancel
             </Button>
             <Button type="submit" disabled={!name.trim()}>
@@ -292,5 +326,5 @@ export function AddViewDialog({ open, onOpenChange, onAdd }: AddViewDialogProps)
         </form>
       </DialogContent>
     </Dialog>
-  )
+  );
 }

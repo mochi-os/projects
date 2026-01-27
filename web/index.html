@@ -3,11 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <script>
-      (function() {
+      (function () {
         var path = location.pathname;
         var match = path.match(/^(\/[^/]+)/);
-        var base = match ? match[1] + '/' : '/';
-        var baseEl = document.createElement('base');
+        var base = match ? match[1] + "/" : "/";
+        var baseEl = document.createElement("base");
         baseEl.href = base;
         document.head.appendChild(baseEl);
       })();

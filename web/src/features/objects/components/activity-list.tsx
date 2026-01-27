@@ -1,59 +1,59 @@
 // Mochi Projects: Activity list component
 // Copyright Alistair Cunningham 2026
 
-import { useQuery } from '@tanstack/react-query'
-import { Loader2 } from 'lucide-react'
-import projectsApi from '@/api/projects'
+import { useQuery } from "@tanstack/react-query";
+import { Loader2 } from "lucide-react";
+import projectsApi from "@/api/projects";
 
 interface ActivityListProps {
-  projectId: string
-  objectId: string
+  projectId: string;
+  objectId: string;
 }
 
 export function ActivityList({ projectId, objectId }: ActivityListProps) {
   const { data, isLoading } = useQuery({
-    queryKey: ['activity', projectId, objectId],
+    queryKey: ["activity", projectId, objectId],
     queryFn: async () => {
-      const response = await projectsApi.listActivity(projectId, objectId)
-      return response.data.activities
+      const response = await projectsApi.listActivity(projectId, objectId);
+      return response.data.activities;
     },
-  })
+  });
 
   const formatDate = (timestamp: number) => {
-    return new Date(timestamp * 1000).toLocaleString()
-  }
+    return new Date(timestamp * 1000).toLocaleString();
+  };
 
   const formatAction = (action: string) => {
     switch (action) {
-      case 'create':
-        return 'created'
-      case 'update':
-        return 'updated'
-      case 'delete':
-        return 'deleted'
-      case 'move':
-        return 'moved'
+      case "create":
+        return "created";
+      case "update":
+        return "updated";
+      case "delete":
+        return "deleted";
+      case "move":
+        return "moved";
       default:
-        return action
+        return action;
     }
-  }
+  };
 
   if (isLoading) {
     return (
       <div className="flex justify-center py-4">
         <Loader2 className="size-5 animate-spin text-muted-foreground" />
       </div>
-    )
+    );
   }
 
-  const activities = data || []
+  const activities = data || [];
 
   if (activities.length === 0) {
     return (
       <div className="text-sm text-muted-foreground text-center py-4">
         No activity yet
       </div>
-    )
+    );
   }
 
   return (
@@ -64,11 +64,11 @@ export function ActivityList({ projectId, objectId }: ActivityListProps) {
           className="text-sm border-l-2 border-muted pl-3 py-1"
         >
           <div className="text-foreground">
-            <span className="font-medium">{activity.actor}</span>{' '}
+            <span className="font-medium">{activity.actor}</span>{" "}
             {formatAction(activity.action)}
             {activity.field && (
               <>
-                {' '}
+                {" "}
                 <span className="text-muted-foreground">{activity.field}</span>
               </>
             )}
@@ -76,7 +76,7 @@ export function ActivityList({ projectId, objectId }: ActivityListProps) {
           {activity.oldvalue && activity.newvalue && (
             <div className="text-muted-foreground mt-0.5">
               <span className="line-through">{activity.oldvalue}</span>
-              {' → '}
+              {" → "}
               <span>{activity.newvalue}</span>
             </div>
           )}
@@ -86,5 +86,5 @@ export function ActivityList({ projectId, objectId }: ActivityListProps) {
         </div>
       ))}
     </div>
-  )
+  );
 }

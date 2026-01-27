@@ -1,0 +1,200 @@
+// Test utilities for React component testing
+import React, { type ReactElement } from "react";
+import { render, type RenderOptions } from "@testing-library/react";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import type {
+  Project,
+  ProjectDetails,
+  ProjectField,
+  FieldOption,
+  ProjectView,
+  ProjectType,
+  ProjectObject,
+} from "@/types";
+
+// Create a wrapper with all providers
+function createTestQueryClient() {
+  return new QueryClient({
+    defaultOptions: {
+      queries: {
+        retry: false,
+        gcTime: 0,
+      },
+      mutations: {
+        retry: false,
+      },
+    },
+  });
+}
+
+interface WrapperProps {
+  children: React.ReactNode;
+}
+
+function AllProviders({ children }: WrapperProps) {
+  const queryClient = createTestQueryClient();
+  return (
+    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+  );
+}
+
+function customRender(
+  ui: ReactElement,
+  options?: Omit<RenderOptions, "wrapper">,
+) {
+  return render(ui, { wrapper: AllProviders, ...options });
+}
+
+// Re-export everything
+export * from "@testing-library/react";
+export { customRender as render };
+
+// ============= Mock Data Factories =============
+
+export function createMockProject(overrides?: Partial<Project>): Project {
+  return {
+    id: "proj-1",
+    fingerprint: "abc123def",
+    name: "Test Project",
+    description: "A test project",
+    prefix: "TEST",
+    counter: 10,
+    owner: 1,
+    server: "local",
+    created: Date.now(),
+    updated: Date.now(),
+    ...overrides,
+  };
+}
+
+export function createMockField(overrides?: Partial<ProjectField>): ProjectField {
+  return {
+    id: "field-1",
+    name: "Test Field",
+    fieldtype: "text",
+    required: 0,
+    multi: 0,
+    sort: 0,
+    card: 0,
+    position: "",
+    ...overrides,
+  };
+}
+
+export function createMockOption(overrides?: Partial<FieldOption>): FieldOption {
+  return {
+    id: "opt-1",
+    name: "Test Option",
+    colour: "#3b82f6",
+    icon: "",
+    sort: 0,
+    ...overrides,
+  };
+}
+
+export function createMockView(overrides?: Partial<ProjectView>): ProjectView {
+  return {
+    id: "view-1",
+    name: "Board",
+    viewtype: "board",
+    filter: "",
+    columns: "",
+    rows: "",
+    cardfields: "",
+    sort: "",
+    direction: "",
+    ...overrides,
+  };
+}
+
+export function createMockType(overrides?: Partial<ProjectType>): ProjectType {
+  return {
+    id: "task",
+    name: "Task",
+    sort: 0,
+    ...overrides,
+  };
+}
+
+export function createMockObject(
+  overrides?: Partial<ProjectObject>,
+): ProjectObject {
+  return {
+    id: "obj-1",
+    project: "proj-1",
+    type: "task",
+    number: 1,
+    parent: "",
+    created: Date.now(),
+    updated: Date.now(),
+    readable: "TEST-1",
+    values: {
+      title: "Test Task",
+      status: "todo",
+      priority: "medium",
+    },
+    ...overrides,
+  };
+}
+
+export function createMockProjectDetails(
+  overrides?: Partial<ProjectDetails>,
+): ProjectDetails {
+  const statusOptions: FieldOption[] = [
+    createMockOption({ id: "todo", name: "To Do", colour: "#6b7280" }),
+    createMockOption({ id: "in_progress", name: "In Progress", colour: "#f59e0b" }),
+    createMockOption({ id: "done", name: "Done", colour: "#22c55e" }),
+  ];
+
+  const priorityOptions: FieldOption[] = [
+    createMockOption({ id: "high", name: "High", colour: "#ef4444" }),
+    createMockOption({ id: "medium", name: "Medium", colour: "#f59e0b" }),
+    createMockOption({ id: "low", name: "Low", colour: "#22c55e" }),
+  ];
+
+  return {
+    project: createMockProject(),
+    types: [createMockType()],
+    fields: {
+      task: [
+        createMockField({ id: "title", name: "Title", fieldtype: "text" }),
+        createMockField({ id: "status", name: "Status", fieldtype: "select" }),
+        createMockField({ id: "priority", name: "Priority", fieldtype: "select" }),
+        createMockField({
+          id: "description",
+          name: "Description",
+          fieldtype: "textarea",
+        }),
+      ],
+    },
+    options: {
+      task: {
+        status: statusOptions,
+        priority: priorityOptions,
+      },
+    },
+    views: [
+      createMockView({ id: "board", name: "Board", viewtype: "board" }),
+      createMockView({ id: "list", name: "List", viewtype: "list" }),
+    ],
+    hierarchy: {},
+    ...overrides,
+  };
+}
+
+// ============= Test Helpers =============
+
+export function createMockObjects(count: number): ProjectObject[] {
+  return Array.from({ length: count }, (_, i) =>
+    createMockObject({
+      id: `obj-${i + 1}`,
+      number: i + 1,
+      readable: `TEST-${i + 1}`,
+      values: {
+        title: `Task ${i + 1}`,
+        status: ["todo", "in_progress", "done"][i % 3],
+        priority: ["high", "medium", "low"][i % 3],
+      },
+    }),
+  );
+}

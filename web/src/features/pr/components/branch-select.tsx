@@ -1,43 +1,43 @@
 // Mochi Projects: Branch select component
 // Copyright Alistair Cunningham 2026
 
-import { useQuery } from '@tanstack/react-query'
+import { useQuery } from "@tanstack/react-query";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@mochi/common'
-import { GitBranch } from 'lucide-react'
-import projectsApi from '@/api/projects'
+} from "@mochi/common";
+import { GitBranch } from "lucide-react";
+import projectsApi from "@/api/projects";
 
 interface BranchSelectProps {
-  repoId: string
-  value: string
-  onChange: (value: string) => void
-  placeholder?: string
-  disabled?: boolean
+  repoId: string;
+  value: string;
+  onChange: (value: string) => void;
+  placeholder?: string;
+  disabled?: boolean;
 }
 
 export function BranchSelect({
   repoId,
   value,
   onChange,
-  placeholder = 'Select branch',
+  placeholder = "Select branch",
   disabled,
 }: BranchSelectProps) {
   const { data, isLoading } = useQuery({
-    queryKey: ['branches', repoId],
+    queryKey: ["branches", repoId],
     queryFn: async () => {
-      if (!repoId) return []
-      const response = await projectsApi.getRepositoryBranches(repoId)
-      return response.data.branches
+      if (!repoId) return [];
+      const response = await projectsApi.getRepositoryBranches(repoId);
+      return response.data.branches;
     },
     enabled: !!repoId,
-  })
+  });
 
-  const branches = data || []
+  const branches = data || [];
 
   return (
     <Select
@@ -69,5 +69,5 @@ export function BranchSelect({
         )}
       </SelectContent>
     </Select>
-  )
+  );
 }

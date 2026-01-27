@@ -1,18 +1,18 @@
 // Mochi Projects: Field list component for design editor
 // Copyright Alistair Cunningham 2026
 
-import { useState } from 'react'
-import { Plus, GripVertical, Trash2 } from 'lucide-react'
-import { Button, cn, ConfirmDialog } from '@mochi/common'
-import type { ProjectField } from '@/types'
+import { useState } from "react";
+import { Plus, GripVertical, Trash2 } from "lucide-react";
+import { Button, cn, ConfirmDialog } from "@mochi/common";
+import type { ProjectField } from "@/types";
 
 interface FieldListProps {
-  fields: ProjectField[]
-  selectedFieldId: string | null
-  onSelectField: (fieldId: string) => void
-  onAddField: () => void
-  onDeleteField: (fieldId: string) => void
-  onReorder: (order: string[]) => void
+  fields: ProjectField[];
+  selectedFieldId: string | null;
+  onSelectField: (fieldId: string) => void;
+  onAddField: () => void;
+  onDeleteField: (fieldId: string) => void;
+  onReorder: (order: string[]) => void;
 }
 
 export function FieldList({
@@ -23,50 +23,50 @@ export function FieldList({
   onDeleteField,
   onReorder,
 }: FieldListProps) {
-  const [draggedId, setDraggedId] = useState<string | null>(null)
-  const [dragOverId, setDragOverId] = useState<string | null>(null)
-  const [deleteFieldId, setDeleteFieldId] = useState<string | null>(null)
-  const deleteField = fields.find((f) => f.id === deleteFieldId)
+  const [draggedId, setDraggedId] = useState<string | null>(null);
+  const [dragOverId, setDragOverId] = useState<string | null>(null);
+  const [deleteFieldId, setDeleteFieldId] = useState<string | null>(null);
+  const deleteField = fields.find((f) => f.id === deleteFieldId);
 
   const handleDragStart = (e: React.DragEvent, fieldId: string) => {
-    setDraggedId(fieldId)
-    e.dataTransfer.effectAllowed = 'move'
-  }
+    setDraggedId(fieldId);
+    e.dataTransfer.effectAllowed = "move";
+  };
 
   const handleDragOver = (e: React.DragEvent, fieldId: string) => {
-    e.preventDefault()
+    e.preventDefault();
     if (draggedId && draggedId !== fieldId) {
-      setDragOverId(fieldId)
+      setDragOverId(fieldId);
     }
-  }
+  };
 
   const handleDragEnd = () => {
     if (draggedId && dragOverId && draggedId !== dragOverId) {
-      const newOrder = [...fields.map((f) => f.id)]
-      const draggedIndex = newOrder.indexOf(draggedId)
-      const targetIndex = newOrder.indexOf(dragOverId)
+      const newOrder = [...fields.map((f) => f.id)];
+      const draggedIndex = newOrder.indexOf(draggedId);
+      const targetIndex = newOrder.indexOf(dragOverId);
 
-      newOrder.splice(draggedIndex, 1)
-      newOrder.splice(targetIndex, 0, draggedId)
+      newOrder.splice(draggedIndex, 1);
+      newOrder.splice(targetIndex, 0, draggedId);
 
-      onReorder(newOrder)
+      onReorder(newOrder);
     }
-    setDraggedId(null)
-    setDragOverId(null)
-  }
+    setDraggedId(null);
+    setDragOverId(null);
+  };
 
   const getFieldTypeLabel = (fieldtype: string) => {
     const labels: Record<string, string> = {
-      text: 'Text',
-      number: 'Number',
-      date: 'Date',
-      enum: 'Select',
-      user: 'User',
-      object: 'Object',
-      checkbox: 'Checkbox',
-    }
-    return labels[fieldtype] || fieldtype
-  }
+      text: "Text",
+      number: "Number",
+      date: "Date",
+      enum: "Select",
+      user: "User",
+      object: "Object",
+      checkbox: "Checkbox",
+    };
+    return labels[fieldtype] || fieldtype;
+  };
 
   return (
     <div className="space-y-2">
@@ -85,11 +85,11 @@ export function FieldList({
             onDragOver={(e) => handleDragOver(e, field.id)}
             onDragEnd={handleDragEnd}
             className={cn(
-              'flex items-center gap-2 px-2 py-1.5 rounded text-sm cursor-pointer',
+              "flex items-center gap-2 px-2 py-1.5 rounded text-sm cursor-pointer",
               selectedFieldId === field.id
-                ? 'bg-primary text-primary-foreground'
-                : 'hover:bg-muted',
-              dragOverId === field.id && 'border-t-2 border-primary'
+                ? "bg-primary text-primary-foreground"
+                : "hover:bg-muted",
+              dragOverId === field.id && "border-t-2 border-primary",
             )}
             onClick={() => onSelectField(field.id)}
           >
@@ -97,10 +97,10 @@ export function FieldList({
             <span className="flex-1">{field.name}</span>
             <span
               className={cn(
-                'text-xs px-1.5 py-0.5 rounded',
+                "text-xs px-1.5 py-0.5 rounded",
                 selectedFieldId === field.id
-                  ? 'bg-primary-foreground/20'
-                  : 'bg-muted'
+                  ? "bg-primary-foreground/20"
+                  : "bg-muted",
               )}
             >
               {getFieldTypeLabel(field.fieldtype)}
@@ -112,14 +112,14 @@ export function FieldList({
               variant="ghost"
               size="sm"
               className={cn(
-                'size-6 p-0',
+                "size-6 p-0",
                 selectedFieldId === field.id
-                  ? 'hover:bg-primary-foreground/20'
-                  : 'hover:bg-destructive/20'
+                  ? "hover:bg-primary-foreground/20"
+                  : "hover:bg-destructive/20",
               )}
               onClick={(e) => {
-                e.stopPropagation()
-                setDeleteFieldId(field.id)
+                e.stopPropagation();
+                setDeleteFieldId(field.id);
               }}
             >
               <Trash2 className="size-3" />
@@ -127,7 +127,9 @@ export function FieldList({
           </div>
         ))}
         {fields.length === 0 && (
-          <p className="text-sm text-muted-foreground px-2">No fields defined</p>
+          <p className="text-sm text-muted-foreground px-2">
+            No fields defined
+          </p>
         )}
       </div>
 
@@ -140,11 +142,11 @@ export function FieldList({
         destructive
         handleConfirm={() => {
           if (deleteFieldId) {
-            onDeleteField(deleteFieldId)
-            setDeleteFieldId(null)
+            onDeleteField(deleteFieldId);
+            setDeleteFieldId(null);
           }
         }}
       />
     </div>
-  )
+  );
 }

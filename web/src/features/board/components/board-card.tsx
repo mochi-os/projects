@@ -1,15 +1,15 @@
 // Mochi Projects: Board card component
 // Copyright Alistair Cunningham 2026
 
-import { cn } from '@mochi/common'
-import type { ProjectObject, ProjectField, FieldOption } from '@/types'
+import { cn } from "@mochi/common";
+import type { ProjectObject, ProjectField, FieldOption } from "@/types";
 
 interface BoardCardProps {
-  object: ProjectObject
-  fields: ProjectField[]
-  options: Record<string, FieldOption[]>
-  prefix: string
-  onClick?: () => void
+  object: ProjectObject;
+  fields: ProjectField[];
+  options: Record<string, FieldOption[]>;
+  prefix: string;
+  onClick?: () => void;
 }
 
 export function BoardCard({
@@ -19,21 +19,21 @@ export function BoardCard({
   prefix,
   onClick,
 }: BoardCardProps) {
-  const title = object.values.title || `${prefix}-${object.number}`
-  const cardFields = fields.filter((f) => f.card === 1)
+  const title = object.values.title || `${prefix}-${object.number}`;
+  const cardFields = fields.filter((f) => f.card === 1);
 
   return (
     <div
       className={cn(
-        'bg-card border rounded-lg p-3 cursor-pointer',
-        'hover:border-primary/50 hover:shadow-sm transition-all',
-        'active:scale-[0.98]'
+        "bg-card border rounded-lg p-3 cursor-pointer",
+        "hover:border-primary/50 hover:shadow-sm transition-all",
+        "active:scale-[0.98]",
       )}
       onClick={onClick}
       draggable
       onDragStart={(e) => {
-        e.dataTransfer.setData('text/plain', object.id)
-        e.dataTransfer.effectAllowed = 'move'
+        e.dataTransfer.setData("text/plain", object.id);
+        e.dataTransfer.effectAllowed = "move";
       }}
     >
       <div className="text-xs text-muted-foreground mb-1">
@@ -44,13 +44,13 @@ export function BoardCard({
       {cardFields.length > 0 && (
         <div className="flex flex-wrap gap-1.5 mt-2">
           {cardFields.map((field) => {
-            const value = object.values[field.id]
-            if (!value) return null
+            const value = object.values[field.id];
+            if (!value) return null;
 
-            const fieldOptions = options[field.id] || []
-            const option = fieldOptions.find((o) => o.id === value)
+            const fieldOptions = options[field.id] || [];
+            const option = fieldOptions.find((o) => o.id === value);
 
-            if (field.fieldtype === 'enum' && option) {
+            if (field.fieldtype === "enum" && option) {
               return (
                 <span
                   key={field.id}
@@ -64,20 +64,17 @@ export function BoardCard({
                 >
                   {option.name}
                 </span>
-              )
+              );
             }
 
             return (
-              <span
-                key={field.id}
-                className="text-xs text-muted-foreground"
-              >
+              <span key={field.id} className="text-xs text-muted-foreground">
                 {value}
               </span>
-            )
+            );
           })}
         </div>
       )}
     </div>
-  )
+  );
 }

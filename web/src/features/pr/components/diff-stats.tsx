@@ -1,29 +1,29 @@
 // Mochi Projects: Diff stats component
 // Copyright Alistair Cunningham 2026
 
-import { useQuery } from '@tanstack/react-query'
-import { FileCode2, Plus, Minus, Loader2 } from 'lucide-react'
-import { cn } from '@mochi/common'
-import projectsApi from '@/api/projects'
+import { useQuery } from "@tanstack/react-query";
+import { FileCode2, Plus, Minus, Loader2 } from "lucide-react";
+import { cn } from "@mochi/common";
+import projectsApi from "@/api/projects";
 
 interface DiffStatsProps {
-  repoId: string
-  base: string
-  head: string
+  repoId: string;
+  base: string;
+  head: string;
 }
 
 export function DiffStats({ repoId, base, head }: DiffStatsProps) {
   const { data, isLoading } = useQuery({
-    queryKey: ['diff', repoId, base, head],
+    queryKey: ["diff", repoId, base, head],
     queryFn: async () => {
-      const response = await projectsApi.getDiff(repoId, base, head)
-      return response.data
+      const response = await projectsApi.getDiff(repoId, base, head);
+      return response.data;
     },
     enabled: !!repoId && !!base && !!head,
-  })
+  });
 
   if (!repoId || !base || !head) {
-    return null
+    return null;
   }
 
   if (isLoading) {
@@ -32,13 +32,13 @@ export function DiffStats({ repoId, base, head }: DiffStatsProps) {
         <Loader2 className="size-4 animate-spin" />
         Loading diff...
       </div>
-    )
+    );
   }
 
   if (!data || data.files.length === 0) {
     return (
       <div className="text-sm text-muted-foreground">No changes detected</div>
-    )
+    );
   }
 
   return (
@@ -80,23 +80,23 @@ export function DiffStats({ repoId, base, head }: DiffStatsProps) {
         ))}
       </div>
     </div>
-  )
+  );
 }
 
 function StatusIcon({ status }: { status: string }) {
   const colors: Record<string, string> = {
-    added: 'bg-green-500',
-    modified: 'bg-amber-500',
-    deleted: 'bg-red-500',
-    renamed: 'bg-blue-500',
-  }
+    added: "bg-green-500",
+    modified: "bg-amber-500",
+    deleted: "bg-red-500",
+    renamed: "bg-blue-500",
+  };
 
   return (
     <span
       className={cn(
-        'size-2 rounded-full shrink-0',
-        colors[status] || 'bg-muted-foreground'
+        "size-2 rounded-full shrink-0",
+        colors[status] || "bg-muted-foreground",
       )}
     />
-  )
+  );
 }

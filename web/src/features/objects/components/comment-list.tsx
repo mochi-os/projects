@@ -1,109 +1,107 @@
 // Mochi Projects: Comment list component
 // Copyright Alistair Cunningham 2026
 
-import { useState } from 'react'
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
-import { Loader2, Send, Trash2, Pencil } from 'lucide-react'
-import { Button, Textarea, ConfirmDialog } from '@mochi/common'
-import projectsApi from '@/api/projects'
-import type { Comment } from '@/types'
+import { useState } from "react";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { Loader2, Send, Trash2, Pencil } from "lucide-react";
+import { Button, Textarea, ConfirmDialog } from "@mochi/common";
+import projectsApi from "@/api/projects";
+import type { Comment } from "@/types";
 
 interface CommentListProps {
-  projectId: string
-  objectId: string
+  projectId: string;
+  objectId: string;
 }
 
 export function CommentList({ projectId, objectId }: CommentListProps) {
-  const [newComment, setNewComment] = useState('')
-  const [editingId, setEditingId] = useState<string | null>(null)
-  const [editContent, setEditContent] = useState('')
-  const [deleteCommentId, setDeleteCommentId] = useState<string | null>(null)
-  const queryClient = useQueryClient()
+  const [newComment, setNewComment] = useState("");
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [editContent, setEditContent] = useState("");
+  const [deleteCommentId, setDeleteCommentId] = useState<string | null>(null);
+  const queryClient = useQueryClient();
 
   const { data, isLoading } = useQuery({
-    queryKey: ['comments', projectId, objectId],
+    queryKey: ["comments", projectId, objectId],
     queryFn: async () => {
-      const response = await projectsApi.listComments(projectId, objectId)
-      return response.data.comments
+      const response = await projectsApi.listComments(projectId, objectId);
+      return response.data.comments;
     },
-  })
+  });
 
   const createMutation = useMutation({
     mutationFn: async (content: string) => {
-      return projectsApi.createComment(projectId, objectId, content)
+      return projectsApi.createComment(projectId, objectId, content);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ['comments', projectId, objectId],
-      })
-      setNewComment('')
+        queryKey: ["comments", projectId, objectId],
+      });
+      setNewComment("");
     },
-  })
+  });
 
   const updateMutation = useMutation({
     mutationFn: async ({
       commentId,
       content,
     }: {
-      commentId: string
-      content: string
+      commentId: string;
+      content: string;
     }) => {
-      return projectsApi.updateComment(
-        projectId,
-        objectId,
-        commentId,
-        content
-      )
+      return projectsApi.updateComment(projectId, objectId, commentId, content);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ['comments', projectId, objectId],
-      })
-      setEditingId(null)
+        queryKey: ["comments", projectId, objectId],
+      });
+      setEditingId(null);
     },
-  })
+  });
 
   const deleteMutation = useMutation({
     mutationFn: async (commentId: string) => {
-      return projectsApi.deleteComment(projectId, objectId, commentId)
+      return projectsApi.deleteComment(projectId, objectId, commentId);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ['comments', projectId, objectId],
-      })
+        queryKey: ["comments", projectId, objectId],
+      });
     },
-  })
+  });
 
   const handleSubmit = () => {
     if (newComment.trim()) {
-      createMutation.mutate(newComment.trim())
+      createMutation.mutate(newComment.trim());
     }
-  }
+  };
 
   const handleEdit = (comment: Comment) => {
-    setEditingId(comment.id)
-    setEditContent(comment.content)
-  }
+    setEditingId(comment.id);
+    setEditContent(comment.content);
+  };
 
   const handleSaveEdit = () => {
     if (editingId && editContent.trim()) {
-      updateMutation.mutate({ commentId: editingId, content: editContent.trim() })
+      updateMutation.mutate({
+        commentId: editingId,
+        content: editContent.trim(),
+      });
     }
-  }
+  };
 
   const formatDate = (timestamp: number) => {
-    return new Date(timestamp * 1000).toLocaleString()
-  }
+    return new Date(timestamp * 1000).toLocaleString();
+  };
 
   if (isLoading) {
     return (
       <div className="flex justify-center py-4">
         <Loader2 className="size-5 animate-spin text-muted-foreground" />
       </div>
-    )
+    );
   }
 
-  const comments = data || []
+  const comments = data || [];
 
   return (
     <div className="space-y-4">
@@ -122,7 +120,7 @@ export function CommentList({ projectId, objectId }: CommentListProps) {
             disabled={!newComment.trim() || createMutation.isPending}
           >
             <Send className="size-4 mr-1" />
-            {createMutation.isPending ? 'Posting...' : 'Post'}
+            {createMutation.isPending ? "Posting..." : "Post"}
           </Button>
         </div>
       </div>
@@ -190,7 +188,7 @@ export function CommentList({ projectId, objectId }: CommentListProps) {
                   </div>
                   <div className="text-xs text-muted-foreground mt-2">
                     {formatDate(comment.created)}
-                    {comment.edited > 0 && ' (edited)'}
+                    {comment.edited > 0 && " (edited)"}
                   </div>
                 </>
               )}
@@ -208,11 +206,11 @@ export function CommentList({ projectId, objectId }: CommentListProps) {
         destructive
         handleConfirm={() => {
           if (deleteCommentId) {
-            deleteMutation.mutate(deleteCommentId)
-            setDeleteCommentId(null)
+            deleteMutation.mutate(deleteCommentId);
+            setDeleteCommentId(null);
           }
         }}
       />
     </div>
-  )
+  );
 }

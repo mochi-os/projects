@@ -1,14 +1,14 @@
 // Mochi Projects: Hierarchy editor component
 // Copyright Alistair Cunningham 2026
 
-import { Label, Checkbox } from '@mochi/common'
-import type { ProjectType } from '@/types'
+import { Label, Checkbox } from "@mochi/common";
+import type { ProjectType } from "@/types";
 
 interface HierarchyEditorProps {
-  types: ProjectType[]
-  currentTypeId: string
-  allowedParents: string[]
-  onUpdate: (parents: string[]) => void
+  types: ProjectType[];
+  currentTypeId: string;
+  allowedParents: string[];
+  onUpdate: (parents: string[]) => void;
 }
 
 export function HierarchyEditor({
@@ -19,14 +19,14 @@ export function HierarchyEditor({
 }: HierarchyEditorProps) {
   const handleToggle = (parentId: string, checked: boolean) => {
     if (checked) {
-      onUpdate([...allowedParents, parentId])
+      onUpdate([...allowedParents, parentId]);
     } else {
-      onUpdate(allowedParents.filter((p) => p !== parentId))
+      onUpdate(allowedParents.filter((p) => p !== parentId));
     }
-  }
+  };
 
   // Filter out current type from potential parents
-  const otherTypes = types.filter((t) => t.id !== currentTypeId)
+  const otherTypes = types.filter((t) => t.id !== currentTypeId);
 
   return (
     <div className="space-y-4 p-4 border rounded-lg">
@@ -42,8 +42,8 @@ export function HierarchyEditor({
         <div className="flex items-center gap-2">
           <Checkbox
             id="parent-root"
-            checked={allowedParents.includes('')}
-            onCheckedChange={(checked) => handleToggle('', checked === true)}
+            checked={allowedParents.includes("")}
+            onCheckedChange={(checked) => handleToggle("", checked === true)}
           />
           <Label htmlFor="parent-root" className="font-normal cursor-pointer">
             Can be root (no parent)
@@ -56,7 +56,9 @@ export function HierarchyEditor({
             <Checkbox
               id={`parent-${type.id}`}
               checked={allowedParents.includes(type.id)}
-              onCheckedChange={(checked) => handleToggle(type.id, checked === true)}
+              onCheckedChange={(checked) =>
+                handleToggle(type.id, checked === true)
+              }
             />
             <Label
               htmlFor={`parent-${type.id}`}
@@ -74,5 +76,5 @@ export function HierarchyEditor({
         </p>
       )}
     </div>
-  )
+  );
 }

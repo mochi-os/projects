@@ -1,29 +1,29 @@
 // Mochi Projects: Merge status component
 // Copyright Alistair Cunningham 2026
 
-import { useQuery } from '@tanstack/react-query'
-import { CheckCircle2, XCircle, AlertCircle, Loader2 } from 'lucide-react'
-import { cn } from '@mochi/common'
-import projectsApi from '@/api/projects'
+import { useQuery } from "@tanstack/react-query";
+import { CheckCircle2, XCircle, AlertCircle, Loader2 } from "lucide-react";
+import { cn } from "@mochi/common";
+import projectsApi from "@/api/projects";
 
 interface MergeStatusProps {
-  repoId: string
-  source: string
-  target: string
+  repoId: string;
+  source: string;
+  target: string;
 }
 
 export function MergeStatus({ repoId, source, target }: MergeStatusProps) {
   const { data, isLoading, error } = useQuery({
-    queryKey: ['merge-check', repoId, source, target],
+    queryKey: ["merge-check", repoId, source, target],
     queryFn: async () => {
-      const response = await projectsApi.checkMerge(repoId, source, target)
-      return response.data
+      const response = await projectsApi.checkMerge(repoId, source, target);
+      return response.data;
     },
     enabled: !!repoId && !!source && !!target,
-  })
+  });
 
   if (!repoId || !source || !target) {
-    return null
+    return null;
   }
 
   if (isLoading) {
@@ -32,7 +32,7 @@ export function MergeStatus({ repoId, source, target }: MergeStatusProps) {
         <Loader2 className="size-4 animate-spin" />
         Checking merge status...
       </div>
-    )
+    );
   }
 
   if (error) {
@@ -41,19 +41,19 @@ export function MergeStatus({ repoId, source, target }: MergeStatusProps) {
         <AlertCircle className="size-4" />
         Failed to check merge status
       </div>
-    )
+    );
   }
 
   if (!data) {
-    return null
+    return null;
   }
 
   return (
     <div className="space-y-3">
       <div
         className={cn(
-          'flex items-center gap-2 text-sm font-medium',
-          data.can_merge ? 'text-green-600' : 'text-destructive'
+          "flex items-center gap-2 text-sm font-medium",
+          data.can_merge ? "text-green-600" : "text-destructive",
         )}
       >
         {data.can_merge ? (
@@ -95,5 +95,5 @@ export function MergeStatus({ repoId, source, target }: MergeStatusProps) {
         </div>
       )}
     </div>
-  )
+  );
 }

@@ -1,85 +1,90 @@
 // Mochi Projects: Project page with board and list views
 // Copyright Alistair Cunningham 2026
 
-import { useState, useMemo, useRef, useCallback } from 'react'
-import { createFileRoute, Link } from '@tanstack/react-router'
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
-import { GeneralError, Main, PageHeader, usePageTitle } from '@mochi/common'
-import { FolderKanban, Plus, Settings2 } from 'lucide-react'
-import { Button } from '@mochi/common'
-import projectsApi from '@/api/projects'
-import type { ProjectDetails, ProjectObject, ObjectTemplate } from '@/types'
-import { BoardContainer } from '@/features/board/components'
-import { ListView, type SortState } from '@/features/list'
-import { ViewTabs, FilterBar, type FilterState } from '@/features/views'
+import { useState, useMemo, useRef, useCallback } from "react";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import {
+  GeneralError,
+  Main,
+  PageHeader,
+  usePageTitle,
+  Button,
+} from "@mochi/common";
+import { FolderKanban, Plus, Settings2 } from "lucide-react";
+import projectsApi from "@/api/projects";
+import type { ProjectDetails, ProjectObject, ObjectTemplate } from "@/types";
+import { BoardContainer } from "@/features/board/components";
+import { ListView, type SortState } from "@/features/list";
+import { ViewTabs, FilterBar, type FilterState } from "@/features/views";
 import {
   CreateObjectDialog,
   ObjectDetailPanel,
-} from '@/features/objects/components'
-import { useKeyboardShortcuts } from '@/hooks/use-keyboard-shortcuts'
-import { KeyboardShortcutsHelp } from '@/components/keyboard-shortcuts-help'
+} from "@/features/objects/components";
+import { useKeyboardShortcuts } from "@/hooks/use-keyboard-shortcuts";
+import { KeyboardShortcutsHelp } from "@/components/keyboard-shortcuts-help";
 
-export const Route = createFileRoute('/_authenticated/$projectId/')({
+export const Route = createFileRoute("/_authenticated/$projectId/")({
   loader: async ({ params }) => {
     const [projectResponse, templatesResponse] = await Promise.all([
       projectsApi.get(params.projectId),
       projectsApi.objectTemplates(),
-    ])
+    ]);
     return {
       project: projectResponse.data,
       templates: templatesResponse.data.templates,
-    }
+    };
   },
   component: ProjectPage,
   errorComponent: ({ error }) => <GeneralError error={error} />,
-})
+});
 
 function ProjectPage() {
   const { project, templates } = Route.useLoaderData() as {
-    project: ProjectDetails
-    templates: ObjectTemplate[]
-  }
-  const params = Route.useParams()
+    project: ProjectDetails;
+    templates: ObjectTemplate[];
+  };
+  const params = Route.useParams();
 
-  usePageTitle(project.project.name)
+  usePageTitle(project.project.name);
 
-  const [selectedObjectId, setSelectedObjectId] = useState<string | null>(null)
-  const [createDialogOpen, setCreateDialogOpen] = useState(false)
+  const [selectedObjectId, setSelectedObjectId] = useState<string | null>(null);
+  const [createDialogOpen, setCreateDialogOpen] = useState(false);
   const [createDefaultStatus, setCreateDefaultStatus] = useState<
     string | undefined
-  >()
-  const [showShortcutsHelp, setShowShortcutsHelp] = useState(false)
-  const [selectedCardIndex, setSelectedCardIndex] = useState(-1)
-  const searchInputRef = useRef<HTMLInputElement>(null)
+  >();
+  const [showShortcutsHelp, setShowShortcutsHelp] = useState(false);
+  const [selectedCardIndex, setSelectedCardIndex] = useState(-1);
+  const searchInputRef = useRef<HTMLInputElement>(null);
 
   // View state
   const [activeViewId, setActiveViewId] = useState(
-    project.views[0]?.id || 'board'
-  )
-  const activeView = project.views.find((v) => v.id === activeViewId) ||
-    project.views[0]
+    project.views[0]?.id || "board",
+  );
+  const activeView =
+    project.views.find((v) => v.id === activeViewId) || project.views[0];
 
   // Filter state
   const [filters, setFilters] = useState<FilterState>({
-    search: '',
-    status: '',
-    priority: '',
-    assignee: '',
-  })
+    search: "",
+    status: "",
+    priority: "",
+    assignee: "",
+  });
 
   // Sort state for list view
-  const [sort, setSort] = useState<SortState | null>(null)
+  const [sort, setSort] = useState<SortState | null>(null);
 
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClient();
 
   // Load objects
   const { data: objectsData } = useQuery({
-    queryKey: ['objects', params.projectId],
+    queryKey: ["objects", params.projectId],
     queryFn: async () => {
-      const response = await projectsApi.listObjects(params.projectId)
-      return response.data.objects
+      const response = await projectsApi.listObjects(params.projectId);
+      return response.data.objects;
     },
-  })
+  });
 
   // Move object mutation
   const moveMutation = useMutation({
@@ -87,115 +92,115 @@ function ProjectPage() {
       objectId,
       status,
     }: {
-      objectId: string
-      status: string
+      objectId: string;
+      status: string;
     }) => {
-      return projectsApi.moveObject(params.projectId, objectId, { status })
+      return projectsApi.moveObject(params.projectId, objectId, { status });
     },
     onMutate: async ({ objectId, status }) => {
       // Optimistically update the UI
       await queryClient.cancelQueries({
-        queryKey: ['objects', params.projectId],
-      })
+        queryKey: ["objects", params.projectId],
+      });
 
       const previousObjects = queryClient.getQueryData<ProjectObject[]>([
-        'objects',
+        "objects",
         params.projectId,
-      ])
+      ]);
 
       queryClient.setQueryData<ProjectObject[]>(
-        ['objects', params.projectId],
+        ["objects", params.projectId],
         (old) =>
           old?.map((obj) =>
             obj.id === objectId
               ? { ...obj, values: { ...obj.values, status } }
-              : obj
-          )
-      )
+              : obj,
+          ),
+      );
 
-      return { previousObjects }
+      return { previousObjects };
     },
     onError: (_err, _variables, context) => {
       // Rollback on error
       if (context?.previousObjects) {
         queryClient.setQueryData(
-          ['objects', params.projectId],
-          context.previousObjects
-        )
+          ["objects", params.projectId],
+          context.previousObjects,
+        );
       }
     },
     onSettled: () => {
       queryClient.invalidateQueries({
-        queryKey: ['objects', params.projectId],
-      })
+        queryKey: ["objects", params.projectId],
+      });
     },
-  })
+  });
 
   // Filter objects
   const filteredObjects = useMemo(() => {
-    let result = objectsData || []
+    let result = objectsData || [];
 
     // Apply search filter
     if (filters.search) {
-      const searchLower = filters.search.toLowerCase()
+      const searchLower = filters.search.toLowerCase();
       result = result.filter((obj) => {
-        const title = obj.values.title?.toLowerCase() || ''
-        const description = obj.values.description?.toLowerCase() || ''
-        return title.includes(searchLower) || description.includes(searchLower)
-      })
+        const title = obj.values.title?.toLowerCase() || "";
+        const description = obj.values.description?.toLowerCase() || "";
+        return title.includes(searchLower) || description.includes(searchLower);
+      });
     }
 
     // Apply status filter
     if (filters.status) {
-      result = result.filter((obj) => obj.values.status === filters.status)
+      result = result.filter((obj) => obj.values.status === filters.status);
     }
 
     // Apply priority filter
     if (filters.priority) {
-      result = result.filter((obj) => obj.values.priority === filters.priority)
+      result = result.filter((obj) => obj.values.priority === filters.priority);
     }
 
     // Apply assignee filter
     if (filters.assignee) {
-      result = result.filter((obj) => obj.values.assignee === filters.assignee)
+      result = result.filter((obj) => obj.values.assignee === filters.assignee);
     }
 
-    return result
-  }, [objectsData, filters])
+    return result;
+  }, [objectsData, filters]);
 
   // Keyboard navigation helpers
   const handleSelectNext = useCallback(() => {
-    if (filteredObjects.length === 0) return
+    if (filteredObjects.length === 0) return;
     setSelectedCardIndex((prev) => {
-      const next = prev + 1
-      if (next >= filteredObjects.length) return 0
-      return next
-    })
-  }, [filteredObjects.length])
+      const next = prev + 1;
+      if (next >= filteredObjects.length) return 0;
+      return next;
+    });
+  }, [filteredObjects.length]);
 
   const handleSelectPrevious = useCallback(() => {
-    if (filteredObjects.length === 0) return
+    if (filteredObjects.length === 0) return;
     setSelectedCardIndex((prev) => {
-      if (prev <= 0) return filteredObjects.length - 1
-      return prev - 1
-    })
-  }, [filteredObjects.length])
+      if (prev <= 0) return filteredObjects.length - 1;
+      return prev - 1;
+    });
+  }, [filteredObjects.length]);
 
   const handleOpenSelected = useCallback(() => {
     if (selectedCardIndex >= 0 && selectedCardIndex < filteredObjects.length) {
-      setSelectedObjectId(filteredObjects[selectedCardIndex].id)
+      setSelectedObjectId(filteredObjects[selectedCardIndex].id);
     }
-  }, [selectedCardIndex, filteredObjects])
+  }, [selectedCardIndex, filteredObjects]);
 
   const handleSwitchView = useCallback(
     (index: number) => {
       if (index < project.views.length) {
-        setActiveViewId(project.views[index].id)
-        setSort(null)
+        setActiveViewId(project.views[index].id);
+        setSort(null);
       }
     },
-    [project.views]
-  )
+    [project.views],
+  );
 
   // Keyboard shortcuts
   useKeyboardShortcuts({
@@ -208,37 +213,37 @@ function ProjectPage() {
     onEditSelected: handleOpenSelected,
     onClose: () => {
       if (selectedObjectId) {
-        setSelectedObjectId(null)
+        setSelectedObjectId(null);
       } else {
-        setSelectedCardIndex(-1)
+        setSelectedCardIndex(-1);
       }
     },
     onShowHelp: () => setShowShortcutsHelp(true),
     enabled: !createDialogOpen,
-  })
+  });
 
   const handleCardClick = (object: ProjectObject) => {
-    setSelectedObjectId(object.id)
-  }
+    setSelectedObjectId(object.id);
+  };
 
   const handleCreateClick = (statusId: string) => {
-    setCreateDefaultStatus(statusId)
-    setCreateDialogOpen(true)
-  }
+    setCreateDefaultStatus(statusId);
+    setCreateDialogOpen(true);
+  };
 
   const handleMoveObject = (objectId: string, newStatus: string) => {
-    moveMutation.mutate({ objectId, status: newStatus })
-  }
+    moveMutation.mutate({ objectId, status: newStatus });
+  };
 
   const handleObjectCreated = () => {
     // Object created successfully, queries will be invalidated by the mutation
-  }
+  };
 
   const handleViewChange = (viewId: string) => {
-    setActiveViewId(viewId)
+    setActiveViewId(viewId);
     // Reset sort when switching views
-    setSort(null)
-  }
+    setSort(null);
+  };
 
   return (
     <>
@@ -248,7 +253,10 @@ function ProjectPage() {
         actions={
           <div className="flex items-center gap-2">
             <Button variant="outline" size="sm" asChild>
-              <Link to="/$projectId/design" params={{ projectId: params.projectId }}>
+              <Link
+                to="/$projectId/design"
+                params={{ projectId: params.projectId }}
+              >
                 <Settings2 className="size-4 mr-1" />
                 Design
               </Link>
@@ -278,7 +286,7 @@ function ProjectPage() {
 
         {/* Content area */}
         <div className="flex-1 overflow-auto">
-          {activeView?.viewtype === 'list' ? (
+          {activeView?.viewtype === "list" ? (
             <div className="p-4">
               <ListView
                 project={project}
@@ -327,5 +335,5 @@ function ProjectPage() {
         onOpenChange={setShowShortcutsHelp}
       />
     </>
-  )
+  );
 }

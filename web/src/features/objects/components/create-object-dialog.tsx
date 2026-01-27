@@ -1,9 +1,9 @@
 // Mochi Projects: Create object dialog component
 // Copyright Alistair Cunningham 2026
 
-import { useState } from 'react'
-import { useForm } from 'react-hook-form'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   Button,
   Dialog,
@@ -23,23 +23,23 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@mochi/common'
-import projectsApi from '@/api/projects'
-import type { ProjectDetails, ObjectTemplate } from '@/types'
+} from "@mochi/common";
+import projectsApi from "@/api/projects";
+import type { ProjectDetails, ObjectTemplate } from "@/types";
 
 interface CreateObjectDialogProps {
-  open: boolean
-  onOpenChange: (open: boolean) => void
-  project: ProjectDetails
-  templates: ObjectTemplate[]
-  defaultStatus?: string
-  onCreated?: (id: string, number: number, readable: string) => void
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  project: ProjectDetails;
+  templates: ObjectTemplate[];
+  defaultStatus?: string;
+  onCreated?: (id: string, number: number, readable: string) => void;
 }
 
 interface FormValues {
-  title: string
-  type: string
-  template: string
+  title: string;
+  type: string;
+  template: string;
 }
 
 export function CreateObjectDialog({
@@ -50,16 +50,16 @@ export function CreateObjectDialog({
   defaultStatus,
   onCreated,
 }: CreateObjectDialogProps) {
-  const [error, setError] = useState<string | null>(null)
-  const queryClient = useQueryClient()
+  const [error, setError] = useState<string | null>(null);
+  const queryClient = useQueryClient();
 
   const form = useForm<FormValues>({
     defaultValues: {
-      title: '',
-      type: project.types[0]?.id || '',
-      template: 'blank',
+      title: "",
+      type: project.types[0]?.id || "",
+      template: "blank",
     },
-  })
+  });
 
   const createMutation = useMutation({
     mutationFn: async (values: FormValues) => {
@@ -67,38 +67,38 @@ export function CreateObjectDialog({
       const response = await projectsApi.createObject(project.project.id, {
         type: values.type,
         title: values.title || undefined,
-        template: values.template !== 'blank' ? values.template : undefined,
-      })
+        template: values.template !== "blank" ? values.template : undefined,
+      });
 
       // If we have a default status, set it
       if (defaultStatus && response.data.id) {
         await projectsApi.setValue(
           project.project.id,
           response.data.id,
-          'status',
-          defaultStatus
-        )
+          "status",
+          defaultStatus,
+        );
       }
 
-      return response.data
+      return response.data;
     },
     onSuccess: (data) => {
       queryClient.invalidateQueries({
-        queryKey: ['objects', project.project.id],
-      })
-      onCreated?.(data.id, data.number, data.readable)
-      form.reset()
-      onOpenChange(false)
+        queryKey: ["objects", project.project.id],
+      });
+      onCreated?.(data.id, data.number, data.readable);
+      form.reset();
+      onOpenChange(false);
     },
     onError: (err: Error) => {
-      setError(err.message)
+      setError(err.message);
     },
-  })
+  });
 
   const handleSubmit = (values: FormValues) => {
-    setError(null)
-    createMutation.mutate(values)
-  }
+    setError(null);
+    createMutation.mutate(values);
+  };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -186,9 +186,7 @@ export function CreateObjectDialog({
               />
             )}
 
-            {error && (
-              <div className="text-sm text-destructive">{error}</div>
-            )}
+            {error && <div className="text-sm text-destructive">{error}</div>}
 
             <DialogFooter>
               <Button
@@ -199,12 +197,12 @@ export function CreateObjectDialog({
                 Cancel
               </Button>
               <Button type="submit" disabled={createMutation.isPending}>
-                {createMutation.isPending ? 'Creating...' : 'Create'}
+                {createMutation.isPending ? "Creating..." : "Create"}
               </Button>
             </DialogFooter>
           </form>
         </Form>
       </DialogContent>
     </Dialog>
-  )
+  );
 }

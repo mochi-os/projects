@@ -1,7 +1,7 @@
 // Mochi Projects: Field editor component
 // Copyright Alistair Cunningham 2026
 
-import { useState } from 'react'
+import { useState } from "react";
 import {
   Input,
   Textarea,
@@ -10,15 +10,15 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@mochi/common'
-import type { ProjectField, FieldOption } from '@/types'
+} from "@mochi/common";
+import type { ProjectField, FieldOption } from "@/types";
 
 interface FieldEditorProps {
-  field: ProjectField
-  value: string
-  options: FieldOption[]
-  onChange: (value: string) => void
-  disabled?: boolean
+  field: ProjectField;
+  value: string;
+  options: FieldOption[];
+  onChange: (value: string) => void;
+  disabled?: boolean;
 }
 
 export function FieldEditor({
@@ -28,23 +28,19 @@ export function FieldEditor({
   onChange,
   disabled,
 }: FieldEditorProps) {
-  const [localValue, setLocalValue] = useState(value)
+  const [localValue, setLocalValue] = useState(value);
 
   const handleBlur = () => {
     if (localValue !== value) {
-      onChange(localValue)
+      onChange(localValue);
     }
-  }
+  };
 
   const renderEditor = () => {
     switch (field.fieldtype) {
-      case 'enum':
+      case "enum":
         return (
-          <Select
-            value={value}
-            onValueChange={onChange}
-            disabled={disabled}
-          >
+          <Select value={value} onValueChange={onChange} disabled={disabled}>
             <SelectTrigger>
               <SelectValue placeholder="Select..." />
             </SelectTrigger>
@@ -64,9 +60,9 @@ export function FieldEditor({
               ))}
             </SelectContent>
           </Select>
-        )
+        );
 
-      case 'text':
+      case "text":
         return (
           <Textarea
             value={localValue}
@@ -75,9 +71,9 @@ export function FieldEditor({
             disabled={disabled}
             rows={3}
           />
-        )
+        );
 
-      case 'number':
+      case "number":
         return (
           <Input
             type="number"
@@ -86,22 +82,22 @@ export function FieldEditor({
             onBlur={handleBlur}
             disabled={disabled}
           />
-        )
+        );
 
-      case 'date':
+      case "date":
         return (
           <Input
             type="date"
             value={localValue}
             onChange={(e) => {
-              setLocalValue(e.target.value)
-              onChange(e.target.value)
+              setLocalValue(e.target.value);
+              onChange(e.target.value);
             }}
             disabled={disabled}
           />
-        )
+        );
 
-      case 'user':
+      case "user":
         // For now, just show a text input
         // TODO: Add user picker
         return (
@@ -112,7 +108,7 @@ export function FieldEditor({
             disabled={disabled}
             placeholder="User ID"
           />
-        )
+        );
 
       default:
         return (
@@ -122,17 +118,19 @@ export function FieldEditor({
             onBlur={handleBlur}
             disabled={disabled}
           />
-        )
+        );
     }
-  }
+  };
 
   return (
     <div className="space-y-1.5">
       <label className="text-sm font-medium text-muted-foreground">
         {field.name}
-        {field.required === 1 && <span className="text-destructive ml-1">*</span>}
+        {field.required === 1 && (
+          <span className="text-destructive ml-1">*</span>
+        )}
       </label>
       {renderEditor()}
     </div>
-  )
+  );
 }

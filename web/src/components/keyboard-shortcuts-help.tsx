@@ -6,25 +6,25 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-} from '@mochi/common'
+} from "@mochi/common";
 
 interface KeyboardShortcutsHelpProps {
-  open: boolean
-  onOpenChange: (open: boolean) => void
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
 }
 
 const shortcuts = [
-  { key: 'c / n', description: 'Create new item' },
-  { key: '/', description: 'Focus search' },
-  { key: '⌘ K', description: 'Focus search (alternative)' },
-  { key: '1-9', description: 'Switch to view 1-9' },
-  { key: 'j / ↓', description: 'Select next card' },
-  { key: 'k / ↑', description: 'Select previous card' },
-  { key: 'Enter', description: 'Open selected card' },
-  { key: 'e', description: 'Edit selected card' },
-  { key: 'Escape', description: 'Close panel / cancel' },
-  { key: '?', description: 'Show this help' },
-]
+  { key: "c / n", description: "Create new item" },
+  { key: "/", description: "Focus search" },
+  { key: "⌘ K", description: "Focus search (alternative)" },
+  { key: "1-9", description: "Switch to view 1-9" },
+  { key: "j / ↓", description: "Select next card" },
+  { key: "k / ↑", description: "Select previous card" },
+  { key: "Enter", description: "Open selected card" },
+  { key: "e", description: "Edit selected card" },
+  { key: "Escape", description: "Close panel / cancel" },
+  { key: "?", description: "Show this help" },
+];
 
 export function KeyboardShortcutsHelp({
   open,
@@ -53,5 +53,5 @@ export function KeyboardShortcutsHelp({
         </div>
       </DialogContent>
     </Dialog>
-  )
+  );
 }

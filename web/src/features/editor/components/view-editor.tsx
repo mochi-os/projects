@@ -1,79 +1,87 @@
 // Mochi Projects: View editor component
 // Copyright Alistair Cunningham 2026
 
-import { useState, useEffect } from 'react'
-import { Input, Label, RadioGroup, RadioGroupItem } from '@mochi/common'
-import type { ProjectView, ProjectField } from '@/types'
+import { useState, useEffect } from "react";
+import { Input, Label, RadioGroup, RadioGroupItem } from "@mochi/common";
+import type { ProjectView, ProjectField } from "@/types";
 
 interface ViewEditorProps {
-  view: ProjectView
-  fields: ProjectField[]
-  onUpdate: (updates: Partial<ProjectView>) => void
+  view: ProjectView;
+  fields: ProjectField[];
+  onUpdate: (updates: Partial<ProjectView>) => void;
 }
 
 export function ViewEditor({ view, fields, onUpdate }: ViewEditorProps) {
-  const [name, setName] = useState(view.name)
-  const [viewtype, setViewtype] = useState(view.viewtype)
-  const [columns, setColumns] = useState(view.columns)
-  const [cardfields, setCardfields] = useState(view.cardfields)
-  const [sort, setSort] = useState(view.sort)
-  const [direction, setDirection] = useState(view.direction)
+  const [name, setName] = useState(view.name);
+  const [viewtype, setViewtype] = useState(view.viewtype);
+  const [columns, setColumns] = useState(view.columns);
+  const [cardfields, setCardfields] = useState(view.cardfields);
+  const [sort, setSort] = useState(view.sort);
+  const [direction, setDirection] = useState(view.direction);
 
   // Reset state when view changes
   useEffect(() => {
-    setName(view.name)
-    setViewtype(view.viewtype)
-    setColumns(view.columns)
-    setCardfields(view.cardfields)
-    setSort(view.sort)
-    setDirection(view.direction)
-  }, [view.id, view.name, view.viewtype, view.columns, view.cardfields, view.sort, view.direction])
+    setName(view.name);
+    setViewtype(view.viewtype);
+    setColumns(view.columns);
+    setCardfields(view.cardfields);
+    setSort(view.sort);
+    setDirection(view.direction);
+  }, [
+    view.id,
+    view.name,
+    view.viewtype,
+    view.columns,
+    view.cardfields,
+    view.sort,
+    view.direction,
+  ]);
 
   const handleNameBlur = () => {
     if (name.trim() && name !== view.name) {
-      onUpdate({ name: name.trim() })
+      onUpdate({ name: name.trim() });
     }
-  }
+  };
 
   const handleViewtypeChange = (value: string) => {
-    setViewtype(value)
-    onUpdate({ viewtype: value })
-  }
+    setViewtype(value);
+    onUpdate({ viewtype: value });
+  };
 
   const handleColumnsChange = (value: string) => {
-    setColumns(value)
-    onUpdate({ columns: value })
-  }
+    setColumns(value);
+    onUpdate({ columns: value });
+  };
 
   const handleSortChange = (value: string) => {
-    setSort(value)
-    onUpdate({ sort: value })
-  }
+    setSort(value);
+    onUpdate({ sort: value });
+  };
 
   const handleDirectionChange = (value: string) => {
-    setDirection(value)
-    onUpdate({ direction: value })
-  }
+    setDirection(value);
+    onUpdate({ direction: value });
+  };
 
   const toggleCardField = (fieldId: string) => {
-    const currentFields = cardfields.split(',').filter(Boolean)
-    let newFields: string[]
+    const currentFields = cardfields.split(",").filter(Boolean);
+    let newFields: string[];
 
     if (currentFields.includes(fieldId)) {
-      newFields = currentFields.filter((f) => f !== fieldId)
+      newFields = currentFields.filter((f) => f !== fieldId);
     } else {
-      newFields = [...currentFields, fieldId]
+      newFields = [...currentFields, fieldId];
     }
 
-    const newCardfields = newFields.join(',')
-    setCardfields(newCardfields)
-    onUpdate({ cardfields: newCardfields })
-  }
+    const newCardfields = newFields.join(",");
+    setCardfields(newCardfields);
+    onUpdate({ cardfields: newCardfields });
+  };
 
-  const cardfieldsList = cardfields.split(',').filter(Boolean)
+  const cardfieldsList = cardfields.split(",").filter(Boolean);
 
   // Get enum fields for column selection (board view groups by enum fields)
-  const enumFields = fields.filter((f) => f.fieldtype === 'enum')
+  const enumFields = fields.filter((f) => f.fieldtype === "enum");
 
   return (
     <div className="space-y-4 p-4 border rounded-lg">
@@ -86,7 +94,7 @@ export function ViewEditor({ view, fields, onUpdate }: ViewEditorProps) {
           value={name}
           onChange={(e) => setName(e.target.value)}
           onBlur={handleNameBlur}
-          onKeyDown={(e) => e.key === 'Enter' && handleNameBlur()}
+          onKeyDown={(e) => e.key === "Enter" && handleNameBlur()}
         />
       </div>
 
@@ -95,20 +103,26 @@ export function ViewEditor({ view, fields, onUpdate }: ViewEditorProps) {
         <RadioGroup value={viewtype} onValueChange={handleViewtypeChange}>
           <div className="flex items-center gap-2">
             <RadioGroupItem value="board" id="viewtype-board" />
-            <Label htmlFor="viewtype-board" className="font-normal cursor-pointer">
+            <Label
+              htmlFor="viewtype-board"
+              className="font-normal cursor-pointer"
+            >
               Board
             </Label>
           </div>
           <div className="flex items-center gap-2">
             <RadioGroupItem value="list" id="viewtype-list" />
-            <Label htmlFor="viewtype-list" className="font-normal cursor-pointer">
+            <Label
+              htmlFor="viewtype-list"
+              className="font-normal cursor-pointer"
+            >
               List
             </Label>
           </div>
         </RadioGroup>
       </div>
 
-      {viewtype === 'board' && enumFields.length > 0 && (
+      {viewtype === "board" && enumFields.length > 0 && (
         <div className="space-y-2">
           <Label>Group by (columns)</Label>
           <select
@@ -174,5 +188,5 @@ export function ViewEditor({ view, fields, onUpdate }: ViewEditorProps) {
         </div>
       </div>
     </div>
-  )
+  );
 }

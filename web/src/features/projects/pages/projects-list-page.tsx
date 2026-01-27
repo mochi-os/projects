@@ -1,5 +1,5 @@
-import { useEffect } from 'react'
-import { Link } from '@tanstack/react-router'
+import { useEffect } from "react";
+import { Link } from "@tanstack/react-router";
 import {
   Main,
   Card,
@@ -9,23 +9,23 @@ import {
   EmptyState,
   Skeleton,
   PageHeader,
-} from '@mochi/common'
-import { FolderKanban, Plus } from 'lucide-react'
-import { useProjectsStore } from '@/stores/projects-store'
-import { useSidebarContext } from '@/context/sidebar-context'
-import { formatDistanceToNow } from 'date-fns'
+} from "@mochi/common";
+import { FolderKanban, Plus } from "lucide-react";
+import { useProjectsStore } from "@/stores/projects-store";
+import { useSidebarContext } from "@/context/sidebar-context";
+import { formatDistanceToNow } from "date-fns";
 
 export function ProjectsListPage() {
-  const projects = useProjectsStore((state) => state.projects)
-  const isLoading = useProjectsStore((state) => state.isLoading)
-  const refresh = useProjectsStore((state) => state.refresh)
-  const { openCreateDialog } = useSidebarContext()
+  const projects = useProjectsStore((state) => state.projects);
+  const isLoading = useProjectsStore((state) => state.isLoading);
+  const refresh = useProjectsStore((state) => state.refresh);
+  const { openCreateDialog } = useSidebarContext();
 
-  usePageTitle('Projects')
+  usePageTitle("Projects");
 
   useEffect(() => {
-    void refresh()
-  }, [refresh])
+    void refresh();
+  }, [refresh]);
 
   return (
     <>
@@ -75,10 +75,13 @@ export function ProjectsListPage() {
                           </p>
                         )}
                         <p className="text-muted-foreground mt-2 text-xs">
-                          Updated{' '}
-                          {formatDistanceToNow(new Date(project.updated * 1000), {
-                            addSuffix: true,
-                          })}
+                          Updated{" "}
+                          {formatDistanceToNow(
+                            new Date(project.updated * 1000),
+                            {
+                              addSuffix: true,
+                            },
+                          )}
                         </p>
                       </div>
                       <div className="bg-muted text-muted-foreground ml-2 rounded px-2 py-1 text-xs font-medium">
@@ -93,5 +96,5 @@ export function ProjectsListPage() {
         )}
       </Main>
     </>
-  )
+  );
 }

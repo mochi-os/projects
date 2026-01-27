@@ -1,15 +1,15 @@
 // Mochi Projects: List row component
 // Copyright Alistair Cunningham 2026
 
-import { cn } from '@mochi/common'
-import type { ProjectObject, ProjectField, FieldOption } from '@/types'
+import { cn } from "@mochi/common";
+import type { ProjectObject, ProjectField, FieldOption } from "@/types";
 
 interface ListRowProps {
-  object: ProjectObject
-  fields: ProjectField[]
-  options: Record<string, FieldOption[]>
-  prefix: string
-  onClick: () => void
+  object: ProjectObject;
+  fields: ProjectField[];
+  options: Record<string, FieldOption[]>;
+  prefix: string;
+  onClick: () => void;
 }
 
 export function ListRow({
@@ -21,13 +21,13 @@ export function ListRow({
 }: ListRowProps) {
   const renderFieldValue = (field: ProjectField, value: string) => {
     if (!value) {
-      return <span className="text-muted-foreground">-</span>
+      return <span className="text-muted-foreground">-</span>;
     }
 
     switch (field.fieldtype) {
-      case 'enum': {
-        const fieldOptions = options[field.id] || []
-        const option = fieldOptions.find((o) => o.id === value)
+      case "enum": {
+        const fieldOptions = options[field.id] || [];
+        const option = fieldOptions.find((o) => o.id === value);
         if (option) {
           return (
             <span className="inline-flex items-center gap-1.5">
@@ -37,31 +37,31 @@ export function ListRow({
               />
               <span className="truncate">{option.name}</span>
             </span>
-          )
+          );
         }
-        return <span className="truncate">{value}</span>
+        return <span className="truncate">{value}</span>;
       }
 
-      case 'date': {
-        const date = new Date(parseInt(value) * 1000)
+      case "date": {
+        const date = new Date(parseInt(value) * 1000);
         return (
           <span className="truncate">
             {date.toLocaleDateString(undefined, {
-              month: 'short',
-              day: 'numeric',
+              month: "short",
+              day: "numeric",
             })}
           </span>
-        )
+        );
       }
 
-      case 'user':
-        return <span className="truncate">{value}</span>
+      case "user":
+        return <span className="truncate">{value}</span>;
 
-      case 'text':
+      case "text":
       default:
-        return <span className="truncate">{value}</span>
+        return <span className="truncate">{value}</span>;
     }
-  }
+  };
 
   return (
     <div
@@ -77,11 +77,11 @@ export function ListRow({
       {fields.map((field) => (
         <div
           key={field.id}
-          className={cn('px-3 py-2', field.id === 'title' ? 'flex-1' : 'w-32')}
+          className={cn("px-3 py-2", field.id === "title" ? "flex-1" : "w-32")}
         >
-          {renderFieldValue(field, object.values[field.id] || '')}
+          {renderFieldValue(field, object.values[field.id] || "")}
         </div>
       ))}
     </div>
-  )
+  );
 }

@@ -1,6 +1,6 @@
-import { createFileRoute } from '@tanstack/react-router'
-import { GeneralError } from '@mochi/common'
+import { createFileRoute } from "@tanstack/react-router";
+import { GeneralError } from "@mochi/common";
 
-export const Route = createFileRoute('/(errors)/500')({
+export const Route = createFileRoute("/(errors)/500")({
   component: GeneralError,
-})
+});

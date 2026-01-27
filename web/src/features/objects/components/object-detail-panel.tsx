@@ -1,25 +1,25 @@
 // Mochi Projects: Object detail panel component
 // Copyright Alistair Cunningham 2026
 
-import { useState } from 'react'
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
-import { X, Eye, EyeOff, Loader2, Trash2 } from 'lucide-react'
-import { Button, Textarea, ConfirmDialog } from '@mochi/common'
-import projectsApi from '@/api/projects'
-import type { ProjectDetails } from '@/types'
-import { FieldEditor } from './field-editor'
-import { CommentList } from './comment-list'
-import { ActivityList } from './activity-list'
-import { PrPanel } from '@/features/pr'
+import { useState } from "react";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { X, Eye, EyeOff, Loader2, Trash2 } from "lucide-react";
+import { Button, Textarea, ConfirmDialog } from "@mochi/common";
+import projectsApi from "@/api/projects";
+import type { ProjectDetails } from "@/types";
+import { FieldEditor } from "./field-editor";
+import { CommentList } from "./comment-list";
+import { ActivityList } from "./activity-list";
+import { PrPanel } from "@/features/pr";
 
 interface ObjectDetailPanelProps {
-  projectId: string
-  objectId: string
-  project: ProjectDetails
-  onClose: () => void
+  projectId: string;
+  objectId: string;
+  project: ProjectDetails;
+  onClose: () => void;
 }
 
-type Tab = 'comments' | 'activity'
+type Tab = "comments" | "activity";
 
 export function ObjectDetailPanel({
   projectId,
@@ -27,73 +27,67 @@ export function ObjectDetailPanel({
   project,
   onClose,
 }: ObjectDetailPanelProps) {
-  const [activeTab, setActiveTab] = useState<Tab>('comments')
-  const [editingTitle, setEditingTitle] = useState(false)
-  const [titleValue, setTitleValue] = useState('')
-  const [showDeleteDialog, setShowDeleteDialog] = useState(false)
-  const queryClient = useQueryClient()
+  const [activeTab, setActiveTab] = useState<Tab>("comments");
+  const [editingTitle, setEditingTitle] = useState(false);
+  const [titleValue, setTitleValue] = useState("");
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+  const queryClient = useQueryClient();
 
   const { data, isLoading, error } = useQuery({
-    queryKey: ['object', projectId, objectId],
+    queryKey: ["object", projectId, objectId],
     queryFn: async () => {
-      const response = await projectsApi.getObject(projectId, objectId)
-      return response.data
+      const response = await projectsApi.getObject(projectId, objectId);
+      return response.data;
     },
-  })
+  });
 
   const updateValueMutation = useMutation({
-    mutationFn: async ({
-      field,
-      value,
-    }: {
-      field: string
-      value: string
-    }) => {
-      await projectsApi.setValue(projectId, objectId, field, value)
+    mutationFn: async ({ field, value }: { field: string; value: string }) => {
+      await projectsApi.setValue(projectId, objectId, field, value);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ['object', projectId, objectId],
-      })
+        queryKey: ["object", projectId, objectId],
+      });
       queryClient.invalidateQueries({
-        queryKey: ['objects', projectId],
-      })
+        queryKey: ["objects", projectId],
+      });
     },
-  })
+  });
 
   const watchMutation = useMutation({
     mutationFn: async (watching: boolean) => {
       if (watching) {
-        return projectsApi.removeWatcher(projectId, objectId)
+        return projectsApi.removeWatcher(projectId, objectId);
       } else {
-        return projectsApi.addWatcher(projectId, objectId)
+        return projectsApi.addWatcher(projectId, objectId);
       }
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ['object', projectId, objectId],
-      })
+        queryKey: ["object", projectId, objectId],
+      });
     },
-  })
+  });
 
   const deleteMutation = useMutation({
     mutationFn: async () => {
-      return projectsApi.deleteObject(projectId, objectId)
+      return projectsApi.deleteObject(projectId, objectId);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ['objects', projectId],
-      })
-      onClose()
+        queryKey: ["objects", projectId],
+      });
+      onClose();
     },
-  })
+  });
 
   if (isLoading) {
     return (
       <div className="w-96 border-l bg-background flex items-center justify-center">
         <Loader2 className="size-6 animate-spin text-muted-foreground" />
       </div>
-    )
+    );
   }
 
   if (error || !data) {
@@ -105,27 +99,27 @@ export function ObjectDetailPanel({
           </Button>
         </div>
         <div className="text-destructive text-sm">
-          {error instanceof Error ? error.message : 'Failed to load object'}
+          {error instanceof Error ? error.message : "Failed to load object"}
         </div>
       </div>
-    )
+    );
   }
 
-  const object = data.object
-  const typeFields = project.fields[object.type] || []
-  const typeOptions = project.options[object.type] || {}
-  const title = data.values.title || object.readable
+  const object = data.object;
+  const typeFields = project.fields[object.type] || [];
+  const typeOptions = project.options[object.type] || {};
+  const title = data.values.title || object.readable;
 
   const handleTitleSave = () => {
     if (titleValue !== data.values.title) {
-      updateValueMutation.mutate({ field: 'title', value: titleValue })
+      updateValueMutation.mutate({ field: "title", value: titleValue });
     }
-    setEditingTitle(false)
-  }
+    setEditingTitle(false);
+  };
 
   const handleFieldChange = (fieldId: string, value: string) => {
-    updateValueMutation.mutate({ field: fieldId, value })
-  }
+    updateValueMutation.mutate({ field: fieldId, value });
+  };
 
   return (
     <div className="w-96 border-l bg-background flex flex-col h-full overflow-hidden">
@@ -171,12 +165,12 @@ export function ObjectDetailPanel({
               onChange={(e) => setTitleValue(e.target.value)}
               onBlur={handleTitleSave}
               onKeyDown={(e) => {
-                if (e.key === 'Enter' && !e.shiftKey) {
-                  e.preventDefault()
-                  handleTitleSave()
+                if (e.key === "Enter" && !e.shiftKey) {
+                  e.preventDefault();
+                  handleTitleSave();
                 }
-                if (e.key === 'Escape') {
-                  setEditingTitle(false)
+                if (e.key === "Escape") {
+                  setEditingTitle(false);
                 }
               }}
               className="text-lg font-semibold resize-none"
@@ -186,8 +180,8 @@ export function ObjectDetailPanel({
             <h2
               className="text-lg font-semibold cursor-pointer hover:text-primary"
               onClick={() => {
-                setTitleValue(data.values.title || '')
-                setEditingTitle(true)
+                setTitleValue(data.values.title || "");
+                setEditingTitle(true);
               }}
             >
               {title}
@@ -198,12 +192,18 @@ export function ObjectDetailPanel({
         {/* Fields */}
         <div className="p-4 space-y-4 border-b">
           {typeFields
-            .filter((f) => f.id !== 'title' && !['repository', 'source_branch', 'target_branch'].includes(f.id))
+            .filter(
+              (f) =>
+                f.id !== "title" &&
+                !["repository", "source_branch", "target_branch"].includes(
+                  f.id,
+                ),
+            )
             .map((field) => (
               <FieldEditor
                 key={field.id}
                 field={field}
-                value={data.values[field.id] || ''}
+                value={data.values[field.id] || ""}
                 options={typeOptions[field.id] || []}
                 onChange={(value) => handleFieldChange(field.id, value)}
                 disabled={updateValueMutation.isPending}
@@ -212,7 +212,8 @@ export function ObjectDetailPanel({
         </div>
 
         {/* Pull Request Panel - shown if object has PR-related fields */}
-        {(data.values.repository || typeFields.some((f) => f.id === 'repository')) && (
+        {(data.values.repository ||
+          typeFields.some((f) => f.id === "repository")) && (
           <div className="p-4 border-b">
             <PrPanel
               values={data.values}
@@ -228,21 +229,21 @@ export function ObjectDetailPanel({
           <div className="flex">
             <button
               className={`flex-1 py-2 text-sm font-medium border-b-2 ${
-                activeTab === 'comments'
-                  ? 'border-primary text-primary'
-                  : 'border-transparent text-muted-foreground hover:text-foreground'
+                activeTab === "comments"
+                  ? "border-primary text-primary"
+                  : "border-transparent text-muted-foreground hover:text-foreground"
               }`}
-              onClick={() => setActiveTab('comments')}
+              onClick={() => setActiveTab("comments")}
             >
               Comments
             </button>
             <button
               className={`flex-1 py-2 text-sm font-medium border-b-2 ${
-                activeTab === 'activity'
-                  ? 'border-primary text-primary'
-                  : 'border-transparent text-muted-foreground hover:text-foreground'
+                activeTab === "activity"
+                  ? "border-primary text-primary"
+                  : "border-transparent text-muted-foreground hover:text-foreground"
               }`}
-              onClick={() => setActiveTab('activity')}
+              onClick={() => setActiveTab("activity")}
             >
               Activity
             </button>
@@ -251,10 +252,10 @@ export function ObjectDetailPanel({
 
         {/* Tab content */}
         <div className="p-4">
-          {activeTab === 'comments' && (
+          {activeTab === "comments" && (
             <CommentList projectId={projectId} objectId={objectId} />
           )}
-          {activeTab === 'activity' && (
+          {activeTab === "activity" && (
             <ActivityList projectId={projectId} objectId={objectId} />
           )}
         </div>
@@ -271,5 +272,5 @@ export function ObjectDetailPanel({
         handleConfirm={() => deleteMutation.mutate()}
       />
     </div>
-  )
+  );
 }

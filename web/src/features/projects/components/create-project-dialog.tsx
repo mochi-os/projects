@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react'
-import { useNavigate } from '@tanstack/react-router'
+import { useEffect, useState } from "react";
+import { useNavigate } from "@tanstack/react-router";
 import {
   Button,
   Dialog,
@@ -14,16 +14,16 @@ import {
   getErrorMessage,
   RadioGroup,
   RadioGroupItem,
-} from '@mochi/common'
-import { FolderKanban, Plus } from 'lucide-react'
-import projectsApi from '@/api/projects'
-import { useProjectsStore } from '@/stores/projects-store'
-import type { ProjectTemplate } from '@/types'
+} from "@mochi/common";
+import { FolderKanban, Plus } from "lucide-react";
+import projectsApi from "@/api/projects";
+import { useProjectsStore } from "@/stores/projects-store";
+import type { ProjectTemplate } from "@/types";
 
 interface CreateProjectDialogProps {
-  open?: boolean
-  onOpenChange?: (open: boolean) => void
-  hideTrigger?: boolean
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
+  hideTrigger?: boolean;
 }
 
 export function CreateProjectDialog({
@@ -31,73 +31,75 @@ export function CreateProjectDialog({
   onOpenChange,
   hideTrigger,
 }: CreateProjectDialogProps) {
-  const [isPending, setIsPending] = useState(false)
-  const [name, setName] = useState('')
-  const [selectedTemplate, setSelectedTemplate] = useState('simple')
-  const [templates, setTemplates] = useState<ProjectTemplate[]>([])
-  const [isLoadingTemplates, setIsLoadingTemplates] = useState(false)
-  const navigate = useNavigate()
-  const refreshProjects = useProjectsStore((state) => state.refresh)
+  const [isPending, setIsPending] = useState(false);
+  const [name, setName] = useState("");
+  const [selectedTemplate, setSelectedTemplate] = useState("simple");
+  const [templates, setTemplates] = useState<ProjectTemplate[]>([]);
+  const [isLoadingTemplates, setIsLoadingTemplates] = useState(false);
+  const navigate = useNavigate();
+  const refreshProjects = useProjectsStore((state) => state.refresh);
 
   // Load templates when dialog opens
   useEffect(() => {
     if (open) {
-      setIsLoadingTemplates(true)
+      setIsLoadingTemplates(true);
       projectsApi
         .templates()
         .then((response) => {
-          setTemplates(response.data?.templates ?? [])
+          setTemplates(response.data?.templates ?? []);
         })
-        .catch((error) => {
-          console.error('[CreateProjectDialog] Failed to load templates', error)
+        .catch(() => {
+          // Template loading failed - user will see empty list
         })
         .finally(() => {
-          setIsLoadingTemplates(false)
-        })
+          setIsLoadingTemplates(false);
+        });
     }
-  }, [open])
+  }, [open]);
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
 
     if (!name.trim()) {
-      toast.error('Name is required')
-      return
+      toast.error("Name is required");
+      return;
     }
 
     if (!selectedTemplate) {
-      toast.error('Please select a template')
-      return
+      toast.error("Please select a template");
+      return;
     }
 
-    setIsPending(true)
+    setIsPending(true);
     try {
       const response = await projectsApi.create({
         name: name.trim(),
         template: selectedTemplate,
-        privacy: 'private',
-      })
+        privacy: "private",
+      });
 
-      const fingerprint = response.data?.fingerprint
-      await refreshProjects()
+      const fingerprint = response.data?.fingerprint;
+      await refreshProjects();
 
-      toast.success('Project created')
-      onOpenChange?.(false)
-      setName('')
-      setSelectedTemplate('simple')
+      toast.success("Project created");
+      onOpenChange?.(false);
+      setName("");
+      setSelectedTemplate("simple");
 
       if (fingerprint) {
-        void navigate({ to: '/$projectId', params: { projectId: fingerprint } })
+        void navigate({
+          to: "/$projectId",
+          params: { projectId: fingerprint },
+        });
       } else {
-        void navigate({ to: '/' })
+        void navigate({ to: "/" });
       }
-    } catch (error) {
-      console.error('[CreateProjectDialog] Failed to create project', error)
-      toast.error(getErrorMessage(error, 'Failed to create project'))
+    } catch (err) {
+      toast.error(getErrorMessage(err, "Failed to create project"));
     } finally {
-      setIsPending(false)
+      setIsPending(false);
     }
-  }
+  };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -179,11 +181,11 @@ export function CreateProjectDialog({
               Cancel
             </Button>
             <Button type="submit" disabled={isPending || !selectedTemplate}>
-              {isPending ? 'Creating...' : 'Create project'}
+              {isPending ? "Creating..." : "Create project"}
             </Button>
           </DialogFooter>
         </form>
       </DialogContent>
     </Dialog>
-  )
+  );
 }

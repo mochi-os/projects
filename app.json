@@ -1,0 +1,105 @@
+// Mochi Projects app
+// Copyright Alistair Cunningham 2026
+
+{
+	"version": "1.0",
+	"label": "app_name",
+	"classes": ["project"],
+	"paths": ["projects"],
+	"services": ["projects"],
+
+	"architecture": {"engine": "starlark", "version": 2},
+	"execute": ["projects.star"],
+
+	"database": {
+		"schema": 1,
+		"file": "projects.db",
+		"create": {"function": "database_create"},
+		"upgrade": {"function": "database_upgrade"}
+	},
+
+	"icons": [
+		{"action": "", "label": "app_name", "file": "images/icon.svg"}
+	],
+
+	"actions": {
+		"": {"file": "web/dist/index.html"},
+		"new": {"file": "web/dist/index.html"},
+		"assets": {"files": "web/dist/assets", "public": true},
+		"images": {"files": "web/dist/images", "public": true},
+
+		"-/list": {"function": "action_project_list"},
+		"-/create": {"function": "action_project_create"},
+		"-/templates": {"function": "action_templates"},
+		"-/templates/object": {"function": "action_object_templates"},
+
+		":project": {"file": "web/dist/index.html"},
+		":project/design": {"file": "web/dist/index.html"},
+		":project/-/info": {"function": "action_project_get"},
+		":project/-/update": {"function": "action_project_update"},
+		":project/-/delete": {"function": "action_project_delete"},
+
+		":project/-/objects": {"function": "action_object_list"},
+		":project/-/objects/create": {"function": "action_object_create"},
+		":project/-/objects/:object": {"function": "action_object_get"},
+		":project/-/objects/:object/update": {"function": "action_object_update"},
+		":project/-/objects/:object/delete": {"function": "action_object_delete"},
+		":project/-/objects/:object/move": {"function": "action_object_move"},
+
+		":project/-/objects/:object/values": {"function": "action_values_set"},
+		":project/-/objects/:object/values/:field": {"function": "action_value_set"},
+
+		":project/-/objects/:object/links": {"function": "action_link_list"},
+		":project/-/objects/:object/links/create": {"function": "action_link_create"},
+		":project/-/objects/:object/links/delete": {"function": "action_link_delete"},
+
+		":project/-/objects/:object/comments": {"function": "action_comment_list"},
+		":project/-/objects/:object/comments/create": {"function": "action_comment_create"},
+		":project/-/objects/:object/comments/:comment/update": {"function": "action_comment_update"},
+		":project/-/objects/:object/comments/:comment/delete": {"function": "action_comment_delete"},
+
+		":project/-/objects/:object/attachments": {"function": "action_attachment_list"},
+		":project/-/objects/:object/attachments/create": {"function": "action_attachment_create"},
+		":project/-/objects/:object/attachments/:attachment/delete": {"function": "action_attachment_delete"},
+
+		":project/-/objects/:object/activity": {"function": "action_activity_list"},
+
+		":project/-/objects/:object/watchers": {"function": "action_watcher_list"},
+		":project/-/objects/:object/watchers/add": {"function": "action_watcher_add"},
+		":project/-/objects/:object/watchers/remove": {"function": "action_watcher_remove"},
+
+		":project/-/views": {"function": "action_view_list"},
+		":project/-/views/create": {"function": "action_view_create"},
+		":project/-/views/:view/update": {"function": "action_view_update"},
+		":project/-/views/:view/delete": {"function": "action_view_delete"},
+
+		":project/-/types": {"function": "action_type_list"},
+		":project/-/types/create": {"function": "action_type_create"},
+		":project/-/types/:type/update": {"function": "action_type_update"},
+		":project/-/types/:type/delete": {"function": "action_type_delete"},
+
+		":project/-/types/:type/hierarchy": {"function": "action_hierarchy_get"},
+		":project/-/types/:type/hierarchy/set": {"function": "action_hierarchy_set"},
+
+		":project/-/types/:type/fields": {"function": "action_field_list"},
+		":project/-/types/:type/fields/create": {"function": "action_field_create"},
+		":project/-/types/:type/fields/reorder": {"function": "action_field_reorder"},
+		":project/-/types/:type/fields/:field/update": {"function": "action_field_update"},
+		":project/-/types/:type/fields/:field/delete": {"function": "action_field_delete"},
+
+		":project/-/types/:type/fields/:field/options": {"function": "action_option_list"},
+		":project/-/types/:type/fields/:field/options/create": {"function": "action_option_create"},
+		":project/-/types/:type/fields/:field/options/reorder": {"function": "action_option_reorder"},
+		":project/-/types/:type/fields/:field/options/:option/update": {"function": "action_option_update"},
+		":project/-/types/:type/fields/:field/options/:option/delete": {"function": "action_option_delete"},
+
+		"-/repositories": {"function": "action_repositories_list"},
+		"-/repositories/:repo/branches": {"function": "action_repositories_branches"},
+		"-/repositories/:repo/merge/check": {"function": "action_repositories_merge_check"},
+		"-/repositories/:repo/diff": {"function": "action_repositories_diff"},
+		"-/repositories/:repo/merge": {"function": "action_repositories_merge"}
+	},
+
+	"events": {
+	}
+}

@@ -43,24 +43,24 @@ function ProjectsLayoutInner() {
       icon: FolderKanban,
     };
 
-    // Build top action items
-    const topItems: NavItem[] = [
+    // Build action items (moved to bottom)
+    const actionItems: NavItem[] = [
       {
-        title: "New project",
+        title: "Create project",
         icon: Plus,
         onClick: openCreateDialog,
-        variant: "primary",
       },
     ];
 
     const groups: SidebarData["navGroups"] = [
       {
-        title: "",
-        items: topItems,
-      },
-      {
         title: "Projects",
         items: [allProjectsItem, ...projectItems],
+      },
+      {
+        title: "",
+        items: actionItems,
+        separator: true,
       },
     ];
 

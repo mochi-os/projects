@@ -623,7 +623,7 @@ def get_project(project_id):
 
 def log_activity(object_id, actor, action, field="", oldvalue="", newvalue=""):
 	"""Log an activity entry for an object."""
-	activity_id = mochi.id()
+	activity_id = mochi.uid()
 	now = mochi.time.now()
 	mochi.db.execute(
 		"insert into activity (id, object, actor, action, field, oldvalue, newvalue, created) values (?, ?, ?, ?, ?, ?, ?, ?)",
@@ -741,7 +741,7 @@ def action_object_create(a):
 	mochi.db.execute("update projects set counter = ?, updated = ? where id = ?", new_counter, mochi.time.now(), project_id)
 
 	# Create object
-	object_id = mochi.id()
+	object_id = mochi.uid()
 	now = mochi.time.now()
 
 	mochi.db.execute(
@@ -1284,7 +1284,7 @@ def action_comment_create(a):
 
 	parent = a.input("parent") or ""
 
-	comment_id = mochi.id()
+	comment_id = mochi.uid()
 	now = mochi.time.now()
 
 	mochi.db.execute(
@@ -1438,7 +1438,7 @@ def action_attachment_create(a):
 		a.error(400, "File is required")
 		return
 
-	attachment_id = mochi.id()
+	attachment_id = mochi.uid()
 	now = mochi.time.now()
 
 	# Store file using Mochi attachment system

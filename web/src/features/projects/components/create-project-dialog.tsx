@@ -14,6 +14,7 @@ import {
   getErrorMessage,
   RadioGroup,
   RadioGroupItem,
+  cn,
 } from "@mochi/common";
 import { FolderKanban, Plus } from "lucide-react";
 import projectsApi from "@/api/projects";
@@ -147,25 +148,30 @@ export function CreateProjectDialog({
                   className="gap-3"
                 >
                   {templates.map((template) => (
-                    <div
+                    <Label
                       key={template.id}
-                      className="flex items-start space-x-3"
+                      htmlFor={template.id}
+                      className={cn(
+                        "flex cursor-pointer items-start gap-3 rounded-lg border p-3 transition-all hover:border-primary/50 hover:bg-muted/50",
+                        selectedTemplate === template.id
+                          ? "border-primary bg-primary/5 shadow-sm"
+                          : "border-border",
+                      )}
                     >
                       <RadioGroupItem
                         value={template.id}
                         id={template.id}
                         className="mt-1"
                       />
-                      <Label
-                        htmlFor={template.id}
-                        className="flex cursor-pointer flex-col gap-1 font-normal"
-                      >
-                        <span className="font-medium">{template.name}</span>
-                        <span className="text-muted-foreground text-sm">
+                      <div className="space-y-1">
+                        <span className="font-medium block leading-none">
+                          {template.name}
+                        </span>
+                        <span className="text-muted-foreground text-sm block leading-normal">
                           {template.description}
                         </span>
-                      </Label>
-                    </div>
+                      </div>
+                    </Label>
                   ))}
                 </RadioGroup>
               )}

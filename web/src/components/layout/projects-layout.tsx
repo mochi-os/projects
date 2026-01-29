@@ -54,15 +54,6 @@ function ProjectsLayoutInner() {
     [navigate, refresh],
   );
 
-  // Handle bookmarking a remote project from search
-  const handleBookmark = useCallback(
-    async (projectId: string, server?: string) => {
-      await projectsApi.bookmarkAdd(projectId, server);
-      await refresh();
-    },
-    [refresh],
-  );
-
   const sidebarData: SidebarData = useMemo(() => {
     // Sort projects alphabetically by name
     const sortedProjects = [...projects].sort((a, b) =>
@@ -125,7 +116,6 @@ function ProjectsLayoutInner() {
           if (!open) closeSearchDialog();
         }}
         onSubscribe={handleSubscribe}
-        onBookmark={handleBookmark}
         subscribedIds={accessibleProjectIds}
         entityClass="project"
         searchEndpoint={endpoints.projects.search}
@@ -135,7 +125,6 @@ function ProjectsLayoutInner() {
         placeholder="Search by name, ID, fingerprint, or URL..."
         emptyMessage="No projects found"
         subscribeLabel="Subscribe"
-        bookmarkLabel="Bookmark"
       />
     </>
   );

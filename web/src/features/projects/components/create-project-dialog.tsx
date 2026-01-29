@@ -33,6 +33,7 @@ export function CreateProjectDialog({
 }: CreateProjectDialogProps) {
   const [isPending, setIsPending] = useState(false);
   const [name, setName] = useState("");
+  const [prefix, setPrefix] = useState("");
   const [selectedTemplate, setSelectedTemplate] = useState("simple");
   const [templates, setTemplates] = useState<ProjectTemplate[]>([]);
   const [isLoadingTemplates, setIsLoadingTemplates] = useState(false);
@@ -74,6 +75,7 @@ export function CreateProjectDialog({
     try {
       const response = await projectsApi.create({
         name: name.trim(),
+        prefix: prefix.trim().toUpperCase() || "PROJ",
         template: selectedTemplate,
         privacy: "private",
       });
@@ -84,6 +86,7 @@ export function CreateProjectDialog({
       toast.success("Project created");
       onOpenChange?.(false);
       setName("");
+      setPrefix("");
       setSelectedTemplate("simple");
 
       if (fingerprint) {
@@ -132,6 +135,20 @@ export function CreateProjectDialog({
                 placeholder="My project"
                 autoFocus
               />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="prefix">Prefix</Label>
+              <Input
+                id="prefix"
+                value={prefix}
+                onChange={(e) => setPrefix(e.target.value.toUpperCase().slice(0, 8))}
+                placeholder="PROJ"
+                className="uppercase"
+              />
+              <p className="text-muted-foreground text-xs">
+                Used for readable IDs like {prefix || "PROJ"}-1, {prefix || "PROJ"}-2
+              </p>
             </div>
 
             <div className="space-y-2">

@@ -1,16 +1,17 @@
-// Mochi Projects: Object detail panel component
+// Mochi Projects: Object detail dialog component
 // Copyright Alistair Cunningham 2026
 
 import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { X, Eye, EyeOff, Loader2, Trash2, MessageSquare, Activity } from "lucide-react";
-import { 
-  Button, 
-  Textarea, 
+import { Eye, EyeOff, Loader2, Trash2, MessageSquare, Activity, X, Settings2 } from "lucide-react";
+import {
+  Button,
+  Textarea,
   ConfirmDialog,
-  Section,
-  FieldRow,
   DataChip,
+  Dialog,
+  DialogContent,
+  cn,
 } from "@mochi/common";
 import projectsApi from "@/api/projects";
 import type { ProjectDetails } from "@/types";
@@ -21,12 +22,24 @@ import { PrPanel } from "@/features/pr";
 
 interface ObjectDetailPanelProps {
   projectId: string;
-  objectId: string;
+  objectId: string | null;
   project: ProjectDetails;
   onClose: () => void;
 }
 
-type Tab = "comments" | "activity";
+type Tab = "properties" | "comments" | "activity";
+
+interface TabDef {
+  id: Tab;
+  label: string;
+  icon: React.ReactNode;
+}
+
+const tabs: TabDef[] = [
+  { id: "properties", label: "Properties", icon: <Settings2 className="size-4" /> },
+  { id: "comments", label: "Comments", icon: <MessageSquare className="size-4" /> },
+  { id: "activity", label: "Activity", icon: <Activity className="size-4" /> },
+];
 
 export function ObjectDetailPanel({
   projectId,
@@ -34,7 +47,7 @@ export function ObjectDetailPanel({
   project,
   onClose,
 }: ObjectDetailPanelProps) {
-  const [activeTab, setActiveTab] = useState<Tab>("comments");
+  const [activeTab, setActiveTab] = useState<Tab>("properties");
   const [editingTitle, setEditingTitle] = useState(false);
   const [titleValue, setTitleValue] = useState("");
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
@@ -43,13 +56,16 @@ export function ObjectDetailPanel({
   const { data, isLoading, error } = useQuery({
     queryKey: ["object", projectId, objectId],
     queryFn: async () => {
+      if (!objectId) throw new Error("No object ID");
       const response = await projectsApi.getObject(projectId, objectId);
       return response.data;
     },
+    enabled: !!objectId,
   });
 
   const updateValueMutation = useMutation({
     mutationFn: async ({ field, value }: { field: string; value: string }) => {
+      if (!objectId) return;
       await projectsApi.setValue(projectId, objectId, field, value);
     },
     onSuccess: () => {
@@ -64,6 +80,7 @@ export function ObjectDetailPanel({
 
   const watchMutation = useMutation({
     mutationFn: async (watching: boolean) => {
+      if (!objectId) return;
       if (watching) {
         return projectsApi.removeWatcher(projectId, objectId);
       } else {
@@ -79,6 +96,7 @@ export function ObjectDetailPanel({
 
   const deleteMutation = useMutation({
     mutationFn: async () => {
+      if (!objectId) return;
       return projectsApi.deleteObject(projectId, objectId);
     },
     onSuccess: () => {
@@ -89,27 +107,32 @@ export function ObjectDetailPanel({
     },
   });
 
+  if (!objectId) {
+    return null;
+  }
+
   if (isLoading) {
     return (
-      <div className="w-96 border-l bg-background flex flex-col items-center justify-center">
-        <Loader2 className="size-6 animate-spin text-muted-foreground" />
-        <span className="text-xs text-muted-foreground mt-2">Loading details...</span>
-      </div>
+      <Dialog open={true} onOpenChange={() => onClose()}>
+        <DialogContent className="max-w-5xl h-[85vh] flex flex-col p-0" showCloseButton={false}>
+          <div className="flex-1 flex items-center justify-center">
+            <Loader2 className="size-6 animate-spin text-muted-foreground" />
+            <span className="text-xs text-muted-foreground ml-2">Loading details...</span>
+          </div>
+        </DialogContent>
+      </Dialog>
     );
   }
 
   if (error || !data) {
     return (
-      <div className="w-96 border-l bg-background p-4">
-        <div className="flex justify-end mb-4">
-          <Button variant="ghost" size="icon" onClick={onClose}>
-            <X className="size-4" />
-          </Button>
-        </div>
-        <div className="text-destructive text-sm bg-destructive/10 p-3 rounded-md">
-          {error instanceof Error ? error.message : "Failed to load object"}
-        </div>
-      </div>
+      <Dialog open={true} onOpenChange={() => onClose()}>
+        <DialogContent className="max-w-5xl" showCloseButton={false}>
+          <div className="text-destructive text-sm bg-destructive/10 p-3 rounded-md">
+            {error instanceof Error ? error.message : "Failed to load object"}
+          </div>
+        </DialogContent>
+      </Dialog>
     );
   }
 
@@ -130,47 +153,10 @@ export function ObjectDetailPanel({
   };
 
   return (
-    <div className="w-96 border-l bg-background flex flex-col h-full overflow-hidden shadow-2xl">
-      {/* Header */}
-      <div className="flex items-center justify-between p-4 border-b shrink-0 bg-muted/20">
-        <div className="flex items-center gap-2">
-           <DataChip value={object.readable} copyable={false} chipClassName="bg-primary/10 border-primary/20 text-primary font-bold text-[11px]" />
-        </div>
-        <div className="flex items-center gap-1">
-          <Button
-            variant="ghost"
-            size="icon"
-            className="h-8 w-8"
-            onClick={() => watchMutation.mutate(data.watching)}
-            disabled={watchMutation.isPending}
-            title={data.watching ? "Stop watching" : "Watch"}
-          >
-            {data.watching ? (
-              <Eye className="size-4 text-primary" />
-            ) : (
-              <EyeOff className="size-4" />
-            )}
-          </Button>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="h-8 w-8 text-muted-foreground hover:text-destructive hover:bg-destructive/10"
-            onClick={() => setShowDeleteDialog(true)}
-            title="Delete item"
-          >
-            <Trash2 className="size-4" />
-          </Button>
-          <div className="w-px h-4 bg-border mx-1" />
-          <Button variant="ghost" size="icon" className="h-8 w-8" onClick={onClose}>
-            <X className="size-4" />
-          </Button>
-        </div>
-      </div>
-
-      {/* Content */}
-      <div className="flex-1 overflow-y-auto space-y-px">
-        {/* Title Section */}
-        <div className="p-4 bg-background">
+    <Dialog open={true} onOpenChange={() => onClose()}>
+      <DialogContent className="max-w-5xl h-[85vh] flex flex-col p-0 gap-0" showCloseButton={false}>
+        {/* Header */}
+        <div className="flex items-center gap-3 px-6 py-4 border-b shrink-0">
           {editingTitle ? (
             <Textarea
               value={titleValue}
@@ -185,12 +171,12 @@ export function ObjectDetailPanel({
                   setEditingTitle(false);
                 }
               }}
-              className="text-lg font-bold resize-none min-h-[80px]"
+              className="text-xl font-bold resize-none min-h-[40px] flex-1"
               autoFocus
             />
           ) : (
             <h2
-              className="text-lg font-bold cursor-pointer hover:text-primary transition-colors leading-tight"
+              className="text-xl font-bold cursor-pointer hover:text-primary transition-colors leading-tight truncate flex-1 min-w-0"
               onClick={() => {
                 setTitleValue(data.values.title || "");
                 setEditingTitle(true);
@@ -199,105 +185,136 @@ export function ObjectDetailPanel({
               {title}
             </h2>
           )}
+          <div className="flex items-center gap-1 shrink-0">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="h-8 w-8"
+              onClick={() => watchMutation.mutate(data.watching)}
+              disabled={watchMutation.isPending}
+              title={data.watching ? "Stop watching" : "Watch"}
+            >
+              {data.watching ? (
+                <Eye className="size-4 text-primary" />
+              ) : (
+                <EyeOff className="size-4" />
+              )}
+            </Button>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="h-8 w-8 text-muted-foreground hover:text-destructive hover:bg-destructive/10"
+              onClick={() => setShowDeleteDialog(true)}
+              title="Delete item"
+            >
+              <Trash2 className="size-4" />
+            </Button>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="h-8 w-8"
+              onClick={onClose}
+              title="Close"
+            >
+              <X className="size-4" />
+            </Button>
+          </div>
         </div>
 
-        {/* Fields Section */}
-        <Section 
-          title="Properties" 
-          className="rounded-none border-x-0 border-t-0 shadow-none" 
-          contentClassName="py-0 px-4"
-        >
-          <div className="divide-y-0">
-            {typeFields
-              .filter(
-                (f) =>
-                  f.id !== "title" &&
-                  !["repository", "source_branch", "target_branch"].includes(
-                    f.id,
-                  ),
-              )
-              .map((field) => (
-                <FieldRow key={field.id} label={field.name} className="py-3 grid-cols-[100px_1fr] gap-2">
-                  <div className="w-full">
+        {/* Tabs */}
+        <div className="flex gap-1 border-b px-6 shrink-0">
+          {tabs.map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className={cn(
+                "flex items-center gap-2 px-4 py-2 text-sm font-medium transition-colors",
+                "border-b-2 -mb-px",
+                activeTab === tab.id
+                  ? "border-primary text-foreground"
+                  : "border-transparent text-muted-foreground hover:text-foreground"
+              )}
+            >
+              {tab.icon}
+              {tab.label}
+            </button>
+          ))}
+        </div>
+
+        {/* Tab content */}
+        <div className="flex-1 overflow-y-auto p-6">
+          {activeTab === "properties" && (
+            <div className="max-w-2xl space-y-6">
+              {/* ID */}
+              <div className="grid grid-cols-[120px_1fr] gap-4 items-start">
+                <label className="text-sm font-medium text-muted-foreground pt-2">
+                  ID
+                </label>
+                <DataChip value={object.readable} copyable chipClassName="bg-primary/10 border-primary/20 text-primary font-bold text-[11px]" />
+              </div>
+
+              {typeFields
+                .filter(
+                  (f) =>
+                    f.id !== "title" &&
+                    !["repository", "source_branch", "target_branch"].includes(f.id),
+                )
+                .map((field) => (
+                  <div key={field.id} className="grid grid-cols-[120px_1fr] gap-4 items-start">
+                    <label className="text-sm font-medium text-muted-foreground pt-2">
+                      {field.name}
+                    </label>
                     <FieldEditor
                       field={field}
                       value={data.values[field.id] || ""}
                       options={typeOptions[field.id] || []}
                       onChange={(value) => handleFieldChange(field.id, value)}
                       disabled={updateValueMutation.isPending}
-                      hideLabel // I'll add this prop to FieldEditor or just use unique styling
+                      hideLabel
                     />
                   </div>
-                </FieldRow>
-              ))}
-          </div>
-        </Section>
+                ))}
 
-        {/* Pull Request Panel */}
-        {(data.values.repository ||
-          typeFields.some((f) => f.id === "repository")) && (
-          <Section 
-            title="Development" 
-            className="rounded-none border-x-0 border-t-0 shadow-none"
-            contentClassName="p-4"
-          >
-            <PrPanel
-              values={data.values}
-              onValueChange={handleFieldChange}
-              objectTitle={title}
-              objectReadable={object.readable}
-            />
-          </Section>
-        )}
+              {/* Pull Request Panel */}
+              {(data.values.repository ||
+                typeFields.some((f) => f.id === "repository")) && (
+                <div className="mt-8 pt-6 border-t">
+                  <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-4">Development</h3>
+                  <PrPanel
+                    values={data.values}
+                    onValueChange={handleFieldChange}
+                    objectTitle={title}
+                    objectReadable={object.readable}
+                  />
+                </div>
+              )}
+            </div>
+          )}
 
-        {/* Tabs for Comments/Activity */}
-        <div className="bg-background flex flex-col min-h-[400px]">
-          <div className="flex border-b sticky top-0 bg-background z-10 px-4">
-            <button
-              className={`flex items-center gap-2 py-3 px-4 text-xs font-bold uppercase tracking-wider border-b-2 transition-all ${
-                activeTab === "comments"
-                  ? "border-primary text-primary"
-                  : "border-transparent text-muted-foreground hover:text-foreground hover:bg-muted/30"
-              }`}
-              onClick={() => setActiveTab("comments")}
-            >
-              <MessageSquare className="size-3.5" />
-              Comments
-            </button>
-            <button
-              className={`flex items-center gap-2 py-3 px-4 text-xs font-bold uppercase tracking-wider border-b-2 transition-all ${
-                activeTab === "activity"
-                  ? "border-primary text-primary"
-                  : "border-transparent text-muted-foreground hover:text-foreground hover:bg-muted/30"
-              }`}
-              onClick={() => setActiveTab("activity")}
-            >
-              <Activity className="size-3.5" />
-              Activity
-            </button>
-          </div>
-
-          <div className="p-4 flex-1">
-            {activeTab === "comments" && (
+          {activeTab === "comments" && (
+            <div className="max-w-2xl">
               <CommentList projectId={projectId} objectId={objectId} />
-            )}
-            {activeTab === "activity" && (
-              <ActivityList projectId={projectId} objectId={objectId} />
-            )}
-          </div>
-        </div>
-      </div>
+            </div>
+          )}
 
-      <ConfirmDialog
-        open={showDeleteDialog}
-        onOpenChange={setShowDeleteDialog}
-        title="Delete item"
-        desc={`Are you sure you want to delete "${title}"? This action cannot be undone.`}
-        confirmText="Delete"
-        destructive
-        isLoading={deleteMutation.isPending}
-        handleConfirm={() => deleteMutation.mutate()}
-      />
-    </div>
+          {activeTab === "activity" && (
+            <div className="max-w-2xl">
+              <ActivityList projectId={projectId} objectId={objectId} />
+            </div>
+          )}
+        </div>
+
+        <ConfirmDialog
+          open={showDeleteDialog}
+          onOpenChange={setShowDeleteDialog}
+          title="Delete item"
+          desc={`Are you sure you want to delete "${title}"? This action cannot be undone.`}
+          confirmText="Delete"
+          destructive
+          isLoading={deleteMutation.isPending}
+          handleConfirm={() => deleteMutation.mutate()}
+        />
+      </DialogContent>
+    </Dialog>
   );
 }

@@ -8,7 +8,6 @@ interface ListRowProps {
   object: ProjectObject;
   fields: ProjectField[];
   options: Record<string, FieldOption[]>;
-  prefix: string;
   onClick: () => void;
 }
 
@@ -16,7 +15,6 @@ export function ListRow({
   object,
   fields,
   options,
-  prefix,
   onClick,
 }: ListRowProps) {
   const renderFieldValue = (field: ProjectField, value: string) => {
@@ -68,11 +66,6 @@ export function ListRow({
       className="flex items-center border-b border-border hover:bg-muted/50 cursor-pointer text-sm"
       onClick={onClick}
     >
-      {/* ID column */}
-      <div className="w-24 px-3 py-2 text-muted-foreground font-mono text-xs">
-        {prefix}-{object.number}
-      </div>
-
       {/* Field columns */}
       {fields.map((field) => (
         <div

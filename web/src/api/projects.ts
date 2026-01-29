@@ -98,7 +98,8 @@ interface CreateObjectRequest {
 }
 
 interface MoveObjectRequest {
-  status: string;
+  status?: string;
+  rank?: number;
 }
 
 interface CreateViewRequest {
@@ -860,25 +861,6 @@ const projectsApi = {
     });
   },
 
-  // Add a bookmark to a remote project
-  bookmarkAdd: async (
-    projectId: string,
-    server?: string,
-  ): Promise<{ data: { id: string; name: string; existing?: boolean } }> => {
-    return projectsRequest.post(endpoints.projects.bookmarkAdd, {
-      project: projectId,
-      server,
-    });
-  },
-
-  // Remove a bookmark
-  bookmarkRemove: async (
-    projectId: string,
-  ): Promise<{ data: { removed: string } }> => {
-    return projectsRequest.post(endpoints.projects.bookmarkRemove, {
-      project: projectId,
-    });
-  },
 };
 
 export default projectsApi;

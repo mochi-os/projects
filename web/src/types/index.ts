@@ -78,6 +78,7 @@ export interface ProjectObject {
   type: string;
   number: number;
   parent: string;
+  rank: number;
   created: number;
   updated: number;
   readable?: string;
@@ -115,6 +116,7 @@ export interface Attachment {
 export interface Activity {
   id: string;
   actor: string;
+  name: string;
   action: string;
   field: string;
   oldvalue: string;

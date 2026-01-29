@@ -14,14 +14,12 @@ interface ListHeaderProps {
   fields: ProjectField[];
   sort: SortState | null;
   onSortChange: (sort: SortState) => void;
-  prefix: string;
 }
 
 export function ListHeader({
   fields,
   sort,
   onSortChange,
-  prefix,
 }: ListHeaderProps) {
   const handleSort = (fieldId: string) => {
     if (sort?.field === fieldId) {
@@ -49,15 +47,6 @@ export function ListHeader({
 
   return (
     <div className="flex items-center border-b border-border bg-muted/50 text-sm font-medium text-muted-foreground">
-      {/* ID column */}
-      <div
-        className="w-24 px-3 py-2 cursor-pointer hover:text-foreground flex items-center gap-1"
-        onClick={() => handleSort("number")}
-      >
-        {prefix}
-        {getSortIcon("number")}
-      </div>
-
       {/* Field columns */}
       {fields.map((field) => (
         <div

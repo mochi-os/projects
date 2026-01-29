@@ -1,6 +1,23 @@
 # Mochi Projects app
 # Copyright Alistair Cunningham 2026
 
+# Helper to create P2P message headers
+def p2p_headers(from_id, to_id, event):
+	return {
+		"from": from_id,
+		"to": to_id,
+		"service": "projects",
+		"event": event
+	}
+
+# Broadcast an event to all subscribers of a project
+def broadcast_event(project_id, event, data, exclude=None):
+	subscribers = mochi.db.rows("select id from subscribers where project=?", project_id)
+	for sub in subscribers:
+		if exclude and sub["id"] == exclude:
+			continue
+		mochi.message.send(p2p_headers(project_id, sub["id"], event), data)
+
 # Create database with all 14 tables
 def database_create():
 	# 1. projects - the container, a Mochi entity
@@ -110,6 +127,7 @@ def database_create():
 		type text not null,
 		number integer not null,
 		parent text not null default '',
+		rank integer not null default 0,
 		created integer not null,
 		updated integer not null,
 		foreign key (project, type) references types(project, id)
@@ -117,6 +135,7 @@ def database_create():
 	mochi.db.execute("create index if not exists objects_project on objects(project)")
 	mochi.db.execute("create index if not exists objects_type on objects(project, type)")
 	mochi.db.execute("create index if not exists objects_parent on objects(parent)")
+	mochi.db.execute("create index if not exists objects_rank on objects(rank)")
 	mochi.db.execute("create index if not exists objects_created on objects(created)")
 	mochi.db.execute("create index if not exists objects_updated on objects(updated)")
 
@@ -194,8 +213,9 @@ def database_create():
 
 # Upgrade database schema
 def database_upgrade(to_version):
-	# No upgrades needed yet for schema version 1
-	pass
+	if to_version == 2:
+		# Add rank column to objects for ordering within columns
+		mochi.db.execute("alter table objects add column rank integer not null default 0")
 
 
 # ============================================================================
@@ -487,6 +507,10 @@ def action_project_update(a):
 	if prefix:
 		mochi.db.execute("update projects set prefix = ?, updated = ? where id = ?", prefix, now, project_id)
 
+	broadcast_event(project_id, "project/update", {
+		"project": project_id, "name": name or "", "description": description or "", "prefix": prefix or ""
+	})
+
 	return {"data": {"success": True}}
 
 # Delete project
@@ -528,6 +552,11 @@ def action_project_delete(a):
 	mochi.db.execute("delete from fields where project = ?", project_id)
 	mochi.db.execute("delete from hierarchy where project = ?", project_id)
 	mochi.db.execute("delete from types where project = ?", project_id)
+	# Notify subscribers that project is being deleted (before removing subscriber list)
+	subscribers = mochi.db.rows("select id from subscribers where project=?", project_id)
+	for sub in subscribers:
+		mochi.message.send(p2p_headers(a.user.identity.id, sub["id"], "deleted"), {"project": project_id})
+
 	mochi.db.execute("delete from subscribers where project = ?", project_id)
 	mochi.db.execute("delete from projects where id = ?", project_id)
 
@@ -582,8 +611,7 @@ def get_object_templates():
 			"name": "Feature",
 			"description": "Feature request.",
 			"fields": {
-				"status": "todo",
-				"description": "## User Story\nAs a [user], I want [feature] so that [benefit].\n\n## Description\n\n## Acceptance Criteria\n- [ ] \n- [ ] \n- [ ] \n"
+				"status": "todo"
 			}
 		},
 		"pull_request": {
@@ -623,7 +651,7 @@ def get_project(project_id):
 
 def log_activity(object_id, actor, action, field="", oldvalue="", newvalue=""):
 	"""Log an activity entry for an object."""
-	activity_id = mochi.id()
+	activity_id = mochi.uid()
 	now = mochi.time.now()
 	mochi.db.execute(
 		"insert into activity (id, object, actor, action, field, oldvalue, newvalue, created) values (?, ?, ?, ?, ?, ?, ?, ?)",
@@ -656,7 +684,7 @@ def action_object_list(a):
 	parent_filter = a.input("parent")
 
 	# Build query
-	query = "select o.id, o.project, o.type, o.number, o.parent, o.created, o.updated from objects o where o.project = ?"
+	query = "select o.id, o.project, o.type, o.number, o.parent, o.rank, o.created, o.updated from objects o where o.project = ?"
 	params = [project_id]
 
 	if type_filter:
@@ -667,7 +695,7 @@ def action_object_list(a):
 		query += " and o.parent = ?"
 		params.append(parent_filter)
 
-	query += " order by o.created desc"
+	query += " order by o.rank asc, o.created desc"
 
 	rows = mochi.db.rows(query, *params) or []
 
@@ -680,6 +708,7 @@ def action_object_list(a):
 			"type": row["type"],
 			"number": row["number"],
 			"parent": row["parent"],
+			"rank": row["rank"],
 			"created": row["created"],
 			"updated": row["updated"],
 			"values": {}
@@ -740,13 +769,25 @@ def action_object_create(a):
 	new_counter = project["counter"] + 1
 	mochi.db.execute("update projects set counter = ?, updated = ? where id = ?", new_counter, mochi.time.now(), project_id)
 
+	# Determine the status for this object (from template or default)
+	status = template.get("fields", {}).get("status", "")
+
+	# Calculate initial rank (add to end of column)
+	max_rank_row = mochi.db.row("""
+		select coalesce(max(o.rank), 0) as max_rank
+		from objects o
+		left join "values" v on v.object = o.id and v.field = 'status'
+		where o.project = ? and coalesce(v.value, '') = ?
+	""", project_id, status)
+	initial_rank = (max_rank_row["max_rank"] if max_rank_row else 0) + 1
+
 	# Create object
-	object_id = mochi.id()
+	object_id = mochi.uid()
 	now = mochi.time.now()
 
 	mochi.db.execute(
-		"insert into objects (id, project, type, number, parent, created, updated) values (?, ?, ?, ?, ?, ?, ?)",
-		object_id, project_id, obj_type, new_counter, parent, now, now
+		"insert into objects (id, project, type, number, parent, rank, created, updated) values (?, ?, ?, ?, ?, ?, ?, ?)",
+		object_id, project_id, obj_type, new_counter, parent, initial_rank, now, now
 	)
 
 	# Set title if provided
@@ -763,6 +804,21 @@ def action_object_create(a):
 
 	# Auto-watch creator
 	mochi.db.execute("insert into watchers (object, user, created) values (?, ?, ?)", object_id, a.user.identity.id, now)
+
+	# Collect all values for broadcast
+	values = {}
+	if title:
+		values["title"] = title
+	for field, value in template.get("fields", {}).items():
+		if field != "title" or not title:
+			values[field] = value
+
+	# Broadcast to subscribers
+	broadcast_event(project_id, "object/create", {
+		"project": project_id, "id": object_id, "type": obj_type,
+		"number": new_counter, "parent": parent, "values": values,
+		"created": now
+	})
 
 	return {"data": {
 		"id": object_id,
@@ -872,6 +928,12 @@ def action_object_update(a):
 
 	mochi.db.execute("update objects set updated = ? where id = ?", now, object_id)
 
+	broadcast_event(project_id, "object/update", {
+		"project": project_id, "id": object_id,
+		"parent": parent if parent != None else row["parent"],
+		"type": new_type if new_type and new_type != row["type"] else row["type"]
+	})
+
 	return {"data": {"success": True}}
 
 def action_object_delete(a):
@@ -912,10 +974,12 @@ def action_object_delete(a):
 	mochi.db.execute("delete from links where source = ? or target = ?", object_id, object_id)
 	mochi.db.execute("delete from objects where id = ?", object_id)
 
+	broadcast_event(project_id, "object/delete", {"project": project_id, "id": object_id})
+
 	return {"data": {"success": True}}
 
 def action_object_move(a):
-	"""Quick action to move object to a new status (for drag-drop)."""
+	"""Quick action to move object to a new status and/or rank (for drag-drop)."""
 	if not a.user:
 		a.error(401, "Not logged in")
 		return
@@ -939,24 +1003,68 @@ def action_object_move(a):
 		a.error(400, "Object ID required")
 		return
 
-	row = mochi.db.row("select id from objects where id = ? and project = ?", object_id, project_id)
+	row = mochi.db.row("select id, rank from objects where id = ? and project = ?", object_id, project_id)
 	if not row:
 		a.error(404, "Object not found")
 		return
 
+	old_rank = row["rank"]
 	status = a.input("status")
-	if not status:
-		a.error(400, "Status is required")
-		return
+	new_rank = a.input("rank")
 
-	# Get old value
-	old_row = mochi.db.row("select value from \"values\" where object = ? and field = ?", object_id, "status")
-	old_value = old_row["value"] if old_row else ""
+	# Get old status value
+	old_status_row = mochi.db.row("select value from \"values\" where object = ? and field = ?", object_id, "status")
+	old_status = old_status_row["value"] if old_status_row else ""
 
-	if old_value != status:
-		mochi.db.execute("replace into \"values\" (object, field, value) values (?, ?, ?)", object_id, "status", status)
-		mochi.db.execute("update objects set updated = ? where id = ?", mochi.time.now(), object_id)
-		log_activity(object_id, a.user.identity.id, "updated", "status", old_value, status)
+	# Determine target status (use provided or keep current)
+	target_status = status if status else old_status
+	status_changed = old_status != target_status
+
+	# Handle status change
+	if status_changed:
+		mochi.db.execute("replace into \"values\" (object, field, value) values (?, ?, ?)", object_id, "status", target_status)
+		log_activity(object_id, a.user.identity.id, "updated", "status", old_status, target_status)
+
+	# Handle rank change
+	if new_rank != None:
+		new_rank = int(new_rank)
+		# Shift other objects to make room
+		if status_changed or new_rank != old_rank:
+			# Get all objects in the target column
+			objects_in_column = mochi.db.rows("""
+				select o.id, o.rank from objects o
+				left join "values" v on v.object = o.id and v.field = 'status'
+				where o.project = ? and coalesce(v.value, '') = ? and o.id != ?
+				order by o.rank asc
+			""", project_id, target_status, object_id) or []
+
+			# Renumber all objects, inserting this one at the new position
+			rank = 1
+			for obj in objects_in_column:
+				if rank == new_rank:
+					rank += 1  # Skip the position for our object
+				mochi.db.execute("update objects set rank = ? where id = ?", rank, obj["id"])
+				rank += 1
+
+			# Set our object's rank
+			mochi.db.execute("update objects set rank = ? where id = ?", new_rank, object_id)
+	elif status_changed:
+		# Moving to new column without specific rank - add to end
+		max_rank_row = mochi.db.row("""
+			select coalesce(max(o.rank), 0) as max_rank from objects o
+			left join "values" v on v.object = o.id and v.field = 'status'
+			where o.project = ? and coalesce(v.value, '') = ? and o.id != ?
+		""", project_id, target_status, object_id)
+		new_rank = (max_rank_row["max_rank"] if max_rank_row else 0) + 1
+		mochi.db.execute("update objects set rank = ? where id = ?", new_rank, object_id)
+
+	mochi.db.execute("update objects set updated = ? where id = ?", mochi.time.now(), object_id)
+
+	if status_changed:
+		broadcast_event(project_id, "values/update", {
+			"project": project_id, "id": object_id,
+			"values": {"status": target_status}
+		})
 
 	return {"data": {"success": True}}
 
@@ -1019,6 +1127,15 @@ def action_values_set(a):
 
 	if changes:
 		mochi.db.execute("update objects set updated = ? where id = ?", now, object_id)
+		# Collect changed values for broadcast
+		changed_values = {}
+		for fid in changes:
+			val = mochi.db.row("select value from \"values\" where object=? and field=?", object_id, fid)
+			if val:
+				changed_values[fid] = val["value"]
+		broadcast_event(project_id, "values/update", {
+			"project": project_id, "id": object_id, "values": changed_values
+		})
 
 	return {"data": {"success": True, "changed": changes}}
 
@@ -1075,6 +1192,10 @@ def action_value_set(a):
 		mochi.db.execute("replace into \"values\" (object, field, value) values (?, ?, ?)", object_id, field_id, str(new_value))
 		mochi.db.execute("update objects set updated = ? where id = ?", mochi.time.now(), object_id)
 		log_activity(object_id, a.user.identity.id, "updated", field_id, old_value, str(new_value))
+		broadcast_event(project_id, "values/update", {
+			"project": project_id, "id": object_id,
+			"values": {field_id: str(new_value)}
+		})
 
 	return {"data": {"success": True}}
 
@@ -1187,6 +1308,11 @@ def action_link_create(a):
 
 	log_activity(object_id, a.user.identity.id, "linked", linktype, "", target_id)
 
+	broadcast_event(project_id, "link/create", {
+		"project": project_id, "source": object_id,
+		"target": target_id, "linktype": linktype, "created": now
+	})
+
 	return {"data": {"success": True}}
 
 def action_link_delete(a):
@@ -1217,6 +1343,11 @@ def action_link_delete(a):
 		return
 
 	mochi.db.execute("delete from links where source = ? and target = ? and linktype = ?", object_id, target_id, linktype)
+
+	broadcast_event(project_id, "link/delete", {
+		"project": project_id, "source": object_id,
+		"target": target_id, "linktype": linktype
+	})
 
 	return {"data": {"success": True}}
 
@@ -1284,7 +1415,7 @@ def action_comment_create(a):
 
 	parent = a.input("parent") or ""
 
-	comment_id = mochi.id()
+	comment_id = mochi.uid()
 	now = mochi.time.now()
 
 	mochi.db.execute(
@@ -1294,6 +1425,13 @@ def action_comment_create(a):
 
 	mochi.db.execute("update objects set updated = ? where id = ?", now, object_id)
 	log_activity(object_id, a.user.identity.id, "commented")
+
+	broadcast_event(project_id, "comment/create", {
+		"project": project_id, "object": object_id,
+		"id": comment_id, "parent": parent,
+		"author": a.user.identity.id, "name": a.user.identity.name,
+		"content": content.strip(), "created": now
+	})
 
 	return {"data": {
 		"id": comment_id,
@@ -1338,6 +1476,11 @@ def action_comment_update(a):
 	now = mochi.time.now()
 	mochi.db.execute("update comments set content = ?, edited = ? where id = ?", content.strip(), now, comment_id)
 
+	broadcast_event(project_id, "comment/update", {
+		"project": project_id, "object": object_id,
+		"id": comment_id, "content": content.strip(), "edited": now
+	})
+
 	return {"data": {"success": True}}
 
 def action_comment_delete(a):
@@ -1368,6 +1511,10 @@ def action_comment_delete(a):
 		return
 
 	mochi.db.execute("delete from comments where id = ?", comment_id)
+
+	broadcast_event(project_id, "comment/delete", {
+		"project": project_id, "object": object_id, "id": comment_id
+	})
 
 	return {"data": {"success": True}}
 
@@ -1438,7 +1585,7 @@ def action_attachment_create(a):
 		a.error(400, "File is required")
 		return
 
-	attachment_id = mochi.id()
+	attachment_id = mochi.uid()
 	now = mochi.time.now()
 
 	# Store file using Mochi attachment system
@@ -1519,10 +1666,26 @@ def action_activity_list(a):
 		a.error(404, "Object not found")
 		return
 
-	activities = mochi.db.rows(
+	rows = mochi.db.rows(
 		"select id, actor, action, field, oldvalue, newvalue, created from activity where object = ? order by created desc",
 		object_id
 	) or []
+
+	# Resolve actor names
+	activities = []
+	for row in rows:
+		actor = row["actor"]
+		name = mochi.entity.name(actor) or actor[:9]
+		activities.append({
+			"id": row["id"],
+			"actor": actor,
+			"name": name,
+			"action": row["action"],
+			"field": row["field"],
+			"oldvalue": row["oldvalue"],
+			"newvalue": row["newvalue"],
+			"created": row["created"],
+		})
 
 	return {"data": {"activities": activities}}
 
@@ -1689,6 +1852,12 @@ def action_view_create(a):
 		project_id, view_id, name.strip(), viewtype, filter_str, columns, rows, cardfields, sort, direction
 	)
 
+	broadcast_event(project_id, "view/create", {
+		"project": project_id, "id": view_id, "name": name.strip(),
+		"viewtype": viewtype, "filter": filter_str, "columns": columns,
+		"rows": rows, "cardfields": cardfields, "sort": sort, "direction": direction
+	})
+
 	return {"data": {
 		"id": view_id,
 		"name": name.strip(),
@@ -1757,6 +1926,17 @@ def action_view_update(a):
 			return
 		mochi.db.execute("update views set direction = ? where project = ? and id = ?", direction, project_id, view_id)
 
+	# Read back updated view for broadcast
+	updated = mochi.db.row("select * from views where project=? and id=?", project_id, view_id)
+	if updated:
+		broadcast_event(project_id, "view/update", {
+			"project": project_id, "id": view_id,
+			"name": updated["name"], "viewtype": updated["viewtype"],
+			"filter": updated["filter"], "columns": updated["columns"],
+			"rows": updated["rows"], "cardfields": updated["cardfields"],
+			"sort": updated["sort"], "direction": updated["direction"]
+		})
+
 	return {"data": {"success": True}}
 
 def action_view_delete(a):
@@ -1790,6 +1970,8 @@ def action_view_delete(a):
 		return
 
 	mochi.db.execute("delete from views where project = ? and id = ?", project_id, view_id)
+
+	broadcast_event(project_id, "view/delete", {"project": project_id, "id": view_id})
 
 	return {"data": {"success": True}}
 
@@ -1859,6 +2041,10 @@ def action_type_create(a):
 		project_id, type_id, name.strip(), sort
 	)
 
+	broadcast_event(project_id, "type/create", {
+		"project": project_id, "id": type_id, "name": name.strip(), "sort": sort
+	})
+
 	return {"data": {"id": type_id, "name": name.strip(), "sort": sort}}
 
 def action_type_update(a):
@@ -1893,6 +2079,10 @@ def action_type_update(a):
 	name = a.input("name")
 	if name != None:
 		mochi.db.execute("update types set name = ? where project = ? and id = ?", name.strip(), project_id, type_id)
+
+	broadcast_event(project_id, "type/update", {
+		"project": project_id, "id": type_id, "name": name or type_row["name"]
+	})
 
 	return {"data": {"success": True}}
 
@@ -1931,6 +2121,8 @@ def action_type_delete(a):
 	mochi.db.execute("delete from fields where project = ? and type = ?", project_id, type_id)
 	mochi.db.execute("delete from hierarchy where project = ? and type = ?", project_id, type_id)
 	mochi.db.execute("delete from types where project = ? and id = ?", project_id, type_id)
+
+	broadcast_event(project_id, "type/delete", {"project": project_id, "id": type_id})
 
 	return {"data": {"success": True}}
 
@@ -2011,6 +2203,10 @@ def action_hierarchy_set(a):
 			"insert into hierarchy (project, type, parent) values (?, ?, ?)",
 			project_id, type_id, parent
 		)
+
+	broadcast_event(project_id, "hierarchy/set", {
+		"project": project_id, "type": type_id, "parents": parents
+	})
 
 	return {"data": {"success": True}}
 
@@ -2107,6 +2303,12 @@ def action_field_create(a):
 		project_id, type_id, field_id, name.strip(), fieldtype, required, multi, sort, card
 	)
 
+	broadcast_event(project_id, "field/create", {
+		"project": project_id, "type": type_id, "id": field_id,
+		"name": name.strip(), "fieldtype": fieldtype, "required": required,
+		"multi": multi, "sort": sort, "card": card
+	})
+
 	return {"data": {"id": field_id, "name": name.strip(), "fieldtype": fieldtype, "sort": sort}}
 
 def action_field_update(a):
@@ -2184,6 +2386,36 @@ def action_field_update(a):
 	if position != None:
 		mochi.db.execute("update fields set position = ? where project = ? and type = ? and id = ?", position, project_id, type_id, field_id)
 
+	# Build update data from provided fields
+	update_data = {"project": project_id, "type": type_id, "id": field_id}
+	if name != None:
+		update_data["name"] = name.strip()
+	if required != None:
+		update_data["required"] = 1 if required == "1" or required == "true" else 0
+	if multi != None:
+		update_data["multi"] = 1 if multi == "1" or multi == "true" else 0
+	if card != None:
+		update_data["card"] = 1 if card == "1" or card == "true" else 0
+	if min_val != None:
+		update_data["min"] = min_val
+	if max_val != None:
+		update_data["max"] = max_val
+	if pattern != None:
+		update_data["pattern"] = pattern
+	if minlength != None:
+		update_data["minlength"] = int(minlength)
+	if maxlength != None:
+		update_data["maxlength"] = int(maxlength)
+	if prefix != None:
+		update_data["prefix"] = prefix
+	if suffix != None:
+		update_data["suffix"] = suffix
+	if format_str != None:
+		update_data["format"] = format_str
+	if position != None:
+		update_data["position"] = position
+	broadcast_event(project_id, "field/update", update_data)
+
 	return {"data": {"success": True}}
 
 def action_field_delete(a):
@@ -2216,6 +2448,8 @@ def action_field_delete(a):
 
 	# Delete field
 	mochi.db.execute("delete from fields where project = ? and type = ? and id = ?", project_id, type_id, field_id)
+
+	broadcast_event(project_id, "field/delete", {"project": project_id, "type": type_id, "id": field_id})
 
 	return {"data": {"success": True}}
 
@@ -2253,6 +2487,8 @@ def action_field_reorder(a):
 			"update fields set sort = ? where project = ? and type = ? and id = ?",
 			i, project_id, type_id, field_id
 		)
+
+	broadcast_event(project_id, "field/reorder", {"project": project_id, "type": type_id, "order": order})
 
 	return {"data": {"success": True}}
 
@@ -2349,6 +2585,11 @@ def action_option_create(a):
 		project_id, type_id, field_id, option_id, name.strip(), colour, icon, sort
 	)
 
+	broadcast_event(project_id, "option/create", {
+		"project": project_id, "type": type_id, "field": field_id,
+		"id": option_id, "name": name.strip(), "colour": colour, "icon": icon, "sort": sort
+	})
+
 	return {"data": {"id": option_id, "name": name.strip(), "colour": colour, "sort": sort}}
 
 def action_option_update(a):
@@ -2393,6 +2634,15 @@ def action_option_update(a):
 	if icon != None:
 		mochi.db.execute("update options set icon = ? where project = ? and type = ? and field = ? and id = ?", icon, project_id, type_id, field_id, option_id)
 
+	update_data = {"project": project_id, "type": type_id, "field": field_id, "id": option_id}
+	if name != None:
+		update_data["name"] = name.strip()
+	if colour != None:
+		update_data["colour"] = colour
+	if icon != None:
+		update_data["icon"] = icon
+	broadcast_event(project_id, "option/update", update_data)
+
 	return {"data": {"success": True}}
 
 def action_option_delete(a):
@@ -2422,6 +2672,8 @@ def action_option_delete(a):
 		return
 
 	mochi.db.execute("delete from options where project = ? and type = ? and field = ? and id = ?", project_id, type_id, field_id, option_id)
+
+	broadcast_event(project_id, "option/delete", {"project": project_id, "type": type_id, "field": field_id, "id": option_id})
 
 	return {"data": {"success": True}}
 
@@ -2460,6 +2712,8 @@ def action_option_reorder(a):
 			"update options set sort = ? where project = ? and type = ? and field = ? and id = ?",
 			i, project_id, type_id, field_id, option_id
 		)
+
+	broadcast_event(project_id, "option/reorder", {"project": project_id, "type": type_id, "field": field_id, "order": order})
 
 	return {"data": {"success": True}}
 
@@ -2672,15 +2926,6 @@ def action_search(a):
 # Remote Projects (Subscribe/Bookmark)
 # ============================================================================
 
-# Helper to create P2P message headers
-def p2p_headers(from_id, to_id, event):
-	return {
-		"from": from_id,
-		"to": to_id,
-		"service": "projects",
-		"event": event
-	}
-
 # Probe a remote project by URL without subscribing
 def action_probe(a):
 	if not a.user.identity.id:
@@ -2866,73 +3111,183 @@ def action_unsubscribe(a):
 
 	return {"data": {"success": True}}
 
-# Add a bookmark to a remote project (view-only, no P2P subscription)
-def action_bookmark_add(a):
-	if not a.user.identity.id:
-		a.error(401, "Not logged in")
-		return
 
-	project_id = a.input("project")
-	server = a.input("server")
+# ============================================================================
+# P2P Events
+# ============================================================================
 
-	if not project_id:
-		a.error(400, "Project ID is required")
-		return
+# Handle project info request from a remote server
+def event_info(e):
+	project_id = e.header("to")
 
-	if not mochi.valid(project_id, "entity"):
-		a.error(400, "Invalid project ID")
-		return
-
-	# Check if already exists
-	existing = mochi.db.row("select id, owner from projects where id=?", project_id)
-	if existing:
-		if existing["owner"] == 1:
-			a.error(400, "You own this project")
-			return
-		# Already bookmarked/subscribed
-		return {"data": {"existing": True, "id": project_id}}
-
-	# Fetch project info from remote
-	peer = mochi.remote.peer(server) if server else None
-	response = mochi.remote.request(project_id, "projects", "info", {"project": project_id}, peer)
-	if response.get("error"):
-		a.error(response.get("code", 404), response["error"])
-		return
-
-	project_name = response.get("name", "Unknown")
-	project_desc = response.get("description", "")
-	project_prefix = response.get("prefix", "PROJ")
-	now = mochi.time.now()
-
-	# Insert as bookmarked project (owner=0, no P2P message sent)
-	mochi.db.execute(
-		"insert into projects (id, name, description, prefix, counter, owner, server, created, updated) values (?, ?, ?, ?, 0, 0, ?, ?, ?)",
-		project_id, project_name, project_desc, project_prefix, server or "", now, now
-	)
-
-	return {"data": {"id": project_id, "name": project_name}}
-
-# Remove a bookmark
-def action_bookmark_remove(a):
-	if not a.user.identity.id:
-		a.error(401, "Not logged in")
-		return
-
-	project_id = a.input("project")
-	if not project_id:
-		a.error(400, "Project ID is required")
+	entity = mochi.entity.info(project_id)
+	if not entity or entity.get("class") != "project":
+		e.stream.write({"error": "Project not found"})
 		return
 
 	project = mochi.db.row("select * from projects where id=?", project_id)
 	if not project:
-		a.error(404, "Project not found")
+		e.stream.write({"error": "Project not found"})
 		return
 
-	if project["owner"] == 1:
-		a.error(400, "Cannot remove owned project as bookmark")
+	e.stream.write({
+		"id": entity["id"],
+		"name": project["name"],
+		"description": project["description"],
+		"prefix": project["prefix"],
+		"fingerprint": entity.get("fingerprint", mochi.entity.fingerprint(project_id)),
+	})
+
+# Send all existing project data to a new subscriber
+def send_project_data(project_id, subscriber_id):
+	h = p2p_headers(project_id, subscriber_id, "")
+
+	# Send types
+	types = mochi.db.rows("select * from types where project=?", project_id)
+	for t in types:
+		h["event"] = "type/create"
+		mochi.message.send(h, {"project": project_id, "id": t["id"], "name": t["name"], "icon": t["icon"], "colour": t["colour"], "prefix": t["prefix"], "created": t["created"]})
+
+		# Send hierarchy for this type
+		children = mochi.db.rows("select child from hierarchy where project=? and type=? order by sort", project_id, t["id"])
+		if children:
+			h["event"] = "hierarchy/set"
+			mochi.message.send(h, {"project": project_id, "type": t["id"], "children": [c["child"] for c in children]})
+
+		# Send fields for this type
+		fields = mochi.db.rows("select * from fields where project=? and type=? order by sort", project_id, t["id"])
+		for f in fields:
+			h["event"] = "field/create"
+			mochi.message.send(h, {
+				"project": project_id, "type": t["id"], "id": f["id"], "name": f["name"],
+				"fieldtype": f["fieldtype"], "required": f["required"], "multi": f["multi"],
+				"sort": f["sort"], "card": f["card"]
+			})
+
+			# Send options for enum fields
+			options = mochi.db.rows("select * from options where project=? and type=? and field=? order by sort", project_id, t["id"], f["id"])
+			for o in options:
+				h["event"] = "option/create"
+				mochi.message.send(h, {
+					"project": project_id, "type": t["id"], "field": f["id"],
+					"id": o["id"], "name": o["name"], "colour": o["colour"], "icon": o["icon"], "sort": o["sort"]
+				})
+
+	# Send views
+	views = mochi.db.rows("select * from views where project=?", project_id)
+	for v in views:
+		h["event"] = "view/create"
+		mochi.message.send(h, {
+			"project": project_id, "id": v["id"], "name": v["name"], "type": v["type"],
+			"layout": v["layout"], "filters": v["filters"], "sort": v["sort"],
+			"groups": v["groups"], "columns": v["columns"], "created": v["created"]
+		})
+
+	# Send objects with their values, comments, and links
+	objects = mochi.db.rows("select * from objects where project=?", project_id)
+	for obj in objects:
+		h["event"] = "object/create"
+		mochi.message.send(h, {
+			"project": project_id, "id": obj["id"], "type": obj["type"], "name": obj["name"],
+			"number": obj["number"], "parent": obj["parent"], "created": obj["created"], "updated": obj["updated"]
+		})
+
+		# Send values for this object
+		vals = mochi.db.rows("select field, value from \"values\" where object=?", obj["id"])
+		if vals:
+			values_map = {}
+			for v in vals:
+				values_map[v["field"]] = v["value"]
+			h["event"] = "values/update"
+			mochi.message.send(h, {"project": project_id, "id": obj["id"], "values": values_map})
+
+		# Send comments for this object
+		comments = mochi.db.rows("select * from comments where object=? order by created", obj["id"])
+		for c in comments:
+			h["event"] = "comment/create"
+			mochi.message.send(h, {
+				"project": project_id, "id": c["id"], "object": obj["id"],
+				"author": c["author"], "content": c["content"], "created": c["created"]
+			})
+
+	# Send links (once, not per-object)
+	links = mochi.db.rows("select l.source, l.target, l.type from links l join objects o on l.source = o.id where o.project=?", project_id)
+	for l in links:
+		h["event"] = "link/create"
+		mochi.message.send(h, {"project": project_id, "source": l["source"], "target": l["target"], "type": l["type"]})
+
+# Handle subscribe event from a remote user
+def event_subscribe(e):
+	project_id = e.header("to")
+
+	project = mochi.db.row("select * from projects where id=? and owner=1", project_id)
+	if not project:
 		return
 
-	# Delete all local data for this bookmarked project
+	subscriber_id = e.header("from")
+	if not mochi.valid(subscriber_id, "entity"):
+		return
+
+	name = e.content("name")
+	if not mochi.valid(name, "line"):
+		return
+
+	now = mochi.time.now()
+	mochi.db.execute(
+		"insert or ignore into subscribers (project, id, name, subscribed) values (?, ?, ?, ?)",
+		project_id, subscriber_id, name, now
+	)
+
+	# Update project timestamp
+	mochi.db.execute("update projects set updated=? where id=?", now, project_id)
+
+	# Send websocket notification for real-time UI updates
+	fingerprint = mochi.entity.fingerprint(project_id)
+	if fingerprint:
+		mochi.websocket.write(fingerprint, {"type": "project/update", "project": project_id})
+
+	# Sync all existing project data to the new subscriber
+	send_project_data(project_id, subscriber_id)
+
+# Handle unsubscribe event from a remote user
+def event_unsubscribe(e):
+	project_id = e.header("to")
+
+	project = mochi.db.row("select * from projects where id=? and owner=1", project_id)
+	if not project:
+		return
+
+	subscriber_id = e.header("from")
+
+	# Clean up watchers created by this subscriber
+	mochi.db.execute("delete from watchers where user=?", subscriber_id)
+
+	# Clean up activity records by this subscriber
+	mochi.db.execute("delete from activity where user=?", subscriber_id)
+
+	# Remove subscriber
+	mochi.db.execute("delete from subscribers where project=? and id=?", project_id, subscriber_id)
+
+	# Update project timestamp
+	mochi.db.execute("update projects set updated=? where id=?", mochi.time.now(), project_id)
+
+	# Send websocket notification
+	fingerprint = mochi.entity.fingerprint(project_id)
+	if fingerprint:
+		mochi.websocket.write(fingerprint, {"type": "project/update", "project": project_id})
+
+# Handle notification that a project has been deleted by its owner
+def event_deleted(e):
+	project_id = e.content("project")
+	if not project_id:
+		project_id = e.header("from")
+
+	# Only delete if we don't own this project
+	project = mochi.db.row("select * from projects where id=? and owner=0", project_id)
+	if not project:
+		return
+
+	# Delete all local data for this remote project
 	objects = mochi.db.rows("select id from objects where project=?", project_id)
 	for obj in objects:
 		mochi.db.execute("delete from watchers where object=?", obj["id"])
@@ -2950,4 +3305,480 @@ def action_bookmark_remove(a):
 	mochi.db.execute("delete from subscribers where project=?", project_id)
 	mochi.db.execute("delete from projects where id=?", project_id)
 
-	return {"data": {"removed": project_id}}
+
+# ============================================================================
+# Content Sync Event Handlers (received by subscribers)
+# ============================================================================
+
+# Helper to verify a content event is for a project we subscribe to
+def verify_subscription(e):
+	project_id = e.content("project")
+	if not project_id:
+		return None
+	project = mochi.db.row("select id from projects where id=? and owner=0", project_id)
+	if not project:
+		return None
+	return project_id
+
+# Project updated
+def event_project_update(e):
+	project_id = verify_subscription(e)
+	if not project_id:
+		return
+	name = e.content("name")
+	description = e.content("description")
+	prefix = e.content("prefix")
+	if name != None:
+		mochi.db.execute("update projects set name=? where id=?", name, project_id)
+	if description != None:
+		mochi.db.execute("update projects set description=? where id=?", description, project_id)
+	if prefix != None:
+		mochi.db.execute("update projects set prefix=? where id=?", prefix, project_id)
+	mochi.db.execute("update projects set updated=? where id=?", mochi.time.now(), project_id)
+	fp = mochi.entity.fingerprint(project_id)
+	if fp:
+		mochi.websocket.write(fp, {"type": "project/update", "project": project_id})
+
+# Object created
+def event_object_create(e):
+	project_id = verify_subscription(e)
+	if not project_id:
+		return
+	mochi.db.execute(
+		"insert or ignore into objects (id, project, type, name, number, parent, created, updated) values (?, ?, ?, ?, ?, ?, ?, ?)",
+		e.content("id"), project_id, e.content("type") or "", e.content("name") or "",
+		e.content("number") or 0, e.content("parent") or "", e.content("created") or mochi.time.now(),
+		e.content("updated") or mochi.time.now()
+	)
+	fp = mochi.entity.fingerprint(project_id)
+	if fp:
+		mochi.websocket.write(fp, {"type": "object/create", "project": project_id, "id": e.content("id")})
+
+# Object updated
+def event_object_update(e):
+	project_id = verify_subscription(e)
+	if not project_id:
+		return
+	object_id = e.content("id")
+	if not object_id:
+		return
+	name = e.content("name")
+	type_id = e.content("type")
+	parent = e.content("parent")
+	if name != None:
+		mochi.db.execute("update objects set name=? where id=? and project=?", name, object_id, project_id)
+	if type_id != None:
+		mochi.db.execute("update objects set type=? where id=? and project=?", type_id, object_id, project_id)
+	if parent != None:
+		mochi.db.execute("update objects set parent=? where id=? and project=?", parent, object_id, project_id)
+	mochi.db.execute("update objects set updated=? where id=? and project=?", mochi.time.now(), object_id, project_id)
+	fp = mochi.entity.fingerprint(project_id)
+	if fp:
+		mochi.websocket.write(fp, {"type": "object/update", "project": project_id, "id": object_id})
+
+# Object deleted
+def event_object_delete(e):
+	project_id = verify_subscription(e)
+	if not project_id:
+		return
+	object_id = e.content("id")
+	if not object_id:
+		return
+	mochi.db.execute("delete from watchers where object=?", object_id)
+	mochi.db.execute("delete from activity where object=?", object_id)
+	mochi.db.execute("delete from comments where object=?", object_id)
+	mochi.db.execute("delete from \"values\" where object=?", object_id)
+	mochi.db.execute("delete from links where source=? or target=?", object_id, object_id)
+	mochi.db.execute("delete from objects where id=? and project=?", object_id, project_id)
+	fp = mochi.entity.fingerprint(project_id)
+	if fp:
+		mochi.websocket.write(fp, {"type": "object/delete", "project": project_id, "id": object_id})
+
+# Values updated
+def event_values_update(e):
+	project_id = verify_subscription(e)
+	if not project_id:
+		return
+	object_id = e.content("id")
+	if not object_id:
+		return
+	values = e.content("values")
+	if not values:
+		return
+	for field in values:
+		mochi.db.execute("replace into \"values\" (object, field, value) values (?, ?, ?)", object_id, field, values[field])
+	mochi.db.execute("update objects set updated=? where id=? and project=?", mochi.time.now(), object_id, project_id)
+	fp = mochi.entity.fingerprint(project_id)
+	if fp:
+		mochi.websocket.write(fp, {"type": "values/update", "project": project_id, "id": object_id})
+
+# Comment created
+def event_comment_create(e):
+	project_id = verify_subscription(e)
+	if not project_id:
+		return
+	mochi.db.execute(
+		"insert or ignore into comments (id, object, author, content, created, updated) values (?, ?, ?, ?, ?, ?)",
+		e.content("id"), e.content("object") or "", e.content("author") or "",
+		e.content("content") or "", e.content("created") or mochi.time.now(),
+		e.content("created") or mochi.time.now()
+	)
+	fp = mochi.entity.fingerprint(project_id)
+	if fp:
+		mochi.websocket.write(fp, {"type": "comment/create", "project": project_id, "object": e.content("object")})
+
+# Comment updated
+def event_comment_update(e):
+	project_id = verify_subscription(e)
+	if not project_id:
+		return
+	comment_id = e.content("id")
+	if not comment_id:
+		return
+	content = e.content("content")
+	if content != None:
+		mochi.db.execute("update comments set content=?, updated=? where id=?", content, mochi.time.now(), comment_id)
+	fp = mochi.entity.fingerprint(project_id)
+	if fp:
+		mochi.websocket.write(fp, {"type": "comment/update", "project": project_id, "id": comment_id})
+
+# Comment deleted
+def event_comment_delete(e):
+	project_id = verify_subscription(e)
+	if not project_id:
+		return
+	comment_id = e.content("id")
+	if not comment_id:
+		return
+	mochi.db.execute("delete from comments where id=?", comment_id)
+	fp = mochi.entity.fingerprint(project_id)
+	if fp:
+		mochi.websocket.write(fp, {"type": "comment/delete", "project": project_id, "id": comment_id})
+
+# Link created
+def event_link_create(e):
+	project_id = verify_subscription(e)
+	if not project_id:
+		return
+	mochi.db.execute(
+		"insert or ignore into links (source, target, type) values (?, ?, ?)",
+		e.content("source") or "", e.content("target") or "", e.content("type") or "related"
+	)
+	fp = mochi.entity.fingerprint(project_id)
+	if fp:
+		mochi.websocket.write(fp, {"type": "link/create", "project": project_id})
+
+# Link deleted
+def event_link_delete(e):
+	project_id = verify_subscription(e)
+	if not project_id:
+		return
+	mochi.db.execute(
+		"delete from links where source=? and target=? and type=?",
+		e.content("source") or "", e.content("target") or "", e.content("type") or "related"
+	)
+	fp = mochi.entity.fingerprint(project_id)
+	if fp:
+		mochi.websocket.write(fp, {"type": "link/delete", "project": project_id})
+
+# View created
+def event_view_create(e):
+	project_id = verify_subscription(e)
+	if not project_id:
+		return
+	mochi.db.execute(
+		"insert or ignore into views (id, project, name, type, layout, filters, sort, groups, columns, created, updated) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+		e.content("id"), project_id, e.content("name") or "", e.content("type") or "",
+		e.content("layout") or "list", e.content("filters") or "[]", e.content("sort") or "[]",
+		e.content("groups") or "[]", e.content("columns") or "[]",
+		e.content("created") or mochi.time.now(), e.content("created") or mochi.time.now()
+	)
+	fp = mochi.entity.fingerprint(project_id)
+	if fp:
+		mochi.websocket.write(fp, {"type": "view/create", "project": project_id, "id": e.content("id")})
+
+# View updated
+def event_view_update(e):
+	project_id = verify_subscription(e)
+	if not project_id:
+		return
+	view_id = e.content("id")
+	if not view_id:
+		return
+	name = e.content("name")
+	layout = e.content("layout")
+	filters = e.content("filters")
+	sort = e.content("sort")
+	groups = e.content("groups")
+	columns = e.content("columns")
+	if name != None:
+		mochi.db.execute("update views set name=? where id=? and project=?", name, view_id, project_id)
+	if layout != None:
+		mochi.db.execute("update views set layout=? where id=? and project=?", layout, view_id, project_id)
+	if filters != None:
+		mochi.db.execute("update views set filters=? where id=? and project=?", filters, view_id, project_id)
+	if sort != None:
+		mochi.db.execute("update views set sort=? where id=? and project=?", sort, view_id, project_id)
+	if groups != None:
+		mochi.db.execute("update views set groups=? where id=? and project=?", groups, view_id, project_id)
+	if columns != None:
+		mochi.db.execute("update views set columns=? where id=? and project=?", columns, view_id, project_id)
+	mochi.db.execute("update views set updated=? where id=? and project=?", mochi.time.now(), view_id, project_id)
+	fp = mochi.entity.fingerprint(project_id)
+	if fp:
+		mochi.websocket.write(fp, {"type": "view/update", "project": project_id, "id": view_id})
+
+# View deleted
+def event_view_delete(e):
+	project_id = verify_subscription(e)
+	if not project_id:
+		return
+	view_id = e.content("id")
+	if not view_id:
+		return
+	mochi.db.execute("delete from views where id=? and project=?", view_id, project_id)
+	fp = mochi.entity.fingerprint(project_id)
+	if fp:
+		mochi.websocket.write(fp, {"type": "view/delete", "project": project_id, "id": view_id})
+
+# Type created
+def event_type_create(e):
+	project_id = verify_subscription(e)
+	if not project_id:
+		return
+	mochi.db.execute(
+		"insert or ignore into types (id, project, name, icon, colour, prefix, created) values (?, ?, ?, ?, ?, ?, ?)",
+		e.content("id"), project_id, e.content("name") or "", e.content("icon") or "",
+		e.content("colour") or "", e.content("prefix") or "", e.content("created") or mochi.time.now()
+	)
+	fp = mochi.entity.fingerprint(project_id)
+	if fp:
+		mochi.websocket.write(fp, {"type": "type/create", "project": project_id, "id": e.content("id")})
+
+# Type updated
+def event_type_update(e):
+	project_id = verify_subscription(e)
+	if not project_id:
+		return
+	type_id = e.content("id")
+	if not type_id:
+		return
+	name = e.content("name")
+	icon = e.content("icon")
+	colour = e.content("colour")
+	prefix = e.content("prefix")
+	if name != None:
+		mochi.db.execute("update types set name=? where id=? and project=?", name, type_id, project_id)
+	if icon != None:
+		mochi.db.execute("update types set icon=? where id=? and project=?", icon, type_id, project_id)
+	if colour != None:
+		mochi.db.execute("update types set colour=? where id=? and project=?", colour, type_id, project_id)
+	if prefix != None:
+		mochi.db.execute("update types set prefix=? where id=? and project=?", prefix, type_id, project_id)
+	fp = mochi.entity.fingerprint(project_id)
+	if fp:
+		mochi.websocket.write(fp, {"type": "type/update", "project": project_id, "id": type_id})
+
+# Type deleted
+def event_type_delete(e):
+	project_id = verify_subscription(e)
+	if not project_id:
+		return
+	type_id = e.content("id")
+	if not type_id:
+		return
+	mochi.db.execute("delete from options where project=? and type=?", project_id, type_id)
+	mochi.db.execute("delete from fields where project=? and type=?", project_id, type_id)
+	mochi.db.execute("delete from hierarchy where project=? and type=?", project_id, type_id)
+	mochi.db.execute("delete from types where id=? and project=?", type_id, project_id)
+	fp = mochi.entity.fingerprint(project_id)
+	if fp:
+		mochi.websocket.write(fp, {"type": "type/delete", "project": project_id, "id": type_id})
+
+# Hierarchy set
+def event_hierarchy_set(e):
+	project_id = verify_subscription(e)
+	if not project_id:
+		return
+	type_id = e.content("type")
+	children = e.content("children")
+	if not type_id:
+		return
+	# Clear existing hierarchy for this type
+	mochi.db.execute("delete from hierarchy where project=? and type=?", project_id, type_id)
+	# Insert new children
+	if children:
+		for i, child in enumerate(children):
+			mochi.db.execute(
+				"insert into hierarchy (project, type, child, sort) values (?, ?, ?, ?)",
+				project_id, type_id, child, i
+			)
+	fp = mochi.entity.fingerprint(project_id)
+	if fp:
+		mochi.websocket.write(fp, {"type": "hierarchy/set", "project": project_id, "type_id": type_id})
+
+# Field created
+def event_field_create(e):
+	project_id = verify_subscription(e)
+	if not project_id:
+		return
+	mochi.db.execute(
+		"insert or ignore into fields (project, type, id, name, fieldtype, required, multi, sort, card) values (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+		project_id, e.content("type") or "", e.content("id") or "", e.content("name") or "",
+		e.content("fieldtype") or "text", e.content("required") or 0, e.content("multi") or 0,
+		e.content("sort") or 0, e.content("card") or 1
+	)
+	fp = mochi.entity.fingerprint(project_id)
+	if fp:
+		mochi.websocket.write(fp, {"type": "field/create", "project": project_id, "type_id": e.content("type"), "id": e.content("id")})
+
+# Field updated
+def event_field_update(e):
+	project_id = verify_subscription(e)
+	if not project_id:
+		return
+	type_id = e.content("type")
+	field_id = e.content("id")
+	if not type_id or not field_id:
+		return
+	name = e.content("name")
+	required = e.content("required")
+	multi = e.content("multi")
+	card = e.content("card")
+	min_val = e.content("min")
+	max_val = e.content("max")
+	pattern = e.content("pattern")
+	minlength = e.content("minlength")
+	maxlength = e.content("maxlength")
+	prefix = e.content("prefix")
+	suffix = e.content("suffix")
+	format_str = e.content("format")
+	position = e.content("position")
+	if name != None:
+		mochi.db.execute("update fields set name=? where project=? and type=? and id=?", name, project_id, type_id, field_id)
+	if required != None:
+		mochi.db.execute("update fields set required=? where project=? and type=? and id=?", required, project_id, type_id, field_id)
+	if multi != None:
+		mochi.db.execute("update fields set multi=? where project=? and type=? and id=?", multi, project_id, type_id, field_id)
+	if card != None:
+		mochi.db.execute("update fields set card=? where project=? and type=? and id=?", card, project_id, type_id, field_id)
+	if min_val != None:
+		mochi.db.execute("update fields set min=? where project=? and type=? and id=?", min_val, project_id, type_id, field_id)
+	if max_val != None:
+		mochi.db.execute("update fields set max=? where project=? and type=? and id=?", max_val, project_id, type_id, field_id)
+	if pattern != None:
+		mochi.db.execute("update fields set pattern=? where project=? and type=? and id=?", pattern, project_id, type_id, field_id)
+	if minlength != None:
+		mochi.db.execute("update fields set minlength=? where project=? and type=? and id=?", minlength, project_id, type_id, field_id)
+	if maxlength != None:
+		mochi.db.execute("update fields set maxlength=? where project=? and type=? and id=?", maxlength, project_id, type_id, field_id)
+	if prefix != None:
+		mochi.db.execute("update fields set prefix=? where project=? and type=? and id=?", prefix, project_id, type_id, field_id)
+	if suffix != None:
+		mochi.db.execute("update fields set suffix=? where project=? and type=? and id=?", suffix, project_id, type_id, field_id)
+	if format_str != None:
+		mochi.db.execute("update fields set format=? where project=? and type=? and id=?", format_str, project_id, type_id, field_id)
+	if position != None:
+		mochi.db.execute("update fields set position=? where project=? and type=? and id=?", position, project_id, type_id, field_id)
+	fp = mochi.entity.fingerprint(project_id)
+	if fp:
+		mochi.websocket.write(fp, {"type": "field/update", "project": project_id, "type_id": type_id, "id": field_id})
+
+# Field deleted
+def event_field_delete(e):
+	project_id = verify_subscription(e)
+	if not project_id:
+		return
+	type_id = e.content("type")
+	field_id = e.content("id")
+	if not type_id or not field_id:
+		return
+	mochi.db.execute("delete from options where project=? and type=? and field=?", project_id, type_id, field_id)
+	mochi.db.execute("delete from fields where project=? and type=? and id=?", project_id, type_id, field_id)
+	fp = mochi.entity.fingerprint(project_id)
+	if fp:
+		mochi.websocket.write(fp, {"type": "field/delete", "project": project_id, "type_id": type_id, "id": field_id})
+
+# Field reorder
+def event_field_reorder(e):
+	project_id = verify_subscription(e)
+	if not project_id:
+		return
+	type_id = e.content("type")
+	order = e.content("order")
+	if not type_id or not order:
+		return
+	for i, field_id in enumerate(order):
+		mochi.db.execute("update fields set sort=? where project=? and type=? and id=?", i, project_id, type_id, field_id)
+	fp = mochi.entity.fingerprint(project_id)
+	if fp:
+		mochi.websocket.write(fp, {"type": "field/reorder", "project": project_id, "type_id": type_id})
+
+# Option created
+def event_option_create(e):
+	project_id = verify_subscription(e)
+	if not project_id:
+		return
+	mochi.db.execute(
+		"insert or ignore into options (project, type, field, id, name, colour, icon, sort) values (?, ?, ?, ?, ?, ?, ?, ?)",
+		project_id, e.content("type") or "", e.content("field") or "", e.content("id") or "",
+		e.content("name") or "", e.content("colour") or "#94a3b8", e.content("icon") or "",
+		e.content("sort") or 0
+	)
+	fp = mochi.entity.fingerprint(project_id)
+	if fp:
+		mochi.websocket.write(fp, {"type": "option/create", "project": project_id})
+
+# Option updated
+def event_option_update(e):
+	project_id = verify_subscription(e)
+	if not project_id:
+		return
+	type_id = e.content("type")
+	field_id = e.content("field")
+	option_id = e.content("id")
+	if not type_id or not field_id or not option_id:
+		return
+	name = e.content("name")
+	colour = e.content("colour")
+	icon = e.content("icon")
+	if name != None:
+		mochi.db.execute("update options set name=? where project=? and type=? and field=? and id=?", name, project_id, type_id, field_id, option_id)
+	if colour != None:
+		mochi.db.execute("update options set colour=? where project=? and type=? and field=? and id=?", colour, project_id, type_id, field_id, option_id)
+	if icon != None:
+		mochi.db.execute("update options set icon=? where project=? and type=? and field=? and id=?", icon, project_id, type_id, field_id, option_id)
+	fp = mochi.entity.fingerprint(project_id)
+	if fp:
+		mochi.websocket.write(fp, {"type": "option/update", "project": project_id})
+
+# Option deleted
+def event_option_delete(e):
+	project_id = verify_subscription(e)
+	if not project_id:
+		return
+	type_id = e.content("type")
+	field_id = e.content("field")
+	option_id = e.content("id")
+	if not type_id or not field_id or not option_id:
+		return
+	mochi.db.execute("delete from options where project=? and type=? and field=? and id=?", project_id, type_id, field_id, option_id)
+	fp = mochi.entity.fingerprint(project_id)
+	if fp:
+		mochi.websocket.write(fp, {"type": "option/delete", "project": project_id})
+
+# Option reorder
+def event_option_reorder(e):
+	project_id = verify_subscription(e)
+	if not project_id:
+		return
+	type_id = e.content("type")
+	field_id = e.content("field")
+	order = e.content("order")
+	if not type_id or not field_id or not order:
+		return
+	for i, option_id in enumerate(order):
+		mochi.db.execute("update options set sort=? where project=? and type=? and field=? and id=?", i, project_id, type_id, field_id, option_id)
+	fp = mochi.entity.fingerprint(project_id)
+	if fp:
+		mochi.websocket.write(fp, {"type": "option/reorder", "project": project_id})

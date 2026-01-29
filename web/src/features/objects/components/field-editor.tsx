@@ -43,7 +43,7 @@ export function FieldEditor({
       case "enum":
         return (
           <Select value={value} onValueChange={onChange} disabled={disabled}>
-            <SelectTrigger className="h-9">
+            <SelectTrigger className="h-9 w-full">
               <SelectValue placeholder="Select..." />
             </SelectTrigger>
             <SelectContent>

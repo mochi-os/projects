@@ -1,10 +1,8 @@
 // Mochi Projects: Filter bar component
 // Copyright Alistair Cunningham 2026
 
-import { useState, forwardRef } from "react";
-import { Search, X, Filter } from "lucide-react";
+import { X, ArrowUpDown, Check } from "lucide-react";
 import {
-  Input,
   Button,
   DropdownMenu,
   DropdownMenuContent,
@@ -12,6 +10,7 @@ import {
   DropdownMenuTrigger,
 } from "@mochi/common";
 import type { ProjectDetails, FieldOption } from "@/types";
+import type { SortState } from "@/features/list";
 
 export interface FilterState {
   search: string;
@@ -20,201 +19,133 @@ export interface FilterState {
   assignee: string;
 }
 
+const SORT_OPTIONS = [
+  { id: "rank", label: "Manual order" },
+  { id: "title", label: "Title" },
+  { id: "status", label: "Status" },
+  { id: "priority", label: "Priority" },
+  { id: "created", label: "Created" },
+  { id: "updated", label: "Updated" },
+] as const;
+
 interface FilterBarProps {
   project: ProjectDetails;
   filters: FilterState;
   onFilterChange: (filters: FilterState) => void;
+  sort?: SortState | null;
+  onSortChange?: (sort: SortState | null) => void;
+  showSort?: boolean;
 }
 
-export const FilterBar = forwardRef<HTMLInputElement, FilterBarProps>(
-  function FilterBar({ project, filters, onFilterChange }, ref) {
-    const [searchValue, setSearchValue] = useState(filters.search);
+export function FilterBar({
+  project,
+  filters,
+  onFilterChange,
+  sort,
+  onSortChange,
+  showSort,
+}: FilterBarProps) {
+  // Get status and priority options from the task type
+  const taskOptions = project.options["task"] || {};
+  const statusOptions: FieldOption[] = taskOptions["status"] || [];
+  const priorityOptions: FieldOption[] = taskOptions["priority"] || [];
 
-    // Get status and priority options from the task type
-    const taskFields = project.fields["task"] || [];
-    const taskOptions = project.options["task"] || {};
+  const clearFilter = (key: keyof FilterState) => {
+    onFilterChange({ ...filters, [key]: "" });
+  };
 
-    const statusField = taskFields.find((f) => f.id === "status");
-    const priorityField = taskFields.find((f) => f.id === "priority");
+  const clearAllFilters = () => {
+    onFilterChange({ search: "", status: "", priority: "", assignee: "" });
+  };
 
-    const statusOptions: FieldOption[] = statusField
-      ? taskOptions["status"] || []
-      : [];
-    const priorityOptions: FieldOption[] = priorityField
-      ? taskOptions["priority"] || []
-      : [];
+  const activeFilters: {
+    key: keyof FilterState;
+    label: string;
+    value: string;
+  }[] = [];
 
-    const handleSearchChange = (value: string) => {
-      setSearchValue(value);
-      onFilterChange({ ...filters, search: value });
-    };
+  if (filters.search) {
+    activeFilters.push({
+      key: "search",
+      label: "Search",
+      value: filters.search,
+    });
+  }
+  if (filters.status) {
+    const option = statusOptions.find((o) => o.id === filters.status);
+    activeFilters.push({
+      key: "status",
+      label: "Status",
+      value: option?.name || filters.status,
+    });
+  }
+  if (filters.priority) {
+    const option = priorityOptions.find((o) => o.id === filters.priority);
+    activeFilters.push({
+      key: "priority",
+      label: "Priority",
+      value: option?.name || filters.priority,
+    });
+  }
 
-    const handleSearchKeyDown = (e: React.KeyboardEvent) => {
-      if (e.key === "Escape") {
-        setSearchValue("");
-        onFilterChange({ ...filters, search: "" });
-      }
-    };
+  // Don't render anything if no filters and no sort to show
+  if (activeFilters.length === 0 && !showSort) {
+    return null;
+  }
 
-    const handleStatusChange = (value: string) => {
-      onFilterChange({ ...filters, status: value });
-    };
+  return (
+    <div className="flex items-center gap-2 flex-wrap px-4">
+      {/* Active filter chips */}
+      {activeFilters.map((filter) => (
+        <span
+          key={filter.key}
+          className="inline-flex items-center gap-1 px-2 py-0.5 text-xs font-medium bg-muted rounded-full"
+        >
+          <span className="text-muted-foreground">{filter.label}:</span>
+          <span className="truncate max-w-[100px]">{filter.value}</span>
+          <button
+            onClick={() => clearFilter(filter.key)}
+            className="ml-0.5 hover:text-destructive"
+          >
+            <X className="size-3" />
+          </button>
+        </span>
+      ))}
 
-    const handlePriorityChange = (value: string) => {
-      onFilterChange({ ...filters, priority: value });
-    };
+      {/* Clear all filters */}
+      {activeFilters.length > 1 && (
+        <Button
+          variant="ghost"
+          size="sm"
+          className="h-6 text-xs text-muted-foreground"
+          onClick={clearAllFilters}
+        >
+          Clear all
+        </Button>
+      )}
 
-    const clearFilter = (key: keyof FilterState) => {
-      onFilterChange({ ...filters, [key]: "" });
-      if (key === "search") {
-        setSearchValue("");
-      }
-    };
-
-    const clearAllFilters = () => {
-      setSearchValue("");
-      onFilterChange({ search: "", status: "", priority: "", assignee: "" });
-    };
-
-    const activeFilters: {
-      key: keyof FilterState;
-      label: string;
-      value: string;
-    }[] = [];
-
-    if (filters.search) {
-      activeFilters.push({
-        key: "search",
-        label: "Search",
-        value: filters.search,
-      });
-    }
-    if (filters.status) {
-      const option = statusOptions.find((o) => o.id === filters.status);
-      activeFilters.push({
-        key: "status",
-        label: "Status",
-        value: option?.name || filters.status,
-      });
-    }
-    if (filters.priority) {
-      const option = priorityOptions.find((o) => o.id === filters.priority);
-      activeFilters.push({
-        key: "priority",
-        label: "Priority",
-        value: option?.name || filters.priority,
-      });
-    }
-
-    return (
-      <div className="flex flex-col gap-2">
-        <div className="flex items-center gap-2">
-          {/* Search input */}
-          <div className="relative flex-1 max-w-xs">
-            <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
-            <Input
-              ref={ref}
-              type="search"
-              placeholder="Search..."
-              value={searchValue}
-              onChange={(e) => handleSearchChange(e.target.value)}
-              onKeyDown={handleSearchKeyDown}
-              className="pl-8 h-8"
-            />
-          </div>
-
-          {/* Status filter */}
-          {statusOptions.length > 0 && (
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="outline" size="sm" className="h-8">
-                  <Filter className="size-3 mr-1" />
-                  Status
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="start">
-                <DropdownMenuItem onClick={() => handleStatusChange("")}>
-                  All
-                </DropdownMenuItem>
-                {statusOptions.map((option) => (
-                  <DropdownMenuItem
-                    key={option.id}
-                    onClick={() => handleStatusChange(option.id)}
-                  >
-                    <span
-                      className="size-2 rounded-full mr-2"
-                      style={{ backgroundColor: option.colour }}
-                    />
-                    {option.name}
-                  </DropdownMenuItem>
-                ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
-          )}
-
-          {/* Priority filter */}
-          {priorityOptions.length > 0 && (
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="outline" size="sm" className="h-8">
-                  <Filter className="size-3 mr-1" />
-                  Priority
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="start">
-                <DropdownMenuItem onClick={() => handlePriorityChange("")}>
-                  All
-                </DropdownMenuItem>
-                {priorityOptions.map((option) => (
-                  <DropdownMenuItem
-                    key={option.id}
-                    onClick={() => handlePriorityChange(option.id)}
-                  >
-                    <span
-                      className="size-2 rounded-full mr-2"
-                      style={{ backgroundColor: option.colour }}
-                    />
-                    {option.name}
-                  </DropdownMenuItem>
-                ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
-          )}
-
-          {/* Clear all filters */}
-          {activeFilters.length > 0 && (
-            <Button
-              variant="ghost"
-              size="sm"
-              className="h-8 text-muted-foreground"
-              onClick={clearAllFilters}
-            >
-              Clear filters
+      {/* Sort dropdown */}
+      {showSort && onSortChange && (
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" size="sm" className="h-6 text-xs ml-auto">
+              <ArrowUpDown className="size-3 mr-1" />
+              {SORT_OPTIONS.find((o) => o.id === sort?.field)?.label || "Sort"}
             </Button>
-          )}
-        </div>
-
-        {/* Active filter chips */}
-        {activeFilters.length > 0 && (
-          <div className="flex items-center gap-2 flex-wrap">
-            {activeFilters.map((filter) => (
-              <span
-                key={filter.key}
-                className="inline-flex items-center gap-1 px-2 py-0.5 text-xs font-medium bg-muted rounded-full"
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            {SORT_OPTIONS.map((option) => (
+              <DropdownMenuItem
+                key={option.id}
+                onClick={() => onSortChange({ field: option.id, direction: "asc" })}
               >
-                <span className="text-muted-foreground">{filter.label}:</span>
-                <span className="truncate max-w-[100px]">{filter.value}</span>
-                <button
-                  onClick={() => clearFilter(filter.key)}
-                  className="ml-0.5 hover:text-destructive"
-                >
-                  <X className="size-3" />
-                </button>
-              </span>
+                {option.label}
+                {sort?.field === option.id && <Check className="size-4 ml-auto" />}
+              </DropdownMenuItem>
             ))}
-          </div>
-        )}
-      </div>
-    );
-  },
-);
+          </DropdownMenuContent>
+        </DropdownMenu>
+      )}
+    </div>
+  );
+}

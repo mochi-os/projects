@@ -4,6 +4,7 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { Plus } from "lucide-react";
 import {
   Button,
   Dialog,
@@ -30,6 +31,7 @@ import type { ProjectDetails, ObjectTemplate } from "@/types";
 interface CreateObjectDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  projectId: string; // Used for query cache key (matches URL param)
   project: ProjectDetails;
   templates: ObjectTemplate[];
   defaultStatus?: string;
@@ -45,6 +47,7 @@ interface FormValues {
 export function CreateObjectDialog({
   open,
   onOpenChange,
+  projectId,
   project,
   templates,
   defaultStatus,
@@ -80,11 +83,38 @@ export function CreateObjectDialog({
         );
       }
 
-      return response.data;
+      return {
+        ...response.data,
+        status: defaultStatus,
+        title: values.title,
+        type: values.type,
+      };
     },
     onSuccess: (data) => {
+      // Add new object to cache immediately for instant UI update
+      const newObject = {
+        id: data.id,
+        project: project.project.id,
+        type: data.type,
+        number: data.number,
+        parent: "",
+        rank: 999999, // Temporary high rank, will be corrected on refetch
+        created: Math.floor(Date.now() / 1000),
+        updated: Math.floor(Date.now() / 1000),
+        values: {
+          title: data.title || "",
+          status: data.status || "",
+        },
+      };
+      queryClient.setQueryData(
+        ["objects", projectId],
+        (old: Array<{ id: string; values: Record<string, string> }> | undefined) => {
+          return old ? [...old, newObject] : [newObject];
+        },
+      );
+      // Also invalidate to get full data from server
       queryClient.invalidateQueries({
-        queryKey: ["objects", project.project.id],
+        queryKey: ["objects", projectId],
       });
       onCreated?.(data.id, data.number, data.readable);
       form.reset();
@@ -103,11 +133,46 @@ export function CreateObjectDialog({
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Create item</DialogTitle>
-        </DialogHeader>
-
         <Form {...form}>
+          <DialogHeader className="flex-row items-center gap-3 space-y-0">
+            <DialogTitle className="shrink-0">New:</DialogTitle>
+            {templates.length > 1 && (
+              <FormField
+                control={form.control}
+                name="template"
+                render={({ field }) => (
+                  <FormItem className="flex-1">
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {[...templates]
+                          .sort((a, b) => {
+                            // Keep "Blank" first, then sort alphabetically
+                            if (a.id === "blank") return -1;
+                            if (b.id === "blank") return 1;
+                            return a.name.localeCompare(b.name);
+                          })
+                          .map((template) => (
+                            <SelectItem key={template.id} value={template.id}>
+                              {template.name}
+                            </SelectItem>
+                          ))}
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            )}
+          </DialogHeader>
+
           <form
             onSubmit={form.handleSubmit(handleSubmit)}
             className="space-y-4"
@@ -156,36 +221,6 @@ export function CreateObjectDialog({
               />
             )}
 
-            {templates.length > 1 && (
-              <FormField
-                control={form.control}
-                name="template"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Template</FormLabel>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {templates.map((template) => (
-                          <SelectItem key={template.id} value={template.id}>
-                            {template.name}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            )}
-
             {error && <div className="text-sm text-destructive">{error}</div>}
 
             <DialogFooter>
@@ -197,6 +232,7 @@ export function CreateObjectDialog({
                 Cancel
               </Button>
               <Button type="submit" disabled={createMutation.isPending}>
+                <Plus className="size-4 mr-1" />
                 {createMutation.isPending ? "Creating..." : "Create"}
               </Button>
             </DialogFooter>

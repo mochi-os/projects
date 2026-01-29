@@ -125,6 +125,7 @@ export function createMockObject(
     type: "task",
     number: 1,
     parent: "",
+    rank: 1,
     created: Date.now(),
     updated: Date.now(),
     readable: "TEST-1",

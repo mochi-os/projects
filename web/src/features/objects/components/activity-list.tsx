@@ -20,7 +20,14 @@ export function ActivityList({ projectId, objectId }: ActivityListProps) {
   });
 
   const formatDate = (timestamp: number) => {
-    return new Date(timestamp * 1000).toLocaleString();
+    const d = new Date(timestamp * 1000);
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, "0");
+    const day = String(d.getDate()).padStart(2, "0");
+    const hours = String(d.getHours()).padStart(2, "0");
+    const minutes = String(d.getMinutes()).padStart(2, "0");
+    const seconds = String(d.getSeconds()).padStart(2, "0");
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
   };
 
   const formatAction = (action: string) => {
@@ -63,25 +70,25 @@ export function ActivityList({ projectId, objectId }: ActivityListProps) {
           key={activity.id}
           className="text-sm border-l-2 border-muted pl-3 py-1"
         >
-          <div className="text-foreground">
-            <span className="font-medium">{activity.actor}</span>{" "}
+          <div className="flex items-center gap-2">
+            <span className="text-xs text-muted-foreground">
+              {formatDate(activity.created)}
+            </span>
+            <span className="font-medium">
+              {activity.name || activity.actor}
+            </span>
+          </div>
+          <div className="text-muted-foreground">
             {formatAction(activity.action)}
-            {activity.field && (
+            {activity.field && ` ${activity.field}`}
+            {activity.oldvalue && activity.newvalue && (
               <>
-                {" "}
-                <span className="text-muted-foreground">{activity.field}</span>
+                {": "}
+                <span className="line-through">{activity.oldvalue}</span>
+                {" → "}
+                <span className="text-foreground">{activity.newvalue}</span>
               </>
             )}
-          </div>
-          {activity.oldvalue && activity.newvalue && (
-            <div className="text-muted-foreground mt-0.5">
-              <span className="line-through">{activity.oldvalue}</span>
-              {" → "}
-              <span>{activity.newvalue}</span>
-            </div>
-          )}
-          <div className="text-xs text-muted-foreground mt-1">
-            {formatDate(activity.created)}
           </div>
         </div>
       ))}

@@ -1,7 +1,7 @@
 // Mochi Projects: Project page with board and list views
 // Copyright Alistair Cunningham 2026
 
-import { useState, useMemo, useRef, useCallback } from "react";
+import { useState, useMemo, useCallback } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import {
@@ -10,13 +10,22 @@ import {
   PageHeader,
   usePageTitle,
   Button,
+  Input,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+  DropdownMenuSub,
+  DropdownMenuSubTrigger,
+  DropdownMenuSubContent,
+  DropdownMenuSeparator,
 } from "@mochi/common";
-import { FolderKanban, Plus, Settings2 } from "lucide-react";
+import { Check, Ellipsis, Filter, FolderKanban, LayoutGrid, List, Plus, Search, Settings2 } from "lucide-react";
 import projectsApi from "@/api/projects";
 import type { ProjectDetails, ProjectObject, ObjectTemplate } from "@/types";
 import { BoardContainer } from "@/features/board/components";
 import { ListView, type SortState } from "@/features/list";
-import { ViewTabs, FilterBar, type FilterState } from "@/features/views";
+import { FilterBar, type FilterState } from "@/features/views";
 import {
   CreateObjectDialog,
   ObjectDetailPanel,
@@ -55,7 +64,6 @@ function ProjectPage() {
   >();
   const [showShortcutsHelp, setShowShortcutsHelp] = useState(false);
   const [selectedCardIndex, setSelectedCardIndex] = useState(-1);
-  const searchInputRef = useRef<HTMLInputElement>(null);
 
   // View state
   const [activeViewId, setActiveViewId] = useState(
@@ -72,8 +80,13 @@ function ProjectPage() {
     assignee: "",
   });
 
-  // Sort state for list view
-  const [sort, setSort] = useState<SortState | null>(null);
+  // Sort state for list view (default to rank/manual order)
+  const [sort, setSort] = useState<SortState | null>({ field: "rank", direction: "asc" });
+
+  // Get status and priority options
+  const taskOptions = project.options["task"] || {};
+  const statusOptions = taskOptions["status"] || [];
+  const priorityOptions = taskOptions["priority"] || [];
 
   const queryClient = useQueryClient();
 
@@ -91,13 +104,15 @@ function ProjectPage() {
     mutationFn: async ({
       objectId,
       status,
+      rank,
     }: {
       objectId: string;
       status: string;
+      rank?: number;
     }) => {
-      return projectsApi.moveObject(params.projectId, objectId, { status });
+      return projectsApi.moveObject(params.projectId, objectId, { status, rank });
     },
-    onMutate: async ({ objectId, status }) => {
+    onMutate: async ({ objectId, status, rank }) => {
       // Optimistically update the UI
       await queryClient.cancelQueries({
         queryKey: ["objects", params.projectId],
@@ -113,7 +128,7 @@ function ProjectPage() {
         (old) =>
           old?.map((obj) =>
             obj.id === objectId
-              ? { ...obj, values: { ...obj.values, status } }
+              ? { ...obj, rank: rank ?? obj.rank, values: { ...obj.values, status } }
               : obj,
           ),
       );
@@ -196,16 +211,29 @@ function ProjectPage() {
     (index: number) => {
       if (index < project.views.length) {
         setActiveViewId(project.views[index].id);
-        setSort(null);
+        setSort({ field: "rank", direction: "asc" });
       }
     },
     [project.views],
   );
 
+  // Get default status (first option of status field for first type)
+  const getDefaultStatus = useCallback(() => {
+    const firstType = project.types[0]?.id;
+    if (firstType && project.options[firstType]?.status?.length > 0) {
+      return project.options[firstType].status[0].id;
+    }
+    return undefined;
+  }, [project.types, project.options]);
+
+  const handleOpenCreateDialog = useCallback(() => {
+    setCreateDefaultStatus(getDefaultStatus());
+    setCreateDialogOpen(true);
+  }, [getDefaultStatus]);
+
   // Keyboard shortcuts
   useKeyboardShortcuts({
-    onCreateNew: () => setCreateDialogOpen(true),
-    onFocusSearch: () => searchInputRef.current?.focus(),
+    onCreateNew: handleOpenCreateDialog,
     onSwitchView: handleSwitchView,
     onSelectNext: handleSelectNext,
     onSelectPrevious: handleSelectPrevious,
@@ -231,8 +259,8 @@ function ProjectPage() {
     setCreateDialogOpen(true);
   };
 
-  const handleMoveObject = (objectId: string, newStatus: string) => {
-    moveMutation.mutate({ objectId, status: newStatus });
+  const handleMoveObject = (objectId: string, newStatus: string, newRank?: number) => {
+    moveMutation.mutate({ objectId, status: newStatus, rank: newRank });
   };
 
   const handleObjectCreated = () => {
@@ -242,7 +270,7 @@ function ProjectPage() {
   const handleViewChange = (viewId: string) => {
     setActiveViewId(viewId);
     // Reset sort when switching views
-    setSort(null);
+    setSort({ field: "rank", direction: "asc" });
   };
 
   return (
@@ -251,41 +279,142 @@ function ProjectPage() {
         title={project.project.name}
         icon={<FolderKanban className="size-4 md:size-5" />}
         actions={
-          <div className="flex items-center gap-2">
-            <Button variant="outline" size="sm" asChild>
-              <Link
-                to="/$projectId/design"
-                params={{ projectId: params.projectId }}
-              >
-                <Settings2 className="size-4 mr-1" />
-                Design
-              </Link>
-            </Button>
-            <Button size="sm" onClick={() => setCreateDialogOpen(true)}>
-              <Plus className="size-4 mr-1" />
-              New item
-            </Button>
-          </div>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" size="icon">
+                <Ellipsis className="size-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem onClick={handleOpenCreateDialog}>
+                <Plus className="size-4 mr-2" />
+                New
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuSub>
+                <DropdownMenuSubTrigger>
+                  <Search className="size-4 mr-2" />
+                  Search
+                  {filters.search && <span className="ml-2 text-xs text-muted-foreground">(active)</span>}
+                </DropdownMenuSubTrigger>
+                <DropdownMenuSubContent>
+                  <div className="p-2">
+                    <Input
+                      type="search"
+                      placeholder="Search..."
+                      value={filters.search}
+                      onChange={(e) => setFilters({ ...filters, search: e.target.value })}
+                      className="h-8"
+                      autoFocus
+                    />
+                  </div>
+                </DropdownMenuSubContent>
+              </DropdownMenuSub>
+              <DropdownMenuSub>
+                <DropdownMenuSubTrigger>
+                  {activeView?.viewtype === "list" ? (
+                    <List className="size-4 mr-2" />
+                  ) : (
+                    <LayoutGrid className="size-4 mr-2" />
+                  )}
+                  View
+                </DropdownMenuSubTrigger>
+                <DropdownMenuSubContent>
+                  {project.views.map((view) => (
+                    <DropdownMenuItem
+                      key={view.id}
+                      onClick={() => handleViewChange(view.id)}
+                    >
+                      {view.viewtype === "list" ? (
+                        <List className="size-4 mr-2" />
+                      ) : (
+                        <LayoutGrid className="size-4 mr-2" />
+                      )}
+                      {view.name}
+                      {activeViewId === view.id && <Check className="size-4 ml-auto" />}
+                    </DropdownMenuItem>
+                  ))}
+                </DropdownMenuSubContent>
+              </DropdownMenuSub>
+              <DropdownMenuSub>
+                <DropdownMenuSubTrigger>
+                  <Filter className="size-4 mr-2" />
+                  Status
+                  {filters.status && <span className="ml-2 text-xs text-muted-foreground">(active)</span>}
+                </DropdownMenuSubTrigger>
+                <DropdownMenuSubContent>
+                  <DropdownMenuItem onClick={() => setFilters({ ...filters, status: "" })}>
+                    All
+                    {!filters.status && <Check className="size-4 ml-auto" />}
+                  </DropdownMenuItem>
+                  {statusOptions.map((option) => (
+                    <DropdownMenuItem
+                      key={option.id}
+                      onClick={() => setFilters({ ...filters, status: option.id })}
+                    >
+                      <span
+                        className="size-2 rounded-full mr-2"
+                        style={{ backgroundColor: option.colour }}
+                      />
+                      {option.name}
+                      {filters.status === option.id && <Check className="size-4 ml-auto" />}
+                    </DropdownMenuItem>
+                  ))}
+                </DropdownMenuSubContent>
+              </DropdownMenuSub>
+              <DropdownMenuSub>
+                <DropdownMenuSubTrigger>
+                  <Filter className="size-4 mr-2" />
+                  Priority
+                  {filters.priority && <span className="ml-2 text-xs text-muted-foreground">(active)</span>}
+                </DropdownMenuSubTrigger>
+                <DropdownMenuSubContent>
+                  <DropdownMenuItem onClick={() => setFilters({ ...filters, priority: "" })}>
+                    All
+                    {!filters.priority && <Check className="size-4 ml-auto" />}
+                  </DropdownMenuItem>
+                  {priorityOptions.map((option) => (
+                    <DropdownMenuItem
+                      key={option.id}
+                      onClick={() => setFilters({ ...filters, priority: option.id })}
+                    >
+                      <span
+                        className="size-2 rounded-full mr-2"
+                        style={{ backgroundColor: option.colour }}
+                      />
+                      {option.name}
+                      {filters.priority === option.id && <Check className="size-4 ml-auto" />}
+                    </DropdownMenuItem>
+                  ))}
+                </DropdownMenuSubContent>
+              </DropdownMenuSub>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem asChild>
+                <Link
+                  to="/$projectId/design"
+                  params={{ projectId: params.projectId }}
+                >
+                  <Settings2 className="size-4 mr-2" />
+                  Design
+                </Link>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         }
       />
-      <Main className="flex flex-col overflow-hidden">
-        {/* View tabs and filters */}
-        <div className="px-4 pt-2 space-y-3">
-          <ViewTabs
-            views={project.views}
-            activeViewId={activeViewId}
-            onViewChange={handleViewChange}
-          />
-          <FilterBar
-            ref={searchInputRef}
-            project={project}
-            filters={filters}
-            onFilterChange={setFilters}
-          />
-        </div>
+      <Main fluid className="flex flex-col min-h-0 flex-1">
+        {/* Filters */}
+        <FilterBar
+          project={project}
+          filters={filters}
+          onFilterChange={setFilters}
+          sort={sort}
+          onSortChange={setSort}
+          showSort={activeView?.viewtype === "list"}
+        />
 
         {/* Content area */}
-        <div className="flex-1 overflow-auto">
+        <div className="flex-1 min-h-0 overflow-auto">
           {activeView?.viewtype === "list" ? (
             <div className="p-4">
               <ListView
@@ -297,7 +426,7 @@ function ProjectPage() {
               />
             </div>
           ) : (
-            <div className="p-4 overflow-x-auto">
+            <div className="px-4 h-full min-h-0">
               <BoardContainer
                 project={project}
                 objects={filteredObjects}
@@ -309,21 +438,20 @@ function ProjectPage() {
             </div>
           )}
         </div>
-
-        {/* Detail panel */}
-        {selectedObjectId && (
-          <ObjectDetailPanel
-            projectId={params.projectId}
-            objectId={selectedObjectId}
-            project={project}
-            onClose={() => setSelectedObjectId(null)}
-          />
-        )}
       </Main>
+
+      {/* Object detail dialog */}
+      <ObjectDetailPanel
+        projectId={params.projectId}
+        objectId={selectedObjectId}
+        project={project}
+        onClose={() => setSelectedObjectId(null)}
+      />
 
       <CreateObjectDialog
         open={createDialogOpen}
         onOpenChange={setCreateDialogOpen}
+        projectId={params.projectId}
         project={project}
         templates={templates}
         defaultStatus={createDefaultStatus}

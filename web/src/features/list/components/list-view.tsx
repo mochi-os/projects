@@ -40,7 +40,10 @@ export function ListView({
       let aVal: string | number;
       let bVal: string | number;
 
-      if (sort.field === "number") {
+      if (sort.field === "rank") {
+        aVal = a.rank || 0;
+        bVal = b.rank || 0;
+      } else if (sort.field === "number") {
         aVal = a.number;
         bVal = b.number;
       } else if (sort.field === "created") {
@@ -84,7 +87,6 @@ export function ListView({
         fields={visibleFields}
         sort={sort}
         onSortChange={onSortChange}
-        prefix={project.project.prefix}
       />
       <div className="divide-y divide-border">
         {sortedObjects.map((object) => (
@@ -93,7 +95,6 @@ export function ListView({
             object={object}
             fields={visibleFields}
             options={taskOptions}
-            prefix={project.project.prefix}
             onClick={() => onCardClick(object)}
           />
         ))}

@@ -1,7 +1,7 @@
 // Mochi Projects: Board column component
 // Copyright Alistair Cunningham 2026
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { cn } from "@mochi/common";
 import { Plus } from "lucide-react";
 import { BoardCard } from "./board-card";
@@ -17,7 +17,7 @@ interface BoardColumnProps {
   prefix: string;
   onCardClick?: (object: ProjectObject) => void;
   onCreateClick?: () => void;
-  onDrop?: (objectId: string, columnId: string) => void;
+  onDrop?: (objectId: string, columnId: string, newRank?: number) => void;
 }
 
 export function BoardColumn({
@@ -33,15 +33,41 @@ export function BoardColumn({
   onDrop,
 }: BoardColumnProps) {
   const [isDragOver, setIsDragOver] = useState(false);
+  const [dropIndex, setDropIndex] = useState<number | null>(null);
+  const cardsContainerRef = useRef<HTMLDivElement>(null);
 
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault();
     e.dataTransfer.dropEffect = "move";
     setIsDragOver(true);
+
+    // Calculate drop position based on mouse Y position
+    if (cardsContainerRef.current) {
+      const container = cardsContainerRef.current;
+      const cards = container.querySelectorAll("[data-card-id]");
+      const mouseY = e.clientY;
+
+      let newDropIndex = objects.length; // Default to end
+      for (let i = 0; i < cards.length; i++) {
+        const card = cards[i];
+        const rect = card.getBoundingClientRect();
+        const cardMiddle = rect.top + rect.height / 2;
+        if (mouseY < cardMiddle) {
+          newDropIndex = i;
+          break;
+        }
+      }
+      setDropIndex(newDropIndex);
+    }
   };
 
-  const handleDragLeave = () => {
-    setIsDragOver(false);
+  const handleDragLeave = (e: React.DragEvent) => {
+    // Only clear if leaving the column entirely
+    const relatedTarget = e.relatedTarget as HTMLElement;
+    if (!cardsContainerRef.current?.contains(relatedTarget)) {
+      setIsDragOver(false);
+      setDropIndex(null);
+    }
   };
 
   const handleDrop = (e: React.DragEvent) => {
@@ -49,14 +75,17 @@ export function BoardColumn({
     setIsDragOver(false);
     const objectId = e.dataTransfer.getData("text/plain");
     if (objectId && onDrop) {
-      onDrop(objectId, id);
+      // Calculate rank: position + 1 (1-based)
+      const newRank = dropIndex !== null ? dropIndex + 1 : objects.length + 1;
+      onDrop(objectId, id, newRank);
     }
+    setDropIndex(null);
   };
 
   return (
     <div
       className={cn(
-        "flex flex-col w-72 shrink-0 rounded-lg",
+        "flex flex-col w-72 shrink-0 rounded-lg h-full min-h-0",
         "bg-muted/30 border",
         isDragOver && "border-primary bg-primary/5",
       )}
@@ -89,19 +118,31 @@ export function BoardColumn({
       </div>
 
       {/* Cards */}
-      <div className="flex-1 p-2 space-y-2 overflow-y-auto min-h-[200px]">
-        {objects.map((object) => (
-          <BoardCard
-            key={object.id}
-            object={object}
-            fields={fields}
-            options={options}
-            prefix={prefix}
-            onClick={() => onCardClick?.(object)}
-          />
+      <div
+        ref={cardsContainerRef}
+        className="flex-1 p-2 space-y-2 overflow-y-auto min-h-0"
+      >
+        {objects.map((object, index) => (
+          <div key={object.id} data-card-id={object.id}>
+            {isDragOver && dropIndex === index && (
+              <div className="h-1 bg-primary rounded mb-2" />
+            )}
+            <BoardCard
+              object={object}
+              fields={fields}
+              options={options}
+              prefix={prefix}
+              onClick={() => onCardClick?.(object)}
+            />
+          </div>
         ))}
 
-        {objects.length === 0 && (
+        {/* Drop indicator at end */}
+        {isDragOver && dropIndex === objects.length && (
+          <div className="h-1 bg-primary rounded" />
+        )}
+
+        {objects.length === 0 && !isDragOver && (
           <div className="text-center text-sm text-muted-foreground py-8">
             No items
           </div>

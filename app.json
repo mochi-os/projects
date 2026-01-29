@@ -12,7 +12,7 @@
 	"execute": ["projects.star"],
 
 	"database": {
-		"schema": 1,
+		"schema": 2,
 		"file": "projects.db",
 		"create": {"function": "database_create"},
 		"upgrade": {"function": "database_upgrade"}
@@ -37,8 +37,6 @@
 		"probe": {"function": "action_probe"},
 		"subscribe": {"function": "action_subscribe"},
 		"unsubscribe": {"function": "action_unsubscribe"},
-		"bookmark/add": {"function": "action_bookmark_add"},
-		"bookmark/remove": {"function": "action_bookmark_remove"},
 
 		":project": {"file": "web/dist/index.html"},
 		":project/design": {"file": "web/dist/index.html"},
@@ -108,5 +106,35 @@
 	},
 
 	"events": {
+		"info": {"function": "event_info"},
+		"subscribe": {"function": "event_subscribe"},
+		"unsubscribe": {"function": "event_unsubscribe"},
+		"deleted": {"function": "event_deleted"},
+
+		"project/update": {"function": "event_project_update"},
+		"object/create": {"function": "event_object_create"},
+		"object/update": {"function": "event_object_update"},
+		"object/delete": {"function": "event_object_delete"},
+		"values/update": {"function": "event_values_update"},
+		"comment/create": {"function": "event_comment_create"},
+		"comment/update": {"function": "event_comment_update"},
+		"comment/delete": {"function": "event_comment_delete"},
+		"link/create": {"function": "event_link_create"},
+		"link/delete": {"function": "event_link_delete"},
+		"view/create": {"function": "event_view_create"},
+		"view/update": {"function": "event_view_update"},
+		"view/delete": {"function": "event_view_delete"},
+		"type/create": {"function": "event_type_create"},
+		"type/update": {"function": "event_type_update"},
+		"type/delete": {"function": "event_type_delete"},
+		"hierarchy/set": {"function": "event_hierarchy_set"},
+		"field/create": {"function": "event_field_create"},
+		"field/update": {"function": "event_field_update"},
+		"field/delete": {"function": "event_field_delete"},
+		"field/reorder": {"function": "event_field_reorder"},
+		"option/create": {"function": "event_option_create"},
+		"option/update": {"function": "event_option_update"},
+		"option/delete": {"function": "event_option_delete"},
+		"option/reorder": {"function": "event_option_reorder"}
 	}
 }

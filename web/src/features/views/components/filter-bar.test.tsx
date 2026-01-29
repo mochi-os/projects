@@ -212,19 +212,4 @@ describe("FilterBar", () => {
       screen.queryByRole("button", { name: /priority/i }),
     ).not.toBeInTheDocument();
   });
-
-  it("should forward ref to search input", () => {
-    const ref = vi.fn();
-
-    render(
-      <FilterBar
-        ref={ref}
-        project={mockProject}
-        filters={defaultFilters}
-        onFilterChange={mockOnFilterChange}
-      />,
-    );
-
-    expect(ref).toHaveBeenCalled();
-  });
 });

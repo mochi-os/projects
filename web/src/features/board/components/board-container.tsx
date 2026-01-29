@@ -11,7 +11,7 @@ interface BoardContainerProps {
   statusField: string;
   onCardClick?: (object: ProjectObject) => void;
   onCreateClick?: (statusId: string) => void;
-  onMoveObject?: (objectId: string, newStatus: string) => void;
+  onMoveObject?: (objectId: string, newStatus: string, newRank?: number) => void;
 }
 
 export function BoardContainer({
@@ -33,7 +33,7 @@ export function BoardContainer({
     return opts.sort((a, b) => a.sort - b.sort);
   }, [typeOptions, statusField]);
 
-  // Group objects by status
+  // Group objects by status and sort by rank
   const objectsByStatus = useMemo(() => {
     const grouped: Record<string, ProjectObject[]> = {};
 
@@ -55,15 +55,20 @@ export function BoardContainer({
       }
     });
 
+    // Sort each column by rank
+    Object.keys(grouped).forEach((status) => {
+      grouped[status].sort((a, b) => (a.rank || 0) - (b.rank || 0));
+    });
+
     return grouped;
   }, [objects, statusOptions, statusField]);
 
-  const handleDrop = (objectId: string, columnId: string) => {
-    onMoveObject?.(objectId, columnId);
+  const handleDrop = (objectId: string, columnId: string, newRank?: number) => {
+    onMoveObject?.(objectId, columnId, newRank);
   };
 
   return (
-    <div className="flex gap-4 overflow-x-auto pb-4 min-h-[500px]">
+    <div className="flex gap-4 pb-2 h-full overflow-x-auto overflow-y-hidden">
       {statusOptions.map((status) => (
         <BoardColumn
           key={status.id}

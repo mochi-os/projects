@@ -20,7 +20,8 @@ export function BoardCard({
   onClick,
 }: BoardCardProps) {
   const title = object.values.title || `${prefix}-${object.number}`;
-  const cardFields = fields.filter((f) => f.card === 1);
+  // Exclude title (shown separately) and status (redundant - card is already in status column)
+  const cardFields = fields.filter((f) => f.card === 1 && f.id !== "title" && f.id !== "status");
 
   return (
     <div
@@ -36,9 +37,6 @@ export function BoardCard({
         e.dataTransfer.effectAllowed = "move";
       }}
     >
-      <div className="text-xs text-muted-foreground mb-1">
-        {prefix}-{object.number}
-      </div>
       <div className="font-medium text-sm mb-2 line-clamp-2">{title}</div>
 
       {cardFields.length > 0 && (

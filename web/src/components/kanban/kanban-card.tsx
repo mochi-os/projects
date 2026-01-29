@@ -28,6 +28,8 @@ export function KanbanCard({
         "hover:border-primary/50 hover:shadow-sm transition-all",
         // Overlay specific styles
         isOverlay && "cursor-grabbing shadow-xl rotate-2 scale-105 z-50 opacity-100 ring-2 ring-primary",
+        // Optimistic item styles (loading state)
+        object.isOptimistic && "opacity-70 cursor-wait pointer-events-none",
         className
       )}
       {...props}

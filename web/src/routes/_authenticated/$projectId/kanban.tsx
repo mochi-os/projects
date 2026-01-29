@@ -37,11 +37,11 @@ function KanbanPage() {
     const [createDialogOpen, setCreateDialogOpen] = useState(false);
     const [createDefaultStatus, setCreateDefaultStatus] = useState<string | undefined>();
 
-    // Load objects
+    // Load objects - use full project ID to match mutation cache updates
     const { data: objectsData } = useQuery({
-        queryKey: ["objects", params.projectId],
+        queryKey: ["objects", project.project.id],
         queryFn: async () => {
-            const response = await projectsApi.listObjects(params.projectId);
+            const response = await projectsApi.listObjects(project.project.id);
             return response.data.objects;
         },
     });
@@ -59,14 +59,14 @@ function KanbanPage() {
         },
         onMutate: async ({ objectId, status }) => {
           await queryClient.cancelQueries({
-            queryKey: ["objects", params.projectId],
+             queryKey: ["objects", project.project.id],
           });
           const previousObjects = queryClient.getQueryData<ProjectObject[]>([
             "objects",
-            params.projectId,
+            project.project.id,
           ]);
           queryClient.setQueryData<ProjectObject[]>(
-            ["objects", params.projectId],
+            ["objects", project.project.id],
             (old) =>
               old?.map((obj) =>
                 obj.id === objectId
@@ -79,14 +79,14 @@ function KanbanPage() {
         onError: (_err, _variables, context) => {
           if (context?.previousObjects) {
             queryClient.setQueryData(
-              ["objects", params.projectId],
+              ["objects", project.project.id],
               context.previousObjects,
             );
           }
         },
         onSettled: () => {
           queryClient.invalidateQueries({
-            queryKey: ["objects", params.projectId],
+            queryKey: ["objects", project.project.id],
           });
         },
     });

@@ -56,7 +56,7 @@ export function KanbanBoard({
   const defaultType = project.types[0];
   const typeFields = defaultType ? project.fields[defaultType.id] || [] : [];
   const typeOptions = defaultType ? project.options[defaultType.id] || {} : {};
-  
+
   // Columns (Statuses)
   const statusOptions = useMemo(() => {
     const opts = typeOptions[statusField] || [];
@@ -83,8 +83,8 @@ export function KanbanBoard({
     localObjects.forEach((obj) => {
       const status = obj.values[statusField] || "";
       if (typeof grouped[status] === 'undefined') {
-         // handle unknown status
-         grouped[status] = []; 
+        // handle unknown status
+        grouped[status] = [];
       }
       grouped[status].push(obj);
     });
@@ -94,7 +94,14 @@ export function KanbanBoard({
   // Handlers
   const handleDragStart = (event: DragStartEvent) => {
     if (event.active.data.current?.type === "Task") {
-      setActiveObject(event.active.data.current.object);
+      const object = event.active.data.current.object as ProjectObject;
+
+      // Prevent dragging optimistic items (not yet confirmed by server)
+      if (object.isOptimistic) {
+        return;
+      }
+
+      setActiveObject(object);
       return;
     }
   };
@@ -121,34 +128,34 @@ export function KanbanBoard({
     setLocalObjects((prev) => {
       const activeIndex = prev.findIndex((o) => o.id === activeId);
       const activeObj = prev[activeIndex];
-      
+
       // 1. Dragging over a Column (empty space or header)
       if (isOverColumn) {
-         const overColumnId = overId as string;
-         if (activeObj.values[statusField] !== overColumnId) {
-             // Move to the new column
-             const newObj = { ...activeObj, values: { ...activeObj.values, [statusField]: overColumnId } };
-             const newArr = [...prev];
-             newArr[activeIndex] = newObj;
-             // We could also move it to end of list, but keeping index is fine for now as sort strategy
-             return newArr;
-         }
+        const overColumnId = overId as string;
+        if (activeObj.values[statusField] !== overColumnId) {
+          // Move to the new column
+          const newObj = { ...activeObj, values: { ...activeObj.values, [statusField]: overColumnId } };
+          const newArr = [...prev];
+          newArr[activeIndex] = newObj;
+          // We could also move it to end of list, but keeping index is fine for now as sort strategy
+          return newArr;
+        }
       }
 
       // 2. Dragging over another Task
       if (isOverTask) {
         const overIndex = prev.findIndex((o) => o.id === overId);
         const overObj = prev[overIndex];
-        
+
         if (activeObj.values[statusField] !== overObj.values[statusField]) {
-            // Moving to different column
-             const newObj = { ...activeObj, values: { ...activeObj.values, [statusField]: overObj.values[statusField] } };
-             const newArr = [...prev];
-             newArr[activeIndex] = newObj;
-             return arrayMove(newArr, activeIndex, overIndex);
+          // Moving to different column
+          const newObj = { ...activeObj, values: { ...activeObj.values, [statusField]: overObj.values[statusField] } };
+          const newArr = [...prev];
+          newArr[activeIndex] = newObj;
+          return arrayMove(newArr, activeIndex, overIndex);
         } else {
-             // Reordering in same column
-             return arrayMove(prev, activeIndex, overIndex);
+          // Reordering in same column
+          return arrayMove(prev, activeIndex, overIndex);
         }
       }
 
@@ -169,18 +176,18 @@ export function KanbanBoard({
     // Actually, 'localObjects' has the final state.
     // We need to find the object in localObjects and see if its status changed compared to *what it was before drag*?
     // Or simpler: we know where it ended up.
-    
+
     // BUT 'onMoveObject' usually expects (id, status).
     // If we reordered, we might need a different API for 'index'. 
     // The current API 'onMoveObject' seems to only handle status change (moveMutation in parent).
     // So we assume reordering within column is NOT persisted (or ignored) for now, only Status change.
-    
+
     const finalObj = localObjects.find(o => o.id === activeId);
     if (finalObj) {
-         const finalStatus = finalObj.values[statusField];
-         // We should check if it's different from the *original* status or just trigger it.
-         // Triggering it is safe usually.
-         onMoveObject?.(activeId, finalStatus);
+      const finalStatus = finalObj.values[statusField];
+      // We should check if it's different from the *original* status or just trigger it.
+      // Triggering it is safe usually.
+      onMoveObject?.(activeId, finalStatus);
     }
   };
 
@@ -206,30 +213,30 @@ export function KanbanBoard({
             onCreateClick={() => onCreateClick?.(status.id)}
           />
         ))}
-         {/* Column for items without status if any */}
+        {/* Column for items without status if any */}
         {objectsByStatus[""]?.length > 0 && (
-            <ColumnContainer
+          <ColumnContainer
             id=""
             title="No Status"
             objects={objectsByStatus[""]}
             fields={typeFields}
             options={typeOptions}
             prefix={project.project.prefix}
-            />
+          />
         )}
       </div>
 
       {createPortal(
         <DragOverlay dropAnimation={dropAnimation}>
-            {activeObject && (
-                <KanbanCard
-                    object={activeObject}
-                    fields={typeFields}
-                    options={typeOptions}
-                    prefix={project.project.prefix}
-                    isOverlay
-                />
-            )}
+          {activeObject && (
+            <KanbanCard
+              object={activeObject}
+              fields={typeFields}
+              options={typeOptions}
+              prefix={project.project.prefix}
+              isOverlay
+            />
+          )}
         </DragOverlay>,
         document.body
       )}

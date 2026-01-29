@@ -23,9 +23,10 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
+  toast,
 } from "@mochi/common";
 import projectsApi from "@/api/projects";
-import type { ProjectDetails, ObjectTemplate } from "@/types";
+import type { ProjectDetails, ObjectTemplate, ProjectObject } from "@/types";
 
 interface CreateObjectDialogProps {
   open: boolean;
@@ -82,16 +83,108 @@ export function CreateObjectDialog({
 
       return response.data;
     },
-    onSuccess: (data) => {
+    onMutate: async (values: FormValues) => {
+      // Cancel any outgoing refetches
+      await queryClient.cancelQueries({
+        queryKey: ["objects", project.project.id],
+      });
+
+      // Snapshot the previous value
+      const previousObjects = queryClient.getQueryData<ProjectObject[]>([
+        "objects",
+        project.project.id,
+      ]);
+
+      // Generate a temporary ID
+      const tempId = `temp-${Date.now()}`;
+
+      // Create optimistic object
+      const optimisticObject: ProjectObject = {
+        id: tempId,
+        project: project.project.id,
+        type: values.type,
+        number: -1, // Temporary number
+        parent: "",
+        created: Date.now(),
+        updated: Date.now(),
+        values: {
+          title: values.title || "New Item",
+          ...(defaultStatus ? { status: defaultStatus } : {}),
+        },
+        isOptimistic: true,
+      };
+
+      console.log('[Optimistic] Adding temp object:', optimisticObject);
+      console.log('[Optimistic] Previous objects count:', previousObjects?.length || 0);
+
+      // Optimistically update to the new value
+      queryClient.setQueryData<ProjectObject[]>(
+        ["objects", project.project.id],
+        (old) => {
+          const updated = [...(old || []), optimisticObject];
+          console.log('[Optimistic] Updated objects count:', updated.length);
+          return updated;
+        },
+      );
+
+      // Close dialog immediately
+      form.reset();
+      onOpenChange(false);
+
+      // Return context with rollback info
+      return { previousObjects, tempId, values };
+    },
+    onSuccess: (data, _variables, context) => {
+      // Seamlessly swap the temp object with the real one
+      queryClient.setQueryData<ProjectObject[]>(
+        ["objects", project.project.id],
+        (old) => {
+          const swapped = old?.map((obj) =>
+            obj.id === context?.tempId
+              ? {
+                  ...obj,
+                  id: data.id,
+                  number: data.number,
+                  readable: data.readable,
+                  isOptimistic: false,
+                }
+              : obj,
+          );
+          console.log('[Success] Swapped temp ID', context?.tempId, 'with real ID', data.id);
+          console.log('[Success] Updated objects:', swapped);
+          return swapped;
+        },
+      );
+
+      // Invalidate in background for consistency
       queryClient.invalidateQueries({
         queryKey: ["objects", project.project.id],
       });
+      
       onCreated?.(data.id, data.number, data.readable);
-      form.reset();
-      onOpenChange(false);
     },
-    onError: (err: Error) => {
-      setError(err.message);
+    onError: (err: Error, _variables, context) => {
+      // Rollback to previous state
+      if (context?.previousObjects) {
+        queryClient.setQueryData(
+          ["objects", project.project.id],
+          context.previousObjects,
+        );
+      }
+
+      // Show error toast with retry
+      const title = context?.values.title || "item";
+      toast.error(`We couldn't create '${title}'`, {
+        description: err.message,
+        action: {
+          label: "Retry",
+          onClick: () => {
+            if (context?.values) {
+              createMutation.mutate(context.values);
+            }
+          },
+        },
+      });
     },
   });
 

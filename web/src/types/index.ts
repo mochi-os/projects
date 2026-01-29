@@ -82,6 +82,7 @@ export interface ProjectObject {
   updated: number;
   readable?: string;
   values: Record<string, string>;
+  isOptimistic?: boolean;
 }
 
 export interface ObjectLink {

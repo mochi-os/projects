@@ -125,7 +125,7 @@ export function BoardColumn({
         {objects.map((object, index) => (
           <div key={object.id} data-card-id={object.id}>
             {isDragOver && dropIndex === index && (
-              <div className="h-1 bg-primary rounded mb-2" />
+              <div className="h-[50px] w-full rounded-[10px] border border-dashed border-primary bg-primary/10 mb-2 transition-all duration-200" />
             )}
             <BoardCard
               object={object}
@@ -139,7 +139,7 @@ export function BoardColumn({
 
         {/* Drop indicator at end */}
         {isDragOver && dropIndex === objects.length && (
-          <div className="h-1 bg-primary rounded" />
+          <div className="h-[50px] w-full rounded-[10px] border border-dashed border-primary bg-primary/10 transition-all duration-200" />
         )}
 
         {objects.length === 0 && !isDragOver && (

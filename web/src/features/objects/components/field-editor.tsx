@@ -1,7 +1,7 @@
 // Mochi Projects: Field editor component
 // Copyright Alistair Cunningham 2026
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   Input,
   Textarea,
@@ -30,15 +30,38 @@ export function FieldEditor({
   hideLabel,
 }: FieldEditorProps & { hideLabel?: boolean }) {
   const [localValue, setLocalValue] = useState(value);
+  const debounceTimerRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Sync local state with prop value when it changes externally
+  useEffect(() => {
+    setLocalValue(value);
+  }, [value]);
 
   const handleBlur = () => {
+    if (debounceTimerRef.current) {
+      clearTimeout(debounceTimerRef.current);
+    }
     if (localValue !== value) {
       onChange(localValue);
     }
   };
 
+  const handleTextChange = (newValue: string) => {
+    setLocalValue(newValue);
+    
+    // Debounce auto-save for better UX
+    if (debounceTimerRef.current) {
+      clearTimeout(debounceTimerRef.current);
+    }
+    
+    debounceTimerRef.current = setTimeout(() => {
+      if (newValue !== value) {
+        onChange(newValue);
+      }
+    }, 1000); // 1 second debounce
+  };
+
   const renderEditor = () => {
-    // ... same logic
     switch (field.fieldtype) {
       case "enum":
         return (
@@ -68,7 +91,7 @@ export function FieldEditor({
         return (
           <Textarea
             value={localValue}
-            onChange={(e) => setLocalValue(e.target.value)}
+            onChange={(e) => handleTextChange(e.target.value)}
             onBlur={handleBlur}
             disabled={disabled}
             rows={3}

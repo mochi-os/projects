@@ -85,7 +85,7 @@ export function BoardColumn({
   return (
     <div
       className={cn(
-        "flex flex-col w-72 shrink-0 rounded-[10px] h-full min-h-0",
+        "flex flex-col w-72 shrink-0 rounded-[10px] min-h-[calc(100vh-5rem)]",
         "bg-muted/30 border",
         isDragOver && "border-primary bg-primary/5",
       )}
@@ -120,7 +120,7 @@ export function BoardColumn({
       {/* Cards */}
       <div
         ref={cardsContainerRef}
-        className="flex-1 p-2 space-y-2 overflow-y-auto min-h-0"
+        className="p-2 space-y-2"
       >
         {objects.map((object, index) => (
           <div key={object.id} data-card-id={object.id}>

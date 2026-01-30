@@ -437,7 +437,7 @@ function ProjectPage() {
         />
 
         {/* Content area */}
-        <div className="flex-1 min-h-0 overflow-auto">
+        <div className={activeView?.viewtype === "list" ? "flex-1 min-h-0 overflow-auto" : ""}>
           {activeView?.viewtype === "list" ? (
             <div className="p-4">
               <ListView
@@ -449,7 +449,7 @@ function ProjectPage() {
               />
             </div>
           ) : (
-            <div className="px-4 h-full min-h-0">
+            <div className="pl-2 pr-4 pt-1">
               <BoardContainer
                 project={project}
                 objects={filteredObjects}

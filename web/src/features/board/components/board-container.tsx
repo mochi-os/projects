@@ -68,7 +68,7 @@ export function BoardContainer({
   };
 
   return (
-    <div className="flex gap-4 pb-2 h-full overflow-x-auto overflow-y-hidden">
+    <div className="flex gap-4 pb-2">
       {statusOptions.map((status) => (
         <BoardColumn
           key={status.id}

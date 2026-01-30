@@ -85,7 +85,7 @@ export function BoardColumn({
   return (
     <div
       className={cn(
-        "flex flex-col w-72 shrink-0 rounded-lg h-full min-h-0",
+        "flex flex-col w-72 shrink-0 rounded-[10px] h-full min-h-0",
         "bg-muted/30 border",
         isDragOver && "border-primary bg-primary/5",
       )}

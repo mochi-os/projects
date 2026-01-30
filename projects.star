@@ -592,8 +592,7 @@ def get_object_templates():
 			"description": "Support request or general issue.",
 			"fields": {
 				"status": "todo",
-				"priority": "medium",
-				"description": "## Summary\n\n## Details\n\n"
+				"priority": "medium"
 			}
 		},
 		"bug": {
@@ -602,8 +601,7 @@ def get_object_templates():
 			"description": "Defect report.",
 			"fields": {
 				"status": "todo",
-				"priority": "high",
-				"description": "## Steps to Reproduce\n1. \n2. \n3. \n\n## Expected Behaviour\n\n## Actual Behaviour\n\n## Environment\n"
+				"priority": "high"
 			}
 		},
 		"feature": {
@@ -619,8 +617,7 @@ def get_object_templates():
 			"name": "Pull request",
 			"description": "Code review request linked to a repository.",
 			"fields": {
-				"status": "todo",
-				"description": "## Changes\n\n## Testing\n\n## Related Issues\n"
+				"status": "todo"
 			}
 		}
 	}

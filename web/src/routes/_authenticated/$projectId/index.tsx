@@ -1,8 +1,8 @@
 // Mochi Projects: Project page with board and list views
 // Copyright Alistair Cunningham 2026
 
-import { useState, useMemo, useCallback } from "react";
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { useState, useMemo, useCallback, useEffect } from "react";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   GeneralError,
@@ -33,7 +33,14 @@ import {
 import { useKeyboardShortcuts } from "@/hooks/use-keyboard-shortcuts";
 import { KeyboardShortcutsHelp } from "@/components/keyboard-shortcuts-help";
 
+interface SearchParams {
+  view?: string;
+}
+
 export const Route = createFileRoute("/_authenticated/$projectId/")({
+  validateSearch: (search: Record<string, unknown>): SearchParams => ({
+    view: typeof search.view === "string" ? search.view : undefined,
+  }),
   loader: async ({ params }) => {
     const [projectResponse, templatesResponse] = await Promise.all([
       projectsApi.get(params.projectId),
@@ -54,6 +61,8 @@ function ProjectPage() {
     templates: ObjectTemplate[];
   };
   const params = Route.useParams();
+  const search = Route.useSearch();
+  const navigate = useNavigate();
 
   usePageTitle(project.project.name);
 
@@ -65,12 +74,26 @@ function ProjectPage() {
   const [showShortcutsHelp, setShowShortcutsHelp] = useState(false);
   const [selectedCardIndex, setSelectedCardIndex] = useState(-1);
 
-  // View state
-  const [activeViewId, setActiveViewId] = useState(
-    project.views[0]?.id || "board",
-  );
+  // View state - initialize from URL or first view
+  const defaultViewId = project.views[0]?.id || "board";
+  const initialViewId = search.view && project.views.some((v) => v.id === search.view)
+    ? search.view
+    : defaultViewId;
+  const [activeViewId, setActiveViewId] = useState(initialViewId);
   const activeView =
     project.views.find((v) => v.id === activeViewId) || project.views[0];
+
+  // Sync URL when view changes
+  useEffect(() => {
+    const newView = activeViewId === defaultViewId ? undefined : activeViewId;
+    if (search.view !== newView) {
+      navigate({
+        to: ".",
+        search: { view: newView },
+        replace: true,
+      });
+    }
+  }, [activeViewId, defaultViewId, search.view, navigate]);
 
   // Filter state
   const [filters, setFilters] = useState<FilterState>({

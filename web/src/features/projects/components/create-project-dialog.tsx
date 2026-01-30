@@ -15,7 +15,8 @@ import {
   RadioGroup,
   RadioGroupItem,
 } from "@mochi/common";
-import { FolderKanban, Plus } from "lucide-react";
+import { Check, FolderKanban, Plus } from "lucide-react";
+import { cn } from "@mochi/common";
 import projectsApi from "@/api/projects";
 import { useProjectsStore } from "@/stores/projects-store";
 import type { ProjectTemplate } from "@/types";
@@ -161,29 +162,50 @@ export function CreateProjectDialog({
                 <RadioGroup
                   value={selectedTemplate}
                   onValueChange={setSelectedTemplate}
-                  className="gap-3"
+                  className="grid grid-cols-1 gap-3"
                 >
-                  {templates.map((template) => (
-                    <div
-                      key={template.id}
-                      className="flex items-start space-x-3"
-                    >
-                      <RadioGroupItem
-                        value={template.id}
-                        id={template.id}
-                        className="mt-1"
-                      />
-                      <Label
-                        htmlFor={template.id}
-                        className="flex cursor-pointer flex-col gap-1 font-normal"
+                  {templates.map((template) => {
+                    const isSelected = selectedTemplate === template.id;
+                    return (
+                      <div
+                        key={template.id}
+                        className={cn(
+                          "relative flex cursor-pointer items-start gap-4 rounded-xl border-2 p-4 transition-all duration-200",
+                          isSelected
+                            ? "border-primary bg-primary/5 shadow-sm"
+                            : "border-border hover:border-primary/30 hover:bg-accent/50",
+                        )}
+                        onClick={() => setSelectedTemplate(template.id)}
                       >
-                        <span className="font-medium">{template.name}</span>
-                        <span className="text-muted-foreground text-sm">
-                          {template.description}
-                        </span>
-                      </Label>
-                    </div>
-                  ))}
+                        <RadioGroupItem
+                          value={template.id}
+                          id={template.id}
+                          className="sr-only"
+                        />
+                        <div
+                          className={cn(
+                            "mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full border-2 transition-colors",
+                            isSelected
+                              ? "border-primary bg-primary text-primary-foreground"
+                              : "border-muted-foreground/30 bg-transparent",
+                          )}
+                        >
+                          {isSelected && <Check className="size-3 stroke-[3]" />}
+                        </div>
+                        <div className="flex flex-col gap-1.5">
+                          <Label
+                            htmlFor={template.id}
+                            className="cursor-pointer text-base font-semibold leading-none"
+                          >
+                            {template.name}
+                          </Label>
+                          <p className="text-muted-foreground text-sm leading-relaxed">
+                            {template.description}
+                          </p>
+                        </div>
+                      </div>
+                    );
+                  })}
                 </RadioGroup>
               )}
             </div>

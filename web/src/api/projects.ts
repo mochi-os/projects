@@ -280,6 +280,13 @@ const projectsApi = {
     );
   },
 
+  // List project members (subscribers + owners)
+  listPeople: async (
+    projectId: string,
+  ): Promise<{ data: { people: { id: string; name: string }[] } }> => {
+    return projectsRequest.get(endpoints.projects.people(projectId));
+  },
+
   // ============= Object Methods =============
 
   // List objects

@@ -14,7 +14,7 @@ describe("FilterBar", () => {
     search: "",
     status: "",
     priority: "",
-    assignee: "",
+    owner: "",
   };
   const mockOnFilterChange = vi.fn();
 
@@ -145,7 +145,7 @@ describe("FilterBar", () => {
           search: "test",
           status: "todo",
           priority: "high",
-          assignee: "",
+          owner: "",
         }}
         onFilterChange={mockOnFilterChange}
       />,
@@ -157,7 +157,7 @@ describe("FilterBar", () => {
       search: "",
       status: "",
       priority: "",
-      assignee: "",
+      owner: "",
     });
   });
 

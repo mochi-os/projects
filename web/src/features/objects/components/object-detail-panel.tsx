@@ -63,6 +63,16 @@ export function ObjectDetailPanel({
     enabled: !!objectId,
   });
 
+  // Fetch project members for the owner picker
+  const { data: peopleData } = useQuery({
+    queryKey: ["people", projectId],
+    queryFn: async () => {
+      const response = await projectsApi.listPeople(projectId);
+      return response.data.people;
+    },
+    staleTime: 60000, // Cache for 1 minute
+  });
+
   const updateValueMutation = useMutation({
     mutationFn: async ({ field, value }: { field: string; value: string }) => {
       if (!objectId) return;
@@ -271,6 +281,7 @@ export function ObjectDetailPanel({
                       onChange={(value) => handleFieldChange(field.id, value)}
                       disabled={updateValueMutation.isPending}
                       hideLabel
+                      localPeople={peopleData}
                     />
                   </div>
                 ))}

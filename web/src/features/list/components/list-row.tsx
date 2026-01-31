@@ -11,6 +11,11 @@ interface ListRowProps {
   onClick: () => void;
 }
 
+function truncate(text: string, maxLength: number): string {
+  if (text.length <= maxLength) return text;
+  return text.slice(0, maxLength - 1) + "…";
+}
+
 export function ListRow({
   object,
   fields,
@@ -67,14 +72,18 @@ export function ListRow({
       onClick={onClick}
     >
       {/* Field columns */}
-      {fields.map((field) => (
-        <div
-          key={field.id}
-          className={cn("px-3 py-2", field.id === "title" ? "flex-1" : "w-32")}
-        >
-          {renderFieldValue(field, object.values[field.id] || "")}
-        </div>
-      ))}
+      {fields.map((field) => {
+        const value = object.values[field.id] || "";
+        const displayValue = field.id === "title" ? truncate(value, 100) : value;
+        return (
+          <div
+            key={field.id}
+            className={cn("px-3 py-2", field.id === "title" ? "flex-1" : "w-32")}
+          >
+            {renderFieldValue(field, displayValue)}
+          </div>
+        );
+      })}
     </div>
   );
 }

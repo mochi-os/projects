@@ -16,7 +16,7 @@ export interface FilterState {
   search: string;
   status: string;
   priority: string;
-  assignee: string;
+  owner: string;
 }
 
 const SORT_OPTIONS = [
@@ -55,7 +55,7 @@ export function FilterBar({
   };
 
   const clearAllFilters = () => {
-    onFilterChange({ search: "", status: "", priority: "", assignee: "" });
+    onFilterChange({ search: "", status: "", priority: "", owner: "" });
   };
 
   const activeFilters: {

@@ -12,7 +12,7 @@
 	"execute": ["projects.star"],
 
 	"database": {
-		"schema": 2,
+		"schema": 3,
 		"file": "projects.db",
 		"create": {"function": "database_create"},
 		"upgrade": {"function": "database_upgrade"}
@@ -43,6 +43,7 @@
 		":project/-/info": {"function": "action_project_get"},
 		":project/-/update": {"function": "action_project_update"},
 		":project/-/delete": {"function": "action_project_delete"},
+		":project/-/people": {"function": "action_people_list"},
 
 		":project/-/objects": {"function": "action_object_list"},
 		":project/-/objects/create": {"function": "action_object_create"},

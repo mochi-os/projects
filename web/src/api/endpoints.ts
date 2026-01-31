@@ -15,6 +15,7 @@ const endpoints = {
     info: (projectId: string) => `${projectId}/-/info`,
     update: (projectId: string) => `${projectId}/-/update`,
     delete: (projectId: string) => `${projectId}/-/delete`,
+    people: (projectId: string) => `${projectId}/-/people`,
 
     // Object endpoints
     objects: (projectId: string) => `${projectId}/-/objects`,

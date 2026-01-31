@@ -100,7 +100,7 @@ function ProjectPage() {
     search: "",
     status: "",
     priority: "",
-    assignee: "",
+    owner: "",
   });
 
   // Sort state for list view (default to rank/manual order)
@@ -198,9 +198,9 @@ function ProjectPage() {
       result = result.filter((obj) => obj.values.priority === filters.priority);
     }
 
-    // Apply assignee filter
-    if (filters.assignee) {
-      result = result.filter((obj) => obj.values.assignee === filters.assignee);
+    // Apply owner filter
+    if (filters.owner) {
+      result = result.filter((obj) => obj.values.owner === filters.owner);
     }
 
     return result;

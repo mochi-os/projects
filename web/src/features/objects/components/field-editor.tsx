@@ -10,6 +10,8 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
+  PersonPicker,
+  type Person,
 } from "@mochi/common";
 import type { ProjectField, FieldOption } from "@/types";
 
@@ -19,6 +21,7 @@ interface FieldEditorProps {
   options: FieldOption[];
   onChange: (value: string) => void;
   disabled?: boolean;
+  localPeople?: Person[];
 }
 
 export function FieldEditor({
@@ -28,6 +31,7 @@ export function FieldEditor({
   onChange,
   disabled,
   hideLabel,
+  localPeople = [],
 }: FieldEditorProps & { hideLabel?: boolean }) {
   const [localValue, setLocalValue] = useState(value);
 
@@ -104,13 +108,16 @@ export function FieldEditor({
 
       case "user":
         return (
-          <Input
-            value={localValue}
-            onChange={(e) => setLocalValue(e.target.value)}
-            onBlur={handleBlur}
+          <PersonPicker
+            mode="single"
+            value={value}
+            onChange={(v) => onChange(v as string)}
+            local={localPeople}
+            friends
+            directory
             disabled={disabled}
-            placeholder="User ID"
-            className="h-9"
+            placeholder="Select owner..."
+            emptyMessage="No people found"
           />
         );
 

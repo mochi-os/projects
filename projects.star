@@ -159,6 +159,7 @@ def database_create():
 		primary key (object, field)
 	)""")
 	mochi.db.execute("create index if not exists values_object on \"values\"(object)")
+	mochi.db.execute("create index if not exists values_owner on \"values\"(value) where field='owner'")
 
 	# 11. comments - comments on objects
 	mochi.db.execute("""create table if not exists comments (
@@ -217,6 +218,14 @@ def database_upgrade(to_version):
 		# Add rank column to objects for ordering within columns
 		mochi.db.execute("alter table objects add column rank integer not null default 0")
 
+	if to_version == 3:
+		# Rename assignee field to owner
+		mochi.db.execute("update fields set id='owner', name='Owner' where id='assignee'")
+		mochi.db.execute("update \"values\" set field='owner' where field='assignee'")
+		mochi.db.execute("update views set cardfields=replace(cardfields, 'assignee', 'owner')")
+		# Add index for efficient owner lookups
+		mochi.db.execute("create index if not exists values_owner on \"values\"(value) where field='owner'")
+
 
 # ============================================================================
 # Templates
@@ -252,7 +261,7 @@ def apply_template_simple(project_id):
 		("description", "Description", "text", 0, 1),
 		("status", "Status", "enum", 1, 2),
 		("priority", "Priority", "enum", 0, 3),
-		("assignee", "Assignee", "user", 0, 4),
+		("owner", "Owner", "user", 0, 4),
 		("due", "Due", "date", 0, 5),
 	]
 	for field_id, name, fieldtype, required, sort in fields:
@@ -290,13 +299,13 @@ def apply_template_simple(project_id):
 	# Create default board view
 	mochi.db.execute(
 		"insert into views (project, id, name, viewtype, columns, cardfields) values (?, ?, ?, ?, ?, ?)",
-		project_id, "board", "Board", "board", "status", "title,priority,assignee,due"
+		project_id, "board", "Board", "board", "status", "title,priority,owner,due"
 	)
 
 	# Create default list view
 	mochi.db.execute(
 		"insert into views (project, id, name, viewtype, columns, cardfields, sort, direction) values (?, ?, ?, ?, ?, ?, ?, ?)",
-		project_id, "list", "List", "list", "", "title,status,priority,assignee,due", "number", "desc"
+		project_id, "list", "List", "list", "", "title,status,priority,owner,due", "number", "desc"
 	)
 
 
@@ -564,6 +573,49 @@ def action_project_delete(a):
 	mochi.entity.delete(project_id)
 
 	return {"data": {"success": True}}
+
+
+# List project members (subscribers + unique owners + current user)
+def action_people_list(a):
+	if not a.user:
+		a.error(401, "Not logged in")
+		return
+
+	project_id = resolve_project(a)
+	if not project_id:
+		a.error(400, "Project ID required")
+		return
+
+	project = get_project(project_id)
+	if not project:
+		a.error(404, "Project not found")
+		return
+
+	# Collect unique people with names
+	people = {}
+
+	# Always include current user first so they can assign to themselves
+	people[a.user.identity.id] = {"id": a.user.identity.id, "name": a.user.identity.name}
+
+	# Add subscribers (already have names stored)
+	subscribers = mochi.db.rows("select id, name from subscribers where project=?", project_id) or []
+	for sub in subscribers:
+		if sub["id"] not in people:
+			people[sub["id"]] = {"id": sub["id"], "name": sub["name"]}
+
+	# Add unique owners from object values
+	owners = mochi.db.rows(
+		"select distinct value from \"values\" where field='owner' and value != '' and object in (select id from objects where project=?)",
+		project_id
+	) or []
+	for owner in owners:
+		owner_id = owner["value"]
+		if owner_id and owner_id not in people:
+			# Resolve owner name from entity
+			name = mochi.entity.name(owner_id) or owner_id[:9]
+			people[owner_id] = {"id": owner_id, "name": name}
+
+	return {"data": {"people": list(people.values())}}
 
 
 # ============================================================================
@@ -1840,7 +1892,7 @@ def action_view_create(a):
 	filter_str = a.input("filter") or ""
 	columns = a.input("columns") or "status"
 	rows = a.input("rows") or ""
-	cardfields = a.input("cardfields") or "title,priority,assignee,due"
+	cardfields = a.input("cardfields") or "title,priority,owner,due"
 	sort = a.input("sort") or ""
 	direction = a.input("direction") or "asc"
 

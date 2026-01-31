@@ -12,11 +12,6 @@ interface BoardCardProps {
   onClick?: () => void;
 }
 
-function truncate(text: string, maxLength: number): string {
-  if (text.length <= maxLength) return text;
-  return text.slice(0, maxLength - 1) + "…";
-}
-
 export function BoardCard({
   object,
   fields,
@@ -24,8 +19,7 @@ export function BoardCard({
   prefix,
   onClick,
 }: BoardCardProps) {
-  const rawTitle = object.values.title || `${prefix}-${object.number}`;
-  const title = truncate(rawTitle, 160);
+  const title = object.values.title || `${prefix}-${object.number}`;
   // Exclude title (shown separately), status (redundant - card is already in status column), and priority (shown as border)
   const cardFields = fields.filter(
     (f) => f.card === 1 && f.id !== "title" && f.id !== "status" && f.id !== "priority",
@@ -56,8 +50,8 @@ export function BoardCard({
       <div className="font-medium text-sm mb-2 line-clamp-2">{title}</div>
 
       {object.values.description && (
-        <div className="text-xs text-muted-foreground mb-2">
-          {truncate(object.values.description, 160)}
+        <div className="text-xs text-muted-foreground mb-2 line-clamp-3">
+          {object.values.description}
         </div>
       )}
 

@@ -59,10 +59,6 @@ export function useKeyboardShortcuts({
           e.preventDefault();
           onCreateNew?.();
           break;
-        case "/":
-          e.preventDefault();
-          onFocusSearch?.();
-          break;
         case "?":
           e.preventDefault();
           onShowHelp?.();
@@ -112,10 +108,27 @@ export function useKeyboardShortcuts({
     ],
   );
 
+  // Handle Ctrl+K in capture phase to intercept before other handlers
+  const handleCtrlK = useCallback(
+    (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === "k") {
+        e.preventDefault();
+        e.stopPropagation();
+        onFocusSearch?.();
+      }
+    },
+    [onFocusSearch],
+  );
+
   useEffect(() => {
     if (!enabled) return;
 
+    // Use capture phase for Ctrl+K to intercept before SearchProvider
+    document.addEventListener("keydown", handleCtrlK, true);
     window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [enabled, handleKeyDown]);
+    return () => {
+      document.removeEventListener("keydown", handleCtrlK, true);
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [enabled, handleKeyDown, handleCtrlK]);
 }

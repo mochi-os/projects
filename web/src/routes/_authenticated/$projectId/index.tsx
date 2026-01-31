@@ -14,6 +14,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
+  useSearch,
 } from "@mochi/common";
 import { ChevronDown, ChevronUp, Ellipsis, FolderKanban, Plus, Settings2 } from "lucide-react";
 import projectsApi from "@/api/projects";
@@ -61,6 +62,13 @@ function ProjectPage() {
   const navigate = useNavigate();
 
   usePageTitle(project.project.name);
+
+  // Disable global Ctrl+K search shortcut so we can use it for view options
+  const { setShortcutEnabled } = useSearch();
+  useEffect(() => {
+    setShortcutEnabled(false);
+    return () => setShortcutEnabled(true);
+  }, [setShortcutEnabled]);
 
   const [selectedObjectId, setSelectedObjectId] = useState<string | null>(null);
   const [createDialogOpen, setCreateDialogOpen] = useState(false);
@@ -340,7 +348,7 @@ function ProjectPage() {
                 variant="ghost"
                 size="icon"
                 onClick={() => setShowViewOptions(!showViewOptions)}
-                title="View options (/ or Cmd+K)"
+                title={`View options (${navigator.platform.includes("Mac") ? "Cmd" : "Ctrl"}+K)`}
               >
                 {showViewOptions ? (
                   <ChevronDown className="size-4" />

@@ -13,10 +13,11 @@ interface KeyboardShortcutsHelpProps {
   onOpenChange: (open: boolean) => void;
 }
 
+const isMac = typeof navigator !== "undefined" && navigator.platform.includes("Mac");
+
 const shortcuts = [
   { key: "c / n", description: "Create new item" },
-  { key: "/", description: "Focus search" },
-  { key: "⌘ K", description: "Focus search (alternative)" },
+  { key: isMac ? "⌘ K" : "Ctrl+K", description: "Toggle view options" },
   { key: "1-9", description: "Switch to view 1-9" },
   { key: "j / ↓", description: "Select next card" },
   { key: "k / ↑", description: "Select previous card" },

@@ -329,6 +329,9 @@ def action_project_list(a):
 	rows = mochi.db.rows("select id, name, description, prefix, owner, server, created, updated from projects order by updated desc")
 	projects = []
 	for row in rows or []:
+		# Get owner name from first subscriber (the creator)
+		subscriber = mochi.db.row("select name from subscribers where project=? order by subscribed asc limit 1", row["id"])
+		ownername = subscriber["name"] if subscriber else ""
 		projects.append({
 			"id": row["id"],
 			"fingerprint": mochi.entity.fingerprint(row["id"]),
@@ -336,6 +339,7 @@ def action_project_list(a):
 			"description": row["description"],
 			"prefix": row["prefix"],
 			"owner": row["owner"],
+			"ownername": ownername,
 			"server": row["server"],
 			"created": row["created"],
 			"updated": row["updated"],

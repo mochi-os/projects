@@ -122,6 +122,24 @@ function ProjectPage() {
     },
   });
 
+  // Load people for resolving user field values to names
+  const { data: peopleData } = useQuery({
+    queryKey: ["people", params.projectId],
+    queryFn: async () => {
+      const response = await projectsApi.listPeople(params.projectId);
+      return response.data.people;
+    },
+  });
+
+  // Create a map of user ID to name for quick lookups
+  const peopleMap = useMemo(() => {
+    const map: Record<string, string> = {};
+    for (const person of peopleData || []) {
+      map[person.id] = person.name;
+    }
+    return map;
+  }, [peopleData]);
+
   // Move object mutation
   const moveMutation = useMutation({
     mutationFn: async ({
@@ -443,6 +461,7 @@ function ProjectPage() {
               <ListView
                 project={project}
                 objects={filteredObjects}
+                peopleMap={peopleMap}
                 sort={sort}
                 onSortChange={setSort}
                 onCardClick={handleCardClick}

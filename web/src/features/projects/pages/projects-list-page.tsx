@@ -75,6 +75,9 @@ export function ProjectsListPage() {
                           </p>
                         )}
                         <p className="text-muted-foreground mt-2 text-xs">
+                          {project.ownername && (
+                            <span>{project.ownername} · </span>
+                          )}
                           Updated{" "}
                           {formatDistanceToNow(
                             new Date(project.updated * 1000),

@@ -8,6 +8,7 @@ interface ListRowProps {
   object: ProjectObject;
   fields: ProjectField[];
   options: Record<string, FieldOption[]>;
+  peopleMap: Record<string, string>;
   onClick: () => void;
 }
 
@@ -20,6 +21,7 @@ export function ListRow({
   object,
   fields,
   options,
+  peopleMap,
   onClick,
 }: ListRowProps) {
   const renderFieldValue = (field: ProjectField, value: string) => {
@@ -57,8 +59,10 @@ export function ListRow({
         );
       }
 
-      case "user":
-        return <span className="truncate">{value}</span>;
+      case "user": {
+        const name = peopleMap[value] || value;
+        return <span className="truncate">{truncate(name, 25)}</span>;
+      }
 
       case "text":
       default:

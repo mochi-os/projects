@@ -9,6 +9,7 @@ import type { ProjectDetails, ProjectObject } from "@/types";
 interface ListViewProps {
   project: ProjectDetails;
   objects: ProjectObject[];
+  peopleMap: Record<string, string>;
   sort: SortState | null;
   onSortChange: (sort: SortState) => void;
   onCardClick: (object: ProjectObject) => void;
@@ -17,6 +18,7 @@ interface ListViewProps {
 export function ListView({
   project,
   objects,
+  peopleMap,
   sort,
   onSortChange,
   onCardClick,
@@ -95,6 +97,7 @@ export function ListView({
             object={object}
             fields={visibleFields}
             options={taskOptions}
+            peopleMap={peopleMap}
             onClick={() => onCardClick(object)}
           />
         ))}

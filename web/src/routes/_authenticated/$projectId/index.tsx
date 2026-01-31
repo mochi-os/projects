@@ -10,17 +10,12 @@ import {
   PageHeader,
   usePageTitle,
   Button,
-  Input,
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-  DropdownMenuSub,
-  DropdownMenuSubTrigger,
-  DropdownMenuSubContent,
-  DropdownMenuSeparator,
 } from "@mochi/common";
-import { Check, Ellipsis, Filter, FolderKanban, LayoutGrid, List, Plus, Search, Settings2 } from "lucide-react";
+import { Ellipsis, FolderKanban, Plus, Settings2, SlidersHorizontal } from "lucide-react";
 import projectsApi from "@/api/projects";
 import type { ProjectDetails, ProjectObject, ObjectTemplate } from "@/types";
 import { BoardContainer } from "@/features/board/components";
@@ -32,6 +27,7 @@ import {
 } from "@/features/objects/components";
 import { useKeyboardShortcuts } from "@/hooks/use-keyboard-shortcuts";
 import { KeyboardShortcutsHelp } from "@/components/keyboard-shortcuts-help";
+import { CommandPanel } from "@/components/command-panel";
 
 interface SearchParams {
   view?: string;
@@ -72,6 +68,7 @@ function ProjectPage() {
     string | undefined
   >();
   const [showShortcutsHelp, setShowShortcutsHelp] = useState(false);
+  const [showCommandPanel, setShowCommandPanel] = useState(false);
   const [selectedCardIndex, setSelectedCardIndex] = useState(-1);
 
   // View state - initialize from URL or first view
@@ -105,11 +102,6 @@ function ProjectPage() {
 
   // Sort state for list view (default to rank/manual order)
   const [sort, setSort] = useState<SortState | null>({ field: "rank", direction: "asc" });
-
-  // Get status and priority options
-  const taskOptions = project.options["task"] || {};
-  const statusOptions = taskOptions["status"] || [];
-  const priorityOptions = taskOptions["priority"] || [];
 
   const queryClient = useQueryClient();
 
@@ -275,13 +267,16 @@ function ProjectPage() {
   // Keyboard shortcuts
   useKeyboardShortcuts({
     onCreateNew: handleOpenCreateDialog,
+    onFocusSearch: () => setShowCommandPanel(true),
     onSwitchView: handleSwitchView,
     onSelectNext: handleSelectNext,
     onSelectPrevious: handleSelectPrevious,
     onOpenSelected: handleOpenSelected,
     onEditSelected: handleOpenSelected,
     onClose: () => {
-      if (selectedObjectId) {
+      if (showCommandPanel) {
+        setShowCommandPanel(false);
+      } else if (selectedObjectId) {
         setSelectedObjectId(null);
       } else {
         setSelectedCardIndex(-1);
@@ -320,140 +315,52 @@ function ProjectPage() {
         title={project.project.name}
         icon={<FolderKanban className="size-4 md:size-5" />}
         actions={
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon">
-                <Ellipsis className="size-4" />
+          <div className="flex items-center gap-2">
+            <FilterBar
+              project={project}
+              filters={filters}
+              onFilterChange={setFilters}
+            />
+            <div className="flex items-center gap-1">
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={handleOpenCreateDialog}
+                title="New (n)"
+              >
+                <Plus className="size-4" />
               </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuItem onClick={handleOpenCreateDialog}>
-                <Plus className="size-4 mr-2" />
-                New
-              </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuSub>
-                <DropdownMenuSubTrigger>
-                  <Search className="size-4 mr-2" />
-                  Search
-                  {filters.search && <span className="ml-2 text-xs text-muted-foreground">(active)</span>}
-                </DropdownMenuSubTrigger>
-                <DropdownMenuSubContent>
-                  <div className="p-2">
-                    <Input
-                      type="search"
-                      placeholder="Search..."
-                      value={filters.search}
-                      onChange={(e) => setFilters({ ...filters, search: e.target.value })}
-                      className="h-8"
-                      autoFocus
-                    />
-                  </div>
-                </DropdownMenuSubContent>
-              </DropdownMenuSub>
-              <DropdownMenuSub>
-                <DropdownMenuSubTrigger>
-                  {activeView?.viewtype === "list" ? (
-                    <List className="size-4 mr-2" />
-                  ) : (
-                    <LayoutGrid className="size-4 mr-2" />
-                  )}
-                  View
-                </DropdownMenuSubTrigger>
-                <DropdownMenuSubContent>
-                  {project.views.map((view) => (
-                    <DropdownMenuItem
-                      key={view.id}
-                      onClick={() => handleViewChange(view.id)}
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setShowCommandPanel(true)}
+                title="View options (/ or Cmd+K)"
+              >
+                <SlidersHorizontal className="size-4" />
+              </Button>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" size="icon">
+                    <Ellipsis className="size-4" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuItem asChild>
+                    <Link
+                      to="/$projectId/design"
+                      params={{ projectId: params.projectId }}
                     >
-                      {view.viewtype === "list" ? (
-                        <List className="size-4 mr-2" />
-                      ) : (
-                        <LayoutGrid className="size-4 mr-2" />
-                      )}
-                      {view.name}
-                      {activeViewId === view.id && <Check className="size-4 ml-auto" />}
-                    </DropdownMenuItem>
-                  ))}
-                </DropdownMenuSubContent>
-              </DropdownMenuSub>
-              <DropdownMenuSub>
-                <DropdownMenuSubTrigger>
-                  <Filter className="size-4 mr-2" />
-                  Status
-                  {filters.status && <span className="ml-2 text-xs text-muted-foreground">(active)</span>}
-                </DropdownMenuSubTrigger>
-                <DropdownMenuSubContent>
-                  <DropdownMenuItem onClick={() => setFilters({ ...filters, status: "" })}>
-                    All
-                    {!filters.status && <Check className="size-4 ml-auto" />}
+                      <Settings2 className="size-4 mr-2" />
+                      Design
+                    </Link>
                   </DropdownMenuItem>
-                  {statusOptions.map((option) => (
-                    <DropdownMenuItem
-                      key={option.id}
-                      onClick={() => setFilters({ ...filters, status: option.id })}
-                    >
-                      <span
-                        className="size-2 rounded-full mr-2"
-                        style={{ backgroundColor: option.colour }}
-                      />
-                      {option.name}
-                      {filters.status === option.id && <Check className="size-4 ml-auto" />}
-                    </DropdownMenuItem>
-                  ))}
-                </DropdownMenuSubContent>
-              </DropdownMenuSub>
-              <DropdownMenuSub>
-                <DropdownMenuSubTrigger>
-                  <Filter className="size-4 mr-2" />
-                  Priority
-                  {filters.priority && <span className="ml-2 text-xs text-muted-foreground">(active)</span>}
-                </DropdownMenuSubTrigger>
-                <DropdownMenuSubContent>
-                  <DropdownMenuItem onClick={() => setFilters({ ...filters, priority: "" })}>
-                    All
-                    {!filters.priority && <Check className="size-4 ml-auto" />}
-                  </DropdownMenuItem>
-                  {priorityOptions.map((option) => (
-                    <DropdownMenuItem
-                      key={option.id}
-                      onClick={() => setFilters({ ...filters, priority: option.id })}
-                    >
-                      <span
-                        className="size-2 rounded-full mr-2"
-                        style={{ backgroundColor: option.colour }}
-                      />
-                      {option.name}
-                      {filters.priority === option.id && <Check className="size-4 ml-auto" />}
-                    </DropdownMenuItem>
-                  ))}
-                </DropdownMenuSubContent>
-              </DropdownMenuSub>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem asChild>
-                <Link
-                  to="/$projectId/design"
-                  params={{ projectId: params.projectId }}
-                >
-                  <Settings2 className="size-4 mr-2" />
-                  Design
-                </Link>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
+          </div>
         }
       />
       <Main fluid className="flex flex-col min-h-0 flex-1">
-        {/* Filters */}
-        <FilterBar
-          project={project}
-          filters={filters}
-          onFilterChange={setFilters}
-          sort={sort}
-          onSortChange={setSort}
-          showSort={activeView?.viewtype === "list"}
-        />
-
         {/* Content area */}
         <div className={activeView?.viewtype === "list" ? "flex-1 min-h-0 overflow-auto" : ""}>
           {activeView?.viewtype === "list" ? (
@@ -498,6 +405,19 @@ function ProjectPage() {
         templates={templates}
         defaultStatus={createDefaultStatus}
         onCreated={handleObjectCreated}
+      />
+
+      <CommandPanel
+        open={showCommandPanel}
+        onOpenChange={setShowCommandPanel}
+        project={project}
+        filters={filters}
+        onFilterChange={setFilters}
+        activeViewId={activeViewId}
+        onViewChange={handleViewChange}
+        sort={sort}
+        onSortChange={setSort}
+        showSort={activeView?.viewtype === "list"}
       />
 
       <KeyboardShortcutsHelp

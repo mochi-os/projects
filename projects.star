@@ -2338,7 +2338,7 @@ def action_field_create(a):
 		return
 
 	fieldtype = a.input("fieldtype") or "text"
-	if fieldtype not in ["text", "number", "date", "enum", "user", "object", "checkbox"]:
+	if fieldtype not in ["text", "number", "date", "enum", "user", "object", "checkbox", "checklist"]:
 		a.error(400, "Invalid field type")
 		return
 

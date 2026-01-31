@@ -2,7 +2,8 @@
 // Copyright Alistair Cunningham 2026
 
 import { cn, Tooltip, TooltipContent, TooltipTrigger } from "@mochi/common";
-import type { ProjectObject, ProjectField, FieldOption } from "@/types";
+import { CheckSquare } from "lucide-react";
+import type { ProjectObject, ProjectField, FieldOption, ChecklistItem } from "@/types";
 
 interface BoardCardProps {
   object: ProjectObject;
@@ -131,7 +132,33 @@ export function BoardCard({
                 </span>
               );
             }
-            return null; // Skip non-enum text fields in card view to keep it minimal
+
+            if (field.fieldtype === "checklist") {
+              try {
+                const items: ChecklistItem[] = JSON.parse(value);
+                if (items.length === 0) return null;
+                const doneCount = items.filter((item) => item.done).length;
+                const allDone = doneCount === items.length;
+                return (
+                  <span
+                    key={field.id}
+                    className={cn(
+                      "inline-flex items-center gap-1 rounded-md px-1.5 py-0.5 text-[10px] font-medium ring-1 ring-inset",
+                      allDone
+                        ? "bg-green-500/10 text-green-600 ring-green-500/30"
+                        : "bg-muted text-muted-foreground ring-border"
+                    )}
+                  >
+                    <CheckSquare className="h-3 w-3" />
+                    {doneCount}/{items.length}
+                  </span>
+                );
+              } catch {
+                return null;
+              }
+            }
+
+            return null; // Skip other field types in card view to keep it minimal
           })}
         </div>
       )}

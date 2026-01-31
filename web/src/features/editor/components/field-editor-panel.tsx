@@ -47,6 +47,7 @@ export function FieldEditorPanel({ field, onUpdate }: FieldEditorPanelProps) {
       user: "User",
       object: "Object",
       checkbox: "Checkbox",
+      checklist: "Checklist",
     };
     return labels[fieldtype] || fieldtype;
   };

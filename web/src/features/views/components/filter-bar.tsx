@@ -1,16 +1,9 @@
 // Mochi Projects: Filter bar component
 // Copyright Alistair Cunningham 2026
 
-import { X, ArrowUpDown, Check } from "lucide-react";
-import {
-  Button,
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@mochi/common";
+import { X } from "lucide-react";
+import { Button } from "@mochi/common";
 import type { ProjectDetails, FieldOption } from "@/types";
-import type { SortState } from "@/features/list";
 
 export interface FilterState {
   search: string;
@@ -19,31 +12,16 @@ export interface FilterState {
   owner: string;
 }
 
-const SORT_OPTIONS = [
-  { id: "rank", label: "Manual order" },
-  { id: "title", label: "Title" },
-  { id: "status", label: "Status" },
-  { id: "priority", label: "Priority" },
-  { id: "created", label: "Created" },
-  { id: "updated", label: "Updated" },
-] as const;
-
 interface FilterBarProps {
   project: ProjectDetails;
   filters: FilterState;
   onFilterChange: (filters: FilterState) => void;
-  sort?: SortState | null;
-  onSortChange?: (sort: SortState | null) => void;
-  showSort?: boolean;
 }
 
 export function FilterBar({
   project,
   filters,
   onFilterChange,
-  sort,
-  onSortChange,
-  showSort,
 }: FilterBarProps) {
   // Get status and priority options from the task type
   const taskOptions = project.options["task"] || {};
@@ -88,13 +66,13 @@ export function FilterBar({
     });
   }
 
-  // Don't render anything if no filters and no sort to show
-  if (activeFilters.length === 0 && !showSort) {
+  // Don't render anything if no active filters
+  if (activeFilters.length === 0) {
     return null;
   }
 
   return (
-    <div className="flex items-center gap-2 flex-wrap px-4">
+    <div className="flex items-center gap-2 flex-wrap">
       {/* Active filter chips */}
       {activeFilters.map((filter) => (
         <span
@@ -122,29 +100,6 @@ export function FilterBar({
         >
           Clear all
         </Button>
-      )}
-
-      {/* Sort dropdown */}
-      {showSort && onSortChange && (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline" size="sm" className="h-6 text-xs ml-auto">
-              <ArrowUpDown className="size-3 mr-1" />
-              {SORT_OPTIONS.find((o) => o.id === sort?.field)?.label || "Sort"}
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            {SORT_OPTIONS.map((option) => (
-              <DropdownMenuItem
-                key={option.id}
-                onClick={() => onSortChange({ field: option.id, direction: "asc" })}
-              >
-                {option.label}
-                {sort?.field === option.id && <Check className="size-4 ml-auto" />}
-              </DropdownMenuItem>
-            ))}
-          </DropdownMenuContent>
-        </DropdownMenu>
       )}
     </div>
   );

@@ -114,6 +114,12 @@ export interface Attachment {
   created: number;
 }
 
+export interface ChecklistItem {
+  id: string;
+  text: string;
+  done: boolean;
+}
+
 export interface Activity {
   id: string;
   actor: string;

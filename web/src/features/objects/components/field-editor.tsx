@@ -3,6 +3,8 @@
 
 import { useState, useEffect, useRef } from "react";
 import {
+  Button,
+  Checkbox,
   Input,
   Textarea,
   Select,
@@ -13,7 +15,8 @@ import {
   PersonPicker,
   type Person,
 } from "@mochi/common";
-import type { ProjectField, FieldOption } from "@/types";
+import { Plus, Trash2 } from "lucide-react";
+import type { ProjectField, FieldOption, ChecklistItem } from "@/types";
 
 interface FieldEditorProps {
   field: ProjectField;
@@ -144,6 +147,15 @@ export function FieldEditor({
           />
         );
 
+      case "checklist":
+        return (
+          <ChecklistEditor
+            value={value}
+            onChange={onChange}
+            disabled={disabled}
+          />
+        );
+
       default:
         return (
           <Input
@@ -168,6 +180,163 @@ export function FieldEditor({
         )}
       </label>
       {renderEditor()}
+    </div>
+  );
+}
+
+// Checklist editor component
+interface ChecklistEditorProps {
+  value: string;
+  onChange: (value: string) => void;
+  disabled?: boolean;
+}
+
+function ChecklistEditor({ value, onChange, disabled }: ChecklistEditorProps) {
+  const [newItemText, setNewItemText] = useState("");
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  // Parse checklist items from JSON string
+  const items: ChecklistItem[] = (() => {
+    if (!value) return [];
+    try {
+      return JSON.parse(value);
+    } catch {
+      return [];
+    }
+  })();
+
+  const doneCount = items.filter((item) => item.done).length;
+  const totalCount = items.length;
+
+  // Generate a simple unique ID
+  const generateId = () => {
+    return Math.random().toString(36).substring(2, 8);
+  };
+
+  // Update items and notify parent
+  const updateItems = (newItems: ChecklistItem[]) => {
+    onChange(JSON.stringify(newItems));
+  };
+
+  // Toggle item done status
+  const toggleItem = (id: string) => {
+    const newItems = items.map((item) =>
+      item.id === id ? { ...item, done: !item.done } : item
+    );
+    updateItems(newItems);
+  };
+
+  // Add new item
+  const addItem = () => {
+    if (!newItemText.trim()) return;
+    const newItems = [
+      ...items,
+      { id: generateId(), text: newItemText.trim(), done: false },
+    ];
+    updateItems(newItems);
+    setNewItemText("");
+    inputRef.current?.focus();
+  };
+
+  // Remove item
+  const removeItem = (id: string) => {
+    const newItems = items.filter((item) => item.id !== id);
+    updateItems(newItems);
+  };
+
+  // Update item text
+  const updateItemText = (id: string, text: string) => {
+    const newItems = items.map((item) =>
+      item.id === id ? { ...item, text } : item
+    );
+    updateItems(newItems);
+  };
+
+  // Handle key press in new item input
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      addItem();
+    }
+  };
+
+  return (
+    <div className="space-y-2">
+      {/* Progress indicator */}
+      {totalCount > 0 && (
+        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+          <div className="flex-1 h-1.5 bg-muted rounded-full overflow-hidden">
+            <div
+              className="h-full bg-primary transition-all"
+              style={{ width: `${(doneCount / totalCount) * 100}%` }}
+            />
+          </div>
+          <span className="tabular-nums">
+            {doneCount}/{totalCount}
+          </span>
+        </div>
+      )}
+
+      {/* Existing items */}
+      <div className="space-y-1">
+        {items.map((item) => (
+          <div
+            key={item.id}
+            className="flex items-center gap-2 group"
+          >
+            <Checkbox
+              checked={item.done}
+              onCheckedChange={() => toggleItem(item.id)}
+              disabled={disabled}
+            />
+            <input
+              type="text"
+              value={item.text}
+              onChange={(e) => updateItemText(item.id, e.target.value)}
+              disabled={disabled}
+              className={`flex-1 bg-transparent text-sm border-none outline-none ${
+                item.done ? "line-through text-muted-foreground" : ""
+              }`}
+            />
+            {!disabled && (
+              <button
+                type="button"
+                onClick={() => removeItem(item.id)}
+                className="opacity-0 group-hover:opacity-100 p-1 text-muted-foreground hover:text-destructive transition-opacity"
+              >
+                <Trash2 className="h-3.5 w-3.5" />
+              </button>
+            )}
+          </div>
+        ))}
+      </div>
+
+      {/* Add new item */}
+      {!disabled && (
+        <div className="flex items-center gap-2">
+          <Plus className="h-4 w-4 text-muted-foreground" />
+          <input
+            ref={inputRef}
+            type="text"
+            value={newItemText}
+            onChange={(e) => setNewItemText(e.target.value)}
+            onKeyDown={handleKeyDown}
+            placeholder="Add item..."
+            className="flex-1 bg-transparent text-sm border-none outline-none placeholder:text-muted-foreground"
+          />
+          {newItemText && (
+            <Button
+              type="button"
+              variant="ghost"
+              size="sm"
+              onClick={addItem}
+              className="h-6 px-2 text-xs"
+            >
+              Add
+            </Button>
+          )}
+        </div>
+      )}
     </div>
   );
 }

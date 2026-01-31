@@ -87,6 +87,7 @@ const FIELD_TYPES = [
   { id: "enum", name: "Select" },
   { id: "user", name: "User" },
   { id: "checkbox", name: "Checkbox" },
+  { id: "checklist", name: "Checklist" },
 ];
 
 export function AddFieldDialog({

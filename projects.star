@@ -716,7 +716,15 @@ def log_activity(object_id, actor, action, field="", oldvalue="", newvalue=""):
 # Object Actions
 # ============================================================================
 
+def ensure_rank_column_exists():
+	# Check if rank column exists to avoid errors
+	check = mochi.db.row("select count(*) as c from pragma_table_info('objects') where name='rank'")
+	if check and check["c"] == 0:
+		mochi.db.execute("alter table objects add column rank integer not null default 0")
+		mochi.db.execute("create index if not exists objects_rank on objects(rank)")
+
 def action_object_list(a):
+	ensure_rank_column_exists()
 	if not a.user:
 		a.error(401, "Not logged in")
 		return

@@ -235,20 +235,27 @@ function ProjectPage() {
   // Keyboard navigation helpers
   const handleSelectNext = useCallback(() => {
     if (filteredObjects.length === 0) return;
-    setSelectedCardIndex((prev) => {
-      const next = prev + 1;
-      if (next >= filteredObjects.length) return 0;
-      return next;
-    });
-  }, [filteredObjects.length]);
+    const currentIndex = selectedObjectId
+      ? filteredObjects.findIndex((obj) => obj.id === selectedObjectId)
+      : selectedCardIndex;
+    const nextIndex = currentIndex + 1 >= filteredObjects.length ? 0 : currentIndex + 1;
+    setSelectedCardIndex(nextIndex);
+    if (selectedObjectId) {
+      setSelectedObjectId(filteredObjects[nextIndex].id);
+    }
+  }, [filteredObjects, selectedCardIndex, selectedObjectId]);
 
   const handleSelectPrevious = useCallback(() => {
     if (filteredObjects.length === 0) return;
-    setSelectedCardIndex((prev) => {
-      if (prev <= 0) return filteredObjects.length - 1;
-      return prev - 1;
-    });
-  }, [filteredObjects.length]);
+    const currentIndex = selectedObjectId
+      ? filteredObjects.findIndex((obj) => obj.id === selectedObjectId)
+      : selectedCardIndex;
+    const prevIndex = currentIndex <= 0 ? filteredObjects.length - 1 : currentIndex - 1;
+    setSelectedCardIndex(prevIndex);
+    if (selectedObjectId) {
+      setSelectedObjectId(filteredObjects[prevIndex].id);
+    }
+  }, [filteredObjects, selectedCardIndex, selectedObjectId]);
 
   const handleOpenSelected = useCallback(() => {
     if (selectedCardIndex >= 0 && selectedCardIndex < filteredObjects.length) {

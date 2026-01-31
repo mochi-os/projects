@@ -382,7 +382,7 @@ function ProjectPage() {
           showSort={activeView?.viewtype === "list"}
         />
       )}
-      <Main fluid className="flex flex-col min-h-0 flex-1">
+      <Main fluid className="flex flex-col min-h-0 flex-1 !py-0">
         {/* Content area */}
         <div className={activeView?.viewtype === "list" ? "flex-1 min-h-0 overflow-auto" : ""}>
           {activeView?.viewtype === "list" ? (
@@ -397,7 +397,7 @@ function ProjectPage() {
               />
             </div>
           ) : (
-            <div className="pl-2 pr-4 pt-1">
+            <div className="pl-2 pr-4">
               <BoardContainer
                 project={project}
                 objects={filteredObjects}

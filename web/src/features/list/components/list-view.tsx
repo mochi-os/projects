@@ -38,6 +38,19 @@ export function ListView({
       return objects;
     }
 
+    // Check if the sort field is an enum
+    const sortField = taskFields.find((f) => f.id === sort.field);
+    const isEnum = sortField?.fieldtype === "enum";
+    const fieldOptions = isEnum ? taskOptions[sort.field] || [] : [];
+
+    // Build a map of option ID to sort order for enum fields
+    const optionSortMap: Record<string, number> = {};
+    if (isEnum) {
+      for (const opt of fieldOptions) {
+        optionSortMap[opt.id] = opt.sort;
+      }
+    }
+
     return [...objects].sort((a, b) => {
       let aVal: string | number;
       let bVal: string | number;
@@ -54,6 +67,13 @@ export function ListView({
       } else if (sort.field === "updated") {
         aVal = a.updated;
         bVal = b.updated;
+      } else if (isEnum) {
+        // For enum fields, sort by option sort order
+        const aOptVal = a.values[sort.field] || "";
+        const bOptVal = b.values[sort.field] || "";
+        // Use sort order if available, otherwise put at end (9999)
+        aVal = optionSortMap[aOptVal] ?? 9999;
+        bVal = optionSortMap[bOptVal] ?? 9999;
       } else {
         aVal = a.values[sort.field] || "";
         bVal = b.values[sort.field] || "";
@@ -73,7 +93,7 @@ export function ListView({
       }
       return bStr.localeCompare(aStr);
     });
-  }, [objects, sort]);
+  }, [objects, sort, taskFields, taskOptions]);
 
   if (objects.length === 0) {
     return (

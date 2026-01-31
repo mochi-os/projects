@@ -15,7 +15,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@mochi/common";
-import { Ellipsis, FolderKanban, Plus, Settings2, SlidersHorizontal } from "lucide-react";
+import { ChevronDown, ChevronUp, Ellipsis, FolderKanban, Plus, Settings2 } from "lucide-react";
 import projectsApi from "@/api/projects";
 import type { ProjectDetails, ProjectObject, ObjectTemplate } from "@/types";
 import { BoardContainer } from "@/features/board/components";
@@ -27,7 +27,7 @@ import {
 } from "@/features/objects/components";
 import { useKeyboardShortcuts } from "@/hooks/use-keyboard-shortcuts";
 import { KeyboardShortcutsHelp } from "@/components/keyboard-shortcuts-help";
-import { CommandPanel } from "@/components/command-panel";
+import { ViewOptionsBar } from "@/components/view-options-bar";
 
 interface SearchParams {
   view?: string;
@@ -68,8 +68,16 @@ function ProjectPage() {
     string | undefined
   >();
   const [showShortcutsHelp, setShowShortcutsHelp] = useState(false);
-  const [showCommandPanel, setShowCommandPanel] = useState(false);
+  const [showViewOptions, setShowViewOptions] = useState(() => {
+    const saved = localStorage.getItem("projects-view-options-expanded");
+    return saved === "true";
+  });
   const [selectedCardIndex, setSelectedCardIndex] = useState(-1);
+
+  // Persist view options bar state
+  useEffect(() => {
+    localStorage.setItem("projects-view-options-expanded", String(showViewOptions));
+  }, [showViewOptions]);
 
   // View state - initialize from URL or first view
   const defaultViewId = project.views[0]?.id || "board";
@@ -267,16 +275,14 @@ function ProjectPage() {
   // Keyboard shortcuts
   useKeyboardShortcuts({
     onCreateNew: handleOpenCreateDialog,
-    onFocusSearch: () => setShowCommandPanel(true),
+    onFocusSearch: () => setShowViewOptions((prev) => !prev),
     onSwitchView: handleSwitchView,
     onSelectNext: handleSelectNext,
     onSelectPrevious: handleSelectPrevious,
     onOpenSelected: handleOpenSelected,
     onEditSelected: handleOpenSelected,
     onClose: () => {
-      if (showCommandPanel) {
-        setShowCommandPanel(false);
-      } else if (selectedObjectId) {
+      if (selectedObjectId) {
         setSelectedObjectId(null);
       } else {
         setSelectedCardIndex(-1);
@@ -333,10 +339,14 @@ function ProjectPage() {
               <Button
                 variant="ghost"
                 size="icon"
-                onClick={() => setShowCommandPanel(true)}
+                onClick={() => setShowViewOptions(!showViewOptions)}
                 title="View options (/ or Cmd+K)"
               >
-                <SlidersHorizontal className="size-4" />
+                {showViewOptions ? (
+                  <ChevronDown className="size-4" />
+                ) : (
+                  <ChevronUp className="size-4" />
+                )}
               </Button>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -360,6 +370,18 @@ function ProjectPage() {
           </div>
         }
       />
+      {showViewOptions && (
+        <ViewOptionsBar
+          project={project}
+          filters={filters}
+          onFilterChange={setFilters}
+          activeViewId={activeViewId}
+          onViewChange={handleViewChange}
+          sort={sort}
+          onSortChange={setSort}
+          showSort={activeView?.viewtype === "list"}
+        />
+      )}
       <Main fluid className="flex flex-col min-h-0 flex-1">
         {/* Content area */}
         <div className={activeView?.viewtype === "list" ? "flex-1 min-h-0 overflow-auto" : ""}>
@@ -405,19 +427,6 @@ function ProjectPage() {
         templates={templates}
         defaultStatus={createDefaultStatus}
         onCreated={handleObjectCreated}
-      />
-
-      <CommandPanel
-        open={showCommandPanel}
-        onOpenChange={setShowCommandPanel}
-        project={project}
-        filters={filters}
-        onFilterChange={setFilters}
-        activeViewId={activeViewId}
-        onViewChange={handleViewChange}
-        sort={sort}
-        onSortChange={setSort}
-        showSort={activeView?.viewtype === "list"}
       />
 
       <KeyboardShortcutsHelp

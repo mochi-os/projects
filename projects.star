@@ -2102,6 +2102,18 @@ def action_type_create(a):
 		project_id, type_id, name.strip(), sort
 	)
 
+	# Add default title field
+	mochi.db.execute(
+		"insert into fields (project, type, id, name, fieldtype, required, sort) values (?, ?, ?, ?, ?, ?, ?)",
+		project_id, type_id, "title", "Title", "text", 1, 0
+	)
+
+	# Set hierarchy to allow root by default
+	mochi.db.execute(
+		"insert into hierarchy (project, type, parent) values (?, ?, ?)",
+		project_id, type_id, ""
+	)
+
 	broadcast_event(project_id, "type/create", {
 		"project": project_id, "id": type_id, "name": name.strip(), "sort": sort
 	})
@@ -2246,9 +2258,17 @@ def action_hierarchy_set(a):
 		a.error(404, "Type not found")
 		return
 
-	# Get parents list (comma-separated or as JSON)
-	parents_str = a.input("parents") or ""
-	parents = [p.strip() for p in parents_str.split(",") if p.strip()] if parents_str else []
+	# Get parents list (comma-separated)
+	# Empty string in list means "can be root" (no parent required)
+	# "_none_" means no parents allowed (empty list)
+	parents_str = a.input("parents")
+	if parents_str == None or parents_str == "_none_":
+		parents = []
+	elif parents_str == "":
+		# Empty string input means "can be root"
+		parents = [""]
+	else:
+		parents = [p.strip() for p in parents_str.split(",")]
 
 	# Delete existing hierarchy
 	mochi.db.execute("delete from hierarchy where project = ? and type = ?", project_id, type_id)

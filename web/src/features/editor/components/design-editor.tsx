@@ -263,7 +263,7 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
     <div className="flex h-full">
       {/* Editor panel (left) */}
       <div className="w-80 border-r flex flex-col overflow-hidden">
-        <Tabs defaultValue="types" className="flex-1 flex flex-col">
+        <Tabs defaultValue="types" className="flex-1 min-h-0 flex flex-col">
           <TabsList className="w-full justify-start rounded-none border-b px-2">
             <TabsTrigger value="types">Types</TabsTrigger>
             <TabsTrigger value="views">Views</TabsTrigger>

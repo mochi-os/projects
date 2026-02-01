@@ -48,13 +48,11 @@ export function ListRow({
       }
 
       case "date": {
-        const date = new Date(parseInt(value) * 1000);
+        // Date values are stored as YYYY-MM-DD strings
+        const date = new Date(value + "T00:00:00");
         return (
           <span className="truncate">
-            {date.toLocaleDateString(undefined, {
-              month: "short",
-              day: "numeric",
-            })}
+            {date.toLocaleDateString()}
           </span>
         );
       }

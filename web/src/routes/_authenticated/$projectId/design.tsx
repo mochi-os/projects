@@ -50,7 +50,7 @@ function DesignPage() {
         title={`${project.project.name} - Design`}
         icon={<Settings2 className="size-4 md:size-5" />}
       />
-      <Main className="flex-1 overflow-hidden">
+      <Main fixed fluid className="flex-1 !py-0">
         <DesignEditor projectId={projectId} project={project} />
       </Main>
     </>

@@ -73,8 +73,10 @@ export function CreateObjectDialog({
         template: values.template !== "blank" ? values.template : undefined,
       });
 
-      // If we have a default status, set it
-      if (defaultStatus && response.data.id) {
+      // If we have a default status and the type has a status field, set it
+      const typeFields = project.fields[values.type] || [];
+      const hasStatusField = typeFields.some((f) => f.id === "status");
+      if (defaultStatus && response.data.id && hasStatusField) {
         await projectsApi.setValue(
           project.project.id,
           response.data.id,
@@ -85,7 +87,7 @@ export function CreateObjectDialog({
 
       return {
         ...response.data,
-        status: defaultStatus,
+        status: hasStatusField ? defaultStatus : undefined,
         title: values.title,
         type: values.type,
       };

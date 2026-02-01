@@ -640,9 +640,11 @@ const projectsApi = {
     typeId: string,
     parents: string[],
   ): Promise<SuccessResponse> => {
+    // Use _none_ to indicate empty list, since empty string means "can be root"
+    const parentsStr = parents.length === 0 ? "_none_" : parents.join(",");
     return projectsRequest.post<SuccessResponse, SetHierarchyRequest>(
       endpoints.projects.hierarchySet(projectId, typeId),
-      { parents: parents.join(",") },
+      { parents: parentsStr },
     );
   },
 

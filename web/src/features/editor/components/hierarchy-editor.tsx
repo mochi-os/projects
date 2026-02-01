@@ -72,7 +72,7 @@ export function HierarchyEditor({
 
       {allowedParents.length === 0 && (
         <p className="text-sm text-amber-600">
-          Warning: This type cannot be created (no valid parent)
+          Warning: This type cannot be created as it has no valid parent
         </p>
       )}
     </div>

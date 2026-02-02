@@ -12,10 +12,9 @@
 	"execute": ["projects.star"],
 
 	"database": {
-		"schema": 3,
+		"schema": 1,
 		"file": "projects.db",
-		"create": {"function": "database_create"},
-		"upgrade": {"function": "database_upgrade"}
+		"create": {"function": "database_create"}
 	},
 
 	"icons": [
@@ -32,7 +31,6 @@
 		"-/list": {"function": "action_project_list"},
 		"-/create": {"function": "action_project_create"},
 		"-/templates": {"function": "action_templates"},
-		"-/templates/object": {"function": "action_object_templates"},
 		"directory/search": {"function": "action_search"},
 		"probe": {"function": "action_probe"},
 		"subscribe": {"function": "action_subscribe"},

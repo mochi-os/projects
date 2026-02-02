@@ -2,10 +2,10 @@
 // Copyright Alistair Cunningham 2026
 
 import { useState, useRef } from "react";
-import { cn } from "@mochi/common";
-import { Plus } from "lucide-react";
+import { cn, ConfirmDialog } from "@mochi/common";
+import { Plus, Trash2 } from "lucide-react";
 import { BoardCard } from "./board-card";
-import type { ProjectObject, ProjectField, FieldOption } from "@/types";
+import type { ProjectObject, ProjectField, FieldOption, ProjectType } from "@/types";
 
 interface BoardColumnProps {
   id: string;
@@ -15,9 +15,12 @@ interface BoardColumnProps {
   fields: ProjectField[];
   options: Record<string, FieldOption[]>;
   prefix: string;
+  objectMap: Record<string, ProjectObject>;
+  typeMap: Record<string, ProjectType>;
   onCardClick?: (object: ProjectObject) => void;
   onCreateClick?: () => void;
   onDrop?: (objectId: string, columnId: string, newRank?: number) => void;
+  onDeleteColumn?: () => Promise<void>;
 }
 
 export function BoardColumn({
@@ -28,12 +31,17 @@ export function BoardColumn({
   fields,
   options,
   prefix,
+  objectMap,
+  typeMap,
   onCardClick,
   onCreateClick,
   onDrop,
+  onDeleteColumn,
 }: BoardColumnProps) {
   const [isDragOver, setIsDragOver] = useState(false);
   const [dropIndex, setDropIndex] = useState<number | null>(null);
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
   const cardsContainerRef = useRef<HTMLDivElement>(null);
 
   const handleDragOver = (e: React.DragEvent) => {
@@ -107,20 +115,61 @@ export function BoardColumn({
             {objects.length}
           </span>
         </div>
-        {onCreateClick && (
-          <button
-            onClick={onCreateClick}
-            className="p-1 rounded hover:bg-muted transition-colors"
-          >
-            <Plus className="size-4 text-muted-foreground" />
-          </button>
-        )}
+        <div className="flex items-center gap-1">
+          {onCreateClick && (
+            <button
+              onClick={onCreateClick}
+              className="p-1 rounded hover:bg-muted transition-colors"
+              title="Add item"
+            >
+              <Plus className="size-4 text-muted-foreground" />
+            </button>
+          )}
+          {objects.length === 0 && onDeleteColumn && (
+            <button
+              onClick={() => setShowDeleteDialog(true)}
+              className="p-1 rounded hover:bg-destructive/10 transition-colors"
+              title="Delete column"
+            >
+              <Trash2 className="size-4 text-muted-foreground hover:text-destructive" />
+            </button>
+          )}
+        </div>
       </div>
+
+      <ConfirmDialog
+        open={showDeleteDialog}
+        onOpenChange={setShowDeleteDialog}
+        title="Delete column"
+        description={`Are you sure you want to delete the "${name}" column? This cannot be undone.`}
+        confirmText={isDeleting ? "Deleting..." : "Delete"}
+        confirmVariant="destructive"
+        onConfirm={async () => {
+          if (objects.length > 0) {
+            // Column has items now, don't delete
+            setShowDeleteDialog(false);
+            return;
+          }
+          setIsDeleting(true);
+          try {
+            await onDeleteColumn?.();
+            setShowDeleteDialog(false);
+          } finally {
+            setIsDeleting(false);
+          }
+        }}
+      />
 
       {/* Cards */}
       <div
         ref={cardsContainerRef}
-        className="p-2 space-y-2"
+        className="p-2 space-y-2 flex-1"
+        onDoubleClick={(e) => {
+          // Only trigger if clicking directly on the container, not on a card
+          if (e.target === e.currentTarget || (e.target as HTMLElement).closest("[data-card-id]") === null) {
+            onCreateClick?.();
+          }
+        }}
       >
         {objects.map((object, index) => (
           <div key={object.id} data-card-id={object.id}>
@@ -132,6 +181,8 @@ export function BoardColumn({
               fields={fields}
               options={options}
               prefix={prefix}
+              objectMap={objectMap}
+              typeMap={typeMap}
               onClick={() => onCardClick?.(object)}
             />
           </div>

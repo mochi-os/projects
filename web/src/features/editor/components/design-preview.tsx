@@ -82,7 +82,7 @@ export function DesignPreview({
   const renderFieldValue = (field: ProjectField, value: string) => {
     if (!value) return null;
 
-    if (field.fieldtype === "enum") {
+    if (field.fieldtype === "enumerated") {
       const fieldOpts = typeOptions[field.id] || [];
       const opt = fieldOpts.find((o) => o.id === value);
       if (opt) {
@@ -105,7 +105,7 @@ export function DesignPreview({
     return (
       <div className="p-3 bg-background border rounded-lg shadow-sm space-y-2">
         <div className="text-xs text-muted-foreground font-mono">
-          PROJ-{card.number}
+          proj-{card.number}
         </div>
         {cardFields.map((fieldId) => {
           const field = typeFields.find((f) => f.id === fieldId);
@@ -179,7 +179,7 @@ export function DesignPreview({
         <div className="bg-background border rounded-lg p-4 space-y-4">
           <div className="flex items-center justify-between">
             <span className="text-sm font-mono text-muted-foreground">
-              PROJ-{card.number}
+              proj-{card.number}
             </span>
           </div>
           {typeFields.map((field) => {
@@ -231,7 +231,7 @@ export function DesignPreview({
             className="flex items-center border-t text-sm hover:bg-muted/30"
           >
             <div className="w-20 px-3 py-2 font-mono text-xs text-muted-foreground">
-              PROJ-{card.number}
+              proj-{card.number}
             </div>
             {cardFields.map((fieldId) => {
               const field = typeFields.find((f) => f.id === fieldId);

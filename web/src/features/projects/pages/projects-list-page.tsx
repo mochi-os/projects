@@ -53,7 +53,7 @@ export function ProjectsListPage() {
           >
             <Button onClick={openCreateDialog}>
               <Plus className="mr-2 size-4" />
-              New project
+              Create project
             </Button>
           </EmptyState>
         ) : (
@@ -86,9 +86,6 @@ export function ProjectsListPage() {
                             },
                           )}
                         </p>
-                      </div>
-                      <div className="bg-muted text-muted-foreground ml-2 rounded px-2 py-1 text-xs font-medium">
-                        {project.prefix}
                       </div>
                     </div>
                   </CardContent>

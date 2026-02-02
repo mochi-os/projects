@@ -70,7 +70,7 @@ export function FieldEditor({
 
   const renderEditor = () => {
     switch (field.fieldtype) {
-      case "enum":
+      case "enumerated":
         return (
           <Select value={value} onValueChange={onChange} disabled={disabled}>
             <SelectTrigger className="h-9 w-full">

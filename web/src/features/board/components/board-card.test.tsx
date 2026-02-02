@@ -74,28 +74,38 @@ describe("BoardCard", () => {
     expect(setData).toHaveBeenCalledWith("text/plain", "obj-1");
   });
 
-  it("should render card fields when marked as card=1", () => {
-    const priorityField = createMockField({
-      id: "priority",
-      name: "Priority",
-      fieldtype: "enum",
+  it("should render enumerated card fields (excluding status/priority/title)", () => {
+    // Create a custom enumerated field that isn't status or priority
+    const categoryField = createMockField({
+      id: "category",
+      name: "Category",
+      fieldtype: "enumerated",
       card: 1,
     });
 
-    const priorityOptions = [
-      createMockOption({ id: "high", name: "High", colour: "#ef4444" }),
-      createMockOption({ id: "medium", name: "Medium", colour: "#f59e0b" }),
+    const categoryOptions = [
+      createMockOption({ id: "bug", name: "Bug", colour: "#ef4444" }),
+      createMockOption({ id: "feature", name: "Feature", colour: "#22c55e" }),
     ];
+
+    const objectWithCategory = createMockObject({
+      values: {
+        title: "Test Task",
+        status: "todo",
+        category: "bug",
+      },
+    });
 
     render(
       <BoardCard
         {...defaultProps}
-        fields={[priorityField]}
-        options={{ priority: priorityOptions }}
+        object={objectWithCategory}
+        fields={[categoryField]}
+        options={{ category: categoryOptions }}
       />,
     );
 
-    expect(screen.getByText("Medium")).toBeInTheDocument();
+    expect(screen.getByText("Bug")).toBeInTheDocument();
   });
 
   it("should not render fields when card=0", () => {
@@ -122,49 +132,24 @@ describe("BoardCard", () => {
       />,
     );
 
-    expect(screen.queryByText("This is a description")).not.toBeInTheDocument();
-  });
-
-  it("should render non-enum field values as text", () => {
-    const textField = createMockField({
-      id: "custom",
-      name: "Custom Field",
-      fieldtype: "text",
-      card: 1,
-    });
-
-    const objectWithCustom = createMockObject({
-      values: {
-        title: "Test Task",
-        custom: "Custom Value",
-        status: "todo",
-      },
-    });
-
-    render(
-      <BoardCard
-        {...defaultProps}
-        object={objectWithCustom}
-        fields={[textField]}
-      />,
-    );
-
-    expect(screen.getByText("Custom Value")).toBeInTheDocument();
+    // Description is shown separately from card fields
+    // But card=0 fields shouldn't appear in the tags section
+    expect(screen.queryByText("Description:")).not.toBeInTheDocument();
   });
 
   it("should not render card field if value is empty", () => {
-    const priorityField = createMockField({
-      id: "priority",
-      name: "Priority",
-      fieldtype: "enum",
+    const categoryField = createMockField({
+      id: "category",
+      name: "Category",
+      fieldtype: "enumerated",
       card: 1,
     });
 
-    const priorityOptions = [
-      createMockOption({ id: "high", name: "High", colour: "#ef4444" }),
+    const categoryOptions = [
+      createMockOption({ id: "bug", name: "Bug", colour: "#ef4444" }),
     ];
 
-    const objectWithoutPriority = createMockObject({
+    const objectWithoutCategory = createMockObject({
       values: {
         title: "Test Task",
         status: "todo",
@@ -174,75 +159,77 @@ describe("BoardCard", () => {
     render(
       <BoardCard
         {...defaultProps}
-        object={objectWithoutPriority}
-        fields={[priorityField]}
-        options={{ priority: priorityOptions }}
+        object={objectWithoutCategory}
+        fields={[categoryField]}
+        options={{ category: categoryOptions }}
       />,
     );
 
-    expect(screen.queryByText("High")).not.toBeInTheDocument();
+    expect(screen.queryByText("Bug")).not.toBeInTheDocument();
   });
 
-  it("should apply option colour to badge", () => {
-    const statusField = createMockField({
-      id: "status",
-      name: "Status",
-      fieldtype: "enum",
+  it("should apply option colour to enumerated badge", () => {
+    const categoryField = createMockField({
+      id: "category",
+      name: "Category",
+      fieldtype: "enumerated",
       card: 1,
     });
 
-    const statusOptions = [
-      createMockOption({ id: "todo", name: "To Do", colour: "#6b7280" }),
+    const categoryOptions = [
+      createMockOption({ id: "bug", name: "Bug", colour: "#6b7280" }),
     ];
 
-    const objectWithTodo = createMockObject({
+    const objectWithCategory = createMockObject({
       values: {
         title: "Test Task",
         status: "todo",
+        category: "bug",
       },
     });
 
     render(
       <BoardCard
         {...defaultProps}
-        object={objectWithTodo}
-        fields={[statusField]}
-        options={{ status: statusOptions }}
+        object={objectWithCategory}
+        fields={[categoryField]}
+        options={{ category: categoryOptions }}
       />,
     );
 
-    const badge = screen.getByText("To Do");
+    const badge = screen.getByText("Bug");
     expect(badge).toHaveStyle({ color: "#6b7280" });
   });
 
   it("should render multiple card fields", () => {
-    const statusField = createMockField({
-      id: "status",
-      name: "Status",
-      fieldtype: "enum",
+    const categoryField = createMockField({
+      id: "category",
+      name: "Category",
+      fieldtype: "enumerated",
       card: 1,
     });
 
-    const priorityField = createMockField({
-      id: "priority",
-      name: "Priority",
-      fieldtype: "enum",
+    const labelField = createMockField({
+      id: "label",
+      name: "Label",
+      fieldtype: "enumerated",
       card: 1,
     });
 
-    const statusOptions = [
-      createMockOption({ id: "todo", name: "To Do", colour: "#6b7280" }),
+    const categoryOptions = [
+      createMockOption({ id: "bug", name: "Bug", colour: "#ef4444" }),
     ];
 
-    const priorityOptions = [
-      createMockOption({ id: "high", name: "High", colour: "#ef4444" }),
+    const labelOptions = [
+      createMockOption({ id: "urgent", name: "Urgent", colour: "#6b7280" }),
     ];
 
     const object = createMockObject({
       values: {
         title: "Test Task",
         status: "todo",
-        priority: "high",
+        category: "bug",
+        label: "urgent",
       },
     });
 
@@ -250,15 +237,69 @@ describe("BoardCard", () => {
       <BoardCard
         {...defaultProps}
         object={object}
-        fields={[statusField, priorityField]}
+        fields={[categoryField, labelField]}
         options={{
-          status: statusOptions,
-          priority: priorityOptions,
+          category: categoryOptions,
+          label: labelOptions,
         }}
       />,
     );
 
-    expect(screen.getByText("To Do")).toBeInTheDocument();
-    expect(screen.getByText("High")).toBeInTheDocument();
+    expect(screen.getByText("Bug")).toBeInTheDocument();
+    expect(screen.getByText("Urgent")).toBeInTheDocument();
+  });
+
+  it("should show priority color strip when priority is set", () => {
+    const object = createMockObject({
+      values: {
+        title: "Test Task",
+        priority: "high",
+      },
+    });
+
+    const priorityOptions = [
+      createMockOption({ id: "high", name: "High", colour: "#ef4444" }),
+    ];
+
+    const { container } = render(
+      <BoardCard
+        {...defaultProps}
+        object={object}
+        options={{ priority: priorityOptions }}
+      />,
+    );
+
+    // Look for the priority strip element
+    const strip = container.querySelector(".w-1.rounded-r-full");
+    expect(strip).toBeInTheDocument();
+    expect(strip).toHaveStyle({ backgroundColor: "rgb(239, 68, 68)" });
+  });
+
+  it("should show parent badge when parent is set", () => {
+    const parentObject = createMockObject({
+      id: "parent-1",
+      type: "epic",
+      number: 5,
+      values: { title: "Parent Epic" },
+    });
+
+    const childObject = createMockObject({
+      parent: "parent-1",
+      values: { title: "Child Task" },
+    });
+
+    const objectMap = { "parent-1": parentObject };
+    const typeMap = { epic: { id: "epic", name: "Epic", sort: 0 } };
+
+    render(
+      <BoardCard
+        {...defaultProps}
+        object={childObject}
+        objectMap={objectMap}
+        typeMap={typeMap}
+      />,
+    );
+
+    expect(screen.getByText("Parent Epic")).toBeInTheDocument();
   });
 });

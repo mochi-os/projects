@@ -60,7 +60,7 @@ export function FieldList({
       text: "Text",
       number: "Number",
       date: "Date",
-      enum: "Select",
+      enumerated: "Select",
       user: "User",
       object: "Object",
       checkbox: "Checkbox",

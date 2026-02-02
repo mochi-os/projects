@@ -221,7 +221,7 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
     mutationFn: ({ name, viewtype }: { name: string; viewtype: string }) =>
       projectsApi.createView(projectId, {
         name,
-        viewtype: viewtype as "board" | "list",
+        viewtype: viewtype as "board" | "tree",
       }),
     onSuccess: (data) => {
       invalidateProject();
@@ -233,14 +233,17 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
     mutationFn: ({
       viewId,
       updates,
+      types,
     }: {
       viewId: string;
-      updates: Partial<ProjectView>;
+      updates?: Partial<ProjectView>;
+      types?: string[];
     }) =>
       projectsApi.updateView(projectId, viewId, {
         ...updates,
-        viewtype: updates.viewtype as "board" | "list" | undefined,
-        direction: updates.direction as "asc" | "desc" | undefined,
+        viewtype: updates?.viewtype as "board" | "tree" | undefined,
+        direction: updates?.direction as "asc" | "desc" | undefined,
+        types: types !== undefined ? types.join(",") : undefined,
       }),
     onSuccess: invalidateProject,
   });
@@ -253,7 +256,7 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
     },
   });
 
-  // Handle field selection - also check if it's an enum to show options
+  // Handle field selection - also check if it's an enumerated to show options
   const handleSelectField = (fieldId: string) => {
     setSelectedFieldId(fieldId);
     setSelectedOptionId(null);
@@ -334,7 +337,7 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
                   />
                 )}
 
-                {selectedField?.fieldtype === "enum" && (
+                {selectedField?.fieldtype === "enumerated" && (
                   <>
                     <OptionList
                       options={selectedOptions}
@@ -392,10 +395,17 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
               <ViewEditor
                 view={selectedView}
                 fields={selectedFields}
+                types={project.types}
                 onUpdate={(updates) =>
                   updateViewMutation.mutate({
                     viewId: selectedView.id,
                     updates,
+                  })
+                }
+                onUpdateTypes={(types) =>
+                  updateViewMutation.mutate({
+                    viewId: selectedView.id,
+                    types,
                   })
                 }
               />

@@ -55,22 +55,6 @@ describe("projectsApi", () => {
     });
   });
 
-  describe("objectTemplates", () => {
-    it("should fetch object templates", async () => {
-      const mockResponse = {
-        data: {
-          templates: [{ id: "task", name: "Task", description: "A task item" }],
-        },
-      };
-      vi.mocked(projectsRequest.get).mockResolvedValue(mockResponse);
-
-      const result = await projectsApi.objectTemplates();
-
-      expect(projectsRequest.get).toHaveBeenCalledWith("-/templates/object");
-      expect(result).toEqual(mockResponse);
-    });
-  });
-
   describe("create", () => {
     it("should create a new project", async () => {
       const mockResponse = {
@@ -215,7 +199,7 @@ describe("projectsApi", () => {
   describe("createObject", () => {
     it("should create an object", async () => {
       const mockResponse = {
-        data: { id: "obj1", number: 1, readable: "PROJ-1" },
+        data: { id: "obj1", number: 1, readable: "proj-1" },
       };
       vi.mocked(projectsRequest.post).mockResolvedValue(mockResponse);
 
@@ -295,15 +279,15 @@ describe("projectsApi", () => {
   });
 
   describe("moveObject", () => {
-    it("should move object to new status", async () => {
+    it("should move object to new column value", async () => {
       const mockResponse = { data: { success: true } };
       vi.mocked(projectsRequest.post).mockResolvedValue(mockResponse);
 
-      await projectsApi.moveObject("proj123", "obj1", { status: "done" });
+      await projectsApi.moveObject("proj123", "obj1", { field: "status", value: "done" });
 
       expect(projectsRequest.post).toHaveBeenCalledWith(
         "proj123/-/objects/obj1/move",
-        { status: "done" },
+        { field: "status", value: "done" },
       );
     });
   });
@@ -447,13 +431,13 @@ describe("projectsApi", () => {
       vi.mocked(projectsRequest.post).mockResolvedValue(mockResponse);
 
       await projectsApi.createView("proj123", {
-        name: "List View",
-        viewtype: "list",
+        name: "Tree View",
+        viewtype: "tree",
       });
 
       expect(projectsRequest.post).toHaveBeenCalledWith(
         "proj123/-/views/create",
-        { name: "List View", viewtype: "list" },
+        { name: "Tree View", viewtype: "tree" },
       );
     });
   });
@@ -853,7 +837,7 @@ describe("projectsApi", () => {
 
       expect(projectsRequest.post).toHaveBeenCalledWith(
         "proj123/-/types/task/hierarchy/set",
-        { parents: "" },
+        { parents: "_none_" },
       );
     });
   });

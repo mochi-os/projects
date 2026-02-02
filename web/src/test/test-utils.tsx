@@ -104,6 +104,7 @@ export function createMockView(overrides?: Partial<ProjectView>): ProjectView {
     cardfields: "",
     sort: "",
     direction: "",
+    types: [],
     ...overrides,
   };
 }

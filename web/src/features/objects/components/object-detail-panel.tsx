@@ -1,7 +1,7 @@
 // Mochi Projects: Object detail dialog component
 // Copyright Alistair Cunningham 2026
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Eye, EyeOff, Loader2, Trash2, MessageSquare, Activity, X, Settings2 } from "lucide-react";
 import {
@@ -11,6 +11,11 @@ import {
   DataChip,
   Dialog,
   DialogContent,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
   cn,
 } from "@mochi/common";
 import projectsApi from "@/api/projects";
@@ -73,6 +78,15 @@ export function ObjectDetailPanel({
     staleTime: 60000, // Cache for 1 minute
   });
 
+  // Fetch all objects for parent picker
+  const { data: objectsData } = useQuery({
+    queryKey: ["objects", projectId],
+    queryFn: async () => {
+      const response = await projectsApi.listObjects(projectId);
+      return response.data.objects;
+    },
+  });
+
   const updateValueMutation = useMutation({
     mutationFn: async ({ field, value }: { field: string; value: string }) => {
       if (!objectId) return;
@@ -116,6 +130,65 @@ export function ObjectDetailPanel({
       onClose();
     },
   });
+
+  const updateParentMutation = useMutation({
+    mutationFn: async (newParent: string) => {
+      if (!objectId) return;
+      return projectsApi.updateObject(projectId, objectId, { parent: newParent });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["object", projectId, objectId],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ["objects", projectId],
+      });
+    },
+  });
+
+  // Build type name map - must be before early returns to maintain hook order
+  const typeNameMap = useMemo(() => {
+    const map: Record<string, string> = {};
+    for (const t of project.types) {
+      map[t.id] = t.name;
+    }
+    return map;
+  }, [project.types]);
+
+  // Get valid parent options based on hierarchy rules - must be before early returns
+  const validParentOptions = useMemo(() => {
+    if (!objectsData || !data) return [];
+
+    const object = data.object;
+    // Get allowed parent types for this object type
+    const allowedParentTypes = project.hierarchy[object.type] || [];
+    const parentTypeIds = allowedParentTypes.filter((t) => t !== "");
+
+    if (parentTypeIds.length === 0) return [];
+
+    // Filter objects to those matching allowed parent types
+    // Also exclude this object and its descendants
+    const descendants = new Set<string>();
+    const findDescendants = (id: string) => {
+      descendants.add(id);
+      for (const obj of objectsData) {
+        if (obj.parent === id && !descendants.has(obj.id)) {
+          findDescendants(obj.id);
+        }
+      }
+    };
+    findDescendants(object.id);
+
+    return objectsData.filter(
+      (obj) => parentTypeIds.includes(obj.type) && !descendants.has(obj.id)
+    );
+  }, [objectsData, data, project.hierarchy]);
+
+  // Get current parent object info - must be before early returns
+  const currentParent = useMemo(() => {
+    if (!data?.object.parent || !objectsData) return null;
+    return objectsData.find((obj) => obj.id === data.object.parent);
+  }, [data, objectsData]);
 
   if (!objectId) {
     return null;
@@ -262,6 +335,36 @@ export function ObjectDetailPanel({
                 </label>
                 <DataChip value={object.readable} copyable chipClassName="bg-primary/10 border-primary/20 text-primary font-bold text-[11px]" />
               </div>
+
+              {/* Parent */}
+              {(validParentOptions.length > 0 || currentParent) && (
+                <div className="grid grid-cols-[120px_1fr] gap-4 items-start">
+                  <label className="text-sm font-medium text-muted-foreground pt-2">
+                    Parent
+                  </label>
+                  <Select
+                    value={object.parent || "_none_"}
+                    onValueChange={(value) => updateParentMutation.mutate(value === "_none_" ? "" : value)}
+                    disabled={updateParentMutation.isPending}
+                  >
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="None">
+                        {currentParent
+                          ? `${typeNameMap[currentParent.type] || currentParent.type}: ${currentParent.values.title || `${project.project.prefix}-${currentParent.number}`}`
+                          : "None"}
+                      </SelectValue>
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="_none_">None</SelectItem>
+                      {validParentOptions.map((obj) => (
+                        <SelectItem key={obj.id} value={obj.id}>
+                          {typeNameMap[obj.type] || obj.type}: {obj.values.title || `${project.project.prefix}-${obj.number}`}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              )}
 
               {typeFields
                 .filter(

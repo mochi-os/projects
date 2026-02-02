@@ -2,14 +2,16 @@
 // Copyright Alistair Cunningham 2026
 
 import { cn, Tooltip, TooltipContent, TooltipTrigger } from "@mochi/common";
-import { CheckSquare } from "lucide-react";
-import type { ProjectObject, ProjectField, FieldOption, ChecklistItem } from "@/types";
+import { CheckSquare, CornerLeftUp } from "lucide-react";
+import type { ProjectObject, ProjectField, FieldOption, ChecklistItem, ProjectType } from "@/types";
 
 interface BoardCardProps {
   object: ProjectObject;
   fields: ProjectField[];
   options: Record<string, FieldOption[]>;
   prefix: string;
+  objectMap?: Record<string, ProjectObject>;
+  typeMap?: Record<string, ProjectType>;
   onClick?: () => void;
 }
 
@@ -23,6 +25,8 @@ export function BoardCard({
   fields,
   options,
   prefix,
+  objectMap,
+  typeMap,
   onClick,
 }: BoardCardProps) {
   const rawTitle = object.values.title || `${prefix}-${object.number}`;
@@ -55,6 +59,11 @@ export function BoardCard({
     ? "U"
     : ownerName.split(" ").slice(0, 2).map((n) => n[0]).join("").toUpperCase();
 
+  // Get parent info
+  const parentObject = object.parent && objectMap ? objectMap[object.parent] : null;
+  const parentTypeName = parentObject && typeMap ? typeMap[parentObject.type]?.name || parentObject.type : null;
+  const parentTitle = parentObject?.values.title || (parentObject ? `${prefix}-${parentObject.number}` : null);
+
   return (
     <div
       className={cn(
@@ -74,6 +83,23 @@ export function BoardCard({
           className="absolute left-0 top-3 bottom-3 w-1 rounded-r-full"
           style={{ backgroundColor: priorityColor }}
         />
+      )}
+
+      {/* Parent Badge */}
+      {parentObject && (
+        <div className={cn("flex items-center gap-1", priorityColor && "pl-2")}>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <span className="inline-flex items-center gap-1 text-[10px] text-muted-foreground bg-muted/50 px-1.5 py-0.5 rounded-md">
+                <CornerLeftUp className="size-3" />
+                <span className="truncate max-w-[140px]">{parentTitle}</span>
+              </span>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>{parentTypeName}: {parentTitle}</p>
+            </TooltipContent>
+          </Tooltip>
+        </div>
       )}
 
       {/* Header / Title */}
@@ -117,7 +143,7 @@ export function BoardCard({
             const fieldOptions = options[field.id] || [];
             const option = fieldOptions.find((o) => o.id === value);
 
-            if (field.fieldtype === "enum" && option) {
+            if (field.fieldtype === "enumerated" && option) {
               return (
                 <span
                   key={field.id}

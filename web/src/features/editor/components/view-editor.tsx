@@ -3,21 +3,24 @@
 
 import { useState, useEffect } from "react";
 import { Input, Label, RadioGroup, RadioGroupItem } from "@mochi/common";
-import type { ProjectView, ProjectField } from "@/types";
+import type { ProjectView, ProjectField, ProjectType } from "@/types";
 
 interface ViewEditorProps {
   view: ProjectView;
   fields: ProjectField[];
+  types: ProjectType[];
   onUpdate: (updates: Partial<ProjectView>) => void;
+  onUpdateTypes: (types: string[]) => void;
 }
 
-export function ViewEditor({ view, fields, onUpdate }: ViewEditorProps) {
+export function ViewEditor({ view, fields, types, onUpdate, onUpdateTypes }: ViewEditorProps) {
   const [name, setName] = useState(view.name);
   const [viewtype, setViewtype] = useState(view.viewtype);
   const [columns, setColumns] = useState(view.columns);
   const [cardfields, setCardfields] = useState(view.cardfields);
   const [sort, setSort] = useState(view.sort);
   const [direction, setDirection] = useState(view.direction);
+  const [selectedTypes, setSelectedTypes] = useState<string[]>(view.types || []);
 
   // Reset state when view changes
   useEffect(() => {
@@ -27,6 +30,7 @@ export function ViewEditor({ view, fields, onUpdate }: ViewEditorProps) {
     setCardfields(view.cardfields);
     setSort(view.sort);
     setDirection(view.direction);
+    setSelectedTypes(view.types || []);
   }, [
     view.id,
     view.name,
@@ -35,6 +39,7 @@ export function ViewEditor({ view, fields, onUpdate }: ViewEditorProps) {
     view.cardfields,
     view.sort,
     view.direction,
+    view.types,
   ]);
 
   const handleNameBlur = () => {
@@ -80,8 +85,19 @@ export function ViewEditor({ view, fields, onUpdate }: ViewEditorProps) {
 
   const cardfieldsList = cardfields.split(",").filter(Boolean);
 
-  // Get enum fields for column selection (board view groups by enum fields)
-  const enumFields = fields.filter((f) => f.fieldtype === "enum");
+  // Get enumerated fields for column selection (board view groups by enumerated fields)
+  const enumeratedFields = fields.filter((f) => f.fieldtype === "enumerated");
+
+  const toggleType = (typeId: string) => {
+    let newTypes: string[];
+    if (selectedTypes.includes(typeId)) {
+      newTypes = selectedTypes.filter((t) => t !== typeId);
+    } else {
+      newTypes = [...selectedTypes, typeId];
+    }
+    setSelectedTypes(newTypes);
+    onUpdateTypes(newTypes);
+  };
 
   return (
     <div className="space-y-4 p-4 border rounded-lg">
@@ -111,18 +127,41 @@ export function ViewEditor({ view, fields, onUpdate }: ViewEditorProps) {
             </Label>
           </div>
           <div className="flex items-center gap-2">
-            <RadioGroupItem value="list" id="viewtype-list" />
+            <RadioGroupItem value="tree" id="viewtype-tree" />
             <Label
-              htmlFor="viewtype-list"
+              htmlFor="viewtype-tree"
               className="font-normal cursor-pointer"
             >
-              List
+              Tree
             </Label>
           </div>
         </RadioGroup>
       </div>
 
-      {viewtype === "board" && enumFields.length > 0 && (
+      {types.length > 1 && (
+        <div className="space-y-2">
+          <Label>Show types</Label>
+          <p className="text-xs text-muted-foreground">Leave all unchecked to show all types</p>
+          <div className="space-y-1">
+            {types.map((type) => (
+              <label
+                key={type.id}
+                className="flex items-center gap-2 text-sm cursor-pointer"
+              >
+                <input
+                  type="checkbox"
+                  checked={selectedTypes.includes(type.id)}
+                  onChange={() => toggleType(type.id)}
+                  className="rounded"
+                />
+                {type.name}
+              </label>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {viewtype === "board" && enumeratedFields.length > 0 && (
         <div className="space-y-2">
           <Label>Group by (columns)</Label>
           <select
@@ -130,7 +169,7 @@ export function ViewEditor({ view, fields, onUpdate }: ViewEditorProps) {
             onChange={(e) => handleColumnsChange(e.target.value)}
             className="w-full h-9 rounded-md border border-input bg-background px-3 py-1 text-sm"
           >
-            {enumFields.map((field) => (
+            {enumeratedFields.map((field) => (
               <option key={field.id} value={field.id}>
                 {field.name}
               </option>

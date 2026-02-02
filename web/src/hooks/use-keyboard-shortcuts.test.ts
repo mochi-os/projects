@@ -41,10 +41,18 @@ describe("useKeyboardShortcuts", () => {
     expect(defaultCallbacks.onCreateNew).toHaveBeenCalledTimes(1);
   });
 
-  it("should call onFocusSearch when '/' is pressed", () => {
+  it("should call onFocusSearch when Ctrl+K is pressed", () => {
     renderHook(() => useKeyboardShortcuts(defaultCallbacks));
 
-    fireKeydown("/");
+    fireKeydown("k", { ctrlKey: true });
+
+    expect(defaultCallbacks.onFocusSearch).toHaveBeenCalledTimes(1);
+  });
+
+  it("should call onFocusSearch when Cmd+K is pressed", () => {
+    renderHook(() => useKeyboardShortcuts(defaultCallbacks));
+
+    fireKeydown("k", { metaKey: true });
 
     expect(defaultCallbacks.onFocusSearch).toHaveBeenCalledTimes(1);
   });

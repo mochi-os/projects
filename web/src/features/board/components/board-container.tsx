@@ -3,7 +3,7 @@
 
 import { useMemo } from "react";
 import { BoardColumn } from "./board-column";
-import type { ProjectObject, ProjectDetails } from "@/types";
+import type { ProjectObject, ProjectDetails, ProjectType } from "@/types";
 
 interface BoardContainerProps {
   project: ProjectDetails;
@@ -12,6 +12,7 @@ interface BoardContainerProps {
   onCardClick?: (object: ProjectObject) => void;
   onCreateClick?: (statusId: string) => void;
   onMoveObject?: (objectId: string, newStatus: string, newRank?: number) => void;
+  onDeleteColumn?: (typeId: string, fieldId: string, optionId: string) => Promise<void>;
 }
 
 export function BoardContainer({
@@ -21,11 +22,30 @@ export function BoardContainer({
   onCardClick,
   onCreateClick,
   onMoveObject,
+  onDeleteColumn,
 }: BoardContainerProps) {
   // Get the default type's fields (first type)
   const defaultType = project.types[0];
   const typeFields = defaultType ? project.fields[defaultType.id] || [] : [];
   const typeOptions = defaultType ? project.options[defaultType.id] || {} : {};
+
+  // Build a map of object id to object for quick parent lookups
+  const objectMap = useMemo(() => {
+    const map: Record<string, ProjectObject> = {};
+    for (const obj of objects) {
+      map[obj.id] = obj;
+    }
+    return map;
+  }, [objects]);
+
+  // Build type name map
+  const typeMap = useMemo(() => {
+    const map: Record<string, ProjectType> = {};
+    for (const t of project.types) {
+      map[t.id] = t;
+    }
+    return map;
+  }, [project.types]);
 
   // Get status options for columns
   const statusOptions = useMemo(() => {
@@ -79,6 +99,8 @@ export function BoardContainer({
           fields={typeFields.filter((f) => f.card === 1)}
           options={typeOptions}
           prefix={project.project.prefix}
+          objectMap={objectMap}
+          typeMap={typeMap}
           onCardClick={onCardClick}
           onCreateClick={() => onCreateClick?.(status.id)}
           onDrop={handleDrop}
@@ -94,6 +116,8 @@ export function BoardContainer({
           fields={typeFields.filter((f) => f.card === 1)}
           options={typeOptions}
           prefix={project.project.prefix}
+          objectMap={objectMap}
+          typeMap={typeMap}
           onCardClick={onCardClick}
           onDrop={handleDrop}
         />

@@ -16,10 +16,6 @@ describe("endpoints.projects", () => {
       expect(endpoints.projects.templates).toBe("-/templates");
     });
 
-    it("should have object templates endpoint", () => {
-      expect(endpoints.projects.objectTemplates).toBe("-/templates/object");
-    });
-
     it("should have repositories endpoint", () => {
       expect(endpoints.projects.repositories).toBe("-/repositories");
     });

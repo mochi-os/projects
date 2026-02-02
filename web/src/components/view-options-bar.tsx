@@ -11,7 +11,7 @@ import {
   SelectValue,
   cn,
 } from "@mochi/common";
-import { ArrowDown, ArrowUp, LayoutGrid, List } from "lucide-react";
+import { ArrowDown, ArrowUp, LayoutGrid, List, Network } from "lucide-react";
 import type { ProjectDetails, ProjectView, FieldOption } from "@/types";
 import type { FilterState } from "@/features/views/components/filter-bar";
 import type { SortState } from "@/features/list";
@@ -72,7 +72,9 @@ export function ViewOptionsBar({
                 : "hover:bg-muted"
             )}
           >
-            {view.viewtype === "list" ? (
+            {view.viewtype === "tree" ? (
+              <Network className="size-3.5" />
+            ) : view.viewtype === "list" ? (
               <List className="size-3.5" />
             ) : (
               <LayoutGrid className="size-3.5" />

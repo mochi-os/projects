@@ -84,7 +84,7 @@ const FIELD_TYPES = [
   { id: "text", name: "Text" },
   { id: "number", name: "Number" },
   { id: "date", name: "Date" },
-  { id: "enum", name: "Select" },
+  { id: "enumerated", name: "Select" },
   { id: "user", name: "User" },
   { id: "checkbox", name: "Checkbox" },
   { id: "checklist", name: "Checklist" },
@@ -308,7 +308,7 @@ export function AddViewDialog({
                 className="w-full h-9 rounded-md border border-input bg-background px-3 py-1 text-sm"
               >
                 <option value="board">Board</option>
-                <option value="list">List</option>
+                <option value="tree">Tree</option>
               </select>
             </div>
           </div>

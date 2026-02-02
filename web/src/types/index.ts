@@ -48,19 +48,14 @@ export interface ProjectView {
   cardfields: string;
   sort: string;
   direction: string;
+  types: string[];
 }
 
 export interface ProjectTemplate {
   id: string;
   name: string;
   description: string;
-}
-
-export interface ObjectTemplate {
-  id: string;
-  name: string;
-  description: string;
-  fields: Record<string, string>;
+  icon: string;
 }
 
 export interface ProjectDetails {

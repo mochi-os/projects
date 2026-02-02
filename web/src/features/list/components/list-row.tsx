@@ -30,7 +30,7 @@ export function ListRow({
     }
 
     switch (field.fieldtype) {
-      case "enum": {
+      case "enumerated": {
         const fieldOptions = options[field.id] || [];
         const option = fieldOptions.find((o) => o.id === value);
         if (option) {

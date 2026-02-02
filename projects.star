@@ -89,7 +89,7 @@ def database_create():
 	mochi.db.execute("create index if not exists fields_project on fields(project)")
 	mochi.db.execute("create index if not exists fields_type on fields(project, type)")
 
-	# 6. options - enum options for enum fields
+	# 6. options - enumerated options for enumerated fields
 	mochi.db.execute("""create table if not exists options (
 		project text not null references projects(id),
 		type text not null,
@@ -104,7 +104,7 @@ def database_create():
 	)""")
 	mochi.db.execute("create index if not exists options_field on options(project, type, field)")
 
-	# 7. views - board, list, table configurations
+	# 7. views - board and tree configurations
 	mochi.db.execute("""create table if not exists views (
 		project text not null references projects(id),
 		id text not null,
@@ -113,14 +113,33 @@ def database_create():
 		filter text not null default '',
 		columns text not null default '',
 		rows text not null default '',
-		cardfields text not null default '',
 		sort text not null default '',
 		direction text not null default 'asc',
 		primary key (project, id)
 	)""")
 	mochi.db.execute("create index if not exists views_project on views(project)")
 
-	# 8. objects - the actual tasks, epics, etc.
+	# 8. view_types - which types appear in a view (empty = all types)
+	mochi.db.execute("""create table if not exists view_types (
+		project text not null,
+		view text not null,
+		type text not null,
+		primary key (project, view, type),
+		foreign key (project, view) references views(project, id),
+		foreign key (project, type) references types(project, id)
+	)""")
+
+	# 9. view_cardfields - which fields appear on cards in a view
+	mochi.db.execute("""create table if not exists view_cardfields (
+		project text not null,
+		view text not null,
+		field text not null,
+		sort integer not null default 0,
+		primary key (project, view, field),
+		foreign key (project, view) references views(project, id)
+	)""")
+
+	# 10. objects - the actual tasks, epics, etc.
 	mochi.db.execute("""create table if not exists objects (
 		id text primary key,
 		project text not null references projects(id),
@@ -139,7 +158,7 @@ def database_create():
 	mochi.db.execute("create index if not exists objects_created on objects(created)")
 	mochi.db.execute("create index if not exists objects_updated on objects(updated)")
 
-	# 9. links - links between objects (blocks, relates to, duplicates, etc.)
+	# 11. links - links between objects (blocks, relates to, duplicates, etc.)
 	mochi.db.execute("""create table if not exists links (
 		project text not null references projects(id),
 		source text not null references objects(id),
@@ -151,7 +170,7 @@ def database_create():
 	mochi.db.execute("create index if not exists links_source on links(source)")
 	mochi.db.execute("create index if not exists links_target on links(target)")
 
-	# 10. values - field values on objects
+	# 12. values - field values on objects
 	mochi.db.execute("""create table if not exists "values" (
 		object text not null references objects(id),
 		field text not null,
@@ -161,7 +180,7 @@ def database_create():
 	mochi.db.execute("create index if not exists values_object on \"values\"(object)")
 	mochi.db.execute("create index if not exists values_owner on \"values\"(value) where field='owner'")
 
-	# 11. comments - comments on objects
+	# 13. comments - comments on objects
 	mochi.db.execute("""create table if not exists comments (
 		id text primary key,
 		object text not null references objects(id),
@@ -176,7 +195,7 @@ def database_create():
 	mochi.db.execute("create index if not exists comments_parent on comments(parent)")
 	mochi.db.execute("create index if not exists comments_created on comments(created)")
 
-	# 12. activity - activity history on objects
+	# 14. activity - activity history on objects
 	mochi.db.execute("""create table if not exists activity (
 		id text primary key,
 		object text not null references objects(id),
@@ -190,7 +209,7 @@ def database_create():
 	mochi.db.execute("create index if not exists activity_object on activity(object)")
 	mochi.db.execute("create index if not exists activity_created on activity(created)")
 
-	# 13. watchers - users subscribed to object updates
+	# 15. watchers - users subscribed to object updates
 	mochi.db.execute("""create table if not exists watchers (
 		object text not null references objects(id),
 		user text not null,
@@ -199,7 +218,7 @@ def database_create():
 	)""")
 	mochi.db.execute("create index if not exists watchers_user on watchers(user)")
 
-	# 14. attachments - file attachments on objects (uses Mochi attachment system)
+	# 16. attachments - file attachments on objects (uses Mochi attachment system)
 	# Note: Mochi handles attachments internally, but we track metadata here
 	mochi.db.execute("""create table if not exists attachments (
 		id text primary key,
@@ -212,101 +231,88 @@ def database_create():
 	mochi.db.execute("create index if not exists attachments_object on attachments(object)")
 
 
-# Upgrade database schema
-def database_upgrade(to_version):
-	if to_version == 2:
-		# Add rank column to objects for ordering within columns
-		mochi.db.execute("alter table objects add column rank integer not null default 0")
-
-	if to_version == 3:
-		# Rename assignee field to owner
-		mochi.db.execute("update fields set id='owner', name='Owner' where id='assignee'")
-		mochi.db.execute("update \"values\" set field='owner' where field='assignee'")
-		mochi.db.execute("update views set cardfields=replace(cardfields, 'assignee', 'owner')")
-		# Add index for efficient owner lookups
-		mochi.db.execute("create index if not exists values_owner on \"values\"(value) where field='owner'")
-
-
 # ============================================================================
 # Templates
 # ============================================================================
 
-# Get available project templates
+# Get available project templates from JSON files
 def get_templates():
-	return {
-		"simple": {
-			"id": "simple",
-			"name": "Simple",
-			"description": "A simple task board with To do, In progress, Review, and Done columns."
-		}
-	}
+	templates = {}
+	files = mochi.app.file.list("templates") or []
+	for filename in files:
+		if filename.endswith(".json"):
+			content = mochi.app.file.read("templates/" + filename)
+			if content:
+				data = json.decode(str(content))
+				templates[data["id"]] = {
+					"id": data["id"],
+					"name": data["name"],
+					"description": data.get("description", ""),
+					"icon": data.get("icon", "")
+				}
+	return templates
 
-# Apply the "simple" template to a project
-def apply_template_simple(project_id):
-	# Create "task" type
-	mochi.db.execute(
-		"insert into types (project, id, name, sort) values (?, ?, ?, ?)",
-		project_id, "task", "Task", 0
-	)
+# Apply a template to a project by loading from JSON
+def apply_template(project_id, template_id):
+	# Load template JSON
+	content = mochi.app.file.read("templates/" + template_id + ".json")
+	data = json.decode(str(content))
 
-	# Set hierarchy: task can be root (empty parent means root-level allowed)
-	mochi.db.execute(
-		"insert into hierarchy (project, type, parent) values (?, ?, ?)",
-		project_id, "task", ""
-	)
-
-	# Create fields for task type
-	fields = [
-		("title", "Title", "text", 1, 0),
-		("description", "Description", "text", 0, 1),
-		("status", "Status", "enum", 1, 2),
-		("priority", "Priority", "enum", 0, 3),
-		("owner", "Owner", "user", 0, 4),
-		("due", "Due", "date", 0, 5),
-	]
-	for field_id, name, fieldtype, required, sort in fields:
-		card = 1 if field_id != "description" else 0
+	# Create types
+	for t in data.get("types", []):
 		mochi.db.execute(
-			"insert into fields (project, type, id, name, fieldtype, required, card, sort) values (?, ?, ?, ?, ?, ?, ?, ?)",
-			project_id, "task", field_id, name, fieldtype, required, card, sort
+			"insert into types (project, id, name, sort) values (?, ?, ?, ?)",
+			project_id, t["id"], t["name"], t.get("sort", 0)
 		)
 
-	# Create status options
-	status_options = [
-		("todo", "To do", "#94a3b8", 0),
-		("progress", "In progress", "#fbbf24", 1),
-		("review", "Review", "#a78bfa", 2),
-		("done", "Done", "#4ade80", 3),
-	]
-	for opt_id, name, colour, sort in status_options:
+	# Set hierarchy for each type
+	for type_id, parents in data.get("hierarchy", {}).items():
+		for parent in parents:
+			mochi.db.execute(
+				"insert into hierarchy (project, type, parent) values (?, ?, ?)",
+				project_id, type_id, parent
+			)
+
+	# Create fields for each type
+	for type_id, fields in data.get("fields", {}).items():
+		for f in fields:
+			mochi.db.execute(
+				"insert into fields (project, type, id, name, fieldtype, required, card, sort) values (?, ?, ?, ?, ?, ?, ?, ?)",
+				project_id, type_id, f["id"], f["name"], f.get("fieldtype", "text"),
+				f.get("required", 0), f.get("card", 0), f.get("sort", 0)
+			)
+
+	# Create options for each type's enumerated fields
+	for type_id, type_options in data.get("options", {}).items():
+		for field_id, field_options in type_options.items():
+			for opt in field_options:
+				mochi.db.execute(
+					"insert into options (project, type, field, id, name, colour, sort) values (?, ?, ?, ?, ?, ?, ?)",
+					project_id, type_id, field_id, opt["id"], opt["name"],
+					opt.get("colour", "#94a3b8"), opt.get("sort", 0)
+				)
+
+	# Create views
+	for v in data.get("views", []):
 		mochi.db.execute(
-			"insert into options (project, type, field, id, name, colour, sort) values (?, ?, ?, ?, ?, ?, ?)",
-			project_id, "task", "status", opt_id, name, colour, sort
+			"insert into views (project, id, name, viewtype, columns, rows) values (?, ?, ?, ?, ?, ?)",
+			project_id, v["id"], v["name"], v.get("viewtype", "board"),
+			v.get("columns", ""), v.get("rows", "")
 		)
-
-	# Create priority options
-	priority_options = [
-		("low", "Low", "#94a3b8", 0),
-		("medium", "Medium", "#fbbf24", 1),
-		("high", "High", "#f87171", 2),
-	]
-	for opt_id, name, colour, sort in priority_options:
-		mochi.db.execute(
-			"insert into options (project, type, field, id, name, colour, sort) values (?, ?, ?, ?, ?, ?, ?)",
-			project_id, "task", "priority", opt_id, name, colour, sort
-		)
-
-	# Create default board view
-	mochi.db.execute(
-		"insert into views (project, id, name, viewtype, columns, cardfields) values (?, ?, ?, ?, ?, ?)",
-		project_id, "board", "Board", "board", "status", "title,priority,owner,due"
-	)
-
-	# Create default list view
-	mochi.db.execute(
-		"insert into views (project, id, name, viewtype, columns, cardfields, sort, direction) values (?, ?, ?, ?, ?, ?, ?, ?)",
-		project_id, "list", "List", "list", "", "title,status,priority,owner,due", "number", "desc"
-	)
+		# Add view types if specified
+		for vtype in v.get("types", []):
+			mochi.db.execute(
+				"insert into view_types (project, view, type) values (?, ?, ?)",
+				project_id, v["id"], vtype
+			)
+		# Add card fields
+		cardfields = v.get("cardfields", "").split(",")
+		for i, field in enumerate(cardfields):
+			if field.strip():
+				mochi.db.execute(
+					"insert into view_cardfields (project, view, field, sort) values (?, ?, ?, ?)",
+					project_id, v["id"], field.strip(), i
+				)
 
 
 # ============================================================================
@@ -392,9 +398,9 @@ def action_project_create(a):
 		entity, creator, a.user.identity.name, now
 	)
 
-	# Apply template
-	if template == "simple":
-		apply_template_simple(entity)
+	# Apply template (blank template creates nothing)
+	if template != "blank":
+		apply_template(entity, template)
 
 	# Set up access control
 	resource = "project/" + entity
@@ -442,12 +448,19 @@ def action_project_get(a):
 	for t in types:
 		options[t["id"]] = {}
 		for f in fields.get(t["id"], []):
-			if f["fieldtype"] == "enum":
+			if f["fieldtype"] == "enumerated":
 				field_options = mochi.db.rows("select id, name, colour, icon, sort from options where project = ? and type = ? and field = ? order by sort", project_id, t["id"], f["id"]) or []
 				options[t["id"]][f["id"]] = field_options
 
 	# Get views
-	views = mochi.db.rows("select id, name, viewtype, filter, columns, rows, cardfields, sort, direction from views where project = ? order by name", project_id) or []
+	views = mochi.db.rows("select id, name, viewtype, filter, columns, rows, sort, direction from views where project = ? order by name", project_id) or []
+
+	# Add types and cardfields to each view
+	for v in views:
+		view_types = mochi.db.rows("select type from view_types where project = ? and view = ?", project_id, v["id"]) or []
+		v["types"] = [vt["type"] for vt in view_types]
+		view_cardfields = mochi.db.rows("select field from view_cardfields where project = ? and view = ? order by sort", project_id, v["id"]) or []
+		v["cardfields"] = ",".join([cf["field"] for cf in view_cardfields])
 
 	# Get hierarchy
 	hierarchy = {}
@@ -626,63 +639,6 @@ def action_people_list(a):
 # Object Templates
 # ============================================================================
 
-def get_object_templates():
-	return {
-		"blank": {
-			"id": "blank",
-			"name": "Blank",
-			"description": "Empty task with no pre-filled fields.",
-			"fields": {}
-		},
-		"task": {
-			"id": "task",
-			"name": "Task",
-			"description": "General work item.",
-			"fields": {
-				"status": "todo"
-			}
-		},
-		"ticket": {
-			"id": "ticket",
-			"name": "Ticket",
-			"description": "Support request or general issue.",
-			"fields": {
-				"status": "todo",
-				"priority": "medium"
-			}
-		},
-		"bug": {
-			"id": "bug",
-			"name": "Bug",
-			"description": "Defect report.",
-			"fields": {
-				"status": "todo",
-				"priority": "high"
-			}
-		},
-		"feature": {
-			"id": "feature",
-			"name": "Feature",
-			"description": "Feature request.",
-			"fields": {
-				"status": "todo"
-			}
-		},
-		"pull_request": {
-			"id": "pull_request",
-			"name": "Pull request",
-			"description": "Code review request linked to a repository.",
-			"fields": {
-				"status": "todo"
-			}
-		}
-	}
-
-def action_object_templates(a):
-	if not a.user:
-		a.error(401, "Not logged in")
-		return
-	return {"data": {"templates": list(get_object_templates().values())}}
 
 
 # ============================================================================
@@ -710,6 +666,37 @@ def log_activity(object_id, actor, action, field="", oldvalue="", newvalue=""):
 		"insert into activity (id, object, actor, action, field, oldvalue, newvalue, created) values (?, ?, ?, ?, ?, ?, ?, ?)",
 		activity_id, object_id, actor, action, field, str(oldvalue), str(newvalue), now
 	)
+
+def would_create_cycle(object_id, new_parent_id):
+	"""Check if setting new_parent_id as parent of object_id would create a cycle."""
+	if not new_parent_id:
+		return False
+	current = new_parent_id
+	while current:
+		if current == object_id:
+			return True
+		parent_row = mochi.db.row("select parent from objects where id = ?", current)
+		current = parent_row["parent"] if parent_row else ""
+	return False
+
+def delete_object_cascade(project_id, object_id):
+	"""Delete an object and all its children recursively."""
+	# First, recursively delete all children
+	children = mochi.db.rows("select id from objects where parent = ?", object_id)
+	for child in children:
+		delete_object_cascade(project_id, child["id"])
+
+	# Then delete this object's related data
+	mochi.db.execute("delete from attachments where object = ?", object_id)
+	mochi.db.execute("delete from watchers where object = ?", object_id)
+	mochi.db.execute("delete from activity where object = ?", object_id)
+	mochi.db.execute("delete from comments where object = ?", object_id)
+	mochi.db.execute("delete from \"values\" where object = ?", object_id)
+	mochi.db.execute("delete from links where source = ? or target = ?", object_id, object_id)
+	mochi.db.execute("delete from objects where id = ?", object_id)
+
+	# Broadcast delete event for each object
+	broadcast_event(project_id, "object/delete", {"project": project_id, "id": object_id})
 
 
 # ============================================================================
@@ -818,28 +805,15 @@ def action_object_create(a):
 		a.error(400, "Invalid type")
 		return
 
-	# Get template and initial values
-	template_id = a.input("template") or "blank"
-	templates = get_object_templates()
-	template = templates.get(template_id, templates["blank"])
-
 	parent = a.input("parent") or ""
 	title = a.input("title") or ""
 
 	# Increment counter and get number
 	new_counter = project["counter"] + 1
-	mochi.db.execute("update projects set counter = ?, updated = ? where id = ?", new_counter, mochi.time.now(), project_id)
+	mochi.db.execute("update projects set counter=?, updated=? where id=?", new_counter, mochi.time.now(), project_id)
 
-	# Determine the status for this object (from template or default)
-	status = template.get("fields", {}).get("status", "")
-
-	# Calculate initial rank (add to end of column)
-	max_rank_row = mochi.db.row("""
-		select coalesce(max(o.rank), 0) as max_rank
-		from objects o
-		left join "values" v on v.object = o.id and v.field = 'status'
-		where o.project = ? and coalesce(v.value, '') = ?
-	""", project_id, status)
+	# Calculate initial rank (add to end)
+	max_rank_row = mochi.db.row("select coalesce(max(rank), 0) as max_rank from objects where project=?", project_id)
 	initial_rank = (max_rank_row["max_rank"] if max_rank_row else 0) + 1
 
 	# Create object
@@ -852,27 +826,16 @@ def action_object_create(a):
 	)
 
 	# Set title if provided
+	values = {}
 	if title:
 		mochi.db.execute("insert into \"values\" (object, field, value) values (?, ?, ?)", object_id, "title", title)
-
-	# Apply template field values
-	for field, value in template.get("fields", {}).items():
-		if field != "title" or not title:  # Don't overwrite provided title
-			mochi.db.execute("replace into \"values\" (object, field, value) values (?, ?, ?)", object_id, field, value)
+		values["title"] = title
 
 	# Log activity
 	log_activity(object_id, a.user.identity.id, "created")
 
 	# Auto-watch creator
 	mochi.db.execute("insert into watchers (object, user, created) values (?, ?, ?)", object_id, a.user.identity.id, now)
-
-	# Collect all values for broadcast
-	values = {}
-	if title:
-		values["title"] = title
-	for field, value in template.get("fields", {}).items():
-		if field != "title" or not title:
-			values[field] = value
 
 	# Broadcast to subscribers
 	broadcast_event(project_id, "object/create", {
@@ -975,6 +938,10 @@ def action_object_update(a):
 	if parent != None:
 		old_parent = row["parent"]
 		if parent != old_parent:
+			# Check for cycles
+			if parent and would_create_cycle(object_id, parent):
+				a.error(400, "Cannot set parent: would create a cycle")
+				return
 			mochi.db.execute("update objects set parent = ?, updated = ? where id = ?", parent, now, object_id)
 			log_activity(object_id, a.user.identity.id, "moved", "parent", old_parent, parent)
 
@@ -1026,16 +993,8 @@ def action_object_delete(a):
 		a.error(404, "Object not found")
 		return
 
-	# Delete in order
-	mochi.db.execute("delete from attachments where object = ?", object_id)
-	mochi.db.execute("delete from watchers where object = ?", object_id)
-	mochi.db.execute("delete from activity where object = ?", object_id)
-	mochi.db.execute("delete from comments where object = ?", object_id)
-	mochi.db.execute("delete from \"values\" where object = ?", object_id)
-	mochi.db.execute("delete from links where source = ? or target = ?", object_id, object_id)
-	mochi.db.execute("delete from objects where id = ?", object_id)
-
-	broadcast_event(project_id, "object/delete", {"project": project_id, "id": object_id})
+	# Cascade delete this object and all its children
+	delete_object_cascade(project_id, object_id)
 
 	return {"data": {"success": True}}
 
@@ -1070,34 +1029,35 @@ def action_object_move(a):
 		return
 
 	old_rank = row["rank"]
-	status = a.input("status")
+	field = a.input("field") or "status"  # Column field name (e.g., "status" or "column")
+	value = a.input("value")  # New column value
 	new_rank = a.input("rank")
 
-	# Get old status value
-	old_status_row = mochi.db.row("select value from \"values\" where object = ? and field = ?", object_id, "status")
-	old_status = old_status_row["value"] if old_status_row else ""
+	# Get old field value
+	old_value_row = mochi.db.row("select value from \"values\" where object = ? and field = ?", object_id, field)
+	old_value = old_value_row["value"] if old_value_row else ""
 
-	# Determine target status (use provided or keep current)
-	target_status = status if status else old_status
-	status_changed = old_status != target_status
+	# Determine target value (use provided or keep current)
+	target_value = value if value else old_value
+	value_changed = old_value != target_value
 
-	# Handle status change
-	if status_changed:
-		mochi.db.execute("replace into \"values\" (object, field, value) values (?, ?, ?)", object_id, "status", target_status)
-		log_activity(object_id, a.user.identity.id, "updated", "status", old_status, target_status)
+	# Handle field value change
+	if value_changed:
+		mochi.db.execute("replace into \"values\" (object, field, value) values (?, ?, ?)", object_id, field, target_value)
+		log_activity(object_id, a.user.identity.id, "updated", field, old_value, target_value)
 
 	# Handle rank change
 	if new_rank != None:
 		new_rank = int(new_rank)
 		# Shift other objects to make room
-		if status_changed or new_rank != old_rank:
+		if value_changed or new_rank != old_rank:
 			# Get all objects in the target column
 			objects_in_column = mochi.db.rows("""
 				select o.id, o.rank from objects o
-				left join "values" v on v.object = o.id and v.field = 'status'
+				left join "values" v on v.object = o.id and v.field = ?
 				where o.project = ? and coalesce(v.value, '') = ? and o.id != ?
 				order by o.rank asc
-			""", project_id, target_status, object_id) or []
+			""", field, project_id, target_value, object_id) or []
 
 			# Renumber all objects, inserting this one at the new position
 			rank = 1
@@ -1109,22 +1069,22 @@ def action_object_move(a):
 
 			# Set our object's rank
 			mochi.db.execute("update objects set rank = ? where id = ?", new_rank, object_id)
-	elif status_changed:
+	elif value_changed:
 		# Moving to new column without specific rank - add to end
 		max_rank_row = mochi.db.row("""
 			select coalesce(max(o.rank), 0) as max_rank from objects o
-			left join "values" v on v.object = o.id and v.field = 'status'
+			left join "values" v on v.object = o.id and v.field = ?
 			where o.project = ? and coalesce(v.value, '') = ? and o.id != ?
-		""", project_id, target_status, object_id)
+		""", field, project_id, target_value, object_id)
 		new_rank = (max_rank_row["max_rank"] if max_rank_row else 0) + 1
 		mochi.db.execute("update objects set rank = ? where id = ?", new_rank, object_id)
 
 	mochi.db.execute("update objects set updated = ? where id = ?", mochi.time.now(), object_id)
 
-	if status_changed:
+	if value_changed:
 		broadcast_event(project_id, "values/update", {
 			"project": project_id, "id": object_id,
-			"values": {"status": target_status}
+			"values": {field: target_value}
 		})
 
 	return {"data": {"success": True}}
@@ -1857,9 +1817,14 @@ def action_view_list(a):
 		return
 
 	views = mochi.db.rows(
-		"select id, name, viewtype, filter, columns, rows, cardfields, sort, direction from views where project = ? order by name",
+		"select id, name, viewtype, filter, columns, rows, sort, direction from views where project = ? order by name",
 		project_id
 	) or []
+
+	# Add cardfields to each view
+	for v in views:
+		view_cardfields = mochi.db.rows("select field from view_cardfields where project = ? and view = ? order by sort", project_id, v["id"]) or []
+		v["cardfields"] = ",".join([cf["field"] for cf in view_cardfields])
 
 	return {"data": {"views": views}}
 
@@ -1888,7 +1853,7 @@ def action_view_create(a):
 		return
 
 	viewtype = a.input("viewtype") or "board"
-	if viewtype not in ["board", "list"]:
+	if viewtype not in ["board", "tree"]:
 		a.error(400, "Invalid view type")
 		return
 
@@ -1909,9 +1874,17 @@ def action_view_create(a):
 	direction = a.input("direction") or "asc"
 
 	mochi.db.execute(
-		"insert into views (project, id, name, viewtype, filter, columns, rows, cardfields, sort, direction) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-		project_id, view_id, name.strip(), viewtype, filter_str, columns, rows, cardfields, sort, direction
+		"insert into views (project, id, name, viewtype, filter, columns, rows, sort, direction) values (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+		project_id, view_id, name.strip(), viewtype, filter_str, columns, rows, sort, direction
 	)
+
+	# Add card fields to junction table
+	for i, field in enumerate(cardfields.split(",")):
+		if field.strip():
+			mochi.db.execute(
+				"insert into view_cardfields (project, view, field, sort) values (?, ?, ?, ?)",
+				project_id, view_id, field.strip(), i
+			)
 
 	broadcast_event(project_id, "view/create", {
 		"project": project_id, "id": view_id, "name": name.strip(),
@@ -1967,7 +1940,7 @@ def action_view_update(a):
 	if name != None:
 		mochi.db.execute("update views set name = ? where project = ? and id = ?", name.strip(), project_id, view_id)
 	if viewtype != None:
-		if viewtype not in ["board", "list"]:
+		if viewtype not in ["board", "tree"]:
 			a.error(400, "Invalid view type")
 			return
 		mochi.db.execute("update views set viewtype = ? where project = ? and id = ?", viewtype, project_id, view_id)
@@ -1978,7 +1951,14 @@ def action_view_update(a):
 	if rows != None:
 		mochi.db.execute("update views set rows = ? where project = ? and id = ?", rows, project_id, view_id)
 	if cardfields != None:
-		mochi.db.execute("update views set cardfields = ? where project = ? and id = ?", cardfields, project_id, view_id)
+		# Delete existing cardfields and insert new ones
+		mochi.db.execute("delete from view_cardfields where project = ? and view = ?", project_id, view_id)
+		for i, field in enumerate(cardfields.split(",")):
+			if field.strip():
+				mochi.db.execute(
+					"insert into view_cardfields (project, view, field, sort) values (?, ?, ?, ?)",
+					project_id, view_id, field.strip(), i
+				)
 	if sort != None:
 		mochi.db.execute("update views set sort = ? where project = ? and id = ?", sort, project_id, view_id)
 	if direction != None:
@@ -1987,14 +1967,31 @@ def action_view_update(a):
 			return
 		mochi.db.execute("update views set direction = ? where project = ? and id = ?", direction, project_id, view_id)
 
+	# Update view types if provided (comma-separated list of type IDs, empty string = all types)
+	view_types = a.input("types")
+	if view_types != None:
+		# Delete existing view types
+		mochi.db.execute("delete from view_types where project = ? and view = ?", project_id, view_id)
+		# Insert new view types
+		if view_types:
+			type_ids = [t.strip() for t in view_types.split(",") if t.strip()]
+			for type_id in type_ids:
+				mochi.db.execute(
+					"insert into view_types (project, view, type) values (?, ?, ?)",
+					project_id, view_id, type_id
+				)
+
 	# Read back updated view for broadcast
 	updated = mochi.db.row("select * from views where project=? and id=?", project_id, view_id)
 	if updated:
+		# Get cardfields from junction table
+		view_cardfields = mochi.db.rows("select field from view_cardfields where project = ? and view = ? order by sort", project_id, view_id) or []
+		updated_cardfields = ",".join([cf["field"] for cf in view_cardfields])
 		broadcast_event(project_id, "view/update", {
 			"project": project_id, "id": view_id,
 			"name": updated["name"], "viewtype": updated["viewtype"],
 			"filter": updated["filter"], "columns": updated["columns"],
-			"rows": updated["rows"], "cardfields": updated["cardfields"],
+			"rows": updated["rows"], "cardfields": updated_cardfields,
 			"sort": updated["sort"], "direction": updated["direction"]
 		})
 
@@ -2030,6 +2027,8 @@ def action_view_delete(a):
 		a.error(400, "Cannot delete the last view")
 		return
 
+	mochi.db.execute("delete from view_cardfields where project = ? and view = ?", project_id, view_id)
+	mochi.db.execute("delete from view_types where project = ? and view = ?", project_id, view_id)
 	mochi.db.execute("delete from views where project = ? and id = ?", project_id, view_id)
 
 	broadcast_event(project_id, "view/delete", {"project": project_id, "id": view_id})
@@ -2358,7 +2357,7 @@ def action_field_create(a):
 		return
 
 	fieldtype = a.input("fieldtype") or "text"
-	if fieldtype not in ["text", "number", "date", "enum", "user", "object", "checkbox", "checklist"]:
+	if fieldtype not in ["text", "number", "date", "enumerated", "user", "object", "checkbox", "checklist"]:
 		a.error(400, "Invalid field type")
 		return
 
@@ -2631,13 +2630,13 @@ def action_option_create(a):
 		a.error(400, "Type and field ID required")
 		return
 
-	# Verify field exists and is enum type
+	# Verify field exists and is enumerated type
 	field_row = mochi.db.row("select fieldtype from fields where project = ? and type = ? and id = ?", project_id, type_id, field_id)
 	if not field_row:
 		a.error(404, "Field not found")
 		return
-	if field_row["fieldtype"] != "enum":
-		a.error(400, "Options can only be added to enum fields")
+	if field_row["fieldtype"] != "enumerated":
+		a.error(400, "Options can only be added to enumerated fields")
 		return
 
 	name = a.input("name")
@@ -3245,7 +3244,7 @@ def send_project_data(project_id, subscriber_id):
 				"sort": f["sort"], "card": f["card"]
 			})
 
-			# Send options for enum fields
+			# Send options for enumerated fields
 			options = mochi.db.rows("select * from options where project=? and type=? and field=? order by sort", project_id, t["id"], f["id"])
 			for o in options:
 				h["event"] = "option/create"

@@ -5,7 +5,6 @@ const endpoints = {
     list: "-/list",
     create: "-/create",
     templates: "-/templates",
-    objectTemplates: "-/templates/object",
     search: "directory/search",
     probe: "probe",
     subscribe: "subscribe",

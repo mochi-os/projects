@@ -4,7 +4,6 @@ import type {
   Project,
   ProjectDetails,
   ProjectTemplate,
-  ObjectTemplate,
   ProjectView,
   ProjectType,
   ProjectField,
@@ -46,12 +45,6 @@ interface ProjectGetResponse {
 interface TemplatesResponse {
   data: {
     templates: ProjectTemplate[];
-  };
-}
-
-interface ObjectTemplatesResponse {
-  data: {
-    templates: ObjectTemplate[];
   };
 }
 
@@ -98,13 +91,14 @@ interface CreateObjectRequest {
 }
 
 interface MoveObjectRequest {
-  status?: string;
+  field?: string;  // Column field name (e.g., "status" or "column")
+  value?: string;  // New column value
   rank?: number;
 }
 
 interface CreateViewRequest {
   name: string;
-  viewtype?: "board" | "list";
+  viewtype?: "board" | "tree";
   filter?: string;
   columns?: string;
   rows?: string;
@@ -115,13 +109,14 @@ interface CreateViewRequest {
 
 interface UpdateViewRequest {
   name?: string;
-  viewtype?: "board" | "list";
+  viewtype?: "board" | "tree";
   filter?: string;
   columns?: string;
   rows?: string;
   cardfields?: string;
   sort?: string;
   direction?: "asc" | "desc";
+  types?: string;
 }
 
 // Type response/request types
@@ -236,13 +231,6 @@ const projectsApi = {
   // Get available templates
   templates: async (): Promise<TemplatesResponse> => {
     return projectsRequest.get<TemplatesResponse>(endpoints.projects.templates);
-  },
-
-  // Get object templates
-  objectTemplates: async (): Promise<ObjectTemplatesResponse> => {
-    return projectsRequest.get<ObjectTemplatesResponse>(
-      endpoints.projects.objectTemplates,
-    );
   },
 
   // Create a new project

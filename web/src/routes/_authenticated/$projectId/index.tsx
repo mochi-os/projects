@@ -18,10 +18,11 @@ import {
 } from "@mochi/common";
 import { ChevronDown, ChevronUp, Ellipsis, FolderKanban, Plus, Settings2 } from "lucide-react";
 import projectsApi from "@/api/projects";
-import type { ProjectDetails, ProjectObject, ObjectTemplate } from "@/types";
+import type { ProjectDetails, ProjectObject } from "@/types";
 import { BoardContainer } from "@/features/board/components";
-import { ListView, type SortState } from "@/features/list";
+import { TreeView } from "@/features/tree";
 import { FilterBar, type FilterState } from "@/features/views";
+import type { SortState } from "@/features/list";
 import {
   CreateObjectDialog,
   ObjectDetailPanel,
@@ -39,23 +40,16 @@ export const Route = createFileRoute("/_authenticated/$projectId/")({
     view: typeof search.view === "string" ? search.view : undefined,
   }),
   loader: async ({ params }) => {
-    const [projectResponse, templatesResponse] = await Promise.all([
-      projectsApi.get(params.projectId),
-      projectsApi.objectTemplates(),
-    ]);
-    return {
-      project: projectResponse.data,
-      templates: templatesResponse.data.templates,
-    };
+    const projectResponse = await projectsApi.get(params.projectId);
+    return { project: projectResponse.data };
   },
   component: ProjectPage,
   errorComponent: ({ error }) => <GeneralError error={error} />,
 });
 
 function ProjectPage() {
-  const { project, templates } = Route.useLoaderData() as {
+  const { project } = Route.useLoaderData() as {
     project: ProjectDetails;
-    templates: ObjectTemplate[];
   };
   const params = Route.useParams();
   const search = Route.useSearch();
@@ -72,9 +66,10 @@ function ProjectPage() {
 
   const [selectedObjectId, setSelectedObjectId] = useState<string | null>(null);
   const [createDialogOpen, setCreateDialogOpen] = useState(false);
-  const [createDefaultStatus, setCreateDefaultStatus] = useState<
-    string | undefined
-  >();
+  const [createDefaultField, setCreateDefaultField] = useState<{
+    field: string;
+    value: string;
+  } | undefined>();
   const [showShortcutsHelp, setShowShortcutsHelp] = useState(false);
   const [showViewOptions, setShowViewOptions] = useState(() => {
     const saved = localStorage.getItem("projects-view-options-expanded");
@@ -152,16 +147,18 @@ function ProjectPage() {
   const moveMutation = useMutation({
     mutationFn: async ({
       objectId,
-      status,
+      field,
+      value,
       rank,
     }: {
       objectId: string;
-      status: string;
+      field: string;
+      value: string;
       rank?: number;
     }) => {
-      return projectsApi.moveObject(params.projectId, objectId, { status, rank });
+      return projectsApi.moveObject(params.projectId, objectId, { field, value, rank });
     },
-    onMutate: async ({ objectId, status, rank }) => {
+    onMutate: async ({ objectId, field, value, rank }) => {
       // Optimistically update the UI
       await queryClient.cancelQueries({
         queryKey: ["objects", params.projectId],
@@ -177,7 +174,7 @@ function ProjectPage() {
         (old) =>
           old?.map((obj) =>
             obj.id === objectId
-              ? { ...obj, rank: rank ?? obj.rank, values: { ...obj.values, status } }
+              ? { ...obj, rank: rank ?? obj.rank, values: { ...obj.values, [field]: value } }
               : obj,
           ),
       );
@@ -200,9 +197,65 @@ function ProjectPage() {
     },
   });
 
+  // Reparent object mutation
+  const reparentMutation = useMutation({
+    mutationFn: async ({
+      objectId,
+      parentId,
+    }: {
+      objectId: string;
+      parentId: string | null;
+    }) => {
+      return projectsApi.updateObject(params.projectId, objectId, {
+        parent: parentId || "",
+      });
+    },
+    onMutate: async ({ objectId, parentId }) => {
+      await queryClient.cancelQueries({
+        queryKey: ["objects", params.projectId],
+      });
+
+      const previousObjects = queryClient.getQueryData<ProjectObject[]>([
+        "objects",
+        params.projectId,
+      ]);
+
+      queryClient.setQueryData<ProjectObject[]>(
+        ["objects", params.projectId],
+        (old) =>
+          old?.map((obj) =>
+            obj.id === objectId
+              ? { ...obj, parent: parentId || "" }
+              : obj,
+          ),
+      );
+
+      return { previousObjects };
+    },
+    onError: (_err, _variables, context) => {
+      if (context?.previousObjects) {
+        queryClient.setQueryData(
+          ["objects", params.projectId],
+          context.previousObjects,
+        );
+      }
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["objects", params.projectId],
+      });
+    },
+  });
+
   // Filter objects
   const filteredObjects = useMemo(() => {
     let result = objectsData || [];
+
+    // Apply view's type filter (if view has specific types selected)
+    const viewTypes = activeView?.types || [];
+    if (viewTypes.length > 0) {
+      result = result.filter((obj) => viewTypes.includes(obj.type));
+    }
 
     // Apply search filter
     if (filters.search) {
@@ -230,7 +283,7 @@ function ProjectPage() {
     }
 
     return result;
-  }, [objectsData, filters]);
+  }, [objectsData, filters, activeView?.types]);
 
   // Keyboard navigation helpers
   const handleSelectNext = useCallback(() => {
@@ -273,19 +326,25 @@ function ProjectPage() {
     [project.views],
   );
 
-  // Get default status (first option of status field for first type)
-  const getDefaultStatus = useCallback(() => {
+  // Get the column field for the current view
+  const columnField = activeView?.columns || "status";
+
+  // Get default column value (first option of column field for first type)
+  const getDefaultColumnValue = useCallback(() => {
     const firstType = project.types[0]?.id;
-    if (firstType && project.options[firstType]?.status?.length > 0) {
-      return project.options[firstType].status[0].id;
+    if (firstType && project.options[firstType]?.[columnField]?.length > 0) {
+      return {
+        field: columnField,
+        value: project.options[firstType][columnField][0].id,
+      };
     }
     return undefined;
-  }, [project.types, project.options]);
+  }, [project.types, project.options, columnField]);
 
   const handleOpenCreateDialog = useCallback(() => {
-    setCreateDefaultStatus(getDefaultStatus());
+    setCreateDefaultField(getDefaultColumnValue());
     setCreateDialogOpen(true);
-  }, [getDefaultStatus]);
+  }, [getDefaultColumnValue]);
 
   // Keyboard shortcuts
   useKeyboardShortcuts({
@@ -311,13 +370,17 @@ function ProjectPage() {
     setSelectedObjectId(object.id);
   };
 
-  const handleCreateClick = (statusId: string) => {
-    setCreateDefaultStatus(statusId);
+  const handleCreateClick = (columnValue: string) => {
+    setCreateDefaultField({ field: columnField, value: columnValue });
     setCreateDialogOpen(true);
   };
 
-  const handleMoveObject = (objectId: string, newStatus: string, newRank?: number) => {
-    moveMutation.mutate({ objectId, status: newStatus, rank: newRank });
+  const handleMoveObject = (objectId: string, newValue: string, newRank?: number) => {
+    moveMutation.mutate({ objectId, field: columnField, value: newValue, rank: newRank });
+  };
+
+  const handleReparent = (objectId: string, newParentId: string | null) => {
+    reparentMutation.mutate({ objectId, parentId: newParentId });
   };
 
   const handleObjectCreated = () => {
@@ -394,21 +457,21 @@ function ProjectPage() {
           onViewChange={handleViewChange}
           sort={sort}
           onSortChange={setSort}
-          showSort={activeView?.viewtype === "list"}
+          showSort={activeView?.viewtype === "tree"}
         />
       )}
       <Main fluid className="flex flex-col min-h-0 flex-1 !py-0">
         {/* Content area */}
-        <div className={activeView?.viewtype === "list" ? "flex-1 min-h-0 overflow-auto" : ""}>
-          {activeView?.viewtype === "list" ? (
+        <div className={activeView?.viewtype === "tree" ? "flex-1 min-h-0 overflow-auto" : ""}>
+          {activeView?.viewtype === "tree" ? (
             <div className="p-4">
-              <ListView
+              <TreeView
                 project={project}
+                projectId={params.projectId}
                 objects={filteredObjects}
                 peopleMap={peopleMap}
-                sort={sort}
-                onSortChange={setSort}
                 onCardClick={handleCardClick}
+                onReparent={handleReparent}
               />
             </div>
           ) : (
@@ -416,7 +479,7 @@ function ProjectPage() {
               <BoardContainer
                 project={project}
                 objects={filteredObjects}
-                statusField="status"
+                statusField={columnField}
                 onCardClick={handleCardClick}
                 onCreateClick={handleCreateClick}
                 onMoveObject={handleMoveObject}
@@ -439,8 +502,7 @@ function ProjectPage() {
         onOpenChange={setCreateDialogOpen}
         projectId={params.projectId}
         project={project}
-        templates={templates}
-        defaultStatus={createDefaultStatus}
+        defaultField={createDefaultField}
         onCreated={handleObjectCreated}
       />
 

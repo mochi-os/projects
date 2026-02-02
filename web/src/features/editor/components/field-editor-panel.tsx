@@ -43,7 +43,7 @@ export function FieldEditorPanel({ field, onUpdate }: FieldEditorPanelProps) {
       text: "Text",
       number: "Number",
       date: "Date",
-      enum: "Select",
+      enumerated: "Select",
       user: "User",
       object: "Object",
       checkbox: "Checkbox",

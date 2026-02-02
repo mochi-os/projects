@@ -58,7 +58,7 @@ export function ViewOptionsBar({
   const priorityOptions: FieldOption[] = taskOptions["priority"] || [];
 
   return (
-    <div className="flex items-center gap-2 px-4 py-2 border-b bg-muted/30 flex-wrap">
+    <div className="flex items-center gap-2 px-4 py-2 bg-muted/30 flex-wrap">
       {/* View Switcher */}
       <div className="flex gap-1">
         {project.views.map((view: ProjectView) => (

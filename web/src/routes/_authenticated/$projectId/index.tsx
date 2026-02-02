@@ -247,6 +247,26 @@ function ProjectPage() {
     },
   });
 
+  // Delete column (option) mutation
+  const deleteColumnMutation = useMutation({
+    mutationFn: async ({
+      typeId,
+      fieldId,
+      optionId,
+    }: {
+      typeId: string;
+      fieldId: string;
+      optionId: string;
+    }) => {
+      return projectsApi.deleteOption(params.projectId, typeId, fieldId, optionId);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["project", params.projectId],
+      });
+    },
+  });
+
   // Filter objects
   const filteredObjects = useMemo(() => {
     let result = objectsData || [];
@@ -383,6 +403,10 @@ function ProjectPage() {
     reparentMutation.mutate({ objectId, parentId: newParentId });
   };
 
+  const handleDeleteColumn = async (typeId: string, fieldId: string, optionId: string) => {
+    await deleteColumnMutation.mutateAsync({ typeId, fieldId, optionId });
+  };
+
   const handleObjectCreated = () => {
     // Object created successfully, queries will be invalidated by the mutation
   };
@@ -483,6 +507,7 @@ function ProjectPage() {
                 onCardClick={handleCardClick}
                 onCreateClick={handleCreateClick}
                 onMoveObject={handleMoveObject}
+                onDeleteColumn={handleDeleteColumn}
               />
             </div>
           )}

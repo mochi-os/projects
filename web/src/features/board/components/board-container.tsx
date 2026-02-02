@@ -104,6 +104,11 @@ export function BoardContainer({
           onCardClick={onCardClick}
           onCreateClick={() => onCreateClick?.(status.id)}
           onDrop={handleDrop}
+          onDeleteColumn={
+            onDeleteColumn && defaultType
+              ? () => onDeleteColumn(defaultType.id, statusField, status.id)
+              : undefined
+          }
         />
       ))}
 

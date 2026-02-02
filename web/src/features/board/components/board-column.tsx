@@ -2,8 +2,15 @@
 // Copyright Alistair Cunningham 2026
 
 import { useState, useRef } from "react";
-import { cn, ConfirmDialog } from "@mochi/common";
-import { Plus, Trash2 } from "lucide-react";
+import {
+  cn,
+  ConfirmDialog,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@mochi/common";
+import { Inbox, MoreHorizontal, Plus, Trash2 } from "lucide-react";
 import { BoardCard } from "./board-card";
 import type { ProjectObject, ProjectField, FieldOption, ProjectType } from "@/types";
 
@@ -115,36 +122,40 @@ export function BoardColumn({
             {objects.length}
           </span>
         </div>
-        <div className="flex items-center gap-1">
-          {onCreateClick && (
-            <button
-              onClick={onCreateClick}
-              className="p-1 rounded hover:bg-muted transition-colors"
-              title="Add item"
-            >
-              <Plus className="size-4 text-muted-foreground" />
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <button className="p-1 rounded hover:bg-muted transition-colors">
+              <MoreHorizontal className="size-4 text-muted-foreground" />
             </button>
-          )}
-          {objects.length === 0 && onDeleteColumn && (
-            <button
-              onClick={() => setShowDeleteDialog(true)}
-              className="p-1 rounded hover:bg-destructive/10 transition-colors"
-              title="Delete column"
-            >
-              <Trash2 className="size-4 text-muted-foreground hover:text-destructive" />
-            </button>
-          )}
-        </div>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            {onCreateClick && (
+              <DropdownMenuItem onClick={onCreateClick}>
+                <Plus className="size-4 mr-2" />
+                New
+              </DropdownMenuItem>
+            )}
+            {objects.length === 0 && onDeleteColumn && (
+              <DropdownMenuItem
+                onClick={() => setShowDeleteDialog(true)}
+              >
+                <Trash2 className="size-4 mr-2" />
+                Delete
+              </DropdownMenuItem>
+            )}
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
 
       <ConfirmDialog
         open={showDeleteDialog}
         onOpenChange={setShowDeleteDialog}
         title="Delete column"
-        description={`Are you sure you want to delete the "${name}" column? This cannot be undone.`}
-        confirmText={isDeleting ? "Deleting..." : "Delete"}
-        confirmVariant="destructive"
-        onConfirm={async () => {
+        desc={`Are you sure you want to delete the "${name}" column? This cannot be undone.`}
+        confirmText="Delete"
+        destructive
+        isLoading={isDeleting}
+        handleConfirm={async () => {
           if (objects.length > 0) {
             // Column has items now, don't delete
             setShowDeleteDialog(false);
@@ -194,8 +205,8 @@ export function BoardColumn({
         )}
 
         {objects.length === 0 && !isDragOver && (
-          <div className="text-center text-sm text-muted-foreground py-8">
-            No items
+          <div className="flex items-center justify-center py-8">
+            <Inbox className="size-8 text-muted-foreground/30" />
           </div>
         )}
       </div>

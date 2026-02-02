@@ -252,7 +252,6 @@ export function CreateObjectDialog({
               <div key={field.id} className="grid grid-cols-[100px_1fr] gap-4 items-start">
                 <label className="text-sm font-medium text-muted-foreground pt-2">
                   {field.name}
-                  {field.required === 1 && <span className="text-destructive ml-1">*</span>}
                 </label>
                 <FieldEditor
                   field={field}

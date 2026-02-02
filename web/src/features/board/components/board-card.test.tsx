@@ -289,7 +289,7 @@ describe("BoardCard", () => {
     });
 
     const objectMap = { "parent-1": parentObject };
-    const typeMap = { epic: { id: "epic", name: "Epic", sort: 0 } };
+    const typeMap = { epic: { id: "epic", name: "Epic", rank: 0 } };
 
     render(
       <BoardCard

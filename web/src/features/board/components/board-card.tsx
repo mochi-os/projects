@@ -43,22 +43,6 @@ export function BoardCard({
   const priorityOption = priorityOptions.find((o) => o.id === priorityValue);
   const priorityColor = priorityOption?.colour;
 
-  // Format date
-  const dateStr = new Date(object.created * 1000).toLocaleDateString(undefined, {
-    month: "short",
-    day: "numeric",
-  });
-
-  // Get owner info
-  const ownerId = object.values.owner;
-  const ownerOptions = options.owner || [];
-  const ownerOption = ownerOptions.find((o) => o.id === ownerId);
-  const ownerName = ownerOption?.name || ownerId || "Unassigned";
-  // Get initials (first letter of first 2 words if possible, or just first letter)
-  const ownerInitials = ownerName === "Unassigned"
-    ? "U"
-    : ownerName.split(" ").slice(0, 2).map((n) => n[0]).join("").toUpperCase();
-
   // Get parent info
   const parentObject = object.parent && objectMap ? objectMap[object.parent] : null;
   const parentTypeName = parentObject && typeMap ? typeMap[parentObject.type]?.name || parentObject.type : null;
@@ -103,27 +87,8 @@ export function BoardCard({
       )}
 
       {/* Header / Title */}
-      <div className={cn("pr-6 font-medium text-sm leading-tight text-card-foreground", priorityColor && "pl-2")}>
+      <div className={cn("font-medium text-sm leading-tight text-card-foreground", priorityColor && "pl-2")}>
         {title}
-      </div>
-
-      {/* Edit Action (Visible on Hover) */}
-      <div className="absolute top-2 right-2 opacity-0 transition-opacity group-hover:opacity-100">
-        <button className="flex h-6 w-6 items-center justify-center rounded-md text-muted-foreground hover:bg-muted hover:text-foreground">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="12"
-            height="12"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z" />
-          </svg>
-        </button>
       </div>
 
       {/* Description Preview */}
@@ -189,32 +154,6 @@ export function BoardCard({
         </div>
       )}
 
-      {/* Footer: Date & ID & Owner */}
-      <div className={cn("mt-1 flex items-center justify-between border-t pt-2 text-[10px] text-muted-foreground", priorityColor && "pl-2")}>
-        <div className="flex items-center gap-1.5">
-          {/* Owner Avatar with Tooltip */}
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <div
-                className={cn(
-                  "flex h-5 w-5 items-center justify-center rounded-full text-[9px] font-medium transition-colors cursor-help",
-                  ownerId ? "bg-primary/10 text-primary" : "bg-muted text-muted-foreground"
-                )}
-              >
-                {ownerInitials}
-              </div>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>{ownerName}</p>
-            </TooltipContent>
-          </Tooltip>
-
-          <span>{dateStr}</span>
-        </div>
-        <div className="font-mono opacity-50">
-          {prefix}-{object.number}
-        </div>
-      </div>
     </div>
   );
 }

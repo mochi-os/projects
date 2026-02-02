@@ -48,7 +48,7 @@ def database_create():
 		project text not null references projects(id),
 		id text not null,
 		name text not null,
-		sort integer not null default 0,
+		rank integer not null default 0,
 		primary key (project, id)
 	)""")
 	mochi.db.execute("create index if not exists types_project on types(project)")
@@ -72,7 +72,7 @@ def database_create():
 		fieldtype text not null,
 		required integer not null default 0,
 		multi integer not null default 0,
-		sort integer not null default 0,
+		rank integer not null default 0,
 		min text not null default '',
 		max text not null default '',
 		pattern text not null default '',
@@ -83,6 +83,7 @@ def database_create():
 		format text not null default '',
 		card integer not null default 1,
 		position text not null default '',
+		rows integer not null default 1,
 		primary key (project, type, id),
 		foreign key (project, type) references types(project, id)
 	)""")
@@ -98,7 +99,7 @@ def database_create():
 		name text not null,
 		colour text not null default '',
 		icon text not null default '',
-		sort integer not null default 0,
+		rank integer not null default 0,
 		primary key (project, type, field, id),
 		foreign key (project, type, field) references fields(project, type, id)
 	)""")
@@ -134,7 +135,7 @@ def database_create():
 		project text not null,
 		view text not null,
 		field text not null,
-		sort integer not null default 0,
+		rank integer not null default 0,
 		primary key (project, view, field),
 		foreign key (project, view) references views(project, id)
 	)""")
@@ -261,8 +262,8 @@ def apply_template(project_id, template_id):
 	# Create types
 	for t in data.get("types", []):
 		mochi.db.execute(
-			"insert into types (project, id, name, sort) values (?, ?, ?, ?)",
-			project_id, t["id"], t["name"], t.get("sort", 0)
+			"insert into types (project, id, name, rank) values (?, ?, ?, ?)",
+			project_id, t["id"], t["name"], t.get("rank", 0)
 		)
 
 	# Set hierarchy for each type
@@ -277,9 +278,9 @@ def apply_template(project_id, template_id):
 	for type_id, fields in data.get("fields", {}).items():
 		for f in fields:
 			mochi.db.execute(
-				"insert into fields (project, type, id, name, fieldtype, required, card, sort) values (?, ?, ?, ?, ?, ?, ?, ?)",
+				"insert into fields (project, type, id, name, fieldtype, required, card, rank, rows) values (?, ?, ?, ?, ?, ?, ?, ?, ?)",
 				project_id, type_id, f["id"], f["name"], f.get("fieldtype", "text"),
-				f.get("required", 0), f.get("card", 0), f.get("sort", 0)
+				f.get("required", 0), f.get("card", 0), f.get("rank", 0), f.get("rows", 1)
 			)
 
 	# Create options for each type's enumerated fields
@@ -287,9 +288,9 @@ def apply_template(project_id, template_id):
 		for field_id, field_options in type_options.items():
 			for opt in field_options:
 				mochi.db.execute(
-					"insert into options (project, type, field, id, name, colour, sort) values (?, ?, ?, ?, ?, ?, ?)",
+					"insert into options (project, type, field, id, name, colour, rank) values (?, ?, ?, ?, ?, ?, ?)",
 					project_id, type_id, field_id, opt["id"], opt["name"],
-					opt.get("colour", "#94a3b8"), opt.get("sort", 0)
+					opt.get("colour", "#94a3b8"), opt.get("rank", 0)
 				)
 
 	# Create views
@@ -310,7 +311,7 @@ def apply_template(project_id, template_id):
 		for i, field in enumerate(cardfields):
 			if field.strip():
 				mochi.db.execute(
-					"insert into view_cardfields (project, view, field, sort) values (?, ?, ?, ?)",
+					"insert into view_cardfields (project, view, field, rank) values (?, ?, ?, ?)",
 					project_id, v["id"], field.strip(), i
 				)
 
@@ -435,12 +436,12 @@ def action_project_get(a):
 		return
 
 	# Get types
-	types = mochi.db.rows("select id, name, sort from types where project = ? order by sort", project_id) or []
+	types = mochi.db.rows("select id, name, rank from types where project = ? order by rank", project_id) or []
 
 	# Get fields by type
 	fields = {}
 	for t in types:
-		type_fields = mochi.db.rows("select id, name, fieldtype, required, multi, sort, card, position from fields where project = ? and type = ? order by sort", project_id, t["id"]) or []
+		type_fields = mochi.db.rows("select id, name, fieldtype, required, multi, rank, card, position, rows from fields where project = ? and type = ? order by rank", project_id, t["id"]) or []
 		fields[t["id"]] = type_fields
 
 	# Get options by type and field
@@ -449,7 +450,7 @@ def action_project_get(a):
 		options[t["id"]] = {}
 		for f in fields.get(t["id"], []):
 			if f["fieldtype"] == "enumerated":
-				field_options = mochi.db.rows("select id, name, colour, icon, sort from options where project = ? and type = ? and field = ? order by sort", project_id, t["id"], f["id"]) or []
+				field_options = mochi.db.rows("select id, name, colour, icon, rank from options where project = ? and type = ? and field = ? order by rank", project_id, t["id"], f["id"]) or []
 				options[t["id"]][f["id"]] = field_options
 
 	# Get views
@@ -459,7 +460,7 @@ def action_project_get(a):
 	for v in views:
 		view_types = mochi.db.rows("select type from view_types where project = ? and view = ?", project_id, v["id"]) or []
 		v["types"] = [vt["type"] for vt in view_types]
-		view_cardfields = mochi.db.rows("select field from view_cardfields where project = ? and view = ? order by sort", project_id, v["id"]) or []
+		view_cardfields = mochi.db.rows("select field from view_cardfields where project = ? and view = ? order by rank", project_id, v["id"]) or []
 		v["cardfields"] = ",".join([cf["field"] for cf in view_cardfields])
 
 	# Get hierarchy
@@ -1823,7 +1824,7 @@ def action_view_list(a):
 
 	# Add cardfields to each view
 	for v in views:
-		view_cardfields = mochi.db.rows("select field from view_cardfields where project = ? and view = ? order by sort", project_id, v["id"]) or []
+		view_cardfields = mochi.db.rows("select field from view_cardfields where project = ? and view = ? order by rank", project_id, v["id"]) or []
 		v["cardfields"] = ",".join([cf["field"] for cf in view_cardfields])
 
 	return {"data": {"views": views}}
@@ -1882,7 +1883,7 @@ def action_view_create(a):
 	for i, field in enumerate(cardfields.split(",")):
 		if field.strip():
 			mochi.db.execute(
-				"insert into view_cardfields (project, view, field, sort) values (?, ?, ?, ?)",
+				"insert into view_cardfields (project, view, field, rank) values (?, ?, ?, ?)",
 				project_id, view_id, field.strip(), i
 			)
 
@@ -1956,7 +1957,7 @@ def action_view_update(a):
 		for i, field in enumerate(cardfields.split(",")):
 			if field.strip():
 				mochi.db.execute(
-					"insert into view_cardfields (project, view, field, sort) values (?, ?, ?, ?)",
+					"insert into view_cardfields (project, view, field, rank) values (?, ?, ?, ?)",
 					project_id, view_id, field.strip(), i
 				)
 	if sort != None:
@@ -1985,7 +1986,7 @@ def action_view_update(a):
 	updated = mochi.db.row("select * from views where project=? and id=?", project_id, view_id)
 	if updated:
 		# Get cardfields from junction table
-		view_cardfields = mochi.db.rows("select field from view_cardfields where project = ? and view = ? order by sort", project_id, view_id) or []
+		view_cardfields = mochi.db.rows("select field from view_cardfields where project = ? and view = ? order by rank", project_id, view_id) or []
 		updated_cardfields = ",".join([cf["field"] for cf in view_cardfields])
 		broadcast_event(project_id, "view/update", {
 			"project": project_id, "id": view_id,
@@ -2055,7 +2056,7 @@ def action_type_list(a):
 		a.error(404, "Project not found")
 		return
 
-	types = mochi.db.rows("select id, name, sort from types where project = ? order by sort", project_id) or []
+	types = mochi.db.rows("select id, name, rank from types where project = ? order by rank", project_id) or []
 
 	return {"data": {"types": types}}
 
@@ -2092,18 +2093,18 @@ def action_type_create(a):
 		a.error(400, "A type with this name already exists")
 		return
 
-	# Get max sort order
-	max_sort = mochi.db.row("select max(sort) as m from types where project = ?", project_id)
-	sort = (max_sort["m"] or 0) + 1 if max_sort else 0
+	# Get max rank
+	max_rank = mochi.db.row("select max(rank) as m from types where project = ?", project_id)
+	rank = (max_rank["m"] or 0) + 1 if max_rank else 0
 
 	mochi.db.execute(
-		"insert into types (project, id, name, sort) values (?, ?, ?, ?)",
-		project_id, type_id, name.strip(), sort
+		"insert into types (project, id, name, rank) values (?, ?, ?, ?)",
+		project_id, type_id, name.strip(), rank
 	)
 
 	# Add default title field
 	mochi.db.execute(
-		"insert into fields (project, type, id, name, fieldtype, required, sort) values (?, ?, ?, ?, ?, ?, ?)",
+		"insert into fields (project, type, id, name, fieldtype, required, rank) values (?, ?, ?, ?, ?, ?, ?)",
 		project_id, type_id, "title", "Title", "text", 1, 0
 	)
 
@@ -2114,10 +2115,10 @@ def action_type_create(a):
 	)
 
 	broadcast_event(project_id, "type/create", {
-		"project": project_id, "id": type_id, "name": name.strip(), "sort": sort
+		"project": project_id, "id": type_id, "name": name.strip(), "rank": rank
 	})
 
-	return {"data": {"id": type_id, "name": name.strip(), "sort": sort}}
+	return {"data": {"id": type_id, "name": name.strip(), "rank": rank}}
 
 def action_type_update(a):
 	if not a.user:
@@ -2316,7 +2317,7 @@ def action_field_list(a):
 		return
 
 	fields = mochi.db.rows(
-		"select id, name, fieldtype, required, multi, sort, min, max, pattern, minlength, maxlength, prefix, suffix, format, card, position from fields where project = ? and type = ? order by sort",
+		"select id, name, fieldtype, required, multi, rank, min, max, pattern, minlength, maxlength, prefix, suffix, format, card, position, rows from fields where project = ? and type = ? order by rank",
 		project_id, type_id
 	) or []
 
@@ -2370,26 +2371,27 @@ def action_field_create(a):
 		a.error(400, "A field with this name already exists")
 		return
 
-	# Get max sort order
-	max_sort = mochi.db.row("select max(sort) as m from fields where project = ? and type = ?", project_id, type_id)
-	sort = (max_sort["m"] or 0) + 1 if max_sort else 0
+	# Get max rank
+	max_rank = mochi.db.row("select max(rank) as m from fields where project = ? and type = ?", project_id, type_id)
+	rank = (max_rank["m"] or 0) + 1 if max_rank else 0
 
 	required = 1 if a.input("required") == "1" or a.input("required") == "true" else 0
 	multi = 1 if a.input("multi") == "1" or a.input("multi") == "true" else 0
 	card = 1 if a.input("card") != "0" and a.input("card") != "false" else 0
+	rows = int(a.input("rows")) if a.input("rows") else 1
 
 	mochi.db.execute(
-		"insert into fields (project, type, id, name, fieldtype, required, multi, sort, card) values (?, ?, ?, ?, ?, ?, ?, ?, ?)",
-		project_id, type_id, field_id, name.strip(), fieldtype, required, multi, sort, card
+		"insert into fields (project, type, id, name, fieldtype, required, multi, rank, card, rows) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+		project_id, type_id, field_id, name.strip(), fieldtype, required, multi, rank, card, rows
 	)
 
 	broadcast_event(project_id, "field/create", {
 		"project": project_id, "type": type_id, "id": field_id,
 		"name": name.strip(), "fieldtype": fieldtype, "required": required,
-		"multi": multi, "sort": sort, "card": card
+		"multi": multi, "rank": rank, "card": card, "rows": rows
 	})
 
-	return {"data": {"id": field_id, "name": name.strip(), "fieldtype": fieldtype, "sort": sort}}
+	return {"data": {"id": field_id, "name": name.strip(), "fieldtype": fieldtype, "rank": rank}}
 
 def action_field_update(a):
 	if not a.user:
@@ -2435,6 +2437,7 @@ def action_field_update(a):
 	suffix = a.input("suffix")
 	format_str = a.input("format")
 	position = a.input("position")
+	rows_val = a.input("rows")
 
 	if name != None:
 		mochi.db.execute("update fields set name = ? where project = ? and type = ? and id = ?", name.strip(), project_id, type_id, field_id)
@@ -2465,6 +2468,8 @@ def action_field_update(a):
 		mochi.db.execute("update fields set format = ? where project = ? and type = ? and id = ?", format_str, project_id, type_id, field_id)
 	if position != None:
 		mochi.db.execute("update fields set position = ? where project = ? and type = ? and id = ?", position, project_id, type_id, field_id)
+	if rows_val != None:
+		mochi.db.execute("update fields set rows=? where project=? and type=? and id=?", int(rows_val), project_id, type_id, field_id)
 
 	# Build update data from provided fields
 	update_data = {"project": project_id, "type": type_id, "id": field_id}
@@ -2494,6 +2499,8 @@ def action_field_update(a):
 		update_data["format"] = format_str
 	if position != None:
 		update_data["position"] = position
+	if rows_val != None:
+		update_data["rows"] = int(rows_val)
 	broadcast_event(project_id, "field/update", update_data)
 
 	return {"data": {"success": True}}
@@ -2599,7 +2606,7 @@ def action_option_list(a):
 		return
 
 	options = mochi.db.rows(
-		"select id, name, colour, icon, sort from options where project = ? and type = ? and field = ? order by sort",
+		"select id, name, colour, icon, rank from options where project = ? and type = ? and field = ? order by rank",
 		project_id, type_id, field_id
 	) or []
 
@@ -2653,24 +2660,24 @@ def action_option_create(a):
 		a.error(400, "An option with this name already exists")
 		return
 
-	# Get max sort order
-	max_sort = mochi.db.row("select max(sort) as m from options where project = ? and type = ? and field = ?", project_id, type_id, field_id)
-	sort = (max_sort["m"] or 0) + 1 if max_sort else 0
+	# Get max rank
+	max_rank = mochi.db.row("select max(rank) as m from options where project = ? and type = ? and field = ?", project_id, type_id, field_id)
+	rank = (max_rank["m"] or 0) + 1 if max_rank else 0
 
 	colour = a.input("colour") or "#94a3b8"
 	icon = a.input("icon") or ""
 
 	mochi.db.execute(
-		"insert into options (project, type, field, id, name, colour, icon, sort) values (?, ?, ?, ?, ?, ?, ?, ?)",
-		project_id, type_id, field_id, option_id, name.strip(), colour, icon, sort
+		"insert into options (project, type, field, id, name, colour, icon, rank) values (?, ?, ?, ?, ?, ?, ?, ?)",
+		project_id, type_id, field_id, option_id, name.strip(), colour, icon, rank
 	)
 
 	broadcast_event(project_id, "option/create", {
 		"project": project_id, "type": type_id, "field": field_id,
-		"id": option_id, "name": name.strip(), "colour": colour, "icon": icon, "sort": sort
+		"id": option_id, "name": name.strip(), "colour": colour, "icon": icon, "rank": rank
 	})
 
-	return {"data": {"id": option_id, "name": name.strip(), "colour": colour, "sort": sort}}
+	return {"data": {"id": option_id, "name": name.strip(), "colour": colour, "rank": rank}}
 
 def action_option_update(a):
 	if not a.user:
@@ -3229,28 +3236,28 @@ def send_project_data(project_id, subscriber_id):
 		mochi.message.send(h, {"project": project_id, "id": t["id"], "name": t["name"], "icon": t["icon"], "colour": t["colour"], "prefix": t["prefix"], "created": t["created"]})
 
 		# Send hierarchy for this type
-		children = mochi.db.rows("select child from hierarchy where project=? and type=? order by sort", project_id, t["id"])
+		children = mochi.db.rows("select child from hierarchy where project=? and type=?", project_id, t["id"])
 		if children:
 			h["event"] = "hierarchy/set"
 			mochi.message.send(h, {"project": project_id, "type": t["id"], "children": [c["child"] for c in children]})
 
 		# Send fields for this type
-		fields = mochi.db.rows("select * from fields where project=? and type=? order by sort", project_id, t["id"])
+		fields = mochi.db.rows("select * from fields where project=? and type=? order by rank", project_id, t["id"])
 		for f in fields:
 			h["event"] = "field/create"
 			mochi.message.send(h, {
 				"project": project_id, "type": t["id"], "id": f["id"], "name": f["name"],
 				"fieldtype": f["fieldtype"], "required": f["required"], "multi": f["multi"],
-				"sort": f["sort"], "card": f["card"]
+				"rank": f["rank"], "card": f["card"]
 			})
 
 			# Send options for enumerated fields
-			options = mochi.db.rows("select * from options where project=? and type=? and field=? order by sort", project_id, t["id"], f["id"])
+			options = mochi.db.rows("select * from options where project=? and type=? and field=? order by rank", project_id, t["id"], f["id"])
 			for o in options:
 				h["event"] = "option/create"
 				mochi.message.send(h, {
 					"project": project_id, "type": t["id"], "field": f["id"],
-					"id": o["id"], "name": o["name"], "colour": o["colour"], "icon": o["icon"], "sort": o["sort"]
+					"id": o["id"], "name": o["name"], "colour": o["colour"], "icon": o["icon"], "rank": o["rank"]
 				})
 
 	# Send views
@@ -3703,10 +3710,10 @@ def event_field_create(e):
 	if not project_id:
 		return
 	mochi.db.execute(
-		"insert or ignore into fields (project, type, id, name, fieldtype, required, multi, sort, card) values (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+		"insert or ignore into fields (project, type, id, name, fieldtype, required, multi, rank, card, rows) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
 		project_id, e.content("type") or "", e.content("id") or "", e.content("name") or "",
 		e.content("fieldtype") or "text", e.content("required") or 0, e.content("multi") or 0,
-		e.content("sort") or 0, e.content("card") or 1
+		e.content("rank") or 0, e.content("card") or 1, e.content("rows") or 1
 	)
 	fp = mochi.entity.fingerprint(project_id)
 	if fp:
@@ -3734,6 +3741,7 @@ def event_field_update(e):
 	suffix = e.content("suffix")
 	format_str = e.content("format")
 	position = e.content("position")
+	rows_val = e.content("rows")
 	if name != None:
 		mochi.db.execute("update fields set name=? where project=? and type=? and id=?", name, project_id, type_id, field_id)
 	if required != None:
@@ -3760,6 +3768,8 @@ def event_field_update(e):
 		mochi.db.execute("update fields set format=? where project=? and type=? and id=?", format_str, project_id, type_id, field_id)
 	if position != None:
 		mochi.db.execute("update fields set position=? where project=? and type=? and id=?", position, project_id, type_id, field_id)
+	if rows_val != None:
+		mochi.db.execute("update fields set rows=? where project=? and type=? and id=?", rows_val, project_id, type_id, field_id)
 	fp = mochi.entity.fingerprint(project_id)
 	if fp:
 		mochi.websocket.write(fp, {"type": "field/update", "project": project_id, "type_id": type_id, "id": field_id})
@@ -3800,10 +3810,10 @@ def event_option_create(e):
 	if not project_id:
 		return
 	mochi.db.execute(
-		"insert or ignore into options (project, type, field, id, name, colour, icon, sort) values (?, ?, ?, ?, ?, ?, ?, ?)",
+		"insert or ignore into options (project, type, field, id, name, colour, icon, rank) values (?, ?, ?, ?, ?, ?, ?, ?)",
 		project_id, e.content("type") or "", e.content("field") or "", e.content("id") or "",
 		e.content("name") or "", e.content("colour") or "#94a3b8", e.content("icon") or "",
-		e.content("sort") or 0
+		e.content("rank") or 0
 	)
 	fp = mochi.entity.fingerprint(project_id)
 	if fp:

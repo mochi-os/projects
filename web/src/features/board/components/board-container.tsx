@@ -57,7 +57,7 @@ export function BoardContainer({
   // Get status options for columns
   const statusOptions = useMemo(() => {
     const opts = typeOptions[statusField] || [];
-    return [...opts].sort((a, b) => a.sort - b.sort);
+    return [...opts].sort((a, b) => a.rank - b.rank);
   }, [typeOptions, statusField]);
 
   // Local reorder state

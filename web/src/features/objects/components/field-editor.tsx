@@ -95,14 +95,25 @@ export function FieldEditor({
         );
 
       case "text":
+        // If rows is 1, render single-line input; otherwise render textarea
+        if (field.rows === 1) {
+          return (
+            <Input
+              value={localValue}
+              onChange={(e) => handleTextChange(e.target.value)}
+              onBlur={handleBlur}
+              disabled={disabled}
+              className="h-9"
+            />
+          );
+        }
         return (
           <Textarea
             value={localValue}
             onChange={(e) => handleTextChange(e.target.value)}
             onBlur={handleBlur}
             disabled={disabled}
-            rows={3}
-            className="min-h-[80px]"
+            rows={field.rows}
           />
         );
 
@@ -175,9 +186,6 @@ export function FieldEditor({
     <div className="space-y-1.5">
       <label className="text-sm font-medium text-muted-foreground">
         {field.name}
-        {field.required === 1 && (
-          <span className="text-destructive ml-1">*</span>
-        )}
       </label>
       {renderEditor()}
     </div>

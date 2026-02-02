@@ -165,6 +165,7 @@ interface AddOptionDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onAdd: (name: string, colour: string) => void;
+  title?: string;
 }
 
 const DEFAULT_COLOURS = [
@@ -180,6 +181,7 @@ export function AddOptionDialog({
   open,
   onOpenChange,
   onAdd,
+  title = "Add option",
 }: AddOptionDialogProps) {
   const [name, setName] = useState("");
   const [colour, setColour] = useState(DEFAULT_COLOURS[0]);
@@ -201,7 +203,7 @@ export function AddOptionDialog({
       <DialogContent>
         <form onSubmit={handleSubmit}>
           <DialogHeader>
-            <DialogTitle>Add option</DialogTitle>
+            <DialogTitle>{title}</DialogTitle>
           </DialogHeader>
           <div className="py-4 space-y-4">
             <div className="space-y-2">

@@ -5,12 +5,20 @@ import { useState, useRef } from "react";
 import {
   cn,
   ConfirmDialog,
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+  Button,
+  Input,
+  Label,
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@mochi/common";
-import { Inbox, MoreHorizontal, Plus, Trash2 } from "lucide-react";
+import { Inbox, MoreHorizontal, Pencil, Plus, Trash2 } from "lucide-react";
 import { BoardCard } from "./board-card";
 import type { ProjectObject, ProjectField, FieldOption, ProjectType } from "@/types";
 
@@ -27,7 +35,10 @@ interface BoardColumnProps {
   onCardClick?: (object: ProjectObject) => void;
   onCreateClick?: () => void;
   onDrop?: (objectId: string, columnId: string, newRank?: number) => void;
+  onRenameColumn?: (newName: string) => Promise<void>;
   onDeleteColumn?: () => Promise<void>;
+  isReordering?: boolean;
+  isDragging?: boolean;
 }
 
 export function BoardColumn({
@@ -43,15 +54,24 @@ export function BoardColumn({
   onCardClick,
   onCreateClick,
   onDrop,
+  onRenameColumn,
   onDeleteColumn,
+  isReordering,
+  isDragging,
 }: BoardColumnProps) {
   const [isDragOver, setIsDragOver] = useState(false);
   const [dropIndex, setDropIndex] = useState<number | null>(null);
+  const [showRenameDialog, setShowRenameDialog] = useState(false);
+  const [newName, setNewName] = useState(name);
+  const [isRenaming, setIsRenaming] = useState(false);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const cardsContainerRef = useRef<HTMLDivElement>(null);
 
   const handleDragOver = (e: React.DragEvent) => {
+    // Disable card drag during column reordering
+    if (isReordering) return;
+
     e.preventDefault();
     e.dataTransfer.dropEffect = "move";
     setIsDragOver(true);
@@ -102,11 +122,13 @@ export function BoardColumn({
       className={cn(
         "flex flex-col w-72 shrink-0 rounded-[10px] min-h-[calc(100vh-5rem)]",
         "bg-muted/30 border",
-        isDragOver && "border-primary bg-primary/5",
+        isDragOver && !isReordering && "border-primary bg-primary/5",
+        isReordering && !isDragging && "border-dashed border-muted-foreground/50",
+        isDragging && "border-primary border-2 bg-background shadow-lg",
       )}
-      onDragOver={handleDragOver}
-      onDragLeave={handleDragLeave}
-      onDrop={handleDrop}
+      onDragOver={isReordering ? undefined : handleDragOver}
+      onDragLeave={isReordering ? undefined : handleDragLeave}
+      onDrop={isReordering ? undefined : handleDrop}
     >
       {/* Column header */}
       <div className="flex items-center justify-between p-3 border-b">
@@ -122,30 +144,89 @@ export function BoardColumn({
             {objects.length}
           </span>
         </div>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <button className="p-1 rounded hover:bg-muted transition-colors">
-              <MoreHorizontal className="size-4 text-muted-foreground" />
-            </button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            {onCreateClick && (
-              <DropdownMenuItem onClick={onCreateClick}>
-                <Plus className="size-4 mr-2" />
-                New
-              </DropdownMenuItem>
-            )}
-            {objects.length === 0 && onDeleteColumn && (
-              <DropdownMenuItem
-                onClick={() => setShowDeleteDialog(true)}
-              >
-                <Trash2 className="size-4 mr-2" />
-                Delete
-              </DropdownMenuItem>
-            )}
-          </DropdownMenuContent>
-        </DropdownMenu>
+        {!isReordering && (
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button className="p-1 rounded hover:bg-muted transition-colors">
+                <MoreHorizontal className="size-4 text-muted-foreground" />
+              </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              {onCreateClick && (
+                <DropdownMenuItem onClick={onCreateClick}>
+                  <Plus className="size-4 mr-2" />
+                  Create
+                </DropdownMenuItem>
+              )}
+              {onRenameColumn && (
+                <DropdownMenuItem
+                  onClick={() => {
+                    setNewName(name);
+                    setShowRenameDialog(true);
+                  }}
+                >
+                  <Pencil className="size-4 mr-2" />
+                  Rename
+                </DropdownMenuItem>
+              )}
+              {objects.length === 0 && onDeleteColumn && (
+                <DropdownMenuItem
+                  onClick={() => setShowDeleteDialog(true)}
+                >
+                  <Trash2 className="size-4 mr-2" />
+                  Delete
+                </DropdownMenuItem>
+              )}
+            </DropdownMenuContent>
+          </DropdownMenu>
+        )}
       </div>
+
+      <Dialog open={showRenameDialog} onOpenChange={setShowRenameDialog}>
+        <DialogContent>
+          <form
+            onSubmit={async (e) => {
+              e.preventDefault();
+              if (!newName.trim() || newName.trim() === name) {
+                setShowRenameDialog(false);
+                return;
+              }
+              setIsRenaming(true);
+              try {
+                await onRenameColumn?.(newName.trim());
+                setShowRenameDialog(false);
+              } finally {
+                setIsRenaming(false);
+              }
+            }}
+          >
+            <DialogHeader>
+              <DialogTitle>Rename column</DialogTitle>
+            </DialogHeader>
+            <div className="py-4 space-y-2">
+              <Label htmlFor="column-name">Name</Label>
+              <Input
+                id="column-name"
+                value={newName}
+                onChange={(e) => setNewName(e.target.value)}
+                autoFocus
+              />
+            </div>
+            <DialogFooter>
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => setShowRenameDialog(false)}
+              >
+                Cancel
+              </Button>
+              <Button type="submit" disabled={!newName.trim() || isRenaming}>
+                Rename
+              </Button>
+            </DialogFooter>
+          </form>
+        </DialogContent>
+      </Dialog>
 
       <ConfirmDialog
         open={showDeleteDialog}

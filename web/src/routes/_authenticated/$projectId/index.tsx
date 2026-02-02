@@ -2,7 +2,7 @@
 // Copyright Alistair Cunningham 2026
 
 import { useState, useMemo, useCallback, useEffect } from "react";
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate, useRouter } from "@tanstack/react-router";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   GeneralError,
@@ -14,9 +14,10 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
+  Switch,
   useSearch,
 } from "@mochi/common";
-import { ChevronDown, ChevronUp, Ellipsis, FolderKanban, Plus, Settings2 } from "lucide-react";
+import { Columns3, Ellipsis, FolderKanban, GripVertical, Plus, Settings2, SlidersHorizontal, X } from "lucide-react";
 import projectsApi from "@/api/projects";
 import type { ProjectDetails, ProjectObject } from "@/types";
 import { BoardContainer } from "@/features/board/components";
@@ -30,6 +31,7 @@ import {
 import { useKeyboardShortcuts } from "@/hooks/use-keyboard-shortcuts";
 import { KeyboardShortcutsHelp } from "@/components/keyboard-shortcuts-help";
 import { ViewOptionsBar } from "@/components/view-options-bar";
+import { AddOptionDialog } from "@/features/editor/components/add-dialogs";
 
 interface SearchParams {
   view?: string;
@@ -54,6 +56,7 @@ function ProjectPage() {
   const params = Route.useParams();
   const search = Route.useSearch();
   const navigate = useNavigate();
+  const router = useRouter();
 
   usePageTitle(project.project.name);
 
@@ -76,6 +79,17 @@ function ProjectPage() {
     return saved === "true";
   });
   const [selectedCardIndex, setSelectedCardIndex] = useState(-1);
+  const [addColumnDialogOpen, setAddColumnDialogOpen] = useState(false);
+  const [isReorderingColumns, setIsReorderingColumns] = useState(false);
+  const [pendingColumnOrder, setPendingColumnOrder] = useState<string[] | null>(null);
+  const [showBoardHint, setShowBoardHint] = useState(() => {
+    return localStorage.getItem("projects-hint-double-click-dismissed") !== "true";
+  });
+
+  const dismissBoardHint = () => {
+    setShowBoardHint(false);
+    localStorage.setItem("projects-hint-double-click-dismissed", "true");
+  };
 
   // Persist view options bar state
   useEffect(() => {
@@ -261,9 +275,67 @@ function ProjectPage() {
       return projectsApi.deleteOption(params.projectId, typeId, fieldId, optionId);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ["project", params.projectId],
-      });
+      router.invalidate();
+    },
+  });
+
+  // Rename column (option) mutation
+  const renameColumnMutation = useMutation({
+    mutationFn: async ({
+      typeId,
+      fieldId,
+      optionId,
+      name,
+    }: {
+      typeId: string;
+      fieldId: string;
+      optionId: string;
+      name: string;
+    }) => {
+      return projectsApi.updateOption(params.projectId, typeId, fieldId, optionId, { name });
+    },
+    onSuccess: () => {
+      router.invalidate();
+    },
+  });
+
+  // Create column (option) mutation
+  const createColumnMutation = useMutation({
+    mutationFn: async ({
+      typeId,
+      fieldId,
+      name,
+      colour,
+    }: {
+      typeId: string;
+      fieldId: string;
+      name: string;
+      colour: string;
+    }) => {
+      return projectsApi.createOption(params.projectId, typeId, fieldId, { name, colour });
+    },
+    onSuccess: () => {
+      router.invalidate();
+    },
+  });
+
+  // Reorder columns (options) mutation
+  const reorderColumnsMutation = useMutation({
+    mutationFn: async ({
+      typeId,
+      fieldId,
+      order,
+    }: {
+      typeId: string;
+      fieldId: string;
+      order: string[];
+    }) => {
+      return projectsApi.reorderOptions(params.projectId, typeId, fieldId, order);
+    },
+    onSuccess: () => {
+      router.invalidate();
+      setIsReorderingColumns(false);
+      setPendingColumnOrder(null);
     },
   });
 
@@ -407,6 +479,10 @@ function ProjectPage() {
     await deleteColumnMutation.mutateAsync({ typeId, fieldId, optionId });
   };
 
+  const handleRenameColumn = async (typeId: string, fieldId: string, optionId: string, newName: string) => {
+    await renameColumnMutation.mutateAsync({ typeId, fieldId, optionId, name: newName });
+  };
+
   const handleObjectCreated = () => {
     // Object created successfully, queries will be invalidated by the mutation
   };
@@ -415,6 +491,36 @@ function ProjectPage() {
     setActiveViewId(viewId);
     // Reset sort when switching views
     setSort({ field: "rank", direction: "asc" });
+  };
+
+  const handleAddColumn = (name: string, colour: string) => {
+    const defaultType = project.types[0];
+    if (!defaultType) return;
+    createColumnMutation.mutate({
+      typeId: defaultType.id,
+      fieldId: columnField,
+      name,
+      colour,
+    });
+  };
+
+  const handleReorderColumns = (order: string[]) => {
+    setPendingColumnOrder(order);
+  };
+
+  const handleSaveColumnOrder = () => {
+    const defaultType = project.types[0];
+    if (!defaultType || !pendingColumnOrder) return;
+    reorderColumnsMutation.mutate({
+      typeId: defaultType.id,
+      fieldId: columnField,
+      order: pendingColumnOrder,
+    });
+  };
+
+  const handleCancelReorder = () => {
+    setIsReorderingColumns(false);
+    setPendingColumnOrder(null);
   };
 
   return (
@@ -429,46 +535,51 @@ function ProjectPage() {
               filters={filters}
               onFilterChange={setFilters}
             />
-            <div className="flex items-center gap-1">
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={handleOpenCreateDialog}
-                title="New (n)"
-              >
-                <Plus className="size-4" />
-              </Button>
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => setShowViewOptions(!showViewOptions)}
-                title={`View options (${navigator.platform.includes("Mac") ? "Cmd" : "Ctrl"}+K)`}
-              >
-                {showViewOptions ? (
-                  <ChevronDown className="size-4" />
-                ) : (
-                  <ChevronUp className="size-4" />
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" size="icon">
+                  <Ellipsis className="size-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem onClick={handleOpenCreateDialog}>
+                  <Plus className="size-4 mr-2" />
+                  Create
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onSelect={(e) => e.preventDefault()}
+                >
+                  <SlidersHorizontal className="size-4 mr-2" />
+                  View options
+                  <Switch
+                    className="ml-auto"
+                    checked={showViewOptions}
+                    onCheckedChange={setShowViewOptions}
+                  />
+                </DropdownMenuItem>
+                {activeView?.viewtype !== "tree" && (
+                  <>
+                    <DropdownMenuItem onClick={() => setAddColumnDialogOpen(true)}>
+                      <Columns3 className="size-4 mr-2" />
+                      Add column
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => setIsReorderingColumns(true)}>
+                      <GripVertical className="size-4 mr-2" />
+                      Re-order columns
+                    </DropdownMenuItem>
+                  </>
                 )}
-              </Button>
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" size="icon">
-                    <Ellipsis className="size-4" />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
-                  <DropdownMenuItem asChild>
-                    <Link
-                      to="/$projectId/design"
-                      params={{ projectId: params.projectId }}
-                    >
-                      <Settings2 className="size-4 mr-2" />
-                      Design
-                    </Link>
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </div>
+                <DropdownMenuItem asChild>
+                  <Link
+                    to="/$projectId/design"
+                    params={{ projectId: params.projectId }}
+                  >
+                    <Settings2 className="size-4 mr-2" />
+                    Design
+                  </Link>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
         }
       />
@@ -483,6 +594,40 @@ function ProjectPage() {
           onSortChange={setSort}
           showSort={activeView?.viewtype === "tree"}
         />
+      )}
+      {isReorderingColumns && (
+        <div className="flex items-center justify-between px-4 py-2 bg-muted border-b">
+          <span className="text-sm text-muted-foreground">
+            Drag columns to re-order them
+          </span>
+          <div className="flex items-center gap-2">
+            <Button variant="outline" size="sm" onClick={handleCancelReorder}>
+              Cancel
+            </Button>
+            <Button
+              size="sm"
+              onClick={handleSaveColumnOrder}
+              disabled={!pendingColumnOrder || reorderColumnsMutation.isPending}
+            >
+              Save
+            </Button>
+          </div>
+        </div>
+      )}
+      {showBoardHint && !isReorderingColumns && activeView?.viewtype !== "tree" && (
+        <div className="flex items-center justify-between px-4 py-2 bg-muted border-b">
+          <span className="text-sm text-muted-foreground">
+            Double click on a column to add content
+          </span>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="size-6"
+            onClick={dismissBoardHint}
+          >
+            <X className="size-4" />
+          </Button>
+        </div>
       )}
       <Main fluid className="flex flex-col min-h-0 flex-1 !py-0">
         {/* Content area */}
@@ -507,7 +652,10 @@ function ProjectPage() {
                 onCardClick={handleCardClick}
                 onCreateClick={handleCreateClick}
                 onMoveObject={handleMoveObject}
+                onRenameColumn={handleRenameColumn}
                 onDeleteColumn={handleDeleteColumn}
+                isReordering={isReorderingColumns}
+                onReorderColumns={handleReorderColumns}
               />
             </div>
           )}
@@ -534,6 +682,13 @@ function ProjectPage() {
       <KeyboardShortcutsHelp
         open={showShortcutsHelp}
         onOpenChange={setShowShortcutsHelp}
+      />
+
+      <AddOptionDialog
+        open={addColumnDialogOpen}
+        onOpenChange={setAddColumnDialogOpen}
+        onAdd={handleAddColumn}
+        title="Add column"
       />
     </>
   );

@@ -23,10 +23,12 @@ export function FilterBar({
   filters,
   onFilterChange,
 }: FilterBarProps) {
-  // Get status and priority options from the task type
-  const taskOptions = project.options["task"] || {};
-  const statusOptions: FieldOption[] = taskOptions["status"] || [];
-  const priorityOptions: FieldOption[] = taskOptions["priority"] || [];
+  // Get options from the first type's enumerated fields
+  // Use "status" or "column" for status-like field, "priority" or "row" for priority-like field
+  const firstTypeId = project.types[0]?.id;
+  const typeOptions = firstTypeId ? project.options[firstTypeId] || {} : {};
+  const statusOptions: FieldOption[] = typeOptions["status"] || typeOptions["column"] || [];
+  const priorityOptions: FieldOption[] = typeOptions["priority"] || typeOptions["row"] || [];
 
   const clearFilter = (key: keyof FilterState) => {
     onFilterChange({ ...filters, [key]: "" });

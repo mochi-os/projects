@@ -23,9 +23,10 @@ export function ListView({
   onSortChange,
   onCardClick,
 }: ListViewProps) {
-  // Get fields to display (card fields from the default view, or all fields)
-  const taskFields = project.fields["task"] || [];
-  const taskOptions = project.options["task"] || {};
+  // Get fields to display from the first type (card fields or all fields)
+  const firstTypeId = project.types[0]?.id;
+  const taskFields = firstTypeId ? project.fields[firstTypeId] || [] : [];
+  const taskOptions = firstTypeId ? project.options[firstTypeId] || {} : {};
 
   // Get visible fields (exclude description for list view)
   const visibleFields = taskFields.filter(

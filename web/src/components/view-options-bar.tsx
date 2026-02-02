@@ -53,9 +53,22 @@ export function ViewOptionsBar({
     setTimeout(() => searchRef.current?.focus(), 0);
   }, []);
 
-  const taskOptions = project.options["task"] || {};
-  const statusOptions: FieldOption[] = taskOptions["status"] || [];
-  const priorityOptions: FieldOption[] = taskOptions["priority"] || [];
+  // Get the active view to determine which fields to use for filtering
+  const activeView = project.views.find((v) => v.id === activeViewId);
+
+  // Get the column field (used for status-like filtering) from the view
+  const columnField = activeView?.columns || "status";
+  // Get the row field (used for priority-like filtering) from the view
+  const rowField = activeView?.rows || "priority";
+
+  // Get the first type ID (or first type from the view's type filter)
+  const viewTypes = activeView?.types || [];
+  const firstTypeId = viewTypes.length > 0 ? viewTypes[0] : project.types[0]?.id;
+
+  // Get options for the column and row fields from the first type
+  const typeOptions = firstTypeId ? project.options[firstTypeId] || {} : {};
+  const statusOptions: FieldOption[] = typeOptions[columnField] || [];
+  const priorityOptions: FieldOption[] = typeOptions[rowField] || [];
 
   return (
     <div className="flex items-center gap-2 px-4 py-2 bg-muted/30 flex-wrap">

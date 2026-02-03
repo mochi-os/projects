@@ -14,10 +14,12 @@ interface DirectoryEntry {
 
 interface InlineProjectSearchProps {
   subscribedIds: Set<string>;
+  onRefresh?: () => void;
 }
 
 export function InlineProjectSearch({
   subscribedIds,
+  onRefresh,
 }: InlineProjectSearchProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [debouncedQuery, setDebouncedQuery] = useState("");
@@ -62,6 +64,7 @@ export function InlineProjectSearch({
     try {
       await projectsApi.subscribe(project.id, project.location || undefined);
       void refresh();
+      onRefresh?.();
       void navigate({
         to: "/$projectId",
         params: { projectId: project.fingerprint || project.id },

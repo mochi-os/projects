@@ -132,6 +132,12 @@ export interface Watcher {
   created: number;
 }
 
+// Sort state for views
+export interface SortState {
+  field: string;
+  direction: "asc" | "desc";
+}
+
 // API Response types
 export interface ObjectListResponse {
   data: {

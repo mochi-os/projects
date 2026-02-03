@@ -3,18 +3,10 @@
 
 import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@mochi/common";
+import { Button, Label } from "@mochi/common";
+import { Plus } from "lucide-react";
 import projectsApi from "@/api/projects";
-import type { ProjectDetails, ProjectField, ProjectView } from "@/types";
-import { TypeList } from "./type-list";
-import { TypeEditor } from "./type-editor";
-import { FieldList } from "./field-list";
-import { FieldEditorPanel } from "./field-editor-panel";
-import { OptionList } from "./option-list";
-import { OptionEditor } from "./option-editor";
-import { HierarchyEditor } from "./hierarchy-editor";
-import { ViewList } from "./view-list";
-import { ViewEditor } from "./view-editor";
+import type { ProjectDetails, ProjectField, ProjectView, FieldOption } from "@/types";
 import { DesignPreview } from "./design-preview";
 import {
   AddTypeDialog,
@@ -22,6 +14,12 @@ import {
   AddOptionDialog,
   AddViewDialog,
 } from "./add-dialogs";
+import {
+  EditViewDialog,
+  EditTypeDialog,
+  EditFieldDialog,
+  EditOptionDialog,
+} from "./edit-dialogs";
 
 interface DesignEditorProps {
   projectId: string;
@@ -35,33 +33,36 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
   const [selectedTypeId, setSelectedTypeId] = useState<string | null>(
     project.types[0]?.id || null,
   );
-  const [selectedFieldId, setSelectedFieldId] = useState<string | null>(null);
-  const [selectedOptionId, setSelectedOptionId] = useState<string | null>(null);
-  const [selectedViewId, setSelectedViewId] = useState<string | null>(
-    project.views[0]?.id || null,
-  );
 
-  // Dialog state
+  // Add dialog state
   const [addTypeOpen, setAddTypeOpen] = useState(false);
   const [addFieldOpen, setAddFieldOpen] = useState(false);
   const [addOptionOpen, setAddOptionOpen] = useState(false);
   const [addViewOpen, setAddViewOpen] = useState(false);
+
+  // Edit dialog state
+  const [editViewOpen, setEditViewOpen] = useState(false);
+  const [editTypeOpen, setEditTypeOpen] = useState(false);
+  const [editFieldOpen, setEditFieldOpen] = useState(false);
+  const [editOptionOpen, setEditOptionOpen] = useState(false);
+  const [editingView, setEditingView] = useState<ProjectView | null>(null);
+  const [editingField, setEditingField] = useState<ProjectField | null>(null);
+  const [editingOption, setEditingOption] = useState<FieldOption | null>(null);
 
   // Get current selections
   const selectedType = project.types.find((t) => t.id === selectedTypeId);
   const selectedFields = selectedTypeId
     ? project.fields[selectedTypeId] || []
     : [];
-  const selectedField = selectedFields.find((f) => f.id === selectedFieldId);
-  const selectedOptions =
-    selectedTypeId && selectedFieldId
-      ? project.options[selectedTypeId]?.[selectedFieldId] || []
-      : [];
-  const selectedOption = selectedOptions.find((o) => o.id === selectedOptionId);
-  const selectedView = project.views.find((v) => v.id === selectedViewId);
   const hierarchy = selectedTypeId
     ? project.hierarchy[selectedTypeId] || []
     : [];
+
+  // Get options for editing field
+  const editingFieldOptions =
+    selectedTypeId && editingField
+      ? project.options[selectedTypeId]?.[editingField.id] || []
+      : [];
 
   // Invalidate project data
   const invalidateProject = () => {
@@ -88,8 +89,7 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
     onSuccess: () => {
       invalidateProject();
       setSelectedTypeId(project.types[0]?.id || null);
-      setSelectedFieldId(null);
-      setSelectedOptionId(null);
+      setEditTypeOpen(false);
     },
   });
 
@@ -111,10 +111,7 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
       name: string;
       fieldtype: string;
     }) => projectsApi.createField(projectId, typeId, { name, fieldtype }),
-    onSuccess: (data) => {
-      invalidateProject();
-      setSelectedFieldId(data.data.id);
-    },
+    onSuccess: invalidateProject,
   });
 
   const updateFieldMutation = useMutation({
@@ -140,15 +137,8 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
       projectsApi.deleteField(projectId, typeId, fieldId),
     onSuccess: () => {
       invalidateProject();
-      setSelectedFieldId(null);
-      setSelectedOptionId(null);
+      setEditFieldOpen(false);
     },
-  });
-
-  const reorderFieldsMutation = useMutation({
-    mutationFn: ({ typeId, order }: { typeId: string; order: string[] }) =>
-      projectsApi.reorderFields(projectId, typeId, order),
-    onSuccess: invalidateProject,
   });
 
   // Option mutations
@@ -165,10 +155,7 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
       colour: string;
     }) =>
       projectsApi.createOption(projectId, typeId, fieldId, { name, colour }),
-    onSuccess: (data) => {
-      invalidateProject();
-      setSelectedOptionId(data.data.id);
-    },
+    onSuccess: invalidateProject,
   });
 
   const updateOptionMutation = useMutation({
@@ -199,21 +186,8 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
     }) => projectsApi.deleteOption(projectId, typeId, fieldId, optionId),
     onSuccess: () => {
       invalidateProject();
-      setSelectedOptionId(null);
+      setEditOptionOpen(false);
     },
-  });
-
-  const reorderOptionsMutation = useMutation({
-    mutationFn: ({
-      typeId,
-      fieldId,
-      order,
-    }: {
-      typeId: string;
-      fieldId: string;
-      order: string[];
-    }) => projectsApi.reorderOptions(projectId, typeId, fieldId, order),
-    onSuccess: invalidateProject,
   });
 
   // View mutations
@@ -223,10 +197,7 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
         name,
         viewtype: viewtype as "board" | "tree",
       }),
-    onSuccess: (data) => {
-      invalidateProject();
-      setSelectedViewId(data.data.id);
-    },
+    onSuccess: invalidateProject,
   });
 
   const updateViewMutation = useMutation({
@@ -239,7 +210,6 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
       updates?: Partial<ProjectView>;
       types?: string[];
     }) => {
-      // Only include defined values to avoid sending undefined/null
       const payload: Record<string, string> = {};
       if (updates?.name !== undefined) payload.name = updates.name;
       if (updates?.viewtype !== undefined) payload.viewtype = updates.viewtype;
@@ -259,166 +229,98 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
     mutationFn: (viewId: string) => projectsApi.deleteView(projectId, viewId),
     onSuccess: () => {
       invalidateProject();
-      setSelectedViewId(project.views[0]?.id || null);
+      setEditViewOpen(false);
     },
   });
 
-  // Handle field selection - also check if it's an enumerated to show options
-  const handleSelectField = (fieldId: string) => {
-    setSelectedFieldId(fieldId);
-    setSelectedOptionId(null);
+  // Handlers
+  const handleEditView = (view: ProjectView) => {
+    setEditingView(view);
+    setEditViewOpen(true);
+  };
+
+  const handleEditField = (field: ProjectField) => {
+    setEditingField(field);
+    setEditFieldOpen(true);
+  };
+
+  const handleEditOption = (option: FieldOption) => {
+    setEditingOption(option);
+    setEditOptionOpen(true);
   };
 
   return (
     <div className="flex h-full">
       {/* Editor panel (left) */}
       <div className="w-80 border-r flex flex-col overflow-hidden">
-        <Tabs defaultValue="types" className="flex-1 min-h-0 flex flex-col">
-          <TabsList className="w-full justify-start rounded-none border-b px-2">
-            <TabsTrigger value="types">Types</TabsTrigger>
-            <TabsTrigger value="views">Views</TabsTrigger>
-          </TabsList>
+        <div className="flex-1 overflow-auto p-4 space-y-6">
+          {/* Views Section */}
+          <section>
+            <div className="flex items-center justify-between mb-2">
+              <div>
+                <Label className="text-sm font-medium">Views</Label>
+                <p className="text-xs text-muted-foreground">How items are displayed</p>
+              </div>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setAddViewOpen(true)}
+              >
+                <Plus className="size-4" />
+              </Button>
+            </div>
+            <div className="space-y-1">
+              {project.views.map((view) => (
+                <button
+                  key={view.id}
+                  onClick={() => handleEditView(view)}
+                  className="w-full text-left px-3 py-2 text-sm rounded-md hover:bg-muted transition-colors"
+                >
+                  <span className="font-medium">{view.name}</span>
+                  <span className="text-muted-foreground ml-2 capitalize">
+                    ({view.viewtype})
+                  </span>
+                </button>
+              ))}
+            </div>
+          </section>
 
-          <TabsContent
-            value="types"
-            className="flex-1 overflow-auto p-4 space-y-4 m-0"
-          >
-            <TypeList
-              types={project.types}
-              selectedTypeId={selectedTypeId}
-              onSelectType={setSelectedTypeId}
-              onAddType={() => setAddTypeOpen(true)}
-              onDeleteType={(typeId) => deleteTypeMutation.mutate(typeId)}
-            />
+          {/* Types Section */}
+          <section>
+            <div className="flex items-center justify-between mb-2">
+              <div>
+                <Label className="text-sm font-medium">Item types</Label>
+                <p className="text-xs text-muted-foreground">What you can create</p>
+              </div>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setAddTypeOpen(true)}
+              >
+                <Plus className="size-4" />
+              </Button>
+            </div>
+            <div className="space-y-1">
+              {project.types.map((type) => (
+                <button
+                  key={type.id}
+                  onClick={() => {
+                    setSelectedTypeId(type.id);
+                    setEditTypeOpen(true);
+                  }}
+                  className={`w-full text-left px-3 py-2 text-sm rounded-md transition-colors ${
+                    selectedTypeId === type.id
+                      ? "bg-muted"
+                      : "hover:bg-muted"
+                  }`}
+                >
+                  {type.name}
+                </button>
+              ))}
+            </div>
+          </section>
 
-            {selectedType && (
-              <>
-                <TypeEditor
-                  type={selectedType}
-                  onUpdate={(name) =>
-                    updateTypeMutation.mutate({ typeId: selectedType.id, name })
-                  }
-                />
-
-                <HierarchyEditor
-                  types={project.types}
-                  currentTypeId={selectedType.id}
-                  allowedParents={hierarchy}
-                  onUpdate={(parents) =>
-                    setHierarchyMutation.mutate({
-                      typeId: selectedType.id,
-                      parents,
-                    })
-                  }
-                />
-
-                <FieldList
-                  fields={selectedFields}
-                  selectedFieldId={selectedFieldId}
-                  onSelectField={handleSelectField}
-                  onAddField={() => setAddFieldOpen(true)}
-                  onDeleteField={(fieldId) =>
-                    deleteFieldMutation.mutate({
-                      typeId: selectedType.id,
-                      fieldId,
-                    })
-                  }
-                  onReorder={(order) =>
-                    reorderFieldsMutation.mutate({
-                      typeId: selectedType.id,
-                      order,
-                    })
-                  }
-                />
-
-                {selectedField && (
-                  <FieldEditorPanel
-                    field={selectedField}
-                    onUpdate={(updates) =>
-                      updateFieldMutation.mutate({
-                        typeId: selectedType.id,
-                        fieldId: selectedField.id,
-                        updates,
-                      })
-                    }
-                  />
-                )}
-
-                {selectedField?.fieldtype === "enumerated" && (
-                  <>
-                    <OptionList
-                      options={selectedOptions}
-                      selectedOptionId={selectedOptionId}
-                      onSelectOption={setSelectedOptionId}
-                      onAddOption={() => setAddOptionOpen(true)}
-                      onDeleteOption={(optionId) =>
-                        deleteOptionMutation.mutate({
-                          typeId: selectedType.id,
-                          fieldId: selectedField.id,
-                          optionId,
-                        })
-                      }
-                      onReorder={(order) =>
-                        reorderOptionsMutation.mutate({
-                          typeId: selectedType.id,
-                          fieldId: selectedField.id,
-                          order,
-                        })
-                      }
-                    />
-
-                    {selectedOption && (
-                      <OptionEditor
-                        option={selectedOption}
-                        onUpdate={(updates) =>
-                          updateOptionMutation.mutate({
-                            typeId: selectedType.id,
-                            fieldId: selectedField.id,
-                            optionId: selectedOption.id,
-                            updates,
-                          })
-                        }
-                      />
-                    )}
-                  </>
-                )}
-              </>
-            )}
-          </TabsContent>
-
-          <TabsContent
-            value="views"
-            className="flex-1 overflow-auto p-4 space-y-4 m-0"
-          >
-            <ViewList
-              views={project.views}
-              selectedViewId={selectedViewId}
-              onSelectView={setSelectedViewId}
-              onAddView={() => setAddViewOpen(true)}
-              onDeleteView={(viewId) => deleteViewMutation.mutate(viewId)}
-            />
-
-            {selectedView && (
-              <ViewEditor
-                view={selectedView}
-                fields={selectedFields}
-                types={project.types}
-                onUpdate={(updates) =>
-                  updateViewMutation.mutate({
-                    viewId: selectedView.id,
-                    updates,
-                  })
-                }
-                onUpdateTypes={(types) =>
-                  updateViewMutation.mutate({
-                    viewId: selectedView.id,
-                    types,
-                  })
-                }
-              />
-            )}
-          </TabsContent>
-        </Tabs>
+        </div>
       </div>
 
       {/* Preview panel (right) */}
@@ -433,6 +335,12 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
       </div>
 
       {/* Add dialogs */}
+      <AddViewDialog
+        open={addViewOpen}
+        onOpenChange={setAddViewOpen}
+        onAdd={(name, viewtype) => createViewMutation.mutate({ name, viewtype })}
+      />
+
       <AddTypeDialog
         open={addTypeOpen}
         onOpenChange={setAddTypeOpen}
@@ -457,10 +365,10 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
         open={addOptionOpen}
         onOpenChange={setAddOptionOpen}
         onAdd={(name, colour) => {
-          if (selectedTypeId && selectedFieldId) {
+          if (selectedTypeId && editingField) {
             createOptionMutation.mutate({
               typeId: selectedTypeId,
-              fieldId: selectedFieldId,
+              fieldId: editingField.id,
               name,
               colour,
             });
@@ -468,12 +376,115 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
         }}
       />
 
-      <AddViewDialog
-        open={addViewOpen}
-        onOpenChange={setAddViewOpen}
-        onAdd={(name, viewtype) =>
-          createViewMutation.mutate({ name, viewtype })
-        }
+      {/* Edit dialogs */}
+      <EditViewDialog
+        open={editViewOpen}
+        onOpenChange={setEditViewOpen}
+        view={editingView}
+        fields={selectedFields}
+        types={project.types}
+        onUpdate={(updates) => {
+          if (editingView) {
+            updateViewMutation.mutate({ viewId: editingView.id, updates });
+          }
+        }}
+        onUpdateTypes={(types) => {
+          if (editingView) {
+            updateViewMutation.mutate({ viewId: editingView.id, types });
+          }
+        }}
+        onDelete={() => {
+          if (editingView) {
+            deleteViewMutation.mutate(editingView.id);
+          }
+        }}
+      />
+
+      <EditTypeDialog
+        open={editTypeOpen}
+        onOpenChange={setEditTypeOpen}
+        type={selectedType || null}
+        types={project.types}
+        hierarchy={hierarchy}
+        fields={selectedFields}
+        onUpdate={(name) => {
+          if (selectedTypeId) {
+            updateTypeMutation.mutate({ typeId: selectedTypeId, name });
+          }
+        }}
+        onUpdateHierarchy={(parents) => {
+          if (selectedTypeId) {
+            setHierarchyMutation.mutate({ typeId: selectedTypeId, parents });
+          }
+        }}
+        onDelete={() => {
+          if (selectedTypeId) {
+            deleteTypeMutation.mutate(selectedTypeId);
+          }
+        }}
+        onAddField={() => setAddFieldOpen(true)}
+        onEditField={handleEditField}
+      />
+
+      <EditFieldDialog
+        open={editFieldOpen}
+        onOpenChange={setEditFieldOpen}
+        field={editingField}
+        options={editingFieldOptions}
+        onUpdate={(updates) => {
+          if (selectedTypeId && editingField) {
+            updateFieldMutation.mutate({
+              typeId: selectedTypeId,
+              fieldId: editingField.id,
+              updates,
+            });
+          }
+        }}
+        onDelete={() => {
+          if (selectedTypeId && editingField) {
+            deleteFieldMutation.mutate({
+              typeId: selectedTypeId,
+              fieldId: editingField.id,
+            });
+          }
+        }}
+        onAddOption={() => setAddOptionOpen(true)}
+        onEditOption={handleEditOption}
+        onDeleteOption={(optionId) => {
+          if (selectedTypeId && editingField) {
+            deleteOptionMutation.mutate({
+              typeId: selectedTypeId,
+              fieldId: editingField.id,
+              optionId,
+            });
+          }
+        }}
+        onReorderOptions={() => {}}
+      />
+
+      <EditOptionDialog
+        open={editOptionOpen}
+        onOpenChange={setEditOptionOpen}
+        option={editingOption}
+        onUpdate={(updates) => {
+          if (selectedTypeId && editingField && editingOption) {
+            updateOptionMutation.mutate({
+              typeId: selectedTypeId,
+              fieldId: editingField.id,
+              optionId: editingOption.id,
+              updates,
+            });
+          }
+        }}
+        onDelete={() => {
+          if (selectedTypeId && editingField && editingOption) {
+            deleteOptionMutation.mutate({
+              typeId: selectedTypeId,
+              fieldId: editingField.id,
+              optionId: editingOption.id,
+            });
+          }
+        }}
       />
     </div>
   );

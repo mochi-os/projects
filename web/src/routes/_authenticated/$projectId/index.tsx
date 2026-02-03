@@ -1,4 +1,4 @@
-// Mochi Projects: Project page with board and list views
+// Mochi Projects: Project page with board and tree views
 // Copyright Alistair Cunningham 2026
 
 import { useState, useMemo, useCallback, useEffect } from "react";
@@ -19,11 +19,10 @@ import {
 } from "@mochi/common";
 import { Columns3, Ellipsis, FolderKanban, GripVertical, Plus, Settings, Settings2, SlidersHorizontal, X } from "lucide-react";
 import projectsApi from "@/api/projects";
-import type { ProjectDetails, ProjectObject } from "@/types";
+import type { ProjectDetails, ProjectObject, SortState } from "@/types";
 import { BoardContainer } from "@/features/board/components";
 import { TreeView } from "@/features/tree";
 import { FilterBar, type FilterState } from "@/features/views";
-import type { SortState } from "@/features/list";
 import {
   CreateObjectDialog,
   ObjectDetailPanel,
@@ -601,7 +600,7 @@ function ProjectPage() {
           onViewChange={handleViewChange}
           sort={sort}
           onSortChange={setSort}
-          showSort={activeView?.viewtype === "tree"}
+          showSort
         />
       )}
       {isReorderingColumns && (
@@ -659,6 +658,7 @@ function ProjectPage() {
                 project={project}
                 objects={filteredObjects}
                 statusField={columnField}
+                sort={sort}
                 onCardClick={handleCardClick}
                 onCreateClick={handleCreateClick}
                 onMoveObject={handleMoveObject}

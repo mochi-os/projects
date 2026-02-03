@@ -10,7 +10,7 @@ import type {
   ProjectView,
 } from "@/types";
 
-type PreviewMode = "board" | "card" | "list";
+type PreviewMode = "board" | "card";
 
 interface DesignPreviewProps {
   types: ProjectType[];
@@ -205,60 +205,11 @@ export function DesignPreview({
     );
   };
 
-  const renderListPreview = () => {
-    return (
-      <div className="border rounded-lg overflow-hidden">
-        <div className="flex items-center bg-muted/50 text-sm font-medium text-muted-foreground">
-          <div className="w-20 px-3 py-2">ID</div>
-          {cardFields.map((fieldId) => {
-            const field = typeFields.find((f) => f.id === fieldId);
-            return (
-              <div
-                key={fieldId}
-                className={cn(
-                  "px-3 py-2",
-                  fieldId === "title" ? "flex-1" : "w-28",
-                )}
-              >
-                {field?.name || fieldId}
-              </div>
-            );
-          })}
-        </div>
-        {SAMPLE_CARDS.map((card) => (
-          <div
-            key={card.id}
-            className="flex items-center border-t text-sm hover:bg-muted/30"
-          >
-            <div className="w-20 px-3 py-2 font-mono text-xs text-muted-foreground">
-              proj-{card.number}
-            </div>
-            {cardFields.map((fieldId) => {
-              const field = typeFields.find((f) => f.id === fieldId);
-              const value = card.values[fieldId as keyof typeof card.values];
-              return (
-                <div
-                  key={fieldId}
-                  className={cn(
-                    "px-3 py-2",
-                    fieldId === "title" ? "flex-1" : "w-28",
-                  )}
-                >
-                  {field ? renderFieldValue(field, value || "") : value}
-                </div>
-              );
-            })}
-          </div>
-        ))}
-      </div>
-    );
-  };
-
   return (
     <div className="h-full flex flex-col">
       <div className="flex items-center gap-2 p-2 border-b">
         <span className="text-sm font-medium">Preview:</span>
-        {(["board", "card", "list"] as const).map((mode) => (
+        {(["board", "card"] as const).map((mode) => (
           <button
             key={mode}
             onClick={() => setPreviewMode(mode)}
@@ -276,7 +227,6 @@ export function DesignPreview({
       <div className="flex-1 p-4 overflow-auto bg-muted/30">
         {previewMode === "board" && renderBoardPreview()}
         {previewMode === "card" && renderCardPreview()}
-        {previewMode === "list" && renderListPreview()}
       </div>
     </div>
   );

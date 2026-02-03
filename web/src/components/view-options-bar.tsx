@@ -9,12 +9,12 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
+  SortDirectionButton,
   cn,
 } from "@mochi/common";
-import { ArrowDown, ArrowUp, LayoutGrid, List, Network } from "lucide-react";
-import type { ProjectDetails, ProjectView, FieldOption } from "@/types";
+import { LayoutGrid, Network } from "lucide-react";
+import type { ProjectDetails, ProjectView, FieldOption, SortState } from "@/types";
 import type { FilterState } from "@/features/views/components/filter-bar";
-import type { SortState } from "@/features/list";
 
 const SORT_OPTIONS = [
   { id: "rank", label: "Manual" },
@@ -87,8 +87,6 @@ export function ViewOptionsBar({
           >
             {view.viewtype === "tree" ? (
               <Network className="size-3.5" />
-            ) : view.viewtype === "list" ? (
-              <List className="size-3.5" />
             ) : (
               <LayoutGrid className="size-3.5" />
             )}
@@ -181,22 +179,16 @@ export function ViewOptionsBar({
               ))}
             </SelectContent>
           </Select>
-          <button
-            onClick={() =>
+          <SortDirectionButton
+            direction={sort?.direction || "asc"}
+            onToggle={() =>
               onSortChange({
                 field: sort?.field || "rank",
                 direction: sort?.direction === "asc" ? "desc" : "asc",
               })
             }
-            className="h-7 w-7 flex items-center justify-center rounded-md border border-input bg-background hover:bg-muted"
-            title={sort?.direction === "asc" ? "Ascending" : "Descending"}
-          >
-            {sort?.direction === "asc" ? (
-              <ArrowUp className="size-3.5" />
-            ) : (
-              <ArrowDown className="size-3.5" />
-            )}
-          </button>
+            size="sm"
+          />
         </div>
       )}
     </div>

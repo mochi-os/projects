@@ -4,12 +4,13 @@
 import { useMemo, useState, useEffect, useCallback, useRef } from "react";
 import { cn } from "@mochi/common";
 import { BoardColumn } from "./board-column";
-import type { ProjectObject, ProjectDetails, ProjectType, FieldOption } from "@/types";
+import type { ProjectObject, ProjectDetails, ProjectType, FieldOption, SortState } from "@/types";
 
 interface BoardContainerProps {
   project: ProjectDetails;
   objects: ProjectObject[];
   statusField: string;
+  sort?: SortState | null;
   onCardClick?: (object: ProjectObject) => void;
   onCreateClick?: (statusId: string) => void;
   onMoveObject?: (objectId: string, newStatus: string, newRank?: number) => void;
@@ -23,6 +24,7 @@ export function BoardContainer({
   project,
   objects,
   statusField,
+  sort,
   onCardClick,
   onCreateClick,
   onMoveObject,
@@ -72,7 +74,7 @@ export function BoardContainer({
   // Columns to render (use reordered if in reorder mode)
   const columnsToRender = isReordering ? reorderedColumns : statusOptions;
 
-  // Group objects by status and sort by rank
+  // Group objects by status and sort
   const objectsByStatus = useMemo(() => {
     const grouped: Record<string, ProjectObject[]> = {};
 
@@ -94,13 +96,42 @@ export function BoardContainer({
       }
     });
 
-    // Sort each column by rank
+    // Sort each column
+    const sortField = sort?.field || "rank";
+    const sortDirection = sort?.direction || "asc";
+    const multiplier = sortDirection === "asc" ? 1 : -1;
+
     Object.keys(grouped).forEach((status) => {
-      grouped[status].sort((a, b) => (a.rank || 0) - (b.rank || 0));
+      grouped[status].sort((a, b) => {
+        let aVal: string | number;
+        let bVal: string | number;
+
+        if (sortField === "rank") {
+          aVal = a.rank || 0;
+          bVal = b.rank || 0;
+        } else if (sortField === "created") {
+          aVal = a.created || 0;
+          bVal = b.created || 0;
+        } else if (sortField === "updated") {
+          aVal = a.updated || 0;
+          bVal = b.updated || 0;
+        } else if (sortField === "number") {
+          aVal = a.number || 0;
+          bVal = b.number || 0;
+        } else {
+          aVal = a.values[sortField] || "";
+          bVal = b.values[sortField] || "";
+        }
+
+        if (typeof aVal === "number" && typeof bVal === "number") {
+          return (aVal - bVal) * multiplier;
+        }
+        return String(aVal).localeCompare(String(bVal)) * multiplier;
+      });
     });
 
     return grouped;
-  }, [objects, statusOptions, statusField]);
+  }, [objects, statusOptions, statusField, sort]);
 
   const handleDrop = (objectId: string, columnId: string, newRank?: number) => {
     onMoveObject?.(objectId, columnId, newRank);

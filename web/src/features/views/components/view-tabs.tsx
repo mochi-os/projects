@@ -2,7 +2,7 @@
 // Copyright Alistair Cunningham 2026
 
 import { cn } from "@mochi/common";
-import { LayoutGrid, List, Plus } from "lucide-react";
+import { LayoutGrid, Network, Plus } from "lucide-react";
 import type { ProjectView } from "@/types";
 
 interface ViewTabsProps {
@@ -20,8 +20,8 @@ export function ViewTabs({
 }: ViewTabsProps) {
   const getViewIcon = (viewtype: string) => {
     switch (viewtype) {
-      case "list":
-        return <List className="size-4" />;
+      case "tree":
+        return <Network className="size-4" />;
       case "board":
       default:
         return <LayoutGrid className="size-4" />;

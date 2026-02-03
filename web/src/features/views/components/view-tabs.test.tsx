@@ -5,8 +5,8 @@ import { ViewTabs } from "./view-tabs";
 
 describe("ViewTabs", () => {
   const boardView = createMockView({ id: "board", name: "Board", viewtype: "board" });
-  const listView = createMockView({ id: "list", name: "List", viewtype: "list" });
-  const defaultViews = [boardView, listView];
+  const treeView = createMockView({ id: "tree", name: "Tree", viewtype: "tree" });
+  const defaultViews = [boardView, treeView];
 
   it("should render all views", () => {
     render(
@@ -18,7 +18,7 @@ describe("ViewTabs", () => {
     );
 
     expect(screen.getByText("Board")).toBeInTheDocument();
-    expect(screen.getByText("List")).toBeInTheDocument();
+    expect(screen.getByText("Tree")).toBeInTheDocument();
   });
 
   it("should call onViewChange when a view is clicked", () => {
@@ -32,9 +32,9 @@ describe("ViewTabs", () => {
       />,
     );
 
-    fireEvent.click(screen.getByText("List"));
+    fireEvent.click(screen.getByText("Tree"));
 
-    expect(onViewChange).toHaveBeenCalledWith("list");
+    expect(onViewChange).toHaveBeenCalledWith("tree");
   });
 
   it("should highlight active view", () => {
@@ -47,10 +47,10 @@ describe("ViewTabs", () => {
     );
 
     const boardButton = screen.getByText("Board").closest("button");
-    const listButton = screen.getByText("List").closest("button");
+    const treeButton = screen.getByText("Tree").closest("button");
 
     expect(boardButton).toHaveClass("border-primary");
-    expect(listButton).not.toHaveClass("border-primary");
+    expect(treeButton).not.toHaveClass("border-primary");
   });
 
   it("should render add view button when onAddView is provided", () => {
@@ -113,17 +113,17 @@ describe("ViewTabs", () => {
     expect(svg).toBeInTheDocument();
   });
 
-  it("should render correct icon for list view", () => {
+  it("should render correct icon for tree view", () => {
     render(
       <ViewTabs
-        views={[listView]}
-        activeViewId="list"
+        views={[treeView]}
+        activeViewId="tree"
         onViewChange={vi.fn()}
       />,
     );
 
-    // List icon is used for list view
-    const button = screen.getByText("List").closest("button");
+    // Network icon is used for tree view
+    const button = screen.getByText("Tree").closest("button");
     const svg = button?.querySelector("svg");
     expect(svg).toBeInTheDocument();
   });

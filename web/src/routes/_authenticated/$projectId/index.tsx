@@ -3,9 +3,8 @@
 
 import { useState, useMemo, useCallback, useEffect } from "react";
 import { createFileRoute, Link, useNavigate, useRouter } from "@tanstack/react-router";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
-  GeneralError,
   Main,
   PageHeader,
   usePageTitle,
@@ -16,14 +15,19 @@ import {
   DropdownMenuTrigger,
   Switch,
   useSearch,
+  useQueryWithError,
+  GeneralError,
+  cn,
 } from "@mochi/common";
 import { Columns3, Ellipsis, FolderKanban, GripVertical, Plus, Settings2, SlidersHorizontal, X } from "lucide-react";
 import projectsApi from "@/api/projects";
 import type { ProjectDetails, ProjectObject } from "@/types";
-import { BoardContainer } from "@/features/board/components";
+import {
+  BoardContainer,
+} from "@/features/board/components";
 import { TreeView } from "@/features/tree";
+import { ListView, type SortState } from "@/features/list";
 import { FilterBar, type FilterState } from "@/features/views";
-import type { SortState } from "@/features/list";
 import {
   CreateObjectDialog,
   ObjectDetailPanel,
@@ -131,7 +135,7 @@ function ProjectPage() {
   const queryClient = useQueryClient();
 
   // Load objects
-  const { data: objectsData } = useQuery({
+  const { data: objectsData, isLoading: isLoadingObjects, ErrorComponent: ObjectsError } = useQueryWithError({
     queryKey: ["objects", params.projectId],
     queryFn: async () => {
       const response = await projectsApi.listObjects(params.projectId);
@@ -140,7 +144,7 @@ function ProjectPage() {
   });
 
   // Load people for resolving user field values to names
-  const { data: peopleData } = useQuery({
+  const { data: peopleData, ErrorComponent: PeopleError } = useQueryWithError({
     queryKey: ["people", params.projectId],
     queryFn: async () => {
       const response = await projectsApi.listPeople(params.projectId);
@@ -630,36 +634,51 @@ function ProjectPage() {
         </div>
       )}
       <Main fluid className="flex flex-col min-h-0 flex-1 !py-0">
-        {/* Content area */}
-        <div className={activeView?.viewtype === "tree" ? "flex-1 min-h-0 overflow-auto" : ""}>
-          {activeView?.viewtype === "tree" ? (
-            <div className="p-4">
-              <TreeView
-                project={project}
-                projectId={params.projectId}
-                objects={filteredObjects}
-                peopleMap={peopleMap}
-                onCardClick={handleCardClick}
-                onReparent={handleReparent}
-              />
-            </div>
-          ) : (
-            <div className="pl-2 pr-4">
-              <BoardContainer
-                project={project}
-                objects={filteredObjects}
-                statusField={columnField}
-                onCardClick={handleCardClick}
-                onCreateClick={handleCreateClick}
-                onMoveObject={handleMoveObject}
-                onRenameColumn={handleRenameColumn}
-                onDeleteColumn={handleDeleteColumn}
-                isReordering={isReorderingColumns}
-                onReorderColumns={handleReorderColumns}
-              />
-            </div>
-          )}
-        </div>
+        {ObjectsError || PeopleError || (
+          <div className={cn("flex-1 min-h-0", activeView?.viewtype === "tree" && "overflow-auto")}>
+            {activeView?.viewtype === "tree" ? (
+              <div className="p-4">
+                <TreeView
+                  project={project}
+                  projectId={params.projectId}
+                  objects={filteredObjects}
+                  peopleMap={peopleMap}
+                  onCardClick={handleCardClick}
+                  onReparent={handleReparent}
+                />
+              </div>
+            ) : activeView?.viewtype === "list" ? (
+              <div className="p-4">
+                <ListView
+                  project={project}
+                  objects={filteredObjects}
+                  peopleMap={peopleMap}
+                  sort={sort}
+                  isLoading={isLoadingObjects}
+                  onSortChange={setSort}
+                  onCardClick={handleCardClick}
+                  onCreateClick={handleOpenCreateDialog}
+                />
+              </div>
+            ) : (
+              <div className="pl-2 pr-4">
+                <BoardContainer
+                  project={project}
+                  objects={filteredObjects}
+                  statusField={columnField}
+                  isLoading={isLoadingObjects}
+                  onCardClick={handleCardClick}
+                  onCreateClick={handleCreateClick}
+                  onMoveObject={handleMoveObject}
+                  onRenameColumn={handleRenameColumn}
+                  onDeleteColumn={handleDeleteColumn}
+                  isReordering={isReorderingColumns}
+                  onReorderColumns={handleReorderColumns}
+                />
+              </div>
+            )}
+          </div>
+        )}
       </Main>
 
       {/* Object detail dialog */}

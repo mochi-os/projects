@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import {
   Button,
+  cn,
   Dialog,
   DialogContent,
   DialogFooter,
@@ -17,7 +18,7 @@ import {
   RadioGroupItem,
 } from "@mochi/common";
 import { ArrowLeft, ArrowRight, Check, File, FolderKanban, LayoutGrid, Plus, Ticket, Zap } from "lucide-react";
-import { cn } from "@mochi/common";
+
 import projectsApi from "@/api/projects";
 import { useProjectsStore } from "@/stores/projects-store";
 import type { ProjectTemplate } from "@/types";
@@ -231,20 +232,20 @@ export function CreateProjectDialog({
                       "zap": Zap,
                     }[template.icon] || FolderKanban;
                     return (
-                      <div
+                      <label
                         key={template.id}
+                        htmlFor={template.id}
                         className={cn(
                           "relative flex cursor-pointer items-start gap-4 rounded-xl border-2 p-4 transition-all duration-200",
                           isSelected
                             ? "border-primary bg-primary/5 shadow-sm"
                             : "border-border hover:border-primary/30 hover:bg-accent/50",
                         )}
-                        onClick={() => setSelectedTemplate(template.id)}
                       >
                         <RadioGroupItem
                           value={template.id}
                           id={template.id}
-                          className="sr-only"
+                          className="absolute opacity-0 pointer-events-none"
                         />
                         <div
                           className={cn(
@@ -258,15 +259,12 @@ export function CreateProjectDialog({
                         </div>
                         <div className="flex flex-col gap-1.5 flex-1">
                           <div className="flex items-center gap-2">
-                            <Label
-                              htmlFor={template.id}
-                              className="cursor-pointer text-base font-semibold leading-none"
-                            >
+                            <span className="cursor-pointer text-base font-semibold leading-none">
                               {template.name}
-                            </Label>
+                            </span>
                             {isSelected && (
                               <div className="flex size-4 items-center justify-center rounded-full bg-primary text-primary-foreground">
-                                <Check className="size-3 stroke-[3]" />
+                                <Check className="size-3 stroke-3" />
                               </div>
                             )}
                           </div>
@@ -274,7 +272,7 @@ export function CreateProjectDialog({
                             {template.description}
                           </p>
                         </div>
-                      </div>
+                      </label>
                     );
                   })}
                 </RadioGroup>

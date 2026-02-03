@@ -286,8 +286,25 @@ export function BoardColumn({
         )}
 
         {objects.length === 0 && !isDragOver && (
-          <div className="flex items-center justify-center py-8">
-            <Inbox className="size-8 text-muted-foreground/30" />
+          <div className="flex flex-col items-center justify-center py-12 px-4 text-center">
+            <div className="size-10 rounded-full bg-muted flex items-center justify-center mb-3">
+              <Inbox className="size-5 text-muted-foreground/50" />
+            </div>
+            <p className="text-xs font-medium text-muted-foreground mb-1">No items yet</p>
+            <p className="text-[10px] text-muted-foreground/60 mb-4">
+              Drag items here or click below to add
+            </p>
+            {onCreateClick && (
+              <Button 
+                variant="outline" 
+                size="sm" 
+                className="h-7 text-[10px] px-2 border-dashed hover:border-primary hover:text-primary transition-all"
+                onClick={onCreateClick}
+              >
+                <Plus className="size-3 mr-1" />
+                Add item
+              </Button>
+            )}
           </div>
         )}
       </div>

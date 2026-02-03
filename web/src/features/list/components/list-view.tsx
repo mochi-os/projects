@@ -2,6 +2,8 @@
 // Copyright Alistair Cunningham 2026
 
 import { useMemo } from "react";
+import { ListSkeleton, EmptyState, Button } from "@mochi/common";
+import { FolderKanban, Plus } from "lucide-react";
 import { ListHeader, type SortState } from "./list-header";
 import { ListRow } from "./list-row";
 import type { ProjectDetails, ProjectObject } from "@/types";
@@ -11,8 +13,10 @@ interface ListViewProps {
   objects: ProjectObject[];
   peopleMap: Record<string, string>;
   sort: SortState | null;
+  isLoading?: boolean;
   onSortChange: (sort: SortState) => void;
   onCardClick: (object: ProjectObject) => void;
+  onCreateClick?: () => void;
 }
 
 export function ListView({
@@ -20,17 +24,28 @@ export function ListView({
   objects,
   peopleMap,
   sort,
+  isLoading,
   onSortChange,
   onCardClick,
+  onCreateClick,
 }: ListViewProps) {
   // Get fields to display from the first type (card fields or all fields)
   const firstTypeId = project.types[0]?.id;
-  const taskFields = firstTypeId ? project.fields[firstTypeId] || [] : [];
-  const taskOptions = firstTypeId ? project.options[firstTypeId] || {} : {};
+  
+  const taskFields = useMemo(() => 
+    firstTypeId ? project.fields[firstTypeId] || [] : [],
+    [firstTypeId, project.fields]
+  );
+  
+  const taskOptions = useMemo(() => 
+    firstTypeId ? project.options[firstTypeId] || {} : {},
+    [firstTypeId, project.options]
+  );
 
   // Get visible fields (exclude description for list view)
-  const visibleFields = taskFields.filter(
-    (f) => f.card === 1 || f.id === "title",
+  const visibleFields = useMemo(() => 
+    taskFields.filter((f) => f.card === 1 || f.id === "title"),
+    [taskFields]
   );
 
   // Sort objects
@@ -96,11 +111,24 @@ export function ListView({
     });
   }, [objects, sort, taskFields, taskOptions]);
 
+  if (isLoading) {
+    return <ListSkeleton count={5} />;
+  }
+
   if (objects.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center py-12 text-muted-foreground">
-        <p>No items found</p>
-      </div>
+      <EmptyState
+        icon={FolderKanban}
+        title="No items found"
+        description="Try adjusting your filters or create a new item to get started."
+      >
+        {onCreateClick && (
+          <Button onClick={onCreateClick}>
+            <Plus className="mr-2 size-4" />
+            Create item
+          </Button>
+        )}
+      </EmptyState>
     );
   }
 

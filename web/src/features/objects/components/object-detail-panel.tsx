@@ -2,8 +2,8 @@
 // Copyright Alistair Cunningham 2026
 
 import { useState, useMemo } from "react";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { Eye, EyeOff, Loader2, Trash2, MessageSquare, Activity, X, Settings2 } from "lucide-react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { Eye, EyeOff, Trash2, MessageSquare, Activity, X, Settings2 } from "lucide-react";
 import {
   Button,
   Textarea,
@@ -16,7 +16,9 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
+  DetailSkeleton,
   cn,
+  useQueryWithError,
 } from "@mochi/common";
 import projectsApi from "@/api/projects";
 import type { ProjectDetails } from "@/types";
@@ -58,7 +60,7 @@ export function ObjectDetailPanel({
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const queryClient = useQueryClient();
 
-  const { data, isLoading, error } = useQuery({
+  const { data, isLoading, ErrorComponent: ObjectError } = useQueryWithError({
     queryKey: ["object", projectId, objectId],
     queryFn: async () => {
       if (!objectId) throw new Error("No object ID");
@@ -69,7 +71,7 @@ export function ObjectDetailPanel({
   });
 
   // Fetch project members for the owner picker
-  const { data: peopleData } = useQuery({
+  const { data: peopleData, ErrorComponent: _PeopleError } = useQueryWithError({
     queryKey: ["people", projectId],
     queryFn: async () => {
       const response = await projectsApi.listPeople(projectId);
@@ -79,7 +81,7 @@ export function ObjectDetailPanel({
   });
 
   // Fetch all objects for parent picker
-  const { data: objectsData } = useQuery({
+  const { data: objectsData, ErrorComponent: _ObjectsError } = useQueryWithError({
     queryKey: ["objects", projectId],
     queryFn: async () => {
       const response = await projectsApi.listObjects(projectId);
@@ -197,23 +199,22 @@ export function ObjectDetailPanel({
   if (isLoading) {
     return (
       <Dialog open={true} onOpenChange={() => onClose()}>
-        <DialogContent className="max-w-5xl h-[85vh] flex flex-col p-0" showCloseButton={false}>
-          <div className="flex-1 flex items-center justify-center">
-            <Loader2 className="size-6 animate-spin text-muted-foreground" />
-            <span className="text-xs text-muted-foreground ml-2">Loading details...</span>
-          </div>
+        <DialogContent className="max-w-5xl h-[85vh] flex flex-col p-0 overflow-hidden" showCloseButton={false}>
+          <DetailSkeleton className="flex-1" />
         </DialogContent>
       </Dialog>
     );
   }
 
-  if (error || !data) {
+  if (ObjectError || !data) {
     return (
       <Dialog open={true} onOpenChange={() => onClose()}>
         <DialogContent className="max-w-5xl" showCloseButton={false}>
-          <div className="text-destructive text-sm bg-destructive/10 p-3 rounded-md">
-            {error instanceof Error ? error.message : "Failed to load object"}
-          </div>
+          {ObjectError || (
+            <div className="text-destructive text-sm bg-destructive/10 p-3 rounded-md">
+              Failed to load object
+            </div>
+          )}
         </DialogContent>
       </Dialog>
     );
@@ -254,7 +255,7 @@ export function ObjectDetailPanel({
                   setEditingTitle(false);
                 }
               }}
-              className="text-xl font-bold resize-none min-h-[40px] flex-1"
+              className="text-xl font-bold resize-none min-h-10 flex-1"
               autoFocus
             />
           ) : (

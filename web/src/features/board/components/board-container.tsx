@@ -2,14 +2,21 @@
 // Copyright Alistair Cunningham 2026
 
 import { useMemo, useState, useEffect, useCallback, useRef } from "react";
-import { cn } from "@mochi/common";
+import {
+  cn,
+  BoardSkeleton,
+  EmptyState,
+  Button,
+} from "@mochi/common";
 import { BoardColumn } from "./board-column";
+import { FolderKanban, Plus } from "lucide-react";
 import type { ProjectObject, ProjectDetails, ProjectType, FieldOption } from "@/types";
 
 interface BoardContainerProps {
   project: ProjectDetails;
   objects: ProjectObject[];
   statusField: string;
+  isLoading?: boolean;
   onCardClick?: (object: ProjectObject) => void;
   onCreateClick?: (statusId: string) => void;
   onMoveObject?: (objectId: string, newStatus: string, newRank?: number) => void;
@@ -23,6 +30,7 @@ export function BoardContainer({
   project,
   objects,
   statusField,
+  isLoading,
   onCardClick,
   onCreateClick,
   onMoveObject,
@@ -33,8 +41,16 @@ export function BoardContainer({
 }: BoardContainerProps) {
   // Get the default type's fields (first type)
   const defaultType = project.types[0];
-  const typeFields = defaultType ? project.fields[defaultType.id] || [] : [];
-  const typeOptions = defaultType ? project.options[defaultType.id] || {} : {};
+  
+  const typeFields = useMemo(() => 
+    defaultType ? project.fields[defaultType.id] || [] : [],
+    [defaultType, project.fields]
+  );
+  
+  const typeOptions = useMemo(() => 
+    defaultType ? project.options[defaultType.id] || {} : {},
+    [defaultType, project.options]
+  );
 
   // Build a map of object id to object for quick parent lookups
   const objectMap = useMemo(() => {
@@ -159,6 +175,25 @@ export function BoardContainer({
     }
     setDraggedColumnId(null);
   }, [draggedColumnId, isReordering, reorderedColumns, onReorderColumns]);
+
+  if (isLoading) {
+    return <BoardSkeleton columnCount={4} />;
+  }
+
+  if (statusOptions.length === 0) {
+    return (
+      <EmptyState
+        icon={FolderKanban}
+        title="No columns defined"
+        description="Try adding some columns to your project to get started."
+      >
+        <Button onClick={() => onCreateClick?.("")}>
+          <Plus className="mr-2 size-4" />
+          Create item
+        </Button>
+      </EmptyState>
+    );
+  }
 
   return (
     <div className="flex gap-4 pb-2">

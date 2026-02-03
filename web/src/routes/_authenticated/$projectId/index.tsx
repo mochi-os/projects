@@ -644,7 +644,18 @@ function ProjectPage() {
               />
             </div>
           ) : (
-            <div className="pl-2 pr-4">
+            <div className="pl-2 pr-4 h-full overflow-hidden">
+              <div
+                className="h-full py-4"
+                style={{
+                  height: `calc(100vh - ${
+                    44 + // Header
+                    (showViewOptions ? 40 : 0) + // View options bar
+                    (isReorderingColumns ? 36 : 0) + // Reorder bar
+                    (showBoardHint && !isReorderingColumns && activeView?.viewtype !== "tree" ? 30 : 0) // Hint
+                  }px)`
+                }}
+              >
               <BoardContainer
                 project={project}
                 objects={filteredObjects}
@@ -657,6 +668,7 @@ function ProjectPage() {
                 isReordering={isReorderingColumns}
                 onReorderColumns={handleReorderColumns}
               />
+              </div>
             </div>
           )}
         </div>

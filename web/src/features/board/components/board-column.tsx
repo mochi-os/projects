@@ -120,7 +120,7 @@ export function BoardColumn({
   return (
     <div
       className={cn(
-        "flex flex-col w-72 shrink-0 rounded-[10px] min-h-[calc(100vh-5rem)]",
+        "flex flex-col w-72 shrink-0 rounded-[10px] h-full",
         "bg-muted/30 border",
         isDragOver && !isReordering && "border-primary bg-primary/5",
         isReordering && !isDragging && "border-dashed border-muted-foreground/50",
@@ -255,7 +255,7 @@ export function BoardColumn({
       {/* Cards */}
       <div
         ref={cardsContainerRef}
-        className="p-2 space-y-2 flex-1"
+        className="p-2 space-y-2 flex-1 overflow-y-auto min-h-0"
         onDoubleClick={(e) => {
           // Only trigger if clicking directly on the container, not on a card
           if (e.target === e.currentTarget || (e.target as HTMLElement).closest("[data-card-id]") === null) {

@@ -161,7 +161,7 @@ export function BoardContainer({
   }, [draggedColumnId, isReordering, reorderedColumns, onReorderColumns]);
 
   return (
-    <div className="flex gap-4 pb-2">
+    <div className="flex gap-4 pb-2 h-full">
       {columnsToRender.map((status) => {
         const isDragging = draggedColumnId === status.id;
         return (

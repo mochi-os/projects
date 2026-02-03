@@ -224,11 +224,30 @@ interface UpdateOptionRequest {
   icon?: string;
 }
 
+// Search response type
+interface DirectoryEntry {
+  id: string;
+  name: string;
+  fingerprint: string;
+  location?: string;
+}
+
+interface SearchResponse {
+  data: DirectoryEntry[];
+}
+
 // API methods
 const projectsApi = {
   // List all projects
   list: async (): Promise<ProjectListResponse> => {
     return projectsRequest.get<ProjectListResponse>(endpoints.projects.list);
+  },
+
+  // Search for projects in the directory
+  search: async (params: { search: string }): Promise<SearchResponse> => {
+    return projectsRequest.get<SearchResponse>(
+      `${endpoints.projects.search}?search=${encodeURIComponent(params.search)}`
+    );
   },
 
   // Get available templates

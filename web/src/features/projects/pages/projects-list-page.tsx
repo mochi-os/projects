@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { Link } from "@tanstack/react-router";
 import {
   Main,
@@ -6,7 +6,6 @@ import {
   CardContent,
   Button,
   usePageTitle,
-  EmptyState,
   Skeleton,
   PageHeader,
 } from "@mochi/common";
@@ -14,6 +13,7 @@ import { FolderKanban, Plus } from "lucide-react";
 import { useProjectsStore } from "@/stores/projects-store";
 import { useSidebarContext } from "@/context/sidebar-context";
 import { formatDistanceToNow } from "date-fns";
+import { InlineProjectSearch } from "../components/inline-project-search";
 
 export function ProjectsListPage() {
   const projects = useProjectsStore((state) => state.projects);
@@ -26,6 +26,17 @@ export function ProjectsListPage() {
   useEffect(() => {
     void refresh();
   }, [refresh]);
+
+  // Set of subscribed project IDs for inline search
+  const subscribedProjectIds = useMemo(
+    () =>
+      new Set(
+        projects.flatMap((p) =>
+          [p.id, p.fingerprint].filter((x): x is string => !!x),
+        ),
+      ),
+    [projects],
+  );
 
   return (
     <>
@@ -46,16 +57,28 @@ export function ProjectsListPage() {
             ))}
           </div>
         ) : projects.length === 0 ? (
-          <EmptyState
-            icon={FolderKanban}
-            title="No projects yet"
-            description="Create a project to start tracking your tasks and issues."
-          >
-            <Button onClick={openCreateDialog}>
-              <Plus className="mr-2 size-4" />
-              Create project
-            </Button>
-          </EmptyState>
+          <div className="mx-auto flex w-full max-w-4xl flex-col gap-12 pt-8">
+            <div className="space-y-6 text-center">
+              <div className="space-y-2">
+                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-muted/30">
+                  <FolderKanban className="text-muted-foreground h-8 w-8" />
+                </div>
+                <h2 className="text-2xl font-semibold tracking-tight">
+                  No projects yet
+                </h2>
+                <p className="text-muted-foreground mx-auto max-w-md">
+                  Search for projects to subscribe to, or create your own to
+                  get started.
+                </p>
+              </div>
+
+              <InlineProjectSearch subscribedIds={subscribedProjectIds} />
+              <Button variant="outline" onClick={openCreateDialog}>
+                <Plus className="size-4" />
+                Create a new project
+              </Button>
+            </div>
+          </div>
         ) : (
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {projects.map((project) => (

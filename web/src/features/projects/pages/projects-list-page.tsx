@@ -57,27 +57,19 @@ export function ProjectsListPage() {
             ))}
           </div>
         ) : projects.length === 0 ? (
-          <div className="mx-auto flex w-full max-w-4xl flex-col gap-12 pt-8">
-            <div className="space-y-6 text-center">
-              <div className="space-y-2">
-                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-muted/30">
-                  <FolderKanban className="text-muted-foreground h-8 w-8" />
-                </div>
-                <h2 className="text-2xl font-semibold tracking-tight">
-                  No projects yet
-                </h2>
-                <p className="text-muted-foreground mx-auto max-w-md">
-                  Search for projects to subscribe to, or create your own to
-                  get started.
-                </p>
-              </div>
-
-              <InlineProjectSearch subscribedIds={subscribedProjectIds} />
-              <Button variant="outline" onClick={openCreateDialog}>
-                <Plus className="size-4" />
-                Create a new project
-              </Button>
-            </div>
+          <div className="flex flex-col items-center justify-center p-8 text-center">
+            <FolderKanban className="text-muted-foreground mx-auto mb-3 h-10 w-10 opacity-50" />
+            <p className="text-muted-foreground mb-1 text-sm font-medium">
+              Projects
+            </p>
+            <p className="text-muted-foreground mb-4 max-w-sm text-xs">
+              You have no projects yet.
+            </p>
+            <InlineProjectSearch subscribedIds={subscribedProjectIds} />
+            <Button variant="outline" onClick={openCreateDialog} className="mt-4">
+              <Plus className="mr-2 h-4 w-4" />
+              Create a new project
+            </Button>
           </div>
         ) : (
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">

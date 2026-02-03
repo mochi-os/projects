@@ -278,7 +278,7 @@ export function ObjectDetailPanel({
               title={data.watching ? "Stop watching" : "Watch"}
             >
               {data.watching ? (
-                <Eye className="size-4 text-primary" />
+                <Eye className="size-4" />
               ) : (
                 <EyeOff className="size-4" />
               )}

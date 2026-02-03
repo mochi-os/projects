@@ -4,90 +4,90 @@
   "description": "Full Agile/Scrum for development teams",
   "icon": "zap",
   "types": [
-    {"id": "epic", "name": "Epic", "sort": 0},
-    {"id": "story", "name": "Story", "sort": 1},
-    {"id": "task", "name": "Task", "sort": 2},
-    {"id": "bug", "name": "Bug", "sort": 3}
+    {"id": "epic", "name": "Epic", "rank": 0},
+    {"id": "story", "name": "Story", "rank": 1},
+    {"id": "task", "name": "Task", "rank": 2},
+    {"id": "bug", "name": "Bug", "rank": 3}
   ],
   "fields": {
     "epic": [
-      {"id": "title", "name": "Title", "fieldtype": "text", "required": 1, "card": 1, "sort": 0},
-      {"id": "description", "name": "Description", "fieldtype": "text", "required": 0, "card": 0, "sort": 1},
-      {"id": "status", "name": "Status", "fieldtype": "enumerated", "required": 1, "card": 1, "sort": 2},
-      {"id": "owner", "name": "Owner", "fieldtype": "user", "required": 0, "card": 1, "sort": 3}
+      {"id": "title", "name": "Title", "fieldtype": "text", "required": 1, "card": 1, "rank": 0, "rows": 1},
+      {"id": "description", "name": "Description", "fieldtype": "text", "required": 0, "card": 0, "rank": 1, "rows": 3},
+      {"id": "status", "name": "Status", "fieldtype": "enumerated", "required": 1, "card": 0, "rank": 2},
+      {"id": "owner", "name": "Owner", "fieldtype": "user", "required": 0, "card": 0, "rank": 3}
     ],
     "story": [
-      {"id": "title", "name": "Title", "fieldtype": "text", "required": 1, "card": 1, "sort": 0},
-      {"id": "description", "name": "Description", "fieldtype": "text", "required": 0, "card": 0, "sort": 1},
-      {"id": "status", "name": "Status", "fieldtype": "enumerated", "required": 1, "card": 1, "sort": 2},
-      {"id": "points", "name": "Points", "fieldtype": "enumerated", "required": 0, "card": 1, "sort": 3},
-      {"id": "sprint", "name": "Sprint", "fieldtype": "enumerated", "required": 0, "card": 1, "sort": 4},
-      {"id": "owner", "name": "Owner", "fieldtype": "user", "required": 0, "card": 1, "sort": 5}
+      {"id": "title", "name": "Title", "fieldtype": "text", "required": 1, "card": 1, "rank": 0, "rows": 1},
+      {"id": "description", "name": "Description", "fieldtype": "text", "required": 0, "card": 0, "rank": 1, "rows": 3},
+      {"id": "status", "name": "Status", "fieldtype": "enumerated", "required": 1, "card": 0, "rank": 2},
+      {"id": "points", "name": "Points", "fieldtype": "enumerated", "required": 0, "card": 1, "rank": 3},
+      {"id": "sprint", "name": "Sprint", "fieldtype": "enumerated", "required": 0, "card": 1, "rank": 4},
+      {"id": "owner", "name": "Owner", "fieldtype": "user", "required": 0, "card": 0, "rank": 5}
     ],
     "task": [
-      {"id": "title", "name": "Title", "fieldtype": "text", "required": 1, "card": 1, "sort": 0},
-      {"id": "description", "name": "Description", "fieldtype": "text", "required": 0, "card": 0, "sort": 1},
-      {"id": "status", "name": "Status", "fieldtype": "enumerated", "required": 1, "card": 1, "sort": 2},
-      {"id": "owner", "name": "Owner", "fieldtype": "user", "required": 0, "card": 1, "sort": 3}
+      {"id": "title", "name": "Title", "fieldtype": "text", "required": 1, "card": 1, "rank": 0, "rows": 1},
+      {"id": "description", "name": "Description", "fieldtype": "text", "required": 0, "card": 0, "rank": 1, "rows": 3},
+      {"id": "status", "name": "Status", "fieldtype": "enumerated", "required": 1, "card": 0, "rank": 2},
+      {"id": "owner", "name": "Owner", "fieldtype": "user", "required": 0, "card": 0, "rank": 3}
     ],
     "bug": [
-      {"id": "title", "name": "Title", "fieldtype": "text", "required": 1, "card": 1, "sort": 0},
-      {"id": "description", "name": "Description", "fieldtype": "text", "required": 0, "card": 0, "sort": 1},
-      {"id": "status", "name": "Status", "fieldtype": "enumerated", "required": 1, "card": 1, "sort": 2},
-      {"id": "priority", "name": "Priority", "fieldtype": "enumerated", "required": 0, "card": 1, "sort": 3},
-      {"id": "owner", "name": "Owner", "fieldtype": "user", "required": 0, "card": 1, "sort": 4}
+      {"id": "title", "name": "Title", "fieldtype": "text", "required": 1, "card": 1, "rank": 0, "rows": 1},
+      {"id": "description", "name": "Description", "fieldtype": "text", "required": 0, "card": 0, "rank": 1, "rows": 3},
+      {"id": "status", "name": "Status", "fieldtype": "enumerated", "required": 1, "card": 0, "rank": 2},
+      {"id": "priority", "name": "Priority", "fieldtype": "enumerated", "required": 0, "card": 1, "rank": 3},
+      {"id": "owner", "name": "Owner", "fieldtype": "user", "required": 0, "card": 0, "rank": 4}
     ]
   },
   "options": {
     "epic": {
       "status": [
-        {"id": "todo", "name": "To Do", "colour": "#94a3b8", "sort": 0},
-        {"id": "progress", "name": "In Progress", "colour": "#fbbf24", "sort": 1},
-        {"id": "review", "name": "In Review", "colour": "#a78bfa", "sort": 2},
-        {"id": "done", "name": "Done", "colour": "#4ade80", "sort": 3}
+        {"id": "todo", "name": "To Do", "colour": "#94a3b8", "rank": 0},
+        {"id": "progress", "name": "In Progress", "colour": "#fbbf24", "rank": 1},
+        {"id": "review", "name": "In Review", "colour": "#a78bfa", "rank": 2},
+        {"id": "done", "name": "Done", "colour": "#4ade80", "rank": 3}
       ]
     },
     "story": {
       "status": [
-        {"id": "todo", "name": "To Do", "colour": "#94a3b8", "sort": 0},
-        {"id": "progress", "name": "In Progress", "colour": "#fbbf24", "sort": 1},
-        {"id": "review", "name": "In Review", "colour": "#a78bfa", "sort": 2},
-        {"id": "done", "name": "Done", "colour": "#4ade80", "sort": 3}
+        {"id": "todo", "name": "To Do", "colour": "#94a3b8", "rank": 0},
+        {"id": "progress", "name": "In Progress", "colour": "#fbbf24", "rank": 1},
+        {"id": "review", "name": "In Review", "colour": "#a78bfa", "rank": 2},
+        {"id": "done", "name": "Done", "colour": "#4ade80", "rank": 3}
       ],
       "points": [
-        {"id": "1", "name": "1", "colour": "#94a3b8", "sort": 0},
-        {"id": "2", "name": "2", "colour": "#94a3b8", "sort": 1},
-        {"id": "3", "name": "3", "colour": "#fbbf24", "sort": 2},
-        {"id": "5", "name": "5", "colour": "#fbbf24", "sort": 3},
-        {"id": "8", "name": "8", "colour": "#f87171", "sort": 4},
-        {"id": "13", "name": "13", "colour": "#f87171", "sort": 5}
+        {"id": "1", "name": "1", "colour": "#94a3b8", "rank": 0},
+        {"id": "2", "name": "2", "colour": "#94a3b8", "rank": 1},
+        {"id": "3", "name": "3", "colour": "#fbbf24", "rank": 2},
+        {"id": "5", "name": "5", "colour": "#fbbf24", "rank": 3},
+        {"id": "8", "name": "8", "colour": "#f87171", "rank": 4},
+        {"id": "13", "name": "13", "colour": "#f87171", "rank": 5}
       ],
       "sprint": [
-        {"id": "sprint1", "name": "Sprint 1", "colour": "#60a5fa", "sort": 0},
-        {"id": "sprint2", "name": "Sprint 2", "colour": "#60a5fa", "sort": 1},
-        {"id": "sprint3", "name": "Sprint 3", "colour": "#60a5fa", "sort": 2}
+        {"id": "sprint1", "name": "Sprint 1", "colour": "#60a5fa", "rank": 0},
+        {"id": "sprint2", "name": "Sprint 2", "colour": "#60a5fa", "rank": 1},
+        {"id": "sprint3", "name": "Sprint 3", "colour": "#60a5fa", "rank": 2}
       ]
     },
     "task": {
       "status": [
-        {"id": "todo", "name": "To Do", "colour": "#94a3b8", "sort": 0},
-        {"id": "progress", "name": "In Progress", "colour": "#fbbf24", "sort": 1},
-        {"id": "review", "name": "In Review", "colour": "#a78bfa", "sort": 2},
-        {"id": "done", "name": "Done", "colour": "#4ade80", "sort": 3}
+        {"id": "todo", "name": "To Do", "colour": "#94a3b8", "rank": 0},
+        {"id": "progress", "name": "In Progress", "colour": "#fbbf24", "rank": 1},
+        {"id": "review", "name": "In Review", "colour": "#a78bfa", "rank": 2},
+        {"id": "done", "name": "Done", "colour": "#4ade80", "rank": 3}
       ]
     },
     "bug": {
       "status": [
-        {"id": "todo", "name": "To Do", "colour": "#94a3b8", "sort": 0},
-        {"id": "progress", "name": "In Progress", "colour": "#fbbf24", "sort": 1},
-        {"id": "review", "name": "In Review", "colour": "#a78bfa", "sort": 2},
-        {"id": "done", "name": "Done", "colour": "#4ade80", "sort": 3}
+        {"id": "todo", "name": "To Do", "colour": "#94a3b8", "rank": 0},
+        {"id": "progress", "name": "In Progress", "colour": "#fbbf24", "rank": 1},
+        {"id": "review", "name": "In Review", "colour": "#a78bfa", "rank": 2},
+        {"id": "done", "name": "Done", "colour": "#4ade80", "rank": 3}
       ],
       "priority": [
-        {"id": "low", "name": "Low", "colour": "#94a3b8", "sort": 0},
-        {"id": "medium", "name": "Medium", "colour": "#fbbf24", "sort": 1},
-        {"id": "high", "name": "High", "colour": "#f87171", "sort": 2},
-        {"id": "critical", "name": "Critical", "colour": "#dc2626", "sort": 3}
+        {"id": "low", "name": "Low", "colour": "#94a3b8", "rank": 0},
+        {"id": "medium", "name": "Medium", "colour": "#fbbf24", "rank": 1},
+        {"id": "high", "name": "High", "colour": "#f87171", "rank": 2},
+        {"id": "critical", "name": "Critical", "colour": "#dc2626", "rank": 3}
       ]
     }
   },
@@ -98,8 +98,8 @@
     "bug": ["", "epic", "story"]
   },
   "views": [
-    {"id": "sprint", "name": "Sprint Board", "viewtype": "board", "columns": "status", "cardfields": "title,points,owner", "types": ["story", "task"]},
-    {"id": "backlog", "name": "Backlog", "viewtype": "tree", "cardfields": "title,status,points,sprint,owner", "types": ["story"]},
-    {"id": "roadmap", "name": "Roadmap", "viewtype": "tree", "cardfields": "title,status,owner", "types": ["epic"]}
+    {"id": "sprint", "name": "Sprint Board", "viewtype": "board", "columns": "status", "cardfields": "title,points", "types": ["story", "task"]},
+    {"id": "backlog", "name": "Backlog", "viewtype": "tree", "cardfields": "title,points,sprint", "types": ["story"]},
+    {"id": "roadmap", "name": "Roadmap", "viewtype": "tree", "cardfields": "title", "types": ["epic"]}
   ]
 }

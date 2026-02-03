@@ -75,9 +75,10 @@ export function createMockField(overrides?: Partial<ProjectField>): ProjectField
     fieldtype: "text",
     required: 0,
     multi: 0,
-    sort: 0,
+    rank: 0,
     card: 0,
     position: "",
+    rows: 0,
     ...overrides,
   };
 }
@@ -88,7 +89,7 @@ export function createMockOption(overrides?: Partial<FieldOption>): FieldOption 
     name: "Test Option",
     colour: "#3b82f6",
     icon: "",
-    sort: 0,
+    rank: 0,
     ...overrides,
   };
 }
@@ -113,7 +114,7 @@ export function createMockType(overrides?: Partial<ProjectType>): ProjectType {
   return {
     id: "task",
     name: "Task",
-    sort: 0,
+    rank: 0,
     ...overrides,
   };
 }

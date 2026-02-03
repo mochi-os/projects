@@ -4,55 +4,55 @@
   "description": "Development, support, and bug tracking",
   "icon": "ticket",
   "types": [
-    {"id": "ticket", "name": "Ticket", "sort": 0},
-    {"id": "pr", "name": "Pull Request", "sort": 1}
+    {"id": "ticket", "name": "Ticket", "rank": 0},
+    {"id": "pr", "name": "Pull Request", "rank": 1}
   ],
   "fields": {
     "ticket": [
-      {"id": "title", "name": "Title", "fieldtype": "text", "required": 1, "card": 1, "sort": 0},
-      {"id": "description", "name": "Description", "fieldtype": "text", "required": 0, "card": 0, "sort": 1},
-      {"id": "status", "name": "Status", "fieldtype": "enumerated", "required": 1, "card": 1, "sort": 2},
-      {"id": "priority", "name": "Priority", "fieldtype": "enumerated", "required": 0, "card": 1, "sort": 3},
-      {"id": "category", "name": "Category", "fieldtype": "enumerated", "required": 0, "card": 1, "sort": 4},
-      {"id": "owner", "name": "Owner", "fieldtype": "user", "required": 0, "card": 1, "sort": 5},
-      {"id": "due", "name": "Due", "fieldtype": "date", "required": 0, "card": 1, "sort": 6}
+      {"id": "title", "name": "Title", "fieldtype": "text", "required": 1, "card": 1, "rank": 0, "rows": 1},
+      {"id": "description", "name": "Description", "fieldtype": "text", "required": 0, "card": 0, "rank": 1, "rows": 3},
+      {"id": "status", "name": "Status", "fieldtype": "enumerated", "required": 1, "card": 0, "rank": 2},
+      {"id": "priority", "name": "Priority", "fieldtype": "enumerated", "required": 0, "card": 1, "rank": 3},
+      {"id": "category", "name": "Category", "fieldtype": "enumerated", "required": 0, "card": 1, "rank": 4},
+      {"id": "owner", "name": "Owner", "fieldtype": "user", "required": 0, "card": 0, "rank": 5},
+      {"id": "due", "name": "Due", "fieldtype": "date", "required": 0, "card": 0, "rank": 6}
     ],
     "pr": [
-      {"id": "title", "name": "Title", "fieldtype": "text", "required": 1, "card": 1, "sort": 0},
-      {"id": "description", "name": "Description", "fieldtype": "text", "required": 0, "card": 0, "sort": 1},
-      {"id": "status", "name": "Status", "fieldtype": "enumerated", "required": 1, "card": 1, "sort": 2},
-      {"id": "repository", "name": "Repository", "fieldtype": "text", "required": 0, "card": 0, "sort": 3},
-      {"id": "branch", "name": "Branch", "fieldtype": "text", "required": 0, "card": 0, "sort": 4},
-      {"id": "owner", "name": "Owner", "fieldtype": "user", "required": 0, "card": 1, "sort": 5}
+      {"id": "title", "name": "Title", "fieldtype": "text", "required": 1, "card": 1, "rank": 0, "rows": 1},
+      {"id": "description", "name": "Description", "fieldtype": "text", "required": 0, "card": 0, "rank": 1, "rows": 3},
+      {"id": "status", "name": "Status", "fieldtype": "enumerated", "required": 1, "card": 0, "rank": 2},
+      {"id": "repository", "name": "Repository", "fieldtype": "text", "required": 0, "card": 0, "rank": 3, "rows": 1},
+      {"id": "branch", "name": "Branch", "fieldtype": "text", "required": 0, "card": 0, "rank": 4, "rows": 1},
+      {"id": "owner", "name": "Owner", "fieldtype": "user", "required": 0, "card": 0, "rank": 5}
     ]
   },
   "options": {
     "ticket": {
       "status": [
-        {"id": "open", "name": "Open", "colour": "#60a5fa", "sort": 0},
-        {"id": "progress", "name": "In Progress", "colour": "#fbbf24", "sort": 1},
-        {"id": "resolved", "name": "Resolved", "colour": "#4ade80", "sort": 2},
-        {"id": "closed", "name": "Closed", "colour": "#94a3b8", "sort": 3}
+        {"id": "open", "name": "Open", "colour": "#60a5fa", "rank": 0},
+        {"id": "progress", "name": "In Progress", "colour": "#fbbf24", "rank": 1},
+        {"id": "resolved", "name": "Resolved", "colour": "#4ade80", "rank": 2},
+        {"id": "closed", "name": "Closed", "colour": "#94a3b8", "rank": 3}
       ],
       "priority": [
-        {"id": "low", "name": "Low", "colour": "#94a3b8", "sort": 0},
-        {"id": "medium", "name": "Medium", "colour": "#fbbf24", "sort": 1},
-        {"id": "high", "name": "High", "colour": "#f87171", "sort": 2},
-        {"id": "critical", "name": "Critical", "colour": "#dc2626", "sort": 3}
+        {"id": "low", "name": "Low", "colour": "#94a3b8", "rank": 0},
+        {"id": "medium", "name": "Medium", "colour": "#fbbf24", "rank": 1},
+        {"id": "high", "name": "High", "colour": "#f87171", "rank": 2},
+        {"id": "critical", "name": "Critical", "colour": "#dc2626", "rank": 3}
       ],
       "category": [
-        {"id": "bug", "name": "Bug", "colour": "#f87171", "sort": 0},
-        {"id": "feature", "name": "Feature", "colour": "#60a5fa", "sort": 1},
-        {"id": "question", "name": "Question", "colour": "#a78bfa", "sort": 2},
-        {"id": "support", "name": "Support", "colour": "#4ade80", "sort": 3}
+        {"id": "bug", "name": "Bug", "colour": "#f87171", "rank": 0},
+        {"id": "feature", "name": "Feature", "colour": "#60a5fa", "rank": 1},
+        {"id": "question", "name": "Question", "colour": "#a78bfa", "rank": 2},
+        {"id": "support", "name": "Support", "colour": "#4ade80", "rank": 3}
       ]
     },
     "pr": {
       "status": [
-        {"id": "draft", "name": "Draft", "colour": "#94a3b8", "sort": 0},
-        {"id": "review", "name": "In Review", "colour": "#fbbf24", "sort": 1},
-        {"id": "approved", "name": "Approved", "colour": "#4ade80", "sort": 2},
-        {"id": "merged", "name": "Merged", "colour": "#a78bfa", "sort": 3}
+        {"id": "draft", "name": "Draft", "colour": "#94a3b8", "rank": 0},
+        {"id": "review", "name": "In Review", "colour": "#fbbf24", "rank": 1},
+        {"id": "approved", "name": "Approved", "colour": "#4ade80", "rank": 2},
+        {"id": "merged", "name": "Merged", "colour": "#a78bfa", "rank": 3}
       ]
     }
   },
@@ -61,7 +61,7 @@
     "pr": ["", "ticket"]
   },
   "views": [
-    {"id": "board", "name": "Board", "viewtype": "board", "columns": "status", "cardfields": "title,priority,category,owner"},
-    {"id": "tree", "name": "Tree", "viewtype": "tree", "cardfields": "title,status,priority,category,owner"}
+    {"id": "board", "name": "Board", "viewtype": "board", "columns": "status", "cardfields": "title,priority,category"},
+    {"id": "tree", "name": "Tree", "viewtype": "tree", "cardfields": "title,priority,category"}
   ]
 }

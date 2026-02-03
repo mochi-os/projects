@@ -16,7 +16,7 @@ export interface Project {
 export interface ProjectType {
   id: string;
   name: string;
-  sort: number;
+  rank: number;
 }
 
 export interface ProjectField {
@@ -25,9 +25,10 @@ export interface ProjectField {
   fieldtype: string;
   required: number;
   multi: number;
-  sort: number;
+  rank: number;
   card: number;
   position: string;
+  rows: number;
 }
 
 export interface FieldOption {
@@ -35,7 +36,7 @@ export interface FieldOption {
   name: string;
   colour: string;
   icon: string;
-  sort: number;
+  rank: number;
 }
 
 export interface ProjectView {

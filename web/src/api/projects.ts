@@ -175,6 +175,7 @@ interface CreateFieldRequest {
   required?: string;
   multi?: string;
   card?: string;
+  rows?: string;
 }
 
 interface UpdateFieldRequest {
@@ -191,6 +192,7 @@ interface UpdateFieldRequest {
   suffix?: string;
   format?: string;
   position?: string;
+  rows?: string;
 }
 
 // Option response/request types

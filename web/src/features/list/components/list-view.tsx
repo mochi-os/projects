@@ -44,11 +44,11 @@ export function ListView({
     const isEnum = sortField?.fieldtype === "enumerated";
     const fieldOptions = isEnum ? taskOptions[sort.field] || [] : [];
 
-    // Build a map of option ID to sort order for enumerated fields
-    const optionSortMap: Record<string, number> = {};
+    // Build a map of option ID to rank for enumerated fields
+    const optionRankMap: Record<string, number> = {};
     if (isEnum) {
       for (const opt of fieldOptions) {
-        optionSortMap[opt.id] = opt.sort;
+        optionRankMap[opt.id] = opt.rank;
       }
     }
 
@@ -69,12 +69,12 @@ export function ListView({
         aVal = a.updated;
         bVal = b.updated;
       } else if (isEnum) {
-        // For enumerated fields, sort by option sort order
+        // For enumerated fields, sort by option rank
         const aOptVal = a.values[sort.field] || "";
         const bOptVal = b.values[sort.field] || "";
-        // Use sort order if available, otherwise put at end (9999)
-        aVal = optionSortMap[aOptVal] ?? 9999;
-        bVal = optionSortMap[bOptVal] ?? 9999;
+        // Use rank if available, otherwise put at end (9999)
+        aVal = optionRankMap[aOptVal] ?? 9999;
+        bVal = optionRankMap[bOptVal] ?? 9999;
       } else {
         aVal = a.values[sort.field] || "";
         bVal = b.values[sort.field] || "";

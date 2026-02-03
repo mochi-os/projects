@@ -1,7 +1,7 @@
 // Mochi Projects: View editor component
 // Copyright Alistair Cunningham 2026
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import { Input, Label, RadioGroup, RadioGroupItem } from "@mochi/common";
 import type { ProjectView, ProjectField, ProjectType } from "@/types";
 
@@ -14,61 +14,57 @@ interface ViewEditorProps {
 }
 
 export function ViewEditor({ view, fields, types, onUpdate, onUpdateTypes }: ViewEditorProps) {
+  const allTypeIds = useMemo(() => types.map((t) => t.id), [types]);
+
+  // Local state for all editable fields
   const [name, setName] = useState(view.name);
   const [viewtype, setViewtype] = useState(view.viewtype);
   const [columns, setColumns] = useState(view.columns);
-  const [cardfields, setCardfields] = useState(view.cardfields);
+  const [cardfields, setCardfields] = useState(view.cardfields || "");
   const [sort, setSort] = useState(view.sort);
   const [direction, setDirection] = useState(view.direction);
-  const [selectedTypes, setSelectedTypes] = useState<string[]>(view.types || []);
+  const [selectedTypes, setSelectedTypes] = useState<string[]>(
+    view.types?.length ? view.types : allTypeIds
+  );
 
-  // Reset state when view changes
+  // Reset state when switching to a different view
   useEffect(() => {
     setName(view.name);
     setViewtype(view.viewtype);
     setColumns(view.columns);
-    setCardfields(view.cardfields);
+    setCardfields(view.cardfields || "");
     setSort(view.sort);
     setDirection(view.direction);
-    setSelectedTypes(view.types || []);
-  }, [
-    view.id,
-    view.name,
-    view.viewtype,
-    view.columns,
-    view.cardfields,
-    view.sort,
-    view.direction,
-    view.types,
-  ]);
+    setSelectedTypes(view.types?.length ? view.types : allTypeIds);
+  }, [view.id]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const handleNameBlur = () => {
+  const handleNameBlur = useCallback(() => {
     if (name.trim() && name !== view.name) {
       onUpdate({ name: name.trim() });
     }
-  };
+  }, [name, view.name, onUpdate]);
 
-  const handleViewtypeChange = (value: string) => {
+  const handleViewtypeChange = useCallback((value: string) => {
     setViewtype(value);
     onUpdate({ viewtype: value });
-  };
+  }, [onUpdate]);
 
-  const handleColumnsChange = (value: string) => {
+  const handleColumnsChange = useCallback((value: string) => {
     setColumns(value);
     onUpdate({ columns: value });
-  };
+  }, [onUpdate]);
 
-  const handleSortChange = (value: string) => {
+  const handleSortChange = useCallback((value: string) => {
     setSort(value);
     onUpdate({ sort: value });
-  };
+  }, [onUpdate]);
 
-  const handleDirectionChange = (value: string) => {
+  const handleDirectionChange = useCallback((value: string) => {
     setDirection(value);
     onUpdate({ direction: value });
-  };
+  }, [onUpdate]);
 
-  const toggleCardField = (fieldId: string) => {
+  const toggleCardField = useCallback((fieldId: string) => {
     const currentFields = cardfields.split(",").filter(Boolean);
     let newFields: string[];
 
@@ -81,14 +77,14 @@ export function ViewEditor({ view, fields, types, onUpdate, onUpdateTypes }: Vie
     const newCardfields = newFields.join(",");
     setCardfields(newCardfields);
     onUpdate({ cardfields: newCardfields });
-  };
+  }, [cardfields, onUpdate]);
 
   const cardfieldsList = cardfields.split(",").filter(Boolean);
 
   // Get enumerated fields for column selection (board view groups by enumerated fields)
   const enumeratedFields = fields.filter((f) => f.fieldtype === "enumerated");
 
-  const toggleType = (typeId: string) => {
+  const toggleType = useCallback((typeId: string) => {
     let newTypes: string[];
     if (selectedTypes.includes(typeId)) {
       newTypes = selectedTypes.filter((t) => t !== typeId);
@@ -97,7 +93,7 @@ export function ViewEditor({ view, fields, types, onUpdate, onUpdateTypes }: Vie
     }
     setSelectedTypes(newTypes);
     onUpdateTypes(newTypes);
-  };
+  }, [selectedTypes, onUpdateTypes]);
 
   return (
     <div className="space-y-4 p-4 border rounded-lg">
@@ -141,7 +137,6 @@ export function ViewEditor({ view, fields, types, onUpdate, onUpdateTypes }: Vie
       {types.length > 1 && (
         <div className="space-y-2">
           <Label>Show types</Label>
-          <p className="text-xs text-muted-foreground">Leave all unchecked to show all types</p>
           <div className="space-y-1">
             {types.map((type) => (
               <label
@@ -207,10 +202,10 @@ export function ViewEditor({ view, fields, types, onUpdate, onUpdateTypes }: Vie
             className="flex-1 h-9 rounded-md border border-input bg-background px-3 py-1 text-sm"
           >
             <option value="">None</option>
-            <option value="number">Number</option>
             <option value="created">Created</option>
+            <option value="number">Number</option>
             <option value="updated">Updated</option>
-            {fields.map((field) => (
+            {[...fields].sort((a, b) => a.name.localeCompare(b.name)).map((field) => (
               <option key={field.id} value={field.id}>
                 {field.name}
               </option>

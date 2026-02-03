@@ -17,6 +17,7 @@ import { Route as errors404RouteImport } from './routes/(errors)/404'
 import { Route as errors403RouteImport } from './routes/(errors)/403'
 import { Route as errors401RouteImport } from './routes/(errors)/401'
 import { Route as AuthenticatedProjectIdIndexRouteImport } from './routes/_authenticated/$projectId/index'
+import { Route as AuthenticatedProjectIdSettingsRouteImport } from './routes/_authenticated/$projectId_.settings'
 import { Route as AuthenticatedProjectIdDesignRouteImport } from './routes/_authenticated/$projectId/design'
 
 const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
@@ -59,6 +60,12 @@ const AuthenticatedProjectIdIndexRoute =
     path: '/$projectId/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedProjectIdSettingsRoute =
+  AuthenticatedProjectIdSettingsRouteImport.update({
+    id: '/$projectId_/settings',
+    path: '/$projectId/settings',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedProjectIdDesignRoute =
   AuthenticatedProjectIdDesignRouteImport.update({
     id: '/$projectId/design',
@@ -74,6 +81,7 @@ export interface FileRoutesByFullPath {
   '/503': typeof errors503Route
   '/': typeof AuthenticatedIndexRoute
   '/$projectId/design': typeof AuthenticatedProjectIdDesignRoute
+  '/$projectId/settings': typeof AuthenticatedProjectIdSettingsRoute
   '/$projectId': typeof AuthenticatedProjectIdIndexRoute
 }
 export interface FileRoutesByTo {
@@ -84,6 +92,7 @@ export interface FileRoutesByTo {
   '/503': typeof errors503Route
   '/': typeof AuthenticatedIndexRoute
   '/$projectId/design': typeof AuthenticatedProjectIdDesignRoute
+  '/$projectId/settings': typeof AuthenticatedProjectIdSettingsRoute
   '/$projectId': typeof AuthenticatedProjectIdIndexRoute
 }
 export interface FileRoutesById {
@@ -96,6 +105,7 @@ export interface FileRoutesById {
   '/(errors)/503': typeof errors503Route
   '/_authenticated/': typeof AuthenticatedIndexRoute
   '/_authenticated/$projectId/design': typeof AuthenticatedProjectIdDesignRoute
+  '/_authenticated/$projectId_/settings': typeof AuthenticatedProjectIdSettingsRoute
   '/_authenticated/$projectId/': typeof AuthenticatedProjectIdIndexRoute
 }
 export interface FileRouteTypes {
@@ -108,6 +118,7 @@ export interface FileRouteTypes {
     | '/503'
     | '/'
     | '/$projectId/design'
+    | '/$projectId/settings'
     | '/$projectId'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -118,6 +129,7 @@ export interface FileRouteTypes {
     | '/503'
     | '/'
     | '/$projectId/design'
+    | '/$projectId/settings'
     | '/$projectId'
   id:
     | '__root__'
@@ -129,6 +141,7 @@ export interface FileRouteTypes {
     | '/(errors)/503'
     | '/_authenticated/'
     | '/_authenticated/$projectId/design'
+    | '/_authenticated/$projectId_/settings'
     | '/_authenticated/$projectId/'
   fileRoutesById: FileRoutesById
 }
@@ -199,6 +212,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedProjectIdIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/$projectId_/settings': {
+      id: '/_authenticated/$projectId_/settings'
+      path: '/$projectId/settings'
+      fullPath: '/$projectId/settings'
+      preLoaderRoute: typeof AuthenticatedProjectIdSettingsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/$projectId/design': {
       id: '/_authenticated/$projectId/design'
       path: '/$projectId/design'
@@ -212,12 +232,14 @@ declare module '@tanstack/react-router' {
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute
   AuthenticatedProjectIdDesignRoute: typeof AuthenticatedProjectIdDesignRoute
+  AuthenticatedProjectIdSettingsRoute: typeof AuthenticatedProjectIdSettingsRoute
   AuthenticatedProjectIdIndexRoute: typeof AuthenticatedProjectIdIndexRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedIndexRoute: AuthenticatedIndexRoute,
   AuthenticatedProjectIdDesignRoute: AuthenticatedProjectIdDesignRoute,
+  AuthenticatedProjectIdSettingsRoute: AuthenticatedProjectIdSettingsRoute,
   AuthenticatedProjectIdIndexRoute: AuthenticatedProjectIdIndexRoute,
 }
 

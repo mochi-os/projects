@@ -38,10 +38,14 @@
 
 		":project": {"file": "web/dist/index.html"},
 		":project/design": {"file": "web/dist/index.html"},
+		":project/settings": {"file": "web/dist/index.html"},
 		":project/-/info": {"function": "action_project_get"},
 		":project/-/update": {"function": "action_project_update"},
 		":project/-/delete": {"function": "action_project_delete"},
 		":project/-/people": {"function": "action_people_list"},
+		":project/-/access": {"function": "action_access_list"},
+		":project/-/access/set": {"function": "action_access_set"},
+		":project/-/access/revoke": {"function": "action_access_revoke"},
 
 		":project/-/objects": {"function": "action_object_list"},
 		":project/-/objects/create": {"function": "action_object_create"},

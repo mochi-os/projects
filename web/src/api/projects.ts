@@ -1,5 +1,6 @@
 import endpoints from "./endpoints";
 import { projectsRequest } from "./request";
+import type { AccessRule } from "@mochi/common";
 import type {
   Project,
   ProjectDetails,
@@ -554,9 +555,16 @@ const projectsApi = {
     viewId: string,
     data: UpdateViewRequest,
   ): Promise<SuccessResponse> => {
-    return projectsRequest.post<SuccessResponse, UpdateViewRequest>(
+    // Filter out undefined values before sending
+    const cleanData: Record<string, string> = { view: viewId };
+    for (const [key, value] of Object.entries(data)) {
+      if (value !== undefined && value !== null) {
+        cleanData[key] = value;
+      }
+    }
+    return projectsRequest.post<SuccessResponse, Record<string, string>>(
       endpoints.projects.viewUpdate(projectId, viewId),
-      data,
+      cleanData,
     );
   },
 
@@ -860,6 +868,55 @@ const projectsApi = {
     });
   },
 
+  // ============================================================================
+  // Access Control
+  // ============================================================================
+
+  // Get access rules for a project
+  getAccessRules: async (
+    projectId: string,
+  ): Promise<{
+    data: {
+      rules: AccessRule[];
+      owner: { id: string; name: string };
+    };
+  }> => {
+    return projectsRequest.get(endpoints.projects.access(projectId));
+  },
+
+  // Set access level for a subject
+  setAccessLevel: async (
+    projectId: string,
+    subject: string,
+    level: string,
+  ): Promise<{ data: { success: boolean } }> => {
+    return projectsRequest.post(endpoints.projects.accessSet(projectId), {
+      subject,
+      level,
+    });
+  },
+
+  // Revoke access for a subject
+  revokeAccess: async (
+    projectId: string,
+    subject: string,
+  ): Promise<{ data: { success: boolean } }> => {
+    return projectsRequest.post(endpoints.projects.accessRevoke(projectId), {
+      subject,
+    });
+  },
+
+  // Search users (for adding access rules)
+  searchUsers: async (
+    query: string,
+  ): Promise<{ results: { id: string; name: string; fingerprint: string }[] }> => {
+    return projectsRequest.get(`-/users/search?q=${encodeURIComponent(query)}`);
+  },
+
+  // List groups (for adding access rules)
+  listGroups: async (): Promise<{ groups: { id: string; name: string }[] }> => {
+    return projectsRequest.get("-/groups");
+  },
 };
 
 export default projectsApi;

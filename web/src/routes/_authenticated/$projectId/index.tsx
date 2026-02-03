@@ -17,7 +17,7 @@ import {
   Switch,
   useSearch,
 } from "@mochi/common";
-import { Columns3, Ellipsis, FolderKanban, GripVertical, Plus, Settings2, SlidersHorizontal, X } from "lucide-react";
+import { Columns3, Ellipsis, FolderKanban, GripVertical, Plus, Settings, Settings2, SlidersHorizontal, X } from "lucide-react";
 import projectsApi from "@/api/projects";
 import type { ProjectDetails, ProjectObject } from "@/types";
 import { BoardContainer } from "@/features/board/components";
@@ -578,6 +578,15 @@ function ProjectPage() {
                     Design
                   </Link>
                 </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link
+                    to="/$projectId/settings"
+                    params={{ projectId: params.projectId }}
+                  >
+                    <Settings className="size-4 mr-2" />
+                    Settings
+                  </Link>
+                </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
@@ -639,6 +648,7 @@ function ProjectPage() {
                 projectId={params.projectId}
                 objects={filteredObjects}
                 peopleMap={peopleMap}
+                cardfields={activeView?.cardfields}
                 onCardClick={handleCardClick}
                 onReparent={handleReparent}
               />

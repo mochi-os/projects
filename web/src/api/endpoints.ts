@@ -16,6 +16,11 @@ const endpoints = {
     delete: (projectId: string) => `${projectId}/-/delete`,
     people: (projectId: string) => `${projectId}/-/people`,
 
+    // Access control endpoints
+    access: (projectId: string) => `${projectId}/-/access`,
+    accessSet: (projectId: string) => `${projectId}/-/access/set`,
+    accessRevoke: (projectId: string) => `${projectId}/-/access/revoke`,
+
     // Object endpoints
     objects: (projectId: string) => `${projectId}/-/objects`,
     objectCreate: (projectId: string) => `${projectId}/-/objects/create`,

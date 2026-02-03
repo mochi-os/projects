@@ -637,6 +637,157 @@ def action_people_list(a):
 
 
 # ============================================================================
+# Access Control
+# ============================================================================
+
+# Access levels for projects (from most to least permissive)
+ACCESS_LEVELS = ["comment", "view"]
+
+# List access rules for a project
+def action_access_list(a):
+	if not a.user:
+		a.error(401, "Not logged in")
+		return
+
+	project_id = resolve_project(a)
+	if not project_id:
+		a.error(400, "Project ID required")
+		return
+
+	project = get_project(project_id)
+	if not project:
+		a.error(404, "Project not found")
+		return
+
+	# Only owner can manage access
+	if project["owner"] != 1:
+		a.error(403, "Access denied")
+		return
+
+	# Get owner info
+	owner = {"id": a.user.identity.id, "name": a.user.identity.name}
+
+	resource = "project/" + project_id
+	rules = mochi.access.list.resource(resource)
+
+	# Resolve names for rules and mark owner
+	filtered_rules = []
+	for rule in rules:
+		subject = rule.get("subject", "")
+		# Mark owner rules
+		if subject == owner.get("id"):
+			rule["isOwner"] = True
+		# Resolve names for non-special subjects
+		if subject and subject not in ("*", "+") and not subject.startswith("#"):
+			if subject.startswith("@"):
+				# Look up group name
+				group_id = subject[1:]
+				group = mochi.db.row("select name from groups where id=?", group_id)
+				rule["name"] = group["name"] if group else subject
+			else:
+				# Look up entity name
+				name = mochi.entity.name(subject)
+				rule["name"] = name if name else subject[:9]
+		filtered_rules.append(rule)
+
+	return {"data": {"rules": filtered_rules, "owner": owner}}
+
+# Set access level for a subject
+def action_access_set(a):
+	if not a.user:
+		a.error(401, "Not logged in")
+		return
+
+	project_id = resolve_project(a)
+	if not project_id:
+		a.error(400, "Project ID required")
+		return
+
+	project = get_project(project_id)
+	if not project:
+		a.error(404, "Project not found")
+		return
+
+	# Only owner can manage access
+	if project["owner"] != 1:
+		a.error(403, "Access denied")
+		return
+
+	subject = a.input("subject")
+	level = a.input("level")
+
+	if not subject:
+		a.error(400, "Subject is required")
+		return
+	if len(subject) > 255:
+		a.error(400, "Subject too long")
+		return
+
+	if not level:
+		a.error(400, "Level is required")
+		return
+
+	if level not in ["view", "comment", "none"]:
+		a.error(400, "Invalid level")
+		return
+
+	resource = "project/" + project_id
+
+	# Revoke all existing rules for this subject first
+	for op in ACCESS_LEVELS + ["*"]:
+		mochi.access.revoke(subject, resource, op)
+
+	# Set new level (none means just revoke)
+	if level != "none":
+		# Grant cumulative permissions based on level
+		if level == "view":
+			mochi.access.allow(subject, resource, "view", a.user.identity.id)
+		elif level == "comment":
+			mochi.access.allow(subject, resource, "view", a.user.identity.id)
+			mochi.access.allow(subject, resource, "comment", a.user.identity.id)
+
+	return {"data": {"success": True}}
+
+# Revoke access for a subject
+def action_access_revoke(a):
+	if not a.user:
+		a.error(401, "Not logged in")
+		return
+
+	project_id = resolve_project(a)
+	if not project_id:
+		a.error(400, "Project ID required")
+		return
+
+	project = get_project(project_id)
+	if not project:
+		a.error(404, "Project not found")
+		return
+
+	# Only owner can manage access
+	if project["owner"] != 1:
+		a.error(403, "Access denied")
+		return
+
+	subject = a.input("subject")
+
+	if not subject:
+		a.error(400, "Subject is required")
+		return
+	if len(subject) > 255:
+		a.error(400, "Subject too long")
+		return
+
+	resource = "project/" + project_id
+
+	# Revoke all rules for this subject
+	for op in ACCESS_LEVELS + ["*"]:
+		mochi.access.revoke(subject, resource, op)
+
+	return {"data": {"success": True}}
+
+
+# ============================================================================
 # Object Templates
 # ============================================================================
 
@@ -1938,9 +2089,9 @@ def action_view_update(a):
 	sort = a.input("sort")
 	direction = a.input("direction")
 
-	if name != None:
+	if name != None and name.strip() != "":
 		mochi.db.execute("update views set name = ? where project = ? and id = ?", name.strip(), project_id, view_id)
-	if viewtype != None:
+	if viewtype != None and viewtype != "":
 		if viewtype not in ["board", "tree"]:
 			a.error(400, "Invalid view type")
 			return
@@ -1962,7 +2113,7 @@ def action_view_update(a):
 				)
 	if sort != None:
 		mochi.db.execute("update views set sort = ? where project = ? and id = ?", sort, project_id, view_id)
-	if direction != None:
+	if direction != None and direction != "":
 		if direction not in ["asc", "desc"]:
 			a.error(400, "Invalid direction")
 			return

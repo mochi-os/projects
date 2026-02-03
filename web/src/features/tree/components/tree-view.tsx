@@ -10,6 +10,7 @@ interface TreeViewProps {
   projectId: string;
   objects: ProjectObject[];
   peopleMap: Record<string, string>;
+  cardfields?: string;
   onCardClick: (object: ProjectObject) => void;
   onReparent?: (objectId: string, newParentId: string | null) => void;
 }
@@ -78,6 +79,7 @@ export function TreeView({
   projectId,
   objects,
   peopleMap,
+  cardfields,
   onCardClick,
   onReparent,
 }: TreeViewProps) {
@@ -127,10 +129,11 @@ export function TreeView({
   const fields = project.fields[firstType] || [];
   const options = project.options[firstType] || {};
 
-  // Get visible fields (card fields + title)
-  const visibleFields = fields.filter(
-    (f) => f.card === 1 || f.id === "title",
-  );
+  // Get visible fields from view's cardfields setting, or fall back to field's card property
+  const cardFieldsList = cardfields?.split(",").filter(Boolean) || [];
+  const visibleFields = cardFieldsList.length > 0
+    ? fields.filter((f) => cardFieldsList.includes(f.id) || f.id === "title")
+    : fields.filter((f) => f.card === 1 || f.id === "title");
 
   // Build type map for looking up type names
   const typeMap = useMemo(() => {

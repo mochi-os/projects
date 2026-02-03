@@ -238,13 +238,20 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
       viewId: string;
       updates?: Partial<ProjectView>;
       types?: string[];
-    }) =>
-      projectsApi.updateView(projectId, viewId, {
-        ...updates,
-        viewtype: updates?.viewtype as "board" | "tree" | undefined,
-        direction: updates?.direction as "asc" | "desc" | undefined,
-        types: types !== undefined ? types.join(",") : undefined,
-      }),
+    }) => {
+      // Only include defined values to avoid sending undefined/null
+      const payload: Record<string, string> = {};
+      if (updates?.name !== undefined) payload.name = updates.name;
+      if (updates?.viewtype !== undefined) payload.viewtype = updates.viewtype;
+      if (updates?.filter !== undefined) payload.filter = updates.filter;
+      if (updates?.columns !== undefined) payload.columns = updates.columns;
+      if (updates?.rows !== undefined) payload.rows = updates.rows;
+      if (updates?.cardfields !== undefined) payload.cardfields = updates.cardfields;
+      if (updates?.sort !== undefined) payload.sort = updates.sort;
+      if (updates?.direction !== undefined) payload.direction = updates.direction;
+      if (types !== undefined) payload.types = types.join(",");
+      return projectsApi.updateView(projectId, viewId, payload);
+    },
     onSuccess: invalidateProject,
   });
 

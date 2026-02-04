@@ -3,14 +3,14 @@
 
 import { useState, useMemo } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { Eye, EyeOff, Loader2, Trash2, MessageSquare, Activity, X, Settings2 } from "lucide-react";
+import { Eye, EyeOff, Loader2, Trash2, MessageSquare, Activity, Settings2, X } from "lucide-react";
 import {
   Button,
   Textarea,
   ConfirmDialog,
   DataChip,
-  Dialog,
-  DialogContent,
+  Sheet,
+  SheetContent,
   Select,
   SelectContent,
   SelectItem,
@@ -219,26 +219,26 @@ export function ObjectDetailPanel({
 
   if (isLoading) {
     return (
-      <Dialog open={true} onOpenChange={handleClose}>
-        <DialogContent className="max-w-5xl h-[85vh] flex flex-col p-0" showCloseButton={false}>
+      <Sheet open={true} onOpenChange={handleClose}>
+        <SheetContent className="w-full sm:max-w-2xl p-0 gap-0">
           <div className="flex-1 flex items-center justify-center">
             <Loader2 className="size-6 animate-spin text-muted-foreground" />
             <span className="text-xs text-muted-foreground ml-2">Loading details...</span>
           </div>
-        </DialogContent>
-      </Dialog>
+        </SheetContent>
+      </Sheet>
     );
   }
 
   if (error || !data) {
     return (
-      <Dialog open={true} onOpenChange={handleClose}>
-        <DialogContent className="max-w-5xl" showCloseButton={false}>
+      <Sheet open={true} onOpenChange={handleClose}>
+        <SheetContent className="w-full sm:max-w-2xl p-6">
           <div className="text-destructive text-sm bg-destructive/10 p-3 rounded-md">
             {error instanceof Error ? error.message : "Failed to load object"}
           </div>
-        </DialogContent>
-      </Dialog>
+        </SheetContent>
+      </Sheet>
     );
   }
 
@@ -259,8 +259,8 @@ export function ObjectDetailPanel({
   };
 
   return (
-    <Dialog open={true} onOpenChange={handleClose}>
-      <DialogContent className="max-w-5xl h-[85vh] flex flex-col p-0 gap-0" showCloseButton={false}>
+    <Sheet open={true} onOpenChange={handleClose}>
+      <SheetContent className="w-full sm:max-w-2xl p-0 gap-0 [&>button:last-child]:hidden">
         {/* Header */}
         <div className="flex items-center gap-3 px-6 py-4 border-b shrink-0">
           {editingTitle ? (
@@ -452,7 +452,7 @@ export function ObjectDetailPanel({
           isLoading={deleteMutation.isPending}
           handleConfirm={() => deleteMutation.mutate()}
         />
-      </DialogContent>
-    </Dialog>
+      </SheetContent>
+    </Sheet>
   );
 }

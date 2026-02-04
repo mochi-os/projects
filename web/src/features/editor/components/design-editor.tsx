@@ -349,14 +349,25 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
       <AddFieldDialog
         open={addFieldOpen}
         onOpenChange={setAddFieldOpen}
-        onAdd={(name, fieldtype, rows) => {
+        onAdd={async (name, fieldtype, rows, options) => {
           if (selectedClassId) {
-            createFieldMutation.mutate({
+            const result = await createFieldMutation.mutateAsync({
               classId: selectedClassId,
               name,
               fieldtype,
               rows,
             });
+            // Create options for enumerated fields
+            if (fieldtype === "enumerated" && options && result.data) {
+              for (const opt of options) {
+                await createOptionMutation.mutateAsync({
+                  classId: selectedClassId,
+                  fieldId: result.data.id,
+                  name: opt.name,
+                  colour: opt.colour,
+                });
+              }
+            }
           }
         }}
       />

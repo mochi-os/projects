@@ -13,6 +13,15 @@ import {
   Label,
 } from "@mochi/common";
 
+const DEFAULT_COLOURS = [
+  "#94a3b8",
+  "#f87171",
+  "#fbbf24",
+  "#4ade80",
+  "#60a5fa",
+  "#a78bfa",
+];
+
 // Add Class Dialog
 interface AddClassDialogProps {
   open: boolean;
@@ -74,10 +83,16 @@ export function AddClassDialog({
 }
 
 // Add Field Dialog
+interface PendingOption {
+  id: string;
+  name: string;
+  colour: string;
+}
+
 interface AddFieldDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onAdd: (name: string, fieldtype: string, rows?: number) => void;
+  onAdd: (name: string, fieldtype: string, rows?: number, options?: PendingOption[]) => void;
 }
 
 const FIELD_TYPES = [
@@ -98,16 +113,47 @@ export function AddFieldDialog({
   const [name, setName] = useState("");
   const [fieldtype, setFieldtype] = useState("text");
   const [rows, setRows] = useState(1);
+  const [options, setOptions] = useState<PendingOption[]>([]);
+  const [newOptionName, setNewOptionName] = useState("");
+
+  const resetForm = () => {
+    setName("");
+    setFieldtype("text");
+    setRows(1);
+    setOptions([]);
+    setNewOptionName("");
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (name.trim()) {
-      onAdd(name.trim(), fieldtype, fieldtype === "text" && rows > 1 ? rows : undefined);
-      setName("");
-      setFieldtype("text");
-      setRows(1);
+      onAdd(
+        name.trim(),
+        fieldtype,
+        fieldtype === "text" && rows > 1 ? rows : undefined,
+        fieldtype === "enumerated" ? options : undefined
+      );
+      resetForm();
       onOpenChange(false);
     }
+  };
+
+  const addOption = () => {
+    if (newOptionName.trim()) {
+      setOptions([
+        ...options,
+        {
+          id: crypto.randomUUID(),
+          name: newOptionName.trim(),
+          colour: DEFAULT_COLOURS[options.length % DEFAULT_COLOURS.length],
+        },
+      ]);
+      setNewOptionName("");
+    }
+  };
+
+  const removeOption = (id: string) => {
+    setOptions(options.filter((o) => o.id !== id));
   };
 
   return (
@@ -159,6 +205,58 @@ export function AddFieldDialog({
                 </p>
               </div>
             )}
+            {fieldtype === "enumerated" && (
+              <div className="space-y-2">
+                <Label>Options</Label>
+                {options.length > 0 && (
+                  <div className="space-y-1">
+                    {options.map((opt) => (
+                      <div
+                        key={opt.id}
+                        className="flex items-center justify-between p-2 border rounded-md"
+                      >
+                        <div className="flex items-center gap-2">
+                          <span
+                            className="size-3 rounded-full"
+                            style={{ backgroundColor: opt.colour }}
+                          />
+                          <span className="text-sm">{opt.name}</span>
+                        </div>
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => removeOption(opt.id)}
+                        >
+                          Remove
+                        </Button>
+                      </div>
+                    ))}
+                  </div>
+                )}
+                <div className="flex gap-2">
+                  <Input
+                    value={newOptionName}
+                    onChange={(e) => setNewOptionName(e.target.value)}
+                    placeholder="Option name"
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        e.preventDefault();
+                        addOption();
+                      }
+                    }}
+                  />
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={addOption}
+                    disabled={!newOptionName.trim()}
+                  >
+                    Add
+                  </Button>
+                </div>
+              </div>
+            )}
           </div>
           <DialogFooter>
             <Button
@@ -168,7 +266,10 @@ export function AddFieldDialog({
             >
               Cancel
             </Button>
-            <Button type="submit" disabled={!name.trim()}>
+            <Button
+              type="submit"
+              disabled={!name.trim() || (fieldtype === "enumerated" && options.length === 0)}
+            >
               Add
             </Button>
           </DialogFooter>
@@ -185,15 +286,6 @@ interface AddOptionDialogProps {
   onAdd: (name: string, colour: string) => void;
   title?: string;
 }
-
-const DEFAULT_COLOURS = [
-  "#94a3b8",
-  "#f87171",
-  "#fbbf24",
-  "#4ade80",
-  "#60a5fa",
-  "#a78bfa",
-];
 
 export function AddOptionDialog({
   open,

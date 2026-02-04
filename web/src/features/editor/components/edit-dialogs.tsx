@@ -538,7 +538,7 @@ export function EditFieldDialog({
                 onChange={(e) => handleCardChange(e.target.checked)}
                 className="rounded"
               />
-              Show on card by default
+              Show by default
             </label>
           </div>
 
@@ -637,15 +637,9 @@ export function EditOptionDialog({
   if (!option) return null;
 
   const handleSave = () => {
-    const updates: { name?: string; colour?: string } = {};
-    if (name.trim() && name !== option.name) {
-      updates.name = name.trim();
-    }
-    if (colour !== option.colour) {
-      updates.colour = colour;
-    }
-    if (Object.keys(updates).length > 0) {
-      onUpdate(updates);
+    // Always send both name and colour to prevent losing values
+    if (name.trim() !== option.name || colour !== option.colour) {
+      onUpdate({ name: name.trim(), colour });
     }
     onOpenChange(false);
   };

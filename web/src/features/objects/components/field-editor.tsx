@@ -151,7 +151,7 @@ export function FieldEditor({
             friends
             directory
             disabled={disabled}
-            placeholder="Select owner..."
+            placeholder="Select..."
             emptyMessage="No people found"
           />
         );

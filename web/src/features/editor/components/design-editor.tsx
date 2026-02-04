@@ -257,10 +257,7 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
           {/* Views Section */}
           <section>
             <div className="flex items-center justify-between mb-2">
-              <div>
-                <Label className="text-sm font-medium">Views</Label>
-                <p className="text-xs text-muted-foreground">How items are displayed</p>
-              </div>
+              <Label className="text-sm font-medium">Views</Label>
               <Button
                 variant="ghost"
                 size="sm"
@@ -285,13 +282,12 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
             </div>
           </section>
 
+          <hr className="border-border" />
+
           {/* Classes Section */}
           <section>
             <div className="flex items-center justify-between mb-2">
-              <div>
-                <Label className="text-sm font-medium">Classes</Label>
-                <p className="text-xs text-muted-foreground">What you can create</p>
-              </div>
+              <Label className="text-sm font-medium">Classes</Label>
               <Button
                 variant="ghost"
                 size="sm"

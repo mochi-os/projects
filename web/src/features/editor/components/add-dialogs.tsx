@@ -77,7 +77,7 @@ export function AddClassDialog({
 interface AddFieldDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onAdd: (name: string, fieldtype: string) => void;
+  onAdd: (name: string, fieldtype: string, rows?: number) => void;
 }
 
 const FIELD_TYPES = [
@@ -97,13 +97,15 @@ export function AddFieldDialog({
 }: AddFieldDialogProps) {
   const [name, setName] = useState("");
   const [fieldtype, setFieldtype] = useState("text");
+  const [rows, setRows] = useState(1);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (name.trim()) {
-      onAdd(name.trim(), fieldtype);
+      onAdd(name.trim(), fieldtype, fieldtype === "text" && rows > 1 ? rows : undefined);
       setName("");
       setFieldtype("text");
+      setRows(1);
       onOpenChange(false);
     }
   };
@@ -141,6 +143,19 @@ export function AddFieldDialog({
                 ))}
               </select>
             </div>
+            {fieldtype === "text" && (
+              <div className="space-y-2">
+                <Label htmlFor="field-rows">Rows</Label>
+                <Input
+                  id="field-rows"
+                  type="number"
+                  min={1}
+                  max={20}
+                  value={rows}
+                  onChange={(e) => setRows(parseInt(e.target.value) || 1)}
+                />
+              </div>
+            )}
           </div>
           <DialogFooter>
             <Button

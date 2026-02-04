@@ -440,12 +440,14 @@ export function EditFieldDialog({
   const [name, setName] = useState("");
   const [required, setRequired] = useState(false);
   const [card, setCard] = useState(false);
+  const [rows, setRows] = useState(1);
 
   useEffect(() => {
     if (field) {
       setName(field.name);
       setRequired(field.required === 1);
       setCard(field.card === 1);
+      setRows(field.rows || 1);
     }
   }, [field]);
 
@@ -461,6 +463,9 @@ export function EditFieldDialog({
     }
     if ((card ? 1 : 0) !== field.card) {
       updates.card = card ? 1 : 0;
+    }
+    if (field.fieldtype === "text" && rows !== (field.rows || 1)) {
+      updates.rows = rows;
     }
     if (Object.keys(updates).length > 0) {
       onUpdate(updates);
@@ -508,6 +513,20 @@ export function EditFieldDialog({
             <Label>Type</Label>
             <p className="text-sm text-muted-foreground capitalize">{field.fieldtype}</p>
           </div>
+
+          {field.fieldtype === "text" && (
+            <div className="space-y-2">
+              <Label htmlFor="field-rows">Rows</Label>
+              <Input
+                id="field-rows"
+                type="number"
+                min={1}
+                max={20}
+                value={rows}
+                onChange={(e) => setRows(parseInt(e.target.value) || 1)}
+              />
+            </div>
+          )}
 
           <div className="space-y-2">
             <label className="flex items-center gap-2 text-sm cursor-pointer">

@@ -106,11 +106,13 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
       classId,
       name,
       fieldtype,
+      rows,
     }: {
       classId: string;
       name: string;
       fieldtype: string;
-    }) => projectsApi.createField(projectId, classId, { name, fieldtype }),
+      rows?: number;
+    }) => projectsApi.createField(projectId, classId, { name, fieldtype, rows: rows?.toString() }),
     onSuccess: invalidateProject,
   });
 
@@ -128,6 +130,7 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
         name: updates.name,
         required: updates.required?.toString(),
         card: updates.card?.toString(),
+        rows: updates.rows?.toString(),
       }),
     onSuccess: invalidateProject,
   });
@@ -346,12 +349,13 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
       <AddFieldDialog
         open={addFieldOpen}
         onOpenChange={setAddFieldOpen}
-        onAdd={(name, fieldtype) => {
+        onAdd={(name, fieldtype, rows) => {
           if (selectedClassId) {
             createFieldMutation.mutate({
               classId: selectedClassId,
               name,
               fieldtype,
+              rows,
             });
           }
         }}

@@ -3,7 +3,7 @@
   "name": "Agile development",
   "description": "Full Agile/Scrum for development teams",
   "icon": "zap",
-  "types": [
+  "classes": [
     {"id": "epic", "name": "Epic", "rank": 0},
     {"id": "story", "name": "Story", "rank": 1},
     {"id": "task", "name": "Task", "rank": 2},
@@ -98,8 +98,8 @@
     "bug": ["", "epic", "story"]
   },
   "views": [
-    {"id": "sprint", "name": "Sprint Board", "viewtype": "board", "columns": "status", "cardfields": "title,points", "types": ["story", "task"]},
-    {"id": "backlog", "name": "Backlog", "viewtype": "tree", "cardfields": "title,points,sprint", "types": ["story"]},
-    {"id": "roadmap", "name": "Roadmap", "viewtype": "tree", "cardfields": "title", "types": ["epic"]}
+    {"id": "sprint", "name": "Sprint Board", "viewtype": "board", "columns": "status", "fields": "title,description,points", "classes": ["story", "task"]},
+    {"id": "backlog", "name": "Backlog", "viewtype": "tree", "fields": "title,description,status,points,sprint,owner", "classes": ["story"]},
+    {"id": "roadmap", "name": "Roadmap", "viewtype": "tree", "fields": "title,description,status,owner", "classes": ["epic"]}
   ]
 }

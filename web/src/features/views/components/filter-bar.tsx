@@ -23,12 +23,12 @@ export function FilterBar({
   filters,
   onFilterChange,
 }: FilterBarProps) {
-  // Get options from the first type's enumerated fields
+  // Get options from the first class's enumerated fields
   // Use "status" or "column" for status-like field, "priority" or "row" for priority-like field
-  const firstTypeId = project.types[0]?.id;
-  const typeOptions = firstTypeId ? project.options[firstTypeId] || {} : {};
-  const statusOptions: FieldOption[] = typeOptions["status"] || typeOptions["column"] || [];
-  const priorityOptions: FieldOption[] = typeOptions["priority"] || typeOptions["row"] || [];
+  const firstClassId = project.classes[0]?.id;
+  const classOptions = firstClassId ? project.options[firstClassId] || {} : {};
+  const statusOptions: FieldOption[] = classOptions["status"] || classOptions["column"] || [];
+  const priorityOptions: FieldOption[] = classOptions["priority"] || classOptions["row"] || [];
 
   const clearFilter = (key: keyof FilterState) => {
     onFilterChange({ ...filters, [key]: "" });

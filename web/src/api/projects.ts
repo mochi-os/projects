@@ -6,7 +6,7 @@ import type {
   ProjectDetails,
   ProjectTemplate,
   ProjectView,
-  ProjectType,
+  ProjectClass,
   ProjectField,
   FieldOption,
   ObjectListResponse,
@@ -85,7 +85,7 @@ interface UpdateProjectRequest {
 }
 
 interface CreateObjectRequest {
-  type: string;
+  class: string;
   title?: string;
   template?: string;
   parent?: string;
@@ -103,7 +103,7 @@ interface CreateViewRequest {
   filter?: string;
   columns?: string;
   rows?: string;
-  cardfields?: string;
+  fields?: string;
   sort?: string;
   direction?: "asc" | "desc";
 }
@@ -114,20 +114,20 @@ interface UpdateViewRequest {
   filter?: string;
   columns?: string;
   rows?: string;
-  cardfields?: string;
+  fields?: string;
   sort?: string;
   direction?: "asc" | "desc";
-  types?: string;
+  classes?: string;
 }
 
-// Type response/request types
-interface TypeListResponse {
+// Class response/request types
+interface ClassListResponse {
   data: {
-    types: ProjectType[];
+    classes: ProjectClass[];
   };
 }
 
-interface TypeCreateResponse {
+interface ClassCreateResponse {
   data: {
     id: string;
     name: string;
@@ -135,11 +135,11 @@ interface TypeCreateResponse {
   };
 }
 
-interface CreateTypeRequest {
+interface CreateClassRequest {
   name: string;
 }
 
-interface UpdateTypeRequest {
+interface UpdateClassRequest {
   name?: string;
 }
 
@@ -302,10 +302,10 @@ const projectsApi = {
   // List objects
   listObjects: async (
     projectId: string,
-    params?: { type?: string; status?: string; parent?: string },
+    params?: { class?: string; status?: string; parent?: string },
   ): Promise<ObjectListResponse> => {
     const searchParams = new URLSearchParams();
-    if (params?.type) searchParams.set("type", params.type);
+    if (params?.class) searchParams.set("class", params.class);
     if (params?.status) searchParams.set("status", params.status);
     if (params?.parent !== undefined) searchParams.set("parent", params.parent);
     const query = searchParams.toString();
@@ -339,7 +339,7 @@ const projectsApi = {
   updateObject: async (
     projectId: string,
     objectId: string,
-    data: { parent?: string; type?: string },
+    data: { parent?: string; class?: string },
   ): Promise<SuccessResponse> => {
     return projectsRequest.post<SuccessResponse>(
       endpoints.projects.objectUpdate(projectId, objectId),
@@ -575,7 +575,7 @@ const projectsApi = {
     data: UpdateViewRequest,
   ): Promise<SuccessResponse> => {
     // Filter out undefined values before sending
-    const cleanData: Record<string, string> = { view: viewId };
+    const cleanData: Record<string, string> = {};
     for (const [key, value] of Object.entries(data)) {
       if (value !== undefined && value !== null) {
         cleanData[key] = value;
@@ -597,45 +597,45 @@ const projectsApi = {
     );
   },
 
-  // ============= Type Methods =============
+  // ============= Class Methods =============
 
-  // List types
-  listTypes: async (projectId: string): Promise<TypeListResponse> => {
-    return projectsRequest.get<TypeListResponse>(
-      endpoints.projects.types(projectId),
+  // List classes
+  listClasses: async (projectId: string): Promise<ClassListResponse> => {
+    return projectsRequest.get<ClassListResponse>(
+      endpoints.projects.classes(projectId),
     );
   },
 
-  // Create type
-  createType: async (
+  // Create class
+  createClass: async (
     projectId: string,
-    data: CreateTypeRequest,
-  ): Promise<TypeCreateResponse> => {
-    return projectsRequest.post<TypeCreateResponse, CreateTypeRequest>(
-      endpoints.projects.typeCreate(projectId),
+    data: CreateClassRequest,
+  ): Promise<ClassCreateResponse> => {
+    return projectsRequest.post<ClassCreateResponse, CreateClassRequest>(
+      endpoints.projects.classCreate(projectId),
       data,
     );
   },
 
-  // Update type
-  updateType: async (
+  // Update class
+  updateClass: async (
     projectId: string,
-    typeId: string,
-    data: UpdateTypeRequest,
+    classId: string,
+    data: UpdateClassRequest,
   ): Promise<SuccessResponse> => {
-    return projectsRequest.post<SuccessResponse, UpdateTypeRequest>(
-      endpoints.projects.typeUpdate(projectId, typeId),
+    return projectsRequest.post<SuccessResponse, UpdateClassRequest>(
+      endpoints.projects.classUpdate(projectId, classId),
       data,
     );
   },
 
-  // Delete type
-  deleteType: async (
+  // Delete class
+  deleteClass: async (
     projectId: string,
-    typeId: string,
+    classId: string,
   ): Promise<SuccessResponse> => {
     return projectsRequest.post<SuccessResponse>(
-      endpoints.projects.typeDelete(projectId, typeId),
+      endpoints.projects.classDelete(projectId, classId),
     );
   },
 
@@ -644,23 +644,23 @@ const projectsApi = {
   // Get hierarchy
   getHierarchy: async (
     projectId: string,
-    typeId: string,
+    classId: string,
   ): Promise<HierarchyGetResponse> => {
     return projectsRequest.get<HierarchyGetResponse>(
-      endpoints.projects.hierarchy(projectId, typeId),
+      endpoints.projects.hierarchy(projectId, classId),
     );
   },
 
   // Set hierarchy
   setHierarchy: async (
     projectId: string,
-    typeId: string,
+    classId: string,
     parents: string[],
   ): Promise<SuccessResponse> => {
     // Use _none_ to indicate empty list, since empty string means "can be root"
     const parentsStr = parents.length === 0 ? "_none_" : parents.join(",");
     return projectsRequest.post<SuccessResponse, SetHierarchyRequest>(
-      endpoints.projects.hierarchySet(projectId, typeId),
+      endpoints.projects.hierarchySet(projectId, classId),
       { parents: parentsStr },
     );
   },
@@ -670,21 +670,21 @@ const projectsApi = {
   // List fields
   listFields: async (
     projectId: string,
-    typeId: string,
+    classId: string,
   ): Promise<FieldListResponse> => {
     return projectsRequest.get<FieldListResponse>(
-      endpoints.projects.fields(projectId, typeId),
+      endpoints.projects.fields(projectId, classId),
     );
   },
 
   // Create field
   createField: async (
     projectId: string,
-    typeId: string,
+    classId: string,
     data: CreateFieldRequest,
   ): Promise<FieldCreateResponse> => {
     return projectsRequest.post<FieldCreateResponse, CreateFieldRequest>(
-      endpoints.projects.fieldCreate(projectId, typeId),
+      endpoints.projects.fieldCreate(projectId, classId),
       data,
     );
   },
@@ -692,12 +692,12 @@ const projectsApi = {
   // Update field
   updateField: async (
     projectId: string,
-    typeId: string,
+    classId: string,
     fieldId: string,
     data: UpdateFieldRequest,
   ): Promise<SuccessResponse> => {
     return projectsRequest.post<SuccessResponse, UpdateFieldRequest>(
-      endpoints.projects.fieldUpdate(projectId, typeId, fieldId),
+      endpoints.projects.fieldUpdate(projectId, classId, fieldId),
       data,
     );
   },
@@ -705,22 +705,22 @@ const projectsApi = {
   // Delete field
   deleteField: async (
     projectId: string,
-    typeId: string,
+    classId: string,
     fieldId: string,
   ): Promise<SuccessResponse> => {
     return projectsRequest.post<SuccessResponse>(
-      endpoints.projects.fieldDelete(projectId, typeId, fieldId),
+      endpoints.projects.fieldDelete(projectId, classId, fieldId),
     );
   },
 
   // Reorder fields
   reorderFields: async (
     projectId: string,
-    typeId: string,
+    classId: string,
     order: string[],
   ): Promise<SuccessResponse> => {
     return projectsRequest.post<SuccessResponse>(
-      endpoints.projects.fieldReorder(projectId, typeId),
+      endpoints.projects.fieldReorder(projectId, classId),
       { order: order.join(",") },
     );
   },
@@ -730,23 +730,23 @@ const projectsApi = {
   // List options
   listOptions: async (
     projectId: string,
-    typeId: string,
+    classId: string,
     fieldId: string,
   ): Promise<OptionListResponse> => {
     return projectsRequest.get<OptionListResponse>(
-      endpoints.projects.options(projectId, typeId, fieldId),
+      endpoints.projects.options(projectId, classId, fieldId),
     );
   },
 
   // Create option
   createOption: async (
     projectId: string,
-    typeId: string,
+    classId: string,
     fieldId: string,
     data: CreateOptionRequest,
   ): Promise<OptionCreateResponse> => {
     return projectsRequest.post<OptionCreateResponse, CreateOptionRequest>(
-      endpoints.projects.optionCreate(projectId, typeId, fieldId),
+      endpoints.projects.optionCreate(projectId, classId, fieldId),
       data,
     );
   },
@@ -754,13 +754,13 @@ const projectsApi = {
   // Update option
   updateOption: async (
     projectId: string,
-    typeId: string,
+    classId: string,
     fieldId: string,
     optionId: string,
     data: UpdateOptionRequest,
   ): Promise<SuccessResponse> => {
     return projectsRequest.post<SuccessResponse, UpdateOptionRequest>(
-      endpoints.projects.optionUpdate(projectId, typeId, fieldId, optionId),
+      endpoints.projects.optionUpdate(projectId, classId, fieldId, optionId),
       data,
     );
   },
@@ -768,24 +768,24 @@ const projectsApi = {
   // Delete option
   deleteOption: async (
     projectId: string,
-    typeId: string,
+    classId: string,
     fieldId: string,
     optionId: string,
   ): Promise<SuccessResponse> => {
     return projectsRequest.post<SuccessResponse>(
-      endpoints.projects.optionDelete(projectId, typeId, fieldId, optionId),
+      endpoints.projects.optionDelete(projectId, classId, fieldId, optionId),
     );
   },
 
   // Reorder options
   reorderOptions: async (
     projectId: string,
-    typeId: string,
+    classId: string,
     fieldId: string,
     order: string[],
   ): Promise<SuccessResponse> => {
     return projectsRequest.post<SuccessResponse>(
-      endpoints.projects.optionReorder(projectId, typeId, fieldId),
+      endpoints.projects.optionReorder(projectId, classId, fieldId),
       { order: order.join(",") },
     );
   },

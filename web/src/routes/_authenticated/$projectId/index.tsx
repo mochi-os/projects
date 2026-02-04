@@ -263,15 +263,15 @@ function ProjectPage() {
   // Delete column (option) mutation
   const deleteColumnMutation = useMutation({
     mutationFn: async ({
-      typeId,
+      classId,
       fieldId,
       optionId,
     }: {
-      typeId: string;
+      classId: string;
       fieldId: string;
       optionId: string;
     }) => {
-      return projectsApi.deleteOption(params.projectId, typeId, fieldId, optionId);
+      return projectsApi.deleteOption(params.projectId, classId, fieldId, optionId);
     },
     onSuccess: () => {
       router.invalidate();
@@ -281,17 +281,17 @@ function ProjectPage() {
   // Rename column (option) mutation
   const renameColumnMutation = useMutation({
     mutationFn: async ({
-      typeId,
+      classId,
       fieldId,
       optionId,
       name,
     }: {
-      typeId: string;
+      classId: string;
       fieldId: string;
       optionId: string;
       name: string;
     }) => {
-      return projectsApi.updateOption(params.projectId, typeId, fieldId, optionId, { name });
+      return projectsApi.updateOption(params.projectId, classId, fieldId, optionId, { name });
     },
     onSuccess: () => {
       router.invalidate();
@@ -301,17 +301,17 @@ function ProjectPage() {
   // Create column (option) mutation
   const createColumnMutation = useMutation({
     mutationFn: async ({
-      typeId,
+      classId,
       fieldId,
       name,
       colour,
     }: {
-      typeId: string;
+      classId: string;
       fieldId: string;
       name: string;
       colour: string;
     }) => {
-      return projectsApi.createOption(params.projectId, typeId, fieldId, { name, colour });
+      return projectsApi.createOption(params.projectId, classId, fieldId, { name, colour });
     },
     onSuccess: () => {
       router.invalidate();
@@ -321,15 +321,15 @@ function ProjectPage() {
   // Reorder columns (options) mutation
   const reorderColumnsMutation = useMutation({
     mutationFn: async ({
-      typeId,
+      classId,
       fieldId,
       order,
     }: {
-      typeId: string;
+      classId: string;
       fieldId: string;
       order: string[];
     }) => {
-      return projectsApi.reorderOptions(params.projectId, typeId, fieldId, order);
+      return projectsApi.reorderOptions(params.projectId, classId, fieldId, order);
     },
     onSuccess: () => {
       router.invalidate();
@@ -342,10 +342,10 @@ function ProjectPage() {
   const filteredObjects = useMemo(() => {
     let result = objectsData || [];
 
-    // Apply view's type filter (if view has specific types selected)
-    const viewTypes = activeView?.types || [];
-    if (viewTypes.length > 0) {
-      result = result.filter((obj) => viewTypes.includes(obj.type));
+    // Apply view's class filter (if view has specific classes selected)
+    const viewClasses = activeView?.classes || [];
+    if (viewClasses.length > 0) {
+      result = result.filter((obj) => viewClasses.includes(obj.class));
     }
 
     // Apply search filter
@@ -374,7 +374,7 @@ function ProjectPage() {
     }
 
     return result;
-  }, [objectsData, filters, activeView?.types]);
+  }, [objectsData, filters, activeView?.classes]);
 
   // Keyboard navigation helpers
   const handleSelectNext = useCallback(() => {
@@ -422,7 +422,7 @@ function ProjectPage() {
 
   // Get default column value (first option of column field for first type)
   const getDefaultColumnValue = useCallback(() => {
-    const firstType = project.types[0]?.id;
+    const firstType = project.classes[0]?.id;
     if (firstType && project.options[firstType]?.[columnField]?.length > 0) {
       return {
         field: columnField,
@@ -430,7 +430,7 @@ function ProjectPage() {
       };
     }
     return undefined;
-  }, [project.types, project.options, columnField]);
+  }, [project.classes, project.options, columnField]);
 
   const handleOpenCreateDialog = useCallback(() => {
     setCreateDefaultField(getDefaultColumnValue());
@@ -474,12 +474,12 @@ function ProjectPage() {
     reparentMutation.mutate({ objectId, parentId: newParentId });
   };
 
-  const handleDeleteColumn = async (typeId: string, fieldId: string, optionId: string) => {
-    await deleteColumnMutation.mutateAsync({ typeId, fieldId, optionId });
+  const handleDeleteColumn = async (classId: string, fieldId: string, optionId: string) => {
+    await deleteColumnMutation.mutateAsync({ classId, fieldId, optionId });
   };
 
-  const handleRenameColumn = async (typeId: string, fieldId: string, optionId: string, newName: string) => {
-    await renameColumnMutation.mutateAsync({ typeId, fieldId, optionId, name: newName });
+  const handleRenameColumn = async (classId: string, fieldId: string, optionId: string, newName: string) => {
+    await renameColumnMutation.mutateAsync({ classId, fieldId, optionId, name: newName });
   };
 
   const handleObjectCreated = () => {
@@ -493,10 +493,10 @@ function ProjectPage() {
   };
 
   const handleAddColumn = (name: string, colour: string) => {
-    const defaultType = project.types[0];
-    if (!defaultType) return;
+    const defaultClass = project.classes[0];
+    if (!defaultClass) return;
     createColumnMutation.mutate({
-      typeId: defaultType.id,
+      classId: defaultClass.id,
       fieldId: columnField,
       name,
       colour,
@@ -508,10 +508,10 @@ function ProjectPage() {
   };
 
   const handleSaveColumnOrder = () => {
-    const defaultType = project.types[0];
-    if (!defaultType || !pendingColumnOrder) return;
+    const defaultClass = project.classes[0];
+    if (!defaultClass || !pendingColumnOrder) return;
     reorderColumnsMutation.mutate({
-      typeId: defaultType.id,
+      classId: defaultClass.id,
       fieldId: columnField,
       order: pendingColumnOrder,
     });
@@ -647,7 +647,7 @@ function ProjectPage() {
                 projectId={params.projectId}
                 objects={filteredObjects}
                 peopleMap={peopleMap}
-                cardfields={activeView?.cardfields}
+                viewFields={activeView?.fields}
                 onCardClick={handleCardClick}
                 onReparent={handleReparent}
               />

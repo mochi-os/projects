@@ -61,14 +61,14 @@ export function ViewOptionsBar({
   // Get the row field (used for priority-like filtering) from the view
   const rowField = activeView?.rows || "priority";
 
-  // Get the first type ID (or first type from the view's type filter)
-  const viewTypes = activeView?.types || [];
-  const firstTypeId = viewTypes.length > 0 ? viewTypes[0] : project.types[0]?.id;
+  // Get the first class ID (or first class from the view's class filter)
+  const viewClasses = activeView?.classes || [];
+  const firstClassId = viewClasses.length > 0 ? viewClasses[0] : project.classes[0]?.id;
 
-  // Get options for the column and row fields from the first type
-  const typeOptions = firstTypeId ? project.options[firstTypeId] || {} : {};
-  const statusOptions: FieldOption[] = typeOptions[columnField] || [];
-  const priorityOptions: FieldOption[] = typeOptions[rowField] || [];
+  // Get options for the column and row fields from the first class
+  const classOptions = firstClassId ? project.options[firstClassId] || {} : {};
+  const statusOptions: FieldOption[] = classOptions[columnField] || [];
+  const priorityOptions: FieldOption[] = classOptions[rowField] || [];
 
   return (
     <div className="flex items-center gap-2 px-4 py-2 bg-muted/30 flex-wrap">

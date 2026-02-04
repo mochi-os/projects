@@ -13,18 +13,18 @@ import {
   Label,
 } from "@mochi/common";
 
-// Add Type Dialog
-interface AddTypeDialogProps {
+// Add Class Dialog
+interface AddClassDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onAdd: (name: string) => void;
 }
 
-export function AddTypeDialog({
+export function AddClassDialog({
   open,
   onOpenChange,
   onAdd,
-}: AddTypeDialogProps) {
+}: AddClassDialogProps) {
   const [name, setName] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -41,13 +41,13 @@ export function AddTypeDialog({
       <DialogContent>
         <form onSubmit={handleSubmit}>
           <DialogHeader>
-            <DialogTitle>Add type</DialogTitle>
+            <DialogTitle>Add class</DialogTitle>
           </DialogHeader>
           <div className="py-4 space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="type-name">Name</Label>
+              <Label htmlFor="class-name">Name</Label>
               <Input
-                id="type-name"
+                id="class-name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="e.g., Task, Bug, Epic"

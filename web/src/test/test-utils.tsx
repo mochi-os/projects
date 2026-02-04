@@ -8,7 +8,7 @@ import type {
   ProjectField,
   FieldOption,
   ProjectView,
-  ProjectType,
+  ProjectClass,
   ProjectObject,
 } from "@/types";
 
@@ -102,15 +102,15 @@ export function createMockView(overrides?: Partial<ProjectView>): ProjectView {
     filter: "",
     columns: "",
     rows: "",
-    cardfields: "",
+    fields: "",
     sort: "",
     direction: "",
-    types: [],
+    classes: [],
     ...overrides,
   };
 }
 
-export function createMockType(overrides?: Partial<ProjectType>): ProjectType {
+export function createMockClass(overrides?: Partial<ProjectClass>): ProjectClass {
   return {
     id: "task",
     name: "Task",
@@ -125,7 +125,7 @@ export function createMockObject(
   return {
     id: "obj-1",
     project: "proj-1",
-    type: "task",
+    class: "task",
     number: 1,
     parent: "",
     rank: 1,
@@ -158,7 +158,7 @@ export function createMockProjectDetails(
 
   return {
     project: createMockProject(),
-    types: [createMockType()],
+    classes: [createMockClass()],
     fields: {
       task: [
         createMockField({ id: "title", name: "Title", fieldtype: "text" }),

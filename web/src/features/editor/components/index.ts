@@ -1,14 +1,14 @@
 export { DesignEditor } from "./design-editor";
 export { DesignPreview } from "./design-preview";
 export {
-  AddTypeDialog,
+  AddClassDialog,
   AddFieldDialog,
   AddOptionDialog,
   AddViewDialog,
 } from "./add-dialogs";
 export {
   EditViewDialog,
-  EditTypeDialog,
+  EditClassDialog,
   EditFieldDialog,
   EditOptionDialog,
 } from "./edit-dialogs";

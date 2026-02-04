@@ -4,7 +4,7 @@
 import { useState } from "react";
 import { cn } from "@mochi/common";
 import type {
-  ProjectType,
+  ProjectClass,
   ProjectField,
   FieldOption,
   ProjectView,
@@ -13,11 +13,11 @@ import type {
 type PreviewMode = "board" | "card";
 
 interface DesignPreviewProps {
-  types: ProjectType[];
+  classes: ProjectClass[];
   fields: Record<string, ProjectField[]>;
   options: Record<string, Record<string, FieldOption[]>>;
   views: ProjectView[];
-  selectedTypeId: string | null;
+  selectedClassId: string | null;
 }
 
 // Sample data for preview
@@ -55,35 +55,35 @@ const SAMPLE_CARDS = [
 ];
 
 export function DesignPreview({
-  types,
+  classes,
   fields,
   options,
   views,
-  selectedTypeId,
+  selectedClassId,
 }: DesignPreviewProps) {
   const [previewMode, setPreviewMode] = useState<PreviewMode>("board");
 
-  const typeId = selectedTypeId || types[0]?.id || "task";
-  const typeFields = fields[typeId] || [];
-  const typeOptions = options[typeId] || {};
+  const classId = selectedClassId || classes[0]?.id || "task";
+  const classFields = fields[classId] || [];
+  const classOptions = options[classId] || {};
 
   // Get the first board view or create a default
   const boardView = views.find((v) => v.viewtype === "board") || {
     columns: "status",
-    cardfields: "title,priority",
+    fields: "title,priority",
   };
 
-  const cardFields = boardView.cardfields?.split(",").filter(Boolean) || [
+  const cardFields = boardView.fields?.split(",").filter(Boolean) || [
     "title",
   ];
   const columnField = boardView.columns || "status";
-  const columnOptions = typeOptions[columnField] || [];
+  const columnOptions = classOptions[columnField] || [];
 
   const renderFieldValue = (field: ProjectField, value: string) => {
     if (!value) return null;
 
     if (field.fieldtype === "enumerated") {
-      const fieldOpts = typeOptions[field.id] || [];
+      const fieldOpts = classOptions[field.id] || [];
       const opt = fieldOpts.find((o) => o.id === value);
       if (opt) {
         return (
@@ -108,7 +108,7 @@ export function DesignPreview({
           proj-{card.number}
         </div>
         {cardFields.map((fieldId) => {
-          const field = typeFields.find((f) => f.id === fieldId);
+          const field = classFields.find((f) => f.id === fieldId);
           if (!field) return null;
           const value = card.values[fieldId as keyof typeof card.values];
           if (!value) return null;
@@ -182,7 +182,7 @@ export function DesignPreview({
               proj-{card.number}
             </span>
           </div>
-          {typeFields.map((field) => {
+          {classFields.map((field) => {
             const value = card.values[field.id as keyof typeof card.values];
             return (
               <div key={field.id} className="space-y-1">

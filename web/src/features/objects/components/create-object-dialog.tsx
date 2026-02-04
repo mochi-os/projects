@@ -39,7 +39,7 @@ export function CreateObjectDialog({
   onCreated,
 }: CreateObjectDialogProps) {
   const [error, setError] = useState<string | null>(null);
-  const [selectedType, setSelectedType] = useState(project.types[0]?.id || "");
+  const [selectedClass, setSelectedType] = useState(project.classes[0]?.id || "");
   const [fieldValues, setFieldValues] = useState<Record<string, string>>({});
   const [parent, setParent] = useState("");
   const queryClient = useQueryClient();
@@ -47,7 +47,7 @@ export function CreateObjectDialog({
   // Reset state when dialog opens/closes or type changes
   useEffect(() => {
     if (open) {
-      const initialType = project.types[0]?.id || "";
+      const initialType = project.classes[0]?.id || "";
       setSelectedType(initialType);
       setParent("");
       setError(null);
@@ -58,13 +58,13 @@ export function CreateObjectDialog({
       }
       setFieldValues(initialValues);
     }
-  }, [open, project.types, defaultField]);
+  }, [open, project.classes, defaultField]);
 
   // Update default field value when type changes (if field exists in new type)
   useEffect(() => {
-    if (defaultField && selectedType) {
-      const typeFields = project.fields[selectedType] || [];
-      const hasField = typeFields.some((f) => f.id === defaultField.field);
+    if (defaultField && selectedClass) {
+      const classFields = project.fields[selectedClass] || [];
+      const hasField = classFields.some((f) => f.id === defaultField.field);
       if (hasField) {
         setFieldValues((prev) => ({
           ...prev,
@@ -72,7 +72,7 @@ export function CreateObjectDialog({
         }));
       }
     }
-  }, [selectedType, defaultField, project.fields]);
+  }, [selectedClass, defaultField, project.fields]);
 
   // Load objects for parent selection
   const { data: objectsData } = useQuery({
@@ -94,40 +94,40 @@ export function CreateObjectDialog({
   });
 
   // Get fields and options for selected type
-  const typeFields = useMemo(() => {
-    return project.fields[selectedType] || [];
-  }, [project.fields, selectedType]);
+  const classFields = useMemo(() => {
+    return project.fields[selectedClass] || [];
+  }, [project.fields, selectedClass]);
 
-  const typeOptions = useMemo(() => {
-    return project.options[selectedType] || {};
-  }, [project.options, selectedType]);
+  const classOptions = useMemo(() => {
+    return project.options[selectedClass] || {};
+  }, [project.options, selectedClass]);
 
   // Filter objects to only show valid parents based on hierarchy rules
   const validParentOptions = useMemo(() => {
-    if (!objectsData || !selectedType) return [];
+    if (!objectsData || !selectedClass) return [];
 
-    const allowedParentTypes = project.hierarchy[selectedType] || [];
-    const parentTypeIds = allowedParentTypes.filter((t) => t !== "");
+    const allowedParentClasses = project.hierarchy[selectedClass] || [];
+    const parentClassIds = allowedParentClasses.filter((t) => t !== "");
 
-    if (parentTypeIds.length === 0) return [];
+    if (parentClassIds.length === 0) return [];
 
-    return objectsData.filter((obj) => parentTypeIds.includes(obj.type));
-  }, [objectsData, selectedType, project.hierarchy]);
+    return objectsData.filter((obj) => parentClassIds.includes(obj.class));
+  }, [objectsData, selectedClass, project.hierarchy]);
 
   // Build type name map
-  const typeNameMap = useMemo(() => {
+  const classNameMap = useMemo(() => {
     const map: Record<string, string> = {};
-    for (const t of project.types) {
+    for (const t of project.classes) {
       map[t.id] = t.name;
     }
     return map;
-  }, [project.types]);
+  }, [project.classes]);
 
   const createMutation = useMutation({
     mutationFn: async () => {
       // Create the object
       const response = await projectsApi.createObject(project.project.id, {
-        type: selectedType,
+        class: selectedClass,
         title: fieldValues.title || undefined,
         parent: parent || undefined,
       });
@@ -151,7 +151,7 @@ export function CreateObjectDialog({
       const newObject = {
         id: data.id,
         project: project.project.id,
-        type: selectedType,
+        type: selectedClass,
         number: data.number,
         parent: data.parent || "",
         rank: 999999,
@@ -206,12 +206,12 @@ export function CreateObjectDialog({
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             New
-            <Select value={selectedType} onValueChange={handleTypeChange}>
+            <Select value={selectedClass} onValueChange={handleTypeChange}>
               <SelectTrigger className="w-auto h-auto py-0.5 px-2 text-lg font-semibold">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                {project.types.map((type) => (
+                {project.classes.map((type) => (
                   <SelectItem key={type.id} value={type.id}>
                     {type.name}
                   </SelectItem>
@@ -238,7 +238,7 @@ export function CreateObjectDialog({
                 <SelectItem value="_none_">None</SelectItem>
                 {validParentOptions.map((obj) => (
                   <SelectItem key={obj.id} value={obj.id}>
-                    {typeNameMap[obj.type] || obj.type}: {obj.values.title || `${project.project.prefix}-${obj.number}`}
+                    {classNameMap[obj.class] || obj.class}: {obj.values.title || `${project.project.prefix}-${obj.number}`}
                   </SelectItem>
                 ))}
               </SelectContent>
@@ -246,7 +246,7 @@ export function CreateObjectDialog({
           </div>
 
           {/* Dynamic fields based on selected type */}
-          {typeFields
+          {classFields
             .filter((f) => !["repository", "source_branch", "target_branch"].includes(f.id))
             .map((field) => (
               <div key={field.id} className="grid grid-cols-[100px_1fr] gap-4 items-start">
@@ -256,7 +256,7 @@ export function CreateObjectDialog({
                 <FieldEditor
                   field={field}
                   value={fieldValues[field.id] || ""}
-                  options={typeOptions[field.id] || []}
+                  options={classOptions[field.id] || []}
                   onChange={(value) => handleFieldChange(field.id, value)}
                   disabled={createMutation.isPending}
                   hideLabel

@@ -43,30 +43,30 @@ def database_create():
 	)""")
 	mochi.db.execute("create index if not exists subscribers_id on subscribers(id)")
 
-	# 3. types - object types (Task, Subproject, Pull Request, etc.)
-	mochi.db.execute("""create table if not exists types (
+	# 3. classes - object classes (Task, Subproject, Pull Request, etc.)
+	mochi.db.execute("""create table if not exists classes (
 		project text not null references projects(id),
 		id text not null,
 		name text not null,
 		rank integer not null default 0,
 		primary key (project, id)
 	)""")
-	mochi.db.execute("create index if not exists types_project on types(project)")
+	mochi.db.execute("create index if not exists classes_project on classes(project)")
 
 	# 4. hierarchy - hierarchy rules (what can be parent of what)
 	mochi.db.execute("""create table if not exists hierarchy (
 		project text not null references projects(id),
-		type text not null,
+		class text not null,
 		parent text not null default '',
-		primary key (project, type, parent),
-		foreign key (project, type) references types(project, id)
+		primary key (project, class, parent),
+		foreign key (project, class) references classes(project, id)
 	)""")
 	mochi.db.execute("create index if not exists hierarchy_project on hierarchy(project)")
 
-	# 5. fields - field definitions per type
+	# 5. fields - field definitions per class
 	mochi.db.execute("""create table if not exists fields (
 		project text not null references projects(id),
-		type text not null,
+		class text not null,
 		id text not null,
 		name text not null,
 		fieldtype text not null,
@@ -84,26 +84,26 @@ def database_create():
 		card integer not null default 1,
 		position text not null default '',
 		rows integer not null default 1,
-		primary key (project, type, id),
-		foreign key (project, type) references types(project, id)
+		primary key (project, class, id),
+		foreign key (project, class) references classes(project, id)
 	)""")
 	mochi.db.execute("create index if not exists fields_project on fields(project)")
-	mochi.db.execute("create index if not exists fields_type on fields(project, type)")
+	mochi.db.execute("create index if not exists fields_class on fields(project, class)")
 
 	# 6. options - enumerated options for enumerated fields
 	mochi.db.execute("""create table if not exists options (
 		project text not null references projects(id),
-		type text not null,
+		class text not null,
 		field text not null,
 		id text not null,
 		name text not null,
 		colour text not null default '',
 		icon text not null default '',
 		rank integer not null default 0,
-		primary key (project, type, field, id),
-		foreign key (project, type, field) references fields(project, type, id)
+		primary key (project, class, field, id),
+		foreign key (project, class, field) references fields(project, class, id)
 	)""")
-	mochi.db.execute("create index if not exists options_field on options(project, type, field)")
+	mochi.db.execute("create index if not exists options_field on options(project, class, field)")
 
 	# 7. views - board and tree configurations
 	mochi.db.execute("""create table if not exists views (
@@ -120,18 +120,18 @@ def database_create():
 	)""")
 	mochi.db.execute("create index if not exists views_project on views(project)")
 
-	# 8. view_types - which types appear in a view (empty = all types)
-	mochi.db.execute("""create table if not exists view_types (
+	# 8. view_classes - which classes appear in a view (empty = all classes)
+	mochi.db.execute("""create table if not exists view_classes (
 		project text not null,
 		view text not null,
-		type text not null,
-		primary key (project, view, type),
+		class text not null,
+		primary key (project, view, class),
 		foreign key (project, view) references views(project, id),
-		foreign key (project, type) references types(project, id)
+		foreign key (project, class) references classes(project, id)
 	)""")
 
-	# 9. view_cardfields - which fields appear on cards in a view
-	mochi.db.execute("""create table if not exists view_cardfields (
+	# 9. view_fields - which fields appear in a view
+	mochi.db.execute("""create table if not exists view_fields (
 		project text not null,
 		view text not null,
 		field text not null,
@@ -144,16 +144,16 @@ def database_create():
 	mochi.db.execute("""create table if not exists objects (
 		id text primary key,
 		project text not null references projects(id),
-		type text not null,
+		class text not null,
 		number integer not null,
 		parent text not null default '',
 		rank integer not null default 0,
 		created integer not null,
 		updated integer not null,
-		foreign key (project, type) references types(project, id)
+		foreign key (project, class) references classes(project, id)
 	)""")
 	mochi.db.execute("create index if not exists objects_project on objects(project)")
-	mochi.db.execute("create index if not exists objects_type on objects(project, type)")
+	mochi.db.execute("create index if not exists objects_class on objects(project, class)")
 	mochi.db.execute("create index if not exists objects_parent on objects(parent)")
 	mochi.db.execute("create index if not exists objects_rank on objects(rank)")
 	mochi.db.execute("create index if not exists objects_created on objects(created)")
@@ -259,37 +259,37 @@ def apply_template(project_id, template_id):
 	content = mochi.app.file.read("templates/" + template_id + ".json")
 	data = json.decode(str(content))
 
-	# Create types
-	for t in data.get("types", []):
+	# Create classes
+	for t in data.get("classes", []):
 		mochi.db.execute(
-			"insert into types (project, id, name, rank) values (?, ?, ?, ?)",
+			"insert into classes (project, id, name, rank) values (?, ?, ?, ?)",
 			project_id, t["id"], t["name"], t.get("rank", 0)
 		)
 
-	# Set hierarchy for each type
-	for type_id, parents in data.get("hierarchy", {}).items():
+	# Set hierarchy for each class
+	for cls_id, parents in data.get("hierarchy", {}).items():
 		for parent in parents:
 			mochi.db.execute(
-				"insert into hierarchy (project, type, parent) values (?, ?, ?)",
-				project_id, type_id, parent
+				"insert into hierarchy (project, class, parent) values (?, ?, ?)",
+				project_id, cls_id, parent
 			)
 
-	# Create fields for each type
-	for type_id, fields in data.get("fields", {}).items():
+	# Create fields for each class
+	for cls_id, fields in data.get("fields", {}).items():
 		for f in fields:
 			mochi.db.execute(
-				"insert into fields (project, type, id, name, fieldtype, required, card, rank, rows) values (?, ?, ?, ?, ?, ?, ?, ?, ?)",
-				project_id, type_id, f["id"], f["name"], f.get("fieldtype", "text"),
+				"insert into fields (project, class, id, name, fieldtype, required, card, rank, rows) values (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+				project_id, cls_id, f["id"], f["name"], f.get("fieldtype", "text"),
 				f.get("required", 0), f.get("card", 0), f.get("rank", 0), f.get("rows", 1)
 			)
 
-	# Create options for each type's enumerated fields
-	for type_id, type_options in data.get("options", {}).items():
-		for field_id, field_options in type_options.items():
+	# Create options for each class's enumerated fields
+	for cls_id, class_options in data.get("options", {}).items():
+		for field_id, field_options in class_options.items():
 			for opt in field_options:
 				mochi.db.execute(
-					"insert into options (project, type, field, id, name, colour, rank) values (?, ?, ?, ?, ?, ?, ?)",
-					project_id, type_id, field_id, opt["id"], opt["name"],
+					"insert into options (project, class, field, id, name, colour, rank) values (?, ?, ?, ?, ?, ?, ?)",
+					project_id, cls_id, field_id, opt["id"], opt["name"],
 					opt.get("colour", "#94a3b8"), opt.get("rank", 0)
 				)
 
@@ -300,18 +300,18 @@ def apply_template(project_id, template_id):
 			project_id, v["id"], v["name"], v.get("viewtype", "board"),
 			v.get("columns", ""), v.get("rows", "")
 		)
-		# Add view types if specified
-		for vtype in v.get("types", []):
+		# Add view classes if specified
+		for vclass in v.get("classes", []):
 			mochi.db.execute(
-				"insert into view_types (project, view, type) values (?, ?, ?)",
-				project_id, v["id"], vtype
+				"insert into view_classes (project, view, class) values (?, ?, ?)",
+				project_id, v["id"], vclass
 			)
-		# Add card fields
-		cardfields = v.get("cardfields", "").split(",")
-		for i, field in enumerate(cardfields):
+		# Add fields
+		fields = v.get("fields", "").split(",")
+		for i, field in enumerate(fields):
 			if field.strip():
 				mochi.db.execute(
-					"insert into view_cardfields (project, view, field, rank) values (?, ?, ?, ?)",
+					"insert into view_fields (project, view, field, rank) values (?, ?, ?, ?)",
 					project_id, v["id"], field.strip(), i
 				)
 
@@ -430,44 +430,44 @@ def action_project_get(a):
 			a.error(404, "Project not found")
 			return
 
-	row = mochi.db.row("select id, name, description, prefix, counter, owner, server, created, updated from projects where id = ?", project_id)
+	row = mochi.db.row("select id, name, description, prefix, counter, owner, server, created, updated from projects where id=?", project_id)
 	if not row:
 		a.error(404, "Project not found")
 		return
 
-	# Get types
-	types = mochi.db.rows("select id, name, rank from types where project = ? order by rank", project_id) or []
+	# Get classes
+	classes = mochi.db.rows("select id, name, rank from classes where project=? order by rank", project_id) or []
 
-	# Get fields by type
+	# Get fields by class
 	fields = {}
-	for t in types:
-		type_fields = mochi.db.rows("select id, name, fieldtype, required, multi, rank, card, position, rows from fields where project = ? and type = ? order by rank", project_id, t["id"]) or []
-		fields[t["id"]] = type_fields
+	for c in classes:
+		class_fields = mochi.db.rows("select id, name, fieldtype, required, multi, rank, card, position, rows from fields where project=? and class=? order by rank", project_id, c["id"]) or []
+		fields[c["id"]] = class_fields
 
-	# Get options by type and field
+	# Get options by class and field
 	options = {}
-	for t in types:
-		options[t["id"]] = {}
-		for f in fields.get(t["id"], []):
+	for c in classes:
+		options[c["id"]] = {}
+		for f in fields.get(c["id"], []):
 			if f["fieldtype"] == "enumerated":
-				field_options = mochi.db.rows("select id, name, colour, icon, rank from options where project = ? and type = ? and field = ? order by rank", project_id, t["id"], f["id"]) or []
-				options[t["id"]][f["id"]] = field_options
+				field_options = mochi.db.rows("select id, name, colour, icon, rank from options where project=? and class=? and field=? order by rank", project_id, c["id"], f["id"]) or []
+				options[c["id"]][f["id"]] = field_options
 
 	# Get views
-	views = mochi.db.rows("select id, name, viewtype, filter, columns, rows, sort, direction from views where project = ? order by name", project_id) or []
+	views = mochi.db.rows("select id, name, viewtype, filter, columns, rows, sort, direction from views where project=? order by name", project_id) or []
 
-	# Add types and cardfields to each view
+	# Add classes and fields to each view
 	for v in views:
-		view_types = mochi.db.rows("select type from view_types where project = ? and view = ?", project_id, v["id"]) or []
-		v["types"] = [vt["type"] for vt in view_types]
-		view_cardfields = mochi.db.rows("select field from view_cardfields where project = ? and view = ? order by rank", project_id, v["id"]) or []
-		v["cardfields"] = ",".join([cf["field"] for cf in view_cardfields])
+		view_classes = mochi.db.rows("select class from view_classes where project=? and view=?", project_id, v["id"]) or []
+		v["classes"] = [vc["class"] for vc in view_classes]
+		view_fields = mochi.db.rows("select field from view_fields where project=? and view=? order by rank", project_id, v["id"]) or []
+		v["fields"] = ",".join([vf["field"] for vf in view_fields])
 
 	# Get hierarchy
 	hierarchy = {}
-	for t in types:
-		parents = mochi.db.rows("select parent from hierarchy where project = ? and type = ?", project_id, t["id"]) or []
-		hierarchy[t["id"]] = [p["parent"] for p in parents]
+	for c in classes:
+		parents = mochi.db.rows("select parent from hierarchy where project=? and class=?", project_id, c["id"]) or []
+		hierarchy[c["id"]] = [p["parent"] for p in parents]
 
 	return {"data": {
 		"project": {
@@ -482,7 +482,7 @@ def action_project_get(a):
 			"created": row["created"],
 			"updated": row["updated"],
 		},
-		"types": types,
+		"classes": classes,
 		"fields": fields,
 		"options": options,
 		"views": views,
@@ -506,7 +506,7 @@ def action_project_update(a):
 			a.error(404, "Project not found")
 			return
 
-	row = mochi.db.row("select id, owner from projects where id = ?", project_id)
+	row = mochi.db.row("select id, owner from projects where id=?", project_id)
 	if not row:
 		a.error(404, "Project not found")
 		return
@@ -525,14 +525,14 @@ def action_project_update(a):
 		if not mochi.valid(name, "name"):
 			a.error(400, "Invalid name")
 			return
-		mochi.db.execute("update projects set name = ?, updated = ? where id = ?", name, now, project_id)
+		mochi.db.execute("update projects set name=?, updated=? where id=?", name, now, project_id)
 		mochi.entity.rename(project_id, name)
 
 	if description != None:
-		mochi.db.execute("update projects set description = ?, updated = ? where id = ?", description, now, project_id)
+		mochi.db.execute("update projects set description=?, updated=? where id=?", description, now, project_id)
 
 	if prefix:
-		mochi.db.execute("update projects set prefix = ?, updated = ? where id = ?", prefix, now, project_id)
+		mochi.db.execute("update projects set prefix=?, updated=? where id=?", prefix, now, project_id)
 
 	broadcast_event(project_id, "project/update", {
 		"project": project_id, "name": name or "", "description": description or "", "prefix": prefix or ""
@@ -557,7 +557,7 @@ def action_project_delete(a):
 			a.error(404, "Project not found")
 			return
 
-	row = mochi.db.row("select id, owner from projects where id = ?", project_id)
+	row = mochi.db.row("select id, owner from projects where id=?", project_id)
 	if not row:
 		a.error(404, "Project not found")
 		return
@@ -567,25 +567,25 @@ def action_project_delete(a):
 		return
 
 	# Delete in reverse dependency order
-	mochi.db.execute("delete from attachments where object in (select id from objects where project = ?)", project_id)
-	mochi.db.execute("delete from watchers where object in (select id from objects where project = ?)", project_id)
-	mochi.db.execute("delete from activity where object in (select id from objects where project = ?)", project_id)
-	mochi.db.execute("delete from comments where object in (select id from objects where project = ?)", project_id)
-	mochi.db.execute("delete from \"values\" where object in (select id from objects where project = ?)", project_id)
-	mochi.db.execute("delete from links where project = ?", project_id)
-	mochi.db.execute("delete from objects where project = ?", project_id)
-	mochi.db.execute("delete from views where project = ?", project_id)
-	mochi.db.execute("delete from options where project = ?", project_id)
-	mochi.db.execute("delete from fields where project = ?", project_id)
-	mochi.db.execute("delete from hierarchy where project = ?", project_id)
-	mochi.db.execute("delete from types where project = ?", project_id)
+	mochi.db.execute("delete from attachments where object in (select id from objects where project=?)", project_id)
+	mochi.db.execute("delete from watchers where object in (select id from objects where project=?)", project_id)
+	mochi.db.execute("delete from activity where object in (select id from objects where project=?)", project_id)
+	mochi.db.execute("delete from comments where object in (select id from objects where project=?)", project_id)
+	mochi.db.execute("delete from \"values\" where object in (select id from objects where project=?)", project_id)
+	mochi.db.execute("delete from links where project=?", project_id)
+	mochi.db.execute("delete from objects where project=?", project_id)
+	mochi.db.execute("delete from views where project=?", project_id)
+	mochi.db.execute("delete from options where project=?", project_id)
+	mochi.db.execute("delete from fields where project=?", project_id)
+	mochi.db.execute("delete from hierarchy where project=?", project_id)
+	mochi.db.execute("delete from classes where project=?", project_id)
 	# Notify subscribers that project is being deleted (before removing subscriber list)
 	subscribers = mochi.db.rows("select id from subscribers where project=?", project_id)
 	for sub in subscribers:
 		mochi.message.send(p2p_headers(a.user.identity.id, sub["id"], "deleted"), {"project": project_id})
 
-	mochi.db.execute("delete from subscribers where project = ?", project_id)
-	mochi.db.execute("delete from projects where id = ?", project_id)
+	mochi.db.execute("delete from subscribers where project=?", project_id)
+	mochi.db.execute("delete from projects where id=?", project_id)
 
 	# Delete entity
 	mochi.entity.delete(project_id)
@@ -808,7 +808,7 @@ def resolve_project(a):
 
 def get_project(project_id):
 	"""Get project row or None."""
-	return mochi.db.row("select * from projects where id = ?", project_id)
+	return mochi.db.row("select * from projects where id=?", project_id)
 
 def log_activity(object_id, actor, action, field="", oldvalue="", newvalue=""):
 	"""Log an activity entry for an object."""
@@ -827,25 +827,25 @@ def would_create_cycle(object_id, new_parent_id):
 	while current:
 		if current == object_id:
 			return True
-		parent_row = mochi.db.row("select parent from objects where id = ?", current)
+		parent_row = mochi.db.row("select parent from objects where id=?", current)
 		current = parent_row["parent"] if parent_row else ""
 	return False
 
 def delete_object_cascade(project_id, object_id):
 	"""Delete an object and all its children recursively."""
 	# First, recursively delete all children
-	children = mochi.db.rows("select id from objects where parent = ?", object_id)
+	children = mochi.db.rows("select id from objects where parent=?", object_id)
 	for child in children:
 		delete_object_cascade(project_id, child["id"])
 
 	# Then delete this object's related data
-	mochi.db.execute("delete from attachments where object = ?", object_id)
-	mochi.db.execute("delete from watchers where object = ?", object_id)
-	mochi.db.execute("delete from activity where object = ?", object_id)
-	mochi.db.execute("delete from comments where object = ?", object_id)
-	mochi.db.execute("delete from \"values\" where object = ?", object_id)
-	mochi.db.execute("delete from links where source = ? or target = ?", object_id, object_id)
-	mochi.db.execute("delete from objects where id = ?", object_id)
+	mochi.db.execute("delete from attachments where object=?", object_id)
+	mochi.db.execute("delete from watchers where object=?", object_id)
+	mochi.db.execute("delete from activity where object=?", object_id)
+	mochi.db.execute("delete from comments where object=?", object_id)
+	mochi.db.execute("delete from \"values\" where object=?", object_id)
+	mochi.db.execute("delete from links where source=? or target=?", object_id, object_id)
+	mochi.db.execute("delete from objects where id=?", object_id)
 
 	# Broadcast delete event for each object
 	broadcast_event(project_id, "object/delete", {"project": project_id, "id": object_id})
@@ -879,20 +879,20 @@ def action_object_list(a):
 		return
 
 	# Get filter params
-	type_filter = a.input("type")
+	class_filter = a.input("class")
 	status_filter = a.input("status")
 	parent_filter = a.input("parent")
 
 	# Build query
-	query = "select o.id, o.project, o.type, o.number, o.parent, o.rank, o.created, o.updated from objects o where o.project = ?"
+	query = "select o.id, o.project, o.class, o.number, o.parent, o.rank, o.created, o.updated from objects o where o.project=?"
 	params = [project_id]
 
-	if type_filter:
-		query += " and o.type = ?"
-		params.append(type_filter)
+	if class_filter:
+		query += " and o.class=?"
+		params.append(class_filter)
 
 	if parent_filter != None:
-		query += " and o.parent = ?"
+		query += " and o.parent=?"
 		params.append(parent_filter)
 
 	query += " order by o.rank asc, o.created desc"
@@ -905,7 +905,7 @@ def action_object_list(a):
 		obj = {
 			"id": row["id"],
 			"project": row["project"],
-			"type": row["type"],
+			"class": row["class"],
 			"number": row["number"],
 			"parent": row["parent"],
 			"rank": row["rank"],
@@ -915,7 +915,7 @@ def action_object_list(a):
 		}
 
 		# Get field values
-		values = mochi.db.rows("select field, value from \"values\" where object = ?", row["id"]) or []
+		values = mochi.db.rows("select field, value from \"values\" where object=?", row["id"]) or []
 		for v in values:
 			obj["values"][v["field"]] = v["value"]
 
@@ -946,15 +946,15 @@ def action_object_create(a):
 		a.error(403, "Cannot modify remote project")
 		return
 
-	obj_type = a.input("type")
-	if not obj_type:
-		a.error(400, "Type is required")
+	obj_class = a.input("class")
+	if not obj_class:
+		a.error(400, "Class is required")
 		return
 
-	# Verify type exists
-	type_row = mochi.db.row("select id from types where project = ? and id = ?", project_id, obj_type)
-	if not type_row:
-		a.error(400, "Invalid type")
+	# Verify class exists
+	class_row = mochi.db.row("select id from classes where project=? and id=?", project_id, obj_class)
+	if not class_row:
+		a.error(400, "Invalid class")
 		return
 
 	parent = a.input("parent") or ""
@@ -973,8 +973,8 @@ def action_object_create(a):
 	now = mochi.time.now()
 
 	mochi.db.execute(
-		"insert into objects (id, project, type, number, parent, rank, created, updated) values (?, ?, ?, ?, ?, ?, ?, ?)",
-		object_id, project_id, obj_type, new_counter, parent, initial_rank, now, now
+		"insert into objects (id, project, class, number, parent, rank, created, updated) values (?, ?, ?, ?, ?, ?, ?, ?)",
+		object_id, project_id, obj_class, new_counter, parent, initial_rank, now, now
 	)
 
 	# Set title if provided
@@ -991,7 +991,7 @@ def action_object_create(a):
 
 	# Broadcast to subscribers
 	broadcast_event(project_id, "object/create", {
-		"project": project_id, "id": object_id, "type": obj_type,
+		"project": project_id, "id": object_id, "class": obj_class,
 		"number": new_counter, "parent": parent, "values": values,
 		"created": now
 	})
@@ -1017,7 +1017,7 @@ def action_object_get(a):
 		a.error(400, "Object ID required")
 		return
 
-	row = mochi.db.row("select * from objects where id = ? and project = ?", object_id, project_id)
+	row = mochi.db.row("select * from objects where id=? and project=?", object_id, project_id)
 	if not row:
 		a.error(404, "Object not found")
 		return
@@ -1026,22 +1026,22 @@ def action_object_get(a):
 
 	# Get values
 	values = {}
-	value_rows = mochi.db.rows("select field, value from \"values\" where object = ?", object_id) or []
+	value_rows = mochi.db.rows("select field, value from \"values\" where object=?", object_id) or []
 	for v in value_rows:
 		values[v["field"]] = v["value"]
 
 	# Get links
-	links = mochi.db.rows("select target, linktype, created from links where source = ?", object_id) or []
-	linked_by = mochi.db.rows("select source, linktype, created from links where target = ?", object_id) or []
+	links = mochi.db.rows("select target, linktype, created from links where source=?", object_id) or []
+	linked_by = mochi.db.rows("select source, linktype, created from links where target=?", object_id) or []
 
 	# Check if user is watching
-	watching = mochi.db.exists("select 1 from watchers where object = ? and user = ?", object_id, a.user.identity.id)
+	watching = mochi.db.exists("select 1 from watchers where object=? and user=?", object_id, a.user.identity.id)
 
 	return {"data": {
 		"object": {
 			"id": row["id"],
 			"project": row["project"],
-			"type": row["type"],
+			"class": row["class"],
 			"number": row["number"],
 			"parent": row["parent"],
 			"created": row["created"],
@@ -1078,7 +1078,7 @@ def action_object_update(a):
 		a.error(400, "Object ID required")
 		return
 
-	row = mochi.db.row("select * from objects where id = ? and project = ?", object_id, project_id)
+	row = mochi.db.row("select * from objects where id=? and project=?", object_id, project_id)
 	if not row:
 		a.error(404, "Object not found")
 		return
@@ -1094,24 +1094,37 @@ def action_object_update(a):
 			if parent and would_create_cycle(object_id, parent):
 				a.error(400, "Cannot set parent: would create a cycle")
 				return
-			mochi.db.execute("update objects set parent = ?, updated = ? where id = ?", parent, now, object_id)
+			# Check hierarchy rules
+			if parent:
+				parent_row = mochi.db.row("select class from objects where id=? and project=?", parent, project_id)
+				if not parent_row:
+					a.error(404, "Parent object not found")
+					return
+				parent_class = parent_row["class"]
+			else:
+				parent_class = ""
+			allowed = mochi.db.exists("select 1 from hierarchy where project=? and class=? and parent=?", project_id, row["class"], parent_class)
+			if not allowed:
+				a.error(400, "Cannot set parent: hierarchy rules do not allow this relationship")
+				return
+			mochi.db.execute("update objects set parent=?, updated=? where id=?", parent, now, object_id)
 			log_activity(object_id, a.user.identity.id, "moved", "parent", old_parent, parent)
 
-	# Update type if provided
-	new_type = a.input("type")
-	if new_type and new_type != row["type"]:
-		# Verify type exists
-		type_row = mochi.db.row("select id from types where project = ? and id = ?", project_id, new_type)
-		if type_row:
-			mochi.db.execute("update objects set type = ?, updated = ? where id = ?", new_type, now, object_id)
-			log_activity(object_id, a.user.identity.id, "updated", "type", row["type"], new_type)
+	# Update class if provided
+	new_class = a.input("class")
+	if new_class and new_class != row["class"]:
+		# Verify class exists
+		class_row = mochi.db.row("select id from classes where project=? and id=?", project_id, new_class)
+		if class_row:
+			mochi.db.execute("update objects set class=?, updated=? where id=?", new_class, now, object_id)
+			log_activity(object_id, a.user.identity.id, "updated", "class", row["class"], new_class)
 
-	mochi.db.execute("update objects set updated = ? where id = ?", now, object_id)
+	mochi.db.execute("update objects set updated=? where id=?", now, object_id)
 
 	broadcast_event(project_id, "object/update", {
 		"project": project_id, "id": object_id,
 		"parent": parent if parent != None else row["parent"],
-		"type": new_type if new_type and new_type != row["type"] else row["type"]
+		"class": new_class if new_class and new_class != row["class"] else row["class"]
 	})
 
 	return {"data": {"success": True}}
@@ -1140,7 +1153,7 @@ def action_object_delete(a):
 		a.error(400, "Object ID required")
 		return
 
-	row = mochi.db.row("select id from objects where id = ? and project = ?", object_id, project_id)
+	row = mochi.db.row("select id from objects where id=? and project=?", object_id, project_id)
 	if not row:
 		a.error(404, "Object not found")
 		return
@@ -1175,7 +1188,7 @@ def action_object_move(a):
 		a.error(400, "Object ID required")
 		return
 
-	row = mochi.db.row("select id, rank from objects where id = ? and project = ?", object_id, project_id)
+	row = mochi.db.row("select id, rank from objects where id=? and project=?", object_id, project_id)
 	if not row:
 		a.error(404, "Object not found")
 		return
@@ -1186,7 +1199,7 @@ def action_object_move(a):
 	new_rank = a.input("rank")
 
 	# Get old field value
-	old_value_row = mochi.db.row("select value from \"values\" where object = ? and field = ?", object_id, field)
+	old_value_row = mochi.db.row("select value from \"values\" where object=? and field=?", object_id, field)
 	old_value = old_value_row["value"] if old_value_row else ""
 
 	# Determine target value (use provided or keep current)
@@ -1206,8 +1219,8 @@ def action_object_move(a):
 			# Get all objects in the target column
 			objects_in_column = mochi.db.rows("""
 				select o.id, o.rank from objects o
-				left join "values" v on v.object = o.id and v.field = ?
-				where o.project = ? and coalesce(v.value, '') = ? and o.id != ?
+				left join "values" v on v.object = o.id and v.field=?
+				where o.project=? and coalesce(v.value, '')=? and o.id!=?
 				order by o.rank asc
 			""", field, project_id, target_value, object_id) or []
 
@@ -1216,22 +1229,22 @@ def action_object_move(a):
 			for obj in objects_in_column:
 				if rank == new_rank:
 					rank += 1  # Skip the position for our object
-				mochi.db.execute("update objects set rank = ? where id = ?", rank, obj["id"])
+				mochi.db.execute("update objects set rank=? where id=?", rank, obj["id"])
 				rank += 1
 
 			# Set our object's rank
-			mochi.db.execute("update objects set rank = ? where id = ?", new_rank, object_id)
+			mochi.db.execute("update objects set rank=? where id=?", new_rank, object_id)
 	elif value_changed:
 		# Moving to new column without specific rank - add to end
 		max_rank_row = mochi.db.row("""
 			select coalesce(max(o.rank), 0) as max_rank from objects o
-			left join "values" v on v.object = o.id and v.field = ?
-			where o.project = ? and coalesce(v.value, '') = ? and o.id != ?
+			left join "values" v on v.object = o.id and v.field=?
+			where o.project=? and coalesce(v.value, '')=? and o.id!=?
 		""", field, project_id, target_value, object_id)
 		new_rank = (max_rank_row["max_rank"] if max_rank_row else 0) + 1
-		mochi.db.execute("update objects set rank = ? where id = ?", new_rank, object_id)
+		mochi.db.execute("update objects set rank=? where id=?", new_rank, object_id)
 
-	mochi.db.execute("update objects set updated = ? where id = ?", mochi.time.now(), object_id)
+	mochi.db.execute("update objects set updated=? where id=?", mochi.time.now(), object_id)
 
 	if value_changed:
 		broadcast_event(project_id, "values/update", {
@@ -1271,14 +1284,14 @@ def action_values_set(a):
 		a.error(400, "Object ID required")
 		return
 
-	row = mochi.db.row("select id, type from objects where id = ? and project = ?", object_id, project_id)
+	row = mochi.db.row("select id, class from objects where id=? and project=?", object_id, project_id)
 	if not row:
 		a.error(404, "Object not found")
 		return
 
-	# Get valid fields for this type
+	# Get valid fields for this class
 	valid_fields = {}
-	field_rows = mochi.db.rows("select id, name from fields where project = ? and type = ?", project_id, row["type"]) or []
+	field_rows = mochi.db.rows("select id, name from fields where project=? and class=?", project_id, row["class"]) or []
 	for f in field_rows:
 		valid_fields[f["id"]] = f["name"]
 
@@ -1290,7 +1303,7 @@ def action_values_set(a):
 		new_value = a.input(field_id)
 		if new_value != None:
 			# Get old value
-			old_row = mochi.db.row("select value from \"values\" where object = ? and field = ?", object_id, field_id)
+			old_row = mochi.db.row("select value from \"values\" where object=? and field=?", object_id, field_id)
 			old_value = old_row["value"] if old_row else ""
 
 			if str(new_value) != old_value:
@@ -1299,7 +1312,7 @@ def action_values_set(a):
 				changes.append(field_id)
 
 	if changes:
-		mochi.db.execute("update objects set updated = ? where id = ?", now, object_id)
+		mochi.db.execute("update objects set updated=? where id=?", now, object_id)
 		# Collect changed values for broadcast
 		changed_values = {}
 		for fid in changes:
@@ -1342,15 +1355,15 @@ def action_value_set(a):
 		a.error(400, "Field ID required")
 		return
 
-	row = mochi.db.row("select id, type from objects where id = ? and project = ?", object_id, project_id)
+	row = mochi.db.row("select id, class from objects where id=? and project=?", object_id, project_id)
 	if not row:
 		a.error(404, "Object not found")
 		return
 
-	# Verify field exists for this type
-	field_row = mochi.db.row("select id from fields where project = ? and type = ? and id = ?", project_id, row["type"], field_id)
+	# Verify field exists for this class
+	field_row = mochi.db.row("select id from fields where project=? and class=? and id=?", project_id, row["class"], field_id)
 	if not field_row:
-		a.error(400, "Invalid field for this type")
+		a.error(400, "Invalid field for this class")
 		return
 
 	new_value = a.input("value")
@@ -1358,12 +1371,12 @@ def action_value_set(a):
 		new_value = ""
 
 	# Get old value
-	old_row = mochi.db.row("select value from \"values\" where object = ? and field = ?", object_id, field_id)
+	old_row = mochi.db.row("select value from \"values\" where object=? and field=?", object_id, field_id)
 	old_value = old_row["value"] if old_row else ""
 
 	if str(new_value) != old_value:
 		mochi.db.execute("replace into \"values\" (object, field, value) values (?, ?, ?)", object_id, field_id, str(new_value))
-		mochi.db.execute("update objects set updated = ? where id = ?", mochi.time.now(), object_id)
+		mochi.db.execute("update objects set updated=? where id=?", mochi.time.now(), object_id)
 		log_activity(object_id, a.user.identity.id, "updated", field_id, old_value, str(new_value))
 		broadcast_event(project_id, "values/update", {
 			"project": project_id, "id": object_id,
@@ -1392,27 +1405,27 @@ def action_link_list(a):
 		a.error(400, "Object ID required")
 		return
 
-	row = mochi.db.row("select id from objects where id = ? and project = ?", object_id, project_id)
+	row = mochi.db.row("select id from objects where id=? and project=?", object_id, project_id)
 	if not row:
 		a.error(404, "Object not found")
 		return
 
 	# Get outgoing links
 	outgoing = mochi.db.rows("""
-		select l.target, l.linktype, l.created, o.number, o.type, v.value as title
+		select l.target, l.linktype, l.created, o.number, o.class, v.value as title
 		from links l
 		join objects o on o.id = l.target
 		left join "values" v on v.object = l.target and v.field = 'title'
-		where l.source = ?
+		where l.source=?
 	""", object_id) or []
 
 	# Get incoming links
 	incoming = mochi.db.rows("""
-		select l.source, l.linktype, l.created, o.number, o.type, v.value as title
+		select l.source, l.linktype, l.created, o.number, o.class, v.value as title
 		from links l
 		join objects o on o.id = l.source
 		left join "values" v on v.object = l.source and v.field = 'title'
-		where l.target = ?
+		where l.target=?
 	""", object_id) or []
 
 	return {"data": {"outgoing": outgoing, "incoming": incoming}}
@@ -1456,8 +1469,8 @@ def action_link_create(a):
 		return
 
 	# Verify both objects exist in same project
-	source_row = mochi.db.row("select id from objects where id = ? and project = ?", object_id, project_id)
-	target_row = mochi.db.row("select id from objects where id = ? and project = ?", target_id, project_id)
+	source_row = mochi.db.row("select id from objects where id=? and project=?", object_id, project_id)
+	target_row = mochi.db.row("select id from objects where id=? and project=?", target_id, project_id)
 
 	if not source_row or not target_row:
 		a.error(404, "Object not found")
@@ -1468,7 +1481,7 @@ def action_link_create(a):
 		return
 
 	# Check if link already exists
-	existing = mochi.db.exists("select 1 from links where source = ? and target = ? and linktype = ?", object_id, target_id, linktype)
+	existing = mochi.db.exists("select 1 from links where source=? and target=? and linktype=?", object_id, target_id, linktype)
 	if existing:
 		a.error(400, "Link already exists")
 		return
@@ -1515,7 +1528,7 @@ def action_link_delete(a):
 		a.error(400, "Object, target, and linktype are required")
 		return
 
-	mochi.db.execute("delete from links where source = ? and target = ? and linktype = ?", object_id, target_id, linktype)
+	mochi.db.execute("delete from links where source=? and target=? and linktype=?", object_id, target_id, linktype)
 
 	broadcast_event(project_id, "link/delete", {
 		"project": project_id, "source": object_id,
@@ -1544,13 +1557,13 @@ def action_comment_list(a):
 		a.error(400, "Object ID required")
 		return
 
-	row = mochi.db.row("select id from objects where id = ? and project = ?", object_id, project_id)
+	row = mochi.db.row("select id from objects where id=? and project=?", object_id, project_id)
 	if not row:
 		a.error(404, "Object not found")
 		return
 
 	comments = mochi.db.rows(
-		"select id, parent, author, name, content, created, edited from comments where object = ? order by created asc",
+		"select id, parent, author, name, content, created, edited from comments where object=? order by created asc",
 		object_id
 	) or []
 
@@ -1576,7 +1589,7 @@ def action_comment_create(a):
 		a.error(400, "Object ID required")
 		return
 
-	row = mochi.db.row("select id from objects where id = ? and project = ?", object_id, project_id)
+	row = mochi.db.row("select id from objects where id=? and project=?", object_id, project_id)
 	if not row:
 		a.error(404, "Object not found")
 		return
@@ -1596,7 +1609,7 @@ def action_comment_create(a):
 		comment_id, object_id, parent, a.user.identity.id, a.user.identity.name, content.strip(), now, 0
 	)
 
-	mochi.db.execute("update objects set updated = ? where id = ?", now, object_id)
+	mochi.db.execute("update objects set updated=? where id=?", now, object_id)
 	log_activity(object_id, a.user.identity.id, "commented")
 
 	broadcast_event(project_id, "comment/create", {
@@ -1631,7 +1644,7 @@ def action_comment_update(a):
 		a.error(400, "Object and comment ID required")
 		return
 
-	comment = mochi.db.row("select * from comments where id = ? and object = ?", comment_id, object_id)
+	comment = mochi.db.row("select * from comments where id=? and object=?", comment_id, object_id)
 	if not comment:
 		a.error(404, "Comment not found")
 		return
@@ -1647,7 +1660,7 @@ def action_comment_update(a):
 		return
 
 	now = mochi.time.now()
-	mochi.db.execute("update comments set content = ?, edited = ? where id = ?", content.strip(), now, comment_id)
+	mochi.db.execute("update comments set content=?, edited=? where id=?", content.strip(), now, comment_id)
 
 	broadcast_event(project_id, "comment/update", {
 		"project": project_id, "object": object_id,
@@ -1673,7 +1686,7 @@ def action_comment_delete(a):
 		a.error(400, "Object and comment ID required")
 		return
 
-	comment = mochi.db.row("select * from comments where id = ? and object = ?", comment_id, object_id)
+	comment = mochi.db.row("select * from comments where id=? and object=?", comment_id, object_id)
 	if not comment:
 		a.error(404, "Comment not found")
 		return
@@ -1683,7 +1696,7 @@ def action_comment_delete(a):
 		a.error(403, "Cannot delete another user's comment")
 		return
 
-	mochi.db.execute("delete from comments where id = ?", comment_id)
+	mochi.db.execute("delete from comments where id=?", comment_id)
 
 	broadcast_event(project_id, "comment/delete", {
 		"project": project_id, "object": object_id, "id": comment_id
@@ -1711,13 +1724,13 @@ def action_attachment_list(a):
 		a.error(400, "Object ID required")
 		return
 
-	row = mochi.db.row("select id from objects where id = ? and project = ?", object_id, project_id)
+	row = mochi.db.row("select id from objects where id=? and project=?", object_id, project_id)
 	if not row:
 		a.error(404, "Object not found")
 		return
 
 	attachments = mochi.db.rows(
-		"select id, name, size, mimetype, created from attachments where object = ? order by created desc",
+		"select id, name, size, mimetype, created from attachments where object=? order by created desc",
 		object_id
 	) or []
 
@@ -1747,7 +1760,7 @@ def action_attachment_create(a):
 		a.error(400, "Object ID required")
 		return
 
-	row = mochi.db.row("select id from objects where id = ? and project = ?", object_id, project_id)
+	row = mochi.db.row("select id from objects where id=? and project=?", object_id, project_id)
 	if not row:
 		a.error(404, "Object not found")
 		return
@@ -1770,7 +1783,7 @@ def action_attachment_create(a):
 		attachment_id, object_id, file.name, len(file.data), file.mimetype or "", now
 	)
 
-	mochi.db.execute("update objects set updated = ? where id = ?", now, object_id)
+	mochi.db.execute("update objects set updated=? where id=?", now, object_id)
 	log_activity(object_id, a.user.identity.id, "attached", "", "", file.name)
 
 	return {"data": {"id": attachment_id, "name": file.name, "size": len(file.data)}}
@@ -1801,7 +1814,7 @@ def action_attachment_delete(a):
 		a.error(400, "Object and attachment ID required")
 		return
 
-	attachment = mochi.db.row("select * from attachments where id = ? and object = ?", attachment_id, object_id)
+	attachment = mochi.db.row("select * from attachments where id=? and object=?", attachment_id, object_id)
 	if not attachment:
 		a.error(404, "Attachment not found")
 		return
@@ -1810,7 +1823,7 @@ def action_attachment_delete(a):
 	mochi.attachment.delete(object_id, attachment_id)
 
 	# Delete record
-	mochi.db.execute("delete from attachments where id = ?", attachment_id)
+	mochi.db.execute("delete from attachments where id=?", attachment_id)
 
 	return {"data": {"success": True}}
 
@@ -1834,13 +1847,13 @@ def action_activity_list(a):
 		a.error(400, "Object ID required")
 		return
 
-	row = mochi.db.row("select id from objects where id = ? and project = ?", object_id, project_id)
+	row = mochi.db.row("select id from objects where id=? and project=?", object_id, project_id)
 	if not row:
 		a.error(404, "Object not found")
 		return
 
 	rows = mochi.db.rows(
-		"select id, actor, action, field, oldvalue, newvalue, created from activity where object = ? order by created desc",
+		"select id, actor, action, field, oldvalue, newvalue, created from activity where object=? order by created desc",
 		object_id
 	) or []
 
@@ -1882,15 +1895,15 @@ def action_watcher_list(a):
 		a.error(400, "Object ID required")
 		return
 
-	row = mochi.db.row("select id from objects where id = ? and project = ?", object_id, project_id)
+	row = mochi.db.row("select id from objects where id=? and project=?", object_id, project_id)
 	if not row:
 		a.error(404, "Object not found")
 		return
 
-	watchers = mochi.db.rows("select user, created from watchers where object = ?", object_id) or []
+	watchers = mochi.db.rows("select user, created from watchers where object=?", object_id) or []
 
 	# Check if current user is watching
-	watching = mochi.db.exists("select 1 from watchers where object = ? and user = ?", object_id, a.user.identity.id)
+	watching = mochi.db.exists("select 1 from watchers where object=? and user=?", object_id, a.user.identity.id)
 
 	return {"data": {"watchers": watchers, "watching": watching}}
 
@@ -1909,7 +1922,7 @@ def action_watcher_add(a):
 		a.error(400, "Object ID required")
 		return
 
-	row = mochi.db.row("select id from objects where id = ? and project = ?", object_id, project_id)
+	row = mochi.db.row("select id from objects where id=? and project=?", object_id, project_id)
 	if not row:
 		a.error(404, "Object not found")
 		return
@@ -1938,13 +1951,13 @@ def action_watcher_remove(a):
 		a.error(400, "Object ID required")
 		return
 
-	row = mochi.db.row("select id from objects where id = ? and project = ?", object_id, project_id)
+	row = mochi.db.row("select id from objects where id=? and project=?", object_id, project_id)
 	if not row:
 		a.error(404, "Object not found")
 		return
 
 	# Remove current user as watcher
-	mochi.db.execute("delete from watchers where object = ? and user = ?", object_id, a.user.identity.id)
+	mochi.db.execute("delete from watchers where object=? and user=?", object_id, a.user.identity.id)
 
 	return {"data": {"success": True, "watching": False}}
 
@@ -1969,14 +1982,14 @@ def action_view_list(a):
 		return
 
 	views = mochi.db.rows(
-		"select id, name, viewtype, filter, columns, rows, sort, direction from views where project = ? order by name",
+		"select id, name, viewtype, filter, columns, rows, sort, direction from views where project=? order by name",
 		project_id
 	) or []
 
-	# Add cardfields to each view
+	# Add fields to each view
 	for v in views:
-		view_cardfields = mochi.db.rows("select field from view_cardfields where project = ? and view = ? order by rank", project_id, v["id"]) or []
-		v["cardfields"] = ",".join([cf["field"] for cf in view_cardfields])
+		view_fields = mochi.db.rows("select field from view_fields where project=? and view=? order by rank", project_id, v["id"]) or []
+		v["fields"] = ",".join([vf["field"] for vf in view_fields])
 
 	return {"data": {"views": views}}
 
@@ -2013,7 +2026,7 @@ def action_view_create(a):
 	view_id = name.strip().lower().replace(" ", "_")
 
 	# Check if ID already exists
-	existing = mochi.db.exists("select 1 from views where project = ? and id = ?", project_id, view_id)
+	existing = mochi.db.exists("select 1 from views where project=? and id=?", project_id, view_id)
 	if existing:
 		a.error(400, "A view with this name already exists")
 		return
@@ -2021,7 +2034,7 @@ def action_view_create(a):
 	filter_str = a.input("filter") or ""
 	columns = a.input("columns") or "status"
 	rows = a.input("rows") or ""
-	cardfields = a.input("cardfields") or "title,priority,owner,due"
+	fields = a.input("fields") or "title,priority,owner,due"
 	sort = a.input("sort") or ""
 	direction = a.input("direction") or "asc"
 
@@ -2030,18 +2043,18 @@ def action_view_create(a):
 		project_id, view_id, name.strip(), viewtype, filter_str, columns, rows, sort, direction
 	)
 
-	# Add card fields to junction table
-	for i, field in enumerate(cardfields.split(",")):
+	# Add fields to junction table
+	for i, field in enumerate(fields.split(",")):
 		if field.strip():
 			mochi.db.execute(
-				"insert into view_cardfields (project, view, field, rank) values (?, ?, ?, ?)",
+				"insert into view_fields (project, view, field, rank) values (?, ?, ?, ?)",
 				project_id, view_id, field.strip(), i
 			)
 
 	broadcast_event(project_id, "view/create", {
 		"project": project_id, "id": view_id, "name": name.strip(),
 		"viewtype": viewtype, "filter": filter_str, "columns": columns,
-		"rows": rows, "cardfields": cardfields, "sort": sort, "direction": direction
+		"rows": rows, "fields": fields, "sort": sort, "direction": direction
 	})
 
 	return {"data": {
@@ -2074,7 +2087,7 @@ def action_view_update(a):
 		a.error(400, "View ID required")
 		return
 
-	view = mochi.db.row("select * from views where project = ? and id = ?", project_id, view_id)
+	view = mochi.db.row("select * from views where project=? and id=?", project_id, view_id)
 	if not view:
 		a.error(404, "View not found")
 		return
@@ -2085,65 +2098,65 @@ def action_view_update(a):
 	filter_str = a.input("filter")
 	columns = a.input("columns")
 	rows = a.input("rows")
-	cardfields = a.input("cardfields")
+	fields = a.input("fields")
 	sort = a.input("sort")
 	direction = a.input("direction")
 
 	if name != None and name.strip() != "":
-		mochi.db.execute("update views set name = ? where project = ? and id = ?", name.strip(), project_id, view_id)
+		mochi.db.execute("update views set name=? where project=? and id=?", name.strip(), project_id, view_id)
 	if viewtype != None and viewtype != "":
 		if viewtype not in ["board", "tree"]:
 			a.error(400, "Invalid view type")
 			return
-		mochi.db.execute("update views set viewtype = ? where project = ? and id = ?", viewtype, project_id, view_id)
+		mochi.db.execute("update views set viewtype=? where project=? and id=?", viewtype, project_id, view_id)
 	if filter_str != None:
-		mochi.db.execute("update views set filter = ? where project = ? and id = ?", filter_str, project_id, view_id)
+		mochi.db.execute("update views set filter=? where project=? and id=?", filter_str, project_id, view_id)
 	if columns != None:
-		mochi.db.execute("update views set columns = ? where project = ? and id = ?", columns, project_id, view_id)
+		mochi.db.execute("update views set columns=? where project=? and id=?", columns, project_id, view_id)
 	if rows != None:
-		mochi.db.execute("update views set rows = ? where project = ? and id = ?", rows, project_id, view_id)
-	if cardfields != None:
-		# Delete existing cardfields and insert new ones
-		mochi.db.execute("delete from view_cardfields where project = ? and view = ?", project_id, view_id)
-		for i, field in enumerate(cardfields.split(",")):
+		mochi.db.execute("update views set rows=? where project=? and id=?", rows, project_id, view_id)
+	if fields != None:
+		# Delete existing fields and insert new ones
+		mochi.db.execute("delete from view_fields where project=? and view=?", project_id, view_id)
+		for i, field in enumerate(fields.split(",")):
 			if field.strip():
 				mochi.db.execute(
-					"insert into view_cardfields (project, view, field, rank) values (?, ?, ?, ?)",
+					"insert into view_fields (project, view, field, rank) values (?, ?, ?, ?)",
 					project_id, view_id, field.strip(), i
 				)
 	if sort != None:
-		mochi.db.execute("update views set sort = ? where project = ? and id = ?", sort, project_id, view_id)
+		mochi.db.execute("update views set sort=? where project=? and id=?", sort, project_id, view_id)
 	if direction != None and direction != "":
 		if direction not in ["asc", "desc"]:
 			a.error(400, "Invalid direction")
 			return
-		mochi.db.execute("update views set direction = ? where project = ? and id = ?", direction, project_id, view_id)
+		mochi.db.execute("update views set direction=? where project=? and id=?", direction, project_id, view_id)
 
-	# Update view types if provided (comma-separated list of type IDs, empty string = all types)
-	view_types = a.input("types")
-	if view_types != None:
-		# Delete existing view types
-		mochi.db.execute("delete from view_types where project = ? and view = ?", project_id, view_id)
-		# Insert new view types
-		if view_types:
-			type_ids = [t.strip() for t in view_types.split(",") if t.strip()]
-			for type_id in type_ids:
+	# Update view classes if provided (comma-separated list of class IDs, empty string = all classes)
+	view_classes_input = a.input("classes")
+	if view_classes_input != None:
+		# Delete existing view classes
+		mochi.db.execute("delete from view_classes where project=? and view=?", project_id, view_id)
+		# Insert new view classes
+		if view_classes_input:
+			cls_ids = [c.strip() for c in view_classes_input.split(",") if c.strip()]
+			for cls_id in cls_ids:
 				mochi.db.execute(
-					"insert into view_types (project, view, type) values (?, ?, ?)",
-					project_id, view_id, type_id
+					"insert into view_classes (project, view, class) values (?, ?, ?)",
+					project_id, view_id, cls_id
 				)
 
 	# Read back updated view for broadcast
 	updated = mochi.db.row("select * from views where project=? and id=?", project_id, view_id)
 	if updated:
-		# Get cardfields from junction table
-		view_cardfields = mochi.db.rows("select field from view_cardfields where project = ? and view = ? order by rank", project_id, view_id) or []
-		updated_cardfields = ",".join([cf["field"] for cf in view_cardfields])
+		# Get fields from junction table
+		view_fields = mochi.db.rows("select field from view_fields where project=? and view=? order by rank", project_id, view_id) or []
+		updated_fields = ",".join([vf["field"] for vf in view_fields])
 		broadcast_event(project_id, "view/update", {
 			"project": project_id, "id": view_id,
 			"name": updated["name"], "viewtype": updated["viewtype"],
 			"filter": updated["filter"], "columns": updated["columns"],
-			"rows": updated["rows"], "cardfields": updated_cardfields,
+			"rows": updated["rows"], "fields": updated_fields,
 			"sort": updated["sort"], "direction": updated["direction"]
 		})
 
@@ -2174,14 +2187,14 @@ def action_view_delete(a):
 		return
 
 	# Don't allow deleting the last view
-	count = mochi.db.row("select count(*) as cnt from views where project = ?", project_id)
+	count = mochi.db.row("select count(*) as cnt from views where project=?", project_id)
 	if count and count["cnt"] <= 1:
 		a.error(400, "Cannot delete the last view")
 		return
 
-	mochi.db.execute("delete from view_cardfields where project = ? and view = ?", project_id, view_id)
-	mochi.db.execute("delete from view_types where project = ? and view = ?", project_id, view_id)
-	mochi.db.execute("delete from views where project = ? and id = ?", project_id, view_id)
+	mochi.db.execute("delete from view_fields where project=? and view=?", project_id, view_id)
+	mochi.db.execute("delete from view_classes where project=? and view=?", project_id, view_id)
+	mochi.db.execute("delete from views where project=? and id=?", project_id, view_id)
 
 	broadcast_event(project_id, "view/delete", {"project": project_id, "id": view_id})
 
@@ -2192,7 +2205,7 @@ def action_view_delete(a):
 # Type Actions
 # ============================================================================
 
-def action_type_list(a):
+def action_class_list(a):
 	if not a.user:
 		a.error(401, "Not logged in")
 		return
@@ -2207,11 +2220,11 @@ def action_type_list(a):
 		a.error(404, "Project not found")
 		return
 
-	types = mochi.db.rows("select id, name, rank from types where project = ? order by rank", project_id) or []
+	classes = mochi.db.rows("select id, name, rank from classes where project=? order by rank", project_id) or []
 
-	return {"data": {"types": types}}
+	return {"data": {"classes": classes}}
 
-def action_type_create(a):
+def action_class_create(a):
 	if not a.user:
 		a.error(401, "Not logged in")
 		return
@@ -2235,43 +2248,43 @@ def action_type_create(a):
 		a.error(400, "Name is required")
 		return
 
-	# Generate type ID from name
-	type_id = name.strip().lower().replace(" ", "_")
+	# Generate class ID from name
+	class_id = name.strip().lower().replace(" ", "_")
 
 	# Check if ID already exists
-	existing = mochi.db.exists("select 1 from types where project = ? and id = ?", project_id, type_id)
+	existing = mochi.db.exists("select 1 from classes where project=? and id=?", project_id, class_id)
 	if existing:
-		a.error(400, "A type with this name already exists")
+		a.error(400, "A class with this name already exists")
 		return
 
 	# Get max rank
-	max_rank = mochi.db.row("select max(rank) as m from types where project = ?", project_id)
+	max_rank = mochi.db.row("select max(rank) as m from classes where project=?", project_id)
 	rank = (max_rank["m"] or 0) + 1 if max_rank else 0
 
 	mochi.db.execute(
-		"insert into types (project, id, name, rank) values (?, ?, ?, ?)",
-		project_id, type_id, name.strip(), rank
+		"insert into classes (project, id, name, rank) values (?, ?, ?, ?)",
+		project_id, class_id, name.strip(), rank
 	)
 
 	# Add default title field
 	mochi.db.execute(
-		"insert into fields (project, type, id, name, fieldtype, required, rank) values (?, ?, ?, ?, ?, ?, ?)",
-		project_id, type_id, "title", "Title", "text", 1, 0
+		"insert into fields (project, class, id, name, fieldtype, required, rank) values (?, ?, ?, ?, ?, ?, ?)",
+		project_id, class_id, "title", "Title", "text", 1, 0
 	)
 
 	# Set hierarchy to allow root by default
 	mochi.db.execute(
-		"insert into hierarchy (project, type, parent) values (?, ?, ?)",
-		project_id, type_id, ""
+		"insert into hierarchy (project, class, parent) values (?, ?, ?)",
+		project_id, class_id, ""
 	)
 
-	broadcast_event(project_id, "type/create", {
-		"project": project_id, "id": type_id, "name": name.strip(), "rank": rank
+	broadcast_event(project_id, "class/create", {
+		"project": project_id, "id": class_id, "name": name.strip(), "rank": rank
 	})
 
-	return {"data": {"id": type_id, "name": name.strip(), "rank": rank}}
+	return {"data": {"id": class_id, "name": name.strip(), "rank": rank}}
 
-def action_type_update(a):
+def action_class_update(a):
 	if not a.user:
 		a.error(401, "Not logged in")
 		return
@@ -2290,27 +2303,27 @@ def action_type_update(a):
 		a.error(403, "Cannot modify remote project")
 		return
 
-	type_id = a.input("type")
-	if not type_id:
+	class_id = a.input("class")
+	if not class_id:
 		a.error(400, "Type ID required")
 		return
 
-	type_row = mochi.db.row("select * from types where project = ? and id = ?", project_id, type_id)
-	if not type_row:
-		a.error(404, "Type not found")
+	class_row = mochi.db.row("select * from classes where project=? and id=?", project_id, class_id)
+	if not class_row:
+		a.error(404, "Class not found")
 		return
 
 	name = a.input("name")
 	if name != None:
-		mochi.db.execute("update types set name = ? where project = ? and id = ?", name.strip(), project_id, type_id)
+		mochi.db.execute("update classes set name=? where project=? and id=?", name.strip(), project_id, class_id)
 
-	broadcast_event(project_id, "type/update", {
-		"project": project_id, "id": type_id, "name": name or type_row["name"]
+	broadcast_event(project_id, "class/update", {
+		"project": project_id, "id": class_id, "name": name or class_row["name"]
 	})
 
 	return {"data": {"success": True}}
 
-def action_type_delete(a):
+def action_class_delete(a):
 	if not a.user:
 		a.error(401, "Not logged in")
 		return
@@ -2329,24 +2342,24 @@ def action_type_delete(a):
 		a.error(403, "Cannot modify remote project")
 		return
 
-	type_id = a.input("type")
-	if not type_id:
-		a.error(400, "Type ID required")
+	class_id = a.input("class")
+	if not class_id:
+		a.error(400, "Class ID required")
 		return
 
-	# Check if there are objects of this type
-	has_objects = mochi.db.exists("select 1 from objects where project = ? and type = ?", project_id, type_id)
+	# Check if there are objects of this class
+	has_objects = mochi.db.exists("select 1 from objects where project=? and class=?", project_id, class_id)
 	if has_objects:
-		a.error(400, "Cannot delete type with existing objects")
+		a.error(400, "Cannot delete class with existing objects")
 		return
 
-	# Delete in order: options, fields, hierarchy, type
-	mochi.db.execute("delete from options where project = ? and type = ?", project_id, type_id)
-	mochi.db.execute("delete from fields where project = ? and type = ?", project_id, type_id)
-	mochi.db.execute("delete from hierarchy where project = ? and type = ?", project_id, type_id)
-	mochi.db.execute("delete from types where project = ? and id = ?", project_id, type_id)
+	# Delete in order: options, fields, hierarchy, class
+	mochi.db.execute("delete from options where project=? and class=?", project_id, class_id)
+	mochi.db.execute("delete from fields where project=? and class=?", project_id, class_id)
+	mochi.db.execute("delete from hierarchy where project=? and class=?", project_id, class_id)
+	mochi.db.execute("delete from classes where project=? and id=?", project_id, class_id)
 
-	broadcast_event(project_id, "type/delete", {"project": project_id, "id": type_id})
+	broadcast_event(project_id, "class/delete", {"project": project_id, "id": class_id})
 
 	return {"data": {"success": True}}
 
@@ -2370,12 +2383,12 @@ def action_hierarchy_get(a):
 		a.error(404, "Project not found")
 		return
 
-	type_id = a.input("type")
-	if not type_id:
+	class_id = a.input("class")
+	if not class_id:
 		a.error(400, "Type ID required")
 		return
 
-	parents = mochi.db.rows("select parent from hierarchy where project = ? and type = ?", project_id, type_id) or []
+	parents = mochi.db.rows("select parent from hierarchy where project=? and class=?", project_id, class_id) or []
 	parent_list = [p["parent"] for p in parents]
 
 	return {"data": {"parents": parent_list}}
@@ -2399,13 +2412,13 @@ def action_hierarchy_set(a):
 		a.error(403, "Cannot modify remote project")
 		return
 
-	type_id = a.input("type")
-	if not type_id:
+	class_id = a.input("class")
+	if not class_id:
 		a.error(400, "Type ID required")
 		return
 
-	type_row = mochi.db.row("select id from types where project = ? and id = ?", project_id, type_id)
-	if not type_row:
+	class_row = mochi.db.row("select id from classes where project=? and id=?", project_id, class_id)
+	if not class_row:
 		a.error(404, "Type not found")
 		return
 
@@ -2422,22 +2435,22 @@ def action_hierarchy_set(a):
 		parents = [p.strip() for p in parents_str.split(",")]
 
 	# Delete existing hierarchy
-	mochi.db.execute("delete from hierarchy where project = ? and type = ?", project_id, type_id)
+	mochi.db.execute("delete from hierarchy where project=? and class=?", project_id, class_id)
 
 	# Insert new hierarchy entries
 	for parent in parents:
-		# Verify parent type exists (unless it's empty string for root)
+		# Verify parent class exists (unless it's empty string for root)
 		if parent and parent != "":
-			parent_exists = mochi.db.exists("select 1 from types where project = ? and id = ?", project_id, parent)
+			parent_exists = mochi.db.exists("select 1 from classes where project=? and id=?", project_id, parent)
 			if not parent_exists:
 				continue  # Skip invalid parents
 		mochi.db.execute(
-			"insert into hierarchy (project, type, parent) values (?, ?, ?)",
-			project_id, type_id, parent
+			"insert into hierarchy (project, class, parent) values (?, ?, ?)",
+			project_id, class_id, parent
 		)
 
 	broadcast_event(project_id, "hierarchy/set", {
-		"project": project_id, "type": type_id, "parents": parents
+		"project": project_id, "class": class_id, "parents": parents
 	})
 
 	return {"data": {"success": True}}
@@ -2462,14 +2475,14 @@ def action_field_list(a):
 		a.error(404, "Project not found")
 		return
 
-	type_id = a.input("type")
-	if not type_id:
-		a.error(400, "Type ID required")
+	class_id = a.input("class")
+	if not class_id:
+		a.error(400, "Class ID required")
 		return
 
 	fields = mochi.db.rows(
-		"select id, name, fieldtype, required, multi, rank, min, max, pattern, minlength, maxlength, prefix, suffix, format, card, position, rows from fields where project = ? and type = ? order by rank",
-		project_id, type_id
+		"select id, name, fieldtype, required, multi, rank, min, max, pattern, minlength, maxlength, prefix, suffix, format, card, position, rows from fields where project=? and class=? order by rank",
+		project_id, class_id
 	) or []
 
 	return {"data": {"fields": fields}}
@@ -2493,13 +2506,13 @@ def action_field_create(a):
 		a.error(403, "Cannot modify remote project")
 		return
 
-	type_id = a.input("type")
-	if not type_id:
+	class_id = a.input("class")
+	if not class_id:
 		a.error(400, "Type ID required")
 		return
 
-	type_row = mochi.db.row("select id from types where project = ? and id = ?", project_id, type_id)
-	if not type_row:
+	class_row = mochi.db.row("select id from classes where project=? and id=?", project_id, class_id)
+	if not class_row:
 		a.error(404, "Type not found")
 		return
 
@@ -2517,13 +2530,13 @@ def action_field_create(a):
 	field_id = name.strip().lower().replace(" ", "_")
 
 	# Check if ID already exists
-	existing = mochi.db.exists("select 1 from fields where project = ? and type = ? and id = ?", project_id, type_id, field_id)
+	existing = mochi.db.exists("select 1 from fields where project=? and class=? and id=?", project_id, class_id, field_id)
 	if existing:
 		a.error(400, "A field with this name already exists")
 		return
 
 	# Get max rank
-	max_rank = mochi.db.row("select max(rank) as m from fields where project = ? and type = ?", project_id, type_id)
+	max_rank = mochi.db.row("select max(rank) as m from fields where project=? and class=?", project_id, class_id)
 	rank = (max_rank["m"] or 0) + 1 if max_rank else 0
 
 	required = 1 if a.input("required") == "1" or a.input("required") == "true" else 0
@@ -2532,12 +2545,12 @@ def action_field_create(a):
 	rows = int(a.input("rows")) if a.input("rows") else 1
 
 	mochi.db.execute(
-		"insert into fields (project, type, id, name, fieldtype, required, multi, rank, card, rows) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-		project_id, type_id, field_id, name.strip(), fieldtype, required, multi, rank, card, rows
+		"insert into fields (project, class, id, name, fieldtype, required, multi, rank, card, rows) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+		project_id, class_id, field_id, name.strip(), fieldtype, required, multi, rank, card, rows
 	)
 
 	broadcast_event(project_id, "field/create", {
-		"project": project_id, "type": type_id, "id": field_id,
+		"project": project_id, "class": class_id, "id": field_id,
 		"name": name.strip(), "fieldtype": fieldtype, "required": required,
 		"multi": multi, "rank": rank, "card": card, "rows": rows
 	})
@@ -2563,13 +2576,13 @@ def action_field_update(a):
 		a.error(403, "Cannot modify remote project")
 		return
 
-	type_id = a.input("type")
+	class_id = a.input("class")
 	field_id = a.input("field")
-	if not type_id or not field_id:
+	if not class_id or not field_id:
 		a.error(400, "Type and field ID required")
 		return
 
-	field_row = mochi.db.row("select * from fields where project = ? and type = ? and id = ?", project_id, type_id, field_id)
+	field_row = mochi.db.row("select * from fields where project=? and class=? and id=?", project_id, class_id, field_id)
 	if not field_row:
 		a.error(404, "Field not found")
 		return
@@ -2591,39 +2604,39 @@ def action_field_update(a):
 	rows_val = a.input("rows")
 
 	if name != None:
-		mochi.db.execute("update fields set name = ? where project = ? and type = ? and id = ?", name.strip(), project_id, type_id, field_id)
+		mochi.db.execute("update fields set name=? where project=? and class=? and id=?", name.strip(), project_id, class_id, field_id)
 	if required != None:
 		req_val = 1 if required == "1" or required == "true" else 0
-		mochi.db.execute("update fields set required = ? where project = ? and type = ? and id = ?", req_val, project_id, type_id, field_id)
+		mochi.db.execute("update fields set required=? where project=? and class=? and id=?", req_val, project_id, class_id, field_id)
 	if multi != None:
 		multi_val = 1 if multi == "1" or multi == "true" else 0
-		mochi.db.execute("update fields set multi = ? where project = ? and type = ? and id = ?", multi_val, project_id, type_id, field_id)
+		mochi.db.execute("update fields set multi=? where project=? and class=? and id=?", multi_val, project_id, class_id, field_id)
 	if card != None:
 		card_val = 1 if card == "1" or card == "true" else 0
-		mochi.db.execute("update fields set card = ? where project = ? and type = ? and id = ?", card_val, project_id, type_id, field_id)
+		mochi.db.execute("update fields set card=? where project=? and class=? and id=?", card_val, project_id, class_id, field_id)
 	if min_val != None:
-		mochi.db.execute("update fields set min = ? where project = ? and type = ? and id = ?", min_val, project_id, type_id, field_id)
+		mochi.db.execute("update fields set min=? where project=? and class=? and id=?", min_val, project_id, class_id, field_id)
 	if max_val != None:
-		mochi.db.execute("update fields set max = ? where project = ? and type = ? and id = ?", max_val, project_id, type_id, field_id)
+		mochi.db.execute("update fields set max=? where project=? and class=? and id=?", max_val, project_id, class_id, field_id)
 	if pattern != None:
-		mochi.db.execute("update fields set pattern = ? where project = ? and type = ? and id = ?", pattern, project_id, type_id, field_id)
+		mochi.db.execute("update fields set pattern=? where project=? and class=? and id=?", pattern, project_id, class_id, field_id)
 	if minlength != None:
-		mochi.db.execute("update fields set minlength = ? where project = ? and type = ? and id = ?", int(minlength), project_id, type_id, field_id)
+		mochi.db.execute("update fields set minlength=? where project=? and class=? and id=?", int(minlength), project_id, class_id, field_id)
 	if maxlength != None:
-		mochi.db.execute("update fields set maxlength = ? where project = ? and type = ? and id = ?", int(maxlength), project_id, type_id, field_id)
+		mochi.db.execute("update fields set maxlength=? where project=? and class=? and id=?", int(maxlength), project_id, class_id, field_id)
 	if prefix != None:
-		mochi.db.execute("update fields set prefix = ? where project = ? and type = ? and id = ?", prefix, project_id, type_id, field_id)
+		mochi.db.execute("update fields set prefix=? where project=? and class=? and id=?", prefix, project_id, class_id, field_id)
 	if suffix != None:
-		mochi.db.execute("update fields set suffix = ? where project = ? and type = ? and id = ?", suffix, project_id, type_id, field_id)
+		mochi.db.execute("update fields set suffix=? where project=? and class=? and id=?", suffix, project_id, class_id, field_id)
 	if format_str != None:
-		mochi.db.execute("update fields set format = ? where project = ? and type = ? and id = ?", format_str, project_id, type_id, field_id)
+		mochi.db.execute("update fields set format=? where project=? and class=? and id=?", format_str, project_id, class_id, field_id)
 	if position != None:
-		mochi.db.execute("update fields set position = ? where project = ? and type = ? and id = ?", position, project_id, type_id, field_id)
+		mochi.db.execute("update fields set position=? where project=? and class=? and id=?", position, project_id, class_id, field_id)
 	if rows_val != None:
-		mochi.db.execute("update fields set rows=? where project=? and type=? and id=?", int(rows_val), project_id, type_id, field_id)
+		mochi.db.execute("update fields set rows=? where project=? and class=? and id=?", int(rows_val), project_id, class_id, field_id)
 
 	# Build update data from provided fields
-	update_data = {"project": project_id, "type": type_id, "id": field_id}
+	update_data = {"project": project_id, "class": class_id, "id": field_id}
 	if name != None:
 		update_data["name"] = name.strip()
 	if required != None:
@@ -2675,19 +2688,19 @@ def action_field_delete(a):
 		a.error(403, "Cannot modify remote project")
 		return
 
-	type_id = a.input("type")
+	class_id = a.input("class")
 	field_id = a.input("field")
-	if not type_id or not field_id:
+	if not class_id or not field_id:
 		a.error(400, "Type and field ID required")
 		return
 
 	# Delete options for this field
-	mochi.db.execute("delete from options where project = ? and type = ? and field = ?", project_id, type_id, field_id)
+	mochi.db.execute("delete from options where project=? and class=? and field=?", project_id, class_id, field_id)
 
 	# Delete field
-	mochi.db.execute("delete from fields where project = ? and type = ? and id = ?", project_id, type_id, field_id)
+	mochi.db.execute("delete from fields where project=? and class=? and id=?", project_id, class_id, field_id)
 
-	broadcast_event(project_id, "field/delete", {"project": project_id, "type": type_id, "id": field_id})
+	broadcast_event(project_id, "field/delete", {"project": project_id, "class": class_id, "id": field_id})
 
 	return {"data": {"success": True}}
 
@@ -2710,8 +2723,8 @@ def action_field_reorder(a):
 		a.error(403, "Cannot modify remote project")
 		return
 
-	type_id = a.input("type")
-	if not type_id:
+	class_id = a.input("class")
+	if not class_id:
 		a.error(400, "Type ID required")
 		return
 
@@ -2722,11 +2735,11 @@ def action_field_reorder(a):
 	# Update sort order for each field
 	for i, field_id in enumerate(order):
 		mochi.db.execute(
-			"update fields set sort = ? where project = ? and type = ? and id = ?",
-			i, project_id, type_id, field_id
+			"update fields set sort=? where project=? and class=? and id=?",
+			i, project_id, class_id, field_id
 		)
 
-	broadcast_event(project_id, "field/reorder", {"project": project_id, "type": type_id, "order": order})
+	broadcast_event(project_id, "field/reorder", {"project": project_id, "class": class_id, "order": order})
 
 	return {"data": {"success": True}}
 
@@ -2750,15 +2763,15 @@ def action_option_list(a):
 		a.error(404, "Project not found")
 		return
 
-	type_id = a.input("type")
+	class_id = a.input("class")
 	field_id = a.input("field")
-	if not type_id or not field_id:
+	if not class_id or not field_id:
 		a.error(400, "Type and field ID required")
 		return
 
 	options = mochi.db.rows(
-		"select id, name, colour, icon, rank from options where project = ? and type = ? and field = ? order by rank",
-		project_id, type_id, field_id
+		"select id, name, colour, icon, rank from options where project=? and class=? and field=? order by rank",
+		project_id, class_id, field_id
 	) or []
 
 	return {"data": {"options": options}}
@@ -2782,14 +2795,14 @@ def action_option_create(a):
 		a.error(403, "Cannot modify remote project")
 		return
 
-	type_id = a.input("type")
+	class_id = a.input("class")
 	field_id = a.input("field")
-	if not type_id or not field_id:
+	if not class_id or not field_id:
 		a.error(400, "Type and field ID required")
 		return
 
-	# Verify field exists and is enumerated type
-	field_row = mochi.db.row("select fieldtype from fields where project = ? and type = ? and id = ?", project_id, type_id, field_id)
+	# Verify field exists and is enumerated
+	field_row = mochi.db.row("select fieldtype from fields where project=? and class=? and id=?", project_id, class_id, field_id)
 	if not field_row:
 		a.error(404, "Field not found")
 		return
@@ -2806,25 +2819,25 @@ def action_option_create(a):
 	option_id = name.strip().lower().replace(" ", "_")
 
 	# Check if ID already exists
-	existing = mochi.db.exists("select 1 from options where project = ? and type = ? and field = ? and id = ?", project_id, type_id, field_id, option_id)
+	existing = mochi.db.exists("select 1 from options where project=? and class=? and field=? and id=?", project_id, class_id, field_id, option_id)
 	if existing:
 		a.error(400, "An option with this name already exists")
 		return
 
 	# Get max rank
-	max_rank = mochi.db.row("select max(rank) as m from options where project = ? and type = ? and field = ?", project_id, type_id, field_id)
+	max_rank = mochi.db.row("select max(rank) as m from options where project=? and class=? and field=?", project_id, class_id, field_id)
 	rank = (max_rank["m"] or 0) + 1 if max_rank else 0
 
 	colour = a.input("colour") or "#94a3b8"
 	icon = a.input("icon") or ""
 
 	mochi.db.execute(
-		"insert into options (project, type, field, id, name, colour, icon, rank) values (?, ?, ?, ?, ?, ?, ?, ?)",
-		project_id, type_id, field_id, option_id, name.strip(), colour, icon, rank
+		"insert into options (project, class, field, id, name, colour, icon, rank) values (?, ?, ?, ?, ?, ?, ?, ?)",
+		project_id, class_id, field_id, option_id, name.strip(), colour, icon, rank
 	)
 
 	broadcast_event(project_id, "option/create", {
-		"project": project_id, "type": type_id, "field": field_id,
+		"project": project_id, "class": class_id, "field": field_id,
 		"id": option_id, "name": name.strip(), "colour": colour, "icon": icon, "rank": rank
 	})
 
@@ -2849,14 +2862,14 @@ def action_option_update(a):
 		a.error(403, "Cannot modify remote project")
 		return
 
-	type_id = a.input("type")
+	class_id = a.input("class")
 	field_id = a.input("field")
 	option_id = a.input("option")
-	if not type_id or not field_id or not option_id:
+	if not class_id or not field_id or not option_id:
 		a.error(400, "Type, field, and option ID required")
 		return
 
-	option_row = mochi.db.row("select * from options where project = ? and type = ? and field = ? and id = ?", project_id, type_id, field_id, option_id)
+	option_row = mochi.db.row("select * from options where project=? and class=? and field=? and id=?", project_id, class_id, field_id, option_id)
 	if not option_row:
 		a.error(404, "Option not found")
 		return
@@ -2866,13 +2879,13 @@ def action_option_update(a):
 	icon = a.input("icon")
 
 	if name != None:
-		mochi.db.execute("update options set name = ? where project = ? and type = ? and field = ? and id = ?", name.strip(), project_id, type_id, field_id, option_id)
+		mochi.db.execute("update options set name=? where project=? and class=? and field=? and id=?", name.strip(), project_id, class_id, field_id, option_id)
 	if colour != None:
-		mochi.db.execute("update options set colour = ? where project = ? and type = ? and field = ? and id = ?", colour, project_id, type_id, field_id, option_id)
+		mochi.db.execute("update options set colour=? where project=? and class=? and field=? and id=?", colour, project_id, class_id, field_id, option_id)
 	if icon != None:
-		mochi.db.execute("update options set icon = ? where project = ? and type = ? and field = ? and id = ?", icon, project_id, type_id, field_id, option_id)
+		mochi.db.execute("update options set icon=? where project=? and class=? and field=? and id=?", icon, project_id, class_id, field_id, option_id)
 
-	update_data = {"project": project_id, "type": type_id, "field": field_id, "id": option_id}
+	update_data = {"project": project_id, "class": class_id, "field": field_id, "id": option_id}
 	if name != None:
 		update_data["name"] = name.strip()
 	if colour != None:
@@ -2902,16 +2915,16 @@ def action_option_delete(a):
 		a.error(403, "Cannot modify remote project")
 		return
 
-	type_id = a.input("type")
+	class_id = a.input("class")
 	field_id = a.input("field")
 	option_id = a.input("option")
-	if not type_id or not field_id or not option_id:
+	if not class_id or not field_id or not option_id:
 		a.error(400, "Type, field, and option ID required")
 		return
 
-	mochi.db.execute("delete from options where project = ? and type = ? and field = ? and id = ?", project_id, type_id, field_id, option_id)
+	mochi.db.execute("delete from options where project=? and class=? and field=? and id=?", project_id, class_id, field_id, option_id)
 
-	broadcast_event(project_id, "option/delete", {"project": project_id, "type": type_id, "field": field_id, "id": option_id})
+	broadcast_event(project_id, "option/delete", {"project": project_id, "class": class_id, "field": field_id, "id": option_id})
 
 	return {"data": {"success": True}}
 
@@ -2934,9 +2947,9 @@ def action_option_reorder(a):
 		a.error(403, "Cannot modify remote project")
 		return
 
-	type_id = a.input("type")
+	class_id = a.input("class")
 	field_id = a.input("field")
-	if not type_id or not field_id:
+	if not class_id or not field_id:
 		a.error(400, "Type and field ID required")
 		return
 
@@ -2947,11 +2960,11 @@ def action_option_reorder(a):
 	# Update sort order for each option
 	for i, option_id in enumerate(order):
 		mochi.db.execute(
-			"update options set sort = ? where project = ? and type = ? and field = ? and id = ?",
-			i, project_id, type_id, field_id, option_id
+			"update options set sort=? where project=? and class=? and field=? and id=?",
+			i, project_id, class_id, field_id, option_id
 		)
 
-	broadcast_event(project_id, "option/reorder", {"project": project_id, "type": type_id, "field": field_id, "order": order})
+	broadcast_event(project_id, "option/reorder", {"project": project_id, "class": class_id, "field": field_id, "order": order})
 
 	return {"data": {"success": True}}
 
@@ -3339,7 +3352,7 @@ def action_unsubscribe(a):
 	mochi.db.execute("delete from options where project=?", project_id)
 	mochi.db.execute("delete from fields where project=?", project_id)
 	mochi.db.execute("delete from hierarchy where project=?", project_id)
-	mochi.db.execute("delete from types where project=?", project_id)
+	mochi.db.execute("delete from classes where project=?", project_id)
 	mochi.db.execute("delete from views where project=?", project_id)
 	mochi.db.execute("delete from subscribers where project=?", project_id)
 	mochi.db.execute("delete from projects where id=?", project_id)
@@ -3381,33 +3394,33 @@ def send_project_data(project_id, subscriber_id):
 	h = p2p_headers(project_id, subscriber_id, "")
 
 	# Send types
-	types = mochi.db.rows("select * from types where project=?", project_id)
+	types = mochi.db.rows("select * from classes where project=?", project_id)
 	for t in types:
-		h["event"] = "type/create"
+		h["event"] = "class/create"
 		mochi.message.send(h, {"project": project_id, "id": t["id"], "name": t["name"], "icon": t["icon"], "colour": t["colour"], "prefix": t["prefix"], "created": t["created"]})
 
-		# Send hierarchy for this type
-		children = mochi.db.rows("select child from hierarchy where project=? and type=?", project_id, t["id"])
+		# Send hierarchy for this class
+		children = mochi.db.rows("select child from hierarchy where project=? and class=?", project_id, t["id"])
 		if children:
 			h["event"] = "hierarchy/set"
-			mochi.message.send(h, {"project": project_id, "type": t["id"], "children": [c["child"] for c in children]})
+			mochi.message.send(h, {"project": project_id, "class": t["id"], "children": [c["child"] for c in children]})
 
-		# Send fields for this type
-		fields = mochi.db.rows("select * from fields where project=? and type=? order by rank", project_id, t["id"])
+		# Send fields for this class
+		fields = mochi.db.rows("select * from fields where project=? and class=? order by rank", project_id, t["id"])
 		for f in fields:
 			h["event"] = "field/create"
 			mochi.message.send(h, {
-				"project": project_id, "type": t["id"], "id": f["id"], "name": f["name"],
+				"project": project_id, "class": t["id"], "id": f["id"], "name": f["name"],
 				"fieldtype": f["fieldtype"], "required": f["required"], "multi": f["multi"],
 				"rank": f["rank"], "card": f["card"]
 			})
 
 			# Send options for enumerated fields
-			options = mochi.db.rows("select * from options where project=? and type=? and field=? order by rank", project_id, t["id"], f["id"])
+			options = mochi.db.rows("select * from options where project=? and class=? and field=? order by rank", project_id, t["id"], f["id"])
 			for o in options:
 				h["event"] = "option/create"
 				mochi.message.send(h, {
-					"project": project_id, "type": t["id"], "field": f["id"],
+					"project": project_id, "class": t["id"], "field": f["id"],
 					"id": o["id"], "name": o["name"], "colour": o["colour"], "icon": o["icon"], "rank": o["rank"]
 				})
 
@@ -3426,7 +3439,7 @@ def send_project_data(project_id, subscriber_id):
 	for obj in objects:
 		h["event"] = "object/create"
 		mochi.message.send(h, {
-			"project": project_id, "id": obj["id"], "type": obj["type"], "name": obj["name"],
+			"project": project_id, "id": obj["id"], "class": obj["class"], "name": obj["name"],
 			"number": obj["number"], "parent": obj["parent"], "created": obj["created"], "updated": obj["updated"]
 		})
 
@@ -3538,7 +3551,7 @@ def event_deleted(e):
 	mochi.db.execute("delete from options where project=?", project_id)
 	mochi.db.execute("delete from fields where project=?", project_id)
 	mochi.db.execute("delete from hierarchy where project=?", project_id)
-	mochi.db.execute("delete from types where project=?", project_id)
+	mochi.db.execute("delete from classes where project=?", project_id)
 	mochi.db.execute("delete from views where project=?", project_id)
 	mochi.db.execute("delete from subscribers where project=?", project_id)
 	mochi.db.execute("delete from projects where id=?", project_id)
@@ -3583,8 +3596,8 @@ def event_object_create(e):
 	if not project_id:
 		return
 	mochi.db.execute(
-		"insert or ignore into objects (id, project, type, name, number, parent, created, updated) values (?, ?, ?, ?, ?, ?, ?, ?)",
-		e.content("id"), project_id, e.content("type") or "", e.content("name") or "",
+		"insert or ignore into objects (id, project, class, name, number, parent, created, updated) values (?, ?, ?, ?, ?, ?, ?, ?)",
+		e.content("id"), project_id, e.content("class") or "", e.content("name") or "",
 		e.content("number") or 0, e.content("parent") or "", e.content("created") or mochi.time.now(),
 		e.content("updated") or mochi.time.now()
 	)
@@ -3601,12 +3614,12 @@ def event_object_update(e):
 	if not object_id:
 		return
 	name = e.content("name")
-	type_id = e.content("type")
+	class_id = e.content("class")
 	parent = e.content("parent")
 	if name != None:
 		mochi.db.execute("update objects set name=? where id=? and project=?", name, object_id, project_id)
-	if type_id != None:
-		mochi.db.execute("update objects set type=? where id=? and project=?", type_id, object_id, project_id)
+	if class_id != None:
+		mochi.db.execute("update objects set class=? where id=? and project=?", class_id, object_id, project_id)
 	if parent != None:
 		mochi.db.execute("update objects set parent=? where id=? and project=?", parent, object_id, project_id)
 	mochi.db.execute("update objects set updated=? where id=? and project=?", mochi.time.now(), object_id, project_id)
@@ -3780,80 +3793,80 @@ def event_view_delete(e):
 		mochi.websocket.write(fp, {"type": "view/delete", "project": project_id, "id": view_id})
 
 # Type created
-def event_type_create(e):
+def event_class_create(e):
 	project_id = verify_subscription(e)
 	if not project_id:
 		return
 	mochi.db.execute(
-		"insert or ignore into types (id, project, name, icon, colour, prefix, created) values (?, ?, ?, ?, ?, ?, ?)",
+		"insert or ignore into classes (id, project, name, icon, colour, prefix, created) values (?, ?, ?, ?, ?, ?, ?)",
 		e.content("id"), project_id, e.content("name") or "", e.content("icon") or "",
 		e.content("colour") or "", e.content("prefix") or "", e.content("created") or mochi.time.now()
 	)
 	fp = mochi.entity.fingerprint(project_id)
 	if fp:
-		mochi.websocket.write(fp, {"type": "type/create", "project": project_id, "id": e.content("id")})
+		mochi.websocket.write(fp, {"type": "class/create", "project": project_id, "id": e.content("id")})
 
 # Type updated
-def event_type_update(e):
+def event_class_update(e):
 	project_id = verify_subscription(e)
 	if not project_id:
 		return
-	type_id = e.content("id")
-	if not type_id:
+	class_id = e.content("id")
+	if not class_id:
 		return
 	name = e.content("name")
 	icon = e.content("icon")
 	colour = e.content("colour")
 	prefix = e.content("prefix")
 	if name != None:
-		mochi.db.execute("update types set name=? where id=? and project=?", name, type_id, project_id)
+		mochi.db.execute("update classes set name=? where id=? and project=?", name, class_id, project_id)
 	if icon != None:
-		mochi.db.execute("update types set icon=? where id=? and project=?", icon, type_id, project_id)
+		mochi.db.execute("update classes set icon=? where id=? and project=?", icon, class_id, project_id)
 	if colour != None:
-		mochi.db.execute("update types set colour=? where id=? and project=?", colour, type_id, project_id)
+		mochi.db.execute("update classes set colour=? where id=? and project=?", colour, class_id, project_id)
 	if prefix != None:
-		mochi.db.execute("update types set prefix=? where id=? and project=?", prefix, type_id, project_id)
+		mochi.db.execute("update classes set prefix=? where id=? and project=?", prefix, class_id, project_id)
 	fp = mochi.entity.fingerprint(project_id)
 	if fp:
-		mochi.websocket.write(fp, {"type": "type/update", "project": project_id, "id": type_id})
+		mochi.websocket.write(fp, {"type": "class/update", "project": project_id, "id": class_id})
 
-# Type deleted
-def event_type_delete(e):
+# Class deleted
+def event_class_delete(e):
 	project_id = verify_subscription(e)
 	if not project_id:
 		return
-	type_id = e.content("id")
-	if not type_id:
+	class_id = e.content("id")
+	if not class_id:
 		return
-	mochi.db.execute("delete from options where project=? and type=?", project_id, type_id)
-	mochi.db.execute("delete from fields where project=? and type=?", project_id, type_id)
-	mochi.db.execute("delete from hierarchy where project=? and type=?", project_id, type_id)
-	mochi.db.execute("delete from types where id=? and project=?", type_id, project_id)
+	mochi.db.execute("delete from options where project=? and class=?", project_id, class_id)
+	mochi.db.execute("delete from fields where project=? and class=?", project_id, class_id)
+	mochi.db.execute("delete from hierarchy where project=? and class=?", project_id, class_id)
+	mochi.db.execute("delete from classes where id=? and project=?", class_id, project_id)
 	fp = mochi.entity.fingerprint(project_id)
 	if fp:
-		mochi.websocket.write(fp, {"type": "type/delete", "project": project_id, "id": type_id})
+		mochi.websocket.write(fp, {"type": "class/delete", "project": project_id, "id": class_id})
 
 # Hierarchy set
 def event_hierarchy_set(e):
 	project_id = verify_subscription(e)
 	if not project_id:
 		return
-	type_id = e.content("type")
+	class_id = e.content("class")
 	children = e.content("children")
-	if not type_id:
+	if not class_id:
 		return
-	# Clear existing hierarchy for this type
-	mochi.db.execute("delete from hierarchy where project=? and type=?", project_id, type_id)
+	# Clear existing hierarchy for this class
+	mochi.db.execute("delete from hierarchy where project=? and class=?", project_id, class_id)
 	# Insert new children
 	if children:
 		for i, child in enumerate(children):
 			mochi.db.execute(
-				"insert into hierarchy (project, type, child, sort) values (?, ?, ?, ?)",
-				project_id, type_id, child, i
+				"insert into hierarchy (project, class, child, sort) values (?, ?, ?, ?)",
+				project_id, class_id, child, i
 			)
 	fp = mochi.entity.fingerprint(project_id)
 	if fp:
-		mochi.websocket.write(fp, {"type": "hierarchy/set", "project": project_id, "type_id": type_id})
+		mochi.websocket.write(fp, {"type": "hierarchy/set", "project": project_id, "class_id": class_id})
 
 # Field created
 def event_field_create(e):
@@ -3861,23 +3874,23 @@ def event_field_create(e):
 	if not project_id:
 		return
 	mochi.db.execute(
-		"insert or ignore into fields (project, type, id, name, fieldtype, required, multi, rank, card, rows) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-		project_id, e.content("type") or "", e.content("id") or "", e.content("name") or "",
+		"insert or ignore into fields (project, class, id, name, fieldtype, required, multi, rank, card, rows) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+		project_id, e.content("class") or "", e.content("id") or "", e.content("name") or "",
 		e.content("fieldtype") or "text", e.content("required") or 0, e.content("multi") or 0,
 		e.content("rank") or 0, e.content("card") or 1, e.content("rows") or 1
 	)
 	fp = mochi.entity.fingerprint(project_id)
 	if fp:
-		mochi.websocket.write(fp, {"type": "field/create", "project": project_id, "type_id": e.content("type"), "id": e.content("id")})
+		mochi.websocket.write(fp, {"type": "field/create", "project": project_id, "class_id": e.content("class"), "id": e.content("id")})
 
 # Field updated
 def event_field_update(e):
 	project_id = verify_subscription(e)
 	if not project_id:
 		return
-	type_id = e.content("type")
+	class_id = e.content("class")
 	field_id = e.content("id")
-	if not type_id or not field_id:
+	if not class_id or not field_id:
 		return
 	name = e.content("name")
 	required = e.content("required")
@@ -3894,66 +3907,66 @@ def event_field_update(e):
 	position = e.content("position")
 	rows_val = e.content("rows")
 	if name != None:
-		mochi.db.execute("update fields set name=? where project=? and type=? and id=?", name, project_id, type_id, field_id)
+		mochi.db.execute("update fields set name=? where project=? and class=? and id=?", name, project_id, class_id, field_id)
 	if required != None:
-		mochi.db.execute("update fields set required=? where project=? and type=? and id=?", required, project_id, type_id, field_id)
+		mochi.db.execute("update fields set required=? where project=? and class=? and id=?", required, project_id, class_id, field_id)
 	if multi != None:
-		mochi.db.execute("update fields set multi=? where project=? and type=? and id=?", multi, project_id, type_id, field_id)
+		mochi.db.execute("update fields set multi=? where project=? and class=? and id=?", multi, project_id, class_id, field_id)
 	if card != None:
-		mochi.db.execute("update fields set card=? where project=? and type=? and id=?", card, project_id, type_id, field_id)
+		mochi.db.execute("update fields set card=? where project=? and class=? and id=?", card, project_id, class_id, field_id)
 	if min_val != None:
-		mochi.db.execute("update fields set min=? where project=? and type=? and id=?", min_val, project_id, type_id, field_id)
+		mochi.db.execute("update fields set min=? where project=? and class=? and id=?", min_val, project_id, class_id, field_id)
 	if max_val != None:
-		mochi.db.execute("update fields set max=? where project=? and type=? and id=?", max_val, project_id, type_id, field_id)
+		mochi.db.execute("update fields set max=? where project=? and class=? and id=?", max_val, project_id, class_id, field_id)
 	if pattern != None:
-		mochi.db.execute("update fields set pattern=? where project=? and type=? and id=?", pattern, project_id, type_id, field_id)
+		mochi.db.execute("update fields set pattern=? where project=? and class=? and id=?", pattern, project_id, class_id, field_id)
 	if minlength != None:
-		mochi.db.execute("update fields set minlength=? where project=? and type=? and id=?", minlength, project_id, type_id, field_id)
+		mochi.db.execute("update fields set minlength=? where project=? and class=? and id=?", minlength, project_id, class_id, field_id)
 	if maxlength != None:
-		mochi.db.execute("update fields set maxlength=? where project=? and type=? and id=?", maxlength, project_id, type_id, field_id)
+		mochi.db.execute("update fields set maxlength=? where project=? and class=? and id=?", maxlength, project_id, class_id, field_id)
 	if prefix != None:
-		mochi.db.execute("update fields set prefix=? where project=? and type=? and id=?", prefix, project_id, type_id, field_id)
+		mochi.db.execute("update fields set prefix=? where project=? and class=? and id=?", prefix, project_id, class_id, field_id)
 	if suffix != None:
-		mochi.db.execute("update fields set suffix=? where project=? and type=? and id=?", suffix, project_id, type_id, field_id)
+		mochi.db.execute("update fields set suffix=? where project=? and class=? and id=?", suffix, project_id, class_id, field_id)
 	if format_str != None:
-		mochi.db.execute("update fields set format=? where project=? and type=? and id=?", format_str, project_id, type_id, field_id)
+		mochi.db.execute("update fields set format=? where project=? and class=? and id=?", format_str, project_id, class_id, field_id)
 	if position != None:
-		mochi.db.execute("update fields set position=? where project=? and type=? and id=?", position, project_id, type_id, field_id)
+		mochi.db.execute("update fields set position=? where project=? and class=? and id=?", position, project_id, class_id, field_id)
 	if rows_val != None:
-		mochi.db.execute("update fields set rows=? where project=? and type=? and id=?", rows_val, project_id, type_id, field_id)
+		mochi.db.execute("update fields set rows=? where project=? and class=? and id=?", rows_val, project_id, class_id, field_id)
 	fp = mochi.entity.fingerprint(project_id)
 	if fp:
-		mochi.websocket.write(fp, {"type": "field/update", "project": project_id, "type_id": type_id, "id": field_id})
+		mochi.websocket.write(fp, {"type": "field/update", "project": project_id, "class_id": class_id, "id": field_id})
 
 # Field deleted
 def event_field_delete(e):
 	project_id = verify_subscription(e)
 	if not project_id:
 		return
-	type_id = e.content("type")
+	class_id = e.content("class")
 	field_id = e.content("id")
-	if not type_id or not field_id:
+	if not class_id or not field_id:
 		return
-	mochi.db.execute("delete from options where project=? and type=? and field=?", project_id, type_id, field_id)
-	mochi.db.execute("delete from fields where project=? and type=? and id=?", project_id, type_id, field_id)
+	mochi.db.execute("delete from options where project=? and class=? and field=?", project_id, class_id, field_id)
+	mochi.db.execute("delete from fields where project=? and class=? and id=?", project_id, class_id, field_id)
 	fp = mochi.entity.fingerprint(project_id)
 	if fp:
-		mochi.websocket.write(fp, {"type": "field/delete", "project": project_id, "type_id": type_id, "id": field_id})
+		mochi.websocket.write(fp, {"type": "field/delete", "project": project_id, "class_id": class_id, "id": field_id})
 
 # Field reorder
 def event_field_reorder(e):
 	project_id = verify_subscription(e)
 	if not project_id:
 		return
-	type_id = e.content("type")
+	class_id = e.content("class")
 	order = e.content("order")
-	if not type_id or not order:
+	if not class_id or not order:
 		return
 	for i, field_id in enumerate(order):
-		mochi.db.execute("update fields set sort=? where project=? and type=? and id=?", i, project_id, type_id, field_id)
+		mochi.db.execute("update fields set sort=? where project=? and class=? and id=?", i, project_id, class_id, field_id)
 	fp = mochi.entity.fingerprint(project_id)
 	if fp:
-		mochi.websocket.write(fp, {"type": "field/reorder", "project": project_id, "type_id": type_id})
+		mochi.websocket.write(fp, {"type": "field/reorder", "project": project_id, "class_id": class_id})
 
 # Option created
 def event_option_create(e):
@@ -3961,8 +3974,8 @@ def event_option_create(e):
 	if not project_id:
 		return
 	mochi.db.execute(
-		"insert or ignore into options (project, type, field, id, name, colour, icon, rank) values (?, ?, ?, ?, ?, ?, ?, ?)",
-		project_id, e.content("type") or "", e.content("field") or "", e.content("id") or "",
+		"insert or ignore into options (project, class, field, id, name, colour, icon, rank) values (?, ?, ?, ?, ?, ?, ?, ?)",
+		project_id, e.content("class") or "", e.content("field") or "", e.content("id") or "",
 		e.content("name") or "", e.content("colour") or "#94a3b8", e.content("icon") or "",
 		e.content("rank") or 0
 	)
@@ -3975,20 +3988,20 @@ def event_option_update(e):
 	project_id = verify_subscription(e)
 	if not project_id:
 		return
-	type_id = e.content("type")
+	class_id = e.content("class")
 	field_id = e.content("field")
 	option_id = e.content("id")
-	if not type_id or not field_id or not option_id:
+	if not class_id or not field_id or not option_id:
 		return
 	name = e.content("name")
 	colour = e.content("colour")
 	icon = e.content("icon")
 	if name != None:
-		mochi.db.execute("update options set name=? where project=? and type=? and field=? and id=?", name, project_id, type_id, field_id, option_id)
+		mochi.db.execute("update options set name=? where project=? and class=? and field=? and id=?", name, project_id, class_id, field_id, option_id)
 	if colour != None:
-		mochi.db.execute("update options set colour=? where project=? and type=? and field=? and id=?", colour, project_id, type_id, field_id, option_id)
+		mochi.db.execute("update options set colour=? where project=? and class=? and field=? and id=?", colour, project_id, class_id, field_id, option_id)
 	if icon != None:
-		mochi.db.execute("update options set icon=? where project=? and type=? and field=? and id=?", icon, project_id, type_id, field_id, option_id)
+		mochi.db.execute("update options set icon=? where project=? and class=? and field=? and id=?", icon, project_id, class_id, field_id, option_id)
 	fp = mochi.entity.fingerprint(project_id)
 	if fp:
 		mochi.websocket.write(fp, {"type": "option/update", "project": project_id})
@@ -3998,12 +4011,12 @@ def event_option_delete(e):
 	project_id = verify_subscription(e)
 	if not project_id:
 		return
-	type_id = e.content("type")
+	class_id = e.content("class")
 	field_id = e.content("field")
 	option_id = e.content("id")
-	if not type_id or not field_id or not option_id:
+	if not class_id or not field_id or not option_id:
 		return
-	mochi.db.execute("delete from options where project=? and type=? and field=? and id=?", project_id, type_id, field_id, option_id)
+	mochi.db.execute("delete from options where project=? and class=? and field=? and id=?", project_id, class_id, field_id, option_id)
 	fp = mochi.entity.fingerprint(project_id)
 	if fp:
 		mochi.websocket.write(fp, {"type": "option/delete", "project": project_id})
@@ -4013,13 +4026,13 @@ def event_option_reorder(e):
 	project_id = verify_subscription(e)
 	if not project_id:
 		return
-	type_id = e.content("type")
+	class_id = e.content("class")
 	field_id = e.content("field")
 	order = e.content("order")
-	if not type_id or not field_id or not order:
+	if not class_id or not field_id or not order:
 		return
 	for i, option_id in enumerate(order):
-		mochi.db.execute("update options set sort=? where project=? and type=? and field=? and id=?", i, project_id, type_id, field_id, option_id)
+		mochi.db.execute("update options set sort=? where project=? and class=? and field=? and id=?", i, project_id, class_id, field_id, option_id)
 	fp = mochi.entity.fingerprint(project_id)
 	if fp:
 		mochi.websocket.write(fp, {"type": "option/reorder", "project": project_id})

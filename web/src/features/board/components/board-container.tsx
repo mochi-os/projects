@@ -4,7 +4,7 @@
 import { useMemo, useState, useEffect, useCallback, useRef } from "react";
 import { cn } from "@mochi/common";
 import { BoardColumn } from "./board-column";
-import type { ProjectObject, ProjectDetails, ProjectType, FieldOption, SortState } from "@/types";
+import type { ProjectObject, ProjectDetails, ProjectClass, FieldOption, SortState } from "@/types";
 
 interface BoardContainerProps {
   project: ProjectDetails;
@@ -14,8 +14,8 @@ interface BoardContainerProps {
   onCardClick?: (object: ProjectObject) => void;
   onCreateClick?: (statusId: string) => void;
   onMoveObject?: (objectId: string, newStatus: string, newRank?: number) => void;
-  onRenameColumn?: (typeId: string, fieldId: string, optionId: string, newName: string) => Promise<void>;
-  onDeleteColumn?: (typeId: string, fieldId: string, optionId: string) => Promise<void>;
+  onRenameColumn?: (classId: string, fieldId: string, optionId: string, newName: string) => Promise<void>;
+  onDeleteColumn?: (classId: string, fieldId: string, optionId: string) => Promise<void>;
   isReordering?: boolean;
   onReorderColumns?: (order: string[]) => void;
 }
@@ -33,10 +33,10 @@ export function BoardContainer({
   isReordering,
   onReorderColumns,
 }: BoardContainerProps) {
-  // Get the default type's fields (first type)
-  const defaultType = project.types[0];
-  const typeFields = defaultType ? project.fields[defaultType.id] || [] : [];
-  const typeOptions = defaultType ? project.options[defaultType.id] || {} : {};
+  // Get the default class's fields (first class)
+  const defaultClass = project.classes[0];
+  const classFields = defaultClass ? project.fields[defaultClass.id] || [] : [];
+  const classOptions = defaultClass ? project.options[defaultClass.id] || {} : {};
 
   // Build a map of object id to object for quick parent lookups
   const objectMap = useMemo(() => {
@@ -47,20 +47,20 @@ export function BoardContainer({
     return map;
   }, [objects]);
 
-  // Build type name map
-  const typeMap = useMemo(() => {
-    const map: Record<string, ProjectType> = {};
-    for (const t of project.types) {
-      map[t.id] = t;
+  // Build class name map
+  const classMap = useMemo(() => {
+    const map: Record<string, ProjectClass> = {};
+    for (const c of project.classes) {
+      map[c.id] = c;
     }
     return map;
-  }, [project.types]);
+  }, [project.classes]);
 
   // Get status options for columns
   const statusOptions = useMemo(() => {
-    const opts = typeOptions[statusField] || [];
+    const opts = classOptions[statusField] || [];
     return [...opts].sort((a, b) => a.rank - b.rank);
-  }, [typeOptions, statusField]);
+  }, [classOptions, statusField]);
 
   // Local reorder state
   const [reorderedColumns, setReorderedColumns] = useState<FieldOption[]>(statusOptions);
@@ -212,22 +212,22 @@ export function BoardContainer({
             name={status.name}
             colour={status.colour}
             objects={objectsByStatus[status.id] || []}
-            fields={typeFields.filter((f) => f.card === 1)}
-            options={typeOptions}
+            fields={classFields.filter((f) => f.card === 1)}
+            options={classOptions}
             prefix={project.project.prefix}
             objectMap={objectMap}
-            typeMap={typeMap}
+            classMap={classMap}
             onCardClick={isReordering ? undefined : onCardClick}
             onCreateClick={isReordering ? undefined : () => onCreateClick?.(status.id)}
             onDrop={isReordering ? undefined : handleDrop}
             onRenameColumn={
-              !isReordering && onRenameColumn && defaultType
-                ? (newName: string) => onRenameColumn(defaultType.id, statusField, status.id, newName)
+              !isReordering && onRenameColumn && defaultClass
+                ? (newName: string) => onRenameColumn(defaultClass.id, statusField, status.id, newName)
                 : undefined
             }
             onDeleteColumn={
-              !isReordering && onDeleteColumn && defaultType
-                ? () => onDeleteColumn(defaultType.id, statusField, status.id)
+              !isReordering && onDeleteColumn && defaultClass
+                ? () => onDeleteColumn(defaultClass.id, statusField, status.id)
                 : undefined
             }
             isReordering={isReordering}
@@ -243,11 +243,11 @@ export function BoardContainer({
           id=""
           name="No Status"
           objects={objectsByStatus[""]}
-          fields={typeFields.filter((f) => f.card === 1)}
-          options={typeOptions}
+          fields={classFields.filter((f) => f.card === 1)}
+          options={classOptions}
           prefix={project.project.prefix}
           objectMap={objectMap}
-          typeMap={typeMap}
+          classMap={classMap}
           onCardClick={onCardClick}
           onDrop={handleDrop}
         />

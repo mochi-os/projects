@@ -147,13 +147,13 @@ export function ObjectDetailPanel({
   });
 
   // Build type name map - must be before early returns to maintain hook order
-  const typeNameMap = useMemo(() => {
+  const classNameMap = useMemo(() => {
     const map: Record<string, string> = {};
-    for (const t of project.types) {
+    for (const t of project.classes) {
       map[t.id] = t.name;
     }
     return map;
-  }, [project.types]);
+  }, [project.classes]);
 
   // Get valid parent options based on hierarchy rules - must be before early returns
   const validParentOptions = useMemo(() => {
@@ -161,10 +161,10 @@ export function ObjectDetailPanel({
 
     const object = data.object;
     // Get allowed parent types for this object type
-    const allowedParentTypes = project.hierarchy[object.type] || [];
-    const parentTypeIds = allowedParentTypes.filter((t) => t !== "");
+    const allowedParentClasses = project.hierarchy[object.class] || [];
+    const parentClassIds = allowedParentClasses.filter((t) => t !== "");
 
-    if (parentTypeIds.length === 0) return [];
+    if (parentClassIds.length === 0) return [];
 
     // Filter objects to those matching allowed parent types
     // Also exclude this object and its descendants
@@ -180,7 +180,7 @@ export function ObjectDetailPanel({
     findDescendants(object.id);
 
     return objectsData.filter(
-      (obj) => parentTypeIds.includes(obj.type) && !descendants.has(obj.id)
+      (obj) => parentClassIds.includes(obj.class) && !descendants.has(obj.id)
     );
   }, [objectsData, data, project.hierarchy]);
 
@@ -220,8 +220,8 @@ export function ObjectDetailPanel({
   }
 
   const object = data.object;
-  const typeFields = project.fields[object.type] || [];
-  const typeOptions = project.options[object.type] || {};
+  const classFields = project.fields[object.class] || [];
+  const classOptions = project.options[object.class] || {};
   const title = data.values.title || object.readable;
 
   const handleTitleSave = () => {
@@ -350,7 +350,7 @@ export function ObjectDetailPanel({
                     <SelectTrigger className="w-full">
                       <SelectValue placeholder="None">
                         {currentParent
-                          ? `${typeNameMap[currentParent.type] || currentParent.type}: ${currentParent.values.title || `${project.project.prefix}-${currentParent.number}`}`
+                          ? `${classNameMap[currentParent.class] || currentParent.class}: ${currentParent.values.title || `${project.project.prefix}-${currentParent.number}`}`
                           : "None"}
                       </SelectValue>
                     </SelectTrigger>
@@ -358,7 +358,7 @@ export function ObjectDetailPanel({
                       <SelectItem value="_none_">None</SelectItem>
                       {validParentOptions.map((obj) => (
                         <SelectItem key={obj.id} value={obj.id}>
-                          {typeNameMap[obj.type] || obj.type}: {obj.values.title || `${project.project.prefix}-${obj.number}`}
+                          {classNameMap[obj.class] || obj.class}: {obj.values.title || `${project.project.prefix}-${obj.number}`}
                         </SelectItem>
                       ))}
                     </SelectContent>
@@ -366,7 +366,7 @@ export function ObjectDetailPanel({
                 </div>
               )}
 
-              {typeFields
+              {classFields
                 .filter(
                   (f) =>
                     f.id !== "title" &&
@@ -380,7 +380,7 @@ export function ObjectDetailPanel({
                     <FieldEditor
                       field={field}
                       value={data.values[field.id] || ""}
-                      options={typeOptions[field.id] || []}
+                      options={classOptions[field.id] || []}
                       onChange={(value) => handleFieldChange(field.id, value)}
                       disabled={updateValueMutation.isPending}
                       hideLabel
@@ -391,7 +391,7 @@ export function ObjectDetailPanel({
 
               {/* Pull Request Panel */}
               {(data.values.repository ||
-                typeFields.some((f) => f.id === "repository")) && (
+                classFields.some((f) => f.id === "repository")) && (
                 <div className="mt-8 pt-6 border-t">
                   <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-4">Development</h3>
                   <PrPanel

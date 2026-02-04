@@ -3,7 +3,7 @@
   "name": "Ticket system",
   "description": "Development, support, and bug tracking",
   "icon": "ticket",
-  "types": [
+  "classes": [
     {"id": "ticket", "name": "Ticket", "rank": 0},
     {"id": "pr", "name": "Pull Request", "rank": 1}
   ],
@@ -61,7 +61,7 @@
     "pr": ["", "ticket"]
   },
   "views": [
-    {"id": "board", "name": "Board", "viewtype": "board", "columns": "status", "cardfields": "title,priority,category"},
-    {"id": "tree", "name": "Tree", "viewtype": "tree", "cardfields": "title,priority,category"}
+    {"id": "board", "name": "Board", "viewtype": "board", "columns": "status", "fields": "title,description,priority,category"},
+    {"id": "tree", "name": "Tree", "viewtype": "tree", "fields": "title,description,status,priority,category,owner,due"}
   ]
 }

@@ -101,7 +101,7 @@ describe("projectsApi", () => {
       const mockResponse = {
         data: {
           project: { id: "1", name: "Test Project" },
-          types: [],
+          classes: [],
           fields: {},
           options: {},
           views: [],
@@ -159,14 +159,14 @@ describe("projectsApi", () => {
       expect(projectsRequest.get).toHaveBeenCalledWith("proj123/-/objects");
     });
 
-    it("should fetch objects with type filter", async () => {
+    it("should fetch objects with class filter", async () => {
       const mockResponse = { data: { objects: [] } };
       vi.mocked(projectsRequest.get).mockResolvedValue(mockResponse);
 
-      await projectsApi.listObjects("proj123", { type: "task" });
+      await projectsApi.listObjects("proj123", { class: "task" });
 
       expect(projectsRequest.get).toHaveBeenCalledWith(
-        "proj123/-/objects?type=task",
+        "proj123/-/objects?class=task",
       );
     });
 
@@ -175,12 +175,12 @@ describe("projectsApi", () => {
       vi.mocked(projectsRequest.get).mockResolvedValue(mockResponse);
 
       await projectsApi.listObjects("proj123", {
-        type: "task",
+        class: "task",
         status: "in_progress",
       });
 
       expect(projectsRequest.get).toHaveBeenCalledWith(
-        "proj123/-/objects?type=task&status=in_progress",
+        "proj123/-/objects?class=task&status=in_progress",
       );
     });
 
@@ -204,13 +204,13 @@ describe("projectsApi", () => {
       vi.mocked(projectsRequest.post).mockResolvedValue(mockResponse);
 
       const result = await projectsApi.createObject("proj123", {
-        type: "task",
+        class: "task",
         title: "New Task",
       });
 
       expect(projectsRequest.post).toHaveBeenCalledWith(
         "proj123/-/objects/create",
-        { type: "task", title: "New Task" },
+        { class: "task", title: "New Task" },
       );
       expect(result).toEqual(mockResponse);
     });
@@ -220,13 +220,13 @@ describe("projectsApi", () => {
       vi.mocked(projectsRequest.post).mockResolvedValue(mockResponse);
 
       await projectsApi.createObject("proj123", {
-        type: "subtask",
+        class: "subtask",
         parent: "obj1",
       });
 
       expect(projectsRequest.post).toHaveBeenCalledWith(
         "proj123/-/objects/create",
-        { type: "subtask", parent: "obj1" },
+        { class: "subtask", parent: "obj1" },
       );
     });
   });
@@ -235,7 +235,7 @@ describe("projectsApi", () => {
     it("should fetch object details", async () => {
       const mockResponse = {
         data: {
-          object: { id: "obj1", type: "task" },
+          object: { id: "obj1", class: "task" },
           values: { title: "Test Task" },
           watching: false,
         },
@@ -256,11 +256,11 @@ describe("projectsApi", () => {
       const mockResponse = { data: { success: true } };
       vi.mocked(projectsRequest.post).mockResolvedValue(mockResponse);
 
-      await projectsApi.updateObject("proj123", "obj1", { type: "bug" });
+      await projectsApi.updateObject("proj123", "obj1", { class: "bug" });
 
       expect(projectsRequest.post).toHaveBeenCalledWith(
         "proj123/-/objects/obj1/update",
-        { type: "bug" },
+        { class: "bug" },
       );
     });
   });
@@ -473,59 +473,59 @@ describe("projectsApi", () => {
     });
   });
 
-  // ============= Type Methods =============
+  // ============= Class Methods =============
 
-  describe("listTypes", () => {
-    it("should fetch project types", async () => {
+  describe("listClasses", () => {
+    it("should fetch project classes", async () => {
       const mockResponse = {
-        data: { types: [{ id: "task", name: "Task", sort: 0 }] },
+        data: { classes: [{ id: "task", name: "Task", sort: 0 }] },
       };
       vi.mocked(projectsRequest.get).mockResolvedValue(mockResponse);
 
-      const result = await projectsApi.listTypes("proj123");
+      const result = await projectsApi.listClasses("proj123");
 
-      expect(projectsRequest.get).toHaveBeenCalledWith("proj123/-/types");
+      expect(projectsRequest.get).toHaveBeenCalledWith("proj123/-/classes");
       expect(result).toEqual(mockResponse);
     });
   });
 
-  describe("createType", () => {
-    it("should create a type", async () => {
+  describe("createClass", () => {
+    it("should create a class", async () => {
       const mockResponse = { data: { id: "bug", name: "Bug", sort: 1 } };
       vi.mocked(projectsRequest.post).mockResolvedValue(mockResponse);
 
-      await projectsApi.createType("proj123", { name: "Bug" });
+      await projectsApi.createClass("proj123", { name: "Bug" });
 
       expect(projectsRequest.post).toHaveBeenCalledWith(
-        "proj123/-/types/create",
+        "proj123/-/classes/create",
         { name: "Bug" },
       );
     });
   });
 
-  describe("updateType", () => {
-    it("should update a type", async () => {
+  describe("updateClass", () => {
+    it("should update a class", async () => {
       const mockResponse = { data: { success: true } };
       vi.mocked(projectsRequest.post).mockResolvedValue(mockResponse);
 
-      await projectsApi.updateType("proj123", "task", { name: "Issue" });
+      await projectsApi.updateClass("proj123", "task", { name: "Issue" });
 
       expect(projectsRequest.post).toHaveBeenCalledWith(
-        "proj123/-/types/task/update",
+        "proj123/-/classes/task/update",
         { name: "Issue" },
       );
     });
   });
 
-  describe("deleteType", () => {
-    it("should delete a type", async () => {
+  describe("deleteClass", () => {
+    it("should delete a class", async () => {
       const mockResponse = { data: { success: true } };
       vi.mocked(projectsRequest.post).mockResolvedValue(mockResponse);
 
-      await projectsApi.deleteType("proj123", "bug");
+      await projectsApi.deleteClass("proj123", "bug");
 
       expect(projectsRequest.post).toHaveBeenCalledWith(
-        "proj123/-/types/bug/delete",
+        "proj123/-/classes/bug/delete",
       );
     });
   });
@@ -533,7 +533,7 @@ describe("projectsApi", () => {
   // ============= Field Methods =============
 
   describe("listFields", () => {
-    it("should fetch fields for a type", async () => {
+    it("should fetch fields for a class", async () => {
       const mockResponse = {
         data: {
           fields: [{ id: "title", name: "Title", fieldtype: "text" }],
@@ -544,7 +544,7 @@ describe("projectsApi", () => {
       const result = await projectsApi.listFields("proj123", "task");
 
       expect(projectsRequest.get).toHaveBeenCalledWith(
-        "proj123/-/types/task/fields",
+        "proj123/-/classes/task/fields",
       );
       expect(result).toEqual(mockResponse);
     });
@@ -563,7 +563,7 @@ describe("projectsApi", () => {
       });
 
       expect(projectsRequest.post).toHaveBeenCalledWith(
-        "proj123/-/types/task/fields/create",
+        "proj123/-/classes/task/fields/create",
         { name: "Priority", fieldtype: "select" },
       );
     });
@@ -580,7 +580,7 @@ describe("projectsApi", () => {
       });
 
       expect(projectsRequest.post).toHaveBeenCalledWith(
-        "proj123/-/types/task/fields/priority/update",
+        "proj123/-/classes/task/fields/priority/update",
         { required: "1", position: "card" },
       );
     });
@@ -594,7 +594,7 @@ describe("projectsApi", () => {
       await projectsApi.deleteField("proj123", "task", "priority");
 
       expect(projectsRequest.post).toHaveBeenCalledWith(
-        "proj123/-/types/task/fields/priority/delete",
+        "proj123/-/classes/task/fields/priority/delete",
       );
     });
   });
@@ -611,7 +611,7 @@ describe("projectsApi", () => {
       ]);
 
       expect(projectsRequest.post).toHaveBeenCalledWith(
-        "proj123/-/types/task/fields/reorder",
+        "proj123/-/classes/task/fields/reorder",
         { order: "title,status,priority" },
       );
     });
@@ -635,7 +635,7 @@ describe("projectsApi", () => {
       );
 
       expect(projectsRequest.get).toHaveBeenCalledWith(
-        "proj123/-/types/task/fields/priority/options",
+        "proj123/-/classes/task/fields/priority/options",
       );
       expect(result).toEqual(mockResponse);
     });
@@ -654,7 +654,7 @@ describe("projectsApi", () => {
       });
 
       expect(projectsRequest.post).toHaveBeenCalledWith(
-        "proj123/-/types/task/fields/priority/options/create",
+        "proj123/-/classes/task/fields/priority/options/create",
         { name: "Critical", colour: "#ff0000" },
       );
     });
@@ -670,7 +670,7 @@ describe("projectsApi", () => {
       });
 
       expect(projectsRequest.post).toHaveBeenCalledWith(
-        "proj123/-/types/task/fields/priority/options/high/update",
+        "proj123/-/classes/task/fields/priority/options/high/update",
         { colour: "#ff5500" },
       );
     });
@@ -684,7 +684,7 @@ describe("projectsApi", () => {
       await projectsApi.deleteOption("proj123", "task", "priority", "low");
 
       expect(projectsRequest.post).toHaveBeenCalledWith(
-        "proj123/-/types/task/fields/priority/options/low/delete",
+        "proj123/-/classes/task/fields/priority/options/low/delete",
       );
     });
   });
@@ -702,7 +702,7 @@ describe("projectsApi", () => {
       ]);
 
       expect(projectsRequest.post).toHaveBeenCalledWith(
-        "proj123/-/types/task/fields/priority/options/reorder",
+        "proj123/-/classes/task/fields/priority/options/reorder",
         { order: "critical,high,medium,low" },
       );
     });
@@ -803,28 +803,28 @@ describe("projectsApi", () => {
   // ============= Hierarchy Methods =============
 
   describe("getHierarchy", () => {
-    it("should fetch hierarchy for a type", async () => {
+    it("should fetch hierarchy for a class", async () => {
       const mockResponse = { data: { parents: ["epic", "story"] } };
       vi.mocked(projectsRequest.get).mockResolvedValue(mockResponse);
 
       const result = await projectsApi.getHierarchy("proj123", "task");
 
       expect(projectsRequest.get).toHaveBeenCalledWith(
-        "proj123/-/types/task/hierarchy",
+        "proj123/-/classes/task/hierarchy",
       );
       expect(result).toEqual(mockResponse);
     });
   });
 
   describe("setHierarchy", () => {
-    it("should set hierarchy for a type", async () => {
+    it("should set hierarchy for a class", async () => {
       const mockResponse = { data: { success: true } };
       vi.mocked(projectsRequest.post).mockResolvedValue(mockResponse);
 
       await projectsApi.setHierarchy("proj123", "subtask", ["task", "bug"]);
 
       expect(projectsRequest.post).toHaveBeenCalledWith(
-        "proj123/-/types/subtask/hierarchy/set",
+        "proj123/-/classes/subtask/hierarchy/set",
         { parents: "task,bug" },
       );
     });
@@ -836,7 +836,7 @@ describe("projectsApi", () => {
       await projectsApi.setHierarchy("proj123", "task", []);
 
       expect(projectsRequest.post).toHaveBeenCalledWith(
-        "proj123/-/types/task/hierarchy/set",
+        "proj123/-/classes/task/hierarchy/set",
         { parents: "_none_" },
       );
     });

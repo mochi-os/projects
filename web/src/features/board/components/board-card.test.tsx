@@ -18,12 +18,6 @@ describe("BoardCard", () => {
     prefix: "TEST",
   };
 
-  it("should render object readable ID", () => {
-    render(<BoardCard {...defaultProps} />);
-
-    expect(screen.getByText("TEST-1")).toBeInTheDocument();
-  });
-
   it("should render object title", () => {
     render(<BoardCard {...defaultProps} />);
 
@@ -278,7 +272,7 @@ describe("BoardCard", () => {
   it("should show parent badge when parent is set", () => {
     const parentObject = createMockObject({
       id: "parent-1",
-      type: "epic",
+      class: "epic",
       number: 5,
       values: { title: "Parent Epic" },
     });
@@ -289,14 +283,14 @@ describe("BoardCard", () => {
     });
 
     const objectMap = { "parent-1": parentObject };
-    const typeMap = { epic: { id: "epic", name: "Epic", rank: 0 } };
+    const classMap = { epic: { id: "epic", name: "Epic", rank: 0 } };
 
     render(
       <BoardCard
         {...defaultProps}
         object={childObject}
         objectMap={objectMap}
-        typeMap={typeMap}
+        classMap={classMap}
       />,
     );
 

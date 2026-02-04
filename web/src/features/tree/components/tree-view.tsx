@@ -10,7 +10,7 @@ interface TreeViewProps {
   projectId: string;
   objects: ProjectObject[];
   peopleMap: Record<string, string>;
-  cardfields?: string;
+  viewFields?: string;
   onCardClick: (object: ProjectObject) => void;
   onReparent?: (objectId: string, newParentId: string | null) => void;
 }
@@ -79,7 +79,7 @@ export function TreeView({
   projectId,
   objects,
   peopleMap,
-  cardfields,
+  viewFields,
   onCardClick,
   onReparent,
 }: TreeViewProps) {
@@ -123,26 +123,55 @@ export function TreeView({
     });
   }, []);
 
-  // Get fields and options for the first type (for now)
-  // TODO: Support per-type fields when type filtering is implemented
-  const firstType = project.types[0]?.id || "task";
-  const fields = project.fields[firstType] || [];
-  const options = project.options[firstType] || {};
+  // Get fields and options for the first class (for now)
+  // TODO: Support per-class fields when class filtering is implemented
+  const firstClass = project.classes[0]?.id || "task";
+  const fields = project.fields[firstClass] || [];
+  const options = project.options[firstClass] || {};
 
-  // Get visible fields from view's cardfields setting, or fall back to field's card property
-  const cardFieldsList = cardfields?.split(",").filter(Boolean) || [];
-  const visibleFields = cardFieldsList.length > 0
-    ? fields.filter((f) => cardFieldsList.includes(f.id) || f.id === "title")
+  // Get visible fields from view's fields setting, or fall back to field's card property
+  const viewFieldsList = viewFields?.split(",").filter(Boolean) || [];
+  const showClass = viewFieldsList.includes("class");
+  const showId = viewFieldsList.includes("id");
+  const visibleFields = viewFieldsList.length > 0
+    ? fields.filter((f) => viewFieldsList.includes(f.id) || f.id === "title")
     : fields.filter((f) => f.card === 1 || f.id === "title");
 
-  // Build type map for looking up type names
-  const typeMap = useMemo(() => {
+  // Build class map for looking up class names
+  const classMap = useMemo(() => {
     const map: Record<string, string> = {};
-    for (const t of project.types) {
-      map[t.id] = t.name;
+    for (const c of project.classes) {
+      map[c.id] = c.name;
     }
     return map;
-  }, [project.types]);
+  }, [project.classes]);
+
+  // Build object map for looking up objects by ID
+  const objectMap = useMemo(() => {
+    const map: Record<string, ProjectObject> = {};
+    for (const obj of objects) {
+      map[obj.id] = obj;
+    }
+    return map;
+  }, [objects]);
+
+  // Check if reparenting is allowed by hierarchy rules
+  const isReparentAllowed = useCallback((childId: string, parentId: string | null) => {
+    const child = objectMap[childId];
+    if (!child) return false;
+
+    const allowedParents = project.hierarchy[child.class] || [];
+    if (parentId === null) {
+      // Check if root is allowed (empty string in hierarchy)
+      return allowedParents.includes("");
+    }
+
+    const parent = objectMap[parentId];
+    if (!parent) return false;
+
+    // Check if parent's class is allowed
+    return allowedParents.includes(parent.class);
+  }, [objectMap, project.hierarchy]);
 
   // Drag state
   const [draggedId, setDraggedId] = useState<string | null>(null);
@@ -153,26 +182,26 @@ export function TreeView({
   }, []);
 
   const handleDragOver = useCallback((objectId: string) => {
-    if (draggedId && draggedId !== objectId) {
+    if (draggedId && draggedId !== objectId && isReparentAllowed(draggedId, objectId)) {
       setDragOverId(objectId);
     }
-  }, [draggedId]);
+  }, [draggedId, isReparentAllowed]);
 
   const handleDragEnd = useCallback(() => {
-    if (draggedId && dragOverId && draggedId !== dragOverId && onReparent) {
+    if (draggedId && dragOverId && draggedId !== dragOverId && onReparent && isReparentAllowed(draggedId, dragOverId)) {
       onReparent(draggedId, dragOverId);
     }
     setDraggedId(null);
     setDragOverId(null);
-  }, [draggedId, dragOverId, onReparent]);
+  }, [draggedId, dragOverId, onReparent, isReparentAllowed]);
 
   const handleDropOnRoot = useCallback(() => {
-    if (draggedId && onReparent) {
+    if (draggedId && onReparent && isReparentAllowed(draggedId, null)) {
       onReparent(draggedId, null);
     }
     setDraggedId(null);
     setDragOverId(null);
-  }, [draggedId, onReparent]);
+  }, [draggedId, onReparent, isReparentAllowed]);
 
   if (objects.length === 0) {
     return (
@@ -185,7 +214,7 @@ export function TreeView({
   return (
     <div className="border rounded-[10px] overflow-hidden bg-background">
       {/* Drop zone for making items root-level */}
-      {draggedId && (
+      {draggedId && isReparentAllowed(draggedId, null) && (
         <div
           className="h-8 border-b border-dashed border-primary/50 bg-primary/5 flex items-center justify-center text-xs text-muted-foreground"
           onDragOver={(e) => {
@@ -198,19 +227,22 @@ export function TreeView({
         </div>
       )}
 
-      <div className="divide-y divide-border">
-        {flatNodes.map(({ node, hasChildren, isExpanded }) => (
-          <TreeRow
-            key={node.object.id}
-            object={node.object}
+      <table className="w-full border-collapse">
+        <tbody className="divide-y divide-border">
+          {flatNodes.map(({ node, hasChildren, isExpanded }) => (
+            <TreeRow
+              key={node.object.id}
+              object={node.object}
             depth={node.depth}
             hasChildren={hasChildren}
             isExpanded={isExpanded}
             fields={visibleFields}
             options={options}
             peopleMap={peopleMap}
-            typeMap={typeMap}
+            classMap={classMap}
             prefix={project.project.prefix}
+            showClass={showClass}
+            showId={showId}
             isDragOver={dragOverId === node.object.id}
             onToggleExpand={() => toggleExpand(node.object.id)}
             onClick={() => onCardClick(node.object)}
@@ -218,8 +250,9 @@ export function TreeView({
             onDragOver={() => handleDragOver(node.object.id)}
             onDragEnd={handleDragEnd}
           />
-        ))}
-      </div>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }

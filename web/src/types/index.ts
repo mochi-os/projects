@@ -13,7 +13,7 @@ export interface Project {
   updated: number;
 }
 
-export interface ProjectType {
+export interface ProjectClass {
   id: string;
   name: string;
   rank: number;
@@ -46,10 +46,10 @@ export interface ProjectView {
   filter: string;
   columns: string;
   rows: string;
-  cardfields: string;
+  fields: string;
   sort: string;
   direction: string;
-  types: string[];
+  classes: string[];
 }
 
 export interface ProjectTemplate {
@@ -61,7 +61,7 @@ export interface ProjectTemplate {
 
 export interface ProjectDetails {
   project: Project;
-  types: ProjectType[];
+  classes: ProjectClass[];
   fields: Record<string, ProjectField[]>;
   options: Record<string, Record<string, FieldOption[]>>;
   views: ProjectView[];
@@ -72,7 +72,7 @@ export interface ProjectDetails {
 export interface ProjectObject {
   id: string;
   project: string;
-  type: string;
+  class: string;
   number: number;
   parent: string;
   rank: number;

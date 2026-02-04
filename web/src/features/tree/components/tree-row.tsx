@@ -13,8 +13,10 @@ interface TreeRowProps {
   fields: ProjectField[];
   options: Record<string, FieldOption[]>;
   peopleMap: Record<string, string>;
-  typeMap: Record<string, string>;
+  classMap: Record<string, string>;
   prefix: string;
+  showClass?: boolean;
+  showId?: boolean;
   isDragOver: boolean;
   onToggleExpand: () => void;
   onClick: () => void;
@@ -36,8 +38,10 @@ export function TreeRow({
   fields,
   options,
   peopleMap,
-  typeMap,
+  classMap,
   prefix,
+  showClass = true,
+  showId = true,
   isDragOver,
   onToggleExpand,
   onClick,
@@ -92,10 +96,10 @@ export function TreeRow({
   const indentPx = depth * 24;
 
   return (
-    <div
+    <tr
       className={cn(
-        "flex items-center hover:bg-muted/50 cursor-pointer text-sm group",
-        isDragOver && "bg-primary/10 border-l-2 border-primary",
+        "hover:bg-muted/50 cursor-pointer text-sm group",
+        isDragOver && "bg-primary/10",
       )}
       onClick={onClick}
       draggable
@@ -110,61 +114,64 @@ export function TreeRow({
       }}
       onDragEnd={onDragEnd}
     >
-      {/* Drag handle */}
-      <div className="w-6 flex-shrink-0 flex items-center justify-center opacity-0 group-hover:opacity-50 cursor-grab">
-        <GripVertical className="size-3" />
-      </div>
+      {/* Drag handle + expand/collapse */}
+      <td className="whitespace-nowrap py-1.5 pl-1">
+        <div className="flex items-center" style={{ paddingLeft: indentPx }}>
+          <div className="w-5 flex items-center justify-center opacity-0 group-hover:opacity-50 cursor-grab">
+            <GripVertical className="size-3" />
+          </div>
+          {hasChildren ? (
+            <button
+              className="size-5 flex items-center justify-center hover:bg-muted rounded"
+              onClick={(e) => {
+                e.stopPropagation();
+                onToggleExpand();
+              }}
+            >
+              {isExpanded ? (
+                <ChevronDown className="size-4" />
+              ) : (
+                <ChevronRight className="size-4" />
+              )}
+            </button>
+          ) : (
+            <div className="size-5" />
+          )}
+        </div>
+      </td>
 
-      {/* Indentation and expand/collapse */}
-      <div
-        className="flex items-center flex-shrink-0"
-        style={{ width: indentPx + 24 }}
-      >
-        <div style={{ width: indentPx }} />
-        {hasChildren ? (
-          <button
-            className="size-6 flex items-center justify-center hover:bg-muted rounded"
-            onClick={(e) => {
-              e.stopPropagation();
-              onToggleExpand();
-            }}
-          >
-            {isExpanded ? (
-              <ChevronDown className="size-4" />
-            ) : (
-              <ChevronRight className="size-4" />
-            )}
-          </button>
-        ) : (
-          <div className="size-6" />
-        )}
-      </div>
-
-      {/* Type badge */}
-      <div className="w-20 flex-shrink-0 px-1">
-        <span className="text-xs text-muted-foreground bg-muted px-1.5 py-0.5 rounded">
-          {typeMap[object.type] || object.type}
-        </span>
-      </div>
+      {/* Class badge */}
+      {showClass && (
+        <td className="whitespace-nowrap px-2 py-1.5">
+          <span className="text-xs text-muted-foreground bg-muted px-1.5 py-0.5 rounded">
+            {classMap[object.class] || object.class}
+          </span>
+        </td>
+      )}
 
       {/* Object number */}
-      <div className="w-20 flex-shrink-0 text-xs text-muted-foreground font-mono px-2">
-        {prefix}-{object.number}
-      </div>
+      {showId && (
+        <td className="whitespace-nowrap px-2 py-1.5 text-xs text-muted-foreground font-mono">
+          {prefix}-{object.number}
+        </td>
+      )}
 
       {/* Field columns */}
       {fields.map((field) => {
         const value = object.values[field.id] || "";
         const displayValue = field.id === "title" ? truncate(value, 100) : value;
         return (
-          <div
+          <td
             key={field.id}
-            className={cn("px-3 py-2", field.id === "title" ? "flex-1 min-w-0" : "w-28 flex-shrink-0")}
+            className={cn(
+              "px-2 py-1.5",
+              field.id === "title" ? "" : "whitespace-nowrap"
+            )}
           >
             {renderFieldValue(field, displayValue)}
-          </div>
+          </td>
         );
       })}
-    </div>
+    </tr>
   );
 }

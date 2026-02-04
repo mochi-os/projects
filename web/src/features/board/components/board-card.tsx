@@ -3,7 +3,7 @@
 
 import { cn, Tooltip, TooltipContent, TooltipTrigger } from "@mochi/common";
 import { CheckSquare, CornerLeftUp } from "lucide-react";
-import type { ProjectObject, ProjectField, FieldOption, ChecklistItem, ProjectType } from "@/types";
+import type { ProjectObject, ProjectField, FieldOption, ChecklistItem, ProjectClass } from "@/types";
 
 interface BoardCardProps {
   object: ProjectObject;
@@ -11,7 +11,7 @@ interface BoardCardProps {
   options: Record<string, FieldOption[]>;
   prefix: string;
   objectMap?: Record<string, ProjectObject>;
-  typeMap?: Record<string, ProjectType>;
+  classMap?: Record<string, ProjectClass>;
   onClick?: () => void;
 }
 
@@ -26,7 +26,7 @@ export function BoardCard({
   options,
   prefix,
   objectMap,
-  typeMap,
+  classMap,
   onClick,
 }: BoardCardProps) {
   const rawTitle = object.values.title || `${prefix}-${object.number}`;
@@ -45,7 +45,7 @@ export function BoardCard({
 
   // Get parent info
   const parentObject = object.parent && objectMap ? objectMap[object.parent] : null;
-  const parentTypeName = parentObject && typeMap ? typeMap[parentObject.type]?.name || parentObject.type : null;
+  const parentClassName = parentObject && classMap ? classMap[parentObject.class]?.name || parentObject.class : null;
   const parentTitle = parentObject?.values.title || (parentObject ? `${prefix}-${parentObject.number}` : null);
 
   return (
@@ -80,7 +80,7 @@ export function BoardCard({
               </span>
             </TooltipTrigger>
             <TooltipContent>
-              <p>{parentTypeName}: {parentTitle}</p>
+              <p>{parentClassName}: {parentTitle}</p>
             </TooltipContent>
           </Tooltip>
         </div>

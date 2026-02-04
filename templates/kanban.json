@@ -3,7 +3,7 @@
   "name": "Kanban",
   "description": "Simple board for general tasks",
   "icon": "layout-grid",
-  "types": [
+  "classes": [
     {"id": "card", "name": "Card", "rank": 0},
     {"id": "checklist", "name": "Checklist", "rank": 1}
   ],
@@ -57,7 +57,7 @@
     "checklist": [""]
   },
   "views": [
-    {"id": "board", "name": "Board", "viewtype": "board", "columns": "status", "rows": "priority", "cardfields": "title"},
-    {"id": "tree", "name": "Tree", "viewtype": "tree", "cardfields": "title"}
+    {"id": "board", "name": "Board", "viewtype": "board", "columns": "status", "rows": "priority", "fields": "title,description"},
+    {"id": "tree", "name": "Tree", "viewtype": "tree", "fields": "title,description,status,priority,owner,due"}
   ]
 }

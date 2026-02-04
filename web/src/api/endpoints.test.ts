@@ -109,26 +109,26 @@ describe("endpoints.projects", () => {
     });
   });
 
-  describe("type endpoints", () => {
-    it("should generate types list endpoint", () => {
-      expect(endpoints.projects.types("proj1")).toBe("proj1/-/types");
+  describe("class endpoints", () => {
+    it("should generate classes list endpoint", () => {
+      expect(endpoints.projects.classes("proj1")).toBe("proj1/-/classes");
     });
 
-    it("should generate type create endpoint", () => {
-      expect(endpoints.projects.typeCreate("proj1")).toBe(
-        "proj1/-/types/create",
+    it("should generate class create endpoint", () => {
+      expect(endpoints.projects.classCreate("proj1")).toBe(
+        "proj1/-/classes/create",
       );
     });
 
-    it("should generate type update endpoint", () => {
-      expect(endpoints.projects.typeUpdate("proj1", "task")).toBe(
-        "proj1/-/types/task/update",
+    it("should generate class update endpoint", () => {
+      expect(endpoints.projects.classUpdate("proj1", "task")).toBe(
+        "proj1/-/classes/task/update",
       );
     });
 
-    it("should generate type delete endpoint", () => {
-      expect(endpoints.projects.typeDelete("proj1", "task")).toBe(
-        "proj1/-/types/task/delete",
+    it("should generate class delete endpoint", () => {
+      expect(endpoints.projects.classDelete("proj1", "task")).toBe(
+        "proj1/-/classes/task/delete",
       );
     });
   });
@@ -136,31 +136,31 @@ describe("endpoints.projects", () => {
   describe("field endpoints", () => {
     it("should generate fields list endpoint", () => {
       expect(endpoints.projects.fields("proj1", "task")).toBe(
-        "proj1/-/types/task/fields",
+        "proj1/-/classes/task/fields",
       );
     });
 
     it("should generate field create endpoint", () => {
       expect(endpoints.projects.fieldCreate("proj1", "task")).toBe(
-        "proj1/-/types/task/fields/create",
+        "proj1/-/classes/task/fields/create",
       );
     });
 
     it("should generate field reorder endpoint", () => {
       expect(endpoints.projects.fieldReorder("proj1", "task")).toBe(
-        "proj1/-/types/task/fields/reorder",
+        "proj1/-/classes/task/fields/reorder",
       );
     });
 
     it("should generate field update endpoint", () => {
       expect(endpoints.projects.fieldUpdate("proj1", "task", "field1")).toBe(
-        "proj1/-/types/task/fields/field1/update",
+        "proj1/-/classes/task/fields/field1/update",
       );
     });
 
     it("should generate field delete endpoint", () => {
       expect(endpoints.projects.fieldDelete("proj1", "task", "field1")).toBe(
-        "proj1/-/types/task/fields/field1/delete",
+        "proj1/-/classes/task/fields/field1/delete",
       );
     });
   });
@@ -168,26 +168,26 @@ describe("endpoints.projects", () => {
   describe("option endpoints", () => {
     it("should generate options list endpoint", () => {
       expect(endpoints.projects.options("proj1", "task", "status")).toBe(
-        "proj1/-/types/task/fields/status/options",
+        "proj1/-/classes/task/fields/status/options",
       );
     });
 
     it("should generate option create endpoint", () => {
       expect(endpoints.projects.optionCreate("proj1", "task", "status")).toBe(
-        "proj1/-/types/task/fields/status/options/create",
+        "proj1/-/classes/task/fields/status/options/create",
       );
     });
 
     it("should generate option update endpoint", () => {
       expect(
         endpoints.projects.optionUpdate("proj1", "task", "status", "opt1"),
-      ).toBe("proj1/-/types/task/fields/status/options/opt1/update");
+      ).toBe("proj1/-/classes/task/fields/status/options/opt1/update");
     });
 
     it("should generate option delete endpoint", () => {
       expect(
         endpoints.projects.optionDelete("proj1", "task", "status", "opt1"),
-      ).toBe("proj1/-/types/task/fields/status/options/opt1/delete");
+      ).toBe("proj1/-/classes/task/fields/status/options/opt1/delete");
     });
   });
 

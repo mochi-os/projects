@@ -89,53 +89,53 @@ const endpoints = {
     viewDelete: (projectId: string, viewId: string) =>
       `${projectId}/-/views/${viewId}/delete`,
 
-    // Type endpoints
-    types: (projectId: string) => `${projectId}/-/types`,
-    typeCreate: (projectId: string) => `${projectId}/-/types/create`,
-    typeUpdate: (projectId: string, typeId: string) =>
-      `${projectId}/-/types/${typeId}/update`,
-    typeDelete: (projectId: string, typeId: string) =>
-      `${projectId}/-/types/${typeId}/delete`,
+    // Class endpoints
+    classes: (projectId: string) => `${projectId}/-/classes`,
+    classCreate: (projectId: string) => `${projectId}/-/classes/create`,
+    classUpdate: (projectId: string, classId: string) =>
+      `${projectId}/-/classes/${classId}/update`,
+    classDelete: (projectId: string, classId: string) =>
+      `${projectId}/-/classes/${classId}/delete`,
 
     // Hierarchy endpoints
-    hierarchy: (projectId: string, typeId: string) =>
-      `${projectId}/-/types/${typeId}/hierarchy`,
-    hierarchySet: (projectId: string, typeId: string) =>
-      `${projectId}/-/types/${typeId}/hierarchy/set`,
+    hierarchy: (projectId: string, classId: string) =>
+      `${projectId}/-/classes/${classId}/hierarchy`,
+    hierarchySet: (projectId: string, classId: string) =>
+      `${projectId}/-/classes/${classId}/hierarchy/set`,
 
     // Field endpoints
-    fields: (projectId: string, typeId: string) =>
-      `${projectId}/-/types/${typeId}/fields`,
-    fieldCreate: (projectId: string, typeId: string) =>
-      `${projectId}/-/types/${typeId}/fields/create`,
-    fieldReorder: (projectId: string, typeId: string) =>
-      `${projectId}/-/types/${typeId}/fields/reorder`,
-    fieldUpdate: (projectId: string, typeId: string, fieldId: string) =>
-      `${projectId}/-/types/${typeId}/fields/${fieldId}/update`,
-    fieldDelete: (projectId: string, typeId: string, fieldId: string) =>
-      `${projectId}/-/types/${typeId}/fields/${fieldId}/delete`,
+    fields: (projectId: string, classId: string) =>
+      `${projectId}/-/classes/${classId}/fields`,
+    fieldCreate: (projectId: string, classId: string) =>
+      `${projectId}/-/classes/${classId}/fields/create`,
+    fieldReorder: (projectId: string, classId: string) =>
+      `${projectId}/-/classes/${classId}/fields/reorder`,
+    fieldUpdate: (projectId: string, classId: string, fieldId: string) =>
+      `${projectId}/-/classes/${classId}/fields/${fieldId}/update`,
+    fieldDelete: (projectId: string, classId: string, fieldId: string) =>
+      `${projectId}/-/classes/${classId}/fields/${fieldId}/delete`,
 
     // Option endpoints
-    options: (projectId: string, typeId: string, fieldId: string) =>
-      `${projectId}/-/types/${typeId}/fields/${fieldId}/options`,
-    optionCreate: (projectId: string, typeId: string, fieldId: string) =>
-      `${projectId}/-/types/${typeId}/fields/${fieldId}/options/create`,
-    optionReorder: (projectId: string, typeId: string, fieldId: string) =>
-      `${projectId}/-/types/${typeId}/fields/${fieldId}/options/reorder`,
+    options: (projectId: string, classId: string, fieldId: string) =>
+      `${projectId}/-/classes/${classId}/fields/${fieldId}/options`,
+    optionCreate: (projectId: string, classId: string, fieldId: string) =>
+      `${projectId}/-/classes/${classId}/fields/${fieldId}/options/create`,
+    optionReorder: (projectId: string, classId: string, fieldId: string) =>
+      `${projectId}/-/classes/${classId}/fields/${fieldId}/options/reorder`,
     optionUpdate: (
       projectId: string,
-      typeId: string,
+      classId: string,
       fieldId: string,
       optionId: string,
     ) =>
-      `${projectId}/-/types/${typeId}/fields/${fieldId}/options/${optionId}/update`,
+      `${projectId}/-/classes/${classId}/fields/${fieldId}/options/${optionId}/update`,
     optionDelete: (
       projectId: string,
-      typeId: string,
+      classId: string,
       fieldId: string,
       optionId: string,
     ) =>
-      `${projectId}/-/types/${typeId}/fields/${fieldId}/options/${optionId}/delete`,
+      `${projectId}/-/classes/${classId}/fields/${fieldId}/options/${optionId}/delete`,
 
     // Repository integration endpoints (for Pull Requests)
     repositories: "-/repositories",

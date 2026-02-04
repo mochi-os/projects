@@ -20,7 +20,7 @@ import {
   SortDirectionButton,
 } from "@mochi/common";
 import { MoreHorizontal } from "lucide-react";
-import type { ProjectView, ProjectField, ProjectType, FieldOption } from "@/types";
+import type { ProjectView, ProjectField, ProjectClass, FieldOption } from "@/types";
 
 // Edit View Dialog
 interface EditViewDialogProps {
@@ -28,9 +28,9 @@ interface EditViewDialogProps {
   onOpenChange: (open: boolean) => void;
   view: ProjectView | null;
   fields: ProjectField[];
-  types: ProjectType[];
+  classes: ProjectClass[];
   onUpdate: (updates: Partial<ProjectView>) => void;
-  onUpdateTypes: (types: string[]) => void;
+  onUpdateClasses: (classes: string[]) => void;
   onDelete: () => void;
 }
 
@@ -39,32 +39,32 @@ export function EditViewDialog({
   onOpenChange,
   view,
   fields,
-  types,
+  classes,
   onUpdate,
-  onUpdateTypes,
+  onUpdateClasses,
   onDelete,
 }: EditViewDialogProps) {
-  const allTypeIds = useMemo(() => types.map((t) => t.id), [types]);
+  const allClassIds = useMemo(() => classes.map((c) => c.id), [classes]);
 
   const [name, setName] = useState("");
   const [viewtype, setViewtype] = useState("board");
   const [columns, setColumns] = useState("");
-  const [cardfields, setCardfields] = useState("");
+  const [viewFields, setViewFields] = useState("");
   const [sort, setSort] = useState("");
   const [direction, setDirection] = useState("asc");
-  const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
+  const [selectedClasses, setSelectedClasses] = useState<string[]>([]);
 
   useEffect(() => {
     if (view) {
       setName(view.name);
       setViewtype(view.viewtype);
       setColumns(view.columns);
-      setCardfields(view.cardfields || "");
+      setViewFields(view.fields || "");
       setSort(view.sort);
       setDirection(view.direction);
-      setSelectedTypes(view.types?.length ? view.types : allTypeIds);
+      setSelectedClasses(view.classes?.length ? view.classes : allClassIds);
     }
-  }, [view, allTypeIds]);
+  }, [view, allClassIds]);
 
   if (!view) return null;
 
@@ -78,8 +78,8 @@ export function EditViewDialog({
     if (columns !== view.columns) {
       onUpdate({ columns });
     }
-    if (cardfields !== (view.cardfields || "")) {
-      onUpdate({ cardfields });
+    if (viewFields !== (view.fields || "")) {
+      onUpdate({ fields: viewFields });
     }
     if (sort !== view.sort) {
       onUpdate({ sort });
@@ -87,32 +87,32 @@ export function EditViewDialog({
     if (direction !== view.direction) {
       onUpdate({ direction });
     }
-    // Check if types changed
-    const currentTypes = view.types?.length ? view.types : allTypeIds;
-    if (JSON.stringify(selectedTypes.sort()) !== JSON.stringify(currentTypes.sort())) {
-      onUpdateTypes(selectedTypes);
+    // Check if classes changed
+    const currentClasses = view.classes?.length ? view.classes : allClassIds;
+    if (JSON.stringify(selectedClasses.sort()) !== JSON.stringify(currentClasses.sort())) {
+      onUpdateClasses(selectedClasses);
     }
     onOpenChange(false);
   };
 
-  const toggleCardField = (fieldId: string) => {
-    const currentFields = cardfields.split(",").filter(Boolean);
+  const toggleViewField = (fieldId: string) => {
+    const currentFields = viewFields.split(",").filter(Boolean);
     if (currentFields.includes(fieldId)) {
-      setCardfields(currentFields.filter((f) => f !== fieldId).join(","));
+      setViewFields(currentFields.filter((f) => f !== fieldId).join(","));
     } else {
-      setCardfields([...currentFields, fieldId].join(","));
+      setViewFields([...currentFields, fieldId].join(","));
     }
   };
 
-  const toggleType = (typeId: string) => {
-    if (selectedTypes.includes(typeId)) {
-      setSelectedTypes(selectedTypes.filter((t) => t !== typeId));
+  const toggleClass = (classId: string) => {
+    if (selectedClasses.includes(classId)) {
+      setSelectedClasses(selectedClasses.filter((c) => c !== classId));
     } else {
-      setSelectedTypes([...selectedTypes, typeId]);
+      setSelectedClasses([...selectedClasses, classId]);
     }
   };
 
-  const cardfieldsList = cardfields.split(",").filter(Boolean);
+  const viewFieldsList = viewFields.split(",").filter(Boolean);
   const enumeratedFields = fields.filter((f) => f.fieldtype === "enumerated");
 
   return (
@@ -164,22 +164,22 @@ export function EditViewDialog({
             </RadioGroup>
           </div>
 
-          {types.length > 1 && (
+          {classes.length > 1 && (
             <div className="space-y-2">
-              <Label>Show types</Label>
+              <Label>Show classes</Label>
               <div className="space-y-1">
-                {types.map((type) => (
+                {classes.map((cls) => (
                   <label
-                    key={type.id}
+                    key={cls.id}
                     className="flex items-center gap-2 text-sm cursor-pointer"
                   >
                     <input
                       type="checkbox"
-                      checked={selectedTypes.includes(type.id)}
-                      onChange={() => toggleType(type.id)}
+                      checked={selectedClasses.includes(cls.id)}
+                      onChange={() => toggleClass(cls.id)}
                       className="rounded"
                     />
-                    {type.name}
+                    {cls.name}
                   </label>
                 ))}
               </div>
@@ -213,8 +213,8 @@ export function EditViewDialog({
                 >
                   <input
                     type="checkbox"
-                    checked={cardfieldsList.includes(field.id)}
-                    onChange={() => toggleCardField(field.id)}
+                    checked={viewFieldsList.includes(field.id)}
+                    onChange={() => toggleViewField(field.id)}
                     className="rounded"
                   />
                   {field.name}
@@ -261,12 +261,12 @@ export function EditViewDialog({
   );
 }
 
-// Edit Type Dialog
-interface EditTypeDialogProps {
+// Edit Class Dialog
+interface EditClassDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  type: ProjectType | null;
-  types: ProjectType[];
+  cls: ProjectClass | null;
+  classes: ProjectClass[];
   hierarchy: string[];
   fields: ProjectField[];
   onUpdate: (name: string) => void;
@@ -276,11 +276,11 @@ interface EditTypeDialogProps {
   onEditField: (field: ProjectField) => void;
 }
 
-export function EditTypeDialog({
+export function EditClassDialog({
   open,
   onOpenChange,
-  type,
-  types,
+  cls,
+  classes,
   hierarchy,
   fields,
   onUpdate,
@@ -288,21 +288,21 @@ export function EditTypeDialog({
   onDelete,
   onAddField,
   onEditField,
-}: EditTypeDialogProps) {
+}: EditClassDialogProps) {
   const [name, setName] = useState("");
   const [parents, setParents] = useState<string[]>([]);
 
   useEffect(() => {
-    if (type) {
-      setName(type.name);
+    if (cls) {
+      setName(cls.name);
       setParents(hierarchy);
     }
-  }, [type, hierarchy]);
+  }, [cls, hierarchy]);
 
-  if (!type) return null;
+  if (!cls) return null;
 
   const handleSave = () => {
-    if (name.trim() && name !== type.name) {
+    if (name.trim() && name !== cls.name) {
       onUpdate(name.trim());
     }
     if (JSON.stringify(parents.sort()) !== JSON.stringify(hierarchy.sort())) {
@@ -319,13 +319,13 @@ export function EditTypeDialog({
     }
   };
 
-  const otherTypes = types.filter((t) => t.id !== type.id);
+  const otherClasses = classes.filter((c) => c.id !== cls.id);
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-md flex flex-col max-h-[85vh]" showCloseButton={false}>
         <DialogHeader className="flex flex-row items-center justify-between">
-          <DialogTitle>Edit type</DialogTitle>
+          <DialogTitle>Edit class</DialogTitle>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" size="icon" className="size-8">
@@ -337,40 +337,40 @@ export function EditTypeDialog({
                 className="text-destructive focus:text-destructive"
                 onClick={onDelete}
               >
-                Delete type
+                Delete class
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </DialogHeader>
         <div className="flex-1 overflow-y-auto py-4 space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="type-name">Name</Label>
+            <Label htmlFor="class-name">Name</Label>
             <Input
-              id="type-name"
+              id="class-name"
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
           </div>
 
-          {otherTypes.length > 0 && (
+          {otherClasses.length > 0 && (
             <div className="space-y-2">
               <Label>Can be child of</Label>
               <p className="text-xs text-muted-foreground">
-                Select which types this can be nested under
+                Select which classes this can be nested under
               </p>
               <div className="space-y-1">
-                {otherTypes.map((t) => (
+                {otherClasses.map((c) => (
                   <label
-                    key={t.id}
+                    key={c.id}
                     className="flex items-center gap-2 text-sm cursor-pointer"
                   >
                     <input
                       type="checkbox"
-                      checked={parents.includes(t.id)}
-                      onChange={() => toggleParent(t.id)}
+                      checked={parents.includes(c.id)}
+                      onChange={() => toggleParent(c.id)}
                       className="rounded"
                     />
-                    {t.name}
+                    {c.name}
                   </label>
                 ))}
               </div>

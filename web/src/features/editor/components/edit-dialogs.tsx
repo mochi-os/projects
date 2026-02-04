@@ -525,6 +525,9 @@ export function EditFieldDialog({
                 value={rows}
                 onChange={(e) => setRows(parseInt(e.target.value) || 1)}
               />
+              <p className={`text-xs text-muted-foreground ${rows === 1 ? "" : "invisible"}`}>
+                Single line of text only
+              </p>
             </div>
           )}
 

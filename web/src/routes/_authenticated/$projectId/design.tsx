@@ -1,9 +1,6 @@
-// Mochi Projects: Design editor page
-// Copyright Alistair Cunningham 2026
-
 import { createFileRoute } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { GeneralError, Main, PageHeader, usePageTitle } from "@mochi/common";
+import { GeneralError, Main, PageHeader, usePageTitle, Skeleton } from "@mochi/common";
 import { Settings2 } from "lucide-react";
 import projectsApi from "@/api/projects";
 import type { ProjectDetails } from "@/types";
@@ -35,7 +32,10 @@ function DesignPage() {
   if (isLoading) {
     return (
       <Main className="flex items-center justify-center">
-        <p className="text-muted-foreground">Loading...</p>
+        <div className="space-y-4">
+          <Skeleton className="h-8 w-64" />
+          <Skeleton className="h-96 w-full" />
+        </div>
       </Main>
     );
   }

@@ -3,6 +3,7 @@
 
 import { useState } from "react";
 import { cn } from "@mochi/common";
+import { ChevronDown, ChevronRight } from "lucide-react";
 import type {
   ProjectClass,
   ProjectField,
@@ -10,7 +11,7 @@ import type {
   ProjectView,
 } from "@/types";
 
-type PreviewMode = "board" | "card";
+type PreviewMode = "board" | "tree" | "card";
 
 interface DesignPreviewProps {
   classes: ProjectClass[];
@@ -51,6 +52,63 @@ const SAMPLE_CARDS = [
       priority: "low",
       description: "Add API documentation",
     },
+  },
+];
+
+// Sample tree data for preview
+const SAMPLE_TREE = [
+  {
+    id: "1",
+    number: 1,
+    title: "Project setup",
+    status: "done",
+    expanded: true,
+    children: [
+      {
+        id: "2",
+        number: 2,
+        title: "Configure build system",
+        status: "done",
+        children: [],
+      },
+      {
+        id: "3",
+        number: 3,
+        title: "Set up testing framework",
+        status: "progress",
+        children: [],
+      },
+    ],
+  },
+  {
+    id: "4",
+    number: 4,
+    title: "Core features",
+    status: "progress",
+    expanded: true,
+    children: [
+      {
+        id: "5",
+        number: 5,
+        title: "User authentication",
+        status: "progress",
+        children: [],
+      },
+      {
+        id: "6",
+        number: 6,
+        title: "Data persistence",
+        status: "todo",
+        children: [],
+      },
+    ],
+  },
+  {
+    id: "7",
+    number: 7,
+    title: "Documentation",
+    status: "todo",
+    children: [],
   },
 ];
 
@@ -205,11 +263,66 @@ export function DesignPreview({
     );
   };
 
+  const renderTreePreview = () => {
+    const statusField = classFields.find((f) => f.id === "status");
+    const statusOptions = statusField ? classOptions["status"] || [] : [];
+
+    const getStatusColor = (statusId: string) => {
+      const opt = statusOptions.find((o) => o.id === statusId);
+      return opt?.colour || "#888";
+    };
+
+    type TreeItem = (typeof SAMPLE_TREE)[0];
+
+    const renderTreeRow = (item: TreeItem, depth: number) => {
+      const hasChildren = item.children && item.children.length > 0;
+      const isExpanded = "expanded" in item && item.expanded;
+
+      return (
+        <div key={item.id}>
+          <div className="flex items-center gap-1 py-1.5 px-2 hover:bg-muted/50 rounded text-sm">
+            <div style={{ width: depth * 24 }} />
+            <div className="w-5 flex items-center justify-center text-muted-foreground">
+              {hasChildren ? (
+                isExpanded ? (
+                  <ChevronDown className="size-4" />
+                ) : (
+                  <ChevronRight className="size-4" />
+                )
+              ) : null}
+            </div>
+            <span className="text-xs text-muted-foreground font-mono mr-2">
+              proj-{item.number}
+            </span>
+            <span className="flex-1">{item.title}</span>
+            {statusField && (
+              <span className="inline-flex items-center gap-1">
+                <span
+                  className="size-2 rounded-full"
+                  style={{ backgroundColor: getStatusColor(item.status) }}
+                />
+              </span>
+            )}
+          </div>
+          {hasChildren &&
+            isExpanded &&
+            item.children.map((child) => renderTreeRow(child as TreeItem, depth + 1))}
+        </div>
+      );
+    };
+
+    return (
+      <div className="bg-background border rounded-[10px] overflow-hidden max-w-2xl">
+        {SAMPLE_TREE.map((item) => renderTreeRow(item, 0))}
+      </div>
+    );
+  };
+
   return (
     <div className="h-full flex flex-col">
       <div className="flex items-center gap-2 p-2 border-b">
         <span className="text-sm font-medium">Preview:</span>
-        {(["board", "card"] as const).map((mode) => (
+        {(["board", "tree", "card"] as const).map((mode) => (
           <button
             key={mode}
             onClick={() => setPreviewMode(mode)}
@@ -226,6 +339,7 @@ export function DesignPreview({
       </div>
       <div className="flex-1 p-4 overflow-auto bg-muted/30">
         {previewMode === "board" && renderBoardPreview()}
+        {previewMode === "tree" && renderTreePreview()}
         {previewMode === "card" && renderCardPreview()}
       </div>
     </div>

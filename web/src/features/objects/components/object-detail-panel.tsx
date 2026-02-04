@@ -56,7 +56,30 @@ export function ObjectDetailPanel({
   const [editingTitle, setEditingTitle] = useState(false);
   const [titleValue, setTitleValue] = useState("");
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+  const [validationErrors, setValidationErrors] = useState<Set<string>>(new Set());
   const queryClient = useQueryClient();
+
+  // Track validation errors from fields
+  const handleValidationError = (fieldId: string, hasError: boolean) => {
+    setValidationErrors((prev) => {
+      const next = new Set(prev);
+      if (hasError) {
+        next.add(fieldId);
+      } else {
+        next.delete(fieldId);
+      }
+      return next;
+    });
+  };
+
+  // Try to close, but prevent if there are validation errors
+  const handleClose = () => {
+    if (validationErrors.size > 0) {
+      // Don't close - there are validation errors
+      return;
+    }
+    onClose();
+  };
 
   const { data, isLoading, error } = useQuery({
     queryKey: ["object", projectId, objectId],
@@ -196,7 +219,7 @@ export function ObjectDetailPanel({
 
   if (isLoading) {
     return (
-      <Dialog open={true} onOpenChange={() => onClose()}>
+      <Dialog open={true} onOpenChange={handleClose}>
         <DialogContent className="max-w-5xl h-[85vh] flex flex-col p-0" showCloseButton={false}>
           <div className="flex-1 flex items-center justify-center">
             <Loader2 className="size-6 animate-spin text-muted-foreground" />
@@ -209,7 +232,7 @@ export function ObjectDetailPanel({
 
   if (error || !data) {
     return (
-      <Dialog open={true} onOpenChange={() => onClose()}>
+      <Dialog open={true} onOpenChange={handleClose}>
         <DialogContent className="max-w-5xl" showCloseButton={false}>
           <div className="text-destructive text-sm bg-destructive/10 p-3 rounded-md">
             {error instanceof Error ? error.message : "Failed to load object"}
@@ -236,7 +259,7 @@ export function ObjectDetailPanel({
   };
 
   return (
-    <Dialog open={true} onOpenChange={() => onClose()}>
+    <Dialog open={true} onOpenChange={handleClose}>
       <DialogContent className="max-w-5xl h-[85vh] flex flex-col p-0 gap-0" showCloseButton={false}>
         {/* Header */}
         <div className="flex items-center gap-3 px-6 py-4 border-b shrink-0">
@@ -296,7 +319,7 @@ export function ObjectDetailPanel({
               variant="ghost"
               size="icon"
               className="h-8 w-8"
-              onClick={onClose}
+              onClick={handleClose}
               title="Close"
             >
               <X className="size-4" />
@@ -385,6 +408,7 @@ export function ObjectDetailPanel({
                       disabled={updateValueMutation.isPending}
                       hideLabel
                       localPeople={peopleData}
+                      onValidationError={(hasError) => handleValidationError(field.id, hasError)}
                     />
                   </div>
                 ))}

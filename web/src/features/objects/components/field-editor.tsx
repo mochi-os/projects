@@ -25,6 +25,7 @@ interface FieldEditorProps {
   onChange: (value: string) => void;
   disabled?: boolean;
   localPeople?: Person[];
+  onValidationError?: (hasError: boolean) => void;
 }
 
 export function FieldEditor({
@@ -35,6 +36,7 @@ export function FieldEditor({
   disabled,
   hideLabel,
   localPeople = [],
+  onValidationError,
 }: FieldEditorProps & { hideLabel?: boolean }) {
   const [localValue, setLocalValue] = useState(value);
   const debounceTimerRef = useRef<NodeJS.Timeout | null>(null);
@@ -131,15 +133,11 @@ export function FieldEditor({
 
       case "date":
         return (
-          <Input
-            type="date"
-            value={localValue}
-            onChange={(e) => {
-              setLocalValue(e.target.value);
-              onChange(e.target.value);
-            }}
+          <DateEditor
+            value={value}
+            onChange={onChange}
             disabled={disabled}
-            className="h-9"
+            onErrorChange={(hasError) => onValidationError?.(hasError)}
           />
         );
 
@@ -188,6 +186,56 @@ export function FieldEditor({
         {field.name}
       </label>
       {renderEditor()}
+    </div>
+  );
+}
+
+// Date editor component with blur validation
+interface DateEditorProps {
+  value: string;
+  onChange: (value: string) => void;
+  disabled?: boolean;
+  onErrorChange: (error: boolean) => void;
+}
+
+function DateEditor({ value, onChange, disabled, onErrorChange }: DateEditorProps) {
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [showError, setShowError] = useState(false);
+
+  const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    if (e.target.validity.badInput) {
+      setShowError(true);
+      onErrorChange(true);
+    } else {
+      setShowError(false);
+      onErrorChange(false);
+      if (e.target.value !== value) {
+        onChange(e.target.value);
+      }
+    }
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // Track bad input so parent can prevent close
+    onErrorChange(e.target.validity.badInput);
+    // Clear visible error when user starts editing again
+    if (showError) setShowError(false);
+  };
+
+  return (
+    <div className="space-y-1">
+      <Input
+        ref={inputRef}
+        type="date"
+        defaultValue={value}
+        onBlur={handleBlur}
+        onChange={handleChange}
+        disabled={disabled}
+        className={`h-9 ${showError ? "border-destructive" : ""}`}
+      />
+      {showError && (
+        <p className="text-xs text-destructive">Invalid date</p>
+      )}
     </div>
   );
 }

@@ -290,33 +290,26 @@ export function EditClassDialog({
   onEditField,
 }: EditClassDialogProps) {
   const [name, setName] = useState("");
-  const [parents, setParents] = useState<string[]>([]);
 
   useEffect(() => {
     if (cls) {
       setName(cls.name);
-      setParents(hierarchy);
     }
-  }, [cls, hierarchy]);
+  }, [cls]);
 
   if (!cls) return null;
 
-  const handleSave = () => {
-    if (name.trim() && name !== cls.name) {
+  const handleNameBlur = () => {
+    if (name.trim() && name.trim() !== cls.name) {
       onUpdate(name.trim());
     }
-    if (JSON.stringify(parents.sort()) !== JSON.stringify(hierarchy.sort())) {
-      onUpdateHierarchy(parents);
-    }
-    onOpenChange(false);
   };
 
   const toggleParent = (parentId: string) => {
-    if (parents.includes(parentId)) {
-      setParents(parents.filter((p) => p !== parentId));
-    } else {
-      setParents([...parents, parentId]);
-    }
+    const newParents = hierarchy.includes(parentId)
+      ? hierarchy.filter((p) => p !== parentId)
+      : [...hierarchy, parentId];
+    onUpdateHierarchy(newParents);
   };
 
   const otherClasses = classes.filter((c) => c.id !== cls.id);
@@ -349,6 +342,7 @@ export function EditClassDialog({
               id="class-name"
               value={name}
               onChange={(e) => setName(e.target.value)}
+              onBlur={handleNameBlur}
             />
           </div>
 
@@ -366,7 +360,7 @@ export function EditClassDialog({
                   >
                     <input
                       type="checkbox"
-                      checked={parents.includes(c.id)}
+                      checked={hierarchy.includes(c.id)}
                       onChange={() => toggleParent(c.id)}
                       className="rounded"
                     />
@@ -400,11 +394,8 @@ export function EditClassDialog({
           </div>
         </div>
         <DialogFooter>
-          <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
-            Cancel
-          </Button>
-          <Button type="button" onClick={handleSave}>
-            Save
+          <Button type="button" onClick={() => onOpenChange(false)}>
+            Done
           </Button>
         </DialogFooter>
       </DialogContent>
@@ -438,42 +429,38 @@ export function EditFieldDialog({
   onDeleteOption,
 }: EditFieldDialogProps) {
   const [name, setName] = useState("");
-  const [required, setRequired] = useState(false);
-  const [card, setCard] = useState(false);
   const [rows, setRows] = useState(1);
 
   useEffect(() => {
     if (field) {
       setName(field.name);
-      setRequired(field.required === 1);
-      setCard(field.card === 1);
       setRows(field.rows || 1);
     }
   }, [field]);
 
   if (!field) return null;
 
-  const handleSave = () => {
-    const updates: Partial<ProjectField> = {};
-    if (name.trim() && name !== field.name) {
-      updates.name = name.trim();
+  const isSystemField = field.id === "title";
+
+  const handleNameBlur = () => {
+    if (name.trim() && name.trim() !== field.name) {
+      onUpdate({ name: name.trim() });
     }
-    if ((required ? 1 : 0) !== field.required) {
-      updates.required = required ? 1 : 0;
-    }
-    if ((card ? 1 : 0) !== field.card) {
-      updates.card = card ? 1 : 0;
-    }
-    if (field.fieldtype === "text" && rows !== (field.rows || 1)) {
-      updates.rows = rows;
-    }
-    if (Object.keys(updates).length > 0) {
-      onUpdate(updates);
-    }
-    onOpenChange(false);
   };
 
-  const isSystemField = field.id === "title";
+  const handleRowsBlur = () => {
+    if (field.fieldtype === "text" && rows !== (field.rows || 1)) {
+      onUpdate({ rows });
+    }
+  };
+
+  const handleRequiredChange = (checked: boolean) => {
+    onUpdate({ required: checked ? 1 : 0 });
+  };
+
+  const handleCardChange = (checked: boolean) => {
+    onUpdate({ card: checked ? 1 : 0 });
+  };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -505,6 +492,7 @@ export function EditFieldDialog({
               id="field-name"
               value={name}
               onChange={(e) => setName(e.target.value)}
+              onBlur={handleNameBlur}
               disabled={isSystemField}
             />
           </div>
@@ -524,6 +512,7 @@ export function EditFieldDialog({
                 max={20}
                 value={rows}
                 onChange={(e) => setRows(parseInt(e.target.value) || 1)}
+                onBlur={handleRowsBlur}
               />
               <p className={`text-xs text-muted-foreground ${rows === 1 ? "" : "invisible"}`}>
                 Single line of text only
@@ -535,8 +524,8 @@ export function EditFieldDialog({
             <label className="flex items-center gap-2 text-sm cursor-pointer">
               <input
                 type="checkbox"
-                checked={required}
-                onChange={(e) => setRequired(e.target.checked)}
+                checked={field.required === 1}
+                onChange={(e) => handleRequiredChange(e.target.checked)}
                 className="rounded"
                 disabled={isSystemField}
               />
@@ -545,8 +534,8 @@ export function EditFieldDialog({
             <label className="flex items-center gap-2 text-sm cursor-pointer">
               <input
                 type="checkbox"
-                checked={card}
-                onChange={(e) => setCard(e.target.checked)}
+                checked={field.card === 1}
+                onChange={(e) => handleCardChange(e.target.checked)}
                 className="rounded"
               />
               Show on card by default
@@ -597,11 +586,8 @@ export function EditFieldDialog({
           )}
         </div>
         <DialogFooter>
-          <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
-            Cancel
-          </Button>
-          <Button type="button" onClick={handleSave}>
-            Save
+          <Button type="button" onClick={() => onOpenChange(false)}>
+            Done
           </Button>
         </DialogFooter>
       </DialogContent>

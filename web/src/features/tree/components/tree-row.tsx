@@ -1,6 +1,7 @@
 // Mochi Projects: Tree row component
 // Copyright Alistair Cunningham 2026
 
+import { useRef } from "react";
 import { ChevronRight, ChevronDown, GripVertical } from "lucide-react";
 import { cn } from "@mochi/common";
 import type { ProjectObject, ProjectField, FieldOption } from "@/types";
@@ -18,10 +19,14 @@ interface TreeRowProps {
   showClass?: boolean;
   showId?: boolean;
   isDragOver: boolean;
+  isDragBefore: boolean;
+  isDragAfter: boolean;
+  canReorder: boolean;
+  canReparent: boolean;
   onToggleExpand: () => void;
   onClick: () => void;
   onDragStart: () => void;
-  onDragOver: () => void;
+  onDragOver: (objectId: string, position: "before" | "after" | "on") => void;
   onDragEnd: () => void;
 }
 
@@ -43,12 +48,18 @@ export function TreeRow({
   showClass = true,
   showId = true,
   isDragOver,
+  isDragBefore,
+  isDragAfter,
+  canReorder,
+  canReparent,
   onToggleExpand,
   onClick,
   onDragStart,
   onDragOver,
   onDragEnd,
 }: TreeRowProps) {
+  const rowRef = useRef<HTMLTableRowElement>(null);
+
   const renderFieldValue = (field: ProjectField, value: string) => {
     if (!value) {
       return <span className="text-muted-foreground">-</span>;
@@ -95,11 +106,41 @@ export function TreeRow({
   // Calculate indentation (24px per level)
   const indentPx = depth * 24;
 
+  // Determine drop position based on mouse position within row
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+
+    if (!rowRef.current) return;
+
+    const rect = rowRef.current.getBoundingClientRect();
+    const y = e.clientY - rect.top;
+    const height = rect.height;
+
+    // Use larger edge zones (8px) for reorder, center for reparent
+    const edgeZone = 8;
+
+    if (canReorder && y < edgeZone) {
+      onDragOver(object.id, "before");
+    } else if (canReorder && y > height - edgeZone) {
+      onDragOver(object.id, "after");
+    } else if (canReparent) {
+      onDragOver(object.id, "on");
+    } else if (canReorder) {
+      // If can't reparent but can reorder, use before/after based on half
+      if (y < height * 0.5) {
+        onDragOver(object.id, "before");
+      } else {
+        onDragOver(object.id, "after");
+      }
+    }
+  };
+
   return (
     <tr
+      ref={rowRef}
       className={cn(
-        "hover:bg-muted/50 cursor-pointer text-sm group",
-        isDragOver && "bg-primary/10",
+        "hover:bg-muted/50 cursor-pointer text-sm group relative",
+        isDragOver && "bg-primary/20 ring-2 ring-inset ring-primary/50",
       )}
       onClick={onClick}
       draggable
@@ -108,12 +149,19 @@ export function TreeRow({
         e.dataTransfer.setData("text/plain", object.id);
         onDragStart();
       }}
-      onDragOver={(e) => {
-        e.preventDefault();
-        onDragOver();
-      }}
+      onDragOver={handleDragOver}
+      onDrop={onDragEnd}
       onDragEnd={onDragEnd}
     >
+      {/* Drop indicator - before */}
+      {isDragBefore && (
+        <td colSpan={100} className="absolute -top-px left-0 right-0 pointer-events-none">
+          <div className="relative h-0.5 bg-primary shadow-[0_0_4px_1px] shadow-primary/50">
+            <div className="absolute -left-1 -top-[3px] size-2 rounded-full bg-primary" />
+          </div>
+        </td>
+      )}
+
       {/* Drag handle + expand/collapse */}
       <td className="whitespace-nowrap py-1.5 pl-1">
         <div className="flex items-center" style={{ paddingLeft: indentPx }}>
@@ -172,6 +220,15 @@ export function TreeRow({
           </td>
         );
       })}
+
+      {/* Drop indicator - after */}
+      {isDragAfter && (
+        <td colSpan={100} className="absolute -bottom-px left-0 right-0 pointer-events-none">
+          <div className="relative h-0.5 bg-primary shadow-[0_0_4px_1px] shadow-primary/50">
+            <div className="absolute -left-1 -top-[3px] size-2 rounded-full bg-primary" />
+          </div>
+        </td>
+      )}
     </tr>
   );
 }

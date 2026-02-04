@@ -3,7 +3,7 @@
 
 import { useState, useMemo, useEffect, useCallback } from "react";
 import { TreeRow } from "./tree-row";
-import type { ProjectDetails, ProjectObject } from "@/types";
+import type { ProjectDetails, ProjectObject, SortState } from "@/types";
 
 interface TreeViewProps {
   project: ProjectDetails;
@@ -11,18 +11,21 @@ interface TreeViewProps {
   objects: ProjectObject[];
   peopleMap: Record<string, string>;
   viewFields?: string;
+  sort?: SortState | null;
   onCardClick: (object: ProjectObject) => void;
   onReparent?: (objectId: string, newParentId: string | null) => void;
+  onReorder?: (objectId: string, newRank: number) => void;
 }
 
 export interface TreeNode {
   object: ProjectObject;
   children: TreeNode[];
   depth: number;
+  parent: string;
 }
 
 // Build tree structure from flat list of objects
-function buildTree(objects: ProjectObject[]): TreeNode[] {
+function buildTree(objects: ProjectObject[], sort?: SortState | null): TreeNode[] {
   const objectMap = new Map<string, ProjectObject>();
   const childrenMap = new Map<string, ProjectObject[]>();
 
@@ -35,34 +38,71 @@ function buildTree(objects: ProjectObject[]): TreeNode[] {
     childrenMap.get(obj.parent || "")!.push(obj);
   }
 
+  // Sort comparator based on sort state
+  const sortField = sort?.field || "rank";
+  const sortDirection = sort?.direction || "asc";
+  const multiplier = sortDirection === "asc" ? 1 : -1;
+
+  const compare = (a: ProjectObject, b: ProjectObject): number => {
+    let aVal: string | number;
+    let bVal: string | number;
+
+    if (sortField === "rank") {
+      aVal = a.rank || 0;
+      bVal = b.rank || 0;
+    } else if (sortField === "created") {
+      aVal = a.created || 0;
+      bVal = b.created || 0;
+    } else if (sortField === "updated") {
+      aVal = a.updated || 0;
+      bVal = b.updated || 0;
+    } else if (sortField === "number") {
+      aVal = a.number || 0;
+      bVal = b.number || 0;
+    } else {
+      aVal = a.values[sortField] || "";
+      bVal = b.values[sortField] || "";
+    }
+
+    if (typeof aVal === "number" && typeof bVal === "number") {
+      return (aVal - bVal) * multiplier;
+    }
+    return String(aVal).localeCompare(String(bVal)) * multiplier;
+  };
+
   // Recursively build tree nodes
   function buildNodes(parentId: string, depth: number): TreeNode[] {
     const children = childrenMap.get(parentId) || [];
-    // Sort by rank, then by number
-    children.sort((a, b) => (a.rank || 0) - (b.rank || 0) || a.number - b.number);
+    children.sort(compare);
 
     return children.map((obj) => ({
       object: obj,
       children: buildNodes(obj.id, depth + 1),
       depth,
+      parent: parentId,
     }));
   }
 
   return buildNodes("", 0);
 }
 
+interface FlatNode {
+  node: TreeNode;
+  hasChildren: boolean;
+  isExpanded: boolean;
+  siblings: ProjectObject[];
+}
+
 // Flatten tree for rendering, respecting expanded state
-function flattenTree(
-  nodes: TreeNode[],
-  expanded: Set<string>,
-): { node: TreeNode; hasChildren: boolean; isExpanded: boolean }[] {
-  const result: { node: TreeNode; hasChildren: boolean; isExpanded: boolean }[] = [];
+function flattenTree(nodes: TreeNode[], expanded: Set<string>): FlatNode[] {
+  const result: FlatNode[] = [];
 
   function traverse(nodeList: TreeNode[]) {
+    const siblings = nodeList.map((n) => n.object);
     for (const node of nodeList) {
       const hasChildren = node.children.length > 0;
       const isExpanded = expanded.has(node.object.id);
-      result.push({ node, hasChildren, isExpanded });
+      result.push({ node, hasChildren, isExpanded, siblings });
 
       if (hasChildren && isExpanded) {
         traverse(node.children);
@@ -74,14 +114,28 @@ function flattenTree(
   return result;
 }
 
+// Calculate rank for inserting at a position between siblings
+function calculateRank(siblings: ProjectObject[], insertIndex: number): number {
+  const prevItem = insertIndex > 0 ? siblings[insertIndex - 1] : null;
+  const nextItem = insertIndex < siblings.length ? siblings[insertIndex] : null;
+
+  const prevRank = prevItem?.rank ?? 0;
+  const nextRank = nextItem?.rank ?? prevRank + 1000;
+
+  // Insert midway between prev and next
+  return Math.floor((prevRank + nextRank) / 2);
+}
+
 export function TreeView({
   project,
   projectId,
   objects,
   peopleMap,
   viewFields,
+  sort,
   onCardClick,
   onReparent,
+  onReorder,
 }: TreeViewProps) {
   // Storage key for expanded state
   const storageKey = `projects:${projectId}:tree:expanded`;
@@ -102,13 +156,10 @@ export function TreeView({
   }, [expanded, storageKey]);
 
   // Build tree structure
-  const tree = useMemo(() => buildTree(objects), [objects]);
+  const tree = useMemo(() => buildTree(objects, sort), [objects, sort]);
 
   // Flatten tree for rendering
-  const flatNodes = useMemo(
-    () => flattenTree(tree, expanded),
-    [tree, expanded],
-  );
+  const flatNodes = useMemo(() => flattenTree(tree, expanded), [tree, expanded]);
 
   // Toggle expand/collapse
   const toggleExpand = useCallback((objectId: string) => {
@@ -133,9 +184,10 @@ export function TreeView({
   const viewFieldsList = viewFields?.split(",").filter(Boolean) || [];
   const showClass = viewFieldsList.includes("class");
   const showId = viewFieldsList.includes("id");
-  const visibleFields = viewFieldsList.length > 0
-    ? fields.filter((f) => viewFieldsList.includes(f.id) || f.id === "title")
-    : fields.filter((f) => f.card === 1 || f.id === "title");
+  const visibleFields =
+    viewFieldsList.length > 0
+      ? fields.filter((f) => viewFieldsList.includes(f.id) || f.id === "title")
+      : fields.filter((f) => f.card === 1 || f.id === "title");
 
   // Build class map for looking up class names
   const classMap = useMemo(() => {
@@ -156,52 +208,104 @@ export function TreeView({
   }, [objects]);
 
   // Check if reparenting is allowed by hierarchy rules
-  const isReparentAllowed = useCallback((childId: string, parentId: string | null) => {
-    const child = objectMap[childId];
-    if (!child) return false;
+  const isReparentAllowed = useCallback(
+    (childId: string, parentId: string | null) => {
+      const child = objectMap[childId];
+      if (!child) return false;
 
-    const allowedParents = project.hierarchy[child.class] || [];
-    if (parentId === null) {
-      // Check if root is allowed (empty string in hierarchy)
-      return allowedParents.includes("");
-    }
+      const allowedParents = project.hierarchy[child.class] || [];
+      if (parentId === null) {
+        // Check if root is allowed (empty string in hierarchy)
+        return allowedParents.includes("");
+      }
 
-    const parent = objectMap[parentId];
-    if (!parent) return false;
+      const parent = objectMap[parentId];
+      if (!parent) return false;
 
-    // Check if parent's class is allowed
-    return allowedParents.includes(parent.class);
-  }, [objectMap, project.hierarchy]);
+      // Check if parent's class is allowed
+      return allowedParents.includes(parent.class);
+    },
+    [objectMap, project.hierarchy],
+  );
+
+  // Only allow reordering when sorting by rank
+  const canReorder = sort?.field === "rank" || (!sort && true);
 
   // Drag state
   const [draggedId, setDraggedId] = useState<string | null>(null);
   const [dragOverId, setDragOverId] = useState<string | null>(null);
+  const [dropPosition, setDropPosition] = useState<"before" | "after" | "on" | null>(null);
 
   const handleDragStart = useCallback((objectId: string) => {
     setDraggedId(objectId);
   }, []);
 
-  const handleDragOver = useCallback((objectId: string) => {
-    if (draggedId && draggedId !== objectId && isReparentAllowed(draggedId, objectId)) {
+  const handleDragOver = useCallback(
+    (objectId: string, position: "before" | "after" | "on") => {
+      if (!draggedId || draggedId === objectId) return;
+
+      // For "on" position (reparent), check if allowed
+      if (position === "on") {
+        if (!isReparentAllowed(draggedId, objectId)) return;
+      }
+
+      // For reorder positions, check if items share same parent and reordering is allowed
+      if (position === "before" || position === "after") {
+        if (!canReorder) return;
+        const draggedObj = objectMap[draggedId];
+        const targetObj = objectMap[objectId];
+        if (!draggedObj || !targetObj) return;
+        // Only allow reordering within same parent level
+        if (draggedObj.parent !== targetObj.parent) return;
+      }
+
       setDragOverId(objectId);
-    }
-  }, [draggedId, isReparentAllowed]);
+      setDropPosition(position);
+    },
+    [draggedId, isReparentAllowed, canReorder, objectMap],
+  );
+
 
   const handleDragEnd = useCallback(() => {
-    if (draggedId && dragOverId && draggedId !== dragOverId && onReparent && isReparentAllowed(draggedId, dragOverId)) {
-      onReparent(draggedId, dragOverId);
+    if (draggedId && dragOverId && draggedId !== dragOverId) {
+      if (dropPosition === "on" && onReparent && isReparentAllowed(draggedId, dragOverId)) {
+        // Reparent: make dragged item a child of target
+        onReparent(draggedId, dragOverId);
+      } else if ((dropPosition === "before" || dropPosition === "after") && onReorder && canReorder) {
+        // Reorder within same parent
+        const targetObj = objectMap[dragOverId];
+        const draggedObj = objectMap[draggedId];
+        if (targetObj && draggedObj && targetObj.parent === draggedObj.parent) {
+          // Find siblings and calculate new rank
+          const flatNode = flatNodes.find((fn) => fn.node.object.id === dragOverId);
+          if (flatNode) {
+            const { siblings } = flatNode;
+            // Filter out the dragged item from siblings for rank calculation
+            const siblingsWithoutDragged = siblings.filter((s) => s.id !== draggedId);
+            // Find where target is in the filtered list
+            const targetIndex = siblingsWithoutDragged.findIndex((s) => s.id === dragOverId);
+            // Calculate insert index
+            const insertIndex = dropPosition === "before" ? targetIndex : targetIndex + 1;
+            const newRank = calculateRank(siblingsWithoutDragged, insertIndex);
+            onReorder(draggedId, newRank);
+          }
+        }
+      }
     }
     setDraggedId(null);
     setDragOverId(null);
-  }, [draggedId, dragOverId, onReparent, isReparentAllowed]);
-
-  const handleDropOnRoot = useCallback(() => {
-    if (draggedId && onReparent && isReparentAllowed(draggedId, null)) {
-      onReparent(draggedId, null);
-    }
-    setDraggedId(null);
-    setDragOverId(null);
-  }, [draggedId, onReparent, isReparentAllowed]);
+    setDropPosition(null);
+  }, [
+    draggedId,
+    dragOverId,
+    dropPosition,
+    onReparent,
+    onReorder,
+    isReparentAllowed,
+    canReorder,
+    objectMap,
+    flatNodes,
+  ]);
 
   if (objects.length === 0) {
     return (
@@ -212,45 +316,41 @@ export function TreeView({
   }
 
   return (
-    <div className="border rounded-[10px] overflow-hidden bg-background">
-      {/* Drop zone for making items root-level */}
-      {draggedId && isReparentAllowed(draggedId, null) && (
-        <div
-          className="h-8 border-b border-dashed border-primary/50 bg-primary/5 flex items-center justify-center text-xs text-muted-foreground"
-          onDragOver={(e) => {
-            e.preventDefault();
-            setDragOverId(null);
-          }}
-          onDrop={handleDropOnRoot}
-        >
-          Drop here to make root level
-        </div>
-      )}
-
+    <div className="border rounded-[10px] overflow-hidden bg-background relative">
       <table className="w-full border-collapse">
         <tbody className="divide-y divide-border">
-          {flatNodes.map(({ node, hasChildren, isExpanded }) => (
-            <TreeRow
-              key={node.object.id}
-              object={node.object}
-            depth={node.depth}
-            hasChildren={hasChildren}
-            isExpanded={isExpanded}
-            fields={visibleFields}
-            options={options}
-            peopleMap={peopleMap}
-            classMap={classMap}
-            prefix={project.project.prefix}
-            showClass={showClass}
-            showId={showId}
-            isDragOver={dragOverId === node.object.id}
-            onToggleExpand={() => toggleExpand(node.object.id)}
-            onClick={() => onCardClick(node.object)}
-            onDragStart={() => handleDragStart(node.object.id)}
-            onDragOver={() => handleDragOver(node.object.id)}
-            onDragEnd={handleDragEnd}
-          />
-          ))}
+          {flatNodes.map(({ node, hasChildren, isExpanded }) => {
+            const draggedObj = draggedId ? objectMap[draggedId] : null;
+            const canReorderHere =
+              canReorder && draggedObj && draggedObj.parent === node.object.parent && draggedId !== node.object.id;
+
+            return (
+              <TreeRow
+                key={node.object.id}
+                object={node.object}
+                depth={node.depth}
+                hasChildren={hasChildren}
+                isExpanded={isExpanded}
+                fields={visibleFields}
+                options={options}
+                peopleMap={peopleMap}
+                classMap={classMap}
+                prefix={project.project.prefix}
+                showClass={showClass}
+                showId={showId}
+                isDragOver={dragOverId === node.object.id && dropPosition === "on"}
+                isDragBefore={dragOverId === node.object.id && dropPosition === "before"}
+                isDragAfter={dragOverId === node.object.id && dropPosition === "after"}
+                canReorder={!!canReorderHere}
+                canReparent={!!draggedId && draggedId !== node.object.id && isReparentAllowed(draggedId, node.object.id)}
+                onToggleExpand={() => toggleExpand(node.object.id)}
+                onClick={() => onCardClick(node.object)}
+                onDragStart={() => handleDragStart(node.object.id)}
+                onDragOver={handleDragOver}
+                onDragEnd={handleDragEnd}
+              />
+            );
+          })}
         </tbody>
       </table>
     </div>

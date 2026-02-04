@@ -12,7 +12,7 @@ import {
   SortDirectionButton,
   cn,
 } from "@mochi/common";
-import { LayoutGrid, Network } from "lucide-react";
+import { LayoutGrid, ListTree } from "lucide-react";
 import type { ProjectDetails, ProjectView, FieldOption, SortState } from "@/types";
 import type { FilterState } from "@/features/views/components/filter-bar";
 
@@ -86,7 +86,7 @@ export function ViewOptionsBar({
             )}
           >
             {view.viewtype === "tree" ? (
-              <Network className="size-3.5" />
+              <ListTree className="size-3.5" />
             ) : (
               <LayoutGrid className="size-3.5" />
             )}

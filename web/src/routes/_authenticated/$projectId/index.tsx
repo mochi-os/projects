@@ -474,6 +474,11 @@ function ProjectPage() {
     reparentMutation.mutate({ objectId, parentId: newParentId });
   };
 
+  const handleReorder = (objectId: string, newRank: number) => {
+    // Use move mutation with just rank (no field/value change)
+    moveMutation.mutate({ objectId, field: "", value: "", rank: newRank });
+  };
+
   const handleDeleteColumn = async (classId: string, fieldId: string, optionId: string) => {
     await deleteColumnMutation.mutateAsync({ classId, fieldId, optionId });
   };
@@ -648,8 +653,10 @@ function ProjectPage() {
                 objects={filteredObjects}
                 peopleMap={peopleMap}
                 viewFields={activeView?.fields}
+                sort={sort}
                 onCardClick={handleCardClick}
                 onReparent={handleReparent}
+                onReorder={handleReorder}
               />
             </div>
           ) : (

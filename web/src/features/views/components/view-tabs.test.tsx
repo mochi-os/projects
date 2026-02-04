@@ -122,7 +122,7 @@ describe("ViewTabs", () => {
       />,
     );
 
-    // Network icon is used for tree view
+    // ListTree icon is used for tree view
     const button = screen.getByText("Tree").closest("button");
     const svg = button?.querySelector("svg");
     expect(svg).toBeInTheDocument();

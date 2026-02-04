@@ -11,6 +11,7 @@ interface TreeRowProps {
   depth: number;
   hasChildren: boolean;
   isExpanded: boolean;
+  anySiblingHasChildren: boolean;
   fields: ProjectField[];
   options: Record<string, FieldOption[]>;
   peopleMap: Record<string, string>;
@@ -40,6 +41,7 @@ export function TreeRow({
   depth,
   hasChildren,
   isExpanded,
+  anySiblingHasChildren,
   fields,
   options,
   peopleMap,
@@ -182,9 +184,9 @@ export function TreeRow({
                 <ChevronRight className="size-4" />
               )}
             </button>
-          ) : (
+          ) : anySiblingHasChildren ? (
             <div className="size-5" />
-          )}
+          ) : null}
         </div>
       </td>
 

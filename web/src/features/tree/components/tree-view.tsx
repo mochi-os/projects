@@ -91,6 +91,7 @@ interface FlatNode {
   hasChildren: boolean;
   isExpanded: boolean;
   siblings: ProjectObject[];
+  anySiblingHasChildren: boolean;
 }
 
 // Flatten tree for rendering, respecting expanded state
@@ -99,10 +100,11 @@ function flattenTree(nodes: TreeNode[], expanded: Set<string>): FlatNode[] {
 
   function traverse(nodeList: TreeNode[]) {
     const siblings = nodeList.map((n) => n.object);
+    const anySiblingHasChildren = nodeList.some((n) => n.children.length > 0);
     for (const node of nodeList) {
       const hasChildren = node.children.length > 0;
       const isExpanded = expanded.has(node.object.id);
-      result.push({ node, hasChildren, isExpanded, siblings });
+      result.push({ node, hasChildren, isExpanded, siblings, anySiblingHasChildren });
 
       if (hasChildren && isExpanded) {
         traverse(node.children);
@@ -319,7 +321,7 @@ export function TreeView({
     <div className="border rounded-[10px] overflow-hidden bg-background relative">
       <table className="w-full border-collapse">
         <tbody className="divide-y divide-border">
-          {flatNodes.map(({ node, hasChildren, isExpanded }) => {
+          {flatNodes.map(({ node, hasChildren, isExpanded, anySiblingHasChildren }) => {
             const draggedObj = draggedId ? objectMap[draggedId] : null;
             const canReorderHere =
               canReorder && draggedObj && draggedObj.parent === node.object.parent && draggedId !== node.object.id;
@@ -331,6 +333,7 @@ export function TreeView({
                 depth={node.depth}
                 hasChildren={hasChildren}
                 isExpanded={isExpanded}
+                anySiblingHasChildren={anySiblingHasChildren}
                 fields={visibleFields}
                 options={options}
                 peopleMap={peopleMap}

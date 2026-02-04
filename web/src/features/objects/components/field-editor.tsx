@@ -156,6 +156,17 @@ export function FieldEditor({
           />
         );
 
+      case "checkbox":
+        return (
+          <div className="pt-2">
+            <Checkbox
+              checked={value === "1" || value === "true"}
+              onCheckedChange={(checked) => onChange(checked ? "1" : "0")}
+              disabled={disabled}
+            />
+          </div>
+        );
+
       case "checklist":
         return (
           <ChecklistEditor

@@ -96,13 +96,13 @@ interface AddFieldDialogProps {
 }
 
 const FIELD_TYPES = [
-  { id: "text", name: "Text" },
-  { id: "number", name: "Number" },
-  { id: "date", name: "Date" },
-  { id: "enumerated", name: "Select" },
-  { id: "user", name: "User" },
   { id: "checkbox", name: "Checkbox" },
   { id: "checklist", name: "Checklist" },
+  { id: "date", name: "Date" },
+  { id: "number", name: "Number" },
+  { id: "enumerated", name: "Select" },
+  { id: "text", name: "Text" },
+  { id: "user", name: "User" },
 ];
 
 export function AddFieldDialog({

@@ -381,7 +381,19 @@ function ChecklistEditor({ value, onChange, disabled }: ChecklistEditorProps) {
       {/* Add new item */}
       {!disabled && (
         <div className="flex items-center gap-2">
-          <Plus className="h-4 w-4 text-muted-foreground" />
+          <button
+            type="button"
+            onClick={() => {
+              if (newItemText.trim()) {
+                addItem();
+              } else {
+                inputRef.current?.focus();
+              }
+            }}
+            className="p-1 -m-1 text-muted-foreground hover:text-foreground cursor-pointer"
+          >
+            <Plus className="h-4 w-4" />
+          </button>
           <input
             ref={inputRef}
             type="text"

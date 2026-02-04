@@ -144,7 +144,7 @@ export function BoardColumn({
             {objects.length}
           </span>
         </div>
-        {!isReordering && (
+        {!isReordering && (onCreateClick || onRenameColumn || (objects.length === 0 && onDeleteColumn)) && (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <button className="p-1 rounded hover:bg-muted transition-colors">

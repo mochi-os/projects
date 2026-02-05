@@ -2,9 +2,9 @@
 // Copyright Alistair Cunningham 2026
 
 import { useRef } from "react";
-import { ChevronRight, ChevronDown, GripVertical } from "lucide-react";
+import { CheckSquare, ChevronRight, ChevronDown, GripVertical } from "lucide-react";
 import { cn } from "@mochi/common";
-import type { ProjectObject, ProjectField, FieldOption } from "@/types";
+import type { ProjectObject, ProjectField, FieldOption, ChecklistItem } from "@/types";
 
 interface TreeRowProps {
   object: ProjectObject;
@@ -97,6 +97,32 @@ export function TreeRow({
       case "user": {
         const name = peopleMap[value] || value;
         return <span className="truncate">{truncate(name, 25)}</span>;
+      }
+
+      case "checklist": {
+        try {
+          const items: ChecklistItem[] = JSON.parse(value);
+          if (items.length === 0) {
+            return <span className="text-muted-foreground">-</span>;
+          }
+          const doneCount = items.filter((item) => item.done).length;
+          const allDone = doneCount === items.length;
+          return (
+            <span
+              className={cn(
+                "inline-flex items-center gap-1 rounded-md px-1.5 py-0.5 text-xs font-medium ring-1 ring-inset",
+                allDone
+                  ? "bg-green-500/10 text-green-600 ring-green-500/30"
+                  : "bg-muted text-muted-foreground ring-border"
+              )}
+            >
+              <CheckSquare className="size-3" />
+              {doneCount}/{items.length}
+            </span>
+          );
+        } catch {
+          return <span className="text-muted-foreground">-</span>;
+        }
       }
 
       case "text":

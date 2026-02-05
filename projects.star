@@ -2732,10 +2732,10 @@ def action_field_reorder(a):
 	order_str = a.input("order") or ""
 	order = [f.strip() for f in order_str.split(",") if f.strip()]
 
-	# Update sort order for each field
+	# Update rank for each field
 	for i, field_id in enumerate(order):
 		mochi.db.execute(
-			"update fields set sort=? where project=? and class=? and id=?",
+			"update fields set rank=? where project=? and class=? and id=?",
 			i, project_id, class_id, field_id
 		)
 

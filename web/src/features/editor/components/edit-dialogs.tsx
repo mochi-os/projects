@@ -19,7 +19,7 @@ import {
   DropdownMenuItem,
   SortDirectionButton,
 } from "@mochi/common";
-import { MoreHorizontal } from "lucide-react";
+import { GripVertical, MoreHorizontal } from "lucide-react";
 import type { ProjectView, ProjectField, ProjectClass, FieldOption } from "@/types";
 
 // Edit View Dialog
@@ -274,6 +274,7 @@ interface EditClassDialogProps {
   onDelete: () => void;
   onAddField: () => void;
   onEditField: (field: ProjectField) => void;
+  onReorderFields: (order: string[]) => void;
 }
 
 export function EditClassDialog({
@@ -288,8 +289,11 @@ export function EditClassDialog({
   onDelete,
   onAddField,
   onEditField,
+  onReorderFields,
 }: EditClassDialogProps) {
   const [name, setName] = useState("");
+  const [draggedFieldId, setDraggedFieldId] = useState<string | null>(null);
+  const [dragOverFieldId, setDragOverFieldId] = useState<string | null>(null);
 
   useEffect(() => {
     if (cls) {
@@ -313,6 +317,48 @@ export function EditClassDialog({
   };
 
   const otherClasses = classes.filter((c) => c.id !== cls.id);
+
+  const handleDragStart = (e: React.DragEvent, fieldId: string) => {
+    setDraggedFieldId(fieldId);
+    e.dataTransfer.effectAllowed = "move";
+    e.dataTransfer.setData("text/plain", fieldId);
+  };
+
+  const handleDragEnd = () => {
+    setDraggedFieldId(null);
+    setDragOverFieldId(null);
+  };
+
+  const handleDragOver = (e: React.DragEvent, fieldId: string) => {
+    e.preventDefault();
+    if (fieldId !== draggedFieldId) {
+      setDragOverFieldId(fieldId);
+    }
+  };
+
+  const handleDragLeave = () => {
+    setDragOverFieldId(null);
+  };
+
+  const handleDrop = (e: React.DragEvent, targetFieldId: string) => {
+    e.preventDefault();
+    if (!draggedFieldId || draggedFieldId === targetFieldId) return;
+
+    const currentOrder = fields.map((f) => f.id);
+    const draggedIndex = currentOrder.indexOf(draggedFieldId);
+    const targetIndex = currentOrder.indexOf(targetFieldId);
+
+    if (draggedIndex === -1 || targetIndex === -1) return;
+
+    // Remove dragged item and insert at target position
+    const newOrder = [...currentOrder];
+    newOrder.splice(draggedIndex, 1);
+    newOrder.splice(targetIndex, 0, draggedFieldId);
+
+    onReorderFields(newOrder);
+    setDraggedFieldId(null);
+    setDragOverFieldId(null);
+  };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -375,17 +421,30 @@ export function EditClassDialog({
             <Label>Fields</Label>
             <div className="space-y-1">
               {fields.map((field) => (
-                <button
+                <div
                   key={field.id}
-                  type="button"
-                  onClick={() => onEditField(field)}
-                  className="w-full text-left px-3 py-2 text-sm rounded-md hover:bg-muted transition-colors border"
+                  draggable
+                  onDragStart={(e) => handleDragStart(e, field.id)}
+                  onDragEnd={handleDragEnd}
+                  onDragOver={(e) => handleDragOver(e, field.id)}
+                  onDragLeave={handleDragLeave}
+                  onDrop={(e) => handleDrop(e, field.id)}
+                  className={`flex items-center gap-2 px-3 py-2 text-sm rounded-md hover:bg-muted transition-colors border cursor-grab ${
+                    dragOverFieldId === field.id ? "border-primary bg-primary/10" : ""
+                  } ${draggedFieldId === field.id ? "opacity-50" : ""}`}
                 >
-                  <span>{field.name}</span>
-                  <span className="text-muted-foreground ml-2 capitalize">
-                    ({field.fieldtype})
-                  </span>
-                </button>
+                  <GripVertical className="size-4 text-muted-foreground shrink-0" />
+                  <button
+                    type="button"
+                    onClick={() => onEditField(field)}
+                    className="flex-1 text-left hover:text-primary"
+                  >
+                    <span>{field.name}</span>
+                    <span className="text-muted-foreground ml-2 capitalize">
+                      ({field.fieldtype})
+                    </span>
+                  </button>
+                </div>
               ))}
             </div>
             <Button type="button" variant="outline" size="sm" onClick={onAddField}>

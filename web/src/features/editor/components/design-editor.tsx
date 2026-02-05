@@ -3,7 +3,7 @@
 
 import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { Button, Label } from "@mochi/common";
+import { Button, Label, toast } from "@mochi/common";
 import { Plus } from "lucide-react";
 import projectsApi from "@/api/projects";
 import type { ProjectDetails, ProjectField, ProjectView, FieldOption } from "@/types";
@@ -141,6 +141,16 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
     onSuccess: () => {
       invalidateProject();
       setEditFieldOpen(false);
+    },
+  });
+
+  const reorderFieldsMutation = useMutation({
+    mutationFn: ({ classId, order }: { classId: string; order: string[] }) =>
+      projectsApi.reorderFields(projectId, classId, order),
+    onSuccess: invalidateProject,
+    onError: (error) => {
+      console.error("Reorder fields error:", error);
+      toast.error(error instanceof Error ? error.message : "Failed to reorder fields");
     },
   });
 
@@ -435,6 +445,11 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
         }}
         onAddField={() => setAddFieldOpen(true)}
         onEditField={handleEditField}
+        onReorderFields={(order) => {
+          if (selectedClassId) {
+            reorderFieldsMutation.mutate({ classId: selectedClassId, order });
+          }
+        }}
       />
 
       <EditFieldDialog

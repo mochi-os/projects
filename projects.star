@@ -236,31 +236,58 @@ def database_create():
 # Templates
 # ============================================================================
 
-# Get available project templates from JSON files
+# Get available project templates
+# Note: Hardcoded since mochi.app.file API is not yet available in runtime
 def get_templates():
-	templates = {}
-	files = mochi.app.file.list("templates") or []
-	for filename in files:
-		if filename.endswith(".json"):
-			content = mochi.app.file.read("templates/" + filename)
-			if content:
-				data = json.decode(str(content))
-				templates[data["id"]] = {
-					"id": data["id"],
-					"name": data["name"],
-					"description": data.get("description", ""),
-					"icon": data.get("icon", "")
-				}
-	return templates
+	return {
+		"blank": {
+			"id": "blank",
+			"name": "Blank",
+			"description": "Empty project",
+			"icon": "file"
+		},
+		"kanban": {
+			"id": "kanban",
+			"name": "Kanban",
+			"description": "Simple board for general tasks",
+			"icon": "layout-grid"
+		},
+		"agile": {
+			"id": "agile",
+			"name": "Agile development",
+			"description": "Full Agile/Scrum for development teams",
+			"icon": "zap"
+		},
+		"ticket": {
+			"id": "ticket",
+			"name": "Ticket system",
+			"description": "Development, support, and bug tracking",
+			"icon": "ticket"
+		}
+	}
 
-# Apply a template to a project by loading from JSON
+# Get full template data by ID (hardcoded since file API unavailable)
+def get_template_data(template_id):
+	if template_id == "blank":
+		return {"types": [], "fields": {}, "options": {}, "hierarchy": {}, "views": []}
+	elif template_id == "kanban":
+		return json.decode("""{"types":[{"id":"card","name":"Card","rank":0},{"id":"checklist","name":"Checklist","rank":1}],"fields":{"card":[{"id":"title","name":"Title","fieldtype":"text","required":1,"card":1,"rank":0,"rows":1},{"id":"description","name":"Description","fieldtype":"text","required":0,"card":0,"rank":1,"rows":3},{"id":"status","name":"Status","fieldtype":"enumerated","required":1,"card":0,"rank":2},{"id":"priority","name":"Priority","fieldtype":"enumerated","required":0,"card":1,"rank":3},{"id":"owner","name":"Owner","fieldtype":"user","required":0,"card":0,"rank":4},{"id":"due","name":"Due","fieldtype":"date","required":0,"card":0,"rank":5}],"checklist":[{"id":"title","name":"Title","fieldtype":"text","required":1,"card":1,"rank":0,"rows":1},{"id":"description","name":"Description","fieldtype":"text","required":0,"card":0,"rank":1,"rows":3},{"id":"items","name":"Items","fieldtype":"checklist","required":0,"card":1,"rank":2},{"id":"status","name":"Status","fieldtype":"enumerated","required":1,"card":0,"rank":3},{"id":"priority","name":"Priority","fieldtype":"enumerated","required":0,"card":1,"rank":4},{"id":"owner","name":"Owner","fieldtype":"user","required":0,"card":0,"rank":5},{"id":"due","name":"Due","fieldtype":"date","required":0,"card":0,"rank":6}]},"options":{"card":{"status":[{"id":"todo","name":"To do","colour":"#94a3b8","rank":0},{"id":"progress","name":"In progress","colour":"#fbbf24","rank":1},{"id":"done","name":"Done","colour":"#4ade80","rank":2}],"priority":[{"id":"high","name":"High","colour":"#f87171","rank":0},{"id":"medium","name":"Medium","colour":"#fbbf24","rank":1},{"id":"low","name":"Low","colour":"#94a3b8","rank":2}]},"checklist":{"status":[{"id":"todo","name":"To do","colour":"#94a3b8","rank":0},{"id":"progress","name":"In progress","colour":"#fbbf24","rank":1},{"id":"done","name":"Done","colour":"#4ade80","rank":2}],"priority":[{"id":"high","name":"High","colour":"#f87171","rank":0},{"id":"medium","name":"Medium","colour":"#fbbf24","rank":1},{"id":"low","name":"Low","colour":"#94a3b8","rank":2}]}},"hierarchy":{"card":[""],"checklist":[""]},"views":[{"id":"board","name":"Board","viewtype":"board","columns":"status","rows":"priority","cardfields":"title"},{"id":"tree","name":"Tree","viewtype":"tree","cardfields":"title"}]}""")
+	elif template_id == "agile":
+		return json.decode("""{"types":[{"id":"epic","name":"Epic","rank":0},{"id":"story","name":"Story","rank":1},{"id":"task","name":"Task","rank":2},{"id":"bug","name":"Bug","rank":3}],"fields":{"epic":[{"id":"title","name":"Title","fieldtype":"text","required":1,"card":1,"rank":0,"rows":1},{"id":"description","name":"Description","fieldtype":"text","required":0,"card":0,"rank":1,"rows":3},{"id":"status","name":"Status","fieldtype":"enumerated","required":1,"card":0,"rank":2},{"id":"owner","name":"Owner","fieldtype":"user","required":0,"card":0,"rank":3}],"story":[{"id":"title","name":"Title","fieldtype":"text","required":1,"card":1,"rank":0,"rows":1},{"id":"description","name":"Description","fieldtype":"text","required":0,"card":0,"rank":1,"rows":3},{"id":"status","name":"Status","fieldtype":"enumerated","required":1,"card":0,"rank":2},{"id":"points","name":"Points","fieldtype":"enumerated","required":0,"card":1,"rank":3},{"id":"sprint","name":"Sprint","fieldtype":"enumerated","required":0,"card":1,"rank":4},{"id":"owner","name":"Owner","fieldtype":"user","required":0,"card":0,"rank":5}],"task":[{"id":"title","name":"Title","fieldtype":"text","required":1,"card":1,"rank":0,"rows":1},{"id":"description","name":"Description","fieldtype":"text","required":0,"card":0,"rank":1,"rows":3},{"id":"status","name":"Status","fieldtype":"enumerated","required":1,"card":0,"rank":2},{"id":"owner","name":"Owner","fieldtype":"user","required":0,"card":0,"rank":3}],"bug":[{"id":"title","name":"Title","fieldtype":"text","required":1,"card":1,"rank":0,"rows":1},{"id":"description","name":"Description","fieldtype":"text","required":0,"card":0,"rank":1,"rows":3},{"id":"status","name":"Status","fieldtype":"enumerated","required":1,"card":0,"rank":2},{"id":"priority","name":"Priority","fieldtype":"enumerated","required":0,"card":1,"rank":3},{"id":"owner","name":"Owner","fieldtype":"user","required":0,"card":0,"rank":4}]},"options":{"epic":{"status":[{"id":"todo","name":"To Do","colour":"#94a3b8","rank":0},{"id":"progress","name":"In Progress","colour":"#fbbf24","rank":1},{"id":"review","name":"In Review","colour":"#a78bfa","rank":2},{"id":"done","name":"Done","colour":"#4ade80","rank":3}]},"story":{"status":[{"id":"todo","name":"To Do","colour":"#94a3b8","rank":0},{"id":"progress","name":"In Progress","colour":"#fbbf24","rank":1},{"id":"review","name":"In Review","colour":"#a78bfa","rank":2},{"id":"done","name":"Done","colour":"#4ade80","rank":3}],"points":[{"id":"1","name":"1","colour":"#94a3b8","rank":0},{"id":"2","name":"2","colour":"#94a3b8","rank":1},{"id":"3","name":"3","colour":"#fbbf24","rank":2},{"id":"5","name":"5","colour":"#fbbf24","rank":3},{"id":"8","name":"8","colour":"#f87171","rank":4},{"id":"13","name":"13","colour":"#f87171","rank":5}],"sprint":[{"id":"sprint1","name":"Sprint 1","colour":"#60a5fa","rank":0},{"id":"sprint2","name":"Sprint 2","colour":"#60a5fa","rank":1},{"id":"sprint3","name":"Sprint 3","colour":"#60a5fa","rank":2}]},"task":{"status":[{"id":"todo","name":"To Do","colour":"#94a3b8","rank":0},{"id":"progress","name":"In Progress","colour":"#fbbf24","rank":1},{"id":"review","name":"In Review","colour":"#a78bfa","rank":2},{"id":"done","name":"Done","colour":"#4ade80","rank":3}]},"bug":{"status":[{"id":"todo","name":"To Do","colour":"#94a3b8","rank":0},{"id":"progress","name":"In Progress","colour":"#fbbf24","rank":1},{"id":"review","name":"In Review","colour":"#a78bfa","rank":2},{"id":"done","name":"Done","colour":"#4ade80","rank":3}],"priority":[{"id":"low","name":"Low","colour":"#94a3b8","rank":0},{"id":"medium","name":"Medium","colour":"#fbbf24","rank":1},{"id":"high","name":"High","colour":"#f87171","rank":2},{"id":"critical","name":"Critical","colour":"#dc2626","rank":3}]}},"hierarchy":{"epic":[""],"story":["epic"],"task":["story"],"bug":["","epic","story"]},"views":[{"id":"sprint","name":"Sprint Board","viewtype":"board","columns":"status","cardfields":"title,points","types":["story","task"]},{"id":"backlog","name":"Backlog","viewtype":"tree","cardfields":"title,points,sprint","types":["story"]},{"id":"roadmap","name":"Roadmap","viewtype":"tree","cardfields":"title","types":["epic"]}]}""")
+	elif template_id == "ticket":
+		return json.decode("""{"types":[{"id":"ticket","name":"Ticket","rank":0},{"id":"pr","name":"Pull Request","rank":1}],"fields":{"ticket":[{"id":"title","name":"Title","fieldtype":"text","required":1,"card":1,"rank":0,"rows":1},{"id":"description","name":"Description","fieldtype":"text","required":0,"card":0,"rank":1,"rows":3},{"id":"status","name":"Status","fieldtype":"enumerated","required":1,"card":0,"rank":2},{"id":"priority","name":"Priority","fieldtype":"enumerated","required":0,"card":1,"rank":3},{"id":"category","name":"Category","fieldtype":"enumerated","required":0,"card":1,"rank":4},{"id":"owner","name":"Owner","fieldtype":"user","required":0,"card":0,"rank":5},{"id":"due","name":"Due","fieldtype":"date","required":0,"card":0,"rank":6}],"pr":[{"id":"title","name":"Title","fieldtype":"text","required":1,"card":1,"rank":0,"rows":1},{"id":"description","name":"Description","fieldtype":"text","required":0,"card":0,"rank":1,"rows":3},{"id":"status","name":"Status","fieldtype":"enumerated","required":1,"card":0,"rank":2},{"id":"repository","name":"Repository","fieldtype":"text","required":0,"card":0,"rank":3,"rows":1},{"id":"branch","name":"Branch","fieldtype":"text","required":0,"card":0,"rank":4,"rows":1},{"id":"owner","name":"Owner","fieldtype":"user","required":0,"card":0,"rank":5}]},"options":{"ticket":{"status":[{"id":"open","name":"Open","colour":"#60a5fa","rank":0},{"id":"progress","name":"In Progress","colour":"#fbbf24","rank":1},{"id":"resolved","name":"Resolved","colour":"#4ade80","rank":2},{"id":"closed","name":"Closed","colour":"#94a3b8","rank":3}],"priority":[{"id":"low","name":"Low","colour":"#94a3b8","rank":0},{"id":"medium","name":"Medium","colour":"#fbbf24","rank":1},{"id":"high","name":"High","colour":"#f87171","rank":2},{"id":"critical","name":"Critical","colour":"#dc2626","rank":3}],"category":[{"id":"bug","name":"Bug","colour":"#f87171","rank":0},{"id":"feature","name":"Feature","colour":"#60a5fa","rank":1},{"id":"question","name":"Question","colour":"#a78bfa","rank":2},{"id":"support","name":"Support","colour":"#4ade80","rank":3}]},"pr":{"status":[{"id":"draft","name":"Draft","colour":"#94a3b8","rank":0},{"id":"review","name":"In Review","colour":"#fbbf24","rank":1},{"id":"approved","name":"Approved","colour":"#4ade80","rank":2},{"id":"merged","name":"Merged","colour":"#a78bfa","rank":3}]}},"hierarchy":{"ticket":["","ticket"],"pr":["","ticket"]},"views":[{"id":"board","name":"Board","viewtype":"board","columns":"status","cardfields":"title,priority,category"},{"id":"tree","name":"Tree","viewtype":"tree","cardfields":"title,priority,category"}]}""")
+	else:
+		return None
+
+# Apply a template to a project
 def apply_template(project_id, template_id):
-	# Load template JSON
-	content = mochi.app.file.read("templates/" + template_id + ".json")
-	data = json.decode(str(content))
+	# Get template data
+	data = get_template_data(template_id)
+	if not data:
+		return
 
 	# Create classes
-	for t in data.get("classes", []):
+	for t in data.get("classes", []) or data.get("types", []):
 		mochi.db.execute(
 			"insert into classes (project, id, name, rank) values (?, ?, ?, ?)",
 			project_id, t["id"], t["name"], t.get("rank", 0)

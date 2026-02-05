@@ -3,15 +3,19 @@
 
 import { useState } from "react";
 import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogFooter,
+  Sheet,
+  SheetContent,
+  SheetTitle,
+  SheetFooter,
   Button,
   Input,
   Label,
+  RadioGroup,
+  RadioGroupItem,
+  SortDirectionButton,
 } from "@mochi/common";
+import { Check, Plus, X } from "lucide-react";
+import type { ProjectField, ProjectClass } from "@/types";
 
 const DEFAULT_COLOURS = [
   "#94a3b8",
@@ -26,35 +30,55 @@ const DEFAULT_COLOURS = [
 interface AddClassDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onAdd: (name: string) => void;
+  classes: ProjectClass[];
+  onAdd: (name: string, parents: string[]) => void;
 }
 
 export function AddClassDialog({
   open,
   onOpenChange,
+  classes,
   onAdd,
 }: AddClassDialogProps) {
   const [name, setName] = useState("");
+  const [parents, setParents] = useState<string[]>([]);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = () => {
     if (name.trim()) {
-      onAdd(name.trim());
+      onAdd(name.trim(), parents);
       setName("");
+      setParents([]);
       onOpenChange(false);
     }
   };
 
+  const toggleParent = (classId: string) => {
+    if (parents.includes(classId)) {
+      setParents(parents.filter((p) => p !== classId));
+    } else {
+      setParents([...parents, classId]);
+    }
+  };
+
+  const handleClose = () => {
+    setName("");
+    setParents([]);
+    onOpenChange(false);
+  };
+
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent>
-        <form onSubmit={handleSubmit}>
-          <DialogHeader>
-            <DialogTitle>Add class</DialogTitle>
-          </DialogHeader>
-          <div className="py-4 space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="class-name">Name</Label>
+    <Sheet open={open} onOpenChange={handleClose}>
+      <SheetContent className="w-full sm:max-w-md p-0 flex flex-col [&>button:last-child]:hidden">
+        <div className="flex items-center justify-between px-6 py-4 border-b">
+          <SheetTitle>Add class</SheetTitle>
+          <Button variant="ghost" size="icon" className="size-8" onClick={handleClose}>
+            <X className="size-4" />
+          </Button>
+        </div>
+        <div className="flex-1 overflow-y-auto p-6 space-y-4">
+          <div className="space-y-2">
+            <Label htmlFor="class-name">Name</Label>
+            <div className="pl-4">
               <Input
                 id="class-name"
                 value={name}
@@ -64,21 +88,42 @@ export function AddClassDialog({
               />
             </div>
           </div>
-          <DialogFooter>
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() => onOpenChange(false)}
-            >
-              Cancel
-            </Button>
-            <Button type="submit" disabled={!name.trim()}>
-              Add
-            </Button>
-          </DialogFooter>
-        </form>
-      </DialogContent>
-    </Dialog>
+
+          {classes.length > 0 && (
+            <div className="space-y-2">
+              <Label>Can be child of</Label>
+              <div className="pl-4 space-y-2">
+                <p className="text-xs text-muted-foreground">
+                  Select which classes this can be nested under
+                </p>
+                <div className="space-y-1">
+                  {classes.map((c) => (
+                    <label
+                      key={c.id}
+                      className="flex items-center gap-2 text-sm cursor-pointer"
+                    >
+                      <input
+                        type="checkbox"
+                        checked={parents.includes(c.id)}
+                        onChange={() => toggleParent(c.id)}
+                        className="rounded"
+                      />
+                      {c.name}
+                    </label>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+        <SheetFooter className="px-6 py-4 border-t">
+          <Button onClick={handleSubmit} disabled={!name.trim()}>
+            <Check className="size-4" />
+            Add class
+          </Button>
+        </SheetFooter>
+      </SheetContent>
+    </Sheet>
   );
 }
 
@@ -124,8 +169,7 @@ export function AddFieldDialog({
     setNewOptionName("");
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = () => {
     if (name.trim()) {
       onAdd(
         name.trim(),
@@ -156,16 +200,24 @@ export function AddFieldDialog({
     setOptions(options.filter((o) => o.id !== id));
   };
 
+  const handleClose = () => {
+    resetForm();
+    onOpenChange(false);
+  };
+
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent>
-        <form onSubmit={handleSubmit}>
-          <DialogHeader>
-            <DialogTitle>Add field</DialogTitle>
-          </DialogHeader>
-          <div className="py-4 space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="field-name">Name</Label>
+    <Sheet open={open} onOpenChange={handleClose}>
+      <SheetContent className="w-full sm:max-w-md p-0 flex flex-col [&>button:last-child]:hidden">
+        <div className="flex items-center justify-between px-6 py-4 border-b">
+          <SheetTitle>Add field</SheetTitle>
+          <Button variant="ghost" size="icon" className="size-8" onClick={handleClose}>
+            <X className="size-4" />
+          </Button>
+        </div>
+        <div className="flex-1 overflow-y-auto p-6 space-y-4">
+          <div className="space-y-2">
+            <Label htmlFor="field-name">Name</Label>
+            <div className="pl-4">
               <Input
                 id="field-name"
                 value={name}
@@ -174,8 +226,10 @@ export function AddFieldDialog({
                 autoFocus
               />
             </div>
-            <div className="space-y-2">
-              <Label htmlFor="field-type">Type</Label>
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="field-type">Type</Label>
+            <div className="pl-4">
               <select
                 id="field-type"
                 value={fieldtype}
@@ -189,9 +243,11 @@ export function AddFieldDialog({
                 ))}
               </select>
             </div>
-            {fieldtype === "text" && (
-              <div className="space-y-2">
-                <Label htmlFor="field-rows">Rows</Label>
+          </div>
+          {fieldtype === "text" && (
+            <div className="space-y-2">
+              <Label htmlFor="field-rows">Rows</Label>
+              <div className="pl-4">
                 <Input
                   id="field-rows"
                   type="number"
@@ -200,14 +256,16 @@ export function AddFieldDialog({
                   value={rows}
                   onChange={(e) => setRows(parseInt(e.target.value) || 1)}
                 />
-                <p className={`text-xs text-muted-foreground ${rows === 1 ? "" : "invisible"}`}>
+                <p className={`text-xs text-muted-foreground mt-1 ${rows === 1 ? "" : "invisible"}`}>
                   Single line of text only
                 </p>
               </div>
-            )}
-            {fieldtype === "enumerated" && (
-              <div className="space-y-2">
-                <Label>Options</Label>
+            </div>
+          )}
+          {fieldtype === "enumerated" && (
+            <div className="space-y-2">
+              <Label>Options</Label>
+              <div className="pl-4 space-y-2">
                 {options.length > 0 && (
                   <div className="space-y-1">
                     {options.map((opt) => (
@@ -252,30 +310,24 @@ export function AddFieldDialog({
                     onClick={addOption}
                     disabled={!newOptionName.trim()}
                   >
-                    Add
+                    <Plus className="size-4" />
                   </Button>
                 </div>
               </div>
-            )}
-          </div>
-          <DialogFooter>
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() => onOpenChange(false)}
-            >
-              Cancel
-            </Button>
-            <Button
-              type="submit"
-              disabled={!name.trim() || (fieldtype === "enumerated" && options.length === 0)}
-            >
-              Add
-            </Button>
-          </DialogFooter>
-        </form>
-      </DialogContent>
-    </Dialog>
+            </div>
+          )}
+        </div>
+        <SheetFooter className="px-6 py-4 border-t">
+          <Button
+            onClick={handleSubmit}
+            disabled={!name.trim() || (fieldtype === "enumerated" && options.length === 0)}
+          >
+            <Check className="size-4" />
+            Add field
+          </Button>
+        </SheetFooter>
+      </SheetContent>
+    </Sheet>
   );
 }
 
@@ -296,8 +348,7 @@ export function AddOptionDialog({
   const [name, setName] = useState("");
   const [colour, setColour] = useState(DEFAULT_COLOURS[0]);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = () => {
     if (name.trim()) {
       onAdd(name.trim(), colour);
       setName("");
@@ -308,16 +359,25 @@ export function AddOptionDialog({
     }
   };
 
+  const handleClose = () => {
+    setName("");
+    setColour(DEFAULT_COLOURS[0]);
+    onOpenChange(false);
+  };
+
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent>
-        <form onSubmit={handleSubmit}>
-          <DialogHeader>
-            <DialogTitle>{title}</DialogTitle>
-          </DialogHeader>
-          <div className="py-4 space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="option-name">Name</Label>
+    <Sheet open={open} onOpenChange={handleClose}>
+      <SheetContent className="w-full sm:max-w-md p-0 flex flex-col [&>button:last-child]:hidden">
+        <div className="flex items-center justify-between px-6 py-4 border-b">
+          <SheetTitle>{title}</SheetTitle>
+          <Button variant="ghost" size="icon" className="size-8" onClick={handleClose}>
+            <X className="size-4" />
+          </Button>
+        </div>
+        <div className="flex-1 overflow-y-auto p-6 space-y-4">
+          <div className="space-y-2">
+            <Label htmlFor="option-name">Name</Label>
+            <div className="pl-4">
               <Input
                 id="option-name"
                 value={name}
@@ -326,8 +386,10 @@ export function AddOptionDialog({
                 autoFocus
               />
             </div>
-            <div className="space-y-2">
-              <Label>Colour</Label>
+          </div>
+          <div className="space-y-2">
+            <Label>Colour</Label>
+            <div className="pl-4">
               <div className="flex gap-2">
                 {DEFAULT_COLOURS.map((c) => (
                   <button
@@ -342,29 +404,23 @@ export function AddOptionDialog({
                 ))}
               </div>
             </div>
-            <div className="flex items-center gap-2">
-              <span
-                className="size-4 rounded-full"
-                style={{ backgroundColor: colour }}
-              />
-              <span className="text-sm">Preview: {name || "Option name"}</span>
-            </div>
           </div>
-          <DialogFooter>
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() => onOpenChange(false)}
-            >
-              Cancel
-            </Button>
-            <Button type="submit" disabled={!name.trim()}>
-              Add
-            </Button>
-          </DialogFooter>
-        </form>
-      </DialogContent>
-    </Dialog>
+          <div className="pl-4 flex items-center gap-2">
+            <span
+              className="size-4 rounded-full"
+              style={{ backgroundColor: colour }}
+            />
+            <span className="text-sm">Preview: {name || "Option name"}</span>
+          </div>
+        </div>
+        <SheetFooter className="px-6 py-4 border-t">
+          <Button onClick={handleSubmit} disabled={!name.trim()}>
+            <Check className="size-4" />
+            Add option
+          </Button>
+        </SheetFooter>
+      </SheetContent>
+    </Sheet>
   );
 }
 
@@ -372,37 +428,106 @@ export function AddOptionDialog({
 interface AddViewDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onAdd: (name: string, viewtype: string) => void;
+  fields: ProjectField[];
+  classes: ProjectClass[];
+  onAdd: (
+    name: string,
+    viewtype: string,
+    columns: string,
+    rows: string,
+    selectedFields: string[],
+    sort: string,
+    direction: string,
+    selectedClasses: string[]
+  ) => void;
 }
 
 export function AddViewDialog({
   open,
   onOpenChange,
+  fields,
+  classes,
   onAdd,
 }: AddViewDialogProps) {
   const [name, setName] = useState("");
   const [viewtype, setViewtype] = useState("board");
+  const [columns, setColumns] = useState("");
+  const [rows, setRows] = useState("");
+  const [selectedFields, setSelectedFields] = useState<string[]>([]);
+  const [sort, setSort] = useState("");
+  const [direction, setDirection] = useState<"asc" | "desc">("asc");
+  const [selectedClasses, setSelectedClasses] = useState<string[]>([]);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (name.trim()) {
-      onAdd(name.trim(), viewtype);
+  const enumeratedFields = fields.filter((f) => f.fieldtype === "enumerated");
+
+  // Initialize defaults when dialog opens
+  const handleOpenChange = (isOpen: boolean) => {
+    if (isOpen) {
+      // Set defaults
+      setSelectedFields(fields.map((f) => f.id));
+      setSelectedClasses(classes.map((c) => c.id));
+      if (enumeratedFields.length > 0 && !columns) {
+        setColumns(enumeratedFields[0].id);
+      }
+    } else {
+      // Reset form
       setName("");
       setViewtype("board");
-      onOpenChange(false);
+      setColumns("");
+      setRows("");
+      setSelectedFields([]);
+      setSort("");
+      setDirection("asc");
+      setSelectedClasses([]);
+    }
+    onOpenChange(isOpen);
+  };
+
+  const handleSubmit = () => {
+    if (name.trim()) {
+      onAdd(
+        name.trim(),
+        viewtype,
+        columns,
+        rows,
+        selectedFields,
+        sort,
+        direction,
+        selectedClasses
+      );
+      handleOpenChange(false);
+    }
+  };
+
+  const toggleField = (fieldId: string) => {
+    if (selectedFields.includes(fieldId)) {
+      setSelectedFields(selectedFields.filter((f) => f !== fieldId));
+    } else {
+      setSelectedFields([...selectedFields, fieldId]);
+    }
+  };
+
+  const toggleClass = (classId: string) => {
+    if (selectedClasses.includes(classId)) {
+      setSelectedClasses(selectedClasses.filter((c) => c !== classId));
+    } else {
+      setSelectedClasses([...selectedClasses, classId]);
     }
   };
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent>
-        <form onSubmit={handleSubmit}>
-          <DialogHeader>
-            <DialogTitle>Add view</DialogTitle>
-          </DialogHeader>
-          <div className="py-4 space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="view-name">Name</Label>
+    <Sheet open={open} onOpenChange={handleOpenChange}>
+      <SheetContent className="w-full sm:max-w-md p-0 flex flex-col [&>button:last-child]:hidden">
+        <div className="flex items-center justify-between px-6 py-4 border-b">
+          <SheetTitle>Add view</SheetTitle>
+          <Button variant="ghost" size="icon" className="size-8" onClick={() => handleOpenChange(false)}>
+            <X className="size-4" />
+          </Button>
+        </div>
+        <div className="flex-1 overflow-y-auto p-6 space-y-4">
+          <div className="space-y-2">
+            <Label htmlFor="view-name">Name</Label>
+            <div className="pl-4">
               <Input
                 id="view-name"
                 value={name}
@@ -411,33 +536,141 @@ export function AddViewDialog({
                 autoFocus
               />
             </div>
-            <div className="space-y-2">
-              <Label htmlFor="view-type">Type</Label>
-              <select
-                id="view-type"
-                value={viewtype}
-                onChange={(e) => setViewtype(e.target.value)}
-                className="w-full h-9 rounded-md border border-input bg-background px-3 py-1 text-sm"
-              >
-                <option value="board">Board</option>
-                <option value="tree">Tree</option>
-              </select>
+          </div>
+
+          <div className="space-y-2">
+            <Label>Layout</Label>
+            <div className="pl-4">
+              <RadioGroup value={viewtype} onValueChange={setViewtype}>
+                <div className="flex items-center gap-2">
+                  <RadioGroupItem value="board" id="add-vt-board" />
+                  <Label htmlFor="add-vt-board" className="font-normal cursor-pointer">
+                    Board
+                  </Label>
+                </div>
+                <div className="flex items-center gap-2">
+                  <RadioGroupItem value="tree" id="add-vt-tree" />
+                  <Label htmlFor="add-vt-tree" className="font-normal cursor-pointer">
+                    Tree
+                  </Label>
+                </div>
+              </RadioGroup>
             </div>
           </div>
-          <DialogFooter>
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() => onOpenChange(false)}
-            >
-              Cancel
-            </Button>
-            <Button type="submit" disabled={!name.trim()}>
-              Add
-            </Button>
-          </DialogFooter>
-        </form>
-      </DialogContent>
-    </Dialog>
+
+          {classes.length > 1 && (
+            <div className="space-y-2">
+              <Label>Show classes</Label>
+              <div className="pl-4 space-y-1">
+                {classes.map((cls) => (
+                  <label
+                    key={cls.id}
+                    className="flex items-center gap-2 text-sm cursor-pointer"
+                  >
+                    <input
+                      type="checkbox"
+                      checked={selectedClasses.includes(cls.id)}
+                      onChange={() => toggleClass(cls.id)}
+                      className="rounded"
+                    />
+                    {cls.name}
+                  </label>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {viewtype === "board" && enumeratedFields.length > 0 && (
+            <div className="space-y-2">
+              <Label>Columns group by</Label>
+              <div className="pl-4">
+                <select
+                  value={columns}
+                  onChange={(e) => setColumns(e.target.value)}
+                  className="w-full h-9 rounded-md border border-input bg-background px-3 py-1 text-sm"
+                >
+                  {enumeratedFields.map((field) => (
+                    <option key={field.id} value={field.id}>
+                      {field.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+          )}
+
+          {viewtype === "board" && enumeratedFields.length > 0 && (
+            <div className="space-y-2">
+              <Label>Rows group by</Label>
+              <div className="pl-4">
+                <select
+                  value={rows}
+                  onChange={(e) => setRows(e.target.value)}
+                  className="w-full h-9 rounded-md border border-input bg-background px-3 py-1 text-sm"
+                >
+                  <option value="">None</option>
+                  {enumeratedFields.map((field) => (
+                    <option key={field.id} value={field.id}>
+                      {field.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+          )}
+
+          <div className="space-y-2">
+            <Label>Show fields</Label>
+            <div className="pl-4 space-y-1">
+              {fields.map((field) => (
+                <label
+                  key={field.id}
+                  className="flex items-center gap-2 text-sm cursor-pointer"
+                >
+                  <input
+                    type="checkbox"
+                    checked={selectedFields.includes(field.id)}
+                    onChange={() => toggleField(field.id)}
+                    className="rounded"
+                  />
+                  {field.name}
+                </label>
+              ))}
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <Label>Default sort</Label>
+            <div className="pl-4 flex gap-2">
+              <select
+                value={sort}
+                onChange={(e) => setSort(e.target.value)}
+                className="flex-1 h-9 rounded-md border border-input bg-background px-3 py-1 text-sm"
+              >
+                <option value="">None</option>
+                <option value="created">Created</option>
+                <option value="number">Number</option>
+                <option value="updated">Updated</option>
+                {[...fields].sort((a, b) => a.name.localeCompare(b.name)).map((field) => (
+                  <option key={field.id} value={field.id}>
+                    {field.name}
+                  </option>
+                ))}
+              </select>
+              <SortDirectionButton
+                direction={direction}
+                onToggle={() => setDirection(direction === "asc" ? "desc" : "asc")}
+              />
+            </div>
+          </div>
+        </div>
+        <SheetFooter className="px-6 py-4 border-t">
+          <Button onClick={handleSubmit} disabled={!name.trim()}>
+            <Check className="size-4" />
+            Add view
+          </Button>
+        </SheetFooter>
+      </SheetContent>
+    </Sheet>
   );
 }

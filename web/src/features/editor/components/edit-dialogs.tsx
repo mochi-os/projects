@@ -3,6 +3,10 @@
 
 import { useState, useEffect, useMemo } from "react";
 import {
+  Sheet,
+  SheetContent,
+  SheetTitle,
+  SheetFooter,
   Dialog,
   DialogContent,
   DialogHeader,
@@ -19,10 +23,10 @@ import {
   DropdownMenuItem,
   SortDirectionButton,
 } from "@mochi/common";
-import { Check, GripVertical, Minus, MoreHorizontal, Plus } from "lucide-react";
+import { Check, GripVertical, Minus, MoreHorizontal, Plus, X } from "lucide-react";
 import type { ProjectView, ProjectField, ProjectClass, FieldOption } from "@/types";
 
-// Edit View Dialog
+// Edit View Sheet
 interface EditViewDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
@@ -118,25 +122,30 @@ export function EditViewDialog({
   const enumeratedFields = fields.filter((f) => f.fieldtype === "enumerated");
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-md flex flex-col max-h-[85vh]" showCloseButton={false}>
-        <DialogHeader className="flex flex-row items-center justify-between">
-          <DialogTitle>Edit view</DialogTitle>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon" className="size-8">
-                <MoreHorizontal className="size-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuItem onClick={onDelete}>
-                <Minus className="size-4" />
-                Delete view
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </DialogHeader>
-        <div className="flex-1 overflow-y-auto py-4 space-y-4">
+    <Sheet open={open} onOpenChange={onOpenChange}>
+      <SheetContent className="w-full sm:max-w-md p-0 flex flex-col [&>button:last-child]:hidden">
+        <div className="flex items-center justify-between px-6 py-4 border-b">
+          <SheetTitle>Edit view</SheetTitle>
+          <div className="flex items-center gap-1">
+            <Button variant="ghost" size="icon" className="size-8" onClick={() => onOpenChange(false)}>
+              <X className="size-4" />
+            </Button>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" size="icon" className="size-8">
+                  <MoreHorizontal className="size-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem onClick={onDelete}>
+                  <Minus className="size-4" />
+                  Delete view
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+        </div>
+        <div className="flex-1 overflow-y-auto p-6 space-y-4">
           <div className="space-y-2">
             <Label htmlFor="view-name">Name</Label>
             <div className="pl-4">
@@ -275,18 +284,18 @@ export function EditViewDialog({
             </div>
           </div>
         </div>
-        <DialogFooter>
+        <SheetFooter className="px-6 py-4 border-t">
           <Button type="button" onClick={() => onOpenChange(false)}>
             <Check className="size-4" />
             Done
           </Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+        </SheetFooter>
+      </SheetContent>
+    </Sheet>
   );
 }
 
-// Edit Class Dialog
+// Edit Class Sheet
 interface EditClassDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
@@ -386,25 +395,30 @@ export function EditClassDialog({
   };
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-md flex flex-col max-h-[85vh]" showCloseButton={false}>
-        <DialogHeader className="flex flex-row items-center justify-between">
-          <DialogTitle>Edit class</DialogTitle>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon" className="size-8">
-                <MoreHorizontal className="size-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuItem onClick={onDelete}>
-                <Minus className="size-4" />
-                Delete class
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </DialogHeader>
-        <div className="flex-1 overflow-y-auto py-4 pr-2 space-y-4">
+    <Sheet open={open} onOpenChange={onOpenChange}>
+      <SheetContent className="w-full sm:max-w-md p-0 flex flex-col [&>button:last-child]:hidden">
+        <div className="flex items-center justify-between px-6 py-4 border-b">
+          <SheetTitle>Edit class</SheetTitle>
+          <div className="flex items-center gap-1">
+            <Button variant="ghost" size="icon" className="size-8" onClick={() => onOpenChange(false)}>
+              <X className="size-4" />
+            </Button>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" size="icon" className="size-8">
+                  <MoreHorizontal className="size-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem onClick={onDelete}>
+                  <Minus className="size-4" />
+                  Delete class
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+        </div>
+        <div className="flex-1 overflow-y-auto p-6 space-y-4">
           <div className="space-y-2">
             <Label htmlFor="class-name">Name</Label>
             <div className="pl-4">
@@ -478,7 +492,7 @@ export function EditClassDialog({
             </div>
           </div>
         </div>
-        <DialogFooter className="justify-between">
+        <SheetFooter className="px-6 py-4 border-t justify-between">
           <Button type="button" variant="outline" size="sm" onClick={onAddField}>
             <Plus className="size-4" />
             Add field
@@ -487,13 +501,13 @@ export function EditClassDialog({
             <Check className="size-4" />
             Done
           </Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+        </SheetFooter>
+      </SheetContent>
+    </Sheet>
   );
 }
 
-// Edit Field Dialog
+// Edit Field Dialog (keep as dialog since it's nested)
 interface EditFieldDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
@@ -569,7 +583,7 @@ export function EditFieldDialog({
             </DropdownMenu>
           )}
         </DialogHeader>
-        <div className="flex-1 overflow-y-auto py-4 space-y-4">
+        <div className="flex-1 overflow-y-auto p-6 space-y-4">
           <div className="space-y-2">
             <Label htmlFor="field-name">Name</Label>
             <Input
@@ -669,7 +683,7 @@ export function EditFieldDialog({
   );
 }
 
-// Edit Option Dialog
+// Edit Option Dialog (keep as dialog since it's nested)
 interface EditOptionDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;

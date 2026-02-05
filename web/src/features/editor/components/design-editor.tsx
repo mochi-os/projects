@@ -217,11 +217,34 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
 
   // View mutations
   const createViewMutation = useMutation({
-    mutationFn: ({ name, viewtype }: { name: string; viewtype: string }) =>
+    mutationFn: ({
+      name,
+      viewtype,
+      columns,
+      rows,
+      fields,
+      sort,
+      direction,
+      classes,
+    }: {
+      name: string;
+      viewtype: string;
+      columns?: string;
+      rows?: string;
+      fields?: string;
+      sort?: string;
+      direction?: "asc" | "desc";
+      classes?: string;
+    }) =>
       projectsApi.createView(projectId, {
         name,
         viewtype: viewtype as "board" | "tree",
-        fields: allFields.map((f) => f.id).join(","),
+        fields: fields || allFields.map((f) => f.id).join(","),
+        columns,
+        rows,
+        sort,
+        direction,
+        classes,
       }),
     onSuccess: invalidateProject,
   });
@@ -360,13 +383,32 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
       <AddViewDialog
         open={addViewOpen}
         onOpenChange={setAddViewOpen}
-        onAdd={(name, viewtype) => createViewMutation.mutate({ name, viewtype })}
+        fields={allFields}
+        classes={project.classes}
+        onAdd={(name, viewtype, columns, rows, selectedFields, sort, direction, selectedClasses) => {
+          createViewMutation.mutate({
+            name,
+            viewtype,
+            columns: columns || undefined,
+            rows: rows || undefined,
+            fields: selectedFields.join(","),
+            sort: sort || undefined,
+            direction: direction as "asc" | "desc",
+            classes: selectedClasses.join(","),
+          });
+        }}
       />
 
       <AddClassDialog
         open={addClassOpen}
         onOpenChange={setAddClassOpen}
-        onAdd={(name) => createClassMutation.mutate(name)}
+        classes={project.classes}
+        onAdd={async (name, parents) => {
+          const result = await createClassMutation.mutateAsync(name);
+          if (parents.length > 0 && result.data?.id) {
+            setHierarchyMutation.mutate({ classId: result.data.id, parents });
+          }
+        }}
       />
 
       <AddFieldDialog

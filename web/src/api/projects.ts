@@ -106,6 +106,7 @@ interface CreateViewRequest {
   fields?: string;
   sort?: string;
   direction?: "asc" | "desc";
+  classes?: string;
 }
 
 interface UpdateViewRequest {

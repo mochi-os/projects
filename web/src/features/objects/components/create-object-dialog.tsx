@@ -3,14 +3,13 @@
 
 import { useState, useMemo, useEffect } from "react";
 import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
-import { Plus } from "lucide-react";
+import { Check, X } from "lucide-react";
 import {
   Button,
-  Dialog,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
+  Label,
+  Sheet,
+  SheetContent,
+  SheetFooter,
   Select,
   SelectContent,
   SelectItem,
@@ -123,6 +122,12 @@ export function CreateObjectDialog({
     return map;
   }, [project.classes]);
 
+  // Get current parent object info
+  const currentParent = useMemo(() => {
+    if (!parent || !objectsData) return null;
+    return objectsData.find((obj) => obj.id === parent);
+  }, [parent, objectsData]);
+
   const createMutation = useMutation({
     mutationFn: async () => {
       // Create the object
@@ -200,17 +205,22 @@ export function CreateObjectDialog({
     setFieldValues(newValues);
   };
 
+  const handleClose = () => {
+    onOpenChange(false);
+  };
+
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-lg">
-        <DialogHeader>
-          <DialogTitle className="flex items-center gap-2">
-            New
+    <Sheet open={open} onOpenChange={handleClose} modal={false}>
+      <SheetContent className="w-full sm:max-w-2xl p-0 gap-0 [&>button:last-child]:hidden" onInteractOutside={(e) => e.preventDefault()}>
+        {/* Header */}
+        <div className="flex items-center gap-3 px-6 py-4 border-b shrink-0">
+          <div className="flex items-center gap-2 flex-1">
+            <Label className="text-xl font-bold">New</Label>
             <Select value={selectedClass} onValueChange={handleTypeChange}>
-              <SelectTrigger className="w-auto h-auto py-0.5 px-2 text-lg font-semibold">
+              <SelectTrigger className="w-auto h-auto py-1 px-2 text-xl font-bold">
                 <SelectValue />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className="z-[60]">
                 {project.classes.map((type) => (
                   <SelectItem key={type.id} value={type.id}>
                     {type.name}
@@ -218,70 +228,87 @@ export function CreateObjectDialog({
                 ))}
               </SelectContent>
             </Select>
-          </DialogTitle>
-        </DialogHeader>
+          </div>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="h-8 w-8"
+            onClick={handleClose}
+            title="Close"
+          >
+            <X className="size-4" />
+          </Button>
+        </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4 mt-4">
-          {/* Parent picker */}
-          <div className={validParentOptions.length === 0 ? "hidden" : "grid grid-cols-[100px_1fr] gap-4 items-start"}>
-            <label className="text-sm font-medium text-muted-foreground pt-2">
-              Parent
-            </label>
-            <Select
-              value={parent || "_none_"}
-              onValueChange={(v) => setParent(v === "_none_" ? "" : v)}
-            >
-              <SelectTrigger>
-                <SelectValue placeholder="None" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="_none_">None</SelectItem>
-                {validParentOptions.map((obj) => (
-                  <SelectItem key={obj.id} value={obj.id}>
-                    {classNameMap[obj.class] || obj.class}: {obj.values.title || `${project.project.prefix}-${obj.number}`}
-                  </SelectItem>
+        {/* Content */}
+        <form onSubmit={handleSubmit} className="flex flex-col flex-1 overflow-hidden">
+          <div className="flex-1 overflow-y-auto p-6">
+            <div className="max-w-2xl space-y-6">
+              {/* Parent picker */}
+              {validParentOptions.length > 0 && (
+                <div className="grid grid-cols-[120px_1fr] gap-4 items-start">
+                  <label className="text-sm font-medium text-muted-foreground pt-2">
+                    Parent
+                  </label>
+                  <Select
+                    value={parent || "_none_"}
+                    onValueChange={(v) => setParent(v === "_none_" ? "" : v)}
+                  >
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="None">
+                        {currentParent
+                          ? `${classNameMap[currentParent.class] || currentParent.class}: ${currentParent.values.title || `${project.project.prefix}-${currentParent.number}`}`
+                          : "None"}
+                      </SelectValue>
+                    </SelectTrigger>
+                    <SelectContent className="z-[60]">
+                      <SelectItem value="_none_">None</SelectItem>
+                      {validParentOptions.map((obj) => (
+                        <SelectItem key={obj.id} value={obj.id}>
+                          {classNameMap[obj.class] || obj.class}: {obj.values.title || `${project.project.prefix}-${obj.number}`}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              )}
+
+              {/* Dynamic fields based on selected type */}
+              {classFields
+                .filter((f) => !["repository", "source_branch", "target_branch"].includes(f.id))
+                .map((field) => (
+                  <div key={field.id} className="grid grid-cols-[120px_1fr] gap-4 items-start">
+                    <label className="text-sm font-medium text-muted-foreground pt-2">
+                      {field.name}
+                    </label>
+                    <FieldEditor
+                      field={field}
+                      value={fieldValues[field.id] || ""}
+                      options={classOptions[field.id] || []}
+                      onChange={(value) => handleFieldChange(field.id, value)}
+                      disabled={createMutation.isPending}
+                      hideLabel
+                      localPeople={peopleData}
+                    />
+                  </div>
                 ))}
-              </SelectContent>
-            </Select>
+
+              {error && (
+                <div className="text-sm text-destructive bg-destructive/10 p-3 rounded-md">
+                  {error}
+                </div>
+              )}
+            </div>
           </div>
 
-          {/* Dynamic fields based on selected type */}
-          {classFields
-            .filter((f) => !["repository", "source_branch", "target_branch"].includes(f.id))
-            .map((field) => (
-              <div key={field.id} className="grid grid-cols-[100px_1fr] gap-4 items-start">
-                <label className="text-sm font-medium text-muted-foreground pt-2">
-                  {field.name}
-                </label>
-                <FieldEditor
-                  field={field}
-                  value={fieldValues[field.id] || ""}
-                  options={classOptions[field.id] || []}
-                  onChange={(value) => handleFieldChange(field.id, value)}
-                  disabled={createMutation.isPending}
-                  hideLabel
-                  localPeople={peopleData}
-                />
-              </div>
-            ))}
-
-          {error && <div className="text-sm text-destructive">{error}</div>}
-
-          <DialogFooter>
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() => onOpenChange(false)}
-            >
-              Cancel
-            </Button>
+          <SheetFooter className="px-6 py-4 border-t">
             <Button type="submit" disabled={createMutation.isPending}>
-              <Plus className="size-4 mr-1" />
+              <Check className="size-4" />
               {createMutation.isPending ? "Creating..." : "Create"}
             </Button>
-          </DialogFooter>
+          </SheetFooter>
         </form>
-      </DialogContent>
-    </Dialog>
+      </SheetContent>
+    </Sheet>
   );
 }

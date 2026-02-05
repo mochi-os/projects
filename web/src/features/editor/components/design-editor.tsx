@@ -1,7 +1,7 @@
 // Mochi Projects: Design editor main component
 // Copyright Alistair Cunningham 2026
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Button, Label, toast } from "@mochi/common";
 import { Plus } from "lucide-react";
@@ -57,6 +57,19 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
   const hierarchy = selectedClassId
     ? project.hierarchy[selectedClassId] || []
     : [];
+
+  // Get all fields across all classes for view editing
+  const allFields = useMemo(() => {
+    const fieldsMap = new Map<string, ProjectField>();
+    for (const classId of Object.keys(project.fields)) {
+      for (const field of project.fields[classId]) {
+        if (!fieldsMap.has(field.id)) {
+          fieldsMap.set(field.id, field);
+        }
+      }
+    }
+    return Array.from(fieldsMap.values());
+  }, [project.fields]);
 
   // Get options for editing field
   const editingFieldOptions =
@@ -129,7 +142,6 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
       projectsApi.updateField(projectId, classId, fieldId, {
         name: updates.name,
         required: updates.required?.toString(),
-        card: updates.card?.toString(),
         rows: updates.rows?.toString(),
       }),
     onSuccess: invalidateProject,
@@ -209,6 +221,7 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
       projectsApi.createView(projectId, {
         name,
         viewtype: viewtype as "board" | "tree",
+        fields: allFields.map((f) => f.id).join(","),
       }),
     onSuccess: invalidateProject,
   });
@@ -402,7 +415,7 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
         open={editViewOpen}
         onOpenChange={setEditViewOpen}
         view={editingView}
-        fields={selectedFields}
+        fields={allFields}
         classes={project.classes}
         onUpdate={(updates) => {
           if (editingView) {

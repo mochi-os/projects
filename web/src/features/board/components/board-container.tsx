@@ -10,6 +10,7 @@ interface BoardContainerProps {
   project: ProjectDetails;
   objects: ProjectObject[];
   statusField: string;
+  viewFields?: string;
   sort?: SortState | null;
   onCardClick?: (object: ProjectObject) => void;
   onCreateClick?: (statusId: string) => void;
@@ -24,6 +25,7 @@ export function BoardContainer({
   project,
   objects,
   statusField,
+  viewFields,
   sort,
   onCardClick,
   onCreateClick,
@@ -37,6 +39,18 @@ export function BoardContainer({
   const defaultClass = project.classes[0];
   const classFields = defaultClass ? project.fields[defaultClass.id] || [] : [];
   const classOptions = defaultClass ? project.options[defaultClass.id] || {} : {};
+
+  // Parse view fields list
+  const viewFieldsList = useMemo(
+    () => (viewFields || "").split(",").filter(Boolean),
+    [viewFields]
+  );
+
+  // Filter fields to show on cards
+  const visibleFields = useMemo(
+    () => classFields.filter((f) => viewFieldsList.includes(f.id)),
+    [classFields, viewFieldsList]
+  );
 
   // Build a map of object id to object for quick parent lookups
   const objectMap = useMemo(() => {
@@ -212,7 +226,7 @@ export function BoardContainer({
             name={status.name}
             colour={status.colour}
             objects={objectsByStatus[status.id] || []}
-            fields={classFields.filter((f) => f.card === 1)}
+            fields={visibleFields}
             options={classOptions}
             prefix={project.project.prefix}
             objectMap={objectMap}
@@ -243,7 +257,7 @@ export function BoardContainer({
           id=""
           name="No Status"
           objects={objectsByStatus[""]}
-          fields={classFields.filter((f) => f.card === 1)}
+          fields={visibleFields}
           options={classOptions}
           prefix={project.project.prefix}
           objectMap={objectMap}

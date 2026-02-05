@@ -665,6 +665,7 @@ function ProjectPage() {
                 project={project}
                 objects={filteredObjects}
                 statusField={columnField}
+                viewFields={activeView?.fields}
                 sort={sort}
                 onCardClick={handleCardClick}
                 onCreateClick={handleCreateClick}

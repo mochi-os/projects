@@ -19,7 +19,7 @@ import {
   DropdownMenuItem,
   SortDirectionButton,
 } from "@mochi/common";
-import { GripVertical, MoreHorizontal } from "lucide-react";
+import { Check, GripVertical, Minus, MoreHorizontal, Plus } from "lucide-react";
 import type { ProjectView, ProjectField, ProjectClass, FieldOption } from "@/types";
 
 // Edit View Dialog
@@ -47,72 +47,74 @@ export function EditViewDialog({
   const allClassIds = useMemo(() => classes.map((c) => c.id), [classes]);
 
   const [name, setName] = useState("");
-  const [viewtype, setViewtype] = useState("board");
-  const [columns, setColumns] = useState("");
-  const [viewFields, setViewFields] = useState("");
-  const [sort, setSort] = useState("");
-  const [direction, setDirection] = useState("asc");
-  const [selectedClasses, setSelectedClasses] = useState<string[]>([]);
 
   useEffect(() => {
     if (view) {
       setName(view.name);
-      setViewtype(view.viewtype);
-      setColumns(view.columns);
-      setViewFields(view.fields || "");
-      setSort(view.sort);
-      setDirection(view.direction);
-      setSelectedClasses(view.classes?.length ? view.classes : allClassIds);
     }
-  }, [view, allClassIds]);
+  }, [view]);
 
   if (!view) return null;
 
-  const handleSave = () => {
-    if (name.trim() && name !== view.name) {
+  const handleNameBlur = () => {
+    if (name.trim() && name.trim() !== view.name) {
       onUpdate({ name: name.trim() });
     }
-    if (viewtype !== view.viewtype) {
-      onUpdate({ viewtype });
+  };
+
+  const handleViewtypeChange = (value: string) => {
+    if (value !== view.viewtype) {
+      onUpdate({ viewtype: value });
     }
-    if (columns !== view.columns) {
-      onUpdate({ columns });
+  };
+
+  const handleColumnsChange = (value: string) => {
+    if (value !== view.columns) {
+      onUpdate({ columns: value });
     }
-    if (viewFields !== (view.fields || "")) {
-      onUpdate({ fields: viewFields });
+  };
+
+  const handleRowsChange = (value: string) => {
+    if (value !== view.rows) {
+      onUpdate({ rows: value });
     }
-    if (sort !== view.sort) {
-      onUpdate({ sort });
+  };
+
+  const handleSortChange = (value: string) => {
+    if (value !== view.sort) {
+      onUpdate({ sort: value });
     }
-    if (direction !== view.direction) {
-      onUpdate({ direction });
-    }
-    // Check if classes changed
-    const currentClasses = view.classes?.length ? view.classes : allClassIds;
-    if (JSON.stringify(selectedClasses.sort()) !== JSON.stringify(currentClasses.sort())) {
-      onUpdateClasses(selectedClasses);
-    }
-    onOpenChange(false);
+  };
+
+  const handleDirectionToggle = () => {
+    const newDirection = view.direction === "asc" ? "desc" : "asc";
+    onUpdate({ direction: newDirection });
   };
 
   const toggleViewField = (fieldId: string) => {
-    const currentFields = viewFields.split(",").filter(Boolean);
+    const currentFields = (view.fields || "").split(",").filter(Boolean);
+    let newFields: string[];
     if (currentFields.includes(fieldId)) {
-      setViewFields(currentFields.filter((f) => f !== fieldId).join(","));
+      newFields = currentFields.filter((f) => f !== fieldId);
     } else {
-      setViewFields([...currentFields, fieldId].join(","));
+      newFields = [...currentFields, fieldId];
     }
+    onUpdate({ fields: newFields.join(",") });
   };
 
   const toggleClass = (classId: string) => {
-    if (selectedClasses.includes(classId)) {
-      setSelectedClasses(selectedClasses.filter((c) => c !== classId));
+    const currentClasses = view.classes?.length ? view.classes : allClassIds;
+    let newClasses: string[];
+    if (currentClasses.includes(classId)) {
+      newClasses = currentClasses.filter((c) => c !== classId);
     } else {
-      setSelectedClasses([...selectedClasses, classId]);
+      newClasses = [...currentClasses, classId];
     }
+    onUpdateClasses(newClasses);
   };
 
-  const viewFieldsList = viewFields.split(",").filter(Boolean);
+  const viewFieldsList = (view.fields || "").split(",").filter(Boolean);
+  const selectedClasses = view.classes?.length ? view.classes : allClassIds;
   const enumeratedFields = fields.filter((f) => f.fieldtype === "enumerated");
 
   return (
@@ -127,10 +129,8 @@ export function EditViewDialog({
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuItem
-                className="text-destructive focus:text-destructive"
-                onClick={onDelete}
-              >
+              <DropdownMenuItem onClick={onDelete}>
+                <Minus className="size-4" />
                 Delete view
               </DropdownMenuItem>
             </DropdownMenuContent>
@@ -139,35 +139,40 @@ export function EditViewDialog({
         <div className="flex-1 overflow-y-auto py-4 space-y-4">
           <div className="space-y-2">
             <Label htmlFor="view-name">Name</Label>
-            <Input
-              id="view-name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
+            <div className="pl-4">
+              <Input
+                id="view-name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                onBlur={handleNameBlur}
+              />
+            </div>
           </div>
 
           <div className="space-y-2">
             <Label>Layout</Label>
-            <RadioGroup value={viewtype} onValueChange={setViewtype}>
-              <div className="flex items-center gap-2">
-                <RadioGroupItem value="board" id="vt-board" />
-                <Label htmlFor="vt-board" className="font-normal cursor-pointer">
-                  Board
-                </Label>
-              </div>
-              <div className="flex items-center gap-2">
-                <RadioGroupItem value="tree" id="vt-tree" />
-                <Label htmlFor="vt-tree" className="font-normal cursor-pointer">
-                  Tree
-                </Label>
-              </div>
-            </RadioGroup>
+            <div className="pl-4">
+              <RadioGroup value={view.viewtype} onValueChange={handleViewtypeChange}>
+                <div className="flex items-center gap-2">
+                  <RadioGroupItem value="board" id="vt-board" />
+                  <Label htmlFor="vt-board" className="font-normal cursor-pointer">
+                    Board
+                  </Label>
+                </div>
+                <div className="flex items-center gap-2">
+                  <RadioGroupItem value="tree" id="vt-tree" />
+                  <Label htmlFor="vt-tree" className="font-normal cursor-pointer">
+                    Tree
+                  </Label>
+                </div>
+              </RadioGroup>
+            </div>
           </div>
 
           {classes.length > 1 && (
             <div className="space-y-2">
               <Label>Show classes</Label>
-              <div className="space-y-1">
+              <div className="pl-4 space-y-1">
                 {classes.map((cls) => (
                   <label
                     key={cls.id}
@@ -186,26 +191,48 @@ export function EditViewDialog({
             </div>
           )}
 
-          {viewtype === "board" && enumeratedFields.length > 0 && (
+          {view.viewtype === "board" && enumeratedFields.length > 0 && (
             <div className="space-y-2">
-              <Label>Group by (columns)</Label>
-              <select
-                value={columns}
-                onChange={(e) => setColumns(e.target.value)}
-                className="w-full h-9 rounded-md border border-input bg-background px-3 py-1 text-sm"
-              >
-                {enumeratedFields.map((field) => (
-                  <option key={field.id} value={field.id}>
-                    {field.name}
-                  </option>
-                ))}
-              </select>
+              <Label>Columns group by</Label>
+              <div className="pl-4">
+                <select
+                  value={view.columns}
+                  onChange={(e) => handleColumnsChange(e.target.value)}
+                  className="w-full h-9 rounded-md border border-input bg-background px-3 py-1 text-sm"
+                >
+                  {enumeratedFields.map((field) => (
+                    <option key={field.id} value={field.id}>
+                      {field.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+          )}
+
+          {view.viewtype === "board" && enumeratedFields.length > 0 && (
+            <div className="space-y-2">
+              <Label>Rows group by</Label>
+              <div className="pl-4">
+                <select
+                  value={view.rows || ""}
+                  onChange={(e) => handleRowsChange(e.target.value)}
+                  className="w-full h-9 rounded-md border border-input bg-background px-3 py-1 text-sm"
+                >
+                  <option value="">None</option>
+                  {enumeratedFields.map((field) => (
+                    <option key={field.id} value={field.id}>
+                      {field.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
             </div>
           )}
 
           <div className="space-y-2">
-            <Label>Fields on card</Label>
-            <div className="space-y-1">
+            <Label>Show fields</Label>
+            <div className="pl-4 space-y-1">
               {fields.map((field) => (
                 <label
                   key={field.id}
@@ -225,10 +252,10 @@ export function EditViewDialog({
 
           <div className="space-y-2">
             <Label>Default sort</Label>
-            <div className="flex gap-2">
+            <div className="pl-4 flex gap-2">
               <select
-                value={sort}
-                onChange={(e) => setSort(e.target.value)}
+                value={view.sort}
+                onChange={(e) => handleSortChange(e.target.value)}
                 className="flex-1 h-9 rounded-md border border-input bg-background px-3 py-1 text-sm"
               >
                 <option value="">None</option>
@@ -242,18 +269,16 @@ export function EditViewDialog({
                 ))}
               </select>
               <SortDirectionButton
-                direction={direction as "asc" | "desc"}
-                onToggle={() => setDirection(direction === "asc" ? "desc" : "asc")}
+                direction={view.direction as "asc" | "desc"}
+                onToggle={handleDirectionToggle}
               />
             </div>
           </div>
         </div>
         <DialogFooter>
-          <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
-            Cancel
-          </Button>
-          <Button type="button" onClick={handleSave}>
-            Save
+          <Button type="button" onClick={() => onOpenChange(false)}>
+            <Check className="size-4" />
+            Done
           </Button>
         </DialogFooter>
       </DialogContent>
@@ -372,88 +397,94 @@ export function EditClassDialog({
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuItem
-                className="text-destructive focus:text-destructive"
-                onClick={onDelete}
-              >
+              <DropdownMenuItem onClick={onDelete}>
+                <Minus className="size-4" />
                 Delete class
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </DialogHeader>
-        <div className="flex-1 overflow-y-auto py-4 space-y-4">
+        <div className="flex-1 overflow-y-auto py-4 pr-2 space-y-4">
           <div className="space-y-2">
             <Label htmlFor="class-name">Name</Label>
-            <Input
-              id="class-name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              onBlur={handleNameBlur}
-            />
+            <div className="pl-4">
+              <Input
+                id="class-name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                onBlur={handleNameBlur}
+              />
+            </div>
           </div>
 
           {otherClasses.length > 0 && (
             <div className="space-y-2">
               <Label>Can be child of</Label>
-              <p className="text-xs text-muted-foreground">
-                Select which classes this can be nested under
-              </p>
-              <div className="space-y-1">
-                {otherClasses.map((c) => (
-                  <label
-                    key={c.id}
-                    className="flex items-center gap-2 text-sm cursor-pointer"
-                  >
-                    <input
-                      type="checkbox"
-                      checked={hierarchy.includes(c.id)}
-                      onChange={() => toggleParent(c.id)}
-                      className="rounded"
-                    />
-                    {c.name}
-                  </label>
-                ))}
+              <div className="pl-4 space-y-2">
+                <p className="text-xs text-muted-foreground">
+                  Select which classes this can be nested under
+                </p>
+                <div className="space-y-1">
+                  {otherClasses.map((c) => (
+                    <label
+                      key={c.id}
+                      className="flex items-center gap-2 text-sm cursor-pointer"
+                    >
+                      <input
+                        type="checkbox"
+                        checked={hierarchy.includes(c.id)}
+                        onChange={() => toggleParent(c.id)}
+                        className="rounded"
+                      />
+                      {c.name}
+                    </label>
+                  ))}
+                </div>
               </div>
             </div>
           )}
 
           <div className="space-y-2">
             <Label>Fields</Label>
-            <div className="space-y-1">
-              {fields.map((field) => (
-                <div
-                  key={field.id}
-                  draggable
-                  onDragStart={(e) => handleDragStart(e, field.id)}
-                  onDragEnd={handleDragEnd}
-                  onDragOver={(e) => handleDragOver(e, field.id)}
-                  onDragLeave={handleDragLeave}
-                  onDrop={(e) => handleDrop(e, field.id)}
-                  className={`flex items-center gap-2 px-3 py-2 text-sm rounded-md hover:bg-muted transition-colors border cursor-grab ${
-                    dragOverFieldId === field.id ? "border-primary bg-primary/10" : ""
-                  } ${draggedFieldId === field.id ? "opacity-50" : ""}`}
-                >
-                  <GripVertical className="size-4 text-muted-foreground shrink-0" />
-                  <button
-                    type="button"
-                    onClick={() => onEditField(field)}
-                    className="flex-1 text-left hover:text-primary"
+            <div className="pl-4 space-y-2">
+              <div className="space-y-1">
+                {fields.map((field) => (
+                  <div
+                    key={field.id}
+                    draggable
+                    onDragStart={(e) => handleDragStart(e, field.id)}
+                    onDragEnd={handleDragEnd}
+                    onDragOver={(e) => handleDragOver(e, field.id)}
+                    onDragLeave={handleDragLeave}
+                    onDrop={(e) => handleDrop(e, field.id)}
+                    className={`flex items-center gap-2 px-3 py-2 text-sm rounded-md hover:bg-muted transition-colors border cursor-grab ${
+                      dragOverFieldId === field.id ? "border-primary bg-primary/10" : ""
+                    } ${draggedFieldId === field.id ? "opacity-50" : ""}`}
                   >
-                    <span>{field.name}</span>
-                    <span className="text-muted-foreground ml-2 capitalize">
-                      ({field.fieldtype})
-                    </span>
-                  </button>
-                </div>
-              ))}
+                    <GripVertical className="size-4 text-muted-foreground shrink-0" />
+                    <button
+                      type="button"
+                      onClick={() => onEditField(field)}
+                      className="flex-1 text-left hover:text-primary"
+                    >
+                      <span>{field.name}</span>
+                      <span className="text-muted-foreground ml-2 capitalize">
+                        ({field.fieldtype})
+                      </span>
+                    </button>
+                  </div>
+                ))}
+              </div>
             </div>
-            <Button type="button" variant="outline" size="sm" onClick={onAddField}>
-              Add field
-            </Button>
           </div>
         </div>
-        <DialogFooter>
+        <DialogFooter className="justify-between">
+          <Button type="button" variant="outline" size="sm" onClick={onAddField}>
+            <Plus className="size-4" />
+            Add field
+          </Button>
           <Button type="button" onClick={() => onOpenChange(false)}>
+            <Check className="size-4" />
             Done
           </Button>
         </DialogFooter>
@@ -517,10 +548,6 @@ export function EditFieldDialog({
     onUpdate({ required: checked ? 1 : 0 });
   };
 
-  const handleCardChange = (checked: boolean) => {
-    onUpdate({ card: checked ? 1 : 0 });
-  };
-
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-md flex flex-col max-h-[85vh]" showCloseButton={false}>
@@ -534,10 +561,8 @@ export function EditFieldDialog({
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
-                <DropdownMenuItem
-                  className="text-destructive focus:text-destructive"
-                  onClick={onDelete}
-                >
+                <DropdownMenuItem onClick={onDelete}>
+                  <Minus className="size-4" />
                   Delete field
                 </DropdownMenuItem>
               </DropdownMenuContent>
@@ -579,27 +604,16 @@ export function EditFieldDialog({
             </div>
           )}
 
-          <div className="space-y-2">
-            <label className="flex items-center gap-2 text-sm cursor-pointer">
-              <input
-                type="checkbox"
-                checked={field.required === 1}
-                onChange={(e) => handleRequiredChange(e.target.checked)}
-                className="rounded"
-                disabled={isSystemField}
-              />
-              Required
-            </label>
-            <label className="flex items-center gap-2 text-sm cursor-pointer">
-              <input
-                type="checkbox"
-                checked={field.card === 1}
-                onChange={(e) => handleCardChange(e.target.checked)}
-                className="rounded"
-              />
-              Show by default
-            </label>
-          </div>
+          <label className="flex items-center gap-2 text-sm cursor-pointer">
+            <input
+              type="checkbox"
+              checked={field.required === 1}
+              onChange={(e) => handleRequiredChange(e.target.checked)}
+              className="rounded"
+              disabled={isSystemField}
+            />
+            Required
+          </label>
 
           {field.fieldtype === "enumerated" && (
             <div className="space-y-2">
@@ -646,6 +660,7 @@ export function EditFieldDialog({
         </div>
         <DialogFooter>
           <Button type="button" onClick={() => onOpenChange(false)}>
+            <Check className="size-4" />
             Done
           </Button>
         </DialogFooter>
@@ -715,10 +730,8 @@ export function EditOptionDialog({
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuItem
-                className="text-destructive focus:text-destructive"
-                onClick={onDelete}
-              >
+              <DropdownMenuItem onClick={onDelete}>
+                <Minus className="size-4" />
                 Delete option
               </DropdownMenuItem>
             </DropdownMenuContent>

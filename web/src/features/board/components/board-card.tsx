@@ -34,7 +34,7 @@ export function BoardCard({
 
   // Exclude title, status, priority for the body content
   const cardFields = fields.filter(
-    (f) => f.card === 1 && f.id !== "title" && f.id !== "status" && f.id !== "priority",
+    (f) => f.id !== "title" && f.id !== "status" && f.id !== "priority",
   );
 
   // Get priority color for left border strip

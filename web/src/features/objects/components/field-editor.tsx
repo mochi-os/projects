@@ -227,10 +227,16 @@ function DateEditor({ value, onChange, disabled, onErrorChange }: DateEditorProp
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const badInput = e.target.validity.badInput;
     // Track bad input so parent can prevent close
-    onErrorChange(e.target.validity.badInput);
+    onErrorChange(badInput);
     // Clear visible error when user starts editing again
     if (showError) setShowError(false);
+    // Save immediately when value changes and is valid (native date picker
+    // fires onChange but may not trigger blur)
+    if (!badInput && e.target.value !== value) {
+      onChange(e.target.value);
+    }
   };
 
   return (

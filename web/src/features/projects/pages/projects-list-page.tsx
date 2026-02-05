@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from "react";
+import { useEffect } from "react";
 import { Link } from "@tanstack/react-router";
 import {
   Main,
@@ -6,15 +6,14 @@ import {
   CardContent,
   Button,
   usePageTitle,
-  Skeleton,
+  EmptyState,
   PageHeader,
+  CardSkeleton,
 } from "@mochi/common";
 import { FolderKanban, Plus } from "lucide-react";
 import { useProjectsStore } from "@/stores/projects-store";
 import { useSidebarContext } from "@/context/sidebar-context";
 import { formatDistanceToNow } from "date-fns";
-import { InlineProjectSearch } from "../components/inline-project-search";
-
 export function ProjectsListPage() {
   const projects = useProjectsStore((state) => state.projects);
   const isLoading = useProjectsStore((state) => state.isLoading);
@@ -27,17 +26,6 @@ export function ProjectsListPage() {
     void refresh();
   }, [refresh]);
 
-  // Set of subscribed project IDs for inline search
-  const subscribedProjectIds = useMemo(
-    () =>
-      new Set(
-        projects.flatMap((p) =>
-          [p.id, p.fingerprint].filter((x): x is string => !!x),
-        ),
-      ),
-    [projects],
-  );
-
   return (
     <>
       <PageHeader
@@ -46,31 +34,18 @@ export function ProjectsListPage() {
       />
       <Main>
         {isLoading ? (
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {Array.from({ length: 3 }).map((_, i) => (
-              <Card key={i}>
-                <CardContent className="p-4">
-                  <Skeleton className="mb-2 h-5 w-3/4" />
-                  <Skeleton className="h-4 w-1/2" />
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+          <CardSkeleton count={6} />
         ) : projects.length === 0 ? (
-          <div className="flex flex-col items-center justify-center p-8 text-center">
-            <FolderKanban className="text-muted-foreground mx-auto mb-3 h-10 w-10 opacity-50" />
-            <p className="text-muted-foreground mb-1 text-sm font-medium">
-              Projects
-            </p>
-            <p className="text-muted-foreground mb-4 max-w-sm text-xs">
-              You have no projects yet.
-            </p>
-            <InlineProjectSearch subscribedIds={subscribedProjectIds} />
-            <Button variant="outline" onClick={openCreateDialog} className="mt-4">
-              <Plus className="mr-2 h-4 w-4" />
-              Create a new project
+          <EmptyState
+            icon={FolderKanban}
+            title="No projects yet"
+            description="Create a project to start tracking your tasks and issues."
+          >
+            <Button onClick={openCreateDialog}>
+              <Plus className="mr-2 size-4" />
+              Create project
             </Button>
-          </div>
+          </EmptyState>
         ) : (
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {projects.map((project) => (

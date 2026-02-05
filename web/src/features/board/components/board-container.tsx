@@ -2,8 +2,14 @@
 // Copyright Alistair Cunningham 2026
 
 import { useMemo, useState, useEffect, useCallback, useRef } from "react";
-import { cn } from "@mochi/common";
+import {
+  cn,
+  BoardSkeleton,
+  EmptyState,
+  Button,
+} from "@mochi/common";
 import { BoardColumn } from "./board-column";
+import { FolderKanban, Plus } from "lucide-react";
 import type { ProjectObject, ProjectDetails, ProjectClass, FieldOption, SortState } from "@/types";
 
 interface BoardContainerProps {
@@ -18,6 +24,7 @@ interface BoardContainerProps {
   onDeleteColumn?: (classId: string, fieldId: string, optionId: string) => Promise<void>;
   isReordering?: boolean;
   onReorderColumns?: (order: string[]) => void;
+  isLoading?: boolean;
 }
 
 export function BoardContainer({
@@ -32,6 +39,7 @@ export function BoardContainer({
   onDeleteColumn,
   isReordering,
   onReorderColumns,
+  isLoading,
 }: BoardContainerProps) {
   // Get the default class's fields (first class)
   const defaultClass = project.classes[0];
@@ -190,6 +198,25 @@ export function BoardContainer({
     }
     setDraggedColumnId(null);
   }, [draggedColumnId, isReordering, reorderedColumns, onReorderColumns]);
+
+  if (isLoading) {
+    return <BoardSkeleton columnCount={4} />;
+  }
+
+  if (statusOptions.length === 0) {
+    return (
+      <EmptyState
+        icon={FolderKanban}
+        title="No columns defined"
+        description="Try adding some columns to your project to get started."
+      >
+        <Button onClick={() => onCreateClick?.("")}>
+          <Plus className="mr-2 size-4" />
+          Create item
+        </Button>
+      </EmptyState>
+    );
+  }
 
   return (
     <div className="flex gap-4 pb-2">

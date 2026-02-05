@@ -3,7 +3,7 @@
 
 import { useState, useMemo, useCallback, useEffect } from "react";
 import { createFileRoute, Link, useNavigate, useRouter } from "@tanstack/react-router";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   GeneralError,
   Main,
@@ -16,6 +16,7 @@ import {
   DropdownMenuTrigger,
   Switch,
   useSearch,
+  useQueryWithError,
 } from "@mochi/common";
 import { Columns3, Ellipsis, FolderKanban, GripVertical, Plus, Settings, Settings2, SlidersHorizontal, X } from "lucide-react";
 import projectsApi from "@/api/projects";
@@ -130,7 +131,7 @@ function ProjectPage() {
   const queryClient = useQueryClient();
 
   // Load objects
-  const { data: objectsData } = useQuery({
+  const { data: objectsData } = useQueryWithError({
     queryKey: ["objects", params.projectId],
     queryFn: async () => {
       const response = await projectsApi.listObjects(params.projectId);
@@ -139,7 +140,7 @@ function ProjectPage() {
   });
 
   // Load people for resolving user field values to names
-  const { data: peopleData } = useQuery({
+  const { data: peopleData } = useQueryWithError({
     queryKey: ["people", params.projectId],
     queryFn: async () => {
       const response = await projectsApi.listPeople(params.projectId);

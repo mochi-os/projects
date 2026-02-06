@@ -325,7 +325,7 @@ export function BoardColumn({
             data-row-id={row.id}
             className={cn(
               "p-2 space-y-2",
-              index < rows.length - 1 && "border-b border-dashed"
+              index < rows.length - 1 && "border-b"
             )}
           >
             {row.objects.map((object) => (

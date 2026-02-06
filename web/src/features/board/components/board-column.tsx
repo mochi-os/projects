@@ -92,6 +92,7 @@ export function BoardColumn({
   rowsRef.current = rows;
   const isDragOverRef = useRef(false);
   const safetyTimeoutRef = useRef<ReturnType<typeof setTimeout>>(undefined);
+  const indicatorRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     return () => clearTimeout(safetyTimeoutRef.current);
@@ -100,6 +101,7 @@ export function BoardColumn({
   const clearDragState = useCallback(() => {
     isDragOverRef.current = false;
     columnRef.current?.removeAttribute("data-drag-over");
+    if (indicatorRef.current) indicatorRef.current.style.opacity = "0";
     clearTimeout(safetyTimeoutRef.current);
   }, []);
 
@@ -159,6 +161,37 @@ export function BoardColumn({
       }
       dropIndexRef.current = newDropIndex;
     }
+
+    // Position drop indicator line
+    if (indicatorRef.current && columnRef.current) {
+      const columnRect = columnRef.current.getBoundingClientRect();
+      let targetCards: NodeListOf<Element> | null = null;
+
+      if (rowsRef.current) {
+        const section = columnRef.current.querySelector(
+          `[data-row-id="${CSS.escape(dropRowRef.current)}"]`
+        );
+        if (section) {
+          targetCards = section.querySelectorAll("[data-card-id]");
+        }
+      } else if (cardsContainerRef.current) {
+        targetCards = cardsContainerRef.current.querySelectorAll("[data-card-id]");
+      }
+
+      if (targetCards && targetCards.length > 0) {
+        const idx = dropIndexRef.current;
+        let top: number;
+        if (idx < targetCards.length) {
+          top = targetCards[idx].getBoundingClientRect().top - columnRect.top;
+        } else {
+          top = targetCards[targetCards.length - 1].getBoundingClientRect().bottom - columnRect.top + 4;
+        }
+        indicatorRef.current.style.top = `${top}px`;
+        indicatorRef.current.style.opacity = "1";
+      } else {
+        indicatorRef.current.style.opacity = "0";
+      }
+    }
   }, [isReordering, clearDragState]);
 
   const handleDragLeave = useCallback((e: React.DragEvent) => {
@@ -184,7 +217,7 @@ export function BoardColumn({
     <div
       ref={columnRef}
       className={cn(
-        "rounded-[10px]",
+        "rounded-[10px] relative",
         rows ? "grid grid-rows-subgrid row-span-full" : "flex flex-col w-72 shrink-0",
         "bg-muted/30 border transition-colors",
         "data-[drag-over]:border-primary data-[drag-over]:bg-primary/5",
@@ -315,6 +348,12 @@ export function BoardColumn({
             setIsDeleting(false);
           }
         }}
+      />
+
+      {/* Drop indicator */}
+      <div
+        ref={indicatorRef}
+        className="absolute left-2 right-2 h-0.5 rounded-full bg-primary z-10 pointer-events-none opacity-0 -translate-y-1/2"
       />
 
       {/* Cards */}

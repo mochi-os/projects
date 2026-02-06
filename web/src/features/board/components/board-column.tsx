@@ -22,6 +22,13 @@ import { Inbox, MoreHorizontal, Pencil, Plus, Trash2 } from "lucide-react";
 import { BoardCard } from "./board-card";
 import type { ProjectObject, ProjectField, FieldOption, ProjectClass } from "@/types";
 
+export interface BoardColumnRow {
+  id: string;
+  label: string;
+  colour?: string;
+  objects: ProjectObject[];
+}
+
 interface BoardColumnProps {
   id: string;
   name: string;
@@ -36,12 +43,13 @@ interface BoardColumnProps {
   statusField?: string;
   onCardClick?: (object: ProjectObject) => void;
   onCreateClick?: () => void;
-  onDrop?: (objectId: string, columnId: string, newRank?: number) => void;
+  onDrop?: (objectId: string, columnId: string, newRank?: number, rowId?: string) => void;
   onRenameColumn?: (newName: string) => Promise<void>;
   onDeleteColumn?: () => Promise<void>;
   isReordering?: boolean;
   isDragging?: boolean;
   hideHeader?: boolean;
+  rows?: BoardColumnRow[];
 }
 
 export function BoardColumn({
@@ -64,6 +72,7 @@ export function BoardColumn({
   isReordering,
   isDragging,
   hideHeader,
+  rows,
 }: BoardColumnProps) {
   const [showRenameDialog, setShowRenameDialog] = useState(false);
   const [newName, setNewName] = useState(name);
@@ -71,10 +80,16 @@ export function BoardColumn({
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
 
+  // Total object count across rows (or flat objects)
+  const totalCount = rows ? rows.reduce((sum, r) => sum + r.objects.length, 0) : objects.length;
+
   // Drag state managed via refs + direct DOM manipulation to avoid re-renders
   const columnRef = useRef<HTMLDivElement>(null);
   const cardsContainerRef = useRef<HTMLDivElement>(null);
   const dropIndexRef = useRef(0);
+  const dropRowRef = useRef("");
+  const rowsRef = useRef(rows);
+  rowsRef.current = rows;
   const isDragOverRef = useRef(false);
   const safetyTimeoutRef = useRef<ReturnType<typeof setTimeout>>(undefined);
 
@@ -109,11 +124,32 @@ export function BoardColumn({
     safetyTimeoutRef.current = setTimeout(clearDragState, 150);
 
     // Calculate drop position based on mouse Y
-    if (cardsContainerRef.current) {
-      const cards = cardsContainerRef.current.querySelectorAll("[data-card-id]");
-      const mouseY = e.clientY;
-      let newDropIndex = cards.length;
+    const mouseY = e.clientY;
 
+    if (rowsRef.current && columnRef.current) {
+      // Swimlane mode: find which row section and position within it
+      const sections = columnRef.current.querySelectorAll("[data-row-id]");
+      for (const section of sections) {
+        const rect = section.getBoundingClientRect();
+        if (mouseY >= rect.top && mouseY <= rect.bottom) {
+          dropRowRef.current = section.getAttribute("data-row-id") || "";
+          const cards = section.querySelectorAll("[data-card-id]");
+          let newDropIndex = cards.length;
+          for (let i = 0; i < cards.length; i++) {
+            const cardRect = cards[i].getBoundingClientRect();
+            if (mouseY < cardRect.top + cardRect.height / 2) {
+              newDropIndex = i;
+              break;
+            }
+          }
+          dropIndexRef.current = newDropIndex;
+          break;
+        }
+      }
+    } else if (cardsContainerRef.current) {
+      // Flat mode
+      const cards = cardsContainerRef.current.querySelectorAll("[data-card-id]");
+      let newDropIndex = cards.length;
       for (let i = 0; i < cards.length; i++) {
         const rect = cards[i].getBoundingClientRect();
         if (mouseY < rect.top + rect.height / 2) {
@@ -121,7 +157,6 @@ export function BoardColumn({
           break;
         }
       }
-
       dropIndexRef.current = newDropIndex;
     }
   }, [isReordering, clearDragState]);
@@ -137,10 +172,11 @@ export function BoardColumn({
   const handleDrop = useCallback((e: React.DragEvent) => {
     e.preventDefault();
     const rank = dropIndexRef.current + 1;
+    const rowId = rowsRef.current ? dropRowRef.current : undefined;
     clearDragState();
     const objectId = e.dataTransfer.getData("text/plain");
     if (objectId && onDrop) {
-      onDrop(objectId, id, rank);
+      onDrop(objectId, id, rank, rowId);
     }
   }, [id, onDrop, clearDragState]);
 
@@ -148,8 +184,8 @@ export function BoardColumn({
     <div
       ref={columnRef}
       className={cn(
-        "flex flex-col w-72 shrink-0 rounded-[10px]",
-        !hideHeader && "min-h-[calc(100vh-5rem)]",
+        "rounded-[10px]",
+        rows ? "grid grid-rows-subgrid row-span-full" : "flex flex-col w-72 shrink-0",
         "bg-muted/30 border transition-colors",
         "data-[drag-over]:border-primary data-[drag-over]:bg-primary/5",
         isReordering && !isDragging && "border-dashed border-muted-foreground/50",
@@ -161,58 +197,56 @@ export function BoardColumn({
       onDrop={isReordering ? undefined : handleDrop}
     >
       {/* Column header */}
-      {!hideHeader && (
-        <div className="flex items-center justify-between p-3 border-b">
-          <div className="flex items-center gap-2">
-            {colour && (
-              <div
-                className="w-3 h-3 rounded-full"
-                style={{ backgroundColor: colour }}
-              />
-            )}
-            <span className="font-medium text-sm">{name}</span>
-            <span className="text-xs text-muted-foreground bg-muted px-1.5 py-0.5 rounded">
-              {objects.length}
-            </span>
-          </div>
-          {!isReordering && (onCreateClick || onRenameColumn || (objects.length === 0 && onDeleteColumn)) && (
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <button className="p-1 rounded hover:bg-muted transition-colors">
-                  <MoreHorizontal className="size-4 text-muted-foreground" />
-                </button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                {onCreateClick && (
-                  <DropdownMenuItem onClick={onCreateClick}>
-                    <Plus className="size-4 mr-2" />
-                    Create
-                  </DropdownMenuItem>
-                )}
-                {onRenameColumn && (
-                  <DropdownMenuItem
-                    onClick={() => {
-                      setNewName(name);
-                      setShowRenameDialog(true);
-                    }}
-                  >
-                    <Pencil className="size-4 mr-2" />
-                    Rename
-                  </DropdownMenuItem>
-                )}
-                {objects.length === 0 && onDeleteColumn && (
-                  <DropdownMenuItem
-                    onClick={() => setShowDeleteDialog(true)}
-                  >
-                    <Trash2 className="size-4 mr-2" />
-                    Delete
-                  </DropdownMenuItem>
-                )}
-              </DropdownMenuContent>
-            </DropdownMenu>
+      <div className="flex items-center justify-between p-3 border-b">
+        <div className="flex items-center gap-2">
+          {colour && (
+            <div
+              className="w-3 h-3 rounded-full"
+              style={{ backgroundColor: colour }}
+            />
           )}
+          <span className="font-medium text-sm">{name}</span>
+          <span className="text-xs text-muted-foreground bg-muted px-1.5 py-0.5 rounded">
+            {totalCount}
+          </span>
         </div>
-      )}
+        {!isReordering && (onCreateClick || onRenameColumn || (totalCount === 0 && onDeleteColumn)) && (
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button className="p-1 rounded hover:bg-muted transition-colors">
+                <MoreHorizontal className="size-4 text-muted-foreground" />
+              </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              {onCreateClick && (
+                <DropdownMenuItem onClick={onCreateClick}>
+                  <Plus className="size-4 mr-2" />
+                  Create
+                </DropdownMenuItem>
+              )}
+              {onRenameColumn && (
+                <DropdownMenuItem
+                  onClick={() => {
+                    setNewName(name);
+                    setShowRenameDialog(true);
+                  }}
+                >
+                  <Pencil className="size-4 mr-2" />
+                  Rename
+                </DropdownMenuItem>
+              )}
+              {totalCount === 0 && onDeleteColumn && (
+                <DropdownMenuItem
+                  onClick={() => setShowDeleteDialog(true)}
+                >
+                  <Trash2 className="size-4 mr-2" />
+                  Delete
+                </DropdownMenuItem>
+              )}
+            </DropdownMenuContent>
+          </DropdownMenu>
+        )}
+      </div>
 
       <Dialog open={showRenameDialog} onOpenChange={setShowRenameDialog}>
         <DialogContent>
@@ -269,7 +303,7 @@ export function BoardColumn({
         destructive
         isLoading={isDeleting}
         handleConfirm={async () => {
-          if (objects.length > 0) {
+          if (totalCount > 0) {
             setShowDeleteDialog(false);
             return;
           }
@@ -284,37 +318,66 @@ export function BoardColumn({
       />
 
       {/* Cards */}
-      <div
-        ref={cardsContainerRef}
-        className="p-2 space-y-2 flex-1 relative"
-        onDoubleClick={(e) => {
-          if (e.target === e.currentTarget || (e.target as HTMLElement).closest("[data-card-id]") === null) {
-            onCreateClick?.();
-          }
-        }}
-      >
-        {objects.map((object) => (
-          <div key={object.id} data-card-id={object.id}>
-            <BoardCard
-              object={object}
-              fields={fields}
-              options={options}
-              prefix={prefix}
-              objectMap={objectMap}
-              classMap={classMap}
-              allObjects={allObjects}
-              statusField={statusField}
-              onClick={() => onCardClick?.(object)}
-            />
+      {rows ? (
+        rows.map((row, index) => (
+          <div
+            key={row.id}
+            data-row-id={row.id}
+            className={cn(
+              "p-2 space-y-2",
+              index < rows.length - 1 && "border-b border-dashed"
+            )}
+          >
+            {row.objects.map((object) => (
+              <div key={object.id} data-card-id={object.id}>
+                <BoardCard
+                  object={object}
+                  fields={fields}
+                  options={options}
+                  prefix={prefix}
+                  objectMap={objectMap}
+                  classMap={classMap}
+                  allObjects={allObjects}
+                  statusField={statusField}
+                  onClick={() => onCardClick?.(object)}
+                />
+              </div>
+            ))}
           </div>
-        ))}
+        ))
+      ) : (
+        <div
+          ref={cardsContainerRef}
+          className="p-2 space-y-2 flex-1 relative"
+          onDoubleClick={(e) => {
+            if (e.target === e.currentTarget || (e.target as HTMLElement).closest("[data-card-id]") === null) {
+              onCreateClick?.();
+            }
+          }}
+        >
+          {objects.map((object) => (
+            <div key={object.id} data-card-id={object.id}>
+              <BoardCard
+                object={object}
+                fields={fields}
+                options={options}
+                prefix={prefix}
+                objectMap={objectMap}
+                classMap={classMap}
+                allObjects={allObjects}
+                statusField={statusField}
+                onClick={() => onCardClick?.(object)}
+              />
+            </div>
+          ))}
 
-        {objects.length === 0 && (
-          <div className="flex items-center justify-center py-8">
-            <Inbox className="size-8 text-muted-foreground/30" />
-          </div>
-        )}
-      </div>
+          {totalCount === 0 && !hideHeader && (
+            <div className="flex items-center justify-center py-8">
+              <Inbox className="size-8 text-muted-foreground/30" />
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 }

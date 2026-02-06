@@ -1,9 +1,9 @@
 // Mochi Projects: Board container component
 // Copyright Alistair Cunningham 2026
 
-import { useMemo, useState, useEffect, useCallback, useRef } from "react";
+import { useMemo, useState, useEffect, useLayoutEffect, useCallback, useRef } from "react";
 import { cn } from "@mochi/common";
-import { BoardColumn } from "./board-column";
+import { BoardColumn, type BoardColumnRow } from "./board-column";
 import type { ProjectObject, ProjectDetails, ProjectClass, FieldOption, SortState } from "@/types";
 
 interface BoardContainerProps {
@@ -120,6 +120,18 @@ export function BoardContainer({
   }, [classOptions, rowField]);
 
   const hasRows = rowField && rowOptions.length > 0;
+
+  // Measure board position to compute viewport-filling min-height dynamically
+  const boardRef = useRef<HTMLDivElement>(null);
+  const [minHeight, setMinHeight] = useState("");
+
+  useLayoutEffect(() => {
+    const el = boardRef.current;
+    if (!el) return;
+    const top = Math.ceil(el.getBoundingClientRect().top);
+    const h = `calc(100dvh - ${top}px)`;
+    setMinHeight((prev) => (prev === h ? prev : h));
+  });
 
   // Local reorder state
   const [reorderedColumns, setReorderedColumns] = useState<FieldOption[]>(statusOptions);
@@ -264,22 +276,31 @@ export function BoardContainer({
   }, [draggedColumnId, isReordering, reorderedColumns, onReorderColumns]);
 
   // Render a single column with its reorder wrapper
-  const renderColumn = (status: FieldOption, columnObjects: ProjectObject[], hideHeader?: boolean, rowId?: string) => {
+  const renderColumn = (
+    status: FieldOption,
+    columnObjects: ProjectObject[],
+    rows?: BoardColumnRow[],
+    gridCol?: number,
+    gridRowSpan?: number,
+  ) => {
     const isDragging = draggedColumnId === status.id;
-    const dropHandler = rowId !== undefined
-      ? (objectId: string, columnId: string, newRank?: number) => handleDrop(objectId, columnId, newRank, rowId)
-      : handleDrop;
     return (
       <div
         key={status.id}
-        draggable={isReordering && !hideHeader}
-        onDragStart={isReordering && !hideHeader ? (e) => handleColumnDragStart(e, status.id) : undefined}
-        onDragOver={isReordering && !hideHeader ? (e) => handleColumnDragOver(e, status.id) : undefined}
-        onDragEnd={isReordering && !hideHeader ? handleColumnDragEnd : undefined}
+        draggable={isReordering}
+        onDragStart={isReordering ? (e) => handleColumnDragStart(e, status.id) : undefined}
+        onDragOver={isReordering ? (e) => handleColumnDragOver(e, status.id) : undefined}
+        onDragEnd={isReordering ? handleColumnDragEnd : undefined}
         className={cn(
-          !hideHeader && isReordering && "cursor-grab active:cursor-grabbing transition-transform duration-200 ease-out",
-          !hideHeader && isDragging && "opacity-90 scale-[1.02] shadow-xl z-10 rotate-1"
+          isReordering && "cursor-grab active:cursor-grabbing transition-transform duration-200 ease-out",
+          isDragging && "opacity-90 scale-[1.02] shadow-xl z-10 rotate-1"
         )}
+        style={gridCol ? {
+          gridColumn: gridCol,
+          gridRow: `1 / span ${gridRowSpan}`,
+          display: 'grid',
+          gridTemplateRows: 'subgrid',
+        } : undefined}
       >
         <BoardColumn
           id={status.id}
@@ -295,7 +316,7 @@ export function BoardContainer({
           statusField={statusField}
           onCardClick={isReordering ? undefined : onCardClick}
           onCreateClick={isReordering ? undefined : () => onCreateClick?.(status.id)}
-          onDrop={isReordering ? undefined : dropHandler}
+          onDrop={isReordering ? undefined : handleDrop}
           onRenameColumn={
             !isReordering && onRenameColumn && defaultClass
               ? (newName: string) => onRenameColumn(defaultClass.id, statusField, status.id, newName)
@@ -308,63 +329,8 @@ export function BoardContainer({
           }
           isReordering={isReordering}
           isDragging={isDragging}
-          hideHeader={hideHeader}
+          rows={rows}
         />
-      </div>
-    );
-  };
-
-  // Render a swimlane row
-  const renderSwimlane = (rowId: string, rowOption: FieldOption | null, rowData: Record<string, ProjectObject[]>) => {
-    const label = rowOption?.name || "[not set]";
-    const colour = rowOption?.colour;
-    const hasNoStatusItems = !isReordering && (rowData[""]?.length || 0) > 0;
-
-    return (
-      <div key={rowId || "__none__"} className="border-b last:border-b-0">
-        <div className="flex gap-4">
-          {/* Row label */}
-          <div className="w-48 shrink-0 p-3 pt-4 sticky left-0 bg-background z-10">
-            <div className="flex items-center gap-2">
-              {colour && (
-                <div
-                  className="w-3 h-3 rounded-full shrink-0"
-                  style={{ backgroundColor: colour }}
-                />
-              )}
-              <span className={cn(
-                "font-medium text-sm truncate",
-                !rowOption && "text-muted-foreground"
-              )}>
-                {label}
-              </span>
-            </div>
-          </div>
-
-          {/* Columns within this row */}
-          {columnsToRender.map((status) =>
-            renderColumn(status, rowData[status.id] || [], true, rowId)
-          )}
-
-          {/* No status column within this row */}
-          {hasNoStatusItems && (
-            <BoardColumn
-              id=""
-              name="No status"
-              objects={rowData[""]}
-              fields={visibleFields}
-              options={classOptions}
-              prefix={project.project.prefix}
-              objectMap={objectMap}
-              classMap={classMap}
-              allObjects={objects}
-              statusField={statusField}
-              onCardClick={onCardClick}
-              onDrop={(objectId, columnId, newRank) => handleDrop(objectId, columnId, newRank, rowId)}
-              hideHeader
-            />
-          )}
-        </div>
       </div>
     );
   };
@@ -376,52 +342,106 @@ export function BoardContainer({
       (arr) => arr.length > 0
     );
 
+    // Build row metadata for swimlane columns
+    const swimlaneRows: { id: string; label: string; colour?: string }[] = [
+      ...rowOptions.map((r) => ({ id: r.id, label: r.name, colour: r.colour })),
+      ...(hasNoRowObjects ? [{ id: "", label: "[not set]" }] : []),
+    ];
+
+    // Check if any row has objects without a status
+    const hasNoStatusSwimlane = !isReordering && swimlaneRows.some(
+      (row) => (objectsByRowAndStatus[row.id]?.[""]?.length || 0) > 0
+    );
+
+    const totalCols = columnsToRender.length + (hasNoStatusSwimlane ? 1 : 0);
+
     return (
-      <div className="pb-2">
-        {/* Column headers row */}
-        <div className="flex gap-4 sticky top-0 z-20 bg-background border-b">
-          {/* Spacer for row label column */}
-          <div className="w-48 shrink-0" />
+      <div
+        ref={boardRef}
+        className="grid pb-2 gap-x-4"
+        style={{
+          minHeight,
+          gridTemplateColumns: `max-content repeat(${totalCols}, 18rem)`,
+          gridTemplateRows: `auto repeat(${swimlaneRows.length}, 1fr)`,
+        }}
+      >
+        {/* Row indicators in left column */}
+        {swimlaneRows.map((row, r) => (
+          <div
+            key={`label-${row.id}`}
+            className={cn(
+              "flex items-start gap-2 pt-2 pr-3",
+              r < swimlaneRows.length - 1 && "border-b border-dashed"
+            )}
+            style={{ gridColumn: 1, gridRow: r + 2 }}
+          >
+            {row.colour && (
+              <div
+                className="w-2.5 h-2.5 rounded-full shrink-0 mt-0.5"
+                style={{ backgroundColor: row.colour }}
+              />
+            )}
+            <span className="text-xs text-muted-foreground font-medium whitespace-nowrap">
+              {row.label}
+            </span>
+          </div>
+        ))}
 
-          {/* Column headers */}
-          {columnsToRender.map((status) => (
-            <div
-              key={status.id}
-              className="w-72 shrink-0 p-3"
-              draggable={isReordering}
-              onDragStart={isReordering ? (e) => handleColumnDragStart(e, status.id) : undefined}
-              onDragOver={isReordering ? (e) => handleColumnDragOver(e, status.id) : undefined}
-              onDragEnd={isReordering ? handleColumnDragEnd : undefined}
-            >
-              <div className="flex items-center gap-2">
-                {status.colour && (
-                  <div
-                    className="w-3 h-3 rounded-full"
-                    style={{ backgroundColor: status.colour }}
-                  />
-                )}
-                <span className="font-medium text-sm">{status.name}</span>
-              </div>
-            </div>
-          ))}
-        </div>
+        {/* Board columns */}
+        {columnsToRender.map((status, c) =>
+          renderColumn(
+            status,
+            [],
+            swimlaneRows.map((row) => ({
+              id: row.id,
+              label: row.label,
+              colour: row.colour,
+              objects: objectsByRowAndStatus[row.id]?.[status.id] || [],
+            })),
+            c + 2,
+            swimlaneRows.length + 1
+          )
+        )}
 
-        {/* Swimlane rows */}
-        {rowOptions.map((rowOpt) => {
-          const rowData = objectsByRowAndStatus[rowOpt.id];
-          if (!rowData) return null;
-          return renderSwimlane(rowOpt.id, rowOpt, rowData);
-        })}
-
-        {/* "No value" swimlane at bottom */}
-        {hasNoRowObjects && renderSwimlane("", null, objectsByRowAndStatus[""] || {})}
+        {/* Column for items without status */}
+        {hasNoStatusSwimlane && (
+          <div
+            style={{
+              gridColumn: columnsToRender.length + 2,
+              gridRow: `1 / span ${swimlaneRows.length + 1}`,
+              display: 'grid',
+              gridTemplateRows: 'subgrid',
+            }}
+          >
+            <BoardColumn
+              id=""
+              name="No status"
+              objects={[]}
+              fields={visibleFields}
+              options={classOptions}
+              prefix={project.project.prefix}
+              objectMap={objectMap}
+              classMap={classMap}
+              allObjects={objects}
+              statusField={statusField}
+              onCardClick={onCardClick}
+              onDrop={handleDrop}
+              rows={swimlaneRows.map((row) => ({
+                id: row.id,
+                label: row.label,
+                colour: row.colour,
+                objects: objectsByRowAndStatus[row.id]?.[""] || [],
+              }))}
+            />
+          </div>
+        )}
       </div>
     );
   }
 
   // Flat layout (no row field — existing behavior)
   return (
-    <div className="flex gap-4 pb-2">
+    <div ref={boardRef} className="flex gap-4 pb-2" style={{ minHeight }}>
       {columnsToRender.map((status) =>
         renderColumn(status, objectsByStatus[status.id] || [])
       )}

@@ -125,16 +125,11 @@ export function DesignPreview({
   const classFields = fields[classId] || [];
   const classOptions = options[classId] || {};
 
-  // Get the first board view or create a default
-  const boardView = views.find((v) => v.viewtype === "board") || {
-    columns: "status",
-    fields: "title,priority",
-  };
+  // Get the first board view
+  const boardView = views.find((v) => v.viewtype === "board");
 
-  const cardFields = boardView.fields?.split(",").filter(Boolean) || [
-    "title",
-  ];
-  const columnField = boardView.columns || "status";
+  const cardFields = boardView?.fields?.split(",").filter(Boolean) || [];
+  const columnField = boardView?.columns || "";
   const columnOptions = classOptions[columnField] || [];
 
   const renderFieldValue = (field: ProjectField, value: string) => {

@@ -52,6 +52,8 @@ export function EditViewDialog({
 
   const [name, setName] = useState("");
 
+  const enumeratedFields = fields.filter((f) => f.fieldtype === "enumerated");
+
   useEffect(() => {
     if (view) {
       setName(view.name);
@@ -119,7 +121,6 @@ export function EditViewDialog({
 
   const viewFieldsList = (view.fields || "").split(",").filter(Boolean);
   const selectedClasses = view.classes?.length ? view.classes : allClassIds;
-  const enumeratedFields = fields.filter((f) => f.fieldtype === "enumerated");
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
@@ -209,6 +210,11 @@ export function EditViewDialog({
                   onChange={(e) => handleColumnsChange(e.target.value)}
                   className="w-full h-9 rounded-md border border-input bg-background px-3 py-1 text-sm"
                 >
+                  {!enumeratedFields.some((f) => f.id === view.columns) && (
+                    <option value={view.columns} disabled>
+                      Select a field
+                    </option>
+                  )}
                   {enumeratedFields.map((field) => (
                     <option key={field.id} value={field.id}>
                       {field.name}
@@ -327,7 +333,7 @@ export function EditClassDialog({
 }: EditClassDialogProps) {
   const [name, setName] = useState("");
   const [draggedFieldId, setDraggedFieldId] = useState<string | null>(null);
-  const [dragOverFieldId, setDragOverFieldId] = useState<string | null>(null);
+  const [dropIndicator, setDropIndicator] = useState<{ fieldId: string; position: "before" | "after" } | null>(null);
 
   useEffect(() => {
     if (cls) {
@@ -360,18 +366,20 @@ export function EditClassDialog({
 
   const handleDragEnd = () => {
     setDraggedFieldId(null);
-    setDragOverFieldId(null);
+    setDropIndicator(null);
   };
 
   const handleDragOver = (e: React.DragEvent, fieldId: string) => {
     e.preventDefault();
-    if (fieldId !== draggedFieldId) {
-      setDragOverFieldId(fieldId);
-    }
+    if (fieldId === draggedFieldId) return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    const midY = rect.top + rect.height / 2;
+    const position = e.clientY < midY ? "before" : "after";
+    setDropIndicator({ fieldId, position });
   };
 
   const handleDragLeave = () => {
-    setDragOverFieldId(null);
+    setDropIndicator(null);
   };
 
   const handleDrop = (e: React.DragEvent, targetFieldId: string) => {
@@ -384,14 +392,17 @@ export function EditClassDialog({
 
     if (draggedIndex === -1 || targetIndex === -1) return;
 
-    // Remove dragged item and insert at target position
     const newOrder = [...currentOrder];
     newOrder.splice(draggedIndex, 1);
-    newOrder.splice(targetIndex, 0, draggedFieldId);
+    // Calculate insertion index after removal
+    const insertIndex = dropIndicator?.position === "after"
+      ? currentOrder.indexOf(targetFieldId) - (draggedIndex < targetIndex ? 1 : 0) + 1
+      : currentOrder.indexOf(targetFieldId) - (draggedIndex < targetIndex ? 1 : 0);
+    newOrder.splice(insertIndex, 0, draggedFieldId);
 
     onReorderFields(newOrder);
     setDraggedFieldId(null);
-    setDragOverFieldId(null);
+    setDropIndicator(null);
   };
 
   return (
@@ -463,29 +474,36 @@ export function EditClassDialog({
             <div className="pl-4 space-y-2">
               <div className="space-y-1">
                 {fields.map((field) => (
-                  <div
-                    key={field.id}
-                    draggable
-                    onDragStart={(e) => handleDragStart(e, field.id)}
-                    onDragEnd={handleDragEnd}
-                    onDragOver={(e) => handleDragOver(e, field.id)}
-                    onDragLeave={handleDragLeave}
-                    onDrop={(e) => handleDrop(e, field.id)}
-                    className={`flex items-center gap-2 px-3 py-2 text-sm rounded-md hover:bg-muted transition-colors border cursor-grab ${
-                      dragOverFieldId === field.id ? "border-primary bg-primary/10" : ""
-                    } ${draggedFieldId === field.id ? "opacity-50" : ""}`}
-                  >
-                    <GripVertical className="size-4 text-muted-foreground shrink-0" />
-                    <button
-                      type="button"
-                      onClick={() => onEditField(field)}
-                      className="flex-1 text-left hover:text-primary"
+                  <div key={field.id}>
+                    {dropIndicator?.fieldId === field.id && dropIndicator.position === "before" && (
+                      <div className="h-0.5 bg-primary mx-3 rounded-full" />
+                    )}
+                    <div
+                      draggable
+                      onDragStart={(e) => handleDragStart(e, field.id)}
+                      onDragEnd={handleDragEnd}
+                      onDragOver={(e) => handleDragOver(e, field.id)}
+                      onDragLeave={handleDragLeave}
+                      onDrop={(e) => handleDrop(e, field.id)}
+                      className={`flex items-center gap-2 px-3 py-2 text-sm rounded-md hover:bg-muted transition-colors border cursor-grab ${
+                        draggedFieldId === field.id ? "opacity-50" : ""
+                      }`}
                     >
-                      <span>{field.name}</span>
-                      <span className="text-muted-foreground ml-2 capitalize">
-                        ({field.fieldtype})
-                      </span>
-                    </button>
+                      <GripVertical className="size-4 text-muted-foreground shrink-0" />
+                      <button
+                        type="button"
+                        onClick={() => onEditField(field)}
+                        className="flex-1 text-left hover:text-primary"
+                      >
+                        <span>{field.name}</span>
+                        <span className="text-muted-foreground ml-2 capitalize">
+                          ({field.fieldtype})
+                        </span>
+                      </button>
+                    </div>
+                    {dropIndicator?.fieldId === field.id && dropIndicator.position === "after" && (
+                      <div className="h-0.5 bg-primary mx-3 rounded-full" />
+                    )}
                   </div>
                 ))}
               </div>

@@ -880,7 +880,6 @@ def action_object_list(a):
 
 	# Get filter params
 	class_filter = a.input("class")
-	status_filter = a.input("status")
 	parent_filter = a.input("parent")
 
 	# Build query
@@ -891,7 +890,7 @@ def action_object_list(a):
 		query += " and o.class=?"
 		params.append(class_filter)
 
-	if parent_filter != None:
+	if parent_filter:
 		query += " and o.parent=?"
 		params.append(parent_filter)
 
@@ -918,10 +917,6 @@ def action_object_list(a):
 		values = mochi.db.rows("select field, value from \"values\" where object=?", row["id"]) or []
 		for v in values:
 			obj["values"][v["field"]] = v["value"]
-
-		# Apply status filter after getting values
-		if status_filter and obj["values"].get("status") != status_filter:
-			continue
 
 		objects.append(obj)
 
@@ -1194,7 +1189,7 @@ def action_object_move(a):
 		return
 
 	old_rank = row["rank"]
-	field = a.input("field") or "status"  # Column field name (e.g., "status" or "column")
+	field = a.input("field") or ""
 	value = a.input("value")  # New column value
 	new_rank = a.input("rank")
 
@@ -1244,12 +1239,29 @@ def action_object_move(a):
 		new_rank = (max_rank_row["max_rank"] if max_rank_row else 0) + 1
 		mochi.db.execute("update objects set rank=? where id=?", new_rank, object_id)
 
+	# Handle row field change (for swimlane drag-drop)
+	row_field = a.input("row_field")
+	row_value = a.input("row_value")
+	row_changed = False
+	if row_field:
+		old_row_row = mochi.db.row("select value from \"values\" where object=? and field=?", object_id, row_field)
+		old_row_value = old_row_row["value"] if old_row_row else ""
+		if old_row_value != row_value:
+			mochi.db.execute("replace into \"values\" (object, field, value) values (?, ?, ?)", object_id, row_field, row_value)
+			log_activity(object_id, a.user.identity.id, "updated", row_field, old_row_value, row_value)
+			row_changed = True
+
 	mochi.db.execute("update objects set updated=? where id=?", mochi.time.now(), object_id)
 
+	updated_values = {}
 	if value_changed:
+		updated_values[field] = target_value
+	if row_changed:
+		updated_values[row_field] = row_value
+	if updated_values:
 		broadcast_event(project_id, "values/update", {
 			"project": project_id, "id": object_id,
-			"values": {field: target_value}
+			"values": updated_values
 		})
 
 	return {"data": {"success": True}}
@@ -2032,7 +2044,10 @@ def action_view_create(a):
 		return
 
 	filter_str = a.input("filter") or ""
-	columns = a.input("columns") or "status"
+	columns = a.input("columns") or ""
+	if viewtype == "board" and not columns:
+		a.error(400, "Columns field is required for board views")
+		return
 	rows = a.input("rows") or ""
 	fields = a.input("fields") or "title,priority,owner,due"
 	sort = a.input("sort") or ""
@@ -2049,6 +2064,15 @@ def action_view_create(a):
 			mochi.db.execute(
 				"insert into view_fields (project, view, field, rank) values (?, ?, ?, ?)",
 				project_id, view_id, field.strip(), i
+			)
+
+	# Add classes to junction table
+	view_classes = a.input("classes") or ""
+	if view_classes:
+		for cls_id in [c.strip() for c in view_classes.split(",") if c.strip()]:
+			mochi.db.execute(
+				"insert into view_classes (project, view, class) values (?, ?, ?)",
+				project_id, view_id, cls_id
 			)
 
 	broadcast_event(project_id, "view/create", {

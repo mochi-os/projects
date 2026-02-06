@@ -14,21 +14,23 @@ export interface FilterState {
 
 interface FilterBarProps {
   project: ProjectDetails;
+  columnField: string;
+  rowField: string;
   filters: FilterState;
   onFilterChange: (filters: FilterState) => void;
 }
 
 export function FilterBar({
   project,
+  columnField,
+  rowField,
   filters,
   onFilterChange,
 }: FilterBarProps) {
-  // Get options from the first class's enumerated fields
-  // Use "status" or "column" for status-like field, "priority" or "row" for priority-like field
   const firstClassId = project.classes[0]?.id;
   const classOptions = firstClassId ? project.options[firstClassId] || {} : {};
-  const statusOptions: FieldOption[] = classOptions["status"] || classOptions["column"] || [];
-  const priorityOptions: FieldOption[] = classOptions["priority"] || classOptions["row"] || [];
+  const statusOptions: FieldOption[] = columnField ? classOptions[columnField] || [] : [];
+  const priorityOptions: FieldOption[] = rowField ? classOptions[rowField] || [] : [];
 
   const clearFilter = (key: keyof FilterState) => {
     onFilterChange({ ...filters, [key]: "" });

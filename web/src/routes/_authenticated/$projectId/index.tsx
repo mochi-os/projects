@@ -163,15 +163,25 @@ function ProjectPage() {
       field,
       value,
       rank,
+      rowField: rf,
+      rowValue,
     }: {
       objectId: string;
       field: string;
       value: string;
       rank?: number;
+      rowField?: string;
+      rowValue?: string;
     }) => {
-      return projectsApi.moveObject(params.projectId, objectId, { field, value, rank });
+      return projectsApi.moveObject(params.projectId, objectId, {
+        field,
+        value,
+        rank,
+        row_field: rf,
+        row_value: rowValue,
+      });
     },
-    onMutate: async ({ objectId, field, value, rank }) => {
+    onMutate: async ({ objectId, field, value, rank, rowField: rf, rowValue }) => {
       // Optimistically update the UI
       await queryClient.cancelQueries({
         queryKey: ["objects", params.projectId],
@@ -185,11 +195,14 @@ function ProjectPage() {
       queryClient.setQueryData<ProjectObject[]>(
         ["objects", params.projectId],
         (old) =>
-          old?.map((obj) =>
-            obj.id === objectId
-              ? { ...obj, rank: rank ?? obj.rank, values: { ...obj.values, [field]: value } }
-              : obj,
-          ),
+          old?.map((obj) => {
+            if (obj.id !== objectId) return obj;
+            const updatedValues = { ...obj.values, [field]: value };
+            if (rf && rowValue !== undefined) {
+              updatedValues[rf] = rowValue;
+            }
+            return { ...obj, rank: rank ?? obj.rank, values: updatedValues };
+          }),
       );
 
       return { previousObjects };
@@ -417,8 +430,9 @@ function ProjectPage() {
     [project.views],
   );
 
-  // Get the column field for the current view
-  const columnField = activeView?.columns || "status";
+  // Get the column and row fields for the current view
+  const columnField = activeView?.columns || "";
+  const rowField = activeView?.rows || "";
 
   // Get default column value (first option of column field for first type)
   const getDefaultColumnValue = useCallback(() => {
@@ -466,8 +480,15 @@ function ProjectPage() {
     setCreateDialogOpen(true);
   };
 
-  const handleMoveObject = (objectId: string, newValue: string, newRank?: number) => {
-    moveMutation.mutate({ objectId, field: columnField, value: newValue, rank: newRank });
+  const handleMoveObject = (objectId: string, newValue: string, newRank?: number, newRow?: string) => {
+    moveMutation.mutate({
+      objectId,
+      field: columnField,
+      value: newValue,
+      rank: newRank,
+      rowField: newRow !== undefined ? rowField : undefined,
+      rowValue: newRow,
+    });
   };
 
   const handleReparent = (objectId: string, newParentId: string | null) => {
@@ -536,6 +557,8 @@ function ProjectPage() {
           <div className="flex items-center gap-2">
             <FilterBar
               project={project}
+              columnField={columnField}
+              rowField={rowField}
               filters={filters}
               onFilterChange={setFilters}
             />
@@ -665,6 +688,7 @@ function ProjectPage() {
                 project={project}
                 objects={filteredObjects}
                 statusField={columnField}
+                rowField={rowField}
                 viewFields={activeView?.fields}
                 sort={sort}
                 onCardClick={handleCardClick}

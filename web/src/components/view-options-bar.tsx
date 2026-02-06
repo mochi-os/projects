@@ -56,10 +56,9 @@ export function ViewOptionsBar({
   // Get the active view to determine which fields to use for filtering
   const activeView = project.views.find((v) => v.id === activeViewId);
 
-  // Get the column field (used for status-like filtering) from the view
-  const columnField = activeView?.columns || "status";
-  // Get the row field (used for priority-like filtering) from the view
-  const rowField = activeView?.rows || "priority";
+  // Get the column and row fields from the view
+  const columnField = activeView?.columns || "";
+  const rowField = activeView?.rows || "";
 
   // Get the first class ID (or first class from the view's class filter)
   const viewClasses = activeView?.classes || [];

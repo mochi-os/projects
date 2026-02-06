@@ -26,6 +26,8 @@ describe("FilterBar", () => {
     const { container } = render(
       <FilterBar
         project={mockProject}
+        columnField="status"
+        rowField="priority"
         filters={defaultFilters}
         onFilterChange={mockOnFilterChange}
       />,
@@ -38,6 +40,8 @@ describe("FilterBar", () => {
     render(
       <FilterBar
         project={mockProject}
+        columnField="status"
+        rowField="priority"
         filters={{ ...defaultFilters, search: "my search" }}
         onFilterChange={mockOnFilterChange}
       />,
@@ -51,6 +55,8 @@ describe("FilterBar", () => {
     render(
       <FilterBar
         project={mockProject}
+        columnField="status"
+        rowField="priority"
         filters={{ ...defaultFilters, status: "in_progress" }}
         onFilterChange={mockOnFilterChange}
       />,
@@ -64,6 +70,8 @@ describe("FilterBar", () => {
     render(
       <FilterBar
         project={mockProject}
+        columnField="status"
+        rowField="priority"
         filters={{ ...defaultFilters, priority: "high" }}
         onFilterChange={mockOnFilterChange}
       />,
@@ -77,6 +85,8 @@ describe("FilterBar", () => {
     render(
       <FilterBar
         project={mockProject}
+        columnField="status"
+        rowField="priority"
         filters={{ ...defaultFilters, status: "todo" }}
         onFilterChange={mockOnFilterChange}
       />,
@@ -96,6 +106,8 @@ describe("FilterBar", () => {
     render(
       <FilterBar
         project={mockProject}
+        columnField="status"
+        rowField="priority"
         filters={{
           search: "test",
           status: "todo",
@@ -113,6 +125,8 @@ describe("FilterBar", () => {
     render(
       <FilterBar
         project={mockProject}
+        columnField="status"
+        rowField="priority"
         filters={{ ...defaultFilters, status: "todo" }}
         onFilterChange={mockOnFilterChange}
       />,
@@ -125,6 +139,8 @@ describe("FilterBar", () => {
     render(
       <FilterBar
         project={mockProject}
+        columnField="status"
+        rowField="priority"
         filters={{
           search: "test",
           status: "todo",
@@ -149,6 +165,8 @@ describe("FilterBar", () => {
     render(
       <FilterBar
         project={mockProject}
+        columnField="status"
+        rowField="priority"
         filters={{ ...defaultFilters, status: "unknown_status" }}
         onFilterChange={mockOnFilterChange}
       />,

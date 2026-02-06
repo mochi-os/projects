@@ -12,6 +12,8 @@ interface BoardCardProps {
   prefix: string;
   objectMap?: Record<string, ProjectObject>;
   classMap?: Record<string, ProjectClass>;
+  allObjects?: ProjectObject[];
+  statusField?: string;
   onClick?: () => void;
 }
 
@@ -27,6 +29,8 @@ export function BoardCard({
   prefix,
   objectMap,
   classMap,
+  allObjects,
+  statusField,
   onClick,
 }: BoardCardProps) {
   const rawTitle = object.values.title || `${prefix}-${object.number}`;
@@ -48,6 +52,19 @@ export function BoardCard({
   const parentClassName = parentObject && classMap ? classMap[parentObject.class]?.name || parentObject.class : null;
   const parentTitle = parentObject?.values.title || (parentObject ? `${prefix}-${parentObject.number}` : null);
 
+  // Compute child status counts for parent cards
+  const children = allObjects && statusField
+    ? allObjects.filter((o) => o.parent === object.id)
+    : [];
+  const statusOptions = statusField ? (options[statusField] || []) : [];
+  const statusCounts: Record<string, number> = {};
+  if (children.length > 0) {
+    for (const child of children) {
+      const status = child.values[statusField!] || "";
+      statusCounts[status] = (statusCounts[status] || 0) + 1;
+    }
+  }
+
   return (
     <div
       className={cn(
@@ -67,23 +84,6 @@ export function BoardCard({
           className="absolute left-0 top-3 bottom-3 w-1 rounded-r-full"
           style={{ backgroundColor: priorityColor }}
         />
-      )}
-
-      {/* Parent Badge */}
-      {parentObject && (
-        <div className={cn("flex items-center gap-1", priorityColor && "pl-2")}>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <span className="inline-flex items-center gap-1 text-[10px] text-muted-foreground bg-muted/50 px-1.5 py-0.5 rounded-md">
-                <CornerLeftUp className="size-3" />
-                <span className="truncate max-w-[140px]">{parentTitle}</span>
-              </span>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>{parentClassName}: {parentTitle}</p>
-            </TooltipContent>
-          </Tooltip>
-        </div>
       )}
 
       {/* Header / Title */}
@@ -152,6 +152,36 @@ export function BoardCard({
             return null; // Skip other field types in card view to keep it minimal
           })}
         </div>
+      )}
+
+      {/* Parent / Children indicators */}
+      {(parentObject || children.length > 0) && (
+        <>
+          <hr className="border-dashed" />
+          <div className={cn("flex items-center gap-2 flex-wrap", priorityColor && "pl-2")}>
+            {parentObject && (
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <span className="inline-flex items-center gap-1 text-[10px] text-muted-foreground bg-muted/50 px-1.5 py-0.5 rounded-md">
+                    <CornerLeftUp className="size-3" />
+                    <span className="truncate max-w-[140px]">{parentTitle}</span>
+                  </span>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>{parentClassName}: {parentTitle}</p>
+                </TooltipContent>
+              </Tooltip>
+            )}
+            {statusOptions
+              .filter((opt) => (statusCounts[opt.id] || 0) > 0)
+              .map((opt) => (
+                <span key={opt.id} className="inline-flex items-center gap-0.5 text-[10px] text-muted-foreground">
+                  <span className="w-2 h-2 rounded-full" style={{ backgroundColor: opt.colour }} />
+                  {statusCounts[opt.id]}
+                </span>
+              ))}
+          </div>
+        </>
       )}
 
     </div>

@@ -95,6 +95,8 @@ interface MoveObjectRequest {
   field?: string;  // Column field name (e.g., "status" or "column")
   value?: string;  // New column value
   rank?: number;
+  row_field?: string;  // Row field name (for swimlane moves)
+  row_value?: string;  // New row value
 }
 
 interface CreateViewRequest {

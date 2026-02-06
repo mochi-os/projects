@@ -1,7 +1,7 @@
 // Mochi Projects: Board column component
 // Copyright Alistair Cunningham 2026
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import {
   cn,
   ConfirmDialog,
@@ -32,6 +32,8 @@ interface BoardColumnProps {
   prefix: string;
   objectMap: Record<string, ProjectObject>;
   classMap: Record<string, ProjectClass>;
+  allObjects?: ProjectObject[];
+  statusField?: string;
   onCardClick?: (object: ProjectObject) => void;
   onCreateClick?: () => void;
   onDrop?: (objectId: string, columnId: string, newRank?: number) => void;
@@ -39,6 +41,7 @@ interface BoardColumnProps {
   onDeleteColumn?: () => Promise<void>;
   isReordering?: boolean;
   isDragging?: boolean;
+  hideHeader?: boolean;
 }
 
 export function BoardColumn({
@@ -51,6 +54,8 @@ export function BoardColumn({
   prefix,
   objectMap,
   classMap,
+  allObjects,
+  statusField,
   onCardClick,
   onCreateClick,
   onDrop,
@@ -58,129 +63,156 @@ export function BoardColumn({
   onDeleteColumn,
   isReordering,
   isDragging,
+  hideHeader,
 }: BoardColumnProps) {
-  const [isDragOver, setIsDragOver] = useState(false);
-  const [dropIndex, setDropIndex] = useState<number | null>(null);
   const [showRenameDialog, setShowRenameDialog] = useState(false);
   const [newName, setNewName] = useState(name);
   const [isRenaming, setIsRenaming] = useState(false);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
+
+  // Drag state managed via refs + direct DOM manipulation to avoid re-renders
+  const columnRef = useRef<HTMLDivElement>(null);
   const cardsContainerRef = useRef<HTMLDivElement>(null);
+  const dropIndexRef = useRef(0);
+  const isDragOverRef = useRef(false);
+  const safetyTimeoutRef = useRef<ReturnType<typeof setTimeout>>(undefined);
 
-  const handleDragOver = (e: React.DragEvent) => {
-    // Disable card drag during column reordering
+  useEffect(() => {
+    return () => clearTimeout(safetyTimeoutRef.current);
+  }, []);
+
+  const clearDragState = useCallback(() => {
+    isDragOverRef.current = false;
+    columnRef.current?.removeAttribute("data-drag-over");
+    clearTimeout(safetyTimeoutRef.current);
+  }, []);
+
+  const handleDragEnter = useCallback((e: React.DragEvent) => {
     if (isReordering) return;
+    e.preventDefault();
+  }, [isReordering]);
 
+  const handleDragOver = useCallback((e: React.DragEvent) => {
+    if (isReordering) return;
     e.preventDefault();
     e.dataTransfer.dropEffect = "move";
-    setIsDragOver(true);
 
-    // Calculate drop position based on mouse Y position
+    // Show column highlight via data attribute (CSS handles styling)
+    if (!isDragOverRef.current) {
+      isDragOverRef.current = true;
+      columnRef.current?.setAttribute("data-drag-over", "");
+    }
+
+    // Safety net: clear if dragover stops firing
+    clearTimeout(safetyTimeoutRef.current);
+    safetyTimeoutRef.current = setTimeout(clearDragState, 150);
+
+    // Calculate drop position based on mouse Y
     if (cardsContainerRef.current) {
-      const container = cardsContainerRef.current;
-      const cards = container.querySelectorAll("[data-card-id]");
+      const cards = cardsContainerRef.current.querySelectorAll("[data-card-id]");
       const mouseY = e.clientY;
+      let newDropIndex = cards.length;
 
-      let newDropIndex = objects.length; // Default to end
       for (let i = 0; i < cards.length; i++) {
-        const card = cards[i];
-        const rect = card.getBoundingClientRect();
-        const cardMiddle = rect.top + rect.height / 2;
-        if (mouseY < cardMiddle) {
+        const rect = cards[i].getBoundingClientRect();
+        if (mouseY < rect.top + rect.height / 2) {
           newDropIndex = i;
           break;
         }
       }
-      setDropIndex(newDropIndex);
-    }
-  };
 
-  const handleDragLeave = (e: React.DragEvent) => {
-    // Only clear if leaving the column entirely
-    const relatedTarget = e.relatedTarget as HTMLElement;
-    if (!cardsContainerRef.current?.contains(relatedTarget)) {
-      setIsDragOver(false);
-      setDropIndex(null);
+      dropIndexRef.current = newDropIndex;
     }
-  };
+  }, [isReordering, clearDragState]);
 
-  const handleDrop = (e: React.DragEvent) => {
+  const handleDragLeave = useCallback((e: React.DragEvent) => {
+    if (isReordering) return;
+    const relatedTarget = e.relatedTarget as Node | null;
+    if (!relatedTarget || !columnRef.current?.contains(relatedTarget)) {
+      clearDragState();
+    }
+  }, [isReordering, clearDragState]);
+
+  const handleDrop = useCallback((e: React.DragEvent) => {
     e.preventDefault();
-    setIsDragOver(false);
+    const rank = dropIndexRef.current + 1;
+    clearDragState();
     const objectId = e.dataTransfer.getData("text/plain");
     if (objectId && onDrop) {
-      // Calculate rank: position + 1 (1-based)
-      const newRank = dropIndex !== null ? dropIndex + 1 : objects.length + 1;
-      onDrop(objectId, id, newRank);
+      onDrop(objectId, id, rank);
     }
-    setDropIndex(null);
-  };
+  }, [id, onDrop, clearDragState]);
 
   return (
     <div
+      ref={columnRef}
       className={cn(
-        "flex flex-col w-72 shrink-0 rounded-[10px] min-h-[calc(100vh-5rem)]",
-        "bg-muted/30 border",
-        isDragOver && !isReordering && "border-primary bg-primary/5",
+        "flex flex-col w-72 shrink-0 rounded-[10px]",
+        !hideHeader && "min-h-[calc(100vh-5rem)]",
+        "bg-muted/30 border transition-colors",
+        "data-[drag-over]:border-primary data-[drag-over]:bg-primary/5",
         isReordering && !isDragging && "border-dashed border-muted-foreground/50",
         isDragging && "border-primary border-2 bg-background shadow-lg",
       )}
+      onDragEnter={isReordering ? undefined : handleDragEnter}
       onDragOver={isReordering ? undefined : handleDragOver}
       onDragLeave={isReordering ? undefined : handleDragLeave}
       onDrop={isReordering ? undefined : handleDrop}
     >
       {/* Column header */}
-      <div className="flex items-center justify-between p-3 border-b">
-        <div className="flex items-center gap-2">
-          {colour && (
-            <div
-              className="w-3 h-3 rounded-full"
-              style={{ backgroundColor: colour }}
-            />
+      {!hideHeader && (
+        <div className="flex items-center justify-between p-3 border-b">
+          <div className="flex items-center gap-2">
+            {colour && (
+              <div
+                className="w-3 h-3 rounded-full"
+                style={{ backgroundColor: colour }}
+              />
+            )}
+            <span className="font-medium text-sm">{name}</span>
+            <span className="text-xs text-muted-foreground bg-muted px-1.5 py-0.5 rounded">
+              {objects.length}
+            </span>
+          </div>
+          {!isReordering && (onCreateClick || onRenameColumn || (objects.length === 0 && onDeleteColumn)) && (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button className="p-1 rounded hover:bg-muted transition-colors">
+                  <MoreHorizontal className="size-4 text-muted-foreground" />
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                {onCreateClick && (
+                  <DropdownMenuItem onClick={onCreateClick}>
+                    <Plus className="size-4 mr-2" />
+                    Create
+                  </DropdownMenuItem>
+                )}
+                {onRenameColumn && (
+                  <DropdownMenuItem
+                    onClick={() => {
+                      setNewName(name);
+                      setShowRenameDialog(true);
+                    }}
+                  >
+                    <Pencil className="size-4 mr-2" />
+                    Rename
+                  </DropdownMenuItem>
+                )}
+                {objects.length === 0 && onDeleteColumn && (
+                  <DropdownMenuItem
+                    onClick={() => setShowDeleteDialog(true)}
+                  >
+                    <Trash2 className="size-4 mr-2" />
+                    Delete
+                  </DropdownMenuItem>
+                )}
+              </DropdownMenuContent>
+            </DropdownMenu>
           )}
-          <span className="font-medium text-sm">{name}</span>
-          <span className="text-xs text-muted-foreground bg-muted px-1.5 py-0.5 rounded">
-            {objects.length}
-          </span>
         </div>
-        {!isReordering && (onCreateClick || onRenameColumn || (objects.length === 0 && onDeleteColumn)) && (
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <button className="p-1 rounded hover:bg-muted transition-colors">
-                <MoreHorizontal className="size-4 text-muted-foreground" />
-              </button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              {onCreateClick && (
-                <DropdownMenuItem onClick={onCreateClick}>
-                  <Plus className="size-4 mr-2" />
-                  Create
-                </DropdownMenuItem>
-              )}
-              {onRenameColumn && (
-                <DropdownMenuItem
-                  onClick={() => {
-                    setNewName(name);
-                    setShowRenameDialog(true);
-                  }}
-                >
-                  <Pencil className="size-4 mr-2" />
-                  Rename
-                </DropdownMenuItem>
-              )}
-              {objects.length === 0 && onDeleteColumn && (
-                <DropdownMenuItem
-                  onClick={() => setShowDeleteDialog(true)}
-                >
-                  <Trash2 className="size-4 mr-2" />
-                  Delete
-                </DropdownMenuItem>
-              )}
-            </DropdownMenuContent>
-          </DropdownMenu>
-        )}
-      </div>
+      )}
 
       <Dialog open={showRenameDialog} onOpenChange={setShowRenameDialog}>
         <DialogContent>
@@ -238,7 +270,6 @@ export function BoardColumn({
         isLoading={isDeleting}
         handleConfirm={async () => {
           if (objects.length > 0) {
-            // Column has items now, don't delete
             setShowDeleteDialog(false);
             return;
           }
@@ -255,19 +286,15 @@ export function BoardColumn({
       {/* Cards */}
       <div
         ref={cardsContainerRef}
-        className="p-2 space-y-2 flex-1"
+        className="p-2 space-y-2 flex-1 relative"
         onDoubleClick={(e) => {
-          // Only trigger if clicking directly on the container, not on a card
           if (e.target === e.currentTarget || (e.target as HTMLElement).closest("[data-card-id]") === null) {
             onCreateClick?.();
           }
         }}
       >
-        {objects.map((object, index) => (
+        {objects.map((object) => (
           <div key={object.id} data-card-id={object.id}>
-            {isDragOver && dropIndex === index && (
-              <div className="h-[50px] w-full rounded-[10px] border border-dashed border-primary bg-primary/10 mb-2 transition-all duration-200" />
-            )}
             <BoardCard
               object={object}
               fields={fields}
@@ -275,17 +302,14 @@ export function BoardColumn({
               prefix={prefix}
               objectMap={objectMap}
               classMap={classMap}
+              allObjects={allObjects}
+              statusField={statusField}
               onClick={() => onCardClick?.(object)}
             />
           </div>
         ))}
 
-        {/* Drop indicator at end */}
-        {isDragOver && dropIndex === objects.length && (
-          <div className="h-[50px] w-full rounded-[10px] border border-dashed border-primary bg-primary/10 transition-all duration-200" />
-        )}
-
-        {objects.length === 0 && !isDragOver && (
+        {objects.length === 0 && (
           <div className="flex items-center justify-center py-8">
             <Inbox className="size-8 text-muted-foreground/30" />
           </div>

@@ -259,16 +259,30 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
       updates?: Partial<ProjectView>;
       types?: string[];
     }) => {
-      const payload: Record<string, string> = {};
-      if (updates?.name !== undefined) payload.name = updates.name;
-      if (updates?.viewtype !== undefined) payload.viewtype = updates.viewtype;
-      if (updates?.filter !== undefined) payload.filter = updates.filter;
-      if (updates?.columns !== undefined) payload.columns = updates.columns;
-      if (updates?.rows !== undefined) payload.rows = updates.rows;
-      if (updates?.fields !== undefined) payload.fields = updates.fields;
-      if (updates?.sort !== undefined) payload.sort = updates.sort;
-      if (updates?.direction !== undefined) payload.direction = updates.direction;
-      if (types !== undefined) payload.classes = types.join(",");
+      // Always send all view fields to prevent backend from clearing unmentioned fields
+      // (a.input() returns "" for missing fields, which passes the != None check)
+      const currentView = project.views.find((v) => v.id === viewId);
+      const payload: Record<string, string> = {
+        name: currentView?.name || "",
+        viewtype: currentView?.viewtype || "board",
+        filter: currentView?.filter || "",
+        columns: currentView?.columns || "",
+        rows: currentView?.rows || "",
+        fields: currentView?.fields || "",
+        sort: currentView?.sort || "",
+        direction: currentView?.direction || "asc",
+      };
+      if (updates) {
+        if (updates.name !== undefined) payload.name = updates.name;
+        if (updates.viewtype !== undefined) payload.viewtype = updates.viewtype;
+        if (updates.filter !== undefined) payload.filter = updates.filter;
+        if (updates.columns !== undefined) payload.columns = updates.columns;
+        if (updates.rows !== undefined) payload.rows = updates.rows;
+        if (updates.fields !== undefined) payload.fields = updates.fields;
+        if (updates.sort !== undefined) payload.sort = updates.sort;
+        if (updates.direction !== undefined) payload.direction = updates.direction;
+      }
+      if (types !== undefined) payload.classes = types.length === project.classes.length ? "" : types.join(",");
       return projectsApi.updateView(projectId, viewId, payload);
     },
     onSuccess: invalidateProject,
@@ -394,7 +408,7 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
             fields: selectedFields.join(","),
             sort: sort || undefined,
             direction: direction as "asc" | "desc",
-            classes: selectedClasses.join(","),
+            classes: selectedClasses.length === project.classes.length ? "" : selectedClasses.join(","),
           });
         }}
       />

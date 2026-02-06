@@ -156,7 +156,7 @@ export function CreateObjectDialog({
       const newObject = {
         id: data.id,
         project: project.project.id,
-        type: selectedClass,
+        class: selectedClass,
         number: data.number,
         parent: data.parent || "",
         rank: 999999,

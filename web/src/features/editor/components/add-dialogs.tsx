@@ -466,9 +466,6 @@ export function AddViewDialog({
       // Set defaults
       setSelectedFields(fields.map((f) => f.id));
       setSelectedClasses(classes.map((c) => c.id));
-      if (enumeratedFields.length > 0 && !columns) {
-        setColumns(enumeratedFields[0].id);
-      }
     } else {
       // Reset form
       setName("");
@@ -483,8 +480,10 @@ export function AddViewDialog({
     onOpenChange(isOpen);
   };
 
+  const canSubmit = name.trim() && (viewtype !== "board" || enumeratedFields.length === 0 || columns);
+
   const handleSubmit = () => {
-    if (name.trim()) {
+    if (canSubmit) {
       onAdd(
         name.trim(),
         viewtype,
@@ -589,6 +588,11 @@ export function AddViewDialog({
                   onChange={(e) => setColumns(e.target.value)}
                   className="w-full h-9 rounded-md border border-input bg-background px-3 py-1 text-sm"
                 >
+                  {!columns && (
+                    <option value="" disabled>
+                      Select a field
+                    </option>
+                  )}
                   {enumeratedFields.map((field) => (
                     <option key={field.id} value={field.id}>
                       {field.name}
@@ -665,7 +669,7 @@ export function AddViewDialog({
           </div>
         </div>
         <SheetFooter className="px-6 py-4 border-t">
-          <Button onClick={handleSubmit} disabled={!name.trim()}>
+          <Button onClick={handleSubmit} disabled={!canSubmit}>
             <Check className="size-4" />
             Add view
           </Button>

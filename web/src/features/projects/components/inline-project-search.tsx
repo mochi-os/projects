@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { Search, Loader2, FolderKanban } from "lucide-react";
-import { Button, Input, toast } from "@mochi/common";
+import { Button, Input, toast, getErrorMessage } from "@mochi/common";
 import projectsApi from "@/api/projects";
 import { useProjectsStore } from "@/stores/projects-store";
 
@@ -70,9 +70,7 @@ export function InlineProjectSearch({
         params: { projectId: project.fingerprint || project.id },
       });
     } catch (error) {
-      toast.error("Failed to subscribe", {
-        description: error instanceof Error ? error.message : "Unknown error",
-      });
+      toast.error(getErrorMessage(error, "Failed to subscribe"));
       setPendingProjectId(null);
     }
   };

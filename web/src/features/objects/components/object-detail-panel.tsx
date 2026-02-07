@@ -17,6 +17,7 @@ import {
   SelectTrigger,
   SelectValue,
   cn,
+  getErrorMessage,
 } from "@mochi/common";
 import projectsApi from "@/api/projects";
 import type { ProjectDetails } from "@/types";
@@ -226,7 +227,7 @@ export function ObjectDetailPanel({
       <Sheet open={true} onOpenChange={handleClose}>
         <SheetContent className="w-full sm:max-w-2xl p-6">
           <div className="text-destructive text-sm bg-destructive/10 p-3 rounded-md">
-            {error instanceof Error ? error.message : "Failed to load object"}
+            {getErrorMessage(error, "Failed to load object")}
           </div>
         </SheetContent>
       </Sheet>

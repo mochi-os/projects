@@ -3,7 +3,7 @@
 
 import { useState, useMemo } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { Button, Label, toast } from "@mochi/common";
+import { Button, Label, toast, getErrorMessage } from "@mochi/common";
 import { Plus } from "lucide-react";
 import projectsApi from "@/api/projects";
 import type { ProjectDetails, ProjectField, ProjectView, FieldOption } from "@/types";
@@ -88,8 +88,8 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
       invalidateProject();
       setSelectedClassId(data.data.id);
     },
-    onError: (error: any) => {
-      toast.error(error?.response?.data?.error || (error instanceof Error ? error.message : "Failed to create class"));
+    onError: (error) => {
+      toast.error(getErrorMessage(error, "Failed to create class"));
     },
   });
 
@@ -164,7 +164,7 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
     onSuccess: invalidateProject,
     onError: (error) => {
       console.error("Reorder fields error:", error);
-      toast.error(error instanceof Error ? error.message : "Failed to reorder fields");
+      toast.error(getErrorMessage(error, "Failed to reorder fields"));
     },
   });
 
@@ -249,8 +249,8 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
         classes,
       }),
     onSuccess: invalidateProject,
-    onError: (error: any) => {
-      toast.error(error?.response?.data?.error || (error instanceof Error ? error.message : "Failed to create view"));
+    onError: (error) => {
+      toast.error(getErrorMessage(error, "Failed to create view"));
     },
   });
 
@@ -299,8 +299,8 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
       invalidateProject();
       setEditViewOpen(false);
     },
-    onError: (error: any) => {
-      toast.error(error?.response?.data?.error || (error instanceof Error ? error.message : "Failed to delete view"));
+    onError: (error) => {
+      toast.error(getErrorMessage(error, "Failed to delete view"));
     },
   });
 

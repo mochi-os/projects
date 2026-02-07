@@ -117,15 +117,6 @@ export function CreateObjectDialog({
     return objectsData.filter((obj) => parentClassIds.includes(obj.class));
   }, [objectsData, selectedClass, project.hierarchy]);
 
-  // Build type name map
-  const classNameMap = useMemo(() => {
-    const map: Record<string, string> = {};
-    for (const t of project.classes) {
-      map[t.id] = t.name;
-    }
-    return map;
-  }, [project.classes]);
-
   // Get current parent object info
   const currentParent = useMemo(() => {
     if (!parent || !objectsData) return null;
@@ -263,7 +254,7 @@ export function CreateObjectDialog({
                     <SelectTrigger className="w-full">
                       <SelectValue placeholder="None">
                         {currentParent
-                          ? `${classNameMap[currentParent.class] || currentParent.class}: ${currentParent.values.title || `${project.project.prefix}-${currentParent.number}`}`
+                          ? currentParent.values.title || `${project.project.prefix}-${currentParent.number}`
                           : "None"}
                       </SelectValue>
                     </SelectTrigger>
@@ -271,7 +262,7 @@ export function CreateObjectDialog({
                       <SelectItem value="_none_">None</SelectItem>
                       {validParentOptions.map((obj) => (
                         <SelectItem key={obj.id} value={obj.id}>
-                          {classNameMap[obj.class] || obj.class}: {obj.values.title || `${project.project.prefix}-${obj.number}`}
+                          {obj.values.title || `${project.project.prefix}-${obj.number}`}
                         </SelectItem>
                       ))}
                     </SelectContent>

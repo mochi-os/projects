@@ -586,11 +586,8 @@ export function ClassSheet({
             <div className="space-y-2">
               <Label>Can be child of</Label>
               <div className="pl-4 space-y-2">
-                <p className="text-xs text-muted-foreground">
-                  Select which classes this can be nested under
-                </p>
                 <div className="space-y-1">
-                  {otherClasses.map((c) => (
+                  {[...otherClasses].sort((a, b) => a.name.localeCompare(b.name)).map((c) => (
                     <label
                       key={c.id}
                       className="flex items-center gap-2 text-sm cursor-pointer"

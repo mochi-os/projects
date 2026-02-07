@@ -93,7 +93,7 @@ export function PrPanel({
     <div className="space-y-4">
       <div className="flex items-center gap-2 text-sm font-medium">
         <GitPullRequest className="size-4" />
-        Pull Request
+        Pull request
         {isMerged && (
           <span className="ml-auto text-xs text-green-600 font-normal">
             Merged

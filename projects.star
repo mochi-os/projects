@@ -2984,7 +2984,7 @@ def action_option_reorder(a):
 	# Update sort order for each option
 	for i, option_id in enumerate(order):
 		mochi.db.execute(
-			"update options set sort=? where project=? and class=? and field=? and id=?",
+			"update options set rank=? where project=? and class=? and field=? and id=?",
 			i, project_id, class_id, field_id, option_id
 		)
 
@@ -3987,7 +3987,7 @@ def event_field_reorder(e):
 	if not class_id or not order:
 		return
 	for i, field_id in enumerate(order):
-		mochi.db.execute("update fields set sort=? where project=? and class=? and id=?", i, project_id, class_id, field_id)
+		mochi.db.execute("update fields set rank=? where project=? and class=? and id=?", i, project_id, class_id, field_id)
 	fp = mochi.entity.fingerprint(project_id)
 	if fp:
 		mochi.websocket.write(fp, {"type": "field/reorder", "project": project_id, "class_id": class_id})
@@ -4056,7 +4056,7 @@ def event_option_reorder(e):
 	if not class_id or not field_id or not order:
 		return
 	for i, option_id in enumerate(order):
-		mochi.db.execute("update options set sort=? where project=? and class=? and field=? and id=?", i, project_id, class_id, field_id, option_id)
+		mochi.db.execute("update options set rank=? where project=? and class=? and field=? and id=?", i, project_id, class_id, field_id, option_id)
 	fp = mochi.entity.fingerprint(project_id)
 	if fp:
 		mochi.websocket.write(fp, {"type": "option/reorder", "project": project_id})

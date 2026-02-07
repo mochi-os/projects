@@ -191,7 +191,7 @@ export function TreeRow({
       )}
 
       {/* Drag handle + expand/collapse */}
-      <td className="whitespace-nowrap py-1.5 pl-1">
+      <td className="whitespace-nowrap py-1.5 pl-1 pr-0 w-0">
         <div className="flex items-center" style={{ paddingLeft: indentPx }}>
           <div className="w-5 flex items-center justify-center opacity-0 group-hover:opacity-50 cursor-grab">
             <GripVertical className="size-3" />
@@ -218,7 +218,7 @@ export function TreeRow({
 
       {/* Class badge */}
       {showClass && (
-        <td className="whitespace-nowrap px-2 py-1.5">
+        <td className="whitespace-nowrap pl-1 pr-2 py-1.5">
           <span className="text-xs text-muted-foreground bg-muted px-1.5 py-0.5 rounded">
             {classMap[object.class] || object.class}
           </span>
@@ -227,7 +227,7 @@ export function TreeRow({
 
       {/* Object number */}
       {showId && (
-        <td className="whitespace-nowrap px-2 py-1.5 text-xs text-muted-foreground font-mono">
+        <td className="whitespace-nowrap pl-1 pr-2 py-1.5 text-xs text-muted-foreground font-mono">
           {prefix}-{object.number}
         </td>
       )}

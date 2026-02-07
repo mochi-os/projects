@@ -32,10 +32,15 @@ function buildTree(objects: ProjectObject[], sort?: SortState | null): TreeNode[
   // Index all objects
   for (const obj of objects) {
     objectMap.set(obj.id, obj);
-    if (!childrenMap.has(obj.parent || "")) {
-      childrenMap.set(obj.parent || "", []);
+  }
+
+  // Group by parent, promoting to root if parent is not in the set
+  for (const obj of objects) {
+    const parentId = obj.parent && objectMap.has(obj.parent) ? obj.parent : "";
+    if (!childrenMap.has(parentId)) {
+      childrenMap.set(parentId, []);
     }
-    childrenMap.get(obj.parent || "")!.push(obj);
+    childrenMap.get(parentId)!.push(obj);
   }
 
   // Sort comparator based on sort state

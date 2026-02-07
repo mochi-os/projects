@@ -83,6 +83,8 @@ export function ViewSheet({
   const [sort, setSort] = useState("");
   const [direction, setDirection] = useState<"asc" | "desc">("asc");
   const [selectedClasses, setSelectedClasses] = useState<string[]>([]);
+  const [draggedViewFieldId, setDraggedViewFieldId] = useState<string | null>(null);
+  const [viewFieldDropIndicator, setViewFieldDropIndicator] = useState<{ fieldId: string; position: "before" | "after" } | null>(null);
 
   const enumeratedFields = fields.filter((f) => f.fieldtype === "enumerated");
 
@@ -166,6 +168,50 @@ export function ViewSheet({
     if (mode === "edit" && onUpdate) {
       onUpdate({ fields: newFields.join(",") });
     }
+  };
+
+  const handleViewFieldDragStart = (e: React.DragEvent, fieldId: string) => {
+    setDraggedViewFieldId(fieldId);
+    e.dataTransfer.effectAllowed = "move";
+    e.dataTransfer.setData("text/plain", fieldId);
+  };
+
+  const handleViewFieldDragEnd = () => {
+    setDraggedViewFieldId(null);
+    setViewFieldDropIndicator(null);
+  };
+
+  const handleViewFieldDragOver = (e: React.DragEvent, fieldId: string) => {
+    e.preventDefault();
+    if (fieldId === draggedViewFieldId) return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    const midY = rect.top + rect.height / 2;
+    const position = e.clientY < midY ? "before" : "after";
+    setViewFieldDropIndicator({ fieldId, position });
+  };
+
+  const handleViewFieldDrop = (e: React.DragEvent, targetFieldId: string) => {
+    e.preventDefault();
+    if (!draggedViewFieldId || draggedViewFieldId === targetFieldId) return;
+
+    const draggedIndex = selectedFields.indexOf(draggedViewFieldId);
+    const targetIndex = selectedFields.indexOf(targetFieldId);
+    if (draggedIndex === -1 || targetIndex === -1) return;
+
+    const newOrder = [...selectedFields];
+    newOrder.splice(draggedIndex, 1);
+    const insertIndex = viewFieldDropIndicator?.position === "after"
+      ? targetIndex - (draggedIndex < targetIndex ? 1 : 0) + 1
+      : targetIndex - (draggedIndex < targetIndex ? 1 : 0);
+    newOrder.splice(insertIndex, 0, draggedViewFieldId);
+
+    setSelectedFields(newOrder);
+    if (mode === "edit" && onUpdate) {
+      onUpdate({ fields: newOrder.join(",") });
+    }
+
+    setDraggedViewFieldId(null);
+    setViewFieldDropIndicator(null);
   };
 
   const toggleClass = (classId: string) => {
@@ -323,20 +369,55 @@ export function ViewSheet({
           <div className="space-y-2">
             <Label>Show fields</Label>
             <div className="pl-4 space-y-1">
-              {fields.map((field) => (
-                <label
-                  key={field.id}
-                  className="flex items-center gap-2 text-sm cursor-pointer"
-                >
-                  <input
-                    type="checkbox"
-                    checked={selectedFields.includes(field.id)}
-                    onChange={() => toggleViewField(field.id)}
-                    className="rounded"
-                  />
-                  {field.name}
-                </label>
-              ))}
+              {selectedFields
+                .map((id) => fields.find((f) => f.id === id))
+                .filter(Boolean)
+                .map((field) => (
+                  <div key={field!.id}>
+                    {viewFieldDropIndicator?.fieldId === field!.id && viewFieldDropIndicator.position === "before" && (
+                      <div className="h-0.5 bg-primary mx-3 rounded-full" />
+                    )}
+                    <div
+                      draggable
+                      onDragStart={(e) => handleViewFieldDragStart(e, field!.id)}
+                      onDragEnd={handleViewFieldDragEnd}
+                      onDragOver={(e) => handleViewFieldDragOver(e, field!.id)}
+                      onDragLeave={() => setViewFieldDropIndicator(null)}
+                      onDrop={(e) => handleViewFieldDrop(e, field!.id)}
+                      className={`flex items-center gap-2 px-3 py-1.5 text-sm rounded-md hover:bg-muted transition-colors cursor-grab ${
+                        draggedViewFieldId === field!.id ? "opacity-50" : ""
+                      }`}
+                    >
+                      <GripVertical className="size-4 text-muted-foreground shrink-0" />
+                      <input
+                        type="checkbox"
+                        checked
+                        onChange={() => toggleViewField(field!.id)}
+                        className="rounded"
+                      />
+                      {field!.name}
+                    </div>
+                    {viewFieldDropIndicator?.fieldId === field!.id && viewFieldDropIndicator.position === "after" && (
+                      <div className="h-0.5 bg-primary mx-3 rounded-full" />
+                    )}
+                  </div>
+                ))}
+              {fields
+                .filter((f) => !selectedFields.includes(f.id))
+                .map((field) => (
+                  <label
+                    key={field.id}
+                    className="flex items-center gap-2 px-3 py-1.5 text-sm cursor-pointer"
+                  >
+                    <input
+                      type="checkbox"
+                      checked={false}
+                      onChange={() => toggleViewField(field.id)}
+                      className="rounded"
+                    />
+                    {field.name}
+                  </label>
+                ))}
             </div>
           </div>
 

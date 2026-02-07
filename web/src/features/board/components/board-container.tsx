@@ -82,11 +82,11 @@ export function BoardContainer({
     [viewFields]
   );
 
-  // Filter fields to show on cards
-  const visibleFields = useMemo(
-    () => classFields.filter((f) => viewFieldsList.includes(f.id)),
-    [classFields, viewFieldsList]
-  );
+  // Map view fields in order, looking up from class fields
+  const visibleFields = useMemo(() => {
+    const fieldMap = new Map(classFields.map((f) => [f.id, f]));
+    return viewFieldsList.map((id) => fieldMap.get(id)).filter(Boolean) as typeof classFields;
+  }, [classFields, viewFieldsList]);
 
   // Build a map of object id to object for quick parent lookups
   const objectMap = useMemo(() => {

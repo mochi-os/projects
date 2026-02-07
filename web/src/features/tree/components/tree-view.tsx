@@ -191,7 +191,10 @@ export function TreeView({
   const viewFieldsList = viewFields?.split(",").filter(Boolean) || [];
   const showClass = viewFieldsList.includes("class");
   const showId = viewFieldsList.includes("id");
-  const visibleFields = fields.filter((f) => viewFieldsList.includes(f.id));
+  const fieldMap = new Map(fields.map((f) => [f.id, f]));
+  const visibleFields = viewFieldsList
+    .map((id) => fieldMap.get(id))
+    .filter(Boolean) as typeof fields;
 
   // Build class map for looking up class names
   const classMap = useMemo(() => {

@@ -600,6 +600,17 @@ const projectsApi = {
     );
   },
 
+  // Reorder views
+  reorderViews: async (
+    projectId: string,
+    order: string[],
+  ): Promise<SuccessResponse> => {
+    return projectsRequest.post<SuccessResponse>(
+      endpoints.projects.viewReorder(projectId),
+      { order: order.join(",") },
+    );
+  },
+
   // ============= Class Methods =============
 
   // List classes

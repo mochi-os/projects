@@ -84,6 +84,7 @@ const endpoints = {
     // View endpoints
     views: (projectId: string) => `${projectId}/-/views`,
     viewCreate: (projectId: string) => `${projectId}/-/views/create`,
+    viewReorder: (projectId: string) => `${projectId}/-/views/reorder`,
     viewUpdate: (projectId: string, viewId: string) =>
       `${projectId}/-/views/${viewId}/update`,
     viewDelete: (projectId: string, viewId: string) =>

@@ -106,6 +106,7 @@ export function createMockView(overrides?: Partial<ProjectView>): ProjectView {
     sort: "",
     direction: "",
     classes: [],
+    rank: 0,
     ...overrides,
   };
 }

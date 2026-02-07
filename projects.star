@@ -116,6 +116,7 @@ def database_create():
 		rows text not null default '',
 		sort text not null default '',
 		direction text not null default 'asc',
+		rank integer not null default 0,
 		primary key (project, id)
 	)""")
 	mochi.db.execute("create index if not exists views_project on views(project)")
@@ -294,11 +295,11 @@ def apply_template(project_id, template_id):
 				)
 
 	# Create views
-	for v in data.get("views", []):
+	for i, v in enumerate(data.get("views", [])):
 		mochi.db.execute(
-			"insert into views (project, id, name, viewtype, columns, rows) values (?, ?, ?, ?, ?, ?)",
+			"insert into views (project, id, name, viewtype, columns, rows, rank) values (?, ?, ?, ?, ?, ?, ?)",
 			project_id, v["id"], v["name"], v.get("viewtype", "board"),
-			v.get("columns", ""), v.get("rows", "")
+			v.get("columns", ""), v.get("rows", ""), i
 		)
 		# Add view classes if specified
 		for vclass in v.get("classes", []):
@@ -454,7 +455,7 @@ def action_project_get(a):
 				options[c["id"]][f["id"]] = field_options
 
 	# Get views
-	views = mochi.db.rows("select id, name, viewtype, filter, columns, rows, sort, direction from views where project=? order by name", project_id) or []
+	views = mochi.db.rows("select id, name, viewtype, filter, columns, rows, sort, direction, rank from views where project=? order by rank, name", project_id) or []
 
 	# Add classes and fields to each view
 	for v in views:
@@ -855,15 +856,7 @@ def delete_object_cascade(project_id, object_id):
 # Object Actions
 # ============================================================================
 
-def ensure_rank_column_exists():
-	# Check if rank column exists to avoid errors
-	check = mochi.db.row("select count(*) as c from pragma_table_info('objects') where name='rank'")
-	if check and check["c"] == 0:
-		mochi.db.execute("alter table objects add column rank integer not null default 0")
-		mochi.db.execute("create index if not exists objects_rank on objects(rank)")
-
 def action_object_list(a):
-	ensure_rank_column_exists()
 	if not a.user:
 		a.error(401, "Not logged in")
 		return
@@ -1994,7 +1987,7 @@ def action_view_list(a):
 		return
 
 	views = mochi.db.rows(
-		"select id, name, viewtype, filter, columns, rows, sort, direction from views where project=? order by name",
+		"select id, name, viewtype, filter, columns, rows, sort, direction, rank from views where project=? order by rank, name",
 		project_id
 	) or []
 
@@ -2053,9 +2046,13 @@ def action_view_create(a):
 	sort = a.input("sort") or ""
 	direction = a.input("direction") or "asc"
 
+	# Assign next rank
+	next_rank = mochi.db.row("select coalesce(max(rank), -1) + 1 as r from views where project=?", project_id)
+	rank = next_rank["r"] if next_rank else 0
+
 	mochi.db.execute(
-		"insert into views (project, id, name, viewtype, filter, columns, rows, sort, direction) values (?, ?, ?, ?, ?, ?, ?, ?, ?)",
-		project_id, view_id, name.strip(), viewtype, filter_str, columns, rows, sort, direction
+		"insert into views (project, id, name, viewtype, filter, columns, rows, sort, direction, rank) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+		project_id, view_id, name.strip(), viewtype, filter_str, columns, rows, sort, direction, rank
 	)
 
 	# Add fields to junction table
@@ -2181,7 +2178,8 @@ def action_view_update(a):
 			"name": updated["name"], "viewtype": updated["viewtype"],
 			"filter": updated["filter"], "columns": updated["columns"],
 			"rows": updated["rows"], "fields": updated_fields,
-			"sort": updated["sort"], "direction": updated["direction"]
+			"sort": updated["sort"], "direction": updated["direction"],
+			"rank": updated["rank"]
 		})
 
 	return {"data": {"success": True}}
@@ -2221,6 +2219,40 @@ def action_view_delete(a):
 	mochi.db.execute("delete from views where project=? and id=?", project_id, view_id)
 
 	broadcast_event(project_id, "view/delete", {"project": project_id, "id": view_id})
+
+	return {"data": {"success": True}}
+
+def action_view_reorder(a):
+	if not a.user:
+		a.error(401, "Not logged in")
+		return
+
+	project_id = resolve_project(a)
+	if not project_id:
+		a.error(400, "Project ID required")
+		return
+
+	project = get_project(project_id)
+	if not project:
+		a.error(404, "Project not found")
+		return
+
+	if project["owner"] != 1:
+		a.error(403, "Cannot modify remote project")
+		return
+
+	# Get order (comma-separated view IDs)
+	order_str = a.input("order") or ""
+	order = [v.strip() for v in order_str.split(",") if v.strip()]
+
+	# Update rank for each view
+	for i, view_id in enumerate(order):
+		mochi.db.execute(
+			"update views set rank=? where project=? and id=?",
+			i, project_id, view_id
+		)
+
+	broadcast_event(project_id, "view/reorder", {"project": project_id, "order": order})
 
 	return {"data": {"success": True}}
 

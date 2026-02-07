@@ -50,6 +50,7 @@ export interface ProjectView {
   sort: string;
   direction: string;
   classes: string[];
+  rank: number;
 }
 
 export interface ProjectTemplate {

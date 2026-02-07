@@ -4,7 +4,7 @@
 import { useState, useMemo } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Button, Label, toast, getErrorMessage } from "@mochi/common";
-import { Plus } from "lucide-react";
+import { GripVertical, Plus } from "lucide-react";
 import projectsApi from "@/api/projects";
 import type { ProjectDetails, ProjectField, ProjectView, FieldOption } from "@/types";
 import { DesignPreview } from "./design-preview";
@@ -47,6 +47,13 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
   const [editingView, setEditingView] = useState<ProjectView | null>(null);
   const [editingField, setEditingField] = useState<ProjectField | null>(null);
   const [editingOption, setEditingOption] = useState<FieldOption | null>(null);
+
+  // View drag state
+  const [draggedViewId, setDraggedViewId] = useState<string | null>(null);
+  const [viewDropIndicator, setViewDropIndicator] = useState<{
+    viewId: string;
+    position: "before" | "after";
+  } | null>(null);
 
   // Get current selections
   const selectedClass = project.classes.find((c) => c.id === selectedClassId);
@@ -304,6 +311,15 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
     },
   });
 
+  const reorderViewsMutation = useMutation({
+    mutationFn: (order: string[]) =>
+      projectsApi.reorderViews(projectId, order),
+    onSuccess: invalidateProject,
+    onError: (error) => {
+      toast.error(getErrorMessage(error, "Failed to reorder views"));
+    },
+  });
+
   // Handlers
   const handleEditView = (view: ProjectView) => {
     setEditingView(view);
@@ -353,6 +369,52 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
     }
   };
 
+  // View drag handlers
+  const handleViewDragStart = (e: React.DragEvent, viewId: string) => {
+    setDraggedViewId(viewId);
+    e.dataTransfer.effectAllowed = "move";
+    e.dataTransfer.setData("text/plain", viewId);
+  };
+
+  const handleViewDragEnd = () => {
+    setDraggedViewId(null);
+    setViewDropIndicator(null);
+  };
+
+  const handleViewDragOver = (e: React.DragEvent, viewId: string) => {
+    e.preventDefault();
+    if (viewId === draggedViewId) return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    const midY = rect.top + rect.height / 2;
+    const position = e.clientY < midY ? "before" : "after";
+    setViewDropIndicator({ viewId, position });
+  };
+
+  const handleViewDragLeave = () => {
+    setViewDropIndicator(null);
+  };
+
+  const handleViewDrop = (e: React.DragEvent, targetViewId: string) => {
+    e.preventDefault();
+    if (!draggedViewId || draggedViewId === targetViewId) return;
+
+    const currentOrder = project.views.map((v) => v.id);
+    const draggedIndex = currentOrder.indexOf(draggedViewId);
+    const targetIndex = currentOrder.indexOf(targetViewId);
+    if (draggedIndex === -1 || targetIndex === -1) return;
+
+    const newOrder = [...currentOrder];
+    newOrder.splice(draggedIndex, 1);
+    const insertIndex = viewDropIndicator?.position === "after"
+      ? currentOrder.indexOf(targetViewId) - (draggedIndex < targetIndex ? 1 : 0) + 1
+      : currentOrder.indexOf(targetViewId) - (draggedIndex < targetIndex ? 1 : 0);
+    newOrder.splice(insertIndex, 0, draggedViewId);
+
+    reorderViewsMutation.mutate(newOrder);
+    setDraggedViewId(null);
+    setViewDropIndicator(null);
+  };
+
   return (
     <div className="flex h-full">
       {/* Editor panel (left) */}
@@ -372,16 +434,37 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
             </div>
             <div className="space-y-1">
               {project.views.map((view) => (
-                <button
-                  key={view.id}
-                  onClick={() => handleEditView(view)}
-                  className="w-full text-left px-3 py-2 text-sm rounded-md hover:bg-muted transition-colors"
-                >
-                  <span className="font-medium">{view.name}</span>
-                  <span className="text-muted-foreground ml-2 capitalize">
-                    ({view.viewtype})
-                  </span>
-                </button>
+                <div key={view.id}>
+                  {viewDropIndicator?.viewId === view.id && viewDropIndicator.position === "before" && (
+                    <div className="h-0.5 bg-primary mx-3 rounded-full" />
+                  )}
+                  <div
+                    draggable
+                    onDragStart={(e) => handleViewDragStart(e, view.id)}
+                    onDragEnd={handleViewDragEnd}
+                    onDragOver={(e) => handleViewDragOver(e, view.id)}
+                    onDragLeave={handleViewDragLeave}
+                    onDrop={(e) => handleViewDrop(e, view.id)}
+                    className={`flex items-center gap-2 px-3 py-2 text-sm rounded-md hover:bg-muted transition-colors cursor-grab ${
+                      draggedViewId === view.id ? "opacity-50" : ""
+                    }`}
+                  >
+                    <GripVertical className="size-4 text-muted-foreground shrink-0" />
+                    <button
+                      type="button"
+                      onClick={() => handleEditView(view)}
+                      className="flex-1 text-left"
+                    >
+                      <span className="font-medium">{view.name}</span>
+                      <span className="text-muted-foreground ml-2 capitalize">
+                        ({view.viewtype})
+                      </span>
+                    </button>
+                  </div>
+                  {viewDropIndicator?.viewId === view.id && viewDropIndicator.position === "after" && (
+                    <div className="h-0.5 bg-primary mx-3 rounded-full" />
+                  )}
+                </div>
               ))}
             </div>
           </section>

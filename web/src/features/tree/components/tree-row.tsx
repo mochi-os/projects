@@ -131,8 +131,10 @@ export function TreeRow({
     }
   };
 
-  // Calculate indentation (24px per level)
+  // Calculate indentation (24px per level, applied to first content column)
   const indentPx = depth * 24;
+  const firstContentCol = showClass ? "class" : showId ? "id" : fields[0]?.id || "";
+  const indentStyle = indentPx > 0 ? { paddingLeft: indentPx } : undefined;
 
   // Determine drop position based on mouse position within row
   const handleDragOver = (e: React.DragEvent) => {
@@ -192,7 +194,7 @@ export function TreeRow({
 
       {/* Drag handle + expand/collapse */}
       <td className="whitespace-nowrap py-1.5 pl-1 pr-0 w-0">
-        <div className="flex items-center" style={{ paddingLeft: indentPx }}>
+        <div className="flex items-center">
           <div className="w-5 flex items-center justify-center opacity-0 group-hover:opacity-50 cursor-grab">
             <GripVertical className="size-3" />
           </div>
@@ -218,7 +220,7 @@ export function TreeRow({
 
       {/* Class badge */}
       {showClass && (
-        <td className="whitespace-nowrap pl-1 pr-2 py-1.5">
+        <td className="whitespace-nowrap pl-1 pr-2 py-1.5" style={firstContentCol === "class" ? indentStyle : undefined}>
           <span className="text-xs text-muted-foreground bg-muted px-1.5 py-0.5 rounded">
             {classMap[object.class] || object.class}
           </span>
@@ -227,7 +229,7 @@ export function TreeRow({
 
       {/* Object number */}
       {showId && (
-        <td className="whitespace-nowrap pl-1 pr-2 py-1.5 text-xs text-muted-foreground font-mono">
+        <td className="whitespace-nowrap pl-1 pr-2 py-1.5 text-xs text-muted-foreground font-mono" style={firstContentCol === "id" ? indentStyle : undefined}>
           {prefix}-{object.number}
         </td>
       )}
@@ -243,6 +245,7 @@ export function TreeRow({
               "px-2 py-1.5",
               field.id === "title" ? "" : "whitespace-nowrap"
             )}
+            style={firstContentCol === field.id ? indentStyle : undefined}
           >
             {renderFieldValue(field, displayValue)}
           </td>

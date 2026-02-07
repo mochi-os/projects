@@ -13,7 +13,7 @@ import {
   cn,
 } from "@mochi/common";
 import { LayoutGrid, ListTree } from "lucide-react";
-import type { ProjectDetails, ProjectView, FieldOption, SortState } from "@/types";
+import type { ProjectDetails, ProjectView, SortState } from "@/types";
 import type { FilterState } from "@/features/views/components/filter-bar";
 
 const SORT_OPTIONS = [
@@ -53,22 +53,6 @@ export function ViewOptionsBar({
     setTimeout(() => searchRef.current?.focus(), 0);
   }, []);
 
-  // Get the active view to determine which fields to use for filtering
-  const activeView = project.views.find((v) => v.id === activeViewId);
-
-  // Get the column and row fields from the view
-  const columnField = activeView?.columns || "";
-  const rowField = activeView?.rows || "";
-
-  // Get the first class ID (or first class from the view's class filter)
-  const viewClasses = activeView?.classes || [];
-  const firstClassId = viewClasses.length > 0 ? viewClasses[0] : project.classes[0]?.id;
-
-  // Get options for the column and row fields from the first class
-  const classOptions = firstClassId ? project.options[firstClassId] || {} : {};
-  const statusOptions: FieldOption[] = classOptions[columnField] || [];
-  const priorityOptions: FieldOption[] = classOptions[rowField] || [];
-
   return (
     <div className="flex items-center gap-2 px-4 py-2 bg-muted/30 flex-wrap">
       {/* View Switcher */}
@@ -95,58 +79,6 @@ export function ViewOptionsBar({
       </div>
 
       <div className="w-px h-5 bg-border" />
-
-      {/* Status Filter */}
-      <Select
-        value={filters.status || "all"}
-        onValueChange={(value) =>
-          onFilterChange({ ...filters, status: value === "all" ? "" : value })
-        }
-      >
-        <SelectTrigger className="h-7 text-xs w-auto">
-          <SelectValue placeholder="Status" />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectItem value="all">All statuses</SelectItem>
-          {statusOptions.map((option) => (
-            <SelectItem key={option.id} value={option.id}>
-              <div className="flex items-center gap-2">
-                <span
-                  className="size-2 rounded-full"
-                  style={{ backgroundColor: option.colour }}
-                />
-                {option.name}
-              </div>
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
-
-      {/* Priority Filter */}
-      <Select
-        value={filters.priority || "all"}
-        onValueChange={(value) =>
-          onFilterChange({ ...filters, priority: value === "all" ? "" : value })
-        }
-      >
-        <SelectTrigger className="h-7 text-xs w-auto">
-          <SelectValue placeholder="Priority" />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectItem value="all">All priorities</SelectItem>
-          {priorityOptions.map((option) => (
-            <SelectItem key={option.id} value={option.id}>
-              <div className="flex items-center gap-2">
-                <span
-                  className="size-2 rounded-full"
-                  style={{ backgroundColor: option.colour }}
-                />
-                {option.name}
-              </div>
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
 
       {/* Search */}
       <Input

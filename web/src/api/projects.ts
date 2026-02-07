@@ -101,7 +101,7 @@ interface MoveObjectRequest {
 
 interface CreateViewRequest {
   name: string;
-  viewtype?: "board" | "tree";
+  viewtype?: "board" | "list";
   filter?: string;
   columns?: string;
   rows?: string;
@@ -113,7 +113,7 @@ interface CreateViewRequest {
 
 interface UpdateViewRequest {
   name?: string;
-  viewtype?: "board" | "tree";
+  viewtype?: "board" | "list";
   filter?: string;
   columns?: string;
   rows?: string;

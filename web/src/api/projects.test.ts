@@ -431,13 +431,13 @@ describe("projectsApi", () => {
       vi.mocked(projectsRequest.post).mockResolvedValue(mockResponse);
 
       await projectsApi.createView("proj123", {
-        name: "Tree View",
-        viewtype: "tree",
+        name: "List View",
+        viewtype: "list",
       });
 
       expect(projectsRequest.post).toHaveBeenCalledWith(
         "proj123/-/views/create",
-        { name: "Tree View", viewtype: "tree" },
+        { name: "List View", viewtype: "list" },
       );
     });
   });

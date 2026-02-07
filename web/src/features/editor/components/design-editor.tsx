@@ -247,7 +247,7 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
     }) =>
       projectsApi.createView(projectId, {
         name,
-        viewtype: viewtype as "board" | "tree",
+        viewtype: viewtype as "board" | "list",
         fields: fields || allFields.map((f) => f.id).join(","),
         columns,
         rows,

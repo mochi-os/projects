@@ -593,7 +593,7 @@ function ProjectPage() {
                     onCheckedChange={setShowViewOptions}
                   />
                 </DropdownMenuItem>
-                {activeView?.viewtype !== "tree" && (
+                {activeView?.viewtype !== "list" && (
                   <>
                     <DropdownMenuItem onClick={() => setAddColumnDialogOpen(true)}>
                       <Columns3 className="size-4 mr-2" />
@@ -659,7 +659,7 @@ function ProjectPage() {
           </div>
         </div>
       )}
-      {showBoardHint && !isReorderingColumns && activeView?.viewtype !== "tree" && (
+      {showBoardHint && !isReorderingColumns && activeView?.viewtype !== "list" && (
         <div className="flex items-center justify-between px-4 py-2 bg-muted border-b">
           <span className="text-sm text-muted-foreground">
             Double click on a column to add content
@@ -676,8 +676,8 @@ function ProjectPage() {
       )}
       <Main fluid className="flex flex-col min-h-0 flex-1 !py-0">
         {/* Content area */}
-        <div className={activeView?.viewtype === "tree" ? "flex-1 min-h-0 overflow-auto" : ""}>
-          {activeView?.viewtype === "tree" ? (
+        <div className={activeView?.viewtype === "list" ? "flex-1 min-h-0 overflow-auto" : ""}>
+          {activeView?.viewtype === "list" ? (
             <div className="p-4">
               <TreeView
                 project={project}

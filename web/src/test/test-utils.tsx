@@ -180,7 +180,7 @@ export function createMockProjectDetails(
     },
     views: [
       createMockView({ id: "board", name: "Board", viewtype: "board" }),
-      createMockView({ id: "tree", name: "Tree", viewtype: "tree" }),
+      createMockView({ id: "list", name: "List", viewtype: "list" }),
     ],
     hierarchy: {},
     ...overrides,

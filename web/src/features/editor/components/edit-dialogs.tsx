@@ -93,7 +93,7 @@ export function ViewSheet({
     if (!open) return;
     if (mode === "create") {
       setName("");
-      setViewtype(enumeratedFields.length > 0 ? "board" : "tree");
+      setViewtype(enumeratedFields.length > 0 ? "board" : "list");
       setColumns("");
       setRows("");
       setSelectedFields(fields.map((f) => f.id));
@@ -291,9 +291,9 @@ export function ViewSheet({
                   </Label>
                 </div>
                 <div className="flex items-center gap-2">
-                  <RadioGroupItem value="tree" id="vt-tree" />
-                  <Label htmlFor="vt-tree" className="font-normal cursor-pointer">
-                    Tree
+                  <RadioGroupItem value="list" id="vt-list" />
+                  <Label htmlFor="vt-list" className="font-normal cursor-pointer">
+                    List
                   </Label>
                 </div>
               </RadioGroup>

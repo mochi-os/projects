@@ -11,7 +11,7 @@ import type {
   ProjectView,
 } from "@/types";
 
-type PreviewMode = "board" | "tree" | "card";
+type PreviewMode = "board" | "list" | "card";
 
 interface DesignPreviewProps {
   classes: ProjectClass[];
@@ -258,7 +258,7 @@ export function DesignPreview({
     );
   };
 
-  const renderTreePreview = () => {
+  const renderListPreview = () => {
     const statusField = classFields.find((f) => f.id === "status");
     const statusOptions = statusField ? classOptions["status"] || [] : [];
 
@@ -317,7 +317,7 @@ export function DesignPreview({
     <div className="h-full flex flex-col">
       <div className="flex items-center gap-2 p-2 border-b">
         <span className="text-sm font-medium">Preview:</span>
-        {(["board", "tree", "card"] as const).map((mode) => (
+        {(["board", "list", "card"] as const).map((mode) => (
           <button
             key={mode}
             onClick={() => setPreviewMode(mode)}
@@ -334,7 +334,7 @@ export function DesignPreview({
       </div>
       <div className="flex-1 p-4 overflow-auto bg-muted/30">
         {previewMode === "board" && renderBoardPreview()}
-        {previewMode === "tree" && renderTreePreview()}
+        {previewMode === "list" && renderListPreview()}
         {previewMode === "card" && renderCardPreview()}
       </div>
     </div>

@@ -105,7 +105,7 @@ def database_create():
 	)""")
 	mochi.db.execute("create index if not exists options_field on options(project, class, field)")
 
-	# 7. views - board and tree configurations
+	# 7. views - board and list configurations
 	mochi.db.execute("""create table if not exists views (
 		project text not null references projects(id),
 		id text not null,
@@ -231,6 +231,9 @@ def database_create():
 		created integer not null
 	)""")
 	mochi.db.execute("create index if not exists attachments_object on attachments(object)")
+
+	# Migrations
+	mochi.db.execute("update views set viewtype='list' where viewtype='tree'")
 
 
 # ============================================================================
@@ -2023,7 +2026,7 @@ def action_view_create(a):
 		return
 
 	viewtype = a.input("viewtype") or "board"
-	if viewtype not in ["board", "tree"]:
+	if viewtype not in ["board", "list"]:
 		a.error(400, "Invalid view type")
 		return
 
@@ -2126,7 +2129,7 @@ def action_view_update(a):
 	if name != None and name.strip() != "":
 		mochi.db.execute("update views set name=? where project=? and id=?", name.strip(), project_id, view_id)
 	if viewtype != None and viewtype != "":
-		if viewtype not in ["board", "tree"]:
+		if viewtype not in ["board", "list"]:
 			a.error(400, "Invalid view type")
 			return
 		mochi.db.execute("update views set viewtype=? where project=? and id=?", viewtype, project_id, view_id)

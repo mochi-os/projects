@@ -20,7 +20,7 @@ export function ViewTabs({
 }: ViewTabsProps) {
   const getViewIcon = (viewtype: string) => {
     switch (viewtype) {
-      case "tree":
+      case "list":
         return <ListTree className="size-4" />;
       case "board":
       default:

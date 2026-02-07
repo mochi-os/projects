@@ -68,7 +68,7 @@ export function ViewOptionsBar({
                 : "hover:bg-muted"
             )}
           >
-            {view.viewtype === "tree" ? (
+            {view.viewtype === "list" ? (
               <ListTree className="size-3.5" />
             ) : (
               <LayoutGrid className="size-3.5" />

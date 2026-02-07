@@ -121,15 +121,27 @@ export function BoardContainer({
 
   const hasRows = rowField && rowOptions.length > 0;
 
-  // Measure board position to compute viewport-filling min-height dynamically
+  // Measure board position to compute viewport-filling min-height dynamically.
+  // Observes ancestor elements for resize so minHeight recalculates when
+  // siblings like the view options bar appear or disappear.
   const boardRef = useRef<HTMLDivElement>(null);
   const [minHeight, setMinHeight] = useState("");
 
   useLayoutEffect(() => {
     const el = boardRef.current;
     if (!el) return;
-    const top = Math.ceil(el.getBoundingClientRect().top);
-    setMinHeight(`calc(100dvh - ${top}px)`);
+    const update = () => {
+      const top = Math.ceil(el.getBoundingClientRect().top);
+      setMinHeight(`calc(100dvh - ${top}px)`);
+    };
+    update();
+    const observer = new ResizeObserver(update);
+    let ancestor = el.parentElement;
+    while (ancestor) {
+      observer.observe(ancestor);
+      ancestor = ancestor.parentElement;
+    }
+    return () => observer.disconnect();
   }, []);
 
   // Local reorder state

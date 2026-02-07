@@ -226,7 +226,7 @@ export function BoardColumn({
       ref={columnRef}
       className={cn(
         "rounded-[10px]",
-        rows ? "grid grid-rows-subgrid row-span-full" : "flex flex-col w-72 shrink-0",
+        rows ? "grid grid-rows-subgrid row-span-full" : "flex flex-col w-72 shrink-0 h-full",
         "bg-muted/30 border transition-colors",
         "data-[drag-over]:border-primary data-[drag-over]:bg-primary/5",
         isReordering && !isDragging && "border-dashed border-muted-foreground/50",

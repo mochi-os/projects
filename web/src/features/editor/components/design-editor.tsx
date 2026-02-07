@@ -9,17 +9,16 @@ import projectsApi from "@/api/projects";
 import type { ProjectDetails, ProjectField, ProjectView, FieldOption } from "@/types";
 import { DesignPreview } from "./design-preview";
 import {
-  AddClassDialog,
   AddFieldDialog,
   AddOptionDialog,
-  AddViewDialog,
 } from "./add-dialogs";
 import {
-  EditViewDialog,
-  EditClassDialog,
+  ViewSheet,
+  ClassSheet,
   EditFieldDialog,
   EditOptionDialog,
 } from "./edit-dialogs";
+import type { PendingField } from "./edit-dialogs";
 
 interface DesignEditorProps {
   projectId: string;
@@ -88,6 +87,9 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
     onSuccess: (data) => {
       invalidateProject();
       setSelectedClassId(data.data.id);
+    },
+    onError: (error: any) => {
+      toast.error(error?.response?.data?.error || (error instanceof Error ? error.message : "Failed to create class"));
     },
   });
 
@@ -247,6 +249,9 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
         classes,
       }),
     onSuccess: invalidateProject,
+    onError: (error: any) => {
+      toast.error(error?.response?.data?.error || (error instanceof Error ? error.message : "Failed to create view"));
+    },
   });
 
   const updateViewMutation = useMutation({
@@ -294,6 +299,9 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
       invalidateProject();
       setEditViewOpen(false);
     },
+    onError: (error: any) => {
+      toast.error(error?.response?.data?.error || (error instanceof Error ? error.message : "Failed to delete view"));
+    },
   });
 
   // Handlers
@@ -310,6 +318,39 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
   const handleEditOption = (option: FieldOption) => {
     setEditingOption(option);
     setEditOptionOpen(true);
+  };
+
+  // Create class with chained API calls
+  const handleCreateClass = async (name: string, parents: string[], pendingFields: PendingField[]) => {
+    const result = await createClassMutation.mutateAsync(name);
+    const classId = result.data?.id;
+    if (!classId) return;
+
+    if (parents.length > 0) {
+      await setHierarchyMutation.mutateAsync({ classId, parents });
+    }
+
+    // Create each non-title field (title is auto-created by the backend)
+    for (const field of pendingFields) {
+      if (field.id === "title") continue;
+      const fieldResult = await createFieldMutation.mutateAsync({
+        classId,
+        name: field.name,
+        fieldtype: field.fieldtype,
+        rows: field.rows,
+      });
+      // Create options for enumerated fields
+      if (field.fieldtype === "enumerated" && field.options && fieldResult.data) {
+        for (const opt of field.options) {
+          await createOptionMutation.mutateAsync({
+            classId,
+            fieldId: fieldResult.data.id,
+            name: opt.name,
+            colour: opt.colour,
+          });
+        }
+      }
+    }
   };
 
   return (
@@ -393,14 +434,15 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
         />
       </div>
 
-      {/* Add dialogs */}
-      <AddViewDialog
+      {/* Add view (create mode) */}
+      <ViewSheet
         open={addViewOpen}
         onOpenChange={setAddViewOpen}
+        mode="create"
         fields={allFields}
         classes={project.classes}
-        onAdd={(name, viewtype, columns, rows, selectedFields, sort, direction, selectedClasses) => {
-          createViewMutation.mutate({
+        onCreate={async (name, viewtype, columns, rows, selectedFields, sort, direction, selectedClasses) => {
+          await createViewMutation.mutateAsync({
             name,
             viewtype,
             columns: columns || undefined,
@@ -413,16 +455,13 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
         }}
       />
 
-      <AddClassDialog
+      {/* Add class (create mode) */}
+      <ClassSheet
         open={addClassOpen}
         onOpenChange={setAddClassOpen}
+        mode="create"
         classes={project.classes}
-        onAdd={async (name, parents) => {
-          const result = await createClassMutation.mutateAsync(name);
-          if (parents.length > 0 && result.data?.id) {
-            setHierarchyMutation.mutate({ classId: result.data.id, parents });
-          }
-        }}
+        onCreate={handleCreateClass}
       />
 
       <AddFieldDialog
@@ -466,8 +505,8 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
         }}
       />
 
-      {/* Edit dialogs */}
-      <EditViewDialog
+      {/* Edit view */}
+      <ViewSheet
         open={editViewOpen}
         onOpenChange={setEditViewOpen}
         view={editingView}
@@ -490,7 +529,8 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
         }}
       />
 
-      <EditClassDialog
+      {/* Edit class */}
+      <ClassSheet
         open={editClassOpen}
         onOpenChange={setEditClassOpen}
         cls={selectedClass || null}

@@ -14,7 +14,7 @@ interface BoardContainerProps {
   viewFields?: string;
   sort?: SortState | null;
   onCardClick?: (object: ProjectObject) => void;
-  onCreateClick?: (statusId: string) => void;
+  onCreateClick?: (statusId: string, rowId?: string) => void;
   onMoveObject?: (objectId: string, newStatus: string, newRank?: number, newRow?: string) => void;
   onRenameColumn?: (classId: string, fieldId: string, optionId: string, newName: string) => Promise<void>;
   onDeleteColumn?: (classId: string, fieldId: string, optionId: string) => Promise<void>;
@@ -129,9 +129,8 @@ export function BoardContainer({
     const el = boardRef.current;
     if (!el) return;
     const top = Math.ceil(el.getBoundingClientRect().top);
-    const h = `calc(100dvh - ${top}px)`;
-    setMinHeight((prev) => (prev === h ? prev : h));
-  });
+    setMinHeight(`calc(100dvh - ${top}px)`);
+  }, []);
 
   // Local reorder state
   const [reorderedColumns, setReorderedColumns] = useState<FieldOption[]>(statusOptions);
@@ -221,6 +220,97 @@ export function BoardContainer({
     onMoveObject?.(objectId, columnId, newRank, rowId);
   };
 
+  // Auto-scroll the nearest scrollable ancestor when dragging near its edges
+  const scrollRafRef = useRef(0);
+  const scrollVelocityRef = useRef({ x: 0, y: 0 });
+  const scrollContainerRef = useRef<Element | null>(null);
+
+  useEffect(() => {
+    // Find the scrollable ancestor (the SidebarInset with overflow-auto)
+    const findScrollParent = (el: Element | null): Element | null => {
+      while (el) {
+        const style = getComputedStyle(el);
+        if (style.overflow === "auto" || style.overflow === "scroll" ||
+            style.overflowX === "auto" || style.overflowX === "scroll" ||
+            style.overflowY === "auto" || style.overflowY === "scroll") {
+          return el;
+        }
+        el = el.parentElement;
+      }
+      return null;
+    };
+
+    if (boardRef.current) {
+      scrollContainerRef.current = findScrollParent(boardRef.current);
+    }
+  }, []);
+
+  useEffect(() => {
+    const edgeSize = 60;
+    const maxSpeed = 20;
+
+    const onDragOver = (e: DragEvent) => {
+      const container = scrollContainerRef.current;
+      if (!container) return;
+
+      const rect = container.getBoundingClientRect();
+      const { clientX, clientY } = e;
+      let vx = 0;
+      let vy = 0;
+
+      // Horizontal edges relative to scroll container
+      const distLeft = clientX - rect.left;
+      const distRight = rect.right - clientX;
+      if (distLeft < edgeSize && distLeft >= 0) {
+        vx = -maxSpeed * (1 - distLeft / edgeSize);
+      } else if (distRight < edgeSize && distRight >= 0) {
+        vx = maxSpeed * (1 - distRight / edgeSize);
+      }
+
+      // Vertical edges relative to scroll container
+      const distTop = clientY - rect.top;
+      const distBottom = rect.bottom - clientY;
+      if (distTop < edgeSize && distTop >= 0) {
+        vy = -maxSpeed * (1 - distTop / edgeSize);
+      } else if (distBottom < edgeSize && distBottom >= 0) {
+        vy = maxSpeed * (1 - distBottom / edgeSize);
+      }
+
+      scrollVelocityRef.current = { x: vx, y: vy };
+
+      if ((vx !== 0 || vy !== 0) && !scrollRafRef.current) {
+        const tick = () => {
+          const { x, y } = scrollVelocityRef.current;
+          if (x === 0 && y === 0) {
+            scrollRafRef.current = 0;
+            return;
+          }
+          container.scrollBy(x, y);
+          scrollRafRef.current = requestAnimationFrame(tick);
+        };
+        scrollRafRef.current = requestAnimationFrame(tick);
+      }
+    };
+
+    const onDragEnd = () => {
+      scrollVelocityRef.current = { x: 0, y: 0 };
+      if (scrollRafRef.current) {
+        cancelAnimationFrame(scrollRafRef.current);
+        scrollRafRef.current = 0;
+      }
+    };
+
+    document.addEventListener("dragover", onDragOver);
+    document.addEventListener("dragend", onDragEnd);
+    document.addEventListener("drop", onDragEnd);
+    return () => {
+      document.removeEventListener("dragover", onDragOver);
+      document.removeEventListener("dragend", onDragEnd);
+      document.removeEventListener("drop", onDragEnd);
+      onDragEnd();
+    };
+  }, []);
+
   // Create invisible drag image
   const emptyDragImage = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
@@ -282,6 +372,7 @@ export function BoardContainer({
     rows?: BoardColumnRow[],
     gridCol?: number,
     gridRowSpan?: number,
+    onCreateInRow?: (rowId: string) => void,
   ) => {
     const isDragging = draggedColumnId === status.id;
     return (
@@ -316,6 +407,7 @@ export function BoardContainer({
           statusField={statusField}
           onCardClick={isReordering ? undefined : onCardClick}
           onCreateClick={isReordering ? undefined : () => onCreateClick?.(status.id)}
+          onCreateInRow={isReordering ? undefined : onCreateInRow}
           onDrop={isReordering ? undefined : handleDrop}
           onRenameColumn={
             !isReordering && onRenameColumn && defaultClass
@@ -399,7 +491,8 @@ export function BoardContainer({
               objects: objectsByRowAndStatus[row.id]?.[status.id] || [],
             })),
             c + 2,
-            swimlaneRows.length + 1
+            swimlaneRows.length + 1,
+            onCreateClick ? (rowId: string) => onCreateClick(status.id, rowId) : undefined,
           )
         )}
 

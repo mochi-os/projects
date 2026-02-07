@@ -16,6 +16,7 @@ import {
   DropdownMenuTrigger,
   Switch,
   useSearch,
+  toast,
 } from "@mochi/common";
 import { Columns3, Ellipsis, FolderKanban, GripVertical, Plus, Settings, Settings2, SlidersHorizontal, X } from "lucide-react";
 import projectsApi from "@/api/projects";
@@ -68,10 +69,9 @@ function ProjectPage() {
 
   const [selectedObjectId, setSelectedObjectId] = useState<string | null>(null);
   const [createDialogOpen, setCreateDialogOpen] = useState(false);
-  const [createDefaultField, setCreateDefaultField] = useState<{
-    field: string;
-    value: string;
-  } | undefined>();
+  const [createDefaultFields, setCreateDefaultFields] = useState<
+    { field: string; value: string }[] | undefined
+  >();
   const [showShortcutsHelp, setShowShortcutsHelp] = useState(false);
   const [showViewOptions, setShowViewOptions] = useState(() => {
     const saved = localStorage.getItem("projects-view-options-expanded");
@@ -438,18 +438,19 @@ function ProjectPage() {
   const getDefaultColumnValue = useCallback(() => {
     const firstType = project.classes[0]?.id;
     if (firstType && project.options[firstType]?.[columnField]?.length > 0) {
-      return {
-        field: columnField,
-        value: project.options[firstType][columnField][0].id,
-      };
+      return [{ field: columnField, value: project.options[firstType][columnField][0].id }];
     }
     return undefined;
   }, [project.classes, project.options, columnField]);
 
   const handleOpenCreateDialog = useCallback(() => {
-    setCreateDefaultField(getDefaultColumnValue());
+    if (project.classes.length === 0) {
+      toast.error("Please add one or more classes to the project design.");
+      return;
+    }
+    setCreateDefaultFields(getDefaultColumnValue());
     setCreateDialogOpen(true);
-  }, [getDefaultColumnValue]);
+  }, [project.classes.length, getDefaultColumnValue]);
 
   // Keyboard shortcuts
   useKeyboardShortcuts({
@@ -475,8 +476,16 @@ function ProjectPage() {
     setSelectedObjectId(object.id);
   };
 
-  const handleCreateClick = (columnValue: string) => {
-    setCreateDefaultField({ field: columnField, value: columnValue });
+  const handleCreateClick = (columnValue: string, rowValue?: string) => {
+    if (project.classes.length === 0) {
+      toast.error("Please add one or more classes to the project design.");
+      return;
+    }
+    const fields = [{ field: columnField, value: columnValue }];
+    if (rowValue !== undefined && rowField) {
+      fields.push({ field: rowField, value: rowValue });
+    }
+    setCreateDefaultFields(fields);
     setCreateDialogOpen(true);
   };
 
@@ -717,7 +726,7 @@ function ProjectPage() {
         onOpenChange={setCreateDialogOpen}
         projectId={params.projectId}
         project={project}
-        defaultField={createDefaultField}
+        defaultFields={createDefaultFields}
         onCreated={handleObjectCreated}
       />
 

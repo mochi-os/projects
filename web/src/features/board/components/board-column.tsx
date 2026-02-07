@@ -2,6 +2,7 @@
 // Copyright Alistair Cunningham 2026
 
 import { useState, useRef, useEffect, useCallback } from "react";
+import { createPortal } from "react-dom";
 import {
   cn,
   ConfirmDialog,
@@ -43,6 +44,7 @@ interface BoardColumnProps {
   statusField?: string;
   onCardClick?: (object: ProjectObject) => void;
   onCreateClick?: () => void;
+  onCreateInRow?: (rowId: string) => void;
   onDrop?: (objectId: string, columnId: string, newRank?: number, rowId?: string) => void;
   onRenameColumn?: (newName: string) => Promise<void>;
   onDeleteColumn?: () => Promise<void>;
@@ -66,6 +68,7 @@ export function BoardColumn({
   statusField,
   onCardClick,
   onCreateClick,
+  onCreateInRow,
   onDrop,
   onRenameColumn,
   onDeleteColumn,
@@ -162,9 +165,9 @@ export function BoardColumn({
       dropIndexRef.current = newDropIndex;
     }
 
-    // Position drop indicator line
+    // Position drop indicator line (fixed positioning, viewport coordinates)
     if (indicatorRef.current && columnRef.current) {
-      const columnRect = columnRef.current.getBoundingClientRect();
+      let container: Element | null = null;
       let targetCards: NodeListOf<Element> | null = null;
 
       if (rowsRef.current) {
@@ -172,21 +175,26 @@ export function BoardColumn({
           `[data-row-id="${CSS.escape(dropRowRef.current)}"]`
         );
         if (section) {
+          container = section;
           targetCards = section.querySelectorAll("[data-card-id]");
         }
       } else if (cardsContainerRef.current) {
+        container = cardsContainerRef.current;
         targetCards = cardsContainerRef.current.querySelectorAll("[data-card-id]");
       }
 
-      if (targetCards && targetCards.length > 0) {
+      if (container && targetCards && targetCards.length > 0) {
+        const containerRect = container.getBoundingClientRect();
         const idx = dropIndexRef.current;
         let top: number;
         if (idx < targetCards.length) {
-          top = targetCards[idx].getBoundingClientRect().top - columnRect.top;
+          top = targetCards[idx].getBoundingClientRect().top;
         } else {
-          top = targetCards[targetCards.length - 1].getBoundingClientRect().bottom - columnRect.top + 4;
+          top = targetCards[targetCards.length - 1].getBoundingClientRect().bottom + 4;
         }
         indicatorRef.current.style.top = `${top}px`;
+        indicatorRef.current.style.left = `${containerRect.left + 4}px`;
+        indicatorRef.current.style.width = `${containerRect.width - 8}px`;
         indicatorRef.current.style.opacity = "1";
       } else {
         indicatorRef.current.style.opacity = "0";
@@ -217,7 +225,7 @@ export function BoardColumn({
     <div
       ref={columnRef}
       className={cn(
-        "rounded-[10px] relative",
+        "rounded-[10px]",
         rows ? "grid grid-rows-subgrid row-span-full" : "flex flex-col w-72 shrink-0",
         "bg-muted/30 border transition-colors",
         "data-[drag-over]:border-primary data-[drag-over]:bg-primary/5",
@@ -350,11 +358,14 @@ export function BoardColumn({
         }}
       />
 
-      {/* Drop indicator */}
-      <div
-        ref={indicatorRef}
-        className="absolute left-2 right-2 h-0.5 rounded-full bg-primary z-10 pointer-events-none opacity-0 -translate-y-1/2"
-      />
+      {/* Drop indicator (portaled to body to avoid grid layout impact) */}
+      {createPortal(
+        <div
+          ref={indicatorRef}
+          className="fixed h-0.5 rounded-full bg-primary z-50 pointer-events-none opacity-0 -translate-y-1/2"
+        />,
+        document.body,
+      )}
 
       {/* Cards */}
       {rows ? (
@@ -366,6 +377,11 @@ export function BoardColumn({
               "p-2 space-y-2",
               index < rows.length - 1 && "border-b"
             )}
+            onDoubleClick={onCreateInRow ? (e) => {
+              if (e.target === e.currentTarget || (e.target as HTMLElement).closest("[data-card-id]") === null) {
+                onCreateInRow(row.id);
+              }
+            } : undefined}
           >
             {row.objects.map((object) => (
               <div key={object.id} data-card-id={object.id}>

@@ -25,125 +25,199 @@ import {
 } from "@mochi/common";
 import { Check, GripVertical, Minus, MoreHorizontal, Plus, X } from "lucide-react";
 import type { ProjectView, ProjectField, ProjectClass, FieldOption } from "@/types";
+import { AddFieldDialog } from "./add-dialogs";
 
-// Edit View Sheet
-interface EditViewDialogProps {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-  view: ProjectView | null;
-  fields: ProjectField[];
-  classes: ProjectClass[];
-  onUpdate: (updates: Partial<ProjectView>) => void;
-  onUpdateClasses: (classes: string[]) => void;
-  onDelete: () => void;
+// Pending field for create mode
+export interface PendingField {
+  id: string;
+  name: string;
+  fieldtype: string;
+  rows?: number;
+  options?: { name: string; colour: string }[];
 }
 
-export function EditViewDialog({
+// View Sheet (create + edit)
+interface ViewSheetProps {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  mode?: "create" | "edit";
+  fields: ProjectField[];
+  classes: ProjectClass[];
+  // Edit mode props
+  view?: ProjectView | null;
+  onUpdate?: (updates: Partial<ProjectView>) => void;
+  onUpdateClasses?: (classes: string[]) => void;
+  onDelete?: () => void;
+  // Create mode props
+  onCreate?: (
+    name: string,
+    viewtype: string,
+    columns: string,
+    rows: string,
+    selectedFields: string[],
+    sort: string,
+    direction: string,
+    selectedClasses: string[]
+  ) => void | Promise<void>;
+}
+
+export function ViewSheet({
   open,
   onOpenChange,
-  view,
+  mode = "edit",
   fields,
   classes,
+  view,
   onUpdate,
   onUpdateClasses,
   onDelete,
-}: EditViewDialogProps) {
+  onCreate,
+}: ViewSheetProps) {
   const allClassIds = useMemo(() => classes.map((c) => c.id), [classes]);
 
   const [name, setName] = useState("");
+  const [viewtype, setViewtype] = useState("board");
+  const [columns, setColumns] = useState("");
+  const [rows, setRows] = useState("");
+  const [selectedFields, setSelectedFields] = useState<string[]>([]);
+  const [sort, setSort] = useState("");
+  const [direction, setDirection] = useState<"asc" | "desc">("asc");
+  const [selectedClasses, setSelectedClasses] = useState<string[]>([]);
 
   const enumeratedFields = fields.filter((f) => f.fieldtype === "enumerated");
 
+  // Reset state on open
   useEffect(() => {
-    if (view) {
+    if (!open) return;
+    if (mode === "create") {
+      setName("");
+      setViewtype(enumeratedFields.length > 0 ? "board" : "tree");
+      setColumns("");
+      setRows("");
+      setSelectedFields(fields.map((f) => f.id));
+      setSort("");
+      setDirection("asc");
+      setSelectedClasses(classes.map((c) => c.id));
+    } else if (view) {
       setName(view.name);
+      setViewtype(view.viewtype);
+      setColumns(view.columns || "");
+      setRows(view.rows || "");
+      setSelectedFields((view.fields || "").split(",").filter(Boolean));
+      setSort(view.sort || "");
+      setDirection((view.direction as "asc" | "desc") || "asc");
+      setSelectedClasses(view.classes?.length ? view.classes : allClassIds);
     }
-  }, [view]);
+  }, [open, view, mode]);
 
-  if (!view) return null;
+  if (mode === "edit" && !view) return null;
 
+  // Edit mode handlers (live-save on change)
   const handleNameBlur = () => {
-    if (name.trim() && name.trim() !== view.name) {
+    if (mode === "edit" && onUpdate && view && name.trim() && name.trim() !== view.name) {
       onUpdate({ name: name.trim() });
     }
   };
 
   const handleViewtypeChange = (value: string) => {
-    if (value !== view.viewtype) {
+    setViewtype(value);
+    if (mode === "edit" && onUpdate && view && value !== view.viewtype) {
       onUpdate({ viewtype: value });
     }
   };
 
   const handleColumnsChange = (value: string) => {
-    if (value !== view.columns) {
+    setColumns(value);
+    if (mode === "edit" && onUpdate && view && value !== view.columns) {
       onUpdate({ columns: value });
     }
   };
 
   const handleRowsChange = (value: string) => {
-    if (value !== view.rows) {
+    setRows(value);
+    if (mode === "edit" && onUpdate && view && value !== view.rows) {
       onUpdate({ rows: value });
     }
   };
 
   const handleSortChange = (value: string) => {
-    if (value !== view.sort) {
+    setSort(value);
+    if (mode === "edit" && onUpdate && view && value !== view.sort) {
       onUpdate({ sort: value });
     }
   };
 
   const handleDirectionToggle = () => {
-    const newDirection = view.direction === "asc" ? "desc" : "asc";
-    onUpdate({ direction: newDirection });
+    const newDirection = direction === "asc" ? "desc" : "asc";
+    setDirection(newDirection);
+    if (mode === "edit" && onUpdate) {
+      onUpdate({ direction: newDirection });
+    }
   };
 
   const toggleViewField = (fieldId: string) => {
-    const currentFields = (view.fields || "").split(",").filter(Boolean);
     let newFields: string[];
-    if (currentFields.includes(fieldId)) {
-      newFields = currentFields.filter((f) => f !== fieldId);
+    if (selectedFields.includes(fieldId)) {
+      newFields = selectedFields.filter((f) => f !== fieldId);
     } else {
-      newFields = [...currentFields, fieldId];
+      newFields = [...selectedFields, fieldId];
     }
-    onUpdate({ fields: newFields.join(",") });
+    setSelectedFields(newFields);
+    if (mode === "edit" && onUpdate) {
+      onUpdate({ fields: newFields.join(",") });
+    }
   };
 
   const toggleClass = (classId: string) => {
-    const currentClasses = view.classes?.length ? view.classes : allClassIds;
     let newClasses: string[];
-    if (currentClasses.includes(classId)) {
-      newClasses = currentClasses.filter((c) => c !== classId);
+    if (selectedClasses.includes(classId)) {
+      newClasses = selectedClasses.filter((c) => c !== classId);
     } else {
-      newClasses = [...currentClasses, classId];
+      newClasses = [...selectedClasses, classId];
     }
-    onUpdateClasses(newClasses);
+    setSelectedClasses(newClasses);
+    if (mode === "edit" && onUpdateClasses) {
+      onUpdateClasses(newClasses);
+    }
   };
 
-  const viewFieldsList = (view.fields || "").split(",").filter(Boolean);
-  const selectedClasses = view.classes?.length ? view.classes : allClassIds;
+  const canSubmit = name.trim() && (viewtype !== "board" || enumeratedFields.length === 0 || columns);
+
+  const handleCreate = async () => {
+    if (onCreate && canSubmit) {
+      try {
+        await onCreate(name.trim(), viewtype, columns, rows, selectedFields, sort, direction, selectedClasses);
+        onOpenChange(false);
+      } catch {
+        // Error displayed by caller via toast
+      }
+    }
+  };
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent className="w-full sm:max-w-md p-0 flex flex-col [&>button:last-child]:hidden">
         <div className="flex items-center justify-between px-6 py-4 border-b">
-          <SheetTitle>Edit view</SheetTitle>
+          <SheetTitle>{mode === "create" ? "Add view" : "Edit view"}</SheetTitle>
           <div className="flex items-center gap-1">
             <Button variant="ghost" size="icon" className="size-8" onClick={() => onOpenChange(false)}>
               <X className="size-4" />
             </Button>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon" className="size-8">
-                  <MoreHorizontal className="size-4" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                <DropdownMenuItem onClick={onDelete}>
-                  <Minus className="size-4" />
-                  Delete view
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            {mode === "edit" && onDelete && (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" size="icon" className="size-8">
+                    <MoreHorizontal className="size-4" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" onCloseAutoFocus={(e) => e.preventDefault()}>
+                  <DropdownMenuItem onSelect={onDelete}>
+                    <Minus className="size-4" />
+                    Delete view
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            )}
           </div>
         </div>
         <div className="flex-1 overflow-y-auto p-6 space-y-4">
@@ -154,7 +228,8 @@ export function EditViewDialog({
                 id="view-name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                onBlur={handleNameBlur}
+                onBlur={mode === "edit" ? handleNameBlur : undefined}
+                autoFocus={mode === "create"}
               />
             </div>
           </div>
@@ -162,7 +237,7 @@ export function EditViewDialog({
           <div className="space-y-2">
             <Label>Layout</Label>
             <div className="pl-4">
-              <RadioGroup value={view.viewtype} onValueChange={handleViewtypeChange}>
+              <RadioGroup value={viewtype} onValueChange={handleViewtypeChange}>
                 <div className="flex items-center gap-2">
                   <RadioGroupItem value="board" id="vt-board" />
                   <Label htmlFor="vt-board" className="font-normal cursor-pointer">
@@ -201,17 +276,17 @@ export function EditViewDialog({
             </div>
           )}
 
-          {view.viewtype === "board" && enumeratedFields.length > 0 && (
+          {viewtype === "board" && enumeratedFields.length > 0 && (
             <div className="space-y-2">
               <Label>Columns group by</Label>
               <div className="pl-4">
                 <select
-                  value={view.columns}
+                  value={columns}
                   onChange={(e) => handleColumnsChange(e.target.value)}
                   className="w-full h-9 rounded-md border border-input bg-background px-3 py-1 text-sm"
                 >
-                  {!enumeratedFields.some((f) => f.id === view.columns) && (
-                    <option value={view.columns} disabled>
+                  {!enumeratedFields.some((f) => f.id === columns) && (
+                    <option value={columns} disabled>
                       Select a field
                     </option>
                   )}
@@ -225,12 +300,12 @@ export function EditViewDialog({
             </div>
           )}
 
-          {view.viewtype === "board" && enumeratedFields.length > 0 && (
+          {viewtype === "board" && enumeratedFields.length > 0 && (
             <div className="space-y-2">
               <Label>Rows group by</Label>
               <div className="pl-4">
                 <select
-                  value={view.rows || ""}
+                  value={rows}
                   onChange={(e) => handleRowsChange(e.target.value)}
                   className="w-full h-9 rounded-md border border-input bg-background px-3 py-1 text-sm"
                 >
@@ -255,7 +330,7 @@ export function EditViewDialog({
                 >
                   <input
                     type="checkbox"
-                    checked={viewFieldsList.includes(field.id)}
+                    checked={selectedFields.includes(field.id)}
                     onChange={() => toggleViewField(field.id)}
                     className="rounded"
                   />
@@ -269,7 +344,7 @@ export function EditViewDialog({
             <Label>Default sort</Label>
             <div className="pl-4 flex gap-2">
               <select
-                value={view.sort}
+                value={sort}
                 onChange={(e) => handleSortChange(e.target.value)}
                 className="flex-1 h-9 rounded-md border border-input bg-background px-3 py-1 text-sm"
               >
@@ -284,44 +359,56 @@ export function EditViewDialog({
                 ))}
               </select>
               <SortDirectionButton
-                direction={view.direction as "asc" | "desc"}
+                direction={direction}
                 onToggle={handleDirectionToggle}
               />
             </div>
           </div>
         </div>
         <SheetFooter className="px-6 py-4 border-t">
-          <Button type="button" onClick={() => onOpenChange(false)}>
-            <Check className="size-4" />
-            Done
-          </Button>
+          {mode === "create" ? (
+            <Button type="button" onClick={handleCreate} disabled={!canSubmit}>
+              <Check className="size-4" />
+              Add view
+            </Button>
+          ) : (
+            <Button type="button" onClick={() => onOpenChange(false)}>
+              <Check className="size-4" />
+              Done
+            </Button>
+          )}
         </SheetFooter>
       </SheetContent>
     </Sheet>
   );
 }
 
-// Edit Class Sheet
-interface EditClassDialogProps {
+// Class Sheet (create + edit)
+interface ClassSheetProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  cls: ProjectClass | null;
+  mode?: "create" | "edit";
   classes: ProjectClass[];
-  hierarchy: string[];
-  fields: ProjectField[];
-  onUpdate: (name: string) => void;
-  onUpdateHierarchy: (parents: string[]) => void;
-  onDelete: () => void;
-  onAddField: () => void;
-  onEditField: (field: ProjectField) => void;
-  onReorderFields: (order: string[]) => void;
+  // Edit mode props
+  cls?: ProjectClass | null;
+  hierarchy?: string[];
+  fields?: ProjectField[];
+  onUpdate?: (name: string) => void;
+  onUpdateHierarchy?: (parents: string[]) => void;
+  onDelete?: () => void;
+  onAddField?: () => void;
+  onEditField?: (field: ProjectField) => void;
+  onReorderFields?: (order: string[]) => void;
+  // Create mode props
+  onCreate?: (name: string, parents: string[], fields: PendingField[]) => void | Promise<void>;
 }
 
-export function EditClassDialog({
+export function ClassSheet({
   open,
   onOpenChange,
-  cls,
+  mode = "edit",
   classes,
+  cls,
   hierarchy,
   fields,
   onUpdate,
@@ -330,34 +417,56 @@ export function EditClassDialog({
   onAddField,
   onEditField,
   onReorderFields,
-}: EditClassDialogProps) {
+  onCreate,
+}: ClassSheetProps) {
   const [name, setName] = useState("");
   const [draggedFieldId, setDraggedFieldId] = useState<string | null>(null);
   const [dropIndicator, setDropIndicator] = useState<{ fieldId: string; position: "before" | "after" } | null>(null);
 
+  // Create mode state
+  const [pendingParents, setPendingParents] = useState<string[]>([]);
+  const [pendingFields, setPendingFields] = useState<PendingField[]>([]);
+  const [addFieldOpen, setAddFieldOpen] = useState(false);
+
+  // Reset state on open
   useEffect(() => {
-    if (cls) {
+    if (!open) return;
+    if (mode === "create") {
+      setName("");
+      setPendingParents([]);
+      setPendingFields([{ id: "title", name: "Title", fieldtype: "text" }]);
+    } else if (cls) {
       setName(cls.name);
     }
-  }, [cls]);
+  }, [open, cls, mode]);
 
-  if (!cls) return null;
+  if (mode === "edit" && !cls) return null;
 
   const handleNameBlur = () => {
-    if (name.trim() && name.trim() !== cls.name) {
+    if (mode === "edit" && onUpdate && cls && name.trim() && name.trim() !== cls.name) {
       onUpdate(name.trim());
     }
   };
 
+  // Parent toggling
   const toggleParent = (parentId: string) => {
-    const newParents = hierarchy.includes(parentId)
-      ? hierarchy.filter((p) => p !== parentId)
-      : [...hierarchy, parentId];
-    onUpdateHierarchy(newParents);
+    if (mode === "create") {
+      setPendingParents((prev) =>
+        prev.includes(parentId) ? prev.filter((p) => p !== parentId) : [...prev, parentId]
+      );
+    } else if (onUpdateHierarchy && hierarchy) {
+      const newParents = hierarchy.includes(parentId)
+        ? hierarchy.filter((p) => p !== parentId)
+        : [...hierarchy, parentId];
+      onUpdateHierarchy(newParents);
+    }
   };
 
-  const otherClasses = classes.filter((c) => c.id !== cls.id);
+  const currentHierarchy = mode === "create" ? pendingParents : (hierarchy || []);
+  const otherClasses = mode === "create" ? classes : classes.filter((c) => c.id !== cls!.id);
+  const displayFields = mode === "create" ? pendingFields : (fields || []);
 
+  // Drag and drop for fields
   const handleDragStart = (e: React.DragEvent, fieldId: string) => {
     setDraggedFieldId(fieldId);
     e.dataTransfer.effectAllowed = "move";
@@ -386,47 +495,77 @@ export function EditClassDialog({
     e.preventDefault();
     if (!draggedFieldId || draggedFieldId === targetFieldId) return;
 
-    const currentOrder = fields.map((f) => f.id);
-    const draggedIndex = currentOrder.indexOf(draggedFieldId);
-    const targetIndex = currentOrder.indexOf(targetFieldId);
+    if (mode === "create") {
+      const currentOrder = pendingFields.map((f) => f.id);
+      const draggedIndex = currentOrder.indexOf(draggedFieldId);
+      const targetIndex = currentOrder.indexOf(targetFieldId);
+      if (draggedIndex === -1 || targetIndex === -1) return;
 
-    if (draggedIndex === -1 || targetIndex === -1) return;
+      const newFields = [...pendingFields];
+      const [dragged] = newFields.splice(draggedIndex, 1);
+      const insertIndex = dropIndicator?.position === "after"
+        ? currentOrder.indexOf(targetFieldId) - (draggedIndex < targetIndex ? 1 : 0) + 1
+        : currentOrder.indexOf(targetFieldId) - (draggedIndex < targetIndex ? 1 : 0);
+      newFields.splice(insertIndex, 0, dragged);
+      setPendingFields(newFields);
+    } else if (onReorderFields && fields) {
+      const currentOrder = fields.map((f) => f.id);
+      const draggedIndex = currentOrder.indexOf(draggedFieldId);
+      const targetIndex = currentOrder.indexOf(targetFieldId);
+      if (draggedIndex === -1 || targetIndex === -1) return;
 
-    const newOrder = [...currentOrder];
-    newOrder.splice(draggedIndex, 1);
-    // Calculate insertion index after removal
-    const insertIndex = dropIndicator?.position === "after"
-      ? currentOrder.indexOf(targetFieldId) - (draggedIndex < targetIndex ? 1 : 0) + 1
-      : currentOrder.indexOf(targetFieldId) - (draggedIndex < targetIndex ? 1 : 0);
-    newOrder.splice(insertIndex, 0, draggedFieldId);
+      const newOrder = [...currentOrder];
+      newOrder.splice(draggedIndex, 1);
+      const insertIndex = dropIndicator?.position === "after"
+        ? currentOrder.indexOf(targetFieldId) - (draggedIndex < targetIndex ? 1 : 0) + 1
+        : currentOrder.indexOf(targetFieldId) - (draggedIndex < targetIndex ? 1 : 0);
+      newOrder.splice(insertIndex, 0, draggedFieldId);
+      onReorderFields(newOrder);
+    }
 
-    onReorderFields(newOrder);
     setDraggedFieldId(null);
     setDropIndicator(null);
+  };
+
+  const removePendingField = (fieldId: string) => {
+    setPendingFields((prev) => prev.filter((f) => f.id !== fieldId));
+  };
+
+  const handleCreate = async () => {
+    if (onCreate && name.trim()) {
+      try {
+        await onCreate(name.trim(), pendingParents, pendingFields);
+        onOpenChange(false);
+      } catch {
+        // Error displayed by caller via toast
+      }
+    }
   };
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent className="w-full sm:max-w-md p-0 flex flex-col [&>button:last-child]:hidden">
         <div className="flex items-center justify-between px-6 py-4 border-b">
-          <SheetTitle>Edit class</SheetTitle>
+          <SheetTitle>{mode === "create" ? "Add class" : "Edit class"}</SheetTitle>
           <div className="flex items-center gap-1">
             <Button variant="ghost" size="icon" className="size-8" onClick={() => onOpenChange(false)}>
               <X className="size-4" />
             </Button>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon" className="size-8">
-                  <MoreHorizontal className="size-4" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                <DropdownMenuItem onClick={onDelete}>
-                  <Minus className="size-4" />
-                  Delete class
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            {mode === "edit" && onDelete && (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" size="icon" className="size-8">
+                    <MoreHorizontal className="size-4" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" onCloseAutoFocus={(e) => e.preventDefault()}>
+                  <DropdownMenuItem onSelect={onDelete}>
+                    <Minus className="size-4" />
+                    Delete class
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            )}
           </div>
         </div>
         <div className="flex-1 overflow-y-auto p-6 space-y-4">
@@ -437,7 +576,8 @@ export function EditClassDialog({
                 id="class-name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                onBlur={handleNameBlur}
+                onBlur={mode === "edit" ? handleNameBlur : undefined}
+                autoFocus={mode === "create"}
               />
             </div>
           </div>
@@ -457,7 +597,7 @@ export function EditClassDialog({
                     >
                       <input
                         type="checkbox"
-                        checked={hierarchy.includes(c.id)}
+                        checked={currentHierarchy.includes(c.id)}
                         onChange={() => toggleParent(c.id)}
                         className="rounded"
                       />
@@ -473,7 +613,7 @@ export function EditClassDialog({
             <Label>Fields</Label>
             <div className="pl-4 space-y-2">
               <div className="space-y-1">
-                {fields.map((field) => (
+                {displayFields.map((field) => (
                   <div key={field.id}>
                     {dropIndicator?.fieldId === field.id && dropIndicator.position === "before" && (
                       <div className="h-0.5 bg-primary mx-3 rounded-full" />
@@ -490,16 +630,36 @@ export function EditClassDialog({
                       }`}
                     >
                       <GripVertical className="size-4 text-muted-foreground shrink-0" />
-                      <button
-                        type="button"
-                        onClick={() => onEditField(field)}
-                        className="flex-1 text-left hover:text-primary"
-                      >
-                        <span>{field.name}</span>
-                        <span className="text-muted-foreground ml-2 capitalize">
-                          ({field.fieldtype})
+                      {mode === "edit" && onEditField ? (
+                        <button
+                          type="button"
+                          onClick={() => onEditField(field as ProjectField)}
+                          className="flex-1 text-left hover:text-primary"
+                        >
+                          <span>{field.name}</span>
+                          <span className="text-muted-foreground ml-2 capitalize">
+                            ({field.fieldtype})
+                          </span>
+                        </button>
+                      ) : (
+                        <span className="flex-1 text-left">
+                          <span>{field.name}</span>
+                          <span className="text-muted-foreground ml-2 capitalize">
+                            ({field.fieldtype})
+                          </span>
                         </span>
-                      </button>
+                      )}
+                      {mode === "create" && field.id !== "title" && (
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="icon"
+                          className="size-6 shrink-0"
+                          onClick={() => removePendingField(field.id)}
+                        >
+                          <X className="size-3" />
+                        </Button>
+                      )}
                     </div>
                     {dropIndicator?.fieldId === field.id && dropIndicator.position === "after" && (
                       <div className="h-0.5 bg-primary mx-3 rounded-full" />
@@ -511,16 +671,53 @@ export function EditClassDialog({
           </div>
         </div>
         <SheetFooter className="px-6 py-4 border-t justify-between">
-          <Button type="button" variant="outline" size="sm" onClick={onAddField}>
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            onClick={() => {
+              if (mode === "create") {
+                setAddFieldOpen(true);
+              } else if (onAddField) {
+                onAddField();
+              }
+            }}
+          >
             <Plus className="size-4" />
             Add field
           </Button>
-          <Button type="button" onClick={() => onOpenChange(false)}>
-            <Check className="size-4" />
-            Done
-          </Button>
+          {mode === "create" ? (
+            <Button type="button" onClick={handleCreate} disabled={!name.trim()}>
+              <Check className="size-4" />
+              Add class
+            </Button>
+          ) : (
+            <Button type="button" onClick={() => onOpenChange(false)}>
+              <Check className="size-4" />
+              Done
+            </Button>
+          )}
         </SheetFooter>
       </SheetContent>
+
+      {mode === "create" && (
+        <AddFieldDialog
+          open={addFieldOpen}
+          onOpenChange={setAddFieldOpen}
+          onAdd={(fieldName, fieldtype, rows, options) => {
+            setPendingFields((prev) => [
+              ...prev,
+              {
+                id: crypto.randomUUID(),
+                name: fieldName,
+                fieldtype,
+                rows,
+                options: options?.map((o) => ({ name: o.name, colour: o.colour })),
+              },
+            ]);
+          }}
+        />
+      )}
     </Sheet>
   );
 }

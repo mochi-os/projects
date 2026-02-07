@@ -1,14 +1,13 @@
 export { DesignEditor } from "./design-editor";
 export { DesignPreview } from "./design-preview";
 export {
-  AddClassDialog,
   AddFieldDialog,
   AddOptionDialog,
-  AddViewDialog,
 } from "./add-dialogs";
 export {
-  EditViewDialog,
-  EditClassDialog,
+  ViewSheet,
+  ClassSheet,
   EditFieldDialog,
   EditOptionDialog,
 } from "./edit-dialogs";
+export type { PendingField } from "./edit-dialogs";

@@ -25,7 +25,7 @@ interface CreateObjectDialogProps {
   onOpenChange: (open: boolean) => void;
   projectId: string;
   project: ProjectDetails;
-  defaultField?: { field: string; value: string };
+  defaultFields?: { field: string; value: string }[];
   onCreated?: (id: string, number: number, readable: string) => void;
 }
 
@@ -34,7 +34,7 @@ export function CreateObjectDialog({
   onOpenChange,
   projectId,
   project,
-  defaultField,
+  defaultFields,
   onCreated,
 }: CreateObjectDialogProps) {
   const [error, setError] = useState<string | null>(null);
@@ -52,26 +52,30 @@ export function CreateObjectDialog({
       setError(null);
       // Initialize field values with defaults
       const initialValues: Record<string, string> = {};
-      if (defaultField) {
-        initialValues[defaultField.field] = defaultField.value;
+      if (defaultFields) {
+        for (const df of defaultFields) {
+          initialValues[df.field] = df.value;
+        }
       }
       setFieldValues(initialValues);
     }
-  }, [open, project.classes, defaultField]);
+  }, [open, project.classes, defaultFields]);
 
-  // Update default field value when type changes (if field exists in new type)
+  // Update default field values when type changes (if fields exist in new type)
   useEffect(() => {
-    if (defaultField && selectedClass) {
+    if (defaultFields && selectedClass) {
       const classFields = project.fields[selectedClass] || [];
-      const hasField = classFields.some((f) => f.id === defaultField.field);
-      if (hasField) {
-        setFieldValues((prev) => ({
-          ...prev,
-          [defaultField.field]: defaultField.value,
-        }));
+      const updates: Record<string, string> = {};
+      for (const df of defaultFields) {
+        if (classFields.some((f) => f.id === df.field)) {
+          updates[df.field] = df.value;
+        }
+      }
+      if (Object.keys(updates).length > 0) {
+        setFieldValues((prev) => ({ ...prev, ...updates }));
       }
     }
-  }, [selectedClass, defaultField, project.fields]);
+  }, [selectedClass, defaultFields, project.fields]);
 
   // Load objects for parent selection
   const { data: objectsData } = useQuery({
@@ -196,10 +200,12 @@ export function CreateObjectDialog({
     setParent("");
     // Reset field values but keep defaults if applicable
     const newValues: Record<string, string> = {};
-    if (defaultField) {
+    if (defaultFields) {
       const newTypeFields = project.fields[newType] || [];
-      if (newTypeFields.some((f) => f.id === defaultField.field)) {
-        newValues[defaultField.field] = defaultField.value;
+      for (const df of defaultFields) {
+        if (newTypeFields.some((f) => f.id === df.field)) {
+          newValues[df.field] = df.value;
+        }
       }
     }
     setFieldValues(newValues);

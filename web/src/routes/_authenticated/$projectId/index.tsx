@@ -727,6 +727,7 @@ function ProjectPage() {
         projectId={params.projectId}
         project={project}
         defaultFields={createDefaultFields}
+        allowedClasses={activeView?.classes?.length ? activeView.classes : undefined}
         onCreated={handleObjectCreated}
       />
 

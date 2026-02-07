@@ -37,8 +37,7 @@
       "priority": [
         {"id": "low", "name": "Low", "colour": "#94a3b8", "rank": 0},
         {"id": "medium", "name": "Medium", "colour": "#fbbf24", "rank": 1},
-        {"id": "high", "name": "High", "colour": "#f87171", "rank": 2},
-        {"id": "critical", "name": "Critical", "colour": "#dc2626", "rank": 3}
+        {"id": "high", "name": "High", "colour": "#f87171", "rank": 2}
       ],
       "category": [
         {"id": "bug", "name": "Bug", "colour": "#f87171", "rank": 0},
@@ -61,7 +60,8 @@
     "pr": ["", "ticket"]
   },
   "views": [
-    {"id": "board", "name": "Board", "viewtype": "board", "columns": "status", "fields": "title,description,priority,category"},
+    {"id": "tickets", "name": "Tickets", "viewtype": "board", "columns": "status", "fields": "title,priority,category,owner", "classes": ["ticket"]},
+    {"id": "pull_requests", "name": "Pull Requests", "viewtype": "board", "columns": "status", "fields": "title,repository,branch,owner", "classes": ["pr"]},
     {"id": "tree", "name": "Tree", "viewtype": "tree", "fields": "title,description,status,priority,category,owner,due"}
   ]
 }

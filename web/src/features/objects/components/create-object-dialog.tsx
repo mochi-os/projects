@@ -26,6 +26,7 @@ interface CreateObjectDialogProps {
   projectId: string;
   project: ProjectDetails;
   defaultFields?: { field: string; value: string }[];
+  allowedClasses?: string[];
   onCreated?: (id: string, number: number, readable: string) => void;
 }
 
@@ -35,6 +36,7 @@ export function CreateObjectDialog({
   projectId,
   project,
   defaultFields,
+  allowedClasses,
   onCreated,
 }: CreateObjectDialogProps) {
   const [error, setError] = useState<string | null>(null);
@@ -43,10 +45,15 @@ export function CreateObjectDialog({
   const [parent, setParent] = useState("");
   const queryClient = useQueryClient();
 
+  // Filter classes to those allowed by the current view
+  const availableClasses = allowedClasses?.length
+    ? project.classes.filter((c) => allowedClasses.includes(c.id))
+    : project.classes;
+
   // Reset state when dialog opens/closes or type changes
   useEffect(() => {
     if (open) {
-      const initialType = project.classes[0]?.id || "";
+      const initialType = availableClasses[0]?.id || "";
       setSelectedType(initialType);
       setParent("");
       setError(null);
@@ -218,7 +225,7 @@ export function CreateObjectDialog({
                 <SelectValue />
               </SelectTrigger>
               <SelectContent className="z-[60]">
-                {project.classes.map((type) => (
+                {availableClasses.map((type) => (
                   <SelectItem key={type.id} value={type.id}>
                     {type.name}
                   </SelectItem>

@@ -3070,7 +3070,7 @@ def action_repositories_merge_check(a):
 		a.error(400, "Repository, source branch, and target branch required")
 		return
 
-	result = mochi.service.call("repositories", "can_merge", {
+	result = mochi.service.call("repositories", "merge/check", {
 		"repo": repo_id,
 		"source": source,
 		"target": target

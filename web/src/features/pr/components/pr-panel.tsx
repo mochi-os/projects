@@ -188,6 +188,10 @@ function PrItem({
   };
 
   const handleTitleBlur = () => {
+    if (!title.trim()) {
+      setTitle(pr.title);
+      return;
+    }
     if (title !== pr.title) {
       onUpdate({ title });
     }
@@ -229,7 +233,8 @@ function PrItem({
         ) : (
           <ChevronRight className="size-3.5 shrink-0 text-muted-foreground" />
         )}
-        <span className="flex-1 truncate text-muted-foreground">{summary}</span>
+        {!expanded && <span className="flex-1 truncate text-muted-foreground">{summary}</span>}
+        {expanded && <span className="flex-1" />}
         {isDraft && !isMerged && (
           <span className="text-xs text-yellow-600 font-medium shrink-0 border border-yellow-600/30 rounded px-1.5 py-0.5">Draft</span>
         )}
@@ -257,6 +262,19 @@ function PrItem({
               <div className="text-sm font-medium">{pr.title}</div>
             )}
 
+            {!readOnly && !isMerged && (
+              <Textarea
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                onBlur={handleDescriptionBlur}
+                placeholder="Description"
+                rows={2}
+              />
+            )}
+            {readOnly && pr.description && (
+              <div className="text-sm text-muted-foreground whitespace-pre-wrap">{pr.description}</div>
+            )}
+
             <RepositorySelect
               value={pr.repository}
               onChange={handleRepoChange}
@@ -280,19 +298,6 @@ function PrItem({
                 disabled={readOnly || isMerged}
               />
             </div>
-
-            {!readOnly && !isMerged && (
-              <Textarea
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                onBlur={handleDescriptionBlur}
-                placeholder="Description"
-                rows={2}
-              />
-            )}
-            {readOnly && pr.description && (
-              <div className="text-sm text-muted-foreground whitespace-pre-wrap">{pr.description}</div>
-            )}
 
             {!readOnly && !isMerged && (
               <label className="flex items-center gap-2 text-sm cursor-pointer">

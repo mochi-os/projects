@@ -4345,9 +4345,9 @@ def action_pr_update(a):
 		mochi.db.execute("update pull_requests set target=?, updated=? where id=?", target, now, pr_id)
 	if status:
 		mochi.db.execute("update pull_requests set status=?, updated=? where id=?", status, now, pr_id)
-	if title:
+	if a.input.exists("title") and title:
 		mochi.db.execute("update pull_requests set title=?, updated=? where id=?", title, now, pr_id)
-	if description:
+	if a.input.exists("description"):
 		mochi.db.execute("update pull_requests set description=?, updated=? where id=?", description, now, pr_id)
 	if draft_input:
 		draft = 1 if draft_input == "1" else 0

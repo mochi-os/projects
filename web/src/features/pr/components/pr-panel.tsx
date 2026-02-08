@@ -1,7 +1,7 @@
 // Mochi Projects: Pull request panel component
 // Copyright Alistair Cunningham 2026
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { ArrowRight, GitPullRequest, Plus, Trash2, ChevronDown, ChevronRight } from "lucide-react";
 import { Button, ConfirmDialog, Input, Textarea, cn } from "@mochi/common";
@@ -152,8 +152,15 @@ function PrItem({
   projectId,
   readOnly,
 }: PrItemProps) {
+  const ref = useRef<HTMLDivElement>(null);
   const isMerged = pr.status === "merged";
   const isDraft = pr.draft === 1;
+
+  useEffect(() => {
+    if (expanded) {
+      ref.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }
+  }, [expanded]);
 
   const [title, setTitle] = useState(pr.title);
   const [description, setDescription] = useState(pr.description);
@@ -221,7 +228,7 @@ function PrItem({
       : "border-border";
 
   return (
-    <div className={cn("border-2 rounded-[10px] overflow-hidden", borderColor)}>
+    <div ref={ref} className={cn("border-2 rounded-[10px] overflow-hidden", borderColor)}>
       {/* Header row */}
       <button
         type="button"

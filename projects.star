@@ -446,17 +446,10 @@ def action_project_get(a):
 		a.error(401, "Not logged in")
 		return
 
-	project_id = a.input("project")
+	project_id = resolve_project(a)
 	if not project_id:
 		a.error(400, "Project ID required")
 		return
-
-	# Resolve fingerprint to full ID if needed
-	if len(project_id) == 9:
-		project_id = mochi.entity.resolve(project_id)
-		if not project_id:
-			a.error(404, "Project not found")
-			return
 
 	row = mochi.db.row("select id, name, description, prefix, counter, owner, server, created, updated from projects where id=?", project_id)
 	if not row:
@@ -523,16 +516,10 @@ def action_project_update(a):
 		a.error(401, "Not logged in")
 		return
 
-	project_id = a.input("project")
+	project_id = resolve_project(a)
 	if not project_id:
 		a.error(400, "Project ID required")
 		return
-
-	if len(project_id) == 9:
-		project_id = mochi.entity.resolve(project_id)
-		if not project_id:
-			a.error(404, "Project not found")
-			return
 
 	row = mochi.db.row("select id, owner from projects where id=?", project_id)
 	if not row:
@@ -574,16 +561,10 @@ def action_project_delete(a):
 		a.error(401, "Not logged in")
 		return
 
-	project_id = a.input("project")
+	project_id = resolve_project(a)
 	if not project_id:
 		a.error(400, "Project ID required")
 		return
-
-	if len(project_id) == 9:
-		project_id = mochi.entity.resolve(project_id)
-		if not project_id:
-			a.error(404, "Project not found")
-			return
 
 	row = mochi.db.row("select id, owner from projects where id=?", project_id)
 	if not row:
@@ -835,7 +816,11 @@ def resolve_project(a):
 	if not project_id:
 		return None
 	if len(project_id) == 9:
-		project_id = mochi.entity.resolve(project_id)
+		rows = mochi.db.rows("select id from projects")
+		for row in rows:
+			if mochi.entity.fingerprint(row["id"]) == project_id:
+				return row["id"]
+		return None
 	return project_id
 
 def get_project(project_id):
@@ -3159,8 +3144,12 @@ def action_repositories_merge(a):
 		a.error(401, "Not logged in")
 		return
 
-	project_id = a.input("project")
-	project = mochi.db.row("select * from projects where id=?", project_id)
+	project_id = resolve_project(a)
+	if not project_id:
+		a.error(400, "Project ID required")
+		return
+
+	project = get_project(project_id)
 	if not project:
 		a.error(404, "Project not found")
 		return

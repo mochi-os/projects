@@ -4,7 +4,7 @@
 import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { ArrowRight, GitPullRequest, Plus, Trash2, ChevronDown, ChevronRight } from "lucide-react";
-import { Button, ConfirmDialog } from "@mochi/common";
+import { Button, ConfirmDialog, Input, Textarea, cn } from "@mochi/common";
 import projectsApi from "@/api/projects";
 import type { PrData } from "@/types";
 import { RepositorySelect } from "./repository-select";
@@ -48,7 +48,7 @@ export function PrPanel({
   });
 
   const updateMutation = useMutation({
-    mutationFn: async ({ prId, data }: { prId: string; data: { repository?: string; source?: string; target?: string; status?: string } }) => {
+    mutationFn: async ({ prId, data }: { prId: string; data: { repository?: string; source?: string; target?: string; status?: string; title?: string; description?: string; draft?: string } }) => {
       return projectsApi.updatePr(projectId, objectId, prId, data);
     },
     onSuccess: () => {
@@ -71,7 +71,7 @@ export function PrPanel({
     createMutation.mutate();
   };
 
-  const handleUpdate = (prId: string, data: { repository?: string; source?: string; target?: string; status?: string }) => {
+  const handleUpdate = (prId: string, data: { repository?: string; source?: string; target?: string; status?: string; title?: string; description?: string; draft?: string }) => {
     updateMutation.mutate({ prId, data });
   };
 
@@ -133,7 +133,7 @@ interface PrItemProps {
   pr: PrData;
   expanded: boolean;
   onToggle: () => void;
-  onUpdate: (data: { repository?: string; source?: string; target?: string; status?: string }) => void;
+  onUpdate: (data: { repository?: string; source?: string; target?: string; status?: string; title?: string; description?: string; draft?: string }) => void;
   onDelete: () => void;
   objectTitle: string;
   objectReadable: string;
@@ -153,6 +153,10 @@ function PrItem({
   readOnly,
 }: PrItemProps) {
   const isMerged = pr.status === "merged";
+  const isDraft = pr.draft === 1;
+
+  const [title, setTitle] = useState(pr.title);
+  const [description, setDescription] = useState(pr.description);
 
   // Fetch merge check when expanded and has all fields
   const { data: mergeCheck } = useQuery({
@@ -183,13 +187,37 @@ function PrItem({
     onUpdate({ status: "merged" });
   };
 
+  const handleTitleBlur = () => {
+    if (title !== pr.title) {
+      onUpdate({ title });
+    }
+  };
+
+  const handleDescriptionBlur = () => {
+    if (description !== pr.description) {
+      onUpdate({ description });
+    }
+  };
+
+  const handleDraftToggle = () => {
+    onUpdate({ draft: isDraft ? "0" : "1" });
+  };
+
   // Summary line for collapsed state
-  const summary = pr.repository
-    ? `${pr.source || "?"} → ${pr.target || "?"}`
-    : "Not configured";
+  const summary = pr.title
+    ? pr.title
+    : pr.repository
+      ? `${pr.source || "?"} → ${pr.target || "?"}`
+      : "Not configured";
+
+  const borderColor = isMerged
+    ? "border-green-500/40"
+    : pr.repository && pr.source && pr.target
+      ? "border-blue-500/40"
+      : "border-border";
 
   return (
-    <div className="border rounded-[10px] overflow-hidden">
+    <div className={cn("border-2 rounded-[10px] overflow-hidden", borderColor)}>
       {/* Header row */}
       <button
         type="button"
@@ -202,10 +230,13 @@ function PrItem({
           <ChevronRight className="size-3.5 shrink-0 text-muted-foreground" />
         )}
         <span className="flex-1 truncate text-muted-foreground">{summary}</span>
+        {isDraft && !isMerged && (
+          <span className="text-xs text-yellow-600 font-medium shrink-0 border border-yellow-600/30 rounded px-1.5 py-0.5">Draft</span>
+        )}
         {isMerged && (
           <span className="text-xs text-green-600 font-medium shrink-0">Merged</span>
         )}
-        {!isMerged && pr.repository && pr.source && pr.target && (
+        {!isMerged && !isDraft && pr.repository && pr.source && pr.target && (
           <span className="text-xs text-blue-500 font-medium shrink-0">Open</span>
         )}
       </button>
@@ -214,6 +245,18 @@ function PrItem({
       {expanded && (
         <div className="px-3 pb-3 space-y-3 border-t">
           <div className="space-y-3 pt-3">
+            {!readOnly && !isMerged && (
+              <Input
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                onBlur={handleTitleBlur}
+                placeholder="Title"
+              />
+            )}
+            {readOnly && pr.title && (
+              <div className="text-sm font-medium">{pr.title}</div>
+            )}
+
             <RepositorySelect
               value={pr.repository}
               onChange={handleRepoChange}
@@ -237,6 +280,31 @@ function PrItem({
                 disabled={readOnly || isMerged}
               />
             </div>
+
+            {!readOnly && !isMerged && (
+              <Textarea
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                onBlur={handleDescriptionBlur}
+                placeholder="Description"
+                rows={2}
+              />
+            )}
+            {readOnly && pr.description && (
+              <div className="text-sm text-muted-foreground whitespace-pre-wrap">{pr.description}</div>
+            )}
+
+            {!readOnly && !isMerged && (
+              <label className="flex items-center gap-2 text-sm cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={isDraft}
+                  onChange={handleDraftToggle}
+                  className="rounded"
+                />
+                <span className="text-muted-foreground">Draft</span>
+              </label>
+            )}
           </div>
 
           {pr.repository && pr.source && pr.target && (
@@ -247,7 +315,6 @@ function PrItem({
                     repoId={pr.repository}
                     source={pr.source}
                     target={pr.target}
-                    diffUrl={`/projects/${projectId}/diff?repo=${encodeURIComponent(pr.repository)}&source=${encodeURIComponent(pr.source)}&target=${encodeURIComponent(pr.target)}`}
                   />
 
                   {conflicts.length > 0 && <ConflictList conflicts={conflicts} />}
@@ -256,40 +323,71 @@ function PrItem({
                     repoId={pr.repository}
                     base={pr.target}
                     head={pr.source}
+                    diffUrl={`/projects/${projectId}/diff?repo=${encodeURIComponent(pr.repository)}&source=${encodeURIComponent(pr.source)}&target=${encodeURIComponent(pr.target)}`}
                   />
 
-                  <MergeButton
-                    repoId={pr.repository}
-                    source={pr.source}
-                    target={pr.target}
-                    canMerge={canMerge}
-                    objectTitle={objectTitle}
-                    objectReadable={objectReadable}
-                    projectId={projectId}
-                    onMergeComplete={handleMergeComplete}
-                    disabled={readOnly}
-                  />
+                  {isDraft && (
+                    <p className="text-sm text-yellow-600">This pull request is a draft and cannot be merged.</p>
+                  )}
+
+                  <div className="flex items-center gap-2">
+                    <MergeButton
+                      repoId={pr.repository}
+                      source={pr.source}
+                      target={pr.target}
+                      canMerge={canMerge && !isDraft}
+                      objectTitle={objectTitle}
+                      objectReadable={objectReadable}
+                      projectId={projectId}
+                      onMergeComplete={handleMergeComplete}
+                      disabled={readOnly || isDraft}
+                    />
+                    {!readOnly && (
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-9 w-9 shrink-0 text-muted-foreground hover:text-destructive hover:bg-destructive/10"
+                        onClick={onDelete}
+                        title="Delete pull request"
+                      >
+                        <Trash2 className="size-4" />
+                      </Button>
+                    )}
+                  </div>
                 </>
               )}
 
               {isMerged && (
-                <div className="text-sm text-muted-foreground">
-                  This pull request has been merged into {pr.target}.
+                <div className="flex items-center justify-between">
+                  <div className="text-sm text-muted-foreground">
+                    This pull request has been merged into {pr.target}.
+                  </div>
+                  {!readOnly && (
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="h-9 w-9 shrink-0 text-muted-foreground hover:text-destructive hover:bg-destructive/10"
+                      onClick={onDelete}
+                      title="Delete pull request"
+                    >
+                      <Trash2 className="size-4" />
+                    </Button>
+                  )}
                 </div>
               )}
             </div>
           )}
 
-          {!readOnly && !isMerged && (
-            <div className="pt-2 border-t">
+          {!readOnly && !(pr.repository && pr.source && pr.target) && (
+            <div className="flex justify-end">
               <Button
                 variant="ghost"
-                size="sm"
-                className="h-7 text-xs text-muted-foreground hover:text-destructive"
+                size="icon"
+                className="h-9 w-9 shrink-0 text-muted-foreground hover:text-destructive hover:bg-destructive/10"
                 onClick={onDelete}
+                title="Delete pull request"
               >
-                <Trash2 className="size-3" />
-                Delete
+                <Trash2 className="size-4" />
               </Button>
             </div>
           )}

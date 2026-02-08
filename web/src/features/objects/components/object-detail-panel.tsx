@@ -3,7 +3,7 @@
 
 import { useState, useMemo } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { Eye, EyeOff, Loader2, Trash2, MessageSquare, Activity, Settings2, X } from "lucide-react";
+import { Eye, EyeOff, Loader2, Trash2, MessageSquare, Activity, Settings2, GitPullRequest, X } from "lucide-react";
 import {
   Button,
   Textarea,
@@ -33,19 +33,7 @@ interface ObjectDetailPanelProps {
   onClose: () => void;
 }
 
-type Tab = "properties" | "comments" | "activity";
-
-interface TabDef {
-  id: Tab;
-  label: string;
-  icon: React.ReactNode;
-}
-
-const tabs: TabDef[] = [
-  { id: "properties", label: "Properties", icon: <Settings2 className="size-4" /> },
-  { id: "comments", label: "Comments", icon: <MessageSquare className="size-4" /> },
-  { id: "activity", label: "Activity", icon: <Activity className="size-4" /> },
-];
+type Tab = "properties" | "prs" | "comments" | "activity";
 
 export function ObjectDetailPanel({
   projectId,
@@ -238,6 +226,17 @@ export function ObjectDetailPanel({
   const classFields = project.fields[object.class] || [];
   const classOptions = project.options[object.class] || {};
   const title = data.values.title || object.readable;
+  const hasPrs = project.classes.find((c) => c.id === object.class)?.pull_requests === 1;
+  const prCount = data.prs?.length || 0;
+
+  const tabs: { id: Tab; label: string; icon: React.ReactNode }[] = [
+    { id: "properties", label: "Properties", icon: <Settings2 className="size-4" /> },
+    ...(hasPrs
+      ? [{ id: "prs" as Tab, label: `Pull requests (${prCount})`, icon: <GitPullRequest className="size-4" /> }]
+      : []),
+    { id: "comments", label: `Comments (${data.comment_count || 0})`, icon: <MessageSquare className="size-4" /> },
+    { id: "activity", label: "Activity", icon: <Activity className="size-4" /> },
+  ];
 
   const handleTitleSave = () => {
     if (titleValue !== data.values.title) {
@@ -401,18 +400,18 @@ export function ObjectDetailPanel({
                   </div>
                 ))}
 
-              {/* Pull Request Panel */}
-              {project.classes.find((c) => c.id === object.class)?.pull_requests === 1 && (
-                <div className="mt-8 pt-6 border-t">
-                  <PrPanel
-                    projectId={projectId}
-                    objectId={objectId!}
-                    prs={data.prs || []}
-                    objectTitle={title}
-                    objectReadable={object.readable}
-                  />
-                </div>
-              )}
+            </div>
+          )}
+
+          {activeTab === "prs" && hasPrs && (
+            <div className="max-w-2xl">
+              <PrPanel
+                projectId={projectId}
+                objectId={objectId!}
+                prs={data.prs || []}
+                objectTitle={title}
+                objectReadable={object.readable}
+              />
             </div>
           )}
 

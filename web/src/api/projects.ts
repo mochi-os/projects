@@ -823,7 +823,7 @@ const projectsApi = {
   createPr: async (
     projectId: string,
     objectId: string,
-    data: { repository?: string; source?: string; target?: string },
+    data: { repository?: string; source?: string; target?: string; title?: string; description?: string; draft?: number },
   ): Promise<{ data: PrData }> => {
     return projectsRequest.post(
       endpoints.projects.prCreate(projectId, objectId),
@@ -836,7 +836,7 @@ const projectsApi = {
     projectId: string,
     objectId: string,
     prId: string,
-    data: { repository?: string; source?: string; target?: string; status?: string },
+    data: { repository?: string; source?: string; target?: string; status?: string; title?: string; description?: string; draft?: string },
   ): Promise<{ data: PrData }> => {
     return projectsRequest.post(
       endpoints.projects.prUpdate(projectId, objectId, prId),
@@ -918,10 +918,11 @@ const projectsApi = {
     target: string,
     message: string,
     projectId?: string,
+    method?: string,
   ): Promise<MergeResponse> => {
     return projectsRequest.post<MergeResponse>(
       endpoints.projects.repositoryMerge(repoId),
-      { source, target, message, project: projectId },
+      { source, target, message, project: projectId, method },
     );
   },
 

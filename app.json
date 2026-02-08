@@ -12,9 +12,10 @@
 	"execute": ["projects.star"],
 
 	"database": {
-		"schema": 1,
+		"schema": 2,
 		"file": "projects.db",
-		"create": {"function": "database_create"}
+		"create": {"function": "database_create"},
+		"upgrade": {"function": "database_upgrade"}
 	},
 
 	"icons": [

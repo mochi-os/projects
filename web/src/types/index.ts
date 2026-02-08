@@ -141,6 +141,9 @@ export interface PrData {
   source: string;
   target: string;
   status: string;
+  title: string;
+  description: string;
+  draft: number;
   created: number;
   updated: number;
 }
@@ -174,6 +177,7 @@ export interface ObjectGetResponse {
     linked_by: ObjectLink[];
     watching: boolean;
     prs: PrData[];
+    comment_count: number;
   };
 }
 

@@ -3,7 +3,7 @@
 
 import { useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { FileCode2, Plus, Minus, Loader2 } from "lucide-react";
+import { FileCode2, Plus, Minus, Loader2, FileDiff } from "lucide-react";
 import { cn } from "@mochi/common";
 import projectsApi from "@/api/projects";
 import { parseDiff } from "./diff-viewer";
@@ -12,9 +12,10 @@ interface DiffStatsProps {
   repoId: string;
   base: string;
   head: string;
+  diffUrl?: string;
 }
 
-export function DiffStats({ repoId, base, head }: DiffStatsProps) {
+export function DiffStats({ repoId, base, head, diffUrl }: DiffStatsProps) {
   const { data: rawDiff, isLoading } = useQuery({
     queryKey: ["diff", repoId, base, head],
     queryFn: async () => {
@@ -66,6 +67,17 @@ export function DiffStats({ repoId, base, head }: DiffStatsProps) {
           <Minus className="size-3" />
           {deletions}
         </span>
+        {diffUrl && (
+          <a
+            href={diffUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="ml-auto inline-flex items-center gap-1.5 rounded-md border px-2 py-0.5 text-xs text-muted-foreground hover:bg-muted transition-colors shrink-0"
+          >
+            <FileDiff className="size-3" />
+            Diff
+          </a>
+        )}
       </div>
 
       <div className="space-y-1 max-h-48 overflow-y-auto">

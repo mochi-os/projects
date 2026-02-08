@@ -2,7 +2,7 @@
 // Copyright Alistair Cunningham 2026
 
 import { useQuery } from "@tanstack/react-query";
-import { CheckCircle2, XCircle, AlertCircle, Loader2, ExternalLink } from "lucide-react";
+import { CheckCircle2, XCircle, AlertCircle, Loader2 } from "lucide-react";
 import { cn } from "@mochi/common";
 import projectsApi from "@/api/projects";
 
@@ -10,10 +10,9 @@ interface MergeStatusProps {
   repoId: string;
   source: string;
   target: string;
-  diffUrl?: string;
 }
 
-export function MergeStatus({ repoId, source, target, diffUrl }: MergeStatusProps) {
+export function MergeStatus({ repoId, source, target }: MergeStatusProps) {
   const { data, isLoading, error } = useQuery({
     queryKey: ["merge-check", repoId, source, target],
     queryFn: async () => {
@@ -75,33 +74,8 @@ export function MergeStatus({ repoId, source, target, diffUrl }: MergeStatusProp
               .join(", ")}
           </span>
         )}
-        {diffUrl && (
-          <a
-            href={diffUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="ml-auto inline-flex items-center gap-1 rounded-md border px-2 py-0.5 text-xs text-muted-foreground hover:bg-muted transition-colors shrink-0"
-          >
-            <ExternalLink className="size-3" />
-            View diff
-          </a>
-        )}
       </div>
 
-      {data.conflicts.length > 0 && (
-        <div className="space-y-1">
-          <div className="text-xs font-medium text-destructive">
-            Conflicts ({data.conflicts.length} files):
-          </div>
-          <ul className="text-xs text-muted-foreground space-y-0.5">
-            {data.conflicts.map((file) => (
-              <li key={file} className="font-mono truncate">
-                {file}
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
     </div>
   );
 }

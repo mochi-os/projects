@@ -7,6 +7,8 @@ import { GitMerge, Loader2, CheckCircle2 } from "lucide-react";
 import { Button, ConfirmDialog, getErrorMessage } from "@mochi/common";
 import projectsApi from "@/api/projects";
 
+type MergeMethod = "merge" | "squash" | "rebase";
+
 interface MergeButtonProps {
   repoId: string;
   source: string;
@@ -31,11 +33,12 @@ export function MergeButton({
   disabled,
 }: MergeButtonProps) {
   const [showConfirm, setShowConfirm] = useState(false);
+  const [method, setMethod] = useState<MergeMethod>("merge");
 
   const mergeMutation = useMutation({
     mutationFn: async () => {
       const message = `Merge ${objectReadable}: ${objectTitle}`;
-      const response = await projectsApi.merge(repoId, source, target, message, projectId);
+      const response = await projectsApi.merge(repoId, source, target, message, projectId, method);
       return response.data;
     },
     onSuccess: () => {
@@ -57,12 +60,18 @@ export function MergeButton({
     );
   }
 
+  const methodLabels: Record<MergeMethod, string> = {
+    merge: "Merge commit",
+    squash: "Squash and merge",
+    rebase: "Rebase and merge",
+  };
+
   return (
     <>
       <Button
         onClick={() => setShowConfirm(true)}
         disabled={!canMerge || disabled || mergeMutation.isPending}
-        className="w-full"
+        className="flex-1"
       >
         {mergeMutation.isPending ? (
           <>
@@ -72,7 +81,7 @@ export function MergeButton({
         ) : (
           <>
             <GitMerge className="size-4 mr-2" />
-            Merge pull request
+            {methodLabels[method]}
           </>
         )}
       </Button>
@@ -88,10 +97,25 @@ export function MergeButton({
         onOpenChange={setShowConfirm}
         title="Merge pull request"
         desc={`This will merge "${source}" into "${target}". This action cannot be undone.`}
-        confirmText="Merge"
+        confirmText={methodLabels[method]}
         isLoading={mergeMutation.isPending}
         handleConfirm={handleMerge}
-      />
+      >
+        <div className="space-y-2 px-1">
+          {(["merge", "squash", "rebase"] as const).map((m) => (
+            <label key={m} className="flex items-center gap-2 text-sm cursor-pointer">
+              <input
+                type="radio"
+                name="merge-method"
+                checked={method === m}
+                onChange={() => setMethod(m)}
+                className="accent-primary"
+              />
+              {methodLabels[m]}
+            </label>
+          ))}
+        </div>
+      </ConfirmDialog>
     </>
   );
 }

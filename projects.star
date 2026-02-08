@@ -241,6 +241,9 @@ def database_create():
 		source text not null default '',
 		target text not null default '',
 		status text not null default 'open',
+		title text not null default '',
+		description text not null default '',
+		draft integer not null default 0,
 		created integer not null,
 		updated integer not null
 	)""")
@@ -248,6 +251,13 @@ def database_create():
 
 	# Migrations
 	mochi.db.execute("update views set viewtype='list' where viewtype='tree'")
+
+# Upgrade database schema
+def database_upgrade(from_version, to_version):
+	if from_version < 2:
+		mochi.db.execute("alter table pull_requests add column title text not null default ''")
+		mochi.db.execute("alter table pull_requests add column description text not null default ''")
+		mochi.db.execute("alter table pull_requests add column draft integer not null default 0")
 
 
 # ============================================================================
@@ -1048,7 +1058,11 @@ def action_object_get(a):
 	watching = mochi.db.exists("select 1 from watchers where object=? and user=?", object_id, a.user.identity.id)
 
 	# Get pull requests
-	prs = mochi.db.rows("select id, object, repository, source, target, status, created, updated from pull_requests where object=?", object_id) or []
+	prs = mochi.db.rows("select id, object, repository, source, target, status, title, description, draft, created, updated from pull_requests where object=?", object_id) or []
+
+	# Get comment count
+	comment_row = mochi.db.row("select count(*) as count from comments where object=?", object_id)
+	comment_count = comment_row["count"] if comment_row else 0
 
 	return {"data": {
 		"object": {
@@ -1066,6 +1080,7 @@ def action_object_get(a):
 		"linked_by": linked_by,
 		"watching": watching,
 		"prs": prs,
+		"comment_count": comment_count,
 	}}
 
 def action_object_update(a):
@@ -3154,6 +3169,7 @@ def action_repositories_merge(a):
 	source = a.input("source")
 	target = a.input("target")
 	message = a.input("message") or "Merge branch"
+	method = a.input("method") or "merge"
 
 	if not repo_id or not source or not target:
 		a.error(400, "Repository, source, and target required")
@@ -3166,6 +3182,7 @@ def action_repositories_merge(a):
 			"source": source,
 			"target": target,
 			"message": message,
+			"method": method,
 			"author_name": a.user.identity.name,
 			"author_email": a.user.username,
 		})
@@ -3185,6 +3202,7 @@ def action_repositories_merge(a):
 			"source": source,
 			"target": target,
 			"message": message,
+			"method": method,
 			"author_name": a.user.identity.name,
 			"author_email": a.user.username,
 		})
@@ -4172,6 +4190,7 @@ def event_merge_request(e):
 	source = e.content("source")
 	target = e.content("target")
 	message = e.content("message") or "Merge branch"
+	method = e.content("method") or "merge"
 	author_name = e.content("author_name") or "Mochi"
 	author_email = e.content("author_email") or ""
 
@@ -4180,6 +4199,7 @@ def event_merge_request(e):
 		"source": source,
 		"target": target,
 		"message": message,
+		"method": method,
 		"author_name": author_name,
 		"author_email": author_email,
 	})
@@ -4211,7 +4231,7 @@ def action_pr_list(a):
 		a.error(400, "Object ID required")
 		return
 
-	prs = mochi.db.rows("select id, object, repository, source, target, status, created, updated from pull_requests where object=?", object_id) or []
+	prs = mochi.db.rows("select id, object, repository, source, target, status, title, description, draft, created, updated from pull_requests where object=?", object_id) or []
 	return {"data": {"prs": prs}}
 
 # Create a pull request on an object
@@ -4253,18 +4273,22 @@ def action_pr_create(a):
 	repository = a.input("repository")
 	source = a.input("source")
 	target = a.input("target")
+	title = a.input("title")
+	description = a.input("description")
+	draft = 1 if a.input("draft") == "1" else 0
 
 	now = mochi.time.now()
 	pr_id = mochi.uid()
 
 	mochi.db.execute(
-		"insert into pull_requests (id, object, repository, source, target, status, created, updated) values (?, ?, ?, ?, ?, ?, ?, ?)",
-		pr_id, object_id, repository or "", source or "", target or "", "open", now, now
+		"insert into pull_requests (id, object, repository, source, target, status, title, description, draft, created, updated) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+		pr_id, object_id, repository or "", source or "", target or "", "open", title or "", description or "", draft, now, now
 	)
 
 	pr_data = {
 		"id": pr_id, "object": object_id, "repository": repository or "",
 		"source": source or "", "target": target or "", "status": "open",
+		"title": title or "", "description": description or "", "draft": draft,
 		"created": now, "updated": now,
 	}
 
@@ -4309,6 +4333,9 @@ def action_pr_update(a):
 	source = a.input("source")
 	target = a.input("target")
 	status = a.input("status")
+	title = a.input("title")
+	description = a.input("description")
+	draft_input = a.input("draft")
 
 	if repository:
 		mochi.db.execute("update pull_requests set repository=?, updated=? where id=?", repository, now, pr_id)
@@ -4318,9 +4345,16 @@ def action_pr_update(a):
 		mochi.db.execute("update pull_requests set target=?, updated=? where id=?", target, now, pr_id)
 	if status:
 		mochi.db.execute("update pull_requests set status=?, updated=? where id=?", status, now, pr_id)
+	if title:
+		mochi.db.execute("update pull_requests set title=?, updated=? where id=?", title, now, pr_id)
+	if description:
+		mochi.db.execute("update pull_requests set description=?, updated=? where id=?", description, now, pr_id)
+	if draft_input:
+		draft = 1 if draft_input == "1" else 0
+		mochi.db.execute("update pull_requests set draft=?, updated=? where id=?", draft, now, pr_id)
 
 	# Re-read the updated row
-	pr = mochi.db.row("select id, object, repository, source, target, status, created, updated from pull_requests where id=?", pr_id)
+	pr = mochi.db.row("select id, object, repository, source, target, status, title, description, draft, created, updated from pull_requests where id=?", pr_id)
 
 	broadcast_event(project_id, "pull_request/update", {
 		"project": project_id, "pr": pr
@@ -4406,9 +4440,10 @@ def event_pull_request_create(e):
 	if not pr:
 		return
 	mochi.db.execute(
-		"insert or ignore into pull_requests (id, object, repository, source, target, status, created, updated) values (?, ?, ?, ?, ?, ?, ?, ?)",
+		"insert or ignore into pull_requests (id, object, repository, source, target, status, title, description, draft, created, updated) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
 		pr.get("id", ""), pr.get("object", ""), pr.get("repository", ""),
 		pr.get("source", ""), pr.get("target", ""), pr.get("status", "open"),
+		pr.get("title", ""), pr.get("description", ""), pr.get("draft", 0),
 		pr.get("created", mochi.time.now()), pr.get("updated", mochi.time.now())
 	)
 	fp = mochi.entity.fingerprint(project_id)
@@ -4427,9 +4462,10 @@ def event_pull_request_update(e):
 	if not pr_id:
 		return
 	mochi.db.execute(
-		"update pull_requests set repository=?, source=?, target=?, status=?, updated=? where id=?",
+		"update pull_requests set repository=?, source=?, target=?, status=?, title=?, description=?, draft=?, updated=? where id=?",
 		pr.get("repository", ""), pr.get("source", ""), pr.get("target", ""),
-		pr.get("status", ""), pr.get("updated", mochi.time.now()), pr_id
+		pr.get("status", ""), pr.get("title", ""), pr.get("description", ""),
+		pr.get("draft", 0), pr.get("updated", mochi.time.now()), pr_id
 	)
 	fp = mochi.entity.fingerprint(project_id)
 	if fp:

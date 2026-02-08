@@ -69,6 +69,16 @@ const endpoints = {
     ) =>
       `${projectId}/-/objects/${objectId}/attachments/${attachmentId}/delete`,
 
+    // Pull request endpoints
+    prs: (projectId: string, objectId: string) =>
+      `${projectId}/-/objects/${objectId}/prs`,
+    prCreate: (projectId: string, objectId: string) =>
+      `${projectId}/-/objects/${objectId}/prs/create`,
+    prUpdate: (projectId: string, objectId: string, prId: string) =>
+      `${projectId}/-/objects/${objectId}/prs/${prId}/update`,
+    prDelete: (projectId: string, objectId: string, prId: string) =>
+      `${projectId}/-/objects/${objectId}/prs/${prId}/delete`,
+
     // Activity endpoint
     activity: (projectId: string, objectId: string) =>
       `${projectId}/-/objects/${objectId}/activity`,
@@ -137,6 +147,10 @@ const endpoints = {
       optionId: string,
     ) =>
       `${projectId}/-/classes/${classId}/fields/${fieldId}/options/${optionId}/delete`,
+
+    // Diff preference endpoints
+    diffPreference: "-/diff/preference",
+    diffPreferenceSet: "-/diff/preference/set",
 
     // Repository integration endpoints (for Pull Requests)
     repositories: "-/repositories",

@@ -49,6 +49,7 @@ def database_create():
 		id text not null,
 		name text not null,
 		rank integer not null default 0,
+		pull_requests integer not null default 0,
 		primary key (project, id)
 	)""")
 	mochi.db.execute("create index if not exists classes_project on classes(project)")
@@ -232,6 +233,19 @@ def database_create():
 	)""")
 	mochi.db.execute("create index if not exists attachments_object on attachments(object)")
 
+	# 17. pull_requests - pull requests attached to objects
+	mochi.db.execute("""create table if not exists pull_requests (
+		id text primary key,
+		object text not null references objects(id),
+		repository text not null default '',
+		source text not null default '',
+		target text not null default '',
+		status text not null default 'open',
+		created integer not null,
+		updated integer not null
+	)""")
+	mochi.db.execute("create index if not exists pull_requests_object on pull_requests(object)")
+
 	# Migrations
 	mochi.db.execute("update views set viewtype='list' where viewtype='tree'")
 
@@ -266,8 +280,8 @@ def apply_template(project_id, template_id):
 	# Create classes
 	for t in data.get("classes", []):
 		mochi.db.execute(
-			"insert into classes (project, id, name, rank) values (?, ?, ?, ?)",
-			project_id, t["id"], t["name"], t.get("rank", 0)
+			"insert into classes (project, id, name, rank, pull_requests) values (?, ?, ?, ?, ?)",
+			project_id, t["id"], t["name"], t.get("rank", 0), t.get("pull_requests", 0)
 		)
 
 	# Set hierarchy for each class
@@ -440,7 +454,7 @@ def action_project_get(a):
 		return
 
 	# Get classes
-	classes = mochi.db.rows("select id, name, rank from classes where project=? order by rank", project_id) or []
+	classes = mochi.db.rows("select id, name, rank, pull_requests from classes where project=? order by rank", project_id) or []
 
 	# Get fields by class
 	fields = {}
@@ -645,7 +659,7 @@ def action_people_list(a):
 # ============================================================================
 
 # Access levels for projects (from most to least permissive)
-ACCESS_LEVELS = ["comment", "view"]
+ACCESS_LEVELS = ["write", "comment", "view"]
 
 # List access rules for a project
 def action_access_list(a):
@@ -731,7 +745,7 @@ def action_access_set(a):
 		a.error(400, "Level is required")
 		return
 
-	if level not in ["view", "comment", "none"]:
+	if level not in ["view", "comment", "write", "none"]:
 		a.error(400, "Invalid level")
 		return
 
@@ -749,6 +763,10 @@ def action_access_set(a):
 		elif level == "comment":
 			mochi.access.allow(subject, resource, "view", a.user.identity.id)
 			mochi.access.allow(subject, resource, "comment", a.user.identity.id)
+		elif level == "write":
+			mochi.access.allow(subject, resource, "view", a.user.identity.id)
+			mochi.access.allow(subject, resource, "comment", a.user.identity.id)
+			mochi.access.allow(subject, resource, "write", a.user.identity.id)
 
 	return {"data": {"success": True}}
 
@@ -843,6 +861,7 @@ def delete_object_cascade(project_id, object_id):
 		delete_object_cascade(project_id, child["id"])
 
 	# Then delete this object's related data
+	mochi.db.execute("delete from pull_requests where object=?", object_id)
 	mochi.db.execute("delete from attachments where object=?", object_id)
 	mochi.db.execute("delete from watchers where object=?", object_id)
 	mochi.db.execute("delete from activity where object=?", object_id)
@@ -1028,6 +1047,9 @@ def action_object_get(a):
 	# Check if user is watching
 	watching = mochi.db.exists("select 1 from watchers where object=? and user=?", object_id, a.user.identity.id)
 
+	# Get pull requests
+	prs = mochi.db.rows("select id, object, repository, source, target, status, created, updated from pull_requests where object=?", object_id) or []
+
 	return {"data": {
 		"object": {
 			"id": row["id"],
@@ -1042,7 +1064,8 @@ def action_object_get(a):
 		"values": values,
 		"links": links,
 		"linked_by": linked_by,
-		"watching": watching
+		"watching": watching,
+		"prs": prs,
 	}}
 
 def action_object_update(a):
@@ -2320,9 +2343,11 @@ def action_class_create(a):
 	max_rank = mochi.db.row("select max(rank) as m from classes where project=?", project_id)
 	rank = (max_rank["m"] or 0) + 1 if max_rank else 0
 
+	pr_flag = 1 if a.input("pull_requests") == "1" else 0
+
 	mochi.db.execute(
-		"insert into classes (project, id, name, rank) values (?, ?, ?, ?)",
-		project_id, class_id, name.strip(), rank
+		"insert into classes (project, id, name, rank, pull_requests) values (?, ?, ?, ?, ?)",
+		project_id, class_id, name.strip(), rank, pr_flag
 	)
 
 	# Add default title field
@@ -2338,7 +2363,7 @@ def action_class_create(a):
 	)
 
 	broadcast_event(project_id, "class/create", {
-		"project": project_id, "id": class_id, "name": name.strip(), "rank": rank
+		"project": project_id, "id": class_id, "name": name.strip(), "rank": rank, "pull_requests": pr_flag
 	})
 
 	return {"data": {"id": class_id, "name": name.strip(), "rank": rank}}
@@ -2373,11 +2398,17 @@ def action_class_update(a):
 		return
 
 	name = a.input("name")
-	if name != None:
+	if name:
 		mochi.db.execute("update classes set name=? where project=? and id=?", name.strip(), project_id, class_id)
 
+	pr_input = a.input("pull_requests")
+	if pr_input:
+		pr_flag = 1 if pr_input == "1" else 0
+		mochi.db.execute("update classes set pull_requests=? where project=? and id=?", pr_flag, project_id, class_id)
+
 	broadcast_event(project_id, "class/update", {
-		"project": project_id, "id": class_id, "name": name or class_row["name"]
+		"project": project_id, "id": class_id, "name": name or class_row["name"],
+		"pull_requests": class_row["pull_requests"] if not pr_input else (1 if pr_input == "1" else 0)
 	})
 
 	return {"data": {"success": True}}
@@ -3080,7 +3111,7 @@ def action_repositories_merge_check(a):
 	})
 
 	if result == None:
-		return {"data": {"mergeable": False, "error": "Could not check merge status"}}
+		return {"data": {"can_merge": False, "error": "Could not check merge status"}}
 	return {"data": result}
 
 def action_repositories_diff(a):
@@ -3113,6 +3144,12 @@ def action_repositories_merge(a):
 		a.error(401, "Not logged in")
 		return
 
+	project_id = a.input("project")
+	project = mochi.db.row("select * from projects where id=?", project_id)
+	if not project:
+		a.error(404, "Project not found")
+		return
+
 	repo_id = a.input("repo")
 	source = a.input("source")
 	target = a.input("target")
@@ -3122,16 +3159,42 @@ def action_repositories_merge(a):
 		a.error(400, "Repository, source, and target required")
 		return
 
-	result = mochi.service.call("repositories", "merge", {
-		"repo": repo_id,
-		"source": source,
-		"target": target,
-		"message": message
-	})
+	if project["owner"] == 1:
+		# Owner: merge directly via local service
+		result = mochi.service.call("repositories", "merge", {
+			"repo": repo_id,
+			"source": source,
+			"target": target,
+			"message": message,
+			"author_name": a.user.identity.name,
+			"author_email": a.user.username,
+		})
+		if result == None:
+			a.error(500, "Repositories service unavailable")
+			return
+		return {"data": result}
+	else:
+		# Subscriber: check local access, then send P2P request to owner
+		if not mochi.access.check(a.user.identity.id, "project/" + project_id, "write"):
+			a.error(403, "Write access required to merge")
+			return
 
-	if result == None:
-		return {"data": {"success": False, "error": "Could not perform merge"}}
-	return {"data": result}
+		result = mochi.remote.request(project_id, "projects", "merge/request", {
+			"project": project_id,
+			"repo": repo_id,
+			"source": source,
+			"target": target,
+			"message": message,
+			"author_name": a.user.identity.name,
+			"author_email": a.user.username,
+		})
+		if not result:
+			a.error(502, "Could not reach project owner")
+			return
+		if result.get("error"):
+			a.error(result.get("code", 500), result["error"])
+			return
+		return {"data": result}
 
 # Search for projects in the directory
 def action_search(a):
@@ -3857,9 +3920,9 @@ def event_class_create(e):
 	if not project_id:
 		return
 	mochi.db.execute(
-		"insert or ignore into classes (id, project, name, icon, colour, prefix, created) values (?, ?, ?, ?, ?, ?, ?)",
-		e.content("id"), project_id, e.content("name") or "", e.content("icon") or "",
-		e.content("colour") or "", e.content("prefix") or "", e.content("created") or mochi.time.now()
+		"insert or ignore into classes (id, project, name, rank, pull_requests) values (?, ?, ?, ?, ?)",
+		e.content("id"), project_id, e.content("name") or "",
+		e.content("rank") or 0, e.content("pull_requests") or 0
 	)
 	fp = mochi.entity.fingerprint(project_id)
 	if fp:
@@ -3874,17 +3937,11 @@ def event_class_update(e):
 	if not class_id:
 		return
 	name = e.content("name")
-	icon = e.content("icon")
-	colour = e.content("colour")
-	prefix = e.content("prefix")
 	if name != None:
 		mochi.db.execute("update classes set name=? where id=? and project=?", name, class_id, project_id)
-	if icon != None:
-		mochi.db.execute("update classes set icon=? where id=? and project=?", icon, class_id, project_id)
-	if colour != None:
-		mochi.db.execute("update classes set colour=? where id=? and project=?", colour, class_id, project_id)
-	if prefix != None:
-		mochi.db.execute("update classes set prefix=? where id=? and project=?", prefix, class_id, project_id)
+	pr = e.content("pull_requests")
+	if pr != None:
+		mochi.db.execute("update classes set pull_requests=? where id=? and project=?", pr, class_id, project_id)
 	fp = mochi.entity.fingerprint(project_id)
 	if fp:
 		mochi.websocket.write(fp, {"type": "class/update", "project": project_id, "id": class_id})
@@ -4095,3 +4152,298 @@ def event_option_reorder(e):
 	fp = mochi.entity.fingerprint(project_id)
 	if fp:
 		mochi.websocket.write(fp, {"type": "option/reorder", "project": project_id})
+
+# Handle merge request from subscriber (P2P request-response)
+def event_merge_request(e):
+	requester = e.header("from")
+	project_id = e.content("project")
+
+	project = mochi.db.row("select * from projects where id=? and owner=1", project_id)
+	if not project:
+		e.stream.write({"error": "Project not found", "code": 404})
+		return
+
+	# Check the requester has write access
+	if not mochi.access.check(requester, "project/" + project_id, "write"):
+		e.stream.write({"error": "Write access required", "code": 403})
+		return
+
+	repo_id = e.content("repo")
+	source = e.content("source")
+	target = e.content("target")
+	message = e.content("message") or "Merge branch"
+	author_name = e.content("author_name") or "Mochi"
+	author_email = e.content("author_email") or ""
+
+	result = mochi.service.call("repositories", "merge", {
+		"repo": repo_id,
+		"source": source,
+		"target": target,
+		"message": message,
+		"author_name": author_name,
+		"author_email": author_email,
+	})
+
+	if result == None:
+		e.stream.write({"error": "Repositories service unavailable", "code": 500})
+		return
+
+	e.stream.write(result)
+
+
+# ============================================================================
+# Pull Request Actions
+# ============================================================================
+
+# List pull requests for an object
+def action_pr_list(a):
+	if not a.user:
+		a.error(401, "Not logged in")
+		return
+
+	project_id = resolve_project(a)
+	if not project_id:
+		a.error(400, "Project ID required")
+		return
+
+	object_id = a.input("object")
+	if not object_id:
+		a.error(400, "Object ID required")
+		return
+
+	prs = mochi.db.rows("select id, object, repository, source, target, status, created, updated from pull_requests where object=?", object_id) or []
+	return {"data": {"prs": prs}}
+
+# Create a pull request on an object
+def action_pr_create(a):
+	if not a.user:
+		a.error(401, "Not logged in")
+		return
+
+	project_id = resolve_project(a)
+	if not project_id:
+		a.error(400, "Project ID required")
+		return
+
+	project = get_project(project_id)
+	if not project:
+		a.error(404, "Project not found")
+		return
+
+	if project["owner"] != 1:
+		a.error(403, "Cannot modify remote project")
+		return
+
+	object_id = a.input("object")
+	if not object_id:
+		a.error(400, "Object ID required")
+		return
+
+	obj = mochi.db.row("select * from objects where id=? and project=?", object_id, project_id)
+	if not obj:
+		a.error(404, "Object not found")
+		return
+
+	# Verify class allows pull requests
+	cls = mochi.db.row("select pull_requests from classes where project=? and id=?", project_id, obj["class"])
+	if not cls or cls["pull_requests"] != 1:
+		a.error(400, "Pull requests not enabled for this class")
+		return
+
+	repository = a.input("repository")
+	source = a.input("source")
+	target = a.input("target")
+
+	now = mochi.time.now()
+	pr_id = mochi.uid()
+
+	mochi.db.execute(
+		"insert into pull_requests (id, object, repository, source, target, status, created, updated) values (?, ?, ?, ?, ?, ?, ?, ?)",
+		pr_id, object_id, repository or "", source or "", target or "", "open", now, now
+	)
+
+	pr_data = {
+		"id": pr_id, "object": object_id, "repository": repository or "",
+		"source": source or "", "target": target or "", "status": "open",
+		"created": now, "updated": now,
+	}
+
+	broadcast_event(project_id, "pull_request/create", {
+		"project": project_id, "pr": pr_data
+	})
+
+	return {"data": pr_data}
+
+# Update a pull request
+def action_pr_update(a):
+	if not a.user:
+		a.error(401, "Not logged in")
+		return
+
+	project_id = resolve_project(a)
+	if not project_id:
+		a.error(400, "Project ID required")
+		return
+
+	project = get_project(project_id)
+	if not project:
+		a.error(404, "Project not found")
+		return
+
+	if project["owner"] != 1:
+		a.error(403, "Cannot modify remote project")
+		return
+
+	pr_id = a.input("pr")
+	if not pr_id:
+		a.error(400, "PR ID required")
+		return
+
+	pr = mochi.db.row("select * from pull_requests where id=?", pr_id)
+	if not pr:
+		a.error(404, "Pull request not found")
+		return
+
+	now = mochi.time.now()
+	repository = a.input("repository")
+	source = a.input("source")
+	target = a.input("target")
+	status = a.input("status")
+
+	if repository:
+		mochi.db.execute("update pull_requests set repository=?, updated=? where id=?", repository, now, pr_id)
+	if source:
+		mochi.db.execute("update pull_requests set source=?, updated=? where id=?", source, now, pr_id)
+	if target:
+		mochi.db.execute("update pull_requests set target=?, updated=? where id=?", target, now, pr_id)
+	if status:
+		mochi.db.execute("update pull_requests set status=?, updated=? where id=?", status, now, pr_id)
+
+	# Re-read the updated row
+	pr = mochi.db.row("select id, object, repository, source, target, status, created, updated from pull_requests where id=?", pr_id)
+
+	broadcast_event(project_id, "pull_request/update", {
+		"project": project_id, "pr": pr
+	})
+
+	return {"data": pr}
+
+# Delete a pull request
+def action_pr_delete(a):
+	if not a.user:
+		a.error(401, "Not logged in")
+		return
+
+	project_id = resolve_project(a)
+	if not project_id:
+		a.error(400, "Project ID required")
+		return
+
+	project = get_project(project_id)
+	if not project:
+		a.error(404, "Project not found")
+		return
+
+	if project["owner"] != 1:
+		a.error(403, "Cannot modify remote project")
+		return
+
+	pr_id = a.input("pr")
+	if not pr_id:
+		a.error(400, "PR ID required")
+		return
+
+	pr = mochi.db.row("select * from pull_requests where id=?", pr_id)
+	if not pr:
+		a.error(404, "Pull request not found")
+		return
+
+	mochi.db.execute("delete from pull_requests where id=?", pr_id)
+
+	broadcast_event(project_id, "pull_request/delete", {
+		"project": project_id, "id": pr_id, "object": pr["object"]
+	})
+
+	return {"data": {"success": True}}
+
+
+# ============================================================================
+# Diff View Preference
+# ============================================================================
+
+# Get diff view preference (unified or split)
+def action_diff_preference_get(a):
+	if not a.user:
+		a.error(401, "Not logged in")
+		return
+	value = a.user.preference.get("diff_view")
+	style = value if value else "unified"
+	return {"data": {"style": style}}
+
+# Set diff view preference
+def action_diff_preference_set(a):
+	if not a.user:
+		a.error(401, "Not logged in")
+		return
+	style = a.input("style")
+	if style not in ("unified", "split"):
+		a.error(400, "Style must be 'unified' or 'split'")
+		return
+	a.user.preference.set("diff_view", style)
+	return {"data": {"style": style}}
+
+
+# ============================================================================
+# Pull Request P2P Events
+# ============================================================================
+
+# Pull request created remotely
+def event_pull_request_create(e):
+	project_id = verify_subscription(e)
+	if not project_id:
+		return
+	pr = e.content("pr")
+	if not pr:
+		return
+	mochi.db.execute(
+		"insert or ignore into pull_requests (id, object, repository, source, target, status, created, updated) values (?, ?, ?, ?, ?, ?, ?, ?)",
+		pr.get("id", ""), pr.get("object", ""), pr.get("repository", ""),
+		pr.get("source", ""), pr.get("target", ""), pr.get("status", "open"),
+		pr.get("created", mochi.time.now()), pr.get("updated", mochi.time.now())
+	)
+	fp = mochi.entity.fingerprint(project_id)
+	if fp:
+		mochi.websocket.write(fp, {"type": "pull_request/create", "project": project_id, "pr": pr})
+
+# Pull request updated remotely
+def event_pull_request_update(e):
+	project_id = verify_subscription(e)
+	if not project_id:
+		return
+	pr = e.content("pr")
+	if not pr:
+		return
+	pr_id = pr.get("id", "")
+	if not pr_id:
+		return
+	mochi.db.execute(
+		"update pull_requests set repository=?, source=?, target=?, status=?, updated=? where id=?",
+		pr.get("repository", ""), pr.get("source", ""), pr.get("target", ""),
+		pr.get("status", ""), pr.get("updated", mochi.time.now()), pr_id
+	)
+	fp = mochi.entity.fingerprint(project_id)
+	if fp:
+		mochi.websocket.write(fp, {"type": "pull_request/update", "project": project_id, "pr": pr})
+
+# Pull request deleted remotely
+def event_pull_request_delete(e):
+	project_id = verify_subscription(e)
+	if not project_id:
+		return
+	pr_id = e.content("id")
+	if not pr_id:
+		return
+	mochi.db.execute("delete from pull_requests where id=?", pr_id)
+	fp = mochi.entity.fingerprint(project_id)
+	if fp:
+		mochi.websocket.write(fp, {"type": "pull_request/delete", "project": project_id, "id": pr_id, "object": e.content("object")})

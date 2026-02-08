@@ -18,6 +18,7 @@ import type {
   WatcherListResponse,
   LinkListResponse,
   Comment,
+  PrData,
   RepositoryListResponse,
   BranchListResponse,
   MergeCheckResponse,
@@ -140,10 +141,12 @@ interface ClassCreateResponse {
 
 interface CreateClassRequest {
   name: string;
+  pull_requests?: string;
 }
 
 interface UpdateClassRequest {
   name?: string;
+  pull_requests?: string;
 }
 
 // Hierarchy response/request types
@@ -804,6 +807,68 @@ const projectsApi = {
     );
   },
 
+  // ============= Pull Request Methods =============
+
+  // List pull requests for an object
+  listPrs: async (
+    projectId: string,
+    objectId: string,
+  ): Promise<{ data: { prs: PrData[] } }> => {
+    return projectsRequest.get(
+      endpoints.projects.prs(projectId, objectId),
+    );
+  },
+
+  // Create a pull request
+  createPr: async (
+    projectId: string,
+    objectId: string,
+    data: { repository?: string; source?: string; target?: string },
+  ): Promise<{ data: PrData }> => {
+    return projectsRequest.post(
+      endpoints.projects.prCreate(projectId, objectId),
+      data,
+    );
+  },
+
+  // Update a pull request
+  updatePr: async (
+    projectId: string,
+    objectId: string,
+    prId: string,
+    data: { repository?: string; source?: string; target?: string; status?: string },
+  ): Promise<{ data: PrData }> => {
+    return projectsRequest.post(
+      endpoints.projects.prUpdate(projectId, objectId, prId),
+      data,
+    );
+  },
+
+  // Delete a pull request
+  deletePr: async (
+    projectId: string,
+    objectId: string,
+    prId: string,
+  ): Promise<SuccessResponse> => {
+    return projectsRequest.post(
+      endpoints.projects.prDelete(projectId, objectId, prId),
+    );
+  },
+
+  // ============= Diff Preference Methods =============
+
+  getDiffPreference: async (): Promise<{ data: { style: string } }> => {
+    return projectsRequest.get(endpoints.projects.diffPreference);
+  },
+
+  setDiffPreference: async (
+    style: string,
+  ): Promise<{ data: { style: string } }> => {
+    return projectsRequest.post(endpoints.projects.diffPreferenceSet, {
+      style,
+    });
+  },
+
   // ============= Repository Methods (for Pull Requests) =============
 
   // List available repositories
@@ -852,10 +917,11 @@ const projectsApi = {
     source: string,
     target: string,
     message: string,
+    projectId?: string,
   ): Promise<MergeResponse> => {
     return projectsRequest.post<MergeResponse>(
       endpoints.projects.repositoryMerge(repoId),
-      { source, target, message },
+      { source, target, message, project: projectId },
     );
   },
 

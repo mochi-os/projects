@@ -90,7 +90,8 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
 
   // Class mutations
   const createClassMutation = useMutation({
-    mutationFn: (name: string) => projectsApi.createClass(projectId, { name }),
+    mutationFn: ({ name, pull_requests }: { name: string; pull_requests?: string }) =>
+      projectsApi.createClass(projectId, { name, pull_requests }),
     onSuccess: (data) => {
       invalidateProject();
       setSelectedClassId(data.data.id);
@@ -101,8 +102,8 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
   });
 
   const updateClassMutation = useMutation({
-    mutationFn: ({ classId, name }: { classId: string; name: string }) =>
-      projectsApi.updateClass(projectId, classId, { name }),
+    mutationFn: ({ classId, name, pull_requests }: { classId: string; name: string; pull_requests?: string }) =>
+      projectsApi.updateClass(projectId, classId, { name, pull_requests }),
     onSuccess: invalidateProject,
   });
 
@@ -337,8 +338,8 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
   };
 
   // Create class with chained API calls
-  const handleCreateClass = async (name: string, parents: string[], pendingFields: PendingField[]) => {
-    const result = await createClassMutation.mutateAsync(name);
+  const handleCreateClass = async (name: string, parents: string[], pendingFields: PendingField[], pullRequests: boolean) => {
+    const result = await createClassMutation.mutateAsync({ name, pull_requests: pullRequests ? "1" : undefined });
     const classId = result.data?.id;
     if (!classId) return;
 
@@ -620,9 +621,9 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
         classes={project.classes}
         hierarchy={hierarchy}
         fields={selectedFields}
-        onUpdate={(name) => {
+        onUpdate={(name, pull_requests) => {
           if (selectedClassId) {
-            updateClassMutation.mutate({ classId: selectedClassId, name });
+            updateClassMutation.mutate({ classId: selectedClassId, name, pull_requests });
           }
         }}
         onUpdateHierarchy={(parents) => {

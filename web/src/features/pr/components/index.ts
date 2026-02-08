@@ -6,5 +6,6 @@ export { BranchSelect } from "./branch-select";
 export { MergeStatus } from "./merge-status";
 export { DiffStats } from "./diff-stats";
 export { ConflictList } from "./conflict-list";
-export { MergeButton, ViewDiffLink } from "./merge-button";
+export { MergeButton } from "./merge-button";
+export { DiffViewer } from "./diff-viewer";
 export { PrPanel } from "./pr-panel";

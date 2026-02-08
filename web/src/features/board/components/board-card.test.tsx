@@ -283,7 +283,7 @@ describe("BoardCard", () => {
     });
 
     const objectMap = { "parent-1": parentObject };
-    const classMap = { epic: { id: "epic", name: "Epic", rank: 0 } };
+    const classMap = { epic: { id: "epic", name: "Epic", rank: 0, pull_requests: 0 } };
 
     render(
       <BoardCard

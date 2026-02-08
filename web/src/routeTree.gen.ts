@@ -16,6 +16,7 @@ import { Route as errors500RouteImport } from './routes/(errors)/500'
 import { Route as errors404RouteImport } from './routes/(errors)/404'
 import { Route as errors403RouteImport } from './routes/(errors)/403'
 import { Route as errors401RouteImport } from './routes/(errors)/401'
+import { Route as ProjectIdDiffRouteImport } from './routes/$projectId.diff'
 import { Route as AuthenticatedProjectIdIndexRouteImport } from './routes/_authenticated/$projectId/index'
 import { Route as AuthenticatedProjectIdSettingsRouteImport } from './routes/_authenticated/$projectId_.settings'
 import { Route as AuthenticatedProjectIdDesignRouteImport } from './routes/_authenticated/$projectId/design'
@@ -54,6 +55,11 @@ const errors401Route = errors401RouteImport.update({
   path: '/401',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ProjectIdDiffRoute = ProjectIdDiffRouteImport.update({
+  id: '/$projectId/diff',
+  path: '/$projectId/diff',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthenticatedProjectIdIndexRoute =
   AuthenticatedProjectIdIndexRouteImport.update({
     id: '/$projectId/',
@@ -74,6 +80,7 @@ const AuthenticatedProjectIdDesignRoute =
   } as any)
 
 export interface FileRoutesByFullPath {
+  '/$projectId/diff': typeof ProjectIdDiffRoute
   '/401': typeof errors401Route
   '/403': typeof errors403Route
   '/404': typeof errors404Route
@@ -85,6 +92,7 @@ export interface FileRoutesByFullPath {
   '/$projectId': typeof AuthenticatedProjectIdIndexRoute
 }
 export interface FileRoutesByTo {
+  '/$projectId/diff': typeof ProjectIdDiffRoute
   '/401': typeof errors401Route
   '/403': typeof errors403Route
   '/404': typeof errors404Route
@@ -98,6 +106,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/$projectId/diff': typeof ProjectIdDiffRoute
   '/(errors)/401': typeof errors401Route
   '/(errors)/403': typeof errors403Route
   '/(errors)/404': typeof errors404Route
@@ -111,6 +120,7 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
+    | '/$projectId/diff'
     | '/401'
     | '/403'
     | '/404'
@@ -122,6 +132,7 @@ export interface FileRouteTypes {
     | '/$projectId'
   fileRoutesByTo: FileRoutesByTo
   to:
+    | '/$projectId/diff'
     | '/401'
     | '/403'
     | '/404'
@@ -134,6 +145,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/_authenticated'
+    | '/$projectId/diff'
     | '/(errors)/401'
     | '/(errors)/403'
     | '/(errors)/404'
@@ -147,6 +159,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  ProjectIdDiffRoute: typeof ProjectIdDiffRoute
   errors401Route: typeof errors401Route
   errors403Route: typeof errors403Route
   errors404Route: typeof errors404Route
@@ -205,6 +218,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof errors401RouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/$projectId/diff': {
+      id: '/$projectId/diff'
+      path: '/$projectId/diff'
+      fullPath: '/$projectId/diff'
+      preLoaderRoute: typeof ProjectIdDiffRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_authenticated/$projectId/': {
       id: '/_authenticated/$projectId/'
       path: '/$projectId'
@@ -248,6 +268,7 @@ const AuthenticatedRouteRouteWithChildren =
 
 const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  ProjectIdDiffRoute: ProjectIdDiffRoute,
   errors401Route: errors401Route,
   errors403Route: errors403Route,
   errors404Route: errors404Route,

@@ -4,8 +4,7 @@
   "description": "Development, support, and bug tracking",
   "icon": "ticket",
   "classes": [
-    {"id": "ticket", "name": "Ticket", "rank": 0},
-    {"id": "pr", "name": "Pull request", "rank": 1}
+    {"id": "ticket", "name": "Ticket", "rank": 0, "pull_requests": 1}
   ],
   "fields": {
     "ticket": [
@@ -16,14 +15,6 @@
       {"id": "category", "name": "Category", "fieldtype": "enumerated", "required": 0, "card": 1, "rank": 4},
       {"id": "owner", "name": "Owner", "fieldtype": "user", "required": 0, "card": 0, "rank": 5},
       {"id": "due", "name": "Due", "fieldtype": "date", "required": 0, "card": 0, "rank": 6}
-    ],
-    "pr": [
-      {"id": "title", "name": "Title", "fieldtype": "text", "required": 1, "card": 1, "rank": 0, "rows": 1},
-      {"id": "description", "name": "Description", "fieldtype": "text", "required": 0, "card": 0, "rank": 1, "rows": 3},
-      {"id": "status", "name": "Status", "fieldtype": "enumerated", "required": 1, "card": 0, "rank": 2},
-      {"id": "repository", "name": "Repository", "fieldtype": "text", "required": 0, "card": 0, "rank": 3, "rows": 1},
-      {"id": "branch", "name": "Branch", "fieldtype": "text", "required": 0, "card": 0, "rank": 4, "rows": 1},
-      {"id": "owner", "name": "Owner", "fieldtype": "user", "required": 0, "card": 0, "rank": 5}
     ]
   },
   "options": {
@@ -45,23 +36,13 @@
         {"id": "question", "name": "Question", "colour": "#a78bfa", "rank": 2},
         {"id": "support", "name": "Support", "colour": "#4ade80", "rank": 3}
       ]
-    },
-    "pr": {
-      "status": [
-        {"id": "draft", "name": "Draft", "colour": "#94a3b8", "rank": 0},
-        {"id": "review", "name": "In Review", "colour": "#fbbf24", "rank": 1},
-        {"id": "approved", "name": "Approved", "colour": "#4ade80", "rank": 2},
-        {"id": "merged", "name": "Merged", "colour": "#a78bfa", "rank": 3}
-      ]
     }
   },
   "hierarchy": {
-    "ticket": ["", "ticket"],
-    "pr": ["", "ticket"]
+    "ticket": ["", "ticket"]
   },
   "views": [
     {"id": "tickets", "name": "Tickets", "viewtype": "board", "columns": "status", "fields": "title,priority,category,owner", "classes": ["ticket"]},
-    {"id": "pull_requests", "name": "Pull requests", "viewtype": "board", "columns": "status", "fields": "title,repository,branch,owner", "classes": ["pr"]},
     {"id": "list", "name": "List", "viewtype": "list", "fields": "title,description,status,priority,category,owner,due"}
   ]
 }

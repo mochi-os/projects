@@ -1,10 +1,12 @@
 // Mochi Projects: Diff stats component
 // Copyright Alistair Cunningham 2026
 
+import { useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { FileCode2, Plus, Minus, Loader2 } from "lucide-react";
 import { cn } from "@mochi/common";
 import projectsApi from "@/api/projects";
+import { parseDiff } from "./diff-viewer";
 
 interface DiffStatsProps {
   repoId: string;
@@ -13,7 +15,7 @@ interface DiffStatsProps {
 }
 
 export function DiffStats({ repoId, base, head }: DiffStatsProps) {
-  const { data, isLoading } = useQuery({
+  const { data: rawDiff, isLoading } = useQuery({
     queryKey: ["diff", repoId, base, head],
     queryFn: async () => {
       const response = await projectsApi.getDiff(repoId, base, head);
@@ -21,6 +23,14 @@ export function DiffStats({ repoId, base, head }: DiffStatsProps) {
     },
     enabled: !!repoId && !!base && !!head,
   });
+
+  const files = useMemo(
+    () => (rawDiff ? parseDiff(rawDiff) : []),
+    [rawDiff],
+  );
+
+  const additions = files.reduce((sum, f) => sum + f.additions, 0);
+  const deletions = files.reduce((sum, f) => sum + f.deletions, 0);
 
   if (!repoId || !base || !head) {
     return null;
@@ -35,7 +45,7 @@ export function DiffStats({ repoId, base, head }: DiffStatsProps) {
     );
   }
 
-  if (!data || data.files.length === 0) {
+  if (files.length === 0) {
     return (
       <div className="text-sm text-muted-foreground">No changes detected</div>
     );
@@ -46,20 +56,20 @@ export function DiffStats({ repoId, base, head }: DiffStatsProps) {
       <div className="flex items-center gap-4 text-sm">
         <span className="flex items-center gap-1">
           <FileCode2 className="size-4 text-muted-foreground" />
-          {data.files.length} files changed
+          {files.length} files changed
         </span>
         <span className="flex items-center gap-1 text-green-600">
           <Plus className="size-3" />
-          {data.additions}
+          {additions}
         </span>
         <span className="flex items-center gap-1 text-red-600">
           <Minus className="size-3" />
-          {data.deletions}
+          {deletions}
         </span>
       </div>
 
       <div className="space-y-1 max-h-48 overflow-y-auto">
-        {data.files.map((file) => (
+        {files.map((file) => (
           <div
             key={file.path}
             className="flex items-center justify-between gap-2 text-xs"

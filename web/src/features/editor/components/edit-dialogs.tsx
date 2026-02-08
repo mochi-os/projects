@@ -474,14 +474,14 @@ interface ClassSheetProps {
   cls?: ProjectClass | null;
   hierarchy?: string[];
   fields?: ProjectField[];
-  onUpdate?: (name: string) => void;
+  onUpdate?: (name: string, pull_requests?: string) => void;
   onUpdateHierarchy?: (parents: string[]) => void;
   onDelete?: () => void;
   onAddField?: () => void;
   onEditField?: (field: ProjectField) => void;
   onReorderFields?: (order: string[]) => void;
   // Create mode props
-  onCreate?: (name: string, parents: string[], fields: PendingField[]) => void | Promise<void>;
+  onCreate?: (name: string, parents: string[], fields: PendingField[], pullRequests: boolean) => void | Promise<void>;
 }
 
 export function ClassSheet({
@@ -508,6 +508,7 @@ export function ClassSheet({
   const [pendingParents, setPendingParents] = useState<string[]>([]);
   const [pendingFields, setPendingFields] = useState<PendingField[]>([]);
   const [addFieldOpen, setAddFieldOpen] = useState(false);
+  const [pullRequests, setPullRequests] = useState(false);
 
   // Reset state on open
   useEffect(() => {
@@ -516,8 +517,10 @@ export function ClassSheet({
       setName("");
       setPendingParents([]);
       setPendingFields([{ id: "title", name: "Title", fieldtype: "text" }]);
+      setPullRequests(false);
     } else if (cls) {
       setName(cls.name);
+      setPullRequests(cls.pull_requests === 1);
     }
   }, [open, cls, mode]);
 
@@ -525,7 +528,7 @@ export function ClassSheet({
 
   const handleNameBlur = () => {
     if (mode === "edit" && onUpdate && cls && name.trim() && name.trim() !== cls.name) {
-      onUpdate(name.trim());
+      onUpdate(name.trim(), undefined);
     }
   };
 
@@ -615,7 +618,7 @@ export function ClassSheet({
   const handleCreate = async () => {
     if (onCreate && name.trim()) {
       try {
-        await onCreate(name.trim(), pendingParents, pendingFields);
+        await onCreate(name.trim(), pendingParents, pendingFields, pullRequests);
         onOpenChange(false);
       } catch {
         // Error displayed by caller via toast
@@ -686,6 +689,26 @@ export function ClassSheet({
               </div>
             </div>
           )}
+
+          <div className="space-y-2">
+            <Label>Pull requests</Label>
+            <div className="pl-4">
+              <label className="flex items-center gap-2 text-sm cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={pullRequests}
+                  onChange={(e) => {
+                    setPullRequests(e.target.checked);
+                    if (mode === "edit" && onUpdate) {
+                      onUpdate(name, e.target.checked ? "1" : "0");
+                    }
+                  }}
+                  className="rounded"
+                />
+                Allow pull requests
+              </label>
+            </div>
+          </div>
 
           <div className="space-y-2">
             <Label>Fields</Label>

@@ -1,183 +1,307 @@
 // Mochi Projects: Pull request panel component
 // Copyright Alistair Cunningham 2026
 
-import { useState, useEffect } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { ArrowRight, GitPullRequest } from "lucide-react";
-import { Label } from "@mochi/common";
+import { useState } from "react";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { ArrowRight, GitPullRequest, Plus, Trash2, ChevronDown, ChevronRight, ExternalLink } from "lucide-react";
+import { Button, ConfirmDialog } from "@mochi/common";
 import projectsApi from "@/api/projects";
+import type { PrData } from "@/types";
 import { RepositorySelect } from "./repository-select";
 import { BranchSelect } from "./branch-select";
 import { MergeStatus } from "./merge-status";
 import { DiffStats } from "./diff-stats";
 import { ConflictList } from "./conflict-list";
-import { MergeButton, ViewDiffLink } from "./merge-button";
+import { MergeButton } from "./merge-button";
 
 interface PrPanelProps {
-  values: Record<string, string>;
-  onValueChange: (field: string, value: string) => void;
+  projectId: string;
+  objectId: string;
+  prs: PrData[];
   objectTitle?: string;
   objectReadable?: string;
   readOnly?: boolean;
 }
 
 export function PrPanel({
-  values,
-  onValueChange,
+  projectId,
+  objectId,
+  prs,
   objectTitle = "",
   objectReadable = "",
   readOnly,
 }: PrPanelProps) {
-  const [repoId, setRepoId] = useState(values.repository || "");
-  const [sourceBranch, setSourceBranch] = useState(values.source_branch || "");
-  const [targetBranch, setTargetBranch] = useState(values.target_branch || "");
-  const [merged, setMerged] = useState(values.status === "merged");
+  const [expandedPr, setExpandedPr] = useState<string | null>(null);
+  const [adding, setAdding] = useState(false);
+  const [deleteId, setDeleteId] = useState<string | null>(null);
+  const queryClient = useQueryClient();
 
-  useEffect(() => {
-    if (values.repository !== repoId) setRepoId(values.repository || "");
-    if (values.source_branch !== sourceBranch)
-      setSourceBranch(values.source_branch || "");
-    if (values.target_branch !== targetBranch)
-      setTargetBranch(values.target_branch || "");
-    setMerged(values.status === "merged");
-  }, [
-    values.repository,
-    values.source_branch,
-    values.target_branch,
-    values.status,
-  ]);
-
-  // Fetch merge check status
-  const { data: mergeCheck } = useQuery({
-    queryKey: ["merge-check", repoId, sourceBranch, targetBranch],
-    queryFn: async () => {
-      const response = await projectsApi.checkMerge(
-        repoId,
-        sourceBranch,
-        targetBranch,
-      );
-      return response.data;
+  const createMutation = useMutation({
+    mutationFn: async () => {
+      return projectsApi.createPr(projectId, objectId, {});
     },
-    enabled: !!repoId && !!sourceBranch && !!targetBranch && !merged,
+    onSuccess: (response) => {
+      queryClient.invalidateQueries({ queryKey: ["object", projectId, objectId] });
+      setAdding(false);
+      setExpandedPr(response.data.id);
+    },
   });
 
-  const handleRepoChange = (value: string) => {
-    setRepoId(value);
-    setSourceBranch("");
-    setTargetBranch("");
-    onValueChange("repository", value);
-    onValueChange("source_branch", "");
-    onValueChange("target_branch", "");
+  const updateMutation = useMutation({
+    mutationFn: async ({ prId, data }: { prId: string; data: { repository?: string; source?: string; target?: string; status?: string } }) => {
+      return projectsApi.updatePr(projectId, objectId, prId, data);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["object", projectId, objectId] });
+    },
+  });
+
+  const deleteMutation = useMutation({
+    mutationFn: async (prId: string) => {
+      return projectsApi.deletePr(projectId, objectId, prId);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["object", projectId, objectId] });
+      setDeleteId(null);
+      setExpandedPr(null);
+    },
+  });
+
+  const handleAdd = () => {
+    createMutation.mutate();
   };
 
-  const handleSourceChange = (value: string) => {
-    setSourceBranch(value);
-    onValueChange("source_branch", value);
+  const handleUpdate = (prId: string, data: { repository?: string; source?: string; target?: string; status?: string }) => {
+    updateMutation.mutate({ prId, data });
   };
-
-  const handleTargetChange = (value: string) => {
-    setTargetBranch(value);
-    onValueChange("target_branch", value);
-  };
-
-  const handleMergeComplete = () => {
-    setMerged(true);
-    onValueChange("status", "merged");
-  };
-
-  const canMerge = mergeCheck?.can_merge ?? false;
-  const conflicts = mergeCheck?.conflicts ?? [];
-  const isMerged = merged || values.status === "merged";
 
   return (
-    <div className="space-y-4">
-      <div className="flex items-center gap-2 text-sm font-medium">
-        <GitPullRequest className="size-4" />
-        Pull request
-        {isMerged && (
-          <span className="ml-auto text-xs text-green-600 font-normal">
-            Merged
-          </span>
+    <div className="space-y-3">
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-2 text-sm font-medium">
+          <GitPullRequest className="size-4" />
+          Pull requests
+        </div>
+        {!readOnly && (
+          <Button
+            variant="ghost"
+            size="sm"
+            className="h-7 text-xs"
+            onClick={handleAdd}
+            disabled={createMutation.isPending}
+          >
+            <Plus className="size-3" />
+            Add
+          </Button>
         )}
       </div>
 
-      <div className="space-y-3">
-        <div className="space-y-1.5">
-          <Label>Repository</Label>
-          <RepositorySelect
-            value={repoId}
-            onChange={handleRepoChange}
-            disabled={readOnly || isMerged}
-          />
-        </div>
+      {prs.length === 0 && !adding && (
+        <p className="text-sm text-muted-foreground">No pull requests</p>
+      )}
 
-        <div className="grid grid-cols-[1fr_auto_1fr] items-end gap-2">
-          <div className="space-y-1.5">
-            <Label>Source branch</Label>
-            <BranchSelect
-              repoId={repoId}
-              value={sourceBranch}
-              onChange={handleSourceChange}
-              placeholder="Feature branch"
+      {prs.map((pr) => (
+        <PrItem
+          key={pr.id}
+          pr={pr}
+          expanded={expandedPr === pr.id}
+          onToggle={() => setExpandedPr(expandedPr === pr.id ? null : pr.id)}
+          onUpdate={(data) => handleUpdate(pr.id, data)}
+          onDelete={() => setDeleteId(pr.id)}
+          objectTitle={objectTitle}
+          objectReadable={objectReadable}
+          projectId={projectId}
+          readOnly={readOnly}
+        />
+      ))}
+
+      <ConfirmDialog
+        open={!!deleteId}
+        onOpenChange={(open) => !open && setDeleteId(null)}
+        title="Delete pull request"
+        desc="Are you sure you want to delete this pull request?"
+        confirmText="Delete"
+        destructive
+        isLoading={deleteMutation.isPending}
+        handleConfirm={() => deleteId && deleteMutation.mutate(deleteId)}
+      />
+    </div>
+  );
+}
+
+interface PrItemProps {
+  pr: PrData;
+  expanded: boolean;
+  onToggle: () => void;
+  onUpdate: (data: { repository?: string; source?: string; target?: string; status?: string }) => void;
+  onDelete: () => void;
+  objectTitle: string;
+  objectReadable: string;
+  projectId: string;
+  readOnly?: boolean;
+}
+
+function PrItem({
+  pr,
+  expanded,
+  onToggle,
+  onUpdate,
+  onDelete,
+  objectTitle,
+  objectReadable,
+  projectId,
+  readOnly,
+}: PrItemProps) {
+  const isMerged = pr.status === "merged";
+
+  // Fetch merge check when expanded and has all fields
+  const { data: mergeCheck } = useQuery({
+    queryKey: ["merge-check", pr.repository, pr.source, pr.target],
+    queryFn: async () => {
+      const response = await projectsApi.checkMerge(pr.repository, pr.source, pr.target);
+      return response.data;
+    },
+    enabled: expanded && !!pr.repository && !!pr.source && !!pr.target && !isMerged,
+  });
+
+  const canMerge = mergeCheck?.can_merge ?? false;
+  const conflicts = mergeCheck?.conflicts ?? [];
+
+  const handleRepoChange = (value: string) => {
+    onUpdate({ repository: value, source: "", target: "" });
+  };
+
+  const handleSourceChange = (value: string) => {
+    onUpdate({ source: value });
+  };
+
+  const handleTargetChange = (value: string) => {
+    onUpdate({ target: value });
+  };
+
+  const handleMergeComplete = () => {
+    onUpdate({ status: "merged" });
+  };
+
+  // Summary line for collapsed state
+  const summary = pr.repository
+    ? `${pr.source || "?"} → ${pr.target || "?"}`
+    : "Not configured";
+
+  return (
+    <div className="border rounded-[10px] overflow-hidden">
+      {/* Header row */}
+      <button
+        type="button"
+        onClick={onToggle}
+        className="flex items-center gap-2 w-full px-3 py-2 text-sm hover:bg-muted/50 transition-colors text-left"
+      >
+        {expanded ? (
+          <ChevronDown className="size-3.5 shrink-0 text-muted-foreground" />
+        ) : (
+          <ChevronRight className="size-3.5 shrink-0 text-muted-foreground" />
+        )}
+        <span className="flex-1 truncate text-muted-foreground">{summary}</span>
+        {isMerged && (
+          <span className="text-xs text-green-600 font-medium shrink-0">Merged</span>
+        )}
+        {!isMerged && pr.repository && pr.source && pr.target && (
+          <span className="text-xs text-blue-500 font-medium shrink-0">Open</span>
+        )}
+      </button>
+
+      {/* Expanded content */}
+      {expanded && (
+        <div className="px-3 pb-3 space-y-3 border-t">
+          <div className="space-y-3 pt-3">
+            <RepositorySelect
+              value={pr.repository}
+              onChange={handleRepoChange}
               disabled={readOnly || isMerged}
             />
+
+            <div className="grid grid-cols-[1fr_auto_1fr] items-end gap-2">
+              <BranchSelect
+                repoId={pr.repository}
+                value={pr.source}
+                onChange={handleSourceChange}
+                placeholder="Source"
+                disabled={readOnly || isMerged}
+              />
+              <ArrowRight className="size-4 text-muted-foreground mb-2.5" />
+              <BranchSelect
+                repoId={pr.repository}
+                value={pr.target}
+                onChange={handleTargetChange}
+                placeholder="Target"
+                disabled={readOnly || isMerged}
+              />
+            </div>
           </div>
-          <ArrowRight className="size-4 text-muted-foreground mb-2.5" />
-          <div className="space-y-1.5">
-            <Label>Target branch</Label>
-            <BranchSelect
-              repoId={repoId}
-              value={targetBranch}
-              onChange={handleTargetChange}
-              placeholder="main"
-              disabled={readOnly || isMerged}
-            />
-          </div>
-        </div>
-      </div>
 
-      {repoId && sourceBranch && targetBranch && (
-        <div className="pt-3 border-t space-y-4">
-          {!isMerged && (
-            <>
-              <MergeStatus
-                repoId={repoId}
-                source={sourceBranch}
-                target={targetBranch}
-              />
+          {pr.repository && pr.source && pr.target && (
+            <div className="pt-3 border-t space-y-3">
+              {!isMerged && (
+                <>
+                  <MergeStatus
+                    repoId={pr.repository}
+                    source={pr.source}
+                    target={pr.target}
+                  />
 
-              {conflicts.length > 0 && <ConflictList conflicts={conflicts} />}
+                  {conflicts.length > 0 && <ConflictList conflicts={conflicts} />}
 
-              <DiffStats
-                repoId={repoId}
-                base={targetBranch}
-                head={sourceBranch}
-              />
+                  <DiffStats
+                    repoId={pr.repository}
+                    base={pr.target}
+                    head={pr.source}
+                  />
 
-              <div className="flex items-center justify-between gap-4">
-                <ViewDiffLink
-                  repoId={repoId}
-                  source={sourceBranch}
-                  target={targetBranch}
-                />
-              </div>
+                  <div className="flex items-center justify-between gap-4">
+                    <a
+                      href={`/projects/${projectId}/diff?repo=${encodeURIComponent(pr.repository)}&source=${encodeURIComponent(pr.source)}&target=${encodeURIComponent(pr.target)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 text-xs text-primary hover:underline"
+                    >
+                      View diff
+                      <ExternalLink className="size-3" />
+                    </a>
+                  </div>
 
-              <MergeButton
-                repoId={repoId}
-                source={sourceBranch}
-                target={targetBranch}
-                canMerge={canMerge}
-                objectTitle={objectTitle}
-                objectReadable={objectReadable}
-                onMergeComplete={handleMergeComplete}
-                disabled={readOnly}
-              />
-            </>
+                  <MergeButton
+                    repoId={pr.repository}
+                    source={pr.source}
+                    target={pr.target}
+                    canMerge={canMerge}
+                    objectTitle={objectTitle}
+                    objectReadable={objectReadable}
+                    projectId={projectId}
+                    onMergeComplete={handleMergeComplete}
+                    disabled={readOnly}
+                  />
+                </>
+              )}
+
+              {isMerged && (
+                <div className="text-sm text-muted-foreground">
+                  This pull request has been merged into {pr.target}.
+                </div>
+              )}
+            </div>
           )}
 
-          {isMerged && (
-            <div className="text-sm text-muted-foreground">
-              This pull request has been merged into {targetBranch}.
+          {!readOnly && !isMerged && (
+            <div className="pt-2 border-t">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="h-7 text-xs text-muted-foreground hover:text-destructive"
+                onClick={onDelete}
+              >
+                <Trash2 className="size-3" />
+                Delete
+              </Button>
             </div>
           )}
         </div>

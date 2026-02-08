@@ -17,6 +17,7 @@ export interface ProjectClass {
   id: string;
   name: string;
   rank: number;
+  pull_requests: number;
 }
 
 export interface ProjectField {
@@ -133,6 +134,17 @@ export interface Watcher {
   created: number;
 }
 
+export interface PrData {
+  id: string;
+  object: string;
+  repository: string;
+  source: string;
+  target: string;
+  status: string;
+  created: number;
+  updated: number;
+}
+
 // Sort state for views
 export interface SortState {
   field: string;
@@ -161,6 +173,7 @@ export interface ObjectGetResponse {
     links: ObjectLink[];
     linked_by: ObjectLink[];
     watching: boolean;
+    prs: PrData[];
   };
 }
 
@@ -239,12 +252,7 @@ export interface MergeCheckResponse {
 }
 
 export interface DiffResponse {
-  data: {
-    files: DiffFile[];
-    additions: number;
-    deletions: number;
-    diff: string;
-  };
+  data: string;
 }
 
 export interface MergeResponse {

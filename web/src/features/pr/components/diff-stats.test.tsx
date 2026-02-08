@@ -11,6 +11,30 @@ vi.mock("@/api/projects", () => ({
   },
 }));
 
+// Helper to build a raw unified diff string
+function makeDiff(
+  files: { path: string; oldPath?: string; status?: string; lines: string[] }[],
+): string {
+  return files
+    .map((f) => {
+      const aPath = f.oldPath || f.path;
+      let header = `diff --git a/${aPath} b/${f.path}\n`;
+      if (f.status === "added") {
+        header += `new file mode 100644\n--- /dev/null\n+++ b/${f.path}\n`;
+      } else if (f.status === "deleted") {
+        header += `deleted file mode 100644\n--- a/${f.path}\n+++ /dev/null\n`;
+      } else if (f.status === "renamed") {
+        header += `rename from ${aPath}\nrename to ${f.path}\n--- a/${aPath}\n+++ b/${f.path}\n`;
+      } else {
+        header += `--- a/${f.path}\n+++ b/${f.path}\n`;
+      }
+      header += `@@ -1,10 +1,10 @@\n`;
+      header += f.lines.join("\n") + "\n";
+      return header;
+    })
+    .join("");
+}
+
 describe("DiffStats", () => {
   beforeEach(() => {
     vi.clearAllMocks();
@@ -41,7 +65,6 @@ describe("DiffStats", () => {
   });
 
   it("should show loading state while fetching", async () => {
-    // Create a promise that won't resolve immediately
     vi.mocked(projectsApi.getDiff).mockImplementation(
       () => new Promise(() => {}),
     );
@@ -51,9 +74,9 @@ describe("DiffStats", () => {
     expect(screen.getByText("Loading diff...")).toBeInTheDocument();
   });
 
-  it("should show no changes message when files array is empty", async () => {
+  it("should show no changes message when diff is empty", async () => {
     vi.mocked(projectsApi.getDiff).mockResolvedValue({
-      data: { files: [], additions: 0, deletions: 0, diff: "" },
+      data: "",
     });
 
     render(<DiffStats repoId="repo1" base="main" head="feature" />);
@@ -64,17 +87,11 @@ describe("DiffStats", () => {
   });
 
   it("should display file count", async () => {
-    vi.mocked(projectsApi.getDiff).mockResolvedValue({
-      data: {
-        files: [
-          { path: "file1.ts", status: "modified", additions: 10, deletions: 5 },
-          { path: "file2.ts", status: "added", additions: 20, deletions: 0 },
-        ],
-        additions: 30,
-        deletions: 5,
-        diff: "",
-      },
-    });
+    const diff = makeDiff([
+      { path: "file1.ts", lines: ["-old", "+new"] },
+      { path: "file2.ts", status: "added", lines: ["+new line"] },
+    ]);
+    vi.mocked(projectsApi.getDiff).mockResolvedValue({ data: diff });
 
     render(<DiffStats repoId="repo1" base="main" head="feature" />);
 
@@ -83,66 +100,29 @@ describe("DiffStats", () => {
     });
   });
 
-  it("should display total additions", async () => {
-    vi.mocked(projectsApi.getDiff).mockResolvedValue({
-      data: {
-        files: [
-          { path: "file1.ts", status: "modified", additions: 30, deletions: 5 },
-        ],
-        additions: 30,
-        deletions: 5,
-        diff: "",
+  it("should display total additions and deletions", async () => {
+    const diff = makeDiff([
+      {
+        path: "file1.ts",
+        lines: ["-old1", "-old2", "+new1", "+new2", "+new3"],
       },
-    });
+    ]);
+    vi.mocked(projectsApi.getDiff).mockResolvedValue({ data: diff });
 
     render(<DiffStats repoId="repo1" base="main" head="feature" />);
 
     await waitFor(() => {
-      expect(screen.getByText("30")).toBeInTheDocument();
-    });
-  });
-
-  it("should display total deletions", async () => {
-    vi.mocked(projectsApi.getDiff).mockResolvedValue({
-      data: {
-        files: [
-          { path: "file1.ts", status: "modified", additions: 10, deletions: 15 },
-        ],
-        additions: 10,
-        deletions: 15,
-        diff: "",
-      },
-    });
-
-    render(<DiffStats repoId="repo1" base="main" head="feature" />);
-
-    await waitFor(() => {
-      expect(screen.getByText("15")).toBeInTheDocument();
+      expect(screen.getByText("3")).toBeInTheDocument(); // additions
+      expect(screen.getByText("2")).toBeInTheDocument(); // deletions
     });
   });
 
   it("should display file paths", async () => {
-    vi.mocked(projectsApi.getDiff).mockResolvedValue({
-      data: {
-        files: [
-          {
-            path: "src/utils/helpers.ts",
-            status: "modified",
-            additions: 5,
-            deletions: 2,
-          },
-          {
-            path: "package.json",
-            status: "modified",
-            additions: 1,
-            deletions: 1,
-          },
-        ],
-        additions: 6,
-        deletions: 3,
-        diff: "",
-      },
-    });
+    const diff = makeDiff([
+      { path: "src/utils/helpers.ts", lines: ["-old", "+new"] },
+      { path: "package.json", lines: ["-old", "+new"] },
+    ]);
+    vi.mocked(projectsApi.getDiff).mockResolvedValue({ data: diff });
 
     render(<DiffStats repoId="repo1" base="main" head="feature" />);
 
@@ -153,95 +133,39 @@ describe("DiffStats", () => {
   });
 
   it("should display per-file additions", async () => {
-    vi.mocked(projectsApi.getDiff).mockResolvedValue({
-      data: {
-        files: [
-          { path: "file1.ts", status: "added", additions: 50, deletions: 0 },
-        ],
-        additions: 50,
-        deletions: 0,
-        diff: "",
-      },
-    });
+    const diff = makeDiff([
+      { path: "file1.ts", status: "added", lines: ["+line1", "+line2"] },
+    ]);
+    vi.mocked(projectsApi.getDiff).mockResolvedValue({ data: diff });
 
     render(<DiffStats repoId="repo1" base="main" head="feature" />);
 
     await waitFor(() => {
-      expect(screen.getByText("+50")).toBeInTheDocument();
+      expect(screen.getByText("+2")).toBeInTheDocument();
     });
   });
 
   it("should display per-file deletions", async () => {
-    vi.mocked(projectsApi.getDiff).mockResolvedValue({
-      data: {
-        files: [
-          { path: "file1.ts", status: "modified", additions: 0, deletions: 25 },
-        ],
-        additions: 0,
-        deletions: 25,
-        diff: "",
-      },
-    });
+    const diff = makeDiff([
+      { path: "file1.ts", lines: ["-line1", "-line2", "-line3"] },
+    ]);
+    vi.mocked(projectsApi.getDiff).mockResolvedValue({ data: diff });
 
     render(<DiffStats repoId="repo1" base="main" head="feature" />);
 
     await waitFor(() => {
-      expect(screen.getByText("-25")).toBeInTheDocument();
-    });
-  });
-
-  it("should not show per-file additions when 0", async () => {
-    vi.mocked(projectsApi.getDiff).mockResolvedValue({
-      data: {
-        files: [
-          { path: "deleted.ts", status: "deleted", additions: 0, deletions: 100 },
-        ],
-        additions: 0,
-        deletions: 100,
-        diff: "",
-      },
-    });
-
-    render(<DiffStats repoId="repo1" base="main" head="feature" />);
-
-    await waitFor(() => {
-      expect(screen.queryByText("+0")).not.toBeInTheDocument();
-    });
-  });
-
-  it("should not show per-file deletions when 0", async () => {
-    vi.mocked(projectsApi.getDiff).mockResolvedValue({
-      data: {
-        files: [
-          { path: "new.ts", status: "added", additions: 100, deletions: 0 },
-        ],
-        additions: 100,
-        deletions: 0,
-        diff: "",
-      },
-    });
-
-    render(<DiffStats repoId="repo1" base="main" head="feature" />);
-
-    await waitFor(() => {
-      expect(screen.queryByText("-0")).not.toBeInTheDocument();
+      expect(screen.getByText("-3")).toBeInTheDocument();
     });
   });
 
   it("should render status indicators for different file statuses", async () => {
-    vi.mocked(projectsApi.getDiff).mockResolvedValue({
-      data: {
-        files: [
-          { path: "added.ts", status: "added", additions: 10, deletions: 0 },
-          { path: "modified.ts", status: "modified", additions: 5, deletions: 3 },
-          { path: "deleted.ts", status: "deleted", additions: 0, deletions: 20 },
-          { path: "renamed.ts", status: "renamed", additions: 0, deletions: 0 },
-        ],
-        additions: 15,
-        deletions: 23,
-        diff: "",
-      },
-    });
+    const diff = makeDiff([
+      { path: "added.ts", status: "added", lines: ["+new"] },
+      { path: "modified.ts", lines: ["-old", "+new"] },
+      { path: "deleted.ts", status: "deleted", lines: ["-removed"] },
+      { path: "renamed.ts", oldPath: "old.ts", status: "renamed", lines: [" context"] },
+    ]);
+    vi.mocked(projectsApi.getDiff).mockResolvedValue({ data: diff });
 
     render(<DiffStats repoId="repo1" base="main" head="feature" />);
 

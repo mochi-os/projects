@@ -936,14 +936,7 @@ describe("projectsApi", () => {
   describe("getDiff", () => {
     it("should fetch diff between branches", async () => {
       const mockResponse = {
-        data: {
-          files: [
-            { path: "file1.ts", status: "modified", additions: 50, deletions: 20 },
-          ],
-          additions: 100,
-          deletions: 20,
-          diff: "diff content",
-        },
+        data: "diff --git a/file1.ts b/file1.ts\n--- a/file1.ts\n+++ b/file1.ts\n@@ -1,3 +1,3 @@\n line1\n-old\n+new\n line3\n",
       };
       vi.mocked(projectsRequest.post).mockResolvedValue(mockResponse);
 
@@ -953,7 +946,7 @@ describe("projectsApi", () => {
         "-/repositories/repo1/diff",
         { base: "main", head: "feature/test" },
       );
-      expect(result.data.files).toHaveLength(1);
+      expect(result.data).toContain("diff --git");
     });
   });
 

@@ -3,8 +3,8 @@
 
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
-import { GitMerge, Loader2, CheckCircle2, ExternalLink } from "lucide-react";
-import { Button, ConfirmDialog } from "@mochi/common";
+import { GitMerge, Loader2, CheckCircle2 } from "lucide-react";
+import { Button, ConfirmDialog, getErrorMessage } from "@mochi/common";
 import projectsApi from "@/api/projects";
 
 interface MergeButtonProps {
@@ -14,6 +14,7 @@ interface MergeButtonProps {
   canMerge: boolean;
   objectTitle: string;
   objectReadable: string;
+  projectId?: string;
   onMergeComplete?: () => void;
   disabled?: boolean;
 }
@@ -25,6 +26,7 @@ export function MergeButton({
   canMerge,
   objectTitle,
   objectReadable,
+  projectId,
   onMergeComplete,
   disabled,
 }: MergeButtonProps) {
@@ -33,7 +35,7 @@ export function MergeButton({
   const mergeMutation = useMutation({
     mutationFn: async () => {
       const message = `Merge ${objectReadable}: ${objectTitle}`;
-      const response = await projectsApi.merge(repoId, source, target, message);
+      const response = await projectsApi.merge(repoId, source, target, message, projectId);
       return response.data;
     },
     onSuccess: () => {
@@ -77,9 +79,7 @@ export function MergeButton({
 
       {mergeMutation.isError && (
         <p className="text-xs text-destructive mt-2">
-          {mergeMutation.error instanceof Error
-            ? mergeMutation.error.message
-            : "Failed to merge"}
+          {getErrorMessage(mergeMutation.error, "Failed to merge")}
         </p>
       )}
 
@@ -93,28 +93,5 @@ export function MergeButton({
         handleConfirm={handleMerge}
       />
     </>
-  );
-}
-
-interface ViewDiffLinkProps {
-  repoId: string;
-  source: string;
-  target: string;
-}
-
-export function ViewDiffLink({ repoId, source, target }: ViewDiffLinkProps) {
-  // Link to repositories app to view full diff
-  const diffUrl = `/repositories/${repoId}/compare/${target}...${source}`;
-
-  return (
-    <a
-      href={diffUrl}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="inline-flex items-center gap-1 text-xs text-primary hover:underline"
-    >
-      View full diff
-      <ExternalLink className="size-3" />
-    </a>
   );
 }

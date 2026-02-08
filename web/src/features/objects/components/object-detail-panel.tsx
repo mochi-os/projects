@@ -382,11 +382,7 @@ export function ObjectDetailPanel({
               )}
 
               {classFields
-                .filter(
-                  (f) =>
-                    f.id !== "title" &&
-                    !["repository", "source_branch", "target_branch"].includes(f.id),
-                )
+                .filter((f) => f.id !== "title")
                 .map((field) => (
                   <div key={field.id} className="grid grid-cols-[120px_1fr] gap-4 items-start">
                     <label className="text-sm font-medium text-muted-foreground pt-2">
@@ -406,13 +402,12 @@ export function ObjectDetailPanel({
                 ))}
 
               {/* Pull Request Panel */}
-              {(data.values.repository ||
-                classFields.some((f) => f.id === "repository")) && (
+              {project.classes.find((c) => c.id === object.class)?.pull_requests === 1 && (
                 <div className="mt-8 pt-6 border-t">
-                  <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-4">Development</h3>
                   <PrPanel
-                    values={data.values}
-                    onValueChange={handleFieldChange}
+                    projectId={projectId}
+                    objectId={objectId!}
+                    prs={data.prs || []}
                     objectTitle={title}
                     objectReadable={object.readable}
                   />

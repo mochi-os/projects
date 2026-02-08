@@ -39,6 +39,7 @@
 		":project": {"file": "web/dist/index.html"},
 		":project/design": {"file": "web/dist/index.html"},
 		":project/settings": {"file": "web/dist/index.html"},
+		":project/diff": {"file": "web/dist/index.html"},
 		":project/-/info": {"function": "action_project_get"},
 		":project/-/update": {"function": "action_project_update"},
 		":project/-/delete": {"function": "action_project_delete"},
@@ -69,6 +70,11 @@
 		":project/-/objects/:object/attachments": {"function": "action_attachment_list"},
 		":project/-/objects/:object/attachments/create": {"function": "action_attachment_create"},
 		":project/-/objects/:object/attachments/:attachment/delete": {"function": "action_attachment_delete"},
+
+		":project/-/objects/:object/prs": {"function": "action_pr_list"},
+		":project/-/objects/:object/prs/create": {"function": "action_pr_create"},
+		":project/-/objects/:object/prs/:pr/update": {"function": "action_pr_update"},
+		":project/-/objects/:object/prs/:pr/delete": {"function": "action_pr_delete"},
 
 		":project/-/objects/:object/activity": {"function": "action_activity_list"},
 
@@ -101,6 +107,9 @@
 		":project/-/classes/:class/fields/:field/options/reorder": {"function": "action_option_reorder"},
 		":project/-/classes/:class/fields/:field/options/:option/update": {"function": "action_option_update"},
 		":project/-/classes/:class/fields/:field/options/:option/delete": {"function": "action_option_delete"},
+
+		"-/diff/preference": {"function": "action_diff_preference_get"},
+		"-/diff/preference/set": {"function": "action_diff_preference_set"},
 
 		"-/repositories": {"function": "action_repositories_list"},
 		"-/repositories/:repo/branches": {"function": "action_repositories_branches"},
@@ -139,6 +148,10 @@
 		"option/create": {"function": "event_option_create"},
 		"option/update": {"function": "event_option_update"},
 		"option/delete": {"function": "event_option_delete"},
-		"option/reorder": {"function": "event_option_reorder"}
+		"option/reorder": {"function": "event_option_reorder"},
+		"merge/request": {"function": "event_merge_request"},
+		"pull_request/create": {"function": "event_pull_request_create"},
+		"pull_request/update": {"function": "event_pull_request_update"},
+		"pull_request/delete": {"function": "event_pull_request_delete"}
 	}
 }

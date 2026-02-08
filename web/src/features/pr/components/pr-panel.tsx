@@ -3,7 +3,7 @@
 
 import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { ArrowRight, GitPullRequest, Plus, Trash2, ChevronDown, ChevronRight, ExternalLink } from "lucide-react";
+import { ArrowRight, GitPullRequest, Plus, Trash2, ChevronDown, ChevronRight } from "lucide-react";
 import { Button, ConfirmDialog } from "@mochi/common";
 import projectsApi from "@/api/projects";
 import type { PrData } from "@/types";
@@ -247,6 +247,7 @@ function PrItem({
                     repoId={pr.repository}
                     source={pr.source}
                     target={pr.target}
+                    diffUrl={`/projects/${projectId}/diff?repo=${encodeURIComponent(pr.repository)}&source=${encodeURIComponent(pr.source)}&target=${encodeURIComponent(pr.target)}`}
                   />
 
                   {conflicts.length > 0 && <ConflictList conflicts={conflicts} />}
@@ -256,18 +257,6 @@ function PrItem({
                     base={pr.target}
                     head={pr.source}
                   />
-
-                  <div className="flex items-center justify-between gap-4">
-                    <a
-                      href={`/projects/${projectId}/diff?repo=${encodeURIComponent(pr.repository)}&source=${encodeURIComponent(pr.source)}&target=${encodeURIComponent(pr.target)}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 text-xs text-primary hover:underline"
-                    >
-                      View diff
-                      <ExternalLink className="size-3" />
-                    </a>
-                  </div>
 
                   <MergeButton
                     repoId={pr.repository}

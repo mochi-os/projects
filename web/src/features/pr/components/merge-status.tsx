@@ -2,7 +2,7 @@
 // Copyright Alistair Cunningham 2026
 
 import { useQuery } from "@tanstack/react-query";
-import { CheckCircle2, XCircle, AlertCircle, Loader2 } from "lucide-react";
+import { CheckCircle2, XCircle, AlertCircle, Loader2, ExternalLink } from "lucide-react";
 import { cn } from "@mochi/common";
 import projectsApi from "@/api/projects";
 
@@ -10,9 +10,10 @@ interface MergeStatusProps {
   repoId: string;
   source: string;
   target: string;
+  diffUrl?: string;
 }
 
-export function MergeStatus({ repoId, source, target }: MergeStatusProps) {
+export function MergeStatus({ repoId, source, target, diffUrl }: MergeStatusProps) {
   const { data, isLoading, error } = useQuery({
     queryKey: ["merge-check", repoId, source, target],
     queryFn: async () => {
@@ -49,36 +50,43 @@ export function MergeStatus({ repoId, source, target }: MergeStatusProps) {
   }
 
   return (
-    <div className="space-y-3">
-      <div
-        className={cn(
-          "flex items-center gap-2 text-sm font-medium",
-          data.can_merge ? "text-green-600" : "text-destructive",
-        )}
-      >
+    <div className="space-y-2">
+      <div className="flex items-center gap-2 text-sm">
         {data.can_merge ? (
-          <>
-            <CheckCircle2 className="size-4" />
-            Ready to merge
-          </>
+          <CheckCircle2 className="size-4 text-green-600 shrink-0" />
         ) : (
-          <>
-            <XCircle className="size-4" />
-            Cannot merge automatically
-          </>
+          <XCircle className="size-4 text-destructive shrink-0" />
+        )}
+        <span
+          className={cn(
+            "font-medium",
+            data.can_merge ? "text-green-600" : "text-destructive",
+          )}
+        >
+          {data.can_merge ? "Ready to merge" : "Cannot merge automatically"}
+        </span>
+        {(data.ahead > 0 || data.behind > 0) && (
+          <span className="text-xs text-muted-foreground">
+            {[
+              data.ahead > 0 && `+${data.ahead} ahead`,
+              data.behind > 0 && `${data.behind} behind`,
+            ]
+              .filter(Boolean)
+              .join(", ")}
+          </span>
+        )}
+        {diffUrl && (
+          <a
+            href={diffUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="ml-auto inline-flex items-center gap-1 rounded-md border px-2 py-0.5 text-xs text-muted-foreground hover:bg-muted transition-colors shrink-0"
+          >
+            <ExternalLink className="size-3" />
+            View diff
+          </a>
         )}
       </div>
-
-      {(data.ahead > 0 || data.behind > 0) && (
-        <div className="flex items-center gap-4 text-xs text-muted-foreground">
-          {data.ahead > 0 && (
-            <span className="text-green-600">+{data.ahead} ahead</span>
-          )}
-          {data.behind > 0 && (
-            <span className="text-amber-600">{data.behind} behind</span>
-          )}
-        </div>
-      )}
 
       {data.conflicts.length > 0 && (
         <div className="space-y-1">

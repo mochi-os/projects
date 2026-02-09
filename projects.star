@@ -2177,18 +2177,13 @@ def action_watcher_add(a):
 		return
 
 	object_id = a.input("object")
-
-	if project["owner"] != 1:
-		return forward_to_owner(a, project_id, "watcher/add", {
-			"project": project_id, "object": object_id,
-		})
-
-	if not check_project_access(a.user.identity.id, project_id, "view"):
-		a.error(403, "Access denied")
-		return
-
 	if not object_id:
 		a.error(400, "Object ID required")
+		return
+
+	# Watchers are stored locally since object_get checks the local DB
+	if project["owner"] == 1 and not check_project_access(a.user.identity.id, project_id, "view"):
+		a.error(403, "Access denied")
 		return
 
 	row = mochi.db.row("select id from objects where id=? and project=?", object_id, project_id)
@@ -2221,18 +2216,13 @@ def action_watcher_remove(a):
 		return
 
 	object_id = a.input("object")
-
-	if project["owner"] != 1:
-		return forward_to_owner(a, project_id, "watcher/remove", {
-			"project": project_id, "object": object_id,
-		})
-
-	if not check_project_access(a.user.identity.id, project_id, "view"):
-		a.error(403, "Access denied")
-		return
-
 	if not object_id:
 		a.error(400, "Object ID required")
+		return
+
+	# Watchers are stored locally since object_get checks the local DB
+	if project["owner"] == 1 and not check_project_access(a.user.identity.id, project_id, "view"):
+		a.error(403, "Access denied")
 		return
 
 	row = mochi.db.row("select id from objects where id=? and project=?", object_id, project_id)

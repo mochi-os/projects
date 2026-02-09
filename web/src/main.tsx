@@ -7,7 +7,6 @@ import {
   createQueryClient,
   SearchProvider,
   ThemeProvider,
-  useAuthStore,
   useDomainContextStore,
 } from "@mochi/common";
 // Generated Routes
@@ -40,9 +39,6 @@ declare module "@tanstack/react-router" {
   }
 }
 
-// Initialize auth state from cookie on app start BEFORE router loads
-// This ensures cookies are synced before any route guards run
-useAuthStore.getState().initialize();
 
 // Initialize domain context and render app
 async function init() {

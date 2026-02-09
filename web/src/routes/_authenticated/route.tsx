@@ -11,9 +11,6 @@ export const Route = createFileRoute("/_authenticated")({
       store.initialize();
     }
 
-    // Load identity
-    await store.loadIdentity();
-
     return;
   },
   component: ProjectsLayout,

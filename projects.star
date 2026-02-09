@@ -491,8 +491,22 @@ def action_project_get(a):
 		hierarchy[c["id"]] = [p["parent"] for p in parents]
 
 	# Determine access level
-	access = "owner"
-	if row["owner"] != 1:
+	if row["owner"] == 1:
+		resource = "project/" + project_id
+		if mochi.access.check(a.user.identity.id, resource, "*"):
+			access = "owner"
+		elif check_project_access(a.user.identity.id, project_id, "design"):
+			access = "design"
+		elif check_project_access(a.user.identity.id, project_id, "write"):
+			access = "write"
+		elif check_project_access(a.user.identity.id, project_id, "comment"):
+			access = "comment"
+		elif check_project_access(a.user.identity.id, project_id, "view"):
+			access = "view"
+		else:
+			a.error(403, "Access denied")
+			return
+	else:
 		response = mochi.remote.request(project_id, "projects", "access/check", {
 			"user": a.user.identity.id,
 		})
@@ -506,7 +520,11 @@ def action_project_get(a):
 			elif response.get("view"):
 				access = "view"
 			else:
-				access = "view"
+				a.error(403, "Access denied")
+				return
+		else:
+			a.error(403, "Access denied")
+			return
 
 	return {"data": {
 		"project": {
@@ -547,6 +565,10 @@ def action_project_update(a):
 
 	if row["owner"] != 1:
 		a.error(403, "Cannot update remote project")
+		return
+
+	if not mochi.access.check(a.user.identity.id, "project/" + project_id, "*"):
+		a.error(403, "Access denied")
 		return
 
 	name = a.input("name")
@@ -594,6 +616,10 @@ def action_project_delete(a):
 		a.error(403, "Cannot delete remote project")
 		return
 
+	if not mochi.access.check(a.user.identity.id, "project/" + project_id, "*"):
+		a.error(403, "Access denied")
+		return
+
 	# Delete in reverse dependency order
 	mochi.db.execute("delete from attachments where object in (select id from objects where project=?)", project_id)
 	mochi.db.execute("delete from watchers where object in (select id from objects where project=?)", project_id)
@@ -635,6 +661,10 @@ def action_people_list(a):
 	project = get_project(project_id)
 	if not project:
 		a.error(404, "Project not found")
+		return
+
+	if project["owner"] == 1 and not check_project_access(a.user.identity.id, project_id, "view"):
+		a.error(403, "Access denied")
 		return
 
 	# Collect unique people with names
@@ -790,27 +820,19 @@ def action_access_set(a):
 
 	resource = "project/" + project_id
 
-	# Revoke all existing rules for this subject first
+	# Revoke all existing rules for this subject first (including wildcard)
 	for op in ACCESS_LEVELS + ["*"]:
 		mochi.access.revoke(subject, resource, op)
 
-	# Set new level (none means just revoke)
-	if level != "none":
-		# Grant cumulative permissions based on level
-		if level == "view":
-			mochi.access.allow(subject, resource, "view", a.user.identity.id)
-		elif level == "comment":
-			mochi.access.allow(subject, resource, "view", a.user.identity.id)
-			mochi.access.allow(subject, resource, "comment", a.user.identity.id)
-		elif level == "write":
-			mochi.access.allow(subject, resource, "view", a.user.identity.id)
-			mochi.access.allow(subject, resource, "comment", a.user.identity.id)
-			mochi.access.allow(subject, resource, "write", a.user.identity.id)
-		elif level == "design":
-			mochi.access.allow(subject, resource, "view", a.user.identity.id)
-			mochi.access.allow(subject, resource, "comment", a.user.identity.id)
-			mochi.access.allow(subject, resource, "write", a.user.identity.id)
-			mochi.access.allow(subject, resource, "design", a.user.identity.id)
+	# Then set the new level
+	granter = a.user.identity.id
+	if level == "none":
+		# Store deny rules for all levels to block access
+		for op in ACCESS_LEVELS:
+			mochi.access.deny(subject, resource, op, granter)
+	else:
+		# Store a single allow rule for the level
+		mochi.access.allow(subject, resource, level, granter)
 
 	return {"data": {"success": True}}
 
@@ -941,6 +963,10 @@ def action_object_list(a):
 		a.error(404, "Project not found")
 		return
 
+	if project["owner"] == 1 and not check_project_access(a.user.identity.id, project_id, "view"):
+		a.error(403, "Access denied")
+		return
+
 	# Get filter params
 	class_filter = a.input("class")
 	parent_filter = a.input("parent")
@@ -1010,6 +1036,10 @@ def action_object_create(a):
 			"title": title, "parent": parent,
 		})
 
+	if not check_project_access(a.user.identity.id, project_id, "write"):
+		a.error(403, "Access denied")
+		return
+
 	if not obj_class:
 		a.error(400, "Class is required")
 		return
@@ -1070,6 +1100,11 @@ def action_object_get(a):
 	project_id = resolve_project(a)
 	if not project_id:
 		a.error(400, "Project ID required")
+		return
+
+	project = get_project(project_id)
+	if project and project["owner"] == 1 and not check_project_access(a.user.identity.id, project_id, "view"):
+		a.error(403, "Access denied")
 		return
 
 	object_id = a.input("object")
@@ -1150,6 +1185,10 @@ def action_object_update(a):
 			params["class"] = c
 		return forward_to_owner(a, project_id, "object/update", params)
 
+	if not check_project_access(a.user.identity.id, project_id, "write"):
+		a.error(403, "Access denied")
+		return
+
 	if not object_id:
 		a.error(400, "Object ID required")
 		return
@@ -1226,6 +1265,11 @@ def action_object_delete(a):
 		return forward_to_owner(a, project_id, "object/delete", {
 			"project": project_id, "object": object_id,
 		})
+
+	if not check_project_access(a.user.identity.id, project_id, "write"):
+		a.error(403, "Access denied")
+		return
+
 	if not object_id:
 		a.error(400, "Object ID required")
 		return
@@ -1269,6 +1313,10 @@ def action_object_move(a):
 			params["row_field"] = rf
 			params["row_value"] = a.input("row_value")
 		return forward_to_owner(a, project_id, "object/move", params)
+
+	if not check_project_access(a.user.identity.id, project_id, "write"):
+		a.error(403, "Access denied")
+		return
 
 	if not object_id:
 		a.error(400, "Object ID required")
@@ -1404,6 +1452,10 @@ def action_values_set(a):
 			"project": project_id, "object": object_id, "values": values,
 		})
 
+	if not check_project_access(a.user.identity.id, project_id, "write"):
+		a.error(403, "Access denied")
+		return
+
 	now = mochi.time.now()
 	changes = []
 
@@ -1455,6 +1507,10 @@ def action_value_set(a):
 			"project": project_id, "object": a.input("object"),
 			"field": a.input("field"), "value": a.input("value") or "",
 		})
+
+	if not check_project_access(a.user.identity.id, project_id, "write"):
+		a.error(403, "Access denied")
+		return
 
 	object_id = a.input("object")
 	if not object_id:
@@ -1511,6 +1567,11 @@ def action_link_list(a):
 		a.error(400, "Project ID required")
 		return
 
+	project = get_project(project_id)
+	if project and project["owner"] == 1 and not check_project_access(a.user.identity.id, project_id, "view"):
+		a.error(403, "Access denied")
+		return
+
 	object_id = a.input("object")
 	if not object_id:
 		a.error(400, "Object ID required")
@@ -1561,6 +1622,10 @@ def action_link_create(a):
 			"project": project_id, "object": a.input("object"),
 			"target": a.input("target"), "linktype": a.input("linktype"),
 		})
+
+	if not check_project_access(a.user.identity.id, project_id, "write"):
+		a.error(403, "Access denied")
+		return
 
 	object_id = a.input("object")
 	if not object_id:
@@ -1635,6 +1700,10 @@ def action_link_delete(a):
 			"target": a.input("target"), "linktype": a.input("linktype"),
 		})
 
+	if not check_project_access(a.user.identity.id, project_id, "write"):
+		a.error(403, "Access denied")
+		return
+
 	object_id = a.input("object")
 	target_id = a.input("target")
 	linktype = a.input("linktype")
@@ -1665,6 +1734,11 @@ def action_comment_list(a):
 	project_id = resolve_project(a)
 	if not project_id:
 		a.error(400, "Project ID required")
+		return
+
+	project = get_project(project_id)
+	if project and project["owner"] == 1 and not check_project_access(a.user.identity.id, project_id, "view"):
+		a.error(403, "Access denied")
 		return
 
 	object_id = a.input("object")
@@ -1708,6 +1782,10 @@ def action_comment_create(a):
 			"project": project_id, "object": object_id,
 			"content": content, "parent": parent,
 		})
+
+	if not check_project_access(a.user.identity.id, project_id, "comment"):
+		a.error(403, "Access denied")
+		return
 
 	if not object_id:
 		a.error(400, "Object ID required")
@@ -1773,6 +1851,10 @@ def action_comment_update(a):
 			"comment": comment_id, "content": content,
 		})
 
+	if not check_project_access(a.user.identity.id, project_id, "comment"):
+		a.error(403, "Access denied")
+		return
+
 	if not object_id or not comment_id:
 		a.error(400, "Object and comment ID required")
 		return
@@ -1825,6 +1907,10 @@ def action_comment_delete(a):
 			"comment": comment_id,
 		})
 
+	if not check_project_access(a.user.identity.id, project_id, "comment"):
+		a.error(403, "Access denied")
+		return
+
 	if not object_id or not comment_id:
 		a.error(400, "Object and comment ID required")
 		return
@@ -1862,6 +1948,11 @@ def action_attachment_list(a):
 		a.error(400, "Project ID required")
 		return
 
+	project = get_project(project_id)
+	if project and project["owner"] == 1 and not check_project_access(a.user.identity.id, project_id, "view"):
+		a.error(403, "Access denied")
+		return
+
 	object_id = a.input("object")
 	if not object_id:
 		a.error(400, "Object ID required")
@@ -1896,6 +1987,10 @@ def action_attachment_create(a):
 
 	if project["owner"] != 1:
 		a.error(403, "Attachment uploads are not available for subscribed projects")
+		return
+
+	if not check_project_access(a.user.identity.id, project_id, "write"):
+		a.error(403, "Access denied")
 		return
 
 	object_id = a.input("object")
@@ -1952,6 +2047,10 @@ def action_attachment_delete(a):
 			"attachment": a.input("attachment"),
 		})
 
+	if not check_project_access(a.user.identity.id, project_id, "write"):
+		a.error(403, "Access denied")
+		return
+
 	object_id = a.input("object")
 	attachment_id = a.input("attachment")
 
@@ -1985,6 +2084,11 @@ def action_activity_list(a):
 	project_id = resolve_project(a)
 	if not project_id:
 		a.error(400, "Project ID required")
+		return
+
+	project = get_project(project_id)
+	if project and project["owner"] == 1 and not check_project_access(a.user.identity.id, project_id, "view"):
+		a.error(403, "Access denied")
 		return
 
 	object_id = a.input("object")
@@ -2035,6 +2139,11 @@ def action_watcher_list(a):
 		a.error(400, "Project ID required")
 		return
 
+	project = get_project(project_id)
+	if project and project["owner"] == 1 and not check_project_access(a.user.identity.id, project_id, "view"):
+		a.error(403, "Access denied")
+		return
+
 	object_id = a.input("object")
 	if not object_id:
 		a.error(400, "Object ID required")
@@ -2073,6 +2182,10 @@ def action_watcher_add(a):
 		return forward_to_owner(a, project_id, "watcher/add", {
 			"project": project_id, "object": object_id,
 		})
+
+	if not check_project_access(a.user.identity.id, project_id, "view"):
+		a.error(403, "Access denied")
+		return
 
 	if not object_id:
 		a.error(400, "Object ID required")
@@ -2114,6 +2227,10 @@ def action_watcher_remove(a):
 			"project": project_id, "object": object_id,
 		})
 
+	if not check_project_access(a.user.identity.id, project_id, "view"):
+		a.error(403, "Access denied")
+		return
+
 	if not object_id:
 		a.error(400, "Object ID required")
 		return
@@ -2146,6 +2263,10 @@ def action_view_list(a):
 	project = get_project(project_id)
 	if not project:
 		a.error(404, "Project not found")
+		return
+
+	if project["owner"] == 1 and not check_project_access(a.user.identity.id, project_id, "view"):
+		a.error(403, "Access denied")
 		return
 
 	views = mochi.db.rows(
@@ -2187,6 +2308,10 @@ def action_view_create(a):
 			"direction": a.input("direction") or "asc",
 			"classes": a.input("classes") or "",
 		})
+
+	if not check_project_access(a.user.identity.id, project_id, "design"):
+		a.error(403, "Access denied")
+		return
 
 	name = a.input("name")
 	if not name or not name.strip():
@@ -2277,6 +2402,10 @@ def action_view_update(a):
 			if v != None:
 				params[k] = v
 		return forward_to_owner(a, project_id, "view/update", params)
+
+	if not check_project_access(a.user.identity.id, project_id, "design"):
+		a.error(403, "Access denied")
+		return
 
 	view_id = a.input("view")
 	if not view_id:
@@ -2379,6 +2508,10 @@ def action_view_delete(a):
 			"project": project_id, "view": a.input("view"),
 		})
 
+	if not check_project_access(a.user.identity.id, project_id, "design"):
+		a.error(403, "Access denied")
+		return
+
 	view_id = a.input("view")
 	if not view_id:
 		a.error(400, "View ID required")
@@ -2418,6 +2551,10 @@ def action_view_reorder(a):
 			"project": project_id, "order": a.input("order") or "",
 		})
 
+	if not check_project_access(a.user.identity.id, project_id, "design"):
+		a.error(403, "Access denied")
+		return
+
 	# Get order (comma-separated view IDs)
 	order_str = a.input("order") or ""
 	order = [v.strip() for v in order_str.split(",") if v.strip()]
@@ -2453,6 +2590,10 @@ def action_class_list(a):
 		a.error(404, "Project not found")
 		return
 
+	if project["owner"] == 1 and not check_project_access(a.user.identity.id, project_id, "view"):
+		a.error(403, "Access denied")
+		return
+
 	classes = mochi.db.rows("select id, name, rank from classes where project=? order by rank", project_id) or []
 
 	return {"data": {"classes": classes}}
@@ -2477,6 +2618,10 @@ def action_class_create(a):
 			"project": project_id, "name": a.input("name"),
 			"pull_requests": a.input("pull_requests") or "0",
 		})
+
+	if not check_project_access(a.user.identity.id, project_id, "design"):
+		a.error(403, "Access denied")
+		return
 
 	name = a.input("name")
 	if not name or not name.strip():
@@ -2546,6 +2691,10 @@ def action_class_update(a):
 			params["pull_requests"] = pr
 		return forward_to_owner(a, project_id, "class/update", params)
 
+	if not check_project_access(a.user.identity.id, project_id, "design"):
+		a.error(403, "Access denied")
+		return
+
 	class_id = a.input("class")
 	if not class_id:
 		a.error(400, "Type ID required")
@@ -2592,6 +2741,10 @@ def action_class_delete(a):
 			"project": project_id, "class": a.input("class"),
 		})
 
+	if not check_project_access(a.user.identity.id, project_id, "design"):
+		a.error(403, "Access denied")
+		return
+
 	class_id = a.input("class")
 	if not class_id:
 		a.error(400, "Class ID required")
@@ -2633,6 +2786,10 @@ def action_hierarchy_get(a):
 		a.error(404, "Project not found")
 		return
 
+	if project["owner"] == 1 and not check_project_access(a.user.identity.id, project_id, "view"):
+		a.error(403, "Access denied")
+		return
+
 	class_id = a.input("class")
 	if not class_id:
 		a.error(400, "Type ID required")
@@ -2663,6 +2820,10 @@ def action_hierarchy_set(a):
 			"project": project_id, "class": a.input("class"),
 			"parents": a.input("parents"),
 		})
+
+	if not check_project_access(a.user.identity.id, project_id, "design"):
+		a.error(403, "Access denied")
+		return
 
 	class_id = a.input("class")
 	if not class_id:
@@ -2727,6 +2888,10 @@ def action_field_list(a):
 		a.error(404, "Project not found")
 		return
 
+	if project["owner"] == 1 and not check_project_access(a.user.identity.id, project_id, "view"):
+		a.error(403, "Access denied")
+		return
+
 	class_id = a.input("class")
 	if not class_id:
 		a.error(400, "Class ID required")
@@ -2761,6 +2926,10 @@ def action_field_create(a):
 			"required": a.input("required") or "0", "multi": a.input("multi") or "0",
 			"card": a.input("card") or "1", "rows": a.input("rows") or "1",
 		})
+
+	if not check_project_access(a.user.identity.id, project_id, "design"):
+		a.error(403, "Access denied")
+		return
 
 	class_id = a.input("class")
 	if not class_id:
@@ -2835,6 +3004,10 @@ def action_field_update(a):
 			if v != None:
 				params[k] = v
 		return forward_to_owner(a, project_id, "field/update", params)
+
+	if not check_project_access(a.user.identity.id, project_id, "design"):
+		a.error(403, "Access denied")
+		return
 
 	class_id = a.input("class")
 	field_id = a.input("field")
@@ -2950,6 +3123,10 @@ def action_field_delete(a):
 			"field": a.input("field"),
 		})
 
+	if not check_project_access(a.user.identity.id, project_id, "design"):
+		a.error(403, "Access denied")
+		return
+
 	class_id = a.input("class")
 	field_id = a.input("field")
 	if not class_id or not field_id:
@@ -2986,6 +3163,10 @@ def action_field_reorder(a):
 			"project": project_id, "class": a.input("class"),
 			"order": a.input("order") or "",
 		})
+
+	if not check_project_access(a.user.identity.id, project_id, "design"):
+		a.error(403, "Access denied")
+		return
 
 	class_id = a.input("class")
 	if not class_id:
@@ -3027,6 +3208,10 @@ def action_option_list(a):
 		a.error(404, "Project not found")
 		return
 
+	if project["owner"] == 1 and not check_project_access(a.user.identity.id, project_id, "view"):
+		a.error(403, "Access denied")
+		return
+
 	class_id = a.input("class")
 	field_id = a.input("field")
 	if not class_id or not field_id:
@@ -3062,6 +3247,10 @@ def action_option_create(a):
 			"colour": a.input("colour") or "#94a3b8",
 			"icon": a.input("icon") or "",
 		})
+
+	if not check_project_access(a.user.identity.id, project_id, "design"):
+		a.error(403, "Access denied")
+		return
 
 	class_id = a.input("class")
 	field_id = a.input("field")
@@ -3135,6 +3324,10 @@ def action_option_update(a):
 				params[k] = v
 		return forward_to_owner(a, project_id, "option/update", params)
 
+	if not check_project_access(a.user.identity.id, project_id, "design"):
+		a.error(403, "Access denied")
+		return
+
 	class_id = a.input("class")
 	field_id = a.input("field")
 	option_id = a.input("option")
@@ -3190,6 +3383,10 @@ def action_option_delete(a):
 			"field": a.input("field"), "option": a.input("option"),
 		})
 
+	if not check_project_access(a.user.identity.id, project_id, "design"):
+		a.error(403, "Access denied")
+		return
+
 	class_id = a.input("class")
 	field_id = a.input("field")
 	option_id = a.input("option")
@@ -3223,6 +3420,10 @@ def action_option_reorder(a):
 			"project": project_id, "class": a.input("class"),
 			"field": a.input("field"), "order": a.input("order") or "",
 		})
+
+	if not check_project_access(a.user.identity.id, project_id, "design"):
+		a.error(403, "Access denied")
+		return
 
 	class_id = a.input("class")
 	field_id = a.input("field")
@@ -3352,6 +3553,9 @@ def action_repositories_merge(a):
 		return
 
 	if project["owner"] == 1:
+		if not check_project_access(a.user.identity.id, project_id, "write"):
+			a.error(403, "Access denied")
+			return
 		# Owner: merge directly via local service
 		result = mochi.service.call("repositories", "merge", {
 			"repo": repo_id,
@@ -3704,6 +3908,11 @@ def event_info(e):
 		e.stream.write({"error": "Project not found"})
 		return
 
+	requester = e.header("from")
+	if project["owner"] == 1 and not check_project_access(requester, project_id, "view"):
+		e.stream.write({"error": "Access denied"})
+		return
+
 	e.stream.write({
 		"id": entity["id"],
 		"name": project["name"],
@@ -3718,6 +3927,11 @@ def event_schema(e):
 	project = mochi.db.row("select id from projects where id=? and owner=1", project_id)
 	if not project:
 		e.stream.write({"error": "Project not found"})
+		return
+
+	requester = e.header("from")
+	if not check_project_access(requester, project_id, "view"):
+		e.stream.write({"error": "Access denied"})
 		return
 
 	# Classes
@@ -3931,6 +4145,10 @@ def event_subscribe(e):
 
 	subscriber_id = e.header("from")
 	if not mochi.valid(subscriber_id, "entity"):
+		return
+
+	# Check subscriber has at least view access
+	if not check_project_access(subscriber_id, project_id, "view"):
 		return
 
 	name = e.content("name")
@@ -4575,6 +4793,11 @@ def action_pr_list(a):
 		a.error(400, "Project ID required")
 		return
 
+	project = get_project(project_id)
+	if project and project["owner"] == 1 and not check_project_access(a.user.identity.id, project_id, "view"):
+		a.error(403, "Access denied")
+		return
+
 	object_id = a.input("object")
 	if not object_id:
 		a.error(400, "Object ID required")
@@ -4609,6 +4832,10 @@ def action_pr_create(a):
 			"description": a.input("description") or "",
 			"draft": a.input("draft") or "0",
 		})
+
+	if not check_project_access(a.user.identity.id, project_id, "write"):
+		a.error(403, "Access denied")
+		return
 
 	object_id = a.input("object")
 	if not object_id:
@@ -4678,6 +4905,10 @@ def action_pr_update(a):
 				params[k] = v
 		return forward_to_owner(a, project_id, "pr/update", params)
 
+	if not check_project_access(a.user.identity.id, project_id, "write"):
+		a.error(403, "Access denied")
+		return
+
 	pr_id = a.input("pr")
 	if not pr_id:
 		a.error(400, "PR ID required")
@@ -4743,6 +4974,10 @@ def action_pr_delete(a):
 			"project": project_id, "object": a.input("object"),
 			"pr": a.input("pr"),
 		})
+
+	if not check_project_access(a.user.identity.id, project_id, "write"):
+		a.error(403, "Access denied")
+		return
 
 	pr_id = a.input("pr")
 	if not pr_id:
@@ -4975,7 +5210,7 @@ def event_access_check(e):
 	user_id = e.content("user") or e.header("from")
 	result = {}
 	for op in ["design", "write", "comment", "view"]:
-		result[op] = mochi.access.check(user_id, "project/" + project_id, op)
+		result[op] = check_project_access(user_id, project_id, op)
 	e.stream.write(result)
 
 

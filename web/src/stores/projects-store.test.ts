@@ -1,6 +1,7 @@
 // Tests for the projects store
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { useProjectsStore } from "./projects-store";
+import type { Project } from "@/types";
 
 // Mock the API module
 vi.mock("@/api/projects", () => ({
@@ -47,7 +48,7 @@ describe("useProjectsStore", () => {
   });
 
   it("should load projects successfully", async () => {
-    const mockProjects = [
+    const mockProjects: Project[] = [
       {
         id: "1",
         fingerprint: "abc123",
@@ -60,6 +61,7 @@ describe("useProjectsStore", () => {
         server: "local",
         created: Date.now(),
         updated: Date.now(),
+        access: "owner",
       },
       {
         id: "2",
@@ -73,6 +75,7 @@ describe("useProjectsStore", () => {
         server: "local",
         created: Date.now(),
         updated: Date.now(),
+        access: "owner",
       },
     ];
 

@@ -21,6 +21,7 @@ import {
 import { Columns3, Ellipsis, FolderKanban, GripVertical, Plus, Settings, Settings2, SlidersHorizontal, X } from "lucide-react";
 import projectsApi from "@/api/projects";
 import type { ProjectDetails, ProjectObject, SortState } from "@/types";
+import { canDesign, canWrite } from "@/lib/access";
 import { BoardContainer } from "@/features/board/components";
 import { TreeView } from "@/features/tree";
 import { FilterBar, type FilterState } from "@/features/views";
@@ -57,6 +58,8 @@ function ProjectPage() {
   const search = Route.useSearch();
   const navigate = useNavigate();
   const router = useRouter();
+
+  const access = project.project.access;
 
   usePageTitle(project.project.name);
 
@@ -578,10 +581,12 @@ function ProjectPage() {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
-                <DropdownMenuItem onClick={handleOpenCreateDialog}>
-                  <Plus className="size-4 mr-2" />
-                  Create
-                </DropdownMenuItem>
+                {canWrite(access) && (
+                  <DropdownMenuItem onClick={handleOpenCreateDialog}>
+                    <Plus className="size-4 mr-2" />
+                    Create
+                  </DropdownMenuItem>
+                )}
                 <DropdownMenuItem
                   onSelect={(e) => e.preventDefault()}
                 >
@@ -593,7 +598,7 @@ function ProjectPage() {
                     onCheckedChange={setShowViewOptions}
                   />
                 </DropdownMenuItem>
-                {activeView?.viewtype !== "list" && (
+                {canDesign(access) && activeView?.viewtype !== "list" && (
                   <>
                     <DropdownMenuItem onClick={() => setAddColumnDialogOpen(true)}>
                       <Columns3 className="size-4 mr-2" />
@@ -605,15 +610,17 @@ function ProjectPage() {
                     </DropdownMenuItem>
                   </>
                 )}
-                <DropdownMenuItem asChild>
-                  <Link
-                    to="/$projectId/design"
-                    params={{ projectId: params.projectId }}
-                  >
-                    <Settings2 className="size-4 mr-2" />
-                    Design
-                  </Link>
-                </DropdownMenuItem>
+                {canDesign(access) && (
+                  <DropdownMenuItem asChild>
+                    <Link
+                      to="/$projectId/design"
+                      params={{ projectId: params.projectId }}
+                    >
+                      <Settings2 className="size-4 mr-2" />
+                      Design
+                    </Link>
+                  </DropdownMenuItem>
+                )}
                 <DropdownMenuItem asChild>
                   <Link
                     to="/$projectId/settings"
@@ -687,8 +694,8 @@ function ProjectPage() {
                 viewFields={activeView?.fields}
                 sort={sort}
                 onCardClick={handleCardClick}
-                onReparent={handleReparent}
-                onReorder={handleReorder}
+                onReparent={canWrite(access) ? handleReparent : undefined}
+                onReorder={canWrite(access) ? handleReorder : undefined}
               />
             </div>
           ) : (
@@ -701,10 +708,10 @@ function ProjectPage() {
                 viewFields={activeView?.fields}
                 sort={sort}
                 onCardClick={handleCardClick}
-                onCreateClick={handleCreateClick}
-                onMoveObject={handleMoveObject}
-                onRenameColumn={handleRenameColumn}
-                onDeleteColumn={handleDeleteColumn}
+                onCreateClick={canWrite(access) ? handleCreateClick : undefined}
+                onMoveObject={canWrite(access) ? handleMoveObject : undefined}
+                onRenameColumn={canDesign(access) ? handleRenameColumn : undefined}
+                onDeleteColumn={canDesign(access) ? handleDeleteColumn : undefined}
                 isReordering={isReorderingColumns}
                 onReorderColumns={handleReorderColumns}
               />
@@ -718,18 +725,21 @@ function ProjectPage() {
         projectId={params.projectId}
         objectId={selectedObjectId}
         project={project}
+        access={access}
         onClose={() => setSelectedObjectId(null)}
       />
 
-      <CreateObjectDialog
-        open={createDialogOpen}
-        onOpenChange={setCreateDialogOpen}
-        projectId={params.projectId}
-        project={project}
-        defaultFields={createDefaultFields}
-        allowedClasses={activeView?.classes?.length ? activeView.classes : undefined}
-        onCreated={handleObjectCreated}
-      />
+      {canWrite(access) && (
+        <CreateObjectDialog
+          open={createDialogOpen}
+          onOpenChange={setCreateDialogOpen}
+          projectId={params.projectId}
+          project={project}
+          defaultFields={createDefaultFields}
+          allowedClasses={activeView?.classes?.length ? activeView.classes : undefined}
+          onCreated={handleObjectCreated}
+        />
+      )}
 
       <KeyboardShortcutsHelp
         open={showShortcutsHelp}

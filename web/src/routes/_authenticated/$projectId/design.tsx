@@ -1,12 +1,13 @@
 // Mochi Projects: Design editor page
 // Copyright Alistair Cunningham 2026
 
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Navigate } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { GeneralError, Main, PageHeader, usePageTitle } from "@mochi/common";
 import { Settings2 } from "lucide-react";
 import projectsApi from "@/api/projects";
 import type { ProjectDetails } from "@/types";
+import { canDesign } from "@/lib/access";
 import { DesignEditor } from "@/features/editor";
 
 export const Route = createFileRoute("/_authenticated/$projectId/design")({
@@ -42,6 +43,10 @@ function DesignPage() {
 
   if (error || !project) {
     return <GeneralError error={error} />;
+  }
+
+  if (!canDesign(project.project.access)) {
+    return <Navigate to="/$projectId" params={{ projectId }} />;
   }
 
   return (

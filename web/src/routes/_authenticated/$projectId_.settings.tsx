@@ -91,6 +91,7 @@ function ProjectSettingsPage() {
   };
 
   const [isDeleting, setIsDeleting] = useState(false);
+  const [isUnsubscribing, setIsUnsubscribing] = useState(false);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
 
   const {
@@ -127,6 +128,22 @@ function ProjectSettingsPage() {
       setIsDeleting(false);
     }
   }, [project, isOwner, isDeleting, refreshSidebar, navigate]);
+
+  const handleUnsubscribe = useCallback(async () => {
+    if (!project || isUnsubscribing) return;
+
+    setIsUnsubscribing(true);
+    try {
+      await projectsApi.unsubscribe(project.project.id);
+      void refreshSidebar();
+      toast.success("Unsubscribed");
+      void navigate({ to: "/" });
+    } catch (err) {
+      toast.error(getErrorMessage(err, "Failed to unsubscribe"));
+    } finally {
+      setIsUnsubscribing(false);
+    }
+  }, [project, isUnsubscribing, refreshSidebar, navigate]);
 
   const handleUpdate = useCallback(
     async (updates: {
@@ -225,9 +242,11 @@ function ProjectSettingsPage() {
               project={project}
               isOwner={isOwner}
               isDeleting={isDeleting}
+              isUnsubscribing={isUnsubscribing}
               showDeleteDialog={showDeleteDialog}
               setShowDeleteDialog={setShowDeleteDialog}
               onDelete={handleDelete}
+              onUnsubscribe={handleUnsubscribe}
               onUpdate={handleUpdate}
             />
           )}
@@ -244,9 +263,11 @@ interface GeneralTabProps {
   project: ProjectDetails;
   isOwner: boolean;
   isDeleting: boolean;
+  isUnsubscribing: boolean;
   showDeleteDialog: boolean;
   setShowDeleteDialog: (show: boolean) => void;
   onDelete: () => void;
+  onUnsubscribe: () => void;
   onUpdate: (updates: {
     name?: string;
     description?: string;
@@ -258,9 +279,11 @@ function GeneralTab({
   project,
   isOwner,
   isDeleting,
+  isUnsubscribing,
   showDeleteDialog,
   setShowDeleteDialog,
   onDelete,
+  onUnsubscribe,
   onUpdate,
 }: GeneralTabProps) {
   return (
@@ -311,6 +334,26 @@ function GeneralTab({
           )}
         </div>
       </Section>
+
+      {!isOwner && (
+        <Section
+          title="Unsubscribe from project"
+          action={
+            <Button
+              variant="outline"
+              onClick={onUnsubscribe}
+              disabled={isUnsubscribing}
+              size="sm"
+            >
+              {isUnsubscribing ? (
+                <Loader2 className="mr-2 size-4 animate-spin" />
+              ) : (
+                "Unsubscribe"
+              )}
+            </Button>
+          }
+        />
+      )}
 
       {isOwner && (
         <Section
@@ -509,6 +552,8 @@ function EditableFieldRow({
 
 // Access levels for projects
 const PROJECTS_ACCESS_LEVELS: AccessLevel[] = [
+  { value: "design", label: "Design, write, comment, and view" },
+  { value: "write", label: "Write, comment, and view" },
   { value: "comment", label: "Comment and view" },
   { value: "view", label: "View only" },
   { value: "none", label: "No access" },

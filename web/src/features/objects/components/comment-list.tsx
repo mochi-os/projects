@@ -11,9 +11,10 @@ import type { Comment } from "@/types";
 interface CommentListProps {
   projectId: string;
   objectId: string;
+  readOnly?: boolean;
 }
 
-export function CommentList({ projectId, objectId }: CommentListProps) {
+export function CommentList({ projectId, objectId, readOnly }: CommentListProps) {
   const [newComment, setNewComment] = useState("");
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editContent, setEditContent] = useState("");
@@ -106,24 +107,26 @@ export function CommentList({ projectId, objectId }: CommentListProps) {
   return (
     <div className="space-y-4">
       {/* New comment form */}
-      <div className="space-y-2">
-        <Textarea
-          value={newComment}
-          onChange={(e) => setNewComment(e.target.value)}
-          placeholder="Add a comment..."
-          rows={2}
-        />
-        <div className="flex justify-end">
-          <Button
-            size="sm"
-            onClick={handleSubmit}
-            disabled={!newComment.trim() || createMutation.isPending}
-          >
-            <Send className="size-4 mr-1" />
-            {createMutation.isPending ? "Posting..." : "Post"}
-          </Button>
+      {!readOnly && (
+        <div className="space-y-2">
+          <Textarea
+            value={newComment}
+            onChange={(e) => setNewComment(e.target.value)}
+            placeholder="Add a comment..."
+            rows={2}
+          />
+          <div className="flex justify-end">
+            <Button
+              size="sm"
+              onClick={handleSubmit}
+              disabled={!newComment.trim() || createMutation.isPending}
+            >
+              <Send className="size-4 mr-1" />
+              {createMutation.isPending ? "Posting..." : "Post"}
+            </Button>
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Comments list */}
       {comments.length === 0 ? (
@@ -136,25 +139,27 @@ export function CommentList({ projectId, objectId }: CommentListProps) {
             <div key={comment.id} className="border rounded-lg p-3">
               <div className="flex items-center justify-between mb-2">
                 <div className="font-medium text-sm">{comment.name}</div>
-                <div className="flex items-center gap-1">
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="size-7"
-                    onClick={() => handleEdit(comment)}
-                  >
-                    <Pencil className="size-3" />
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="size-7 text-destructive"
-                    onClick={() => setDeleteCommentId(comment.id)}
-                    disabled={deleteMutation.isPending}
-                  >
-                    <Trash2 className="size-3" />
-                  </Button>
-                </div>
+                {!readOnly && (
+                  <div className="flex items-center gap-1">
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="size-7"
+                      onClick={() => handleEdit(comment)}
+                    >
+                      <Pencil className="size-3" />
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="size-7 text-destructive"
+                      onClick={() => setDeleteCommentId(comment.id)}
+                      disabled={deleteMutation.isPending}
+                    >
+                      <Trash2 className="size-3" />
+                    </Button>
+                  </div>
+                )}
               </div>
 
               {editingId === comment.id ? (

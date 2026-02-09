@@ -64,6 +64,7 @@ export function createMockProject(overrides?: Partial<Project>): Project {
     server: "local",
     created: Date.now(),
     updated: Date.now(),
+    access: "owner",
     ...overrides,
   };
 }

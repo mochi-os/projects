@@ -20,7 +20,8 @@ import {
   getErrorMessage,
 } from "@mochi/common";
 import projectsApi from "@/api/projects";
-import type { ProjectDetails } from "@/types";
+import type { ProjectAccess, ProjectDetails } from "@/types";
+import { canWrite, canComment } from "@/lib/access";
 import { FieldEditor } from "./field-editor";
 import { CommentList } from "./comment-list";
 import { ActivityList } from "./activity-list";
@@ -30,6 +31,7 @@ interface ObjectDetailPanelProps {
   projectId: string;
   objectId: string | null;
   project: ProjectDetails;
+  access: ProjectAccess;
   onClose: () => void;
 }
 
@@ -39,6 +41,7 @@ export function ObjectDetailPanel({
   projectId,
   objectId,
   project,
+  access,
   onClose,
 }: ObjectDetailPanelProps) {
   const [activeTab, setActiveTab] = useState<Tab>("properties");
@@ -254,7 +257,7 @@ export function ObjectDetailPanel({
       <SheetContent className="w-full sm:max-w-2xl p-0 gap-0 [&>button:last-child]:hidden">
         {/* Header */}
         <div className="flex items-center gap-3 px-6 py-4 border-b shrink-0">
-          {editingTitle ? (
+          {editingTitle && canWrite(access) ? (
             <Textarea
               value={titleValue}
               onChange={(e) => setTitleValue(e.target.value)}
@@ -273,11 +276,14 @@ export function ObjectDetailPanel({
             />
           ) : (
             <h2
-              className="text-xl font-bold cursor-pointer hover:text-primary transition-colors leading-tight truncate flex-1 min-w-0"
-              onClick={() => {
+              className={cn(
+                "text-xl font-bold leading-tight truncate flex-1 min-w-0",
+                canWrite(access) && "cursor-pointer hover:text-primary transition-colors"
+              )}
+              onClick={canWrite(access) ? () => {
                 setTitleValue(data.values.title || "");
                 setEditingTitle(true);
-              }}
+              } : undefined}
             >
               {title}
             </h2>
@@ -297,15 +303,17 @@ export function ObjectDetailPanel({
                 <EyeOff className="size-4" />
               )}
             </Button>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="h-8 w-8 text-muted-foreground hover:text-destructive hover:bg-destructive/10"
-              onClick={() => setShowDeleteDialog(true)}
-              title="Delete item"
-            >
-              <Trash2 className="size-4" />
-            </Button>
+            {canWrite(access) && (
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-8 w-8 text-muted-foreground hover:text-destructive hover:bg-destructive/10"
+                onClick={() => setShowDeleteDialog(true)}
+                title="Delete item"
+              >
+                <Trash2 className="size-4" />
+              </Button>
+            )}
             <Button
               variant="ghost"
               size="icon"
@@ -359,7 +367,7 @@ export function ObjectDetailPanel({
                   <Select
                     value={object.parent || "_none_"}
                     onValueChange={(value) => updateParentMutation.mutate(value === "_none_" ? "" : value)}
-                    disabled={updateParentMutation.isPending}
+                    disabled={!canWrite(access) || updateParentMutation.isPending}
                   >
                     <SelectTrigger className="w-full">
                       <SelectValue placeholder="None">
@@ -392,7 +400,7 @@ export function ObjectDetailPanel({
                       value={data.values[field.id] || ""}
                       options={classOptions[field.id] || []}
                       onChange={(value) => handleFieldChange(field.id, value)}
-                      disabled={updateValueMutation.isPending}
+                      disabled={!canWrite(access) || updateValueMutation.isPending}
                       hideLabel
                       localPeople={peopleData}
                       onValidationError={(hasError) => handleValidationError(field.id, hasError)}
@@ -411,13 +419,14 @@ export function ObjectDetailPanel({
                 prs={data.prs || []}
                 objectTitle={title}
                 objectReadable={object.readable}
+                readOnly={!canWrite(access)}
               />
             </div>
           )}
 
           {activeTab === "comments" && (
             <div className="max-w-2xl">
-              <CommentList projectId={projectId} objectId={objectId} />
+              <CommentList projectId={projectId} objectId={objectId} readOnly={!canComment(access)} />
             </div>
           )}
 

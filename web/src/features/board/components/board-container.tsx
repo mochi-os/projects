@@ -228,9 +228,9 @@ export function BoardContainer({
     return grouped;
   }, [objects, statusOptions, rowOptions, statusField, rowField, hasRows, sort]);
 
-  const handleDrop = (objectId: string, columnId: string, newRank?: number, rowId?: string) => {
-    onMoveObject?.(objectId, columnId, newRank, rowId);
-  };
+  const handleDrop = onMoveObject ? (objectId: string, columnId: string, newRank?: number, rowId?: string) => {
+    onMoveObject(objectId, columnId, newRank, rowId);
+  } : undefined;
 
   // Auto-scroll the nearest scrollable ancestor when dragging near its edges
   const scrollRafRef = useRef(0);
@@ -530,7 +530,7 @@ export function BoardContainer({
               allObjects={objects}
               statusField={statusField}
               onCardClick={onCardClick}
-              onDrop={handleDrop}
+              onDrop={isReordering ? undefined : handleDrop}
               rows={swimlaneRows.map((row) => ({
                 id: row.id,
                 label: row.label,

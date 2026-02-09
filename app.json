@@ -121,6 +121,7 @@
 
 	"events": {
 		"info": {"function": "event_info"},
+		"schema": {"function": "event_schema"},
 		"subscribe": {"function": "event_subscribe"},
 		"unsubscribe": {"function": "event_unsubscribe"},
 		"deleted": {"function": "event_deleted"},
@@ -153,6 +154,9 @@
 		"merge/request": {"function": "event_merge_request"},
 		"pull_request/create": {"function": "event_pull_request_create"},
 		"pull_request/update": {"function": "event_pull_request_update"},
-		"pull_request/delete": {"function": "event_pull_request_delete"}
+		"pull_request/delete": {"function": "event_pull_request_delete"},
+
+		"request": {"function": "event_request"},
+		"access/check": {"function": "event_access_check"}
 	}
 }

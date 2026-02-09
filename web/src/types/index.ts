@@ -1,4 +1,6 @@
 // Project types
+export type ProjectAccess = "owner" | "design" | "write" | "comment" | "view";
+
 export interface Project {
   id: string;
   fingerprint: string;
@@ -11,6 +13,7 @@ export interface Project {
   server: string;
   created: number;
   updated: number;
+  access: ProjectAccess;
 }
 
 export interface ProjectClass {

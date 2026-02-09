@@ -14,6 +14,7 @@ interface BoardCardProps {
   classMap?: Record<string, ProjectClass>;
   allObjects?: ProjectObject[];
   statusField?: string;
+  draggable?: boolean;
   onClick?: () => void;
 }
 
@@ -31,6 +32,7 @@ export function BoardCard({
   classMap,
   allObjects,
   statusField,
+  draggable: canDrag = true,
   onClick,
 }: BoardCardProps) {
   const rawTitle = object.values.title || `${prefix}-${object.number}`;
@@ -72,11 +74,11 @@ export function BoardCard({
         "cursor-pointer active:scale-[0.99]",
       )}
       onClick={onClick}
-      draggable
-      onDragStart={(e) => {
+      draggable={canDrag}
+      onDragStart={canDrag ? (e) => {
         e.dataTransfer.setData("text/plain", object.id);
         e.dataTransfer.effectAllowed = "move";
-      }}
+      } : undefined}
     >
       {/* Priority Indicator Strip */}
       {priorityColor && (

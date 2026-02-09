@@ -232,6 +232,7 @@ export function BoardColumn({
         isReordering && !isDragging && "border-dashed border-muted-foreground/50",
         isDragging && "border-primary border-2 bg-background shadow-lg",
       )}
+      onDragStart={!onDrop ? (e) => e.preventDefault() : undefined}
       onDragEnter={isReordering ? undefined : handleDragEnter}
       onDragOver={isReordering ? undefined : handleDragOver}
       onDragLeave={isReordering ? undefined : handleDragLeave}
@@ -394,6 +395,7 @@ export function BoardColumn({
                   classMap={classMap}
                   allObjects={allObjects}
                   statusField={statusField}
+                  draggable={!!onDrop}
                   onClick={() => onCardClick?.(object)}
                 />
               </div>
@@ -421,6 +423,7 @@ export function BoardColumn({
                 classMap={classMap}
                 allObjects={allObjects}
                 statusField={statusField}
+                draggable={!!onDrop}
                 onClick={() => onCardClick?.(object)}
               />
             </div>

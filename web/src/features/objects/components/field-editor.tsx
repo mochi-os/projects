@@ -24,6 +24,7 @@ interface FieldEditorProps {
   options: FieldOption[];
   onChange: (value: string) => void;
   disabled?: boolean;
+  readOnly?: boolean;
   localPeople?: Person[];
   onValidationError?: (hasError: boolean) => void;
 }
@@ -34,6 +35,7 @@ export function FieldEditor({
   options,
   onChange,
   disabled,
+  readOnly,
   hideLabel,
   localPeople = [],
   onValidationError,
@@ -69,6 +71,84 @@ export function FieldEditor({
       }
     }, 1000); // 1 second debounce
   };
+
+  // Read-only display: render values as plain text with normal styling
+  const renderDisplay = () => {
+    switch (field.fieldtype) {
+      case "enumerated": {
+        const opt = options.find((o) => o.id === value);
+        if (!opt) return <span className="text-sm text-muted-foreground">—</span>;
+        return (
+          <div className="flex items-center gap-2 h-9 text-sm">
+            {opt.colour && (
+              <div className="w-3 h-3 rounded-full shrink-0" style={{ backgroundColor: opt.colour }} />
+            )}
+            {opt.name}
+          </div>
+        );
+      }
+      case "text":
+        if (!value) return <span className="text-sm text-muted-foreground h-9 flex items-center">—</span>;
+        if (field.rows > 1) return <p className="text-sm whitespace-pre-wrap pt-2">{value}</p>;
+        return <span className="text-sm h-9 flex items-center">{value}</span>;
+      case "number":
+        if (!value) return <span className="text-sm text-muted-foreground h-9 flex items-center">—</span>;
+        return <span className="text-sm h-9 flex items-center">{value}</span>;
+      case "date":
+        if (!value) return <span className="text-sm text-muted-foreground h-9 flex items-center">—</span>;
+        return <span className="text-sm h-9 flex items-center">{new Date(value + "T00:00:00").toLocaleDateString()}</span>;
+      case "user": {
+        const person = localPeople.find((p) => p.id === value);
+        if (!person) return <span className="text-sm text-muted-foreground h-9 flex items-center">—</span>;
+        return <span className="text-sm h-9 flex items-center">{person.name}</span>;
+      }
+      case "checkbox":
+        return (
+          <div className="pt-2">
+            <Checkbox checked={value === "1" || value === "true"} disabled />
+          </div>
+        );
+      case "checklist": {
+        const items: ChecklistItem[] = (() => {
+          if (!value) return [];
+          try { return JSON.parse(value); } catch { return []; }
+        })();
+        if (items.length === 0) return <span className="text-sm text-muted-foreground">—</span>;
+        const doneCount = items.filter((i) => i.done).length;
+        return (
+          <div className="space-y-2">
+            <div className="flex items-center gap-2 text-sm text-muted-foreground">
+              <div className="flex-1 h-1.5 bg-muted rounded-full overflow-hidden">
+                <div className="h-full bg-primary transition-all" style={{ width: `${(doneCount / items.length) * 100}%` }} />
+              </div>
+              <span className="tabular-nums">{doneCount}/{items.length}</span>
+            </div>
+            <div className="space-y-1">
+              {items.map((item) => (
+                <div key={item.id} className="flex items-center gap-2">
+                  <Checkbox checked={item.done} disabled />
+                  <span className={`text-sm ${item.done ? "line-through text-muted-foreground" : ""}`}>{item.text}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        );
+      }
+      default:
+        if (!value) return <span className="text-sm text-muted-foreground h-9 flex items-center">—</span>;
+        return <span className="text-sm h-9 flex items-center">{value}</span>;
+    }
+  };
+
+  if (readOnly) {
+    if (hideLabel) return renderDisplay();
+    return (
+      <div className="space-y-1.5">
+        <label className="text-sm font-medium text-muted-foreground">{field.name}</label>
+        {renderDisplay()}
+      </div>
+    );
+  }
 
   const renderEditor = () => {
     switch (field.fieldtype) {

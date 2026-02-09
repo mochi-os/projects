@@ -364,27 +364,35 @@ export function ObjectDetailPanel({
                   <label className="text-sm font-medium text-muted-foreground pt-2">
                     Parent
                   </label>
-                  <Select
-                    value={object.parent || "_none_"}
-                    onValueChange={(value) => updateParentMutation.mutate(value === "_none_" ? "" : value)}
-                    disabled={!canWrite(access) || updateParentMutation.isPending}
-                  >
-                    <SelectTrigger className="w-full">
-                      <SelectValue placeholder="None">
-                        {currentParent
-                          ? currentParent.values.title || `${project.project.prefix}-${currentParent.number}`
-                          : "None"}
-                      </SelectValue>
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="_none_">None</SelectItem>
-                      {validParentOptions.map((obj) => (
-                        <SelectItem key={obj.id} value={obj.id}>
-                          {obj.values.title || `${project.project.prefix}-${obj.number}`}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                  {!canWrite(access) ? (
+                    <span className="text-sm h-9 flex items-center">
+                      {currentParent
+                        ? currentParent.values.title || `${project.project.prefix}-${currentParent.number}`
+                        : "None"}
+                    </span>
+                  ) : (
+                    <Select
+                      value={object.parent || "_none_"}
+                      onValueChange={(value) => updateParentMutation.mutate(value === "_none_" ? "" : value)}
+                      disabled={updateParentMutation.isPending}
+                    >
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder="None">
+                          {currentParent
+                            ? currentParent.values.title || `${project.project.prefix}-${currentParent.number}`
+                            : "None"}
+                        </SelectValue>
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="_none_">None</SelectItem>
+                        {validParentOptions.map((obj) => (
+                          <SelectItem key={obj.id} value={obj.id}>
+                            {obj.values.title || `${project.project.prefix}-${obj.number}`}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  )}
                 </div>
               )}
 
@@ -400,7 +408,8 @@ export function ObjectDetailPanel({
                       value={data.values[field.id] || ""}
                       options={classOptions[field.id] || []}
                       onChange={(value) => handleFieldChange(field.id, value)}
-                      disabled={!canWrite(access) || updateValueMutation.isPending}
+                      readOnly={!canWrite(access)}
+                      disabled={updateValueMutation.isPending}
                       hideLabel
                       localPeople={peopleData}
                       onValidationError={(hasError) => handleValidationError(field.id, hasError)}

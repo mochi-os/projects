@@ -1031,10 +1031,24 @@ def action_object_create(a):
 	title = a.input("title") or ""
 
 	if project["owner"] != 1:
-		return forward_to_owner(a, project_id, "object/create", {
+		result = forward_to_owner(a, project_id, "object/create", {
 			"project": project_id, "class": obj_class,
 			"title": title, "parent": parent,
 		})
+		if result and result.get("data"):
+			d = result["data"]
+			obj = d.get("object", {})
+			if obj.get("id"):
+				now = mochi.time.now()
+				mochi.db.execute(
+					"insert or ignore into objects (id, project, class, number, parent, rank, created, updated) values (?, ?, ?, ?, ?, ?, ?, ?)",
+					obj["id"], project_id, obj.get("class", ""), obj.get("number", 0), obj.get("parent", ""), obj.get("rank", 0), now, now
+				)
+				if title:
+					mochi.db.execute("insert or replace into \"values\" (object, field, value) values (?, ?, ?)", obj["id"], "title", title)
+				# Update local counter
+				mochi.db.execute("update projects set counter=counter+1, updated=? where id=?", now, project_id)
+		return result
 
 	if not check_project_access(a.user.identity.id, project_id, "write"):
 		a.error(403, "Access denied")
@@ -1183,7 +1197,14 @@ def action_object_update(a):
 		c = a.input("class")
 		if c:
 			params["class"] = c
-		return forward_to_owner(a, project_id, "object/update", params)
+		result = forward_to_owner(a, project_id, "object/update", params)
+		if result and object_id:
+			now = mochi.time.now()
+			if p != None:
+				mochi.db.execute("update objects set parent=?, updated=? where id=?", p, now, object_id)
+			if c:
+				mochi.db.execute("update objects set class=?, updated=? where id=?", c, now, object_id)
+		return result
 
 	if not check_project_access(a.user.identity.id, project_id, "write"):
 		a.error(403, "Access denied")
@@ -1262,9 +1283,16 @@ def action_object_delete(a):
 	object_id = a.input("object")
 
 	if project["owner"] != 1:
-		return forward_to_owner(a, project_id, "object/delete", {
+		result = forward_to_owner(a, project_id, "object/delete", {
 			"project": project_id, "object": object_id,
 		})
+		if result and object_id:
+			mochi.db.execute("delete from \"values\" where object=?", object_id)
+			mochi.db.execute("delete from watchers where object=?", object_id)
+			mochi.db.execute("delete from comments where object=?", object_id)
+			mochi.db.execute("delete from links where source=? or target=?", object_id, object_id)
+			mochi.db.execute("delete from objects where id=?", object_id)
+		return result
 
 	if not check_project_access(a.user.identity.id, project_id, "write"):
 		a.error(403, "Access denied")
@@ -1312,7 +1340,20 @@ def action_object_move(a):
 		if rf:
 			params["row_field"] = rf
 			params["row_value"] = a.input("row_value")
-		return forward_to_owner(a, project_id, "object/move", params)
+		result = forward_to_owner(a, project_id, "object/move", params)
+		if result and object_id:
+			now = mochi.time.now()
+			field = a.input("field") or ""
+			value = a.input("value")
+			rank = a.input("rank")
+			if value:
+				mochi.db.execute("replace into \"values\" (object, field, value) values (?, ?, ?)", object_id, field, value)
+			if rank:
+				mochi.db.execute("update objects set rank=?, updated=? where id=?", int(rank), now, object_id)
+			if rf:
+				mochi.db.execute("replace into \"values\" (object, field, value) values (?, ?, ?)", object_id, rf, a.input("row_value"))
+			mochi.db.execute("update objects set updated=? where id=?", now, object_id)
+		return result
 
 	if not check_project_access(a.user.identity.id, project_id, "write"):
 		a.error(403, "Access denied")
@@ -1448,9 +1489,16 @@ def action_values_set(a):
 			v = a.input(field_id)
 			if v != None:
 				values[field_id] = str(v)
-		return forward_to_owner(a, project_id, "values/set", {
+		result = forward_to_owner(a, project_id, "values/set", {
 			"project": project_id, "object": object_id, "values": values,
 		})
+		if result:
+			for field_id, value in values.items():
+				mochi.db.execute(
+					"insert or replace into \"values\" (object, field, value) values (?, ?, ?)",
+					object_id, field_id, value
+				)
+		return result
 
 	if not check_project_access(a.user.identity.id, project_id, "write"):
 		a.error(403, "Access denied")
@@ -1503,10 +1551,17 @@ def action_value_set(a):
 		return
 
 	if project["owner"] != 1:
-		return forward_to_owner(a, project_id, "value/set", {
+		result = forward_to_owner(a, project_id, "value/set", {
 			"project": project_id, "object": a.input("object"),
 			"field": a.input("field"), "value": a.input("value") or "",
 		})
+		if result:
+			# Update local cache so subsequent reads reflect the change
+			mochi.db.execute(
+				"insert or replace into \"values\" (object, field, value) values (?, ?, ?)",
+				a.input("object"), a.input("field"), a.input("value") or ""
+			)
+		return result
 
 	if not check_project_access(a.user.identity.id, project_id, "write"):
 		a.error(403, "Access denied")

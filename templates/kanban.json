@@ -9,21 +9,21 @@
   ],
   "fields": {
     "card": [
-      {"id": "title", "name": "Title", "fieldtype": "text", "required": 1, "card": 1, "rank": 0, "rows": 1},
-      {"id": "description", "name": "Description", "fieldtype": "text", "required": 0, "card": 0, "rank": 1, "rows": 3},
-      {"id": "status", "name": "Status", "fieldtype": "enumerated", "required": 1, "card": 0, "rank": 2},
-      {"id": "priority", "name": "Priority", "fieldtype": "enumerated", "required": 0, "card": 1, "rank": 3},
-      {"id": "owner", "name": "Owner", "fieldtype": "user", "required": 0, "card": 0, "rank": 4},
-      {"id": "due", "name": "Due", "fieldtype": "date", "required": 0, "card": 0, "rank": 5}
+      {"id": "title", "name": "Title", "fieldtype": "text", "flags": "required,title,sort", "card": 1, "rank": 0, "rows": 1},
+      {"id": "description", "name": "Description", "fieldtype": "text", "flags": "", "card": 0, "rank": 1, "rows": 3},
+      {"id": "status", "name": "Status", "fieldtype": "enumerated", "flags": "required,sort", "card": 0, "rank": 2},
+      {"id": "priority", "name": "Priority", "fieldtype": "enumerated", "flags": "border,sort", "card": 1, "rank": 3},
+      {"id": "owner", "name": "Owner", "fieldtype": "user", "flags": "", "card": 0, "rank": 4},
+      {"id": "due", "name": "Due", "fieldtype": "date", "flags": "sort", "card": 0, "rank": 5}
     ],
     "checklist": [
-      {"id": "title", "name": "Title", "fieldtype": "text", "required": 1, "card": 1, "rank": 0, "rows": 1},
-      {"id": "description", "name": "Description", "fieldtype": "text", "required": 0, "card": 0, "rank": 1, "rows": 3},
-      {"id": "items", "name": "Items", "fieldtype": "checklist", "required": 0, "card": 1, "rank": 2},
-      {"id": "status", "name": "Status", "fieldtype": "enumerated", "required": 1, "card": 0, "rank": 3},
-      {"id": "priority", "name": "Priority", "fieldtype": "enumerated", "required": 0, "card": 1, "rank": 4},
-      {"id": "owner", "name": "Owner", "fieldtype": "user", "required": 0, "card": 0, "rank": 5},
-      {"id": "due", "name": "Due", "fieldtype": "date", "required": 0, "card": 0, "rank": 6}
+      {"id": "title", "name": "Title", "fieldtype": "text", "flags": "required,title,sort", "card": 1, "rank": 0, "rows": 1},
+      {"id": "description", "name": "Description", "fieldtype": "text", "flags": "", "card": 0, "rank": 1, "rows": 3},
+      {"id": "items", "name": "Items", "fieldtype": "checklist", "flags": "", "card": 1, "rank": 2},
+      {"id": "status", "name": "Status", "fieldtype": "enumerated", "flags": "required,sort", "card": 0, "rank": 3},
+      {"id": "priority", "name": "Priority", "fieldtype": "enumerated", "flags": "border,sort", "card": 1, "rank": 4},
+      {"id": "owner", "name": "Owner", "fieldtype": "user", "flags": "", "card": 0, "rank": 5},
+      {"id": "due", "name": "Due", "fieldtype": "date", "flags": "sort", "card": 0, "rank": 6}
     ]
   },
   "options": {

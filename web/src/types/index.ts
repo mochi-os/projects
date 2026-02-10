@@ -27,7 +27,7 @@ export interface ProjectField {
   id: string;
   name: string;
   fieldtype: string;
-  required: number;
+  flags: string;
   multi: number;
   rank: number;
   card: number;

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import {
   Button,
@@ -22,6 +22,14 @@ import projectsApi from "@/api/projects";
 import { useProjectsStore } from "@/stores/projects-store";
 import type { ProjectTemplate } from "@/types";
 
+function nameToPrefix(name: string): string {
+  return name
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "")
+    .slice(0, 20);
+}
+
 interface CreateProjectDialogProps {
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
@@ -41,6 +49,7 @@ export function CreateProjectDialog({
   const [templates, setTemplates] = useState<ProjectTemplate[]>([]);
   const [isLoadingTemplates, setIsLoadingTemplates] = useState(false);
   const [allowSearch, setAllowSearch] = useState(true);
+  const prefixDirty = useRef(false);
   const navigate = useNavigate();
   const refreshProjects = useProjectsStore((state) => state.refresh);
 
@@ -70,6 +79,7 @@ export function CreateProjectDialog({
       setPrefix("");
       setSelectedTemplate("");
       setAllowSearch(true);
+      prefixDirty.current = false;
     }
   }, [open]);
 
@@ -152,7 +162,12 @@ export function CreateProjectDialog({
               <Input
                 id="name"
                 value={name}
-                onChange={(e) => setName(e.target.value)}
+                onChange={(e) => {
+                  setName(e.target.value);
+                  if (!prefixDirty.current) {
+                    setPrefix(nameToPrefix(e.target.value));
+                  }
+                }}
                 placeholder="My project"
                 autoFocus
                 onKeyDown={(e) => {
@@ -169,8 +184,10 @@ export function CreateProjectDialog({
               <Input
                 id="prefix"
                 value={prefix}
-                onChange={(e) => setPrefix(e.target.value.toLowerCase().slice(0, 20))}
-                placeholder="project"
+                onChange={(e) => {
+                  prefixDirty.current = true;
+                  setPrefix(e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, "").slice(0, 20));
+                }}
                 className="lowercase"
                 onKeyDown={(e) => {
                   if (e.key === "Enter") {

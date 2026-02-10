@@ -7,17 +7,19 @@ import {
   Input,
   Select,
   SelectContent,
+  SelectGroup,
   SelectItem,
+  SelectSeparator,
   SelectTrigger,
   SelectValue,
   SortDirectionButton,
   cn,
 } from "@mochi/common";
 import { Eye, LayoutGrid, ListTree } from "lucide-react";
-import type { ProjectDetails, ProjectView, SortState } from "@/types";
+import type { ProjectDetails, ProjectField, ProjectView, SortState } from "@/types";
 import type { FilterState } from "@/features/views/components/filter-bar";
 
-const SORT_OPTIONS = [
+const BUILT_IN_SORT_OPTIONS = [
   { id: "rank", label: "Manual" },
   { id: "number", label: "Number" },
   { id: "created", label: "Created" },
@@ -26,6 +28,7 @@ const SORT_OPTIONS = [
 
 interface ViewOptionsBarProps {
   project: ProjectDetails;
+  fields?: ProjectField[];
   filters: FilterState;
   onFilterChange: (filters: FilterState) => void;
   activeViewId: string;
@@ -37,6 +40,7 @@ interface ViewOptionsBarProps {
 
 export function ViewOptionsBar({
   project,
+  fields,
   filters,
   onFilterChange,
   activeViewId,
@@ -46,6 +50,11 @@ export function ViewOptionsBar({
   showSort,
 }: ViewOptionsBarProps) {
   const searchRef = useRef<HTMLInputElement>(null);
+
+  // Build sort options: built-in + fields with 'sort' flag
+  const sortFieldOptions = (fields || [])
+    .filter((f) => f.flags?.split(",").includes("sort"))
+    .map((f) => ({ id: `field:${f.id}`, label: f.name }));
 
   // Focus search input when bar mounts
   useEffect(() => {
@@ -113,11 +122,25 @@ export function ViewOptionsBar({
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              {SORT_OPTIONS.map((option) => (
-                <SelectItem key={option.id} value={option.id}>
-                  {option.label}
-                </SelectItem>
-              ))}
+              {sortFieldOptions.length > 0 && (
+                <>
+                <SelectGroup>
+                  {sortFieldOptions.map((option) => (
+                    <SelectItem key={option.id} value={option.id}>
+                      {option.label}
+                    </SelectItem>
+                  ))}
+                </SelectGroup>
+                <SelectSeparator />
+                </>
+              )}
+              <SelectGroup>
+                {BUILT_IN_SORT_OPTIONS.map((option) => (
+                  <SelectItem key={option.id} value={option.id}>
+                    {option.label}
+                  </SelectItem>
+                ))}
+              </SelectGroup>
             </SelectContent>
           </Select>
           <SortDirectionButton

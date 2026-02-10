@@ -179,7 +179,7 @@ interface FieldCreateResponse {
 interface CreateFieldRequest {
   name: string;
   fieldtype?: string;
-  required?: string;
+  flags?: string;
   multi?: string;
   card?: string;
   rows?: string;
@@ -187,7 +187,7 @@ interface CreateFieldRequest {
 
 interface UpdateFieldRequest {
   name?: string;
-  required?: string;
+  flags?: string;
   multi?: string;
   card?: string;
   min?: string;

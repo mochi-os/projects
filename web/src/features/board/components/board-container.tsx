@@ -46,8 +46,9 @@ function sortObjects(objects: ProjectObject[], sort?: SortState | null): Project
       aVal = a.number || 0;
       bVal = b.number || 0;
     } else {
-      aVal = a.values[sortField] || "";
-      bVal = b.values[sortField] || "";
+      const fieldId = sortField.startsWith("field:") ? sortField.slice(6) : sortField;
+      aVal = a.values[fieldId] || "";
+      bVal = b.values[fieldId] || "";
     }
 
     if (typeof aVal === "number" && typeof bVal === "number") {

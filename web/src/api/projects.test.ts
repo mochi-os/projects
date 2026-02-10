@@ -575,13 +575,13 @@ describe("projectsApi", () => {
       vi.mocked(projectsRequest.post).mockResolvedValue(mockResponse);
 
       await projectsApi.updateField("proj123", "task", "priority", {
-        required: "1",
+        flags: "required",
         position: "card",
       });
 
       expect(projectsRequest.post).toHaveBeenCalledWith(
         "proj123/-/classes/task/fields/priority/update",
-        { required: "1", position: "card" },
+        { flags: "required", position: "card" },
       );
     });
   });

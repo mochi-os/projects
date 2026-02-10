@@ -74,7 +74,7 @@ export function createMockField(overrides?: Partial<ProjectField>): ProjectField
     id: "field-1",
     name: "Test Field",
     fieldtype: "text",
-    required: 0,
+    flags: "",
     multi: 0,
     rank: 0,
     card: 0,

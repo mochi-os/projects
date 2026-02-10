@@ -236,14 +236,15 @@ export function TreeRow({
 
       {/* Field columns */}
       {fields.map((field) => {
+        const isTitleField = field.flags?.split(",").includes("title");
         const value = object.values[field.id] || "";
-        const displayValue = field.id === "title" ? truncate(value, 100) : value;
+        const displayValue = isTitleField ? truncate(value, 100) : value;
         return (
           <td
             key={field.id}
             className={cn(
               "px-2 py-1.5",
-              field.id === "title" ? "" : "whitespace-nowrap"
+              isTitleField ? "" : "whitespace-nowrap"
             )}
             style={firstContentCol === field.id ? indentStyle : undefined}
           >

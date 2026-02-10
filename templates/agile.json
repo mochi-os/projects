@@ -11,31 +11,31 @@
   ],
   "fields": {
     "epic": [
-      {"id": "title", "name": "Title", "fieldtype": "text", "required": 1, "card": 1, "rank": 0, "rows": 1},
-      {"id": "description", "name": "Description", "fieldtype": "text", "required": 0, "card": 0, "rank": 1, "rows": 3},
-      {"id": "status", "name": "Status", "fieldtype": "enumerated", "required": 1, "card": 0, "rank": 2},
-      {"id": "owner", "name": "Owner", "fieldtype": "user", "required": 0, "card": 0, "rank": 3}
+      {"id": "title", "name": "Title", "fieldtype": "text", "flags": "required,title,sort", "card": 1, "rank": 0, "rows": 1},
+      {"id": "description", "name": "Description", "fieldtype": "text", "flags": "", "card": 0, "rank": 1, "rows": 3},
+      {"id": "status", "name": "Status", "fieldtype": "enumerated", "flags": "required,sort", "card": 0, "rank": 2},
+      {"id": "owner", "name": "Owner", "fieldtype": "user", "flags": "", "card": 0, "rank": 3}
     ],
     "story": [
-      {"id": "title", "name": "Title", "fieldtype": "text", "required": 1, "card": 1, "rank": 0, "rows": 1},
-      {"id": "description", "name": "Description", "fieldtype": "text", "required": 0, "card": 0, "rank": 1, "rows": 3},
-      {"id": "status", "name": "Status", "fieldtype": "enumerated", "required": 1, "card": 0, "rank": 2},
-      {"id": "points", "name": "Points", "fieldtype": "enumerated", "required": 0, "card": 1, "rank": 3},
-      {"id": "sprint", "name": "Sprint", "fieldtype": "enumerated", "required": 0, "card": 1, "rank": 4},
-      {"id": "owner", "name": "Owner", "fieldtype": "user", "required": 0, "card": 0, "rank": 5}
+      {"id": "title", "name": "Title", "fieldtype": "text", "flags": "required,title,sort", "card": 1, "rank": 0, "rows": 1},
+      {"id": "description", "name": "Description", "fieldtype": "text", "flags": "", "card": 0, "rank": 1, "rows": 3},
+      {"id": "status", "name": "Status", "fieldtype": "enumerated", "flags": "required,sort", "card": 0, "rank": 2},
+      {"id": "points", "name": "Points", "fieldtype": "enumerated", "flags": "sort", "card": 1, "rank": 3},
+      {"id": "sprint", "name": "Sprint", "fieldtype": "enumerated", "flags": "sort", "card": 1, "rank": 4},
+      {"id": "owner", "name": "Owner", "fieldtype": "user", "flags": "", "card": 0, "rank": 5}
     ],
     "task": [
-      {"id": "title", "name": "Title", "fieldtype": "text", "required": 1, "card": 1, "rank": 0, "rows": 1},
-      {"id": "description", "name": "Description", "fieldtype": "text", "required": 0, "card": 0, "rank": 1, "rows": 3},
-      {"id": "status", "name": "Status", "fieldtype": "enumerated", "required": 1, "card": 0, "rank": 2},
-      {"id": "owner", "name": "Owner", "fieldtype": "user", "required": 0, "card": 0, "rank": 3}
+      {"id": "title", "name": "Title", "fieldtype": "text", "flags": "required,title,sort", "card": 1, "rank": 0, "rows": 1},
+      {"id": "description", "name": "Description", "fieldtype": "text", "flags": "", "card": 0, "rank": 1, "rows": 3},
+      {"id": "status", "name": "Status", "fieldtype": "enumerated", "flags": "required,sort", "card": 0, "rank": 2},
+      {"id": "owner", "name": "Owner", "fieldtype": "user", "flags": "", "card": 0, "rank": 3}
     ],
     "bug": [
-      {"id": "title", "name": "Title", "fieldtype": "text", "required": 1, "card": 1, "rank": 0, "rows": 1},
-      {"id": "description", "name": "Description", "fieldtype": "text", "required": 0, "card": 0, "rank": 1, "rows": 3},
-      {"id": "status", "name": "Status", "fieldtype": "enumerated", "required": 1, "card": 0, "rank": 2},
-      {"id": "priority", "name": "Priority", "fieldtype": "enumerated", "required": 0, "card": 1, "rank": 3},
-      {"id": "owner", "name": "Owner", "fieldtype": "user", "required": 0, "card": 0, "rank": 4}
+      {"id": "title", "name": "Title", "fieldtype": "text", "flags": "required,title,sort", "card": 1, "rank": 0, "rows": 1},
+      {"id": "description", "name": "Description", "fieldtype": "text", "flags": "", "card": 0, "rank": 1, "rows": 3},
+      {"id": "status", "name": "Status", "fieldtype": "enumerated", "flags": "required,sort", "card": 0, "rank": 2},
+      {"id": "priority", "name": "Priority", "fieldtype": "enumerated", "flags": "border,sort", "card": 1, "rank": 3},
+      {"id": "owner", "name": "Owner", "fieldtype": "user", "flags": "", "card": 0, "rank": 4}
     ]
   },
   "options": {

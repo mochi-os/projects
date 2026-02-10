@@ -107,6 +107,21 @@ function ProjectPage() {
   const activeView =
     project.views.find((v) => v.id === activeViewId) || project.views[0];
 
+  // Deduplicated field list across all classes (for sort dropdown)
+  const allFields = useMemo(() => {
+    const seen = new Set<string>();
+    const result: typeof project.fields[string] = [];
+    for (const fields of Object.values(project.fields)) {
+      for (const f of fields) {
+        if (!seen.has(f.id)) {
+          seen.add(f.id);
+          result.push(f);
+        }
+      }
+    }
+    return result;
+  }, [project.fields]);
+
   // Sync URL when view changes
   useEffect(() => {
     const newView = activeViewId === defaultViewId ? undefined : activeViewId;
@@ -657,6 +672,7 @@ function ProjectPage() {
       {showViewOptions && (
         <ViewOptionsBar
           project={project}
+          fields={allFields}
           filters={filters}
           onFilterChange={setFilters}
           activeViewId={activeViewId}

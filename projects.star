@@ -71,7 +71,7 @@ def database_create():
 		id text not null,
 		name text not null,
 		fieldtype text not null,
-		required integer not null default 0,
+		flags text not null default '',
 		multi integer not null default 0,
 		rank integer not null default 0,
 		min text not null default '',
@@ -252,12 +252,9 @@ def database_create():
 	# Migrations
 	mochi.db.execute("update views set viewtype='list' where viewtype='tree'")
 
-# Upgrade database schema
-def database_upgrade(from_version, to_version):
-	if from_version < 2:
-		mochi.db.execute("alter table pull_requests add column title text not null default ''")
-		mochi.db.execute("alter table pull_requests add column description text not null default ''")
-		mochi.db.execute("alter table pull_requests add column draft integer not null default 0")
+# Upgrade database schema (called once per version step with target version)
+def database_upgrade(version):
+	pass
 
 
 # ============================================================================
@@ -306,9 +303,9 @@ def apply_template(project_id, template_id):
 	for cls_id, fields in data.get("fields", {}).items():
 		for f in fields:
 			mochi.db.execute(
-				"insert into fields (project, class, id, name, fieldtype, required, card, rank, rows) values (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+				"insert into fields (project, class, id, name, fieldtype, flags, card, rank, rows) values (?, ?, ?, ?, ?, ?, ?, ?, ?)",
 				project_id, cls_id, f["id"], f["name"], f.get("fieldtype", "text"),
-				f.get("required", 0), f.get("card", 0), f.get("rank", 0), f.get("rows", 1)
+				f.get("flags", ""), f.get("card", 0), f.get("rank", 0), f.get("rows", 1)
 			)
 
 	# Create options for each class's enumerated fields
@@ -462,7 +459,7 @@ def action_project_get(a):
 	# Get fields by class
 	fields = {}
 	for c in classes:
-		class_fields = mochi.db.rows("select id, name, fieldtype, required, multi, rank, card, position, rows from fields where project=? and class=? order by rank", project_id, c["id"]) or []
+		class_fields = mochi.db.rows("select id, name, fieldtype, flags, multi, rank, card, position, rows from fields where project=? and class=? order by rank", project_id, c["id"]) or []
 		fields[c["id"]] = class_fields
 
 	# Get options by class and field
@@ -918,9 +915,9 @@ def get_owner_identity(project_id):
 
 def get_object_display(project, obj, object_id):
 	"""Build display title: '<project name> - <object title>'."""
-	first_field_row = mochi.db.row("select id from fields where class=? order by rank limit 1", obj["class"]) if obj else None
-	first_field = first_field_row["id"] if first_field_row else ""
-	title_row = mochi.db.row("select value from \"values\" where object=? and field=?", object_id, first_field) if first_field else None
+	title_field_row = mochi.db.row("select id from fields where project=? and class=? and flags like '%title%' order by rank limit 1", project["id"], obj["class"]) if obj else None
+	title_field = title_field_row["id"] if title_field_row else ""
+	title_row = mochi.db.row("select value from \"values\" where object=? and field=?", object_id, title_field) if title_field else None
 	obj_title = title_row["value"] if title_row else ""
 	if not obj_title:
 		prefix = project["prefix"] if project else ""
@@ -2763,8 +2760,8 @@ def action_class_create(a):
 
 	# Add default title field
 	mochi.db.execute(
-		"insert into fields (project, class, id, name, fieldtype, required, rank) values (?, ?, ?, ?, ?, ?, ?)",
-		project_id, class_id, "title", "Title", "text", 1, 0
+		"insert into fields (project, class, id, name, fieldtype, flags, rank) values (?, ?, ?, ?, ?, ?, ?)",
+		project_id, class_id, "title", "Title", "text", "required,title,sort", 0
 	)
 
 	# Set hierarchy to allow root by default
@@ -3011,7 +3008,7 @@ def action_field_list(a):
 		return
 
 	fields = mochi.db.rows(
-		"select id, name, fieldtype, required, multi, rank, min, max, pattern, minlength, maxlength, prefix, suffix, format, card, position, rows from fields where project=? and class=? order by rank",
+		"select id, name, fieldtype, flags, multi, rank, min, max, pattern, minlength, maxlength, prefix, suffix, format, card, position, rows from fields where project=? and class=? order by rank",
 		project_id, class_id
 	) or []
 
@@ -3036,7 +3033,7 @@ def action_field_create(a):
 		return forward_to_owner(a, project_id, "field/create", {
 			"project": project_id, "class": a.input("class"),
 			"name": a.input("name"), "fieldtype": a.input("fieldtype") or "text",
-			"required": a.input("required") or "0", "multi": a.input("multi") or "0",
+			"flags": a.input("flags") or "", "multi": a.input("multi") or "0",
 			"card": a.input("card") or "1", "rows": a.input("rows") or "1",
 		})
 
@@ -3077,19 +3074,19 @@ def action_field_create(a):
 	max_rank = mochi.db.row("select max(rank) as m from fields where project=? and class=?", project_id, class_id)
 	rank = (max_rank["m"] or 0) + 1 if max_rank else 0
 
-	required = 1 if a.input("required") == "1" or a.input("required") == "true" else 0
+	flags = a.input("flags") or ""
 	multi = 1 if a.input("multi") == "1" or a.input("multi") == "true" else 0
 	card = 1 if a.input("card") != "0" and a.input("card") != "false" else 0
 	rows = int(a.input("rows")) if a.input("rows") else 1
 
 	mochi.db.execute(
-		"insert into fields (project, class, id, name, fieldtype, required, multi, rank, card, rows) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-		project_id, class_id, field_id, name.strip(), fieldtype, required, multi, rank, card, rows
+		"insert into fields (project, class, id, name, fieldtype, flags, multi, rank, card, rows) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+		project_id, class_id, field_id, name.strip(), fieldtype, flags, multi, rank, card, rows
 	)
 
 	broadcast_event(project_id, "field/create", {
 		"project": project_id, "class": class_id, "id": field_id,
-		"name": name.strip(), "fieldtype": fieldtype, "required": required,
+		"name": name.strip(), "fieldtype": fieldtype, "flags": flags,
 		"multi": multi, "rank": rank, "card": card, "rows": rows
 	})
 
@@ -3112,10 +3109,9 @@ def action_field_update(a):
 
 	if project["owner"] != 1:
 		params = {"project": project_id, "class": a.input("class"), "field": a.input("field")}
-		for k in ["name", "required", "multi", "card", "position", "rows"]:
-			v = a.input(k)
-			if v != None:
-				params[k] = v
+		for k in ["name", "flags", "multi", "card", "position", "rows"]:
+			if a.input.exists(k):
+				params[k] = a.input(k)
 		return forward_to_owner(a, project_id, "field/update", params)
 
 	if not check_project_access(a.user.identity.id, project_id, "design"):
@@ -3134,83 +3130,65 @@ def action_field_update(a):
 		return
 
 	# Update fields if provided
-	name = a.input("name")
-	required = a.input("required")
-	multi = a.input("multi")
-	card = a.input("card")
-	min_val = a.input("min")
-	max_val = a.input("max")
-	pattern = a.input("pattern")
-	minlength = a.input("minlength")
-	maxlength = a.input("maxlength")
-	prefix = a.input("prefix")
-	suffix = a.input("suffix")
-	format_str = a.input("format")
-	position = a.input("position")
-	rows_val = a.input("rows")
-
-	if name != None:
-		mochi.db.execute("update fields set name=? where project=? and class=? and id=?", name.strip(), project_id, class_id, field_id)
-	if required != None:
-		req_val = 1 if required == "1" or required == "true" else 0
-		mochi.db.execute("update fields set required=? where project=? and class=? and id=?", req_val, project_id, class_id, field_id)
-	if multi != None:
-		multi_val = 1 if multi == "1" or multi == "true" else 0
-		mochi.db.execute("update fields set multi=? where project=? and class=? and id=?", multi_val, project_id, class_id, field_id)
-	if card != None:
-		card_val = 1 if card == "1" or card == "true" else 0
-		mochi.db.execute("update fields set card=? where project=? and class=? and id=?", card_val, project_id, class_id, field_id)
-	if min_val != None:
-		mochi.db.execute("update fields set min=? where project=? and class=? and id=?", min_val, project_id, class_id, field_id)
-	if max_val != None:
-		mochi.db.execute("update fields set max=? where project=? and class=? and id=?", max_val, project_id, class_id, field_id)
-	if pattern != None:
-		mochi.db.execute("update fields set pattern=? where project=? and class=? and id=?", pattern, project_id, class_id, field_id)
-	if minlength != None:
-		mochi.db.execute("update fields set minlength=? where project=? and class=? and id=?", int(minlength), project_id, class_id, field_id)
-	if maxlength != None:
-		mochi.db.execute("update fields set maxlength=? where project=? and class=? and id=?", int(maxlength), project_id, class_id, field_id)
-	if prefix != None:
-		mochi.db.execute("update fields set prefix=? where project=? and class=? and id=?", prefix, project_id, class_id, field_id)
-	if suffix != None:
-		mochi.db.execute("update fields set suffix=? where project=? and class=? and id=?", suffix, project_id, class_id, field_id)
-	if format_str != None:
-		mochi.db.execute("update fields set format=? where project=? and class=? and id=?", format_str, project_id, class_id, field_id)
-	if position != None:
-		mochi.db.execute("update fields set position=? where project=? and class=? and id=?", position, project_id, class_id, field_id)
-	if rows_val != None:
-		mochi.db.execute("update fields set rows=? where project=? and class=? and id=?", int(rows_val), project_id, class_id, field_id)
-
-	# Build update data from provided fields
 	update_data = {"project": project_id, "class": class_id, "id": field_id}
-	if name != None:
-		update_data["name"] = name.strip()
-	if required != None:
-		update_data["required"] = 1 if required == "1" or required == "true" else 0
-	if multi != None:
-		update_data["multi"] = 1 if multi == "1" or multi == "true" else 0
-	if card != None:
-		update_data["card"] = 1 if card == "1" or card == "true" else 0
-	if min_val != None:
+
+	if a.input.exists("name"):
+		name = a.input("name").strip()
+		mochi.db.execute("update fields set name=? where project=? and class=? and id=?", name, project_id, class_id, field_id)
+		update_data["name"] = name
+	if a.input.exists("flags"):
+		flags = a.input("flags")
+		mochi.db.execute("update fields set flags=? where project=? and class=? and id=?", flags, project_id, class_id, field_id)
+		update_data["flags"] = flags
+	if a.input.exists("multi"):
+		multi_val = 1 if a.input("multi") in ("1", "true") else 0
+		mochi.db.execute("update fields set multi=? where project=? and class=? and id=?", multi_val, project_id, class_id, field_id)
+		update_data["multi"] = multi_val
+	if a.input.exists("card"):
+		card_val = 1 if a.input("card") in ("1", "true") else 0
+		mochi.db.execute("update fields set card=? where project=? and class=? and id=?", card_val, project_id, class_id, field_id)
+		update_data["card"] = card_val
+	if a.input.exists("min"):
+		min_val = a.input("min")
+		mochi.db.execute("update fields set min=? where project=? and class=? and id=?", min_val, project_id, class_id, field_id)
 		update_data["min"] = min_val
-	if max_val != None:
+	if a.input.exists("max"):
+		max_val = a.input("max")
+		mochi.db.execute("update fields set max=? where project=? and class=? and id=?", max_val, project_id, class_id, field_id)
 		update_data["max"] = max_val
-	if pattern != None:
+	if a.input.exists("pattern"):
+		pattern = a.input("pattern")
+		mochi.db.execute("update fields set pattern=? where project=? and class=? and id=?", pattern, project_id, class_id, field_id)
 		update_data["pattern"] = pattern
-	if minlength != None:
-		update_data["minlength"] = int(minlength)
-	if maxlength != None:
-		update_data["maxlength"] = int(maxlength)
-	if prefix != None:
+	if a.input.exists("minlength"):
+		minlength = int(a.input("minlength"))
+		mochi.db.execute("update fields set minlength=? where project=? and class=? and id=?", minlength, project_id, class_id, field_id)
+		update_data["minlength"] = minlength
+	if a.input.exists("maxlength"):
+		maxlength = int(a.input("maxlength"))
+		mochi.db.execute("update fields set maxlength=? where project=? and class=? and id=?", maxlength, project_id, class_id, field_id)
+		update_data["maxlength"] = maxlength
+	if a.input.exists("prefix"):
+		prefix = a.input("prefix")
+		mochi.db.execute("update fields set prefix=? where project=? and class=? and id=?", prefix, project_id, class_id, field_id)
 		update_data["prefix"] = prefix
-	if suffix != None:
+	if a.input.exists("suffix"):
+		suffix = a.input("suffix")
+		mochi.db.execute("update fields set suffix=? where project=? and class=? and id=?", suffix, project_id, class_id, field_id)
 		update_data["suffix"] = suffix
-	if format_str != None:
+	if a.input.exists("format"):
+		format_str = a.input("format")
+		mochi.db.execute("update fields set format=? where project=? and class=? and id=?", format_str, project_id, class_id, field_id)
 		update_data["format"] = format_str
-	if position != None:
+	if a.input.exists("position"):
+		position = a.input("position")
+		mochi.db.execute("update fields set position=? where project=? and class=? and id=?", position, project_id, class_id, field_id)
 		update_data["position"] = position
-	if rows_val != None:
-		update_data["rows"] = int(rows_val)
+	if a.input.exists("rows"):
+		rows_val = int(a.input("rows"))
+		mochi.db.execute("update fields set rows=? where project=? and class=? and id=?", rows_val, project_id, class_id, field_id)
+		update_data["rows"] = rows_val
+
 	broadcast_event(project_id, "field/update", update_data)
 
 	return {"data": {"success": True}}
@@ -4087,7 +4065,7 @@ def event_schema(e):
 	# Fields with class context
 	fields = []
 	for c in classes:
-		class_fields = mochi.db.rows("select id, name, fieldtype, required, multi, rank, card, position, rows from fields where project=? and class=? order by rank", project_id, c["id"]) or []
+		class_fields = mochi.db.rows("select id, name, fieldtype, flags, multi, rank, card, position, rows from fields where project=? and class=? order by rank", project_id, c["id"]) or []
 		for f in class_fields:
 			f["class"] = c["id"]
 			fields.append(f)
@@ -4148,9 +4126,9 @@ def insert_schema(project_id, schema):
 		)
 	for f in (schema.get("fields") or []):
 		mochi.db.execute(
-			"insert or ignore into fields (project, class, id, name, fieldtype, required, multi, rank, card, position, rows) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+			"insert or ignore into fields (project, class, id, name, fieldtype, flags, multi, rank, card, position, rows) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
 			project_id, f.get("class", ""), f.get("id", ""), f.get("name", ""),
-			f.get("fieldtype", "text"), f.get("required", 0), f.get("multi", 0),
+			f.get("fieldtype", "text"), f.get("flags", ""), f.get("multi", 0),
 			f.get("rank", 0), f.get("card", 1), f.get("position", ""), f.get("rows", 1)
 		)
 	for o in (schema.get("options") or []):
@@ -4219,7 +4197,7 @@ def send_project_data(project_id, subscriber_id):
 			h["event"] = "field/create"
 			mochi.message.send(h, {
 				"project": project_id, "class": t["id"], "id": f["id"], "name": f["name"],
-				"fieldtype": f["fieldtype"], "required": f["required"], "multi": f["multi"],
+				"fieldtype": f["fieldtype"], "flags": f["flags"], "multi": f["multi"],
 				"rank": f["rank"], "card": f["card"], "position": f["position"], "rows": f["rows"]
 			})
 
@@ -4782,9 +4760,9 @@ def event_field_create(e):
 	if not project_id:
 		return
 	mochi.db.execute(
-		"insert or ignore into fields (project, class, id, name, fieldtype, required, multi, rank, card, position, rows) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+		"insert or ignore into fields (project, class, id, name, fieldtype, flags, multi, rank, card, position, rows) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
 		project_id, e.content("class") or "", e.content("id") or "", e.content("name") or "",
-		e.content("fieldtype") or "text", e.content("required") or 0, e.content("multi") or 0,
+		e.content("fieldtype") or "text", e.content("flags") or "", e.content("multi") or 0,
 		e.content("rank") or 0, e.content("card") or 1, e.content("position") or "", e.content("rows") or 1
 	)
 	fp = mochi.entity.fingerprint(project_id)
@@ -4801,7 +4779,7 @@ def event_field_update(e):
 	if not class_id or not field_id:
 		return
 	name = e.content("name")
-	required = e.content("required")
+	flags = e.content("flags")
 	multi = e.content("multi")
 	card = e.content("card")
 	min_val = e.content("min")
@@ -4816,8 +4794,8 @@ def event_field_update(e):
 	rows_val = e.content("rows")
 	if name != None:
 		mochi.db.execute("update fields set name=? where project=? and class=? and id=?", name, project_id, class_id, field_id)
-	if required != None:
-		mochi.db.execute("update fields set required=? where project=? and class=? and id=?", required, project_id, class_id, field_id)
+	if flags != None:
+		mochi.db.execute("update fields set flags=? where project=? and class=? and id=?", flags, project_id, class_id, field_id)
 	if multi != None:
 		mochi.db.execute("update fields set multi=? where project=? and class=? and id=?", multi, project_id, class_id, field_id)
 	if card != None:
@@ -5556,9 +5534,9 @@ def do_object_create(project_id, project, params, user_id):
 	owner_id = get_owner_identity(project_id)
 	if owner_id and owner_id != user_id:
 		readable = project["prefix"] + "-" + str(new_counter)
-		first_field_row = mochi.db.row("select id from fields where class=? order by rank limit 1", params.get("class", ""))
-		first_field = first_field_row["id"] if first_field_row else ""
-		title_row = mochi.db.row("select value from \"values\" where object=? and field=?", object_id, first_field) if first_field else None
+		title_field_row = mochi.db.row("select id from fields where project=? and class=? and flags like '%title%' order by rank limit 1", project_id, params.get("class", ""))
+		title_field = title_field_row["id"] if title_field_row else ""
+		title_row = mochi.db.row("select value from \"values\" where object=? and field=?", object_id, title_field) if title_field else None
 		obj_title = title_row["value"] if title_row else ""
 		fp = mochi.entity.fingerprint(project_id)
 		url = "/projects/" + fp if fp else "/projects"
@@ -5936,8 +5914,8 @@ def do_class_create(project_id, project, params):
 		project_id, class_id, name.strip(), rank, pr_flag
 	)
 	mochi.db.execute(
-		"insert into fields (project, class, id, name, fieldtype, required, rank) values (?, ?, ?, ?, ?, ?, ?)",
-		project_id, class_id, "title", "Title", "text", 1, 0
+		"insert into fields (project, class, id, name, fieldtype, flags, rank) values (?, ?, ?, ?, ?, ?, ?)",
+		project_id, class_id, "title", "Title", "text", "required,title,sort", 0
 	)
 	mochi.db.execute(
 		"insert into hierarchy (project, class, parent) values (?, ?, ?)",
@@ -6002,17 +5980,17 @@ def do_field_create(project_id, project, params):
 		return {"error": "A field with this name already exists", "code": 400}
 	max_rank = mochi.db.row("select max(rank) as m from fields where project=? and class=?", project_id, class_id)
 	rank = (max_rank["m"] or 0) + 1 if max_rank else 0
-	required = 1 if params.get("required") == "1" or params.get("required") == "true" else 0
+	flags = params.get("flags", "")
 	multi = 1 if params.get("multi") == "1" or params.get("multi") == "true" else 0
 	card = 1 if params.get("card") != "0" and params.get("card") != "false" else 0
 	rows = int(params.get("rows")) if params.get("rows") else 1
 	mochi.db.execute(
-		"insert into fields (project, class, id, name, fieldtype, required, multi, rank, card, rows) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-		project_id, class_id, field_id, name.strip(), fieldtype, required, multi, rank, card, rows
+		"insert into fields (project, class, id, name, fieldtype, flags, multi, rank, card, rows) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+		project_id, class_id, field_id, name.strip(), fieldtype, flags, multi, rank, card, rows
 	)
 	broadcast_event(project_id, "field/create", {
 		"project": project_id, "class": class_id, "id": field_id,
-		"name": name.strip(), "fieldtype": fieldtype, "required": required,
+		"name": name.strip(), "fieldtype": fieldtype, "flags": flags,
 		"multi": multi, "rank": rank, "card": card, "rows": rows
 	})
 	return {"id": field_id, "name": name.strip(), "fieldtype": fieldtype, "rank": rank}
@@ -6026,16 +6004,15 @@ def do_field_update(project_id, project, params):
 	if not field_row:
 		return {"error": "Field not found", "code": 404}
 	name = params.get("name")
-	required = params.get("required")
+	flags = params.get("flags")
 	multi = params.get("multi")
 	card = params.get("card")
 	position = params.get("position")
 	rows_val = params.get("rows")
 	if name != None:
 		mochi.db.execute("update fields set name=? where project=? and class=? and id=?", name.strip(), project_id, class_id, field_id)
-	if required != None:
-		req_val = 1 if required == "1" or required == "true" else 0
-		mochi.db.execute("update fields set required=? where project=? and class=? and id=?", req_val, project_id, class_id, field_id)
+	if flags != None:
+		mochi.db.execute("update fields set flags=? where project=? and class=? and id=?", flags, project_id, class_id, field_id)
 	if multi != None:
 		multi_val = 1 if multi == "1" or multi == "true" else 0
 		mochi.db.execute("update fields set multi=? where project=? and class=? and id=?", multi_val, project_id, class_id, field_id)
@@ -6049,8 +6026,8 @@ def do_field_update(project_id, project, params):
 	update_data = {"project": project_id, "class": class_id, "id": field_id}
 	if name != None:
 		update_data["name"] = name.strip()
-	if required != None:
-		update_data["required"] = 1 if required == "1" or required == "true" else 0
+	if flags != None:
+		update_data["flags"] = flags
 	if multi != None:
 		update_data["multi"] = 1 if multi == "1" or multi == "true" else 0
 	if card != None:

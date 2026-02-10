@@ -4518,7 +4518,7 @@ def event_values_update(e):
 									url = "/projects/" + fp2 if fp2 else "/projects"
 									mochi.service.call("notifications", "send", "assignment",
 										title, "Assigned to you",
-										object_id + "/assign", url)
+										object_id, url)
 							# Auto-watch on assignment
 							mochi.db.execute(
 								"insert or ignore into watchers (object, user, created) values (?, ?, ?)",

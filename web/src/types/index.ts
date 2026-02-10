@@ -151,6 +151,11 @@ export interface PrData {
   updated: number;
 }
 
+// Field flag check helper
+export function fieldHasFlag(field: { flags?: string }, flag: string): boolean {
+  return field.flags?.split(",").includes(flag) ?? false;
+}
+
 // Sort state for views
 export interface SortState {
   field: string;

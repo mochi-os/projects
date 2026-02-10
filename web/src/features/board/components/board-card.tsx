@@ -12,6 +12,7 @@ interface BoardCardProps {
   prefix: string;
   objectMap?: Record<string, ProjectObject>;
   classMap?: Record<string, ProjectClass>;
+  allFields?: Record<string, ProjectField[]>;
   allObjects?: ProjectObject[];
   statusField?: string;
   rowField?: string;
@@ -38,6 +39,7 @@ export function BoardCard({
   prefix,
   objectMap,
   classMap,
+  allFields,
   allObjects,
   statusField,
   rowField,
@@ -72,11 +74,15 @@ export function BoardCard({
     }
   }
 
-  // Get parent info — use first field value of parent, fallback to prefix-number
+  // Get parent info — use title-flagged field of parent, fallback to prefix-number
   const parentObject = object.parent && objectMap ? objectMap[object.parent] : null;
   const parentClassName = parentObject && classMap ? classMap[parentObject.class]?.name || parentObject.class : null;
+  const parentFields = parentObject
+    ? (allFields?.[parentObject.class] || fields)
+    : null;
+  const parentTitleField = parentFields?.find((f) => f.flags?.split(",").includes("title"));
   const parentTitle = parentObject
-    ? (Object.values(parentObject.values).find((v) => v) || `${prefix}-${parentObject.number}`)
+    ? ((parentTitleField ? parentObject.values[parentTitleField.id] : null) || `${prefix}-${parentObject.number}`)
     : null;
 
   // Compute child status counts for parent cards

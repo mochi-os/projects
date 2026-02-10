@@ -1065,6 +1065,10 @@ def action_object_create(a):
 	parent = a.input("parent") or ""
 	title = a.input("title") or ""
 
+	# Look up the title-flagged field for this class
+	title_field_row = mochi.db.row("select id from fields where project=? and class=? and flags like '%title%' order by rank limit 1", project_id, obj_class)
+	title_field = title_field_row["id"] if title_field_row else ""
+
 	if project["owner"] != 1:
 		result = forward_to_owner(a, project_id, "object/create", {
 			"project": project_id, "class": obj_class,
@@ -1079,8 +1083,8 @@ def action_object_create(a):
 					"insert or ignore into objects (id, project, class, number, parent, rank, created, updated) values (?, ?, ?, ?, ?, ?, ?, ?)",
 					obj["id"], project_id, obj.get("class", ""), obj.get("number", 0), obj.get("parent", ""), obj.get("rank", 0), now, now
 				)
-				if title:
-					mochi.db.execute("insert or replace into \"values\" (object, field, value) values (?, ?, ?)", obj["id"], "title", title)
+				if title and title_field:
+					mochi.db.execute("insert or replace into \"values\" (object, field, value) values (?, ?, ?)", obj["id"], title_field, title)
 				# Update local counter
 				mochi.db.execute("update projects set counter=counter+1, updated=? where id=?", now, project_id)
 		return result
@@ -1118,9 +1122,9 @@ def action_object_create(a):
 
 	# Set title if provided
 	values = {}
-	if title:
-		mochi.db.execute("insert into \"values\" (object, field, value) values (?, ?, ?)", object_id, "title", title)
-		values["title"] = title
+	if title and title_field:
+		mochi.db.execute("insert into \"values\" (object, field, value) values (?, ?, ?)", object_id, title_field, title)
+		values[title_field] = title
 
 	# Log activity
 	log_activity(object_id, a.user.identity.id, "created")
@@ -5509,6 +5513,8 @@ def do_object_create(project_id, project, params, user_id):
 		return {"error": "Invalid class", "code": 400}
 	parent = params.get("parent", "")
 	title = params.get("title", "")
+	title_field_row = mochi.db.row("select id from fields where project=? and class=? and flags like '%title%' order by rank limit 1", project_id, obj_class)
+	title_field = title_field_row["id"] if title_field_row else ""
 	new_counter = project["counter"] + 1
 	mochi.db.execute("update projects set counter=?, updated=? where id=?", new_counter, mochi.time.now(), project_id)
 	max_rank_row = mochi.db.row("select coalesce(max(rank), 0) as max_rank from objects where project=?", project_id)
@@ -5520,9 +5526,9 @@ def do_object_create(project_id, project, params, user_id):
 		object_id, project_id, obj_class, new_counter, parent, initial_rank, now, now
 	)
 	values = {}
-	if title:
-		mochi.db.execute("insert into \"values\" (object, field, value) values (?, ?, ?)", object_id, "title", title)
-		values["title"] = title
+	if title and title_field:
+		mochi.db.execute("insert into \"values\" (object, field, value) values (?, ?, ?)", object_id, title_field, title)
+		values[title_field] = title
 	log_activity(object_id, user_id, "created")
 	mochi.db.execute("insert into watchers (object, user, created) values (?, ?, ?)", object_id, user_id, now)
 	broadcast_event(project_id, "object/create", {

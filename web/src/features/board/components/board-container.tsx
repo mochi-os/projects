@@ -418,6 +418,7 @@ export function BoardContainer({
           prefix={project.project.prefix}
           objectMap={objectMap}
           classMap={classMap}
+          allFields={project.fields}
           allObjects={objects}
           statusField={statusField}
           rowField={rowField}
@@ -532,6 +533,7 @@ export function BoardContainer({
               prefix={project.project.prefix}
               objectMap={objectMap}
               classMap={classMap}
+              allFields={project.fields}
               allObjects={objects}
               statusField={statusField}
               rowField={rowField}
@@ -569,6 +571,7 @@ export function BoardContainer({
           prefix={project.project.prefix}
           objectMap={objectMap}
           classMap={classMap}
+          allFields={project.fields}
           allObjects={objects}
           statusField={statusField}
           rowField={rowField}

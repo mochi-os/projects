@@ -356,7 +356,7 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
 
     // Create each non-title field (title is auto-created by the backend)
     for (const field of pendingFields) {
-      if (field.id === "title") continue;
+      if (field.flags?.split(",").includes("title")) continue;
       const fieldResult = await createFieldMutation.mutateAsync({
         classId,
         name: field.name,

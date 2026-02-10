@@ -32,6 +32,7 @@ export interface PendingField {
   id: string;
   name: string;
   fieldtype: string;
+  flags?: string;
   rows?: number;
   options?: { name: string; colour: string }[];
 }
@@ -516,7 +517,7 @@ export function ClassSheet({
     if (mode === "create") {
       setName("");
       setPendingParents([]);
-      setPendingFields([{ id: "title", name: "Title", fieldtype: "text" }]);
+      setPendingFields([{ id: "title", name: "Title", fieldtype: "text", flags: "required,title,sort" }]);
       setPullRequests(false);
     } else if (cls) {
       setName(cls.name);
@@ -744,7 +745,7 @@ export function ClassSheet({
                           {field.name || field.id}
                         </span>
                       )}
-                      {mode === "create" && field.id !== "title" && (
+                      {mode === "create" && !field.flags?.split(",").includes("title") && (
                         <Button
                           type="button"
                           variant="ghost"
@@ -854,7 +855,7 @@ export function EditFieldDialog({
 
   if (!field) return null;
 
-  const isSystemField = field.id === "title";
+  const isSystemField = field.flags?.split(",").includes("title") ?? false;
 
   const handleNameBlur = () => {
     if (name.trim() && name.trim() !== field.name) {

@@ -40,6 +40,7 @@ interface BoardColumnProps {
   prefix: string;
   objectMap: Record<string, ProjectObject>;
   classMap: Record<string, ProjectClass>;
+  allFields?: Record<string, ProjectField[]>;
   allObjects?: ProjectObject[];
   statusField?: string;
   rowField?: string;
@@ -66,6 +67,7 @@ export function BoardColumn({
   prefix,
   objectMap,
   classMap,
+  allFields,
   allObjects,
   statusField,
   rowField,
@@ -397,6 +399,7 @@ export function BoardColumn({
                   prefix={prefix}
                   objectMap={objectMap}
                   classMap={classMap}
+                  allFields={allFields}
                   allObjects={allObjects}
                   statusField={statusField}
                   rowField={rowField}

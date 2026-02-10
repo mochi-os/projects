@@ -166,7 +166,7 @@ export function DesignPreview({
           const value = card.values[fieldId as keyof typeof card.values];
           if (!value) return null;
 
-          if (fieldId === "title") {
+          if (field.flags?.split(",").includes("title")) {
             return (
               <div key={fieldId} className="font-medium text-sm">
                 {value}
@@ -259,8 +259,8 @@ export function DesignPreview({
   };
 
   const renderListPreview = () => {
-    const statusField = classFields.find((f) => f.id === "status");
-    const statusOptions = statusField ? classOptions["status"] || [] : [];
+    const statusField = classFields.find((f) => f.fieldtype === "enumerated");
+    const statusOptions = statusField ? classOptions[statusField.id] || [] : [];
 
     const getStatusColor = (statusId: string) => {
       const opt = statusOptions.find((o) => o.id === statusId);

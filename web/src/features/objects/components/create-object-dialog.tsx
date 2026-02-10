@@ -133,17 +133,22 @@ export function CreateObjectDialog({
 
   const createMutation = useMutation({
     mutationFn: async () => {
+      // Find the title-flagged field
+      const titleFieldId = classFields.find(
+        (f) => f.flags?.split(",").includes("title"),
+      )?.id;
+
       // Create the object
       const response = await projectsApi.createObject(project.project.id, {
         class: selectedClass,
-        title: fieldValues.title || undefined,
+        title: titleFieldId ? fieldValues[titleFieldId] || undefined : undefined,
         parent: parent || undefined,
       });
 
-      // Set all field values
+      // Set all field values (skip title — already sent in create call)
       const objectId = response.data.id;
       for (const [fieldId, value] of Object.entries(fieldValues)) {
-        if (fieldId !== "title" && value) {
+        if (fieldId !== titleFieldId && value) {
           await projectsApi.setValue(project.project.id, objectId, fieldId, value);
         }
       }

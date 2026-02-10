@@ -398,7 +398,7 @@ export function ObjectDetailPanel({
               )}
 
               {classFields
-                .filter((f) => f.id !== "title")
+                .filter((f) => !f.flags?.split(",").includes("title"))
                 .map((field) => (
                   <div key={field.id} className="grid grid-cols-[120px_1fr] gap-4 items-start">
                     <label className="text-sm font-medium text-muted-foreground pt-2">

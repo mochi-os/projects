@@ -916,7 +916,18 @@ def get_owner_identity(project_id):
 	row = mochi.db.row("select id from subscribers where project=? order by subscribed limit 1", project_id)
 	return row["id"] if row else ""
 
-def notify_watchers(object_id, project_id, local_identity, actor_id, title, body):
+def get_object_display(project, obj, object_id):
+	"""Build display title: '<project name> - <object title>'."""
+	first_field_row = mochi.db.row("select id from fields where class=? order by rank limit 1", obj["class"]) if obj else None
+	first_field = first_field_row["id"] if first_field_row else ""
+	title_row = mochi.db.row("select value from \"values\" where object=? and field=?", object_id, first_field) if first_field else None
+	obj_title = title_row["value"] if title_row else ""
+	if not obj_title:
+		prefix = project["prefix"] if project else ""
+		obj_title = prefix + "-" + str(obj["number"]) if obj and prefix else ""
+	return project["name"] + " - " + obj_title if obj_title else project["name"]
+
+def notify_watchers(object_id, project_id, local_identity, actor_id, body):
 	"""Notify local user if they watch this object and didn't make the change."""
 	if local_identity == actor_id:
 		return
@@ -926,20 +937,12 @@ def notify_watchers(object_id, project_id, local_identity, actor_id, title, body
 	if not project:
 		return
 	obj = mochi.db.row("select number, class from objects where id=?", object_id)
-	prefix = project["prefix"] if project else ""
-	readable = prefix + "-" + str(obj["number"]) if obj and prefix else ""
-	# Use the first field (rank 0) of the object's class as the display name
-	first_field_row = mochi.db.row("select id from fields where class=? order by rank limit 1", obj["class"]) if obj else None
-	first_field = first_field_row["id"] if first_field_row else ""
-	title_row = mochi.db.row("select value from \"values\" where object=? and field=?", object_id, first_field) if first_field else None
-	obj_title = title_row["value"] if title_row else ""
-	if obj_title:
-		display = obj_title + " - " + title
-	else:
-		display = readable + " " + title if readable else title
+	if not obj:
+		return
+	title = get_object_display(project, obj, object_id)
 	fp = mochi.entity.fingerprint(project_id)
 	url = "/projects/" + fp if fp else "/projects"
-	mochi.service.call("notifications", "send", "update", display, body, object_id, url)
+	mochi.service.call("notifications", "send", "update", title, body, object_id, url)
 
 def would_create_cycle(object_id, new_parent_id):
 	"""Check if setting new_parent_id as parent of object_id would create a cycle."""
@@ -4448,7 +4451,7 @@ def event_object_update(e):
 		actor = e.content("actor") or ""
 		local_id = e.header("to")
 		if local_id:
-			notify_watchers(object_id, project_id, local_id, actor, "updated", "Object modified")
+			notify_watchers(object_id, project_id, local_id, actor, "Updated")
 
 # Object deleted
 def event_object_delete(e):
@@ -4462,7 +4465,7 @@ def event_object_delete(e):
 	actor = e.content("actor") or ""
 	local_id = e.header("to")
 	if local_id:
-		notify_watchers(object_id, project_id, local_id, actor, "deleted", "Object deleted")
+		notify_watchers(object_id, project_id, local_id, actor, "Deleted")
 	mochi.db.execute("delete from watchers where object=?", object_id)
 	mochi.db.execute("delete from activity where object=?", object_id)
 	mochi.db.execute("delete from comments where object=?", object_id)
@@ -4495,8 +4498,8 @@ def event_values_update(e):
 		actor = e.content("actor") or ""
 		local_id = e.header("to")
 		if local_id:
-			notify_watchers(object_id, project_id, local_id, actor, "updated", "Fields changed")
-			# Check for assignment notification
+			# Check for assignment notification first
+			assigned = False
 			obj_row = mochi.db.row("select class from objects where id=? and project=?", object_id, project_id)
 			if obj_row:
 				for field in values:
@@ -4505,20 +4508,23 @@ def event_values_update(e):
 							"select fieldtype from fields where project=? and class=? and id=?",
 							project_id, obj_row["class"], field)
 						if field_row and field_row["fieldtype"] == "user":
+							assigned = True
 							project = get_project(project_id)
 							if project:
-								obj = mochi.db.row("select number from objects where id=?", object_id)
-								readable = project["prefix"] + "-" + str(obj["number"]) if obj else ""
-								fp2 = mochi.entity.fingerprint(project_id)
-								url = "/projects/" + fp2 if fp2 else "/projects"
-								mochi.service.call("notifications", "send", "assignment",
-									readable + " assigned to you",
-									"You were assigned to " + readable,
-									object_id + "/assign", url)
+								obj = mochi.db.row("select number, class from objects where id=?", object_id)
+								if obj:
+									title = get_object_display(project, obj, object_id)
+									fp2 = mochi.entity.fingerprint(project_id)
+									url = "/projects/" + fp2 if fp2 else "/projects"
+									mochi.service.call("notifications", "send", "assignment",
+										title, "Assigned to you",
+										object_id + "/assign", url)
 							# Auto-watch on assignment
 							mochi.db.execute(
 								"insert or ignore into watchers (object, user, created) values (?, ?, ?)",
 								object_id, local_id, mochi.time.now())
+			if not assigned:
+				notify_watchers(object_id, project_id, local_id, actor, "Fields changed")
 
 # Comment created
 def event_comment_create(e):
@@ -4542,7 +4548,7 @@ def event_comment_create(e):
 		if object_id and local_id:
 			name = e.content("name") or "Someone"
 			excerpt = (e.content("content") or "")[:80]
-			notify_watchers(object_id, project_id, local_id, actor, name + ": " + excerpt, name + ": " + excerpt)
+			notify_watchers(object_id, project_id, local_id, actor, name + ": " + excerpt)
 
 # Comment updated
 def event_comment_update(e):
@@ -4591,7 +4597,7 @@ def event_link_create(e):
 		local_id = e.header("to")
 		source = e.content("source")
 		if source and local_id:
-			notify_watchers(source, project_id, local_id, actor, "linked", "Link added")
+			notify_watchers(source, project_id, local_id, actor, "Link added")
 
 # Link deleted
 def event_link_delete(e):
@@ -5449,7 +5455,7 @@ def do_comment_create(project_id, project, params, user_id, user_name):
 	# Notify owner if watching
 	owner_id = get_owner_identity(project_id)
 	excerpt = (content.strip())[:80]
-	notify_watchers(object_id, project_id, owner_id, user_id, user_name + ": " + excerpt, user_name + ": " + excerpt)
+	notify_watchers(object_id, project_id, owner_id, user_id, user_name + ": " + excerpt)
 	return {"id": comment_id, "author": user_id, "name": user_name,
 			"content": content.strip(), "created": now}
 
@@ -5603,7 +5609,7 @@ def do_object_update(project_id, project, params, user_id):
 	})
 	# Notify owner if watching
 	owner_id = get_owner_identity(project_id)
-	notify_watchers(object_id, project_id, owner_id, user_id, "updated", "Object modified")
+	notify_watchers(object_id, project_id, owner_id, user_id, "Updated")
 	return {"success": True}
 
 def do_object_delete(project_id, project, params, user_id):
@@ -5615,7 +5621,7 @@ def do_object_delete(project_id, project, params, user_id):
 		return {"error": "Object not found", "code": 404}
 	# Notify owner before cascade (watchers get deleted in cascade)
 	owner_id = get_owner_identity(project_id)
-	notify_watchers(object_id, project_id, owner_id, user_id, "deleted", "Object deleted")
+	notify_watchers(object_id, project_id, owner_id, user_id, "Deleted")
 	delete_object_cascade(project_id, object_id, user_id)
 	return {"success": True}
 
@@ -5684,7 +5690,7 @@ def do_object_move(project_id, project, params, user_id):
 		})
 		# Notify owner if watching
 		owner_id = get_owner_identity(project_id)
-		notify_watchers(object_id, project_id, owner_id, user_id, "updated", "Fields changed")
+		notify_watchers(object_id, project_id, owner_id, user_id, "Fields changed")
 	return {"success": True}
 
 # Value helpers
@@ -5726,7 +5732,7 @@ def do_values_set(project_id, project, params, user_id):
 		})
 		# Notify owner if watching
 		owner_id = get_owner_identity(project_id)
-		notify_watchers(object_id, project_id, owner_id, user_id, "updated", "Fields changed")
+		notify_watchers(object_id, project_id, owner_id, user_id, "Fields changed")
 		# Auto-watch assigned users
 		for fid in changes:
 			if field_types.get(fid) == "user":
@@ -5764,7 +5770,7 @@ def do_value_set(project_id, project, params, user_id):
 		})
 		# Notify owner if watching
 		owner_id = get_owner_identity(project_id)
-		notify_watchers(object_id, project_id, owner_id, user_id, "updated", "Fields changed")
+		notify_watchers(object_id, project_id, owner_id, user_id, "Fields changed")
 		# Auto-watch assigned user
 		if field_row["fieldtype"] == "user" and str(new_value):
 			mochi.db.execute(
@@ -5802,7 +5808,7 @@ def do_link_create(project_id, project, params, user_id):
 	})
 	# Notify owner if watching
 	owner_id = get_owner_identity(project_id)
-	notify_watchers(object_id, project_id, owner_id, user_id, "linked", "Link added")
+	notify_watchers(object_id, project_id, owner_id, user_id, "Link added")
 	return {"success": True}
 
 def do_link_delete(project_id, project, params, user_id):
@@ -5818,7 +5824,7 @@ def do_link_delete(project_id, project, params, user_id):
 	})
 	# Notify owner if watching
 	owner_id = get_owner_identity(project_id)
-	notify_watchers(object_id, project_id, owner_id, user_id, "linked", "Link removed")
+	notify_watchers(object_id, project_id, owner_id, user_id, "Link removed")
 	return {"success": True}
 
 # Attachment helper

@@ -2,7 +2,7 @@
 // Copyright Alistair Cunningham 2026
 
 import { cn, Tooltip, TooltipContent, TooltipTrigger } from "@mochi/common";
-import { CheckSquare, CornerLeftUp } from "lucide-react";
+import { Check, CheckSquare, CornerLeftUp } from "lucide-react";
 import type { ProjectObject, ProjectField, FieldOption, ChecklistItem, ProjectClass } from "@/types";
 
 interface BoardCardProps {
@@ -14,6 +14,8 @@ interface BoardCardProps {
   classMap?: Record<string, ProjectClass>;
   allObjects?: ProjectObject[];
   statusField?: string;
+  rowField?: string;
+  peopleMap?: Record<string, string>;
   draggable?: boolean;
   onClick?: () => void;
 }
@@ -21,6 +23,12 @@ interface BoardCardProps {
 function truncate(text: string, maxLength: number): string {
   if (text.length <= maxLength) return text;
   return text.slice(0, maxLength - 1) + "…";
+}
+
+// Format a date value for display
+function formatDate(value: string): string {
+  const date = new Date(value + "T00:00:00");
+  return date.toLocaleDateString();
 }
 
 export function BoardCard({
@@ -32,15 +40,21 @@ export function BoardCard({
   classMap,
   allObjects,
   statusField,
+  rowField,
+  peopleMap,
   draggable: canDrag = true,
   onClick,
 }: BoardCardProps) {
-  const rawTitle = object.values.title || `${prefix}-${object.number}`;
+  // Use first field as the card header, fallback to prefix-number
+  const headerField = fields[0];
+  const rawTitle = headerField
+    ? (object.values[headerField.id] || `${prefix}-${object.number}`)
+    : `${prefix}-${object.number}`;
   const title = truncate(rawTitle, 160);
 
-  // Exclude title, status, priority for the body content
-  const cardFields = fields.filter(
-    (f) => f.id !== "title" && f.id !== "status" && f.id !== "priority",
+  // Body fields: exclude the header field, statusField, and rowField
+  const cardFields = fields.slice(1).filter(
+    (f) => f.id !== statusField && f.id !== rowField,
   );
 
   // Get border color from the first field with a coloured option
@@ -57,10 +71,12 @@ export function BoardCard({
     }
   }
 
-  // Get parent info
+  // Get parent info — use first field value of parent, fallback to prefix-number
   const parentObject = object.parent && objectMap ? objectMap[object.parent] : null;
   const parentClassName = parentObject && classMap ? classMap[parentObject.class]?.name || parentObject.class : null;
-  const parentTitle = parentObject?.values.title || (parentObject ? `${prefix}-${parentObject.number}` : null);
+  const parentTitle = parentObject
+    ? (Object.values(parentObject.values).find((v) => v) || `${prefix}-${parentObject.number}`)
+    : null;
 
   // Compute child status counts for parent cards
   const children = allObjects && statusField
@@ -74,6 +90,106 @@ export function BoardCard({
       statusCounts[status] = (statusCounts[status] || 0) + 1;
     }
   }
+
+  // Render a field value inline on the card
+  const renderField = (field: ProjectField) => {
+    const value = object.values[field.id];
+    if (!value) return null;
+
+    const fieldOptions = options[field.id] || [];
+    const option = fieldOptions.find((o) => o.id === value);
+
+    switch (field.fieldtype) {
+      case "enumerated":
+        if (!option) return null;
+        return (
+          <span
+            key={field.id}
+            className="inline-flex items-center gap-1 text-[10px] text-muted-foreground"
+          >
+            {option.colour && (
+              <span className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: option.colour }} />
+            )}
+            {option.name}
+          </span>
+        );
+
+      case "checklist":
+        try {
+          const items: ChecklistItem[] = JSON.parse(value);
+          if (items.length === 0) return null;
+          const doneCount = items.filter((item) => item.done).length;
+          const allDone = doneCount === items.length;
+          return (
+            <span
+              key={field.id}
+              className={cn(
+                "inline-flex items-center gap-1 rounded-md px-1.5 py-0.5 text-[10px] font-medium ring-1 ring-inset",
+                allDone
+                  ? "bg-green-500/10 text-green-600 ring-green-500/30"
+                  : "bg-muted text-muted-foreground ring-border"
+              )}
+            >
+              <CheckSquare className="h-3 w-3" />
+              {doneCount}/{items.length}
+            </span>
+          );
+        } catch {
+          return null;
+        }
+
+      case "date":
+        return (
+          <span key={field.id} className="text-[10px] text-muted-foreground">
+            {formatDate(value)}
+          </span>
+        );
+
+      case "user": {
+        const name = peopleMap?.[value] || value;
+        return (
+          <span key={field.id} className="text-[10px] text-muted-foreground">
+            {truncate(name, 25)}
+          </span>
+        );
+      }
+
+      case "checkbox":
+        if (value !== "true") return null;
+        return (
+          <span
+            key={field.id}
+            className="inline-flex items-center gap-1 text-[10px] text-muted-foreground"
+          >
+            <Check className="h-3 w-3" />
+            {field.name}
+          </span>
+        );
+
+      case "number":
+        return (
+          <span key={field.id} className="text-[10px] text-muted-foreground">
+            {value}
+          </span>
+        );
+
+      case "text":
+      default:
+        return (
+          <span key={field.id} className="text-[10px] text-muted-foreground truncate max-w-[200px]">
+            {truncate(value, 80)}
+          </span>
+        );
+    }
+  };
+
+  // Check if any body field has a value to render
+  const hasBodyFields = cardFields.some((f) => {
+    const value = object.values[f.id];
+    if (!value) return false;
+    if (f.fieldtype === "checkbox" && value !== "true") return false;
+    return true;
+  });
 
   return (
     <div
@@ -94,64 +210,10 @@ export function BoardCard({
         {title}
       </div>
 
-      {/* Description Preview */}
-      {object.values.description && (
-        <div className="text-xs text-muted-foreground line-clamp-3">
-          {object.values.description}
-        </div>
-      )}
-
-      {/* Tags / Badges */}
-      {cardFields.length > 0 && (
-        <div className="flex flex-wrap gap-1.5">
-          {cardFields.map((field) => {
-            const value = object.values[field.id];
-            if (!value) return null;
-
-            const fieldOptions = options[field.id] || [];
-            const option = fieldOptions.find((o) => o.id === value);
-
-            if (field.fieldtype === "enumerated" && option) {
-              return (
-                <span
-                  key={field.id}
-                  className="inline-flex items-center gap-1 text-[10px] text-muted-foreground"
-                >
-                  {option.colour && (
-                    <span className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: option.colour }} />
-                  )}
-                  {option.name}
-                </span>
-              );
-            }
-
-            if (field.fieldtype === "checklist") {
-              try {
-                const items: ChecklistItem[] = JSON.parse(value);
-                if (items.length === 0) return null;
-                const doneCount = items.filter((item) => item.done).length;
-                const allDone = doneCount === items.length;
-                return (
-                  <span
-                    key={field.id}
-                    className={cn(
-                      "inline-flex items-center gap-1 rounded-md px-1.5 py-0.5 text-[10px] font-medium ring-1 ring-inset",
-                      allDone
-                        ? "bg-green-500/10 text-green-600 ring-green-500/30"
-                        : "bg-muted text-muted-foreground ring-border"
-                    )}
-                  >
-                    <CheckSquare className="h-3 w-3" />
-                    {doneCount}/{items.length}
-                  </span>
-                );
-              } catch {
-                return null;
-              }
-            }
-
-            return null; // Skip other field types in card view to keep it minimal
-          })}
+      {/* Body fields */}
+      {hasBodyFields && (
+        <div className="flex flex-col gap-1">
+          {cardFields.map((field) => renderField(field))}
         </div>
       )}
 

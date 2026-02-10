@@ -726,6 +726,7 @@ function ProjectPage() {
                 rowField={rowField}
                 viewFields={activeView?.fields}
                 sort={sort}
+                peopleMap={peopleMap}
                 onCardClick={handleCardClick}
                 onCreateClick={canWrite(access) ? handleCreateClick : undefined}
                 onMoveObject={canWrite(access) ? handleMoveObject : undefined}

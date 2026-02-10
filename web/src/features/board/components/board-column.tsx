@@ -42,6 +42,8 @@ interface BoardColumnProps {
   classMap: Record<string, ProjectClass>;
   allObjects?: ProjectObject[];
   statusField?: string;
+  rowField?: string;
+  peopleMap?: Record<string, string>;
   onCardClick?: (object: ProjectObject) => void;
   onCreateClick?: () => void;
   onCreateInRow?: (rowId: string) => void;
@@ -66,6 +68,8 @@ export function BoardColumn({
   classMap,
   allObjects,
   statusField,
+  rowField,
+  peopleMap,
   onCardClick,
   onCreateClick,
   onCreateInRow,
@@ -395,6 +399,8 @@ export function BoardColumn({
                   classMap={classMap}
                   allObjects={allObjects}
                   statusField={statusField}
+                  rowField={rowField}
+                  peopleMap={peopleMap}
                   draggable={!!onDrop}
                   onClick={() => onCardClick?.(object)}
                 />
@@ -423,6 +429,8 @@ export function BoardColumn({
                 classMap={classMap}
                 allObjects={allObjects}
                 statusField={statusField}
+                rowField={rowField}
+                peopleMap={peopleMap}
                 draggable={!!onDrop}
                 onClick={() => onCardClick?.(object)}
               />

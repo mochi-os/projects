@@ -13,6 +13,7 @@ interface BoardContainerProps {
   rowField?: string;
   viewFields?: string;
   sort?: SortState | null;
+  peopleMap?: Record<string, string>;
   onCardClick?: (object: ProjectObject) => void;
   onCreateClick?: (statusId: string, rowId?: string) => void;
   onMoveObject?: (objectId: string, newStatus: string, newRank?: number, newRow?: string) => void;
@@ -63,6 +64,7 @@ export function BoardContainer({
   rowField,
   viewFields,
   sort,
+  peopleMap,
   onCardClick,
   onCreateClick,
   onMoveObject,
@@ -417,6 +419,8 @@ export function BoardContainer({
           classMap={classMap}
           allObjects={objects}
           statusField={statusField}
+          rowField={rowField}
+          peopleMap={peopleMap}
           onCardClick={isReordering ? undefined : onCardClick}
           onCreateClick={isReordering ? undefined : () => onCreateClick?.(status.id)}
           onCreateInRow={isReordering ? undefined : onCreateInRow}
@@ -529,6 +533,8 @@ export function BoardContainer({
               classMap={classMap}
               allObjects={objects}
               statusField={statusField}
+              rowField={rowField}
+              peopleMap={peopleMap}
               onCardClick={onCardClick}
               onDrop={isReordering ? undefined : handleDrop}
               rows={swimlaneRows.map((row) => ({
@@ -564,6 +570,8 @@ export function BoardContainer({
           classMap={classMap}
           allObjects={objects}
           statusField={statusField}
+          rowField={rowField}
+          peopleMap={peopleMap}
           onCardClick={onCardClick}
           onDrop={handleDrop}
         />

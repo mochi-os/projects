@@ -37,6 +37,9 @@ export function CommentList({ projectId, objectId, readOnly }: CommentListProps)
       queryClient.invalidateQueries({
         queryKey: ["comments", projectId, objectId],
       });
+      queryClient.invalidateQueries({
+        queryKey: ["object", projectId, objectId],
+      });
       setNewComment("");
     },
   });
@@ -102,7 +105,7 @@ export function CommentList({ projectId, objectId, readOnly }: CommentListProps)
     );
   }
 
-  const comments = data || [];
+  const comments = [...(data || [])].sort((a, b) => b.created - a.created);
 
   return (
     <div className="space-y-4">

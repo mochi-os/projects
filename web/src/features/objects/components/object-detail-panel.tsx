@@ -93,14 +93,15 @@ export function ObjectDetailPanel({
     staleTime: 60000, // Cache for 1 minute
   });
 
-  // Fetch all objects for parent picker
-  const { data: objectsData } = useQuery({
+  // Fetch all objects for parent picker (shares cache with project page)
+  const { data: objectListData } = useQuery({
     queryKey: ["objects", projectId],
     queryFn: async () => {
       const response = await projectsApi.listObjects(projectId);
-      return response.data.objects;
+      return response.data;
     },
   });
+  const objectsData = objectListData?.objects;
 
   const updateValueMutation = useMutation({
     mutationFn: async ({ field, value }: { field: string; value: string }) => {

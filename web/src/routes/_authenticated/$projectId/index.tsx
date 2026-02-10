@@ -125,6 +125,7 @@ function ProjectPage() {
     status: "",
     priority: "",
     owner: "",
+    watched: false,
   });
 
   // Sort state for list view (default to rank/manual order)
@@ -133,13 +134,15 @@ function ProjectPage() {
   const queryClient = useQueryClient();
 
   // Load objects
-  const { data: objectsData } = useQuery({
+  const { data: objectListData } = useQuery({
     queryKey: ["objects", params.projectId],
     queryFn: async () => {
       const response = await projectsApi.listObjects(params.projectId);
-      return response.data.objects;
+      return response.data;
     },
   });
+  const objectsData = objectListData?.objects;
+  const watchedIds = objectListData?.watched;
 
   // Load people for resolving user field values to names
   const { data: peopleData } = useQuery({
@@ -190,32 +193,37 @@ function ProjectPage() {
         queryKey: ["objects", params.projectId],
       });
 
-      const previousObjects = queryClient.getQueryData<ProjectObject[]>([
+      const previousData = queryClient.getQueryData<{ objects: ProjectObject[]; watched?: string[] }>([
         "objects",
         params.projectId,
       ]);
 
-      queryClient.setQueryData<ProjectObject[]>(
+      queryClient.setQueryData<{ objects: ProjectObject[]; watched?: string[] }>(
         ["objects", params.projectId],
-        (old) =>
-          old?.map((obj) => {
-            if (obj.id !== objectId) return obj;
-            const updatedValues = { ...obj.values, [field]: value };
-            if (rf && rowValue !== undefined) {
-              updatedValues[rf] = rowValue;
-            }
-            return { ...obj, rank: rank ?? obj.rank, values: updatedValues };
-          }),
+        (old) => {
+          if (!old) return old;
+          return {
+            ...old,
+            objects: old.objects.map((obj) => {
+              if (obj.id !== objectId) return obj;
+              const updatedValues = { ...obj.values, [field]: value };
+              if (rf && rowValue !== undefined) {
+                updatedValues[rf] = rowValue;
+              }
+              return { ...obj, rank: rank ?? obj.rank, values: updatedValues };
+            }),
+          };
+        },
       );
 
-      return { previousObjects };
+      return { previousData };
     },
     onError: (_err, _variables, context) => {
       // Rollback on error
-      if (context?.previousObjects) {
+      if (context?.previousData) {
         queryClient.setQueryData(
           ["objects", params.projectId],
-          context.previousObjects,
+          context.previousData,
         );
       }
     },
@@ -244,28 +252,33 @@ function ProjectPage() {
         queryKey: ["objects", params.projectId],
       });
 
-      const previousObjects = queryClient.getQueryData<ProjectObject[]>([
+      const previousData = queryClient.getQueryData<{ objects: ProjectObject[]; watched?: string[] }>([
         "objects",
         params.projectId,
       ]);
 
-      queryClient.setQueryData<ProjectObject[]>(
+      queryClient.setQueryData<{ objects: ProjectObject[]; watched?: string[] }>(
         ["objects", params.projectId],
-        (old) =>
-          old?.map((obj) =>
-            obj.id === objectId
-              ? { ...obj, parent: parentId || "" }
-              : obj,
-          ),
+        (old) => {
+          if (!old) return old;
+          return {
+            ...old,
+            objects: old.objects.map((obj) =>
+              obj.id === objectId
+                ? { ...obj, parent: parentId || "" }
+                : obj,
+            ),
+          };
+        },
       );
 
-      return { previousObjects };
+      return { previousData };
     },
     onError: (_err, _variables, context) => {
-      if (context?.previousObjects) {
+      if (context?.previousData) {
         queryClient.setQueryData(
           ["objects", params.projectId],
-          context.previousObjects,
+          context.previousData,
         );
       }
     },
@@ -389,8 +402,14 @@ function ProjectPage() {
       result = result.filter((obj) => obj.values.owner === filters.owner);
     }
 
+    // Apply watched filter
+    if (filters.watched && watchedIds) {
+      const watchedSet = new Set(watchedIds);
+      result = result.filter((obj) => watchedSet.has(obj.id));
+    }
+
     return result;
-  }, [objectsData, filters, activeView?.classes]);
+  }, [objectsData, watchedIds, filters, activeView?.classes]);
 
   // Keyboard navigation helpers
   const handleSelectNext = useCallback(() => {

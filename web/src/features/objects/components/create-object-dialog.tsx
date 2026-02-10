@@ -84,14 +84,15 @@ export function CreateObjectDialog({
     }
   }, [selectedClass, defaultFields, project.fields]);
 
-  // Load objects for parent selection
-  const { data: objectsData } = useQuery({
+  // Load objects for parent selection (shares cache with project page)
+  const { data: objectListData } = useQuery({
     queryKey: ["objects", projectId],
     queryFn: async () => {
       const response = await projectsApi.listObjects(project.project.id);
-      return response.data.objects;
+      return response.data;
     },
   });
+  const objectsData = objectListData?.objects;
 
   // Fetch project members for the owner picker
   const { data: peopleData } = useQuery({
@@ -168,8 +169,9 @@ export function CreateObjectDialog({
       };
       queryClient.setQueryData(
         ["objects", projectId],
-        (old: Array<{ id: string; values: Record<string, string> }> | undefined) => {
-          return old ? [...old, newObject] : [newObject];
+        (old: { objects: Array<{ id: string; values: Record<string, string> }>; watched?: string[] } | undefined) => {
+          if (!old) return { objects: [newObject], watched: [] };
+          return { ...old, objects: [...old.objects, newObject] };
         },
       );
       queryClient.invalidateQueries({

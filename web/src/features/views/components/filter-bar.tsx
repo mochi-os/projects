@@ -10,6 +10,7 @@ export interface FilterState {
   status: string;
   priority: string;
   owner: string;
+  watched: boolean;
 }
 
 interface FilterBarProps {
@@ -33,11 +34,11 @@ export function FilterBar({
   const priorityOptions: FieldOption[] = rowField ? classOptions[rowField] || [] : [];
 
   const clearFilter = (key: keyof FilterState) => {
-    onFilterChange({ ...filters, [key]: "" });
+    onFilterChange({ ...filters, [key]: key === "watched" ? false : "" });
   };
 
   const clearAllFilters = () => {
-    onFilterChange({ search: "", status: "", priority: "", owner: "" });
+    onFilterChange({ search: "", status: "", priority: "", owner: "", watched: false });
   };
 
   const activeFilters: {
@@ -67,6 +68,13 @@ export function FilterBar({
       key: "priority",
       label: "Priority",
       value: option?.name || filters.priority,
+    });
+  }
+  if (filters.watched) {
+    activeFilters.push({
+      key: "watched",
+      label: "Watched",
+      value: "On",
     });
   }
 

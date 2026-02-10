@@ -911,6 +911,36 @@ def log_activity(object_id, actor, action, field="", oldvalue="", newvalue=""):
 		activity_id, object_id, actor, action, field, str(oldvalue), str(newvalue), now
 	)
 
+def get_owner_identity(project_id):
+	"""Get the project owner's identity from the first subscriber."""
+	row = mochi.db.row("select id from subscribers where project=? order by subscribed limit 1", project_id)
+	return row["id"] if row else ""
+
+def notify_watchers(object_id, project_id, local_identity, actor_id, title, body):
+	"""Notify local user if they watch this object and didn't make the change."""
+	if local_identity == actor_id:
+		return
+	if not mochi.db.exists("select 1 from watchers where object=? and user=?", object_id, local_identity):
+		return
+	project = get_project(project_id)
+	if not project:
+		return
+	obj = mochi.db.row("select number, class from objects where id=?", object_id)
+	prefix = project["prefix"] if project else ""
+	readable = prefix + "-" + str(obj["number"]) if obj and prefix else ""
+	# Use the first field (rank 0) of the object's class as the display name
+	first_field_row = mochi.db.row("select id from fields where class=? order by rank limit 1", obj["class"]) if obj else None
+	first_field = first_field_row["id"] if first_field_row else ""
+	title_row = mochi.db.row("select value from \"values\" where object=? and field=?", object_id, first_field) if first_field else None
+	obj_title = title_row["value"] if title_row else ""
+	if obj_title:
+		display = obj_title + " - " + title
+	else:
+		display = readable + " " + title if readable else title
+	fp = mochi.entity.fingerprint(project_id)
+	url = "/projects/" + fp if fp else "/projects"
+	mochi.service.call("notifications", "send", "update", display, body, object_id, url)
+
 def would_create_cycle(object_id, new_parent_id):
 	"""Check if setting new_parent_id as parent of object_id would create a cycle."""
 	if not new_parent_id:
@@ -923,12 +953,12 @@ def would_create_cycle(object_id, new_parent_id):
 		current = parent_row["parent"] if parent_row else ""
 	return False
 
-def delete_object_cascade(project_id, object_id):
+def delete_object_cascade(project_id, object_id, actor=""):
 	"""Delete an object and all its children recursively."""
 	# First, recursively delete all children
 	children = mochi.db.rows("select id from objects where parent=?", object_id)
 	for child in children:
-		delete_object_cascade(project_id, child["id"])
+		delete_object_cascade(project_id, child["id"], actor)
 
 	# Then delete this object's related data
 	mochi.db.execute("delete from pull_requests where object=?", object_id)
@@ -941,7 +971,7 @@ def delete_object_cascade(project_id, object_id):
 	mochi.db.execute("delete from objects where id=?", object_id)
 
 	# Broadcast delete event for each object
-	broadcast_event(project_id, "object/delete", {"project": project_id, "id": object_id})
+	broadcast_event(project_id, "object/delete", {"project": project_id, "id": object_id, "actor": actor})
 
 
 # ============================================================================
@@ -1009,7 +1039,12 @@ def action_object_list(a):
 
 		objects.append(obj)
 
-	return {"data": {"objects": objects}}
+	# Get watched object IDs for the local user
+	watched = mochi.db.rows(
+		"select w.object from watchers w join objects o on o.id=w.object where o.project=? and w.user=?",
+		project_id, a.user.identity.id) or []
+
+	return {"data": {"objects": objects, "watched": [w["object"] for w in watched]}}
 
 def action_object_create(a):
 	if not a.user:
@@ -1097,7 +1132,7 @@ def action_object_create(a):
 	broadcast_event(project_id, "object/create", {
 		"project": project_id, "id": object_id, "class": obj_class,
 		"number": new_counter, "parent": parent, "values": values,
-		"created": now
+		"created": now, "actor": a.user.identity.id
 	})
 
 	return {"data": {
@@ -1145,6 +1180,10 @@ def action_object_get(a):
 
 	# Check if user is watching
 	watching = mochi.db.exists("select 1 from watchers where object=? and user=?", object_id, a.user.identity.id)
+
+	# Clear notifications for this object if watching
+	if watching:
+		mochi.service.call("notifications", "clear.object", "projects", object_id)
 
 	# Get pull requests
 	prs = mochi.db.rows("select id, object, repository, source, target, status, title, description, draft, created, updated from pull_requests where object=?", object_id) or []
@@ -1260,7 +1299,8 @@ def action_object_update(a):
 	broadcast_event(project_id, "object/update", {
 		"project": project_id, "id": object_id,
 		"parent": parent if parent != None else row["parent"],
-		"class": new_class if new_class and new_class != row["class"] else row["class"]
+		"class": new_class if new_class and new_class != row["class"] else row["class"],
+		"actor": a.user.identity.id
 	})
 
 	return {"data": {"success": True}}
@@ -1308,7 +1348,7 @@ def action_object_delete(a):
 		return
 
 	# Cascade delete this object and all its children
-	delete_object_cascade(project_id, object_id)
+	delete_object_cascade(project_id, object_id, a.user.identity.id)
 
 	return {"data": {"success": True}}
 
@@ -1441,7 +1481,7 @@ def action_object_move(a):
 	if updated_values:
 		broadcast_event(project_id, "values/update", {
 			"project": project_id, "id": object_id,
-			"values": updated_values
+			"values": updated_values, "actor": a.user.identity.id
 		})
 
 	return {"data": {"success": True}}
@@ -1479,9 +1519,11 @@ def action_values_set(a):
 
 	# Get valid fields for this class
 	valid_fields = {}
-	field_rows = mochi.db.rows("select id, name from fields where project=? and class=?", project_id, row["class"]) or []
+	field_types = {}
+	field_rows = mochi.db.rows("select id, name, fieldtype from fields where project=? and class=?", project_id, row["class"]) or []
 	for f in field_rows:
 		valid_fields[f["id"]] = f["name"]
+		field_types[f["id"]] = f["fieldtype"]
 
 	if project["owner"] != 1:
 		values = {}
@@ -1529,8 +1571,17 @@ def action_values_set(a):
 			if val:
 				changed_values[fid] = val["value"]
 		broadcast_event(project_id, "values/update", {
-			"project": project_id, "id": object_id, "values": changed_values
+			"project": project_id, "id": object_id, "values": changed_values,
+			"actor": a.user.identity.id
 		})
+		# Auto-watch assigned users
+		for fid in changes:
+			if field_types.get(fid) == "user":
+				assigned = mochi.db.row("select value from \"values\" where object=? and field=?", object_id, fid)
+				if assigned and assigned["value"]:
+					mochi.db.execute(
+						"insert or ignore into watchers (object, user, created) values (?, ?, ?)",
+						object_id, assigned["value"], now)
 
 	return {"data": {"success": True, "changed": changes}}
 
@@ -1583,7 +1634,7 @@ def action_value_set(a):
 		return
 
 	# Verify field exists for this class
-	field_row = mochi.db.row("select id from fields where project=? and class=? and id=?", project_id, row["class"], field_id)
+	field_row = mochi.db.row("select id, fieldtype from fields where project=? and class=? and id=?", project_id, row["class"], field_id)
 	if not field_row:
 		a.error(400, "Invalid field for this class")
 		return
@@ -1598,12 +1649,18 @@ def action_value_set(a):
 
 	if str(new_value) != old_value:
 		mochi.db.execute("replace into \"values\" (object, field, value) values (?, ?, ?)", object_id, field_id, str(new_value))
-		mochi.db.execute("update objects set updated=? where id=?", mochi.time.now(), object_id)
+		now = mochi.time.now()
+		mochi.db.execute("update objects set updated=? where id=?", now, object_id)
 		log_activity(object_id, a.user.identity.id, "updated", field_id, old_value, str(new_value))
 		broadcast_event(project_id, "values/update", {
 			"project": project_id, "id": object_id,
-			"values": {field_id: str(new_value)}
+			"values": {field_id: str(new_value)}, "actor": a.user.identity.id
 		})
+		# Auto-watch assigned user
+		if field_row["fieldtype"] == "user" and str(new_value):
+			mochi.db.execute(
+				"insert or ignore into watchers (object, user, created) values (?, ?, ?)",
+				object_id, str(new_value), now)
 
 	return {"data": {"success": True}}
 
@@ -1729,7 +1786,8 @@ def action_link_create(a):
 
 	broadcast_event(project_id, "link/create", {
 		"project": project_id, "source": object_id,
-		"target": target_id, "linktype": linktype, "created": now
+		"target": target_id, "linktype": linktype, "created": now,
+		"actor": a.user.identity.id
 	})
 
 	return {"data": {"success": True}}
@@ -1771,7 +1829,7 @@ def action_link_delete(a):
 
 	broadcast_event(project_id, "link/delete", {
 		"project": project_id, "source": object_id,
-		"target": target_id, "linktype": linktype
+		"target": target_id, "linktype": linktype, "actor": a.user.identity.id
 	})
 
 	return {"data": {"success": True}}
@@ -1866,11 +1924,16 @@ def action_comment_create(a):
 	mochi.db.execute("update objects set updated=? where id=?", now, object_id)
 	log_activity(object_id, a.user.identity.id, "commented")
 
+	# Auto-watch on comment
+	mochi.db.execute(
+		"insert or ignore into watchers (object, user, created) values (?, ?, ?)",
+		object_id, a.user.identity.id, now)
+
 	broadcast_event(project_id, "comment/create", {
 		"project": project_id, "object": object_id,
 		"id": comment_id, "parent": parent,
 		"author": a.user.identity.id, "name": a.user.identity.name,
-		"content": content.strip(), "created": now
+		"content": content.strip(), "created": now, "actor": a.user.identity.id
 	})
 
 	return {"data": {
@@ -1933,7 +1996,8 @@ def action_comment_update(a):
 
 	broadcast_event(project_id, "comment/update", {
 		"project": project_id, "object": object_id,
-		"id": comment_id, "content": content.strip(), "edited": now
+		"id": comment_id, "content": content.strip(), "edited": now,
+		"actor": a.user.identity.id
 	})
 
 	return {"data": {"success": True}}
@@ -1983,7 +2047,8 @@ def action_comment_delete(a):
 	mochi.db.execute("delete from comments where id=?", comment_id)
 
 	broadcast_event(project_id, "comment/delete", {
-		"project": project_id, "object": object_id, "id": comment_id
+		"project": project_id, "object": object_id, "id": comment_id,
+		"actor": a.user.identity.id
 	})
 
 	return {"data": {"success": True}}
@@ -3739,6 +3804,40 @@ def action_search(a):
 
 
 # ============================================================================
+# Notification Actions
+# ============================================================================
+
+def action_notifications_subscribe(a):
+	"""Create a notification subscription via the notifications service."""
+	label = a.input("label", "").strip()
+	type = a.input("type", "").strip()
+	object = a.input("object", "").strip()
+	destinations = a.input("destinations", "")
+
+	if not label:
+		a.error(400, "label is required")
+		return
+	if not mochi.valid(label, "text"):
+		a.error(400, "Invalid label")
+		return
+
+	destinations_list = json.decode(destinations) if destinations else []
+
+	result = mochi.service.call("notifications", "subscribe", label, type, object, destinations_list)
+	return {"data": {"id": result}}
+
+def action_notifications_check(a):
+	"""Check if a notification subscription exists for this app."""
+	result = mochi.service.call("notifications", "subscriptions")
+	return {"data": {"exists": len(result) > 0}}
+
+def action_notifications_destinations(a):
+	"""List available notification destinations."""
+	result = mochi.service.call("notifications", "destinations")
+	return {"data": result}
+
+
+# ============================================================================
 # Remote Projects (Subscribe/Bookmark)
 # ============================================================================
 
@@ -4153,7 +4252,7 @@ def send_project_data(project_id, subscriber_id):
 		mochi.message.send(h, {
 			"project": project_id, "id": obj["id"], "class": obj["class"],
 			"number": obj["number"], "parent": obj["parent"], "rank": obj["rank"],
-			"created": obj["created"], "updated": obj["updated"]
+			"created": obj["created"], "updated": obj["updated"], "sync": True
 		})
 
 		# Send values for this object
@@ -4163,7 +4262,7 @@ def send_project_data(project_id, subscriber_id):
 			for v in vals:
 				values_map[v["field"]] = v["value"]
 			h["event"] = "values/update"
-			mochi.message.send(h, {"project": project_id, "id": obj["id"], "values": values_map})
+			mochi.message.send(h, {"project": project_id, "id": obj["id"], "values": values_map, "sync": True})
 
 		# Send comments for this object
 		comments = mochi.db.rows("select * from comments where object=? order by created", obj["id"])
@@ -4171,14 +4270,15 @@ def send_project_data(project_id, subscriber_id):
 			h["event"] = "comment/create"
 			mochi.message.send(h, {
 				"project": project_id, "id": c["id"], "object": obj["id"],
-				"author": c["author"], "name": c["name"], "content": c["content"], "created": c["created"]
+				"author": c["author"], "name": c["name"], "content": c["content"], "created": c["created"],
+				"sync": True
 			})
 
 	# Send links (once, not per-object)
 	links = mochi.db.rows("select l.source, l.target, l.linktype from links l join objects o on l.source = o.id where o.project=?", project_id)
 	for l in links:
 		h["event"] = "link/create"
-		mochi.message.send(h, {"project": project_id, "source": l["source"], "target": l["target"], "linktype": l["linktype"]})
+		mochi.message.send(h, {"project": project_id, "source": l["source"], "target": l["target"], "linktype": l["linktype"], "sync": True})
 
 # Handle subscribe event from a remote user
 def event_subscribe(e):
@@ -4343,6 +4443,12 @@ def event_object_update(e):
 	fp = mochi.entity.fingerprint(project_id)
 	if fp:
 		mochi.websocket.write(fp, {"type": "object/update", "project": project_id, "id": object_id})
+	# Notify local user if watching
+	if not e.content("sync"):
+		actor = e.content("actor") or ""
+		local_id = e.header("to")
+		if local_id:
+			notify_watchers(object_id, project_id, local_id, actor, "updated", "Object modified")
 
 # Object deleted
 def event_object_delete(e):
@@ -4352,6 +4458,11 @@ def event_object_delete(e):
 	object_id = e.content("id")
 	if not object_id:
 		return
+	# Notify local user before deleting watchers
+	actor = e.content("actor") or ""
+	local_id = e.header("to")
+	if local_id:
+		notify_watchers(object_id, project_id, local_id, actor, "deleted", "Object deleted")
 	mochi.db.execute("delete from watchers where object=?", object_id)
 	mochi.db.execute("delete from activity where object=?", object_id)
 	mochi.db.execute("delete from comments where object=?", object_id)
@@ -4379,6 +4490,35 @@ def event_values_update(e):
 	fp = mochi.entity.fingerprint(project_id)
 	if fp:
 		mochi.websocket.write(fp, {"type": "values/update", "project": project_id, "id": object_id})
+	# Notify local user if watching
+	if not e.content("sync"):
+		actor = e.content("actor") or ""
+		local_id = e.header("to")
+		if local_id:
+			notify_watchers(object_id, project_id, local_id, actor, "updated", "Fields changed")
+			# Check for assignment notification
+			obj_row = mochi.db.row("select class from objects where id=? and project=?", object_id, project_id)
+			if obj_row:
+				for field in values:
+					if str(values[field]) == local_id:
+						field_row = mochi.db.row(
+							"select fieldtype from fields where project=? and class=? and id=?",
+							project_id, obj_row["class"], field)
+						if field_row and field_row["fieldtype"] == "user":
+							project = get_project(project_id)
+							if project:
+								obj = mochi.db.row("select number from objects where id=?", object_id)
+								readable = project["prefix"] + "-" + str(obj["number"]) if obj else ""
+								fp2 = mochi.entity.fingerprint(project_id)
+								url = "/projects/" + fp2 if fp2 else "/projects"
+								mochi.service.call("notifications", "send", "assignment",
+									readable + " assigned to you",
+									"You were assigned to " + readable,
+									object_id + "/assign", url)
+							# Auto-watch on assignment
+							mochi.db.execute(
+								"insert or ignore into watchers (object, user, created) values (?, ?, ?)",
+								object_id, local_id, mochi.time.now())
 
 # Comment created
 def event_comment_create(e):
@@ -4394,6 +4534,15 @@ def event_comment_create(e):
 	fp = mochi.entity.fingerprint(project_id)
 	if fp:
 		mochi.websocket.write(fp, {"type": "comment/create", "project": project_id, "object": e.content("object")})
+	# Notify local user if watching
+	if not e.content("sync"):
+		actor = e.content("actor") or ""
+		local_id = e.header("to")
+		object_id = e.content("object")
+		if object_id and local_id:
+			name = e.content("name") or "Someone"
+			excerpt = (e.content("content") or "")[:80]
+			notify_watchers(object_id, project_id, local_id, actor, name + ": " + excerpt, name + ": " + excerpt)
 
 # Comment updated
 def event_comment_update(e):
@@ -4436,6 +4585,13 @@ def event_link_create(e):
 	fp = mochi.entity.fingerprint(project_id)
 	if fp:
 		mochi.websocket.write(fp, {"type": "link/create", "project": project_id})
+	# Notify local user if watching
+	if not e.content("sync"):
+		actor = e.content("actor") or ""
+		local_id = e.header("to")
+		source = e.content("source")
+		if source and local_id:
+			notify_watchers(source, project_id, local_id, actor, "linked", "Link added")
 
 # Link deleted
 def event_link_delete(e):
@@ -5281,11 +5437,19 @@ def do_comment_create(project_id, project, params, user_id, user_name):
 	)
 	mochi.db.execute("update objects set updated=? where id=?", now, object_id)
 	log_activity(object_id, user_id, "commented")
+	# Auto-watch commenter on owner's server
+	mochi.db.execute(
+		"insert or ignore into watchers (object, user, created) values (?, ?, ?)",
+		object_id, user_id, now)
 	broadcast_event(project_id, "comment/create", {
 		"project": project_id, "object": object_id, "id": comment_id,
 		"parent": parent, "author": user_id, "name": user_name,
-		"content": content.strip(), "created": now
+		"content": content.strip(), "created": now, "actor": user_id
 	})
+	# Notify owner if watching
+	owner_id = get_owner_identity(project_id)
+	excerpt = (content.strip())[:80]
+	notify_watchers(object_id, project_id, owner_id, user_id, user_name + ": " + excerpt, user_name + ": " + excerpt)
 	return {"id": comment_id, "author": user_id, "name": user_name,
 			"content": content.strip(), "created": now}
 
@@ -5306,7 +5470,7 @@ def do_comment_update(project_id, project, params, user_id):
 	mochi.db.execute("update comments set content=?, edited=? where id=?", content.strip(), now, comment_id)
 	broadcast_event(project_id, "comment/update", {
 		"project": project_id, "object": object_id,
-		"id": comment_id, "content": content.strip(), "edited": now
+		"id": comment_id, "content": content.strip(), "edited": now, "actor": user_id
 	})
 	return {"success": True}
 
@@ -5322,7 +5486,7 @@ def do_comment_delete(project_id, project, params, user_id):
 		return {"error": "Cannot delete another user's comment", "code": 403}
 	mochi.db.execute("delete from comments where id=?", comment_id)
 	broadcast_event(project_id, "comment/delete", {
-		"project": project_id, "object": object_id, "id": comment_id
+		"project": project_id, "object": object_id, "id": comment_id, "actor": user_id
 	})
 	return {"success": True}
 
@@ -5380,8 +5544,21 @@ def do_object_create(project_id, project, params, user_id):
 	broadcast_event(project_id, "object/create", {
 		"project": project_id, "id": object_id, "class": obj_class,
 		"number": new_counter, "parent": parent, "values": values,
-		"created": now
+		"created": now, "actor": user_id
 	})
+	# Notify owner when subscriber creates an object
+	owner_id = get_owner_identity(project_id)
+	if owner_id and owner_id != user_id:
+		readable = project["prefix"] + "-" + str(new_counter)
+		first_field_row = mochi.db.row("select id from fields where class=? order by rank limit 1", params.get("class", ""))
+		first_field = first_field_row["id"] if first_field_row else ""
+		title_row = mochi.db.row("select value from \"values\" where object=? and field=?", object_id, first_field) if first_field else None
+		obj_title = title_row["value"] if title_row else ""
+		fp = mochi.entity.fingerprint(project_id)
+		url = "/projects/" + fp if fp else "/projects"
+		display = readable + " " + obj_title + " — created" if obj_title else readable + " created"
+		mochi.service.call("notifications", "send", "update",
+			display, "New object created", object_id, url)
 	return {"id": object_id, "number": new_counter,
 			"readable": project["prefix"] + "-" + str(new_counter)}
 
@@ -5421,8 +5598,12 @@ def do_object_update(project_id, project, params, user_id):
 	broadcast_event(project_id, "object/update", {
 		"project": project_id, "id": object_id,
 		"parent": parent if parent != None else row["parent"],
-		"class": new_class if new_class and new_class != row["class"] else row["class"]
+		"class": new_class if new_class and new_class != row["class"] else row["class"],
+		"actor": user_id
 	})
+	# Notify owner if watching
+	owner_id = get_owner_identity(project_id)
+	notify_watchers(object_id, project_id, owner_id, user_id, "updated", "Object modified")
 	return {"success": True}
 
 def do_object_delete(project_id, project, params, user_id):
@@ -5432,7 +5613,10 @@ def do_object_delete(project_id, project, params, user_id):
 	row = mochi.db.row("select id from objects where id=? and project=?", object_id, project_id)
 	if not row:
 		return {"error": "Object not found", "code": 404}
-	delete_object_cascade(project_id, object_id)
+	# Notify owner before cascade (watchers get deleted in cascade)
+	owner_id = get_owner_identity(project_id)
+	notify_watchers(object_id, project_id, owner_id, user_id, "deleted", "Object deleted")
+	delete_object_cascade(project_id, object_id, user_id)
 	return {"success": True}
 
 def do_object_move(project_id, project, params, user_id):
@@ -5496,8 +5680,11 @@ def do_object_move(project_id, project, params, user_id):
 	if updated_values:
 		broadcast_event(project_id, "values/update", {
 			"project": project_id, "id": object_id,
-			"values": updated_values
+			"values": updated_values, "actor": user_id
 		})
+		# Notify owner if watching
+		owner_id = get_owner_identity(project_id)
+		notify_watchers(object_id, project_id, owner_id, user_id, "updated", "Fields changed")
 	return {"success": True}
 
 # Value helpers
@@ -5509,9 +5696,11 @@ def do_values_set(project_id, project, params, user_id):
 	if not row:
 		return {"error": "Object not found", "code": 404}
 	valid_fields = {}
-	field_rows = mochi.db.rows("select id, name from fields where project=? and class=?", project_id, row["class"]) or []
+	field_types = {}
+	field_rows = mochi.db.rows("select id, name, fieldtype from fields where project=? and class=?", project_id, row["class"]) or []
 	for f in field_rows:
 		valid_fields[f["id"]] = f["name"]
+		field_types[f["id"]] = f["fieldtype"]
 	now = mochi.time.now()
 	changes = []
 	values = params.get("values", {})
@@ -5533,8 +5722,19 @@ def do_values_set(project_id, project, params, user_id):
 			if val:
 				changed_values[fid] = val["value"]
 		broadcast_event(project_id, "values/update", {
-			"project": project_id, "id": object_id, "values": changed_values
+			"project": project_id, "id": object_id, "values": changed_values, "actor": user_id
 		})
+		# Notify owner if watching
+		owner_id = get_owner_identity(project_id)
+		notify_watchers(object_id, project_id, owner_id, user_id, "updated", "Fields changed")
+		# Auto-watch assigned users
+		for fid in changes:
+			if field_types.get(fid) == "user":
+				assigned = mochi.db.row("select value from \"values\" where object=? and field=?", object_id, fid)
+				if assigned and assigned["value"]:
+					mochi.db.execute(
+						"insert or ignore into watchers (object, user, created) values (?, ?, ?)",
+						object_id, assigned["value"], now)
 	return {"success": True, "changed": changes}
 
 def do_value_set(project_id, project, params, user_id):
@@ -5547,7 +5747,7 @@ def do_value_set(project_id, project, params, user_id):
 	row = mochi.db.row("select id, class from objects where id=? and project=?", object_id, project_id)
 	if not row:
 		return {"error": "Object not found", "code": 404}
-	field_row = mochi.db.row("select id from fields where project=? and class=? and id=?", project_id, row["class"], field_id)
+	field_row = mochi.db.row("select id, fieldtype from fields where project=? and class=? and id=?", project_id, row["class"], field_id)
 	if not field_row:
 		return {"error": "Invalid field for this class", "code": 400}
 	new_value = params.get("value", "")
@@ -5555,12 +5755,21 @@ def do_value_set(project_id, project, params, user_id):
 	old_value = old_row["value"] if old_row else ""
 	if str(new_value) != old_value:
 		mochi.db.execute("replace into \"values\" (object, field, value) values (?, ?, ?)", object_id, field_id, str(new_value))
-		mochi.db.execute("update objects set updated=? where id=?", mochi.time.now(), object_id)
+		now = mochi.time.now()
+		mochi.db.execute("update objects set updated=? where id=?", now, object_id)
 		log_activity(object_id, user_id, "updated", field_id, old_value, str(new_value))
 		broadcast_event(project_id, "values/update", {
 			"project": project_id, "id": object_id,
-			"values": {field_id: str(new_value)}
+			"values": {field_id: str(new_value)}, "actor": user_id
 		})
+		# Notify owner if watching
+		owner_id = get_owner_identity(project_id)
+		notify_watchers(object_id, project_id, owner_id, user_id, "updated", "Fields changed")
+		# Auto-watch assigned user
+		if field_row["fieldtype"] == "user" and str(new_value):
+			mochi.db.execute(
+				"insert or ignore into watchers (object, user, created) values (?, ?, ?)",
+				object_id, str(new_value), now)
 	return {"success": True}
 
 # Link helpers
@@ -5589,8 +5798,11 @@ def do_link_create(project_id, project, params, user_id):
 	log_activity(object_id, user_id, "linked", linktype, "", target_id)
 	broadcast_event(project_id, "link/create", {
 		"project": project_id, "source": object_id,
-		"target": target_id, "linktype": linktype, "created": now
+		"target": target_id, "linktype": linktype, "created": now, "actor": user_id
 	})
+	# Notify owner if watching
+	owner_id = get_owner_identity(project_id)
+	notify_watchers(object_id, project_id, owner_id, user_id, "linked", "Link added")
 	return {"success": True}
 
 def do_link_delete(project_id, project, params, user_id):
@@ -5602,8 +5814,11 @@ def do_link_delete(project_id, project, params, user_id):
 	mochi.db.execute("delete from links where source=? and target=? and linktype=?", object_id, target_id, linktype)
 	broadcast_event(project_id, "link/delete", {
 		"project": project_id, "source": object_id,
-		"target": target_id, "linktype": linktype
+		"target": target_id, "linktype": linktype, "actor": user_id
 	})
+	# Notify owner if watching
+	owner_id = get_owner_identity(project_id)
+	notify_watchers(object_id, project_id, owner_id, user_id, "linked", "Link removed")
 	return {"success": True}
 
 # Attachment helper

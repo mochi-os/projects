@@ -1,5 +1,6 @@
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link } from "@tanstack/react-router";
+import { useQuery } from "@tanstack/react-query";
 import {
   Main,
   Card,
@@ -8,20 +9,36 @@ import {
   usePageTitle,
   Skeleton,
   PageHeader,
+  SubscribeDialog,
 } from "@mochi/common";
 import { FolderKanban, Plus } from "lucide-react";
 import { useProjectsStore } from "@/stores/projects-store";
 import { useSidebarContext } from "@/context/sidebar-context";
 import { formatDistanceToNow } from "date-fns";
 import { InlineProjectSearch } from "../components/inline-project-search";
+import projectsApi from "@/api/projects";
 
 export function ProjectsListPage() {
   const projects = useProjectsStore((state) => state.projects);
   const isLoading = useProjectsStore((state) => state.isLoading);
   const refresh = useProjectsStore((state) => state.refresh);
   const { openCreateDialog } = useSidebarContext();
+  const [subscribeOpen, setSubscribeOpen] = useState(false);
 
   usePageTitle("Projects");
+
+  // Notification subscription check
+  const { data: subscriptionData, refetch: refetchSubscription } = useQuery({
+    queryKey: ["subscription-check", "projects"],
+    queryFn: () => projectsApi.checkSubscription(),
+    staleTime: Infinity,
+  });
+
+  useEffect(() => {
+    if (!isLoading && projects.length > 0 && subscriptionData?.data?.exists === false) {
+      setSubscribeOpen(true);
+    }
+  }, [isLoading, projects.length, subscriptionData?.data?.exists]);
 
   useEffect(() => {
     void refresh();
@@ -110,6 +127,19 @@ export function ProjectsListPage() {
           </div>
         )}
       </Main>
+
+      <SubscribeDialog
+        open={subscribeOpen}
+        onOpenChange={setSubscribeOpen}
+        app="projects"
+        label="Project updates"
+        appBase="/projects"
+        subscriptions={[
+          { label: "Project updates", type: "update", defaultEnabled: true },
+          { label: "Assignments", type: "assignment", defaultEnabled: true },
+        ]}
+        onResult={() => refetchSubscription()}
+      />
     </>
   );
 }

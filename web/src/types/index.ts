@@ -161,6 +161,7 @@ export interface SortState {
 export interface ObjectListResponse {
   data: {
     objects: ProjectObject[];
+    watched?: string[];
   };
 }
 

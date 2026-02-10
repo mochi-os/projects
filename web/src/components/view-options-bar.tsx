@@ -3,6 +3,7 @@
 
 import { useEffect, useRef } from "react";
 import {
+  Button,
   Input,
   Select,
   SelectContent,
@@ -12,7 +13,7 @@ import {
   SortDirectionButton,
   cn,
 } from "@mochi/common";
-import { LayoutGrid, ListTree } from "lucide-react";
+import { Eye, LayoutGrid, ListTree } from "lucide-react";
 import type { ProjectDetails, ProjectView, SortState } from "@/types";
 import type { FilterState } from "@/features/views/components/filter-bar";
 
@@ -89,6 +90,17 @@ export function ViewOptionsBar({
         onChange={(e) => onFilterChange({ ...filters, search: e.target.value })}
         className="h-7 text-xs w-[200px]"
       />
+
+      {/* Watched filter */}
+      <Button
+        variant={filters.watched ? "secondary" : "ghost"}
+        size="sm"
+        className="h-7 px-2 text-xs"
+        onClick={() => onFilterChange({ ...filters, watched: !filters.watched })}
+      >
+        <Eye className="size-3.5 mr-1" />
+        Watched
+      </Button>
 
       {/* Sort (only for list view) */}
       {showSort && (

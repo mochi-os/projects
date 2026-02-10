@@ -1006,6 +1006,13 @@ const projectsApi = {
     });
   },
 
+  // ============= Notification Methods =============
+
+  // Check if notification subscriptions exist
+  checkSubscription: async (): Promise<{ data: { exists: boolean } }> => {
+    return projectsRequest.get(endpoints.projects.notificationsCheck);
+  },
+
   // Search users (for adding access rules)
   searchUsers: async (
     query: string,

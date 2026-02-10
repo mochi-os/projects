@@ -19,9 +19,7 @@ import type { FilterState } from "@/features/views/components/filter-bar";
 
 const SORT_OPTIONS = [
   { id: "rank", label: "Manual" },
-  { id: "title", label: "Title" },
-  { id: "status", label: "Status" },
-  { id: "priority", label: "Priority" },
+  { id: "number", label: "Number" },
   { id: "created", label: "Created" },
   { id: "updated", label: "Updated" },
 ] as const;

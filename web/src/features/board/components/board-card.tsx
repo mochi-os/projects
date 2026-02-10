@@ -1,7 +1,7 @@
 // Mochi Projects: Board card component
 // Copyright Alistair Cunningham 2026
 
-import { cn, Tooltip, TooltipContent, TooltipTrigger } from "@mochi/common";
+import { Card, cn, Tooltip, TooltipContent, TooltipTrigger } from "@mochi/common";
 import { Check, CheckSquare, CornerLeftUp } from "lucide-react";
 import type { ProjectObject, ProjectField, FieldOption, ChecklistItem, ProjectClass } from "@/types";
 
@@ -45,21 +45,22 @@ export function BoardCard({
   draggable: canDrag = true,
   onClick,
 }: BoardCardProps) {
-  // Use first field as the card header, fallback to prefix-number
-  const headerField = fields[0];
+  // Use field with 'title' flag as the card header
+  const headerField = fields.find((f) => f.flags?.split(",").includes("title"));
   const rawTitle = headerField
     ? (object.values[headerField.id] || `${prefix}-${object.number}`)
     : `${prefix}-${object.number}`;
   const title = truncate(rawTitle, 160);
 
   // Body fields: exclude the header field, statusField, and rowField
-  const cardFields = fields.slice(1).filter(
-    (f) => f.id !== statusField && f.id !== rowField,
+  const cardFields = fields.filter(
+    (f) => f !== headerField && f.id !== statusField && f.id !== rowField,
   );
 
-  // Get border color from the first field with a coloured option
+  // Get border color from the first field with the 'border' flag
   let borderColor: string | undefined;
-  for (const f of fields) {
+  const borderFields = fields.filter((f) => f.flags?.split(",").includes("border"));
+  for (const f of borderFields) {
     const value = object.values[f.id];
     if (!value) continue;
     const fieldOptions = options[f.id];
@@ -192,9 +193,9 @@ export function BoardCard({
   });
 
   return (
-    <div
+    <Card
       className={cn(
-        "group relative flex flex-col gap-2 rounded-[10px] border bg-card p-3 shadow-sm transition-all hover:shadow-md",
+        "group relative p-3 py-3 transition-all hover:shadow-md",
         "cursor-pointer active:scale-[0.99]",
       )}
       style={borderColor ? { borderColor: borderColor } : undefined}
@@ -247,6 +248,6 @@ export function BoardCard({
         </>
       )}
 
-    </div>
+    </Card>
   );
 }

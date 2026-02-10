@@ -2,7 +2,7 @@
 // Copyright Alistair Cunningham 2026
 
 import { useState } from "react";
-import { cn } from "@mochi/common";
+import { Card, cn } from "@mochi/common";
 import { ChevronDown, ChevronRight } from "lucide-react";
 import type {
   ProjectClass,
@@ -156,7 +156,7 @@ export function DesignPreview({
 
   const renderCard = (card: (typeof SAMPLE_CARDS)[0]) => {
     return (
-      <div className="p-3 bg-background border rounded-lg shadow-sm space-y-2">
+      <Card className="p-3 py-3">
         <div className="text-xs text-muted-foreground font-mono">
           proj-{card.number}
         </div>
@@ -176,7 +176,7 @@ export function DesignPreview({
 
           return <div key={fieldId}>{renderFieldValue(field, value)}</div>;
         })}
-      </div>
+      </Card>
     );
   };
 
@@ -229,7 +229,7 @@ export function DesignPreview({
     const card = SAMPLE_CARDS[0];
     return (
       <div className="max-w-md mx-auto">
-        <div className="bg-background border rounded-lg p-4 space-y-4">
+        <Card className="p-4 py-4 gap-0 space-y-4">
           <div className="flex items-center justify-between">
             <span className="text-sm font-mono text-muted-foreground">
               proj-{card.number}
@@ -241,7 +241,7 @@ export function DesignPreview({
               <div key={field.id} className="space-y-1">
                 <label className="text-xs font-medium text-muted-foreground">
                   {field.name}
-                  {field.required === 1 && (
+                  {field.flags?.split(",").includes("required") && (
                     <span className="text-destructive ml-0.5">*</span>
                   )}
                 </label>
@@ -253,7 +253,7 @@ export function DesignPreview({
               </div>
             );
           })}
-        </div>
+        </Card>
       </div>
     );
   };

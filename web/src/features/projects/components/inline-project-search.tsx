@@ -106,7 +106,7 @@ export function InlineProjectSearch({
       )}
 
       {!isLoading && results.length > 0 && (
-        <div className="divide-border divide-y rounded-lg border">
+        <div className="divide-border divide-y rounded-[10px] border">
           {results
             .filter(
               (project) =>

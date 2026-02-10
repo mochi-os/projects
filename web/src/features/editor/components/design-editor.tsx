@@ -77,10 +77,17 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
     return Array.from(fieldsMap.values());
   }, [project.fields]);
 
+  // Keep editingField in sync with refetched project data
+  const resolvedEditingField = useMemo(() => {
+    if (!editingField || !selectedClassId) return editingField;
+    const fields = project.fields[selectedClassId] || [];
+    return fields.find((f) => f.id === editingField.id) || editingField;
+  }, [editingField, selectedClassId, project.fields]);
+
   // Get options for editing field
   const editingFieldOptions =
-    selectedClassId && editingField
-      ? project.options[selectedClassId]?.[editingField.id] || []
+    selectedClassId && resolvedEditingField
+      ? project.options[selectedClassId]?.[resolvedEditingField.id] || []
       : [];
 
   // Invalidate project data
@@ -151,7 +158,7 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
     }) =>
       projectsApi.updateField(projectId, classId, fieldId, {
         name: updates.name,
-        required: updates.required?.toString(),
+        flags: updates.flags,
         rows: updates.rows?.toString(),
       }),
     onSuccess: invalidateProject,
@@ -457,9 +464,6 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
                       className="flex-1 text-left"
                     >
                       <span className="font-medium">{view.name}</span>
-                      <span className="text-muted-foreground ml-2 capitalize">
-                        ({view.viewtype})
-                      </span>
                     </button>
                   </div>
                   {viewDropIndicator?.viewId === view.id && viewDropIndicator.position === "after" && (
@@ -492,11 +496,7 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
                     setSelectedClassId(cls.id);
                     setEditClassOpen(true);
                   }}
-                  className={`w-full text-left px-3 py-2 text-sm rounded-md transition-colors ${
-                    selectedClassId === cls.id
-                      ? "bg-muted"
-                      : "hover:bg-muted"
-                  }`}
+                  className="w-full text-left px-3 py-2 text-sm rounded-md transition-colors hover:bg-muted"
                 >
                   {cls.name}
                 </button>
@@ -648,32 +648,32 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
       <EditFieldDialog
         open={editFieldOpen}
         onOpenChange={setEditFieldOpen}
-        field={editingField}
+        field={resolvedEditingField}
         options={editingFieldOptions}
         onUpdate={(updates) => {
-          if (selectedClassId && editingField) {
+          if (selectedClassId && resolvedEditingField) {
             updateFieldMutation.mutate({
               classId: selectedClassId,
-              fieldId: editingField.id,
+              fieldId: resolvedEditingField.id,
               updates,
             });
           }
         }}
         onDelete={() => {
-          if (selectedClassId && editingField) {
+          if (selectedClassId && resolvedEditingField) {
             deleteFieldMutation.mutate({
               classId: selectedClassId,
-              fieldId: editingField.id,
+              fieldId: resolvedEditingField.id,
             });
           }
         }}
         onAddOption={() => setAddOptionOpen(true)}
         onEditOption={handleEditOption}
         onDeleteOption={(optionId) => {
-          if (selectedClassId && editingField) {
+          if (selectedClassId && resolvedEditingField) {
             deleteOptionMutation.mutate({
               classId: selectedClassId,
-              fieldId: editingField.id,
+              fieldId: resolvedEditingField.id,
               optionId,
             });
           }

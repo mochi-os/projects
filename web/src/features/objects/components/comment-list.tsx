@@ -4,7 +4,7 @@
 import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Loader2, Send, Trash2, Pencil } from "lucide-react";
-import { Button, Textarea, ConfirmDialog } from "@mochi/common";
+import { Button, Card, Textarea, ConfirmDialog } from "@mochi/common";
 import projectsApi from "@/api/projects";
 import type { Comment } from "@/types";
 
@@ -139,7 +139,7 @@ export function CommentList({ projectId, objectId, readOnly }: CommentListProps)
       ) : (
         <div className="space-y-3">
           {comments.map((comment) => (
-            <div key={comment.id} className="border rounded-lg p-3">
+            <Card key={comment.id} className="p-3 py-3 gap-0 shadow-none">
               <div className="flex items-center justify-between mb-2">
                 <div className="font-medium text-sm">{comment.name}</div>
                 {!readOnly && (
@@ -200,7 +200,7 @@ export function CommentList({ projectId, objectId, readOnly }: CommentListProps)
                   </div>
                 </>
               )}
-            </div>
+            </Card>
           ))}
         </div>
       )}

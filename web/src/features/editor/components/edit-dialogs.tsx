@@ -726,7 +726,7 @@ export function ClassSheet({
                       onDragOver={(e) => handleDragOver(e, field.id)}
                       onDragLeave={handleDragLeave}
                       onDrop={(e) => handleDrop(e, field.id)}
-                      className={`flex items-center gap-2 px-3 py-2 text-sm rounded-md hover:bg-muted transition-colors border cursor-grab ${
+                      className={`flex items-center gap-2 px-3 py-2 text-sm rounded-md hover:bg-muted transition-colors cursor-grab ${
                         draggedFieldId === field.id ? "opacity-50" : ""
                       }`}
                     >
@@ -735,19 +735,13 @@ export function ClassSheet({
                         <button
                           type="button"
                           onClick={() => onEditField(field as ProjectField)}
-                          className="flex-1 text-left hover:text-primary"
+                          className="flex-1 text-left"
                         >
-                          <span>{field.name}</span>
-                          <span className="text-muted-foreground ml-2 capitalize">
-                            ({field.fieldtype})
-                          </span>
+                          <span className="font-medium">{field.name || field.id}</span>
                         </button>
                       ) : (
-                        <span className="flex-1 text-left">
-                          <span>{field.name}</span>
-                          <span className="text-muted-foreground ml-2 capitalize">
-                            ({field.fieldtype})
-                          </span>
+                        <span className="flex-1 text-left font-medium">
+                          {field.name || field.id}
                         </span>
                       )}
                       {mode === "create" && field.id !== "title" && (
@@ -856,7 +850,7 @@ export function EditFieldDialog({
       setName(field.name);
       setRows(field.rows || 1);
     }
-  }, [field]);
+  }, [field?.id]);
 
   if (!field) return null;
 
@@ -874,8 +868,16 @@ export function EditFieldDialog({
     }
   };
 
-  const handleRequiredChange = (checked: boolean) => {
-    onUpdate({ required: checked ? 1 : 0 });
+  const hasFlag = (flag: string) => {
+    return (field.flags || "").split(",").filter(Boolean).includes(flag);
+  };
+
+  const toggleFlag = (flag: string, checked: boolean) => {
+    const current = (field.flags || "").split(",").filter(Boolean);
+    const updated = checked
+      ? [...current, flag]
+      : current.filter((f) => f !== flag);
+    onUpdate({ flags: updated.join(",") } as Partial<typeof field>);
   };
 
   return (
@@ -907,7 +909,6 @@ export function EditFieldDialog({
               value={name}
               onChange={(e) => setName(e.target.value)}
               onBlur={handleNameBlur}
-              disabled={isSystemField}
             />
           </div>
 
@@ -934,16 +935,27 @@ export function EditFieldDialog({
             </div>
           )}
 
-          <label className="flex items-center gap-2 text-sm cursor-pointer">
-            <input
-              type="checkbox"
-              checked={field.required === 1}
-              onChange={(e) => handleRequiredChange(e.target.checked)}
-              className="rounded"
-              disabled={isSystemField}
-            />
-            Required
-          </label>
+          <div className="space-y-2">
+            <Label>Flags</Label>
+            <div className="space-y-1">
+              {[
+                { id: "required", label: "Required" },
+                { id: "title", label: "Title" },
+                { id: "border", label: "Border" },
+                { id: "sort", label: "Sort" },
+              ].map((flag) => (
+                <label key={flag.id} className="flex items-center gap-2 text-sm cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={hasFlag(flag.id)}
+                    onChange={(e) => toggleFlag(flag.id, e.target.checked)}
+                    className="rounded"
+                  />
+                  {flag.label}
+                </label>
+              ))}
+            </div>
+          </div>
 
           {field.fieldtype === "enumerated" && (
             <div className="space-y-2">

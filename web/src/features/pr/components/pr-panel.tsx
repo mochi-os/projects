@@ -4,7 +4,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { ArrowRight, GitPullRequest, Plus, Trash2, ChevronDown, ChevronRight } from "lucide-react";
-import { Button, ConfirmDialog, Input, Textarea, cn } from "@mochi/common";
+import { Button, Card, ConfirmDialog, Input, Textarea, cn } from "@mochi/common";
 import projectsApi from "@/api/projects";
 import type { PrData } from "@/types";
 import { RepositorySelect } from "./repository-select";
@@ -228,7 +228,7 @@ function PrItem({
       : "border-border";
 
   return (
-    <div ref={ref} className={cn("border-2 rounded-[10px] overflow-hidden", borderColor)}>
+    <Card ref={ref} className={cn("overflow-hidden border-2 p-0 py-0 gap-0 shadow-none", borderColor)}>
       {/* Header row */}
       <button
         type="button"
@@ -405,6 +405,6 @@ function PrItem({
           )}
         </div>
       )}
-    </div>
+    </Card>
   );
 }

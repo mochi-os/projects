@@ -3,7 +3,7 @@ import { useAuthStore } from "@mochi/common";
 import { ProjectsLayout } from "@/components/layout/projects-layout";
 
 export const Route = createFileRoute("/_authenticated")({
-  beforeLoad: () => {
+  beforeLoad: async () => {
     // Initialize auth state from cookies if available
     const store = useAuthStore.getState();
 

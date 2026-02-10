@@ -43,11 +43,19 @@ export function BoardCard({
     (f) => f.id !== "title" && f.id !== "status" && f.id !== "priority",
   );
 
-  // Get priority color for left border strip
-  const priorityValue = object.values.priority;
-  const priorityOptions = options.priority || [];
-  const priorityOption = priorityOptions.find((o) => o.id === priorityValue);
-  const priorityColor = priorityOption?.colour;
+  // Get border color from the first field with a coloured option
+  let borderColor: string | undefined;
+  for (const f of fields) {
+    const value = object.values[f.id];
+    if (!value) continue;
+    const fieldOptions = options[f.id];
+    if (!fieldOptions) continue;
+    const match = fieldOptions.find((o) => o.id === value && o.colour);
+    if (match) {
+      borderColor = match.colour;
+      break;
+    }
+  }
 
   // Get parent info
   const parentObject = object.parent && objectMap ? objectMap[object.parent] : null;
@@ -70,9 +78,10 @@ export function BoardCard({
   return (
     <div
       className={cn(
-        "group relative flex flex-col gap-2 rounded-lg border bg-card p-3 shadow-sm transition-all hover:shadow-md",
+        "group relative flex flex-col gap-2 rounded-[10px] border bg-card p-3 shadow-sm transition-all hover:shadow-md",
         "cursor-pointer active:scale-[0.99]",
       )}
+      style={borderColor ? { borderColor: borderColor } : undefined}
       onClick={onClick}
       draggable={canDrag}
       onDragStart={canDrag ? (e) => {
@@ -80,29 +89,21 @@ export function BoardCard({
         e.dataTransfer.effectAllowed = "move";
       } : undefined}
     >
-      {/* Priority Indicator Strip */}
-      {priorityColor && (
-        <div
-          className="absolute left-0 top-3 bottom-3 w-1 rounded-r-full"
-          style={{ backgroundColor: priorityColor }}
-        />
-      )}
-
       {/* Header / Title */}
-      <div className={cn("font-medium text-sm leading-tight text-card-foreground", priorityColor && "pl-2")}>
+      <div className="font-medium text-sm leading-tight text-card-foreground">
         {title}
       </div>
 
       {/* Description Preview */}
       {object.values.description && (
-        <div className={cn("text-xs text-muted-foreground line-clamp-3", priorityColor && "pl-2")}>
+        <div className="text-xs text-muted-foreground line-clamp-3">
           {object.values.description}
         </div>
       )}
 
       {/* Tags / Badges */}
       {cardFields.length > 0 && (
-        <div className={cn("flex flex-wrap gap-1.5", priorityColor && "pl-2")}>
+        <div className="flex flex-wrap gap-1.5">
           {cardFields.map((field) => {
             const value = object.values[field.id];
             if (!value) return null;
@@ -114,13 +115,11 @@ export function BoardCard({
               return (
                 <span
                   key={field.id}
-                  className="inline-flex items-center rounded-md px-1.5 py-0.5 text-[10px] font-medium ring-1 ring-inset"
-                  style={{
-                    backgroundColor: option.colour ? `${option.colour}10` : "var(--muted)",
-                    color: option.colour || "var(--muted-foreground)",
-                    boxShadow: option.colour ? `inset 0 0 0 1px ${option.colour}30` : undefined,
-                  }}
+                  className="inline-flex items-center gap-1 text-[10px] text-muted-foreground"
                 >
+                  {option.colour && (
+                    <span className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: option.colour }} />
+                  )}
                   {option.name}
                 </span>
               );
@@ -160,7 +159,7 @@ export function BoardCard({
       {(parentObject || children.length > 0) && (
         <>
           <hr className="border-dashed" />
-          <div className={cn("flex items-center gap-2 flex-wrap", priorityColor && "pl-2")}>
+          <div className="flex items-center gap-2 flex-wrap">
             {parentObject && (
               <Tooltip>
                 <TooltipTrigger asChild>

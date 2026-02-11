@@ -44,35 +44,13 @@ export function InlineProjectSearch({
       return;
     }
 
-    const isUrl =
-      debouncedQuery.startsWith("http://") ||
-      debouncedQuery.startsWith("https://");
-
     const search = async () => {
       setIsLoading(true);
       try {
-        if (isUrl) {
-          // Use probe for URL inputs to resolve remote projects
-          const response = await projectsApi.probe(debouncedQuery);
-          const entry = response.data;
-          setResults(
-            entry
-              ? [
-                  {
-                    id: entry.id,
-                    name: entry.name,
-                    fingerprint: entry.fingerprint,
-                    location: entry.server,
-                  },
-                ]
-              : [],
-          );
-        } else {
-          const response = await projectsApi.search({
-            search: debouncedQuery,
-          });
-          setResults(response.data ?? []);
-        }
+        const response = await projectsApi.search({
+          search: debouncedQuery,
+        });
+        setResults(response.data ?? []);
       } catch {
         setResults([]);
       } finally {

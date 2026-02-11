@@ -3769,8 +3769,21 @@ def action_search(a):
 							break
 					if not found:
 						results.append(entry)
+				elif not results:
+					# Not in directory — probe remote server via P2P
+					peer = mochi.remote.peer(server)
+					if peer:
+						response = mochi.remote.request(project_id, "projects", "info", {"project": project_id}, peer)
+						if not response.get("error"):
+							results.append({
+								"id": response.get("id", project_id),
+								"name": response.get("name", ""),
+								"fingerprint": response.get("fingerprint", ""),
+								"class": "project",
+								"location": server,
+							})
 
-			# Try as fingerprint — check local directory
+			# Try as fingerprint — check local directory first, then probe remote
 			elif mochi.valid(project_id, "fingerprint"):
 				all_projects = mochi.directory.search("project", "", False)
 				for entry in all_projects:
@@ -3784,6 +3797,19 @@ def action_search(a):
 						if not found:
 							results.append(entry)
 						break
+				if not results:
+					# Not in directory — probe remote server via P2P
+					peer = mochi.remote.peer(server)
+					if peer:
+						response = mochi.remote.request(project_id, "projects", "info", {"project": project_id}, peer)
+						if not response.get("error"):
+							results.append({
+								"id": response.get("id", project_id),
+								"name": response.get("name", ""),
+								"fingerprint": response.get("fingerprint", ""),
+								"class": "project",
+								"location": server,
+							})
 
 	# Also search by name
 	name_results = mochi.directory.search("project", search, False)
@@ -3840,25 +3866,6 @@ def action_notifications_destinations(a):
 
 # Public endpoint: resolve a project fingerprint to basic info
 # Used by remote servers to resolve fingerprints during search
-def action_resolve_project(a):
-	project_id = a.input("project")
-	if not project_id:
-		a.error(404, "Project not found")
-		return
-
-	project = mochi.db.row("select id, name, description, prefix from projects where id=?", project_id)
-	if not project:
-		a.error(404, "Project not found")
-		return
-
-	return {"data": {
-		"id": project_id,
-		"name": project["name"],
-		"description": project["description"],
-		"fingerprint": mochi.entity.fingerprint(project_id),
-		"class": "project",
-	}}
-
 # Probe a remote project by URL without subscribing
 def action_probe(a):
 	if not a.user.identity.id:
@@ -3905,31 +3912,24 @@ def action_probe(a):
 		a.error(400, "Could not extract server from URL")
 		return
 
-	if not project_id:
-		a.error(400, "Could not extract project ID from URL")
-		return
-
-	if not mochi.valid(project_id, "entity") and not mochi.valid(project_id, "fingerprint"):
+	if not project_id or (not mochi.valid(project_id, "entity") and not mochi.valid(project_id, "fingerprint")):
 		a.error(400, "Could not extract valid project ID from URL")
 		return
 
-	# Use the remote server's public resolve endpoint (handles both entity IDs and fingerprints)
-	resolve_url = server + "/projects/" + project_id + "/-/resolve"
-	response = mochi.url.get(resolve_url, {}, {"Accept": "application/json"})
-	if not response or response["status"] != 200:
-		a.error(404, "Project not found on remote server")
+	peer = mochi.remote.peer(server)
+	if not peer:
+		a.error(502, "Unable to connect to server")
 		return
-	resolved = json.decode(response["body"])
-	data = resolved.get("data", {})
-	if not data or not data.get("id"):
-		a.error(404, "Project not found on remote server")
+	response = mochi.remote.request(project_id, "projects", "info", {"project": project_id}, peer)
+	if response.get("error"):
+		a.error(response.get("code", 404), response["error"])
 		return
 
 	return {"data": {
-		"id": data["id"],
-		"name": data.get("name", ""),
-		"description": data.get("description", ""),
-		"fingerprint": data.get("fingerprint", ""),
+		"id": response.get("id", project_id),
+		"name": response.get("name", ""),
+		"description": response.get("description", ""),
+		"fingerprint": response.get("fingerprint", ""),
 		"class": "project",
 		"server": server,
 		"remote": True

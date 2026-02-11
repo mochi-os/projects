@@ -506,7 +506,7 @@ export function ClassSheet({
   const [dropIndicator, setDropIndicator] = useState<{ fieldId: string; position: "before" | "after" } | null>(null);
 
   // Create mode state
-  const [pendingParents, setPendingParents] = useState<string[]>([]);
+  const [pendingParents, setPendingParents] = useState<string[]>([""]);
   const [pendingFields, setPendingFields] = useState<PendingField[]>([]);
   const [addFieldOpen, setAddFieldOpen] = useState(false);
   const [pullRequests, setPullRequests] = useState(false);
@@ -548,7 +548,6 @@ export function ClassSheet({
   };
 
   const currentHierarchy = mode === "create" ? pendingParents : (hierarchy || []);
-  const otherClasses = mode === "create" ? classes : classes.filter((c) => c.id !== cls!.id);
   const displayFields = mode === "create" ? pendingFields : (fields || []);
 
   // Drag and drop for fields
@@ -667,29 +666,34 @@ export function ClassSheet({
             </div>
           </div>
 
-          {otherClasses.length > 0 && (
-            <div className="space-y-2">
-              <Label>Can be child of</Label>
-              <div className="pl-4 space-y-2">
-                <div className="space-y-1">
-                  {[...otherClasses].sort((a, b) => a.name.localeCompare(b.name)).map((c) => (
-                    <label
-                      key={c.id}
-                      className="flex items-center gap-2 text-sm cursor-pointer"
-                    >
-                      <input
-                        type="checkbox"
-                        checked={currentHierarchy.includes(c.id)}
-                        onChange={() => toggleParent(c.id)}
-                        className="rounded"
-                      />
-                      {c.name}
-                    </label>
-                  ))}
-                </div>
-              </div>
+          <div className="space-y-2">
+            <Label>Can be child of</Label>
+            <div className="pl-4 space-y-1">
+              <label className="flex items-center gap-2 text-sm cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={currentHierarchy.includes("")}
+                  onChange={() => toggleParent("")}
+                  className="rounded"
+                />
+                Top level
+              </label>
+              {[...classes].sort((a, b) => a.name.localeCompare(b.name)).map((c) => (
+                <label
+                  key={c.id}
+                  className="flex items-center gap-2 text-sm cursor-pointer"
+                >
+                  <input
+                    type="checkbox"
+                    checked={currentHierarchy.includes(c.id)}
+                    onChange={() => toggleParent(c.id)}
+                    className="rounded"
+                  />
+                  {c.name}{c.id === cls?.id ? " (itself)" : ""}
+                </label>
+              ))}
             </div>
-          )}
+          </div>
 
           <div className="space-y-2">
             <Label>Pull requests</Label>

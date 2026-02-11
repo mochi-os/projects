@@ -961,6 +961,15 @@ def would_create_cycle(object_id, new_parent_id):
 		current = parent_row["parent"] if parent_row else ""
 	return False
 
+def get_all_descendants(object_id):
+	"""Get all descendant object IDs recursively."""
+	result = []
+	children = mochi.db.rows("select id from objects where parent=?", object_id)
+	for child in (children or []):
+		result.append(child["id"])
+		result.extend(get_all_descendants(child["id"]))
+	return result
+
 def delete_object_cascade(project_id, object_id, actor=""):
 	"""Delete an object and all its children recursively."""
 	# First, recursively delete all children
@@ -1297,6 +1306,23 @@ def action_object_update(a):
 			mochi.db.execute("update objects set parent=?, updated=? where id=?", parent, now, object_id)
 			log_activity(object_id, a.user.identity.id, "moved", "parent", old_parent, parent)
 
+			# Sync child's column/row values to match new parent
+			if parent:
+				parent_values = mochi.db.rows('select field, value from "values" where object=?', parent) or []
+				parent_val_map = {v["field"]: v["value"] for v in parent_values}
+				views = mochi.db.rows("select columns, rows from views where project=?", project_id) or []
+				sync_fields = {}
+				for view in views:
+					if view["columns"]:
+						sync_fields[view["columns"]] = True
+					if view["rows"]:
+						sync_fields[view["rows"]] = True
+				all_ids = [object_id] + get_all_descendants(object_id)
+				for sync_id in all_ids:
+					for field_id in sync_fields:
+						parent_val = parent_val_map.get(field_id, "")
+						mochi.db.execute('replace into "values" (object, field, value) values (?, ?, ?)', sync_id, field_id, parent_val)
+
 	# Update class if provided
 	new_class = a.input("class")
 	if new_class and new_class != row["class"]:
@@ -1392,6 +1418,9 @@ def action_object_move(a):
 		if rf:
 			params["row_field"] = rf
 			params["row_value"] = a.input("row_value")
+		sp = a.input("scope_parent")
+		if sp:
+			params["scope_parent"] = sp
 		result = forward_to_owner(a, project_id, "object/move", params)
 		if result and object_id:
 			now = mochi.time.now()
@@ -1439,21 +1468,30 @@ def action_object_move(a):
 		log_activity(object_id, a.user.identity.id, "updated", field, old_value, target_value)
 
 	# Handle rank change
+	scope_parent = a.input("scope_parent")
 	if new_rank != None:
 		new_rank = int(new_rank)
 		# Shift other objects to make room
 		if value_changed or new_rank != old_rank:
-			# Get all objects in the target column
-			objects_in_column = mochi.db.rows("""
-				select o.id, o.rank from objects o
-				left join "values" v on v.object = o.id and v.field=?
-				where o.project=? and coalesce(v.value, '')=? and o.id!=?
-				order by o.rank asc
-			""", field, project_id, target_value, object_id) or []
+			if scope_parent:
+				# Scope renumbering to siblings of the same parent
+				objects_in_scope = mochi.db.rows("""
+					select o.id, o.rank from objects o
+					where o.project=? and o.parent=? and o.id!=?
+					order by o.rank asc
+				""", project_id, scope_parent, object_id) or []
+			else:
+				# Get all objects in the target column
+				objects_in_scope = mochi.db.rows("""
+					select o.id, o.rank from objects o
+					left join "values" v on v.object = o.id and v.field=?
+					where o.project=? and coalesce(v.value, '')=? and o.id!=?
+					order by o.rank asc
+				""", field, project_id, target_value, object_id) or []
 
-			# Renumber all objects, inserting this one at the new position
+			# Renumber objects, inserting this one at the new position
 			rank = 1
-			for obj in objects_in_column:
+			for obj in objects_in_scope:
 				if rank == new_rank:
 					rank += 1  # Skip the position for our object
 				mochi.db.execute("update objects set rank=? where id=?", rank, obj["id"])
@@ -1484,6 +1522,17 @@ def action_object_move(a):
 			row_changed = True
 
 	mochi.db.execute("update objects set updated=? where id=?", mochi.time.now(), object_id)
+
+	# Cascade status/row changes to all descendants
+	if value_changed or row_changed:
+		descendants = get_all_descendants(object_id)
+		now = mochi.time.now()
+		for desc_id in descendants:
+			if value_changed:
+				mochi.db.execute('replace into "values" (object, field, value) values (?, ?, ?)', desc_id, field, target_value)
+			if row_changed:
+				mochi.db.execute('replace into "values" (object, field, value) values (?, ?, ?)', desc_id, row_field, row_value)
+			mochi.db.execute("update objects set updated=? where id=?", now, desc_id)
 
 	updated_values = {}
 	if value_changed:
@@ -5616,6 +5665,24 @@ def do_object_update(project_id, project, params, user_id):
 				return {"error": "Cannot set parent: hierarchy rules do not allow this relationship", "code": 400}
 			mochi.db.execute("update objects set parent=?, updated=? where id=?", parent, now, object_id)
 			log_activity(object_id, user_id, "moved", "parent", old_parent, parent)
+
+			# Sync child's column/row values to match new parent
+			if parent:
+				parent_values = mochi.db.rows('select field, value from "values" where object=?', parent) or []
+				parent_val_map = {v["field"]: v["value"] for v in parent_values}
+				views = mochi.db.rows("select columns, rows from views where project=?", project_id) or []
+				sync_fields = {}
+				for view in views:
+					if view["columns"]:
+						sync_fields[view["columns"]] = True
+					if view["rows"]:
+						sync_fields[view["rows"]] = True
+				all_ids = [object_id] + get_all_descendants(object_id)
+				for sync_id in all_ids:
+					for field_id in sync_fields:
+						parent_val = parent_val_map.get(field_id, "")
+						mochi.db.execute('replace into "values" (object, field, value) values (?, ?, ?)', sync_id, field_id, parent_val)
+
 	new_class = params.get("class")
 	if new_class and new_class != row["class"]:
 		class_row = mochi.db.row("select id from classes where project=? and id=?", project_id, new_class)
@@ -5665,17 +5732,25 @@ def do_object_move(project_id, project, params, user_id):
 	if value_changed:
 		mochi.db.execute("replace into \"values\" (object, field, value) values (?, ?, ?)", object_id, field, target_value)
 		log_activity(object_id, user_id, "updated", field, old_value, target_value)
+	scope_parent = params.get("scope_parent", "")
 	if new_rank != None:
 		new_rank = int(new_rank)
 		if value_changed or new_rank != old_rank:
-			objects_in_column = mochi.db.rows("""
-				select o.id, o.rank from objects o
-				left join "values" v on v.object = o.id and v.field=?
-				where o.project=? and coalesce(v.value, '')=? and o.id!=?
-				order by o.rank asc
-			""", field, project_id, target_value, object_id) or []
+			if scope_parent:
+				objects_in_scope = mochi.db.rows("""
+					select o.id, o.rank from objects o
+					where o.project=? and o.parent=? and o.id!=?
+					order by o.rank asc
+				""", project_id, scope_parent, object_id) or []
+			else:
+				objects_in_scope = mochi.db.rows("""
+					select o.id, o.rank from objects o
+					left join "values" v on v.object = o.id and v.field=?
+					where o.project=? and coalesce(v.value, '')=? and o.id!=?
+					order by o.rank asc
+				""", field, project_id, target_value, object_id) or []
 			rank = 1
-			for obj in objects_in_column:
+			for obj in objects_in_scope:
 				if rank == new_rank:
 					rank += 1
 				mochi.db.execute("update objects set rank=? where id=?", rank, obj["id"])
@@ -5700,6 +5775,18 @@ def do_object_move(project_id, project, params, user_id):
 			log_activity(object_id, user_id, "updated", row_field, old_row_value, row_value)
 			row_changed = True
 	mochi.db.execute("update objects set updated=? where id=?", mochi.time.now(), object_id)
+
+	# Cascade status/row changes to all descendants
+	if value_changed or row_changed:
+		descendants = get_all_descendants(object_id)
+		now = mochi.time.now()
+		for desc_id in descendants:
+			if value_changed:
+				mochi.db.execute('replace into "values" (object, field, value) values (?, ?, ?)', desc_id, field, target_value)
+			if row_changed:
+				mochi.db.execute('replace into "values" (object, field, value) values (?, ?, ?)', desc_id, row_field, row_value)
+			mochi.db.execute("update objects set updated=? where id=?", now, desc_id)
+
 	updated_values = {}
 	if value_changed:
 		updated_values[field] = target_value

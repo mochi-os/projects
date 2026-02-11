@@ -177,6 +177,17 @@ function ProjectPage() {
     return map;
   }, [peopleData]);
 
+  // Check if an object is a descendant of a given ancestor
+  const isDescendant = (obj: ProjectObject, ancestorId: string, allObjects: ProjectObject[]): boolean => {
+    let current = obj.parent;
+    while (current) {
+      if (current === ancestorId) return true;
+      const parent = allObjects.find((o) => o.id === current);
+      current = parent?.parent || "";
+    }
+    return false;
+  };
+
   // Move object mutation
   const moveMutation = useMutation({
     mutationFn: async ({
@@ -186,6 +197,7 @@ function ProjectPage() {
       rank,
       rowField: rf,
       rowValue,
+      scopeParent,
     }: {
       objectId: string;
       field: string;
@@ -193,6 +205,7 @@ function ProjectPage() {
       rank?: number;
       rowField?: string;
       rowValue?: string;
+      scopeParent?: string;
     }) => {
       return projectsApi.moveObject(params.projectId, objectId, {
         field,
@@ -200,9 +213,10 @@ function ProjectPage() {
         rank,
         row_field: rf,
         row_value: rowValue,
+        scope_parent: scopeParent,
       });
     },
-    onMutate: async ({ objectId, field, value, rank, rowField: rf, rowValue }) => {
+    onMutate: async ({ objectId, field, value, rank, rowField: rf, rowValue, scopeParent }) => {
       // Optimistically update the UI
       await queryClient.cancelQueries({
         queryKey: ["objects", params.projectId],
@@ -217,15 +231,45 @@ function ProjectPage() {
         ["objects", params.projectId],
         (old) => {
           if (!old) return old;
+
+          // Sibling reorder: renumber siblings sequentially
+          if (scopeParent && rank) {
+            const siblings = old.objects
+              .filter((o) => o.parent === scopeParent && o.id !== objectId)
+              .sort((a, b) => (a.rank || 0) - (b.rank || 0));
+            const movedObj = old.objects.find((o) => o.id === objectId);
+            if (movedObj) {
+              siblings.splice(rank - 1, 0, movedObj);
+              const rankMap: Record<string, number> = {};
+              siblings.forEach((s, i) => { rankMap[s.id] = i + 1; });
+              return {
+                ...old,
+                objects: old.objects.map((obj) =>
+                  rankMap[obj.id] !== undefined ? { ...obj, rank: rankMap[obj.id] } : obj,
+                ),
+              };
+            }
+          }
+
           return {
             ...old,
             objects: old.objects.map((obj) => {
-              if (obj.id !== objectId) return obj;
-              const updatedValues = { ...obj.values, [field]: value };
-              if (rf && rowValue !== undefined) {
-                updatedValues[rf] = rowValue;
+              if (obj.id === objectId) {
+                const updatedValues = { ...obj.values, [field]: value };
+                if (rf && rowValue !== undefined) {
+                  updatedValues[rf] = rowValue;
+                }
+                return { ...obj, rank: rank ?? obj.rank, values: updatedValues };
               }
-              return { ...obj, rank: rank ?? obj.rank, values: updatedValues };
+              // Cascade status/row changes to descendants
+              if (field && isDescendant(obj, objectId, old.objects)) {
+                const updatedValues = { ...obj.values, [field]: value };
+                if (rf && rowValue !== undefined) {
+                  updatedValues[rf] = rowValue;
+                }
+                return { ...obj, values: updatedValues };
+              }
+              return obj;
             }),
           };
         },
@@ -276,13 +320,20 @@ function ProjectPage() {
         ["objects", params.projectId],
         (old) => {
           if (!old) return old;
+          const newParent = parentId ? old.objects.find((o) => o.id === parentId) : null;
+          const sf = activeView?.columns || "";
+          const rf = activeView?.rows || "";
           return {
             ...old,
-            objects: old.objects.map((obj) =>
-              obj.id === objectId
-                ? { ...obj, parent: parentId || "" }
-                : obj,
-            ),
+            objects: old.objects.map((obj) => {
+              if (obj.id !== objectId) return obj;
+              const updated = { ...obj, parent: parentId || "" };
+              if (newParent && sf) {
+                updated.values = { ...updated.values, [sf]: newParent.values[sf] || "" };
+                if (rf) updated.values[rf] = newParent.values[rf] || "";
+              }
+              return updated;
+            }),
           };
         },
       );
@@ -526,7 +577,7 @@ function ProjectPage() {
     setCreateDialogOpen(true);
   };
 
-  const handleMoveObject = (objectId: string, newValue: string, newRank?: number, newRow?: string) => {
+  const handleMoveObject = (objectId: string, newValue: string, newRank?: number, newRow?: string, scopeParent?: string) => {
     moveMutation.mutate({
       objectId,
       field: columnField,
@@ -534,6 +585,7 @@ function ProjectPage() {
       rank: newRank,
       rowField: newRow !== undefined ? rowField : undefined,
       rowValue: newRow,
+      scopeParent,
     });
   };
 
@@ -746,6 +798,7 @@ function ProjectPage() {
                 onCardClick={handleCardClick}
                 onCreateClick={canWrite(access) ? handleCreateClick : undefined}
                 onMoveObject={canWrite(access) ? handleMoveObject : undefined}
+                onReparentObject={canWrite(access) ? handleReparent : undefined}
                 onRenameColumn={canDesign(access) ? handleRenameColumn : undefined}
                 onDeleteColumn={canDesign(access) ? handleDeleteColumn : undefined}
                 isReordering={isReorderingColumns}

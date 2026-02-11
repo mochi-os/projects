@@ -6,6 +6,16 @@ import { cn } from "@mochi/common";
 import { BoardColumn, type BoardColumnRow } from "./board-column";
 import type { ProjectObject, ProjectDetails, FieldOption, SortState } from "@/types";
 
+// Check if objectId is a descendant of ancestorId
+function isDescendantOf(objectId: string, ancestorId: string, objectMap: Record<string, ProjectObject>): boolean {
+  let current = objectMap[objectId]?.parent;
+  while (current) {
+    if (current === ancestorId) return true;
+    current = objectMap[current]?.parent || "";
+  }
+  return false;
+}
+
 interface BoardContainerProps {
   project: ProjectDetails;
   objects: ProjectObject[];
@@ -16,7 +26,8 @@ interface BoardContainerProps {
   peopleMap?: Record<string, string>;
   onCardClick?: (object: ProjectObject) => void;
   onCreateClick?: (statusId: string, rowId?: string) => void;
-  onMoveObject?: (objectId: string, newStatus: string, newRank?: number, newRow?: string) => void;
+  onMoveObject?: (objectId: string, newStatus: string, newRank?: number, newRow?: string, scopeParent?: string) => void;
+  onReparentObject?: (objectId: string, newParentId: string | null) => void;
   onRenameColumn?: (classId: string, fieldId: string, optionId: string, newName: string) => Promise<void>;
   onDeleteColumn?: (classId: string, fieldId: string, optionId: string) => Promise<void>;
   isReordering?: boolean;
@@ -69,6 +80,7 @@ export function BoardContainer({
   onCardClick,
   onCreateClick,
   onMoveObject,
+  onReparentObject,
   onRenameColumn,
   onDeleteColumn,
   isReordering,
@@ -99,6 +111,21 @@ export function BoardContainer({
     }
     return map;
   }, [objects]);
+
+  // Build children-by-parent map for nested card rendering
+  const childrenByParent = useMemo(() => {
+    const map: Record<string, ProjectObject[]> = {};
+    for (const obj of objects) {
+      if (obj.parent && objectMap[obj.parent]) {
+        if (!map[obj.parent]) map[obj.parent] = [];
+        map[obj.parent].push(obj);
+      }
+    }
+    for (const key of Object.keys(map)) {
+      map[key] = sortObjects(map[key], sort);
+    }
+    return map;
+  }, [objects, objectMap, sort]);
 
   // Get status options for columns
   const statusOptions = useMemo(() => {
@@ -150,7 +177,7 @@ export function BoardContainer({
   // Columns to render (use reordered if in reorder mode)
   const columnsToRender = isReordering ? reorderedColumns : statusOptions;
 
-  // Group objects by status (flat mode) and sort
+  // Group top-level objects by status (flat mode) and sort
   const objectsByStatus = useMemo(() => {
     const grouped: Record<string, ProjectObject[]> = {};
 
@@ -162,8 +189,9 @@ export function BoardContainer({
     // Also add a column for items without status
     grouped[""] = [];
 
-    // Group objects
+    // Group objects — skip nested children (they render inside parent cards)
     objects.forEach((obj) => {
+      if (obj.parent && objectMap[obj.parent]) return;
       const status = obj.values[statusField] || "";
       if (grouped[status]) {
         grouped[status].push(obj);
@@ -178,9 +206,9 @@ export function BoardContainer({
     });
 
     return grouped;
-  }, [objects, statusOptions, statusField, sort]);
+  }, [objects, objectMap, statusOptions, statusField, sort]);
 
-  // Group objects by row then column (swimlane mode)
+  // Group top-level objects by row then column (swimlane mode)
   const objectsByRowAndStatus = useMemo(() => {
     if (!hasRows) return {};
 
@@ -201,8 +229,9 @@ export function BoardContainer({
     }
     grouped[""][""] = [];
 
-    // Group objects
+    // Group objects — skip nested children
     objects.forEach((obj) => {
+      if (obj.parent && objectMap[obj.parent]) return;
       const status = obj.values[statusField] || "";
       const row = obj.values[rowField!] || "";
 
@@ -220,10 +249,63 @@ export function BoardContainer({
     });
 
     return grouped;
-  }, [objects, statusOptions, rowOptions, statusField, rowField, hasRows, sort]);
+  }, [objects, objectMap, statusOptions, rowOptions, statusField, rowField, hasRows, sort]);
 
-  const handleDrop = onMoveObject ? (objectId: string, columnId: string, newRank?: number, rowId?: string) => {
-    onMoveObject(objectId, columnId, newRank, rowId);
+  // Handle drop events — distinguishes between-cards, drop-on-card, and sibling reorder
+  const handleDrop = (onMoveObject || onReparentObject) ? (
+    objectId: string, columnId: string, newRank?: number, rowId?: string, dropOnCardId?: string, reorderParentId?: string, reorderRank?: number
+  ) => {
+    const draggedObj = objectMap[objectId];
+    if (!draggedObj) return;
+
+    // Reorder child among siblings
+    if (reorderParentId && reorderRank !== undefined) {
+      if (draggedObj.parent === reorderParentId) {
+        // Already a sibling — just reorder
+        onMoveObject?.(objectId, columnId, reorderRank, rowId, reorderParentId);
+      } else if (onReparentObject) {
+        // Not a sibling — reparent into this parent
+        const parentObj = objectMap[reorderParentId];
+        if (!parentObj) return;
+        const allowedParents = project.hierarchy[draggedObj.class];
+        if (!allowedParents || !allowedParents.includes(parentObj.class)) return;
+        if (isDescendantOf(reorderParentId, objectId, objectMap)) return;
+        onReparentObject(objectId, reorderParentId);
+      }
+      return;
+    }
+
+    // Drop on a card → reparent
+    if (dropOnCardId && onReparentObject) {
+      // Prevent dropping on self or own descendants
+      if (dropOnCardId === objectId) return;
+      if (isDescendantOf(dropOnCardId, objectId, objectMap)) return;
+
+      // Check hierarchy rules allow this relationship
+      const targetObj = objectMap[dropOnCardId];
+      if (!targetObj) return;
+      const allowedParents = project.hierarchy[draggedObj.class];
+      if (!allowedParents || !allowedParents.includes(targetObj.class)) return;
+
+      onReparentObject(objectId, dropOnCardId);
+      return;
+    }
+
+    // Drop between cards
+    if (draggedObj.parent && objectMap[draggedObj.parent]) {
+      // Child dragged to a different column → promote to top-level first
+      const parentStatus = objectMap[draggedObj.parent]?.values[statusField] || "";
+      if (columnId !== parentStatus) {
+        // Promote: remove parent, then move to new column
+        onReparentObject?.(objectId, null);
+        // After promotion, move to new column
+        onMoveObject?.(objectId, columnId, newRank, rowId);
+        return;
+      }
+    }
+
+    // Normal move
+    onMoveObject?.(objectId, columnId, newRank, rowId);
   } : undefined;
 
   // Auto-scroll the nearest scrollable ancestor when dragging near its edges
@@ -413,6 +495,8 @@ export function BoardContainer({
           statusField={statusField}
           rowField={rowField}
           peopleMap={peopleMap}
+          childrenByParent={childrenByParent}
+          hierarchy={project.hierarchy}
           onCardClick={isReordering ? undefined : onCardClick}
           onCreateClick={isReordering ? undefined : () => onCreateClick?.(status.id)}
           onCreateInRow={isReordering ? undefined : onCreateInRow}
@@ -527,6 +611,8 @@ export function BoardContainer({
               statusField={statusField}
               rowField={rowField}
               peopleMap={peopleMap}
+              childrenByParent={childrenByParent}
+              hierarchy={project.hierarchy}
               onCardClick={onCardClick}
               onDrop={isReordering ? undefined : handleDrop}
               rows={swimlaneRows.map((row) => ({
@@ -564,6 +650,8 @@ export function BoardContainer({
           statusField={statusField}
           rowField={rowField}
           peopleMap={peopleMap}
+          childrenByParent={childrenByParent}
+          hierarchy={project.hierarchy}
           onCardClick={onCardClick}
           onDrop={handleDrop}
         />

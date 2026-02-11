@@ -1,8 +1,9 @@
 // Mochi Projects: Board card component
 // Copyright Alistair Cunningham 2026
 
-import { Card, cn, Tooltip, TooltipContent, TooltipTrigger } from "@mochi/common";
-import { Check, CheckSquare, CornerLeftUp } from "lucide-react";
+import { useState } from "react";
+import { Card, cn } from "@mochi/common";
+import { Check, CheckSquare, ChevronDown, ChevronRight } from "lucide-react";
 import type { ProjectObject, ProjectField, FieldOption, ChecklistItem } from "@/types";
 
 interface BoardCardProps {
@@ -18,7 +19,14 @@ interface BoardCardProps {
   peopleMap?: Record<string, string>;
   draggable?: boolean;
   onClick?: () => void;
+  children?: ProjectObject[];
+  childrenByParent?: Record<string, ProjectObject[]>;
+  depth?: number;
+  hierarchy?: Record<string, string[]>;
+  onChildClick?: (object: ProjectObject) => void;
 }
+
+const MAX_NESTING_DEPTH = 3;
 
 function truncate(text: string, maxLength: number): string {
   if (text.length <= maxLength) return text;
@@ -44,7 +52,16 @@ export function BoardCard({
   peopleMap,
   draggable: canDrag = true,
   onClick,
+  children: childObjects,
+  childrenByParent,
+  depth = 0,
+  hierarchy,
+  onChildClick,
 }: BoardCardProps) {
+  const [collapsed, setCollapsed] = useState(false);
+
+  const isNested = depth > 0;
+
   // Use field with 'title' flag as the card header
   const headerField = fields.find((f) => f.flags?.split(",").includes("title"));
   const rawTitle = headerField
@@ -72,20 +89,15 @@ export function BoardCard({
     }
   }
 
-  // Get parent info — use title-flagged field of parent, fallback to prefix-number
-  const parentObject = object.parent && objectMap ? objectMap[object.parent] : null;
-  const parentFields = parentObject
-    ? (allFields?.[parentObject.class] || fields)
-    : null;
-  const parentTitleField = parentFields?.find((f) => f.flags?.split(",").includes("title"));
-  const parentTitle = parentObject
-    ? ((parentTitleField ? parentObject.values[parentTitleField.id] : null) || `${prefix}-${parentObject.number}`)
-    : null;
-
-  // Compute child status counts for parent cards
-  const children = allObjects && statusField
-    ? allObjects.filter((o) => o.parent === object.id)
-    : [];
+  // Count total nested children beyond depth cap
+  const countDeepChildren = (objId: string): number => {
+    const kids = childrenByParent?.[objId] || [];
+    let count = kids.length;
+    for (const kid of kids) {
+      count += countDeepChildren(kid.id);
+    }
+    return count;
+  };
 
   // Render a field value inline on the card
   const renderField = (field: ProjectField) => {
@@ -180,74 +192,114 @@ export function BoardCard({
   };
 
   // Check if any body field has a value to render
-  const hasBodyFields = cardFields.some((f) => {
+  const hasBodyFields = !isNested && cardFields.some((f) => {
     const value = object.values[f.id];
     if (!value) return false;
     if (f.fieldtype === "checkbox" && value !== "true") return false;
     return true;
   });
 
+  const hasChildren = childObjects && childObjects.length > 0;
+  const atDepthCap = depth >= MAX_NESTING_DEPTH;
+
   return (
     <Card
       className={cn(
-        "group relative p-3 py-3 transition-all hover:shadow-md",
+        "group/card relative transition-all",
+        isNested ? "p-2 bg-background" : "p-3 py-3 hover:shadow-md",
         "cursor-pointer active:scale-[0.99]",
       )}
       style={borderColor ? { borderColor: borderColor } : undefined}
-      onClick={onClick}
+      onClick={(e) => {
+        e.stopPropagation();
+        onClick?.();
+      }}
       draggable={canDrag}
       onDragStart={canDrag ? (e) => {
+        e.stopPropagation();
         e.dataTransfer.setData("text/plain", object.id);
         e.dataTransfer.effectAllowed = "move";
       } : undefined}
     >
-      {/* Header row: title + parent/children indicators */}
-      <div className="flex items-baseline gap-2">
-        <div className="font-medium text-sm leading-tight text-card-foreground flex-1 min-w-0">
+      {/* Header row */}
+      <div className="flex items-baseline gap-1.5">
+        {hasChildren && (
+          <button
+            className="shrink-0 self-center p-0.5 -ml-1 rounded hover:bg-muted transition-colors text-muted-foreground"
+            onClick={(e) => {
+              e.stopPropagation();
+              setCollapsed(!collapsed);
+            }}
+          >
+            {collapsed ? (
+              <ChevronRight className="size-3.5" />
+            ) : (
+              <ChevronDown className="size-3.5" />
+            )}
+          </button>
+        )}
+        <div className={cn(
+          "font-medium leading-tight text-card-foreground flex-1 min-w-0",
+          isNested ? "text-xs" : "text-sm",
+        )}>
           {title}
         </div>
-        {parentObject && (
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <span className="text-muted-foreground shrink-0 self-center">
-                <CornerLeftUp className="size-3.5" />
-              </span>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>{parentTitle}</p>
-            </TooltipContent>
-          </Tooltip>
-        )}
-        {children.length > 0 && (
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <span className="text-xs text-muted-foreground shrink-0 tabular-nums">
-                {children.length}
-              </span>
-            </TooltipTrigger>
-            <TooltipContent>
-              <div className="flex flex-col gap-0.5">
-                {children.map((child) => {
-                  const childFields = allFields?.[child.class] || fields;
-                  const childTitleField = childFields.find((f) => f.flags?.split(",").includes("title"));
-                  const childTitle = childTitleField
-                    ? (child.values[childTitleField.id] || `${prefix}-${child.number}`)
-                    : `${prefix}-${child.number}`;
-                  return <p key={child.id}>{childTitle}</p>;
-                })}
-              </div>
-            </TooltipContent>
-          </Tooltip>
+        {hasChildren && collapsed && (
+          <span className="text-[10px] text-muted-foreground shrink-0 tabular-nums">
+            {childObjects.length}
+          </span>
         )}
       </div>
 
-      {/* Body fields */}
+      {/* Body fields (top-level only) */}
       {hasBodyFields && (
         <div className="flex flex-col gap-1">
           {cardFields.map((field) => renderField(field))}
         </div>
       )}
 
+      {/* Nested children */}
+      {hasChildren && !collapsed && (
+        <div className="mt-2 space-y-1.5 border-t pt-2">
+          {atDepthCap ? (
+            <span className="text-[10px] text-muted-foreground">
+              +{countDeepChildren(object.id)} nested
+            </span>
+          ) : (
+            childObjects.map((child) => {
+              const childFields = allFields?.[child.class] || fields;
+              const childOptions = allFields
+                ? Object.fromEntries(
+                    childFields.map((f) => [f.id, options[f.id] || []])
+                  )
+                : options;
+              return (
+                <div key={child.id} data-card-id={child.id} className="rounded-[10px] data-[drop-target]:ring-2 data-[drop-target]:ring-primary">
+                  <BoardCard
+                    object={child}
+                    fields={childFields}
+                    options={childOptions}
+                    prefix={prefix}
+                    objectMap={objectMap}
+                    allFields={allFields}
+                    allObjects={allObjects}
+                    statusField={statusField}
+                    rowField={rowField}
+                    peopleMap={peopleMap}
+                    draggable={canDrag}
+                    onClick={() => onChildClick?.(child)}
+                    children={childrenByParent?.[child.id] || []}
+                    childrenByParent={childrenByParent}
+                    depth={depth + 1}
+                    hierarchy={hierarchy}
+                    onChildClick={onChildClick}
+                  />
+                </div>
+              );
+            })
+          )}
+        </div>
+      )}
     </Card>
   );
 }

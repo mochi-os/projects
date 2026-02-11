@@ -44,10 +44,12 @@ interface BoardColumnProps {
   statusField?: string;
   rowField?: string;
   peopleMap?: Record<string, string>;
+  childrenByParent?: Record<string, ProjectObject[]>;
+  hierarchy?: Record<string, string[]>;
   onCardClick?: (object: ProjectObject) => void;
   onCreateClick?: () => void;
   onCreateInRow?: (rowId: string) => void;
-  onDrop?: (objectId: string, columnId: string, newRank?: number, rowId?: string) => void;
+  onDrop?: (objectId: string, columnId: string, newRank?: number, rowId?: string, dropOnCardId?: string, reorderParentId?: string, reorderRank?: number) => void;
   onRenameColumn?: (newName: string) => Promise<void>;
   onDeleteColumn?: () => Promise<void>;
   isReordering?: boolean;
@@ -70,6 +72,8 @@ export function BoardColumn({
   statusField,
   rowField,
   peopleMap,
+  childrenByParent,
+  hierarchy,
   onCardClick,
   onCreateClick,
   onCreateInRow,
@@ -100,17 +104,31 @@ export function BoardColumn({
   const isDragOverRef = useRef(false);
   const safetyTimeoutRef = useRef<ReturnType<typeof setTimeout>>(undefined);
   const indicatorRef = useRef<HTMLDivElement>(null);
+  const dropModeRef = useRef<"between" | "on">("between");
+  const dropTargetCardRef = useRef<string>("");
+  const childReorderRef = useRef<{ parentId: string; rank: number } | null>(null);
 
   useEffect(() => {
     return () => clearTimeout(safetyTimeoutRef.current);
   }, []);
 
+  // Clear all drop-target highlights from card elements
+  const clearDropTargetHighlights = useCallback(() => {
+    columnRef.current?.querySelectorAll("[data-drop-target]").forEach((el) => {
+      el.removeAttribute("data-drop-target");
+    });
+  }, []);
+
   const clearDragState = useCallback(() => {
     isDragOverRef.current = false;
+    dropModeRef.current = "between";
+    dropTargetCardRef.current = "";
+    childReorderRef.current = null;
     columnRef.current?.removeAttribute("data-drag-over");
     if (indicatorRef.current) indicatorRef.current.style.opacity = "0";
+    clearDropTargetHighlights();
     clearTimeout(safetyTimeoutRef.current);
-  }, []);
+  }, [clearDropTargetHighlights]);
 
   const handleDragEnter = useCallback((e: React.DragEvent) => {
     if (isReordering) return;
@@ -128,88 +146,160 @@ export function BoardColumn({
       columnRef.current?.setAttribute("data-drag-over", "");
     }
 
-    // Safety net: clear if dragover stops firing
+    // Safety net: clear if dragover stops firing (500ms allows for browsers
+    // that reduce dragover rate when the mouse is stationary)
     clearTimeout(safetyTimeoutRef.current);
-    safetyTimeoutRef.current = setTimeout(clearDragState, 150);
+    safetyTimeoutRef.current = setTimeout(clearDragState, 500);
 
     // Calculate drop position based on mouse Y
     const mouseY = e.clientY;
 
+    // Drop detection: find deepest card under cursor
+    let dropOnEl: Element | null = null;
+    let dropOnId = "";
+    let siblingReorder: { parentId: string; rank: number; container: Element; siblings: NodeListOf<Element>; index: number } | null = null;
+
+    const targetEl = (e.target as HTMLElement).closest?.("[data-card-id]");
+    if (targetEl) {
+      const parentCardEl = targetEl.parentElement?.closest("[data-card-id]");
+      const rect = targetEl.getBoundingClientRect();
+      // Larger edge zone for nested cards so sibling reordering is easier to target
+      const edgeZone = parentCardEl
+        ? Math.min(rect.height * 0.35, 20)
+        : Math.min(rect.height * 0.2, 12);
+      const distFromTop = mouseY - rect.top;
+      const distFromBottom = rect.bottom - mouseY;
+
+      if (distFromTop > edgeZone && distFromBottom > edgeZone) {
+        // Center zone → drop ON this card
+        dropOnEl = targetEl;
+        dropOnId = targetEl.getAttribute("data-card-id") || "";
+      } else {
+        if (parentCardEl) {
+          // Nested card edge → reorder among siblings
+          const parentId = parentCardEl.getAttribute("data-card-id") || "";
+          const sibContainer = targetEl.parentElement!;
+          const siblings = sibContainer.querySelectorAll(":scope > [data-card-id]");
+          let sibIndex = siblings.length;
+          for (let i = 0; i < siblings.length; i++) {
+            const sibRect = siblings[i].getBoundingClientRect();
+            if (mouseY < sibRect.top + sibRect.height / 2) {
+              sibIndex = i;
+              break;
+            }
+          }
+          siblingReorder = { parentId, rank: sibIndex + 1, container: sibContainer, siblings, index: sibIndex };
+        }
+        // else: top-level card edge → falls through to between mode
+      }
+    }
+
+    // Drop index for top-level between mode
+    const calculateDropIndex = (cards: NodeListOf<Element>) => {
+      for (let i = 0; i < cards.length; i++) {
+        const cardRect = cards[i].getBoundingClientRect();
+        if (mouseY < cardRect.top + cardRect.height / 2) {
+          return i;
+        }
+      }
+      return cards.length;
+    };
+
     if (rowsRef.current && columnRef.current) {
-      // Swimlane mode: find which row section and position within it
       const sections = columnRef.current.querySelectorAll("[data-row-id]");
       for (const section of sections) {
         const rect = section.getBoundingClientRect();
         if (mouseY >= rect.top && mouseY <= rect.bottom) {
           dropRowRef.current = section.getAttribute("data-row-id") || "";
-          const cards = section.querySelectorAll("[data-card-id]");
-          let newDropIndex = cards.length;
-          for (let i = 0; i < cards.length; i++) {
-            const cardRect = cards[i].getBoundingClientRect();
-            if (mouseY < cardRect.top + cardRect.height / 2) {
-              newDropIndex = i;
-              break;
-            }
-          }
-          dropIndexRef.current = newDropIndex;
+          const cards = section.querySelectorAll(":scope > [data-card-id]");
+          dropIndexRef.current = calculateDropIndex(cards);
           break;
         }
       }
     } else if (cardsContainerRef.current) {
-      // Flat mode
-      const cards = cardsContainerRef.current.querySelectorAll("[data-card-id]");
-      let newDropIndex = cards.length;
-      for (let i = 0; i < cards.length; i++) {
-        const rect = cards[i].getBoundingClientRect();
-        if (mouseY < rect.top + rect.height / 2) {
-          newDropIndex = i;
-          break;
-        }
-      }
-      dropIndexRef.current = newDropIndex;
+      const cards = cardsContainerRef.current.querySelectorAll(":scope > [data-card-id]");
+      dropIndexRef.current = calculateDropIndex(cards);
     }
 
-    // Position drop indicator line (fixed positioning, viewport coordinates)
-    if (indicatorRef.current && columnRef.current) {
-      let container: Element | null = null;
-      let targetCards: NodeListOf<Element> | null = null;
+    // Visual feedback
+    clearDropTargetHighlights();
 
-      if (rowsRef.current) {
-        const section = columnRef.current.querySelector(
-          `[data-row-id="${CSS.escape(dropRowRef.current)}"]`
-        );
-        if (section) {
-          container = section;
-          targetCards = section.querySelectorAll("[data-card-id]");
-        }
-      } else if (cardsContainerRef.current) {
-        container = cardsContainerRef.current;
-        targetCards = cardsContainerRef.current.querySelectorAll("[data-card-id]");
-      }
+    if (dropOnEl && dropOnId) {
+      dropModeRef.current = "on";
+      dropTargetCardRef.current = dropOnId;
+      childReorderRef.current = null;
+      dropOnEl.setAttribute("data-drop-target", "");
+      if (indicatorRef.current) indicatorRef.current.style.opacity = "0";
+    } else if (siblingReorder) {
+      dropModeRef.current = "between";
+      dropTargetCardRef.current = "";
+      childReorderRef.current = { parentId: siblingReorder.parentId, rank: siblingReorder.rank };
 
-      if (container && targetCards && targetCards.length > 0) {
-        const containerRect = container.getBoundingClientRect();
-        const idx = dropIndexRef.current;
+      // Show line indicator between siblings
+      if (indicatorRef.current) {
+        const containerRect = siblingReorder.container.getBoundingClientRect();
+        const idx = siblingReorder.index;
         let top: number;
-        if (idx < targetCards.length) {
-          top = targetCards[idx].getBoundingClientRect().top;
+        if (idx < siblingReorder.siblings.length) {
+          top = siblingReorder.siblings[idx].getBoundingClientRect().top;
         } else {
-          top = targetCards[targetCards.length - 1].getBoundingClientRect().bottom + 4;
+          top = siblingReorder.siblings[siblingReorder.siblings.length - 1].getBoundingClientRect().bottom + 4;
         }
         indicatorRef.current.style.top = `${top}px`;
         indicatorRef.current.style.left = `${containerRect.left + 4}px`;
         indicatorRef.current.style.width = `${containerRect.width - 8}px`;
         indicatorRef.current.style.opacity = "1";
-      } else {
-        indicatorRef.current.style.opacity = "0";
+      }
+    } else {
+      dropModeRef.current = "between";
+      dropTargetCardRef.current = "";
+      childReorderRef.current = null;
+
+      // Position drop indicator line (fixed positioning, viewport coordinates)
+      if (indicatorRef.current && columnRef.current) {
+        let container: Element | null = null;
+        let targetCards: NodeListOf<Element> | null = null;
+
+        if (rowsRef.current) {
+          const section = columnRef.current.querySelector(
+            `[data-row-id="${CSS.escape(dropRowRef.current)}"]`
+          );
+          if (section) {
+            container = section;
+            targetCards = section.querySelectorAll(":scope > [data-card-id]");
+          }
+        } else if (cardsContainerRef.current) {
+          container = cardsContainerRef.current;
+          targetCards = cardsContainerRef.current.querySelectorAll(":scope > [data-card-id]");
+        }
+
+        if (container && targetCards && targetCards.length > 0) {
+          const containerRect = container.getBoundingClientRect();
+          const idx = dropIndexRef.current;
+          let top: number;
+          if (idx < targetCards.length) {
+            top = targetCards[idx].getBoundingClientRect().top;
+          } else {
+            top = targetCards[targetCards.length - 1].getBoundingClientRect().bottom + 4;
+          }
+          indicatorRef.current.style.top = `${top}px`;
+          indicatorRef.current.style.left = `${containerRect.left + 4}px`;
+          indicatorRef.current.style.width = `${containerRect.width - 8}px`;
+          indicatorRef.current.style.opacity = "1";
+        } else {
+          indicatorRef.current.style.opacity = "0";
+        }
       }
     }
-  }, [isReordering, clearDragState]);
+  }, [isReordering, clearDragState, clearDropTargetHighlights]);
 
   const handleDragLeave = useCallback((e: React.DragEvent) => {
     if (isReordering) return;
     const relatedTarget = e.relatedTarget as Node | null;
-    if (!relatedTarget || !columnRef.current?.contains(relatedTarget)) {
+    // Only clear if relatedTarget is definitively outside the column.
+    // Null relatedTarget (common when crossing nested element boundaries)
+    // is handled by the safety timeout instead.
+    if (relatedTarget && !columnRef.current?.contains(relatedTarget)) {
       clearDragState();
     }
   }, [isReordering, clearDragState]);
@@ -218,12 +308,38 @@ export function BoardColumn({
     e.preventDefault();
     const rank = dropIndexRef.current + 1;
     const rowId = rowsRef.current ? dropRowRef.current : undefined;
+    const dropOnCardId = dropModeRef.current === "on" ? dropTargetCardRef.current : undefined;
+    const childReorder = childReorderRef.current;
     clearDragState();
     const objectId = e.dataTransfer.getData("text/plain");
     if (objectId && onDrop) {
-      onDrop(objectId, id, rank, rowId);
+      onDrop(objectId, id, rank, rowId, dropOnCardId, childReorder?.parentId, childReorder?.rank);
     }
   }, [id, onDrop, clearDragState]);
+
+  // Render a single card with its children
+  const renderCard = (object: ProjectObject) => (
+    <div key={object.id} data-card-id={object.id} className="rounded-[10px] transition-all data-[drop-target]:ring-2 data-[drop-target]:ring-primary">
+      <BoardCard
+        object={object}
+        fields={fields}
+        options={options}
+        prefix={prefix}
+        objectMap={objectMap}
+        allFields={allFields}
+        allObjects={allObjects}
+        statusField={statusField}
+        rowField={rowField}
+        peopleMap={peopleMap}
+        draggable={!!onDrop}
+        onClick={() => onCardClick?.(object)}
+        children={childrenByParent?.[object.id] || []}
+        childrenByParent={childrenByParent}
+        hierarchy={hierarchy}
+        onChildClick={onCardClick}
+      />
+    </div>
+  );
 
   return (
     <div
@@ -388,24 +504,7 @@ export function BoardColumn({
               }
             } : undefined}
           >
-            {row.objects.map((object) => (
-              <div key={object.id} data-card-id={object.id}>
-                <BoardCard
-                  object={object}
-                  fields={fields}
-                  options={options}
-                  prefix={prefix}
-                  objectMap={objectMap}
-                  allFields={allFields}
-                  allObjects={allObjects}
-                  statusField={statusField}
-                  rowField={rowField}
-                  peopleMap={peopleMap}
-                  draggable={!!onDrop}
-                  onClick={() => onCardClick?.(object)}
-                />
-              </div>
-            ))}
+            {row.objects.map((object) => renderCard(object))}
           </div>
         ))
       ) : (
@@ -418,24 +517,7 @@ export function BoardColumn({
             }
           }}
         >
-          {objects.map((object) => (
-            <div key={object.id} data-card-id={object.id}>
-              <BoardCard
-                object={object}
-                fields={fields}
-                options={options}
-                prefix={prefix}
-                objectMap={objectMap}
-                allFields={allFields}
-                allObjects={allObjects}
-                statusField={statusField}
-                rowField={rowField}
-                peopleMap={peopleMap}
-                draggable={!!onDrop}
-                onClick={() => onCardClick?.(object)}
-              />
-            </div>
-          ))}
+          {objects.map((object) => renderCard(object))}
 
           {totalCount === 0 && !hideHeader && (
             <div className="flex items-center justify-center py-8">

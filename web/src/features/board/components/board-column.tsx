@@ -21,7 +21,7 @@ import {
 } from "@mochi/common";
 import { Inbox, MoreHorizontal, Pencil, Plus, Trash2 } from "lucide-react";
 import { BoardCard } from "./board-card";
-import type { ProjectObject, ProjectField, FieldOption, ProjectClass } from "@/types";
+import type { ProjectObject, ProjectField, FieldOption } from "@/types";
 
 export interface BoardColumnRow {
   id: string;
@@ -39,7 +39,6 @@ interface BoardColumnProps {
   options: Record<string, FieldOption[]>;
   prefix: string;
   objectMap: Record<string, ProjectObject>;
-  classMap: Record<string, ProjectClass>;
   allFields?: Record<string, ProjectField[]>;
   allObjects?: ProjectObject[];
   statusField?: string;
@@ -66,7 +65,6 @@ export function BoardColumn({
   options,
   prefix,
   objectMap,
-  classMap,
   allFields,
   allObjects,
   statusField,
@@ -398,7 +396,6 @@ export function BoardColumn({
                   options={options}
                   prefix={prefix}
                   objectMap={objectMap}
-                  classMap={classMap}
                   allFields={allFields}
                   allObjects={allObjects}
                   statusField={statusField}
@@ -429,7 +426,7 @@ export function BoardColumn({
                 options={options}
                 prefix={prefix}
                 objectMap={objectMap}
-                classMap={classMap}
+                allFields={allFields}
                 allObjects={allObjects}
                 statusField={statusField}
                 rowField={rowField}

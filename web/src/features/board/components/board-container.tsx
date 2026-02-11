@@ -4,7 +4,7 @@
 import { useMemo, useState, useEffect, useLayoutEffect, useCallback, useRef } from "react";
 import { cn } from "@mochi/common";
 import { BoardColumn, type BoardColumnRow } from "./board-column";
-import type { ProjectObject, ProjectDetails, ProjectClass, FieldOption, SortState } from "@/types";
+import type { ProjectObject, ProjectDetails, FieldOption, SortState } from "@/types";
 
 interface BoardContainerProps {
   project: ProjectDetails;
@@ -99,15 +99,6 @@ export function BoardContainer({
     }
     return map;
   }, [objects]);
-
-  // Build class name map
-  const classMap = useMemo(() => {
-    const map: Record<string, ProjectClass> = {};
-    for (const c of project.classes) {
-      map[c.id] = c;
-    }
-    return map;
-  }, [project.classes]);
 
   // Get status options for columns
   const statusOptions = useMemo(() => {
@@ -417,7 +408,6 @@ export function BoardContainer({
           options={classOptions}
           prefix={project.project.prefix}
           objectMap={objectMap}
-          classMap={classMap}
           allFields={project.fields}
           allObjects={objects}
           statusField={statusField}
@@ -532,7 +522,6 @@ export function BoardContainer({
               options={classOptions}
               prefix={project.project.prefix}
               objectMap={objectMap}
-              classMap={classMap}
               allFields={project.fields}
               allObjects={objects}
               statusField={statusField}
@@ -570,7 +559,6 @@ export function BoardContainer({
           options={classOptions}
           prefix={project.project.prefix}
           objectMap={objectMap}
-          classMap={classMap}
           allFields={project.fields}
           allObjects={objects}
           statusField={statusField}

@@ -269,7 +269,7 @@ describe("BoardCard", () => {
     expect(strip).toHaveStyle({ backgroundColor: "rgb(239, 68, 68)" });
   });
 
-  it("should show parent badge when parent is set", () => {
+  it("should show parent icon when parent is set", () => {
     const parentObject = createMockObject({
       id: "parent-1",
       class: "epic",
@@ -283,17 +283,16 @@ describe("BoardCard", () => {
     });
 
     const objectMap = { "parent-1": parentObject };
-    const classMap = { epic: { id: "epic", name: "Epic", rank: 0, pull_requests: 0 } };
 
-    render(
+    const { container } = render(
       <BoardCard
         {...defaultProps}
         object={childObject}
         objectMap={objectMap}
-        classMap={classMap}
       />,
     );
 
-    expect(screen.getByText("Parent Epic")).toBeInTheDocument();
+    // Parent indicator icon should be rendered
+    expect(container.querySelector("svg")).toBeInTheDocument();
   });
 });

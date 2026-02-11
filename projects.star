@@ -433,6 +433,9 @@ def action_project_create(a):
 	if privacy == "public":
 		mochi.access.allow("*", resource, "view", creator)
 		mochi.access.allow("+", resource, "comment", creator)
+	else:
+		mochi.access.deny("*", resource, "view", creator)
+		mochi.access.deny("+", resource, "view", creator)
 	mochi.access.allow(creator, resource, "*", creator)
 
 	return {"data": {"id": entity, "fingerprint": mochi.entity.fingerprint(entity)}}
@@ -504,9 +507,11 @@ def action_project_get(a):
 			a.error(403, "Access denied")
 			return
 	else:
+		server = row["server"] or ""
+		peer = mochi.remote.peer(server) if server else None
 		response = mochi.remote.request(project_id, "projects", "access/check", {
 			"user": a.user.identity.id,
-		})
+		}, peer)
 		if response:
 			if response.get("design"):
 				access = "design"
@@ -715,10 +720,13 @@ def check_project_access(user_id, project_id, level):
 def forward_to_owner(a, project_id, action, params):
 	params["_user"] = a.user.identity.id
 	params["_name"] = a.user.identity.name
+	# Look up the server for this remote project and resolve peer
+	server = mochi.db.value("select server from projects where id=?", project_id) or ""
+	peer = mochi.remote.peer(server) if server else None
 	result = mochi.remote.request(project_id, "projects", "request", {
 		"action": action,
 		"params": params,
-	})
+	}, peer)
 	if not result:
 		a.error(502, "Could not reach project owner")
 		return None
@@ -3671,6 +3679,8 @@ def action_repositories_merge(a):
 			a.error(403, "Write access required to merge")
 			return
 
+		server = project["server"] or ""
+		peer = mochi.remote.peer(server) if server else None
 		result = mochi.remote.request(project_id, "projects", "merge/request", {
 			"project": project_id,
 			"repo": repo_id,
@@ -3680,7 +3690,7 @@ def action_repositories_merge(a):
 			"method": method,
 			"author_name": a.user.identity.name,
 			"author_email": a.user.username,
-		})
+		}, peer)
 		if not result:
 			a.error(502, "Could not reach project owner")
 			return
@@ -3731,6 +3741,7 @@ def action_search(a):
 		url = search
 		if "/projects/" in url:
 			parts = url.split("/projects/", 1)
+			server = parts[0]
 			project_path = parts[1]
 			# Handle query parameter format: ?project=ENTITY_ID
 			if project_path.startswith("?project="):
@@ -3758,7 +3769,8 @@ def action_search(a):
 							break
 					if not found:
 						results.append(entry)
-			# Try as fingerprint
+
+			# Try as fingerprint — check local directory
 			elif mochi.valid(project_id, "fingerprint"):
 				all_projects = mochi.directory.search("project", "", False)
 				for entry in all_projects:
@@ -3826,6 +3838,27 @@ def action_notifications_destinations(a):
 # Remote Projects (Subscribe/Bookmark)
 # ============================================================================
 
+# Public endpoint: resolve a project fingerprint to basic info
+# Used by remote servers to resolve fingerprints during search
+def action_resolve_project(a):
+	project_id = a.input("project")
+	if not project_id:
+		a.error(404, "Project not found")
+		return
+
+	project = mochi.db.row("select id, name, description, prefix from projects where id=?", project_id)
+	if not project:
+		a.error(404, "Project not found")
+		return
+
+	return {"data": {
+		"id": project_id,
+		"name": project["name"],
+		"description": project["description"],
+		"fingerprint": mochi.entity.fingerprint(project_id),
+		"class": "project",
+	}}
+
 # Probe a remote project by URL without subscribing
 def action_probe(a):
 	if not a.user.identity.id:
@@ -3872,26 +3905,31 @@ def action_probe(a):
 		a.error(400, "Could not extract server from URL")
 		return
 
-	if not project_id or not mochi.valid(project_id, "entity"):
+	if not project_id:
+		a.error(400, "Could not extract project ID from URL")
+		return
+
+	if not mochi.valid(project_id, "entity") and not mochi.valid(project_id, "fingerprint"):
 		a.error(400, "Could not extract valid project ID from URL")
 		return
 
-	peer = mochi.remote.peer(server)
-	if not peer:
-		a.error(502, "Unable to connect to server")
+	# Use the remote server's public resolve endpoint (handles both entity IDs and fingerprints)
+	resolve_url = server + "/projects/" + project_id + "/-/resolve"
+	response = mochi.url.get(resolve_url, {}, {"Accept": "application/json"})
+	if not response or response["status"] != 200:
+		a.error(404, "Project not found on remote server")
 		return
-	response = mochi.remote.request(project_id, "projects", "info", {"project": project_id}, peer)
-	if response.get("error"):
-		a.error(response.get("code", 404), response["error"])
+	resolved = json.decode(response["body"])
+	data = resolved.get("data", {})
+	if not data or not data.get("id"):
+		a.error(404, "Project not found on remote server")
 		return
 
-	# Return project info as a directory-like entry
 	return {"data": {
-		"id": project_id,
-		"name": response.get("name", ""),
-		"description": response.get("description", ""),
-		"prefix": response.get("prefix", "PROJ"),
-		"fingerprint": response.get("fingerprint", ""),
+		"id": data["id"],
+		"name": data.get("name", ""),
+		"description": data.get("description", ""),
+		"fingerprint": data.get("fingerprint", ""),
 		"class": "project",
 		"server": server,
 		"remote": True

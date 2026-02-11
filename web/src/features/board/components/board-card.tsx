@@ -3,7 +3,7 @@
 
 import { Card, cn, Tooltip, TooltipContent, TooltipTrigger } from "@mochi/common";
 import { Check, CheckSquare, CornerLeftUp } from "lucide-react";
-import type { ProjectObject, ProjectField, FieldOption, ChecklistItem, ProjectClass } from "@/types";
+import type { ProjectObject, ProjectField, FieldOption, ChecklistItem } from "@/types";
 
 interface BoardCardProps {
   object: ProjectObject;
@@ -11,7 +11,6 @@ interface BoardCardProps {
   options: Record<string, FieldOption[]>;
   prefix: string;
   objectMap?: Record<string, ProjectObject>;
-  classMap?: Record<string, ProjectClass>;
   allFields?: Record<string, ProjectField[]>;
   allObjects?: ProjectObject[];
   statusField?: string;
@@ -38,7 +37,6 @@ export function BoardCard({
   options,
   prefix,
   objectMap,
-  classMap,
   allFields,
   allObjects,
   statusField,
@@ -76,7 +74,6 @@ export function BoardCard({
 
   // Get parent info — use title-flagged field of parent, fallback to prefix-number
   const parentObject = object.parent && objectMap ? objectMap[object.parent] : null;
-  const parentClassName = parentObject && classMap ? classMap[parentObject.class]?.name || parentObject.class : null;
   const parentFields = parentObject
     ? (allFields?.[parentObject.class] || fields)
     : null;
@@ -89,14 +86,6 @@ export function BoardCard({
   const children = allObjects && statusField
     ? allObjects.filter((o) => o.parent === object.id)
     : [];
-  const statusOptions = statusField ? (options[statusField] || []) : [];
-  const statusCounts: Record<string, number> = {};
-  if (children.length > 0) {
-    for (const child of children) {
-      const status = child.values[statusField!] || "";
-      statusCounts[status] = (statusCounts[status] || 0) + 1;
-    }
-  }
 
   // Render a field value inline on the card
   const renderField = (field: ProjectField) => {
@@ -212,9 +201,44 @@ export function BoardCard({
         e.dataTransfer.effectAllowed = "move";
       } : undefined}
     >
-      {/* Header / Title */}
-      <div className="font-medium text-sm leading-tight text-card-foreground">
-        {title}
+      {/* Header row: title + parent/children indicators */}
+      <div className="flex items-baseline gap-2">
+        <div className="font-medium text-sm leading-tight text-card-foreground flex-1 min-w-0">
+          {title}
+        </div>
+        {parentObject && (
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <span className="text-muted-foreground shrink-0 self-center">
+                <CornerLeftUp className="size-3.5" />
+              </span>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>{parentTitle}</p>
+            </TooltipContent>
+          </Tooltip>
+        )}
+        {children.length > 0 && (
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <span className="text-xs text-muted-foreground shrink-0 tabular-nums">
+                {children.length}
+              </span>
+            </TooltipTrigger>
+            <TooltipContent>
+              <div className="flex flex-col gap-0.5">
+                {children.map((child) => {
+                  const childFields = allFields?.[child.class] || fields;
+                  const childTitleField = childFields.find((f) => f.flags?.split(",").includes("title"));
+                  const childTitle = childTitleField
+                    ? (child.values[childTitleField.id] || `${prefix}-${child.number}`)
+                    : `${prefix}-${child.number}`;
+                  return <p key={child.id}>{childTitle}</p>;
+                })}
+              </div>
+            </TooltipContent>
+          </Tooltip>
+        )}
       </div>
 
       {/* Body fields */}
@@ -222,36 +246,6 @@ export function BoardCard({
         <div className="flex flex-col gap-1">
           {cardFields.map((field) => renderField(field))}
         </div>
-      )}
-
-      {/* Parent / Children indicators */}
-      {(parentObject || children.length > 0) && (
-        <>
-          <hr className="border-dashed" />
-          <div className="flex items-center gap-2 flex-wrap">
-            {parentObject && (
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <span className="inline-flex items-center gap-1 text-[10px] text-muted-foreground bg-muted/50 px-1.5 py-0.5 rounded-md">
-                    <CornerLeftUp className="size-3" />
-                    <span className="truncate max-w-[140px]">{parentTitle}</span>
-                  </span>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>{parentClassName}: {parentTitle}</p>
-                </TooltipContent>
-              </Tooltip>
-            )}
-            {statusOptions
-              .filter((opt) => (statusCounts[opt.id] || 0) > 0)
-              .map((opt) => (
-                <span key={opt.id} className="inline-flex items-center gap-0.5 text-[10px] text-muted-foreground">
-                  <span className="w-2 h-2 rounded-full" style={{ backgroundColor: opt.colour }} />
-                  {statusCounts[opt.id]}
-                </span>
-              ))}
-          </div>
-        </>
       )}
 
     </Card>

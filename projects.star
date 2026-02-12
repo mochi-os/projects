@@ -286,6 +286,10 @@ def database_upgrade(version):
 			parts = [p for p in f["flags"].split(",") if p and p != "title" and p != "border"]
 			mochi.db.execute("update fields set flags=? where project=? and class=? and id=?", ",".join(parts), f["project"], f["class"], f["id"])
 
+	if version == 3:
+		mochi.db.execute("alter table projects add column template text not null default ''")
+		mochi.db.execute("alter table projects add column template_version integer not null default 0")
+
 
 # ============================================================================
 # Templates
@@ -304,7 +308,8 @@ def get_templates():
 					"id": data["id"],
 					"name": data["name"],
 					"description": data.get("description", ""),
-					"icon": data.get("icon", "")
+					"icon": data.get("icon", ""),
+					"version": data.get("version", 1),
 				}
 	return templates
 
@@ -429,6 +434,7 @@ def action_project_create(a):
 		a.error(400, "Invalid template")
 		return
 
+	tmpl_version = templates[template]["version"]
 	description = a.input("description") or ""
 	prefix = a.input("prefix") or "PROJ"
 	privacy = a.input("privacy") or "private"
@@ -444,8 +450,8 @@ def action_project_create(a):
 
 	# Insert project record
 	mochi.db.execute(
-		"insert into projects (id, name, description, prefix, counter, owner, server, created, updated) values (?, ?, ?, ?, ?, ?, ?, ?, ?)",
-		entity, name, description, prefix, 0, 1, "", now, now
+		"insert into projects (id, name, description, prefix, counter, owner, server, template, template_version, created, updated) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+		entity, name, description, prefix, 0, 1, "", template, tmpl_version, now, now
 	)
 
 	# Add creator as subscriber
@@ -481,7 +487,7 @@ def action_project_get(a):
 		a.error(400, "Project ID required")
 		return
 
-	row = mochi.db.row("select id, name, description, prefix, counter, owner, server, created, updated from projects where id=?", project_id)
+	row = mochi.db.row("select id, name, description, prefix, counter, owner, server, template, template_version, created, updated from projects where id=?", project_id)
 	if not row:
 		a.error(404, "Project not found")
 		return
@@ -568,6 +574,8 @@ def action_project_get(a):
 			"counter": row["counter"],
 			"owner": row["owner"],
 			"server": row["server"],
+			"template": row["template"],
+			"template_version": row["template_version"],
 			"created": row["created"],
 			"updated": row["updated"],
 			"access": access,

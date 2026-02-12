@@ -414,7 +414,14 @@ export function BoardColumn({
       onDrop={isReordering ? undefined : handleDrop}
     >
       {/* Column header */}
-      <div className="flex items-center justify-between p-3 border-b">
+      <div
+        className="flex items-center justify-between p-3 border-b cursor-pointer"
+        onDoubleClick={(e) => {
+          if (!(e.target as HTMLElement).closest("[data-column-menu]")) {
+            onCreateClick?.();
+          }
+        }}
+      >
         <div className="flex items-center gap-2">
           {colour && (
             <div
@@ -434,7 +441,7 @@ export function BoardColumn({
         {!isReordering && (onCreateClick || onRenameColumn || (totalCount === 0 && onDeleteColumn)) && (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <button className="p-1 rounded hover:bg-muted transition-colors">
+              <button data-column-menu className="p-1 rounded hover:bg-muted transition-colors">
                 <MoreHorizontal className="size-4 text-muted-foreground" />
               </button>
             </DropdownMenuTrigger>

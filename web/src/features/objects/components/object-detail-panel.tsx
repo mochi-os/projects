@@ -6,7 +6,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Eye, EyeOff, Loader2, Trash2, MessageSquare, Activity, Settings2, GitPullRequest, X } from "lucide-react";
 import {
   Button,
-  Textarea,
+  Input,
   ConfirmDialog,
   DataChip,
   Sheet,
@@ -259,12 +259,12 @@ export function ObjectDetailPanel({
         {/* Header */}
         <div className="flex items-center gap-3 px-6 py-4 border-b shrink-0">
           {editingTitle && canWrite(access) ? (
-            <Textarea
+            <Input
               value={titleValue}
               onChange={(e) => setTitleValue(e.target.value)}
               onBlur={handleTitleSave}
               onKeyDown={(e) => {
-                if (e.key === "Enter" && !e.shiftKey) {
+                if (e.key === "Enter") {
                   e.preventDefault();
                   handleTitleSave();
                 }
@@ -272,7 +272,7 @@ export function ObjectDetailPanel({
                   setEditingTitle(false);
                 }
               }}
-              className="text-xl font-bold resize-none min-h-[40px] flex-1"
+              className="text-xl font-bold flex-1"
               autoFocus
             />
           ) : (

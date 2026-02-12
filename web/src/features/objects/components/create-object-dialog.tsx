@@ -113,17 +113,26 @@ export function CreateObjectDialog({
     return project.options[selectedClass] || {};
   }, [project.options, selectedClass]);
 
+  const missingRequired = classFields.some(
+    (f) => f.flags?.split(",").includes("required") && !fieldValues[f.id]?.trim(),
+  );
+
   // Filter objects to only show valid parents based on hierarchy rules
+  const allowedParentClasses = useMemo(() => {
+    return project.hierarchy[selectedClass] || [];
+  }, [project.hierarchy, selectedClass]);
+
+  const canBeTopLevel = allowedParentClasses.includes("");
+  const parentRequired = !canBeTopLevel && allowedParentClasses.length > 0;
+
   const validParentOptions = useMemo(() => {
     if (!objectsData || !selectedClass) return [];
 
-    const allowedParentClasses = project.hierarchy[selectedClass] || [];
     const parentClassIds = allowedParentClasses.filter((t) => t !== "");
-
     if (parentClassIds.length === 0) return [];
 
     return objectsData.filter((obj) => parentClassIds.includes(obj.class));
-  }, [objectsData, selectedClass, project.hierarchy]);
+  }, [objectsData, selectedClass, allowedParentClasses]);
 
   // Get current parent object info
   const currentParent = useMemo(() => {
@@ -200,6 +209,13 @@ export function CreateObjectDialog({
     setFieldValues((prev) => ({ ...prev, [fieldId]: value }));
   };
 
+  // Auto-select first parent when parent is required
+  useEffect(() => {
+    if (open && parentRequired && !parent && validParentOptions.length > 0) {
+      setParent(validParentOptions[0].id);
+    }
+  }, [open, parentRequired, parent, validParentOptions]);
+
   const handleTypeChange = (newType: string) => {
     setSelectedType(newType);
     setParent("");
@@ -256,36 +272,44 @@ export function CreateObjectDialog({
           <div className="flex-1 overflow-y-auto p-6">
             <div className="max-w-2xl space-y-6">
               {/* Parent picker */}
-              {validParentOptions.length > 0 && (
+              {(validParentOptions.length > 0 || parentRequired) && (
                 <div className="grid grid-cols-[120px_1fr] gap-4 items-start">
                   <label className="text-sm font-medium text-muted-foreground pt-2">
                     Parent
                   </label>
-                  <Select
-                    value={parent || "_none_"}
-                    onValueChange={(v) => setParent(v === "_none_" ? "" : v)}
-                  >
-                    <SelectTrigger className="w-full">
-                      <SelectValue placeholder="None">
-                        {currentParent
-                          ? currentParent.values.title || `${project.project.prefix}-${currentParent.number}`
-                          : "None"}
-                      </SelectValue>
-                    </SelectTrigger>
-                    <SelectContent className="z-[60]">
-                      <SelectItem value="_none_">None</SelectItem>
-                      {validParentOptions.map((obj) => (
-                        <SelectItem key={obj.id} value={obj.id}>
-                          {obj.values.title || `${project.project.prefix}-${obj.number}`}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                  {validParentOptions.length > 0 ? (
+                    <Select
+                      value={parent || "_none_"}
+                      onValueChange={(v) => setParent(v === "_none_" ? "" : v)}
+                    >
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder="None">
+                          {currentParent
+                            ? currentParent.values.title || `${project.project.prefix}-${currentParent.number}`
+                            : "None"}
+                        </SelectValue>
+                      </SelectTrigger>
+                      <SelectContent className="z-[60]">
+                        {!parentRequired && <SelectItem value="_none_">None</SelectItem>}
+                        {validParentOptions.map((obj) => (
+                          <SelectItem key={obj.id} value={obj.id}>
+                            {obj.values.title || `${project.project.prefix}-${obj.number}`}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  ) : (
+                    <p className="text-sm text-muted-foreground pt-2">
+                      No {allowedParentClasses.filter((t) => t !== "").map((id) => project.classes.find((c) => c.id === id)?.name || id).join(" or ")} to add to
+                    </p>
+                  )}
                 </div>
               )}
 
               {/* Dynamic fields based on selected type */}
-              {classFields.map((field) => (
+              {classFields.map((field, index) => {
+                  const isFirstTextField = field.fieldtype === "text" && classFields.findIndex((f) => f.fieldtype === "text") === index;
+                  return (
                   <div key={field.id} className="grid grid-cols-[120px_1fr] gap-4 items-start">
                     <label className="text-sm font-medium text-muted-foreground pt-2">
                       {field.name}
@@ -296,11 +320,13 @@ export function CreateObjectDialog({
                       options={classOptions[field.id] || []}
                       onChange={(value) => handleFieldChange(field.id, value)}
                       disabled={createMutation.isPending}
+                      autoFocus={isFirstTextField}
                       hideLabel
                       localPeople={peopleData}
                     />
                   </div>
-                ))}
+                  );
+                })}
 
               {error && (
                 <div className="text-sm text-destructive bg-destructive/10 p-3 rounded-md">
@@ -311,7 +337,7 @@ export function CreateObjectDialog({
           </div>
 
           <SheetFooter className="px-6 py-4 border-t">
-            <Button type="submit" disabled={createMutation.isPending}>
+            <Button type="submit" disabled={createMutation.isPending || (parentRequired && !parent) || missingRequired}>
               <Check className="size-4" />
               {createMutation.isPending ? "Creating..." : "Create"}
             </Button>

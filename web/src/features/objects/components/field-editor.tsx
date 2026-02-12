@@ -25,6 +25,7 @@ interface FieldEditorProps {
   onChange: (value: string) => void;
   disabled?: boolean;
   readOnly?: boolean;
+  autoFocus?: boolean;
   localPeople?: Person[];
   onValidationError?: (hasError: boolean) => void;
 }
@@ -37,6 +38,7 @@ export function FieldEditor({
   disabled,
   readOnly,
   hideLabel,
+  autoFocus,
   localPeople = [],
   onValidationError,
 }: FieldEditorProps & { hideLabel?: boolean }) {
@@ -185,6 +187,7 @@ export function FieldEditor({
               onChange={(e) => handleTextChange(e.target.value)}
               onBlur={handleBlur}
               disabled={disabled}
+              autoFocus={autoFocus}
               className="h-9"
             />
           );
@@ -195,6 +198,7 @@ export function FieldEditor({
             onChange={(e) => handleTextChange(e.target.value)}
             onBlur={handleBlur}
             disabled={disabled}
+            autoFocus={autoFocus}
             rows={field.rows}
           />
         );

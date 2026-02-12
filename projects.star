@@ -1120,6 +1120,19 @@ def action_object_create(a):
 		a.error(400, "Invalid class")
 		return
 
+	# Check hierarchy rules
+	parent_class = ""
+	if parent:
+		parent_row = mochi.db.row("select class from objects where id=? and project=?", parent, project_id)
+		if not parent_row:
+			a.error(404, "Parent object not found")
+			return
+		parent_class = parent_row["class"]
+	allowed = mochi.db.exists("select 1 from hierarchy where project=? and class=? and parent=?", project_id, obj_class, parent_class)
+	if not allowed:
+		a.error(400, "Cannot create here: hierarchy rules do not allow this relationship")
+		return
+
 	# Increment counter and get number
 	new_counter = project["counter"] + 1
 	mochi.db.execute("update projects set counter=?, updated=? where id=?", new_counter, mochi.time.now(), project_id)
@@ -5613,6 +5626,18 @@ def do_object_create(project_id, project, params, user_id):
 		return {"error": "Invalid class", "code": 400}
 	parent = params.get("parent", "")
 	title = params.get("title", "")
+
+	# Check hierarchy rules
+	parent_class = ""
+	if parent:
+		parent_row = mochi.db.row("select class from objects where id=? and project=?", parent, project_id)
+		if not parent_row:
+			return {"error": "Parent object not found", "code": 404}
+		parent_class = parent_row["class"]
+	allowed = mochi.db.exists("select 1 from hierarchy where project=? and class=? and parent=?", project_id, obj_class, parent_class)
+	if not allowed:
+		return {"error": "Cannot create here: hierarchy rules do not allow this relationship", "code": 400}
+
 	title_field_row = mochi.db.row("select id from fields where project=? and class=? and flags like '%title%' order by rank limit 1", project_id, obj_class)
 	title_field = title_field_row["id"] if title_field_row else ""
 	new_counter = project["counter"] + 1

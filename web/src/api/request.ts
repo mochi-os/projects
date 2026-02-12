@@ -55,5 +55,3 @@ export const projectsRequest = {
     return response.data;
   },
 };
-
-export default projectsRequest;

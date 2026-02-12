@@ -725,7 +725,7 @@ export function ClassSheet({
 
           <div className="space-y-2">
             <Label>Can be child of</Label>
-            <div className="pl-4 space-y-1">
+            <div className="pl-4 space-y-2">
               <label className="flex items-center gap-2 text-sm cursor-pointer">
                 <Switch
                   checked={currentHierarchy.includes("")}

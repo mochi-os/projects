@@ -370,7 +370,7 @@ export function ViewSheet({
             </div>
           )}
 
-          {enumeratedFields.length > 0 && (
+          {viewtype === "board" && enumeratedFields.length > 0 && (
             <div className="space-y-2">
               <Label>Border colour</Label>
               <div className="pl-4">

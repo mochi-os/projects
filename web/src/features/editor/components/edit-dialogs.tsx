@@ -998,7 +998,7 @@ export function EditFieldDialog({
             <div className="space-y-1">
               {[
                 { id: "required", label: "Required" },
-                { id: "sort", label: "Sort" },
+                { id: "sort", label: "Allow sort by" },
               ].map((flag) => (
                 <label key={flag.id} className="flex items-center gap-2 text-sm cursor-pointer">
                   <Switch

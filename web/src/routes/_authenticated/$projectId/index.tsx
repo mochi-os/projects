@@ -451,11 +451,11 @@ function ProjectPage() {
     // Apply search filter
     if (filters.search) {
       const searchLower = filters.search.toLowerCase();
-      result = result.filter((obj) => {
-        const title = obj.values.title?.toLowerCase() || "";
-        const description = obj.values.description?.toLowerCase() || "";
-        return title.includes(searchLower) || description.includes(searchLower);
-      });
+      result = result.filter((obj) =>
+        Object.values(obj.values).some(
+          (v) => typeof v === "string" && v.toLowerCase().includes(searchLower)
+        )
+      );
     }
 
     // Apply watched filter

@@ -553,22 +553,27 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
         onOpenChange={setAddFieldOpen}
         onAdd={async (name, fieldtype, rows, options) => {
           if (selectedClassId) {
-            const result = await createFieldMutation.mutateAsync({
-              classId: selectedClassId,
-              name,
-              fieldtype,
-              rows,
-            });
-            // Create options for enumerated fields
-            if (fieldtype === "enumerated" && options && result.data) {
-              for (const opt of options) {
-                await createOptionMutation.mutateAsync({
-                  classId: selectedClassId,
-                  fieldId: result.data.id,
-                  name: opt.name,
-                  colour: opt.colour,
-                });
+            try {
+              const result = await createFieldMutation.mutateAsync({
+                classId: selectedClassId,
+                name,
+                fieldtype,
+                rows,
+              });
+              // Create options for enumerated fields
+              if (fieldtype === "enumerated" && options && result.data) {
+                for (const opt of options) {
+                  await createOptionMutation.mutateAsync({
+                    classId: selectedClassId,
+                    fieldId: result.data.id,
+                    name: opt.name,
+                    colour: opt.colour,
+                  });
+                }
               }
+            } catch (error) {
+              toast.error(getErrorMessage(error, "Failed to create field"));
+              throw error;
             }
           }
         }}
@@ -577,14 +582,19 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
       <AddOptionDialog
         open={addOptionOpen}
         onOpenChange={setAddOptionOpen}
-        onAdd={(name, colour) => {
+        onAdd={async (name, colour) => {
           if (selectedClassId && editingField) {
-            createOptionMutation.mutate({
-              classId: selectedClassId,
-              fieldId: editingField.id,
-              name,
-              colour,
-            });
+            try {
+              await createOptionMutation.mutateAsync({
+                classId: selectedClassId,
+                fieldId: editingField.id,
+                name,
+                colour,
+              });
+            } catch (error) {
+              toast.error(getErrorMessage(error, "Failed to create option"));
+              throw error;
+            }
           }
         }}
       />

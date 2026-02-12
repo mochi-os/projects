@@ -46,26 +46,39 @@ export function FieldEditor({
 }: FieldEditorProps & { hideLabel?: boolean }) {
   const [localValue, setLocalValue] = useState(value);
   const debounceTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const focusedRef = useRef(false);
+  const localValueRef = useRef(value);
+  const onChangeRef = useRef(onChange);
+  onChangeRef.current = onChange;
 
-  // Sync local state with prop value when it changes externally
+  // Sync local state with prop value when it changes externally,
+  // but not while the user is actively editing (focused)
   useEffect(() => {
-    setLocalValue(value);
+    if (!focusedRef.current) {
+      setLocalValue(value);
+      localValueRef.current = value;
+    }
   }, [value]);
 
+  const handleFocus = () => {
+    focusedRef.current = true;
+  };
+
   const handleBlur = () => {
+    focusedRef.current = false;
     if (debounceTimerRef.current) {
       clearTimeout(debounceTimerRef.current);
+      debounceTimerRef.current = null;
     }
-    if (localValue !== value) {
-      onChange(localValue);
-    }
+    onChangeRef.current(localValueRef.current);
   };
 
   const handleTextChange = (newValue: string) => {
     setLocalValue(newValue);
+    localValueRef.current = newValue;
 
     if (immediate) {
-      onChange(newValue);
+      onChangeRef.current(newValue);
       return;
     }
 
@@ -75,9 +88,7 @@ export function FieldEditor({
     }
 
     debounceTimerRef.current = setTimeout(() => {
-      if (newValue !== value) {
-        onChange(newValue);
-      }
+      onChangeRef.current(localValueRef.current);
     }, 1000); // 1 second debounce
   };
 
@@ -192,6 +203,7 @@ export function FieldEditor({
             <Input
               value={localValue}
               onChange={(e) => handleTextChange(e.target.value)}
+              onFocus={handleFocus}
               onBlur={handleBlur}
               disabled={disabled}
               autoFocus={autoFocus}
@@ -203,6 +215,7 @@ export function FieldEditor({
           <Textarea
             value={localValue}
             onChange={(e) => handleTextChange(e.target.value)}
+            onFocus={handleFocus}
             onBlur={handleBlur}
             disabled={disabled}
             autoFocus={autoFocus}
@@ -216,6 +229,7 @@ export function FieldEditor({
             type="number"
             value={localValue}
             onChange={(e) => setLocalValue(e.target.value)}
+            onFocus={handleFocus}
             onBlur={handleBlur}
             disabled={disabled}
             className="h-9"
@@ -272,6 +286,7 @@ export function FieldEditor({
           <Input
             value={localValue}
             onChange={(e) => setLocalValue(e.target.value)}
+            onFocus={handleFocus}
             onBlur={handleBlur}
             disabled={disabled}
             className="h-9"

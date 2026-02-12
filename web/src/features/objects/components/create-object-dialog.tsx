@@ -64,6 +64,17 @@ export function CreateObjectDialog({
           initialValues[df.field] = df.value;
         }
       }
+      // Auto-select first option for required enumerated fields
+      const fields = project.fields[initialType] || [];
+      const opts = project.options[initialType] || {};
+      for (const f of fields) {
+        if (f.fieldtype === "enumerated" && f.flags?.split(",").includes("required") && !initialValues[f.id]) {
+          const fieldOpts = opts[f.id] || [];
+          if (fieldOpts.length > 0) {
+            initialValues[f.id] = fieldOpts[0].id;
+          }
+        }
+      }
       setFieldValues(initialValues);
     }
   }, [open, project.classes, defaultFields]);
@@ -116,6 +127,12 @@ export function CreateObjectDialog({
   const missingRequired = classFields.some(
     (f) => f.flags?.split(",").includes("required") && !fieldValues[f.id]?.trim(),
   );
+
+  // Get display title for any object using its class's title-flagged field
+  const objectTitle = (obj: { class: string; number: number; values: Record<string, string> }) => {
+    const tf = (project.fields[obj.class] || []).find((f) => f.flags?.split(",").includes("title"));
+    return (tf ? obj.values[tf.id] : "") || `${project.project.prefix}-${obj.number}`;
+  };
 
   // Filter objects to only show valid parents based on hierarchy rules
   const allowedParentClasses = useMemo(() => {
@@ -229,6 +246,17 @@ export function CreateObjectDialog({
         }
       }
     }
+    // Auto-select first option for required enumerated fields
+    const fields = project.fields[newType] || [];
+    const opts = project.options[newType] || {};
+    for (const f of fields) {
+      if (f.fieldtype === "enumerated" && f.flags?.split(",").includes("required") && !newValues[f.id]) {
+        const fieldOpts = opts[f.id] || [];
+        if (fieldOpts.length > 0) {
+          newValues[f.id] = fieldOpts[0].id;
+        }
+      }
+    }
     setFieldValues(newValues);
   };
 
@@ -285,7 +313,7 @@ export function CreateObjectDialog({
                       <SelectTrigger className="w-full">
                         <SelectValue placeholder="None">
                           {currentParent
-                            ? currentParent.values.title || `${project.project.prefix}-${currentParent.number}`
+                            ? objectTitle(currentParent)
                             : "None"}
                         </SelectValue>
                       </SelectTrigger>
@@ -293,7 +321,7 @@ export function CreateObjectDialog({
                         {!parentRequired && <SelectItem value="_none_">None</SelectItem>}
                         {validParentOptions.map((obj) => (
                           <SelectItem key={obj.id} value={obj.id}>
-                            {obj.values.title || `${project.project.prefix}-${obj.number}`}
+                            {objectTitle(obj)}
                           </SelectItem>
                         ))}
                       </SelectContent>

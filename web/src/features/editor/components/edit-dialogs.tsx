@@ -647,7 +647,7 @@ export function ClassSheet({
             )}
           </div>
         </div>
-        <div className="flex-1 overflow-y-auto p-6 space-y-4">
+        <div className="flex-1 overflow-y-auto p-6 space-y-6">
           <div className="space-y-2">
             <Label htmlFor="class-name">Name</Label>
             <div className="pl-4">
@@ -660,6 +660,15 @@ export function ClassSheet({
               />
             </div>
           </div>
+
+          {mode === "edit" && cls && (
+            <div className="space-y-2">
+              <Label htmlFor="class-id">ID</Label>
+              <div className="pl-4">
+                <Input id="class-id" value={cls.id} readOnly className="text-muted-foreground" />
+              </div>
+            </div>
+          )}
 
           <div className="space-y-2">
             <Label>Can be child of</Label>

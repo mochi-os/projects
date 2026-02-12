@@ -4010,6 +4010,44 @@ def action_probe(a):
 		"remote": True
 	}}
 
+# Get recommended projects from the recommendations service
+def action_recommendations(a):
+	if not a.user:
+		a.error(401, "Not logged in")
+		return
+
+	# Get user's existing project IDs
+	existing_ids = set()
+	rows = mochi.db.rows("select id from projects")
+	for row in rows or []:
+		existing_ids.add(row["id"])
+
+	# Connect to recommendations service
+	s = mochi.remote.stream("1JYmMpQU7fxvTrwHpNpiwKCgUg3odWqX7s9t1cLswSMAro5M2P", "recommendations", "list", {"type": "project", "language": "en"})
+	if not s:
+		return {"data": {"projects": []}}
+
+	r = s.read()
+	if r.get("status") != "200":
+		return {"data": {"projects": []}}
+
+	recommendations = []
+	items = s.read()
+	if type(items) not in ["list", "tuple"]:
+		return {"data": {"projects": []}}
+
+	for item in items:
+		entity_id = item.get("entity", "")
+		if entity_id and entity_id not in existing_ids:
+			recommendations.append({
+				"id": entity_id,
+				"name": item.get("name", ""),
+				"blurb": item.get("blurb", ""),
+				"fingerprint": mochi.entity.fingerprint(entity_id),
+			})
+
+	return {"data": {"projects": recommendations}}
+
 # Subscribe to a remote project
 def action_subscribe(a):
 	if not a.user.identity.id:

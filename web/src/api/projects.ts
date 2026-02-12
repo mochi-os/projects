@@ -950,6 +950,20 @@ const projectsApi = {
     return projectsRequest.post(endpoints.projects.probe, { url });
   },
 
+  // Get recommended projects
+  recommendations: async (): Promise<{
+    data: {
+      projects: Array<{
+        id: string;
+        name: string;
+        blurb: string;
+        fingerprint: string;
+      }>;
+    };
+  }> => {
+    return projectsRequest.get(endpoints.projects.recommendations);
+  },
+
   // Subscribe to a remote project
   subscribe: async (
     projectId: string,

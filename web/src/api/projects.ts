@@ -98,6 +98,8 @@ interface MoveObjectRequest {
   rank?: number;
   row_field?: string;  // Row field name (for swimlane moves)
   row_value?: string;  // New row value
+  scope_parent?: string;  // Scope rank renumbering to siblings of this parent
+  promote?: string;  // "true" to clear parent (promote child to top-level)
 }
 
 interface CreateViewRequest {
@@ -110,6 +112,7 @@ interface CreateViewRequest {
   sort?: string;
   direction?: "asc" | "desc";
   classes?: string;
+  border?: string;
 }
 
 interface UpdateViewRequest {
@@ -122,6 +125,7 @@ interface UpdateViewRequest {
   sort?: string;
   direction?: "asc" | "desc";
   classes?: string;
+  border?: string;
 }
 
 // Class response/request types
@@ -142,11 +146,13 @@ interface ClassCreateResponse {
 interface CreateClassRequest {
   name: string;
   pull_requests?: string;
+  title?: string;
 }
 
 interface UpdateClassRequest {
   name?: string;
   pull_requests?: string;
+  title?: string;
 }
 
 // Hierarchy response/request types
@@ -946,6 +952,20 @@ const projectsApi = {
     };
   }> => {
     return projectsRequest.post(endpoints.projects.probe, { url });
+  },
+
+  // Get recommended projects
+  recommendations: async (): Promise<{
+    data: {
+      projects: Array<{
+        id: string;
+        name: string;
+        blurb: string;
+        fingerprint: string;
+      }>;
+    };
+  }> => {
+    return projectsRequest.get(endpoints.projects.recommendations);
   },
 
   // Subscribe to a remote project

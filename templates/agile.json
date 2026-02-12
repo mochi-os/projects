@@ -1,23 +1,24 @@
 {
   "id": "agile",
+  "version": 1,
   "name": "Agile development",
   "description": "Full Agile/Scrum for development teams",
   "icon": "zap",
   "classes": [
-    {"id": "epic", "name": "Epic", "rank": 0},
-    {"id": "story", "name": "Story", "rank": 1},
-    {"id": "task", "name": "Task", "rank": 2},
-    {"id": "bug", "name": "Bug", "rank": 3}
+    {"id": "epic", "name": "Epic", "rank": 0, "title": "title"},
+    {"id": "story", "name": "Story", "rank": 1, "title": "title"},
+    {"id": "task", "name": "Task", "rank": 2, "title": "title"},
+    {"id": "bug", "name": "Bug", "rank": 3, "title": "title"}
   ],
   "fields": {
     "epic": [
-      {"id": "title", "name": "Title", "fieldtype": "text", "flags": "required,title,sort", "card": 1, "rank": 0, "rows": 1},
+      {"id": "title", "name": "Title", "fieldtype": "text", "flags": "required,sort", "card": 1, "rank": 0, "rows": 1},
       {"id": "description", "name": "Description", "fieldtype": "text", "flags": "", "card": 0, "rank": 1, "rows": 3},
       {"id": "status", "name": "Status", "fieldtype": "enumerated", "flags": "required,sort", "card": 0, "rank": 2},
       {"id": "owner", "name": "Owner", "fieldtype": "user", "flags": "", "card": 0, "rank": 3}
     ],
     "story": [
-      {"id": "title", "name": "Title", "fieldtype": "text", "flags": "required,title,sort", "card": 1, "rank": 0, "rows": 1},
+      {"id": "title", "name": "Title", "fieldtype": "text", "flags": "required,sort", "card": 1, "rank": 0, "rows": 1},
       {"id": "description", "name": "Description", "fieldtype": "text", "flags": "", "card": 0, "rank": 1, "rows": 3},
       {"id": "status", "name": "Status", "fieldtype": "enumerated", "flags": "required,sort", "card": 0, "rank": 2},
       {"id": "points", "name": "Points", "fieldtype": "enumerated", "flags": "sort", "card": 1, "rank": 3},
@@ -25,16 +26,16 @@
       {"id": "owner", "name": "Owner", "fieldtype": "user", "flags": "", "card": 0, "rank": 5}
     ],
     "task": [
-      {"id": "title", "name": "Title", "fieldtype": "text", "flags": "required,title,sort", "card": 1, "rank": 0, "rows": 1},
+      {"id": "title", "name": "Title", "fieldtype": "text", "flags": "required,sort", "card": 1, "rank": 0, "rows": 1},
       {"id": "description", "name": "Description", "fieldtype": "text", "flags": "", "card": 0, "rank": 1, "rows": 3},
       {"id": "status", "name": "Status", "fieldtype": "enumerated", "flags": "required,sort", "card": 0, "rank": 2},
       {"id": "owner", "name": "Owner", "fieldtype": "user", "flags": "", "card": 0, "rank": 3}
     ],
     "bug": [
-      {"id": "title", "name": "Title", "fieldtype": "text", "flags": "required,title,sort", "card": 1, "rank": 0, "rows": 1},
+      {"id": "title", "name": "Title", "fieldtype": "text", "flags": "required,sort", "card": 1, "rank": 0, "rows": 1},
       {"id": "description", "name": "Description", "fieldtype": "text", "flags": "", "card": 0, "rank": 1, "rows": 3},
       {"id": "status", "name": "Status", "fieldtype": "enumerated", "flags": "required,sort", "card": 0, "rank": 2},
-      {"id": "priority", "name": "Priority", "fieldtype": "enumerated", "flags": "border,sort", "card": 1, "rank": 3},
+      {"id": "priority", "name": "Priority", "fieldtype": "enumerated", "flags": "sort", "card": 1, "rank": 3},
       {"id": "owner", "name": "Owner", "fieldtype": "user", "flags": "", "card": 0, "rank": 4}
     ]
   },
@@ -98,7 +99,7 @@
     "bug": ["", "epic", "story"]
   },
   "views": [
-    {"id": "sprint", "name": "Sprint Board", "viewtype": "board", "columns": "status", "fields": "title,description,points", "classes": ["story", "task"]},
+    {"id": "sprint", "name": "Sprint Board", "viewtype": "board", "columns": "status", "fields": "title,description,points", "border": "priority", "classes": ["story", "task"]},
     {"id": "backlog", "name": "Backlog", "viewtype": "list", "fields": "title,description,status,points,sprint,owner", "classes": ["story"]},
     {"id": "roadmap", "name": "Roadmap", "viewtype": "list", "fields": "title,description,status,owner", "classes": ["epic"]}
   ]

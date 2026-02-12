@@ -22,6 +22,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   SortDirectionButton,
+  Switch,
 } from "@mochi/common";
 import { Check, GripVertical, Minus, MoreHorizontal, Plus, X } from "lucide-react";
 import type { ProjectView, ProjectField, ProjectClass, FieldOption } from "@/types";
@@ -58,7 +59,8 @@ interface ViewSheetProps {
     selectedFields: string[],
     sort: string,
     direction: string,
-    selectedClasses: string[]
+    selectedClasses: string[],
+    border: string
   ) => void | Promise<void>;
 }
 
@@ -84,6 +86,7 @@ export function ViewSheet({
   const [sort, setSort] = useState("");
   const [direction, setDirection] = useState<"asc" | "desc">("asc");
   const [selectedClasses, setSelectedClasses] = useState<string[]>([]);
+  const [border, setBorder] = useState("");
   const [draggedViewFieldId, setDraggedViewFieldId] = useState<string | null>(null);
   const [viewFieldDropIndicator, setViewFieldDropIndicator] = useState<{ fieldId: string; position: "before" | "after" } | null>(null);
 
@@ -97,6 +100,7 @@ export function ViewSheet({
       setViewtype(enumeratedFields.length > 0 ? "board" : "list");
       setColumns("");
       setRows("");
+      setBorder("");
       setSelectedFields(fields.map((f) => f.id));
       setSort("");
       setDirection("asc");
@@ -106,6 +110,7 @@ export function ViewSheet({
       setViewtype(view.viewtype);
       setColumns(view.columns || "");
       setRows(view.rows || "");
+      setBorder(view.border || "");
       setSelectedFields((view.fields || "").split(",").filter(Boolean));
       setSort(view.sort || "");
       setDirection((view.direction as "asc" | "desc") || "asc");
@@ -233,7 +238,7 @@ export function ViewSheet({
   const handleCreate = async () => {
     if (onCreate && canSubmit) {
       try {
-        await onCreate(name.trim(), viewtype, columns, rows, selectedFields, sort, direction, selectedClasses);
+        await onCreate(name.trim(), viewtype, columns, rows, selectedFields, sort, direction, selectedClasses, border);
         onOpenChange(false);
       } catch {
         // Error displayed by caller via toast
@@ -310,11 +315,9 @@ export function ViewSheet({
                     key={cls.id}
                     className="flex items-center gap-2 text-sm cursor-pointer"
                   >
-                    <input
-                      type="checkbox"
+                    <Switch
                       checked={selectedClasses.includes(cls.id)}
-                      onChange={() => toggleClass(cls.id)}
-                      className="rounded"
+                      onCheckedChange={() => toggleClass(cls.id)}
                     />
                     {cls.name}
                   </label>
@@ -367,6 +370,31 @@ export function ViewSheet({
             </div>
           )}
 
+          {viewtype === "board" && enumeratedFields.length > 0 && (
+            <div className="space-y-2">
+              <Label>Border colour</Label>
+              <div className="pl-4">
+                <select
+                  value={border}
+                  onChange={(e) => {
+                    setBorder(e.target.value);
+                    if (mode === "edit" && onUpdate) {
+                      onUpdate({ border: e.target.value });
+                    }
+                  }}
+                  className="w-full h-9 rounded-md border border-input bg-background px-3 py-1 text-sm"
+                >
+                  <option value="">None</option>
+                  {enumeratedFields.map((field) => (
+                    <option key={field.id} value={field.id}>
+                      {field.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+          )}
+
           <div className="space-y-2">
             <Label>Show fields</Label>
             <div className="pl-4 space-y-1">
@@ -390,11 +418,9 @@ export function ViewSheet({
                       }`}
                     >
                       <GripVertical className="size-4 text-muted-foreground shrink-0" />
-                      <input
-                        type="checkbox"
+                      <Switch
                         checked
-                        onChange={() => toggleViewField(field!.id)}
-                        className="rounded"
+                        onCheckedChange={() => toggleViewField(field!.id)}
                       />
                       {field!.name}
                     </div>
@@ -410,11 +436,9 @@ export function ViewSheet({
                     key={field.id}
                     className="flex items-center gap-2 px-3 py-1.5 text-sm cursor-pointer"
                   >
-                    <input
-                      type="checkbox"
+                    <Switch
                       checked={false}
-                      onChange={() => toggleViewField(field.id)}
-                      className="rounded"
+                      onCheckedChange={() => toggleViewField(field.id)}
                     />
                     {field.name}
                   </label>
@@ -475,7 +499,7 @@ interface ClassSheetProps {
   cls?: ProjectClass | null;
   hierarchy?: string[];
   fields?: ProjectField[];
-  onUpdate?: (name: string, pull_requests?: string) => void;
+  onUpdate?: (name: string, pull_requests?: string, title?: string) => void;
   onUpdateHierarchy?: (parents: string[]) => void;
   onDelete?: () => void;
   onAddField?: () => void;
@@ -506,7 +530,7 @@ export function ClassSheet({
   const [dropIndicator, setDropIndicator] = useState<{ fieldId: string; position: "before" | "after" } | null>(null);
 
   // Create mode state
-  const [pendingParents, setPendingParents] = useState<string[]>([]);
+  const [pendingParents, setPendingParents] = useState<string[]>([""]);
   const [pendingFields, setPendingFields] = useState<PendingField[]>([]);
   const [addFieldOpen, setAddFieldOpen] = useState(false);
   const [pullRequests, setPullRequests] = useState(false);
@@ -517,7 +541,7 @@ export function ClassSheet({
     if (mode === "create") {
       setName("");
       setPendingParents([]);
-      setPendingFields([{ id: "title", name: "Title", fieldtype: "text", flags: "required,title,sort" }]);
+      setPendingFields([{ id: "title", name: "Title", fieldtype: "text", flags: "required,sort" }]);
       setPullRequests(false);
     } else if (cls) {
       setName(cls.name);
@@ -548,7 +572,6 @@ export function ClassSheet({
   };
 
   const currentHierarchy = mode === "create" ? pendingParents : (hierarchy || []);
-  const otherClasses = mode === "create" ? classes : classes.filter((c) => c.id !== cls!.id);
   const displayFields = mode === "create" ? pendingFields : (fields || []);
 
   // Drag and drop for fields
@@ -653,7 +676,7 @@ export function ClassSheet({
             )}
           </div>
         </div>
-        <div className="flex-1 overflow-y-auto p-6 space-y-4">
+        <div className="flex-1 overflow-y-auto p-6 space-y-6">
           <div className="space-y-2">
             <Label htmlFor="class-name">Name</Label>
             <div className="pl-4">
@@ -667,44 +690,76 @@ export function ClassSheet({
             </div>
           </div>
 
-          {otherClasses.length > 0 && (
+          {mode === "edit" && cls && (
             <div className="space-y-2">
-              <Label>Can be child of</Label>
-              <div className="pl-4 space-y-2">
-                <div className="space-y-1">
-                  {[...otherClasses].sort((a, b) => a.name.localeCompare(b.name)).map((c) => (
-                    <label
-                      key={c.id}
-                      className="flex items-center gap-2 text-sm cursor-pointer"
-                    >
-                      <input
-                        type="checkbox"
-                        checked={currentHierarchy.includes(c.id)}
-                        onChange={() => toggleParent(c.id)}
-                        className="rounded"
-                      />
-                      {c.name}
-                    </label>
+              <Label htmlFor="class-id">ID</Label>
+              <div className="pl-4">
+                <Input id="class-id" value={cls.id} readOnly className="text-muted-foreground" />
+              </div>
+            </div>
+          )}
+
+          {mode === "edit" && cls && fields && fields.length > 0 && (
+            <div className="space-y-2">
+              <Label>Title field</Label>
+              <div className="pl-4">
+                <select
+                  value={cls.title || ""}
+                  onChange={(e) => {
+                    if (onUpdate) {
+                      onUpdate(cls.name, undefined, e.target.value);
+                    }
+                  }}
+                  className="w-full h-9 rounded-md border border-input bg-background px-3 py-1 text-sm"
+                >
+                  <option value="">None</option>
+                  {fields.map((field) => (
+                    <option key={field.id} value={field.id}>
+                      {field.name}
+                    </option>
                   ))}
-                </div>
+                </select>
               </div>
             </div>
           )}
 
           <div className="space-y-2">
+            <Label>Can be child of</Label>
+            <div className="pl-4 space-y-1">
+              <label className="flex items-center gap-2 text-sm cursor-pointer">
+                <Switch
+                  checked={currentHierarchy.includes("")}
+                  onCheckedChange={() => toggleParent("")}
+                />
+                Top level
+              </label>
+              {[...classes].sort((a, b) => a.name.localeCompare(b.name)).map((c) => (
+                <label
+                  key={c.id}
+                  className="flex items-center gap-2 text-sm cursor-pointer"
+                >
+                  <Switch
+                    checked={currentHierarchy.includes(c.id)}
+                    onCheckedChange={() => toggleParent(c.id)}
+                  />
+                  {c.name}{c.id === cls?.id ? " (itself)" : ""}
+                </label>
+              ))}
+            </div>
+          </div>
+
+          <div className="space-y-2">
             <Label>Pull requests</Label>
             <div className="pl-4">
               <label className="flex items-center gap-2 text-sm cursor-pointer">
-                <input
-                  type="checkbox"
+                <Switch
                   checked={pullRequests}
-                  onChange={(e) => {
-                    setPullRequests(e.target.checked);
+                  onCheckedChange={(checked) => {
+                    setPullRequests(checked);
                     if (mode === "edit" && onUpdate) {
-                      onUpdate(name, e.target.checked ? "1" : "0");
+                      onUpdate(name, checked ? "1" : "0");
                     }
                   }}
-                  className="rounded"
                 />
                 Allow pull requests
               </label>
@@ -745,7 +800,7 @@ export function ClassSheet({
                           {field.name || field.id}
                         </span>
                       )}
-                      {mode === "create" && !field.flags?.split(",").includes("title") && (
+                      {mode === "create" && field.id !== "title" && (
                         <Button
                           type="button"
                           variant="ghost"
@@ -823,6 +878,7 @@ interface EditFieldDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   field: ProjectField | null;
+  isSystemField?: boolean;
   options: FieldOption[];
   onUpdate: (updates: Partial<ProjectField>) => void;
   onDelete: () => void;
@@ -836,6 +892,7 @@ export function EditFieldDialog({
   open,
   onOpenChange,
   field,
+  isSystemField: isSystemFieldProp,
   options,
   onUpdate,
   onDelete,
@@ -855,7 +912,7 @@ export function EditFieldDialog({
 
   if (!field) return null;
 
-  const isSystemField = field.flags?.split(",").includes("title") ?? false;
+  const isSystemField = isSystemFieldProp ?? false;
 
   const handleNameBlur = () => {
     if (name.trim() && name.trim() !== field.name) {
@@ -941,16 +998,12 @@ export function EditFieldDialog({
             <div className="space-y-1">
               {[
                 { id: "required", label: "Required" },
-                { id: "title", label: "Title" },
-                { id: "border", label: "Border" },
                 { id: "sort", label: "Sort" },
               ].map((flag) => (
                 <label key={flag.id} className="flex items-center gap-2 text-sm cursor-pointer">
-                  <input
-                    type="checkbox"
+                  <Switch
                     checked={hasFlag(flag.id)}
-                    onChange={(e) => toggleFlag(flag.id, e.target.checked)}
-                    className="rounded"
+                    onCheckedChange={(checked) => toggleFlag(flag.id, checked)}
                   />
                   {flag.label}
                 </label>

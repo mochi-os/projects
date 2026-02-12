@@ -99,6 +99,7 @@ interface MoveObjectRequest {
   row_field?: string;  // Row field name (for swimlane moves)
   row_value?: string;  // New row value
   scope_parent?: string;  // Scope rank renumbering to siblings of this parent
+  promote?: string;  // "true" to clear parent (promote child to top-level)
 }
 
 interface CreateViewRequest {

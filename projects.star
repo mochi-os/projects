@@ -1421,6 +1421,8 @@ def action_object_move(a):
 		sp = a.input("scope_parent")
 		if sp:
 			params["scope_parent"] = sp
+		if a.input("promote") == "true":
+			params["promote"] = "true"
 		result = forward_to_owner(a, project_id, "object/move", params)
 		if result and object_id:
 			now = mochi.time.now()
@@ -1433,6 +1435,8 @@ def action_object_move(a):
 				mochi.db.execute("update objects set rank=?, updated=? where id=?", int(rank), now, object_id)
 			if rf:
 				mochi.db.execute("replace into \"values\" (object, field, value) values (?, ?, ?)", object_id, rf, a.input("row_value"))
+			if a.input("promote") == "true":
+				mochi.db.execute("update objects set parent='', updated=? where id=?", now, object_id)
 			mochi.db.execute("update objects set updated=? where id=?", now, object_id)
 		return result
 
@@ -1520,6 +1524,15 @@ def action_object_move(a):
 			mochi.db.execute("replace into \"values\" (object, field, value) values (?, ?, ?)", object_id, row_field, row_value)
 			log_activity(object_id, a.user.identity.id, "updated", row_field, old_row_value, row_value)
 			row_changed = True
+
+	# Handle promote (clear parent — for child dragged to different column/row)
+	promote = a.input("promote") == "true"
+	if promote:
+		old_parent_row = mochi.db.row("select parent from objects where id=?", object_id)
+		old_parent = old_parent_row["parent"] if old_parent_row else ""
+		if old_parent:
+			mochi.db.execute("update objects set parent='', updated=? where id=?", mochi.time.now(), object_id)
+			log_activity(object_id, a.user.identity.id, "moved", "parent", old_parent, "")
 
 	mochi.db.execute("update objects set updated=? where id=?", mochi.time.now(), object_id)
 
@@ -5774,6 +5787,16 @@ def do_object_move(project_id, project, params, user_id):
 			mochi.db.execute("replace into \"values\" (object, field, value) values (?, ?, ?)", object_id, row_field, row_value)
 			log_activity(object_id, user_id, "updated", row_field, old_row_value, row_value)
 			row_changed = True
+
+	# Handle promote (clear parent)
+	promote = params.get("promote", "") == "true"
+	if promote:
+		old_parent_row = mochi.db.row("select parent from objects where id=?", object_id)
+		old_parent = old_parent_row["parent"] if old_parent_row else ""
+		if old_parent:
+			mochi.db.execute("update objects set parent='', updated=? where id=?", mochi.time.now(), object_id)
+			log_activity(object_id, user_id, "moved", "parent", old_parent, "")
+
 	mochi.db.execute("update objects set updated=? where id=?", mochi.time.now(), object_id)
 
 	# Cascade status/row changes to all descendants

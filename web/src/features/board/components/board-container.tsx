@@ -26,7 +26,7 @@ interface BoardContainerProps {
   peopleMap?: Record<string, string>;
   onCardClick?: (object: ProjectObject) => void;
   onCreateClick?: (statusId: string, rowId?: string) => void;
-  onMoveObject?: (objectId: string, newStatus: string, newRank?: number, newRow?: string, scopeParent?: string) => void;
+  onMoveObject?: (objectId: string, newStatus: string, newRank?: number, newRow?: string, scopeParent?: string, promote?: boolean) => void;
   onReparentObject?: (objectId: string, newParentId: string | null) => void;
   onRenameColumn?: (classId: string, fieldId: string, optionId: string, newName: string) => Promise<void>;
   onDeleteColumn?: (classId: string, fieldId: string, optionId: string) => Promise<void>;
@@ -291,15 +291,16 @@ export function BoardContainer({
       return;
     }
 
-    // Drop between cards
+    // Drop between cards — check if child needs promotion
     if (draggedObj.parent && objectMap[draggedObj.parent]) {
-      // Child dragged to a different column → promote to top-level first
-      const parentStatus = objectMap[draggedObj.parent]?.values[statusField] || "";
-      if (columnId !== parentStatus) {
-        // Promote: remove parent, then move to new column
-        onReparentObject?.(objectId, null);
-        // After promotion, move to new column
-        onMoveObject?.(objectId, columnId, newRank, rowId);
+      const parent = objectMap[draggedObj.parent];
+      const parentStatus = parent?.values[statusField] || "";
+      const parentRow = rowField ? (parent?.values[rowField] || "") : undefined;
+      const columnChanged = columnId !== parentStatus;
+      const rowChanged = rowId !== undefined && rowId !== parentRow;
+      if (columnChanged || rowChanged) {
+        // Promote to top-level and move in a single atomic operation
+        onMoveObject?.(objectId, columnId, newRank, rowId, undefined, true);
         return;
       }
     }

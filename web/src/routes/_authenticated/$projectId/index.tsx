@@ -198,6 +198,7 @@ function ProjectPage() {
       rowField: rf,
       rowValue,
       scopeParent,
+      promote,
     }: {
       objectId: string;
       field: string;
@@ -206,6 +207,7 @@ function ProjectPage() {
       rowField?: string;
       rowValue?: string;
       scopeParent?: string;
+      promote?: boolean;
     }) => {
       return projectsApi.moveObject(params.projectId, objectId, {
         field,
@@ -214,9 +216,10 @@ function ProjectPage() {
         row_field: rf,
         row_value: rowValue,
         scope_parent: scopeParent,
+        promote: promote ? "true" : undefined,
       });
     },
-    onMutate: async ({ objectId, field, value, rank, rowField: rf, rowValue, scopeParent }) => {
+    onMutate: async ({ objectId, field, value, rank, rowField: rf, rowValue, scopeParent, promote }) => {
       // Optimistically update the UI
       await queryClient.cancelQueries({
         queryKey: ["objects", params.projectId],
@@ -259,7 +262,12 @@ function ProjectPage() {
                 if (rf && rowValue !== undefined) {
                   updatedValues[rf] = rowValue;
                 }
-                return { ...obj, rank: rank ?? obj.rank, values: updatedValues };
+                return {
+                  ...obj,
+                  rank: rank ?? obj.rank,
+                  values: updatedValues,
+                  ...(promote ? { parent: "" } : {}),
+                };
               }
               // Cascade status/row changes to descendants
               if (field && isDescendant(obj, objectId, old.objects)) {
@@ -577,7 +585,7 @@ function ProjectPage() {
     setCreateDialogOpen(true);
   };
 
-  const handleMoveObject = (objectId: string, newValue: string, newRank?: number, newRow?: string, scopeParent?: string) => {
+  const handleMoveObject = (objectId: string, newValue: string, newRank?: number, newRow?: string, scopeParent?: string, promote?: boolean) => {
     moveMutation.mutate({
       objectId,
       field: columnField,
@@ -586,6 +594,7 @@ function ProjectPage() {
       rowField: newRow !== undefined ? rowField : undefined,
       rowValue: newRow,
       scopeParent,
+      promote,
     });
   };
 

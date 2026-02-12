@@ -4,7 +4,7 @@
 import { useState, useEffect, useRef } from "react";
 import {
   Button,
-  Checkbox,
+  Switch,
   Input,
   Textarea,
   Select,
@@ -105,7 +105,7 @@ export function FieldEditor({
       case "checkbox":
         return (
           <div className="pt-2">
-            <Checkbox checked={value === "1" || value === "true"} disabled />
+            <Switch checked={value === "1" || value === "true"} disabled />
           </div>
         );
       case "checklist": {
@@ -126,7 +126,7 @@ export function FieldEditor({
             <div className="space-y-1">
               {items.map((item) => (
                 <div key={item.id} className="flex items-center gap-2">
-                  <Checkbox checked={item.done} disabled />
+                  <Switch checked={item.done} disabled />
                   <span className={`text-sm ${item.done ? "line-through text-muted-foreground" : ""}`}>{item.text}</span>
                 </div>
               ))}
@@ -239,7 +239,7 @@ export function FieldEditor({
       case "checkbox":
         return (
           <div className="pt-2">
-            <Checkbox
+            <Switch
               checked={value === "1" || value === "true"}
               onCheckedChange={(checked) => onChange(checked ? "1" : "0")}
               disabled={disabled}
@@ -437,7 +437,7 @@ function ChecklistEditor({ value, onChange, disabled }: ChecklistEditorProps) {
             key={item.id}
             className="flex items-center gap-2 group"
           >
-            <Checkbox
+            <Switch
               checked={item.done}
               onCheckedChange={() => toggleItem(item.id)}
               disabled={disabled}

@@ -22,6 +22,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   SortDirectionButton,
+  Switch,
 } from "@mochi/common";
 import { Check, GripVertical, Minus, MoreHorizontal, Plus, X } from "lucide-react";
 import type { ProjectView, ProjectField, ProjectClass, FieldOption } from "@/types";
@@ -310,11 +311,9 @@ export function ViewSheet({
                     key={cls.id}
                     className="flex items-center gap-2 text-sm cursor-pointer"
                   >
-                    <input
-                      type="checkbox"
+                    <Switch
                       checked={selectedClasses.includes(cls.id)}
-                      onChange={() => toggleClass(cls.id)}
-                      className="rounded"
+                      onCheckedChange={() => toggleClass(cls.id)}
                     />
                     {cls.name}
                   </label>
@@ -390,11 +389,9 @@ export function ViewSheet({
                       }`}
                     >
                       <GripVertical className="size-4 text-muted-foreground shrink-0" />
-                      <input
-                        type="checkbox"
+                      <Switch
                         checked
-                        onChange={() => toggleViewField(field!.id)}
-                        className="rounded"
+                        onCheckedChange={() => toggleViewField(field!.id)}
                       />
                       {field!.name}
                     </div>
@@ -410,11 +407,9 @@ export function ViewSheet({
                     key={field.id}
                     className="flex items-center gap-2 px-3 py-1.5 text-sm cursor-pointer"
                   >
-                    <input
-                      type="checkbox"
+                    <Switch
                       checked={false}
-                      onChange={() => toggleViewField(field.id)}
-                      className="rounded"
+                      onCheckedChange={() => toggleViewField(field.id)}
                     />
                     {field.name}
                   </label>
@@ -670,11 +665,9 @@ export function ClassSheet({
             <Label>Can be child of</Label>
             <div className="pl-4 space-y-1">
               <label className="flex items-center gap-2 text-sm cursor-pointer">
-                <input
-                  type="checkbox"
+                <Switch
                   checked={currentHierarchy.includes("")}
-                  onChange={() => toggleParent("")}
-                  className="rounded"
+                  onCheckedChange={() => toggleParent("")}
                 />
                 Top level
               </label>
@@ -683,11 +676,9 @@ export function ClassSheet({
                   key={c.id}
                   className="flex items-center gap-2 text-sm cursor-pointer"
                 >
-                  <input
-                    type="checkbox"
+                  <Switch
                     checked={currentHierarchy.includes(c.id)}
-                    onChange={() => toggleParent(c.id)}
-                    className="rounded"
+                    onCheckedChange={() => toggleParent(c.id)}
                   />
                   {c.name}{c.id === cls?.id ? " (itself)" : ""}
                 </label>
@@ -699,16 +690,14 @@ export function ClassSheet({
             <Label>Pull requests</Label>
             <div className="pl-4">
               <label className="flex items-center gap-2 text-sm cursor-pointer">
-                <input
-                  type="checkbox"
+                <Switch
                   checked={pullRequests}
-                  onChange={(e) => {
-                    setPullRequests(e.target.checked);
+                  onCheckedChange={(checked) => {
+                    setPullRequests(checked);
                     if (mode === "edit" && onUpdate) {
-                      onUpdate(name, e.target.checked ? "1" : "0");
+                      onUpdate(name, checked ? "1" : "0");
                     }
                   }}
-                  className="rounded"
                 />
                 Allow pull requests
               </label>
@@ -950,11 +939,9 @@ export function EditFieldDialog({
                 { id: "sort", label: "Sort" },
               ].map((flag) => (
                 <label key={flag.id} className="flex items-center gap-2 text-sm cursor-pointer">
-                  <input
-                    type="checkbox"
+                  <Switch
                     checked={hasFlag(flag.id)}
-                    onChange={(e) => toggleFlag(flag.id, e.target.checked)}
-                    className="rounded"
+                    onCheckedChange={(checked) => toggleFlag(flag.id, checked)}
                   />
                   {flag.label}
                 </label>

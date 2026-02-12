@@ -137,9 +137,6 @@ function ProjectPage() {
   // Filter state
   const [filters, setFilters] = useState<FilterState>({
     search: "",
-    status: "",
-    priority: "",
-    owner: "",
     watched: false,
   });
 
@@ -461,21 +458,6 @@ function ProjectPage() {
       });
     }
 
-    // Apply status filter
-    if (filters.status) {
-      result = result.filter((obj) => obj.values.status === filters.status);
-    }
-
-    // Apply priority filter
-    if (filters.priority) {
-      result = result.filter((obj) => obj.values.priority === filters.priority);
-    }
-
-    // Apply owner filter
-    if (filters.owner) {
-      result = result.filter((obj) => obj.values.owner === filters.owner);
-    }
-
     // Apply watched filter
     if (filters.watched && watchedIds) {
       const watchedSet = new Set(watchedIds);
@@ -663,9 +645,6 @@ function ProjectPage() {
         actions={
           <div className="flex items-center gap-2">
             <FilterBar
-              project={project}
-              columnField={columnField}
-              rowField={rowField}
               filters={filters}
               onFilterChange={setFilters}
             />

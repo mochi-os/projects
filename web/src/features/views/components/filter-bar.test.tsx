@@ -1,20 +1,11 @@
 // Tests for FilterBar component (shows active filter chips)
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import {
-  render,
-  screen,
-  fireEvent,
-  createMockProjectDetails,
-} from "@/test/test-utils";
+import { render, screen, fireEvent } from "@/test/test-utils";
 import { FilterBar, type FilterState } from "./filter-bar";
 
 describe("FilterBar", () => {
-  const mockProject = createMockProjectDetails();
   const defaultFilters: FilterState = {
     search: "",
-    status: "",
-    priority: "",
-    owner: "",
     watched: false,
   };
   const mockOnFilterChange = vi.fn();
@@ -26,9 +17,6 @@ describe("FilterBar", () => {
   it("should not render when no filters are active", () => {
     const { container } = render(
       <FilterBar
-        project={mockProject}
-        columnField="status"
-        rowField="priority"
         filters={defaultFilters}
         onFilterChange={mockOnFilterChange}
       />,
@@ -40,9 +28,6 @@ describe("FilterBar", () => {
   it("should show search filter chip when search is active", () => {
     render(
       <FilterBar
-        project={mockProject}
-        columnField="status"
-        rowField="priority"
         filters={{ ...defaultFilters, search: "my search" }}
         onFilterChange={mockOnFilterChange}
       />,
@@ -52,70 +37,39 @@ describe("FilterBar", () => {
     expect(screen.getByText("my search")).toBeInTheDocument();
   });
 
-  it("should show status filter chip with option name", () => {
+  it("should show watched filter chip", () => {
     render(
       <FilterBar
-        project={mockProject}
-        columnField="status"
-        rowField="priority"
-        filters={{ ...defaultFilters, status: "in_progress" }}
+        filters={{ ...defaultFilters, watched: true }}
         onFilterChange={mockOnFilterChange}
       />,
     );
 
-    expect(screen.getByText("Status:")).toBeInTheDocument();
-    expect(screen.getByText("In Progress")).toBeInTheDocument();
-  });
-
-  it("should show priority filter chip with option name", () => {
-    render(
-      <FilterBar
-        project={mockProject}
-        columnField="status"
-        rowField="priority"
-        filters={{ ...defaultFilters, priority: "high" }}
-        onFilterChange={mockOnFilterChange}
-      />,
-    );
-
-    expect(screen.getByText("Priority:")).toBeInTheDocument();
-    expect(screen.getByText("High")).toBeInTheDocument();
+    expect(screen.getByText("Watched:")).toBeInTheDocument();
+    expect(screen.getByText("On")).toBeInTheDocument();
   });
 
   it("should clear individual filter when X button is clicked", () => {
     render(
       <FilterBar
-        project={mockProject}
-        columnField="status"
-        rowField="priority"
-        filters={{ ...defaultFilters, status: "todo" }}
+        filters={{ ...defaultFilters, search: "test" }}
         onFilterChange={mockOnFilterChange}
       />,
     );
 
-    // Click the X button on the status chip
     const clearButtons = screen.getAllByRole("button");
     fireEvent.click(clearButtons[0]);
 
     expect(mockOnFilterChange).toHaveBeenCalledWith({
       ...defaultFilters,
-      status: "",
+      search: "",
     });
   });
 
   it("should show clear all button when multiple filters are active", () => {
     render(
       <FilterBar
-        project={mockProject}
-        columnField="status"
-        rowField="priority"
-        filters={{
-          search: "test",
-          status: "todo",
-          priority: "",
-          owner: "",
-          watched: false,
-        }}
+        filters={{ search: "test", watched: true }}
         onFilterChange={mockOnFilterChange}
       />,
     );
@@ -126,10 +80,7 @@ describe("FilterBar", () => {
   it("should not show clear all button when only one filter is active", () => {
     render(
       <FilterBar
-        project={mockProject}
-        columnField="status"
-        rowField="priority"
-        filters={{ ...defaultFilters, status: "todo" }}
+        filters={{ ...defaultFilters, search: "test" }}
         onFilterChange={mockOnFilterChange}
       />,
     );
@@ -140,16 +91,7 @@ describe("FilterBar", () => {
   it("should clear all filters when clear all button is clicked", () => {
     render(
       <FilterBar
-        project={mockProject}
-        columnField="status"
-        rowField="priority"
-        filters={{
-          search: "test",
-          status: "todo",
-          priority: "high",
-          owner: "",
-          watched: false,
-        }}
+        filters={{ search: "test", watched: true }}
         onFilterChange={mockOnFilterChange}
       />,
     );
@@ -158,25 +100,7 @@ describe("FilterBar", () => {
 
     expect(mockOnFilterChange).toHaveBeenCalledWith({
       search: "",
-      status: "",
-      priority: "",
-      owner: "",
       watched: false,
     });
-  });
-
-  it("should show raw value when option name not found", () => {
-    render(
-      <FilterBar
-        project={mockProject}
-        columnField="status"
-        rowField="priority"
-        filters={{ ...defaultFilters, status: "unknown_status" }}
-        onFilterChange={mockOnFilterChange}
-      />,
-    );
-
-    expect(screen.getByText("Status:")).toBeInTheDocument();
-    expect(screen.getByText("unknown_status")).toBeInTheDocument();
   });
 });

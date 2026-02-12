@@ -236,13 +236,6 @@ export interface Branch {
   current: boolean;
 }
 
-export interface DiffFile {
-  path: string;
-  additions: number;
-  deletions: number;
-  status: "added" | "modified" | "deleted" | "renamed";
-}
-
 export interface RepositoryListResponse {
   data: {
     repositories: Repository[];

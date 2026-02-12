@@ -140,6 +140,7 @@ export function ObjectDetailPanel({
       return projectsApi.deleteObject(projectId, objectId);
     },
     onSuccess: () => {
+      setShowDeleteDialog(false);
       queryClient.invalidateQueries({
         queryKey: ["objects", projectId],
       });

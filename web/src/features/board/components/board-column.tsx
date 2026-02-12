@@ -18,6 +18,10 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
 } from "@mochi/common";
 import { Inbox, MoreHorizontal, Pencil, Plus, Trash2 } from "lucide-react";
 import { BoardCard } from "./board-card";
@@ -412,10 +416,14 @@ export function BoardColumn({
               style={{ backgroundColor: colour }}
             />
           )}
-          <span className="font-medium text-sm">{name}</span>
-          <span className="text-xs text-muted-foreground bg-muted px-1.5 py-0.5 rounded">
-            {totalCount}
-          </span>
+          <TooltipProvider delayDuration={0}>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <span className="font-medium text-sm">{name}</span>
+              </TooltipTrigger>
+              <TooltipContent>{totalCount} {totalCount === 1 ? "item" : "items"}</TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         </div>
         {!isReordering && (onCreateClick || onRenameColumn || (totalCount === 0 && onDeleteColumn)) && (
           <DropdownMenu>

@@ -1,8 +1,6 @@
 import { createContext, useContext, useState, type ReactNode } from "react";
-import { useParams } from "@tanstack/react-router";
 
 interface SidebarContextType {
-  projectId: string | undefined;
   createDialogOpen: boolean;
   openCreateDialog: () => void;
   closeCreateDialog: () => void;
@@ -14,9 +12,6 @@ interface SidebarContextType {
 const SidebarContext = createContext<SidebarContextType | null>(null);
 
 export function SidebarProvider({ children }: { children: ReactNode }) {
-  const params = useParams({ strict: false });
-  const projectId = (params as { projectId?: string }).projectId;
-
   const [createDialogOpen, setCreateDialogOpen] = useState(false);
   const [searchDialogOpen, setSearchDialogOpen] = useState(false);
 
@@ -28,7 +23,6 @@ export function SidebarProvider({ children }: { children: ReactNode }) {
   return (
     <SidebarContext.Provider
       value={{
-        projectId,
         createDialogOpen,
         openCreateDialog,
         closeCreateDialog,

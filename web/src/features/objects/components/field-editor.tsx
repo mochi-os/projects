@@ -4,7 +4,7 @@
 import { useState, useEffect, useRef } from "react";
 import {
   Button,
-  Checkbox,
+  Switch,
   Input,
   Textarea,
   Select,
@@ -25,6 +25,8 @@ interface FieldEditorProps {
   onChange: (value: string) => void;
   disabled?: boolean;
   readOnly?: boolean;
+  autoFocus?: boolean;
+  immediate?: boolean;
   localPeople?: Person[];
   onValidationError?: (hasError: boolean) => void;
 }
@@ -37,38 +39,56 @@ export function FieldEditor({
   disabled,
   readOnly,
   hideLabel,
+  autoFocus,
+  immediate,
   localPeople = [],
   onValidationError,
 }: FieldEditorProps & { hideLabel?: boolean }) {
   const [localValue, setLocalValue] = useState(value);
   const debounceTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const focusedRef = useRef(false);
+  const localValueRef = useRef(value);
+  const onChangeRef = useRef(onChange);
+  onChangeRef.current = onChange;
 
-  // Sync local state with prop value when it changes externally
+  // Sync local state with prop value when it changes externally,
+  // but not while the user is actively editing (focused)
   useEffect(() => {
-    setLocalValue(value);
+    if (!focusedRef.current) {
+      setLocalValue(value);
+      localValueRef.current = value;
+    }
   }, [value]);
 
+  const handleFocus = () => {
+    focusedRef.current = true;
+  };
+
   const handleBlur = () => {
+    focusedRef.current = false;
     if (debounceTimerRef.current) {
       clearTimeout(debounceTimerRef.current);
+      debounceTimerRef.current = null;
     }
-    if (localValue !== value) {
-      onChange(localValue);
-    }
+    onChangeRef.current(localValueRef.current);
   };
 
   const handleTextChange = (newValue: string) => {
     setLocalValue(newValue);
-    
+    localValueRef.current = newValue;
+
+    if (immediate) {
+      onChangeRef.current(newValue);
+      return;
+    }
+
     // Debounce auto-save for better UX
     if (debounceTimerRef.current) {
       clearTimeout(debounceTimerRef.current);
     }
-    
+
     debounceTimerRef.current = setTimeout(() => {
-      if (newValue !== value) {
-        onChange(newValue);
-      }
+      onChangeRef.current(localValueRef.current);
     }, 1000); // 1 second debounce
   };
 
@@ -105,7 +125,7 @@ export function FieldEditor({
       case "checkbox":
         return (
           <div className="pt-2">
-            <Checkbox checked={value === "1" || value === "true"} disabled />
+            <Switch checked={value === "1" || value === "true"} disabled />
           </div>
         );
       case "checklist": {
@@ -126,7 +146,7 @@ export function FieldEditor({
             <div className="space-y-1">
               {items.map((item) => (
                 <div key={item.id} className="flex items-center gap-2">
-                  <Checkbox checked={item.done} disabled />
+                  <Switch checked={item.done} disabled />
                   <span className={`text-sm ${item.done ? "line-through text-muted-foreground" : ""}`}>{item.text}</span>
                 </div>
               ))}
@@ -183,8 +203,10 @@ export function FieldEditor({
             <Input
               value={localValue}
               onChange={(e) => handleTextChange(e.target.value)}
+              onFocus={handleFocus}
               onBlur={handleBlur}
               disabled={disabled}
+              autoFocus={autoFocus}
               className="h-9"
             />
           );
@@ -193,8 +215,10 @@ export function FieldEditor({
           <Textarea
             value={localValue}
             onChange={(e) => handleTextChange(e.target.value)}
+            onFocus={handleFocus}
             onBlur={handleBlur}
             disabled={disabled}
+            autoFocus={autoFocus}
             rows={field.rows}
           />
         );
@@ -205,6 +229,7 @@ export function FieldEditor({
             type="number"
             value={localValue}
             onChange={(e) => setLocalValue(e.target.value)}
+            onFocus={handleFocus}
             onBlur={handleBlur}
             disabled={disabled}
             className="h-9"
@@ -239,7 +264,7 @@ export function FieldEditor({
       case "checkbox":
         return (
           <div className="pt-2">
-            <Checkbox
+            <Switch
               checked={value === "1" || value === "true"}
               onCheckedChange={(checked) => onChange(checked ? "1" : "0")}
               disabled={disabled}
@@ -261,6 +286,7 @@ export function FieldEditor({
           <Input
             value={localValue}
             onChange={(e) => setLocalValue(e.target.value)}
+            onFocus={handleFocus}
             onBlur={handleBlur}
             disabled={disabled}
             className="h-9"
@@ -437,7 +463,7 @@ function ChecklistEditor({ value, onChange, disabled }: ChecklistEditorProps) {
             key={item.id}
             className="flex items-center gap-2 group"
           >
-            <Checkbox
+            <Switch
               checked={item.done}
               onCheckedChange={() => toggleItem(item.id)}
               disabled={disabled}

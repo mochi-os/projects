@@ -344,6 +344,7 @@ export function TreeView({
                 options={options}
                 peopleMap={peopleMap}
                 classMap={classMap}
+                titleFieldId={project.classes.find((c) => c.id === node.object.class)?.title}
                 prefix={project.project.prefix}
                 showClass={showClass}
                 showId={showId}

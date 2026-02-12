@@ -108,6 +108,7 @@ export function createMockView(overrides?: Partial<ProjectView>): ProjectView {
     direction: "",
     classes: [],
     rank: 0,
+    border: "",
     ...overrides,
   };
 }
@@ -118,6 +119,7 @@ export function createMockClass(overrides?: Partial<ProjectClass>): ProjectClass
     name: "Task",
     rank: 0,
     pull_requests: 0,
+    title: "title",
     ...overrides,
   };
 }

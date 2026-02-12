@@ -21,6 +21,7 @@ export interface ProjectClass {
   name: string;
   rank: number;
   pull_requests: number;
+  title: string;
 }
 
 export interface ProjectField {
@@ -55,6 +56,7 @@ export interface ProjectView {
   direction: string;
   classes: string[];
   rank: number;
+  border: string;
 }
 
 export interface ProjectTemplate {
@@ -234,13 +236,6 @@ export interface Branch {
   name: string;
   commit: string;
   current: boolean;
-}
-
-export interface DiffFile {
-  path: string;
-  additions: number;
-  deletions: number;
-  status: "added" | "modified" | "deleted" | "renamed";
 }
 
 export interface RepositoryListResponse {

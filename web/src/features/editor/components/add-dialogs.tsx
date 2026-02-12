@@ -32,7 +32,7 @@ interface PendingOption {
 interface AddFieldDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onAdd: (name: string, fieldtype: string, rows?: number, options?: PendingOption[]) => void;
+  onAdd: (name: string, fieldtype: string, rows?: number, options?: PendingOption[]) => void | Promise<void>;
 }
 
 const FIELD_TYPES = [
@@ -64,9 +64,9 @@ export function AddFieldDialog({
     setNewOptionName("");
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (name.trim()) {
-      onAdd(
+      await onAdd(
         name.trim(),
         fieldtype,
         fieldtype === "text" && rows > 1 ? rows : undefined,
@@ -117,7 +117,7 @@ export function AddFieldDialog({
                 id="field-name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                placeholder="e.g., Title, Status, Priority"
+
                 autoFocus
               />
             </div>
@@ -230,7 +230,7 @@ export function AddFieldDialog({
 interface AddOptionDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onAdd: (name: string, colour: string) => void;
+  onAdd: (name: string, colour: string) => void | Promise<void>;
   title?: string;
 }
 
@@ -243,9 +243,9 @@ export function AddOptionDialog({
   const [name, setName] = useState("");
   const [colour, setColour] = useState(DEFAULT_COLOURS[0]);
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (name.trim()) {
-      onAdd(name.trim(), colour);
+      await onAdd(name.trim(), colour);
       setName("");
       setColour(
         DEFAULT_COLOURS[Math.floor(Math.random() * DEFAULT_COLOURS.length)],

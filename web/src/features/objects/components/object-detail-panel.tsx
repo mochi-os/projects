@@ -6,7 +6,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Eye, EyeOff, Loader2, Trash2, MessageSquare, Activity, Settings2, GitPullRequest, X } from "lucide-react";
 import {
   Button,
-  Textarea,
+  Input,
   ConfirmDialog,
   DataChip,
   Sheet,
@@ -140,6 +140,7 @@ export function ObjectDetailPanel({
       return projectsApi.deleteObject(projectId, objectId);
     },
     onSuccess: () => {
+      setShowDeleteDialog(false);
       queryClient.invalidateQueries({
         queryKey: ["objects", projectId],
       });
@@ -229,8 +230,16 @@ export function ObjectDetailPanel({
   const object = data.object;
   const classFields = project.fields[object.class] || [];
   const classOptions = project.options[object.class] || {};
-  const title = data.values.title || object.readable;
-  const hasPrs = project.classes.find((c) => c.id === object.class)?.pull_requests === 1;
+  const cls = project.classes.find((c) => c.id === object.class);
+  const titleField = cls?.title ? classFields.find((f) => f.id === cls.title) : undefined;
+  const title = (titleField ? data.values[titleField.id] : "") || object.readable;
+  const hasPrs = cls?.pull_requests === 1;
+
+  // Get display title for any object using its class's title field
+  const objectTitle = (obj: { class: string; number: number; values: Record<string, string> }) => {
+    const objCls = project.classes.find((c) => c.id === obj.class);
+    return (objCls?.title ? obj.values[objCls.title] : "") || `${project.project.prefix}-${obj.number}`;
+  };
   const prCount = data.prs?.length || 0;
 
   const tabs: { id: Tab; label: string; icon: React.ReactNode }[] = [
@@ -243,8 +252,9 @@ export function ObjectDetailPanel({
   ];
 
   const handleTitleSave = () => {
-    if (titleValue !== data.values.title) {
-      updateValueMutation.mutate({ field: "title", value: titleValue });
+    const currentTitle = titleField ? data.values[titleField.id] : "";
+    if (titleField && titleValue !== currentTitle) {
+      updateValueMutation.mutate({ field: titleField.id, value: titleValue });
     }
     setEditingTitle(false);
   };
@@ -259,12 +269,12 @@ export function ObjectDetailPanel({
         {/* Header */}
         <div className="flex items-center gap-3 px-6 py-4 border-b shrink-0">
           {editingTitle && canWrite(access) ? (
-            <Textarea
+            <Input
               value={titleValue}
               onChange={(e) => setTitleValue(e.target.value)}
               onBlur={handleTitleSave}
               onKeyDown={(e) => {
-                if (e.key === "Enter" && !e.shiftKey) {
+                if (e.key === "Enter") {
                   e.preventDefault();
                   handleTitleSave();
                 }
@@ -272,7 +282,7 @@ export function ObjectDetailPanel({
                   setEditingTitle(false);
                 }
               }}
-              className="text-xl font-bold resize-none min-h-[40px] flex-1"
+              className="text-xl font-bold flex-1"
               autoFocus
             />
           ) : (
@@ -281,8 +291,8 @@ export function ObjectDetailPanel({
                 "text-xl font-bold leading-tight truncate flex-1 min-w-0",
                 canWrite(access) && "cursor-pointer hover:text-primary transition-colors"
               )}
-              onClick={canWrite(access) ? () => {
-                setTitleValue(data.values.title || "");
+              onClick={canWrite(access) && titleField ? () => {
+                setTitleValue(titleField ? data.values[titleField.id] || "" : "");
                 setEditingTitle(true);
               } : undefined}
             >
@@ -368,7 +378,7 @@ export function ObjectDetailPanel({
                   {!canWrite(access) ? (
                     <span className="text-sm h-9 flex items-center">
                       {currentParent
-                        ? currentParent.values.title || `${project.project.prefix}-${currentParent.number}`
+                        ? objectTitle(currentParent)
                         : "None"}
                     </span>
                   ) : (
@@ -380,7 +390,7 @@ export function ObjectDetailPanel({
                       <SelectTrigger className="w-full">
                         <SelectValue placeholder="None">
                           {currentParent
-                            ? currentParent.values.title || `${project.project.prefix}-${currentParent.number}`
+                            ? objectTitle(currentParent)
                             : "None"}
                         </SelectValue>
                       </SelectTrigger>
@@ -388,7 +398,7 @@ export function ObjectDetailPanel({
                         <SelectItem value="_none_">None</SelectItem>
                         {validParentOptions.map((obj) => (
                           <SelectItem key={obj.id} value={obj.id}>
-                            {obj.values.title || `${project.project.prefix}-${obj.number}`}
+                            {objectTitle(obj)}
                           </SelectItem>
                         ))}
                       </SelectContent>
@@ -398,7 +408,7 @@ export function ObjectDetailPanel({
               )}
 
               {classFields
-                .filter((f) => !f.flags?.split(",").includes("title"))
+                .filter((f) => f.id !== cls?.title)
                 .map((field) => (
                   <div key={field.id} className="grid grid-cols-[120px_1fr] gap-4 items-start">
                     <label className="text-sm font-medium text-muted-foreground pt-2">
@@ -410,7 +420,6 @@ export function ObjectDetailPanel({
                       options={classOptions[field.id] || []}
                       onChange={(value) => handleFieldChange(field.id, value)}
                       readOnly={!canWrite(access)}
-                      disabled={updateValueMutation.isPending}
                       hideLabel
                       localPeople={peopleData}
                       onValidationError={(hasError) => handleValidationError(field.id, hasError)}

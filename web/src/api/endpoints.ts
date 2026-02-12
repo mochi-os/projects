@@ -7,6 +7,7 @@ const endpoints = {
     templates: "-/templates",
     search: "directory/search",
     probe: "probe",
+    recommendations: "recommendations",
     subscribe: "subscribe",
     unsubscribe: "unsubscribe",
 

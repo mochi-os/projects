@@ -3,42 +3,27 @@
 
 import { X } from "lucide-react";
 import { Button } from "@mochi/common";
-import type { ProjectDetails, FieldOption } from "@/types";
 
 export interface FilterState {
   search: string;
-  status: string;
-  priority: string;
-  owner: string;
   watched: boolean;
 }
 
 interface FilterBarProps {
-  project: ProjectDetails;
-  columnField: string;
-  rowField: string;
   filters: FilterState;
   onFilterChange: (filters: FilterState) => void;
 }
 
 export function FilterBar({
-  project,
-  columnField,
-  rowField,
   filters,
   onFilterChange,
 }: FilterBarProps) {
-  const firstClassId = project.classes[0]?.id;
-  const classOptions = firstClassId ? project.options[firstClassId] || {} : {};
-  const statusOptions: FieldOption[] = columnField ? classOptions[columnField] || [] : [];
-  const priorityOptions: FieldOption[] = rowField ? classOptions[rowField] || [] : [];
-
   const clearFilter = (key: keyof FilterState) => {
     onFilterChange({ ...filters, [key]: key === "watched" ? false : "" });
   };
 
   const clearAllFilters = () => {
-    onFilterChange({ search: "", status: "", priority: "", owner: "", watched: false });
+    onFilterChange({ search: "", watched: false });
   };
 
   const activeFilters: {
@@ -52,22 +37,6 @@ export function FilterBar({
       key: "search",
       label: "Search",
       value: filters.search,
-    });
-  }
-  if (filters.status) {
-    const option = statusOptions.find((o) => o.id === filters.status);
-    activeFilters.push({
-      key: "status",
-      label: "Status",
-      value: option?.name || filters.status,
-    });
-  }
-  if (filters.priority) {
-    const option = priorityOptions.find((o) => o.id === filters.priority);
-    activeFilters.push({
-      key: "priority",
-      label: "Priority",
-      value: option?.name || filters.priority,
     });
   }
   if (filters.watched) {

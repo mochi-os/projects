@@ -22,6 +22,7 @@ import { FolderKanban, MoreHorizontal, Plus } from "lucide-react";
 import { useProjectsStore } from "@/stores/projects-store";
 import { useSidebarContext } from "@/context/sidebar-context";
 import { InlineProjectSearch } from "../components/inline-project-search";
+import { RecommendedProjects } from "../components/recommended-projects";
 import projectsApi from "@/api/projects";
 
 export function ProjectsListPage() {
@@ -107,6 +108,7 @@ export function ProjectsListPage() {
               <Plus className="mr-2 h-4 w-4" />
               Create a new project
             </Button>
+            <RecommendedProjects subscribedIds={subscribedProjectIds} onSubscribe={() => void refresh()} />
           </div>
         ) : (
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">

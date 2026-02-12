@@ -4,7 +4,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { ArrowRight, GitPullRequest, Plus, Trash2, ChevronDown, ChevronRight } from "lucide-react";
-import { Button, Card, ConfirmDialog, Input, Textarea, cn } from "@mochi/common";
+import { Button, Card, ConfirmDialog, Input, Switch, Textarea, cn } from "@mochi/common";
 import projectsApi from "@/api/projects";
 import type { PrData } from "@/types";
 import { RepositorySelect } from "./repository-select";
@@ -308,11 +308,9 @@ function PrItem({
 
             {!readOnly && !isMerged && (
               <label className="flex items-center gap-2 text-sm cursor-pointer">
-                <input
-                  type="checkbox"
+                <Switch
                   checked={isDraft}
-                  onChange={handleDraftToggle}
-                  className="rounded"
+                  onCheckedChange={handleDraftToggle}
                 />
                 <span className="text-muted-foreground">Draft</span>
               </label>

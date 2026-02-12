@@ -16,6 +16,7 @@ interface TreeRowProps {
   options: Record<string, FieldOption[]>;
   peopleMap: Record<string, string>;
   classMap: Record<string, string>;
+  titleFieldId?: string;
   prefix: string;
   showClass?: boolean;
   showId?: boolean;
@@ -46,6 +47,7 @@ export function TreeRow({
   options,
   peopleMap,
   classMap,
+  titleFieldId,
   prefix,
   showClass = true,
   showId = true,
@@ -236,7 +238,7 @@ export function TreeRow({
 
       {/* Field columns */}
       {fields.map((field) => {
-        const isTitleField = field.flags?.split(",").includes("title");
+        const isTitleField = field.id === titleFieldId;
         const value = object.values[field.id] || "";
         const displayValue = isTitleField ? truncate(value, 100) : value;
         return (

@@ -128,10 +128,10 @@ export function CreateObjectDialog({
     (f) => f.flags?.split(",").includes("required") && !fieldValues[f.id]?.trim(),
   );
 
-  // Get display title for any object using its class's title-flagged field
+  // Get display title for any object using its class's title field
   const objectTitle = (obj: { class: string; number: number; values: Record<string, string> }) => {
-    const tf = (project.fields[obj.class] || []).find((f) => f.flags?.split(",").includes("title"));
-    return (tf ? obj.values[tf.id] : "") || `${project.project.prefix}-${obj.number}`;
+    const cls = project.classes.find((c) => c.id === obj.class);
+    return (cls?.title ? obj.values[cls.title] : "") || `${project.project.prefix}-${obj.number}`;
   };
 
   // Filter objects to only show valid parents based on hierarchy rules
@@ -159,10 +159,9 @@ export function CreateObjectDialog({
 
   const createMutation = useMutation({
     mutationFn: async () => {
-      // Find the title-flagged field
-      const titleFieldId = classFields.find(
-        (f) => f.flags?.split(",").includes("title"),
-      )?.id;
+      // Find the title field from the class
+      const selectedCls = project.classes.find((c) => c.id === selectedClass);
+      const titleFieldId = selectedCls?.title;
 
       // Create the object
       const response = await projectsApi.createObject(project.project.id, {

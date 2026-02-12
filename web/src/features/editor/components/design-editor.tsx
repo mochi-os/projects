@@ -109,8 +109,8 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
   });
 
   const updateClassMutation = useMutation({
-    mutationFn: ({ classId, name, pull_requests }: { classId: string; name: string; pull_requests?: string }) =>
-      projectsApi.updateClass(projectId, classId, { name, pull_requests }),
+    mutationFn: ({ classId, name, pull_requests, title }: { classId: string; name: string; pull_requests?: string; title?: string }) =>
+      projectsApi.updateClass(projectId, classId, { name, pull_requests, title }),
     onSuccess: invalidateProject,
   });
 
@@ -239,6 +239,7 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
       viewtype,
       columns,
       rows,
+      border,
       fields,
       sort,
       direction,
@@ -248,6 +249,7 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
       viewtype: string;
       columns?: string;
       rows?: string;
+      border?: string;
       fields?: string;
       sort?: string;
       direction?: "asc" | "desc";
@@ -259,6 +261,7 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
         fields: fields || allFields.map((f) => f.id).join(","),
         columns,
         rows,
+        border,
         sort,
         direction,
         classes,
@@ -288,6 +291,7 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
         filter: currentView?.filter || "",
         columns: currentView?.columns || "",
         rows: currentView?.rows || "",
+        border: currentView?.border || "",
         fields: currentView?.fields || "",
         sort: currentView?.sort || "",
         direction: currentView?.direction || "asc",
@@ -298,6 +302,7 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
         if (updates.filter !== undefined) payload.filter = updates.filter;
         if (updates.columns !== undefined) payload.columns = updates.columns;
         if (updates.rows !== undefined) payload.rows = updates.rows;
+        if (updates.border !== undefined) payload.border = updates.border;
         if (updates.fields !== undefined) payload.fields = updates.fields;
         if (updates.sort !== undefined) payload.sort = updates.sort;
         if (updates.direction !== undefined) payload.direction = updates.direction;
@@ -356,7 +361,7 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
 
     // Create each non-title field (title is auto-created by the backend)
     for (const field of pendingFields) {
-      if (field.flags?.split(",").includes("title")) continue;
+      if (field.id === "title") continue;
       const fieldResult = await createFieldMutation.mutateAsync({
         classId,
         name: field.name,
@@ -525,12 +530,13 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
         mode="create"
         fields={allFields}
         classes={project.classes}
-        onCreate={async (name, viewtype, columns, rows, selectedFields, sort, direction, selectedClasses) => {
+        onCreate={async (name, viewtype, columns, rows, selectedFields, sort, direction, selectedClasses, border) => {
           await createViewMutation.mutateAsync({
             name,
             viewtype,
             columns: columns || undefined,
             rows: rows || undefined,
+            border: border || undefined,
             fields: selectedFields.join(","),
             sort: sort || undefined,
             direction: direction as "asc" | "desc",
@@ -631,9 +637,9 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
         classes={project.classes}
         hierarchy={hierarchy}
         fields={selectedFields}
-        onUpdate={(name, pull_requests) => {
+        onUpdate={(name, pull_requests, title) => {
           if (selectedClassId) {
-            updateClassMutation.mutate({ classId: selectedClassId, name, pull_requests });
+            updateClassMutation.mutate({ classId: selectedClassId, name, pull_requests, title });
           }
         }}
         onUpdateHierarchy={(parents) => {
@@ -659,6 +665,7 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
         open={editFieldOpen}
         onOpenChange={setEditFieldOpen}
         field={resolvedEditingField}
+        isSystemField={resolvedEditingField?.id === selectedClass?.title}
         options={editingFieldOptions}
         onUpdate={(updates) => {
           if (selectedClassId && resolvedEditingField) {

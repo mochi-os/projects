@@ -50,6 +50,7 @@ def database_create():
 		name text not null,
 		rank integer not null default 0,
 		pull_requests integer not null default 0,
+		title text not null default '',
 		primary key (project, id)
 	)""")
 	mochi.db.execute("create index if not exists classes_project on classes(project)")
@@ -118,6 +119,7 @@ def database_create():
 		sort text not null default '',
 		direction text not null default 'asc',
 		rank integer not null default 0,
+		border text not null default '',
 		primary key (project, id)
 	)""")
 	mochi.db.execute("create index if not exists views_project on views(project)")
@@ -254,7 +256,35 @@ def database_create():
 
 # Upgrade database schema (called once per version step with target version)
 def database_upgrade(version):
-	pass
+	if version == 2:
+		# Add title column to classes, border column to views
+		mochi.db.execute("alter table classes add column title text not null default ''")
+		mochi.db.execute("alter table views add column border text not null default ''")
+		# Migrate title flag: for each class, find the field with "title" flag and set classes.title
+		classes = mochi.db.rows("select project, id from classes") or []
+		for c in classes:
+			row = mochi.db.row("select id from fields where project=? and class=? and flags like '%title%' order by rank limit 1", c["project"], c["id"])
+			if row:
+				mochi.db.execute("update classes set title=? where project=? and id=?", row["id"], c["project"], c["id"])
+		# Migrate border flag: for each view, find a field with "border" flag in any of the view's classes
+		views = mochi.db.rows("select project, id from views") or []
+		for v in views:
+			# Get classes for this view (empty means all classes)
+			view_classes = mochi.db.rows("select class from view_classes where project=? and view=?", v["project"], v["id"]) or []
+			if view_classes:
+				class_ids = [vc["class"] for vc in view_classes]
+			else:
+				class_ids = [c["id"] for c in (mochi.db.rows("select id from classes where project=?", v["project"]) or [])]
+			for cls_id in class_ids:
+				border_row = mochi.db.row("select id from fields where project=? and class=? and flags like '%border%' order by rank limit 1", v["project"], cls_id)
+				if border_row:
+					mochi.db.execute("update views set border=? where project=? and id=?", border_row["id"], v["project"], v["id"])
+					break
+		# Strip "title" and "border" from all field flags
+		fields = mochi.db.rows("select project, class, id, flags from fields where flags like '%title%' or flags like '%border%'") or []
+		for f in fields:
+			parts = [p for p in f["flags"].split(",") if p and p != "title" and p != "border"]
+			mochi.db.execute("update fields set flags=? where project=? and class=? and id=?", ",".join(parts), f["project"], f["class"], f["id"])
 
 
 # ============================================================================
@@ -287,8 +317,8 @@ def apply_template(project_id, template_id):
 	# Create classes
 	for t in data.get("classes", []):
 		mochi.db.execute(
-			"insert into classes (project, id, name, rank, pull_requests) values (?, ?, ?, ?, ?)",
-			project_id, t["id"], t["name"], t.get("rank", 0), t.get("pull_requests", 0)
+			"insert into classes (project, id, name, rank, pull_requests, title) values (?, ?, ?, ?, ?, ?)",
+			project_id, t["id"], t["name"], t.get("rank", 0), t.get("pull_requests", 0), t.get("title", "title")
 		)
 
 	# Set hierarchy for each class
@@ -321,9 +351,9 @@ def apply_template(project_id, template_id):
 	# Create views
 	for i, v in enumerate(data.get("views", [])):
 		mochi.db.execute(
-			"insert into views (project, id, name, viewtype, columns, rows, rank) values (?, ?, ?, ?, ?, ?, ?)",
+			"insert into views (project, id, name, viewtype, columns, rows, rank, border) values (?, ?, ?, ?, ?, ?, ?, ?)",
 			project_id, v["id"], v["name"], v.get("viewtype", "board"),
-			v.get("columns", ""), v.get("rows", ""), i
+			v.get("columns", ""), v.get("rows", ""), i, v.get("border", "")
 		)
 		# Add view classes if specified
 		for vclass in v.get("classes", []):
@@ -457,7 +487,7 @@ def action_project_get(a):
 		return
 
 	# Get classes
-	classes = mochi.db.rows("select id, name, rank, pull_requests from classes where project=? order by rank", project_id) or []
+	classes = mochi.db.rows("select id, name, rank, pull_requests, title from classes where project=? order by rank", project_id) or []
 
 	# Get fields by class
 	fields = {}
@@ -475,7 +505,7 @@ def action_project_get(a):
 				options[c["id"]][f["id"]] = field_options
 
 	# Get views
-	views = mochi.db.rows("select id, name, viewtype, filter, columns, rows, sort, direction, rank from views where project=? order by rank, name", project_id) or []
+	views = mochi.db.rows("select id, name, viewtype, filter, columns, rows, sort, direction, rank, border from views where project=? order by rank, name", project_id) or []
 
 	# Add classes and fields to each view
 	for v in views:
@@ -923,8 +953,8 @@ def get_owner_identity(project_id):
 
 def get_object_display(project, obj, object_id):
 	"""Build display title: '<project name> - <object title>'."""
-	title_field_row = mochi.db.row("select id from fields where project=? and class=? and flags like '%title%' order by rank limit 1", project["id"], obj["class"]) if obj else None
-	title_field = title_field_row["id"] if title_field_row else ""
+	title_field_row = mochi.db.row("select title from classes where project=? and id=?", project["id"], obj["class"]) if obj else None
+	title_field = title_field_row["title"] if title_field_row else ""
 	title_row = mochi.db.row("select value from \"values\" where object=? and field=?", object_id, title_field) if title_field else None
 	obj_title = title_row["value"] if title_row else ""
 	if not obj_title:
@@ -1082,9 +1112,9 @@ def action_object_create(a):
 	parent = a.input("parent") or ""
 	title = a.input("title") or ""
 
-	# Look up the title-flagged field for this class
-	title_field_row = mochi.db.row("select id from fields where project=? and class=? and flags like '%title%' order by rank limit 1", project_id, obj_class)
-	title_field = title_field_row["id"] if title_field_row else ""
+	# Look up the title field for this class
+	title_field_row = mochi.db.row("select title from classes where project=? and id=?", project_id, obj_class)
+	title_field = title_field_row["title"] if title_field_row else ""
 
 	if project["owner"] != 1:
 		result = forward_to_owner(a, project_id, "object/create", {
@@ -2467,7 +2497,7 @@ def action_view_list(a):
 		return
 
 	views = mochi.db.rows(
-		"select id, name, viewtype, filter, columns, rows, sort, direction, rank from views where project=? order by rank, name",
+		"select id, name, viewtype, filter, columns, rows, sort, direction, rank, border from views where project=? order by rank, name",
 		project_id
 	) or []
 
@@ -2504,6 +2534,7 @@ def action_view_create(a):
 			"sort": a.input("sort") or "",
 			"direction": a.input("direction") or "asc",
 			"classes": a.input("classes") or "",
+			"border": a.input("border") or "",
 		})
 
 	if not check_project_access(a.user.identity.id, project_id, "design"):
@@ -2538,14 +2569,15 @@ def action_view_create(a):
 	fields = a.input("fields") or "title,priority,owner,due"
 	sort = a.input("sort") or ""
 	direction = a.input("direction") or "asc"
+	border = a.input("border") or ""
 
 	# Assign next rank
 	next_rank = mochi.db.row("select coalesce(max(rank), -1) + 1 as r from views where project=?", project_id)
 	rank = next_rank["r"] if next_rank else 0
 
 	mochi.db.execute(
-		"insert into views (project, id, name, viewtype, filter, columns, rows, sort, direction, rank) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-		project_id, view_id, name.strip(), viewtype, filter_str, columns, rows, sort, direction, rank
+		"insert into views (project, id, name, viewtype, filter, columns, rows, sort, direction, rank, border) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+		project_id, view_id, name.strip(), viewtype, filter_str, columns, rows, sort, direction, rank, border
 	)
 
 	# Add fields to junction table
@@ -2568,7 +2600,8 @@ def action_view_create(a):
 	broadcast_event(project_id, "view/create", {
 		"project": project_id, "id": view_id, "name": name.strip(),
 		"viewtype": viewtype, "filter": filter_str, "columns": columns,
-		"rows": rows, "fields": fields, "sort": sort, "direction": direction
+		"rows": rows, "fields": fields, "sort": sort, "direction": direction,
+		"border": border
 	})
 
 	return {"data": {
@@ -2594,7 +2627,7 @@ def action_view_update(a):
 
 	if project["owner"] != 1:
 		params = {"project": project_id, "view": a.input("view")}
-		for k in ["name", "viewtype", "filter", "columns", "rows", "fields", "sort", "direction", "classes"]:
+		for k in ["name", "viewtype", "filter", "columns", "rows", "fields", "sort", "direction", "classes", "border"]:
 			v = a.input(k)
 			if v != None:
 				params[k] = v
@@ -2654,6 +2687,10 @@ def action_view_update(a):
 			return
 		mochi.db.execute("update views set direction=? where project=? and id=?", direction, project_id, view_id)
 
+	border = a.input("border")
+	if border != None:
+		mochi.db.execute("update views set border=? where project=? and id=?", border, project_id, view_id)
+
 	# Update view classes if provided (comma-separated list of class IDs, empty string = all classes)
 	view_classes_input = a.input("classes")
 	if view_classes_input != None:
@@ -2680,7 +2717,7 @@ def action_view_update(a):
 			"filter": updated["filter"], "columns": updated["columns"],
 			"rows": updated["rows"], "fields": updated_fields,
 			"sort": updated["sort"], "direction": updated["direction"],
-			"rank": updated["rank"]
+			"rank": updated["rank"], "border": updated["border"]
 		})
 
 	return {"data": {"success": True}}
@@ -2791,7 +2828,7 @@ def action_class_list(a):
 		a.error(403, "Access denied")
 		return
 
-	classes = mochi.db.rows("select id, name, rank from classes where project=? order by rank", project_id) or []
+	classes = mochi.db.rows("select id, name, rank, title from classes where project=? order by rank", project_id) or []
 
 	return {"data": {"classes": classes}}
 
@@ -2841,14 +2878,14 @@ def action_class_create(a):
 	pr_flag = 1 if a.input("pull_requests") == "1" else 0
 
 	mochi.db.execute(
-		"insert into classes (project, id, name, rank, pull_requests) values (?, ?, ?, ?, ?)",
-		project_id, class_id, name.strip(), rank, pr_flag
+		"insert into classes (project, id, name, rank, pull_requests, title) values (?, ?, ?, ?, ?, ?)",
+		project_id, class_id, name.strip(), rank, pr_flag, "title"
 	)
 
 	# Add default title field
 	mochi.db.execute(
 		"insert into fields (project, class, id, name, fieldtype, flags, rank) values (?, ?, ?, ?, ?, ?, ?)",
-		project_id, class_id, "title", "Title", "text", "required,title,sort", 0
+		project_id, class_id, "title", "Title", "text", "required,sort", 0
 	)
 
 	# Set hierarchy to allow root by default
@@ -2858,7 +2895,7 @@ def action_class_create(a):
 	)
 
 	broadcast_event(project_id, "class/create", {
-		"project": project_id, "id": class_id, "name": name.strip(), "rank": rank, "pull_requests": pr_flag
+		"project": project_id, "id": class_id, "name": name.strip(), "rank": rank, "pull_requests": pr_flag, "title": "title"
 	})
 
 	return {"data": {"id": class_id, "name": name.strip(), "rank": rank}}
@@ -2886,6 +2923,9 @@ def action_class_update(a):
 		pr = a.input("pull_requests")
 		if pr:
 			params["pull_requests"] = pr
+		t = a.input("title")
+		if t:
+			params["title"] = t
 		return forward_to_owner(a, project_id, "class/update", params)
 
 	if not check_project_access(a.user.identity.id, project_id, "design"):
@@ -2911,9 +2951,14 @@ def action_class_update(a):
 		pr_flag = 1 if pr_input == "1" else 0
 		mochi.db.execute("update classes set pull_requests=? where project=? and id=?", pr_flag, project_id, class_id)
 
+	title_input = a.input("title")
+	if title_input:
+		mochi.db.execute("update classes set title=? where project=? and id=?", title_input, project_id, class_id)
+
 	broadcast_event(project_id, "class/update", {
 		"project": project_id, "id": class_id, "name": name or class_row["name"],
-		"pull_requests": class_row["pull_requests"] if not pr_input else (1 if pr_input == "1" else 0)
+		"pull_requests": class_row["pull_requests"] if not pr_input else (1 if pr_input == "1" else 0),
+		"title": title_input or class_row["title"]
 	})
 
 	return {"data": {"success": True}}
@@ -4215,7 +4260,7 @@ def event_schema(e):
 		return
 
 	# Classes
-	classes = mochi.db.rows("select id, name, rank, pull_requests from classes where project=?", project_id) or []
+	classes = mochi.db.rows("select id, name, rank, pull_requests, title from classes where project=?", project_id) or []
 
 	# Fields with class context
 	fields = []
@@ -4245,7 +4290,7 @@ def event_schema(e):
 
 	# Views with fields and classes
 	views = []
-	for v in (mochi.db.rows("select id, name, viewtype, filter, columns, rows, sort, direction, rank from views where project=? order by rank, name", project_id) or []):
+	for v in (mochi.db.rows("select id, name, viewtype, filter, columns, rows, sort, direction, rank, border from views where project=? order by rank, name", project_id) or []):
 		view_fields = mochi.db.rows("select field from view_fields where project=? and view=? order by rank", project_id, v["id"]) or []
 		view_classes = mochi.db.rows("select class from view_classes where project=? and view=?", project_id, v["id"]) or []
 		v["fields"] = ",".join([vf["field"] for vf in view_fields])
@@ -4276,8 +4321,8 @@ def event_schema(e):
 def insert_schema(project_id, schema):
 	for c in (schema.get("classes") or []):
 		mochi.db.execute(
-			"insert or ignore into classes (id, project, name, rank, pull_requests) values (?, ?, ?, ?, ?)",
-			c.get("id", ""), project_id, c.get("name", ""), c.get("rank", 0), c.get("pull_requests", 0)
+			"insert or ignore into classes (id, project, name, rank, pull_requests, title) values (?, ?, ?, ?, ?, ?)",
+			c.get("id", ""), project_id, c.get("name", ""), c.get("rank", 0), c.get("pull_requests", 0), c.get("title", "")
 		)
 	for f in (schema.get("fields") or []):
 		mochi.db.execute(
@@ -4301,10 +4346,11 @@ def insert_schema(project_id, schema):
 	for v in (schema.get("views") or []):
 		view_id = v.get("id", "")
 		mochi.db.execute(
-			"insert or ignore into views (id, project, name, viewtype, filter, columns, rows, sort, direction, rank) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+			"insert or ignore into views (id, project, name, viewtype, filter, columns, rows, sort, direction, rank, border) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
 			view_id, project_id, v.get("name", ""), v.get("viewtype", "board"),
 			v.get("filter", ""), v.get("columns", ""), v.get("rows", ""),
-			v.get("sort", ""), v.get("direction", "asc"), v.get("rank", 0)
+			v.get("sort", ""), v.get("direction", "asc"), v.get("rank", 0),
+			v.get("border", "")
 		)
 		fields_csv = v.get("fields", "")
 		if fields_csv:
@@ -4338,7 +4384,7 @@ def send_project_data(project_id, subscriber_id):
 	types = mochi.db.rows("select * from classes where project=?", project_id)
 	for t in types:
 		h["event"] = "class/create"
-		mochi.message.send(h, {"project": project_id, "id": t["id"], "name": t["name"], "rank": t["rank"], "pull_requests": t["pull_requests"]})
+		mochi.message.send(h, {"project": project_id, "id": t["id"], "name": t["name"], "rank": t["rank"], "pull_requests": t["pull_requests"], "title": t["title"]})
 
 		# Send hierarchy for this class
 		parents = mochi.db.rows("select parent from hierarchy where project=? and class=?", project_id, t["id"])
@@ -4378,7 +4424,7 @@ def send_project_data(project_id, subscriber_id):
 			"project": project_id, "id": v["id"], "name": v["name"], "viewtype": v["viewtype"],
 			"filter": v["filter"], "columns": v["columns"], "rows": v["rows"],
 			"sort": v["sort"], "direction": v["direction"], "rank": v["rank"],
-			"fields": fields_csv, "classes": classes_csv
+			"fields": fields_csv, "classes": classes_csv, "border": v["border"]
 		})
 
 	# Send objects with their values, comments, and links
@@ -4754,10 +4800,11 @@ def event_view_create(e):
 	if not view_id:
 		return
 	mochi.db.execute(
-		"insert or ignore into views (id, project, name, viewtype, filter, columns, rows, sort, direction, rank) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+		"insert or ignore into views (id, project, name, viewtype, filter, columns, rows, sort, direction, rank, border) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
 		view_id, project_id, e.content("name") or "", e.content("viewtype") or "board",
 		e.content("filter") or "", e.content("columns") or "", e.content("rows") or "",
-		e.content("sort") or "", e.content("direction") or "asc", e.content("rank") or 0
+		e.content("sort") or "", e.content("direction") or "asc", e.content("rank") or 0,
+		e.content("border") or ""
 	)
 	# Sync view fields
 	fields_csv = e.content("fields") or ""
@@ -4806,6 +4853,9 @@ def event_view_update(e):
 		mochi.db.execute("update views set sort=? where id=? and project=?", sort, view_id, project_id)
 	if direction:
 		mochi.db.execute("update views set direction=? where id=? and project=?", direction, view_id, project_id)
+	border = e.content("border")
+	if border != None:
+		mochi.db.execute("update views set border=? where id=? and project=?", border, view_id, project_id)
 	# Sync view fields if provided
 	fields_csv = e.content("fields")
 	if fields_csv:
@@ -4845,9 +4895,9 @@ def event_class_create(e):
 	if not project_id:
 		return
 	mochi.db.execute(
-		"insert or ignore into classes (id, project, name, rank, pull_requests) values (?, ?, ?, ?, ?)",
+		"insert or ignore into classes (id, project, name, rank, pull_requests, title) values (?, ?, ?, ?, ?, ?)",
 		e.content("id"), project_id, e.content("name") or "",
-		e.content("rank") or 0, e.content("pull_requests") or 0
+		e.content("rank") or 0, e.content("pull_requests") or 0, e.content("title") or ""
 	)
 	fp = mochi.entity.fingerprint(project_id)
 	if fp:
@@ -4867,6 +4917,9 @@ def event_class_update(e):
 	pr = e.content("pull_requests")
 	if pr != None:
 		mochi.db.execute("update classes set pull_requests=? where id=? and project=?", pr, class_id, project_id)
+	title = e.content("title")
+	if title != None:
+		mochi.db.execute("update classes set title=? where id=? and project=?", title, class_id, project_id)
 	fp = mochi.entity.fingerprint(project_id)
 	if fp:
 		mochi.websocket.write(fp, {"type": "class/update", "project": project_id, "id": class_id})
@@ -5676,8 +5729,8 @@ def do_object_create(project_id, project, params, user_id):
 	if not allowed:
 		return {"error": "Cannot create here: hierarchy rules do not allow this relationship", "code": 400}
 
-	title_field_row = mochi.db.row("select id from fields where project=? and class=? and flags like '%title%' order by rank limit 1", project_id, obj_class)
-	title_field = title_field_row["id"] if title_field_row else ""
+	title_field_row = mochi.db.row("select title from classes where project=? and id=?", project_id, obj_class)
+	title_field = title_field_row["title"] if title_field_row else ""
 	new_counter = project["counter"] + 1
 	mochi.db.execute("update projects set counter=?, updated=? where id=?", new_counter, mochi.time.now(), project_id)
 	max_rank_row = mochi.db.row("select coalesce(max(rank), 0) as max_rank from objects where project=?", project_id)
@@ -5703,8 +5756,8 @@ def do_object_create(project_id, project, params, user_id):
 	owner_id = get_owner_identity(project_id)
 	if owner_id and owner_id != user_id:
 		readable = project["prefix"] + "-" + str(new_counter)
-		title_field_row = mochi.db.row("select id from fields where project=? and class=? and flags like '%title%' order by rank limit 1", project_id, params.get("class", ""))
-		title_field = title_field_row["id"] if title_field_row else ""
+		title_field_row = mochi.db.row("select title from classes where project=? and id=?", project_id, params.get("class", ""))
+		title_field = title_field_row["title"] if title_field_row else ""
 		title_row = mochi.db.row("select value from \"values\" where object=? and field=?", object_id, title_field) if title_field else None
 		obj_title = title_row["value"] if title_row else ""
 		fp = mochi.entity.fingerprint(project_id)
@@ -6127,19 +6180,19 @@ def do_class_create(project_id, project, params):
 	rank = (max_rank["m"] or 0) + 1 if max_rank else 0
 	pr_flag = 1 if params.get("pull_requests") == "1" else 0
 	mochi.db.execute(
-		"insert into classes (project, id, name, rank, pull_requests) values (?, ?, ?, ?, ?)",
-		project_id, class_id, name.strip(), rank, pr_flag
+		"insert into classes (project, id, name, rank, pull_requests, title) values (?, ?, ?, ?, ?, ?)",
+		project_id, class_id, name.strip(), rank, pr_flag, "title"
 	)
 	mochi.db.execute(
 		"insert into fields (project, class, id, name, fieldtype, flags, rank) values (?, ?, ?, ?, ?, ?, ?)",
-		project_id, class_id, "title", "Title", "text", "required,title,sort", 0
+		project_id, class_id, "title", "Title", "text", "required,sort", 0
 	)
 	mochi.db.execute(
 		"insert into hierarchy (project, class, parent) values (?, ?, ?)",
 		project_id, class_id, ""
 	)
 	broadcast_event(project_id, "class/create", {
-		"project": project_id, "id": class_id, "name": name.strip(), "rank": rank, "pull_requests": pr_flag
+		"project": project_id, "id": class_id, "name": name.strip(), "rank": rank, "pull_requests": pr_flag, "title": "title"
 	})
 	return {"id": class_id, "name": name.strip(), "rank": rank}
 
@@ -6157,9 +6210,13 @@ def do_class_update(project_id, project, params):
 	if pr_input:
 		pr_flag = 1 if pr_input == "1" else 0
 		mochi.db.execute("update classes set pull_requests=? where project=? and id=?", pr_flag, project_id, class_id)
+	title_input = params.get("title")
+	if title_input:
+		mochi.db.execute("update classes set title=? where project=? and id=?", title_input, project_id, class_id)
 	broadcast_event(project_id, "class/update", {
 		"project": project_id, "id": class_id, "name": name or class_row["name"],
-		"pull_requests": class_row["pull_requests"] if not pr_input else (1 if pr_input == "1" else 0)
+		"pull_requests": class_row["pull_requests"] if not pr_input else (1 if pr_input == "1" else 0),
+		"title": title_input or class_row["title"]
 	})
 	return {"success": True}
 
@@ -6415,11 +6472,12 @@ def do_view_create(project_id, project, params):
 	fields = params.get("fields", "title,priority,owner,due")
 	sort = params.get("sort", "")
 	direction = params.get("direction", "asc")
+	border = params.get("border", "")
 	next_rank = mochi.db.row("select coalesce(max(rank), -1) + 1 as r from views where project=?", project_id)
 	rank = next_rank["r"] if next_rank else 0
 	mochi.db.execute(
-		"insert into views (project, id, name, viewtype, filter, columns, rows, sort, direction, rank) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-		project_id, view_id, name.strip(), viewtype, filter_str, columns, rows, sort, direction, rank
+		"insert into views (project, id, name, viewtype, filter, columns, rows, sort, direction, rank, border) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+		project_id, view_id, name.strip(), viewtype, filter_str, columns, rows, sort, direction, rank, border
 	)
 	for i, field in enumerate(fields.split(",")):
 		if field.strip():
@@ -6437,7 +6495,8 @@ def do_view_create(project_id, project, params):
 	broadcast_event(project_id, "view/create", {
 		"project": project_id, "id": view_id, "name": name.strip(),
 		"viewtype": viewtype, "filter": filter_str, "columns": columns,
-		"rows": rows, "fields": fields, "sort": sort, "direction": direction
+		"rows": rows, "fields": fields, "sort": sort, "direction": direction,
+		"border": border
 	})
 	return {"id": view_id, "name": name.strip(), "viewtype": viewtype}
 
@@ -6482,6 +6541,9 @@ def do_view_update(project_id, project, params):
 		if direction not in ["asc", "desc"]:
 			return {"error": "Invalid direction", "code": 400}
 		mochi.db.execute("update views set direction=? where project=? and id=?", direction, project_id, view_id)
+	border = params.get("border")
+	if border != None:
+		mochi.db.execute("update views set border=? where project=? and id=?", border, project_id, view_id)
 	view_classes_input = params.get("classes")
 	if view_classes_input != None:
 		mochi.db.execute("delete from view_classes where project=? and view=?", project_id, view_id)
@@ -6502,7 +6564,7 @@ def do_view_update(project_id, project, params):
 			"filter": updated["filter"], "columns": updated["columns"],
 			"rows": updated["rows"], "fields": updated_fields,
 			"sort": updated["sort"], "direction": updated["direction"],
-			"rank": updated["rank"]
+			"rank": updated["rank"], "border": updated["border"]
 		})
 	return {"success": True}
 

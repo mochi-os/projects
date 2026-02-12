@@ -166,7 +166,7 @@ export function DesignPreview({
           const value = card.values[fieldId as keyof typeof card.values];
           if (!value) return null;
 
-          if (field.flags?.split(",").includes("title")) {
+          if (field.id === "title") {
             return (
               <div key={fieldId} className="font-medium text-sm">
                 {value}

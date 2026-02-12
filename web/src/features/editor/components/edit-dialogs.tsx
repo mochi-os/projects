@@ -59,7 +59,8 @@ interface ViewSheetProps {
     selectedFields: string[],
     sort: string,
     direction: string,
-    selectedClasses: string[]
+    selectedClasses: string[],
+    border: string
   ) => void | Promise<void>;
 }
 
@@ -85,6 +86,7 @@ export function ViewSheet({
   const [sort, setSort] = useState("");
   const [direction, setDirection] = useState<"asc" | "desc">("asc");
   const [selectedClasses, setSelectedClasses] = useState<string[]>([]);
+  const [border, setBorder] = useState("");
   const [draggedViewFieldId, setDraggedViewFieldId] = useState<string | null>(null);
   const [viewFieldDropIndicator, setViewFieldDropIndicator] = useState<{ fieldId: string; position: "before" | "after" } | null>(null);
 
@@ -98,6 +100,7 @@ export function ViewSheet({
       setViewtype(enumeratedFields.length > 0 ? "board" : "list");
       setColumns("");
       setRows("");
+      setBorder("");
       setSelectedFields(fields.map((f) => f.id));
       setSort("");
       setDirection("asc");
@@ -107,6 +110,7 @@ export function ViewSheet({
       setViewtype(view.viewtype);
       setColumns(view.columns || "");
       setRows(view.rows || "");
+      setBorder(view.border || "");
       setSelectedFields((view.fields || "").split(",").filter(Boolean));
       setSort(view.sort || "");
       setDirection((view.direction as "asc" | "desc") || "asc");
@@ -234,7 +238,7 @@ export function ViewSheet({
   const handleCreate = async () => {
     if (onCreate && canSubmit) {
       try {
-        await onCreate(name.trim(), viewtype, columns, rows, selectedFields, sort, direction, selectedClasses);
+        await onCreate(name.trim(), viewtype, columns, rows, selectedFields, sort, direction, selectedClasses, border);
         onOpenChange(false);
       } catch {
         // Error displayed by caller via toast
@@ -366,6 +370,31 @@ export function ViewSheet({
             </div>
           )}
 
+          {enumeratedFields.length > 0 && (
+            <div className="space-y-2">
+              <Label>Border colour</Label>
+              <div className="pl-4">
+                <select
+                  value={border}
+                  onChange={(e) => {
+                    setBorder(e.target.value);
+                    if (mode === "edit" && onUpdate) {
+                      onUpdate({ border: e.target.value });
+                    }
+                  }}
+                  className="w-full h-9 rounded-md border border-input bg-background px-3 py-1 text-sm"
+                >
+                  <option value="">None</option>
+                  {enumeratedFields.map((field) => (
+                    <option key={field.id} value={field.id}>
+                      {field.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+          )}
+
           <div className="space-y-2">
             <Label>Show fields</Label>
             <div className="pl-4 space-y-1">
@@ -470,7 +499,7 @@ interface ClassSheetProps {
   cls?: ProjectClass | null;
   hierarchy?: string[];
   fields?: ProjectField[];
-  onUpdate?: (name: string, pull_requests?: string) => void;
+  onUpdate?: (name: string, pull_requests?: string, title?: string) => void;
   onUpdateHierarchy?: (parents: string[]) => void;
   onDelete?: () => void;
   onAddField?: () => void;
@@ -512,7 +541,7 @@ export function ClassSheet({
     if (mode === "create") {
       setName("");
       setPendingParents([]);
-      setPendingFields([{ id: "title", name: "Title", fieldtype: "text", flags: "required,title,sort" }]);
+      setPendingFields([{ id: "title", name: "Title", fieldtype: "text", flags: "required,sort" }]);
       setPullRequests(false);
     } else if (cls) {
       setName(cls.name);
@@ -670,6 +699,30 @@ export function ClassSheet({
             </div>
           )}
 
+          {mode === "edit" && cls && fields && fields.length > 0 && (
+            <div className="space-y-2">
+              <Label>Title field</Label>
+              <div className="pl-4">
+                <select
+                  value={cls.title || ""}
+                  onChange={(e) => {
+                    if (onUpdate) {
+                      onUpdate(cls.name, undefined, e.target.value);
+                    }
+                  }}
+                  className="w-full h-9 rounded-md border border-input bg-background px-3 py-1 text-sm"
+                >
+                  <option value="">None</option>
+                  {fields.map((field) => (
+                    <option key={field.id} value={field.id}>
+                      {field.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+          )}
+
           <div className="space-y-2">
             <Label>Can be child of</Label>
             <div className="pl-4 space-y-1">
@@ -747,7 +800,7 @@ export function ClassSheet({
                           {field.name || field.id}
                         </span>
                       )}
-                      {mode === "create" && !field.flags?.split(",").includes("title") && (
+                      {mode === "create" && field.id !== "title" && (
                         <Button
                           type="button"
                           variant="ghost"
@@ -825,6 +878,7 @@ interface EditFieldDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   field: ProjectField | null;
+  isSystemField?: boolean;
   options: FieldOption[];
   onUpdate: (updates: Partial<ProjectField>) => void;
   onDelete: () => void;
@@ -838,6 +892,7 @@ export function EditFieldDialog({
   open,
   onOpenChange,
   field,
+  isSystemField: isSystemFieldProp,
   options,
   onUpdate,
   onDelete,
@@ -857,7 +912,7 @@ export function EditFieldDialog({
 
   if (!field) return null;
 
-  const isSystemField = field.flags?.split(",").includes("title") ?? false;
+  const isSystemField = isSystemFieldProp ?? false;
 
   const handleNameBlur = () => {
     if (name.trim() && name.trim() !== field.name) {
@@ -943,8 +998,6 @@ export function EditFieldDialog({
             <div className="space-y-1">
               {[
                 { id: "required", label: "Required" },
-                { id: "title", label: "Title" },
-                { id: "border", label: "Border" },
                 { id: "sort", label: "Sort" },
               ].map((flag) => (
                 <label key={flag.id} className="flex items-center gap-2 text-sm cursor-pointer">

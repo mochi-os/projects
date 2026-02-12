@@ -230,14 +230,15 @@ export function ObjectDetailPanel({
   const object = data.object;
   const classFields = project.fields[object.class] || [];
   const classOptions = project.options[object.class] || {};
-  const titleField = classFields.find((f) => f.flags?.split(",").includes("title"));
+  const cls = project.classes.find((c) => c.id === object.class);
+  const titleField = cls?.title ? classFields.find((f) => f.id === cls.title) : undefined;
   const title = (titleField ? data.values[titleField.id] : "") || object.readable;
-  const hasPrs = project.classes.find((c) => c.id === object.class)?.pull_requests === 1;
+  const hasPrs = cls?.pull_requests === 1;
 
-  // Get display title for any object using its class's title-flagged field
+  // Get display title for any object using its class's title field
   const objectTitle = (obj: { class: string; number: number; values: Record<string, string> }) => {
-    const tf = (project.fields[obj.class] || []).find((f) => f.flags?.split(",").includes("title"));
-    return (tf ? obj.values[tf.id] : "") || `${project.project.prefix}-${obj.number}`;
+    const objCls = project.classes.find((c) => c.id === obj.class);
+    return (objCls?.title ? obj.values[objCls.title] : "") || `${project.project.prefix}-${obj.number}`;
   };
   const prCount = data.prs?.length || 0;
 
@@ -407,7 +408,7 @@ export function ObjectDetailPanel({
               )}
 
               {classFields
-                .filter((f) => !f.flags?.split(",").includes("title"))
+                .filter((f) => f.id !== cls?.title)
                 .map((field) => (
                   <div key={field.id} className="grid grid-cols-[120px_1fr] gap-4 items-start">
                     <label className="text-sm font-medium text-muted-foreground pt-2">

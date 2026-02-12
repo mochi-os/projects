@@ -21,6 +21,7 @@ export interface ProjectClass {
   name: string;
   rank: number;
   pull_requests: number;
+  title: string;
 }
 
 export interface ProjectField {
@@ -55,6 +56,7 @@ export interface ProjectView {
   direction: string;
   classes: string[];
   rank: number;
+  border: string;
 }
 
 export interface ProjectTemplate {

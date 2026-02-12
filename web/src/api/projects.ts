@@ -112,6 +112,7 @@ interface CreateViewRequest {
   sort?: string;
   direction?: "asc" | "desc";
   classes?: string;
+  border?: string;
 }
 
 interface UpdateViewRequest {
@@ -124,6 +125,7 @@ interface UpdateViewRequest {
   sort?: string;
   direction?: "asc" | "desc";
   classes?: string;
+  border?: string;
 }
 
 // Class response/request types
@@ -144,11 +146,13 @@ interface ClassCreateResponse {
 interface CreateClassRequest {
   name: string;
   pull_requests?: string;
+  title?: string;
 }
 
 interface UpdateClassRequest {
   name?: string;
   pull_requests?: string;
+  title?: string;
 }
 
 // Hierarchy response/request types

@@ -4,7 +4,7 @@
 import { useState } from "react";
 import { Card, cn } from "@mochi/common";
 import { Check, CheckSquare, ChevronDown, ChevronRight } from "lucide-react";
-import type { ProjectObject, ProjectField, FieldOption, ChecklistItem } from "@/types";
+import type { ProjectObject, ProjectField, ProjectClass, FieldOption, ChecklistItem } from "@/types";
 
 interface BoardCardProps {
   object: ProjectObject;
@@ -16,6 +16,8 @@ interface BoardCardProps {
   allObjects?: ProjectObject[];
   statusField?: string;
   rowField?: string;
+  borderField?: string;
+  classMap?: Record<string, ProjectClass>;
   peopleMap?: Record<string, string>;
   draggable?: boolean;
   onClick?: () => void;
@@ -49,6 +51,8 @@ export function BoardCard({
   allObjects,
   statusField,
   rowField,
+  borderField,
+  classMap,
   peopleMap,
   draggable: canDrag = true,
   onClick,
@@ -62,8 +66,10 @@ export function BoardCard({
 
   const isNested = depth > 0;
 
-  // Use field with 'title' flag as the card header
-  const headerField = fields.find((f) => f.flags?.split(",").includes("title"));
+  // Use the class's title field as the card header
+  const cls = classMap?.[object.class];
+  const titleFieldId = cls?.title;
+  const headerField = titleFieldId ? fields.find((f) => f.id === titleFieldId) : undefined;
   const rawTitle = headerField
     ? (object.values[headerField.id] || `${prefix}-${object.number}`)
     : `${prefix}-${object.number}`;
@@ -74,19 +80,15 @@ export function BoardCard({
     (f) => f !== headerField && f.id !== statusField && f.id !== rowField,
   );
 
-  // Get border color from the first field with the 'border' flag (check all class fields, not just visible)
+  // Get border color from the view's border field
   let borderColor: string | undefined;
-  const allClassFields = allFields?.[object.class] || fields;
-  const borderFields = allClassFields.filter((f) => f.flags?.split(",").includes("border"));
-  for (const f of borderFields) {
-    const value = object.values[f.id];
-    if (!value) continue;
-    const fieldOptions = options[f.id];
-    if (!fieldOptions) continue;
-    const match = fieldOptions.find((o) => o.id === value && o.colour);
-    if (match) {
-      borderColor = match.colour;
-      break;
+  if (borderField) {
+    const value = object.values[borderField];
+    if (value) {
+      const match = options[borderField]?.find((o) => o.id === value && o.colour);
+      if (match) {
+        borderColor = match.colour;
+      }
     }
   }
 
@@ -288,6 +290,8 @@ export function BoardCard({
                     allObjects={allObjects}
                     statusField={statusField}
                     rowField={rowField}
+                    borderField={borderField}
+                    classMap={classMap}
                     peopleMap={peopleMap}
                     draggable={canDrag}
                     onClick={() => onChildClick?.(child)}

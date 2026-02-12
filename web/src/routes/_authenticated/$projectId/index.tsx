@@ -780,6 +780,7 @@ function ProjectPage() {
                 objects={filteredObjects}
                 statusField={columnField}
                 rowField={rowField}
+                borderField={activeView?.border}
                 viewFields={activeView?.fields}
                 sort={sort}
                 peopleMap={peopleMap}

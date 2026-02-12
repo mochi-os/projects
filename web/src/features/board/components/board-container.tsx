@@ -21,6 +21,7 @@ interface BoardContainerProps {
   objects: ProjectObject[];
   statusField: string;
   rowField?: string;
+  borderField?: string;
   viewFields?: string;
   sort?: SortState | null;
   peopleMap?: Record<string, string>;
@@ -74,6 +75,7 @@ export function BoardContainer({
   objects,
   statusField,
   rowField,
+  borderField,
   viewFields,
   sort,
   peopleMap,
@@ -111,6 +113,15 @@ export function BoardContainer({
     }
     return map;
   }, [objects]);
+
+  // Build a class map for quick lookups
+  const classMap = useMemo(() => {
+    const map: Record<string, typeof project.classes[0]> = {};
+    for (const cls of project.classes) {
+      map[cls.id] = cls;
+    }
+    return map;
+  }, [project.classes]);
 
   // Build children-by-parent map for nested card rendering
   const childrenByParent = useMemo(() => {
@@ -498,6 +509,8 @@ export function BoardContainer({
           allObjects={objects}
           statusField={statusField}
           rowField={rowField}
+          borderField={borderField}
+          classMap={classMap}
           peopleMap={peopleMap}
           childrenByParent={childrenByParent}
           hierarchy={project.hierarchy}
@@ -614,6 +627,8 @@ export function BoardContainer({
               allObjects={objects}
               statusField={statusField}
               rowField={rowField}
+              borderField={borderField}
+              classMap={classMap}
               peopleMap={peopleMap}
               childrenByParent={childrenByParent}
               hierarchy={project.hierarchy}
@@ -653,6 +668,8 @@ export function BoardContainer({
           allObjects={objects}
           statusField={statusField}
           rowField={rowField}
+          borderField={borderField}
+          classMap={classMap}
           peopleMap={peopleMap}
           childrenByParent={childrenByParent}
           hierarchy={project.hierarchy}

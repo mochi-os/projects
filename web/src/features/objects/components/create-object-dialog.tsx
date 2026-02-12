@@ -321,6 +321,7 @@ export function CreateObjectDialog({
                       onChange={(value) => handleFieldChange(field.id, value)}
                       disabled={createMutation.isPending}
                       autoFocus={isFirstTextField}
+                      immediate
                       hideLabel
                       localPeople={peopleData}
                     />

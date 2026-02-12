@@ -107,6 +107,10 @@ export function BoardColumn({
   const dropModeRef = useRef<"between" | "on">("between");
   const dropTargetCardRef = useRef<string>("");
   const childReorderRef = useRef<{ parentId: string; rank: number } | null>(null);
+  const objectMapRef = useRef(objectMap);
+  objectMapRef.current = objectMap;
+  const hierarchyRef = useRef(hierarchy);
+  hierarchyRef.current = hierarchy;
 
   useEffect(() => {
     return () => clearTimeout(safetyTimeoutRef.current);
@@ -154,6 +158,31 @@ export function BoardColumn({
     // Calculate drop position based on mouse Y
     const mouseY = e.clientY;
 
+    // Extract dragged object info from dataTransfer types (readable during dragover)
+    const om = objectMapRef.current;
+    const hr = hierarchyRef.current;
+    let draggedId = "";
+    let draggedClass = "";
+    for (const t of e.dataTransfer.types) {
+      if (t.startsWith("application/x-mochi-class-")) draggedClass = t.slice(26);
+      else if (t.startsWith("application/x-mochi-id-")) draggedId = t.slice(23);
+    }
+    const draggedObj = draggedId ? om[draggedId] : undefined;
+
+    // Hierarchy validation helpers
+    const canParent = (parentClass: string) => {
+      if (!draggedClass || !hr) return true;
+      return hr[draggedClass]?.includes(parentClass) ?? true;
+    };
+    const isAncestor = (objId: string, ancestorId: string) => {
+      let cur = om[objId]?.parent;
+      while (cur) {
+        if (cur === ancestorId) return true;
+        cur = om[cur]?.parent || "";
+      }
+      return false;
+    };
+
     // Drop detection: find deepest card under cursor
     let dropOnEl: Element | null = null;
     let dropOnId = "";
@@ -171,24 +200,34 @@ export function BoardColumn({
       const distFromBottom = rect.bottom - mouseY;
 
       if (distFromTop > edgeZone && distFromBottom > edgeZone) {
-        // Center zone → drop ON this card
-        dropOnEl = targetEl;
-        dropOnId = targetEl.getAttribute("data-card-id") || "";
+        // Center zone → drop ON this card (if hierarchy allows)
+        const cardId = targetEl.getAttribute("data-card-id") || "";
+        const cardObj = om[cardId];
+        if (cardId && cardId !== draggedId && cardObj &&
+            canParent(cardObj.class) &&
+            (!draggedId || !isAncestor(cardId, draggedId))) {
+          dropOnEl = targetEl;
+          dropOnId = cardId;
+        }
       } else {
         if (parentCardEl) {
-          // Nested card edge → reorder among siblings
+          // Nested card edge → reorder among siblings (if hierarchy allows)
           const parentId = parentCardEl.getAttribute("data-card-id") || "";
-          const sibContainer = targetEl.parentElement!;
-          const siblings = sibContainer.querySelectorAll(":scope > [data-card-id]");
-          let sibIndex = siblings.length;
-          for (let i = 0; i < siblings.length; i++) {
-            const sibRect = siblings[i].getBoundingClientRect();
-            if (mouseY < sibRect.top + sibRect.height / 2) {
-              sibIndex = i;
-              break;
+          const parentObj = om[parentId];
+          const isAlreadySibling = draggedObj?.parent === parentId;
+          if (isAlreadySibling || (parentObj && canParent(parentObj.class) && (!draggedId || !isAncestor(parentId, draggedId)))) {
+            const sibContainer = targetEl.parentElement!;
+            const siblings = sibContainer.querySelectorAll(":scope > [data-card-id]");
+            let sibIndex = siblings.length;
+            for (let i = 0; i < siblings.length; i++) {
+              const sibRect = siblings[i].getBoundingClientRect();
+              if (mouseY < sibRect.top + sibRect.height / 2) {
+                sibIndex = i;
+                break;
+              }
             }
+            siblingReorder = { parentId, rank: sibIndex + 1, container: sibContainer, siblings, index: sibIndex };
           }
-          siblingReorder = { parentId, rank: sibIndex + 1, container: sibContainer, siblings, index: sibIndex };
         }
         // else: top-level card edge → falls through to between mode
       }
@@ -255,8 +294,14 @@ export function BoardColumn({
       dropTargetCardRef.current = "";
       childReorderRef.current = null;
 
+      // A child being promoted to top-level needs hierarchy to allow it
+      const isChild = draggedObj?.parent && om[draggedObj.parent];
+      const canDropBetween = !isChild || canParent("");
+
       // Position drop indicator line (fixed positioning, viewport coordinates)
-      if (indicatorRef.current && columnRef.current) {
+      if (!canDropBetween) {
+        if (indicatorRef.current) indicatorRef.current.style.opacity = "0";
+      } else if (indicatorRef.current && columnRef.current) {
         let container: Element | null = null;
         let targetCards: NodeListOf<Element> | null = null;
 

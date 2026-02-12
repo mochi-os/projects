@@ -299,6 +299,9 @@ export function BoardContainer({
       const columnChanged = columnId !== parentStatus;
       const rowChanged = rowId !== undefined && rowId !== parentRow;
       if (columnChanged || rowChanged) {
+        // Check if hierarchy allows top-level before promoting
+        const allowedParents = project.hierarchy[draggedObj.class];
+        if (!allowedParents || !allowedParents.includes("")) return;
         // Promote to top-level and move in a single atomic operation
         onMoveObject?.(objectId, columnId, newRank, rowId, undefined, true);
         return;

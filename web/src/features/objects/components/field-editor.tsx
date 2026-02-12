@@ -26,6 +26,7 @@ interface FieldEditorProps {
   disabled?: boolean;
   readOnly?: boolean;
   autoFocus?: boolean;
+  immediate?: boolean;
   localPeople?: Person[];
   onValidationError?: (hasError: boolean) => void;
 }
@@ -39,6 +40,7 @@ export function FieldEditor({
   readOnly,
   hideLabel,
   autoFocus,
+  immediate,
   localPeople = [],
   onValidationError,
 }: FieldEditorProps & { hideLabel?: boolean }) {
@@ -61,12 +63,17 @@ export function FieldEditor({
 
   const handleTextChange = (newValue: string) => {
     setLocalValue(newValue);
-    
+
+    if (immediate) {
+      onChange(newValue);
+      return;
+    }
+
     // Debounce auto-save for better UX
     if (debounceTimerRef.current) {
       clearTimeout(debounceTimerRef.current);
     }
-    
+
     debounceTimerRef.current = setTimeout(() => {
       if (newValue !== value) {
         onChange(newValue);

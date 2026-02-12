@@ -74,9 +74,10 @@ export function BoardCard({
     (f) => f !== headerField && f.id !== statusField && f.id !== rowField,
   );
 
-  // Get border color from the first field with the 'border' flag
+  // Get border color from the first field with the 'border' flag (check all class fields, not just visible)
   let borderColor: string | undefined;
-  const borderFields = fields.filter((f) => f.flags?.split(",").includes("border"));
+  const allClassFields = allFields?.[object.class] || fields;
+  const borderFields = allClassFields.filter((f) => f.flags?.split(",").includes("border"));
   for (const f of borderFields) {
     const value = object.values[f.id];
     if (!value) continue;
@@ -218,6 +219,8 @@ export function BoardCard({
       onDragStart={canDrag ? (e) => {
         e.stopPropagation();
         e.dataTransfer.setData("text/plain", object.id);
+        e.dataTransfer.setData(`application/x-mochi-class-${object.class}`, "");
+        e.dataTransfer.setData(`application/x-mochi-id-${object.id}`, "");
         e.dataTransfer.effectAllowed = "move";
       } : undefined}
     >

@@ -1,7 +1,7 @@
 // Mochi Projects: Diff viewer page (standalone, no sidebar)
 // Copyright Alistair Cunningham 2026
 
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Rows3, Columns2 } from "lucide-react";
 import { EmptyState, GeneralError, Main, PageHeader, usePageTitle, useAuthStore, useQueryWithError } from "@mochi/common";
@@ -32,8 +32,11 @@ export const Route = createFileRoute("/$projectId/diff")({
 });
 
 function DiffPage() {
+  const { projectId } = Route.useParams();
   const { repo, source, target } = Route.useSearch();
+  const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const goBackToProject = () => navigate({ to: "/$projectId", params: { projectId } });
 
   usePageTitle(`Diff: ${source} → ${target}`);
 
@@ -96,6 +99,7 @@ function DiffPage() {
     <div className="h-svh flex flex-col overflow-hidden">
       <PageHeader
         title={`${source} → ${target}`}
+        back={{ label: "Back to project", onFallback: goBackToProject }}
         actions={
           <div className="flex rounded-md border overflow-hidden text-sm">
             <button

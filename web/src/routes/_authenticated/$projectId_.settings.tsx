@@ -83,6 +83,7 @@ function ProjectSettingsPage() {
   const navigateSettings = Route.useNavigate();
   const { tab } = Route.useSearch();
   const activeTab = tab ?? "general";
+  const goBackToProject = () => navigate({ to: "/$projectId", params: { projectId } });
   const queryClient = useQueryClient();
   const refreshSidebar = useProjectsStore((state) => state.refresh);
 
@@ -172,6 +173,7 @@ function ProjectSettingsPage() {
         <PageHeader
           title="Settings"
           icon={<Settings className="size-4 md:size-5" />}
+          back={{ label: "Back to project", onFallback: goBackToProject }}
         />
         <Main className="space-y-6">
           <div className="flex gap-1 border-b">
@@ -194,6 +196,7 @@ function ProjectSettingsPage() {
         <PageHeader
           title="Settings"
           icon={<Settings className="size-4 md:size-5" />}
+          back={{ label: "Back to project", onFallback: goBackToProject }}
         />
         <Main>
           <EmptyState
@@ -211,6 +214,7 @@ function ProjectSettingsPage() {
       <PageHeader
         title={`${project.project.name} settings`}
         icon={<Settings className="size-4 md:size-5" />}
+        back={{ label: "Back to project", onFallback: goBackToProject }}
       />
       <Main className="space-y-6">
         {/* Tabs - only show for owners */}

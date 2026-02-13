@@ -1,7 +1,7 @@
 // Mochi Projects: Design editor page
 // Copyright Alistair Cunningham 2026
 
-import { createFileRoute, Navigate } from "@tanstack/react-router";
+import { createFileRoute, Navigate, useNavigate } from "@tanstack/react-router";
 import { GeneralError, Main, PageHeader, usePageTitle, useQueryWithError, DetailSkeleton } from "@mochi/common";
 import { Settings2 } from "lucide-react";
 import projectsApi from "@/api/projects";
@@ -16,6 +16,8 @@ export const Route = createFileRoute("/_authenticated/$projectId/design")({
 
 function DesignPage() {
   const { projectId } = Route.useParams();
+  const navigate = useNavigate();
+  const goBackToProject = () => navigate({ to: "/$projectId", params: { projectId } });
 
   const {
     data: projectData,
@@ -38,6 +40,7 @@ function DesignPage() {
         <PageHeader
           title="Design"
           icon={<Settings2 className="size-4 md:size-5" />}
+          back={{ label: "Back to project", onFallback: goBackToProject }}
         />
         <Main>
           <DetailSkeleton />
@@ -67,6 +70,7 @@ function DesignPage() {
       <PageHeader
         title={`${project.project.name} - Design`}
         icon={<Settings2 className="size-4 md:size-5" />}
+        back={{ label: "Back to project", onFallback: goBackToProject }}
       />
       <Main fixed fluid className="flex-1 !py-0">
         <DesignEditor projectId={projectId} project={project} />

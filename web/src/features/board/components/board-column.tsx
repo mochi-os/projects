@@ -243,15 +243,19 @@ export function BoardColumn({
       }
     }
 
-    // Drop index for top-level between mode
+    // Drop index for top-level between mode (skips the dragged card so
+    // dropping just below yourself doesn't count as moving down one slot)
     const calculateDropIndex = (cards: NodeListOf<Element>) => {
+      let index = 0;
       for (let i = 0; i < cards.length; i++) {
+        if (cards[i].getAttribute("data-card-id") === draggedId) continue;
         const cardRect = cards[i].getBoundingClientRect();
         if (mouseY < cardRect.top + cardRect.height / 2) {
-          return i;
+          return index;
         }
+        index++;
       }
-      return cards.length;
+      return index;
     };
 
     if (rowsRef.current && columnRef.current) {
@@ -328,14 +332,19 @@ export function BoardColumn({
           targetCards = cardsContainerRef.current.querySelectorAll(":scope > [data-card-id]");
         }
 
-        if (container && targetCards && targetCards.length > 0) {
+        // Filter out the dragged card so indicator position matches calculateDropIndex
+        const filtered = targetCards
+          ? Array.from(targetCards).filter((el) => el.getAttribute("data-card-id") !== draggedId)
+          : [];
+
+        if (container && filtered.length > 0) {
           const containerRect = container.getBoundingClientRect();
           const idx = dropIndexRef.current;
           let top: number;
-          if (idx < targetCards.length) {
-            top = targetCards[idx].getBoundingClientRect().top;
+          if (idx < filtered.length) {
+            top = filtered[idx].getBoundingClientRect().top;
           } else {
-            top = targetCards[targetCards.length - 1].getBoundingClientRect().bottom + 4;
+            top = filtered[filtered.length - 1].getBoundingClientRect().bottom + 4;
           }
           indicatorRef.current.style.top = `${top}px`;
           indicatorRef.current.style.left = `${containerRect.left + 4}px`;
@@ -374,7 +383,7 @@ export function BoardColumn({
 
   // Render a single card with its children
   const renderCard = (object: ProjectObject) => (
-    <div key={object.id} data-card-id={object.id} className="rounded-[10px] transition-all data-[drop-target]:ring-2 data-[drop-target]:ring-primary">
+    <div key={object.id} data-card-id={object.id} className="rounded-[10px] transition-shadow data-[drop-target]:ring-2 data-[drop-target]:ring-primary">
       <BoardCard
         object={object}
         fields={fields}

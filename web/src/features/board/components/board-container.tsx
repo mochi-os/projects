@@ -178,6 +178,43 @@ export function BoardContainer({
     return () => observer.disconnect();
   }, []);
 
+  // FLIP animation: capture card positions before drop, animate after re-render
+  const flipRef = useRef<Map<string, DOMRect>>(new Map());
+
+  useLayoutEffect(() => {
+    const prev = flipRef.current;
+    if (!prev.size || !boardRef.current) return;
+
+    const animations: HTMLElement[] = [];
+    boardRef.current.querySelectorAll('[data-card-id]').forEach(card => {
+      // Skip nested cards — they move with their parent
+      if (card.parentElement?.closest('[data-card-id]')) return;
+      const id = card.getAttribute('data-card-id');
+      if (!id) return;
+      const oldRect = prev.get(id);
+      if (!oldRect) return;
+      const newRect = card.getBoundingClientRect();
+      const dx = oldRect.left - newRect.left;
+      const dy = oldRect.top - newRect.top;
+      if (Math.abs(dx) < 1 && Math.abs(dy) < 1) return;
+      const el = card as HTMLElement;
+      el.style.transition = 'none';
+      el.style.transform = `translate(${dx}px, ${dy}px)`;
+      animations.push(el);
+    });
+
+    // Only consume positions once cards have actually moved
+    if (animations.length === 0) return;
+    flipRef.current = new Map();
+
+    document.body.getBoundingClientRect(); // force reflow
+    for (const el of animations) {
+      el.style.transition = 'transform 200ms ease-out';
+      el.style.transform = '';
+      el.addEventListener('transitionend', () => { el.style.transition = ''; }, { once: true });
+    }
+  });
+
   // Local reorder state
   const [reorderedColumns, setReorderedColumns] = useState<FieldOption[]>(statusOptions);
   const [draggedColumnId, setDraggedColumnId] = useState<string | null>(null);
@@ -264,12 +301,26 @@ export function BoardContainer({
     return grouped;
   }, [objects, objectMap, statusOptions, rowOptions, statusField, rowField, hasRows, sort]);
 
+  // Capture card positions for FLIP animation before a drop triggers re-render
+  const capturePositions = useCallback(() => {
+    if (!boardRef.current) return;
+    const positions = new Map<string, DOMRect>();
+    boardRef.current.querySelectorAll('[data-card-id]').forEach(el => {
+      if (!el.parentElement?.closest('[data-card-id]')) {
+        positions.set(el.getAttribute('data-card-id')!, el.getBoundingClientRect());
+      }
+    });
+    flipRef.current = positions;
+  }, []);
+
   // Handle drop events — distinguishes between-cards, drop-on-card, and sibling reorder
   const handleDrop = (onMoveObject || onReparentObject) ? (
     objectId: string, columnId: string, newRank?: number, rowId?: string, dropOnCardId?: string, reorderParentId?: string, reorderRank?: number
   ) => {
     const draggedObj = objectMap[objectId];
     if (!draggedObj) return;
+
+    capturePositions();
 
     // Reorder child among siblings
     if (reorderParentId && reorderRank !== undefined) {

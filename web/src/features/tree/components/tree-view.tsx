@@ -1,7 +1,7 @@
 // Mochi Projects: Tree view component
 // Copyright Alistair Cunningham 2026
 
-import { useState, useMemo, useEffect, useCallback } from "react";
+import { useState, useMemo, useEffect, useLayoutEffect, useCallback, useRef } from "react";
 import { TreeRow } from "./tree-row";
 import type { ProjectDetails, ProjectObject, SortState } from "@/types";
 
@@ -236,6 +236,41 @@ export function TreeView({
     [objectMap, project.hierarchy],
   );
 
+  // FLIP animation: capture row positions before drop, animate after re-render
+  const containerRef = useRef<HTMLDivElement>(null);
+  const flipRef = useRef<Map<string, DOMRect>>(new Map());
+
+  useLayoutEffect(() => {
+    const prev = flipRef.current;
+    if (!prev.size || !containerRef.current) return;
+
+    const animations: HTMLElement[] = [];
+    containerRef.current.querySelectorAll('[data-card-id]').forEach(row => {
+      const id = row.getAttribute('data-card-id');
+      if (!id) return;
+      const oldRect = prev.get(id);
+      if (!oldRect) return;
+      const newRect = row.getBoundingClientRect();
+      const dy = oldRect.top - newRect.top;
+      if (Math.abs(dy) < 1) return;
+      const el = row as HTMLElement;
+      el.style.transition = 'none';
+      el.style.transform = `translateY(${dy}px)`;
+      animations.push(el);
+    });
+
+    // Only consume positions once rows have actually moved
+    if (animations.length === 0) return;
+    flipRef.current = new Map();
+
+    document.body.getBoundingClientRect(); // force reflow
+    for (const el of animations) {
+      el.style.transition = 'transform 200ms ease-out';
+      el.style.transform = '';
+      el.addEventListener('transitionend', () => { el.style.transition = ''; }, { once: true });
+    }
+  });
+
   // Only allow reordering when sorting by rank
   const canReorder = sort?.field === "rank" || (!sort && true);
 
@@ -276,6 +311,15 @@ export function TreeView({
 
   const handleDragEnd = useCallback(() => {
     if (draggedId && dragOverId && draggedId !== dragOverId) {
+      // Capture row positions for FLIP animation before mutation
+      if (containerRef.current) {
+        const positions = new Map<string, DOMRect>();
+        containerRef.current.querySelectorAll('[data-card-id]').forEach(el => {
+          positions.set(el.getAttribute('data-card-id')!, el.getBoundingClientRect());
+        });
+        flipRef.current = positions;
+      }
+
       if (dropPosition === "on" && onReparent && isReparentAllowed(draggedId, dragOverId)) {
         // Reparent: make dragged item a child of target
         onReparent(draggedId, dragOverId);
@@ -324,7 +368,7 @@ export function TreeView({
   }
 
   return (
-    <div className="border rounded-[10px] overflow-hidden bg-background relative">
+    <div ref={containerRef} className="border rounded-[10px] overflow-hidden bg-background relative">
       <table className="w-full border-collapse">
         <tbody className="divide-y divide-border">
           {flatNodes.map(({ node, hasChildren, isExpanded, anySiblingHasChildren }) => {

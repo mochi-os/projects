@@ -118,9 +118,10 @@ export function ProjectsListPage() {
                 to="/$projectId"
                 params={{ projectId: project.fingerprint }}
               >
-                <Card className="hover:border-primary/50 cursor-pointer transition-colors">
+                <Card className="hover:border-primary/50 h-full cursor-pointer transition-colors">
                   <CardContent className="p-4">
                     <div className="flex items-start justify-between gap-2">
+                      <FolderKanban className="text-muted-foreground mt-0.5 size-5 shrink-0" />
                       <div className="min-w-0 flex-1">
                         <h3 className="truncate font-medium">{project.name}</h3>
                         {project.description && (

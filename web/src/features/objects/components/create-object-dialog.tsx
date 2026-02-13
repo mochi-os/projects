@@ -26,6 +26,7 @@ interface CreateObjectDialogProps {
   projectId: string;
   project: ProjectDetails;
   defaultFields?: { field: string; value: string }[];
+  defaultParent?: string;
   allowedClasses?: string[];
   onCreated?: (id: string, number: number, readable: string) => void;
 }
@@ -36,6 +37,7 @@ export function CreateObjectDialog({
   projectId,
   project,
   defaultFields,
+  defaultParent,
   allowedClasses,
   onCreated,
 }: CreateObjectDialogProps) {
@@ -55,7 +57,7 @@ export function CreateObjectDialog({
     if (open) {
       const initialType = availableClasses[0]?.id || "";
       setSelectedType(initialType);
-      setParent("");
+      setParent(defaultParent || "");
       setError(null);
       // Initialize field values with defaults
       const initialValues: Record<string, string> = {};
@@ -77,7 +79,7 @@ export function CreateObjectDialog({
       }
       setFieldValues(initialValues);
     }
-  }, [open, project.classes, defaultFields]);
+  }, [open, project.classes, defaultFields, defaultParent]);
 
   // Update default field values when type changes (if fields exist in new type)
   useEffect(() => {

@@ -53,6 +53,7 @@ interface BoardColumnProps {
   childrenByParent?: Record<string, ProjectObject[]>;
   hierarchy?: Record<string, string[]>;
   onCardClick?: (object: ProjectObject) => void;
+  onCardDoubleClick?: (object: ProjectObject) => void;
   onCreateClick?: () => void;
   onCreateInRow?: (rowId: string) => void;
   onDrop?: (objectId: string, columnId: string, newRank?: number, rowId?: string, dropOnCardId?: string, reorderParentId?: string, reorderRank?: number) => void;
@@ -83,6 +84,7 @@ export function BoardColumn({
   childrenByParent,
   hierarchy,
   onCardClick,
+  onCardDoubleClick,
   onCreateClick,
   onCreateInRow,
   onDrop,
@@ -388,10 +390,12 @@ export function BoardColumn({
         peopleMap={peopleMap}
         draggable={!!onDrop}
         onClick={() => onCardClick?.(object)}
+        onDoubleClick={onCardDoubleClick ? () => onCardDoubleClick(object) : undefined}
         children={childrenByParent?.[object.id] || []}
         childrenByParent={childrenByParent}
         hierarchy={hierarchy}
         onChildClick={onCardClick}
+        onChildDoubleClick={onCardDoubleClick}
       />
     </div>
   );

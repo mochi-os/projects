@@ -77,6 +77,8 @@ function ProjectPage() {
   const [createDefaultFields, setCreateDefaultFields] = useState<
     { field: string; value: string }[] | undefined
   >();
+  const [createDefaultParent, setCreateDefaultParent] = useState<string | undefined>();
+  const [createChildClasses, setCreateChildClasses] = useState<string[] | undefined>();
   const [showShortcutsHelp, setShowShortcutsHelp] = useState(false);
   const [showViewOptions, setShowViewOptions] = useState(() => {
     const saved = localStorage.getItem("projects-view-options-expanded");
@@ -566,6 +568,27 @@ function ProjectPage() {
       fields.push({ field: rowField, value: rowValue });
     }
     setCreateDefaultFields(fields);
+    setCreateDefaultParent(undefined);
+    setCreateChildClasses(undefined);
+    setCreateDialogOpen(true);
+  };
+
+  // Double-click on an object: create a child of that object
+  const handleCreateChild = (parent: ProjectObject) => {
+    setSelectedObjectId(null);
+    // Find all classes that can be children of this object's class
+    const childClasses = project.classes
+      .filter((c) => (project.hierarchy[c.id] || []).includes(parent.class))
+      .map((c) => c.id);
+    if (childClasses.length === 0) return;
+    // Pre-fill column fields from the parent's values
+    const fields: { field: string; value: string }[] = [];
+    if (columnField && parent.values[columnField]) {
+      fields.push({ field: columnField, value: parent.values[columnField] });
+    }
+    setCreateDefaultFields(fields.length > 0 ? fields : undefined);
+    setCreateDefaultParent(parent.id);
+    setCreateChildClasses(childClasses);
     setCreateDialogOpen(true);
   };
 
@@ -787,6 +810,7 @@ function ProjectPage() {
                 sort={sort}
                 peopleMap={peopleMap}
                 onCardClick={handleCardClick}
+                onCardDoubleClick={canWrite(access) ? handleCreateChild : undefined}
                 onCreateClick={canWrite(access) ? handleCreateClick : undefined}
                 onMoveObject={canWrite(access) ? handleMoveObject : undefined}
                 onReparentObject={canWrite(access) ? handleReparent : undefined}
@@ -816,7 +840,8 @@ function ProjectPage() {
           projectId={params.projectId}
           project={project}
           defaultFields={createDefaultFields}
-          allowedClasses={activeView?.classes?.length ? activeView.classes : undefined}
+          defaultParent={createDefaultParent}
+          allowedClasses={createChildClasses || (activeView?.classes?.length ? activeView.classes : undefined)}
           onCreated={handleObjectCreated}
         />
       )}

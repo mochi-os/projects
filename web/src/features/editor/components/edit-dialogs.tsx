@@ -954,23 +954,8 @@ export function EditFieldDialog({
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-md flex flex-col max-h-[85vh]" showCloseButton={false}>
-        <DialogHeader className="flex flex-row items-center justify-between">
+        <DialogHeader>
           <DialogTitle>Edit field</DialogTitle>
-          {!isSystemField && (
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon" className="size-8">
-                  <MoreHorizontal className="size-4" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                <DropdownMenuItem onClick={onDelete}>
-                  <Minus className="size-4" />
-                  Delete field
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          )}
         </DialogHeader>
         <div className="flex-1 overflow-y-auto p-6 space-y-4">
           <div className="space-y-2">
@@ -1077,7 +1062,13 @@ export function EditFieldDialog({
             </div>
           )}
         </div>
-        <DialogFooter>
+        <DialogFooter className="justify-between">
+          {!isSystemField ? (
+            <Button type="button" variant="outline" onClick={onDelete}>
+              <Minus className="size-4" />
+              Delete field
+            </Button>
+          ) : <div />}
           <Button type="button" onClick={() => onOpenChange(false)}>
             <Check className="size-4" />
             Done

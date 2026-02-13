@@ -21,11 +21,13 @@ interface BoardCardProps {
   peopleMap?: Record<string, string>;
   draggable?: boolean;
   onClick?: () => void;
+  onDoubleClick?: () => void;
   children?: ProjectObject[];
   childrenByParent?: Record<string, ProjectObject[]>;
   depth?: number;
   hierarchy?: Record<string, string[]>;
   onChildClick?: (object: ProjectObject) => void;
+  onChildDoubleClick?: (object: ProjectObject) => void;
 }
 
 const MAX_NESTING_DEPTH = 3;
@@ -56,11 +58,13 @@ export function BoardCard({
   peopleMap,
   draggable: canDrag = true,
   onClick,
+  onDoubleClick,
   children: childObjects,
   childrenByParent,
   depth = 0,
   hierarchy,
   onChildClick,
+  onChildDoubleClick,
 }: BoardCardProps) {
   const [collapsed, setCollapsed] = useState(false);
 
@@ -217,6 +221,10 @@ export function BoardCard({
         e.stopPropagation();
         onClick?.();
       }}
+      onDoubleClick={onDoubleClick ? (e) => {
+        e.stopPropagation();
+        onDoubleClick();
+      } : undefined}
       draggable={canDrag}
       onDragStart={canDrag ? (e) => {
         e.stopPropagation();
@@ -295,11 +303,13 @@ export function BoardCard({
                     peopleMap={peopleMap}
                     draggable={canDrag}
                     onClick={() => onChildClick?.(child)}
+                    onDoubleClick={onChildDoubleClick ? () => onChildDoubleClick(child) : undefined}
                     children={childrenByParent?.[child.id] || []}
                     childrenByParent={childrenByParent}
                     depth={depth + 1}
                     hierarchy={hierarchy}
                     onChildClick={onChildClick}
+                    onChildDoubleClick={onChildDoubleClick}
                   />
                 </div>
               );

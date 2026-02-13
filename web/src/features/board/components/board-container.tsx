@@ -26,6 +26,7 @@ interface BoardContainerProps {
   sort?: SortState | null;
   peopleMap?: Record<string, string>;
   onCardClick?: (object: ProjectObject) => void;
+  onCardDoubleClick?: (object: ProjectObject) => void;
   onCreateClick?: (statusId: string, rowId?: string) => void;
   onMoveObject?: (objectId: string, newStatus: string, newRank?: number, newRow?: string, scopeParent?: string, promote?: boolean) => void;
   onReparentObject?: (objectId: string, newParentId: string | null) => void;
@@ -80,6 +81,7 @@ export function BoardContainer({
   sort,
   peopleMap,
   onCardClick,
+  onCardDoubleClick,
   onCreateClick,
   onMoveObject,
   onReparentObject,
@@ -515,6 +517,7 @@ export function BoardContainer({
           childrenByParent={childrenByParent}
           hierarchy={project.hierarchy}
           onCardClick={isReordering ? undefined : onCardClick}
+          onCardDoubleClick={isReordering ? undefined : onCardDoubleClick}
           onCreateClick={isReordering ? undefined : () => onCreateClick?.(status.id)}
           onCreateInRow={isReordering ? undefined : onCreateInRow}
           onDrop={isReordering ? undefined : handleDrop}
@@ -633,6 +636,7 @@ export function BoardContainer({
               childrenByParent={childrenByParent}
               hierarchy={project.hierarchy}
               onCardClick={onCardClick}
+              onCardDoubleClick={onCardDoubleClick}
               onDrop={isReordering ? undefined : handleDrop}
               rows={swimlaneRows.map((row) => ({
                 id: row.id,
@@ -674,6 +678,7 @@ export function BoardContainer({
           childrenByParent={childrenByParent}
           hierarchy={project.hierarchy}
           onCardClick={onCardClick}
+          onCardDoubleClick={onCardDoubleClick}
           onDrop={handleDrop}
         />
       )}

@@ -192,6 +192,7 @@ interface CreateFieldRequest {
 }
 
 interface UpdateFieldRequest {
+  id?: string;
   name?: string;
   flags?: string;
   multi?: string;
@@ -462,10 +463,17 @@ const projectsApi = {
     objectId: string,
     content: string,
     parent?: string,
+    files?: File[],
   ): Promise<{ data: Comment }> => {
+    const formData = new FormData();
+    formData.append("content", content);
+    if (parent) formData.append("parent", parent);
+    if (files) {
+      files.forEach((file) => formData.append("files", file));
+    }
     return projectsRequest.post<{ data: Comment }>(
       endpoints.projects.commentCreate(projectId, objectId),
-      { content, parent },
+      formData,
     );
   },
 

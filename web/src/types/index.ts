@@ -99,6 +99,14 @@ export interface ObjectLink {
   title?: string;
 }
 
+export interface CommentAttachment {
+  id: string;
+  name: string;
+  size: number;
+  type: string;
+  created: number;
+}
+
 export interface Comment {
   id: string;
   parent: string;
@@ -107,6 +115,8 @@ export interface Comment {
   content: string;
   created: number;
   edited: number;
+  children: Comment[];
+  attachments: CommentAttachment[];
 }
 
 export interface Attachment {
@@ -195,6 +205,7 @@ export interface ObjectGetResponse {
 export interface CommentListResponse {
   data: {
     comments: Comment[];
+    count: number;
   };
 }
 

@@ -880,7 +880,7 @@ interface EditFieldDialogProps {
   field: ProjectField | null;
   isSystemField?: boolean;
   options: FieldOption[];
-  onUpdate: (updates: Partial<ProjectField>) => void;
+  onUpdate: (updates: Partial<ProjectField>) => void | Promise<void>;
   onDelete: () => void;
   onAddOption: () => void;
   onEditOption: (option: FieldOption) => void;
@@ -901,11 +901,13 @@ export function EditFieldDialog({
   onDeleteOption,
 }: EditFieldDialogProps) {
   const [name, setName] = useState("");
+  const [fieldId, setFieldId] = useState("");
   const [rows, setRows] = useState(1);
 
   useEffect(() => {
     if (field) {
       setName(field.name);
+      setFieldId(field.id);
       setRows(field.rows || 1);
     }
   }, [field?.id]);
@@ -917,6 +919,17 @@ export function EditFieldDialog({
   const handleNameBlur = () => {
     if (name.trim() && name.trim() !== field.name) {
       onUpdate({ name: name.trim() });
+    }
+  };
+
+  const handleIdBlur = async () => {
+    const trimmed = fieldId.trim().toLowerCase();
+    if (trimmed && trimmed !== field.id) {
+      try {
+        await onUpdate({ id: trimmed } as Partial<ProjectField>);
+      } catch {
+        setFieldId(field.id);
+      }
     }
   };
 
@@ -971,6 +984,16 @@ export function EditFieldDialog({
           </div>
 
           <div className="space-y-2">
+            <Label htmlFor="field-id">ID</Label>
+            <Input
+              id="field-id"
+              value={fieldId}
+              onChange={(e) => setFieldId(e.target.value.toLowerCase().replace(/[^a-z0-9_]/g, ""))}
+              onBlur={handleIdBlur}
+            />
+          </div>
+
+          <div className="space-y-2">
             <Label>Type</Label>
             <p className="text-sm text-muted-foreground capitalize">{field.fieldtype}</p>
           </div>
@@ -995,7 +1018,7 @@ export function EditFieldDialog({
 
           <div className="space-y-2">
             <Label>Flags</Label>
-            <div className="space-y-1">
+            <div className="pl-4 space-y-2">
               {[
                 { id: "required", label: "Required" },
                 { id: "sort", label: "Allow sort by" },

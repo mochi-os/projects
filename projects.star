@@ -661,6 +661,7 @@ def action_project_delete(a):
 		return
 
 	# Delete in reverse dependency order
+	delete_project_comment_attachments(project_id)
 	mochi.db.execute("delete from attachments where object in (select id from objects where project=?)", project_id)
 	mochi.db.execute("delete from watchers where object in (select id from objects where project=?)", project_id)
 	mochi.db.execute("delete from activity where object in (select id from objects where project=?)", project_id)
@@ -759,7 +760,8 @@ def forward_to_owner(a, project_id, action, params):
 	params["_user"] = a.user.identity.id
 	params["_name"] = a.user.identity.name
 	# Look up the server for this remote project and resolve peer
-	server = mochi.db.value("select server from projects where id=?", project_id) or ""
+	server_row = mochi.db.row("select server from projects where id=?", project_id)
+	server = server_row["server"] if server_row else ""
 	peer = mochi.remote.peer(server) if server else None
 	result = mochi.remote.request(project_id, "projects", "request", {
 		"action": action,
@@ -1020,7 +1022,7 @@ def delete_object_cascade(project_id, object_id, actor=""):
 	mochi.db.execute("delete from attachments where object=?", object_id)
 	mochi.db.execute("delete from watchers where object=?", object_id)
 	mochi.db.execute("delete from activity where object=?", object_id)
-	mochi.db.execute("delete from comments where object=?", object_id)
+	delete_object_comments(object_id, project_id)
 	mochi.db.execute("delete from \"values\" where object=?", object_id)
 	mochi.db.execute("delete from links where source=? or target=?", object_id, object_id)
 	mochi.db.execute("delete from objects where id=?", object_id)
@@ -1418,7 +1420,7 @@ def action_object_delete(a):
 		if result and object_id:
 			mochi.db.execute("delete from \"values\" where object=?", object_id)
 			mochi.db.execute("delete from watchers where object=?", object_id)
-			mochi.db.execute("delete from comments where object=?", object_id)
+			delete_object_comments(object_id, project_id)
 			mochi.db.execute("delete from links where source=? or target=?", object_id, object_id)
 			mochi.db.execute("delete from objects where id=?", object_id)
 		return result
@@ -1960,6 +1962,46 @@ def action_link_delete(a):
 	return {"data": {"success": True}}
 
 
+# Build a recursive comment tree for an object
+def object_comments(project_id, object_id, parent_id, depth):
+	if depth > 100:
+		return []
+	comments = mochi.db.rows(
+		"select id, parent, author, name, content, created, edited from comments where object=? and parent=? order by created desc",
+		object_id, parent_id
+	) or []
+	for i in range(len(comments)):
+		comments[i]["children"] = object_comments(project_id, object_id, comments[i]["id"], depth + 1)
+		comments[i]["attachments"] = mochi.attachment.list(comments[i]["id"], project_id) or []
+	return comments
+
+# Recursively delete a comment and all its children and attachments
+def delete_comment_tree(comment_id, project_id):
+	children = mochi.db.rows("select id from comments where parent=?", comment_id) or []
+	for child in children:
+		delete_comment_tree(child["id"], project_id)
+	for att in (mochi.attachment.list(comment_id, project_id) or []):
+		mochi.attachment.delete(att["id"])
+	mochi.db.execute("delete from comments where id=?", comment_id)
+
+# Delete all comments and their attachments for an object
+def delete_object_comments(object_id, project_id):
+	comments = mochi.db.rows("select id from comments where object=?", object_id) or []
+	for c in comments:
+		for att in (mochi.attachment.list(c["id"], project_id) or []):
+			mochi.attachment.delete(att["id"])
+	mochi.db.execute("delete from comments where object=?", object_id)
+
+# Delete all comment attachments for all objects in a project
+def delete_project_comment_attachments(project_id):
+	comments = mochi.db.rows(
+		"select c.id from comments c join objects o on c.object=o.id where o.project=?", project_id
+	) or []
+	for c in comments:
+		for att in (mochi.attachment.list(c["id"], project_id) or []):
+			mochi.attachment.delete(att["id"])
+
+
 # ============================================================================
 # Comment Actions
 # ============================================================================
@@ -1989,12 +2031,11 @@ def action_comment_list(a):
 		a.error(404, "Object not found")
 		return
 
-	comments = mochi.db.rows(
-		"select id, parent, author, name, content, created, edited from comments where object=? order by created asc",
-		object_id
-	) or []
+	comments = object_comments(project_id, object_id, "", 0)
+	count_row = mochi.db.row("select count(*) as count from comments where object=?", object_id)
+	count = count_row["count"] if count_row else 0
 
-	return {"data": {"comments": comments}}
+	return {"data": {"comments": comments, "count": count}}
 
 def action_comment_create(a):
 	if not a.user:
@@ -2016,10 +2057,34 @@ def action_comment_create(a):
 	parent = a.input("parent") or ""
 
 	if project["owner"] != 1:
-		return forward_to_owner(a, project_id, "comment/create", {
-			"project": project_id, "object": object_id,
-			"content": content, "parent": parent,
-		})
+		if not object_id:
+			a.error(400, "Object ID required")
+			return
+		if not content or not content.strip():
+			a.error(400, "Content is required")
+			return
+		comment_id = mochi.uid()
+		now = mochi.time.now()
+		# Save locally for optimistic UI
+		mochi.db.execute(
+			"insert into comments (id, object, parent, author, name, content, created, edited) values (?, ?, ?, ?, ?, ?, ?, ?)",
+			comment_id, object_id, parent, a.user.identity.id, a.user.identity.name, content.strip(), now, 0
+		)
+		# Save attachments locally and sync to project owner
+		mochi.attachment.save(comment_id, "files")
+		mochi.attachment.sync(comment_id, [project_id])
+		# Fire-and-forget to project owner
+		mochi.message.send(
+			{"from": a.user.identity.id, "to": project_id, "service": "projects", "event": "comment/submit"},
+			{"id": comment_id, "object": object_id, "parent": parent,
+			 "content": content.strip(), "name": a.user.identity.name}
+		)
+		return {"data": {
+			"id": comment_id, "parent": parent,
+			"author": a.user.identity.id, "name": a.user.identity.name,
+			"content": content.strip(), "created": now, "edited": 0,
+			"children": [], "attachments": mochi.attachment.list(comment_id, project_id) or [],
+		}}
 
 	if not check_project_access(a.user.identity.id, project_id, "comment"):
 		a.error(403, "Access denied")
@@ -2038,6 +2103,11 @@ def action_comment_create(a):
 		a.error(400, "Content is required")
 		return
 
+	if parent:
+		if not mochi.db.row("select id from comments where id=? and object=?", parent, object_id):
+			a.error(404, "Parent comment not found")
+			return
+
 	comment_id = mochi.uid()
 	now = mochi.time.now()
 
@@ -2045,6 +2115,8 @@ def action_comment_create(a):
 		"insert into comments (id, object, parent, author, name, content, created, edited) values (?, ?, ?, ?, ?, ?, ?, ?)",
 		comment_id, object_id, parent, a.user.identity.id, a.user.identity.name, content.strip(), now, 0
 	)
+
+	attachments = mochi.attachment.save(comment_id, "files", [], [], []) or []
 
 	mochi.db.execute("update objects set updated=? where id=?", now, object_id)
 	log_activity(object_id, a.user.identity.id, "commented")
@@ -2054,6 +2126,12 @@ def action_comment_create(a):
 		"insert or ignore into watchers (object, user, created) values (?, ?, ?)",
 		object_id, a.user.identity.id, now)
 
+	# Sync attachments to subscribers
+	subs = mochi.db.rows("select id from subscribers where project=?", project_id) or []
+	sub_ids = [s["id"] for s in subs]
+	if sub_ids:
+		mochi.attachment.sync(comment_id, sub_ids)
+
 	broadcast_event(project_id, "comment/create", {
 		"project": project_id, "object": object_id,
 		"id": comment_id, "parent": parent,
@@ -2062,11 +2140,10 @@ def action_comment_create(a):
 	})
 
 	return {"data": {
-		"id": comment_id,
-		"author": a.user.identity.id,
-		"name": a.user.identity.name,
-		"content": content.strip(),
-		"created": now
+		"id": comment_id, "parent": parent,
+		"author": a.user.identity.id, "name": a.user.identity.name,
+		"content": content.strip(), "created": now, "edited": 0,
+		"children": [], "attachments": attachments,
 	}}
 
 def action_comment_update(a):
@@ -2169,7 +2246,7 @@ def action_comment_delete(a):
 		a.error(403, "Cannot delete another user's comment")
 		return
 
-	mochi.db.execute("delete from comments where id=?", comment_id)
+	delete_comment_tree(comment_id, project_id)
 
 	broadcast_event(project_id, "comment/delete", {
 		"project": project_id, "object": object_id, "id": comment_id,
@@ -3249,7 +3326,7 @@ def action_field_update(a):
 
 	if project["owner"] != 1:
 		params = {"project": project_id, "class": a.input("class"), "field": a.input("field")}
-		for k in ["name", "flags", "multi", "card", "position", "rows"]:
+		for k in ["name", "flags", "multi", "card", "position", "rows", "id"]:
 			if a.input.exists(k):
 				params[k] = a.input(k)
 		return forward_to_owner(a, project_id, "field/update", params)
@@ -3328,6 +3405,26 @@ def action_field_update(a):
 		rows_val = int(a.input("rows"))
 		mochi.db.execute("update fields set rows=? where project=? and class=? and id=?", rows_val, project_id, class_id, field_id)
 		update_data["rows"] = rows_val
+
+	# Rename field ID if requested
+	if a.input.exists("id"):
+		new_id = a.input("id").strip().lower()
+		if not new_id:
+			a.error(400, "Field ID cannot be empty")
+			return
+		if new_id != field_id:
+			# Validate: lowercase alphanumeric + underscores only
+			for ch in new_id.elems():
+				if ch != "_" and not ch.isalnum():
+					a.error(400, "Field ID must contain only lowercase letters, numbers, and underscores")
+					return
+			# Check for duplicates
+			if mochi.db.exists("select 1 from fields where project=? and class=? and id=?", project_id, class_id, new_id):
+				a.error(400, "A field with this ID already exists")
+				return
+			rename_field_id(project_id, class_id, field_id, new_id)
+			update_data["old_id"] = field_id
+			update_data["id"] = new_id
 
 	broadcast_event(project_id, "field/update", update_data)
 
@@ -4148,6 +4245,17 @@ def action_subscribe(a):
 		project_name = directory.get("name", "")
 		project_desc = ""
 		project_prefix = "PROJ"
+		server = directory.get("location", "")
+		# Fetch full info and schema from the resolved server
+		if server:
+			peer = mochi.remote.peer(server)
+			if peer:
+				response = mochi.remote.request(project_id, "projects", "info", {"project": project_id}, peer)
+				if response and not response.get("error"):
+					project_name = response.get("name", project_name)
+					project_desc = response.get("description", "")
+					project_prefix = response.get("prefix", "PROJ")
+				schema = mochi.remote.request(project_id, "projects", "schema", {}, peer)
 
 	now = mochi.time.now()
 	fp = mochi.entity.fingerprint(project_id) or ""
@@ -4200,6 +4308,7 @@ def action_unsubscribe(a):
 		return
 
 	# Delete all local data for this remote project
+	delete_project_comment_attachments(project_id)
 	objects = mochi.db.rows("select id from objects where project=?", project_id)
 	for obj in objects:
 		mochi.db.execute("delete from watchers where object=?", obj["id"])
@@ -4305,7 +4414,7 @@ def event_schema(e):
 		v["classes"] = ",".join([vc["class"] for vc in view_classes])
 		views.append(v)
 
-	# Objects with values
+	# Objects with values and comments
 	objects = []
 	for obj in (mochi.db.rows("select id, class, number, parent, rank, created, updated from objects where project=?", project_id) or []):
 		vals = mochi.db.rows("select field, value from \"values\" where object=?", obj["id"])
@@ -4314,7 +4423,13 @@ def event_schema(e):
 			for v in vals:
 				values_map[v["field"]] = v["value"]
 			obj["values"] = values_map
+		comments = mochi.db.rows("select id, parent, author, name, content, created, edited from comments where object=? order by created", obj["id"])
+		if comments:
+			obj["comments"] = comments
 		objects.append(obj)
+
+	# Links
+	links = mochi.db.rows("select l.source, l.target, l.linktype from links l join objects o on l.source = o.id where o.project=?", project_id) or []
 
 	e.stream.write({
 		"classes": classes,
@@ -4323,6 +4438,7 @@ def event_schema(e):
 		"hierarchy": hierarchy,
 		"views": views,
 		"objects": objects,
+		"links": links,
 	})
 
 # Insert project schema and objects into local database
@@ -4383,6 +4499,18 @@ def insert_schema(project_id, schema):
 		if values:
 			for field in values:
 				mochi.db.execute("replace into \"values\" (object, field, value) values (?, ?, ?)", obj.get("id", ""), field, values[field])
+		for c in (obj.get("comments") or []):
+			mochi.db.execute(
+				"insert or ignore into comments (id, object, parent, author, name, content, created, edited) values (?, ?, ?, ?, ?, ?, ?, ?)",
+				c.get("id", ""), obj.get("id", ""), c.get("parent", ""),
+				c.get("author", ""), c.get("name", ""),
+				c.get("content", ""), c.get("created", ""), c.get("edited", 0)
+			)
+	for l in (schema.get("links") or []):
+		mochi.db.execute(
+			"insert or ignore into links (project, source, target, linktype, created) values (?, ?, ?, ?, ?)",
+			project_id, l.get("source", ""), l.get("target", ""), l.get("linktype", ""), 0
+		)
 
 # Send all existing project data to a new subscriber
 def send_project_data(project_id, subscriber_id):
@@ -4455,14 +4583,18 @@ def send_project_data(project_id, subscriber_id):
 			mochi.message.send(h, {"project": project_id, "id": obj["id"], "values": values_map, "sync": True})
 
 		# Send comments for this object
-		comments = mochi.db.rows("select * from comments where object=? order by created", obj["id"])
+		comments = mochi.db.rows("select * from comments where object=? order by created", obj["id"]) or []
 		for c in comments:
 			h["event"] = "comment/create"
 			mochi.message.send(h, {
 				"project": project_id, "id": c["id"], "object": obj["id"],
-				"author": c["author"], "name": c["name"], "content": c["content"], "created": c["created"],
+				"parent": c["parent"], "author": c["author"], "name": c["name"],
+				"content": c["content"], "created": c["created"],
 				"sync": True
 			})
+			# Sync comment attachments
+			if mochi.attachment.list(c["id"], project_id):
+				mochi.attachment.sync(c["id"], [subscriber_id])
 
 	# Send links (once, not per-object)
 	links = mochi.db.rows("select l.source, l.target, l.linktype from links l join objects o on l.source = o.id where o.project=?", project_id)
@@ -4546,6 +4678,7 @@ def event_deleted(e):
 		return
 
 	# Delete all local data for this remote project
+	delete_project_comment_attachments(project_id)
 	objects = mochi.db.rows("select id from objects where project=?", project_id)
 	for obj in objects:
 		mochi.db.execute("delete from watchers where object=?", obj["id"])
@@ -4655,7 +4788,7 @@ def event_object_delete(e):
 		notify_watchers(object_id, project_id, local_id, actor, "Deleted")
 	mochi.db.execute("delete from watchers where object=?", object_id)
 	mochi.db.execute("delete from activity where object=?", object_id)
-	mochi.db.execute("delete from comments where object=?", object_id)
+	delete_object_comments(object_id, project_id)
 	mochi.db.execute("delete from \"values\" where object=?", object_id)
 	mochi.db.execute("delete from links where source=? or target=?", object_id, object_id)
 	mochi.db.execute("delete from objects where id=? and project=?", object_id, project_id)
@@ -4713,6 +4846,54 @@ def event_values_update(e):
 			if not assigned:
 				notify_watchers(object_id, project_id, local_id, actor, "Fields changed")
 
+# Comment submitted by remote subscriber (fire-and-forget)
+def event_comment_submit(e):
+	project_id = e.header("to")
+	project = mochi.db.row("select * from projects where id=? and owner=1", project_id)
+	if not project:
+		return
+	sender = e.header("from")
+	if not check_project_access(sender, project_id, "comment"):
+		return
+	comment_id = e.content("id")
+	object_id = e.content("object")
+	if not comment_id or not object_id:
+		return
+	if not mochi.db.row("select id from objects where id=? and project=?", object_id, project_id):
+		return
+	parent = e.content("parent") or ""
+	content = e.content("content") or ""
+	name = e.content("name") or ""
+	if not content.strip():
+		return
+	now = mochi.time.now()
+	mochi.db.execute(
+		"insert or ignore into comments (id, object, parent, author, name, content, created, edited) values (?, ?, ?, ?, ?, ?, ?, ?)",
+		comment_id, object_id, parent, sender, name, content.strip(), now, 0
+	)
+	mochi.db.execute("update objects set updated=? where id=?", now, object_id)
+	log_activity(object_id, sender, "commented")
+	mochi.db.execute("insert or ignore into watchers (object, user, created) values (?, ?, ?)", object_id, sender, now)
+	# Sync attachments from sender to other subscribers
+	subs = mochi.db.rows("select id from subscribers where project=?", project_id) or []
+	other_subs = [s["id"] for s in subs if s["id"] != sender]
+	if other_subs:
+		mochi.attachment.sync(comment_id, other_subs)
+	# Send WebSocket notification to owner for real-time UI updates
+	fp = mochi.entity.fingerprint(project_id)
+	if fp:
+		mochi.websocket.write(fp, {"type": "comment/create", "project": project_id, "object": object_id})
+	# Broadcast to all subscribers
+	broadcast_event(project_id, "comment/create", {
+		"project": project_id, "object": object_id, "id": comment_id,
+		"parent": parent, "author": sender, "name": name,
+		"content": content.strip(), "created": now, "actor": sender
+	}, exclude=sender)
+	# Notify watchers
+	owner_id = get_owner_identity(project_id)
+	excerpt = content.strip()[:80]
+	notify_watchers(object_id, project_id, owner_id, sender, name + ": " + excerpt)
+
 # Comment created
 def event_comment_create(e):
 	project_id = verify_subscription(e)
@@ -4760,7 +4941,7 @@ def event_comment_delete(e):
 	comment_id = e.content("id")
 	if not comment_id:
 		return
-	mochi.db.execute("delete from comments where id=?", comment_id)
+	delete_comment_tree(comment_id, project_id)
 	fp = mochi.entity.fingerprint(project_id)
 	if fp:
 		mochi.websocket.write(fp, {"type": "comment/delete", "project": project_id, "id": comment_id})
@@ -4994,6 +5175,12 @@ def event_field_update(e):
 	field_id = e.content("id")
 	if not class_id or not field_id:
 		return
+	# Handle field ID rename
+	old_id = e.content("old_id")
+	if old_id != None:
+		rename_field_id(project_id, class_id, old_id, field_id)
+	# Use old_id to update the correct row for attribute changes, since rename already happened
+	current_id = field_id
 	name = e.content("name")
 	flags = e.content("flags")
 	multi = e.content("multi")
@@ -5009,33 +5196,33 @@ def event_field_update(e):
 	position = e.content("position")
 	rows_val = e.content("rows")
 	if name != None:
-		mochi.db.execute("update fields set name=? where project=? and class=? and id=?", name, project_id, class_id, field_id)
+		mochi.db.execute("update fields set name=? where project=? and class=? and id=?", name, project_id, class_id, current_id)
 	if flags != None:
-		mochi.db.execute("update fields set flags=? where project=? and class=? and id=?", flags, project_id, class_id, field_id)
+		mochi.db.execute("update fields set flags=? where project=? and class=? and id=?", flags, project_id, class_id, current_id)
 	if multi != None:
-		mochi.db.execute("update fields set multi=? where project=? and class=? and id=?", multi, project_id, class_id, field_id)
+		mochi.db.execute("update fields set multi=? where project=? and class=? and id=?", multi, project_id, class_id, current_id)
 	if card != None:
-		mochi.db.execute("update fields set card=? where project=? and class=? and id=?", card, project_id, class_id, field_id)
+		mochi.db.execute("update fields set card=? where project=? and class=? and id=?", card, project_id, class_id, current_id)
 	if min_val != None:
-		mochi.db.execute("update fields set min=? where project=? and class=? and id=?", min_val, project_id, class_id, field_id)
+		mochi.db.execute("update fields set min=? where project=? and class=? and id=?", min_val, project_id, class_id, current_id)
 	if max_val != None:
-		mochi.db.execute("update fields set max=? where project=? and class=? and id=?", max_val, project_id, class_id, field_id)
+		mochi.db.execute("update fields set max=? where project=? and class=? and id=?", max_val, project_id, class_id, current_id)
 	if pattern != None:
-		mochi.db.execute("update fields set pattern=? where project=? and class=? and id=?", pattern, project_id, class_id, field_id)
+		mochi.db.execute("update fields set pattern=? where project=? and class=? and id=?", pattern, project_id, class_id, current_id)
 	if minlength != None:
-		mochi.db.execute("update fields set minlength=? where project=? and class=? and id=?", minlength, project_id, class_id, field_id)
+		mochi.db.execute("update fields set minlength=? where project=? and class=? and id=?", minlength, project_id, class_id, current_id)
 	if maxlength != None:
-		mochi.db.execute("update fields set maxlength=? where project=? and class=? and id=?", maxlength, project_id, class_id, field_id)
+		mochi.db.execute("update fields set maxlength=? where project=? and class=? and id=?", maxlength, project_id, class_id, current_id)
 	if prefix != None:
-		mochi.db.execute("update fields set prefix=? where project=? and class=? and id=?", prefix, project_id, class_id, field_id)
+		mochi.db.execute("update fields set prefix=? where project=? and class=? and id=?", prefix, project_id, class_id, current_id)
 	if suffix != None:
-		mochi.db.execute("update fields set suffix=? where project=? and class=? and id=?", suffix, project_id, class_id, field_id)
+		mochi.db.execute("update fields set suffix=? where project=? and class=? and id=?", suffix, project_id, class_id, current_id)
 	if format_str != None:
-		mochi.db.execute("update fields set format=? where project=? and class=? and id=?", format_str, project_id, class_id, field_id)
+		mochi.db.execute("update fields set format=? where project=? and class=? and id=?", format_str, project_id, class_id, current_id)
 	if position != None:
-		mochi.db.execute("update fields set position=? where project=? and class=? and id=?", position, project_id, class_id, field_id)
+		mochi.db.execute("update fields set position=? where project=? and class=? and id=?", position, project_id, class_id, current_id)
 	if rows_val != None:
-		mochi.db.execute("update fields set rows=? where project=? and class=? and id=?", rows_val, project_id, class_id, field_id)
+		mochi.db.execute("update fields set rows=? where project=? and class=? and id=?", rows_val, project_id, class_id, current_id)
 	fp = mochi.entity.fingerprint(project_id)
 	if fp:
 		mochi.websocket.write(fp, {"type": "field/update", "project": project_id, "class_id": class_id, "id": field_id})
@@ -5629,10 +5816,10 @@ def do_comment_create(project_id, project, params, user_id, user_name):
 		return {"error": "Object not found", "code": 404}
 	if not content or not content.strip():
 		return {"error": "Content is required", "code": 400}
-	comment_id = mochi.uid()
+	comment_id = params.get("id") or mochi.uid()
 	now = mochi.time.now()
 	mochi.db.execute(
-		"insert into comments (id, object, parent, author, name, content, created, edited) values (?, ?, ?, ?, ?, ?, ?, ?)",
+		"insert or ignore into comments (id, object, parent, author, name, content, created, edited) values (?, ?, ?, ?, ?, ?, ?, ?)",
 		comment_id, object_id, parent, user_id, user_name, content.strip(), now, 0
 	)
 	mochi.db.execute("update objects set updated=? where id=?", now, object_id)
@@ -5646,6 +5833,11 @@ def do_comment_create(project_id, project, params, user_id, user_name):
 		"parent": parent, "author": user_id, "name": user_name,
 		"content": content.strip(), "created": now, "actor": user_id
 	})
+	# Sync attachments from sender to other subscribers
+	subs = mochi.db.rows("select id from subscribers where project=?", project_id) or []
+	other_subs = [s["id"] for s in subs if s["id"] != user_id]
+	if other_subs:
+		mochi.attachment.sync(comment_id, other_subs)
 	# Notify owner if watching
 	owner_id = get_owner_identity(project_id)
 	excerpt = (content.strip())[:80]
@@ -5684,7 +5876,7 @@ def do_comment_delete(project_id, project, params, user_id):
 		return {"error": "Comment not found", "code": 404}
 	if comment["author"] != user_id:
 		return {"error": "Cannot delete another user's comment", "code": 403}
-	mochi.db.execute("delete from comments where id=?", comment_id)
+	delete_comment_tree(comment_id, project_id)
 	broadcast_event(project_id, "comment/delete", {
 		"project": project_id, "object": object_id, "id": comment_id, "actor": user_id
 	})
@@ -6277,6 +6469,19 @@ def do_field_create(project_id, project, params):
 	})
 	return {"id": field_id, "name": name.strip(), "fieldtype": fieldtype, "rank": rank}
 
+# Rename a field ID across all tables that reference it
+def rename_field_id(project_id, class_id, old_id, new_id):
+	mochi.db.execute("update fields set id=? where project=? and class=? and id=?", new_id, project_id, class_id, old_id)
+	mochi.db.execute("update options set field=? where project=? and class=? and field=?", new_id, project_id, class_id, old_id)
+	mochi.db.execute('update "values" set field=? where field=? and object in (select id from objects where project=? and class=?)', new_id, old_id, project_id, class_id)
+	mochi.db.execute("update view_fields set field=? where project=? and field=?", new_id, project_id, old_id)
+	mochi.db.execute("update activity set field=? where field=? and object in (select id from objects where project=? and class=?)", new_id, old_id, project_id, class_id)
+	mochi.db.execute("update views set columns=? where project=? and columns=?", new_id, project_id, old_id)
+	mochi.db.execute("update views set rows=? where project=? and rows=?", new_id, project_id, old_id)
+	mochi.db.execute("update views set sort=? where project=? and sort=?", new_id, project_id, old_id)
+	mochi.db.execute("update views set border=? where project=? and border=?", new_id, project_id, old_id)
+	mochi.db.execute("update classes set title=? where project=? and id=? and title=?", new_id, project_id, class_id, old_id)
+
 def do_field_update(project_id, project, params):
 	class_id = params.get("class")
 	field_id = params.get("field")
@@ -6305,7 +6510,20 @@ def do_field_update(project_id, project, params):
 		mochi.db.execute("update fields set position=? where project=? and class=? and id=?", position, project_id, class_id, field_id)
 	if rows_val != None:
 		mochi.db.execute("update fields set rows=? where project=? and class=? and id=?", int(rows_val), project_id, class_id, field_id)
-	update_data = {"project": project_id, "class": class_id, "id": field_id}
+	# Rename field ID if requested
+	new_id = params.get("id")
+	if new_id != None:
+		new_id = new_id.strip().lower()
+		if new_id and new_id != field_id:
+			for ch in new_id.elems():
+				if ch != "_" and not ch.isalnum():
+					return {"error": "Field ID must contain only lowercase letters, numbers, and underscores", "code": 400}
+			if mochi.db.exists("select 1 from fields where project=? and class=? and id=?", project_id, class_id, new_id):
+				return {"error": "A field with this ID already exists", "code": 400}
+			rename_field_id(project_id, class_id, field_id, new_id)
+	update_data = {"project": project_id, "class": class_id, "id": new_id if (new_id != None and new_id and new_id != field_id) else field_id}
+	if new_id != None and new_id and new_id != field_id:
+		update_data["old_id"] = field_id
 	if name != None:
 		update_data["name"] = name.strip()
 	if flags != None:

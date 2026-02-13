@@ -2,7 +2,7 @@
 // Copyright Alistair Cunningham 2026
 
 {
-	"version": "1.7",
+	"version": "1.12",
 	"label": "app_name",
 	"classes": ["project"],
 	"paths": ["projects"],
@@ -73,6 +73,9 @@
 		":project/-/objects/:object/attachments/create": {"function": "action_attachment_create"},
 		":project/-/objects/:object/attachments/:attachment/delete": {"function": "action_attachment_delete"},
 
+		":project/-/attachments/:id": {"feature": "attachment"},
+		":project/-/attachments/:id/thumbnail": {"feature": "attachment/thumbnail"},
+
 		":project/-/objects/:object/prs": {"function": "action_pr_list"},
 		":project/-/objects/:object/prs/create": {"function": "action_pr_create"},
 		":project/-/objects/:object/prs/:pr/update": {"function": "action_pr_update"},
@@ -136,6 +139,7 @@
 		"object/update": {"function": "event_object_update"},
 		"object/delete": {"function": "event_object_delete"},
 		"values/update": {"function": "event_values_update"},
+		"comment/submit": {"function": "event_comment_submit"},
 		"comment/create": {"function": "event_comment_create"},
 		"comment/update": {"function": "event_comment_update"},
 		"comment/delete": {"function": "event_comment_delete"},

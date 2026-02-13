@@ -157,11 +157,21 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
       updates: Partial<ProjectField>;
     }) =>
       projectsApi.updateField(projectId, classId, fieldId, {
+        id: updates.id,
         name: updates.name,
         flags: updates.flags,
         rows: updates.rows?.toString(),
       }),
-    onSuccess: invalidateProject,
+    onSuccess: (_, variables) => {
+      // If the field was renamed, update editingField to point to the new ID
+      if (variables.updates.id && variables.updates.id !== variables.fieldId) {
+        setEditingField((prev) => prev ? { ...prev, id: variables.updates.id! } : prev);
+      }
+      invalidateProject();
+    },
+    onError: (error) => {
+      toast.error(getErrorMessage(error, "Failed to update field"));
+    },
   });
 
   const deleteFieldMutation = useMutation({
@@ -669,6 +679,13 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
         options={editingFieldOptions}
         onUpdate={(updates) => {
           if (selectedClassId && resolvedEditingField) {
+            if (updates.id) {
+              return updateFieldMutation.mutateAsync({
+                classId: selectedClassId,
+                fieldId: resolvedEditingField.id,
+                updates,
+              }).then(() => {});
+            }
             updateFieldMutation.mutate({
               classId: selectedClassId,
               fieldId: resolvedEditingField.id,

@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthenticatedIndexRouteImport } from './routes/_authenticated/index'
+import { Route as AuthenticatedFindRouteImport } from './routes/_authenticated/find'
 import { Route as errors503RouteImport } from './routes/(errors)/503'
 import { Route as errors500RouteImport } from './routes/(errors)/500'
 import { Route as errors404RouteImport } from './routes/(errors)/404'
@@ -28,6 +29,11 @@ const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
 const AuthenticatedIndexRoute = AuthenticatedIndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedFindRoute = AuthenticatedFindRouteImport.update({
+  id: '/find',
+  path: '/find',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const errors503Route = errors503RouteImport.update({
@@ -86,6 +92,7 @@ export interface FileRoutesByFullPath {
   '/404': typeof errors404Route
   '/500': typeof errors500Route
   '/503': typeof errors503Route
+  '/find': typeof AuthenticatedFindRoute
   '/': typeof AuthenticatedIndexRoute
   '/$projectId/design': typeof AuthenticatedProjectIdDesignRoute
   '/$projectId/settings': typeof AuthenticatedProjectIdSettingsRoute
@@ -98,6 +105,7 @@ export interface FileRoutesByTo {
   '/404': typeof errors404Route
   '/500': typeof errors500Route
   '/503': typeof errors503Route
+  '/find': typeof AuthenticatedFindRoute
   '/': typeof AuthenticatedIndexRoute
   '/$projectId/design': typeof AuthenticatedProjectIdDesignRoute
   '/$projectId/settings': typeof AuthenticatedProjectIdSettingsRoute
@@ -112,6 +120,7 @@ export interface FileRoutesById {
   '/(errors)/404': typeof errors404Route
   '/(errors)/500': typeof errors500Route
   '/(errors)/503': typeof errors503Route
+  '/_authenticated/find': typeof AuthenticatedFindRoute
   '/_authenticated/': typeof AuthenticatedIndexRoute
   '/_authenticated/$projectId/design': typeof AuthenticatedProjectIdDesignRoute
   '/_authenticated/$projectId_/settings': typeof AuthenticatedProjectIdSettingsRoute
@@ -126,6 +135,7 @@ export interface FileRouteTypes {
     | '/404'
     | '/500'
     | '/503'
+    | '/find'
     | '/'
     | '/$projectId/design'
     | '/$projectId/settings'
@@ -138,6 +148,7 @@ export interface FileRouteTypes {
     | '/404'
     | '/500'
     | '/503'
+    | '/find'
     | '/'
     | '/$projectId/design'
     | '/$projectId/settings'
@@ -151,6 +162,7 @@ export interface FileRouteTypes {
     | '/(errors)/404'
     | '/(errors)/500'
     | '/(errors)/503'
+    | '/_authenticated/find'
     | '/_authenticated/'
     | '/_authenticated/$projectId/design'
     | '/_authenticated/$projectId_/settings'
@@ -181,6 +193,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof AuthenticatedIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/find': {
+      id: '/_authenticated/find'
+      path: '/find'
+      fullPath: '/find'
+      preLoaderRoute: typeof AuthenticatedFindRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/(errors)/503': {
@@ -250,6 +269,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedFindRoute: typeof AuthenticatedFindRoute
   AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute
   AuthenticatedProjectIdDesignRoute: typeof AuthenticatedProjectIdDesignRoute
   AuthenticatedProjectIdSettingsRoute: typeof AuthenticatedProjectIdSettingsRoute
@@ -257,6 +277,7 @@ interface AuthenticatedRouteRouteChildren {
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedFindRoute: AuthenticatedFindRoute,
   AuthenticatedIndexRoute: AuthenticatedIndexRoute,
   AuthenticatedProjectIdDesignRoute: AuthenticatedProjectIdDesignRoute,
   AuthenticatedProjectIdSettingsRoute: AuthenticatedProjectIdSettingsRoute,

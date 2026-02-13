@@ -1,12 +1,17 @@
-// Mochi Projects: Comment list component
+// Mochi Projects: Threaded comment list component
 // Copyright Alistair Cunningham 2026
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { Loader2, Send, Trash2, Pencil } from "lucide-react";
-import { Button, Card, Textarea, ConfirmDialog } from "@mochi/common";
+import { Loader2, Paperclip, Send, X } from "lucide-react";
+import {
+  Button,
+  toast,
+  getErrorMessage,
+  useAuthStore,
+} from "@mochi/common";
 import projectsApi from "@/api/projects";
-import type { Comment } from "@/types";
+import { CommentThread } from "./comment-thread";
 
 interface CommentListProps {
   projectId: string;
@@ -14,24 +19,44 @@ interface CommentListProps {
   readOnly?: boolean;
 }
 
-export function CommentList({ projectId, objectId, readOnly }: CommentListProps) {
+export function CommentList({
+  projectId,
+  objectId,
+  readOnly,
+}: CommentListProps) {
   const [newComment, setNewComment] = useState("");
-  const [editingId, setEditingId] = useState<string | null>(null);
-  const [editContent, setEditContent] = useState("");
-  const [deleteCommentId, setDeleteCommentId] = useState<string | null>(null);
+  const [newFiles, setNewFiles] = useState<File[]>([]);
+  const [replyingTo, setReplyingTo] = useState<string | null>(null);
+  const [replyDraft, setReplyDraft] = useState("");
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const queryClient = useQueryClient();
+  const currentUserId = useAuthStore((s) => s.identity);
 
   const { data, isLoading } = useQuery({
     queryKey: ["comments", projectId, objectId],
     queryFn: async () => {
       const response = await projectsApi.listComments(projectId, objectId);
-      return response.data.comments;
+      return response.data;
     },
   });
 
   const createMutation = useMutation({
-    mutationFn: async (content: string) => {
-      return projectsApi.createComment(projectId, objectId, content);
+    mutationFn: async ({
+      content,
+      parent,
+      files,
+    }: {
+      content: string;
+      parent?: string;
+      files?: File[];
+    }) => {
+      return projectsApi.createComment(
+        projectId,
+        objectId,
+        content,
+        parent,
+        files,
+      );
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
@@ -40,7 +65,9 @@ export function CommentList({ projectId, objectId, readOnly }: CommentListProps)
       queryClient.invalidateQueries({
         queryKey: ["object", projectId, objectId],
       });
-      setNewComment("");
+    },
+    onError: (err) => {
+      toast.error(getErrorMessage(err, "Failed to post comment"));
     },
   });
 
@@ -52,13 +79,20 @@ export function CommentList({ projectId, objectId, readOnly }: CommentListProps)
       commentId: string;
       content: string;
     }) => {
-      return projectsApi.updateComment(projectId, objectId, commentId, content);
+      return projectsApi.updateComment(
+        projectId,
+        objectId,
+        commentId,
+        content,
+      );
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ["comments", projectId, objectId],
       });
-      setEditingId(null);
+    },
+    onError: (err) => {
+      toast.error(getErrorMessage(err, "Failed to update comment"));
     },
   });
 
@@ -70,31 +104,57 @@ export function CommentList({ projectId, objectId, readOnly }: CommentListProps)
       queryClient.invalidateQueries({
         queryKey: ["comments", projectId, objectId],
       });
+      queryClient.invalidateQueries({
+        queryKey: ["object", projectId, objectId],
+      });
+    },
+    onError: (err) => {
+      toast.error(getErrorMessage(err, "Failed to delete comment"));
     },
   });
 
-  const handleSubmit = () => {
-    if (newComment.trim()) {
-      createMutation.mutate(newComment.trim());
+  const handleCreate = () => {
+    const trimmed = newComment.trim();
+    if (!trimmed) return;
+    createMutation.mutate(
+      { content: trimmed, files: newFiles.length > 0 ? newFiles : undefined },
+      {
+        onSuccess: () => {
+          setNewComment("");
+          setNewFiles([]);
+        },
+      },
+    );
+  };
+
+  const handleReply = (parentId: string, files?: File[]) => {
+    const trimmed = replyDraft.trim();
+    if (!trimmed) return;
+    createMutation.mutate(
+      { content: trimmed, parent: parentId, files },
+      {
+        onSuccess: () => {
+          setReplyingTo(null);
+          setReplyDraft("");
+        },
+      },
+    );
+  };
+
+  const handleEdit = (commentId: string, content: string) => {
+    updateMutation.mutate({ commentId, content });
+  };
+
+  const handleDelete = (commentId: string) => {
+    deleteMutation.mutate(commentId);
+  };
+
+  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      const selected = Array.from(e.target.files);
+      setNewFiles((prev) => [...prev, ...selected]);
     }
-  };
-
-  const handleEdit = (comment: Comment) => {
-    setEditingId(comment.id);
-    setEditContent(comment.content);
-  };
-
-  const handleSaveEdit = () => {
-    if (editingId && editContent.trim()) {
-      updateMutation.mutate({
-        commentId: editingId,
-        content: editContent.trim(),
-      });
-    }
-  };
-
-  const formatDate = (timestamp: number) => {
-    return new Date(timestamp * 1000).toLocaleString();
+    e.target.value = "";
   };
 
   if (isLoading) {
@@ -105,120 +165,115 @@ export function CommentList({ projectId, objectId, readOnly }: CommentListProps)
     );
   }
 
-  const comments = [...(data || [])].sort((a, b) => b.created - a.created);
+  const comments = data?.comments ?? [];
 
   return (
     <div className="space-y-4">
-      {/* New comment form */}
       {!readOnly && (
         <div className="space-y-2">
-          <Textarea
+          <textarea
             value={newComment}
             onChange={(e) => setNewComment(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) {
+                e.preventDefault();
+                handleCreate();
+              }
+            }}
             placeholder="Add a comment..."
-            rows={2}
+            className="border-input bg-background min-h-16 w-full resize-none rounded-lg border px-3 py-2 text-sm"
+            rows={3}
           />
-          <div className="flex justify-end">
+          {newFiles.length > 0 && (
+            <div className="flex flex-wrap gap-2">
+              {newFiles.map((file, i) => (
+                <div
+                  key={i}
+                  className="bg-muted relative flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs"
+                >
+                  {file.type.startsWith("image/") && (
+                    <img
+                      src={URL.createObjectURL(file)}
+                      alt={file.name}
+                      className="h-8 w-8 rounded object-cover"
+                    />
+                  )}
+                  <Paperclip className="text-muted-foreground size-3 shrink-0" />
+                  <span className="max-w-40 truncate">{file.name}</span>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setNewFiles((prev) => prev.filter((_, idx) => idx !== i))
+                    }
+                    className="text-muted-foreground hover:text-foreground ml-0.5"
+                  >
+                    <X className="size-3.5" />
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
+          <div className="flex items-center justify-end gap-2">
+            <input
+              ref={fileInputRef}
+              type="file"
+              multiple
+              onChange={handleFileSelect}
+              className="hidden"
+            />
             <Button
-              size="sm"
-              onClick={handleSubmit}
-              disabled={!newComment.trim() || createMutation.isPending}
+              type="button"
+              variant="ghost"
+              size="icon"
+              className="size-8"
+              onClick={() => fileInputRef.current?.click()}
             >
-              <Send className="size-4 mr-1" />
-              {createMutation.isPending ? "Posting..." : "Post"}
+              <Paperclip className="size-4" />
+            </Button>
+            <Button
+              type="button"
+              size="icon"
+              className="size-8"
+              disabled={!newComment.trim() || createMutation.isPending}
+              onClick={handleCreate}
+            >
+              <Send className="size-4" />
             </Button>
           </div>
         </div>
       )}
 
-      {/* Comments list */}
       {comments.length === 0 ? (
         <div className="text-sm text-muted-foreground text-center py-4">
           No comments yet
         </div>
       ) : (
-        <div className="space-y-3">
+        <div className="space-y-1">
           {comments.map((comment) => (
-            <Card key={comment.id} className="p-3 py-3 gap-0 shadow-none">
-              <div className="flex items-center justify-between mb-2">
-                <div className="font-medium text-sm">{comment.name}</div>
-                {!readOnly && (
-                  <div className="flex items-center gap-1">
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className="size-7"
-                      onClick={() => handleEdit(comment)}
-                    >
-                      <Pencil className="size-3" />
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className="size-7 text-destructive"
-                      onClick={() => setDeleteCommentId(comment.id)}
-                      disabled={deleteMutation.isPending}
-                    >
-                      <Trash2 className="size-3" />
-                    </Button>
-                  </div>
-                )}
-              </div>
-
-              {editingId === comment.id ? (
-                <div className="space-y-2">
-                  <Textarea
-                    value={editContent}
-                    onChange={(e) => setEditContent(e.target.value)}
-                    rows={2}
-                  />
-                  <div className="flex gap-2 justify-end">
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      onClick={() => setEditingId(null)}
-                    >
-                      Cancel
-                    </Button>
-                    <Button
-                      size="sm"
-                      onClick={handleSaveEdit}
-                      disabled={updateMutation.isPending}
-                    >
-                      Save
-                    </Button>
-                  </div>
-                </div>
-              ) : (
-                <>
-                  <div className="text-sm whitespace-pre-wrap">
-                    {comment.content}
-                  </div>
-                  <div className="text-xs text-muted-foreground mt-2">
-                    {formatDate(comment.created)}
-                    {comment.edited > 0 && " (edited)"}
-                  </div>
-                </>
-              )}
-            </Card>
+            <CommentThread
+              key={comment.id}
+              comment={comment}
+              projectId={projectId}
+              currentUserId={currentUserId}
+              readOnly={!!readOnly}
+              replyingTo={replyingTo}
+              replyDraft={replyDraft}
+              onStartReply={(id) => {
+                setReplyingTo(id);
+                setReplyDraft("");
+              }}
+              onCancelReply={() => {
+                setReplyingTo(null);
+                setReplyDraft("");
+              }}
+              onReplyDraftChange={setReplyDraft}
+              onSubmitReply={handleReply}
+              onEdit={handleEdit}
+              onDelete={handleDelete}
+            />
           ))}
         </div>
       )}
-
-      <ConfirmDialog
-        open={!!deleteCommentId}
-        onOpenChange={(open) => !open && setDeleteCommentId(null)}
-        title="Delete comment"
-        desc="Are you sure you want to delete this comment?"
-        confirmText="Delete"
-        destructive
-        handleConfirm={() => {
-          if (deleteCommentId) {
-            deleteMutation.mutate(deleteCommentId);
-            setDeleteCommentId(null);
-          }
-        }}
-      />
     </div>
   );
 }

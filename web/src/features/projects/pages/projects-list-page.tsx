@@ -129,7 +129,7 @@ export function ProjectsListPage() {
                           </p>
                         )}
                       </div>
-                      {project.server && (
+                      {project.owner !== 1 && (
                         <DropdownMenu>
                           <DropdownMenuTrigger asChild>
                             <button

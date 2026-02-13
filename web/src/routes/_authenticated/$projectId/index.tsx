@@ -30,6 +30,7 @@ import {
   ObjectDetailPanel,
 } from "@/features/objects/components";
 import { useKeyboardShortcuts } from "@/hooks/use-keyboard-shortcuts";
+import { useProjectWebsocket } from "@/hooks/use-project-websocket";
 import { KeyboardShortcutsHelp } from "@/components/keyboard-shortcuts-help";
 import { ViewOptionsBar } from "@/components/view-options-bar";
 import { AddOptionDialog } from "@/features/editor/components/add-dialogs";
@@ -62,6 +63,7 @@ function ProjectPage() {
   const access = project.project.access;
 
   usePageTitle(project.project.name);
+  useProjectWebsocket(project.project.fingerprint);
 
   // Disable global Ctrl+K search shortcut so we can use it for view options
   const { setShortcutEnabled } = useSearch();
@@ -756,9 +758,9 @@ function ProjectPage() {
           </Button>
         </div>
       )}
-      <Main fluid className="flex flex-col min-h-0 flex-1 !py-0">
+      <Main fluid className="flex flex-col min-h-0 min-w-0 flex-1 !py-0">
         {/* Content area */}
-        <div className={activeView?.viewtype === "list" ? "flex-1 min-h-0 overflow-auto" : ""}>
+        <div className={activeView?.viewtype === "list" ? "flex-1 min-h-0 overflow-auto" : "flex-1 min-h-0 overflow-x-auto"}>
           {activeView?.viewtype === "list" ? (
             <div className="p-4">
               <TreeView

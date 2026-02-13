@@ -3,10 +3,11 @@
 
 import { createFileRoute } from "@tanstack/react-router";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { Loader2, Rows3, Columns2 } from "lucide-react";
-import { GeneralError, Main, PageHeader, usePageTitle, useAuthStore } from "@mochi/common";
+import { Rows3, Columns2 } from "lucide-react";
+import { EmptyState, GeneralError, Main, PageHeader, usePageTitle, useAuthStore, useQueryWithError } from "@mochi/common";
 import projectsApi from "@/api/projects";
 import { DiffViewer } from "@/features/pr/components/diff-viewer";
+import { DiffSkeleton } from "@/features/pr/components/diff-skeleton";
 
 interface DiffSearchParams {
   repo: string;
@@ -39,8 +40,8 @@ function DiffPage() {
   const {
     data: diffData,
     isLoading: diffLoading,
-    error: diffError,
-  } = useQuery({
+    ErrorComponent,
+  } = useQueryWithError({
     queryKey: ["diff", repo, target, source],
     queryFn: async () => {
       const response = await projectsApi.getDiff(repo, target, source);
@@ -77,14 +78,18 @@ function DiffPage() {
 
   if (diffLoading) {
     return (
-      <Main className="flex items-center justify-center h-svh">
-        <Loader2 className="size-6 animate-spin text-muted-foreground" />
+      <Main className="h-svh">
+        <DiffSkeleton />
       </Main>
     );
   }
 
-  if (diffError) {
-    return <GeneralError error={diffError} />;
+  if (ErrorComponent) {
+    return (
+      <Main className="h-svh">
+        {ErrorComponent}
+      </Main>
+    );
   }
 
   return (
@@ -124,8 +129,12 @@ function DiffPage() {
         {diffData ? (
           <DiffViewer diff={diffData} viewStyle={viewStyle} />
         ) : (
-          <div className="text-sm text-muted-foreground text-center py-8">
-            No diff available
+          <div className="py-12">
+            <EmptyState
+              icon={Rows3}
+              title="No diff available"
+              description="There are no changes between these refs."
+            />
           </div>
         )}
       </div>

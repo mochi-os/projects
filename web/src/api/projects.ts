@@ -515,6 +515,22 @@ const projectsApi = {
 
   // ============= Attachment Methods =============
 
+  // Upload attachments
+  uploadAttachments: async (
+    projectId: string,
+    objectId: string,
+    files: File[],
+  ): Promise<AttachmentListResponse> => {
+    const formData = new FormData();
+    for (const file of files) {
+      formData.append("files", file);
+    }
+    return projectsRequest.post(
+      endpoints.projects.attachmentCreate(projectId, objectId),
+      formData,
+    );
+  },
+
   // List attachments
   listAttachments: async (
     projectId: string,

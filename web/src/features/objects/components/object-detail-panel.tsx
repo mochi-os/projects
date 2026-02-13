@@ -26,6 +26,7 @@ import { FieldEditor } from "./field-editor";
 import { CommentList } from "./comment-list";
 import { ActivityList } from "./activity-list";
 import { PrPanel } from "@/features/pr";
+import { ObjectAttachments } from "./object-attachments";
 
 interface ObjectDetailPanelProps {
   projectId: string;
@@ -427,6 +428,11 @@ export function ObjectDetailPanel({
                   </div>
                 ))}
 
+              <ObjectAttachments
+                projectId={projectId}
+                objectId={objectId!}
+                readOnly={!canWrite(access)}
+              />
             </div>
           )}
 

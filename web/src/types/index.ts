@@ -123,7 +123,7 @@ export interface Attachment {
   id: string;
   name: string;
   size: number;
-  mimetype: string;
+  type: string;
   created: number;
 }
 

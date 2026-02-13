@@ -223,19 +223,7 @@ def database_create():
 	)""")
 	mochi.db.execute("create index if not exists watchers_user on watchers(user)")
 
-	# 16. attachments - file attachments on objects (uses Mochi attachment system)
-	# Note: Mochi handles attachments internally, but we track metadata here
-	mochi.db.execute("""create table if not exists attachments (
-		id text primary key,
-		object text not null references objects(id),
-		name text not null,
-		size integer not null default 0,
-		mimetype text not null default '',
-		created integer not null
-	)""")
-	mochi.db.execute("create index if not exists attachments_object on attachments(object)")
-
-	# 17. pull_requests - pull requests attached to objects
+	# 16. pull_requests - pull requests attached to objects
 	mochi.db.execute("""create table if not exists pull_requests (
 		id text primary key,
 		object text not null references objects(id),
@@ -662,7 +650,8 @@ def action_project_delete(a):
 
 	# Delete in reverse dependency order
 	delete_project_comment_attachments(project_id)
-	mochi.db.execute("delete from attachments where object in (select id from objects where project=?)", project_id)
+	for obj in (mochi.db.rows("select id from objects where project=?", project_id) or []):
+		mochi.attachment.clear(obj["id"])
 	mochi.db.execute("delete from watchers where object in (select id from objects where project=?)", project_id)
 	mochi.db.execute("delete from activity where object in (select id from objects where project=?)", project_id)
 	mochi.db.execute("delete from comments where object in (select id from objects where project=?)", project_id)
@@ -1019,7 +1008,7 @@ def delete_object_cascade(project_id, object_id, actor=""):
 
 	# Then delete this object's related data
 	mochi.db.execute("delete from pull_requests where object=?", object_id)
-	mochi.db.execute("delete from attachments where object=?", object_id)
+	mochi.attachment.clear(object_id)
 	mochi.db.execute("delete from watchers where object=?", object_id)
 	mochi.db.execute("delete from activity where object=?", object_id)
 	delete_object_comments(object_id, project_id)
@@ -2285,10 +2274,7 @@ def action_attachment_list(a):
 		a.error(404, "Object not found")
 		return
 
-	attachments = mochi.db.rows(
-		"select id, name, size, mimetype, created from attachments where object=? order by created desc",
-		object_id
-	) or []
+	attachments = mochi.attachment.list(object_id, project_id) or []
 
 	return {"data": {"attachments": attachments}}
 
@@ -2307,17 +2293,31 @@ def action_attachment_create(a):
 		a.error(404, "Project not found")
 		return
 
-	if project["owner"] != 1:
-		a.error(403, "Attachment uploads are not available for subscribed projects")
-		return
-
-	if not check_project_access(a.user.identity.id, project_id, "write"):
-		a.error(403, "Access denied")
-		return
-
 	object_id = a.input("object")
 	if not object_id:
 		a.error(400, "Object ID required")
+		return
+
+	if project["owner"] != 1:
+		row = mochi.db.row("select id from objects where id=? and project=?", object_id, project_id)
+		if not row:
+			a.error(404, "Object not found")
+			return
+		# Save locally and sync to project owner
+		attachments = mochi.attachment.save(object_id, "files") or []
+		if not attachments:
+			a.error(400, "File is required")
+			return
+		mochi.attachment.sync(object_id, [project_id])
+		# Fire-and-forget to project owner
+		mochi.message.send(
+			{"from": a.user.identity.id, "to": project_id, "service": "projects", "event": "attachment/submit"},
+			{"object": object_id, "names": [att["name"] for att in attachments]}
+		)
+		return {"data": {"attachments": attachments}}
+
+	if not check_project_access(a.user.identity.id, project_id, "write"):
+		a.error(403, "Access denied")
 		return
 
 	row = mochi.db.row("select id from objects where id=? and project=?", object_id, project_id)
@@ -2325,28 +2325,21 @@ def action_attachment_create(a):
 		a.error(404, "Object not found")
 		return
 
-	# Handle file upload using Mochi attachment system
-	file = a.file("file")
-	if not file:
+	now = mochi.time.now()
+
+	# Save uploaded files and notify subscribers
+	subscribers = mochi.db.rows("select id from subscribers where project=?", project_id) or []
+	attachments = mochi.attachment.save(object_id, "files", [], [], subscribers) or []
+
+	if not attachments:
 		a.error(400, "File is required")
 		return
 
-	attachment_id = mochi.uid()
-	now = mochi.time.now()
-
-	# Store file using Mochi attachment system
-	mochi.attachment.save(object_id, attachment_id, file.name, file.data)
-
-	# Record metadata
-	mochi.db.execute(
-		"insert into attachments (id, object, name, size, mimetype, created) values (?, ?, ?, ?, ?, ?)",
-		attachment_id, object_id, file.name, len(file.data), file.mimetype or "", now
-	)
-
 	mochi.db.execute("update objects set updated=? where id=?", now, object_id)
-	log_activity(object_id, a.user.identity.id, "attached", "", "", file.name)
+	for att in attachments:
+		log_activity(object_id, a.user.identity.id, "attached", "", "", att["name"])
 
-	return {"data": {"id": attachment_id, "name": file.name, "size": len(file.data)}}
+	return {"data": {"attachments": attachments}}
 
 def action_attachment_delete(a):
 	if not a.user:
@@ -2373,23 +2366,17 @@ def action_attachment_delete(a):
 		a.error(403, "Access denied")
 		return
 
-	object_id = a.input("object")
 	attachment_id = a.input("attachment")
-
-	if not object_id or not attachment_id:
-		a.error(400, "Object and attachment ID required")
+	if not attachment_id:
+		a.error(400, "Attachment ID required")
 		return
 
-	attachment = mochi.db.row("select * from attachments where id=? and object=?", attachment_id, object_id)
-	if not attachment:
+	if not mochi.attachment.exists(attachment_id):
 		a.error(404, "Attachment not found")
 		return
 
-	# Delete file
-	mochi.attachment.delete(object_id, attachment_id)
-
-	# Delete record
-	mochi.db.execute("delete from attachments where id=?", attachment_id)
+	subscribers = mochi.db.rows("select id from subscribers where project=?", project_id) or []
+	mochi.attachment.delete(attachment_id, subscribers)
 
 	return {"data": {"success": True}}
 
@@ -4596,6 +4583,10 @@ def send_project_data(project_id, subscriber_id):
 			if mochi.attachment.list(c["id"], project_id):
 				mochi.attachment.sync(c["id"], [subscriber_id])
 
+		# Sync object attachments
+		if mochi.attachment.list(obj["id"], project_id):
+			mochi.attachment.sync(obj["id"], [subscriber_id])
+
 	# Send links (once, not per-object)
 	links = mochi.db.rows("select l.source, l.target, l.linktype from links l join objects o on l.source = o.id where o.project=?", project_id)
 	for l in links:
@@ -4893,6 +4884,35 @@ def event_comment_submit(e):
 	owner_id = get_owner_identity(project_id)
 	excerpt = content.strip()[:80]
 	notify_watchers(object_id, project_id, owner_id, sender, name + ": " + excerpt)
+
+# Attachment submitted by subscriber
+def event_attachment_submit(e):
+	project_id = e.header("to")
+	project = mochi.db.row("select * from projects where id=? and owner=1", project_id)
+	if not project:
+		return
+	sender = e.header("from")
+	if not check_project_access(sender, project_id, "write"):
+		return
+	object_id = e.content("object")
+	if not object_id:
+		return
+	if not mochi.db.row("select id from objects where id=? and project=?", object_id, project_id):
+		return
+	now = mochi.time.now()
+	mochi.db.execute("update objects set updated=? where id=?", now, object_id)
+	names = e.content("names") or []
+	for name in names:
+		log_activity(object_id, sender, "attached", "", "", name)
+	# Sync attachments from sender to other subscribers
+	subs = mochi.db.rows("select id from subscribers where project=?", project_id) or []
+	other_subs = [s["id"] for s in subs if s["id"] != sender]
+	if other_subs:
+		mochi.attachment.sync(object_id, other_subs)
+	# Send WebSocket notification to owner for real-time UI updates
+	fp = mochi.entity.fingerprint(project_id)
+	if fp:
+		mochi.websocket.write(fp, {"type": "attachment/create", "project": project_id, "object": object_id})
 
 # Comment created
 def event_comment_create(e):
@@ -6277,15 +6297,13 @@ def do_link_delete(project_id, project, params, user_id):
 
 # Attachment helper
 def do_attachment_delete(project_id, project, params, user_id):
-	object_id = params.get("object")
 	attachment_id = params.get("attachment")
-	if not object_id or not attachment_id:
-		return {"error": "Object and attachment ID required", "code": 400}
-	attachment = mochi.db.row("select * from attachments where id=? and object=?", attachment_id, object_id)
-	if not attachment:
+	if not attachment_id:
+		return {"error": "Attachment ID required", "code": 400}
+	if not mochi.attachment.exists(attachment_id):
 		return {"error": "Attachment not found", "code": 404}
-	mochi.attachment.delete(object_id, attachment_id)
-	mochi.db.execute("delete from attachments where id=?", attachment_id)
+	subscribers = mochi.db.rows("select id from subscribers where project=?", project_id) or []
+	mochi.attachment.delete(attachment_id, subscribers)
 	return {"success": True}
 
 # PR helpers

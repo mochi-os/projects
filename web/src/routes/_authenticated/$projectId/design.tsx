@@ -2,8 +2,7 @@
 // Copyright Alistair Cunningham 2026
 
 import { createFileRoute, Navigate } from "@tanstack/react-router";
-import { useQuery } from "@tanstack/react-query";
-import { GeneralError, Main, PageHeader, usePageTitle } from "@mochi/common";
+import { GeneralError, Main, PageHeader, usePageTitle, useQueryWithError, DetailSkeleton } from "@mochi/common";
 import { Settings2 } from "lucide-react";
 import projectsApi from "@/api/projects";
 import type { ProjectDetails } from "@/types";
@@ -21,8 +20,8 @@ function DesignPage() {
   const {
     data: projectData,
     isLoading,
-    error,
-  } = useQuery({
+    ErrorComponent,
+  } = useQueryWithError({
     queryKey: ["project", projectId],
     queryFn: async () => {
       const response = await projectsApi.get(projectId);
@@ -35,14 +34,28 @@ function DesignPage() {
 
   if (isLoading) {
     return (
-      <Main className="flex items-center justify-center">
-        <p className="text-muted-foreground">Loading...</p>
+      <>
+        <PageHeader
+          title="Design"
+          icon={<Settings2 className="size-4 md:size-5" />}
+        />
+        <Main>
+          <DetailSkeleton />
+        </Main>
+      </>
+    );
+  }
+
+  if (ErrorComponent) {
+    return (
+      <Main>
+        {ErrorComponent}
       </Main>
     );
   }
 
-  if (error || !project) {
-    return <GeneralError error={error} />;
+  if (!project) {
+    return <GeneralError error={new Error("Project not found")} />;
   }
 
   if (!canDesign(project.project.access)) {

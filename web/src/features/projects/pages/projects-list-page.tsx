@@ -15,6 +15,8 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
+  EmptyState,
+  GeneralError,
   getErrorMessage,
   toast,
 } from "@mochi/common";
@@ -28,6 +30,7 @@ import projectsApi from "@/api/projects";
 export function ProjectsListPage() {
   const projects = useProjectsStore((state) => state.projects);
   const isLoading = useProjectsStore((state) => state.isLoading);
+  const error = useProjectsStore((state) => state.error);
   const refresh = useProjectsStore((state) => state.refresh);
   const { openCreateDialog } = useSidebarContext();
   const [subscribeOpen, setSubscribeOpen] = useState(false);
@@ -83,6 +86,15 @@ export function ProjectsListPage() {
         icon={<FolderKanban className="size-4 md:size-5" />}
       />
       <Main>
+        {error && (
+          <div className="mb-4">
+            <GeneralError
+              minimal
+              className="h-auto min-h-[200px]"
+              error={new Error(error)}
+            />
+          </div>
+        )}
         {isLoading ? (
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {Array.from({ length: 3 }).map((_, i) => (
@@ -95,21 +107,27 @@ export function ProjectsListPage() {
             ))}
           </div>
         ) : projects.length === 0 ? (
-          <div className="flex flex-col items-center justify-center p-8 text-center">
-            <FolderKanban className="text-muted-foreground mx-auto mb-3 h-10 w-10 opacity-50" />
-            <p className="text-muted-foreground mb-1 text-sm font-medium">
-              Projects
-            </p>
-            <p className="text-muted-foreground mb-4 max-w-sm text-xs">
-              You have no projects yet.
-            </p>
-            <InlineProjectSearch subscribedIds={subscribedProjectIds} />
-            <Button variant="outline" onClick={openCreateDialog} className="mt-4">
+          <EmptyState
+            icon={FolderKanban}
+            title="Projects"
+            description="You have no projects yet."
+            childrenLayout="column"
+            childrenClassName="w-full max-w-md"
+          >
+            <div className="w-full">
+              <InlineProjectSearch subscribedIds={subscribedProjectIds} />
+            </div>
+            <Button variant="outline" onClick={openCreateDialog}>
               <Plus className="mr-2 h-4 w-4" />
               Create a new project
             </Button>
-            <RecommendedProjects subscribedIds={subscribedProjectIds} onSubscribe={() => void refresh()} />
-          </div>
+            <div className="w-full">
+              <RecommendedProjects
+                subscribedIds={subscribedProjectIds}
+                onSubscribe={() => void refresh()}
+              />
+            </div>
+          </EmptyState>
         ) : (
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {projects.map((project) => (

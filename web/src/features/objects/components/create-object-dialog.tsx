@@ -225,12 +225,21 @@ export function CreateObjectDialog({
     setFieldValues((prev) => ({ ...prev, [fieldId]: value }));
   };
 
-  // Auto-select first parent when parent is required
+  // Auto-select first parent when parent is required, preferring one in the same column
   useEffect(() => {
     if (open && parentRequired && !parent && validParentOptions.length > 0) {
+      if (defaultFields && defaultFields.length > 0) {
+        const columnParent = validParentOptions.find((obj) =>
+          defaultFields.every((df) => obj.values[df.field] === df.value),
+        );
+        if (columnParent) {
+          setParent(columnParent.id);
+          return;
+        }
+      }
       setParent(validParentOptions[0].id);
     }
-  }, [open, parentRequired, parent, validParentOptions]);
+  }, [open, parentRequired, parent, validParentOptions, defaultFields]);
 
   const handleTypeChange = (newType: string) => {
     setSelectedType(newType);

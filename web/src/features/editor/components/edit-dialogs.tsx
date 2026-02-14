@@ -24,7 +24,7 @@ import {
   SortDirectionButton,
   Switch,
 } from "@mochi/common";
-import { Check, GripVertical, Minus, MoreHorizontal, Plus, X } from "lucide-react";
+import { Check, GripVertical, Minus, MoreHorizontal, Pencil, Plus, Trash2, X } from "lucide-react";
 import type { ProjectView, ProjectField, ProjectClass, FieldOption } from "@/types";
 import { AddFieldDialog } from "./add-dialogs";
 
@@ -1039,18 +1039,20 @@ export function EditFieldDialog({
                       <Button
                         type="button"
                         variant="ghost"
-                        size="sm"
+                        size="icon"
+                        className="size-7"
                         onClick={() => onEditOption(opt)}
                       >
-                        Edit
+                        <Pencil className="size-3.5" />
                       </Button>
                       <Button
                         type="button"
                         variant="ghost"
-                        size="sm"
+                        size="icon"
+                        className="size-7"
                         onClick={() => onDeleteOption(opt.id)}
                       >
-                        Delete
+                        <Trash2 className="size-3.5" />
                       </Button>
                     </div>
                   </div>

@@ -610,7 +610,7 @@ def action_project_update(a):
 			a.error(400, "Invalid name")
 			return
 		mochi.db.execute("update projects set name=?, updated=? where id=?", name, now, project_id)
-		mochi.entity.rename(project_id, name)
+		mochi.entity.update(project_id, name=name)
 
 	if description != None:
 		mochi.db.execute("update projects set description=?, updated=? where id=?", description, now, project_id)

@@ -4,7 +4,7 @@
 import { useState, useMemo } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Button, Label, toast, getErrorMessage } from "@mochi/common";
-import { GripVertical, Plus } from "lucide-react";
+import { Blocks, GripVertical, Plus } from "lucide-react";
 import projectsApi from "@/api/projects";
 import type { ProjectDetails, ProjectField, ProjectView, FieldOption } from "@/types";
 import { DesignPreview } from "./design-preview";
@@ -508,8 +508,9 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
                     setSelectedClassId(cls.id);
                     setEditClassOpen(true);
                   }}
-                  className="w-full text-left px-3 py-2 text-sm rounded-md transition-colors hover:bg-muted"
+                  className="w-full text-left px-3 py-2 text-sm rounded-md transition-colors hover:bg-muted flex items-center gap-2"
                 >
+                  <Blocks className="size-4 text-muted-foreground shrink-0" />
                   {cls.name}
                 </button>
               ))}

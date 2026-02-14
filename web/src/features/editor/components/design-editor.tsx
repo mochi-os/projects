@@ -8,16 +8,13 @@ import { GripVertical, Plus } from "lucide-react";
 import projectsApi from "@/api/projects";
 import type { ProjectDetails, ProjectField, ProjectView, FieldOption } from "@/types";
 import { DesignPreview } from "./design-preview";
-import {
-  AddFieldDialog,
-  AddOptionDialog,
-} from "./add-dialogs";
+import { AddFieldDialog } from "./add-dialogs";
 import {
   ViewSheet,
   ClassSheet,
   EditFieldDialog,
-  EditOptionDialog,
 } from "./edit-dialogs";
+import { OptionDialog } from "./option-dialog";
 import type { PendingField } from "./edit-dialogs";
 
 interface DesignEditorProps {
@@ -595,7 +592,7 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
         }}
       />
 
-      <AddOptionDialog
+      <OptionDialog
         open={addOptionOpen}
         onOpenChange={setAddOptionOpen}
         onAdd={async (name, colour) => {
@@ -715,7 +712,7 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
         onReorderOptions={() => {}}
       />
 
-      <EditOptionDialog
+      <OptionDialog
         open={editOptionOpen}
         onOpenChange={setEditOptionOpen}
         option={editingOption}

@@ -10,17 +10,9 @@ import {
   Button,
   Input,
   Label,
+  PRESET_COLOURS,
 } from "@mochi/common";
 import { Check, Plus, X } from "lucide-react";
-
-const DEFAULT_COLOURS = [
-  "#94a3b8",
-  "#f87171",
-  "#fbbf24",
-  "#4ade80",
-  "#60a5fa",
-  "#a78bfa",
-];
 
 // Add Field Dialog
 interface PendingOption {
@@ -84,7 +76,7 @@ export function AddFieldDialog({
         {
           id: crypto.randomUUID(),
           name: newOptionName.trim(),
-          colour: DEFAULT_COLOURS[options.length % DEFAULT_COLOURS.length],
+          colour: PRESET_COLOURS[options.length % PRESET_COLOURS.length],
         },
       ]);
       setNewOptionName("");
@@ -226,95 +218,3 @@ export function AddFieldDialog({
   );
 }
 
-// Add Option Dialog
-interface AddOptionDialogProps {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-  onAdd: (name: string, colour: string) => void | Promise<void>;
-  title?: string;
-}
-
-export function AddOptionDialog({
-  open,
-  onOpenChange,
-  onAdd,
-  title = "Add option",
-}: AddOptionDialogProps) {
-  const [name, setName] = useState("");
-  const [colour, setColour] = useState(DEFAULT_COLOURS[0]);
-
-  const handleSubmit = async () => {
-    if (name.trim()) {
-      await onAdd(name.trim(), colour);
-      setName("");
-      setColour(
-        DEFAULT_COLOURS[Math.floor(Math.random() * DEFAULT_COLOURS.length)],
-      );
-      onOpenChange(false);
-    }
-  };
-
-  const handleClose = () => {
-    setName("");
-    setColour(DEFAULT_COLOURS[0]);
-    onOpenChange(false);
-  };
-
-  return (
-    <Sheet open={open} onOpenChange={handleClose}>
-      <SheetContent className="w-full sm:max-w-md p-0 flex flex-col [&>button:last-child]:hidden">
-        <div className="flex items-center justify-between px-6 py-4 border-b">
-          <SheetTitle>{title}</SheetTitle>
-          <Button variant="ghost" size="icon" className="size-8" onClick={handleClose}>
-            <X className="size-4" />
-          </Button>
-        </div>
-        <div className="flex-1 overflow-y-auto p-6 space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="option-name">Name</Label>
-            <div className="pl-4">
-              <Input
-                id="option-name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                placeholder="e.g., To do, In progress, Done"
-                autoFocus
-              />
-            </div>
-          </div>
-          <div className="space-y-2">
-            <Label>Colour</Label>
-            <div className="pl-4">
-              <div className="flex gap-2">
-                {DEFAULT_COLOURS.map((c) => (
-                  <button
-                    key={c}
-                    type="button"
-                    className={`size-8 rounded-full border-2 ${
-                      colour === c ? "border-foreground" : "border-transparent"
-                    }`}
-                    style={{ backgroundColor: c }}
-                    onClick={() => setColour(c)}
-                  />
-                ))}
-              </div>
-            </div>
-          </div>
-          <div className="pl-4 flex items-center gap-2">
-            <span
-              className="size-4 rounded-full"
-              style={{ backgroundColor: colour }}
-            />
-            <span className="text-sm">Preview: {name || "Option name"}</span>
-          </div>
-        </div>
-        <SheetFooter className="px-6 py-4 border-t">
-          <Button onClick={handleSubmit} disabled={!name.trim()}>
-            <Check className="size-4" />
-            Add option
-          </Button>
-        </SheetFooter>
-      </SheetContent>
-    </Sheet>
-  );
-}

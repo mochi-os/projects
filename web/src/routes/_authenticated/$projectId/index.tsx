@@ -33,7 +33,7 @@ import { useKeyboardShortcuts } from "@/hooks/use-keyboard-shortcuts";
 import { useProjectWebsocket } from "@/hooks/use-project-websocket";
 import { KeyboardShortcutsHelp } from "@/components/keyboard-shortcuts-help";
 import { ViewOptionsBar } from "@/components/view-options-bar";
-import { AddOptionDialog } from "@/features/editor/components/add-dialogs";
+import { OptionDialog } from "@/features/editor/components/option-dialog";
 
 interface SearchParams {
   view?: string;
@@ -851,7 +851,7 @@ function ProjectPage() {
         onOpenChange={setShowShortcutsHelp}
       />
 
-      <AddOptionDialog
+      <OptionDialog
         open={addColumnDialogOpen}
         onOpenChange={setAddColumnDialogOpen}
         onAdd={handleAddColumn}

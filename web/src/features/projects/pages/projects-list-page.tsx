@@ -15,6 +15,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
+  getAppPath,
   getErrorMessage,
   toast,
 } from "@mochi/common";
@@ -179,7 +180,7 @@ export function ProjectsListPage() {
         onOpenChange={setSubscribeOpen}
         app="projects"
         label="Project updates"
-        appBase="/projects"
+        appBase={getAppPath()}
         subscriptions={[
           { label: "Project updates", type: "update", defaultEnabled: true },
           { label: "Assignments", type: "assignment", defaultEnabled: true },

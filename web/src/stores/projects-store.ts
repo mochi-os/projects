@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { getErrorMessage } from "@mochi/common";
 import type { Project } from "@/types";
 import projectsApi from "@/api/projects";
 
@@ -20,8 +21,8 @@ export const useProjectsStore = create<ProjectsState>()((set) => ({
       const response = await projectsApi.list();
       const projects = response.data?.projects ?? [];
       set({ projects, isLoading: false });
-    } catch (_err) {
-      set({ error: "Failed to load projects", isLoading: false });
+    } catch (error) {
+      set({ error: getErrorMessage(error, "Failed to load projects"), isLoading: false });
     }
   },
 }));

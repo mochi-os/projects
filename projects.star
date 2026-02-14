@@ -898,8 +898,11 @@ def action_project_delete(a):
 	mochi.db.execute("delete from activity where object in (select id from objects where project=?)", project_id)
 	mochi.db.execute("delete from comments where object in (select id from objects where project=?)", project_id)
 	mochi.db.execute("delete from \"values\" where object in (select id from objects where project=?)", project_id)
+	mochi.db.execute("delete from pull_requests where object in (select id from objects where project=?)", project_id)
 	mochi.db.execute("delete from links where project=?", project_id)
 	mochi.db.execute("delete from objects where project=?", project_id)
+	mochi.db.execute("delete from view_fields where project=?", project_id)
+	mochi.db.execute("delete from view_classes where project=?", project_id)
 	mochi.db.execute("delete from views where project=?", project_id)
 	mochi.db.execute("delete from options where project=?", project_id)
 	mochi.db.execute("delete from fields where project=?", project_id)
@@ -1422,9 +1425,9 @@ def action_object_create(a):
 		a.error(400, "Cannot create here: hierarchy rules do not allow this relationship")
 		return
 
-	# Increment counter and get number
-	new_counter = project["counter"] + 1
-	mochi.db.execute("update projects set counter=?, updated=? where id=?", new_counter, mochi.time.now(), project_id)
+	# Increment counter atomically and get number
+	mochi.db.execute("update projects set counter=counter+1, updated=? where id=?", mochi.time.now(), project_id)
+	new_counter = mochi.db.row("select counter from projects where id=?", project_id)["counter"]
 
 	# Calculate initial rank (add to end)
 	max_rank_row = mochi.db.row("select coalesce(max(rank), 0) as max_rank from objects where project=?", project_id)
@@ -4920,10 +4923,10 @@ def event_unsubscribe(e):
 	subscriber_id = e.header("from")
 
 	# Clean up watchers created by this subscriber
-	mochi.db.execute("delete from watchers where user=?", subscriber_id)
+	mochi.db.execute("delete from watchers where user=? and object in (select id from objects where project=?)", subscriber_id, project_id)
 
 	# Clean up activity records by this subscriber
-	mochi.db.execute("delete from activity where user=?", subscriber_id)
+	mochi.db.execute("delete from activity where user=? and object in (select id from objects where project=?)", subscriber_id, project_id)
 
 	# Remove subscriber
 	mochi.db.execute("delete from subscribers where project=? and id=?", project_id, subscriber_id)
@@ -5807,7 +5810,7 @@ def action_pr_update(a):
 		a.error(400, "PR ID required")
 		return
 
-	pr = mochi.db.row("select * from pull_requests where id=?", pr_id)
+	pr = mochi.db.row("select pr.* from pull_requests pr join objects o on pr.object=o.id where pr.id=? and o.project=?", pr_id, project_id)
 	if not pr:
 		a.error(404, "Pull request not found")
 		return
@@ -5877,7 +5880,7 @@ def action_pr_delete(a):
 		a.error(400, "PR ID required")
 		return
 
-	pr = mochi.db.row("select * from pull_requests where id=?", pr_id)
+	pr = mochi.db.row("select pr.* from pull_requests pr join objects o on pr.object=o.id where pr.id=? and o.project=?", pr_id, project_id)
 	if not pr:
 		a.error(404, "Pull request not found")
 		return
@@ -6236,8 +6239,8 @@ def do_object_create(project_id, project, params, user_id):
 
 	title_field_row = mochi.db.row("select title from classes where project=? and id=?", project_id, obj_class)
 	title_field = title_field_row["title"] if title_field_row else ""
-	new_counter = project["counter"] + 1
-	mochi.db.execute("update projects set counter=?, updated=? where id=?", new_counter, mochi.time.now(), project_id)
+	mochi.db.execute("update projects set counter=counter+1, updated=? where id=?", mochi.time.now(), project_id)
+	new_counter = mochi.db.row("select counter from projects where id=?", project_id)["counter"]
 	max_rank_row = mochi.db.row("select coalesce(max(rank), 0) as max_rank from objects where project=?", project_id)
 	initial_rank = (max_rank_row["max_rank"] if max_rank_row else 0) + 1
 	object_id = mochi.uid()

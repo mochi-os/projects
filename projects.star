@@ -375,9 +375,6 @@ def apply_template(project_id, template_id, data=None):
 
 # Export the current project design as template JSON
 def action_design_export(a):
-	if not a.user:
-		a.error(401, "Not logged in")
-		return
 
 	project_id = resolve_project(a)
 	if not project_id:
@@ -526,9 +523,6 @@ def action_design_export(a):
 
 # Import a design from template JSON, replacing the current design
 def action_design_import(a):
-	if not a.user:
-		a.error(401, "Not logged in")
-		return
 
 	project_id = resolve_project(a)
 	if not project_id:
@@ -551,6 +545,10 @@ def action_design_import(a):
 	data_str = a.input("data")
 	template_id = a.input("template") or ""
 	template_version = int(a.input("template_version") or "0")
+
+	if len(template_id) > 100:
+		a.error(400, "Template ID too long")
+		return
 
 	# Load design data from JSON string or from built-in template file
 	data = None
@@ -595,16 +593,10 @@ def action_design_import(a):
 
 # List available templates
 def action_templates(a):
-	if not a.user:
-		a.error(401, "Not logged in")
-		return
 	return {"data": {"templates": list(get_templates().values())}}
 
 # List user's projects
 def action_project_list(a):
-	if not a.user:
-		a.error(401, "Not logged in")
-		return
 
 	rows = mochi.db.rows("""select p.id, p.name, p.description, p.prefix, p.owner, p.server, p.created, p.updated,
 		(select s.name from subscribers s where s.project=p.id order by s.subscribed asc limit 1) as ownername
@@ -627,9 +619,6 @@ def action_project_list(a):
 
 # Create a new project
 def action_project_create(a):
-	if not a.user:
-		a.error(401, "Not logged in")
-		return
 
 	name = a.input("name")
 	if not name or not mochi.valid(name, "name"):
@@ -697,9 +686,6 @@ def action_project_create(a):
 
 # Get project details
 def action_project_get(a):
-	if not a.user:
-		a.error(401, "Not logged in")
-		return
 
 	project_id = resolve_project(a)
 	if not project_id:
@@ -808,9 +794,6 @@ def action_project_get(a):
 
 # Update project
 def action_project_update(a):
-	if not a.user:
-		a.error(401, "Not logged in")
-		return
 
 	project_id = resolve_project(a)
 	if not project_id:
@@ -868,9 +851,6 @@ def action_project_update(a):
 
 # Delete project
 def action_project_delete(a):
-	if not a.user:
-		a.error(401, "Not logged in")
-		return
 
 	project_id = resolve_project(a)
 	if not project_id:
@@ -924,9 +904,6 @@ def action_project_delete(a):
 
 # List project members (subscribers + unique owners + current user)
 def action_people_list(a):
-	if not a.user:
-		a.error(401, "Not logged in")
-		return
 
 	project_id = resolve_project(a)
 	if not project_id:
@@ -1011,9 +988,6 @@ def forward_to_owner(a, project_id, action, params):
 
 # List access rules for a project
 def action_access_list(a):
-	if not a.user:
-		a.error(401, "Not logged in")
-		return
 
 	project_id = resolve_project(a)
 	if not project_id:
@@ -1063,9 +1037,6 @@ def action_access_list(a):
 
 # Set access level for a subject
 def action_access_set(a):
-	if not a.user:
-		a.error(401, "Not logged in")
-		return
 
 	project_id = resolve_project(a)
 	if not project_id:
@@ -1123,9 +1094,6 @@ def action_access_set(a):
 
 # Revoke access for a subject
 def action_access_revoke(a):
-	if not a.user:
-		a.error(401, "Not logged in")
-		return
 
 	project_id = resolve_project(a)
 	if not project_id:
@@ -1179,10 +1147,9 @@ def resolve_project(a):
 	if not project_id:
 		return None
 	if len(project_id) == 9:
-		rows = mochi.db.rows("select id from projects")
-		for row in rows:
-			if mochi.entity.fingerprint(row["id"]) == project_id:
-				return row["id"]
+		results = mochi.entity.get(project_id)
+		if results:
+			return results[0]["id"]
 		return None
 	return project_id
 
@@ -1281,9 +1248,6 @@ def delete_object_cascade(project_id, object_id, user=""):
 # ============================================================================
 
 def action_object_list(a):
-	if not a.user:
-		a.error(401, "Not logged in")
-		return
 
 	project_id = resolve_project(a)
 	if not project_id:
@@ -1352,9 +1316,6 @@ def action_object_list(a):
 	return {"data": {"objects": objects, "watched": [w["object"] for w in watched]}}
 
 def action_object_create(a):
-	if not a.user:
-		a.error(401, "Not logged in")
-		return
 
 	project_id = resolve_project(a)
 	if not project_id:
@@ -1468,9 +1429,6 @@ def action_object_create(a):
 	}}
 
 def action_object_get(a):
-	if not a.user:
-		a.error(401, "Not logged in")
-		return
 
 	project_id = resolve_project(a)
 	if not project_id:
@@ -1538,9 +1496,6 @@ def action_object_get(a):
 	}}
 
 def action_object_update(a):
-	if not a.user:
-		a.error(401, "Not logged in")
-		return
 
 	project_id = resolve_project(a)
 	if not project_id:
@@ -1649,9 +1604,6 @@ def action_object_update(a):
 	return {"data": {"success": True}}
 
 def action_object_delete(a):
-	if not a.user:
-		a.error(401, "Not logged in")
-		return
 
 	project_id = resolve_project(a)
 	if not project_id:
@@ -1697,9 +1649,6 @@ def action_object_delete(a):
 
 def action_object_move(a):
 	"""Quick action to move object to a new status and/or rank (for drag-drop)."""
-	if not a.user:
-		a.error(401, "Not logged in")
-		return
 
 	project_id = resolve_project(a)
 	if not project_id:
@@ -1763,6 +1712,10 @@ def action_object_move(a):
 	value = a.input("value")  # New column value
 	new_rank = a.input("rank")
 
+	if value and len(str(value)) > 10000:
+		a.error(400, "Value too long")
+		return
+
 	# Get old field value
 	old_value_row = mochi.db.row("select value from \"values\" where object=? and field=?", object_id, field)
 	old_value = old_value_row["value"] if old_value_row else ""
@@ -1821,6 +1774,9 @@ def action_object_move(a):
 	# Handle row field change (for swimlane drag-drop)
 	row_field = a.input("row_field")
 	row_value = a.input("row_value")
+	if row_value and len(str(row_value)) > 10000:
+		a.error(400, "Value too long")
+		return
 	row_changed = False
 	if row_field:
 		old_row_row = mochi.db.row("select value from \"values\" where object=? and field=?", object_id, row_field)
@@ -1872,9 +1828,6 @@ def action_object_move(a):
 
 def action_values_set(a):
 	"""Set multiple field values at once."""
-	if not a.user:
-		a.error(401, "Not logged in")
-		return
 
 	project_id = resolve_project(a)
 	if not project_id:
@@ -1932,6 +1885,9 @@ def action_values_set(a):
 		if not a.input.exists(field_id):
 			continue
 		new_value = a.input(field_id)
+		if len(str(new_value)) > 10000:
+			a.error(400, "Value too long")
+			return
 		# Get old value
 		old_row = mochi.db.row("select value from \"values\" where object=? and field=?", object_id, field_id)
 		old_value = old_row["value"] if old_row else ""
@@ -1966,9 +1922,6 @@ def action_values_set(a):
 
 def action_value_set(a):
 	"""Set a single field value."""
-	if not a.user:
-		a.error(401, "Not logged in")
-		return
 
 	project_id = resolve_project(a)
 	if not project_id:
@@ -2019,6 +1972,9 @@ def action_value_set(a):
 		return
 
 	new_value = a.input("value")
+	if len(str(new_value)) > 10000:
+		a.error(400, "Value too long")
+		return
 
 	# Get old value
 	old_row = mochi.db.row("select value from \"values\" where object=? and field=?", object_id, field_id)
@@ -2047,9 +2003,6 @@ def action_value_set(a):
 # ============================================================================
 
 def action_link_list(a):
-	if not a.user:
-		a.error(401, "Not logged in")
-		return
 
 	project_id = resolve_project(a)
 	if not project_id:
@@ -2092,9 +2045,6 @@ def action_link_list(a):
 	return {"data": {"outgoing": outgoing, "incoming": incoming}}
 
 def action_link_create(a):
-	if not a.user:
-		a.error(401, "Not logged in")
-		return
 
 	project_id = resolve_project(a)
 	if not project_id:
@@ -2170,9 +2120,6 @@ def action_link_create(a):
 	return {"data": {"success": True}}
 
 def action_link_delete(a):
-	if not a.user:
-		a.error(401, "Not logged in")
-		return
 
 	project_id = resolve_project(a)
 	if not project_id:
@@ -2200,6 +2147,10 @@ def action_link_delete(a):
 
 	if not object_id or not target_id or not linktype:
 		a.error(400, "Object, target, and linktype are required")
+		return
+
+	if linktype not in ["blocks", "blocked_by", "relates", "duplicates"]:
+		a.error(400, "Invalid link type")
 		return
 
 	mochi.db.execute("delete from links where source=? and target=? and linktype=?", object_id, target_id, linktype)
@@ -2257,9 +2208,6 @@ def delete_project_comment_attachments(project_id):
 # ============================================================================
 
 def action_comment_list(a):
-	if not a.user:
-		a.error(401, "Not logged in")
-		return
 
 	project_id = resolve_project(a)
 	if not project_id:
@@ -2288,9 +2236,6 @@ def action_comment_list(a):
 	return {"data": {"comments": comments, "count": count}}
 
 def action_comment_create(a):
-	if not a.user:
-		a.error(401, "Not logged in")
-		return
 
 	project_id = resolve_project(a)
 	if not project_id:
@@ -2401,9 +2346,6 @@ def action_comment_create(a):
 	}}
 
 def action_comment_update(a):
-	if not a.user:
-		a.error(401, "Not logged in")
-		return
 
 	project_id = resolve_project(a)
 	if not project_id:
@@ -2463,9 +2405,6 @@ def action_comment_update(a):
 	return {"data": {"success": True}}
 
 def action_comment_delete(a):
-	if not a.user:
-		a.error(401, "Not logged in")
-		return
 
 	project_id = resolve_project(a)
 	if not project_id:
@@ -2519,9 +2458,6 @@ def action_comment_delete(a):
 # ============================================================================
 
 def action_attachment_list(a):
-	if not a.user:
-		a.error(401, "Not logged in")
-		return
 
 	project_id = resolve_project(a)
 	if not project_id:
@@ -2548,9 +2484,6 @@ def action_attachment_list(a):
 	return {"data": {"attachments": attachments}}
 
 def action_attachment_create(a):
-	if not a.user:
-		a.error(401, "Not logged in")
-		return
 
 	project_id = resolve_project(a)
 	if not project_id:
@@ -2611,9 +2544,6 @@ def action_attachment_create(a):
 	return {"data": {"attachments": attachments}}
 
 def action_attachment_delete(a):
-	if not a.user:
-		a.error(401, "Not logged in")
-		return
 
 	project_id = resolve_project(a)
 	if not project_id:
@@ -2655,9 +2585,6 @@ def action_attachment_delete(a):
 # ============================================================================
 
 def action_activity_list(a):
-	if not a.user:
-		a.error(401, "Not logged in")
-		return
 
 	project_id = resolve_project(a)
 	if not project_id:
@@ -2708,9 +2635,6 @@ def action_activity_list(a):
 # ============================================================================
 
 def action_watcher_list(a):
-	if not a.user:
-		a.error(401, "Not logged in")
-		return
 
 	project_id = resolve_project(a)
 	if not project_id:
@@ -2740,9 +2664,6 @@ def action_watcher_list(a):
 	return {"data": {"watchers": watchers, "watching": watching}}
 
 def action_watcher_add(a):
-	if not a.user:
-		a.error(401, "Not logged in")
-		return
 
 	project_id = resolve_project(a)
 	if not project_id:
@@ -2779,9 +2700,6 @@ def action_watcher_add(a):
 	return {"data": {"success": True, "watching": True}}
 
 def action_watcher_remove(a):
-	if not a.user:
-		a.error(401, "Not logged in")
-		return
 
 	project_id = resolve_project(a)
 	if not project_id:
@@ -2819,9 +2737,6 @@ def action_watcher_remove(a):
 # ============================================================================
 
 def action_view_list(a):
-	if not a.user:
-		a.error(401, "Not logged in")
-		return
 
 	project_id = resolve_project(a)
 	if not project_id:
@@ -2850,9 +2765,6 @@ def action_view_list(a):
 	return {"data": {"views": views}}
 
 def action_view_create(a):
-	if not a.user:
-		a.error(401, "Not logged in")
-		return
 
 	project_id = resolve_project(a)
 	if not project_id:
@@ -2955,9 +2867,6 @@ def action_view_create(a):
 	}}
 
 def action_view_update(a):
-	if not a.user:
-		a.error(401, "Not logged in")
-		return
 
 	project_id = resolve_project(a)
 	if not project_id:
@@ -3066,9 +2975,6 @@ def action_view_update(a):
 	return {"data": {"success": True}}
 
 def action_view_delete(a):
-	if not a.user:
-		a.error(401, "Not logged in")
-		return
 
 	project_id = resolve_project(a)
 	if not project_id:
@@ -3109,9 +3015,6 @@ def action_view_delete(a):
 	return {"data": {"success": True}}
 
 def action_view_reorder(a):
-	if not a.user:
-		a.error(401, "Not logged in")
-		return
 
 	project_id = resolve_project(a)
 	if not project_id:
@@ -3153,9 +3056,6 @@ def action_view_reorder(a):
 # ============================================================================
 
 def action_class_list(a):
-	if not a.user:
-		a.error(401, "Not logged in")
-		return
 
 	project_id = resolve_project(a)
 	if not project_id:
@@ -3176,9 +3076,6 @@ def action_class_list(a):
 	return {"data": {"classes": classes}}
 
 def action_class_create(a):
-	if not a.user:
-		a.error(401, "Not logged in")
-		return
 
 	project_id = resolve_project(a)
 	if not project_id:
@@ -3247,9 +3144,6 @@ def action_class_create(a):
 	return {"data": {"id": class_id, "name": name.strip(), "rank": rank}}
 
 def action_class_update(a):
-	if not a.user:
-		a.error(401, "Not logged in")
-		return
 
 	project_id = resolve_project(a)
 	if not project_id:
@@ -3310,9 +3204,6 @@ def action_class_update(a):
 	return {"data": {"success": True}}
 
 def action_class_delete(a):
-	if not a.user:
-		a.error(401, "Not logged in")
-		return
 
 	project_id = resolve_project(a)
 	if not project_id:
@@ -3360,9 +3251,6 @@ def action_class_delete(a):
 # ============================================================================
 
 def action_hierarchy_get(a):
-	if not a.user:
-		a.error(401, "Not logged in")
-		return
 
 	project_id = resolve_project(a)
 	if not project_id:
@@ -3389,9 +3277,6 @@ def action_hierarchy_get(a):
 	return {"data": {"parents": parent_list}}
 
 def action_hierarchy_set(a):
-	if not a.user:
-		a.error(401, "Not logged in")
-		return
 
 	project_id = resolve_project(a)
 	if not project_id:
@@ -3462,9 +3347,6 @@ def action_hierarchy_set(a):
 # ============================================================================
 
 def action_field_list(a):
-	if not a.user:
-		a.error(401, "Not logged in")
-		return
 
 	project_id = resolve_project(a)
 	if not project_id:
@@ -3493,9 +3375,6 @@ def action_field_list(a):
 	return {"data": {"fields": fields}}
 
 def action_field_create(a):
-	if not a.user:
-		a.error(401, "Not logged in")
-		return
 
 	project_id = resolve_project(a)
 	if not project_id:
@@ -3574,9 +3453,6 @@ def action_field_create(a):
 	return {"data": {"id": field_id, "name": name.strip(), "fieldtype": fieldtype, "rank": rank}}
 
 def action_field_update(a):
-	if not a.user:
-		a.error(401, "Not logged in")
-		return
 
 	project_id = resolve_project(a)
 	if not project_id:
@@ -3695,9 +3571,6 @@ def action_field_update(a):
 	return {"data": {"success": True}}
 
 def action_field_delete(a):
-	if not a.user:
-		a.error(401, "Not logged in")
-		return
 
 	project_id = resolve_project(a)
 	if not project_id:
@@ -3736,9 +3609,6 @@ def action_field_delete(a):
 	return {"data": {"success": True}}
 
 def action_field_reorder(a):
-	if not a.user:
-		a.error(401, "Not logged in")
-		return
 
 	project_id = resolve_project(a)
 	if not project_id:
@@ -3786,9 +3656,6 @@ def action_field_reorder(a):
 # ============================================================================
 
 def action_option_list(a):
-	if not a.user:
-		a.error(401, "Not logged in")
-		return
 
 	project_id = resolve_project(a)
 	if not project_id:
@@ -3818,9 +3685,6 @@ def action_option_list(a):
 	return {"data": {"options": options}}
 
 def action_option_create(a):
-	if not a.user:
-		a.error(401, "Not logged in")
-		return
 
 	project_id = resolve_project(a)
 	if not project_id:
@@ -3881,7 +3745,13 @@ def action_option_create(a):
 	rank = (max_rank["m"] or 0) + 1 if max_rank else 0
 
 	colour = a.input("colour") or "#94a3b8"
+	if len(colour) > 20:
+		a.error(400, "Colour too long")
+		return
 	icon = a.input("icon") or ""
+	if len(icon) > 100:
+		a.error(400, "Icon too long")
+		return
 
 	mochi.db.execute(
 		"insert into options (project, class, field, id, name, colour, icon, rank) values (?, ?, ?, ?, ?, ?, ?, ?)",
@@ -3896,9 +3766,6 @@ def action_option_create(a):
 	return {"data": {"id": option_id, "name": name.strip(), "colour": colour, "rank": rank}}
 
 def action_option_update(a):
-	if not a.user:
-		a.error(401, "Not logged in")
-		return
 
 	project_id = resolve_project(a)
 	if not project_id:
@@ -3939,10 +3806,22 @@ def action_option_update(a):
 	icon = a.input("icon")
 
 	if a.input.exists("name"):
+		if not name or not name.strip():
+			a.error(400, "Name is required")
+			return
+		if len(name) > 100:
+			a.error(400, "Name too long")
+			return
 		mochi.db.execute("update options set name=? where project=? and class=? and field=? and id=?", name.strip(), project_id, class_id, field_id, option_id)
 	if a.input.exists("colour"):
+		if len(colour) > 20:
+			a.error(400, "Colour too long")
+			return
 		mochi.db.execute("update options set colour=? where project=? and class=? and field=? and id=?", colour, project_id, class_id, field_id, option_id)
 	if a.input.exists("icon"):
+		if len(icon) > 100:
+			a.error(400, "Icon too long")
+			return
 		mochi.db.execute("update options set icon=? where project=? and class=? and field=? and id=?", icon, project_id, class_id, field_id, option_id)
 
 	update_data = {"project": project_id, "class": class_id, "field": field_id, "id": option_id}
@@ -3957,9 +3836,6 @@ def action_option_update(a):
 	return {"data": {"success": True}}
 
 def action_option_delete(a):
-	if not a.user:
-		a.error(401, "Not logged in")
-		return
 
 	project_id = resolve_project(a)
 	if not project_id:
@@ -3995,9 +3871,6 @@ def action_option_delete(a):
 	return {"data": {"success": True}}
 
 def action_option_reorder(a):
-	if not a.user:
-		a.error(401, "Not logged in")
-		return
 
 	project_id = resolve_project(a)
 	if not project_id:
@@ -4047,9 +3920,6 @@ def action_option_reorder(a):
 
 def action_repositories_list(a):
 	"""List repositories the user has access to via the repositories service."""
-	if not a.user:
-		a.error(401, "Not logged in")
-		return
 
 	result = mochi.service.call("repositories", "list", {})
 	if result == None:
@@ -4058,9 +3928,6 @@ def action_repositories_list(a):
 
 def action_repositories_branches(a):
 	"""Get branches for a repository via the repositories service."""
-	if not a.user:
-		a.error(401, "Not logged in")
-		return
 
 	repo_id = a.input("repo")
 	if not repo_id:
@@ -4074,9 +3941,6 @@ def action_repositories_branches(a):
 
 def action_repositories_merge_check(a):
 	"""Check if branches can be merged via the repositories service."""
-	if not a.user:
-		a.error(401, "Not logged in")
-		return
 
 	repo_id = a.input("repo")
 	source = a.input("source")
@@ -4098,9 +3962,6 @@ def action_repositories_merge_check(a):
 
 def action_repositories_diff(a):
 	"""Get diff between branches via the repositories service."""
-	if not a.user:
-		a.error(401, "Not logged in")
-		return
 
 	repo_id = a.input("repo")
 	base = a.input("base")
@@ -4122,9 +3983,6 @@ def action_repositories_diff(a):
 
 def action_repositories_merge(a):
 	"""Perform merge via the repositories service."""
-	if not a.user:
-		a.error(401, "Not logged in")
-		return
 
 	project_id = resolve_project(a)
 	if not project_id:
@@ -4431,9 +4289,6 @@ def action_probe(a):
 
 # Get recommended projects from the recommendations service
 def action_recommendations(a):
-	if not a.user:
-		a.error(401, "Not logged in")
-		return
 
 	# Get user's existing project IDs
 	existing_ids = set()
@@ -4587,11 +4442,13 @@ def action_unsubscribe(a):
 		mochi.db.execute("delete from links where source=? or target=?", obj["id"], obj["id"])
 
 	mochi.db.execute("delete from objects where project=?", project_id)
+	mochi.db.execute("delete from view_fields where project=?", project_id)
+	mochi.db.execute("delete from view_classes where project=?", project_id)
+	mochi.db.execute("delete from views where project=?", project_id)
 	mochi.db.execute("delete from options where project=?", project_id)
 	mochi.db.execute("delete from fields where project=?", project_id)
 	mochi.db.execute("delete from hierarchy where project=?", project_id)
 	mochi.db.execute("delete from classes where project=?", project_id)
-	mochi.db.execute("delete from views where project=?", project_id)
 	mochi.db.execute("delete from subscribers where project=?", project_id)
 	mochi.db.execute("delete from projects where id=?", project_id)
 
@@ -4961,11 +4818,13 @@ def event_deleted(e):
 		mochi.db.execute("delete from links where source=? or target=?", obj["id"], obj["id"])
 
 	mochi.db.execute("delete from objects where project=?", project_id)
+	mochi.db.execute("delete from view_fields where project=?", project_id)
+	mochi.db.execute("delete from view_classes where project=?", project_id)
+	mochi.db.execute("delete from views where project=?", project_id)
 	mochi.db.execute("delete from options where project=?", project_id)
 	mochi.db.execute("delete from fields where project=?", project_id)
 	mochi.db.execute("delete from hierarchy where project=?", project_id)
 	mochi.db.execute("delete from classes where project=?", project_id)
-	mochi.db.execute("delete from views where project=?", project_id)
 	mochi.db.execute("delete from subscribers where project=?", project_id)
 	mochi.db.execute("delete from projects where id=?", project_id)
 
@@ -5031,9 +4890,9 @@ def event_object_update(e):
 	rank = e.content("rank")
 	if class_id:
 		mochi.db.execute("update objects set class=? where id=? and project=?", class_id, object_id, project_id)
-	if parent:
+	if parent != None:
 		mochi.db.execute("update objects set parent=? where id=? and project=?", parent, object_id, project_id)
-	if rank:
+	if rank != None:
 		mochi.db.execute("update objects set rank=? where id=? and project=?", rank, object_id, project_id)
 	mochi.db.execute("update objects set updated=? where id=? and project=?", mochi.time.now(), object_id, project_id)
 	fp = mochi.entity.fingerprint(project_id)
@@ -5334,22 +5193,22 @@ def event_view_update(e):
 		mochi.db.execute("update views set name=? where id=? and project=?", name, view_id, project_id)
 	if viewtype:
 		mochi.db.execute("update views set viewtype=? where id=? and project=?", viewtype, view_id, project_id)
-	if filter_val:
+	if filter_val != None:
 		mochi.db.execute("update views set filter=? where id=? and project=?", filter_val, view_id, project_id)
-	if columns:
+	if columns != None:
 		mochi.db.execute("update views set columns=? where id=? and project=?", columns, view_id, project_id)
-	if rows:
+	if rows != None:
 		mochi.db.execute("update views set rows=? where id=? and project=?", rows, view_id, project_id)
-	if sort:
+	if sort != None:
 		mochi.db.execute("update views set sort=? where id=? and project=?", sort, view_id, project_id)
-	if direction:
+	if direction != None:
 		mochi.db.execute("update views set direction=? where id=? and project=?", direction, view_id, project_id)
 	border = e.content("border")
 	if border != None:
 		mochi.db.execute("update views set border=? where id=? and project=?", border, view_id, project_id)
 	# Sync view fields if provided
 	fields_csv = e.content("fields")
-	if fields_csv:
+	if fields_csv != None:
 		mochi.db.execute("delete from view_fields where project=? and view=?", project_id, view_id)
 		rank = 0
 		for field_id in fields_csv.split(","):
@@ -5358,7 +5217,7 @@ def event_view_update(e):
 				rank += 1
 	# Sync view classes if provided
 	classes_csv = e.content("classes")
-	if classes_csv:
+	if classes_csv != None:
 		mochi.db.execute("delete from view_classes where project=? and view=?", project_id, view_id)
 		for class_id in classes_csv.split(","):
 			if class_id:
@@ -5674,9 +5533,6 @@ def event_merge_request(e):
 
 # List pull requests for an object
 def action_pr_list(a):
-	if not a.user:
-		a.error(401, "Not logged in")
-		return
 
 	project_id = resolve_project(a)
 	if not project_id:
@@ -5698,9 +5554,6 @@ def action_pr_list(a):
 
 # Create a pull request on an object
 def action_pr_create(a):
-	if not a.user:
-		a.error(401, "Not logged in")
-		return
 
 	project_id = resolve_project(a)
 	if not project_id:
@@ -5780,9 +5633,6 @@ def action_pr_create(a):
 
 # Update a pull request
 def action_pr_update(a):
-	if not a.user:
-		a.error(401, "Not logged in")
-		return
 
 	project_id = resolve_project(a)
 	if not project_id:
@@ -5851,9 +5701,6 @@ def action_pr_update(a):
 
 # Delete a pull request
 def action_pr_delete(a):
-	if not a.user:
-		a.error(401, "Not logged in")
-		return
 
 	project_id = resolve_project(a)
 	if not project_id:
@@ -5900,18 +5747,12 @@ def action_pr_delete(a):
 
 # Get diff view preference (unified or split)
 def action_diff_preference_get(a):
-	if not a.user:
-		a.error(401, "Not logged in")
-		return
 	value = a.user.preference.get("diff_view")
 	style = value if value else "unified"
 	return {"data": {"style": style}}
 
 # Set diff view preference
 def action_diff_preference_set(a):
-	if not a.user:
-		a.error(401, "Not logged in")
-		return
 	style = a.input("style")
 	if style not in ("unified", "split"):
 		a.error(400, "Style must be 'unified' or 'split'")

@@ -206,7 +206,7 @@ export function ObjectDetailPanel({
   if (isLoading) {
     return (
       <Sheet open={true} onOpenChange={handleClose} modal={false}>
-        <SheetContent className="w-full sm:max-w-2xl p-0 gap-0" onInteractOutside={(e) => e.preventDefault()}>
+        <SheetContent className="w-full sm:max-w-2xl p-0 gap-0">
           <div className="flex-1 flex items-center justify-center">
             <Loader2 className="size-6 animate-spin text-muted-foreground" />
             <span className="text-xs text-muted-foreground ml-2">Loading details...</span>
@@ -219,7 +219,7 @@ export function ObjectDetailPanel({
   if (error || !data) {
     return (
       <Sheet open={true} onOpenChange={handleClose} modal={false}>
-        <SheetContent className="w-full sm:max-w-2xl p-6" onInteractOutside={(e) => e.preventDefault()}>
+        <SheetContent className="w-full sm:max-w-2xl p-6">
           <div className="text-destructive text-sm bg-destructive/10 p-3 rounded-md">
             {getErrorMessage(error, "Failed to load object")}
           </div>
@@ -266,7 +266,7 @@ export function ObjectDetailPanel({
 
   return (
     <Sheet open={true} onOpenChange={handleClose} modal={false}>
-      <SheetContent className="w-full sm:max-w-2xl p-0 gap-0 [&>button:last-child]:hidden" onInteractOutside={(e) => e.preventDefault()}>
+      <SheetContent className="w-full sm:max-w-2xl p-0 gap-0 [&>button:last-child]:hidden">
         {/* Header */}
         <div className="flex items-center gap-3 px-6 py-4 border-b shrink-0">
           {editingTitle && canWrite(access) ? (

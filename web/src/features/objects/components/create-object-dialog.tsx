@@ -276,7 +276,7 @@ export function CreateObjectDialog({
 
   return (
     <Sheet open={open} onOpenChange={handleClose} modal={false}>
-      <SheetContent className="w-full sm:max-w-2xl p-0 gap-0 [&>button:last-child]:hidden" onInteractOutside={(e) => e.preventDefault()}>
+      <SheetContent className="w-full sm:max-w-2xl p-0 gap-0 [&>button:last-child]:hidden">
         {/* Header */}
         <div className="flex items-center gap-3 px-6 py-4 border-b shrink-0">
           <div className="flex items-center gap-2 flex-1">

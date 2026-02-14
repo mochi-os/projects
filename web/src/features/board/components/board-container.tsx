@@ -180,22 +180,34 @@ export function BoardContainer({
 
   // FLIP animation: capture card positions before drop, animate after re-render
   const flipRef = useRef<Map<string, DOMRect>>(new Map());
+  const flipDraggedRef = useRef<string | null>(null);
+  const lastDragPosRef = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
 
   useLayoutEffect(() => {
     const prev = flipRef.current;
     if (!prev.size || !boardRef.current) return;
 
+    const draggedId = flipDraggedRef.current;
+    const dropPos = lastDragPosRef.current;
+    flipDraggedRef.current = null;
     const animations: HTMLElement[] = [];
     boardRef.current.querySelectorAll('[data-card-id]').forEach(card => {
       // Skip nested cards — they move with their parent
       if (card.parentElement?.closest('[data-card-id]')) return;
       const id = card.getAttribute('data-card-id');
       if (!id) return;
-      const oldRect = prev.get(id);
-      if (!oldRect) return;
       const newRect = card.getBoundingClientRect();
-      const dx = oldRect.left - newRect.left;
-      const dy = oldRect.top - newRect.top;
+      let dx: number, dy: number;
+      if (id === draggedId) {
+        // Animate the dragged card from where the cursor was at drop time
+        dx = dropPos.x - newRect.left - newRect.width / 2;
+        dy = dropPos.y - newRect.top - newRect.height / 2;
+      } else {
+        const oldRect = prev.get(id);
+        if (!oldRect) return;
+        dx = oldRect.left - newRect.left;
+        dy = oldRect.top - newRect.top;
+      }
       if (Math.abs(dx) < 1 && Math.abs(dy) < 1) return;
       const el = card as HTMLElement;
       el.style.transition = 'none';
@@ -320,6 +332,7 @@ export function BoardContainer({
     const draggedObj = objectMap[objectId];
     if (!draggedObj) return;
 
+    flipDraggedRef.current = objectId;
     capturePositions();
 
     // Reorder child among siblings
@@ -406,6 +419,8 @@ export function BoardContainer({
     const maxSpeed = 20;
 
     const onDragOver = (e: DragEvent) => {
+      lastDragPosRef.current = { x: e.clientX, y: e.clientY };
+
       const container = scrollContainerRef.current;
       if (!container) return;
 

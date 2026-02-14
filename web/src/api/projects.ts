@@ -584,6 +584,37 @@ const projectsApi = {
     >(endpoints.projects.watcherRemove(projectId, objectId));
   },
 
+  // ============= Design Import/Export Methods =============
+
+  // Export design as template JSON
+  exportDesign: async (
+    projectId: string,
+  ): Promise<{ data: Record<string, unknown> }> => {
+    return projectsRequest.get(endpoints.projects.designExport(projectId));
+  },
+
+  // Import design from template JSON or built-in template ID
+  importDesign: async (
+    projectId: string,
+    data: Record<string, unknown>,
+    template?: string,
+    templateVersion?: number,
+  ): Promise<SuccessResponse> => {
+    const payload: Record<string, string> = {
+      template: template || "",
+      template_version: String(templateVersion || 0),
+    };
+    // Only send data if it has content (for file imports)
+    // For built-in templates, the backend loads the template file by template ID
+    if (Object.keys(data).length > 0) {
+      payload.data = JSON.stringify(data);
+    }
+    return projectsRequest.post<SuccessResponse>(
+      endpoints.projects.designImport(projectId),
+      payload,
+    );
+  },
+
   // ============= View Methods =============
 
   // List views

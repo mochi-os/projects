@@ -92,6 +92,10 @@ const endpoints = {
     watcherRemove: (projectId: string, objectId: string) =>
       `${projectId}/-/objects/${objectId}/watchers/remove`,
 
+    // Design import/export endpoints
+    designExport: (projectId: string) => `${projectId}/-/design/export`,
+    designImport: (projectId: string) => `${projectId}/-/design/import`,
+
     // View endpoints
     views: (projectId: string) => `${projectId}/-/views`,
     viewCreate: (projectId: string) => `${projectId}/-/views/create`,

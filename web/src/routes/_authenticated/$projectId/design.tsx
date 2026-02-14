@@ -2,11 +2,37 @@
 // Copyright Alistair Cunningham 2026
 
 import { createFileRoute, Navigate } from "@tanstack/react-router";
-import { useQuery } from "@tanstack/react-query";
-import { GeneralError, Main, PageHeader, usePageTitle } from "@mochi/common";
-import { Settings2 } from "lucide-react";
+import { useCallback, useRef, useState } from "react";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  Button,
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+  GeneralError,
+  Main,
+  PageHeader,
+  toast,
+  getErrorMessage,
+  usePageTitle,
+} from "@mochi/common";
+import { Download, Loader2, MoreHorizontal, Settings2, Upload } from "lucide-react";
 import projectsApi from "@/api/projects";
-import type { ProjectDetails } from "@/types";
+import type { ProjectDetails, ProjectTemplate } from "@/types";
 import { canDesign } from "@/lib/access";
 import { DesignEditor } from "@/features/editor";
 
@@ -17,6 +43,7 @@ export const Route = createFileRoute("/_authenticated/$projectId/design")({
 
 function DesignPage() {
   const { projectId } = Route.useParams();
+  const queryClient = useQueryClient();
 
   const {
     data: projectData,
@@ -32,6 +59,60 @@ function DesignPage() {
 
   const project = projectData as ProjectDetails | undefined;
   usePageTitle(project ? `${project.project.name} - Design` : "Design");
+
+  // Import dialog state
+  const [importOpen, setImportOpen] = useState(false);
+  const [confirmOpen, setConfirmOpen] = useState(false);
+  const [importing, setImporting] = useState(false);
+  const [pendingImport, setPendingImport] = useState<{
+    data: Record<string, unknown>;
+    template?: string;
+    templateVersion?: number;
+    label: string;
+  } | null>(null);
+
+  // Export handler
+  const handleExport = useCallback(async () => {
+    if (!project) return;
+    try {
+      const response = await projectsApi.exportDesign(projectId);
+      const json = JSON.stringify(response.data, null, 2);
+      const blob = new Blob([json], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `${project.project.name.toLowerCase().replace(/\s+/g, "-")}-design.json`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    } catch (err) {
+      toast.error(getErrorMessage(err, "Failed to export design"));
+    }
+  }, [projectId, project]);
+
+  // Import confirmation handler
+  const handleConfirmImport = useCallback(async () => {
+    if (!pendingImport) return;
+    setImporting(true);
+    try {
+      await projectsApi.importDesign(
+        projectId,
+        pendingImport.data,
+        pendingImport.template,
+        pendingImport.templateVersion,
+      );
+      queryClient.invalidateQueries({ queryKey: ["project", projectId] });
+      toast.success("Design imported");
+      setConfirmOpen(false);
+      setImportOpen(false);
+      setPendingImport(null);
+    } catch (err) {
+      toast.error(getErrorMessage(err, "Failed to import design"));
+    } finally {
+      setImporting(false);
+    }
+  }, [projectId, pendingImport, queryClient]);
 
   if (isLoading) {
     return (
@@ -54,10 +135,183 @@ function DesignPage() {
       <PageHeader
         title={`${project.project.name} - Design`}
         icon={<Settings2 className="size-4 md:size-5" />}
+        actions={
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" size="icon" className="size-8">
+                <MoreHorizontal className="size-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem onClick={handleExport}>
+                <Download className="size-4 mr-2" />
+                Export design
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setImportOpen(true)}>
+                <Upload className="size-4 mr-2" />
+                Import design
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        }
       />
       <Main fixed fluid className="flex-1 !py-0">
         <DesignEditor projectId={projectId} project={project} />
       </Main>
+
+      {/* Import dialog */}
+      <ImportDialog
+        open={importOpen}
+        onOpenChange={setImportOpen}
+        onSelect={(data, template, templateVersion, label) => {
+          setPendingImport({ data, template, templateVersion, label });
+          setConfirmOpen(true);
+        }}
+      />
+
+      {/* Confirm import dialog */}
+      <AlertDialog open={confirmOpen} onOpenChange={setConfirmOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Replace design?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This will replace the current design with{" "}
+              <strong>{pendingImport?.label}</strong>. All existing classes,
+              fields, options, and views will be deleted. Existing objects will
+              not be deleted but may no longer appear in views.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel disabled={importing}>Cancel</AlertDialogCancel>
+            <Button variant="ghost" onClick={handleExport} disabled={importing}>
+              <Download className="size-4 mr-1.5" />
+              Download backup first
+            </Button>
+            <AlertDialogAction onClick={handleConfirmImport} disabled={importing}>
+              {importing && <Loader2 className="size-4 mr-1.5 animate-spin" />}
+              Replace design
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </>
+  );
+}
+
+// Import dialog: choose built-in template or upload JSON file
+function ImportDialog({
+  open,
+  onOpenChange,
+  onSelect,
+}: {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  onSelect: (
+    data: Record<string, unknown>,
+    template: string | undefined,
+    templateVersion: number | undefined,
+    label: string,
+  ) => void;
+}) {
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const { data: templatesData } = useQuery({
+    queryKey: ["templates"],
+    queryFn: async () => {
+      const response = await projectsApi.templates();
+      return response.data.templates;
+    },
+    enabled: open,
+  });
+
+  const templates = templatesData || [];
+
+  // Handle built-in template selection (backend loads the template file)
+  const handleTemplateSelect = (template: ProjectTemplate) => {
+    onSelect({}, template.id, template.version, template.name);
+  };
+
+  // Handle file upload
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      try {
+        const data = JSON.parse(reader.result as string);
+        onSelect(data, undefined, undefined, file.name);
+      } catch {
+        toast.error("Invalid JSON file");
+      }
+    };
+    reader.onerror = () => {
+      toast.error("Failed to read file");
+    };
+    reader.readAsText(file);
+
+    // Reset input so the same file can be selected again
+    e.target.value = "";
+  };
+
+  return (
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Import design</DialogTitle>
+        </DialogHeader>
+
+        <div className="space-y-4">
+          {/* Built-in templates */}
+          <div className="space-y-2">
+            <p className="text-sm font-medium">Built-in templates</p>
+            <div className="space-y-1">
+              {templates
+                .filter((t) => t.id !== "blank")
+                .map((template) => (
+                  <button
+                    key={template.id}
+                    onClick={() => handleTemplateSelect(template)}
+                    className="w-full text-left px-3 py-2 text-sm rounded-[10px] border hover:bg-muted transition-colors"
+                  >
+                    <div className="font-medium">{template.name}</div>
+                    {template.description && (
+                      <div className="text-muted-foreground text-xs mt-0.5">
+                        {template.description}
+                      </div>
+                    )}
+                  </button>
+                ))}
+            </div>
+          </div>
+
+          {/* File upload */}
+          <div className="space-y-2">
+            <p className="text-sm font-medium">From file</p>
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept=".json"
+              onChange={handleFileChange}
+              className="hidden"
+            />
+            <Button
+              variant="outline"
+              className="w-full"
+              onClick={() => fileInputRef.current?.click()}
+            >
+              <Upload className="size-4 mr-1.5" />
+              Upload .json file
+            </Button>
+          </div>
+        </div>
+
+        <DialogFooter>
+          <Button variant="outline" onClick={() => onOpenChange(false)}>
+            Cancel
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 }

@@ -2,7 +2,7 @@
 // Copyright Alistair Cunningham 2026
 
 {
-	"version": "1.17",
+	"version": "1.19",
 	"label": "app_name",
 	"classes": ["project"],
 	"paths": ["projects"],
@@ -86,6 +86,9 @@
 		":project/-/objects/:object/watchers": {"function": "action_watcher_list"},
 		":project/-/objects/:object/watchers/add": {"function": "action_watcher_add"},
 		":project/-/objects/:object/watchers/remove": {"function": "action_watcher_remove"},
+
+		":project/-/design/export": {"function": "action_design_export"},
+		":project/-/design/import": {"function": "action_design_import"},
 
 		":project/-/views": {"function": "action_view_list"},
 		":project/-/views/create": {"function": "action_view_create"},

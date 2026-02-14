@@ -301,11 +301,12 @@ def get_templates():
 				}
 	return templates
 
-# Apply a template to a project by loading from JSON
-def apply_template(project_id, template_id):
-	# Load template JSON
-	content = mochi.app.file.read("templates/" + template_id + ".json")
-	data = json.decode(str(content))
+# Apply a template to a project by loading from JSON or from provided data
+def apply_template(project_id, template_id, data=None):
+	# Load template JSON from file if no data provided
+	if not data:
+		content = mochi.app.file.read("templates/" + template_id + ".json")
+		data = json.decode(str(content))
 
 	# Create classes
 	for t in data.get("classes", []):
@@ -326,9 +327,13 @@ def apply_template(project_id, template_id):
 	for cls_id, fields in data.get("fields", {}).items():
 		for f in fields:
 			mochi.db.execute(
-				"insert into fields (project, class, id, name, fieldtype, flags, card, rank, rows) values (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+				"insert into fields (project, class, id, name, fieldtype, flags, multi, rank, min, max, pattern, minlength, maxlength, prefix, suffix, format, card, position, rows) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
 				project_id, cls_id, f["id"], f["name"], f.get("fieldtype", "text"),
-				f.get("flags", ""), f.get("card", 0), f.get("rank", 0), f.get("rows", 1)
+				f.get("flags", ""), f.get("multi", 0), f.get("rank", 0),
+				f.get("min", ""), f.get("max", ""), f.get("pattern", ""),
+				f.get("minlength", 0), f.get("maxlength", 0),
+				f.get("prefix", ""), f.get("suffix", ""), f.get("format", ""),
+				f.get("card", 0), f.get("position", ""), f.get("rows", 1)
 			)
 
 	# Create options for each class's enumerated fields
@@ -336,17 +341,18 @@ def apply_template(project_id, template_id):
 		for field_id, field_options in class_options.items():
 			for opt in field_options:
 				mochi.db.execute(
-					"insert into options (project, class, field, id, name, colour, rank) values (?, ?, ?, ?, ?, ?, ?)",
+					"insert into options (project, class, field, id, name, colour, icon, rank) values (?, ?, ?, ?, ?, ?, ?, ?)",
 					project_id, cls_id, field_id, opt["id"], opt["name"],
-					opt.get("colour", "#94a3b8"), opt.get("rank", 0)
+					opt.get("colour", "#94a3b8"), opt.get("icon", ""), opt.get("rank", 0)
 				)
 
 	# Create views
 	for i, v in enumerate(data.get("views", [])):
 		mochi.db.execute(
-			"insert into views (project, id, name, viewtype, columns, rows, rank, border) values (?, ?, ?, ?, ?, ?, ?, ?)",
+			"insert into views (project, id, name, viewtype, filter, columns, rows, sort, direction, rank, border) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
 			project_id, v["id"], v["name"], v.get("viewtype", "board"),
-			v.get("columns", ""), v.get("rows", ""), i, v.get("border", "")
+			v.get("filter", ""), v.get("columns", ""), v.get("rows", ""),
+			v.get("sort", ""), v.get("direction", "asc"), i, v.get("border", "")
 		)
 		# Add view classes if specified
 		for vclass in v.get("classes", []):
@@ -362,6 +368,222 @@ def apply_template(project_id, template_id):
 					"insert into view_fields (project, view, field, rank) values (?, ?, ?, ?)",
 					project_id, v["id"], field.strip(), i
 				)
+
+
+# Export the current project design as template JSON
+def action_design_export(a):
+	if not a.user:
+		a.error(401, "Not logged in")
+		return
+
+	project_id = resolve_project(a)
+	if not project_id:
+		a.error(400, "Project ID required")
+		return
+
+	project = get_project(project_id)
+	if not project:
+		a.error(404, "Project not found")
+		return
+
+	if project["owner"] != 1:
+		a.error(400, "Cannot export remote project design")
+		return
+
+	if not check_project_access(a.user.identity.id, project_id, "design"):
+		a.error(403, "Access denied")
+		return
+
+	# Read classes
+	classes = []
+	class_rows = mochi.db.rows("select id, name, rank, pull_requests, title from classes where project=? order by rank", project_id) or []
+	for c in class_rows:
+		classes.append({
+			"id": c["id"],
+			"name": c["name"],
+			"rank": c["rank"],
+			"pull_requests": c["pull_requests"],
+			"title": c["title"],
+		})
+
+	# Read hierarchy
+	hierarchy = {}
+	for c in class_rows:
+		parents = mochi.db.rows("select parent from hierarchy where project=? and class=?", project_id, c["id"]) or []
+		if parents:
+			hierarchy[c["id"]] = [p["parent"] for p in parents]
+
+	# Read fields
+	fields = {}
+	for c in class_rows:
+		class_fields = mochi.db.rows(
+			"select id, name, fieldtype, flags, multi, rank, min, max, pattern, minlength, maxlength, prefix, suffix, format, card, position, rows from fields where project=? and class=? order by rank",
+			project_id, c["id"]
+		) or []
+		if class_fields:
+			fields[c["id"]] = []
+			for f in class_fields:
+				field = {
+					"id": f["id"],
+					"name": f["name"],
+					"fieldtype": f["fieldtype"],
+					"flags": f["flags"],
+					"card": f["card"],
+					"rank": f["rank"],
+					"rows": f["rows"],
+				}
+				if f["multi"]:
+					field["multi"] = f["multi"]
+				if f["position"]:
+					field["position"] = f["position"]
+				if f["min"]:
+					field["min"] = f["min"]
+				if f["max"]:
+					field["max"] = f["max"]
+				if f["pattern"]:
+					field["pattern"] = f["pattern"]
+				if f["minlength"]:
+					field["minlength"] = f["minlength"]
+				if f["maxlength"]:
+					field["maxlength"] = f["maxlength"]
+				if f["prefix"]:
+					field["prefix"] = f["prefix"]
+				if f["suffix"]:
+					field["suffix"] = f["suffix"]
+				if f["format"]:
+					field["format"] = f["format"]
+				fields[c["id"]].append(field)
+
+	# Read options
+	options = {}
+	for c in class_rows:
+		class_options = {}
+		for f in (fields.get(c["id"], [])):
+			if f["fieldtype"] == "enumerated":
+				field_options = mochi.db.rows(
+					"select id, name, colour, icon, rank from options where project=? and class=? and field=? order by rank",
+					project_id, c["id"], f["id"]
+				) or []
+				if field_options:
+					opts = []
+					for opt in field_options:
+						o = {
+							"id": opt["id"],
+							"name": opt["name"],
+							"colour": opt["colour"],
+							"rank": opt["rank"],
+						}
+						if opt["icon"]:
+							o["icon"] = opt["icon"]
+						opts.append(o)
+					class_options[f["id"]] = opts
+		if class_options:
+			options[c["id"]] = class_options
+
+	# Read views
+	views = []
+	view_rows = mochi.db.rows("select id, name, viewtype, filter, columns, rows, sort, direction, rank, border from views where project=? order by rank", project_id) or []
+	for v in view_rows:
+		view = {
+			"id": v["id"],
+			"name": v["name"],
+			"viewtype": v["viewtype"],
+		}
+		if v["filter"]:
+			view["filter"] = v["filter"]
+		if v["columns"]:
+			view["columns"] = v["columns"]
+		if v["rows"]:
+			view["rows"] = v["rows"]
+		if v["sort"]:
+			view["sort"] = v["sort"]
+		if v["direction"] and v["direction"] != "asc":
+			view["direction"] = v["direction"]
+		if v["border"]:
+			view["border"] = v["border"]
+		# View fields
+		view_fields = mochi.db.rows("select field from view_fields where project=? and view=? order by rank", project_id, v["id"]) or []
+		if view_fields:
+			view["fields"] = ",".join([vf["field"] for vf in view_fields])
+		# View classes
+		view_classes = mochi.db.rows("select class from view_classes where project=? and view=?", project_id, v["id"]) or []
+		if view_classes:
+			view["classes"] = [vc["class"] for vc in view_classes]
+		views.append(view)
+
+	result = {
+		"classes": classes,
+		"fields": fields,
+		"options": options,
+		"hierarchy": hierarchy,
+		"views": views,
+	}
+
+	return {"data": result}
+
+# Import a design from template JSON, replacing the current design
+def action_design_import(a):
+	if not a.user:
+		a.error(401, "Not logged in")
+		return
+
+	project_id = resolve_project(a)
+	if not project_id:
+		a.error(400, "Project ID required")
+		return
+
+	project = get_project(project_id)
+	if not project:
+		a.error(404, "Project not found")
+		return
+
+	if project["owner"] != 1:
+		a.error(400, "Cannot import design to remote project")
+		return
+
+	if not check_project_access(a.user.identity.id, project_id, "design"):
+		a.error(403, "Access denied")
+		return
+
+	data_str = a.input("data")
+	template_id = a.input("template") or ""
+	template_version = int(a.input("template_version") or "0")
+
+	# Load design data from JSON string or from built-in template file
+	data = None
+	if data_str:
+		data = json.decode(data_str)
+	elif template_id:
+		templates = get_templates()
+		if template_id not in templates:
+			a.error(400, "Invalid template")
+			return
+		content = mochi.app.file.read("templates/" + template_id + ".json")
+		data = json.decode(str(content))
+		template_version = templates[template_id]["version"]
+	else:
+		a.error(400, "Design data or template is required")
+		return
+
+	# Delete existing design in correct order (foreign key dependencies)
+	mochi.db.execute("delete from view_fields where project=?", project_id)
+	mochi.db.execute("delete from view_classes where project=?", project_id)
+	mochi.db.execute("delete from views where project=?", project_id)
+	mochi.db.execute("delete from options where project=?", project_id)
+	mochi.db.execute("delete from fields where project=?", project_id)
+	mochi.db.execute("delete from hierarchy where project=?", project_id)
+	mochi.db.execute("delete from classes where project=?", project_id)
+
+	# Apply the new design
+	apply_template(project_id, None, data)
+
+	# Update template tracking
+	mochi.db.execute(
+		"update projects set template=?, template_version=? where id=?",
+		template_id, template_version, project_id
+	)
+
+	return {"data": {"success": True}}
 
 
 # ============================================================================
@@ -618,9 +840,14 @@ def action_project_update(a):
 	if prefix:
 		mochi.db.execute("update projects set prefix=?, updated=? where id=?", prefix, now, project_id)
 
-	broadcast_event(project_id, "project/update", {
-		"project": project_id, "name": name or "", "description": description or "", "prefix": prefix or ""
-	})
+	update = {"project": project_id}
+	if name:
+		update["name"] = name
+	if description != None:
+		update["description"] = description
+	if prefix:
+		update["prefix"] = prefix
+	broadcast_event(project_id, "project/update", update)
 
 	return {"data": {"success": True}}
 

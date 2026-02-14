@@ -64,6 +64,7 @@ export interface ProjectTemplate {
   name: string;
   description: string;
   icon: string;
+  version: number;
 }
 
 export interface ProjectDetails {

@@ -5,11 +5,11 @@ const endpoints = {
     list: "-/list",
     create: "-/create",
     templates: "-/templates",
-    search: "directory/search",
-    probe: "probe",
-    recommendations: "recommendations",
-    subscribe: "subscribe",
-    unsubscribe: "unsubscribe",
+    search: "-/directory/search",
+    probe: "-/probe",
+    recommendations: "-/recommendations",
+    subscribe: "-/subscribe",
+    unsubscribe: "-/unsubscribe",
 
     // Entity-level endpoints (use /-/ separator)
     info: (projectId: string) => `${projectId}/-/info`,

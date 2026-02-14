@@ -204,7 +204,7 @@ def database_create():
 	mochi.db.execute("""create table if not exists activity (
 		id text primary key,
 		object text not null references objects(id),
-		actor text not null,
+		user text not null,
 		action text not null,
 		field text not null default '',
 		oldvalue text not null default '',
@@ -277,6 +277,9 @@ def database_upgrade(version):
 	if version == 3:
 		mochi.db.execute("alter table projects add column template text not null default ''")
 		mochi.db.execute("alter table projects add column template_version integer not null default 0")
+
+	if version == 4:
+		mochi.db.execute("alter table activity rename column actor to user")
 
 
 # ============================================================================
@@ -603,12 +606,11 @@ def action_project_list(a):
 		a.error(401, "Not logged in")
 		return
 
-	rows = mochi.db.rows("select id, name, description, prefix, owner, server, created, updated from projects order by updated desc")
+	rows = mochi.db.rows("""select p.id, p.name, p.description, p.prefix, p.owner, p.server, p.created, p.updated,
+		(select s.name from subscribers s where s.project=p.id order by s.subscribed asc limit 1) as ownername
+		from projects p order by p.updated desc""")
 	projects = []
 	for row in rows or []:
-		# Get owner name from first subscriber (the creator)
-		subscriber = mochi.db.row("select name from subscribers where project=? order by subscribed asc limit 1", row["id"])
-		ownername = subscriber["name"] if subscriber else ""
 		projects.append({
 			"id": row["id"],
 			"fingerprint": mochi.entity.fingerprint(row["id"]),
@@ -616,7 +618,7 @@ def action_project_list(a):
 			"description": row["description"],
 			"prefix": row["prefix"],
 			"owner": row["owner"],
-			"ownername": ownername,
+			"ownername": row["ownername"] or "",
 			"server": row["server"],
 			"created": row["created"],
 			"updated": row["updated"],
@@ -648,6 +650,13 @@ def action_project_create(a):
 	description = a.input("description") or ""
 	prefix = a.input("prefix") or "PROJ"
 	privacy = a.input("privacy") or "private"
+
+	if len(description) > 10000:
+		a.error(400, "Description too long")
+		return
+	if len(prefix) > 10:
+		a.error(400, "Prefix too long")
+		return
 
 	# Create Mochi entity
 	entity = mochi.entity.create("project", name, privacy, description)
@@ -834,16 +843,22 @@ def action_project_update(a):
 		mochi.db.execute("update projects set name=?, updated=? where id=?", name, now, project_id)
 		mochi.entity.update(project_id, name=name)
 
-	if description != None:
+	if a.input.exists("description"):
+		if len(description) > 10000:
+			a.error(400, "Description too long")
+			return
 		mochi.db.execute("update projects set description=?, updated=? where id=?", description, now, project_id)
 
 	if prefix:
+		if len(prefix) > 10:
+			a.error(400, "Prefix too long")
+			return
 		mochi.db.execute("update projects set prefix=?, updated=? where id=?", prefix, now, project_id)
 
 	update = {"project": project_id}
 	if name:
 		update["name"] = name
-	if description != None:
+	if a.input.exists("description"):
 		update["description"] = description
 	if prefix:
 		update["prefix"] = prefix
@@ -1011,6 +1026,9 @@ def action_access_list(a):
 	if project["owner"] != 1:
 		a.error(403, "Access denied")
 		return
+	if not mochi.access.check(a.user.identity.id, "project/" + project_id, "*"):
+		a.error(403, "Access denied")
+		return
 
 	# Get owner info
 	owner = {"id": a.user.identity.id, "name": a.user.identity.name}
@@ -1058,6 +1076,9 @@ def action_access_set(a):
 
 	# Only owner can manage access
 	if project["owner"] != 1:
+		a.error(403, "Access denied")
+		return
+	if not mochi.access.check(a.user.identity.id, "project/" + project_id, "*"):
 		a.error(403, "Access denied")
 		return
 
@@ -1117,6 +1138,9 @@ def action_access_revoke(a):
 	if project["owner"] != 1:
 		a.error(403, "Access denied")
 		return
+	if not mochi.access.check(a.user.identity.id, "project/" + project_id, "*"):
+		a.error(403, "Access denied")
+		return
 
 	subject = a.input("subject")
 
@@ -1163,13 +1187,13 @@ def get_project(project_id):
 	"""Get project row or None."""
 	return mochi.db.row("select * from projects where id=?", project_id)
 
-def log_activity(object_id, actor, action, field="", oldvalue="", newvalue=""):
+def log_activity(object_id, user, action, field="", oldvalue="", newvalue=""):
 	"""Log an activity entry for an object."""
 	activity_id = mochi.uid()
 	now = mochi.time.now()
 	mochi.db.execute(
-		"insert into activity (id, object, actor, action, field, oldvalue, newvalue, created) values (?, ?, ?, ?, ?, ?, ?, ?)",
-		activity_id, object_id, actor, action, field, str(oldvalue), str(newvalue), now
+		"insert into activity (id, object, user, action, field, oldvalue, newvalue, created) values (?, ?, ?, ?, ?, ?, ?, ?)",
+		activity_id, object_id, user, action, field, str(oldvalue), str(newvalue), now
 	)
 
 def get_owner_identity(project_id):
@@ -1188,9 +1212,9 @@ def get_object_display(project, obj, object_id):
 		obj_title = prefix + "-" + str(obj["number"]) if obj and prefix else ""
 	return project["name"] + " - " + obj_title if obj_title else project["name"]
 
-def notify_watchers(object_id, project_id, local_identity, actor_id, body):
+def notify_watchers(object_id, project_id, local_identity, user_id, body):
 	"""Notify local user if they watch this object and didn't make the change."""
-	if local_identity == actor_id:
+	if local_identity == user_id:
 		return
 	if not mochi.db.exists("select 1 from watchers where object=? and user=?", object_id, local_identity):
 		return
@@ -1217,21 +1241,23 @@ def would_create_cycle(object_id, new_parent_id):
 		current = parent_row["parent"] if parent_row else ""
 	return False
 
-def get_all_descendants(object_id):
+def get_all_descendants(object_id, depth=0):
 	"""Get all descendant object IDs recursively."""
+	if depth >= 100:
+		return []
 	result = []
 	children = mochi.db.rows("select id from objects where parent=?", object_id)
 	for child in (children or []):
 		result.append(child["id"])
-		result.extend(get_all_descendants(child["id"]))
+		result.extend(get_all_descendants(child["id"], depth + 1))
 	return result
 
-def delete_object_cascade(project_id, object_id, actor=""):
+def delete_object_cascade(project_id, object_id, user=""):
 	"""Delete an object and all its children recursively."""
 	# First, recursively delete all children
 	children = mochi.db.rows("select id from objects where parent=?", object_id)
 	for child in children:
-		delete_object_cascade(project_id, child["id"], actor)
+		delete_object_cascade(project_id, child["id"], user)
 
 	# Then delete this object's related data
 	mochi.db.execute("delete from pull_requests where object=?", object_id)
@@ -1244,7 +1270,7 @@ def delete_object_cascade(project_id, object_id, actor=""):
 	mochi.db.execute("delete from objects where id=?", object_id)
 
 	# Broadcast delete event for each object
-	broadcast_event(project_id, "object/delete", {"project": project_id, "id": object_id, "actor": actor})
+	broadcast_event(project_id, "object/delete", {"project": project_id, "id": object_id, "user": user})
 
 
 # ============================================================================
@@ -1290,10 +1316,20 @@ def action_object_list(a):
 
 	rows = mochi.db.rows(query, *params) or []
 
-	# Get values for each object
+	# Batch-fetch all values for the returned objects
+	values_map = {}
+	if rows:
+		placeholders = ",".join(["?" for _ in rows])
+		object_ids = [row["id"] for row in rows]
+		all_values = mochi.db.rows("select object, field, value from \"values\" where object in (" + placeholders + ")", *object_ids) or []
+		for v in all_values:
+			if v["object"] not in values_map:
+				values_map[v["object"]] = {}
+			values_map[v["object"]][v["field"]] = v["value"]
+
 	objects = []
 	for row in rows:
-		obj = {
+		objects.append({
 			"id": row["id"],
 			"project": row["project"],
 			"class": row["class"],
@@ -1302,15 +1338,8 @@ def action_object_list(a):
 			"rank": row["rank"],
 			"created": row["created"],
 			"updated": row["updated"],
-			"values": {}
-		}
-
-		# Get field values
-		values = mochi.db.rows("select field, value from \"values\" where object=?", row["id"]) or []
-		for v in values:
-			obj["values"][v["field"]] = v["value"]
-
-		objects.append(obj)
+			"values": values_map.get(row["id"], {}),
+		})
 
 	# Get watched object IDs for the local user
 	watched = mochi.db.rows(
@@ -1337,6 +1366,10 @@ def action_object_create(a):
 	obj_class = a.input("class")
 	parent = a.input("parent") or ""
 	title = a.input("title") or ""
+
+	if len(title) > 500:
+		a.error(400, "Title too long")
+		return
 
 	# Look up the title field for this class
 	title_field_row = mochi.db.row("select title from classes where project=? and id=?", project_id, obj_class)
@@ -1422,7 +1455,7 @@ def action_object_create(a):
 	broadcast_event(project_id, "object/create", {
 		"project": project_id, "id": object_id, "class": obj_class,
 		"number": new_counter, "parent": parent, "values": values,
-		"created": now, "actor": a.user.identity.id
+		"created": now, "user": a.user.identity.id
 	})
 
 	return {"data": {
@@ -1521,7 +1554,7 @@ def action_object_update(a):
 	if project["owner"] != 1:
 		params = {"project": project_id, "object": object_id}
 		p = a.input("parent")
-		if p != None:
+		if a.input.exists("parent"):
 			params["parent"] = p
 		c = a.input("class")
 		if c:
@@ -1529,7 +1562,7 @@ def action_object_update(a):
 		result = forward_to_owner(a, project_id, "object/update", params)
 		if result and object_id:
 			now = mochi.time.now()
-			if p != None:
+			if a.input.exists("parent"):
 				mochi.db.execute("update objects set parent=?, updated=? where id=?", p, now, object_id)
 			if c:
 				mochi.db.execute("update objects set class=?, updated=? where id=?", c, now, object_id)
@@ -1552,7 +1585,7 @@ def action_object_update(a):
 
 	# Update parent if provided
 	parent = a.input("parent")
-	if parent != None:
+	if a.input.exists("parent"):
 		old_parent = row["parent"]
 		if parent != old_parent:
 			# Check for cycles
@@ -1605,9 +1638,9 @@ def action_object_update(a):
 
 	broadcast_event(project_id, "object/update", {
 		"project": project_id, "id": object_id,
-		"parent": parent if parent != None else row["parent"],
+		"parent": parent if a.input.exists("parent") else row["parent"],
 		"class": new_class if new_class and new_class != row["class"] else row["class"],
-		"actor": a.user.identity.id
+		"user": a.user.identity.id
 	})
 
 	return {"data": {"success": True}}
@@ -1742,7 +1775,7 @@ def action_object_move(a):
 
 	# Handle rank change
 	scope_parent = a.input("scope_parent")
-	if new_rank != None:
+	if a.input.exists("rank"):
 		new_rank = int(new_rank)
 		# Shift other objects to make room
 		if value_changed or new_rank != old_rank:
@@ -1824,7 +1857,7 @@ def action_object_move(a):
 	if updated_values:
 		broadcast_event(project_id, "values/update", {
 			"project": project_id, "id": object_id,
-			"values": updated_values, "actor": a.user.identity.id
+			"values": updated_values, "user": a.user.identity.id
 		})
 
 	return {"data": {"success": True}}
@@ -1871,9 +1904,8 @@ def action_values_set(a):
 	if project["owner"] != 1:
 		values = {}
 		for field_id in valid_fields:
-			v = a.input(field_id)
-			if v != None:
-				values[field_id] = str(v)
+			if a.input.exists(field_id):
+				values[field_id] = str(a.input(field_id))
 		result = forward_to_owner(a, project_id, "values/set", {
 			"project": project_id, "object": object_id, "values": values,
 		})
@@ -1894,16 +1926,17 @@ def action_values_set(a):
 
 	# Process each field from input
 	for field_id in valid_fields:
+		if not a.input.exists(field_id):
+			continue
 		new_value = a.input(field_id)
-		if new_value != None:
-			# Get old value
-			old_row = mochi.db.row("select value from \"values\" where object=? and field=?", object_id, field_id)
-			old_value = old_row["value"] if old_row else ""
+		# Get old value
+		old_row = mochi.db.row("select value from \"values\" where object=? and field=?", object_id, field_id)
+		old_value = old_row["value"] if old_row else ""
 
-			if str(new_value) != old_value:
-				mochi.db.execute("replace into \"values\" (object, field, value) values (?, ?, ?)", object_id, field_id, str(new_value))
-				log_activity(object_id, a.user.identity.id, "updated", field_id, old_value, str(new_value))
-				changes.append(field_id)
+		if str(new_value) != old_value:
+			mochi.db.execute("replace into \"values\" (object, field, value) values (?, ?, ?)", object_id, field_id, str(new_value))
+			log_activity(object_id, a.user.identity.id, "updated", field_id, old_value, str(new_value))
+			changes.append(field_id)
 
 	if changes:
 		mochi.db.execute("update objects set updated=? where id=?", now, object_id)
@@ -1915,7 +1948,7 @@ def action_values_set(a):
 				changed_values[fid] = val["value"]
 		broadcast_event(project_id, "values/update", {
 			"project": project_id, "id": object_id, "values": changed_values,
-			"actor": a.user.identity.id
+			"user": a.user.identity.id
 		})
 		# Auto-watch assigned users
 		for fid in changes:
@@ -1983,8 +2016,6 @@ def action_value_set(a):
 		return
 
 	new_value = a.input("value")
-	if new_value == None:
-		new_value = ""
 
 	# Get old value
 	old_row = mochi.db.row("select value from \"values\" where object=? and field=?", object_id, field_id)
@@ -1997,7 +2028,7 @@ def action_value_set(a):
 		log_activity(object_id, a.user.identity.id, "updated", field_id, old_value, str(new_value))
 		broadcast_event(project_id, "values/update", {
 			"project": project_id, "id": object_id,
-			"values": {field_id: str(new_value)}, "actor": a.user.identity.id
+			"values": {field_id: str(new_value)}, "user": a.user.identity.id
 		})
 		# Auto-watch assigned user
 		if field_row["fieldtype"] == "user" and str(new_value):
@@ -2130,7 +2161,7 @@ def action_link_create(a):
 	broadcast_event(project_id, "link/create", {
 		"project": project_id, "source": object_id,
 		"target": target_id, "linktype": linktype, "created": now,
-		"actor": a.user.identity.id
+		"user": a.user.identity.id
 	})
 
 	return {"data": {"success": True}}
@@ -2172,7 +2203,7 @@ def action_link_delete(a):
 
 	broadcast_event(project_id, "link/delete", {
 		"project": project_id, "source": object_id,
-		"target": target_id, "linktype": linktype, "actor": a.user.identity.id
+		"target": target_id, "linktype": linktype, "user": a.user.identity.id
 	})
 
 	return {"data": {"success": True}}
@@ -2272,12 +2303,16 @@ def action_comment_create(a):
 	content = a.input("content")
 	parent = a.input("parent") or ""
 
+	if not content or not content.strip():
+		a.error(400, "Content is required")
+		return
+	if len(content) > 50000:
+		a.error(400, "Content too long")
+		return
+
 	if project["owner"] != 1:
 		if not object_id:
 			a.error(400, "Object ID required")
-			return
-		if not content or not content.strip():
-			a.error(400, "Content is required")
 			return
 		comment_id = mochi.uid()
 		now = mochi.time.now()
@@ -2352,7 +2387,7 @@ def action_comment_create(a):
 		"project": project_id, "object": object_id,
 		"id": comment_id, "parent": parent,
 		"author": a.user.identity.id, "name": a.user.identity.name,
-		"content": content.strip(), "created": now, "actor": a.user.identity.id
+		"content": content.strip(), "created": now, "user": a.user.identity.id
 	})
 
 	return {"data": {
@@ -2380,6 +2415,10 @@ def action_comment_update(a):
 	object_id = a.input("object")
 	comment_id = a.input("comment")
 	content = a.input("content")
+
+	if content and len(content) > 50000:
+		a.error(400, "Content too long")
+		return
 
 	if project["owner"] != 1:
 		return forward_to_owner(a, project_id, "comment/update", {
@@ -2415,7 +2454,7 @@ def action_comment_update(a):
 	broadcast_event(project_id, "comment/update", {
 		"project": project_id, "object": object_id,
 		"id": comment_id, "content": content.strip(), "edited": now,
-		"actor": a.user.identity.id
+		"user": a.user.identity.id
 	})
 
 	return {"data": {"success": True}}
@@ -2466,7 +2505,7 @@ def action_comment_delete(a):
 
 	broadcast_event(project_id, "comment/delete", {
 		"project": project_id, "object": object_id, "id": comment_id,
-		"actor": a.user.identity.id
+		"user": a.user.identity.id
 	})
 
 	return {"data": {"success": True}}
@@ -2638,18 +2677,18 @@ def action_activity_list(a):
 		return
 
 	rows = mochi.db.rows(
-		"select id, actor, action, field, oldvalue, newvalue, created from activity where object=? order by created desc",
+		"select id, user, action, field, oldvalue, newvalue, created from activity where object=? order by created desc",
 		object_id
 	) or []
 
-	# Resolve actor names
+	# Resolve user names
 	activities = []
 	for row in rows:
-		actor = row["actor"]
-		name = mochi.entity.name(actor) or actor[:9]
+		user = row["user"]
+		name = mochi.entity.name(user) or user[:9]
 		activities.append({
 			"id": row["id"],
-			"actor": actor,
+			"user": user,
 			"name": name,
 			"action": row["action"],
 			"field": row["field"],
@@ -2844,6 +2883,9 @@ def action_view_create(a):
 	if not name or not name.strip():
 		a.error(400, "Name is required")
 		return
+	if len(name) > 100:
+		a.error(400, "Name too long")
+		return
 
 	viewtype = a.input("viewtype") or "board"
 	if viewtype not in ["board", "list"]:
@@ -2927,9 +2969,8 @@ def action_view_update(a):
 	if project["owner"] != 1:
 		params = {"project": project_id, "view": a.input("view")}
 		for k in ["name", "viewtype", "filter", "columns", "rows", "fields", "sort", "direction", "classes", "border"]:
-			v = a.input(k)
-			if v != None:
-				params[k] = v
+			if a.input.exists(k):
+				params[k] = a.input(k)
 		return forward_to_owner(a, project_id, "view/update", params)
 
 	if not check_project_access(a.user.identity.id, project_id, "design"):
@@ -2956,20 +2997,20 @@ def action_view_update(a):
 	sort = a.input("sort")
 	direction = a.input("direction")
 
-	if name != None and name.strip() != "":
+	if a.input.exists("name") and name.strip() != "":
 		mochi.db.execute("update views set name=? where project=? and id=?", name.strip(), project_id, view_id)
-	if viewtype != None and viewtype != "":
+	if a.input.exists("viewtype") and viewtype != "":
 		if viewtype not in ["board", "list"]:
 			a.error(400, "Invalid view type")
 			return
 		mochi.db.execute("update views set viewtype=? where project=? and id=?", viewtype, project_id, view_id)
-	if filter_str != None:
+	if a.input.exists("filter"):
 		mochi.db.execute("update views set filter=? where project=? and id=?", filter_str, project_id, view_id)
-	if columns != None:
+	if a.input.exists("columns"):
 		mochi.db.execute("update views set columns=? where project=? and id=?", columns, project_id, view_id)
-	if rows != None:
+	if a.input.exists("rows"):
 		mochi.db.execute("update views set rows=? where project=? and id=?", rows, project_id, view_id)
-	if fields != None:
+	if a.input.exists("fields"):
 		# Delete existing fields and insert new ones
 		mochi.db.execute("delete from view_fields where project=? and view=?", project_id, view_id)
 		for i, field in enumerate(fields.split(",")):
@@ -2978,21 +3019,21 @@ def action_view_update(a):
 					"insert into view_fields (project, view, field, rank) values (?, ?, ?, ?)",
 					project_id, view_id, field.strip(), i
 				)
-	if sort != None:
+	if a.input.exists("sort"):
 		mochi.db.execute("update views set sort=? where project=? and id=?", sort, project_id, view_id)
-	if direction != None and direction != "":
+	if a.input.exists("direction") and direction != "":
 		if direction not in ["asc", "desc"]:
 			a.error(400, "Invalid direction")
 			return
 		mochi.db.execute("update views set direction=? where project=? and id=?", direction, project_id, view_id)
 
 	border = a.input("border")
-	if border != None:
+	if a.input.exists("border"):
 		mochi.db.execute("update views set border=? where project=? and id=?", border, project_id, view_id)
 
 	# Update view classes if provided (comma-separated list of class IDs, empty string = all classes)
 	view_classes_input = a.input("classes")
-	if view_classes_input != None:
+	if a.input.exists("classes"):
 		# Delete existing view classes
 		mochi.db.execute("delete from view_classes where project=? and view=?", project_id, view_id)
 		# Insert new view classes
@@ -3159,6 +3200,9 @@ def action_class_create(a):
 	name = a.input("name")
 	if not name or not name.strip():
 		a.error(400, "Name is required")
+		return
+	if len(name) > 100:
+		a.error(400, "Name too long")
 		return
 
 	# Generate class ID from name
@@ -3485,6 +3529,9 @@ def action_field_create(a):
 	name = a.input("name")
 	if not name or not name.strip():
 		a.error(400, "Name is required")
+		return
+	if len(name) > 100:
+		a.error(400, "Name too long")
 		return
 
 	fieldtype = a.input("fieldtype") or "text"
@@ -3813,6 +3860,9 @@ def action_option_create(a):
 	if not name or not name.strip():
 		a.error(400, "Name is required")
 		return
+	if len(name) > 100:
+		a.error(400, "Name too long")
+		return
 
 	# Generate option ID from name
 	option_id = name.strip().lower().replace(" ", "_")
@@ -3861,9 +3911,8 @@ def action_option_update(a):
 		params = {"project": project_id, "class": a.input("class"),
 				  "field": a.input("field"), "option": a.input("option")}
 		for k in ["name", "colour", "icon"]:
-			v = a.input(k)
-			if v != None:
-				params[k] = v
+			if a.input.exists(k):
+				params[k] = a.input(k)
 		return forward_to_owner(a, project_id, "option/update", params)
 
 	if not check_project_access(a.user.identity.id, project_id, "design"):
@@ -3886,19 +3935,19 @@ def action_option_update(a):
 	colour = a.input("colour")
 	icon = a.input("icon")
 
-	if name != None:
+	if a.input.exists("name"):
 		mochi.db.execute("update options set name=? where project=? and class=? and field=? and id=?", name.strip(), project_id, class_id, field_id, option_id)
-	if colour != None:
+	if a.input.exists("colour"):
 		mochi.db.execute("update options set colour=? where project=? and class=? and field=? and id=?", colour, project_id, class_id, field_id, option_id)
-	if icon != None:
+	if a.input.exists("icon"):
 		mochi.db.execute("update options set icon=? where project=? and class=? and field=? and id=?", icon, project_id, class_id, field_id, option_id)
 
 	update_data = {"project": project_id, "class": class_id, "field": field_id, "id": option_id}
-	if name != None:
+	if a.input.exists("name"):
 		update_data["name"] = name.strip()
-	if colour != None:
+	if a.input.exists("colour"):
 		update_data["colour"] = colour
-	if icon != None:
+	if a.input.exists("icon"):
 		update_data["icon"] = icon
 	broadcast_event(project_id, "option/update", update_data)
 
@@ -4147,6 +4196,9 @@ def action_search(a):
 	search = a.input("search")
 	if not search:
 		a.error(400, "No search entered")
+		return
+	if len(search) > 500:
+		a.error(400, "Search query too long")
 		return
 
 	results = []
@@ -4986,10 +5038,10 @@ def event_object_update(e):
 		mochi.websocket.write(fp, {"type": "object/update", "project": project_id, "id": object_id})
 	# Notify local user if watching
 	if not e.content("sync"):
-		actor = e.content("actor") or ""
+		user = e.content("user") or ""
 		local_id = e.header("to")
 		if local_id:
-			notify_watchers(object_id, project_id, local_id, actor, "Updated")
+			notify_watchers(object_id, project_id, local_id, user, "Updated")
 
 # Object deleted
 def event_object_delete(e):
@@ -5000,10 +5052,10 @@ def event_object_delete(e):
 	if not object_id:
 		return
 	# Notify local user before deleting watchers
-	actor = e.content("actor") or ""
+	user = e.content("user") or ""
 	local_id = e.header("to")
 	if local_id:
-		notify_watchers(object_id, project_id, local_id, actor, "Deleted")
+		notify_watchers(object_id, project_id, local_id, user, "Deleted")
 	mochi.db.execute("delete from watchers where object=?", object_id)
 	mochi.db.execute("delete from activity where object=?", object_id)
 	delete_object_comments(object_id, project_id)
@@ -5033,7 +5085,7 @@ def event_values_update(e):
 		mochi.websocket.write(fp, {"type": "values/update", "project": project_id, "id": object_id})
 	# Notify local user if watching
 	if not e.content("sync"):
-		actor = e.content("actor") or ""
+		user = e.content("user") or ""
 		local_id = e.header("to")
 		if local_id:
 			# Check for assignment notification first
@@ -5062,7 +5114,7 @@ def event_values_update(e):
 								"insert or ignore into watchers (object, user, created) values (?, ?, ?)",
 								object_id, local_id, mochi.time.now())
 			if not assigned:
-				notify_watchers(object_id, project_id, local_id, actor, "Fields changed")
+				notify_watchers(object_id, project_id, local_id, user, "Fields changed")
 
 # Comment submitted by remote subscriber (fire-and-forget)
 def event_comment_submit(e):
@@ -5105,7 +5157,7 @@ def event_comment_submit(e):
 	broadcast_event(project_id, "comment/create", {
 		"project": project_id, "object": object_id, "id": comment_id,
 		"parent": parent, "author": sender, "name": name,
-		"content": content.strip(), "created": now, "actor": sender
+		"content": content.strip(), "created": now, "user": sender
 	}, exclude=sender)
 	# Notify watchers
 	owner_id = get_owner_identity(project_id)
@@ -5157,13 +5209,13 @@ def event_comment_create(e):
 		mochi.websocket.write(fp, {"type": "comment/create", "project": project_id, "object": e.content("object")})
 	# Notify local user if watching
 	if not e.content("sync"):
-		actor = e.content("actor") or ""
+		user = e.content("user") or ""
 		local_id = e.header("to")
 		object_id = e.content("object")
 		if object_id and local_id:
 			name = e.content("name") or "Someone"
 			excerpt = (e.content("content") or "")[:80]
-			notify_watchers(object_id, project_id, local_id, actor, name + ": " + excerpt)
+			notify_watchers(object_id, project_id, local_id, user, name + ": " + excerpt)
 
 # Comment updated
 def event_comment_update(e):
@@ -5208,11 +5260,11 @@ def event_link_create(e):
 		mochi.websocket.write(fp, {"type": "link/create", "project": project_id})
 	# Notify local user if watching
 	if not e.content("sync"):
-		actor = e.content("actor") or ""
+		user = e.content("user") or ""
 		local_id = e.header("to")
 		source = e.content("source")
 		if source and local_id:
-			notify_watchers(source, project_id, local_id, actor, "Link added")
+			notify_watchers(source, project_id, local_id, user, "Link added")
 
 # Link deleted
 def event_link_delete(e):
@@ -5695,6 +5747,13 @@ def action_pr_create(a):
 	description = a.input("description")
 	draft = 1 if a.input("draft") == "1" else 0
 
+	if title and len(title) > 500:
+		a.error(400, "Title too long")
+		return
+	if description and len(description) > 50000:
+		a.error(400, "Description too long")
+		return
+
 	now = mochi.time.now()
 	pr_id = mochi.uid()
 
@@ -5735,9 +5794,8 @@ def action_pr_update(a):
 	if project["owner"] != 1:
 		params = {"project": project_id, "object": a.input("object"), "pr": a.input("pr")}
 		for k in ["repository", "source", "target", "status", "title", "description", "draft"]:
-			v = a.input(k)
-			if v != None:
-				params[k] = v
+			if a.input.exists(k):
+				params[k] = a.input(k)
 		return forward_to_owner(a, project_id, "pr/update", params)
 
 	if not check_project_access(a.user.identity.id, project_id, "write"):
@@ -6078,7 +6136,7 @@ def do_comment_create(project_id, project, params, user_id, user_name):
 	broadcast_event(project_id, "comment/create", {
 		"project": project_id, "object": object_id, "id": comment_id,
 		"parent": parent, "author": user_id, "name": user_name,
-		"content": content.strip(), "created": now, "actor": user_id
+		"content": content.strip(), "created": now, "user": user_id
 	})
 	# Sync attachments from sender to other subscribers
 	subs = mochi.db.rows("select id from subscribers where project=?", project_id) or []
@@ -6109,7 +6167,7 @@ def do_comment_update(project_id, project, params, user_id):
 	mochi.db.execute("update comments set content=?, edited=? where id=?", content.strip(), now, comment_id)
 	broadcast_event(project_id, "comment/update", {
 		"project": project_id, "object": object_id,
-		"id": comment_id, "content": content.strip(), "edited": now, "actor": user_id
+		"id": comment_id, "content": content.strip(), "edited": now, "user": user_id
 	})
 	return {"success": True}
 
@@ -6125,7 +6183,7 @@ def do_comment_delete(project_id, project, params, user_id):
 		return {"error": "Cannot delete another user's comment", "code": 403}
 	delete_comment_tree(comment_id, project_id)
 	broadcast_event(project_id, "comment/delete", {
-		"project": project_id, "object": object_id, "id": comment_id, "actor": user_id
+		"project": project_id, "object": object_id, "id": comment_id, "user": user_id
 	})
 	return {"success": True}
 
@@ -6197,7 +6255,7 @@ def do_object_create(project_id, project, params, user_id):
 	broadcast_event(project_id, "object/create", {
 		"project": project_id, "id": object_id, "class": obj_class,
 		"number": new_counter, "parent": parent, "values": values,
-		"created": now, "actor": user_id
+		"created": now, "user": user_id
 	})
 	# Notify owner when subscriber creates an object
 	owner_id = get_owner_identity(project_id)
@@ -6270,7 +6328,7 @@ def do_object_update(project_id, project, params, user_id):
 		"project": project_id, "id": object_id,
 		"parent": parent if parent != None else row["parent"],
 		"class": new_class if new_class and new_class != row["class"] else row["class"],
-		"actor": user_id
+		"user": user_id
 	})
 	# Notify owner if watching
 	owner_id = get_owner_identity(project_id)
@@ -6381,7 +6439,7 @@ def do_object_move(project_id, project, params, user_id):
 	if updated_values:
 		broadcast_event(project_id, "values/update", {
 			"project": project_id, "id": object_id,
-			"values": updated_values, "actor": user_id
+			"values": updated_values, "user": user_id
 		})
 		# Notify owner if watching
 		owner_id = get_owner_identity(project_id)
@@ -6423,7 +6481,7 @@ def do_values_set(project_id, project, params, user_id):
 			if val:
 				changed_values[fid] = val["value"]
 		broadcast_event(project_id, "values/update", {
-			"project": project_id, "id": object_id, "values": changed_values, "actor": user_id
+			"project": project_id, "id": object_id, "values": changed_values, "user": user_id
 		})
 		# Notify owner if watching
 		owner_id = get_owner_identity(project_id)
@@ -6461,7 +6519,7 @@ def do_value_set(project_id, project, params, user_id):
 		log_activity(object_id, user_id, "updated", field_id, old_value, str(new_value))
 		broadcast_event(project_id, "values/update", {
 			"project": project_id, "id": object_id,
-			"values": {field_id: str(new_value)}, "actor": user_id
+			"values": {field_id: str(new_value)}, "user": user_id
 		})
 		# Notify owner if watching
 		owner_id = get_owner_identity(project_id)
@@ -6499,7 +6557,7 @@ def do_link_create(project_id, project, params, user_id):
 	log_activity(object_id, user_id, "linked", linktype, "", target_id)
 	broadcast_event(project_id, "link/create", {
 		"project": project_id, "source": object_id,
-		"target": target_id, "linktype": linktype, "created": now, "actor": user_id
+		"target": target_id, "linktype": linktype, "created": now, "user": user_id
 	})
 	# Notify owner if watching
 	owner_id = get_owner_identity(project_id)
@@ -6515,7 +6573,7 @@ def do_link_delete(project_id, project, params, user_id):
 	mochi.db.execute("delete from links where source=? and target=? and linktype=?", object_id, target_id, linktype)
 	broadcast_event(project_id, "link/delete", {
 		"project": project_id, "source": object_id,
-		"target": target_id, "linktype": linktype, "actor": user_id
+		"target": target_id, "linktype": linktype, "user": user_id
 	})
 	# Notify owner if watching
 	owner_id = get_owner_identity(project_id)

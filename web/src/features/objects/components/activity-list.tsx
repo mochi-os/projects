@@ -75,7 +75,7 @@ export function ActivityList({ projectId, objectId }: ActivityListProps) {
               {formatDate(activity.created)}
             </span>
             <span className="font-medium">
-              {activity.name || activity.actor}
+              {activity.name || activity.user}
             </span>
           </div>
           <div className="text-muted-foreground">

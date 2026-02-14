@@ -12,7 +12,7 @@
 	"execute": ["projects.star"],
 
 	"database": {
-		"schema": 3,
+		"schema": 4,
 		"file": "projects.db",
 		"create": {"function": "database_create"},
 		"upgrade": {"function": "database_upgrade"}
@@ -32,11 +32,11 @@
 		"-/list": {"function": "action_project_list"},
 		"-/create": {"function": "action_project_create"},
 		"-/templates": {"function": "action_templates"},
-		"directory/search": {"function": "action_search"},
-		"probe": {"function": "action_probe"},
-		"recommendations": {"function": "action_recommendations"},
-		"subscribe": {"function": "action_subscribe"},
-		"unsubscribe": {"function": "action_unsubscribe"},
+		"-/directory/search": {"function": "action_search"},
+		"-/probe": {"function": "action_probe"},
+		"-/recommendations": {"function": "action_recommendations"},
+		"-/subscribe": {"function": "action_subscribe"},
+		"-/unsubscribe": {"function": "action_unsubscribe"},
 
 		":project": {"file": "web/dist/index.html"},
 		":project/design": {"file": "web/dist/index.html"},

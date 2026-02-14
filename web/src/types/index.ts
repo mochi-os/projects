@@ -136,7 +136,7 @@ export interface ChecklistItem {
 
 export interface Activity {
   id: string;
-  actor: string;
+  user: string;
   name: string;
   action: string;
   field: string;

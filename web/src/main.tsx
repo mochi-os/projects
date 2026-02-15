@@ -7,7 +7,7 @@ import {
   createQueryClient,
   SearchProvider,
   ThemeProvider,
-  useDomainContextStore,
+  getRouterBasepath,
 } from "@mochi/common";
 // Generated Routes
 import { routeTree } from "./routeTree.gen";
@@ -18,16 +18,10 @@ const queryClient = createQueryClient({
   onServerError: () => router.navigate({ to: "/500" }),
 });
 
-const getBasepath = () => {
-  const pathname = window.location.pathname;
-  const match = pathname.match(/^(\/[^/]+)/);
-  return match ? match[1] : "/";
-};
-
 const router = createRouter({
   routeTree,
   context: { queryClient },
-  basepath: getBasepath(),
+  basepath: getRouterBasepath(),
   defaultPreload: "intent",
   defaultPreloadStaleTime: 0,
 });
@@ -39,29 +33,20 @@ declare module "@tanstack/react-router" {
   }
 }
 
-
-// Initialize domain context and render app
-async function init() {
-  // Fetch domain routing context (entity info for domain-routed requests)
-  await useDomainContextStore.getState().initialize();
-
-  // Render the app
-  const rootElement = document.getElementById("root")!;
-  if (!rootElement.innerHTML) {
-    const root = ReactDOM.createRoot(rootElement);
-    root.render(
-      <StrictMode>
-        <QueryClientProvider client={queryClient}>
-          <ThemeProvider>
-            <SearchProvider>
-              <RouterProvider router={router} />
-              <CommandMenu sidebarData={{ navGroups: [] }} />
-            </SearchProvider>
-          </ThemeProvider>
-        </QueryClientProvider>
-      </StrictMode>,
-    );
-  }
+// Render the app
+const rootElement = document.getElementById("root")!;
+if (!rootElement.innerHTML) {
+  const root = ReactDOM.createRoot(rootElement);
+  root.render(
+    <StrictMode>
+      <QueryClientProvider client={queryClient}>
+        <ThemeProvider>
+          <SearchProvider>
+            <RouterProvider router={router} />
+            <CommandMenu sidebarData={{ navGroups: [] }} />
+          </SearchProvider>
+        </ThemeProvider>
+      </QueryClientProvider>
+    </StrictMode>,
+  );
 }
-
-void init();

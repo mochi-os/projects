@@ -2269,14 +2269,16 @@ def action_comment_create(a):
 			"insert into comments (id, object, parent, author, name, content, created, edited) values (?, ?, ?, ?, ?, ?, ?, ?)",
 			comment_id, object_id, parent, a.user.identity.id, a.user.identity.name, content.strip(), now, 0
 		)
-		# Save attachments locally and sync to project owner
-		mochi.attachment.save(comment_id, "files")
-		mochi.attachment.sync(comment_id, [project_id])
-		# Fire-and-forget to project owner
+		# Save attachments locally
+		attachments = mochi.attachment.save(comment_id, "files", [], [], [])
+		# Fire-and-forget to project owner with attachment metadata
+		submit_data = {"id": comment_id, "object": object_id, "parent": parent,
+			 "content": content.strip(), "name": a.user.identity.name}
+		if attachments:
+			submit_data["attachments"] = [{"id": att["id"], "name": att["name"], "size": att["size"], "content_type": att.get("type", ""), "rank": att.get("rank", 0), "created": att.get("created", now)} for att in attachments]
 		mochi.message.send(
 			{"from": a.user.identity.id, "to": project_id, "service": "projects", "event": "comment/submit"},
-			{"id": comment_id, "object": object_id, "parent": parent,
-			 "content": content.strip(), "name": a.user.identity.name}
+			submit_data
 		)
 		return {"data": {
 			"id": comment_id, "parent": parent,
@@ -2325,18 +2327,16 @@ def action_comment_create(a):
 		"insert or ignore into watchers (object, user, created) values (?, ?, ?)",
 		object_id, a.user.identity.id, now)
 
-	# Sync attachments to subscribers
-	subs = mochi.db.rows("select id from subscribers where project=?", project_id) or []
-	sub_ids = [s["id"] for s in subs]
-	if sub_ids:
-		mochi.attachment.sync(comment_id, sub_ids)
-
-	broadcast_event(project_id, "comment/create", {
+	# Broadcast with attachment metadata
+	comment_event = {
 		"project": project_id, "object": object_id,
 		"id": comment_id, "parent": parent,
 		"author": a.user.identity.id, "name": a.user.identity.name,
 		"content": content.strip(), "created": now, "user": a.user.identity.id
-	})
+	}
+	if attachments:
+		comment_event["attachments"] = [{"id": att["id"], "name": att["name"], "size": att["size"], "content_type": att.get("type", ""), "rank": att.get("rank", 0), "created": att.get("created", now)} for att in attachments]
+	broadcast_event(project_id, "comment/create", comment_event)
 
 	return {"data": {
 		"id": comment_id, "parent": parent,
@@ -2505,16 +2505,17 @@ def action_attachment_create(a):
 		if not row:
 			a.error(404, "Object not found")
 			return
-		# Save locally and sync to project owner
-		attachments = mochi.attachment.save(object_id, "files") or []
+		# Save locally
+		attachments = mochi.attachment.save(object_id, "files", [], [], []) or []
 		if not attachments:
 			a.error(400, "File is required")
 			return
-		mochi.attachment.sync(object_id, [project_id])
-		# Fire-and-forget to project owner
+		# Fire-and-forget to project owner with attachment metadata
+		submit_data = {"object": object_id, "names": [att["name"] for att in attachments]}
+		submit_data["attachments"] = [{"id": att["id"], "name": att["name"], "size": att["size"], "content_type": att.get("type", ""), "rank": att.get("rank", 0), "created": att.get("created", 0)} for att in attachments]
 		mochi.message.send(
 			{"from": a.user.identity.id, "to": project_id, "service": "projects", "event": "attachment/submit"},
-			{"object": object_id, "names": [att["name"] for att in attachments]}
+			submit_data
 		)
 		return {"data": {"attachments": attachments}}
 
@@ -2529,9 +2530,8 @@ def action_attachment_create(a):
 
 	now = mochi.time.now()
 
-	# Save uploaded files and notify subscribers
-	subscribers = mochi.db.rows("select id from subscribers where project=?", project_id) or []
-	attachments = mochi.attachment.save(object_id, "files", [], [], subscribers) or []
+	# Save uploaded files locally
+	attachments = mochi.attachment.save(object_id, "files", [], [], []) or []
 
 	if not attachments:
 		a.error(400, "File is required")
@@ -2540,6 +2540,12 @@ def action_attachment_create(a):
 	mochi.db.execute("update objects set updated=? where id=?", now, object_id)
 	for att in attachments:
 		log_activity(object_id, a.user.identity.id, "attached", "", "", att["name"])
+
+	# Broadcast attachment metadata to subscribers
+	broadcast_event(project_id, "attachment/add", {
+		"project": project_id, "object": object_id,
+		"attachments": [{"id": att["id"], "name": att["name"], "size": att["size"], "content_type": att.get("type", ""), "rank": att.get("rank", 0), "created": att.get("created", now)} for att in attachments]
+	})
 
 	return {"data": {"attachments": attachments}}
 
@@ -2574,8 +2580,12 @@ def action_attachment_delete(a):
 		a.error(404, "Attachment not found")
 		return
 
-	subscribers = mochi.db.rows("select id from subscribers where project=?", project_id) or []
-	mochi.attachment.delete(attachment_id, subscribers)
+	mochi.attachment.delete(attachment_id, [])
+
+	# Broadcast delete to subscribers
+	broadcast_event(project_id, "attachment/remove", {
+		"project": project_id, "attachment": attachment_id
+	})
 
 	return {"data": {"success": True}}
 
@@ -4708,23 +4718,27 @@ def send_project_data(project_id, subscriber_id):
 			h["event"] = "values/update"
 			mochi.message.send(h, {"project": project_id, "id": obj["id"], "values": values_map, "sync": True})
 
-		# Send comments for this object
+		# Send comments for this object with attachment metadata
 		comments = mochi.db.rows("select * from comments where object=? order by created", obj["id"]) or []
 		for c in comments:
 			h["event"] = "comment/create"
-			mochi.message.send(h, {
+			comment_data = {
 				"project": project_id, "id": c["id"], "object": obj["id"],
 				"parent": c["parent"], "author": c["author"], "name": c["name"],
 				"content": c["content"], "created": c["created"],
 				"sync": True
-			})
-			# Sync comment attachments
-			if mochi.attachment.list(c["id"], project_id):
-				mochi.attachment.sync(c["id"], [subscriber_id])
+			}
+			comment_data["attachments"] = mochi.attachment.list(c["id"], project_id) or []
+			mochi.message.send(h, comment_data)
 
-		# Sync object attachments
-		if mochi.attachment.list(obj["id"], project_id):
-			mochi.attachment.sync(obj["id"], [subscriber_id])
+		# Send object attachments as attachment/add event
+		obj_attachments = mochi.attachment.list(obj["id"], project_id) or []
+		if obj_attachments:
+			h["event"] = "attachment/add"
+			mochi.message.send(h, {
+				"project": project_id, "object": obj["id"],
+				"attachments": obj_attachments
+			})
 
 	# Send links (once, not per-object)
 	links = mochi.db.rows("select l.source, l.target, l.linktype from links l join objects o on l.source = o.id where o.project=?", project_id)
@@ -5003,24 +5017,26 @@ def event_comment_submit(e):
 		"insert or ignore into comments (id, object, parent, author, name, content, created, edited) values (?, ?, ?, ?, ?, ?, ?, ?)",
 		comment_id, object_id, parent, sender, name, content.strip(), now, 0
 	)
+	# Store attachment metadata from the subscriber's event
+	attachments = e.content("attachments") or []
+	if attachments:
+		mochi.attachment.store(attachments, sender, comment_id)
 	mochi.db.execute("update objects set updated=? where id=?", now, object_id)
 	log_activity(object_id, sender, "commented")
 	mochi.db.execute("insert or ignore into watchers (object, user, created) values (?, ?, ?)", object_id, sender, now)
-	# Sync attachments from sender to other subscribers
-	subs = mochi.db.rows("select id from subscribers where project=?", project_id) or []
-	other_subs = [s["id"] for s in subs if s["id"] != sender]
-	if other_subs:
-		mochi.attachment.sync(comment_id, other_subs)
 	# Send WebSocket notification to owner for real-time UI updates
 	fp = mochi.entity.fingerprint(project_id)
 	if fp:
 		mochi.websocket.write(fp, {"type": "comment/create", "project": project_id, "object": object_id})
-	# Broadcast to all subscribers
-	broadcast_event(project_id, "comment/create", {
+	# Broadcast to all subscribers with attachment metadata
+	comment_event = {
 		"project": project_id, "object": object_id, "id": comment_id,
 		"parent": parent, "author": sender, "name": name,
 		"content": content.strip(), "created": now, "user": sender
-	}, exclude=sender)
+	}
+	if attachments:
+		comment_event["attachments"] = attachments
+	broadcast_event(project_id, "comment/create", comment_event, exclude=sender)
 	# Notify watchers
 	owner_id = get_owner_identity(project_id)
 	excerpt = content.strip()[:80]
@@ -5045,27 +5061,62 @@ def event_attachment_submit(e):
 	names = e.content("names") or []
 	for name in names:
 		log_activity(object_id, sender, "attached", "", "", name)
-	# Sync attachments from sender to other subscribers
-	subs = mochi.db.rows("select id from subscribers where project=?", project_id) or []
-	other_subs = [s["id"] for s in subs if s["id"] != sender]
-	if other_subs:
-		mochi.attachment.sync(object_id, other_subs)
+	# Store attachment metadata from the subscriber's event
+	attachments = e.content("attachments") or []
+	if attachments:
+		mochi.attachment.store(attachments, sender, object_id)
+	# Broadcast to other subscribers with attachment metadata
+	if attachments:
+		broadcast_event(project_id, "attachment/add", {
+			"project": project_id, "object": object_id,
+			"attachments": attachments
+		}, exclude=sender)
 	# Send WebSocket notification to owner for real-time UI updates
 	fp = mochi.entity.fingerprint(project_id)
 	if fp:
 		mochi.websocket.write(fp, {"type": "attachment/create", "project": project_id, "object": object_id})
+
+# Attachment metadata received from owner
+def event_attachment_add(e):
+	project_id = verify_subscription(e)
+	if not project_id:
+		return
+	object_id = e.content("object")
+	attachments = e.content("attachments") or []
+	if attachments and object_id:
+		mochi.attachment.store(attachments, e.header("from"), object_id)
+	fp = mochi.entity.fingerprint(project_id)
+	if fp:
+		mochi.websocket.write(fp, {"type": "attachment/create", "project": project_id, "object": object_id})
+
+# Attachment removed by owner
+def event_attachment_remove(e):
+	project_id = verify_subscription(e)
+	if not project_id:
+		return
+	attachment_id = e.content("attachment")
+	if attachment_id:
+		mochi.attachment.delete(attachment_id)
+	fp = mochi.entity.fingerprint(project_id)
+	if fp:
+		mochi.websocket.write(fp, {"type": "attachment/delete", "project": project_id, "attachment": attachment_id})
 
 # Comment created
 def event_comment_create(e):
 	project_id = verify_subscription(e)
 	if not project_id:
 		return
+	comment_id = e.content("id")
 	mochi.db.execute(
 		"insert or ignore into comments (id, object, parent, author, name, content, created, edited) values (?, ?, ?, ?, ?, ?, ?, ?)",
-		e.content("id"), e.content("object") or "", e.content("parent") or "",
+		comment_id, e.content("object") or "", e.content("parent") or "",
 		e.content("author") or "", e.content("name") or "",
 		e.content("content") or "", e.content("created") or mochi.time.now(), 0
 	)
+	# Store attachment metadata from the event
+	attachments = e.content("attachments") or []
+	if attachments:
+		mochi.attachment.store(attachments, e.header("from"), comment_id)
 	fp = mochi.entity.fingerprint(project_id)
 	if fp:
 		mochi.websocket.write(fp, {"type": "comment/create", "project": project_id, "object": e.content("object")})
@@ -5977,16 +6028,16 @@ def do_comment_create(project_id, project, params, user_id, user_name):
 	mochi.db.execute(
 		"insert or ignore into watchers (object, user, created) values (?, ?, ?)",
 		object_id, user_id, now)
-	broadcast_event(project_id, "comment/create", {
+	# Include attachments in broadcast
+	comment_attachments = mochi.attachment.list(comment_id, project_id) or []
+	comment_event = {
 		"project": project_id, "object": object_id, "id": comment_id,
 		"parent": parent, "author": user_id, "name": user_name,
 		"content": content.strip(), "created": now, "user": user_id
-	})
-	# Sync attachments from sender to other subscribers
-	subs = mochi.db.rows("select id from subscribers where project=?", project_id) or []
-	other_subs = [s["id"] for s in subs if s["id"] != user_id]
-	if other_subs:
-		mochi.attachment.sync(comment_id, other_subs)
+	}
+	if comment_attachments:
+		comment_event["attachments"] = comment_attachments
+	broadcast_event(project_id, "comment/create", comment_event)
 	# Notify owner if watching
 	owner_id = get_owner_identity(project_id)
 	excerpt = (content.strip())[:80]
@@ -6431,8 +6482,10 @@ def do_attachment_delete(project_id, project, params, user_id):
 		return {"error": "Attachment ID required", "code": 400}
 	if not mochi.attachment.exists(attachment_id):
 		return {"error": "Attachment not found", "code": 404}
-	subscribers = mochi.db.rows("select id from subscribers where project=?", project_id) or []
-	mochi.attachment.delete(attachment_id, subscribers)
+	mochi.attachment.delete(attachment_id, [])
+	broadcast_event(project_id, "attachment/remove", {
+		"project": project_id, "attachment": attachment_id
+	})
 	return {"success": True}
 
 # PR helpers

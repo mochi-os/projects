@@ -29,9 +29,11 @@ def database_create():
 		counter integer not null default 0,
 		owner integer not null default 1,
 		server text not null default '',
+		fingerprint text not null default '',
 		created integer not null,
 		updated integer not null
 	)""")
+	mochi.db.execute("create index if not exists projects_fingerprint on projects(fingerprint)")
 
 	# 2. subscribers - subscribers to owned projects
 	mochi.db.execute("""create table if not exists subscribers (
@@ -280,6 +282,16 @@ def database_upgrade(version):
 
 	if version == 4:
 		mochi.db.execute("alter table activity rename column actor to user")
+
+	if version == 5:
+		# Add fingerprint column for O(1) lookups by fingerprint
+		mochi.db.execute("alter table projects add column fingerprint text not null default ''")
+		mochi.db.execute("create index if not exists projects_fingerprint on projects( fingerprint )")
+		# Populate fingerprints for existing projects
+		projects = mochi.db.rows("select id from projects")
+		for p in projects:
+			fp = mochi.entity.fingerprint(p["id"]) or ""
+			mochi.db.execute("update projects set fingerprint=? where id=?", fp, p["id"])
 
 
 # ============================================================================
@@ -657,9 +669,10 @@ def action_project_create(a):
 	creator = a.user.identity.id
 
 	# Insert project record
+	fp = mochi.entity.fingerprint(entity) or ""
 	mochi.db.execute(
-		"insert into projects (id, name, description, prefix, counter, owner, server, template, template_version, created, updated) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-		entity, name, description, prefix, 0, 1, "", template, tmpl_version, now, now
+		"insert into projects (id, name, description, prefix, counter, owner, server, fingerprint, template, template_version, created, updated) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+		entity, name, description, prefix, 0, 1, "", fp, template, tmpl_version, now, now
 	)
 
 	# Add creator as subscriber
@@ -1146,16 +1159,19 @@ def resolve_project(a):
 	project_id = a.input("project")
 	if not project_id:
 		return None
-	if len(project_id) == 9:
-		results = mochi.entity.get(project_id)
-		if results:
-			return results[0]["id"]
+	if mochi.valid(project_id, "fingerprint"):
+		row = mochi.db.row("select id from projects where fingerprint=?", project_id)
+		if row:
+			return row["id"]
 		return None
 	return project_id
 
 def get_project(project_id):
 	"""Get project row or None."""
-	return mochi.db.row("select * from projects where id=?", project_id)
+	row = mochi.db.row("select * from projects where id=?", project_id)
+	if not row:
+		row = mochi.db.row("select * from projects where fingerprint=?", project_id)
+	return row
 
 def log_activity(object_id, user, action, field="", oldvalue="", newvalue=""):
 	"""Log an activity entry for an object."""
@@ -4396,8 +4412,8 @@ def action_subscribe(a):
 
 	# Insert the remote project
 	mochi.db.execute(
-		"insert into projects (id, name, description, prefix, counter, owner, server, created, updated) values (?, ?, ?, ?, 0, 0, ?, ?, ?)",
-		project_id, project_name, project_desc, project_prefix, server or "", now, now
+		"insert into projects (id, name, description, prefix, counter, owner, server, fingerprint, created, updated) values (?, ?, ?, ?, 0, 0, ?, ?, ?, ?)",
+		project_id, project_name, project_desc, project_prefix, server or "", fp, now, now
 	)
 
 	# Insert schema so the project page has content immediately
@@ -4424,14 +4440,9 @@ def action_unsubscribe(a):
 	# Look up by ID or fingerprint
 	project = mochi.db.row("select * from projects where id=?", project_id)
 	if not project:
-		# Try fingerprint lookup
-		projects = mochi.db.rows("select * from projects where owner=0")
-		for p in projects:
-			fp = mochi.entity.fingerprint(p["id"]) or ""
-			if fp.replace("-", "") == project_id.replace("-", ""):
-				project = p
-				project_id = p["id"]
-				break
+		project = mochi.db.row("select * from projects where fingerprint=?", project_id)
+		if project:
+			project_id = project["id"]
 
 	if not project:
 		a.error(404, "Project not found")

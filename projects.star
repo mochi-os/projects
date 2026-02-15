@@ -839,7 +839,7 @@ def action_project_update(a):
 		mochi.db.execute("update projects set name=?, updated=? where id=?", name, now, project_id)
 		mochi.entity.update(project_id, name=name)
 
-	if a.input.exists("description"):
+	if a.input("description") != None:
 		if len(description) > 10000:
 			a.error(400, "Description too long")
 			return
@@ -854,7 +854,7 @@ def action_project_update(a):
 	update = {"project": project_id}
 	if name:
 		update["name"] = name
-	if a.input.exists("description"):
+	if a.input("description") != None:
 		update["description"] = description
 	if prefix:
 		update["prefix"] = prefix
@@ -1528,7 +1528,7 @@ def action_object_update(a):
 	if project["owner"] != 1:
 		params = {"project": project_id, "object": object_id}
 		p = a.input("parent")
-		if a.input.exists("parent"):
+		if a.input("parent") != None:
 			params["parent"] = p
 		c = a.input("class")
 		if c:
@@ -1536,7 +1536,7 @@ def action_object_update(a):
 		result = forward_to_owner(a, project_id, "object/update", params)
 		if result and object_id:
 			now = mochi.time.now()
-			if a.input.exists("parent"):
+			if a.input("parent") != None:
 				mochi.db.execute("update objects set parent=?, updated=? where id=?", p, now, object_id)
 			if c:
 				mochi.db.execute("update objects set class=?, updated=? where id=?", c, now, object_id)
@@ -1559,7 +1559,7 @@ def action_object_update(a):
 
 	# Update parent if provided
 	parent = a.input("parent")
-	if a.input.exists("parent"):
+	if a.input("parent") != None:
 		old_parent = row["parent"]
 		if parent != old_parent:
 			# Check for cycles
@@ -1612,7 +1612,7 @@ def action_object_update(a):
 
 	broadcast_event(project_id, "object/update", {
 		"project": project_id, "id": object_id,
-		"parent": parent if a.input.exists("parent") else row["parent"],
+		"parent": parent if a.input("parent") != None else row["parent"],
 		"class": new_class if new_class and new_class != row["class"] else row["class"],
 		"user": a.user.identity.id
 	})
@@ -1747,7 +1747,7 @@ def action_object_move(a):
 
 	# Handle rank change
 	scope_parent = a.input("scope_parent")
-	if a.input.exists("rank"):
+	if a.input("rank") != None:
 		new_rank = int(new_rank)
 		# Shift other objects to make room
 		if value_changed or new_rank != old_rank:
@@ -1876,7 +1876,7 @@ def action_values_set(a):
 	if project["owner"] != 1:
 		values = {}
 		for field_id in valid_fields:
-			if a.input.exists(field_id):
+			if a.input(field_id) != None:
 				values[field_id] = str(a.input(field_id))
 		result = forward_to_owner(a, project_id, "values/set", {
 			"project": project_id, "object": object_id, "values": values,
@@ -1898,7 +1898,7 @@ def action_values_set(a):
 
 	# Process each field from input
 	for field_id in valid_fields:
-		if not a.input.exists(field_id):
+		if a.input(field_id) == None:
 			continue
 		new_value = a.input(field_id)
 		if len(str(new_value)) > 10000:
@@ -2907,7 +2907,7 @@ def action_view_update(a):
 	if project["owner"] != 1:
 		params = {"project": project_id, "view": a.input("view")}
 		for k in ["name", "viewtype", "filter", "columns", "rows", "fields", "sort", "direction", "classes", "border"]:
-			if a.input.exists(k):
+			if a.input(k) != None:
 				params[k] = a.input(k)
 		return forward_to_owner(a, project_id, "view/update", params)
 
@@ -2935,20 +2935,20 @@ def action_view_update(a):
 	sort = a.input("sort")
 	direction = a.input("direction")
 
-	if a.input.exists("name") and name.strip() != "":
+	if a.input("name") != None and name.strip() != "":
 		mochi.db.execute("update views set name=? where project=? and id=?", name.strip(), project_id, view_id)
-	if a.input.exists("viewtype") and viewtype != "":
+	if a.input("viewtype") != None and viewtype != "":
 		if viewtype not in ["board", "list"]:
 			a.error(400, "Invalid view type")
 			return
 		mochi.db.execute("update views set viewtype=? where project=? and id=?", viewtype, project_id, view_id)
-	if a.input.exists("filter"):
+	if a.input("filter") != None:
 		mochi.db.execute("update views set filter=? where project=? and id=?", filter_str, project_id, view_id)
-	if a.input.exists("columns"):
+	if a.input("columns") != None:
 		mochi.db.execute("update views set columns=? where project=? and id=?", columns, project_id, view_id)
-	if a.input.exists("rows"):
+	if a.input("rows") != None:
 		mochi.db.execute("update views set rows=? where project=? and id=?", rows, project_id, view_id)
-	if a.input.exists("fields"):
+	if a.input("fields") != None:
 		# Delete existing fields and insert new ones
 		mochi.db.execute("delete from view_fields where project=? and view=?", project_id, view_id)
 		for i, field in enumerate(fields.split(",")):
@@ -2957,21 +2957,21 @@ def action_view_update(a):
 					"insert into view_fields (project, view, field, rank) values (?, ?, ?, ?)",
 					project_id, view_id, field.strip(), i
 				)
-	if a.input.exists("sort"):
+	if a.input("sort") != None:
 		mochi.db.execute("update views set sort=? where project=? and id=?", sort, project_id, view_id)
-	if a.input.exists("direction") and direction != "":
+	if a.input("direction") != None and direction != "":
 		if direction not in ["asc", "desc"]:
 			a.error(400, "Invalid direction")
 			return
 		mochi.db.execute("update views set direction=? where project=? and id=?", direction, project_id, view_id)
 
 	border = a.input("border")
-	if a.input.exists("border"):
+	if a.input("border") != None:
 		mochi.db.execute("update views set border=? where project=? and id=?", border, project_id, view_id)
 
 	# Update view classes if provided (comma-separated list of class IDs, empty string = all classes)
 	view_classes_input = a.input("classes")
-	if a.input.exists("classes"):
+	if a.input("classes") != None:
 		# Delete existing view classes
 		mochi.db.execute("delete from view_classes where project=? and view=?", project_id, view_id)
 		# Insert new view classes
@@ -3493,7 +3493,7 @@ def action_field_update(a):
 	if project["owner"] != 1:
 		params = {"project": project_id, "class": a.input("class"), "field": a.input("field")}
 		for k in ["name", "flags", "multi", "card", "position", "rows", "id"]:
-			if a.input.exists(k):
+			if a.input(k) != None:
 				params[k] = a.input(k)
 		return forward_to_owner(a, project_id, "field/update", params)
 
@@ -3515,65 +3515,65 @@ def action_field_update(a):
 	# Update fields if provided
 	update_data = {"project": project_id, "class": class_id, "id": field_id}
 
-	if a.input.exists("name"):
+	if a.input("name") != None:
 		name = a.input("name").strip()
 		mochi.db.execute("update fields set name=? where project=? and class=? and id=?", name, project_id, class_id, field_id)
 		update_data["name"] = name
-	if a.input.exists("flags"):
+	if a.input("flags") != None:
 		flags = a.input("flags")
 		mochi.db.execute("update fields set flags=? where project=? and class=? and id=?", flags, project_id, class_id, field_id)
 		update_data["flags"] = flags
-	if a.input.exists("multi"):
+	if a.input("multi") != None:
 		multi_val = 1 if a.input("multi") in ("1", "true") else 0
 		mochi.db.execute("update fields set multi=? where project=? and class=? and id=?", multi_val, project_id, class_id, field_id)
 		update_data["multi"] = multi_val
-	if a.input.exists("card"):
+	if a.input("card") != None:
 		card_val = 1 if a.input("card") in ("1", "true") else 0
 		mochi.db.execute("update fields set card=? where project=? and class=? and id=?", card_val, project_id, class_id, field_id)
 		update_data["card"] = card_val
-	if a.input.exists("min"):
+	if a.input("min") != None:
 		min_val = a.input("min")
 		mochi.db.execute("update fields set min=? where project=? and class=? and id=?", min_val, project_id, class_id, field_id)
 		update_data["min"] = min_val
-	if a.input.exists("max"):
+	if a.input("max") != None:
 		max_val = a.input("max")
 		mochi.db.execute("update fields set max=? where project=? and class=? and id=?", max_val, project_id, class_id, field_id)
 		update_data["max"] = max_val
-	if a.input.exists("pattern"):
+	if a.input("pattern") != None:
 		pattern = a.input("pattern")
 		mochi.db.execute("update fields set pattern=? where project=? and class=? and id=?", pattern, project_id, class_id, field_id)
 		update_data["pattern"] = pattern
-	if a.input.exists("minlength"):
+	if a.input("minlength") != None:
 		minlength = int(a.input("minlength"))
 		mochi.db.execute("update fields set minlength=? where project=? and class=? and id=?", minlength, project_id, class_id, field_id)
 		update_data["minlength"] = minlength
-	if a.input.exists("maxlength"):
+	if a.input("maxlength") != None:
 		maxlength = int(a.input("maxlength"))
 		mochi.db.execute("update fields set maxlength=? where project=? and class=? and id=?", maxlength, project_id, class_id, field_id)
 		update_data["maxlength"] = maxlength
-	if a.input.exists("prefix"):
+	if a.input("prefix") != None:
 		prefix = a.input("prefix")
 		mochi.db.execute("update fields set prefix=? where project=? and class=? and id=?", prefix, project_id, class_id, field_id)
 		update_data["prefix"] = prefix
-	if a.input.exists("suffix"):
+	if a.input("suffix") != None:
 		suffix = a.input("suffix")
 		mochi.db.execute("update fields set suffix=? where project=? and class=? and id=?", suffix, project_id, class_id, field_id)
 		update_data["suffix"] = suffix
-	if a.input.exists("format"):
+	if a.input("format") != None:
 		format_str = a.input("format")
 		mochi.db.execute("update fields set format=? where project=? and class=? and id=?", format_str, project_id, class_id, field_id)
 		update_data["format"] = format_str
-	if a.input.exists("position"):
+	if a.input("position") != None:
 		position = a.input("position")
 		mochi.db.execute("update fields set position=? where project=? and class=? and id=?", position, project_id, class_id, field_id)
 		update_data["position"] = position
-	if a.input.exists("rows"):
+	if a.input("rows") != None:
 		rows_val = int(a.input("rows"))
 		mochi.db.execute("update fields set rows=? where project=? and class=? and id=?", rows_val, project_id, class_id, field_id)
 		update_data["rows"] = rows_val
 
 	# Rename field ID if requested
-	if a.input.exists("id"):
+	if a.input("id") != None:
 		new_id = a.input("id").strip().lower()
 		if not new_id:
 			a.error(400, "Field ID cannot be empty")
@@ -3807,7 +3807,7 @@ def action_option_update(a):
 		params = {"project": project_id, "class": a.input("class"),
 				  "field": a.input("field"), "option": a.input("option")}
 		for k in ["name", "colour", "icon"]:
-			if a.input.exists(k):
+			if a.input(k) != None:
 				params[k] = a.input(k)
 		return forward_to_owner(a, project_id, "option/update", params)
 
@@ -3831,7 +3831,7 @@ def action_option_update(a):
 	colour = a.input("colour")
 	icon = a.input("icon")
 
-	if a.input.exists("name"):
+	if a.input("name") != None:
 		if not name or not name.strip():
 			a.error(400, "Name is required")
 			return
@@ -3839,23 +3839,23 @@ def action_option_update(a):
 			a.error(400, "Name too long")
 			return
 		mochi.db.execute("update options set name=? where project=? and class=? and field=? and id=?", name.strip(), project_id, class_id, field_id, option_id)
-	if a.input.exists("colour"):
+	if a.input("colour") != None:
 		if len(colour) > 20:
 			a.error(400, "Colour too long")
 			return
 		mochi.db.execute("update options set colour=? where project=? and class=? and field=? and id=?", colour, project_id, class_id, field_id, option_id)
-	if a.input.exists("icon"):
+	if a.input("icon") != None:
 		if len(icon) > 100:
 			a.error(400, "Icon too long")
 			return
 		mochi.db.execute("update options set icon=? where project=? and class=? and field=? and id=?", icon, project_id, class_id, field_id, option_id)
 
 	update_data = {"project": project_id, "class": class_id, "field": field_id, "id": option_id}
-	if a.input.exists("name"):
+	if a.input("name") != None:
 		update_data["name"] = name.strip()
-	if a.input.exists("colour"):
+	if a.input("colour") != None:
 		update_data["colour"] = colour
-	if a.input.exists("icon"):
+	if a.input("icon") != None:
 		update_data["icon"] = icon
 	broadcast_event(project_id, "option/update", update_data)
 
@@ -5709,7 +5709,7 @@ def action_pr_update(a):
 	if project["owner"] != 1:
 		params = {"project": project_id, "object": a.input("object"), "pr": a.input("pr")}
 		for k in ["repository", "source", "target", "status", "title", "description", "draft"]:
-			if a.input.exists(k):
+			if a.input(k) != None:
 				params[k] = a.input(k)
 		return forward_to_owner(a, project_id, "pr/update", params)
 
@@ -5744,9 +5744,9 @@ def action_pr_update(a):
 		mochi.db.execute("update pull_requests set target=?, updated=? where id=?", target, now, pr_id)
 	if status:
 		mochi.db.execute("update pull_requests set status=?, updated=? where id=?", status, now, pr_id)
-	if a.input.exists("title") and title:
+	if a.input("title") != None and title:
 		mochi.db.execute("update pull_requests set title=?, updated=? where id=?", title, now, pr_id)
-	if a.input.exists("description"):
+	if a.input("description") != None:
 		mochi.db.execute("update pull_requests set description=?, updated=? where id=?", description, now, pr_id)
 	if draft_input:
 		draft = 1 if draft_input == "1" else 0

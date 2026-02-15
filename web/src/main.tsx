@@ -7,6 +7,7 @@ import {
   createQueryClient,
   SearchProvider,
   ThemeProvider,
+  getAppPath,
   getRouterBasepath,
 } from "@mochi/common";
 // Generated Routes
@@ -18,10 +19,19 @@ const queryClient = createQueryClient({
   onServerError: () => router.navigate({ to: "/500" }),
 });
 
+// Use app path as basepath, ignoring entity fingerprint.
+// Routes use $projectId to handle entity fingerprints — including the fingerprint
+// in the basepath would cause links to double it (e.g. /projects/<fp>/<fp>/...).
+function getBasepath(): string {
+  const appPath = getAppPath()
+  if (appPath) return appPath + "/"
+  return getRouterBasepath()
+}
+
 const router = createRouter({
   routeTree,
   context: { queryClient },
-  basepath: getRouterBasepath(),
+  basepath: getBasepath(),
   defaultPreload: "intent",
   defaultPreloadStaleTime: 0,
 });

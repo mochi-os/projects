@@ -92,8 +92,8 @@ export function BoardContainer({
 }: BoardContainerProps) {
   // Get the default class's fields (first class)
   const defaultClass = project.classes[0];
-  const classFields = defaultClass ? project.fields[defaultClass.id] || [] : [];
-  const classOptions = defaultClass ? project.options[defaultClass.id] || {} : {};
+  const classFields = useMemo(() => defaultClass ? project.fields[defaultClass.id] || [] : [], [defaultClass, project.fields]);
+  const classOptions = useMemo(() => defaultClass ? project.options[defaultClass.id] || {} : {}, [defaultClass, project.options]);
 
   // Parse view fields list
   const viewFieldsList = useMemo(

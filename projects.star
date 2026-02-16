@@ -30,6 +30,8 @@ def database_create():
 		owner integer not null default 1,
 		server text not null default '',
 		fingerprint text not null default '',
+		template text not null default '',
+		template_version integer not null default 0,
 		created integer not null,
 		updated integer not null
 	)""")

@@ -295,6 +295,13 @@ def database_upgrade(version):
 			fp = mochi.entity.fingerprint(p["id"]) or ""
 			mochi.db.execute("update projects set fingerprint=? where id=?", fp, p["id"])
 
+	if version == 6:
+		# Fix databases created with buggy database_create() that missed template columns
+		has_template = mochi.db.row("select count(*) as n from pragma_table_info('projects') where name='template'")
+		if has_template["n"] == 0:
+			mochi.db.execute("alter table projects add column template text not null default ''")
+			mochi.db.execute("alter table projects add column template_version integer not null default 0")
+
 
 # ============================================================================
 # Templates

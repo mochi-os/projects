@@ -1202,9 +1202,6 @@ def get_object_display(project, obj, object_id):
 	title_field = title_field_row["title"] if title_field_row else ""
 	title_row = mochi.db.row("select value from \"values\" where object=? and field=?", object_id, title_field) if title_field else None
 	obj_title = title_row["value"] if title_row else ""
-	if not obj_title:
-		prefix = project["prefix"] if project else ""
-		obj_title = prefix + "-" + str(obj["number"]) if obj and prefix else ""
 	return project["name"] + " - " + obj_title if obj_title else project["name"]
 
 def notify_watchers(object_id, project_id, local_identity, user_id, body):
@@ -6175,16 +6172,12 @@ def do_object_create(project_id, project, params, user_id):
 	# Notify owner when subscriber creates an object
 	owner_id = get_owner_identity(project_id)
 	if owner_id and owner_id != user_id:
-		readable = project["prefix"] + "-" + str(new_counter)
-		title_field_row = mochi.db.row("select title from classes where project=? and id=?", project_id, params.get("class", ""))
-		title_field = title_field_row["title"] if title_field_row else ""
-		title_row = mochi.db.row("select value from \"values\" where object=? and field=?", object_id, title_field) if title_field else None
-		obj_title = title_row["value"] if title_row else ""
+		obj = mochi.db.row("select number, class from objects where id=?", object_id)
+		display = get_object_display(project, obj, object_id)
 		fp = mochi.entity.fingerprint(project_id)
 		url = "/projects/" + fp if fp else "/projects"
-		display = readable + " " + obj_title + " — created" if obj_title else readable + " created"
 		mochi.service.call("notifications", "send", "update",
-			display, "New object created", object_id, url)
+			display, "Created", object_id, url)
 	return {"id": object_id, "number": new_counter,
 			"readable": project["prefix"] + "-" + str(new_counter)}
 

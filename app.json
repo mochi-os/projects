@@ -2,7 +2,7 @@
 // Copyright Alistair Cunningham 2026
 
 {
-	"version": "1.27",
+	"version": "1.28",
 	"label": "app_name",
 	"classes": ["project"],
 	"paths": ["projects"],
@@ -28,6 +28,8 @@
 		"search": {"file": "web/dist/index.html"},
 		"assets": {"files": "web/dist/assets", "public": true},
 		"images": {"files": "web/dist/images", "public": true},
+		":project/assets": {"files": "web/dist/assets", "public": true},
+		":project/images": {"files": "web/dist/images", "public": true},
 
 		"-/list": {"function": "action_project_list"},
 		"-/create": {"function": "action_project_create"},

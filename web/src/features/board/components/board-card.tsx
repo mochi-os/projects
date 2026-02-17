@@ -142,7 +142,7 @@ export function BoardCard({
                 "inline-flex items-center gap-1 rounded-md px-1.5 py-0.5 text-[10px] font-medium ring-1 ring-inset",
                 allDone
                   ? "bg-green-500/10 text-green-600 ring-green-500/30"
-                  : "bg-muted text-muted-foreground ring-border"
+                  : "bg-surface-2 text-muted-foreground ring-border"
               )}
             >
               <CheckSquare className="h-3 w-3" />
@@ -213,7 +213,7 @@ export function BoardCard({
     <Card
       className={cn(
         "group/card relative transition-all",
-        isNested ? "p-2 bg-background" : "p-3 py-3 hover:shadow-md",
+        isNested ? "bg-surface-1 p-2" : "p-3 py-3 hover:bg-surface-2 hover:shadow-md",
         "cursor-pointer active:scale-[0.99]",
       )}
       style={borderColor ? { borderColor: borderColor } : undefined}
@@ -238,7 +238,7 @@ export function BoardCard({
       <div className="flex items-baseline gap-1.5">
         {hasChildren && (
           <button
-            className="shrink-0 self-center p-0.5 -ml-1 rounded hover:bg-muted transition-colors text-muted-foreground"
+            className="text-muted-foreground -ml-1 shrink-0 self-center rounded p-0.5 transition-colors hover:bg-interactive-hover active:bg-interactive-active"
             onClick={(e) => {
               e.stopPropagation();
               setCollapsed(!collapsed);

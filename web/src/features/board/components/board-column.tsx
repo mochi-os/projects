@@ -415,9 +415,9 @@ export function BoardColumn({
       className={cn(
         "rounded-[10px]",
         rows ? "grid grid-rows-subgrid row-span-full" : "flex flex-col w-72 shrink-0 h-full",
-        "bg-muted/30 border transition-colors",
+        "bg-surface-1 border border-border transition-colors",
         "data-[drag-over]:border-primary data-[drag-over]:bg-primary/5",
-        isReordering && !isDragging && "border-dashed border-muted-foreground/50",
+        isReordering && !isDragging && "border-dashed border-border-strong",
         isDragging && "border-primary border-2 bg-background shadow-lg",
       )}
       onDragStart={!onDrop ? (e) => e.preventDefault() : undefined}
@@ -454,7 +454,7 @@ export function BoardColumn({
         {!isReordering && (onCreateClick || onRenameColumn || (totalCount === 0 && onDeleteColumn)) && (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <button data-column-menu className="p-1 rounded hover:bg-muted transition-colors">
+              <button data-column-menu className="rounded p-1 transition-colors hover:bg-interactive-hover active:bg-interactive-active">
                 <MoreHorizontal className="size-4 text-muted-foreground" />
               </button>
             </DropdownMenuTrigger>

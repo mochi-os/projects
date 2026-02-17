@@ -6686,6 +6686,8 @@ def do_field_create(project_id, project, params):
 def rename_field_id(project_id, class_id, old_id, new_id):
 	mochi.db.execute("update fields set id=? where project=? and class=? and id=?", new_id, project_id, class_id, old_id)
 	mochi.db.execute("update options set field=? where project=? and class=? and field=?", new_id, project_id, class_id, old_id)
+	# Delete orphaned values that already use the new field id to avoid unique constraint violations
+	mochi.db.execute('delete from "values" where field=? and object in (select id from objects where project=? and class=?) and object in (select object from "values" where field=?)', new_id, project_id, class_id, old_id)
 	mochi.db.execute('update "values" set field=? where field=? and object in (select id from objects where project=? and class=?)', new_id, old_id, project_id, class_id)
 	mochi.db.execute("update view_fields set field=? where project=? and field=?", new_id, project_id, old_id)
 	mochi.db.execute("update activity set field=? where field=? and object in (select id from objects where project=? and class=?)", new_id, old_id, project_id, class_id)

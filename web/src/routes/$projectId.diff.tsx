@@ -4,7 +4,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Loader2, Rows3, Columns2 } from "lucide-react";
-import { GeneralError, Main, PageHeader, usePageTitle, useAuthStore } from "@mochi/common";
+import { EmptyState, GeneralError, Main, PageHeader, usePageTitle, useAuthStore } from "@mochi/common";
 import projectsApi from "@/api/projects";
 import { DiffViewer } from "@/features/pr/components/diff-viewer";
 
@@ -124,8 +124,12 @@ function DiffPage() {
         {diffData ? (
           <DiffViewer diff={diffData} viewStyle={viewStyle} />
         ) : (
-          <div className="text-sm text-muted-foreground text-center py-8">
-            No diff available
+          <div className="py-8">
+            <EmptyState
+              icon={Rows3}
+              title="No diff available"
+              description="No changes were found for the selected comparison."
+            />
           </div>
         )}
       </div>

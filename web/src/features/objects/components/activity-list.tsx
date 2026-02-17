@@ -2,7 +2,8 @@
 // Copyright Alistair Cunningham 2026
 
 import { useQuery } from "@tanstack/react-query";
-import { Loader2 } from "lucide-react";
+import { Activity } from "lucide-react";
+import { EmptyState, ListSkeleton } from "@mochi/common";
 import projectsApi from "@/api/projects";
 
 interface ActivityListProps {
@@ -46,21 +47,13 @@ export function ActivityList({ projectId, objectId }: ActivityListProps) {
   };
 
   if (isLoading) {
-    return (
-      <div className="flex justify-center py-4">
-        <Loader2 className="size-5 animate-spin text-muted-foreground" />
-      </div>
-    );
+    return <ListSkeleton count={3} variant="simple" height="h-10" />;
   }
 
   const activities = data || [];
 
   if (activities.length === 0) {
-    return (
-      <div className="text-sm text-muted-foreground text-center py-4">
-        No activity yet
-      </div>
-    );
+    return <EmptyState icon={Activity} title="No activity yet" className="py-4" />;
   }
 
   return (

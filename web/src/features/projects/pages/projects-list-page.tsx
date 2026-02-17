@@ -7,7 +7,9 @@ import {
   CardContent,
   Button,
   usePageTitle,
-  Skeleton,
+  CardSkeleton,
+  GeneralError,
+  EntityOnboardingEmptyState,
   PageHeader,
   SubscribeDialog,
   ConfirmDialog,
@@ -29,6 +31,7 @@ import projectsApi from "@/api/projects";
 export function ProjectsListPage() {
   const projects = useProjectsStore((state) => state.projects);
   const isLoading = useProjectsStore((state) => state.isLoading);
+  const error = useProjectsStore((state) => state.error);
   const refresh = useProjectsStore((state) => state.refresh);
   const { openCreateDialog } = useSidebarContext();
   const [subscribeOpen, setSubscribeOpen] = useState(false);
@@ -84,33 +87,32 @@ export function ProjectsListPage() {
         icon={<FolderKanban className="size-4 md:size-5" />}
       />
       <Main>
+        {error && (
+          <div className="mb-4">
+            <GeneralError error={new Error(error)} minimal mode="inline" />
+          </div>
+        )}
         {isLoading ? (
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {Array.from({ length: 3 }).map((_, i) => (
-              <Card key={i}>
-                <CardContent className="p-4">
-                  <Skeleton className="mb-2 h-5 w-3/4" />
-                  <Skeleton className="h-4 w-1/2" />
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+          <CardSkeleton count={3} />
         ) : projects.length === 0 ? (
-          <div className="flex flex-col items-center justify-center p-8 text-center">
-            <FolderKanban className="text-muted-foreground mx-auto mb-3 h-10 w-10 opacity-50" />
-            <p className="text-muted-foreground mb-1 text-sm font-medium">
-              Projects
-            </p>
-            <p className="text-muted-foreground mb-4 max-w-sm text-xs">
-              You have no projects yet.
-            </p>
-            <InlineProjectSearch subscribedIds={subscribedProjectIds} />
-            <Button variant="outline" onClick={openCreateDialog} className="mt-4">
-              <Plus className="mr-2 h-4 w-4" />
-              Create a new project
-            </Button>
-            <RecommendedProjects subscribedIds={subscribedProjectIds} onSubscribe={() => void refresh()} />
-          </div>
+          <EntityOnboardingEmptyState
+            icon={FolderKanban}
+            title="Projects"
+            description="You have no projects yet."
+            searchSlot={<InlineProjectSearch subscribedIds={subscribedProjectIds} />}
+            primaryActionSlot={(
+              <Button variant="outline" onClick={openCreateDialog}>
+                <Plus className="mr-2 h-4 w-4" />
+                Create a new project
+              </Button>
+            )}
+            secondarySlot={(
+              <RecommendedProjects
+                subscribedIds={subscribedProjectIds}
+                onSubscribe={() => void refresh()}
+              />
+            )}
+          />
         ) : (
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {projects.map((project) => (

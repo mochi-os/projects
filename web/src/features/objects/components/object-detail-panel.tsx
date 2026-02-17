@@ -3,7 +3,7 @@
 
 import { useState, useMemo } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { Eye, EyeOff, Loader2, Trash2, MessageSquare, Activity, Settings2, GitPullRequest, X } from "lucide-react";
+import { Eye, EyeOff, Trash2, MessageSquare, Activity, Settings2, GitPullRequest, X } from "lucide-react";
 import {
   Button,
   Input,
@@ -17,7 +17,8 @@ import {
   SelectTrigger,
   SelectValue,
   cn,
-  getErrorMessage,
+  GeneralError,
+  ListSkeleton,
 } from "@mochi/common";
 import projectsApi from "@/api/projects";
 import type { ProjectAccess, ProjectDetails } from "@/types";
@@ -207,9 +208,8 @@ export function ObjectDetailPanel({
     return (
       <Sheet open={true} onOpenChange={handleClose} modal={false}>
         <SheetContent className="w-full sm:max-w-2xl p-0 gap-0">
-          <div className="flex-1 flex items-center justify-center">
-            <Loader2 className="size-6 animate-spin text-muted-foreground" />
-            <span className="text-xs text-muted-foreground ml-2">Loading details...</span>
+          <div className="p-6">
+            <ListSkeleton variant="simple" height="h-12" count={3} />
           </div>
         </SheetContent>
       </Sheet>
@@ -220,9 +220,7 @@ export function ObjectDetailPanel({
     return (
       <Sheet open={true} onOpenChange={handleClose} modal={false}>
         <SheetContent className="w-full sm:max-w-2xl p-6">
-          <div className="text-destructive text-sm bg-destructive/10 p-3 rounded-md">
-            {getErrorMessage(error, "Failed to load object")}
-          </div>
+          <GeneralError error={error ?? new Error("Failed to load object")} minimal mode="inline" />
         </SheetContent>
       </Sheet>
     );

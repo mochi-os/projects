@@ -1368,15 +1368,14 @@ def action_object_create(a):
 		})
 		if result and result.get("data"):
 			d = result["data"]
-			obj = d.get("object", {})
-			if obj.get("id"):
+			if d.get("id"):
 				now = mochi.time.now()
 				mochi.db.execute(
 					"insert or ignore into objects (id, project, class, number, parent, rank, created, updated) values (?, ?, ?, ?, ?, ?, ?, ?)",
-					obj["id"], project_id, obj.get("class", ""), obj.get("number", 0), obj.get("parent", ""), obj.get("rank", 0), now, now
+					d["id"], project_id, obj_class, d.get("number", 0), parent, 0, now, now
 				)
 				if title and title_field:
-					mochi.db.execute("insert or replace into \"values\" (object, field, value) values (?, ?, ?)", obj["id"], title_field, title)
+					mochi.db.execute("insert or replace into \"values\" (object, field, value) values (?, ?, ?)", d["id"], title_field, title)
 				# Update local counter
 				mochi.db.execute("update projects set counter=counter+1, updated=? where id=?", now, project_id)
 		return result
@@ -4898,15 +4897,20 @@ def event_object_create(e):
 	project_id = verify_subscription(e)
 	if not project_id:
 		return
+	object_id = e.content("id")
 	mochi.db.execute(
 		"insert or ignore into objects (id, project, class, number, parent, rank, created, updated) values (?, ?, ?, ?, ?, ?, ?, ?)",
-		e.content("id"), project_id, e.content("class") or "",
+		object_id, project_id, e.content("class") or "",
 		e.content("number") or 0, e.content("parent") or "", e.content("rank") or 0,
 		e.content("created") or mochi.time.now(), e.content("updated") or mochi.time.now()
 	)
+	# Store field values included in the broadcast
+	values = e.content("values") or {}
+	for field, value in values.items():
+		mochi.db.execute("insert or replace into \"values\" (object, field, value) values (?, ?, ?)", object_id, field, value)
 	fp = mochi.entity.fingerprint(project_id)
 	if fp:
-		mochi.websocket.write(fp, {"type": "object/create", "project": project_id, "id": e.content("id")})
+		mochi.websocket.write(fp, {"type": "object/create", "project": project_id, "id": object_id})
 
 # Object updated
 def event_object_update(e):

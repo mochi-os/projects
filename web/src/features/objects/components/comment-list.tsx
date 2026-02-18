@@ -3,11 +3,13 @@
 
 import { useState, useRef } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { Loader2, Paperclip, Send, X } from "lucide-react";
+import { MessageSquare, Paperclip, Send, X } from "lucide-react";
 import {
   Button,
+  EmptyState,
   toast,
   getErrorMessage,
+  ListSkeleton,
   useAuthStore,
 } from "@mochi/common";
 import projectsApi from "@/api/projects";
@@ -159,9 +161,7 @@ export function CommentList({
 
   if (isLoading) {
     return (
-      <div className="flex justify-center py-4">
-        <Loader2 className="size-5 animate-spin text-muted-foreground" />
-      </div>
+      <ListSkeleton count={3} variant="simple" height="h-12" />
     );
   }
 
@@ -244,9 +244,12 @@ export function CommentList({
       )}
 
       {comments.length === 0 ? (
-        <div className="text-sm text-muted-foreground text-center py-4">
-          No comments yet
-        </div>
+        <EmptyState
+          icon={MessageSquare}
+          title="No comments yet"
+          description="Start the discussion by adding the first comment."
+          className="py-4"
+        />
       ) : (
         <div className="space-y-1">
           {comments.map((comment) => (

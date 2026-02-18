@@ -2,6 +2,8 @@
 // Copyright Alistair Cunningham 2026
 
 import { useState, useMemo, useEffect, useLayoutEffect, useCallback, useRef } from "react";
+import { EmptyState } from "@mochi/common";
+import { Folder } from 'lucide-react';
 import { TreeRow } from "./tree-row";
 import type { ProjectDetails, ProjectObject, SortState } from "@/types";
 
@@ -361,9 +363,7 @@ export function TreeView({
 
   if (objects.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center py-12 text-muted-foreground">
-        <p>No items found</p>
-      </div>
+      <EmptyState icon={Folder} title="No items found" className="py-12" />
     );
   }
 

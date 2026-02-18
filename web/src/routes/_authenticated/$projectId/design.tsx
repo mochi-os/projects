@@ -24,6 +24,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
   GeneralError,
+  ListSkeleton,
   Main,
   PageHeader,
   toast,
@@ -116,8 +117,8 @@ function DesignPage() {
 
   if (isLoading) {
     return (
-      <Main className="flex items-center justify-center">
-        <p className="text-muted-foreground">Loading...</p>
+      <Main>
+        <ListSkeleton count={3} />
       </Main>
     );
   }

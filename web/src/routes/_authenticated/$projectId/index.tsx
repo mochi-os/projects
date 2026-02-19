@@ -781,7 +781,7 @@ function ProjectPage() {
           </Button>
         </div>
       )}
-      <Main fluid className="flex flex-col min-h-0 min-w-0 flex-1 !py-0">
+      <Main fluid className="flex flex-col min-h-0 min-w-0 flex-1 !p-0">
         {/* Content area */}
         <div className={activeView?.viewtype === "list" ? "flex-1 min-h-0 overflow-auto" : "flex-1 min-h-0 overflow-x-auto"}>
           {activeView?.viewtype === "list" ? (
@@ -799,7 +799,7 @@ function ProjectPage() {
               />
             </div>
           ) : (
-            <div className="pl-2 pr-4">
+            <div className="px-4 w-fit min-w-full">
               <BoardContainer
                 project={project}
                 objects={filteredObjects}

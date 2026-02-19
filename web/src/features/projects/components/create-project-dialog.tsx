@@ -13,8 +13,6 @@ import {
   Switch,
   toast,
   getErrorMessage,
-  RadioGroup,
-  RadioGroupItem,
 } from "@mochi/common";
 import { ArrowLeft, ArrowRight, Check, File, FolderKanban, LayoutGrid, Plus, Ticket, Zap } from "lucide-react";
 import { cn } from "@mochi/common";
@@ -234,11 +232,7 @@ export function CreateProjectDialog({
                   Loading templates...
                 </div>
               ) : (
-                <RadioGroup
-                  value={selectedTemplate}
-                  onValueChange={setSelectedTemplate}
-                  className="grid grid-cols-1 gap-3"
-                >
+                <div className="grid grid-cols-1 gap-3">
                   {sortedTemplates.map((template) => {
                     const isSelected = selectedTemplate === template.id;
                     const IconComponent = {
@@ -258,11 +252,6 @@ export function CreateProjectDialog({
                         )}
                         onClick={() => setSelectedTemplate(template.id)}
                       >
-                        <RadioGroupItem
-                          value={template.id}
-                          id={template.id}
-                          className="sr-only"
-                        />
                         <div
                           className={cn(
                             "mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-lg transition-colors",
@@ -275,12 +264,9 @@ export function CreateProjectDialog({
                         </div>
                         <div className="flex flex-col gap-1.5 flex-1">
                           <div className="flex items-center gap-2">
-                            <Label
-                              htmlFor={template.id}
-                              className="cursor-pointer text-base font-semibold leading-none"
-                            >
+                            <span className="cursor-pointer text-base font-semibold leading-none">
                               {template.name}
-                            </Label>
+                            </span>
                             {isSelected && (
                               <div className="flex size-4 items-center justify-center rounded-full bg-primary text-primary-foreground">
                                 <Check className="size-3 stroke-[3]" />
@@ -294,7 +280,7 @@ export function CreateProjectDialog({
                       </div>
                     );
                   })}
-                </RadioGroup>
+                </div>
               )}
             </div>
 

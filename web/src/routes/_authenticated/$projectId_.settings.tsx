@@ -48,7 +48,7 @@ import type { ProjectDetails } from "@/types";
 import { useProjectsStore } from "@/stores/projects-store";
 
 // Characters disallowed in project names (matches backend validation)
-const DISALLOWED_NAME_CHARS = /[<>\r\n\\;"'`]/;
+const DISALLOWED_NAME_CHARS = /[<>\r\n]/;
 
 type TabId = "general" | "access";
 
@@ -401,7 +401,7 @@ function validateName(name: string): string | null {
   if (!name.trim()) return "Project name is required";
   if (name.length > 1000) return "Name must be 1000 characters or less";
   if (DISALLOWED_NAME_CHARS.test(name))
-    return "Name cannot contain < > \\ ; \" ' or ` characters";
+    return "Name cannot contain < or > characters";
   return null;
 }
 

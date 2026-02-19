@@ -83,6 +83,22 @@ export function ObjectDetailPanel({
       return response.data;
     },
     enabled: !!objectId,
+    // Use cached objects list as placeholder so the panel renders immediately
+    placeholderData: () => {
+      const cached = queryClient.getQueryData<{ objects: Array<{ id: string; project: string; class: string; number: number; parent: string; rank: number; created: number; updated: number; values: Record<string, string> }>; watched?: string[] }>(["objects", projectId]);
+      if (!cached || !objectId) return undefined;
+      const obj = cached.objects.find((o) => o.id === objectId);
+      if (!obj) return undefined;
+      return {
+        object: { ...obj, readable: `${project.project.prefix}-${obj.number}` },
+        values: obj.values,
+        links: [],
+        linked_by: [],
+        watching: cached.watched?.includes(objectId) ?? false,
+        prs: [],
+        comment_count: 0,
+      };
+    },
   });
 
   // Fetch project members for the owner picker
@@ -264,7 +280,7 @@ export function ObjectDetailPanel({
 
   return (
     <Sheet open={true} onOpenChange={handleClose} modal={false}>
-      <SheetContent className="w-full sm:max-w-2xl p-0 gap-0 [&>button:last-child]:hidden">
+      <SheetContent className="w-full sm:max-w-3xl p-0 gap-0 [&>button:last-child]:hidden">
         {/* Header */}
         <div className="flex items-center gap-3 px-6 py-4 border-b shrink-0">
           {editingTitle && canWrite(access) ? (

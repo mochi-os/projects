@@ -2,7 +2,7 @@
 // Copyright Alistair Cunningham 2026
 
 {
-	"version": "1.24",
+	"version": "1.32",
 	"label": "app_name",
 	"classes": ["project"],
 	"paths": ["projects"],
@@ -12,7 +12,7 @@
 	"execute": ["projects.star"],
 
 	"database": {
-		"schema": 5,
+		"schema": 6,
 		"file": "projects.db",
 		"create": {"function": "database_create"},
 		"upgrade": {"function": "database_upgrade"}
@@ -28,6 +28,8 @@
 		"search": {"file": "web/dist/index.html"},
 		"assets": {"files": "web/dist/assets", "public": true},
 		"images": {"files": "web/dist/images", "public": true},
+		":project/assets": {"files": "web/dist/assets", "public": true},
+		":project/images": {"files": "web/dist/images", "public": true},
 
 		"-/list": {"function": "action_project_list"},
 		"-/create": {"function": "action_project_create"},

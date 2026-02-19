@@ -30,6 +30,8 @@ def database_create():
 		owner integer not null default 1,
 		server text not null default '',
 		fingerprint text not null default '',
+		template text not null default '',
+		template_version integer not null default 0,
 		created integer not null,
 		updated integer not null
 	)""")
@@ -292,6 +294,13 @@ def database_upgrade(version):
 		for p in projects:
 			fp = mochi.entity.fingerprint(p["id"]) or ""
 			mochi.db.execute("update projects set fingerprint=? where id=?", fp, p["id"])
+
+	if version == 6:
+		# Fix databases created with buggy database_create() that missed template columns
+		has_template = mochi.db.row("select count(*) as n from pragma_table_info('projects') where name='template'")
+		if has_template["n"] == 0:
+			mochi.db.execute("alter table projects add column template text not null default ''")
+			mochi.db.execute("alter table projects add column template_version integer not null default 0")
 
 
 # ============================================================================
@@ -1193,9 +1202,6 @@ def get_object_display(project, obj, object_id):
 	title_field = title_field_row["title"] if title_field_row else ""
 	title_row = mochi.db.row("select value from \"values\" where object=? and field=?", object_id, title_field) if title_field else None
 	obj_title = title_row["value"] if title_row else ""
-	if not obj_title:
-		prefix = project["prefix"] if project else ""
-		obj_title = prefix + "-" + str(obj["number"]) if obj and prefix else ""
 	return project["name"] + " - " + obj_title if obj_title else project["name"]
 
 def notify_watchers(object_id, project_id, local_identity, user_id, body):
@@ -1362,15 +1368,14 @@ def action_object_create(a):
 		})
 		if result and result.get("data"):
 			d = result["data"]
-			obj = d.get("object", {})
-			if obj.get("id"):
+			if d.get("id"):
 				now = mochi.time.now()
 				mochi.db.execute(
 					"insert or ignore into objects (id, project, class, number, parent, rank, created, updated) values (?, ?, ?, ?, ?, ?, ?, ?)",
-					obj["id"], project_id, obj.get("class", ""), obj.get("number", 0), obj.get("parent", ""), obj.get("rank", 0), now, now
+					d["id"], project_id, obj_class, d.get("number", 0), parent, 0, now, now
 				)
 				if title and title_field:
-					mochi.db.execute("insert or replace into \"values\" (object, field, value) values (?, ?, ?)", obj["id"], title_field, title)
+					mochi.db.execute("insert or replace into \"values\" (object, field, value) values (?, ?, ?)", d["id"], title_field, title)
 				# Update local counter
 				mochi.db.execute("update projects set counter=counter+1, updated=? where id=?", now, project_id)
 		return result
@@ -4892,15 +4897,20 @@ def event_object_create(e):
 	project_id = verify_subscription(e)
 	if not project_id:
 		return
+	object_id = e.content("id")
 	mochi.db.execute(
 		"insert or ignore into objects (id, project, class, number, parent, rank, created, updated) values (?, ?, ?, ?, ?, ?, ?, ?)",
-		e.content("id"), project_id, e.content("class") or "",
+		object_id, project_id, e.content("class") or "",
 		e.content("number") or 0, e.content("parent") or "", e.content("rank") or 0,
 		e.content("created") or mochi.time.now(), e.content("updated") or mochi.time.now()
 	)
+	# Store field values included in the broadcast
+	values = e.content("values") or {}
+	for field, value in values.items():
+		mochi.db.execute("insert or replace into \"values\" (object, field, value) values (?, ?, ?)", object_id, field, value)
 	fp = mochi.entity.fingerprint(project_id)
 	if fp:
-		mochi.websocket.write(fp, {"type": "object/create", "project": project_id, "id": e.content("id")})
+		mochi.websocket.write(fp, {"type": "object/create", "project": project_id, "id": object_id})
 
 # Object updated
 def event_object_update(e):
@@ -6166,16 +6176,12 @@ def do_object_create(project_id, project, params, user_id):
 	# Notify owner when subscriber creates an object
 	owner_id = get_owner_identity(project_id)
 	if owner_id and owner_id != user_id:
-		readable = project["prefix"] + "-" + str(new_counter)
-		title_field_row = mochi.db.row("select title from classes where project=? and id=?", project_id, params.get("class", ""))
-		title_field = title_field_row["title"] if title_field_row else ""
-		title_row = mochi.db.row("select value from \"values\" where object=? and field=?", object_id, title_field) if title_field else None
-		obj_title = title_row["value"] if title_row else ""
+		obj = mochi.db.row("select number, class from objects where id=?", object_id)
+		display = get_object_display(project, obj, object_id)
 		fp = mochi.entity.fingerprint(project_id)
 		url = "/projects/" + fp if fp else "/projects"
-		display = readable + " " + obj_title + " — created" if obj_title else readable + " created"
 		mochi.service.call("notifications", "send", "update",
-			display, "New object created", object_id, url)
+			display, "Created", object_id, url)
 	return {"id": object_id, "number": new_counter,
 			"readable": project["prefix"] + "-" + str(new_counter)}
 
@@ -6684,6 +6690,8 @@ def do_field_create(project_id, project, params):
 def rename_field_id(project_id, class_id, old_id, new_id):
 	mochi.db.execute("update fields set id=? where project=? and class=? and id=?", new_id, project_id, class_id, old_id)
 	mochi.db.execute("update options set field=? where project=? and class=? and field=?", new_id, project_id, class_id, old_id)
+	# Delete orphaned values that already use the new field id to avoid unique constraint violations
+	mochi.db.execute('delete from "values" where field=? and object in (select id from objects where project=? and class=?) and object in (select object from "values" where field=?)', new_id, project_id, class_id, old_id)
 	mochi.db.execute('update "values" set field=? where field=? and object in (select id from objects where project=? and class=?)', new_id, old_id, project_id, class_id)
 	mochi.db.execute("update view_fields set field=? where project=? and field=?", new_id, project_id, old_id)
 	mochi.db.execute("update activity set field=? where field=? and object in (select id from objects where project=? and class=?)", new_id, old_id, project_id, class_id)

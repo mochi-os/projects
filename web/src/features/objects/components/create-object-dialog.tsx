@@ -174,8 +174,9 @@ export function CreateObjectDialog({
 
       // Set all field values (skip title — already sent in create call)
       const objectId = response.data.id;
+      const validFields = new Set((project.fields[selectedClass] || []).map((f) => f.id));
       for (const [fieldId, value] of Object.entries(fieldValues)) {
-        if (fieldId !== titleFieldId && value) {
+        if (fieldId !== titleFieldId && value && validFields.has(fieldId)) {
           await projectsApi.setValue(project.project.id, objectId, fieldId, value);
         }
       }

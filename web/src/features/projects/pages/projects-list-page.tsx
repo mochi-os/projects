@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
@@ -59,8 +59,12 @@ export function ProjectsListPage() {
     staleTime: Infinity,
   });
 
+  // Show notification subscription dialog once on mount if user has projects but hasn't been asked
+  const promptedNotifications = useRef(false);
   useEffect(() => {
+    if (promptedNotifications.current) return;
     if (!isLoading && projects.length > 0 && subscriptionData?.data?.exists === false) {
+      promptedNotifications.current = true;
       setSubscribeOpen(true);
     }
   }, [isLoading, projects.length, subscriptionData?.data?.exists]);

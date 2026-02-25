@@ -28,6 +28,7 @@ import { CommentList } from "./comment-list";
 import { ActivityList } from "./activity-list";
 import { RequestPanel } from "@/features/requests";
 import { ObjectAttachments } from "./object-attachments";
+import { ObjectLinks } from "./object-links";
 
 interface ObjectDetailPanelProps {
   projectId: string;
@@ -92,8 +93,8 @@ export function ObjectDetailPanel({
       return {
         object: { ...obj, readable: `${project.project.prefix}-${obj.number}` },
         values: obj.values,
-        links: [],
-        linked_by: [],
+        outgoing: [],
+        incoming: [],
         watching: cached.watched?.includes(objectId) ?? false,
         requests: [],
         comment_count: 0,
@@ -445,6 +446,16 @@ export function ObjectDetailPanel({
               <ObjectAttachments
                 projectId={projectId}
                 objectId={objectId!}
+                readOnly={!canWrite(access)}
+              />
+
+              <ObjectLinks
+                projectId={projectId}
+                objectId={objectId!}
+                outgoing={data.outgoing}
+                incoming={data.incoming}
+                prefix={project.project.prefix}
+                classes={project.classes}
                 readOnly={!canWrite(access)}
               />
             </div>

@@ -196,8 +196,8 @@ export interface ObjectGetResponse {
   data: {
     object: ProjectObject & { readable: string };
     values: Record<string, string>;
-    links: ObjectLink[];
-    linked_by: ObjectLink[];
+    outgoing: ObjectLink[];
+    incoming: ObjectLink[];
     watching: boolean;
     requests: RequestData[];
     comment_count: number;

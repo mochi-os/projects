@@ -70,15 +70,15 @@ const endpoints = {
     ) =>
       `${projectId}/-/objects/${objectId}/attachments/${attachmentId}/delete`,
 
-    // Pull request endpoints
-    prs: (projectId: string, objectId: string) =>
-      `${projectId}/-/objects/${objectId}/prs`,
-    prCreate: (projectId: string, objectId: string) =>
-      `${projectId}/-/objects/${objectId}/prs/create`,
-    prUpdate: (projectId: string, objectId: string, prId: string) =>
-      `${projectId}/-/objects/${objectId}/prs/${prId}/update`,
-    prDelete: (projectId: string, objectId: string, prId: string) =>
-      `${projectId}/-/objects/${objectId}/prs/${prId}/delete`,
+    // Request endpoints
+    requests: (projectId: string, objectId: string) =>
+      `${projectId}/-/objects/${objectId}/requests`,
+    requestCreate: (projectId: string, objectId: string) =>
+      `${projectId}/-/objects/${objectId}/requests/create`,
+    requestUpdate: (projectId: string, objectId: string, requestId: string) =>
+      `${projectId}/-/objects/${objectId}/requests/${requestId}/update`,
+    requestDelete: (projectId: string, objectId: string, requestId: string) =>
+      `${projectId}/-/objects/${objectId}/requests/${requestId}/delete`,
 
     // Activity endpoint
     activity: (projectId: string, objectId: string) =>
@@ -160,7 +160,7 @@ const endpoints = {
     diffPreference: "-/diff/preference",
     diffPreferenceSet: "-/diff/preference/set",
 
-    // Repository integration endpoints (for Pull Requests)
+    // Repository integration endpoints (for merge requests)
     repositories: "-/repositories",
     repositoryBranches: (repoId: string) => `-/repositories/${repoId}/branches`,
     repositoryMergeCheck: (repoId: string) =>

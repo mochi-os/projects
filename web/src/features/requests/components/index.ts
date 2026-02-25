@@ -1,4 +1,4 @@
-// Mochi Projects: PR components exports
+// Mochi Projects: Request components exports
 // Copyright Alistair Cunningham 2026
 
 export { RepositorySelect } from "./repository-select";
@@ -8,4 +8,4 @@ export { DiffStats } from "./diff-stats";
 export { ConflictList } from "./conflict-list";
 export { MergeButton } from "./merge-button";
 export { DiffViewer } from "./diff-viewer";
-export { PrPanel } from "./pr-panel";
+export { RequestPanel } from "./request-panel";

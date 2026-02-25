@@ -94,8 +94,8 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
 
   // Class mutations
   const createClassMutation = useMutation({
-    mutationFn: ({ name, pull_requests }: { name: string; pull_requests?: string }) =>
-      projectsApi.createClass(projectId, { name, pull_requests }),
+    mutationFn: ({ name, requests }: { name: string; requests?: string }) =>
+      projectsApi.createClass(projectId, { name, requests }),
     onSuccess: (data) => {
       invalidateProject();
       setSelectedClassId(data.data.id);
@@ -106,8 +106,8 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
   });
 
   const updateClassMutation = useMutation({
-    mutationFn: ({ classId, name, pull_requests, title }: { classId: string; name: string; pull_requests?: string; title?: string }) =>
-      projectsApi.updateClass(projectId, classId, { name, pull_requests, title }),
+    mutationFn: ({ classId, name, requests, title }: { classId: string; name: string; requests?: string; title?: string }) =>
+      projectsApi.updateClass(projectId, classId, { name, requests, title }),
     onSuccess: invalidateProject,
   });
 
@@ -357,8 +357,8 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
   };
 
   // Create class with chained API calls
-  const handleCreateClass = async (name: string, parents: string[], pendingFields: PendingField[], pullRequests: boolean) => {
-    const result = await createClassMutation.mutateAsync({ name, pull_requests: pullRequests ? "1" : undefined });
+  const handleCreateClass = async (name: string, parents: string[], pendingFields: PendingField[], mergeRequests: boolean) => {
+    const result = await createClassMutation.mutateAsync({ name, requests: mergeRequests ? "merge" : undefined });
     const classId = result.data?.id;
     if (!classId) return;
 
@@ -645,9 +645,9 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
         classes={project.classes}
         hierarchy={hierarchy}
         fields={selectedFields}
-        onUpdate={(name, pull_requests, title) => {
+        onUpdate={(name, requests, title) => {
           if (selectedClassId) {
-            updateClassMutation.mutate({ classId: selectedClassId, name, pull_requests, title });
+            updateClassMutation.mutate({ classId: selectedClassId, name, requests, title });
           }
         }}
         onUpdateHierarchy={(parents) => {

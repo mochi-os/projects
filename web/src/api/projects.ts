@@ -18,7 +18,7 @@ import type {
   WatcherListResponse,
   LinkListResponse,
   Comment,
-  PrData,
+  RequestData,
   RepositoryListResponse,
   BranchListResponse,
   MergeCheckResponse,
@@ -145,13 +145,13 @@ interface ClassCreateResponse {
 
 interface CreateClassRequest {
   name: string;
-  pull_requests?: string;
+  requests?: string;
   title?: string;
 }
 
 interface UpdateClassRequest {
   name?: string;
-  pull_requests?: string;
+  requests?: string;
   title?: string;
 }
 
@@ -868,51 +868,51 @@ const projectsApi = {
     );
   },
 
-  // ============= Pull Request Methods =============
+  // ============= Request Methods =============
 
-  // List pull requests for an object
-  listPrs: async (
+  // List requests for an object
+  listRequests: async (
     projectId: string,
     objectId: string,
-  ): Promise<{ data: { prs: PrData[] } }> => {
+  ): Promise<{ data: { requests: RequestData[] } }> => {
     return projectsRequest.get(
-      endpoints.projects.prs(projectId, objectId),
+      endpoints.projects.requests(projectId, objectId),
     );
   },
 
-  // Create a pull request
-  createPr: async (
+  // Create a request
+  createRequest: async (
     projectId: string,
     objectId: string,
-    data: { repository?: string; source?: string; target?: string; title?: string; description?: string; draft?: number },
-  ): Promise<{ data: PrData }> => {
+    data: { type?: string; repository?: string; source?: string; target?: string; title?: string; description?: string; draft?: number },
+  ): Promise<{ data: RequestData }> => {
     return projectsRequest.post(
-      endpoints.projects.prCreate(projectId, objectId),
+      endpoints.projects.requestCreate(projectId, objectId),
       data,
     );
   },
 
-  // Update a pull request
-  updatePr: async (
+  // Update a request
+  updateRequest: async (
     projectId: string,
     objectId: string,
-    prId: string,
+    requestId: string,
     data: { repository?: string; source?: string; target?: string; status?: string; title?: string; description?: string; draft?: string },
-  ): Promise<{ data: PrData }> => {
+  ): Promise<{ data: RequestData }> => {
     return projectsRequest.post(
-      endpoints.projects.prUpdate(projectId, objectId, prId),
+      endpoints.projects.requestUpdate(projectId, objectId, requestId),
       data,
     );
   },
 
-  // Delete a pull request
-  deletePr: async (
+  // Delete a request
+  deleteRequest: async (
     projectId: string,
     objectId: string,
-    prId: string,
+    requestId: string,
   ): Promise<SuccessResponse> => {
     return projectsRequest.post(
-      endpoints.projects.prDelete(projectId, objectId, prId),
+      endpoints.projects.requestDelete(projectId, objectId, requestId),
     );
   },
 
@@ -930,7 +930,7 @@ const projectsApi = {
     });
   },
 
-  // ============= Repository Methods (for Pull Requests) =============
+  // ============= Repository Methods (for merge requests) =============
 
   // List available repositories
   listRepositories: async (): Promise<RepositoryListResponse> => {

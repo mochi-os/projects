@@ -53,7 +53,7 @@ def database_create():
 		id text not null,
 		name text not null,
 		rank integer not null default 0,
-		pull_requests integer not null default 0,
+		requests text not null default '',
 		title text not null default '',
 		primary key (project, id)
 	)""")
@@ -227,10 +227,11 @@ def database_create():
 	)""")
 	mochi.db.execute("create index if not exists watchers_user on watchers(user)")
 
-	# 16. pull_requests - pull requests attached to objects
-	mochi.db.execute("""create table if not exists pull_requests (
+	# 16. requests - merge requests (and future request types) attached to objects
+	mochi.db.execute("""create table if not exists requests (
 		id text primary key,
 		object text not null references objects(id),
+		type text not null default '',
 		repository text not null default '',
 		source text not null default '',
 		target text not null default '',
@@ -241,7 +242,7 @@ def database_create():
 		created integer not null,
 		updated integer not null
 	)""")
-	mochi.db.execute("create index if not exists pull_requests_object on pull_requests(object)")
+	mochi.db.execute("create index if not exists requests_object on requests(object)")
 
 	# Migrations
 	mochi.db.execute("update views set viewtype='list' where viewtype='tree'")
@@ -302,6 +303,17 @@ def database_upgrade(version):
 			mochi.db.execute("alter table projects add column template text not null default ''")
 			mochi.db.execute("alter table projects add column template_version integer not null default 0")
 
+	if version == 7:
+		# Rename classes.pull_requests (integer 0/1) to classes.requests (text)
+		mochi.db.execute("alter table classes add column requests text not null default ''")
+		mochi.db.execute("update classes set requests='merge' where pull_requests=1")
+
+		# Rename pull_requests table to requests, add type column
+		mochi.db.execute("alter table pull_requests rename to requests")
+		mochi.db.execute("alter table requests add column type text not null default ''")
+		mochi.db.execute("update requests set type='merge'")
+		mochi.db.execute("create index if not exists requests_object on requests(object)")
+
 
 # ============================================================================
 # Templates
@@ -335,8 +347,8 @@ def apply_template(project_id, template_id, data=None):
 	# Create classes
 	for t in data.get("classes", []):
 		mochi.db.execute(
-			"insert into classes (project, id, name, rank, pull_requests, title) values (?, ?, ?, ?, ?, ?)",
-			project_id, t["id"], t["name"], t.get("rank", 0), t.get("pull_requests", 0), t.get("title", "title")
+			"insert into classes (project, id, name, rank, requests, title) values (?, ?, ?, ?, ?, ?)",
+			project_id, t["id"], t["name"], t.get("rank", 0), t.get("requests", ""), t.get("title", "title")
 		)
 
 	# Set hierarchy for each class
@@ -417,13 +429,13 @@ def action_design_export(a):
 
 	# Read classes
 	classes = []
-	class_rows = mochi.db.rows("select id, name, rank, pull_requests, title from classes where project=? order by rank", project_id) or []
+	class_rows = mochi.db.rows("select id, name, rank, requests, title from classes where project=? order by rank", project_id) or []
 	for c in class_rows:
 		classes.append({
 			"id": c["id"],
 			"name": c["name"],
 			"rank": c["rank"],
-			"pull_requests": c["pull_requests"],
+			"requests": c["requests"],
 			"title": c["title"],
 		})
 
@@ -664,7 +676,7 @@ def action_project_create(a):
 	if len(description) > 10000:
 		a.error(400, "Description too long")
 		return
-	if len(prefix) > 10:
+	if len(prefix) > 20:
 		a.error(400, "Prefix too long")
 		return
 
@@ -720,7 +732,7 @@ def action_project_get(a):
 		return
 
 	# Get classes
-	classes = mochi.db.rows("select id, name, rank, pull_requests, title from classes where project=? order by rank", project_id) or []
+	classes = mochi.db.rows("select id, name, rank, requests, title from classes where project=? order by rank", project_id) or []
 
 	# Get fields by class
 	fields = {}
@@ -855,7 +867,7 @@ def action_project_update(a):
 		mochi.db.execute("update projects set description=?, updated=? where id=?", description, now, project_id)
 
 	if prefix:
-		if len(prefix) > 10:
+		if len(prefix) > 20:
 			a.error(400, "Prefix too long")
 			return
 		mochi.db.execute("update projects set prefix=?, updated=? where id=?", prefix, now, project_id)
@@ -900,7 +912,7 @@ def action_project_delete(a):
 	mochi.db.execute("delete from activity where object in (select id from objects where project=?)", project_id)
 	mochi.db.execute("delete from comments where object in (select id from objects where project=?)", project_id)
 	mochi.db.execute("delete from \"values\" where object in (select id from objects where project=?)", project_id)
-	mochi.db.execute("delete from pull_requests where object in (select id from objects where project=?)", project_id)
+	mochi.db.execute("delete from requests where object in (select id from objects where project=?)", project_id)
 	mochi.db.execute("delete from links where project=?", project_id)
 	mochi.db.execute("delete from objects where project=?", project_id)
 	mochi.db.execute("delete from view_fields where project=?", project_id)
@@ -1252,7 +1264,7 @@ def delete_object_cascade(project_id, object_id, user=""):
 		delete_object_cascade(project_id, child["id"], user)
 
 	# Then delete this object's related data
-	mochi.db.execute("delete from pull_requests where object=?", object_id)
+	mochi.db.execute("delete from requests where object=?", object_id)
 	mochi.attachment.clear(object_id)
 	mochi.db.execute("delete from watchers where object=?", object_id)
 	mochi.db.execute("delete from activity where object=?", object_id)
@@ -1490,8 +1502,8 @@ def action_object_get(a):
 	if watching:
 		mochi.service.call("notifications", "clear.object", "projects", object_id)
 
-	# Get pull requests
-	prs = mochi.db.rows("select id, object, repository, source, target, status, title, description, draft, created, updated from pull_requests where object=?", object_id) or []
+	# Get requests (merge requests etc.)
+	requests = mochi.db.rows("select id, object, type, repository, source, target, status, title, description, draft, created, updated from requests where object=?", object_id) or []
 
 	# Get comment count
 	comment_row = mochi.db.row("select count(*) as count from comments where object=?", object_id)
@@ -1512,7 +1524,7 @@ def action_object_get(a):
 		"links": links,
 		"linked_by": linked_by,
 		"watching": watching,
-		"prs": prs,
+		"requests": requests,
 		"comment_count": comment_count,
 	}}
 
@@ -3121,7 +3133,7 @@ def action_class_create(a):
 	if project["owner"] != 1:
 		return forward_to_owner(a, project_id, "class/create", {
 			"project": project_id, "name": a.input("name"),
-			"pull_requests": a.input("pull_requests") or "0",
+			"requests": a.input("requests") or "",
 		})
 
 	if not check_project_access(a.user.identity.id, project_id, "design"):
@@ -3149,11 +3161,11 @@ def action_class_create(a):
 	max_rank = mochi.db.row("select max(rank) as m from classes where project=?", project_id)
 	rank = (max_rank["m"] or 0) + 1 if max_rank else 0
 
-	pr_flag = 1 if a.input("pull_requests") == "1" else 0
+	requests = a.input("requests") or ""
 
 	mochi.db.execute(
-		"insert into classes (project, id, name, rank, pull_requests, title) values (?, ?, ?, ?, ?, ?)",
-		project_id, class_id, name.strip(), rank, pr_flag, "title"
+		"insert into classes (project, id, name, rank, requests, title) values (?, ?, ?, ?, ?, ?)",
+		project_id, class_id, name.strip(), rank, requests, "title"
 	)
 
 	# Add default title field
@@ -3169,7 +3181,7 @@ def action_class_create(a):
 	)
 
 	broadcast_event(project_id, "class/create", {
-		"project": project_id, "id": class_id, "name": name.strip(), "rank": rank, "pull_requests": pr_flag, "title": "title"
+		"project": project_id, "id": class_id, "name": name.strip(), "rank": rank, "requests": requests, "title": "title"
 	})
 
 	return {"data": {"id": class_id, "name": name.strip(), "rank": rank}}
@@ -3191,9 +3203,9 @@ def action_class_update(a):
 		n = a.input("name")
 		if n:
 			params["name"] = n
-		pr = a.input("pull_requests")
-		if pr:
-			params["pull_requests"] = pr
+		req = a.input("requests")
+		if req:
+			params["requests"] = req
 		t = a.input("title")
 		if t:
 			params["title"] = t
@@ -3217,10 +3229,10 @@ def action_class_update(a):
 	if name:
 		mochi.db.execute("update classes set name=? where project=? and id=?", name.strip(), project_id, class_id)
 
-	pr_input = a.input("pull_requests")
-	if pr_input:
-		pr_flag = 1 if pr_input == "1" else 0
-		mochi.db.execute("update classes set pull_requests=? where project=? and id=?", pr_flag, project_id, class_id)
+	requests_input = a.input("requests")
+	if requests_input:
+		requests_value = "" if requests_input == "none" else requests_input
+		mochi.db.execute("update classes set requests=? where project=? and id=?", requests_value, project_id, class_id)
 
 	title_input = a.input("title")
 	if title_input:
@@ -3228,7 +3240,7 @@ def action_class_update(a):
 
 	broadcast_event(project_id, "class/update", {
 		"project": project_id, "id": class_id, "name": name or class_row["name"],
-		"pull_requests": class_row["pull_requests"] if not pr_input else (1 if pr_input == "1" else 0),
+		"requests": ("" if requests_input == "none" else requests_input) if requests_input else class_row["requests"],
 		"title": title_input or class_row["title"]
 	})
 
@@ -3952,7 +3964,7 @@ def action_option_reorder(a):
 def action_repositories_list(a):
 	"""List repositories the user has access to via the repositories service."""
 
-	result = mochi.service.call("repositories", "list", {})
+	result = mochi.service.call("repositories", "list")
 	if result == None:
 		return {"data": {"repositories": []}}
 	return {"data": {"repositories": result or []}}
@@ -4529,7 +4541,7 @@ def event_schema(e):
 		return
 
 	# Classes
-	classes = mochi.db.rows("select id, name, rank, pull_requests, title from classes where project=?", project_id) or []
+	classes = mochi.db.rows("select id, name, rank, requests, title from classes where project=?", project_id) or []
 
 	# Fields with class context
 	fields = []
@@ -4597,8 +4609,8 @@ def event_schema(e):
 def insert_schema(project_id, schema):
 	for c in (schema.get("classes") or []):
 		mochi.db.execute(
-			"insert or ignore into classes (id, project, name, rank, pull_requests, title) values (?, ?, ?, ?, ?, ?)",
-			c.get("id", ""), project_id, c.get("name", ""), c.get("rank", 0), c.get("pull_requests", 0), c.get("title", "")
+			"insert or ignore into classes (id, project, name, rank, requests, title) values (?, ?, ?, ?, ?, ?)",
+			c.get("id", ""), project_id, c.get("name", ""), c.get("rank", 0), c.get("requests", ""), c.get("title", "")
 		)
 	for f in (schema.get("fields") or []):
 		mochi.db.execute(
@@ -4672,7 +4684,7 @@ def send_project_data(project_id, subscriber_id):
 	types = mochi.db.rows("select * from classes where project=?", project_id)
 	for t in types:
 		h["event"] = "class/create"
-		mochi.message.send(h, {"project": project_id, "id": t["id"], "name": t["name"], "rank": t["rank"], "pull_requests": t["pull_requests"], "title": t["title"]})
+		mochi.message.send(h, {"project": project_id, "id": t["id"], "name": t["name"], "rank": t["rank"], "requests": t["requests"], "title": t["title"]})
 
 		# Send hierarchy for this class
 		parents = mochi.db.rows("select parent from hierarchy where project=? and class=?", project_id, t["id"])
@@ -5317,9 +5329,9 @@ def event_class_create(e):
 	if not project_id:
 		return
 	mochi.db.execute(
-		"insert or ignore into classes (id, project, name, rank, pull_requests, title) values (?, ?, ?, ?, ?, ?)",
+		"insert or ignore into classes (id, project, name, rank, requests, title) values (?, ?, ?, ?, ?, ?)",
 		e.content("id"), project_id, e.content("name") or "",
-		e.content("rank") or 0, e.content("pull_requests") or 0, e.content("title") or ""
+		e.content("rank") or 0, e.content("requests") or "", e.content("title") or ""
 	)
 	fp = mochi.entity.fingerprint(project_id)
 	if fp:
@@ -5336,9 +5348,9 @@ def event_class_update(e):
 	name = e.content("name")
 	if name != None:
 		mochi.db.execute("update classes set name=? where id=? and project=?", name, class_id, project_id)
-	pr = e.content("pull_requests")
-	if pr != None:
-		mochi.db.execute("update classes set pull_requests=? where id=? and project=?", pr, class_id, project_id)
+	requests = e.content("requests")
+	if requests != None:
+		mochi.db.execute("update classes set requests=? where id=? and project=?", requests, class_id, project_id)
 	title = e.content("title")
 	if title != None:
 		mochi.db.execute("update classes set title=? where id=? and project=?", title, class_id, project_id)
@@ -5600,11 +5612,11 @@ def event_merge_request(e):
 
 
 # ============================================================================
-# Pull Request Actions
+# Request Actions
 # ============================================================================
 
-# List pull requests for an object
-def action_pr_list(a):
+# List requests for an object
+def action_request_list(a):
 
 	project_id = resolve_project(a)
 	if not project_id:
@@ -5621,11 +5633,15 @@ def action_pr_list(a):
 		a.error(400, "Object ID required")
 		return
 
-	prs = mochi.db.rows("select id, object, repository, source, target, status, title, description, draft, created, updated from pull_requests where object=?", object_id) or []
-	return {"data": {"prs": prs}}
+	type = a.input("type") or ""
+	if type:
+		requests = mochi.db.rows("select id, object, type, repository, source, target, status, title, description, draft, created, updated from requests where object=? and type=?", object_id, type) or []
+	else:
+		requests = mochi.db.rows("select id, object, type, repository, source, target, status, title, description, draft, created, updated from requests where object=?", object_id) or []
+	return {"data": {"requests": requests}}
 
-# Create a pull request on an object
-def action_pr_create(a):
+# Create a request on an object
+def action_request_create(a):
 
 	project_id = resolve_project(a)
 	if not project_id:
@@ -5638,8 +5654,9 @@ def action_pr_create(a):
 		return
 
 	if project["owner"] != 1:
-		return forward_to_owner(a, project_id, "pr/create", {
+		return forward_to_owner(a, project_id, "request/create", {
 			"project": project_id, "object": a.input("object"),
+			"type": a.input("type") or "merge",
 			"repository": a.input("repository") or "",
 			"source": a.input("source") or "",
 			"target": a.input("target") or "",
@@ -5662,10 +5679,12 @@ def action_pr_create(a):
 		a.error(404, "Object not found")
 		return
 
-	# Verify class allows pull requests
-	cls = mochi.db.row("select pull_requests from classes where project=? and id=?", project_id, obj["class"])
-	if not cls or cls["pull_requests"] != 1:
-		a.error(400, "Pull requests not enabled for this class")
+	request_type = a.input("type") or "merge"
+
+	# Verify class allows this request type
+	cls = mochi.db.row("select requests from classes where project=? and id=?", project_id, obj["class"])
+	if not cls or request_type not in cls["requests"].split(","):
+		a.error(400, "Request type '" + request_type + "' not enabled for this class")
 		return
 
 	repository = a.input("repository")
@@ -5683,28 +5702,29 @@ def action_pr_create(a):
 		return
 
 	now = mochi.time.now()
-	pr_id = mochi.uid()
+	request_id = mochi.uid()
 
 	mochi.db.execute(
-		"insert into pull_requests (id, object, repository, source, target, status, title, description, draft, created, updated) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-		pr_id, object_id, repository or "", source or "", target or "", "open", title or "", description or "", draft, now, now
+		"insert into requests (id, object, type, repository, source, target, status, title, description, draft, created, updated) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+		request_id, object_id, request_type, repository or "", source or "", target or "", "open", title or "", description or "", draft, now, now
 	)
 
-	pr_data = {
-		"id": pr_id, "object": object_id, "repository": repository or "",
-		"source": source or "", "target": target or "", "status": "open",
+	request_data = {
+		"id": request_id, "object": object_id, "type": request_type,
+		"repository": repository or "", "source": source or "",
+		"target": target or "", "status": "open",
 		"title": title or "", "description": description or "", "draft": draft,
 		"created": now, "updated": now,
 	}
 
-	broadcast_event(project_id, "pull_request/create", {
-		"project": project_id, "pr": pr_data
+	broadcast_event(project_id, "request/create", {
+		"project": project_id, "request": request_data
 	})
 
-	return {"data": pr_data}
+	return {"data": request_data}
 
-# Update a pull request
-def action_pr_update(a):
+# Update a request
+def action_request_update(a):
 
 	project_id = resolve_project(a)
 	if not project_id:
@@ -5717,24 +5737,24 @@ def action_pr_update(a):
 		return
 
 	if project["owner"] != 1:
-		params = {"project": project_id, "object": a.input("object"), "pr": a.input("pr")}
+		params = {"project": project_id, "object": a.input("object"), "request": a.input("request")}
 		for k in ["repository", "source", "target", "status", "title", "description", "draft"]:
 			if a.input(k) != None:
 				params[k] = a.input(k)
-		return forward_to_owner(a, project_id, "pr/update", params)
+		return forward_to_owner(a, project_id, "request/update", params)
 
 	if not check_project_access(a.user.identity.id, project_id, "write"):
 		a.error(403, "Access denied")
 		return
 
-	pr_id = a.input("pr")
-	if not pr_id:
-		a.error(400, "PR ID required")
+	request_id = a.input("request")
+	if not request_id:
+		a.error(400, "Request ID required")
 		return
 
-	pr = mochi.db.row("select pr.* from pull_requests pr join objects o on pr.object=o.id where pr.id=? and o.project=?", pr_id, project_id)
-	if not pr:
-		a.error(404, "Pull request not found")
+	req = mochi.db.row("select r.* from requests r join objects o on r.object=o.id where r.id=? and o.project=?", request_id, project_id)
+	if not req:
+		a.error(404, "Request not found")
 		return
 
 	now = mochi.time.now()
@@ -5747,32 +5767,32 @@ def action_pr_update(a):
 	draft_input = a.input("draft")
 
 	if repository:
-		mochi.db.execute("update pull_requests set repository=?, updated=? where id=?", repository, now, pr_id)
+		mochi.db.execute("update requests set repository=?, updated=? where id=?", repository, now, request_id)
 	if source:
-		mochi.db.execute("update pull_requests set source=?, updated=? where id=?", source, now, pr_id)
+		mochi.db.execute("update requests set source=?, updated=? where id=?", source, now, request_id)
 	if target:
-		mochi.db.execute("update pull_requests set target=?, updated=? where id=?", target, now, pr_id)
+		mochi.db.execute("update requests set target=?, updated=? where id=?", target, now, request_id)
 	if status:
-		mochi.db.execute("update pull_requests set status=?, updated=? where id=?", status, now, pr_id)
+		mochi.db.execute("update requests set status=?, updated=? where id=?", status, now, request_id)
 	if a.input("title") != None and title:
-		mochi.db.execute("update pull_requests set title=?, updated=? where id=?", title, now, pr_id)
+		mochi.db.execute("update requests set title=?, updated=? where id=?", title, now, request_id)
 	if a.input("description") != None:
-		mochi.db.execute("update pull_requests set description=?, updated=? where id=?", description, now, pr_id)
+		mochi.db.execute("update requests set description=?, updated=? where id=?", description, now, request_id)
 	if draft_input:
 		draft = 1 if draft_input == "1" else 0
-		mochi.db.execute("update pull_requests set draft=?, updated=? where id=?", draft, now, pr_id)
+		mochi.db.execute("update requests set draft=?, updated=? where id=?", draft, now, request_id)
 
 	# Re-read the updated row
-	pr = mochi.db.row("select id, object, repository, source, target, status, title, description, draft, created, updated from pull_requests where id=?", pr_id)
+	req = mochi.db.row("select id, object, type, repository, source, target, status, title, description, draft, created, updated from requests where id=?", request_id)
 
-	broadcast_event(project_id, "pull_request/update", {
-		"project": project_id, "pr": pr
+	broadcast_event(project_id, "request/update", {
+		"project": project_id, "request": req
 	})
 
-	return {"data": pr}
+	return {"data": req}
 
-# Delete a pull request
-def action_pr_delete(a):
+# Delete a request
+def action_request_delete(a):
 
 	project_id = resolve_project(a)
 	if not project_id:
@@ -5785,29 +5805,29 @@ def action_pr_delete(a):
 		return
 
 	if project["owner"] != 1:
-		return forward_to_owner(a, project_id, "pr/delete", {
+		return forward_to_owner(a, project_id, "request/delete", {
 			"project": project_id, "object": a.input("object"),
-			"pr": a.input("pr"),
+			"request": a.input("request"),
 		})
 
 	if not check_project_access(a.user.identity.id, project_id, "write"):
 		a.error(403, "Access denied")
 		return
 
-	pr_id = a.input("pr")
-	if not pr_id:
-		a.error(400, "PR ID required")
+	request_id = a.input("request")
+	if not request_id:
+		a.error(400, "Request ID required")
 		return
 
-	pr = mochi.db.row("select pr.* from pull_requests pr join objects o on pr.object=o.id where pr.id=? and o.project=?", pr_id, project_id)
-	if not pr:
-		a.error(404, "Pull request not found")
+	req = mochi.db.row("select r.* from requests r join objects o on r.object=o.id where r.id=? and o.project=?", request_id, project_id)
+	if not req:
+		a.error(404, "Request not found")
 		return
 
-	mochi.db.execute("delete from pull_requests where id=?", pr_id)
+	mochi.db.execute("delete from requests where id=?", request_id)
 
-	broadcast_event(project_id, "pull_request/delete", {
-		"project": project_id, "id": pr_id, "object": pr["object"]
+	broadcast_event(project_id, "request/delete", {
+		"project": project_id, "id": request_id, "object": req["object"]
 	})
 
 	return {"data": {"success": True}}
@@ -5834,61 +5854,61 @@ def action_diff_preference_set(a):
 
 
 # ============================================================================
-# Pull Request P2P Events
+# Request P2P Events
 # ============================================================================
 
-# Pull request created remotely
-def event_pull_request_create(e):
+# Request created remotely
+def event_request_create(e):
 	project_id = verify_subscription(e)
 	if not project_id:
 		return
-	pr = e.content("pr")
-	if not pr:
+	req = e.content("request")
+	if not req:
 		return
 	mochi.db.execute(
-		"insert or ignore into pull_requests (id, object, repository, source, target, status, title, description, draft, created, updated) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-		pr.get("id", ""), pr.get("object", ""), pr.get("repository", ""),
-		pr.get("source", ""), pr.get("target", ""), pr.get("status", "open"),
-		pr.get("title", ""), pr.get("description", ""), pr.get("draft", 0),
-		pr.get("created", mochi.time.now()), pr.get("updated", mochi.time.now())
+		"insert or ignore into requests (id, object, type, repository, source, target, status, title, description, draft, created, updated) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+		req.get("id", ""), req.get("object", ""), req.get("type", "merge"),
+		req.get("repository", ""), req.get("source", ""), req.get("target", ""),
+		req.get("status", "open"), req.get("title", ""), req.get("description", ""),
+		req.get("draft", 0), req.get("created", mochi.time.now()), req.get("updated", mochi.time.now())
 	)
 	fp = mochi.entity.fingerprint(project_id)
 	if fp:
-		mochi.websocket.write(fp, {"type": "pull_request/create", "project": project_id, "pr": pr})
+		mochi.websocket.write(fp, {"type": "request/create", "project": project_id, "request": req})
 
-# Pull request updated remotely
-def event_pull_request_update(e):
+# Request updated remotely
+def event_request_update(e):
 	project_id = verify_subscription(e)
 	if not project_id:
 		return
-	pr = e.content("pr")
-	if not pr:
+	req = e.content("request")
+	if not req:
 		return
-	pr_id = pr.get("id", "")
-	if not pr_id:
+	request_id = req.get("id", "")
+	if not request_id:
 		return
 	mochi.db.execute(
-		"update pull_requests set repository=?, source=?, target=?, status=?, title=?, description=?, draft=?, updated=? where id=?",
-		pr.get("repository", ""), pr.get("source", ""), pr.get("target", ""),
-		pr.get("status", ""), pr.get("title", ""), pr.get("description", ""),
-		pr.get("draft", 0), pr.get("updated", mochi.time.now()), pr_id
+		"update requests set repository=?, source=?, target=?, status=?, title=?, description=?, draft=?, updated=? where id=?",
+		req.get("repository", ""), req.get("source", ""), req.get("target", ""),
+		req.get("status", ""), req.get("title", ""), req.get("description", ""),
+		req.get("draft", 0), req.get("updated", mochi.time.now()), request_id
 	)
 	fp = mochi.entity.fingerprint(project_id)
 	if fp:
-		mochi.websocket.write(fp, {"type": "pull_request/update", "project": project_id, "pr": pr})
+		mochi.websocket.write(fp, {"type": "request/update", "project": project_id, "request": req})
 
-# Pull request deleted remotely
-def event_pull_request_delete(e):
+# Request deleted remotely
+def event_request_delete(e):
 	project_id = verify_subscription(e)
 	if not project_id:
 		return
-	pr_id = e.content("id")
-	if not pr_id:
+	request_id = e.content("id")
+	if not request_id:
 		return
-	mochi.db.execute("delete from pull_requests where id=?", pr_id)
+	mochi.db.execute("delete from requests where id=?", request_id)
 	fp = mochi.entity.fingerprint(project_id)
 	if fp:
-		mochi.websocket.write(fp, {"type": "pull_request/delete", "project": project_id, "id": pr_id, "object": e.content("object")})
+		mochi.websocket.write(fp, {"type": "request/delete", "project": project_id, "id": request_id, "object": e.content("object")})
 
 
 # ============================================================================
@@ -5970,12 +5990,12 @@ def event_request(e):
 		result = do_link_delete(project_id, project, params, user_id)
 	elif action == "attachment/delete":
 		result = do_attachment_delete(project_id, project, params, user_id)
-	elif action == "pr/create":
-		result = do_pr_create(project_id, project, params, user_id)
-	elif action == "pr/update":
-		result = do_pr_update(project_id, project, params, user_id)
-	elif action == "pr/delete":
-		result = do_pr_delete(project_id, project, params, user_id)
+	elif action == "request/create":
+		result = do_request_create(project_id, project, params, user_id)
+	elif action == "request/update":
+		result = do_request_update(project_id, project, params, user_id)
+	elif action == "request/delete":
+		result = do_request_delete(project_id, project, params, user_id)
 	elif action == "class/create":
 		result = do_class_create(project_id, project, params)
 	elif action == "class/update":
@@ -6505,17 +6525,18 @@ def do_attachment_delete(project_id, project, params, user_id):
 	})
 	return {"success": True}
 
-# PR helpers
-def do_pr_create(project_id, project, params, user_id):
+# Request helpers
+def do_request_create(project_id, project, params, user_id):
 	object_id = params.get("object")
 	if not object_id:
 		return {"error": "Object ID required", "code": 400}
 	obj = mochi.db.row("select * from objects where id=? and project=?", object_id, project_id)
 	if not obj:
 		return {"error": "Object not found", "code": 404}
-	cls = mochi.db.row("select pull_requests from classes where project=? and id=?", project_id, obj["class"])
-	if not cls or cls["pull_requests"] != 1:
-		return {"error": "Pull requests not enabled for this class", "code": 400}
+	request_type = params.get("type", "merge")
+	cls = mochi.db.row("select requests from classes where project=? and id=?", project_id, obj["class"])
+	if not cls or request_type not in cls["requests"].split(","):
+		return {"error": "Request type '" + request_type + "' not enabled for this class", "code": 400}
 	repository = params.get("repository", "")
 	source = params.get("source", "")
 	target = params.get("target", "")
@@ -6523,27 +6544,27 @@ def do_pr_create(project_id, project, params, user_id):
 	description = params.get("description", "")
 	draft = 1 if params.get("draft") == "1" else 0
 	now = mochi.time.now()
-	pr_id = mochi.uid()
+	request_id = mochi.uid()
 	mochi.db.execute(
-		"insert into pull_requests (id, object, repository, source, target, status, title, description, draft, created, updated) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-		pr_id, object_id, repository, source, target, "open", title, description, draft, now, now
+		"insert into requests (id, object, type, repository, source, target, status, title, description, draft, created, updated) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+		request_id, object_id, request_type, repository, source, target, "open", title, description, draft, now, now
 	)
-	pr_data = {
-		"id": pr_id, "object": object_id, "repository": repository,
-		"source": source, "target": target, "status": "open",
-		"title": title, "description": description, "draft": draft,
-		"created": now, "updated": now,
+	request_data = {
+		"id": request_id, "object": object_id, "type": request_type,
+		"repository": repository, "source": source, "target": target,
+		"status": "open", "title": title, "description": description,
+		"draft": draft, "created": now, "updated": now,
 	}
-	broadcast_event(project_id, "pull_request/create", {"project": project_id, "pr": pr_data})
-	return pr_data
+	broadcast_event(project_id, "request/create", {"project": project_id, "request": request_data})
+	return request_data
 
-def do_pr_update(project_id, project, params, user_id):
-	pr_id = params.get("pr")
-	if not pr_id:
-		return {"error": "PR ID required", "code": 400}
-	pr = mochi.db.row("select * from pull_requests where id=?", pr_id)
-	if not pr:
-		return {"error": "Pull request not found", "code": 404}
+def do_request_update(project_id, project, params, user_id):
+	request_id = params.get("request")
+	if not request_id:
+		return {"error": "Request ID required", "code": 400}
+	req = mochi.db.row("select * from requests where id=?", request_id)
+	if not req:
+		return {"error": "Request not found", "code": 404}
 	now = mochi.time.now()
 	repository = params.get("repository")
 	source = params.get("source")
@@ -6553,34 +6574,34 @@ def do_pr_update(project_id, project, params, user_id):
 	description = params.get("description")
 	draft_input = params.get("draft")
 	if repository:
-		mochi.db.execute("update pull_requests set repository=?, updated=? where id=?", repository, now, pr_id)
+		mochi.db.execute("update requests set repository=?, updated=? where id=?", repository, now, request_id)
 	if source:
-		mochi.db.execute("update pull_requests set source=?, updated=? where id=?", source, now, pr_id)
+		mochi.db.execute("update requests set source=?, updated=? where id=?", source, now, request_id)
 	if target:
-		mochi.db.execute("update pull_requests set target=?, updated=? where id=?", target, now, pr_id)
+		mochi.db.execute("update requests set target=?, updated=? where id=?", target, now, request_id)
 	if status:
-		mochi.db.execute("update pull_requests set status=?, updated=? where id=?", status, now, pr_id)
+		mochi.db.execute("update requests set status=?, updated=? where id=?", status, now, request_id)
 	if title:
-		mochi.db.execute("update pull_requests set title=?, updated=? where id=?", title, now, pr_id)
+		mochi.db.execute("update requests set title=?, updated=? where id=?", title, now, request_id)
 	if description != None:
-		mochi.db.execute("update pull_requests set description=?, updated=? where id=?", description, now, pr_id)
+		mochi.db.execute("update requests set description=?, updated=? where id=?", description, now, request_id)
 	if draft_input:
 		draft = 1 if draft_input == "1" else 0
-		mochi.db.execute("update pull_requests set draft=?, updated=? where id=?", draft, now, pr_id)
-	pr = mochi.db.row("select id, object, repository, source, target, status, title, description, draft, created, updated from pull_requests where id=?", pr_id)
-	broadcast_event(project_id, "pull_request/update", {"project": project_id, "pr": pr})
-	return pr
+		mochi.db.execute("update requests set draft=?, updated=? where id=?", draft, now, request_id)
+	req = mochi.db.row("select id, object, type, repository, source, target, status, title, description, draft, created, updated from requests where id=?", request_id)
+	broadcast_event(project_id, "request/update", {"project": project_id, "request": req})
+	return req
 
-def do_pr_delete(project_id, project, params, user_id):
-	pr_id = params.get("pr")
-	if not pr_id:
-		return {"error": "PR ID required", "code": 400}
-	pr = mochi.db.row("select * from pull_requests where id=?", pr_id)
-	if not pr:
-		return {"error": "Pull request not found", "code": 404}
-	mochi.db.execute("delete from pull_requests where id=?", pr_id)
-	broadcast_event(project_id, "pull_request/delete", {
-		"project": project_id, "id": pr_id, "object": pr["object"]
+def do_request_delete(project_id, project, params, user_id):
+	request_id = params.get("request")
+	if not request_id:
+		return {"error": "Request ID required", "code": 400}
+	req = mochi.db.row("select * from requests where id=?", request_id)
+	if not req:
+		return {"error": "Request not found", "code": 404}
+	mochi.db.execute("delete from requests where id=?", request_id)
+	broadcast_event(project_id, "request/delete", {
+		"project": project_id, "id": request_id, "object": req["object"]
 	})
 	return {"success": True}
 
@@ -6595,10 +6616,10 @@ def do_class_create(project_id, project, params):
 		return {"error": "A class with this name already exists", "code": 400}
 	max_rank = mochi.db.row("select max(rank) as m from classes where project=?", project_id)
 	rank = (max_rank["m"] or 0) + 1 if max_rank else 0
-	pr_flag = 1 if params.get("pull_requests") == "1" else 0
+	requests = params.get("requests", "")
 	mochi.db.execute(
-		"insert into classes (project, id, name, rank, pull_requests, title) values (?, ?, ?, ?, ?, ?)",
-		project_id, class_id, name.strip(), rank, pr_flag, "title"
+		"insert into classes (project, id, name, rank, requests, title) values (?, ?, ?, ?, ?, ?)",
+		project_id, class_id, name.strip(), rank, requests, "title"
 	)
 	mochi.db.execute(
 		"insert into fields (project, class, id, name, fieldtype, flags, rank) values (?, ?, ?, ?, ?, ?, ?)",
@@ -6609,7 +6630,7 @@ def do_class_create(project_id, project, params):
 		project_id, class_id, ""
 	)
 	broadcast_event(project_id, "class/create", {
-		"project": project_id, "id": class_id, "name": name.strip(), "rank": rank, "pull_requests": pr_flag, "title": "title"
+		"project": project_id, "id": class_id, "name": name.strip(), "rank": rank, "requests": requests, "title": "title"
 	})
 	return {"id": class_id, "name": name.strip(), "rank": rank}
 
@@ -6623,16 +6644,16 @@ def do_class_update(project_id, project, params):
 	name = params.get("name")
 	if name:
 		mochi.db.execute("update classes set name=? where project=? and id=?", name.strip(), project_id, class_id)
-	pr_input = params.get("pull_requests")
-	if pr_input:
-		pr_flag = 1 if pr_input == "1" else 0
-		mochi.db.execute("update classes set pull_requests=? where project=? and id=?", pr_flag, project_id, class_id)
+	requests_input = params.get("requests")
+	if requests_input:
+		requests_value = "" if requests_input == "none" else requests_input
+		mochi.db.execute("update classes set requests=? where project=? and id=?", requests_value, project_id, class_id)
 	title_input = params.get("title")
 	if title_input:
 		mochi.db.execute("update classes set title=? where project=? and id=?", title_input, project_id, class_id)
 	broadcast_event(project_id, "class/update", {
 		"project": project_id, "id": class_id, "name": name or class_row["name"],
-		"pull_requests": class_row["pull_requests"] if not pr_input else (1 if pr_input == "1" else 0),
+		"requests": ("" if requests_input == "none" else requests_input) if requests_input else class_row["requests"],
 		"title": title_input or class_row["title"]
 	})
 	return {"success": True}

@@ -20,7 +20,7 @@ export interface ProjectClass {
   id: string;
   name: string;
   rank: number;
-  pull_requests: number;
+  requests: string;
   title: string;
 }
 
@@ -150,9 +150,10 @@ export interface Watcher {
   created: number;
 }
 
-export interface PrData {
+export interface RequestData {
   id: string;
   object: string;
+  type: string;
   repository: string;
   source: string;
   target: string;
@@ -198,7 +199,7 @@ export interface ObjectGetResponse {
     links: ObjectLink[];
     linked_by: ObjectLink[];
     watching: boolean;
-    prs: PrData[];
+    requests: RequestData[];
     comment_count: number;
   };
 }
@@ -236,7 +237,7 @@ export interface LinkListResponse {
   };
 }
 
-// Repository types (for Pull Request integration)
+// Repository types (for Request integration)
 export interface Repository {
   id: string;
   name: string;

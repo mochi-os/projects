@@ -499,14 +499,14 @@ interface ClassSheetProps {
   cls?: ProjectClass | null;
   hierarchy?: string[];
   fields?: ProjectField[];
-  onUpdate?: (name: string, pull_requests?: string, title?: string) => void;
+  onUpdate?: (name: string, requests?: string, title?: string) => void;
   onUpdateHierarchy?: (parents: string[]) => void;
   onDelete?: () => void;
   onAddField?: () => void;
   onEditField?: (field: ProjectField) => void;
   onReorderFields?: (order: string[]) => void;
   // Create mode props
-  onCreate?: (name: string, parents: string[], fields: PendingField[], pullRequests: boolean) => void | Promise<void>;
+  onCreate?: (name: string, parents: string[], fields: PendingField[], mergeRequests: boolean) => void | Promise<void>;
 }
 
 export function ClassSheet({
@@ -533,7 +533,7 @@ export function ClassSheet({
   const [pendingParents, setPendingParents] = useState<string[]>([""]);
   const [pendingFields, setPendingFields] = useState<PendingField[]>([]);
   const [addFieldOpen, setAddFieldOpen] = useState(false);
-  const [pullRequests, setPullRequests] = useState(false);
+  const [mergeRequests, setMergeRequests] = useState(false);
 
   // Reset state on open
   useEffect(() => {
@@ -542,10 +542,10 @@ export function ClassSheet({
       setName("");
       setPendingParents([]);
       setPendingFields([{ id: "title", name: "Title", fieldtype: "text", flags: "required,sort" }]);
-      setPullRequests(false);
+      setMergeRequests(false);
     } else if (cls) {
       setName(cls.name);
-      setPullRequests(cls.pull_requests === 1);
+      setMergeRequests(cls.requests?.includes("merge") ?? false);
     }
   }, [open, cls, mode]);
 
@@ -642,7 +642,7 @@ export function ClassSheet({
   const handleCreate = async () => {
     if (onCreate && name.trim()) {
       try {
-        await onCreate(name.trim(), pendingParents, pendingFields, pullRequests);
+        await onCreate(name.trim(), pendingParents, pendingFields, mergeRequests);
         onOpenChange(false);
       } catch {
         // Error displayed by caller via toast
@@ -749,19 +749,19 @@ export function ClassSheet({
           </div>
 
           <div className="space-y-2">
-            <Label>Pull requests</Label>
+            <Label>Requests</Label>
             <div className="pl-4">
               <label className="flex items-center gap-2 text-sm cursor-pointer">
                 <Switch
-                  checked={pullRequests}
+                  checked={mergeRequests}
                   onCheckedChange={(checked) => {
-                    setPullRequests(checked);
+                    setMergeRequests(checked);
                     if (mode === "edit" && onUpdate) {
-                      onUpdate(name, checked ? "1" : "0");
+                      onUpdate(name, checked ? "merge" : "none");
                     }
                   }}
                 />
-                Allow pull requests
+                Allow merge requests
               </label>
             </div>
           </div>

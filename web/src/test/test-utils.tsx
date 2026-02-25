@@ -118,7 +118,7 @@ export function createMockClass(overrides?: Partial<ProjectClass>): ProjectClass
     id: "task",
     name: "Task",
     rank: 0,
-    pull_requests: 0,
+    requests: "",
     title: "title",
     ...overrides,
   };

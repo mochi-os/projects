@@ -6,7 +6,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Loader2, Rows3, Columns2 } from "lucide-react";
 import { EmptyState, GeneralError, Main, PageHeader, usePageTitle, useAuthStore } from "@mochi/common";
 import projectsApi from "@/api/projects";
-import { DiffViewer } from "@/features/pr/components/diff-viewer";
+import { DiffViewer } from "@/features/requests/components/diff-viewer";
 
 interface DiffSearchParams {
   repo: string;

@@ -95,7 +95,7 @@ export function MergeButton({
       <ConfirmDialog
         open={showConfirm}
         onOpenChange={setShowConfirm}
-        title="Merge pull request"
+        title="Merge"
         desc={`This will merge "${source}" into "${target}". This action cannot be undone.`}
         confirmText={methodLabels[method]}
         isLoading={mergeMutation.isPending}

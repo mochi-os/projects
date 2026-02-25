@@ -3,7 +3,7 @@
 
 import { useState, useMemo } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { Eye, EyeOff, Trash2, MessageSquare, Activity, Settings2, GitPullRequest, X } from "lucide-react";
+import { Eye, EyeOff, Trash2, MessageSquare, Activity, Settings2, GitMerge, X } from "lucide-react";
 import {
   Button,
   Input,
@@ -26,7 +26,7 @@ import { canWrite, canComment } from "@/lib/access";
 import { FieldEditor } from "./field-editor";
 import { CommentList } from "./comment-list";
 import { ActivityList } from "./activity-list";
-import { PrPanel } from "@/features/pr";
+import { RequestPanel } from "@/features/requests";
 import { ObjectAttachments } from "./object-attachments";
 
 interface ObjectDetailPanelProps {
@@ -37,7 +37,7 @@ interface ObjectDetailPanelProps {
   onClose: () => void;
 }
 
-type Tab = "properties" | "prs" | "comments" | "activity";
+type Tab = "properties" | "requests" | "comments" | "activity";
 
 export function ObjectDetailPanel({
   projectId,
@@ -95,7 +95,7 @@ export function ObjectDetailPanel({
         links: [],
         linked_by: [],
         watching: cached.watched?.includes(objectId) ?? false,
-        prs: [],
+        requests: [],
         comment_count: 0,
       };
     },
@@ -248,19 +248,19 @@ export function ObjectDetailPanel({
   const cls = project.classes.find((c) => c.id === object.class);
   const titleField = cls?.title ? classFields.find((f) => f.id === cls.title) : undefined;
   const title = (titleField ? data.values[titleField.id] : "") || object.readable;
-  const hasPrs = cls?.pull_requests === 1;
+  const hasRequests = cls?.requests?.includes("merge") ?? false;
 
   // Get display title for any object using its class's title field
   const objectTitle = (obj: { class: string; number: number; values: Record<string, string> }) => {
     const objCls = project.classes.find((c) => c.id === obj.class);
     return (objCls?.title ? obj.values[objCls.title] : "") || `${project.project.prefix}-${obj.number}`;
   };
-  const prCount = data.prs?.length || 0;
+  const requestCount = data.requests?.length || 0;
 
   const tabs: { id: Tab; label: string; icon: React.ReactNode }[] = [
     { id: "properties", label: "Properties", icon: <Settings2 className="size-4" /> },
-    ...(hasPrs
-      ? [{ id: "prs" as Tab, label: `Pull requests (${prCount})`, icon: <GitPullRequest className="size-4" /> }]
+    ...(hasRequests
+      ? [{ id: "requests" as Tab, label: `Merge requests (${requestCount})`, icon: <GitMerge className="size-4" /> }]
       : []),
     { id: "comments", label: `Comments (${data.comment_count || 0})`, icon: <MessageSquare className="size-4" /> },
     { id: "activity", label: "Activity", icon: <Activity className="size-4" /> },
@@ -450,12 +450,12 @@ export function ObjectDetailPanel({
             </div>
           )}
 
-          {activeTab === "prs" && hasPrs && (
+          {activeTab === "requests" && hasRequests && (
             <div className="max-w-2xl">
-              <PrPanel
+              <RequestPanel
                 projectId={projectId}
                 objectId={objectId!}
-                prs={data.prs || []}
+                requests={data.requests || []}
                 objectTitle={title}
                 objectReadable={object.readable}
                 readOnly={!canWrite(access)}

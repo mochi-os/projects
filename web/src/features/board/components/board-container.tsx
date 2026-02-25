@@ -23,6 +23,7 @@ interface BoardContainerProps {
   rowField?: string;
   borderField?: string;
   viewFields?: string;
+  viewClasses?: string[];
   sort?: SortState | null;
   peopleMap?: Record<string, string>;
   onCardClick?: (object: ProjectObject) => void;
@@ -78,6 +79,7 @@ export function BoardContainer({
   rowField,
   borderField,
   viewFields,
+  viewClasses,
   sort,
   peopleMap,
   onCardClick,
@@ -90,8 +92,13 @@ export function BoardContainer({
   isReordering,
   onReorderColumns,
 }: BoardContainerProps) {
-  // Get the default class's fields (first class)
-  const defaultClass = project.classes[0];
+  // Get the effective class — use the view's class filter if set, otherwise first class
+  const defaultClass = useMemo(() => {
+    if (viewClasses?.length) {
+      return project.classes.find((c) => c.id === viewClasses[0]) || project.classes[0];
+    }
+    return project.classes[0];
+  }, [project.classes, viewClasses]);
   const classFields = useMemo(() => defaultClass ? project.fields[defaultClass.id] || [] : [], [defaultClass, project.fields]);
   const classOptions = useMemo(() => defaultClass ? project.options[defaultClass.id] || {} : {}, [defaultClass, project.options]);
 

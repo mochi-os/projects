@@ -82,7 +82,7 @@ function ProjectPage() {
   const [showShortcutsHelp, setShowShortcutsHelp] = useState(false);
   const [showViewOptions, setShowViewOptions] = useState(() => {
     const saved = localStorage.getItem("projects-view-options-expanded");
-    return saved === "true";
+    return saved !== "false";
   });
   const [selectedCardIndex, setSelectedCardIndex] = useState(-1);
   const [addColumnDialogOpen, setAddColumnDialogOpen] = useState(false);
@@ -516,14 +516,17 @@ function ProjectPage() {
   const columnField = activeView?.columns || "";
   const rowField = activeView?.rows || "";
 
-  // Get default column value (first option of column field for first type)
+  // Get default column value (first option of column field for the view's class)
+  const viewClasses = activeView?.classes || [];
   const getDefaultColumnValue = useCallback(() => {
-    const firstType = project.classes[0]?.id;
-    if (firstType && project.options[firstType]?.[columnField]?.length > 0) {
-      return [{ field: columnField, value: project.options[firstType][columnField][0].id }];
+    const effectiveType = viewClasses.length > 0
+      ? viewClasses[0]
+      : project.classes[0]?.id;
+    if (effectiveType && project.options[effectiveType]?.[columnField]?.length > 0) {
+      return [{ field: columnField, value: project.options[effectiveType][columnField][0].id }];
     }
     return undefined;
-  }, [project.classes, project.options, columnField]);
+  }, [project.classes, project.options, columnField, viewClasses]);
 
   const handleOpenCreateDialog = useCallback(() => {
     if (project.classes.length === 0) {
@@ -673,6 +676,11 @@ function ProjectPage() {
               filters={filters}
               onFilterChange={setFilters}
             />
+            {canWrite(access) && (
+              <Button variant="ghost" size="icon" onClick={handleOpenCreateDialog} title="Create (C)">
+                <Plus className="size-4" />
+              </Button>
+            )}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" size="icon">
@@ -680,12 +688,6 @@ function ProjectPage() {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
-                {canWrite(access) && (
-                  <DropdownMenuItem onClick={handleOpenCreateDialog}>
-                    <Plus className="size-4 mr-2" />
-                    Create
-                  </DropdownMenuItem>
-                )}
                 <DropdownMenuItem
                   onSelect={(e) => e.preventDefault()}
                 >
@@ -796,6 +798,7 @@ function ProjectPage() {
                 onCardClick={handleCardClick}
                 onReparent={canWrite(access) ? handleReparent : undefined}
                 onReorder={canWrite(access) ? handleReorder : undefined}
+                onCreateClick={canWrite(access) ? handleOpenCreateDialog : undefined}
               />
             </div>
           ) : (
@@ -807,6 +810,7 @@ function ProjectPage() {
                 rowField={rowField}
                 borderField={activeView?.border}
                 viewFields={activeView?.fields}
+                viewClasses={activeView?.classes}
                 sort={sort}
                 peopleMap={peopleMap}
                 onCardClick={handleCardClick}

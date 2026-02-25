@@ -2,8 +2,8 @@
 // Copyright Alistair Cunningham 2026
 
 import { useState, useMemo, useEffect, useLayoutEffect, useCallback, useRef } from "react";
-import { EmptyState } from "@mochi/common";
-import { Folder } from 'lucide-react';
+import { Button, EmptyState } from "@mochi/common";
+import { Folder, Plus } from 'lucide-react';
 import { TreeRow } from "./tree-row";
 import type { ProjectDetails, ProjectObject, SortState } from "@/types";
 
@@ -17,6 +17,7 @@ interface TreeViewProps {
   onCardClick: (object: ProjectObject) => void;
   onReparent?: (objectId: string, newParentId: string | null) => void;
   onReorder?: (objectId: string, newRank: number) => void;
+  onCreateClick?: () => void;
 }
 
 export interface TreeNode {
@@ -146,6 +147,7 @@ export function TreeView({
   onCardClick,
   onReparent,
   onReorder,
+  onCreateClick,
 }: TreeViewProps) {
   // Storage key for expanded state
   const storageKey = `projects:${projectId}:tree:expanded`;
@@ -363,7 +365,14 @@ export function TreeView({
 
   if (objects.length === 0) {
     return (
-      <EmptyState icon={Folder} title="No items found" className="py-12" />
+      <EmptyState icon={Folder} title="Nothing found" className="py-12">
+        {onCreateClick && (
+          <Button variant="outline" size="sm" onClick={onCreateClick}>
+            <Plus className="size-4 mr-1" />
+            Create
+          </Button>
+        )}
+      </EmptyState>
     );
   }
 

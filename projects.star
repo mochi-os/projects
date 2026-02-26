@@ -316,6 +316,15 @@ def database_upgrade(version):
 # Templates
 # ============================================================================
 
+def safe_int(value, default=0):
+	"""Convert value to int, returning default if not a valid integer."""
+	s = str(value) if value else ""
+	if not s:
+		return default
+	if s[0] == "-":
+		return int(s) if s[1:].isdigit() else default
+	return int(s) if s.isdigit() else default
+
 # Get available project templates from JSON files
 def get_templates():
 	templates = {}
@@ -576,7 +585,7 @@ def action_design_import(a):
 
 	data_str = a.input("data")
 	template_id = a.input("template") or ""
-	template_version = int(a.input("template_version") or "0")
+	template_version = safe_int(a.input("template_version"))
 
 	if data_str and len(data_str) > 1000000:
 		a.error(400, "Design data too large")
@@ -737,36 +746,39 @@ def action_project_get(a):
 	# Get classes
 	classes = mochi.db.rows("select id, name, rank, requests, title from classes where project=? order by rank", project_id) or []
 
-	# Get fields by class
+	# Get all fields in one query, group by class
 	fields = {}
-	for c in classes:
-		class_fields = mochi.db.rows("select id, name, fieldtype, flags, multi, rank, card, position, rows from fields where project=? and class=? order by rank", project_id, c["id"]) or []
-		fields[c["id"]] = class_fields
+	all_fields = mochi.db.rows("select class, id, name, fieldtype, flags, multi, rank, card, position, rows from fields where project=? order by class, rank", project_id) or []
+	for f in all_fields:
+		fields.setdefault(f["class"], []).append(f)
 
-	# Get options by class and field
+	# Get all options in one query, group by class and field
 	options = {}
-	for c in classes:
-		options[c["id"]] = {}
-		for f in fields.get(c["id"], []):
-			if f["fieldtype"] == "enumerated":
-				field_options = mochi.db.rows("select id, name, colour, icon, rank from options where project=? and class=? and field=? order by rank", project_id, c["id"], f["id"]) or []
-				options[c["id"]][f["id"]] = field_options
+	all_options = mochi.db.rows("select class, field, id, name, colour, icon, rank from options where project=? order by class, field, rank", project_id) or []
+	for o in all_options:
+		options.setdefault(o["class"], {}).setdefault(o["field"], []).append(o)
 
 	# Get views
 	views = mochi.db.rows("select id, name, viewtype, filter, columns, rows, sort, direction, rank, border from views where project=? order by rank, name", project_id) or []
 
-	# Add classes and fields to each view
+	# Batch-fetch view classes and fields
+	all_view_classes = mochi.db.rows("select view, class from view_classes where project=?", project_id) or []
+	vc_map = {}
+	for vc in all_view_classes:
+		vc_map.setdefault(vc["view"], []).append(vc["class"])
+	all_view_fields = mochi.db.rows("select view, field from view_fields where project=? order by rank", project_id) or []
+	vf_map = {}
+	for vf in all_view_fields:
+		vf_map.setdefault(vf["view"], []).append(vf["field"])
 	for v in views:
-		view_classes = mochi.db.rows("select class from view_classes where project=? and view=?", project_id, v["id"]) or []
-		v["classes"] = [vc["class"] for vc in view_classes]
-		view_fields = mochi.db.rows("select field from view_fields where project=? and view=? order by rank", project_id, v["id"]) or []
-		v["fields"] = ",".join([vf["field"] for vf in view_fields])
+		v["classes"] = vc_map.get(v["id"], [])
+		v["fields"] = ",".join(vf_map.get(v["id"], []))
 
-	# Get hierarchy
+	# Get all hierarchy in one query, group by class
 	hierarchy = {}
-	for c in classes:
-		parents = mochi.db.rows("select parent from hierarchy where project=? and class=?", project_id, c["id"]) or []
-		hierarchy[c["id"]] = [p["parent"] for p in parents]
+	all_hierarchy = mochi.db.rows("select class, parent from hierarchy where project=?", project_id) or []
+	for h in all_hierarchy:
+		hierarchy.setdefault(h["class"], []).append(h["parent"])
 
 	# Determine access level
 	if row["owner"] == 1:
@@ -2632,12 +2644,10 @@ def action_activity_list(a):
 		a.error(404, "Object not found")
 		return
 
-	limit = int(a.input("limit") or "100")
-	offset = int(a.input("offset") or "0")
+	limit = safe_int(a.input("limit"), 100)
+	offset = safe_int(a.input("offset"))
 	if limit < 1 or limit > 500:
 		limit = 100
-	if offset < 0:
-		offset = 0
 
 	rows = mochi.db.rows(
 		"select id, user, action, field, oldvalue, newvalue, created from activity where object=? order by created desc limit ? offset ?",
@@ -3402,7 +3412,7 @@ def action_field_create(a):
 	flags = a.input("flags") or ""
 	multi = 1 if a.input("multi") == "1" or a.input("multi") == "true" else 0
 	card = 1 if a.input("card") != "0" and a.input("card") != "false" else 0
-	rows = int(a.input("rows")) if a.input("rows") else 1
+	rows = safe_int(a.input("rows"), 1)
 
 	mochi.db.execute(
 		"insert into fields (project, class, id, name, fieldtype, flags, multi, rank, card, rows) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
@@ -3483,11 +3493,11 @@ def action_field_update(a):
 		mochi.db.execute("update fields set pattern=? where project=? and class=? and id=?", pattern, project_id, class_id, field_id)
 		update_data["pattern"] = pattern
 	if a.input("minlength") != None:
-		minlength = int(a.input("minlength"))
+		minlength = safe_int(a.input("minlength"))
 		mochi.db.execute("update fields set minlength=? where project=? and class=? and id=?", minlength, project_id, class_id, field_id)
 		update_data["minlength"] = minlength
 	if a.input("maxlength") != None:
-		maxlength = int(a.input("maxlength"))
+		maxlength = safe_int(a.input("maxlength"))
 		mochi.db.execute("update fields set maxlength=? where project=? and class=? and id=?", maxlength, project_id, class_id, field_id)
 		update_data["maxlength"] = maxlength
 	if a.input("prefix") != None:
@@ -3507,7 +3517,7 @@ def action_field_update(a):
 		mochi.db.execute("update fields set position=? where project=? and class=? and id=?", position, project_id, class_id, field_id)
 		update_data["position"] = position
 	if a.input("rows") != None:
-		rows_val = int(a.input("rows"))
+		rows_val = safe_int(a.input("rows"), 1)
 		mochi.db.execute("update fields set rows=? where project=? and class=? and id=?", rows_val, project_id, class_id, field_id)
 		update_data["rows"] = rows_val
 
@@ -4136,6 +4146,20 @@ def action_search(a):
 
 
 # ============================================================================
+# User/Group Proxy Actions (proxy to people app)
+# ============================================================================
+
+def action_users_search(a):
+	query = a.input("q", "")
+	results = mochi.service.call("people", "users/search", query)
+	return {"data": {"results": results}}
+
+def action_groups(a):
+	groups = mochi.service.call("people", "groups/list")
+	return {"data": {"groups": groups}}
+
+
+# ============================================================================
 # Notification Actions
 # ============================================================================
 
@@ -4457,53 +4481,59 @@ def event_schema(e):
 	# Classes
 	classes = mochi.db.rows("select id, name, rank, requests, title from classes where project=?", project_id) or []
 
-	# Fields with class context
-	fields = []
-	for c in classes:
-		class_fields = mochi.db.rows("select id, name, fieldtype, flags, multi, rank, card, position, rows from fields where project=? and class=? order by rank", project_id, c["id"]) or []
-		for f in class_fields:
-			f["class"] = c["id"]
-			fields.append(f)
+	# Fields — batch fetch, already include class column
+	fields = mochi.db.rows("select class, id, name, fieldtype, flags, multi, rank, card, position, rows from fields where project=? order by class, rank", project_id) or []
 
-	# Options with class and field context
-	options = []
-	for c in classes:
-		for f in (mochi.db.rows("select id, fieldtype from fields where project=? and class=?", project_id, c["id"]) or []):
-			if f["fieldtype"] == "enumerated":
-				field_options = mochi.db.rows("select id, name, colour, icon, rank from options where project=? and class=? and field=? order by rank", project_id, c["id"], f["id"]) or []
-				for o in field_options:
-					o["class"] = c["id"]
-					o["field"] = f["id"]
-					options.append(o)
+	# Options — batch fetch, already include class and field columns
+	options = mochi.db.rows("select class, field, id, name, colour, icon, rank from options where project=? order by class, field, rank", project_id) or []
 
-	# Hierarchy
+	# Hierarchy — batch fetch, group by class
 	hierarchy = []
-	for c in classes:
-		parents = mochi.db.rows("select parent from hierarchy where project=? and class=?", project_id, c["id"]) or []
-		if parents:
-			hierarchy.append({"class": c["id"], "parents": [p["parent"] for p in parents]})
+	all_hierarchy = mochi.db.rows("select class, parent from hierarchy where project=?", project_id) or []
+	hierarchy_map = {}
+	for h in all_hierarchy:
+		hierarchy_map.setdefault(h["class"], []).append(h["parent"])
+	for cls, parents in hierarchy_map.items():
+		hierarchy.append({"class": cls, "parents": parents})
 
-	# Views with fields and classes
-	views = []
-	for v in (mochi.db.rows("select id, name, viewtype, filter, columns, rows, sort, direction, rank, border from views where project=? order by rank, name", project_id) or []):
-		view_fields = mochi.db.rows("select field from view_fields where project=? and view=? order by rank", project_id, v["id"]) or []
-		view_classes = mochi.db.rows("select class from view_classes where project=? and view=?", project_id, v["id"]) or []
-		v["fields"] = ",".join([vf["field"] for vf in view_fields])
-		v["classes"] = ",".join([vc["class"] for vc in view_classes])
-		views.append(v)
+	# Views — batch fetch view classes and fields
+	views = mochi.db.rows("select id, name, viewtype, filter, columns, rows, sort, direction, rank, border from views where project=? order by rank, name", project_id) or []
+	all_view_fields = mochi.db.rows("select view, field from view_fields where project=? order by rank", project_id) or []
+	vf_map = {}
+	for vf in all_view_fields:
+		vf_map.setdefault(vf["view"], []).append(vf["field"])
+	all_view_classes = mochi.db.rows("select view, class from view_classes where project=?", project_id) or []
+	vc_map = {}
+	for vc in all_view_classes:
+		vc_map.setdefault(vc["view"], []).append(vc["class"])
+	for v in views:
+		v["fields"] = ",".join(vf_map.get(v["id"], []))
+		v["classes"] = ",".join(vc_map.get(v["id"], []))
 
-	# Objects with values and comments
+	# Objects — batch fetch all, then batch fetch values and comments
+	all_objects = mochi.db.rows("select id, class, number, parent, rank, created, updated from objects where project=?", project_id) or []
+	object_ids = [obj["id"] for obj in all_objects]
+
+	values_map = {}
+	if object_ids:
+		placeholders = ",".join(["?" for _ in object_ids])
+		all_values = mochi.db.rows("select object, field, value from \"values\" where object in (" + placeholders + ")", *object_ids) or []
+		for v in all_values:
+			values_map.setdefault(v["object"], {})[v["field"]] = v["value"]
+
+	comments_map = {}
+	if object_ids:
+		placeholders = ",".join(["?" for _ in object_ids])
+		all_comments = mochi.db.rows("select object, id, parent, author, name, content, created, edited from comments where object in (" + placeholders + ") order by created", *object_ids) or []
+		for c in all_comments:
+			comments_map.setdefault(c["object"], []).append(c)
+
 	objects = []
-	for obj in (mochi.db.rows("select id, class, number, parent, rank, created, updated from objects where project=?", project_id) or []):
-		vals = mochi.db.rows("select field, value from \"values\" where object=?", obj["id"])
-		if vals:
-			values_map = {}
-			for v in vals:
-				values_map[v["field"]] = v["value"]
-			obj["values"] = values_map
-		comments = mochi.db.rows("select id, parent, author, name, content, created, edited from comments where object=? order by created", obj["id"])
-		if comments:
-			obj["comments"] = comments
+	for obj in all_objects:
+		if obj["id"] in values_map:
+			obj["values"] = values_map[obj["id"]]
+		if obj["id"] in comments_map:
+			obj["comments"] = comments_map[obj["id"]]
 		objects.append(obj)
 
 	# Links

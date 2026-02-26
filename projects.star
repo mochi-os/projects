@@ -579,6 +579,10 @@ def action_design_import(a):
 	template_id = a.input("template") or ""
 	template_version = int(a.input("template_version") or "0")
 
+	if data_str and len(data_str) > 1000000:
+		a.error(400, "Design data too large")
+		return
+
 	if len(template_id) > 100:
 		a.error(400, "Template ID too long")
 		return
@@ -6476,7 +6480,7 @@ def do_link_create(project_id, project, params, user_id):
 	linktype = params.get("linktype")
 	if not object_id or not target_id or not linktype:
 		return {"error": "Object, target, and linktype are required", "code": 400}
-	if linktype not in ["blocks", "blocked_by", "relates", "duplicates"]:
+	if linktype not in ["blocks", "relates", "duplicates"]:
 		return {"error": "Invalid link type", "code": 400}
 	source_row = mochi.db.row("select id from objects where id=? and project=?", object_id, project_id)
 	target_row = mochi.db.row("select id from objects where id=? and project=?", target_id, project_id)

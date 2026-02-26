@@ -2186,7 +2186,7 @@ def action_link_delete(a):
 		a.error(400, "Invalid link type")
 		return
 
-	mochi.db.execute("delete from links where source=? and target=? and linktype=?", object_id, target_id, linktype)
+	mochi.db.execute("delete from links where project=? and source=? and target=? and linktype=?", project_id, object_id, target_id, linktype)
 
 	broadcast_event(project_id, "link/delete", {
 		"project": project_id, "source": object_id,
@@ -2604,10 +2604,16 @@ def action_attachment_delete(a):
 		a.error(403, "Access denied")
 		return
 
+	object_id = a.input("object")
 	attachment_id = a.input("attachment")
 	if not attachment_id:
 		a.error(400, "Attachment ID required")
 		return
+
+	if object_id:
+		if not mochi.db.exists("select 1 from objects where id=? and project=?", object_id, project_id):
+			a.error(404, "Object not found")
+			return
 
 	if not mochi.attachment.exists(attachment_id):
 		a.error(404, "Attachment not found")
@@ -6502,7 +6508,7 @@ def do_link_delete(project_id, project, params, user_id):
 	linktype = params.get("linktype")
 	if not object_id or not target_id or not linktype:
 		return {"error": "Object, target, and linktype are required", "code": 400}
-	mochi.db.execute("delete from links where source=? and target=? and linktype=?", object_id, target_id, linktype)
+	mochi.db.execute("delete from links where project=? and source=? and target=? and linktype=?", project_id, object_id, target_id, linktype)
 	broadcast_event(project_id, "link/delete", {
 		"project": project_id, "source": object_id,
 		"target": target_id, "linktype": linktype, "user": user_id
@@ -6515,8 +6521,12 @@ def do_link_delete(project_id, project, params, user_id):
 # Attachment helper
 def do_attachment_delete(project_id, project, params, user_id):
 	attachment_id = params.get("attachment")
+	object_id = params.get("object")
 	if not attachment_id:
 		return {"error": "Attachment ID required", "code": 400}
+	if object_id:
+		if not mochi.db.exists("select 1 from objects where id=? and project=?", object_id, project_id):
+			return {"error": "Object not found", "code": 404}
 	if not mochi.attachment.exists(attachment_id):
 		return {"error": "Attachment not found", "code": 404}
 	mochi.attachment.delete(attachment_id, [])
@@ -6562,7 +6572,7 @@ def do_request_update(project_id, project, params, user_id):
 	request_id = params.get("request")
 	if not request_id:
 		return {"error": "Request ID required", "code": 400}
-	req = mochi.db.row("select * from requests where id=?", request_id)
+	req = mochi.db.row("select r.* from requests r join objects o on r.object=o.id where r.id=? and o.project=?", request_id, project_id)
 	if not req:
 		return {"error": "Request not found", "code": 404}
 	now = mochi.time.now()
@@ -6588,7 +6598,7 @@ def do_request_update(project_id, project, params, user_id):
 	if draft_input:
 		draft = 1 if draft_input == "1" else 0
 		mochi.db.execute("update requests set draft=?, updated=? where id=?", draft, now, request_id)
-	req = mochi.db.row("select id, object, type, repository, source, target, status, title, description, draft, created, updated from requests where id=?", request_id)
+	req = mochi.db.row("select r.id, r.object, r.type, r.repository, r.source, r.target, r.status, r.title, r.description, r.draft, r.created, r.updated from requests r join objects o on r.object=o.id where r.id=? and o.project=?", request_id, project_id)
 	broadcast_event(project_id, "request/update", {"project": project_id, "request": req})
 	return req
 
@@ -6596,7 +6606,7 @@ def do_request_delete(project_id, project, params, user_id):
 	request_id = params.get("request")
 	if not request_id:
 		return {"error": "Request ID required", "code": 400}
-	req = mochi.db.row("select * from requests where id=?", request_id)
+	req = mochi.db.row("select r.* from requests r join objects o on r.object=o.id where r.id=? and o.project=?", request_id, project_id)
 	if not req:
 		return {"error": "Request not found", "code": 404}
 	mochi.db.execute("delete from requests where id=?", request_id)

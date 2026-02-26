@@ -244,9 +244,6 @@ def database_create():
 	)""")
 	mochi.db.execute("create index if not exists requests_object on requests(object)")
 
-	# Migrations
-	mochi.db.execute("update views set viewtype='list' where viewtype='tree'")
-
 # Upgrade database schema (called once per version step with target version)
 def database_upgrade(version):
 	if version == 2:
@@ -341,6 +338,8 @@ def get_templates():
 def apply_template(project_id, template_id, data=None):
 	# Load template JSON from file if no data provided
 	if not data:
+		if ".." in template_id or "/" in template_id:
+			return
 		content = mochi.app.file.read("templates/" + template_id + ".json")
 		data = json.decode(str(content))
 
@@ -398,11 +397,11 @@ def apply_template(project_id, template_id, data=None):
 			)
 		# Add fields
 		fields = v.get("fields", "").split(",")
-		for i, field in enumerate(fields):
+		for j, field in enumerate(fields):
 			if field.strip():
 				mochi.db.execute(
 					"insert into view_fields (project, view, field, rank) values (?, ?, ?, ?)",
-					project_id, v["id"], field.strip(), i
+					project_id, v["id"], field.strip(), j
 				)
 
 
@@ -943,18 +942,8 @@ def action_project_delete(a):
 # List project members (subscribers + unique owners + current user)
 def action_people_list(a):
 
-	project_id = resolve_project(a)
+	project_id, project = require_project(a)
 	if not project_id:
-		a.error(400, "Project ID required")
-		return
-
-	project = get_project(project_id)
-	if not project:
-		a.error(404, "Project not found")
-		return
-
-	if project["owner"] == 1 and not check_project_access(a.user.identity.id, project_id, "view"):
-		a.error(403, "Access denied")
 		return
 
 	# Collect unique people with names
@@ -1198,6 +1187,26 @@ def get_project(project_id):
 		row = mochi.db.row("select * from projects where fingerprint=?", project_id)
 	return row
 
+def require_project(a, level="view"):
+	"""Resolve project, check existence and access. Returns (project_id, project) or (None, None) on error."""
+	project_id = resolve_project(a)
+	if not project_id:
+		a.error(400, "Project ID required")
+		return None, None
+	project = get_project(project_id)
+	if not project:
+		a.error(404, "Project not found")
+		return None, None
+	if level == "view":
+		if project["owner"] == 1 and not check_project_access(a.user.identity.id, project_id, level):
+			a.error(403, "Access denied")
+			return None, None
+	else:
+		if not check_project_access(a.user.identity.id, project_id, level):
+			a.error(403, "Access denied")
+			return None, None
+	return project_id, project
+
 def log_activity(object_id, user, action, field="", oldvalue="", newvalue=""):
 	"""Log an activity entry for an object."""
 	activity_id = mochi.uid()
@@ -1287,18 +1296,8 @@ def delete_object_cascade(project_id, object_id, user=""):
 
 def action_object_list(a):
 
-	project_id = resolve_project(a)
+	project_id, project = require_project(a)
 	if not project_id:
-		a.error(400, "Project ID required")
-		return
-
-	project = get_project(project_id)
-	if not project:
-		a.error(404, "Project not found")
-		return
-
-	if project["owner"] == 1 and not check_project_access(a.user.identity.id, project_id, "view"):
-		a.error(403, "Access denied")
 		return
 
 	# Get filter params
@@ -1467,14 +1466,8 @@ def action_object_create(a):
 
 def action_object_get(a):
 
-	project_id = resolve_project(a)
+	project_id, project = require_project(a)
 	if not project_id:
-		a.error(400, "Project ID required")
-		return
-
-	project = get_project(project_id)
-	if project and project["owner"] == 1 and not check_project_access(a.user.identity.id, project_id, "view"):
-		a.error(403, "Access denied")
 		return
 
 	object_id = a.input("object")
@@ -1748,6 +1741,10 @@ def action_object_move(a):
 	field = a.input("field") or ""
 	value = a.input("value")  # New column value
 	new_rank = a.input("rank")
+
+	if field and len(field) > 100:
+		a.error(400, "Field name too long")
+		return
 
 	if value and len(str(value)) > 10000:
 		a.error(400, "Value too long")
@@ -2041,14 +2038,8 @@ def action_value_set(a):
 
 def action_link_list(a):
 
-	project_id = resolve_project(a)
+	project_id, project = require_project(a)
 	if not project_id:
-		a.error(400, "Project ID required")
-		return
-
-	project = get_project(project_id)
-	if project and project["owner"] == 1 and not check_project_access(a.user.identity.id, project_id, "view"):
-		a.error(403, "Access denied")
 		return
 
 	object_id = a.input("object")
@@ -2246,14 +2237,8 @@ def delete_project_comment_attachments(project_id):
 
 def action_comment_list(a):
 
-	project_id = resolve_project(a)
+	project_id, project = require_project(a)
 	if not project_id:
-		a.error(400, "Project ID required")
-		return
-
-	project = get_project(project_id)
-	if project and project["owner"] == 1 and not check_project_access(a.user.identity.id, project_id, "view"):
-		a.error(403, "Access denied")
 		return
 
 	object_id = a.input("object")
@@ -2496,14 +2481,8 @@ def action_comment_delete(a):
 
 def action_attachment_list(a):
 
-	project_id = resolve_project(a)
+	project_id, project = require_project(a)
 	if not project_id:
-		a.error(400, "Project ID required")
-		return
-
-	project = get_project(project_id)
-	if project and project["owner"] == 1 and not check_project_access(a.user.identity.id, project_id, "view"):
-		a.error(403, "Access denied")
 		return
 
 	object_id = a.input("object")
@@ -2639,14 +2618,8 @@ def action_attachment_delete(a):
 
 def action_activity_list(a):
 
-	project_id = resolve_project(a)
+	project_id, project = require_project(a)
 	if not project_id:
-		a.error(400, "Project ID required")
-		return
-
-	project = get_project(project_id)
-	if project and project["owner"] == 1 and not check_project_access(a.user.identity.id, project_id, "view"):
-		a.error(403, "Access denied")
 		return
 
 	object_id = a.input("object")
@@ -2659,9 +2632,16 @@ def action_activity_list(a):
 		a.error(404, "Object not found")
 		return
 
+	limit = int(a.input("limit") or "100")
+	offset = int(a.input("offset") or "0")
+	if limit < 1 or limit > 500:
+		limit = 100
+	if offset < 0:
+		offset = 0
+
 	rows = mochi.db.rows(
-		"select id, user, action, field, oldvalue, newvalue, created from activity where object=? order by created desc",
-		object_id
+		"select id, user, action, field, oldvalue, newvalue, created from activity where object=? order by created desc limit ? offset ?",
+		object_id, limit, offset
 	) or []
 
 	# Resolve user names
@@ -2689,14 +2669,8 @@ def action_activity_list(a):
 
 def action_watcher_list(a):
 
-	project_id = resolve_project(a)
+	project_id, project = require_project(a)
 	if not project_id:
-		a.error(400, "Project ID required")
-		return
-
-	project = get_project(project_id)
-	if project and project["owner"] == 1 and not check_project_access(a.user.identity.id, project_id, "view"):
-		a.error(403, "Access denied")
 		return
 
 	object_id = a.input("object")
@@ -2718,24 +2692,13 @@ def action_watcher_list(a):
 
 def action_watcher_add(a):
 
-	project_id = resolve_project(a)
+	project_id, project = require_project(a)
 	if not project_id:
-		a.error(400, "Project ID required")
-		return
-
-	project = get_project(project_id)
-	if not project:
-		a.error(404, "Project not found")
 		return
 
 	object_id = a.input("object")
 	if not object_id:
 		a.error(400, "Object ID required")
-		return
-
-	# Watchers are stored locally since object_get checks the local DB
-	if project["owner"] == 1 and not check_project_access(a.user.identity.id, project_id, "view"):
-		a.error(403, "Access denied")
 		return
 
 	row = mochi.db.row("select id from objects where id=? and project=?", object_id, project_id)
@@ -2754,24 +2717,13 @@ def action_watcher_add(a):
 
 def action_watcher_remove(a):
 
-	project_id = resolve_project(a)
+	project_id, project = require_project(a)
 	if not project_id:
-		a.error(400, "Project ID required")
-		return
-
-	project = get_project(project_id)
-	if not project:
-		a.error(404, "Project not found")
 		return
 
 	object_id = a.input("object")
 	if not object_id:
 		a.error(400, "Object ID required")
-		return
-
-	# Watchers are stored locally since object_get checks the local DB
-	if project["owner"] == 1 and not check_project_access(a.user.identity.id, project_id, "view"):
-		a.error(403, "Access denied")
 		return
 
 	row = mochi.db.row("select id from objects where id=? and project=?", object_id, project_id)
@@ -2791,18 +2743,8 @@ def action_watcher_remove(a):
 
 def action_view_list(a):
 
-	project_id = resolve_project(a)
+	project_id, project = require_project(a)
 	if not project_id:
-		a.error(400, "Project ID required")
-		return
-
-	project = get_project(project_id)
-	if not project:
-		a.error(404, "Project not found")
-		return
-
-	if project["owner"] == 1 and not check_project_access(a.user.identity.id, project_id, "view"):
-		a.error(403, "Access denied")
 		return
 
 	views = mochi.db.rows(
@@ -3110,18 +3052,8 @@ def action_view_reorder(a):
 
 def action_class_list(a):
 
-	project_id = resolve_project(a)
+	project_id, project = require_project(a)
 	if not project_id:
-		a.error(400, "Project ID required")
-		return
-
-	project = get_project(project_id)
-	if not project:
-		a.error(404, "Project not found")
-		return
-
-	if project["owner"] == 1 and not check_project_access(a.user.identity.id, project_id, "view"):
-		a.error(403, "Access denied")
 		return
 
 	classes = mochi.db.rows("select id, name, rank, title from classes where project=? order by rank", project_id) or []
@@ -3305,18 +3237,8 @@ def action_class_delete(a):
 
 def action_hierarchy_get(a):
 
-	project_id = resolve_project(a)
+	project_id, project = require_project(a)
 	if not project_id:
-		a.error(400, "Project ID required")
-		return
-
-	project = get_project(project_id)
-	if not project:
-		a.error(404, "Project not found")
-		return
-
-	if project["owner"] == 1 and not check_project_access(a.user.identity.id, project_id, "view"):
-		a.error(403, "Access denied")
 		return
 
 	class_id = a.input("class")
@@ -3401,18 +3323,8 @@ def action_hierarchy_set(a):
 
 def action_field_list(a):
 
-	project_id = resolve_project(a)
+	project_id, project = require_project(a)
 	if not project_id:
-		a.error(400, "Project ID required")
-		return
-
-	project = get_project(project_id)
-	if not project:
-		a.error(404, "Project not found")
-		return
-
-	if project["owner"] == 1 and not check_project_access(a.user.identity.id, project_id, "view"):
-		a.error(403, "Access denied")
 		return
 
 	class_id = a.input("class")
@@ -3710,18 +3622,8 @@ def action_field_reorder(a):
 
 def action_option_list(a):
 
-	project_id = resolve_project(a)
+	project_id, project = require_project(a)
 	if not project_id:
-		a.error(400, "Project ID required")
-		return
-
-	project = get_project(project_id)
-	if not project:
-		a.error(404, "Project not found")
-		return
-
-	if project["owner"] == 1 and not check_project_access(a.user.identity.id, project_id, "view"):
-		a.error(403, "Access denied")
 		return
 
 	class_id = a.input("class")
@@ -4116,6 +4018,7 @@ def action_search(a):
 		return
 
 	results = []
+	all_projects = None  # Lazy-loaded for fingerprint lookups
 
 	# Check if search term is an entity ID (49-51 word characters)
 	if mochi.valid(search, "entity"):
@@ -4190,7 +4093,8 @@ def action_search(a):
 
 			# Try as fingerprint — check local directory first, then probe remote
 			elif mochi.valid(project_id, "fingerprint"):
-				all_projects = mochi.directory.search("project", "", False)
+				if all_projects == None:
+					all_projects = mochi.directory.search("project", "", False)
 				for entry in all_projects:
 					entry_fp = entry.get("fingerprint", "").replace("-", "")
 					if entry_fp == project_id.replace("-", ""):
@@ -5628,14 +5532,8 @@ def event_merge_request(e):
 # List requests for an object
 def action_request_list(a):
 
-	project_id = resolve_project(a)
+	project_id, project = require_project(a)
 	if not project_id:
-		a.error(400, "Project ID required")
-		return
-
-	project = get_project(project_id)
-	if project and project["owner"] == 1 and not check_project_access(a.user.identity.id, project_id, "view"):
-		a.error(403, "Access denied")
 		return
 
 	object_id = a.input("object")

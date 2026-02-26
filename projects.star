@@ -18,7 +18,7 @@ def broadcast_event(project_id, event, data, exclude=None):
 			continue
 		mochi.message.send(p2p_headers(project_id, sub["id"], event), data)
 
-# Create database with all 14 tables
+# Create database with all 16 tables
 def database_create():
 	# 1. projects - the container, a Mochi entity
 	mochi.db.execute("""create table if not exists projects (
@@ -2017,8 +2017,8 @@ def action_value_set(a):
 		a.error(400, "Invalid field for this class")
 		return
 
-	new_value = a.input("value")
-	if len(str(new_value)) > 10000:
+	new_value = a.input("value") or ""
+	if len(new_value) > 10000:
 		a.error(400, "Value too long")
 		return
 
@@ -2295,6 +2295,9 @@ def action_comment_create(a):
 	if project["owner"] != 1:
 		if not object_id:
 			a.error(400, "Object ID required")
+			return
+		if not mochi.db.row("select id from objects where id=? and project=?", object_id, project_id):
+			a.error(404, "Object not found")
 			return
 		comment_id = mochi.uid()
 		now = mochi.time.now()
@@ -5263,6 +5266,8 @@ def event_view_delete(e):
 	if not view_id:
 		return
 	mochi.db.execute("delete from views where id=? and project=?", view_id, project_id)
+	mochi.db.execute("delete from view_fields where view=? and project=?", view_id, project_id)
+	mochi.db.execute("delete from view_classes where view=? and project=?", view_id, project_id)
 	fp = mochi.entity.fingerprint(project_id)
 	if fp:
 		mochi.websocket.write(fp, {"type": "view/delete", "project": project_id, "id": view_id})
@@ -5861,7 +5866,7 @@ REQUEST_LEVELS = {
 	"object/move": "write", "values/set": "write", "value/set": "write",
 	"link/create": "write", "link/delete": "write",
 	"attachment/delete": "write",
-	"pr/create": "write", "pr/update": "write", "pr/delete": "write",
+	"request/create": "write", "request/update": "write", "request/delete": "write",
 	"class/create": "design", "class/update": "design", "class/delete": "design",
 	"field/create": "design", "field/update": "design", "field/delete": "design",
 	"field/reorder": "design",
@@ -6637,7 +6642,7 @@ def do_field_create(project_id, project, params):
 	flags = params.get("flags", "")
 	multi = 1 if params.get("multi") == "1" or params.get("multi") == "true" else 0
 	card = 1 if params.get("card") != "0" and params.get("card") != "false" else 0
-	rows = int(params.get("rows")) if params.get("rows") else 1
+	rows = safe_int(params.get("rows"), 1)
 	mochi.db.execute(
 		"insert into fields (project, class, id, name, fieldtype, flags, multi, rank, card, rows) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
 		project_id, class_id, field_id, name.strip(), fieldtype, flags, multi, rank, card, rows

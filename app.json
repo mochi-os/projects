@@ -2,7 +2,7 @@
 // Copyright Alistair Cunningham 2026
 
 {
-	"version": "1.37",
+	"version": "1.38",
 	"label": "app_name",
 	"classes": ["project"],
 	"paths": ["projects"],
@@ -141,6 +141,7 @@
 		"subscribe": {"function": "event_subscribe"},
 		"unsubscribe": {"function": "event_unsubscribe"},
 		"deleted": {"function": "event_deleted"},
+		"sync/batch": {"function": "event_sync_batch"},
 
 		"project/update": {"function": "event_project_update"},
 		"object/create": {"function": "event_object_create"},

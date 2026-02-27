@@ -4625,101 +4625,96 @@ def insert_schema(project_id, schema):
 
 # Send all existing project data to a new subscriber
 def send_project_data(project_id, subscriber_id):
-	h = p2p_headers(project_id, subscriber_id, "")
+	h = p2p_headers(project_id, subscriber_id, "sync/batch")
 
-	# Send classes
+	# Collect all data into a single batch message
+	batch = {"project": project_id, "classes": [], "views": [], "objects": [], "links": []}
+
+	# Collect classes with their fields, options, and hierarchy
 	types = mochi.db.rows("select * from classes where project=?", project_id)
 	for t in types:
-		h["event"] = "class/create"
-		mochi.message.send(h, {"project": project_id, "id": t["id"], "name": t["name"], "rank": t["rank"], "requests": t["requests"], "title": t["title"]})
+		class_data = {"id": t["id"], "name": t["name"], "rank": t["rank"], "requests": t["requests"], "title": t["title"]}
 
-		# Send hierarchy for this class
+		# Hierarchy
 		parents = mochi.db.rows("select parent from hierarchy where project=? and class=?", project_id, t["id"])
 		if parents:
-			h["event"] = "hierarchy/set"
-			mochi.message.send(h, {"project": project_id, "class": t["id"], "parents": [p["parent"] for p in parents]})
+			class_data["parents"] = [p["parent"] for p in parents]
 
-		# Send fields for this class
+		# Fields and their options
 		fields = mochi.db.rows("select * from fields where project=? and class=? order by rank", project_id, t["id"])
+		field_list = []
 		for f in fields:
-			h["event"] = "field/create"
-			mochi.message.send(h, {
-				"project": project_id, "class": t["id"], "id": f["id"], "name": f["name"],
-				"fieldtype": f["fieldtype"], "flags": f["flags"], "multi": f["multi"],
-				"rank": f["rank"], "card": f["card"], "position": f["position"], "rows": f["rows"]
-			})
-
-			# Send options for enumerated fields
+			field_data = {
+				"id": f["id"], "name": f["name"], "fieldtype": f["fieldtype"],
+				"flags": f["flags"], "multi": f["multi"], "rank": f["rank"],
+				"card": f["card"], "position": f["position"], "rows": f["rows"]
+			}
 			options = mochi.db.rows("select * from options where project=? and class=? and field=? order by rank", project_id, t["id"], f["id"])
-			for o in options:
-				h["event"] = "option/create"
-				mochi.message.send(h, {
-					"project": project_id, "class": t["id"], "field": f["id"],
-					"id": o["id"], "name": o["name"], "colour": o["colour"], "icon": o["icon"], "rank": o["rank"]
-				})
+			if options:
+				field_data["options"] = [{"id": o["id"], "name": o["name"], "colour": o["colour"], "icon": o["icon"], "rank": o["rank"]} for o in options]
+			field_list.append(field_data)
+		class_data["fields"] = field_list
+		batch["classes"].append(class_data)
 
-	# Send views
+	# Collect views
 	views = mochi.db.rows("select * from views where project=?", project_id)
 	for v in views:
-		# Get view fields and classes
 		view_fields = mochi.db.rows("select field from view_fields where project=? and view=? order by rank", project_id, v["id"]) or []
 		fields_csv = ",".join([vf["field"] for vf in view_fields])
 		view_classes = mochi.db.rows("select class from view_classes where project=? and view=?", project_id, v["id"]) or []
 		classes_csv = ",".join([vc["class"] for vc in view_classes])
-		h["event"] = "view/create"
-		mochi.message.send(h, {
-			"project": project_id, "id": v["id"], "name": v["name"], "viewtype": v["viewtype"],
+		batch["views"].append({
+			"id": v["id"], "name": v["name"], "viewtype": v["viewtype"],
 			"filter": v["filter"], "columns": v["columns"], "rows": v["rows"],
 			"sort": v["sort"], "direction": v["direction"], "rank": v["rank"],
 			"fields": fields_csv, "classes": classes_csv, "border": v["border"]
 		})
 
-	# Send objects with their values, comments, and links
+	# Collect objects with values, comments, and attachments
 	objects = mochi.db.rows("select * from objects where project=?", project_id)
 	for obj in objects:
-		h["event"] = "object/create"
-		mochi.message.send(h, {
-			"project": project_id, "id": obj["id"], "class": obj["class"],
-			"number": obj["number"], "parent": obj["parent"], "rank": obj["rank"],
-			"created": obj["created"], "updated": obj["updated"], "sync": True
-		})
+		obj_data = {
+			"id": obj["id"], "class": obj["class"], "number": obj["number"],
+			"parent": obj["parent"], "rank": obj["rank"],
+			"created": obj["created"], "updated": obj["updated"]
+		}
 
-		# Send values for this object
+		# Values
 		vals = mochi.db.rows("select field, value from \"values\" where object=?", obj["id"])
 		if vals:
 			values_map = {}
 			for v in vals:
 				values_map[v["field"]] = v["value"]
-			h["event"] = "values/update"
-			mochi.message.send(h, {"project": project_id, "id": obj["id"], "values": values_map, "sync": True})
+			obj_data["values"] = values_map
 
-		# Send comments for this object with attachment metadata
+		# Comments
 		comments = mochi.db.rows("select * from comments where object=? order by created", obj["id"]) or []
-		for c in comments:
-			h["event"] = "comment/create"
-			comment_data = {
-				"project": project_id, "id": c["id"], "object": obj["id"],
-				"parent": c["parent"], "author": c["author"], "name": c["name"],
-				"content": c["content"], "created": c["created"],
-				"sync": True
-			}
-			comment_data["attachments"] = mochi.attachment.list(c["id"], project_id) or []
-			mochi.message.send(h, comment_data)
+		if comments:
+			comment_list = []
+			for c in comments:
+				comment_data = {
+					"id": c["id"], "object": obj["id"],
+					"parent": c["parent"], "author": c["author"], "name": c["name"],
+					"content": c["content"], "created": c["created"]
+				}
+				comment_data["attachments"] = mochi.attachment.list(c["id"], project_id) or []
+				comment_list.append(comment_data)
+			obj_data["comments"] = comment_list
 
-		# Send object attachments as attachment/add event
+		# Object attachments
 		obj_attachments = mochi.attachment.list(obj["id"], project_id) or []
 		if obj_attachments:
-			h["event"] = "attachment/add"
-			mochi.message.send(h, {
-				"project": project_id, "object": obj["id"],
-				"attachments": obj_attachments
-			})
+			obj_data["attachments"] = obj_attachments
 
-	# Send links (once, not per-object)
+		batch["objects"].append(obj_data)
+
+	# Collect links
 	links = mochi.db.rows("select l.source, l.target, l.linktype from links l join objects o on l.source = o.id where o.project=?", project_id)
 	for l in links:
-		h["event"] = "link/create"
-		mochi.message.send(h, {"project": project_id, "source": l["source"], "target": l["target"], "linktype": l["linktype"], "sync": True})
+		batch["links"].append({"source": l["source"], "target": l["target"], "linktype": l["linktype"]})
+
+	# Send everything in one message
+	mochi.message.send(h, batch)
 
 # Handle subscribe event from a remote user
 def event_subscribe(e):
@@ -4821,6 +4816,98 @@ def event_deleted(e):
 # ============================================================================
 # Content Sync Event Handlers (received by subscribers)
 # ============================================================================
+
+# Handle batched sync data from owner (single message with all project data)
+def event_sync_batch(e):
+	project_id = e.content("project")
+	if not project_id:
+		return
+	project = mochi.db.row("select id from projects where id=? and owner=0", project_id)
+	if not project:
+		return
+	now = mochi.time.now()
+
+	# Process classes
+	classes = e.content("classes") or []
+	for t in classes:
+		mochi.db.execute(
+			"insert or replace into classes (project, id, name, rank, requests, title) values (?, ?, ?, ?, ?, ?)",
+			project_id, t["id"], t["name"], t.get("rank", 0), t.get("requests", ""), t.get("title", "title")
+		)
+		# Hierarchy
+		parents = t.get("parents")
+		if parents:
+			mochi.db.execute("delete from hierarchy where project=? and class=?", project_id, t["id"])
+			for p in parents:
+				mochi.db.execute("insert or ignore into hierarchy (project, class, parent) values (?, ?, ?)", project_id, t["id"], p)
+		# Fields
+		for f in (t.get("fields") or []):
+			mochi.db.execute(
+				"insert or replace into fields (project, class, id, name, fieldtype, flags, multi, rank, card, position, rows) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+				project_id, t["id"], f["id"], f["name"], f["fieldtype"], f.get("flags", ""),
+				f.get("multi", 0), f.get("rank", 0), f.get("card", ""), f.get("position", ""), f.get("rows", 0)
+			)
+			# Options
+			for o in (f.get("options") or []):
+				mochi.db.execute(
+					"insert or replace into options (project, class, field, id, name, colour, icon, rank) values (?, ?, ?, ?, ?, ?, ?, ?)",
+					project_id, t["id"], f["id"], o["id"], o["name"], o.get("colour", "#94a3b8"), o.get("icon", ""), o.get("rank", 0)
+				)
+
+	# Process views
+	for v in (e.content("views") or []):
+		mochi.db.execute(
+			"insert or replace into views (project, id, name, viewtype, filter, columns, rows, sort, direction, rank, border) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+			project_id, v["id"], v["name"], v["viewtype"], v.get("filter", ""), v.get("columns", ""),
+			v.get("rows", ""), v.get("sort", ""), v.get("direction", ""), v.get("rank", 0), v.get("border", "")
+		)
+		# View fields
+		mochi.db.execute("delete from view_fields where project=? and view=?", project_id, v["id"])
+		fields_csv = v.get("fields", "")
+		if fields_csv:
+			for i, field_id in enumerate(fields_csv.split(",")):
+				if field_id:
+					mochi.db.execute("insert into view_fields (project, view, field, rank) values (?, ?, ?, ?)", project_id, v["id"], field_id, i)
+		# View classes
+		mochi.db.execute("delete from view_classes where project=? and view=?", project_id, v["id"])
+		classes_csv = v.get("classes", "")
+		if classes_csv:
+			for class_id in classes_csv.split(","):
+				if class_id:
+					mochi.db.execute("insert into view_classes (project, view, class) values (?, ?, ?)", project_id, v["id"], class_id)
+
+	# Process objects
+	for obj in (e.content("objects") or []):
+		mochi.db.execute(
+			"insert or ignore into objects (id, project, class, number, parent, rank, created, updated) values (?, ?, ?, ?, ?, ?, ?, ?)",
+			obj["id"], project_id, obj.get("class", ""), obj.get("number", 0),
+			obj.get("parent", ""), obj.get("rank", 0),
+			obj.get("created", now), obj.get("updated", now)
+		)
+		# Values
+		values = obj.get("values")
+		if values:
+			for field, value in values.items():
+				mochi.db.execute("insert or replace into \"values\" (object, field, value) values (?, ?, ?)", obj["id"], field, value)
+		# Comments
+		for c in (obj.get("comments") or []):
+			mochi.db.execute(
+				"insert or ignore into comments (id, object, project, parent, author, name, content, created) values (?, ?, ?, ?, ?, ?, ?, ?)",
+				c["id"], obj["id"], project_id, c.get("parent", ""),
+				c.get("author", ""), c.get("name", ""), c.get("content", ""), c.get("created", now)
+			)
+
+	# Process links
+	for l in (e.content("links") or []):
+		mochi.db.execute(
+			"insert or ignore into links (source, target, linktype) values (?, ?, ?)",
+			l["source"], l["target"], l.get("linktype", "relates")
+		)
+
+	# Notify UI
+	fp = mochi.entity.fingerprint(project_id)
+	if fp:
+		mochi.websocket.write(fp, {"type": "project/update", "project": project_id})
 
 # Helper to verify a content event is for a project we subscribe to
 def verify_subscription(e):

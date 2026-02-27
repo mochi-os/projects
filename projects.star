@@ -6319,6 +6319,24 @@ def do_object_move(project_id, project, params, user_id):
 		# Notify owner if watching
 		owner_id = get_owner_identity(project_id)
 		notify_watchers(object_id, project_id, owner_id, user_id, "Fields changed")
+
+	# Broadcast rank changes to subscribers
+	if new_rank != None:
+		# Read final ranks from DB and broadcast them all
+		if scope_parent:
+			all_in_scope = mochi.db.rows("select id, rank from objects where project=? and parent=? order by rank asc", project_id, scope_parent) or []
+		else:
+			all_in_scope = mochi.db.rows("""
+				select o.id, o.rank from objects o
+				left join "values" v on v.object = o.id and v.field=?
+				where o.project=? and coalesce(v.value, '')=?
+				order by o.rank asc
+			""", field, project_id, target_value) or []
+		for obj in all_in_scope:
+			broadcast_event(project_id, "object/update", {
+				"project": project_id, "id": obj["id"], "rank": obj["rank"], "user": user_id
+			})
+
 	return {"success": True}
 
 # Value helpers

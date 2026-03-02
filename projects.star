@@ -1284,7 +1284,7 @@ def get_all_descendants(object_id, depth=0):
 def delete_object_cascade(project_id, object_id, user=""):
 	"""Delete an object and all its children recursively."""
 	# First, recursively delete all children
-	children = mochi.db.rows("select id from objects where parent=?", object_id)
+	children = mochi.db.rows("select id from objects where parent=?", object_id) or []
 	for child in children:
 		delete_object_cascade(project_id, child["id"], user)
 

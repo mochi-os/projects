@@ -325,6 +325,10 @@ def safe_int(value, default=0):
 		return int(s) if s[1:].isdigit() else default
 	return int(s) if s.isdigit() else default
 
+def check_length(value, max_len):
+	"""Return True if value is a string exceeding max_len."""
+	return value != None and len(str(value)) > max_len
+
 # Get available project templates from JSON files
 def get_templates():
 	templates = {}
@@ -524,6 +528,15 @@ def action_design_export(a):
 	# Read views
 	views = []
 	view_rows = mochi.db.rows("select id, name, viewtype, filter, columns, rows, sort, direction, rank, border from views where project=? order by rank", project_id) or []
+	# Batch-fetch view classes and fields
+	all_view_classes = mochi.db.rows("select view, class from view_classes where project=?", project_id) or []
+	vc_map = {}
+	for vc in all_view_classes:
+		vc_map.setdefault(vc["view"], []).append(vc["class"])
+	all_view_fields = mochi.db.rows("select view, field from view_fields where project=? order by rank", project_id) or []
+	vf_map = {}
+	for vf in all_view_fields:
+		vf_map.setdefault(vf["view"], []).append(vf["field"])
 	for v in view_rows:
 		view = {
 			"id": v["id"],
@@ -542,14 +555,12 @@ def action_design_export(a):
 			view["direction"] = v["direction"]
 		if v["border"]:
 			view["border"] = v["border"]
-		# View fields
-		view_fields = mochi.db.rows("select field from view_fields where project=? and view=? order by rank", project_id, v["id"]) or []
-		if view_fields:
-			view["fields"] = ",".join([vf["field"] for vf in view_fields])
-		# View classes
-		view_classes = mochi.db.rows("select class from view_classes where project=? and view=?", project_id, v["id"]) or []
-		if view_classes:
-			view["classes"] = [vc["class"] for vc in view_classes]
+		vf = vf_map.get(v["id"], [])
+		if vf:
+			view["fields"] = ",".join(vf)
+		vc = vc_map.get(v["id"], [])
+		if vc:
+			view["classes"] = vc
 		views.append(view)
 
 	result = {
@@ -1209,14 +1220,9 @@ def require_project(a, level="view"):
 	if not project:
 		a.error(404, "Project not found")
 		return None, None
-	if level == "view":
-		if project["owner"] == 1 and not check_project_access(a.user.identity.id, project_id, level):
-			a.error(403, "Access denied")
-			return None, None
-	else:
-		if not check_project_access(a.user.identity.id, project_id, level):
-			a.error(403, "Access denied")
-			return None, None
+	if project["owner"] == 1 and not check_project_access(a.user.identity.id, project_id, level):
+		a.error(403, "Access denied")
+		return None, None
 	return project_id, project
 
 def log_activity(object_id, user, action, field="", oldvalue="", newvalue=""):
@@ -1744,18 +1750,23 @@ def action_object_move(a):
 		a.error(400, "Object ID required")
 		return
 
-	row = mochi.db.row("select id, rank from objects where id=? and project=?", object_id, project_id)
+	row = mochi.db.row("select id, class, rank from objects where id=? and project=?", object_id, project_id)
 	if not row:
 		a.error(404, "Object not found")
 		return
 
 	old_rank = row["rank"]
+	obj_class = row["class"]
 	field = a.input("field") or ""
 	value = a.input("value")  # New column value
 	new_rank = a.input("rank")
 
 	if field and len(field) > 100:
 		a.error(400, "Field name too long")
+		return
+
+	if field and not mochi.db.exists("select 1 from fields where project=? and class=? and id=?", project_id, obj_class, field):
+		a.error(400, "Field not found")
 		return
 
 	if value and len(str(value)) > 10000:
@@ -1820,6 +1831,12 @@ def action_object_move(a):
 	# Handle row field change (for swimlane drag-drop)
 	row_field = a.input("row_field")
 	row_value = a.input("row_value")
+	if row_field and len(row_field) > 100:
+		a.error(400, "Field name too long")
+		return
+	if row_field and not mochi.db.exists("select 1 from fields where project=? and class=? and id=?", project_id, obj_class, row_field):
+		a.error(400, "Field not found")
+		return
 	if row_value and len(str(row_value)) > 10000:
 		a.error(400, "Value too long")
 		return
@@ -2765,12 +2782,18 @@ def action_view_list(a):
 		project_id
 	) or []
 
-	# Add fields and classes to each view
+	# Batch-fetch view classes and fields
+	all_view_classes = mochi.db.rows("select view, class from view_classes where project=?", project_id) or []
+	vc_map = {}
+	for vc in all_view_classes:
+		vc_map.setdefault(vc["view"], []).append(vc["class"])
+	all_view_fields = mochi.db.rows("select view, field from view_fields where project=? order by rank", project_id) or []
+	vf_map = {}
+	for vf in all_view_fields:
+		vf_map.setdefault(vf["view"], []).append(vf["field"])
 	for v in views:
-		view_fields = mochi.db.rows("select field from view_fields where project=? and view=? order by rank", project_id, v["id"]) or []
-		v["fields"] = ",".join([vf["field"] for vf in view_fields])
-		view_classes = mochi.db.rows("select class from view_classes where project=? and view=?", project_id, v["id"]) or []
-		v["classes"] = [vc["class"] for vc in view_classes]
+		v["classes"] = vc_map.get(v["id"], [])
+		v["fields"] = ",".join(vf_map.get(v["id"], []))
 
 	return {"data": {"views": views}}
 
@@ -4020,9 +4043,6 @@ def action_repositories_merge(a):
 
 # Search for projects in the directory
 def action_search(a):
-	if not a.user.identity.id:
-		a.error(401, "Not logged in")
-		return
 
 	search = a.input("search")
 	if not search:
@@ -4201,9 +4221,6 @@ def action_notifications_destinations(a):
 # Used by remote servers to resolve fingerprints during search
 # Probe a remote project by URL without subscribing
 def action_probe(a):
-	if not a.user.identity.id:
-		a.error(401, "Not logged in")
-		return
 
 	url = a.input("url")
 	if not url:
@@ -4305,9 +4322,6 @@ def action_recommendations(a):
 
 # Subscribe to a remote project
 def action_subscribe(a):
-	if not a.user.identity.id:
-		a.error(401, "Not logged in")
-		return
 	user_id = a.user.identity.id
 
 	project_id = a.input("project")
@@ -4382,9 +4396,6 @@ def action_subscribe(a):
 
 # Unsubscribe from a remote project
 def action_unsubscribe(a):
-	if not a.user.identity.id:
-		a.error(401, "Not logged in")
-		return
 	user_id = a.user.identity.id
 
 	project_id = a.input("project")
@@ -4655,16 +4666,22 @@ def send_project_data(project_id, subscriber_id):
 
 	# Collect views
 	views = mochi.db.rows("select * from views where project=?", project_id)
+	all_view_classes = mochi.db.rows("select view, class from view_classes where project=?", project_id) or []
+	vc_map = {}
+	for vc in all_view_classes:
+		vc_map.setdefault(vc["view"], []).append(vc["class"])
+	all_view_fields = mochi.db.rows("select view, field from view_fields where project=? order by rank", project_id) or []
+	vf_map = {}
+	for vf in all_view_fields:
+		vf_map.setdefault(vf["view"], []).append(vf["field"])
 	for v in views:
-		view_fields = mochi.db.rows("select field from view_fields where project=? and view=? order by rank", project_id, v["id"]) or []
-		fields_csv = ",".join([vf["field"] for vf in view_fields])
-		view_classes = mochi.db.rows("select class from view_classes where project=? and view=?", project_id, v["id"]) or []
-		classes_csv = ",".join([vc["class"] for vc in view_classes])
 		batch["views"].append({
 			"id": v["id"], "name": v["name"], "viewtype": v["viewtype"],
 			"filter": v["filter"], "columns": v["columns"], "rows": v["rows"],
 			"sort": v["sort"], "direction": v["direction"], "rank": v["rank"],
-			"fields": fields_csv, "classes": classes_csv, "border": v["border"]
+			"fields": ",".join(vf_map.get(v["id"], [])),
+			"classes": ",".join(vc_map.get(v["id"], [])),
+			"border": v["border"]
 		})
 
 	# Collect objects with values, comments, and attachments
@@ -4889,9 +4906,9 @@ def event_sync_batch(e):
 		# Comments
 		for c in (obj.get("comments") or []):
 			mochi.db.execute(
-				"insert or ignore into comments (id, object, project, parent, author, name, content, created) values (?, ?, ?, ?, ?, ?, ?, ?)",
-				c["id"], obj["id"], project_id, c.get("parent", ""),
-				c.get("author", ""), c.get("name", ""), c.get("content", ""), c.get("created", now)
+				"insert or ignore into comments (id, object, parent, author, name, content, created, edited) values (?, ?, ?, ?, ?, ?, ?, ?)",
+				c["id"], obj["id"], c.get("parent", ""),
+				c.get("author", ""), c.get("name", ""), c.get("content", ""), c.get("created", now), c.get("edited", 0)
 			)
 
 	# Process links
@@ -6084,6 +6101,8 @@ def do_comment_create(project_id, project, params, user_id, user_name):
 		return {"error": "Object not found", "code": 404}
 	if not content or not content.strip():
 		return {"error": "Content is required", "code": 400}
+	if check_length(content, 50000):
+		return {"error": "Content too long", "code": 400}
 	comment_id = params.get("id") or mochi.uid()
 	now = mochi.time.now()
 	mochi.db.execute(
@@ -6126,6 +6145,8 @@ def do_comment_update(project_id, project, params, user_id):
 		return {"error": "Cannot edit another user's comment", "code": 403}
 	if not content or not content.strip():
 		return {"error": "Content is required", "code": 400}
+	if check_length(content, 50000):
+		return {"error": "Content too long", "code": 400}
 	now = mochi.time.now()
 	mochi.db.execute("update comments set content=?, edited=? where id=?", content.strip(), now, comment_id)
 	broadcast_event(project_id, "comment/update", {
@@ -6185,6 +6206,8 @@ def do_object_create(project_id, project, params, user_id):
 		return {"error": "Invalid class", "code": 400}
 	parent = params.get("parent", "")
 	title = params.get("title", "")
+	if check_length(title, 500):
+		return {"error": "Title too long", "code": 400}
 
 	# Check hierarchy rules
 	parent_class = ""
@@ -6311,11 +6334,20 @@ def do_object_move(project_id, project, params, user_id):
 	object_id = params.get("object")
 	if not object_id:
 		return {"error": "Object ID required", "code": 400}
-	row = mochi.db.row("select id, rank from objects where id=? and project=?", object_id, project_id)
+	row = mochi.db.row("select id, class, rank from objects where id=? and project=?", object_id, project_id)
 	if not row:
 		return {"error": "Object not found", "code": 404}
+	if check_length(params.get("value"), 50000):
+		return {"error": "Value too long", "code": 400}
+	if check_length(params.get("row_value"), 50000):
+		return {"error": "Row value too long", "code": 400}
 	old_rank = row["rank"]
+	obj_class = row["class"]
 	field = params.get("field", "")
+	if check_length(field, 100):
+		return {"error": "Field name too long", "code": 400}
+	if field and not mochi.db.exists("select 1 from fields where project=? and class=? and id=?", project_id, obj_class, field):
+		return {"error": "Field not found", "code": 400}
 	value = params.get("value")
 	new_rank = params.get("rank")
 	old_value_row = mochi.db.row("select value from \"values\" where object=? and field=?", object_id, field)
@@ -6359,6 +6391,10 @@ def do_object_move(project_id, project, params, user_id):
 		mochi.db.execute("update objects set rank=? where id=?", new_rank, object_id)
 	row_field = params.get("row_field")
 	row_value = params.get("row_value")
+	if check_length(row_field, 100):
+		return {"error": "Field name too long", "code": 400}
+	if row_field and not mochi.db.exists("select 1 from fields where project=? and class=? and id=?", project_id, obj_class, row_field):
+		return {"error": "Field not found", "code": 400}
 	row_changed = False
 	if row_field:
 		old_row_row = mochi.db.row("select value from \"values\" where object=? and field=?", object_id, row_field)
@@ -6440,6 +6476,9 @@ def do_values_set(project_id, project, params, user_id):
 	now = mochi.time.now()
 	changes = []
 	values = params.get("values", {})
+	for v in values.values():
+		if check_length(v, 50000):
+			return {"error": "Value too long", "code": 400}
 	for field_id in values:
 		if field_id not in valid_fields:
 			continue
@@ -6487,6 +6526,8 @@ def do_value_set(project_id, project, params, user_id):
 	if not field_row:
 		return {"error": "Invalid field for this class", "code": 400}
 	new_value = params.get("value", "")
+	if check_length(new_value, 50000):
+		return {"error": "Value too long", "code": 400}
 	old_row = mochi.db.row("select value from \"values\" where object=? and field=?", object_id, field_id)
 	old_value = old_row["value"] if old_row else ""
 	if str(new_value) != old_value:
@@ -6582,6 +6623,16 @@ def do_request_create(project_id, project, params, user_id):
 	obj = mochi.db.row("select * from objects where id=? and project=?", object_id, project_id)
 	if not obj:
 		return {"error": "Object not found", "code": 404}
+	if check_length(params.get("title"), 500):
+		return {"error": "Title too long", "code": 400}
+	if check_length(params.get("description"), 50000):
+		return {"error": "Description too long", "code": 400}
+	if check_length(params.get("repository"), 500):
+		return {"error": "Repository too long", "code": 400}
+	if check_length(params.get("source"), 500):
+		return {"error": "Source too long", "code": 400}
+	if check_length(params.get("target"), 500):
+		return {"error": "Target too long", "code": 400}
 	request_type = params.get("type", "merge")
 	cls = mochi.db.row("select requests from classes where project=? and id=?", project_id, obj["class"])
 	if not cls or request_type not in cls["requests"].split(","):
@@ -6614,6 +6665,16 @@ def do_request_update(project_id, project, params, user_id):
 	req = mochi.db.row("select r.* from requests r join objects o on r.object=o.id where r.id=? and o.project=?", request_id, project_id)
 	if not req:
 		return {"error": "Request not found", "code": 404}
+	if check_length(params.get("title"), 500):
+		return {"error": "Title too long", "code": 400}
+	if check_length(params.get("description"), 50000):
+		return {"error": "Description too long", "code": 400}
+	if check_length(params.get("repository"), 500):
+		return {"error": "Repository too long", "code": 400}
+	if check_length(params.get("source"), 500):
+		return {"error": "Source too long", "code": 400}
+	if check_length(params.get("target"), 500):
+		return {"error": "Target too long", "code": 400}
 	now = mochi.time.now()
 	repository = params.get("repository")
 	source = params.get("source")
@@ -6659,6 +6720,8 @@ def do_class_create(project_id, project, params):
 	name = params.get("name")
 	if not name or not name.strip():
 		return {"error": "Name is required", "code": 400}
+	if check_length(name, 100):
+		return {"error": "Name too long", "code": 400}
 	class_id = name.strip().lower().replace(" ", "_")
 	existing = mochi.db.exists("select 1 from classes where project=? and id=?", project_id, class_id)
 	if existing:
@@ -6691,6 +6754,10 @@ def do_class_update(project_id, project, params):
 	if not class_row:
 		return {"error": "Class not found", "code": 404}
 	name = params.get("name")
+	if check_length(name, 100):
+		return {"error": "Name too long", "code": 400}
+	if check_length(params.get("title"), 100):
+		return {"error": "Title too long", "code": 400}
 	if name:
 		mochi.db.execute("update classes set name=? where project=? and id=?", name.strip(), project_id, class_id)
 	requests_input = params.get("requests")
@@ -6732,6 +6799,10 @@ def do_field_create(project_id, project, params):
 	name = params.get("name")
 	if not name or not name.strip():
 		return {"error": "Name is required", "code": 400}
+	if check_length(name, 100):
+		return {"error": "Name too long", "code": 400}
+	if check_length(params.get("flags"), 200):
+		return {"error": "Flags too long", "code": 400}
 	fieldtype = params.get("fieldtype", "text")
 	if fieldtype not in ["text", "number", "date", "enumerated", "user", "object", "checkbox", "checklist"]:
 		return {"error": "Invalid field type", "code": 400}
@@ -6779,6 +6850,12 @@ def do_field_update(project_id, project, params):
 	field_row = mochi.db.row("select * from fields where project=? and class=? and id=?", project_id, class_id, field_id)
 	if not field_row:
 		return {"error": "Field not found", "code": 404}
+	if check_length(params.get("name"), 100):
+		return {"error": "Name too long", "code": 400}
+	if check_length(params.get("flags"), 200):
+		return {"error": "Flags too long", "code": 400}
+	if check_length(params.get("id"), 100):
+		return {"error": "Field ID too long", "code": 400}
 	name = params.get("name")
 	flags = params.get("flags")
 	multi = params.get("multi")
@@ -6866,6 +6943,12 @@ def do_option_create(project_id, project, params):
 	name = params.get("name")
 	if not name or not name.strip():
 		return {"error": "Name is required", "code": 400}
+	if check_length(name, 100):
+		return {"error": "Name too long", "code": 400}
+	if check_length(params.get("colour"), 20):
+		return {"error": "Colour too long", "code": 400}
+	if check_length(params.get("icon"), 100):
+		return {"error": "Icon too long", "code": 400}
 	option_id = name.strip().lower().replace(" ", "_")
 	existing = mochi.db.exists("select 1 from options where project=? and class=? and field=? and id=?", project_id, class_id, field_id, option_id)
 	if existing:
@@ -6893,6 +6976,12 @@ def do_option_update(project_id, project, params):
 	option_row = mochi.db.row("select * from options where project=? and class=? and field=? and id=?", project_id, class_id, field_id, option_id)
 	if not option_row:
 		return {"error": "Option not found", "code": 404}
+	if check_length(params.get("name"), 100):
+		return {"error": "Name too long", "code": 400}
+	if check_length(params.get("colour"), 20):
+		return {"error": "Colour too long", "code": 400}
+	if check_length(params.get("icon"), 100):
+		return {"error": "Icon too long", "code": 400}
 	name = params.get("name")
 	colour = params.get("colour")
 	icon = params.get("icon")
@@ -6972,6 +7061,11 @@ def do_view_create(project_id, project, params):
 	name = params.get("name")
 	if not name or not name.strip():
 		return {"error": "Name is required", "code": 400}
+	if check_length(name, 100):
+		return {"error": "Name too long", "code": 400}
+	for vf in ["filter", "columns", "rows", "fields", "sort", "border"]:
+		if check_length(params.get(vf), 10000):
+			return {"error": vf.capitalize() + " too long", "code": 400}
 	viewtype = params.get("viewtype", "board")
 	if viewtype not in ["board", "list"]:
 		return {"error": "Invalid view type", "code": 400}
@@ -7022,6 +7116,11 @@ def do_view_update(project_id, project, params):
 	view = mochi.db.row("select * from views where project=? and id=?", project_id, view_id)
 	if not view:
 		return {"error": "View not found", "code": 404}
+	if check_length(params.get("name"), 100):
+		return {"error": "Name too long", "code": 400}
+	for vf in ["filter", "columns", "rows", "fields", "sort", "border"]:
+		if check_length(params.get(vf), 10000):
+			return {"error": vf.capitalize() + " too long", "code": 400}
 	name = params.get("name")
 	viewtype = params.get("viewtype")
 	filter_str = params.get("filter")

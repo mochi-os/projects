@@ -156,6 +156,10 @@ const endpoints = {
     // Notification endpoints
     notificationsCheck: "-/notifications/check",
 
+    // User and group endpoints
+    usersSearch: "-/users/search",
+    groups: "-/groups",
+
     // Diff preference endpoints
     diffPreference: "-/diff/preference",
     diffPreferenceSet: "-/diff/preference/set",

@@ -16,7 +16,6 @@ interface DiffSearchParams {
 
 export const Route = createFileRoute("/$projectId/diff")({
   component: DiffPage,
-  errorComponent: ({ error }) => <GeneralError error={error} />,
   beforeLoad: () => {
     const store = useAuthStore.getState();
     if (!store.isInitialized) {
@@ -40,6 +39,7 @@ function DiffPage() {
     data: diffData,
     isLoading: diffLoading,
     error: diffError,
+    refetch: refetchDiff,
   } = useQuery({
     queryKey: ["diff", repo, target, source],
     queryFn: async () => {
@@ -49,7 +49,7 @@ function DiffPage() {
     enabled: !!repo && !!source && !!target,
   });
 
-  const { data: prefData } = useQuery({
+  const { data: prefData, error: prefError, refetch: refetchPreference } = useQuery({
     queryKey: ["diff-preference"],
     queryFn: async () => {
       const response = await projectsApi.getDiffPreference();
@@ -81,10 +81,6 @@ function DiffPage() {
         <Loader2 className="size-6 animate-spin text-muted-foreground" />
       </Main>
     );
-  }
-
-  if (diffError) {
-    return <GeneralError error={diffError} />;
   }
 
   return (
@@ -121,7 +117,30 @@ function DiffPage() {
         }
       />
       <div className="flex-1 overflow-auto px-4 md:px-6 pb-8">
-        {diffData ? (
+        {prefError && (
+          <div className="py-4">
+            <GeneralError
+              error={prefError}
+              minimal
+              mode="inline"
+              reset={() => {
+                void refetchPreference();
+              }}
+            />
+          </div>
+        )}
+        {diffError ? (
+          <div className="py-4">
+            <GeneralError
+              error={diffError}
+              minimal
+              mode="inline"
+              reset={() => {
+                void refetchDiff();
+              }}
+            />
+          </div>
+        ) : diffData ? (
           <DiffViewer diff={diffData} viewStyle={viewStyle} />
         ) : (
           <div className="py-8">

@@ -4,7 +4,7 @@ import {
   type SidebarData,
   type NavItem,
 } from "@mochi/common";
-import { FolderKanban, Plus, Search } from "lucide-react";
+import { FolderKanban, Plus, RefreshCw, Search } from "lucide-react";
 import { useProjectsStore } from "@/stores/projects-store";
 import { SidebarProvider, useSidebarContext } from "@/context/sidebar-context";
 import { CreateProjectDialog } from "@/features/projects/components/create-project-dialog";
@@ -13,6 +13,7 @@ import { APP_ROUTES } from "@/config/routes";
 function ProjectsLayoutInner() {
   const projects = useProjectsStore((state) => state.projects);
   const isLoading = useProjectsStore((state) => state.isLoading);
+  const error = useProjectsStore((state) => state.error);
   const refresh = useProjectsStore((state) => state.refresh);
   const {
     createDialogOpen,
@@ -55,7 +56,22 @@ function ProjectsLayoutInner() {
     const groups: SidebarData["navGroups"] = [
       {
         title: "Projects",
-        items: [allProjectsItem, ...projectItems],
+        items: [
+          allProjectsItem,
+          ...projectItems,
+          ...(error
+            ? [
+                {
+                  title: "Retry projects load",
+                  icon: RefreshCw,
+                  onClick: () => {
+                    void refresh();
+                  },
+                  className: "text-destructive",
+                },
+              ]
+            : []),
+        ],
       },
       {
         title: "",
@@ -65,7 +81,7 @@ function ProjectsLayoutInner() {
     ];
 
     return { navGroups: groups };
-  }, [projects, openCreateDialog]);
+  }, [projects, openCreateDialog, error, refresh]);
 
   return (
     <>

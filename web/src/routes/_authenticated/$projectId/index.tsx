@@ -16,6 +16,7 @@ import {
   DropdownMenuTrigger,
   Switch,
   useSearch,
+  useResetSelectionOnEntityChange,
   toast,
   extractStatus,
 } from "@mochi/common";
@@ -125,6 +126,7 @@ function ProjectPageContent({ project, projectId, search }: ProjectPageContentPr
   }, [setShortcutEnabled]);
 
   const [selectedObjectId, setSelectedObjectId] = useState<string | null>(null);
+  useResetSelectionOnEntityChange(projectId, setSelectedObjectId);
   const [createDialogOpen, setCreateDialogOpen] = useState(false);
   const [createDefaultFields, setCreateDefaultFields] = useState<
     { field: string; value: string }[] | undefined

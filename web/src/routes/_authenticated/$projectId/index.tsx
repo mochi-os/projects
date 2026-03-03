@@ -587,6 +587,7 @@ function ProjectPageContent({ project, projectId, search }: ProjectPageContentPr
       toast.error("Please add one or more classes to the project design.");
       return;
     }
+    setSelectedObjectId(null);
     setCreateDefaultFields(getDefaultColumnValue());
     setCreateDialogOpen(true);
   }, [project.classes.length, getDefaultColumnValue]);
@@ -624,6 +625,7 @@ function ProjectPageContent({ project, projectId, search }: ProjectPageContentPr
     if (rowValue !== undefined && rowField) {
       fields.push({ field: rowField, value: rowValue });
     }
+    setSelectedObjectId(null);
     setCreateDefaultFields(fields);
     setCreateDefaultParent(undefined);
     setCreateChildClasses(undefined);

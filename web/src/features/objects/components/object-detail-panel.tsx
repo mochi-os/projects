@@ -382,8 +382,7 @@ export function ObjectDetailPanel({
 
         {/* Tab content */}
         <div className="flex-1 overflow-y-auto p-6">
-          {activeTab === "properties" && (
-            <div className="max-w-2xl space-y-6">
+          <div className="max-w-2xl space-y-6" hidden={activeTab !== "properties"}>
               {/* ID */}
               <div className="grid grid-cols-[120px_1fr] gap-4 items-start">
                 <label className="text-sm font-medium text-muted-foreground pt-2">
@@ -466,10 +465,8 @@ export function ObjectDetailPanel({
                 readOnly={!canWrite(access)}
               />
             </div>
-          )}
 
-          {activeTab === "requests" && hasRequests && (
-            <div className="max-w-2xl">
+          {hasRequests && <div className="max-w-2xl" hidden={activeTab !== "requests"}>
               <RequestPanel
                 projectId={projectId}
                 objectId={objectId!}
@@ -478,20 +475,15 @@ export function ObjectDetailPanel({
                 objectReadable={object.readable}
                 readOnly={!canWrite(access)}
               />
-            </div>
-          )}
+            </div>}
 
-          {activeTab === "comments" && (
-            <div className="max-w-2xl">
+          <div className="max-w-2xl" hidden={activeTab !== "comments"}>
               <CommentList projectId={projectId} objectId={objectId} readOnly={!canComment(access)} />
-            </div>
-          )}
+          </div>
 
-          {activeTab === "activity" && (
-            <div className="max-w-2xl">
+          <div className="max-w-2xl" hidden={activeTab !== "activity"}>
               <ActivityList projectId={projectId} objectId={objectId} />
-            </div>
-          )}
+          </div>
         </div>
 
         <ConfirmDialog

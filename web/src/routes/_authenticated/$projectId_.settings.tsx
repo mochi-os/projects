@@ -27,7 +27,7 @@ import {
   DataChip,
   toast,
   getErrorMessage,
-  ApiError,
+  extractStatus,
   AccessDialog,
   AccessList,
   GeneralError,
@@ -52,21 +52,6 @@ import { useProjectsStore } from "@/stores/projects-store";
 // Characters disallowed in project names (matches backend validation)
 const DISALLOWED_NAME_CHARS = /[<>\r\n]/;
 
-function toError(error: unknown, fallback: string): Error {
-  if (error instanceof Error) return error;
-  return new Error(fallback);
-}
-
-function getErrorStatus(error: unknown): number | undefined {
-  if (error instanceof ApiError) {
-    return error.status;
-  }
-  if (error && typeof error === "object") {
-    const anyError = error as { status?: number; response?: { status?: number } };
-    return anyError.status ?? anyError.response?.status;
-  }
-  return undefined;
-}
 
 type TabId = "general" | "access";
 
@@ -129,10 +114,10 @@ function ProjectSettingsPage() {
 
   const project = projectData as ProjectDetails | undefined;
   const isOwner = project?.project.owner === 1;
-  const projectStatus = getErrorStatus(error);
+  const projectStatus = extractStatus(error);
   const projectLookupError =
     error && projectStatus !== 403 && projectStatus !== 404
-      ? toError(error, "Failed to load project settings")
+      ? error
       : null;
   const projectNotFound =
     !project &&
@@ -653,16 +638,12 @@ function AccessTab({ projectId }: AccessTabProps) {
     () => rulesData?.data?.rules ?? [],
     [rulesData],
   );
-  const rulesError = rulesErrorRaw
-    ? toError(rulesErrorRaw, "Failed to load access rules")
-    : null;
+  const rulesError = rulesErrorRaw ?? null;
   const userSearchError =
     userSearchQuery.length >= 1 && userSearchErrorRaw
-      ? toError(userSearchErrorRaw, "Failed to search users")
+      ? userSearchErrorRaw
       : null;
-  const groupsError = groupsErrorRaw
-    ? toError(groupsErrorRaw, "Failed to load groups")
-    : null;
+  const groupsError = groupsErrorRaw ?? null;
   const canManageRules = !rulesError && !isLoadingRules && !!rulesData;
 
   const handleAdd = async (

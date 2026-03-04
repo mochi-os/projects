@@ -5,8 +5,9 @@ import { useState, useMemo, useCallback, useEffect } from "react";
 import { createFileRoute, Link, redirect, useNavigate, useRouter } from "@tanstack/react-router";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import {
-  ApiError,
   GeneralError,
+  extractStatus,
+  getErrorMessage,
   Main,
   PageHeader,
   usePageTitle,
@@ -49,7 +50,7 @@ export const Route = createFileRoute("/_authenticated/$projectId/")({
       const projectResponse = await projectsApi.get(params.projectId);
       return { project: projectResponse.data, loaderError: null };
     } catch (error) {
-      const status = getErrorStatus(error);
+      const status = extractStatus(error);
       if (status === 403 || status === 404) {
         throw redirect({ to: "/" });
       }
@@ -57,7 +58,7 @@ export const Route = createFileRoute("/_authenticated/$projectId/")({
       return {
         project: null as ProjectDetails | null,
         loaderError:
-          error instanceof Error ? error.message : "Failed to load project",
+          getErrorMessage(error, "Failed to load project"),
       };
     }
   },
@@ -920,13 +921,3 @@ function ProjectPageContent({ project, projectId, search }: ProjectPageContentPr
   );
 }
 
-function getErrorStatus(error: unknown): number | undefined {
-  if (error instanceof ApiError) {
-    return error.status;
-  }
-  if (error && typeof error === "object") {
-    const maybeError = error as { status?: number; response?: { status?: number } };
-    return maybeError.status ?? maybeError.response?.status;
-  }
-  return undefined;
-}

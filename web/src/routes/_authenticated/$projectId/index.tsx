@@ -2,9 +2,10 @@
 // Copyright Alistair Cunningham 2026
 
 import { useState, useMemo, useCallback, useEffect } from "react";
-import { createFileRoute, Link, useNavigate, useRouter } from "@tanstack/react-router";
+import { createFileRoute, Link, redirect, useNavigate, useRouter } from "@tanstack/react-router";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import {
+  ApiError,
   GeneralError,
   Main,
   PageHeader,
@@ -44,22 +45,74 @@ export const Route = createFileRoute("/_authenticated/$projectId/")({
     view: typeof search.view === "string" ? search.view : undefined,
   }),
   loader: async ({ params }) => {
-    const projectResponse = await projectsApi.get(params.projectId);
-    return { project: projectResponse.data };
+    try {
+      const projectResponse = await projectsApi.get(params.projectId);
+      return { project: projectResponse.data, loaderError: null };
+    } catch (error) {
+      const status = getErrorStatus(error);
+      if (status === 403 || status === 404) {
+        throw redirect({ to: "/" });
+      }
+
+      return {
+        project: null as ProjectDetails | null,
+        loaderError:
+          error instanceof Error ? error.message : "Failed to load project",
+      };
+    }
   },
   component: ProjectPage,
-  errorComponent: ({ error }) => <GeneralError error={error} />,
 });
 
 function ProjectPage() {
-  const { project } = Route.useLoaderData() as {
-    project: ProjectDetails;
+  const { project, loaderError } = Route.useLoaderData() as {
+    project: ProjectDetails | null;
+    loaderError: string | null;
   };
   const params = Route.useParams();
   const search = Route.useSearch();
   const navigate = useNavigate();
   const router = useRouter();
 
+  if (!project) {
+    return (
+      <>
+        <PageHeader
+          title="Project"
+          icon={<FolderKanban className="size-4 md:size-5" />}
+          back={{ label: "Back to projects", onFallback: () => navigate({ to: "/" }) }}
+        />
+        <Main>
+          <GeneralError
+            error={new Error(loaderError ?? "Failed to load project")}
+            minimal
+            mode="inline"
+            reset={() => void router.invalidate()}
+          />
+        </Main>
+      </>
+    );
+  }
+
+  return (
+    <ProjectPageContent
+      project={project}
+      projectId={params.projectId}
+      search={search}
+    />
+  );
+}
+
+interface ProjectPageContentProps {
+  project: ProjectDetails;
+  projectId: string;
+  search: SearchParams;
+}
+
+function ProjectPageContent({ project, projectId, search }: ProjectPageContentProps) {
+  const navigate = useNavigate();
+  const router = useRouter();
+  const params = { projectId };
   const access = project.project.access;
 
   usePageTitle(project.project.name);
@@ -865,4 +918,15 @@ function ProjectPage() {
       />
     </>
   );
+}
+
+function getErrorStatus(error: unknown): number | undefined {
+  if (error instanceof ApiError) {
+    return error.status;
+  }
+  if (error && typeof error === "object") {
+    const maybeError = error as { status?: number; response?: { status?: number } };
+    return maybeError.status ?? maybeError.response?.status;
+  }
+  return undefined;
 }

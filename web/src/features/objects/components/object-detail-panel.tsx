@@ -76,7 +76,7 @@ export function ObjectDetailPanel({
     onClose();
   };
 
-  const { data, isLoading, error } = useQuery({
+  const { data, isLoading, error, refetch } = useQuery({
     queryKey: ["object", projectId, objectId],
     queryFn: async () => {
       if (!objectId) throw new Error("No object ID");
@@ -237,7 +237,14 @@ export function ObjectDetailPanel({
     return (
       <Sheet open={true} onOpenChange={handleClose} modal={false}>
         <SheetContent className="w-full sm:max-w-2xl p-6">
-          <GeneralError error={error ?? new Error("Failed to load object")} minimal mode="inline" />
+          <GeneralError
+            error={error ?? new Error("Failed to load object")}
+            minimal
+            mode="inline"
+            reset={() => {
+              void refetch();
+            }}
+          />
         </SheetContent>
       </Sheet>
     );

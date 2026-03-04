@@ -2,7 +2,7 @@
 // Copyright Alistair Cunningham 2026
 
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   AlertDialog,
@@ -27,8 +27,11 @@ import {
   DataChip,
   toast,
   getErrorMessage,
+  ApiError,
   AccessDialog,
   AccessList,
+  GeneralError,
+  type AccessRule,
   type AccessLevel,
 } from "@mochi/common";
 import {
@@ -43,12 +46,27 @@ import {
   Plus,
 } from "lucide-react";
 import projectsApi from "@/api/projects";
-import type { AccessRule } from "@mochi/common";
 import type { ProjectDetails } from "@/types";
 import { useProjectsStore } from "@/stores/projects-store";
 
 // Characters disallowed in project names (matches backend validation)
 const DISALLOWED_NAME_CHARS = /[<>\r\n]/;
+
+function toError(error: unknown, fallback: string): Error {
+  if (error instanceof Error) return error;
+  return new Error(fallback);
+}
+
+function getErrorStatus(error: unknown): number | undefined {
+  if (error instanceof ApiError) {
+    return error.status;
+  }
+  if (error && typeof error === "object") {
+    const anyError = error as { status?: number; response?: { status?: number } };
+    return anyError.status ?? anyError.response?.status;
+  }
+  return undefined;
+}
 
 type TabId = "general" | "access";
 
@@ -98,16 +116,27 @@ function ProjectSettingsPage() {
     data: projectData,
     isLoading,
     error,
+    refetch: refetchProject,
   } = useQuery({
     queryKey: ["project", projectId],
     queryFn: async () => {
       const response = await projectsApi.get(projectId);
       return response.data;
     },
+    retry: false,
+    refetchOnWindowFocus: false,
   });
 
   const project = projectData as ProjectDetails | undefined;
   const isOwner = project?.project.owner === 1;
+  const projectStatus = getErrorStatus(error);
+  const projectLookupError =
+    error && projectStatus !== 403 && projectStatus !== 404
+      ? toError(error, "Failed to load project settings")
+      : null;
+  const projectNotFound =
+    !project &&
+    (projectStatus === 403 || projectStatus === 404 || (!isLoading && !error));
 
   usePageTitle(
     project ? `${project.project.name} settings` : "Project settings"
@@ -188,7 +217,7 @@ function ProjectSettingsPage() {
     );
   }
 
-  if (error || !project) {
+  if (!project) {
     return (
       <>
         <PageHeader
@@ -196,11 +225,26 @@ function ProjectSettingsPage() {
           icon={<Settings className="size-4 md:size-5" />}
         />
         <Main>
-          <EmptyState
-            icon={FolderKanban}
-            title="Project not found"
-            description="This project may have been deleted or you don't have access to it."
-          />
+          {projectLookupError ? (
+            <GeneralError
+              error={projectLookupError}
+              minimal
+              mode="inline"
+              reset={() => {
+                void refetchProject();
+              }}
+            />
+          ) : (
+            <EmptyState
+              icon={FolderKanban}
+              title={projectNotFound ? "Project not found" : "Project unavailable"}
+              description={
+                projectNotFound
+                  ? "This project may have been deleted or you don't have access to it."
+                  : "This project could not be loaded right now."
+              }
+            />
+          )}
         </Main>
       </>
     );
@@ -567,52 +611,70 @@ interface AccessTabProps {
 }
 
 function AccessTab({ projectId }: AccessTabProps) {
-  const [rules, setRules] = useState<AccessRule[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<Error | null>(null);
-
   const [dialogOpen, setDialogOpen] = useState(false);
   const [userSearchQuery, setUserSearchQuery] = useState("");
 
-  const { data: userSearchData, isLoading: userSearchLoading } = useQuery({
+  const {
+    data: rulesData,
+    isLoading: isLoadingRules,
+    error: rulesErrorRaw,
+    refetch: refetchRules,
+  } = useQuery({
+    queryKey: ["projects", "access-rules", projectId],
+    queryFn: () => projectsApi.getAccessRules(projectId),
+    retry: false,
+    refetchOnWindowFocus: false,
+  });
+
+  const {
+    data: userSearchData,
+    isLoading: userSearchLoading,
+    error: userSearchErrorRaw,
+    refetch: refetchUserSearch,
+  } = useQuery({
     queryKey: ["users", "search", userSearchQuery],
     queryFn: () => projectsApi.searchUsers(userSearchQuery),
     enabled: userSearchQuery.length >= 1,
+    retry: false,
   });
 
-  const { data: groupsData } = useQuery({
+  const {
+    data: groupsData,
+    error: groupsErrorRaw,
+    refetch: refetchGroups,
+  } = useQuery({
     queryKey: ["groups", "list"],
     queryFn: () => projectsApi.listGroups(),
+    retry: false,
+    refetchOnWindowFocus: false,
   });
 
-  const loadRules = useCallback(async () => {
-    setIsLoading(true);
-    setError(null);
-    try {
-      const response = await projectsApi.getAccessRules(projectId);
-      setRules(response.data?.rules ?? []);
-    } catch (err) {
-      setError(
-        err instanceof Error ? err : new Error("Failed to load access rules")
-      );
-    } finally {
-      setIsLoading(false);
-    }
-  }, [projectId]);
-
-  useEffect(() => {
-    void loadRules();
-  }, [loadRules]);
+  const rules = useMemo<AccessRule[]>(
+    () => rulesData?.data?.rules ?? [],
+    [rulesData],
+  );
+  const rulesError = rulesErrorRaw
+    ? toError(rulesErrorRaw, "Failed to load access rules")
+    : null;
+  const userSearchError =
+    userSearchQuery.length >= 1 && userSearchErrorRaw
+      ? toError(userSearchErrorRaw, "Failed to search users")
+      : null;
+  const groupsError = groupsErrorRaw
+    ? toError(groupsErrorRaw, "Failed to load groups")
+    : null;
+  const canManageRules = !rulesError && !isLoadingRules && !!rulesData;
 
   const handleAdd = async (
     subject: string,
     subjectName: string,
     level: string
   ) => {
+    if (!canManageRules) return;
     try {
       await projectsApi.setAccessLevel(projectId, subject, level);
       toast.success(`Access set for ${subjectName}`);
-      void loadRules();
+      await refetchRules();
     } catch (err) {
       toast.error(getErrorMessage(err, "Failed to set access level"));
       throw err;
@@ -620,20 +682,22 @@ function AccessTab({ projectId }: AccessTabProps) {
   };
 
   const handleRevoke = async (subject: string) => {
+    if (!canManageRules) return;
     try {
       await projectsApi.revokeAccess(projectId, subject);
       toast.success("Access removed");
-      void loadRules();
+      await refetchRules();
     } catch (err) {
       toast.error(getErrorMessage(err, "Failed to remove access"));
     }
   };
 
   const handleLevelChange = async (subject: string, newLevel: string) => {
+    if (!canManageRules) return;
     try {
       await projectsApi.setAccessLevel(projectId, subject, newLevel);
       toast.success("Access level updated");
-      void loadRules();
+      await refetchRules();
     } catch (err) {
       toast.error(getErrorMessage(err, "Failed to update access level"));
     }
@@ -646,7 +710,7 @@ function AccessTab({ projectId }: AccessTabProps) {
     >
       <div className="space-y-4">
         <div className="flex justify-end">
-          <Button onClick={() => setDialogOpen(true)} size="sm">
+          <Button onClick={() => setDialogOpen(true)} size="sm" disabled={!canManageRules}>
             <Plus className="h-4 w-4 mr-2" />
             Add Rule
           </Button>
@@ -660,18 +724,37 @@ function AccessTab({ projectId }: AccessTabProps) {
           defaultLevel="comment"
           userSearchResults={userSearchData?.results ?? []}
           userSearchLoading={userSearchLoading}
+          userSearchError={userSearchError}
+          onRetryUserSearch={() => {
+            void refetchUserSearch();
+          }}
           onUserSearch={setUserSearchQuery}
           groups={groupsData?.groups ?? []}
+          groupsError={groupsError}
+          onRetryGroups={() => {
+            void refetchGroups();
+          }}
         />
 
-        <AccessList
-          rules={rules}
-          levels={PROJECTS_ACCESS_LEVELS}
-          onLevelChange={handleLevelChange}
-          onRevoke={handleRevoke}
-          isLoading={isLoading}
-          error={error}
-        />
+        {rulesError ? (
+          <GeneralError
+            error={rulesError}
+            minimal
+            mode="inline"
+            reset={() => {
+              void refetchRules();
+            }}
+          />
+        ) : (
+          <AccessList
+            rules={rules}
+            levels={PROJECTS_ACCESS_LEVELS}
+            onLevelChange={handleLevelChange}
+            onRevoke={handleRevoke}
+            isLoading={isLoadingRules}
+            error={null}
+          />
+        )}
       </div>
     </Section>
   );

@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { Button, Skeleton, toast, getErrorMessage } from "@mochi/common";
+import { useCallback, useEffect, useState } from "react";
+import { Button, GeneralError, Skeleton, toast, getErrorMessage } from "@mochi/common";
 import { FolderKanban, Loader2 } from "lucide-react";
 import projectsApi from "@/api/projects";
 
@@ -23,22 +23,30 @@ export function RecommendedProjects({
     RecommendedProject[]
   >([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<Error | null>(null);
   const [pendingId, setPendingId] = useState<string | null>(null);
 
-  useEffect(() => {
-    const fetchRecommendations = async () => {
-      try {
-        const response = await projectsApi.recommendations();
-        setRecommendations(response.data?.projects ?? []);
-      } catch {
-        // Silently fail for recommendations
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    void fetchRecommendations();
+  const fetchRecommendations = useCallback(async () => {
+    setIsLoading(true);
+    setError(null);
+    try {
+      const response = await projectsApi.recommendations();
+      setRecommendations(response.data?.projects ?? []);
+    } catch (loadError) {
+      setRecommendations([]);
+      setError(
+        loadError instanceof Error
+          ? loadError
+          : new Error("Failed to load recommended projects"),
+      );
+    } finally {
+      setIsLoading(false);
+    }
   }, []);
+
+  useEffect(() => {
+    void fetchRecommendations();
+  }, [fetchRecommendations]);
 
   const handleSubscribe = async (project: RecommendedProject) => {
     setPendingId(project.id);
@@ -78,6 +86,25 @@ export function RecommendedProjects({
               </div>
             ))}
           </div>
+        </div>
+      </>
+    );
+  }
+
+  if (error) {
+    return (
+      <>
+        <hr className="my-6 w-full max-w-md border-t" />
+        <div className="w-full max-w-md">
+          <p className="text-muted-foreground mb-3 text-xs font-medium uppercase tracking-wide">
+            Recommended projects
+          </p>
+          <GeneralError
+            error={error}
+            minimal
+            mode="inline"
+            reset={fetchRecommendations}
+          />
         </div>
       </>
     );

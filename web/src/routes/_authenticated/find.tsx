@@ -22,6 +22,8 @@ function FindProjectsPage() {
     data: recommendationsData,
     isLoading: isLoadingRecommendations,
     isError: isRecommendationsError,
+    error: recommendationsError,
+    refetch: refetchRecommendations,
   } = useQuery({
     queryKey: ['projects', 'recommendations'],
     queryFn: () => projectsApi.recommendations(),
@@ -64,6 +66,10 @@ function FindProjectsPage() {
       recommendations={recommendations}
       isLoadingRecommendations={isLoadingRecommendations}
       isRecommendationsError={isRecommendationsError}
+      recommendationsError={recommendationsError}
+      onRetryRecommendations={() => {
+        void refetchRecommendations();
+      }}
     />
   )
 }

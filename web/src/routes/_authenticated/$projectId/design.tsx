@@ -1,7 +1,7 @@
 // Mochi Projects: Design editor page
 // Copyright Alistair Cunningham 2026
 
-import { createFileRoute, Navigate } from "@tanstack/react-router";
+import { createFileRoute, Navigate, useNavigate } from "@tanstack/react-router";
 import { useCallback, useRef, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import {
@@ -43,7 +43,9 @@ export const Route = createFileRoute("/_authenticated/$projectId/design")({
 
 function DesignPage() {
   const { projectId } = Route.useParams();
+  const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const goBackToProject = () => navigate({ to: "/$projectId", params: { projectId } });
 
   const {
     data: projectData,
@@ -129,6 +131,7 @@ function DesignPage() {
         <PageHeader
           title="Design"
           icon={<Settings2 className="size-4 md:size-5" />}
+          back={{ label: "Back to project", onFallback: goBackToProject }}
         />
         <Main>
           <GeneralError
@@ -153,6 +156,7 @@ function DesignPage() {
       <PageHeader
         title={`${project.project.name} - Design`}
         icon={<Settings2 className="size-4 md:size-5" />}
+        back={{ label: "Back to project", onFallback: goBackToProject }}
         actions={
           <DropdownMenu>
             <DropdownMenuTrigger asChild>

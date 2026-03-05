@@ -988,7 +988,7 @@ const projectsApi = {
   },
 
   // ============================================================================
-  // Remote Projects (Subscribe/Bookmark)
+  // Remote Projects (Subscribe)
   // ============================================================================
 
   // Probe a remote project by URL

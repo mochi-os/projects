@@ -4214,7 +4214,7 @@ def action_notifications_destinations(a):
 
 
 # ============================================================================
-# Remote Projects (Subscribe/Bookmark)
+# Remote Projects (Subscribe)
 # ============================================================================
 
 # Public endpoint: resolve a project fingerprint to basic info

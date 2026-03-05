@@ -179,7 +179,6 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
       projectsApi.reorderFields(projectId, classId, order),
     onSuccess: invalidateProject,
     onError: (error) => {
-      console.error("Reorder fields error:", error);
       toast.error(getErrorMessage(error, "Failed to reorder fields"));
     },
   });

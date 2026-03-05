@@ -1,7 +1,7 @@
 // Mochi Projects: Object link display and management
 // Copyright Alistair Cunningham 2026
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useCallback } from "react";
 import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
 import { Link2, Plus, X } from "lucide-react";
 import {
@@ -53,10 +53,10 @@ export function ObjectLinks({
   const [search, setSearch] = useState("");
   const queryClient = useQueryClient();
 
-  const objectTitle = (obj: { class: string; number: number; values: Record<string, string> }) => {
+  const objectTitle = useCallback((obj: { class: string; number: number; values: Record<string, string> }) => {
     const cls = classes.find((c) => c.id === obj.class);
     return (cls?.title ? obj.values[cls.title] : "") || `${prefix}-${obj.number}`;
-  };
+  }, [classes, prefix]);
 
   const { data: objectListData } = useQuery({
     queryKey: ["objects", projectId],
@@ -157,7 +157,7 @@ export function ObjectLinks({
     }
 
     return items;
-  }, [outgoing, incoming, objectId, prefix, objectsMap]);
+  }, [outgoing, incoming, objectId, prefix, objectsMap, objectTitle]);
 
   // Filter objects for the add-link search
   const linkedObjectIds = useMemo(() => {
@@ -183,7 +183,7 @@ export function ObjectLinks({
         return readable.includes(q) || title.includes(q);
       })
       .slice(0, 10);
-  }, [objectListData, search, linkedObjectIds, prefix]);
+  }, [objectListData, search, linkedObjectIds, objectTitle, prefix]);
 
   const handleAddLink = (targetObj: ProjectObject) => {
     if (linkType === "blocked by") {

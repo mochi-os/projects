@@ -116,7 +116,7 @@ export function ViewSheet({
       setDirection((view.direction as "asc" | "desc") || "asc");
       setSelectedClasses(view.classes?.length ? view.classes : allClassIds);
     }
-  }, [open, view, mode]);
+  }, [open, view, mode, allClassIds, classes, fields, enumeratedFields.length]);
 
   if (mode === "edit" && !view) return null;
 
@@ -910,7 +910,7 @@ export function EditFieldDialog({
       setFieldId(field.id);
       setRows(field.rows || 1);
     }
-  }, [field?.id]);
+  }, [field]);
 
   if (!field) return null;
 
@@ -1080,4 +1080,3 @@ export function EditFieldDialog({
     </Dialog>
   );
 }
-

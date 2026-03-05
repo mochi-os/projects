@@ -82,7 +82,7 @@ export function CreateObjectDialog({
       }
       setFieldValues(initialValues);
     }
-  }, [open, project.classes, defaultFields, defaultParent]);
+  }, [open, availableClasses, defaultFields, defaultParent, project.fields, project.options]);
 
   // Update default field values when type changes (if fields exist in new type)
   useEffect(() => {

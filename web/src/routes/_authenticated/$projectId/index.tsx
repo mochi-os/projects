@@ -22,7 +22,7 @@ import {
 } from "@mochi/common";
 import { Columns3, Ellipsis, FolderKanban, GripVertical, Plus, Settings, Settings2, SlidersHorizontal, X } from "lucide-react";
 import projectsApi from "@/api/projects";
-import type { ProjectDetails, ProjectObject, SortState } from "@/types";
+import type { ProjectDetails, ProjectField, ProjectObject, SortState } from "@/types";
 import { canDesign, canWrite } from "@/lib/access";
 import { BoardContainer } from "@/features/board/components";
 import { TreeView } from "@/features/tree";
@@ -168,7 +168,7 @@ function ProjectPageContent({ project, projectId, search }: ProjectPageContentPr
   // Deduplicated field list across all classes (for sort dropdown)
   const allFields = useMemo(() => {
     const seen = new Set<string>();
-    const result: typeof project.fields[string] = [];
+    const result: ProjectField[] = [];
     for (const fields of Object.values(project.fields)) {
       for (const f of fields) {
         if (!seen.has(f.id)) {
@@ -571,9 +571,9 @@ function ProjectPageContent({ project, projectId, search }: ProjectPageContentPr
   const rowField = activeView?.rows || "";
 
   // Get default column value (first option of column field for the view's class)
-  const viewClasses = activeView?.classes || [];
+  const viewClasses = activeView?.classes;
   const getDefaultColumnValue = useCallback(() => {
-    const effectiveType = viewClasses.length > 0
+    const effectiveType = viewClasses && viewClasses.length > 0
       ? viewClasses[0]
       : project.classes[0]?.id;
     if (effectiveType && project.options[effectiveType]?.[columnField]?.length > 0) {
@@ -920,4 +920,3 @@ function ProjectPageContent({ project, projectId, search }: ProjectPageContentPr
     </>
   );
 }
-

@@ -4,7 +4,7 @@
 import { useMemo, useState, useEffect, useLayoutEffect, useCallback, useRef } from "react";
 import { cn } from "@mochi/common";
 import { BoardColumn, type BoardColumnRow } from "./board-column";
-import type { ProjectObject, ProjectDetails, FieldOption, SortState } from "@/types";
+import type { ProjectObject, ProjectDetails, ProjectClass, FieldOption, SortState } from "@/types";
 
 // Check if objectId is a descendant of ancestorId
 function isDescendantOf(objectId: string, ancestorId: string, objectMap: Record<string, ProjectObject>): boolean {
@@ -125,7 +125,7 @@ export function BoardContainer({
 
   // Build a class map for quick lookups
   const classMap = useMemo(() => {
-    const map: Record<string, typeof project.classes[0]> = {};
+    const map: Record<string, ProjectClass> = {};
     for (const cls of project.classes) {
       map[cls.id] = cls;
     }

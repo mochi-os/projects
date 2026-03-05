@@ -104,7 +104,7 @@ export function CreateObjectDialog({
   const { data: objectListData } = useQuery({
     queryKey: ["objects", projectId],
     queryFn: async () => {
-      const response = await projectsApi.listObjects(project.project.id);
+      const response = await projectsApi.listObjects(projectId);
       return response.data;
     },
   });

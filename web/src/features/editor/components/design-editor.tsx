@@ -9,14 +9,8 @@ import projectsApi from "@/api/projects";
 import type { ProjectDetails, ProjectField, ProjectView, FieldOption } from "@/types";
 import { DesignPreview } from "./design-preview";
 import { AddFieldDialog } from "./add-dialogs";
-import {
-  ViewSheet,
-  ClassSheet,
-  EditFieldDialog,
-} from "./edit-dialogs";
+import { ViewSheet, ClassSheet, EditFieldDialog, type PendingField } from "./edit-dialogs"
 import { OptionDialog } from "./option-dialog";
-import type { PendingField } from "./edit-dialogs";
-
 interface DesignEditorProps {
   projectId: string;
   project: ProjectDetails;

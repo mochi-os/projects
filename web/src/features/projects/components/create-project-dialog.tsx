@@ -1,21 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
-import {
-  Button,
-  Dialog,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-  Input,
-  Label,
-  Switch,
-  toast,
-  getErrorMessage,
-} from "@mochi/common";
+import { Button, Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger, Input, Label, Switch, toast, getErrorMessage, cn } from "@mochi/common"
 import { ArrowLeft, ArrowRight, Check, File, FolderKanban, LayoutGrid, Plus, Ticket, Zap } from "lucide-react";
-import { cn } from "@mochi/common";
 import projectsApi from "@/api/projects";
 import { useProjectsStore } from "@/stores/projects-store";
 import type { ProjectTemplate } from "@/types";

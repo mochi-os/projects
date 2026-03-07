@@ -94,12 +94,12 @@
   },
   "hierarchy": {
     "epic": [""],
-    "story": ["epic"],
+    "story": ["", "epic"],
     "task": ["story"],
     "bug": ["", "epic", "story"]
   },
   "views": [
-    {"id": "sprint", "name": "Sprint Board", "viewtype": "board", "columns": "status", "fields": "title,description,points", "border": "priority", "classes": ["story", "task"]},
+    {"id": "sprint", "name": "Sprint Board", "viewtype": "board", "columns": "status", "fields": "title,description,points", "border": "priority", "classes": ["epic", "story", "task"]},
     {"id": "backlog", "name": "Backlog", "viewtype": "list", "fields": "title,description,status,points,sprint,owner", "classes": ["story"]},
     {"id": "roadmap", "name": "Roadmap", "viewtype": "list", "fields": "title,description,status,owner", "classes": ["epic"]}
   ]

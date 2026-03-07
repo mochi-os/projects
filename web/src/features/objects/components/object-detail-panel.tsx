@@ -1,9 +1,9 @@
 // Mochi Projects: Object detail dialog component
 // Copyright Alistair Cunningham 2026
 
-import { useState, useMemo } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { Eye, EyeOff, Trash2, MessageSquare, Activity, Settings2, GitMerge, X } from "lucide-react";
+import { Eye, EyeOff, Trash2, MessageSquare, Activity, Settings2, GitMerge } from "lucide-react";
 import {
   Button,
   Input,
@@ -76,7 +76,7 @@ export function ObjectDetailPanel({
     onClose();
   };
 
-  const { data, isLoading, error, refetch } = useQuery({
+  const { data, isPlaceholderData, isLoading, error, refetch } = useQuery({
     queryKey: ["object", projectId, objectId],
     queryFn: async () => {
       if (!objectId) throw new Error("No object ID");
@@ -101,6 +101,15 @@ export function ObjectDetailPanel({
       };
     },
   });
+
+  // When opening a different object, default to comments tab if it has comments
+  const tabInitializedFor = useRef<string | null>(null);
+  useEffect(() => {
+    if (objectId !== tabInitializedFor.current && data && !isPlaceholderData) {
+      tabInitializedFor.current = objectId;
+      setActiveTab(data.comment_count > 0 ? "comments" : "properties");
+    }
+  }, [objectId, data, isPlaceholderData]);
 
   // Fetch project members for the owner picker
   const { data: peopleData } = useQuery({
@@ -349,13 +358,12 @@ export function ObjectDetailPanel({
               </Button>
             )}
             <Button
-              variant="ghost"
-              size="icon"
-              className="h-8 w-8"
+              variant="outline"
+              size="sm"
+              className="h-8"
               onClick={handleClose}
-              title="Close"
             >
-              <X className="size-4" />
+              Done
             </Button>
           </div>
         </div>

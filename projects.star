@@ -4183,35 +4183,6 @@ def action_groups(a):
 # Notification Actions
 # ============================================================================
 
-def action_notifications_subscribe(a):
-	"""Create a notification subscription via the notifications service."""
-	label = a.input("label", "").strip()
-	type = a.input("type", "").strip()
-	object = a.input("object", "").strip()
-	destinations = a.input("destinations", "")
-
-	if not label:
-		a.error(400, "label is required")
-		return
-	if not mochi.valid(label, "text"):
-		a.error(400, "Invalid label")
-		return
-
-	destinations_list = json.decode(destinations) if destinations else []
-
-	result = mochi.service.call("notifications", "subscribe", label, type, object, destinations_list)
-	return {"data": {"id": result}}
-
-def action_notifications_check(a):
-	"""Check if a notification subscription exists for this app."""
-	result = mochi.service.call("notifications", "subscriptions")
-	return {"data": {"exists": len(result) > 0}}
-
-def action_notifications_destinations(a):
-	"""List available notification destinations."""
-	result = mochi.service.call("notifications", "destinations")
-	return {"data": result}
-
 
 # ============================================================================
 # Remote Projects (Subscribe)
@@ -7205,3 +7176,8 @@ def do_view_reorder(project_id, project, params):
 		)
 	broadcast_event(project_id, "view/reorder", {"project": project_id, "order": order})
 	return {"success": True}
+
+def action_notifications_check(a):
+	"""Check if a notification subscription exists for this app."""
+	result = mochi.service.call("notifications", "subscriptions")
+	return {"data": {"exists": len(result) > 0}}

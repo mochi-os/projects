@@ -11,13 +11,12 @@ import {
   GeneralError,
   EntityOnboardingEmptyState,
   PageHeader,
-  SubscribeDialog,
   ConfirmDialog,
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-  getAppPath,
+  shellSubscribeNotifications,
   getErrorMessage,
   toast,
 } from "@mochi/common";
@@ -34,7 +33,6 @@ export function ProjectsListPage() {
   const error = useProjectsStore((state) => state.error);
   const refresh = useProjectsStore((state) => state.refresh);
   const { openCreateDialog } = useSidebarContext();
-  const [subscribeOpen, setSubscribeOpen] = useState(false);
   const [unsubscribeId, setUnsubscribeId] = useState<string | null>(null);
   const queryClient = useQueryClient();
 
@@ -59,13 +57,16 @@ export function ProjectsListPage() {
     staleTime: Infinity,
   });
 
-  // Show notification subscription dialog once on mount if user has projects but hasn't been asked
+  // Prompt for notification subscription once on mount if user has projects but hasn't subscribed
   const promptedNotifications = useRef(false);
   useEffect(() => {
     if (promptedNotifications.current) return;
     if (!isLoading && projects.length > 0 && subscriptionData?.data?.exists === false) {
       promptedNotifications.current = true;
-      setSubscribeOpen(true);
+      shellSubscribeNotifications('projects', [
+        { label: 'Project updates', type: 'update', defaultEnabled: true },
+        { label: 'Assignments', type: 'assignment', defaultEnabled: true },
+      ]).then(() => refetchSubscription());
     }
   }, [isLoading, projects.length, subscriptionData?.data?.exists]);
 
@@ -188,18 +189,6 @@ export function ProjectsListPage() {
         }}
       />
 
-      <SubscribeDialog
-        open={subscribeOpen}
-        onOpenChange={setSubscribeOpen}
-        app="projects"
-        label="Project updates"
-        appBase={getAppPath()}
-        subscriptions={[
-          { label: "Project updates", type: "update", defaultEnabled: true },
-          { label: "Assignments", type: "assignment", defaultEnabled: true },
-        ]}
-        onResult={() => refetchSubscription()}
-      />
     </>
   );
 }

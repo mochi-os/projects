@@ -3,6 +3,7 @@
 
 import { useEffect } from "react";
 import { useQueryClient } from "@tanstack/react-query";
+import { isInShell } from "@mochi/common";
 
 interface ProjectWebsocketEvent {
   type: string;
@@ -146,7 +147,7 @@ export function useProjectWebsocket(projectFingerprint?: string) {
   const queryClient = useQueryClient();
 
   useEffect(() => {
-    if (!projectFingerprint) return;
+    if (!projectFingerprint || isInShell()) return;
 
     const handleMessage = (data: ProjectWebsocketEvent) => {
       const pid = projectFingerprint;

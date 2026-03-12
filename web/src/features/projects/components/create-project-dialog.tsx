@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
-import { Button, Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger, Input, Label, Switch, toast, getErrorMessage, cn } from "@mochi/common"
+import { Button, Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger, Input, Label, Switch, toast, getErrorMessage, cn } from "@mochi/common"
 import { ArrowLeft, ArrowRight, Check, File, FolderKanban, LayoutGrid, Plus, Ticket, Zap } from "lucide-react";
 import projectsApi from "@/api/projects";
 import { useProjectsStore } from "@/stores/projects-store";
@@ -137,6 +137,7 @@ export function CreateProjectDialog({
             </div>
             {step === 1 ? "Create project" : "Choose a template"}
           </DialogTitle>
+          <DialogDescription className="sr-only">Create a new project</DialogDescription>
         </DialogHeader>
 
         {step === 1 ? (

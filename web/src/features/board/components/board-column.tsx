@@ -8,6 +8,7 @@ import {
   ConfirmDialog,
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogFooter,
@@ -509,6 +510,7 @@ export function BoardColumn({
           >
             <DialogHeader>
               <DialogTitle>Rename column</DialogTitle>
+              <DialogDescription className="sr-only">Rename this board column</DialogDescription>
             </DialogHeader>
             <div className="py-4 space-y-2">
               <Label htmlFor="column-name">Name</Label>

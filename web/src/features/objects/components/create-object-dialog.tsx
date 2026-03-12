@@ -57,10 +57,31 @@ export function CreateObjectDialog({
     ? project.classes.filter((c) => allowedClasses.includes(c.id))
     : project.classes;
 
+  // Load objects for parent selection (shares cache with project page)
+  const { data: objectListData } = useQuery({
+    queryKey: ["objects", projectId],
+    queryFn: async () => {
+      const response = await projectsApi.listObjects(projectId);
+      return response.data;
+    },
+  });
+  const objectsData = objectListData?.objects;
+
+  // Filter out classes that require a parent but have no valid parent objects
+  const creatableClasses = useMemo(() => {
+    if (!objectsData) return availableClasses;
+    return availableClasses.filter((cls) => {
+      const parentClasses = project.hierarchy[cls.id] || [];
+      if (parentClasses.length === 0 || parentClasses.includes("")) return true;
+      const parentClassIds = parentClasses.filter((t) => t !== "");
+      return objectsData.some((obj) => parentClassIds.includes(obj.class));
+    });
+  }, [availableClasses, project.hierarchy, objectsData]);
+
   // Reset state when dialog opens/closes or type changes
   useEffect(() => {
     if (open) {
-      const initialType = availableClasses[0]?.id || "";
+      const initialType = creatableClasses[0]?.id || "";
       setSelectedType(initialType);
       setParent(defaultParent || "");
       setPendingFiles([]);
@@ -85,7 +106,7 @@ export function CreateObjectDialog({
       }
       setFieldValues(initialValues);
     }
-  }, [open, availableClasses, defaultFields, defaultParent, project.fields, project.options]);
+  }, [open, creatableClasses, defaultFields, defaultParent, project.fields, project.options]);
 
   // Update default field values when type changes (if fields exist in new type)
   useEffect(() => {
@@ -102,16 +123,6 @@ export function CreateObjectDialog({
       }
     }
   }, [selectedClass, defaultFields, project.fields]);
-
-  // Load objects for parent selection (shares cache with project page)
-  const { data: objectListData } = useQuery({
-    queryKey: ["objects", projectId],
-    queryFn: async () => {
-      const response = await projectsApi.listObjects(projectId);
-      return response.data;
-    },
-  });
-  const objectsData = objectListData?.objects;
 
   // Fetch project members for the owner picker
   const { data: peopleData } = useQuery({
@@ -302,7 +313,7 @@ export function CreateObjectDialog({
                 <SelectValue />
               </SelectTrigger>
               <SelectContent className="z-[60]">
-                {availableClasses.map((type) => (
+                {creatableClasses.map((type) => (
                   <SelectItem key={type.id} value={type.id}>
                     {type.name}
                   </SelectItem>

@@ -2,7 +2,7 @@
 // Copyright Alistair Cunningham 2026
 
 import { useState, useMemo } from "react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Button, Label, toast, getErrorMessage } from "@mochi/common";
 import { Blocks, GripVertical, Plus } from "lucide-react";
 import projectsApi from "@/api/projects";
@@ -18,6 +18,16 @@ interface DesignEditorProps {
 
 export function DesignEditor({ projectId, project }: DesignEditorProps) {
   const queryClient = useQueryClient();
+
+  // Fetch objects for preview
+  const { data: objectsData } = useQuery({
+    queryKey: ["project-objects", projectId],
+    queryFn: async () => {
+      const response = await projectsApi.listObjects(projectId);
+      return response.data.objects;
+    },
+  });
+  const objects = objectsData || [];
 
   // Selection state
   const [selectedClassId, setSelectedClassId] = useState<string | null>(
@@ -520,6 +530,7 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
           fields={project.fields}
           options={project.options}
           views={project.views}
+          objects={objects}
           selectedClassId={selectedClassId}
         />
       </div>

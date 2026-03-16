@@ -265,9 +265,9 @@ function ProjectPageContent({ project, projectId, search }: ProjectPageContentPr
         promote: promote ? "true" : undefined,
       });
     },
-    onMutate: async ({ objectId, field, value, rank, rowField: rf, rowValue, scopeParent, promote }) => {
+    onMutate: ({ objectId, field, value, rank, rowField: rf, rowValue, scopeParent, promote }) => {
       // Optimistically update the UI
-      await queryClient.cancelQueries({
+      queryClient.cancelQueries({
         queryKey: ["objects", params.projectId],
       });
 
@@ -300,6 +300,22 @@ function ProjectPageContent({ project, projectId, search }: ProjectPageContentPr
             }
           }
 
+          // Renumber objects in scope to avoid rank ties (mirrors server logic)
+          const oldVal = old.objects.find((o) => o.id === objectId)?.values[field] || "";
+          const targetValue = value || oldVal;
+          const inScope = old.objects
+            .filter((o) => o.id !== objectId && (o.values[field] || "") === targetValue)
+            .sort((a, b) => (a.rank || 0) - (b.rank || 0));
+          const rankMap: Record<string, number> = {};
+          if (rank) {
+            let r = 1;
+            for (const obj of inScope) {
+              if (r === rank) r++;
+              rankMap[obj.id] = r;
+              r++;
+            }
+          }
+
           return {
             ...old,
             objects: old.objects.map((obj) => {
@@ -321,7 +337,10 @@ function ProjectPageContent({ project, projectId, search }: ProjectPageContentPr
                 if (rf && rowValue !== undefined) {
                   updatedValues[rf] = rowValue;
                 }
-                return { ...obj, values: updatedValues };
+                return { ...obj, rank: rankMap[obj.id] ?? obj.rank, values: updatedValues };
+              }
+              if (rankMap[obj.id] !== undefined) {
+                return { ...obj, rank: rankMap[obj.id] };
               }
               return obj;
             }),

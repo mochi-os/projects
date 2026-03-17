@@ -526,7 +526,7 @@ export function BoardColumn({
         {!isReordering && (onCreateClick || onRenameColumn || (totalCount === 0 && onDeleteColumn)) && (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <button data-column-menu className="rounded p-1 transition-colors hover:bg-interactive-hover active:bg-interactive-active">
+              <button type="button" data-column-menu className="rounded p-1 transition-colors hover:bg-interactive-hover active:bg-interactive-active">
                 <MoreHorizontal className="size-4 text-muted-foreground" />
               </button>
             </DropdownMenuTrigger>

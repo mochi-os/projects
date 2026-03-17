@@ -1,6 +1,6 @@
 import endpoints from "./endpoints";
 import { projectsRequest } from "./request";
-import type { AccessRule } from "@mochi/common";
+import type { AccessRule } from "@mochi/web";
 import type {
   Project,
   ProjectDetails,

@@ -18,7 +18,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@mochi/common";
+} from "@mochi/web";
 import projectsApi from "@/api/projects";
 import type { ProjectDetails } from "@/types";
 import { FieldEditor } from "./field-editor";

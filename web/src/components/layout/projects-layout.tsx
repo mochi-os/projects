@@ -3,7 +3,7 @@ import {
   AuthenticatedLayout,
   type SidebarData,
   type NavItem,
-} from "@mochi/common";
+} from "@mochi/web";
 import { FolderKanban, Plus, RefreshCw, Search } from "lucide-react";
 import { useProjectsStore } from "@/stores/projects-store";
 import { SidebarProvider, useSidebarContext } from "@/context/sidebar-context";

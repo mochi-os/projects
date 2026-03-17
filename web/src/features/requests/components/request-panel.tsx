@@ -4,7 +4,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { ArrowRight, GitMerge, Plus, Trash2, ChevronDown, ChevronRight } from "lucide-react";
-import { Button, Card, ConfirmDialog, Input, Switch, Textarea, cn } from "@mochi/common";
+import { Button, Card, ConfirmDialog, Input, Switch, Textarea, cn } from "@mochi/web";
 import projectsApi from "@/api/projects";
 import type { RequestData } from "@/types";
 import { RepositorySelect } from "./repository-select";

@@ -21,7 +21,7 @@ import {
   useSearch,
   useShellStorage,
   toast,
-} from "@mochi/common";
+} from "@mochi/web";
 import { Columns3, Ellipsis, FolderKanban, GripVertical, Plus, Settings, Settings2, SlidersHorizontal, X } from "lucide-react";
 import projectsApi from "@/api/projects";
 import type { ProjectDetails, ProjectField, ProjectObject, SortState } from "@/types";

@@ -3,7 +3,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { CheckCircle2, XCircle, AlertCircle, Loader2 } from "lucide-react";
-import { cn } from "@mochi/common";
+import { cn } from "@mochi/web";
 import projectsApi from "@/api/projects";
 
 interface MergeStatusProps {

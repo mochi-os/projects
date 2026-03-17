@@ -31,7 +31,7 @@ import {
   toast,
   getErrorMessage,
   usePageTitle,
-} from "@mochi/common";
+} from "@mochi/web";
 import { Download, Loader2, MoreHorizontal, Settings2, Upload } from "lucide-react";
 import projectsApi from "@/api/projects";
 import type { ProjectDetails, ProjectTemplate } from "@/types";

@@ -2,7 +2,7 @@
 // Uses getAppPath() + '/' as baseURL
 
 import axios, { type AxiosRequestConfig } from "axios";
-import { getAppPath, useAuthStore, isInShell } from "@mochi/common";
+import { getAppPath, useAuthStore, isInShell } from "@mochi/web";
 
 // Create a projects-specific axios instance that uses app path as baseURL
 const projectsClient = axios.create({

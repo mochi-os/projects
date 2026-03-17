@@ -19,7 +19,7 @@ import {
   shellSubscribeNotifications,
   getErrorMessage,
   toast,
-} from "@mochi/common";
+} from "@mochi/web";
 import { FolderKanban, MoreHorizontal, Plus } from "lucide-react";
 import { useProjectsStore } from "@/stores/projects-store";
 import { useSidebarContext } from "@/context/sidebar-context";

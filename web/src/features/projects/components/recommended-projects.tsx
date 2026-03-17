@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { Button, GeneralError, Skeleton, toast, getErrorMessage } from "@mochi/common";
+import { Button, GeneralError, Skeleton, toast, getErrorMessage } from "@mochi/web";
 import { FolderKanban, Loader2 } from "lucide-react";
 import projectsApi from "@/api/projects";
 

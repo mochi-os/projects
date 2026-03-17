@@ -4,7 +4,7 @@
 import { useState, useMemo, type ReactNode } from "react";
 import { diffWords } from "diff";
 import { ChevronDown, ChevronRight, FileCode2, Plus, Minus } from "lucide-react";
-import { cn } from "@mochi/common";
+import { cn } from "@mochi/web";
 import { parseDiff, type DiffFile, type DiffLine } from "./diff-parser";
 
 interface DiffViewerProps {

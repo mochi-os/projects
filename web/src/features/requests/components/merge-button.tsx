@@ -4,7 +4,7 @@
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { GitMerge, Loader2, CheckCircle2 } from "lucide-react";
-import { Button, ConfirmDialog, getErrorMessage } from "@mochi/common";
+import { Button, ConfirmDialog, getErrorMessage } from "@mochi/web";
 import projectsApi from "@/api/projects";
 
 type MergeMethod = "merge" | "squash" | "rebase";

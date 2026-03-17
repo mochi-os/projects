@@ -16,7 +16,7 @@ import {
   authenticatedUrl,
   toast,
   type LightboxMedia,
-} from "@mochi/common";
+} from "@mochi/web";
 import projectsApi from "@/api/projects";
 import type { Attachment } from "@/types";
 

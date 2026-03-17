@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { Search, Loader2, FolderKanban } from "lucide-react";
-import { Button, GeneralError, Input, toast, getErrorMessage } from "@mochi/common";
+import { Button, GeneralError, Input, toast, getErrorMessage } from "@mochi/web";
 import projectsApi from "@/api/projects";
 import { useProjectsStore } from "@/stores/projects-store";
 

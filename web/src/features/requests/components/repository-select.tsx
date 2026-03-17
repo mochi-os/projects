@@ -8,7 +8,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@mochi/common";
+} from "@mochi/web";
 import { GitBranch } from "lucide-react";
 import projectsApi from "@/api/projects";
 

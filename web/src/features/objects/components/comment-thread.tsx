@@ -8,7 +8,7 @@ import {
   CommentTreeLayout,
   ConfirmDialog,
   formatTimestamp,
-} from "@mochi/common";
+} from "@mochi/web";
 import type { Comment } from "@/types";
 import { CommentAttachments } from "./comment-attachments";
 

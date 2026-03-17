@@ -22,7 +22,7 @@ import {
   cn,
   GeneralError,
   ListSkeleton,
-} from "@mochi/common";
+} from "@mochi/web";
 import projectsApi from "@/api/projects";
 import type { ProjectAccess, ProjectDetails } from "@/types";
 import { canWrite, canComment } from "@/lib/access";

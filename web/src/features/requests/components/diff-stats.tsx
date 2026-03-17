@@ -4,7 +4,7 @@
 import { useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { FileCode2, Plus, Minus, Loader2, FileDiff } from "lucide-react";
-import { cn } from "@mochi/common";
+import { cn } from "@mochi/web";
 import projectsApi from "@/api/projects";
 import { parseDiff } from "./diff-parser";
 

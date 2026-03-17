@@ -18,7 +18,7 @@ import {
   SelectValue,
   getErrorMessage,
   toast,
-} from "@mochi/common";
+} from "@mochi/web";
 import projectsApi from "@/api/projects";
 import type { ProjectObject, ProjectClass, ObjectLink } from "@/types";
 

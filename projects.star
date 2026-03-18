@@ -1340,9 +1340,11 @@ def action_object_create(a):
 			d = result["data"]
 			if d.get("id"):
 				now = mochi.time.now()
+				max_rank_row = mochi.db.row("select coalesce(max(rank), 0) as max_rank from objects where project=? and parent=?", project_id, parent)
+				initial_rank = (max_rank_row["max_rank"] if max_rank_row else 0) + 1
 				mochi.db.execute(
 					"insert or ignore into objects (id, project, class, number, parent, rank, created, updated) values (?, ?, ?, ?, ?, ?, ?, ?)",
-					d["id"], project_id, obj_class, d.get("number", 0), parent, 0, now, now
+					d["id"], project_id, obj_class, d.get("number", 0), parent, initial_rank, now, now
 				)
 				if title and title_field:
 					mochi.db.execute("insert or replace into \"values\" (object, field, value) values (?, ?, ?)", d["id"], title_field, title)
@@ -1381,8 +1383,8 @@ def action_object_create(a):
 	mochi.db.execute("update projects set counter=counter+1, updated=? where id=?", mochi.time.now(), project_id)
 	new_counter = mochi.db.row("select counter from projects where id=?", project_id)["counter"]
 
-	# Calculate initial rank (add to end)
-	max_rank_row = mochi.db.row("select coalesce(max(rank), 0) as max_rank from objects where project=?", project_id)
+	# Calculate initial rank (add to end of parent or project)
+	max_rank_row = mochi.db.row("select coalesce(max(rank), 0) as max_rank from objects where project=? and parent=?", project_id, parent)
 	initial_rank = (max_rank_row["max_rank"] if max_rank_row else 0) + 1
 
 	# Create object
@@ -6146,7 +6148,7 @@ def do_object_create(project_id, project, params, user_id):
 	title_field = title_field_row["title"] if title_field_row else ""
 	mochi.db.execute("update projects set counter=counter+1, updated=? where id=?", mochi.time.now(), project_id)
 	new_counter = mochi.db.row("select counter from projects where id=?", project_id)["counter"]
-	max_rank_row = mochi.db.row("select coalesce(max(rank), 0) as max_rank from objects where project=?", project_id)
+	max_rank_row = mochi.db.row("select coalesce(max(rank), 0) as max_rank from objects where project=? and parent=?", project_id, parent)
 	initial_rank = (max_rank_row["max_rank"] if max_rank_row else 0) + 1
 	object_id = mochi.uid()
 	now = mochi.time.now()

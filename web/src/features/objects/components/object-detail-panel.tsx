@@ -218,9 +218,13 @@ export function ObjectDetailPanel({
     };
     findDescendants(object.id);
 
-    return objectsData.filter(
-      (obj) => parentClassIds.includes(obj.class) && !descendants.has(obj.id)
-    );
+    const title = (obj: { class: string; number: number; values: Record<string, string> }) => {
+      const cls = project.classes.find((c) => c.id === obj.class);
+      return (cls?.title ? obj.values[cls.title] : "") || `${project.project.prefix}-${obj.number}`;
+    };
+    return objectsData
+      .filter((obj) => parentClassIds.includes(obj.class) && !descendants.has(obj.id))
+      .sort((a, b) => title(a).localeCompare(title(b)));
   }, [objectsData, data, project.hierarchy]);
 
   // Get current parent object info - must be before early returns

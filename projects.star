@@ -246,70 +246,7 @@ def database_create():
 
 # Upgrade database schema (called once per version step with target version)
 def database_upgrade(version):
-	if version == 2:
-		# Add title column to classes, border column to views
-		mochi.db.execute("alter table classes add column title text not null default ''")
-		mochi.db.execute("alter table views add column border text not null default ''")
-		# Migrate title flag: for each class, find the field with "title" flag and set classes.title
-		classes = mochi.db.rows("select project, id from classes") or []
-		for c in classes:
-			row = mochi.db.row("select id from fields where project=? and class=? and flags like '%title%' order by rank limit 1", c["project"], c["id"])
-			if row:
-				mochi.db.execute("update classes set title=? where project=? and id=?", row["id"], c["project"], c["id"])
-		# Migrate border flag: for each view, find a field with "border" flag in any of the view's classes
-		views = mochi.db.rows("select project, id from views") or []
-		for v in views:
-			# Get classes for this view (empty means all classes)
-			view_classes = mochi.db.rows("select class from view_classes where project=? and view=?", v["project"], v["id"]) or []
-			if view_classes:
-				class_ids = [vc["class"] for vc in view_classes]
-			else:
-				class_ids = [c["id"] for c in (mochi.db.rows("select id from classes where project=?", v["project"]) or [])]
-			for cls_id in class_ids:
-				border_row = mochi.db.row("select id from fields where project=? and class=? and flags like '%border%' order by rank limit 1", v["project"], cls_id)
-				if border_row:
-					mochi.db.execute("update views set border=? where project=? and id=?", border_row["id"], v["project"], v["id"])
-					break
-		# Strip "title" and "border" from all field flags
-		fields = mochi.db.rows("select project, class, id, flags from fields where flags like '%title%' or flags like '%border%'") or []
-		for f in fields:
-			parts = [p for p in f["flags"].split(",") if p and p != "title" and p != "border"]
-			mochi.db.execute("update fields set flags=? where project=? and class=? and id=?", ",".join(parts), f["project"], f["class"], f["id"])
-
-	if version == 3:
-		mochi.db.execute("alter table projects add column template text not null default ''")
-		mochi.db.execute("alter table projects add column template_version integer not null default 0")
-
-	if version == 4:
-		mochi.db.execute("alter table activity rename column actor to user")
-
-	if version == 5:
-		# Add fingerprint column for O(1) lookups by fingerprint
-		mochi.db.execute("alter table projects add column fingerprint text not null default ''")
-		mochi.db.execute("create index if not exists projects_fingerprint on projects( fingerprint )")
-		# Populate fingerprints for existing projects
-		projects = mochi.db.rows("select id from projects")
-		for p in projects:
-			fp = mochi.entity.fingerprint(p["id"]) or ""
-			mochi.db.execute("update projects set fingerprint=? where id=?", fp, p["id"])
-
-	if version == 6:
-		# Fix databases created with buggy database_create() that missed template columns
-		has_template = mochi.db.row("select count(*) as n from pragma_table_info('projects') where name='template'")
-		if has_template["n"] == 0:
-			mochi.db.execute("alter table projects add column template text not null default ''")
-			mochi.db.execute("alter table projects add column template_version integer not null default 0")
-
-	if version == 7:
-		# Rename classes.pull_requests (integer 0/1) to classes.requests (text)
-		mochi.db.execute("alter table classes add column requests text not null default ''")
-		mochi.db.execute("update classes set requests='merge' where pull_requests=1")
-
-		# Rename pull_requests table to requests, add type column
-		mochi.db.execute("alter table pull_requests rename to requests")
-		mochi.db.execute("alter table requests add column type text not null default ''")
-		mochi.db.execute("update requests set type='merge'")
-		mochi.db.execute("create index if not exists requests_object on requests(object)")
+	pass
 
 
 # ============================================================================

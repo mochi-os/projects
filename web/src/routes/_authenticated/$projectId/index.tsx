@@ -664,7 +664,7 @@ function ProjectPageContent({ project, projectId, search }: ProjectPageContentPr
   const handleMoveObject = (objectId: string, newValue: string, newRank?: number, newRow?: string, scopeParent?: string, promote?: boolean) => {
     moveMutation.mutate({
       objectId,
-      field: columnField,
+      field: newValue ? columnField : "",
       value: newValue,
       rank: newRank,
       rowField: newRow !== undefined ? rowField : undefined,

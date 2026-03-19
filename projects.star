@@ -1201,6 +1201,30 @@ def notify_watchers(object_id, project_id, local_identity, user_id, body):
 	url = "/projects/" + fp if fp else "/projects"
 	mochi.service.call("notifications", "send", "update", title, body, object_id, url)
 
+def notify_mentions(object_id, project_id, content, author_id, author_name):
+	"""Notify the local owner if they are @mentioned in a comment."""
+	owner_id = get_owner_identity(project_id)
+	if not owner_id or owner_id == author_id:
+		return
+	owner_sub = mochi.db.row(
+		"select name from subscribers where project=? and id=?",
+		project_id, owner_id)
+	if not owner_sub or not owner_sub.get("name"):
+		return
+	owner_name = owner_sub["name"]
+	if ("@" + owner_name).lower() not in content.lower():
+		return
+	project = get_project(project_id)
+	obj = mochi.db.row("select number, class from objects where id=?", object_id)
+	if not project or not obj:
+		return
+	title = get_object_display(project, obj, object_id)
+	fp = mochi.entity.fingerprint(project_id)
+	url = "/projects/" + fp if fp else "/projects"
+	excerpt = content.strip()[:80]
+	mochi.service.call("notifications", "send", "mention",
+		title, author_name + " mentioned you: " + excerpt, object_id, url)
+
 def would_create_cycle(object_id, new_parent_id):
 	"""Check if setting new_parent_id as parent of object_id would create a cycle."""
 	if not new_parent_id:
@@ -2344,6 +2368,7 @@ def action_comment_create(a):
 	if attachments:
 		comment_event["attachments"] = [{"id": att["id"], "name": att["name"], "size": att["size"], "content_type": att.get("type", ""), "rank": att.get("rank", 0), "created": att.get("created", now)} for att in attachments]
 	broadcast_event(project_id, "comment/create", comment_event)
+	notify_mentions(object_id, project_id, content, a.user.identity.id, a.user.identity.name)
 
 	return {"data": {
 		"id": comment_id, "parent": parent,

@@ -35,6 +35,8 @@ import { Check, GripVertical, Minus, MoreHorizontal, Pencil, Plus, Trash2, X } f
 import type { ProjectView, ProjectField, ProjectClass, FieldOption } from "@/types";
 import { AddFieldDialog } from "./add-dialogs";
 
+const NONE_SELECT_VALUE = "_none_";
+
 // Pending field for create mode
 export interface PendingField {
   id: string;
@@ -359,12 +361,17 @@ export function ViewSheet({
             <div className="space-y-2">
               <Label>Rows group by</Label>
               <div className="pl-4">
-                <Select value={rows} onValueChange={handleRowsChange}>
+                <Select
+                  value={rows || NONE_SELECT_VALUE}
+                  onValueChange={(value) =>
+                    handleRowsChange(value === NONE_SELECT_VALUE ? "" : value)
+                  }
+                >
                   <SelectTrigger className="w-full">
                     <SelectValue placeholder="None" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="">None</SelectItem>
+                    <SelectItem value={NONE_SELECT_VALUE}>None</SelectItem>
                     {enumeratedFields.map((field) => (
                       <SelectItem key={field.id} value={field.id}>
                         {field.name}
@@ -381,11 +388,12 @@ export function ViewSheet({
               <Label>Border colour</Label>
               <div className="pl-4">
                 <Select
-                  value={border}
+                  value={border || NONE_SELECT_VALUE}
                   onValueChange={(value) => {
-                    setBorder(value);
+                    const nextValue = value === NONE_SELECT_VALUE ? "" : value;
+                    setBorder(nextValue);
                     if (mode === "edit" && onUpdate) {
-                      onUpdate({ border: value });
+                      onUpdate({ border: nextValue });
                     }
                   }}
                 >
@@ -393,7 +401,7 @@ export function ViewSheet({
                     <SelectValue placeholder="None" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="">None</SelectItem>
+                    <SelectItem value={NONE_SELECT_VALUE}>None</SelectItem>
                     {enumeratedFields.map((field) => (
                       <SelectItem key={field.id} value={field.id}>
                         {field.name}
@@ -459,12 +467,17 @@ export function ViewSheet({
           <div className="space-y-2">
             <Label>Default sort</Label>
             <div className="pl-4 flex gap-2">
-              <Select value={sort} onValueChange={handleSortChange}>
+              <Select
+                value={sort || NONE_SELECT_VALUE}
+                onValueChange={(value) =>
+                  handleSortChange(value === NONE_SELECT_VALUE ? "" : value)
+                }
+              >
                 <SelectTrigger className="flex-1">
                   <SelectValue placeholder="None" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">None</SelectItem>
+                  <SelectItem value={NONE_SELECT_VALUE}>None</SelectItem>
                   <SelectItem value="created">Created</SelectItem>
                   <SelectItem value="number">Number</SelectItem>
                   <SelectItem value="updated">Updated</SelectItem>
@@ -716,10 +729,14 @@ export function ClassSheet({
               <Label>Title field</Label>
               <div className="pl-4">
                 <Select
-                  value={cls.title || ""}
+                  value={cls.title || NONE_SELECT_VALUE}
                   onValueChange={(value) => {
                     if (onUpdate) {
-                      onUpdate(cls.name, undefined, value);
+                      onUpdate(
+                        cls.name,
+                        undefined,
+                        value === NONE_SELECT_VALUE ? "" : value,
+                      );
                     }
                   }}
                 >
@@ -727,7 +744,7 @@ export function ClassSheet({
                     <SelectValue placeholder="None" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="">None</SelectItem>
+                    <SelectItem value={NONE_SELECT_VALUE}>None</SelectItem>
                     {fields.map((field) => (
                       <SelectItem key={field.id} value={field.id}>
                         {field.name}

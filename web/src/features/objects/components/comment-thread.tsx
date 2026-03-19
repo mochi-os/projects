@@ -15,6 +15,24 @@ import {
 } from "@mochi/web";
 import type { Comment } from "@/types";
 import { CommentAttachments } from "./comment-attachments";
+import { MentionTextarea } from "./mention-textarea";
+
+function renderMentions(content: string): React.ReactNode {
+  return content.split(/(@\S+)/g).map((part, i) =>
+    part.startsWith("@") ? (
+      <span key={i} className="text-primary font-medium">
+        {part}
+      </span>
+    ) : (
+      part
+    ),
+  );
+}
+
+interface Person {
+  id: string;
+  name: string;
+}
 
 interface CommentThreadProps {
   comment: Comment;
@@ -29,6 +47,7 @@ interface CommentThreadProps {
   onSubmitReply: (commentId: string, files?: File[]) => void;
   onEdit: (commentId: string, content: string) => void;
   onDelete: (commentId: string) => void;
+  people?: Person[];
   depth?: number;
 }
 
@@ -45,6 +64,7 @@ export function CommentThread({
   onSubmitReply,
   onEdit,
   onDelete,
+  people = [],
   depth = 0,
 }: CommentThreadProps) {
   const [collapsed, setCollapsed] = useState(false);
@@ -117,12 +137,12 @@ export function CommentThread({
 
         {editing ? (
           <div className="space-y-2">
-            <textarea
+            <MentionTextarea
               value={editBody}
-              onChange={(e) => setEditBody(e.target.value)}
-              className="border-input bg-background min-h-16 w-full rounded-lg border px-3 py-2 text-sm"
+              onValueChange={setEditBody}
               rows={3}
               autoFocus
+              people={people}
             />
             <div className="flex justify-end gap-2">
               <Button
@@ -148,7 +168,7 @@ export function CommentThread({
           </div>
         ) : (
           <p className="text-foreground text-sm leading-relaxed whitespace-pre-wrap">
-            {comment.content}
+            {renderMentions(comment.content)}
           </p>
         )}
 
@@ -239,10 +259,10 @@ export function CommentThread({
 
       {isReplying && (
         <div className="mt-2 space-y-2 border-t pt-2">
-          <textarea
+          <MentionTextarea
             placeholder={`Reply to ${comment.name || comment.author}...`}
             value={replyDraft}
-            onChange={(e) => onReplyDraftChange(e.target.value)}
+            onValueChange={onReplyDraftChange}
             onKeyDown={(e) => {
               if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) {
                 e.preventDefault();
@@ -255,9 +275,9 @@ export function CommentThread({
                 onCancelReply();
               }
             }}
-            className="border-input bg-background min-h-16 w-full rounded-lg border px-3 py-2 text-sm"
             rows={2}
             autoFocus
+            people={people}
           />
           {replyFiles.length > 0 && (
             <div className="flex flex-wrap gap-2">
@@ -378,6 +398,7 @@ export function CommentThread({
           onSubmitReply={onSubmitReply}
           onEdit={onEdit}
           onDelete={onDelete}
+          people={people}
           depth={depth + 1}
         />
       ))}

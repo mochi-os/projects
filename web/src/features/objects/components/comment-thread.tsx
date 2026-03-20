@@ -18,10 +18,10 @@ import { CommentAttachments } from "./comment-attachments";
 import { MentionTextarea } from "./mention-textarea";
 
 function renderMentions(content: string): React.ReactNode {
-  return content.split(/(@\S+)/g).map((part, i) =>
-    part.startsWith("@") ? (
+  return content.split(/(@\[[^\]]+\])/g).map((part, i) =>
+    part.startsWith("@[") ? (
       <span key={i} className="text-primary font-medium">
-        {part}
+        @{part.slice(2, -1)}
       </span>
     ) : (
       part

@@ -341,11 +341,17 @@ export function ViewSheet({
             <div className="space-y-2">
               <Label>Columns group by</Label>
               <div className="pl-4">
-                <Select value={columns} onValueChange={handleColumnsChange}>
+                <Select
+                  value={columns || NONE_SELECT_VALUE}
+                  onValueChange={(value) =>
+                    handleColumnsChange(value === NONE_SELECT_VALUE ? "" : value)
+                  }
+                >
                   <SelectTrigger className="w-full">
                     <SelectValue placeholder="Select a field" />
                   </SelectTrigger>
                   <SelectContent>
+                    <SelectItem value={NONE_SELECT_VALUE}>None</SelectItem>
                     {enumeratedFields.map((field) => (
                       <SelectItem key={field.id} value={field.id}>
                         {field.name}

@@ -37,10 +37,10 @@ export function DesignPreview({
   const classFields = fields[classId] || [];
   const classOptions = options[classId] || {};
 
-  // Filter objects to the selected class
+  // Filter objects to the selected class, or show all if none selected
   const classObjects = useMemo(
-    () => objects.filter((o) => o.class === classId),
-    [objects, classId],
+    () => selectedClassId ? objects.filter((o) => o.class === classId) : objects,
+    [objects, classId, selectedClassId],
   );
 
   // Get the first board view

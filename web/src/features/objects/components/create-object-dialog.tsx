@@ -477,7 +477,7 @@ export function CreateObjectDialog({
           </div>
 
           <SheetFooter className="px-6 py-4 border-t">
-            <Button type="submit" disabled={createMutation.isPending || (parentRequired && !parent) || missingRequired}>
+            <Button type="submit" disabled={createMutation.isPending || (parentRequired && !parent) || missingRequired || creatableClasses.length === 0}>
               <Check className="size-4" />
               {createMutation.isPending ? "Creating..." : "Create"}
             </Button>

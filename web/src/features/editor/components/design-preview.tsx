@@ -1,7 +1,7 @@
 // Mochi Projects: Design preview component
 // Copyright Alistair Cunningham 2026
 
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { Card, cn } from "@mochi/web";
 import type {
   ProjectClass,
@@ -37,11 +37,9 @@ export function DesignPreview({
   const classFields = fields[classId] || [];
   const classOptions = options[classId] || {};
 
-  // Filter objects to the selected class, or show all if none selected
-  const classObjects = useMemo(
-    () => selectedClassId ? objects.filter((o) => o.class === classId) : objects,
-    [objects, classId, selectedClassId],
-  );
+  // Show all real objects in the preview regardless of selected class,
+  // so the preview always reflects the actual project state.
+  const classObjects = objects;
 
   // Get the first board view
   const boardView = views.find((v) => v.viewtype === "board");
@@ -114,14 +112,6 @@ export function DesignPreview({
   };
 
   const renderCardPreview = () => {
-    if (classObjects.length === 0) {
-      return (
-        <div className="text-sm text-muted-foreground text-center py-8">
-          No items
-        </div>
-      );
-    }
-
     return (
       <div className="max-w-md mx-auto space-y-4">
         {classObjects.slice(0, 10).map((obj) => (
@@ -176,12 +166,7 @@ export function DesignPreview({
             </span>
           ))}
         </div>
-        {classObjects.length === 0 ? (
-          <div className="py-8 text-center text-sm text-muted-foreground">
-            No items
-          </div>
-        ) : (
-          classObjects.slice(0, 10).map((obj) => (
+        {classObjects.slice(0, 10).map((obj) => (
             <div key={obj.id} className="flex items-center gap-4 py-2 px-3 border-b last:border-b-0">
               <div className="w-5" />
               <span className="text-xs font-mono text-muted-foreground w-16">{obj.number}</span>
@@ -198,8 +183,7 @@ export function DesignPreview({
                 );
               })}
             </div>
-          ))
-        )}
+          ))}
         {classObjects.length > 10 && (
           <div className="py-2 text-center text-xs text-muted-foreground">
             +{classObjects.length - 10} more

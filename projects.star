@@ -4923,6 +4923,19 @@ def event_object_create(e):
 	fp = mochi.entity.fingerprint(project_id)
 	if fp:
 		mochi.websocket.write(fp, {"type": "object/create", "project": project_id, "id": object_id})
+	# Notify local user about new object
+	user = e.content("user") or ""
+	local_id = e.header("to")
+	if local_id and local_id != user:
+		project = get_project(project_id)
+		if project:
+			obj = mochi.db.row("select number, class from objects where id=?", object_id)
+			if obj:
+				title = get_object_display(project, obj, object_id)
+				fp2 = mochi.entity.fingerprint(project_id)
+				url = "/projects/" + fp2 if fp2 else "/projects"
+				mochi.service.call("notifications", "send", "update",
+					title, "Created", object_id, url)
 
 # Object updated
 def event_object_update(e):

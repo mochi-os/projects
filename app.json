@@ -2,7 +2,7 @@
 // Copyright Alistair Cunningham 2026
 
 {
-	"version": "1.62",
+	"version": "1.63",
 	"label": "app_name",
 	"classes": ["project"],
 	"paths": ["projects"],
@@ -45,6 +45,7 @@
 		":project/design": {"file": "web/dist/index.html"},
 		":project/settings": {"file": "web/dist/index.html"},
 		":project/diff": {"file": "web/dist/index.html"},
+		":project/:object": {"file": "web/dist/index.html"},
 		":project/-/info": {"function": "action_project_get"},
 		":project/-/update": {"function": "action_project_update"},
 		":project/-/delete": {"function": "action_project_delete"},

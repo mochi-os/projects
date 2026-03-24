@@ -21,6 +21,7 @@ import { Route as ProjectIdDiffRouteImport } from './routes/$projectId.diff'
 import { Route as AuthenticatedProjectIdIndexRouteImport } from './routes/_authenticated/$projectId/index'
 import { Route as AuthenticatedProjectIdSettingsRouteImport } from './routes/_authenticated/$projectId_.settings'
 import { Route as AuthenticatedProjectIdDesignRouteImport } from './routes/_authenticated/$projectId/design'
+import { Route as AuthenticatedProjectIdObjectIdRouteImport } from './routes/_authenticated/$projectId/$objectId'
 
 const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
   id: '/_authenticated',
@@ -84,6 +85,12 @@ const AuthenticatedProjectIdDesignRoute =
     path: '/$projectId/design',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedProjectIdObjectIdRoute =
+  AuthenticatedProjectIdObjectIdRouteImport.update({
+    id: '/$projectId/$objectId',
+    path: '/$projectId/$objectId',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/$projectId/diff': typeof ProjectIdDiffRoute
@@ -94,6 +101,7 @@ export interface FileRoutesByFullPath {
   '/503': typeof errors503Route
   '/find': typeof AuthenticatedFindRoute
   '/': typeof AuthenticatedIndexRoute
+  '/$projectId/$objectId': typeof AuthenticatedProjectIdObjectIdRoute
   '/$projectId/design': typeof AuthenticatedProjectIdDesignRoute
   '/$projectId/settings': typeof AuthenticatedProjectIdSettingsRoute
   '/$projectId': typeof AuthenticatedProjectIdIndexRoute
@@ -107,6 +115,7 @@ export interface FileRoutesByTo {
   '/503': typeof errors503Route
   '/find': typeof AuthenticatedFindRoute
   '/': typeof AuthenticatedIndexRoute
+  '/$projectId/$objectId': typeof AuthenticatedProjectIdObjectIdRoute
   '/$projectId/design': typeof AuthenticatedProjectIdDesignRoute
   '/$projectId/settings': typeof AuthenticatedProjectIdSettingsRoute
   '/$projectId': typeof AuthenticatedProjectIdIndexRoute
@@ -122,6 +131,7 @@ export interface FileRoutesById {
   '/(errors)/503': typeof errors503Route
   '/_authenticated/find': typeof AuthenticatedFindRoute
   '/_authenticated/': typeof AuthenticatedIndexRoute
+  '/_authenticated/$projectId/$objectId': typeof AuthenticatedProjectIdObjectIdRoute
   '/_authenticated/$projectId/design': typeof AuthenticatedProjectIdDesignRoute
   '/_authenticated/$projectId_/settings': typeof AuthenticatedProjectIdSettingsRoute
   '/_authenticated/$projectId/': typeof AuthenticatedProjectIdIndexRoute
@@ -137,6 +147,7 @@ export interface FileRouteTypes {
     | '/503'
     | '/find'
     | '/'
+    | '/$projectId/$objectId'
     | '/$projectId/design'
     | '/$projectId/settings'
     | '/$projectId'
@@ -150,6 +161,7 @@ export interface FileRouteTypes {
     | '/503'
     | '/find'
     | '/'
+    | '/$projectId/$objectId'
     | '/$projectId/design'
     | '/$projectId/settings'
     | '/$projectId'
@@ -164,6 +176,7 @@ export interface FileRouteTypes {
     | '/(errors)/503'
     | '/_authenticated/find'
     | '/_authenticated/'
+    | '/_authenticated/$projectId/$objectId'
     | '/_authenticated/$projectId/design'
     | '/_authenticated/$projectId_/settings'
     | '/_authenticated/$projectId/'
@@ -265,12 +278,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedProjectIdDesignRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/$projectId/$objectId': {
+      id: '/_authenticated/$projectId/$objectId'
+      path: '/$projectId/$objectId'
+      fullPath: '/$projectId/$objectId'
+      preLoaderRoute: typeof AuthenticatedProjectIdObjectIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedFindRoute: typeof AuthenticatedFindRoute
   AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute
+  AuthenticatedProjectIdObjectIdRoute: typeof AuthenticatedProjectIdObjectIdRoute
   AuthenticatedProjectIdDesignRoute: typeof AuthenticatedProjectIdDesignRoute
   AuthenticatedProjectIdSettingsRoute: typeof AuthenticatedProjectIdSettingsRoute
   AuthenticatedProjectIdIndexRoute: typeof AuthenticatedProjectIdIndexRoute
@@ -279,6 +300,7 @@ interface AuthenticatedRouteRouteChildren {
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedFindRoute: AuthenticatedFindRoute,
   AuthenticatedIndexRoute: AuthenticatedIndexRoute,
+  AuthenticatedProjectIdObjectIdRoute: AuthenticatedProjectIdObjectIdRoute,
   AuthenticatedProjectIdDesignRoute: AuthenticatedProjectIdDesignRoute,
   AuthenticatedProjectIdSettingsRoute: AuthenticatedProjectIdSettingsRoute,
   AuthenticatedProjectIdIndexRoute: AuthenticatedProjectIdIndexRoute,

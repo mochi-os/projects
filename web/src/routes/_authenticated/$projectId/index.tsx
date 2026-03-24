@@ -106,13 +106,14 @@ function ProjectPage() {
   );
 }
 
-interface ProjectPageContentProps {
+export interface ProjectPageContentProps {
   project: ProjectDetails;
   projectId: string;
   search: SearchParams;
+  initialObjectId?: string;
 }
 
-function ProjectPageContent({ project, projectId, search }: ProjectPageContentProps) {
+export function ProjectPageContent({ project, projectId, search, initialObjectId }: ProjectPageContentProps) {
   const navigate = useNavigate();
   const router = useRouter();
   const params = { projectId };
@@ -128,7 +129,7 @@ function ProjectPageContent({ project, projectId, search }: ProjectPageContentPr
     return () => setShortcutEnabled(true);
   }, [setShortcutEnabled]);
 
-  const [selectedObjectId, setSelectedObjectId] = useState<string | null>(null);
+  const [selectedObjectId, setSelectedObjectId] = useState<string | null>(initialObjectId ?? null);
   const [createDialogOpen, setCreateDialogOpen] = useState(false);
   const [createDefaultFields, setCreateDefaultFields] = useState<
     { field: string; value: string }[] | undefined
@@ -906,7 +907,12 @@ function ProjectPageContent({ project, projectId, search }: ProjectPageContentPr
         objectId={selectedObjectId}
         project={project}
         access={access}
-        onClose={() => setSelectedObjectId(null)}
+        onClose={() => {
+          setSelectedObjectId(null);
+          if (initialObjectId) {
+            navigate({ to: '/$projectId', params: { projectId }, replace: true });
+          }
+        }}
       />
 
       {canWrite(access) && (

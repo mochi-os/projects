@@ -1,7 +1,7 @@
 // Mochi Projects: Project page with board and tree views
 // Copyright Alistair Cunningham 2026
 
-import { useState, useMemo, useCallback, useEffect } from "react";
+import { useState, useMemo, useCallback, useEffect, useRef } from "react";
 import { createFileRoute, Link, redirect, useNavigate, useRouter } from "@tanstack/react-router";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import {
@@ -21,6 +21,7 @@ import {
   useSearch,
   useShellStorage,
   toast,
+  getAppPath,
 } from "@mochi/web";
 import { Columns3, Ellipsis, FolderKanban, GripVertical, Plus, Settings, Settings2, SlidersHorizontal, X } from "lucide-react";
 import projectsApi from "@/api/projects";
@@ -114,7 +115,6 @@ export interface ProjectPageContentProps {
 }
 
 export function ProjectPageContent({ project, projectId, search, initialObjectId }: ProjectPageContentProps) {
-  const navigate = useNavigate();
   const router = useRouter();
   const params = { projectId };
   const access = project.project.access;
@@ -172,17 +172,20 @@ export function ProjectPageContent({ project, projectId, search, initialObjectId
     return result;
   }, [project.fields]);
 
-  // Sync URL when view changes
+  // Sync view and selected object to URL for bookmarkability
+  const isInitialMount = useRef(true);
   useEffect(() => {
-    const newView = activeViewId === defaultViewId ? undefined : activeViewId;
-    if (search.view !== newView) {
-      navigate({
-        to: ".",
-        search: { view: newView },
-        replace: true,
-      });
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+      return;
     }
-  }, [activeViewId, defaultViewId, search.view, navigate]);
+    const appPath = getAppPath() || '';
+    const path = selectedObjectId
+      ? `${appPath}/${projectId}/${selectedObjectId}`
+      : `${appPath}/${projectId}`;
+    const viewParam = activeViewId !== defaultViewId ? `?view=${activeViewId}` : '';
+    window.history.replaceState(null, '', `${path}${viewParam}`);
+  }, [selectedObjectId, activeViewId, defaultViewId, projectId]);
 
   // Filter state
   const [filters, setFilters] = useState<FilterState>({
@@ -907,12 +910,7 @@ export function ProjectPageContent({ project, projectId, search, initialObjectId
         objectId={selectedObjectId}
         project={project}
         access={access}
-        onClose={() => {
-          setSelectedObjectId(null);
-          if (initialObjectId) {
-            navigate({ to: '/$projectId', params: { projectId }, replace: true });
-          }
-        }}
+        onClose={() => setSelectedObjectId(null)}
       />
 
       {canWrite(access) && (

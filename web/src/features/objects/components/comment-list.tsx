@@ -14,7 +14,7 @@ import {
 } from "@mochi/web";
 import projectsApi from "@/api/projects";
 import { CommentThread } from "./comment-thread";
-import { MentionTextarea } from "./mention-textarea";
+import { MentionTextarea } from "@mochi/web";
 
 interface CommentListProps {
   projectId: string;

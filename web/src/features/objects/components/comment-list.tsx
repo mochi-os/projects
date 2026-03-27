@@ -11,6 +11,7 @@ import {
   getErrorMessage,
   ListSkeleton,
   useAuthStore,
+  useImageObjectUrls,
 } from "@mochi/web";
 import projectsApi from "@/api/projects";
 import { CommentThread } from "./comment-thread";
@@ -29,6 +30,7 @@ export function CommentList({
 }: CommentListProps) {
   const [newComment, setNewComment] = useState("");
   const [newFiles, setNewFiles] = useState<File[]>([]);
+  const newFileImageUrls = useImageObjectUrls(newFiles);
   const [replyingTo, setReplyingTo] = useState<string | null>(null);
   const [replyDraft, setReplyDraft] = useState("");
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -202,9 +204,9 @@ export function CommentList({
                   key={i}
                   className="bg-muted relative flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs"
                 >
-                  {file.type.startsWith("image/") && (
+                  {newFileImageUrls[i] && (
                     <img
-                      src={URL.createObjectURL(file)}
+                      src={newFileImageUrls[i]}
                       alt={file.name}
                       className="h-8 w-8 rounded object-cover"
                     />

@@ -10,6 +10,7 @@ import {
   formatTimestamp,
   MentionTextarea,
   renderMentions,
+  useImageObjectUrls,
 } from "@mochi/web";
 import type { Comment } from "@/types";
 import { CommentAttachments } from "./comment-attachments";
@@ -57,6 +58,7 @@ export function CommentThread({
   const [editBody, setEditBody] = useState("");
   const [deleting, setDeleting] = useState(false);
   const [replyFiles, setReplyFiles] = useState<File[]>([]);
+  const replyImageUrls = useImageObjectUrls(replyFiles);
   const replyFileRef = { current: null as HTMLInputElement | null };
 
   const isReplying = replyingTo === comment.id;
@@ -233,9 +235,9 @@ export function CommentThread({
                   key={i}
                   className="bg-muted relative flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs"
                 >
-                  {file.type.startsWith("image/") && (
+                  {replyImageUrls[i] && (
                     <img
-                      src={URL.createObjectURL(file)}
+                      src={replyImageUrls[i]}
                       alt={file.name}
                       className="h-8 w-8 rounded object-cover"
                     />

@@ -235,9 +235,9 @@ export function CommentThread({
                   key={i}
                   className="bg-muted relative flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs"
                 >
-                  {replyImageUrls[i] && (
+                  {file.type.startsWith("image/") && (
                     <img
-                      src={replyImageUrls[i]}
+                      src={replyImageUrls[i] ?? undefined}
                       alt={file.name}
                       className="h-8 w-8 rounded object-cover"
                     />

@@ -74,19 +74,6 @@ fun PropertiesTab(
             .verticalScroll(rememberScrollState())
             .padding(16.dp)
     ) {
-        // Title field (always first)
-        OutlinedTextField(
-            value = obj.readable,
-            onValueChange = { viewModel.updateTitle(it) },
-            label = { Text("Title") },
-            singleLine = true,
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        Spacer(modifier = Modifier.height(16.dp))
-        HorizontalDivider()
-        Spacer(modifier = Modifier.height(16.dp))
-
         // Dynamic fields
         fields.sortedBy { it.rank }.forEach { field ->
             FieldEditor(

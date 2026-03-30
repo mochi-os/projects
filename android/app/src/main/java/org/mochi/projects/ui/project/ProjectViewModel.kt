@@ -284,6 +284,12 @@ class ProjectViewModel @Inject constructor(
 
     fun getCardFields(classId: String): List<ProjectField> {
         val details = _uiState.value.projectDetails ?: return emptyList()
-        return details.fields[classId]?.filter { it.showOnCard } ?: emptyList()
+        val allFields = details.fields[classId] ?: return emptyList()
+        val view = getActiveView()
+        if (view != null && view.fields.isNotBlank()) {
+            val viewFieldIds = view.fields.split(",").map { it.trim() }.toSet()
+            return allFields.filter { it.id in viewFieldIds }
+        }
+        return allFields.filter { it.showOnCard }
     }
 }

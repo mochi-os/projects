@@ -49,14 +49,24 @@ class ObjectDetailViewModel @Inject constructor(
     private var currentProjectId: String = ""
     private var currentObjectId: String = ""
 
-    fun load(projectId: String, objectId: String) {
+    fun loadWithInitialObject(projectId: String, objectId: String, initialObject: ProjectObject?) {
         currentProjectId = projectId
         currentObjectId = objectId
+        if (initialObject != null) {
+            _uiState.value = _uiState.value.copy(obj = initialObject)
+        }
         viewModelScope.launch {
-            _uiState.value = _uiState.value.copy(isLoading = true, error = null)
+            _uiState.value = _uiState.value.copy(isLoading = _uiState.value.obj == null, error = null)
             try {
-                val obj = repository.getObject(projectId, objectId)
-                _uiState.value = _uiState.value.copy(obj = obj, isLoading = false)
+                val fetched = repository.getObject(projectId, objectId)
+                // The single-object endpoint doesn't return values — merge with what we have
+                val existing = _uiState.value.obj
+                val merged = if (fetched.values.isEmpty() && existing != null && existing.values.isNotEmpty()) {
+                    fetched.copy(values = existing.values)
+                } else {
+                    fetched
+                }
+                _uiState.value = _uiState.value.copy(obj = merged, isLoading = false)
                 loadComments()
                 loadActivity()
                 loadRequests()

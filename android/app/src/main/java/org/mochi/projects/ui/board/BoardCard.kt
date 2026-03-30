@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -19,20 +18,19 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ExpandLess
+import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material.icons.filled.ExpandMore
+import androidx.compose.foundation.border
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.SuggestionChip
-import androidx.compose.material3.SuggestionChipDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -40,6 +38,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import org.mochi.projects.model.ProjectObject
 import org.mochi.projects.ui.project.ProjectViewModel
 
@@ -52,14 +51,17 @@ fun BoardCard(
     viewModel: ProjectViewModel,
     borderFieldId: String?,
     childrenByParent: Map<String, List<ProjectObject>>,
+    columnFieldId: String = "",
+    rowFieldId: String? = null,
     depth: Int = 0,
     onClick: () -> Unit
 ) {
-    var showMoveSheet by remember { mutableStateOf(false) }
+    var showMoveSheet by rememberSaveable(obj.id) { mutableStateOf(false) }
     var collapsed by rememberSaveable(obj.id) { mutableStateOf(true) }
 
     val children = childrenByParent[obj.id] ?: emptyList()
     val hasChildren = children.isNotEmpty()
+    val isNested = depth > 0
 
     val borderColor = if (borderFieldId != null) {
         val borderValue = obj.stringValue(borderFieldId)
@@ -74,118 +76,112 @@ fun BoardCard(
 
     val projectDetails = viewModel.uiState.value.projectDetails
     val prefix = projectDetails?.project?.prefix ?: ""
+    val cls = projectDetails?.classes?.find { it.id == obj.objectClass }
+    val titleFieldId = cls?.title?.takeIf { it.isNotBlank() }
+    val title = if (titleFieldId != null) {
+        obj.stringValue(titleFieldId).ifBlank { "$prefix-${obj.number}" }
+    } else {
+        obj.readable.ifBlank { "$prefix-${obj.number}" }
+    }
     val cardFields = viewModel.getCardFields(obj.objectClass)
 
     Card(
         modifier = Modifier
             .fillMaxWidth()
+            .then(
+                if (borderColor != null) Modifier.border(1.dp, borderColor, MaterialTheme.shapes.small)
+                else Modifier
+            )
             .combinedClickable(
                 onClick = onClick,
                 onLongClick = { showMoveSheet = true }
             ),
         shape = MaterialTheme.shapes.small,
         colors = CardDefaults.cardColors(
-            containerColor = if (depth == 0) MaterialTheme.colorScheme.surface
+            containerColor = if (!isNested) MaterialTheme.colorScheme.surface
             else MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f)
         )
     ) {
-        Row(modifier = Modifier.height(IntrinsicSize.Min)) {
-            // Colored left border
-            if (borderColor != null) {
-                Box(
-                    modifier = Modifier
-                        .width(4.dp)
-                        .fillMaxHeight()
-                        .background(borderColor)
-                )
-            }
-
-            Column(modifier = Modifier.padding(if (depth == 0) 12.dp else 8.dp)) {
-                // Header row: number + expand toggle
+        Column(modifier = Modifier.padding(if (!isNested) 12.dp else 8.dp)) {
+                // Header row: [chevron] [title] [child count]
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    Text(
-                        text = if (prefix.isNotBlank()) "$prefix-${obj.number}" else "#${obj.number}",
-                        style = MaterialTheme.typography.labelSmall,
-                        color = MaterialTheme.colorScheme.primary
-                    )
-                    Spacer(modifier = Modifier.weight(1f))
                     if (hasChildren) {
-                        if (collapsed) {
-                            Text(
-                                text = "${children.size}",
-                                style = MaterialTheme.typography.labelSmall,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant
-                            )
-                            Spacer(modifier = Modifier.width(2.dp))
-                        }
                         Icon(
-                            imageVector = if (collapsed) Icons.Default.ExpandMore else Icons.Default.ExpandLess,
+                            imageVector = if (collapsed) Icons.Default.ChevronRight else Icons.Default.ExpandMore,
                             contentDescription = if (collapsed) "Expand" else "Collapse",
                             tint = MaterialTheme.colorScheme.onSurfaceVariant,
                             modifier = Modifier
-                                .size(20.dp)
+                                .size(16.dp)
                                 .clickable { collapsed = !collapsed }
+                        )
+                        Spacer(modifier = Modifier.width(2.dp))
+                    }
+                    Text(
+                        text = title,
+                        style = if (!isNested) MaterialTheme.typography.bodyMedium else MaterialTheme.typography.bodySmall,
+                        fontWeight = FontWeight.Medium,
+                        maxLines = 2,
+                        overflow = TextOverflow.Ellipsis,
+                        modifier = Modifier.weight(1f)
+                    )
+                    if (hasChildren && collapsed) {
+                        Spacer(modifier = Modifier.width(4.dp))
+                        Text(
+                            text = "${children.size}",
+                            fontSize = 10.sp,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     }
                 }
 
-                // Title
-                Text(
-                    text = obj.readable,
-                    style = if (depth == 0) MaterialTheme.typography.bodyMedium else MaterialTheme.typography.bodySmall,
-                    fontWeight = FontWeight.Medium,
-                    maxLines = 2,
-                    overflow = TextOverflow.Ellipsis
-                )
-
-                // Card fields as chips
-                if (cardFields.isNotEmpty()) {
-                    Spacer(modifier = Modifier.height(6.dp))
-                    FlowRow(
-                        horizontalArrangement = Arrangement.spacedBy(4.dp),
-                        verticalArrangement = Arrangement.spacedBy(2.dp)
-                    ) {
-                        cardFields.forEach { field ->
-                            val value = obj.stringValue(field.id)
-                            if (value.isNotBlank()) {
-                                val displayValue = when (field.fieldtype) {
+                // Body fields (top-level only, matching web's !isNested check)
+                if (!isNested) {
+                    val bodyFields = cardFields.filter {
+                        it.id != columnFieldId && it.id != rowFieldId && it.id != titleFieldId
+                    }
+                    val fieldsWithValues = bodyFields.filter { obj.stringValue(it.id).isNotBlank() }
+                    if (fieldsWithValues.isNotEmpty()) {
+                        Spacer(modifier = Modifier.height(4.dp))
+                        Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
+                            fieldsWithValues.forEach { field ->
+                                val value = obj.stringValue(field.id)
+                                when (field.fieldtype) {
                                     "enumerated" -> {
                                         val options = viewModel.getAllOptionsForField(field.id)
                                         val opt = options.find { it.id == value }
-                                        opt?.name ?: value
-                                    }
-                                    else -> value
-                                }
-                                if (displayValue.isNotBlank()) {
-                                    val chipColor = if (field.fieldtype == "enumerated") {
-                                        val options = viewModel.getAllOptionsForField(field.id)
-                                        val opt = options.find { it.id == value }
-                                        if (opt != null && opt.colour.isNotBlank()) {
-                                            parseColor(opt.colour).copy(alpha = 0.15f)
-                                        } else null
-                                    } else null
-
-                                    SuggestionChip(
-                                        onClick = { },
-                                        label = {
+                                        Row(verticalAlignment = Alignment.CenterVertically) {
+                                            if (opt != null && opt.colour.isNotBlank()) {
+                                                Box(
+                                                    modifier = Modifier
+                                                        .size(8.dp)
+                                                        .background(
+                                                            parseColor(opt.colour),
+                                                            MaterialTheme.shapes.extraSmall
+                                                        )
+                                                )
+                                                Spacer(modifier = Modifier.width(4.dp))
+                                            }
                                             Text(
-                                                text = displayValue,
-                                                style = MaterialTheme.typography.labelSmall,
+                                                text = opt?.name ?: value,
+                                                fontSize = 10.sp,
+                                                color = MaterialTheme.colorScheme.onSurfaceVariant,
                                                 maxLines = 1,
                                                 overflow = TextOverflow.Ellipsis
                                             )
-                                        },
-                                        colors = if (chipColor != null) {
-                                            SuggestionChipDefaults.suggestionChipColors(
-                                                containerColor = chipColor
-                                            )
-                                        } else {
-                                            SuggestionChipDefaults.suggestionChipColors()
                                         }
-                                    )
+                                    }
+                                    else -> {
+                                        Text(
+                                            text = value.take(80),
+                                            fontSize = 10.sp,
+                                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                            maxLines = 1,
+                                            overflow = TextOverflow.Ellipsis
+                                        )
+                                    }
                                 }
                             }
                         }
@@ -194,19 +190,21 @@ fun BoardCard(
 
                 // Nested children
                 if (hasChildren && !collapsed) {
-                    Spacer(modifier = Modifier.height(6.dp))
+                    Spacer(modifier = Modifier.height(8.dp))
                     HorizontalDivider()
-                    Spacer(modifier = Modifier.height(6.dp))
+                    Spacer(modifier = Modifier.height(8.dp))
                     if (depth < MAX_NESTING_DEPTH) {
-                        Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                        Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
                             children.sortedBy { it.rank }.forEach { child ->
                                 BoardCard(
                                     obj = child,
                                     viewModel = viewModel,
                                     borderFieldId = borderFieldId,
                                     childrenByParent = childrenByParent,
+                                    columnFieldId = columnFieldId,
+                                    rowFieldId = rowFieldId,
                                     depth = depth + 1,
-                                    onClick = { onClick() }
+                                    onClick = onClick
                                 )
                             }
                         }
@@ -214,12 +212,11 @@ fun BoardCard(
                         val deepCount = countDeepChildren(obj.id, childrenByParent)
                         Text(
                             text = "+$deepCount nested",
-                            style = MaterialTheme.typography.labelSmall,
+                            fontSize = 10.sp,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     }
                 }
-            }
         }
     }
 

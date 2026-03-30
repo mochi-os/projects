@@ -256,6 +256,7 @@ fun ProjectScreen(
             projectId = viewModel.projectId,
             objectId = uiState.selectedObjectId!!,
             projectDetails = details,
+            initialObject = uiState.objects.find { it.id == uiState.selectedObjectId },
             onDismiss = { viewModel.selectObject(null) },
             onObjectDeleted = {
                 viewModel.selectObject(null)

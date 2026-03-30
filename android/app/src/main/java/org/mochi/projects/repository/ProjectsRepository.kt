@@ -259,7 +259,7 @@ class ProjectsRepository @Inject constructor(
     // ---- Activity ----
 
     suspend fun getActivity(projectId: String, objectId: String): List<Activity> =
-        api.getActivity(projectId, objectId).unwrap().activity
+        api.getActivity(projectId, objectId).unwrap().activities
 
     // ---- Watchers ----
 

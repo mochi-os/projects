@@ -66,6 +66,7 @@ fun BoardView(
                 map.getOrPut(obj.parent) { mutableListOf() }.add(obj)
             }
         }
+        android.util.Log.d("BoardView", "objects=${objects.size} withParent=${objects.count { it.parent.isNotBlank() }} childrenByParent=${map.size} entries, total children=${map.values.sumOf { it.size }}")
         map
     }
 
@@ -217,6 +218,8 @@ private fun BoardColumn(
                             viewModel = viewModel,
                             borderFieldId = borderFieldId,
                             childrenByParent = childrenByParent,
+                            columnFieldId = columnFieldId,
+                            rowFieldId = rowFieldId,
                             onClick = { onObjectClick(obj.id) }
                         )
                     }
@@ -248,6 +251,8 @@ private fun BoardColumn(
                             viewModel = viewModel,
                             borderFieldId = borderFieldId,
                             childrenByParent = childrenByParent,
+                            columnFieldId = columnFieldId,
+                            rowFieldId = rowFieldId,
                             onClick = { onObjectClick(obj.id) }
                         )
                     }

@@ -47,6 +47,7 @@ fun ObjectDetailSheet(
     projectId: String,
     objectId: String,
     projectDetails: ProjectDetails,
+    initialObject: org.mochi.projects.model.ProjectObject? = null,
     onDismiss: () -> Unit,
     onObjectDeleted: () -> Unit,
     onViewDiff: (String, String, String, String) -> Unit,
@@ -58,7 +59,7 @@ fun ObjectDetailSheet(
     var showDeleteConfirm by remember { mutableStateOf(false) }
 
     LaunchedEffect(projectId, objectId) {
-        viewModel.load(projectId, objectId)
+        viewModel.loadWithInitialObject(projectId, objectId, initialObject)
     }
 
     ModalBottomSheet(
@@ -104,28 +105,23 @@ fun ObjectDetailSheet(
                             .padding(horizontal = 16.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Column(modifier = Modifier.weight(1f)) {
-                            Row(verticalAlignment = Alignment.CenterVertically) {
-                                Text(
-                                    text = if (prefix.isNotBlank()) "$prefix-${obj.number}" else "#${obj.number}",
-                                    style = MaterialTheme.typography.labelLarge,
-                                    color = MaterialTheme.colorScheme.primary
-                                )
-                                if (objClass != null) {
-                                    Spacer(modifier = Modifier.width(8.dp))
-                                    Text(
-                                        text = objClass.name,
-                                        style = MaterialTheme.typography.labelMedium,
-                                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                                    )
-                                }
-                            }
-                            Spacer(modifier = Modifier.height(4.dp))
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            modifier = Modifier.weight(1f)
+                        ) {
                             Text(
-                                text = obj.readable,
-                                style = MaterialTheme.typography.titleLarge,
-                                fontWeight = FontWeight.SemiBold
+                                text = if (prefix.isNotBlank()) "$prefix-${obj.number}" else "#${obj.number}",
+                                style = MaterialTheme.typography.labelLarge,
+                                color = MaterialTheme.colorScheme.primary
                             )
+                            if (objClass != null) {
+                                Spacer(modifier = Modifier.width(8.dp))
+                                Text(
+                                    text = objClass.name,
+                                    style = MaterialTheme.typography.labelMedium,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                                )
+                            }
                         }
 
                         IconButton(onClick = { viewModel.toggleWatch() }) {

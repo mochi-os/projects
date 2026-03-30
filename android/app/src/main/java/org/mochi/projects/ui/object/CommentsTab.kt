@@ -144,7 +144,7 @@ private fun CommentItem(
 ) {
     var showOverflow by remember { mutableStateOf(false) }
     var isEditing by remember { mutableStateOf(false) }
-    var editContent by remember { mutableStateOf(comment.body) }
+    var editContent by remember { mutableStateOf(comment.text) }
     val indent = (depth * 16).dp
 
     Column(
@@ -192,7 +192,7 @@ private fun CommentItem(
                         onClick = {
                             showOverflow = false
                             isEditing = true
-                            editContent = comment.body
+                            editContent = comment.text
                         },
                         leadingIcon = { Icon(Icons.Default.Edit, contentDescription = null) }
                     )
@@ -230,7 +230,7 @@ private fun CommentItem(
             }
         } else {
             Text(
-                text = comment.body,
+                text = comment.text,
                 style = MaterialTheme.typography.bodyMedium
             )
         }

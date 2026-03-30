@@ -1,7 +1,7 @@
 // Mochi Projects: Design preview component
 // Copyright Alistair Cunningham 2026
 
-import { useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { Card, cn } from "@mochi/web";
 import type {
   ProjectClass,
@@ -22,7 +22,6 @@ interface DesignPreviewProps {
   selectedClassId: string | null;
 }
 
-
 export function DesignPreview({
   classes,
   fields,
@@ -31,22 +30,48 @@ export function DesignPreview({
   objects,
   selectedClassId,
 }: DesignPreviewProps) {
-  const [previewMode, setPreviewMode] = useState<PreviewMode>("board");
-
   const classId = selectedClassId || classes[0]?.id || "task";
   const classFields = fields[classId] || [];
   const classOptions = options[classId] || {};
 
-  // Show all real objects in the preview regardless of selected class,
-  // so the preview always reflects the actual project state.
-  const classObjects = objects;
+  // Find views that include the selected class
+  const classViews = useMemo(() => {
+    return views.filter(
+      (v) => v.classes.length === 0 || v.classes.includes(classId),
+    );
+  }, [views, classId]);
 
-  // Get the first board view
-  const boardView = views.find((v) => v.viewtype === "board");
+  const availableModes = useMemo(() => {
+    const modes: PreviewMode[] = [];
+    if (classViews.some((v) => v.viewtype === "board")) modes.push("board");
+    if (classViews.some((v) => v.viewtype === "list")) modes.push("list");
+    modes.push("card");
+    return modes;
+  }, [classViews]);
 
+  const [previewMode, setPreviewMode] = useState<PreviewMode>(availableModes[0]);
+
+  // Reset preview mode when available modes change
+  useEffect(() => {
+    if (!availableModes.includes(previewMode)) {
+      setPreviewMode(availableModes[0]);
+    }
+  }, [availableModes, previewMode]);
+
+  // Filter objects to the selected class
+  const classObjects = useMemo(
+    () => objects.filter((obj) => obj.class === classId),
+    [objects, classId],
+  );
+
+  // Get the board view for this class
+  const boardView = classViews.find((v) => v.viewtype === "board");
   const columnField = boardView?.columns || "";
   const columnOptions = classOptions[columnField] || [];
   const borderField = boardView?.border || "";
+
+  // Get the list view for this class
+  const listView = classViews.find((v) => v.viewtype === "list");
 
   // Get the title field for the selected class
   const titleFieldId = classes.find((c) => c.id === classId)?.title || "title";
@@ -122,6 +147,14 @@ export function DesignPreview({
   };
 
   const renderCardPreview = () => {
+    if (classObjects.length === 0) {
+      return (
+        <div className="text-sm text-muted-foreground text-center py-8">
+          No items
+        </div>
+      );
+    }
+
     return (
       <div className="max-w-md mx-auto space-y-4">
         {classObjects.slice(0, 10).map((obj) => (
@@ -163,7 +196,11 @@ export function DesignPreview({
   };
 
   const renderListPreview = () => {
-    const listFields = classFields.slice(0, 4);
+    // Use the view's field list if available, otherwise fall back to first 4 class fields
+    const listFieldIds = listView?.fields ? listView.fields.split(",").map((f) => f.trim()) : [];
+    const listFields = listFieldIds.length > 0
+      ? listFieldIds.map((id) => classFields.find((f) => f.id === id)).filter(Boolean) as ProjectField[]
+      : classFields.slice(0, 4);
 
     return (
       <div className="bg-background border rounded-[10px] overflow-hidden max-w-2xl">
@@ -176,7 +213,12 @@ export function DesignPreview({
             </span>
           ))}
         </div>
-        {classObjects.slice(0, 10).map((obj) => (
+        {classObjects.length === 0 ? (
+          <div className="py-8 text-center text-sm text-muted-foreground">
+            No items
+          </div>
+        ) : (
+          classObjects.slice(0, 10).map((obj) => (
             <div key={obj.id} className="flex items-center gap-4 py-2 px-3 border-b last:border-b-0">
               <div className="w-5" />
               <span className="text-xs font-mono text-muted-foreground w-16">{obj.number}</span>
@@ -193,7 +235,8 @@ export function DesignPreview({
                 );
               })}
             </div>
-          ))}
+          ))
+        )}
         {classObjects.length > 10 && (
           <div className="py-2 text-center text-xs text-muted-foreground">
             +{classObjects.length - 10} more
@@ -207,7 +250,7 @@ export function DesignPreview({
     <div className="h-full flex flex-col">
       <div className="flex items-center gap-2 p-2 border-b">
         <span className="text-sm font-medium">Preview:</span>
-        {(["board", "list", "card"] as const).map((mode) => (
+        {availableModes.map((mode) => (
           <button
             key={mode}
             onClick={() => setPreviewMode(mode)}

@@ -1092,7 +1092,7 @@ const projectsApi = {
   searchUsers: async (
     query: string,
   ): Promise<{ results: { id: string; name: string; fingerprint: string }[] }> => {
-    return projectsRequest.get(`${endpoints.projects.usersSearch}?q=${encodeURIComponent(query)}`);
+    return projectsRequest.get(`${endpoints.projects.usersSearch}?search=${encodeURIComponent(query)}`);
   },
 
   // List groups (for adding access rules)

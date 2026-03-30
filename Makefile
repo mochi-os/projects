@@ -22,5 +22,17 @@ deploy:
 commit:
 	git add -A && git commit -m "$(VERSION)" || true
 
+android:
+	cd android && ./gradlew assembleDebug
+
+android-release:
+	cd android && ./gradlew assembleRelease
+
+android-install:
+	cd android && ./gradlew assembleDebug && adb install -r app/build/outputs/apk/debug/app-debug.apk
+
+android-clean:
+	cd android && ./gradlew clean
+
 push:
 	git push --follow-tags

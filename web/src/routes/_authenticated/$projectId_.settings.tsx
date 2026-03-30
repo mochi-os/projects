@@ -30,6 +30,7 @@ import {
   extractStatus,
   AccessDialog,
   AccessList,
+  coerceObjectArray,
   GeneralError,
   type AccessRule,
   type AccessLevel,
@@ -639,7 +640,7 @@ function AccessTab({ projectId }: AccessTabProps) {
   });
 
   const rules = useMemo<AccessRule[]>(
-    () => rulesData?.data?.rules ?? [],
+    () => coerceObjectArray<AccessRule>(rulesData?.data?.rules),
     [rulesData],
   );
   const rulesError = rulesErrorRaw ?? null;
@@ -649,6 +650,12 @@ function AccessTab({ projectId }: AccessTabProps) {
       : null;
   const groupsError = groupsErrorRaw ?? null;
   const canManageRules = !rulesError && !isLoadingRules && !!rulesData;
+  const userSearchResults = coerceObjectArray<{ id: string; name: string }>(
+    userSearchData?.results,
+  );
+  const groups = coerceObjectArray<{ id: string; name: string; description?: string }>(
+    groupsData?.groups,
+  );
 
   const handleAdd = async (
     subject: string,
@@ -707,14 +714,14 @@ function AccessTab({ projectId }: AccessTabProps) {
           onAdd={handleAdd}
           levels={PROJECTS_ACCESS_LEVELS}
           defaultLevel="comment"
-          userSearchResults={userSearchData?.results ?? []}
+          userSearchResults={userSearchResults}
           userSearchLoading={userSearchLoading}
           userSearchError={userSearchError}
           onRetryUserSearch={() => {
             void refetchUserSearch();
           }}
           onUserSearch={setUserSearchQuery}
-          groups={groupsData?.groups ?? []}
+          groups={groups}
           groupsError={groupsError}
           onRetryGroups={() => {
             void refetchGroups();

@@ -878,6 +878,7 @@ export function ProjectPageContent({ project, projectId, search, initialObjectId
                 objects={filteredObjects}
                 peopleMap={peopleMap}
                 viewFields={activeView?.fields}
+                viewClasses={activeView?.classes}
                 sort={sort}
                 onCardClick={handleCardClick}
                 onReparent={canWrite(access) ? handleReparent : undefined}

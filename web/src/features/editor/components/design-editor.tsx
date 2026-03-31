@@ -526,10 +526,8 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
       {/* Preview panel (right) */}
       <div className="flex-1 overflow-hidden">
         <DesignPreview
-          classes={project.classes}
-          fields={project.fields}
-          options={project.options}
-          views={project.views}
+          project={project}
+          projectId={projectId}
           objects={objects}
           selectedClassId={selectedClassId}
         />

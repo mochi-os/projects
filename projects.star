@@ -1377,6 +1377,8 @@ def action_object_create(a):
 					mochi.db.execute("insert or replace into \"values\" (object, field, value) values (?, ?, ?)", d["id"], title_field, title)
 				# Update local counter
 				mochi.db.execute("update projects set counter=counter+1, updated=? where id=?", now, project_id)
+				# Auto-watch creator locally so subscriber gets notifications
+				mochi.db.execute("insert or ignore into watchers (object, user, created) values (?, ?, ?)", d["id"], a.user.identity.id, now)
 		return result
 
 	if not check_project_access(a.user.identity.id, project_id, "write"):
@@ -2314,6 +2316,10 @@ def action_comment_create(a):
 			{"from": a.user.identity.id, "to": project_id, "service": "projects", "event": "comment/submit"},
 			submit_data
 		)
+		# Auto-watch commenter locally so subscriber gets notifications
+		mochi.db.execute(
+			"insert or ignore into watchers (object, user, created) values (?, ?, ?)",
+			object_id, a.user.identity.id, now)
 		return {"data": {
 			"id": comment_id, "parent": parent,
 			"author": a.user.identity.id, "name": a.user.identity.name,

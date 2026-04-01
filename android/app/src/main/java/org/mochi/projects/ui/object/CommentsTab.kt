@@ -36,6 +36,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import org.mochi.android.model.Comment
+import org.mochi.android.util.formatTimestamp
 
 @Composable
 fun CommentsTab(
@@ -154,13 +155,13 @@ private fun CommentItem(
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(
-                text = comment.name,
+                text = comment.name.orEmpty(),
                 style = MaterialTheme.typography.labelMedium,
                 fontWeight = FontWeight.SemiBold,
                 modifier = Modifier.weight(1f)
             )
             Text(
-                text = comment.createdString,
+                text = comment.created.formatTimestamp(),
                 style = MaterialTheme.typography.labelSmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
@@ -230,7 +231,7 @@ private fun CommentItem(
             }
         } else {
             Text(
-                text = comment.text,
+                text = comment.text.orEmpty(),
                 style = MaterialTheme.typography.bodyMedium
             )
         }
@@ -249,3 +250,4 @@ private fun CommentItem(
         }
     }
 }
+

@@ -26,12 +26,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import org.mochi.android.util.formatTimestamp
 import org.mochi.projects.model.Activity
 import org.mochi.projects.model.ProjectDetails
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
-import java.util.concurrent.TimeUnit
 
 @Composable
 fun ActivityTab(
@@ -136,24 +133,10 @@ private fun ActivityItem(
         }
         Spacer(modifier = Modifier.width(8.dp))
         Text(
-            text = formatRelativeTime(item.created),
+            text = item.created.formatTimestamp(),
             style = MaterialTheme.typography.labelSmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
     }
 }
 
-private fun formatRelativeTime(epochSeconds: Long): String {
-    if (epochSeconds == 0L) return ""
-    val now = System.currentTimeMillis()
-    val then = epochSeconds * 1000
-    val diff = now - then
-
-    return when {
-        diff < TimeUnit.MINUTES.toMillis(1) -> "just now"
-        diff < TimeUnit.HOURS.toMillis(1) -> "${diff / TimeUnit.MINUTES.toMillis(1)}m ago"
-        diff < TimeUnit.DAYS.toMillis(1) -> "${diff / TimeUnit.HOURS.toMillis(1)}h ago"
-        diff < TimeUnit.DAYS.toMillis(7) -> "${diff / TimeUnit.DAYS.toMillis(1)}d ago"
-        else -> SimpleDateFormat("MMM d", Locale.getDefault()).format(Date(then))
-    }
-}

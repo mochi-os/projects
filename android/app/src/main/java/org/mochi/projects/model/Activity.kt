@@ -2,7 +2,7 @@ package org.mochi.projects.model
 
 data class Activity(
     val id: String = "",
-    val user: Int = 0,
+    val user: String = "",
     val name: String = "",
     val action: String = "",
     val field: String = "",

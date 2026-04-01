@@ -1,8 +1,8 @@
 // Mochi Projects: Recursive threaded comment component
 // Copyright Alistair Cunningham 2026
 
-import { useState } from "react";
-import { Pencil, Reply, Send, Trash2, X, Paperclip } from "lucide-react";
+import { useCallback, useState } from "react";
+import { Loader2, Pencil, Reply, Send, Trash2, X, Paperclip } from "lucide-react";
 import {
   Button,
   CommentTreeLayout,
@@ -30,7 +30,7 @@ interface CommentThreadProps {
   onStartReply: (commentId: string) => void;
   onCancelReply: () => void;
   onReplyDraftChange: (value: string) => void;
-  onSubmitReply: (commentId: string, files?: File[]) => void;
+  onSubmitReply: (commentId: string, files?: File[]) => void | Promise<void>;
   onEdit: (commentId: string, content: string) => void;
   onDelete: (commentId: string) => void;
   people?: Person[];
@@ -58,8 +58,23 @@ export function CommentThread({
   const [editBody, setEditBody] = useState("");
   const [deleting, setDeleting] = useState(false);
   const [replyFiles, setReplyFiles] = useState<File[]>([]);
+  const [isSubmittingReply, setIsSubmittingReply] = useState(false);
   const replyImageUrls = useImageObjectUrls(replyFiles);
   const replyFileRef = { current: null as HTMLInputElement | null };
+
+  const handleSubmitReply = useCallback(async () => {
+    if (isSubmittingReply) return;
+    setIsSubmittingReply(true);
+    try {
+      await onSubmitReply(
+        comment.id,
+        replyFiles.length > 0 ? replyFiles : undefined,
+      );
+      setReplyFiles([]);
+    } finally {
+      setIsSubmittingReply(false);
+    }
+  }, [isSubmittingReply, onSubmitReply, comment.id, replyFiles]);
 
   const isReplying = replyingTo === comment.id;
   const hasChildren = comment.children && comment.children.length > 0;
@@ -215,11 +230,7 @@ export function CommentThread({
             onKeyDown={(e) => {
               if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) {
                 e.preventDefault();
-                if (replyDraft.trim())
-                  onSubmitReply(
-                    comment.id,
-                    replyFiles.length > 0 ? replyFiles : undefined,
-                  );
+                if (replyDraft.trim()) void handleSubmitReply();
               } else if (e.key === "Escape") {
                 onCancelReply();
               }
@@ -279,6 +290,7 @@ export function CommentThread({
               size="icon"
               className="size-8"
               onClick={() => replyFileRef.current?.click()}
+              disabled={isSubmittingReply}
               aria-label="Attach reply files"
               title="Attach reply files"
             >
@@ -290,6 +302,7 @@ export function CommentThread({
               variant="ghost"
               className="size-8"
               onClick={onCancelReply}
+              disabled={isSubmittingReply}
               aria-label="Cancel reply"
               title="Cancel reply"
             >
@@ -299,17 +312,12 @@ export function CommentThread({
               type="button"
               size="icon"
               className="size-8"
-              disabled={!replyDraft.trim()}
-              onClick={() =>
-                onSubmitReply(
-                  comment.id,
-                  replyFiles.length > 0 ? replyFiles : undefined,
-                )
-              }
+              disabled={!replyDraft.trim() || isSubmittingReply}
+              onClick={() => void handleSubmitReply()}
               aria-label="Submit reply"
               title="Submit reply"
             >
-              <Send className="size-4" />
+              {isSubmittingReply ? <Loader2 className="size-4 animate-spin" /> : <Send className="size-4" />}
             </Button>
           </div>
         </div>

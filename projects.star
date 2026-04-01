@@ -1186,19 +1186,26 @@ def get_object_display(project, obj, object_id):
 
 def notify_watchers(object_id, project_id, local_identity, user_id, body):
 	"""Notify local user if they watch this object and didn't make the change."""
+	mochi.log.debug("notify_watchers: object=" + str(object_id) + " local=" + str(local_identity) + " user=" + str(user_id))
 	if local_identity == user_id:
+		mochi.log.debug("notify_watchers: skipped, local==user")
 		return
-	if not mochi.db.exists("select 1 from watchers where object=? and user=?", object_id, local_identity):
+	watching = mochi.db.exists("select 1 from watchers where object=? and user=?", object_id, local_identity)
+	mochi.log.debug("notify_watchers: watching=" + str(watching))
+	if not watching:
 		return
 	project = get_project(project_id)
 	if not project:
+		mochi.log.debug("notify_watchers: project not found")
 		return
 	obj = mochi.db.row("select number, class from objects where id=?", object_id)
 	if not obj:
+		mochi.log.debug("notify_watchers: object not found")
 		return
 	title = get_object_display(project, obj, object_id)
 	fp = mochi.entity.fingerprint(project_id)
 	url = "/projects/" + fp + "/" + object_id if fp else "/projects"
+	mochi.log.debug("notify_watchers: sending notification title=" + title)
 	mochi.service.call("notifications", "send", "update", title, body, object_id, url)
 
 def notify_mentions(object_id, project_id, content, author_id, author_name):
@@ -5175,6 +5182,7 @@ def event_comment_create(e):
 	if fp:
 		mochi.websocket.write(fp, {"type": "comment/create", "project": project_id, "object": e.content("object")})
 	# Notify local user if watching
+	mochi.log.debug("event_comment_create: sync=" + str(e.content("sync")) + " user=" + str(e.content("user")) + " to=" + str(e.header("to")) + " object=" + str(e.content("object")))
 	if not e.content("sync"):
 		user = e.content("user") or ""
 		local_id = e.header("to")
@@ -5183,6 +5191,8 @@ def event_comment_create(e):
 			name = e.content("name") or "Someone"
 			excerpt = (e.content("content") or "")[:80]
 			notify_watchers(object_id, project_id, local_id, user, name + ": " + excerpt)
+		else:
+			mochi.log.debug("event_comment_create: skipped notify, object_id=" + str(object_id) + " local_id=" + str(local_id))
 
 # Comment updated
 def event_comment_update(e):

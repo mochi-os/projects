@@ -651,10 +651,10 @@ function AccessTab({ projectId }: AccessTabProps) {
   const groupsError = groupsErrorRaw ?? null;
   const canManageRules = !rulesError && !isLoadingRules && !!rulesData;
   const userSearchResults = coerceObjectArray<{ id: string; name: string }>(
-    userSearchData?.results,
+    userSearchData?.data?.results,
   );
   const groups = coerceObjectArray<{ id: string; name: string; description?: string }>(
-    groupsData?.groups,
+    groupsData?.data?.groups,
   );
 
   const handleAdd = async (

@@ -1091,12 +1091,12 @@ const projectsApi = {
   // Search users (for adding access rules)
   searchUsers: async (
     query: string,
-  ): Promise<{ results: { id: string; name: string; fingerprint: string }[] }> => {
+  ): Promise<{ data: { results: { id: string; name: string; fingerprint: string }[] } }> => {
     return projectsRequest.get(`${endpoints.projects.usersSearch}?search=${encodeURIComponent(query)}`);
   },
 
   // List groups (for adding access rules)
-  listGroups: async (): Promise<{ groups: { id: string; name: string }[] }> => {
+  listGroups: async (): Promise<{ data: { groups: { id: string; name: string }[] } }> => {
     return projectsRequest.get(endpoints.projects.groups);
   },
 };

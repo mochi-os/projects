@@ -5,6 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { CheckCircle2, XCircle, AlertCircle, Loader2 } from "lucide-react";
 import { cn } from "@mochi/web";
 import projectsApi from "@/api/projects";
+import { requestStatusTextStyles } from "./request-status-styles";
 
 interface MergeStatusProps {
   repoId: string;
@@ -52,14 +53,14 @@ export function MergeStatus({ repoId, source, target }: MergeStatusProps) {
     <div className="space-y-2">
       <div className="flex items-center gap-2 text-sm">
         {data.can_merge ? (
-          <CheckCircle2 className="size-4 text-green-600 shrink-0" />
+          <CheckCircle2 className={cn("size-4 shrink-0", requestStatusTextStyles.successIcon)} />
         ) : (
           <XCircle className="size-4 text-destructive shrink-0" />
         )}
         <span
           className={cn(
             "font-medium",
-            data.can_merge ? "text-green-600" : "text-destructive",
+            data.can_merge ? requestStatusTextStyles.added : "text-destructive",
           )}
         >
           {data.can_merge ? "Ready to merge" : "Cannot merge automatically"}

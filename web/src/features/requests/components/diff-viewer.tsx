@@ -6,6 +6,10 @@ import { diffWords } from "diff";
 import { ChevronDown, ChevronRight, FileCode2, Plus, Minus } from "lucide-react";
 import { cn } from "@mochi/web";
 import { parseDiff, type DiffFile, type DiffLine } from "./diff-parser";
+import {
+  diffFileStatusBadgeStyles,
+  requestStatusTextStyles,
+} from "./request-status-styles";
 
 interface DiffViewerProps {
   diff: string;
@@ -104,13 +108,6 @@ function FileHeader({
   collapsed: boolean;
   onToggle: () => void;
 }) {
-  const statusColors: Record<string, string> = {
-    added: "bg-green-500 text-white",
-    modified: "bg-amber-500 text-white",
-    deleted: "bg-red-500 text-white",
-    renamed: "bg-blue-500 text-white",
-  };
-
   return (
     <button
       type="button"
@@ -124,8 +121,8 @@ function FileHeader({
       )}
       <span
         className={cn(
-          "text-[10px] font-sans font-medium px-1.5 py-0.5 rounded shrink-0",
-          statusColors[file.status] || "bg-muted-foreground text-white",
+          "text-[10px] font-sans",
+          diffFileStatusBadgeStyles[file.status] || "border-border bg-muted text-foreground",
         )}
       >
         {file.status.charAt(0).toUpperCase()}
@@ -138,13 +135,13 @@ function FileHeader({
       )}
       <span className="flex items-center gap-2 shrink-0 font-sans text-xs">
         {file.additions > 0 && (
-          <span className="text-green-600 flex items-center gap-0.5">
+          <span className={cn("flex items-center gap-0.5", requestStatusTextStyles.added)}>
             <Plus className="size-3" />
             {file.additions}
           </span>
         )}
         {file.deletions > 0 && (
-          <span className="text-red-600 flex items-center gap-0.5">
+          <span className={cn("flex items-center gap-0.5", requestStatusTextStyles.deleted)}>
             <Minus className="size-3" />
             {file.deletions}
           </span>
@@ -419,11 +416,11 @@ export function DiffViewer({ diff, viewStyle }: DiffViewerProps) {
           <FileCode2 className="size-4" />
           {files.length} files changed
         </span>
-        <span className="flex items-center gap-1 text-green-600">
+        <span className={cn("flex items-center gap-1", requestStatusTextStyles.added)}>
           <Plus className="size-3" />
           {totalAdditions}
         </span>
-        <span className="flex items-center gap-1 text-red-600">
+        <span className={cn("flex items-center gap-1", requestStatusTextStyles.deleted)}>
           <Minus className="size-3" />
           {totalDeletions}
         </span>

@@ -4,8 +4,9 @@
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { GitMerge, Loader2, CheckCircle2 } from "lucide-react";
-import { Button, ConfirmDialog, getErrorMessage } from "@mochi/web";
+import { Button, ConfirmDialog, cn, getErrorMessage } from "@mochi/web";
 import projectsApi from "@/api/projects";
+import { requestStatusTextStyles } from "./request-status-styles";
 
 type MergeMethod = "merge" | "squash" | "rebase";
 
@@ -53,7 +54,7 @@ export function MergeButton({
 
   if (mergeMutation.isSuccess) {
     return (
-      <div className="flex items-center gap-2 text-sm text-green-600 font-medium">
+      <div className={cn("flex items-center gap-2 text-sm font-medium", requestStatusTextStyles.added)}>
         <CheckCircle2 className="size-4" />
         Merged successfully
       </div>

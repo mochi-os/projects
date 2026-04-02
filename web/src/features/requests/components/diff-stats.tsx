@@ -7,6 +7,10 @@ import { FileCode2, Plus, Minus, Loader2, FileDiff } from "lucide-react";
 import { cn } from "@mochi/web";
 import projectsApi from "@/api/projects";
 import { parseDiff } from "./diff-parser";
+import {
+  diffFileStatusDotStyles,
+  requestStatusTextStyles,
+} from "./request-status-styles";
 
 interface DiffStatsProps {
   repoId: string;
@@ -59,11 +63,11 @@ export function DiffStats({ repoId, base, head, diffUrl }: DiffStatsProps) {
           <FileCode2 className="size-4 text-muted-foreground" />
           {files.length} files changed
         </span>
-        <span className="flex items-center gap-1 text-green-600">
+        <span className={cn("flex items-center gap-1", requestStatusTextStyles.added)}>
           <Plus className="size-3" />
           {additions}
         </span>
-        <span className="flex items-center gap-1 text-red-600">
+        <span className={cn("flex items-center gap-1", requestStatusTextStyles.deleted)}>
           <Minus className="size-3" />
           {deletions}
         </span>
@@ -92,10 +96,10 @@ export function DiffStats({ repoId, base, head, diffUrl }: DiffStatsProps) {
             </div>
             <div className="flex items-center gap-2 shrink-0">
               {file.additions > 0 && (
-                <span className="text-green-600">+{file.additions}</span>
+                <span className={requestStatusTextStyles.added}>+{file.additions}</span>
               )}
               {file.deletions > 0 && (
-                <span className="text-red-600">-{file.deletions}</span>
+                <span className={requestStatusTextStyles.deleted}>-{file.deletions}</span>
               )}
             </div>
           </div>
@@ -107,10 +111,10 @@ export function DiffStats({ repoId, base, head, diffUrl }: DiffStatsProps) {
 
 function StatusIcon({ status }: { status: string }) {
   const colors: Record<string, string> = {
-    added: "bg-green-500",
-    modified: "bg-amber-500",
-    deleted: "bg-red-500",
-    renamed: "bg-blue-500",
+    added: diffFileStatusDotStyles.added,
+    modified: diffFileStatusDotStyles.modified,
+    deleted: diffFileStatusDotStyles.deleted,
+    renamed: diffFileStatusDotStyles.renamed,
   };
 
   return (

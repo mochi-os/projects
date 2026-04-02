@@ -13,6 +13,10 @@ import { MergeStatus } from "./merge-status";
 import { DiffStats } from "./diff-stats";
 import { ConflictList } from "./conflict-list";
 import { MergeButton } from "./merge-button";
+import {
+  requestStateBadgeStyles,
+  requestStatusTextStyles,
+} from "./request-status-styles";
 
 interface RequestPanelProps {
   projectId: string;
@@ -243,13 +247,13 @@ function RequestItem({
         {!expanded && <span className="flex-1 truncate text-muted-foreground">{summary}</span>}
         {expanded && <span className="flex-1" />}
         {isDraft && !isMerged && (
-          <span className="text-xs text-yellow-600 font-medium shrink-0 border border-yellow-600/30 rounded px-1.5 py-0.5">Draft</span>
+          <span className={requestStateBadgeStyles.draft}>Draft</span>
         )}
         {isMerged && (
-          <span className="text-xs text-green-600 font-medium shrink-0">Merged</span>
+          <span className={requestStateBadgeStyles.merged}>Merged</span>
         )}
         {!isMerged && !isDraft && request.repository && request.source && request.target && (
-          <span className="text-xs text-blue-500 font-medium shrink-0">Open</span>
+          <span className={requestStateBadgeStyles.open}>Open</span>
         )}
       </button>
 
@@ -338,7 +342,9 @@ function RequestItem({
                   />
 
                   {isDraft && (
-                    <p className="text-sm text-yellow-600">This merge request is a draft and cannot be merged.</p>
+                    <p className={cn("text-sm", requestStatusTextStyles.warning)}>
+                      This merge request is a draft and cannot be merged.
+                    </p>
                   )}
 
                   <div className="flex items-center gap-2">

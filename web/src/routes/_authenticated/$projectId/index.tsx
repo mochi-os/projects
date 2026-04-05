@@ -173,11 +173,11 @@ export function ProjectPageContent({ project, projectId, search, initialObjectId
   }, [project.fields]);
 
   // Sync view and selected object to URL for bookmarkability.
-  // Use History.prototype.replaceState (the original, unpatched method) because
-  // @tanstack/history monkey-patches window.history.replaceState to notify the
-  // router. When the URL includes an object ID, the router matches the
-  // /$projectId/$objectId route and causes a full unmount/remount, making the
-  // sheet animate twice.
+  // Suppress @tanstack/history's subscriber notification around the call,
+  // because otherwise the router matches the /$projectId/$objectId route
+  // and triggers a full unmount/remount (making the sheet animate twice).
+  // We still go through window.history.replaceState so the shell's URL-sync
+  // monkey-patch (shell-bridge.ts) runs and updates the shell URL bar.
   const isInitialMount = useRef(true);
   useEffect(() => {
     if (isInitialMount.current) {
@@ -189,8 +189,14 @@ export function ProjectPageContent({ project, projectId, search, initialObjectId
       ? `${appPath}/${projectId}/${selectedObjectId}`
       : `${appPath}/${projectId}`;
     const viewParam = activeViewId !== defaultViewId ? `?view=${activeViewId}` : '';
-    History.prototype.replaceState.call(history, null, '', `${path}${viewParam}`);
-  }, [selectedObjectId, activeViewId, defaultViewId, projectId]);
+    const routerHistory = router.history as unknown as { _ignoreSubscribers?: boolean };
+    routerHistory._ignoreSubscribers = true;
+    try {
+      window.history.replaceState(null, '', `${path}${viewParam}`);
+    } finally {
+      routerHistory._ignoreSubscribers = false;
+    }
+  }, [selectedObjectId, activeViewId, defaultViewId, projectId, router]);
 
   // Filter state
   const [filters, setFilters] = useState<FilterState>({

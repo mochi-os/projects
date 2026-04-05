@@ -172,7 +172,12 @@ export function ProjectPageContent({ project, projectId, search, initialObjectId
     return result;
   }, [project.fields]);
 
-  // Sync view and selected object to URL for bookmarkability
+  // Sync view and selected object to URL for bookmarkability.
+  // Use History.prototype.replaceState (the original, unpatched method) because
+  // @tanstack/history monkey-patches window.history.replaceState to notify the
+  // router. When the URL includes an object ID, the router matches the
+  // /$projectId/$objectId route and causes a full unmount/remount, making the
+  // sheet animate twice.
   const isInitialMount = useRef(true);
   useEffect(() => {
     if (isInitialMount.current) {
@@ -184,7 +189,7 @@ export function ProjectPageContent({ project, projectId, search, initialObjectId
       ? `${appPath}/${projectId}/${selectedObjectId}`
       : `${appPath}/${projectId}`;
     const viewParam = activeViewId !== defaultViewId ? `?view=${activeViewId}` : '';
-    window.history.replaceState(null, '', `${path}${viewParam}`);
+    History.prototype.replaceState.call(history, null, '', `${path}${viewParam}`);
   }, [selectedObjectId, activeViewId, defaultViewId, projectId]);
 
   // Filter state

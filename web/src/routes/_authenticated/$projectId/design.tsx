@@ -158,7 +158,7 @@ function DesignPage() {
         title={`${project.project.name} - Design`}
         icon={<Settings2 className="size-4 md:size-5" />}
         back={{ label: "Back to project", onFallback: goBackToProject }}
-        actions={
+        menuAction={
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <IconButton

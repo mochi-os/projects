@@ -140,6 +140,17 @@ class ProjectSettingsViewModel @Inject constructor(
         }
     }
 
+    fun unsubscribe(onSuccess: () -> Unit) {
+        viewModelScope.launch {
+            try {
+                repository.unsubscribe(projectId)
+                onSuccess()
+            } catch (e: Exception) {
+                _uiState.value = _uiState.value.copy(error = e.toMochiError())
+            }
+        }
+    }
+
     fun revokeAccess(id: Int) {
         viewModelScope.launch {
             try {

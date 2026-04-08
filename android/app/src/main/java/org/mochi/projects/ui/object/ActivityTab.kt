@@ -83,16 +83,31 @@ private fun ActivityItem(
         name
     } else ""
 
+    // Resolve option IDs to names for enumerated fields
+    fun resolveValue(value: String): String {
+        if (value.isBlank()) return value
+        for ((_, classOptions) in projectDetails.options) {
+            for ((_, fieldOptions) in classOptions) {
+                val opt = fieldOptions.find { it.id == value }
+                if (opt != null) return opt.name
+            }
+        }
+        return value
+    }
+
+    val oldDisplay = resolveValue(item.oldvalue)
+    val newDisplay = resolveValue(item.newvalue)
+
     val description = when (item.action) {
         "created" -> "created this object"
         "deleted" -> "deleted this object"
         else -> {
             if (fieldName.isNotBlank()) {
-                if (item.oldvalue.isNotBlank() && item.newvalue.isNotBlank()) {
-                    "changed $fieldName from \"${item.oldvalue}\" to \"${item.newvalue}\""
-                } else if (item.newvalue.isNotBlank()) {
-                    "set $fieldName to \"${item.newvalue}\""
-                } else if (item.oldvalue.isNotBlank()) {
+                if (oldDisplay.isNotBlank() && newDisplay.isNotBlank()) {
+                    "changed $fieldName: $oldDisplay \u2192 $newDisplay"
+                } else if (newDisplay.isNotBlank()) {
+                    "set $fieldName to $newDisplay"
+                } else if (oldDisplay.isNotBlank()) {
                     "cleared $fieldName"
                 } else {
                     "updated $fieldName"

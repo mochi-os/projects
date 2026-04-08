@@ -23,6 +23,8 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -38,16 +40,25 @@ fun MoveObjectSheet(
     onDismiss: () -> Unit
 ) {
     val sheetState = rememberModalBottomSheetState()
+    val uiState by viewModel.uiState.collectAsState()
     val activeView = viewModel.getActiveView() ?: run { onDismiss(); return }
     val columnFieldId = activeView.columns.takeIf { it.isNotBlank() } ?: run { onDismiss(); return }
     val columnOptions = viewModel.getAllOptionsForField(columnFieldId)
-    val currentValue = obj.stringValue(columnFieldId)
+    val currentColumnValue = obj.stringValue(columnFieldId)
+    val rowFieldId = activeView.rows.takeIf { it.isNotBlank() }
+    val rowOptions = rowFieldId?.let { viewModel.getAllOptionsForField(it) } ?: emptyList()
+    val currentRowValue = rowFieldId?.let { obj.stringValue(it) } ?: ""
+
+    // Objects in the same column for reordering
+    val columnObjects = uiState.objects.filter { it.stringValue(columnFieldId) == currentColumnValue && it.id != obj.id }
+    val prefix = uiState.projectDetails?.project?.prefix ?: ""
 
     ModalBottomSheet(
         onDismissRequest = onDismiss,
         sheetState = sheetState
     ) {
         Column(modifier = Modifier.padding(horizontal = 16.dp)) {
+            // Column selection
             Text(
                 text = "Move to column",
                 style = MaterialTheme.typography.titleMedium,
@@ -58,7 +69,7 @@ fun MoveObjectSheet(
 
             LazyColumn {
                 items(columnOptions, key = { it.id }) { option ->
-                    val isSelected = option.id == currentValue
+                    val isSelected = option.id == currentColumnValue
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -91,6 +102,96 @@ fun MoveObjectSheet(
                                 contentDescription = "Current",
                                 tint = MaterialTheme.colorScheme.primary,
                                 modifier = Modifier.size(20.dp)
+                            )
+                        }
+                    }
+                }
+
+                // Row (swimlane) selection
+                if (rowFieldId != null && rowOptions.isNotEmpty()) {
+                    item {
+                        Spacer(modifier = Modifier.height(8.dp))
+                        HorizontalDivider()
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Text(
+                            text = "Move to row",
+                            style = MaterialTheme.typography.titleMedium,
+                            modifier = Modifier.padding(bottom = 8.dp)
+                        )
+                    }
+                    items(rowOptions, key = { "row_${it.id}" }) { option ->
+                        val isSelected = option.id == currentRowValue
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clickable {
+                                    if (!isSelected) {
+                                        viewModel.moveObject(obj.id, rowFieldId, option.id, null, option.id)
+                                    }
+                                    onDismiss()
+                                }
+                                .padding(vertical = 12.dp, horizontal = 8.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                text = option.name,
+                                style = MaterialTheme.typography.bodyLarge,
+                                modifier = Modifier.weight(1f)
+                            )
+                            if (isSelected) {
+                                Icon(
+                                    Icons.Default.Check,
+                                    contentDescription = "Current",
+                                    tint = MaterialTheme.colorScheme.primary,
+                                    modifier = Modifier.size(20.dp)
+                                )
+                            }
+                        }
+                    }
+                }
+
+                // Position within column
+                if (columnObjects.isNotEmpty()) {
+                    item {
+                        Spacer(modifier = Modifier.height(8.dp))
+                        HorizontalDivider()
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Text(
+                            text = "Position",
+                            style = MaterialTheme.typography.titleMedium,
+                            modifier = Modifier.padding(bottom = 8.dp)
+                        )
+                    }
+                    item(key = "pos_top") {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clickable {
+                                    viewModel.moveObject(obj.id, columnFieldId, currentColumnValue, 0)
+                                    onDismiss()
+                                }
+                                .padding(vertical = 12.dp, horizontal = 8.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text("Top", style = MaterialTheme.typography.bodyLarge)
+                        }
+                    }
+                    items(columnObjects, key = { "after_${it.id}" }) { other ->
+                        val label = other.readable.ifBlank { "$prefix-${other.number}" }
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clickable {
+                                    viewModel.moveObject(obj.id, columnFieldId, currentColumnValue, other.rank + 1)
+                                    onDismiss()
+                                }
+                                .padding(vertical = 12.dp, horizontal = 8.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                text = "After $label",
+                                style = MaterialTheme.typography.bodyLarge,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
                         }
                     }

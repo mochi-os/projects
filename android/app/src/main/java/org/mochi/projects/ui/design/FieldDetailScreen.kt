@@ -87,6 +87,11 @@ fun FieldDetailScreen(
     var isFilterable by remember(field.id) { mutableStateOf(field.isFilterable) }
     var showOnCard by remember(field.id) { mutableStateOf(field.showOnCard) }
     var isMulti by remember(field.id) { mutableStateOf(field.isMulti) }
+    var editRows by remember(field.id) { mutableStateOf(if (field.rows > 0) field.rows.toString() else "") }
+    var editPosition by remember(field.id) { mutableStateOf(field.position) }
+    var editPattern by remember(field.id) { mutableStateOf(field.pattern) }
+    var editMinlength by remember(field.id) { mutableStateOf(if (field.minlength > 0) field.minlength.toString() else "") }
+    var editMaxlength by remember(field.id) { mutableStateOf(if (field.maxlength > 0) field.maxlength.toString() else "") }
     var showAddOptionDialog by remember { mutableStateOf(false) }
     var editingOption by remember { mutableStateOf<FieldOption?>(null) }
     var showDeleteConfirm by remember { mutableStateOf(false) }
@@ -173,6 +178,86 @@ fun FieldDetailScreen(
 
         Spacer(modifier = Modifier.height(12.dp))
 
+        // Display position
+        var posExpanded by remember { mutableStateOf(false) }
+        val positions = listOf("" to "Default", "header" to "Header", "body" to "Body", "sidebar" to "Sidebar")
+        Text("Display position", style = MaterialTheme.typography.labelMedium)
+        Spacer(modifier = Modifier.height(4.dp))
+        ExposedDropdownMenuBox(
+            expanded = posExpanded,
+            onExpandedChange = { posExpanded = it }
+        ) {
+            OutlinedTextField(
+                value = positions.find { it.first == editPosition }?.second ?: "Default",
+                onValueChange = {},
+                readOnly = true,
+                trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = posExpanded) },
+                modifier = Modifier
+                    .menuAnchor(MenuAnchorType.PrimaryNotEditable)
+                    .fillMaxWidth()
+            )
+            ExposedDropdownMenu(
+                expanded = posExpanded,
+                onDismissRequest = { posExpanded = false }
+            ) {
+                positions.forEach { (value, label) ->
+                    DropdownMenuItem(
+                        text = { Text(label) },
+                        onClick = {
+                            editPosition = value
+                            posExpanded = false
+                        }
+                    )
+                }
+            }
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+        HorizontalDivider()
+        Spacer(modifier = Modifier.height(16.dp))
+
+        // Validation
+        Text("Validation", style = MaterialTheme.typography.titleSmall)
+        Spacer(modifier = Modifier.height(8.dp))
+
+        if (editFieldtype == "text") {
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                OutlinedTextField(
+                    value = editMinlength,
+                    onValueChange = { editMinlength = it.filter { c -> c.isDigit() } },
+                    label = { Text("Min length") },
+                    singleLine = true,
+                    modifier = Modifier.weight(1f)
+                )
+                OutlinedTextField(
+                    value = editMaxlength,
+                    onValueChange = { editMaxlength = it.filter { c -> c.isDigit() } },
+                    label = { Text("Max length") },
+                    singleLine = true,
+                    modifier = Modifier.weight(1f)
+                )
+            }
+            Spacer(modifier = Modifier.height(8.dp))
+            OutlinedTextField(
+                value = editPattern,
+                onValueChange = { editPattern = it },
+                label = { Text("Pattern (regex)") },
+                singleLine = true,
+                modifier = Modifier.fillMaxWidth()
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+        }
+
+        OutlinedTextField(
+            value = editRows,
+            onValueChange = { editRows = it.filter { c -> c.isDigit() } },
+            label = { Text("Rows (textarea height)") },
+            singleLine = true,
+            modifier = Modifier.fillMaxWidth()
+        )
+
+        Spacer(modifier = Modifier.height(12.dp))
+
         // Save changes button
         val flagsString = buildList {
             if (isRequired) add("required")
@@ -181,11 +266,13 @@ fun FieldDetailScreen(
             if (isFilterable) add("filter")
         }.joinToString(",").ifEmpty { null }
 
+        val rowsInt = editRows.toIntOrNull()
         val hasChanges = editName != field.name
                 || editFieldtype != field.fieldtype
                 || flagsString != field.flags.ifEmpty { null }
                 || isMulti != field.isMulti
                 || showOnCard != field.showOnCard
+                || (rowsInt ?: 0) != field.rows
 
         if (hasChanges) {
             TextButton(
@@ -198,8 +285,8 @@ fun FieldDetailScreen(
                         flags = flagsString,
                         multi = isMulti.takeIf { it != field.isMulti },
                         card = showOnCard.takeIf { it != field.showOnCard },
-                        position = null,
-                        rows = null
+                        position = editPosition.takeIf { it != field.position },
+                        rows = rowsInt?.takeIf { it != field.rows }
                     )
                 },
                 modifier = Modifier.fillMaxWidth()

@@ -14,6 +14,7 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
+import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -158,6 +159,22 @@ fun ObjectDetailSheet(
                         }
                     }
 
+                    // Editable title
+                    if (obj.readable.isNotEmpty()) {
+                        BasicTextField(
+                            value = obj.readable,
+                            onValueChange = { viewModel.updateTitle(it) },
+                            textStyle = MaterialTheme.typography.titleMedium.copy(
+                                fontWeight = FontWeight.SemiBold,
+                                color = MaterialTheme.colorScheme.onSurface
+                            ),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 16.dp),
+                            singleLine = true
+                        )
+                    }
+
                     Spacer(modifier = Modifier.height(8.dp))
 
                     // Tabs
@@ -192,7 +209,8 @@ fun ObjectDetailSheet(
                             },
                             onDeleteComment = { id ->
                                 viewModel.deleteComment(id)
-                            }
+                            },
+                            onSearchUsers = { query -> viewModel.searchUsers(query) }
                         )
                         2 -> ActivityTab(
                             activity = uiState.activity,

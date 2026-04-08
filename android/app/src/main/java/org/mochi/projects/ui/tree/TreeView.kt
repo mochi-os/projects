@@ -84,7 +84,8 @@ fun TreeView(
                     expandedState[node.obj.id] = !(expandedState[node.obj.id] ?: (node.depth == 0))
                 },
                 onClick = { onObjectClick(node.obj.id) },
-                onDelete = { viewModel.deleteObject(node.obj.id) }
+                onDelete = { viewModel.deleteObject(node.obj.id) },
+                onReparent = { newParentId -> viewModel.reparentObject(node.obj.id, newParentId) }
             )
         }
     }

@@ -35,6 +35,28 @@ import javax.inject.Singleton
 class ProjectsRepository @Inject constructor(
     private val api: ProjectsApi
 ) {
+    // In-memory cache
+    private val projectInfoCache = mutableMapOf<String, Pair<ProjectDetails, Long>>()
+    private val objectsCache = mutableMapOf<String, Pair<List<ProjectObject>, Long>>()
+    private val cacheMaxAge = 60_000L // 1 minute
+
+    fun getCachedProjectInfo(projectId: String): ProjectDetails? {
+        val (details, ts) = projectInfoCache[projectId] ?: return null
+        if (System.currentTimeMillis() - ts > cacheMaxAge) return null
+        return details
+    }
+
+    fun getCachedObjects(projectId: String): List<ProjectObject>? {
+        val (objects, ts) = objectsCache[projectId] ?: return null
+        if (System.currentTimeMillis() - ts > cacheMaxAge) return null
+        return objects
+    }
+
+    fun invalidateCache(projectId: String) {
+        projectInfoCache.remove(projectId)
+        objectsCache.remove(projectId)
+    }
+
     // ---- Projects ----
 
     suspend fun listProjects(): List<Project> =
@@ -86,18 +108,19 @@ class ProjectsRepository @Inject constructor(
     suspend fun checkMerge(repo: String, source: String, target: String): MergeCheck {
         val r = api.checkMerge(repo, source, target).unwrap()
         return MergeCheck(
-            mergeable = r.mergeable,
+            canMerge = r.canMerge,
             conflicts = r.conflicts,
+            base = r.base,
             ahead = r.ahead,
             behind = r.behind
         )
     }
 
-    suspend fun getDiff(repo: String, source: String, target: String): String =
-        api.getDiff(repo, source, target).unwrap().diff
+    suspend fun getDiff(repo: String, base: String, head: String): String =
+        api.getDiff(repo, base, head).unwrap()
 
-    suspend fun merge(repo: String, source: String, target: String, message: String) {
-        api.merge(repo, source, target, message).unwrap()
+    suspend fun merge(repo: String, source: String, target: String, message: String, method: String? = null) {
+        api.merge(repo, source, target, message, method).unwrap()
     }
 
     suspend fun getDiffPreference(): String =
@@ -111,7 +134,7 @@ class ProjectsRepository @Inject constructor(
 
     suspend fun getProjectInfo(projectId: String): ProjectDetails {
         val r = api.getProjectInfo(projectId).unwrap()
-        return ProjectDetails(
+        val details = ProjectDetails(
             project = r.project,
             classes = r.classes,
             fields = r.fields,
@@ -119,6 +142,8 @@ class ProjectsRepository @Inject constructor(
             views = r.views,
             hierarchy = r.hierarchy
         )
+        projectInfoCache[projectId] = details to System.currentTimeMillis()
+        return details
     }
 
     suspend fun updateProject(projectId: String, name: String? = null, description: String? = null, prefix: String? = null) {
@@ -145,8 +170,11 @@ class ProjectsRepository @Inject constructor(
 
     // ---- Objects ----
 
-    suspend fun getObjects(projectId: String): List<ProjectObject> =
-        api.getObjects(projectId).unwrap().objects
+    suspend fun getObjects(projectId: String): List<ProjectObject> {
+        val objects = api.getObjects(projectId).unwrap().objects
+        objectsCache[projectId] = objects to System.currentTimeMillis()
+        return objects
+    }
 
     suspend fun createObject(projectId: String, classId: String, parent: String? = null, title: String): ProjectObject =
         api.createObject(projectId, classId, parent, title).unwrap().`object`
@@ -176,8 +204,10 @@ class ProjectsRepository @Inject constructor(
 
     // ---- Links ----
 
-    suspend fun getLinks(projectId: String, objectId: String): List<Link> =
-        api.getLinks(projectId, objectId).unwrap().links
+    suspend fun getLinks(projectId: String, objectId: String): List<Link> {
+        val response = api.getLinks(projectId, objectId).unwrap()
+        return response.incoming + response.outgoing
+    }
 
     suspend fun createLink(projectId: String, objectId: String, target: String, linktype: String): Link =
         api.createLink(projectId, objectId, target, linktype).unwrap().link
@@ -237,8 +267,12 @@ class ProjectsRepository @Inject constructor(
         target: String,
         title: String,
         description: String? = null,
-        draft: Boolean? = null
-    ): MergeRequest = api.createRequest(projectId, objectId, repository, source, target, title, description, draft).unwrap().request
+        draft: Boolean? = null,
+        type: String? = null
+    ): MergeRequest {
+        val draftField = draft?.let { if (it) "1" else "0" }
+        return api.createRequest(projectId, objectId, type, repository, source, target, title, description, draftField).unwrap().request
+    }
 
     suspend fun updateRequest(
         projectId: String,
@@ -249,7 +283,8 @@ class ProjectsRepository @Inject constructor(
         status: String? = null,
         draft: Boolean? = null
     ) {
-        api.updateRequest(projectId, objectId, requestId, title, description, status, draft).unwrap()
+        val draftField = draft?.let { if (it) "1" else "0" }
+        api.updateRequest(projectId, objectId, requestId, title, description, status, draftField).unwrap()
     }
 
     suspend fun deleteRequest(projectId: String, objectId: String, requestId: String) {
@@ -263,8 +298,12 @@ class ProjectsRepository @Inject constructor(
 
     // ---- Watchers ----
 
-    suspend fun getWatchers(projectId: String, objectId: String): List<Watcher> =
-        api.getWatchers(projectId, objectId).unwrap().watchers
+    data class WatcherResult(val watchers: List<Watcher>, val watching: Boolean)
+
+    suspend fun getWatchers(projectId: String, objectId: String): WatcherResult {
+        val response = api.getWatchers(projectId, objectId).unwrap()
+        return WatcherResult(watchers = response.watchers, watching = response.watching)
+    }
 
     suspend fun addWatcher(projectId: String, objectId: String) {
         api.addWatcher(projectId, objectId).unwrap()
@@ -277,10 +316,15 @@ class ProjectsRepository @Inject constructor(
     // ---- Design ----
 
     suspend fun exportDesign(projectId: String): JsonObject =
-        api.exportDesign(projectId).unwrap().design
+        api.exportDesign(projectId).unwrap()
 
-    suspend fun importDesign(projectId: String, design: String? = null, template: String? = null) {
-        api.importDesign(projectId, design, template).unwrap()
+    suspend fun importDesign(
+        projectId: String,
+        data: String? = null,
+        template: String? = null,
+        templateVersion: Int? = null
+    ) {
+        api.importDesign(projectId, data, template, templateVersion).unwrap()
     }
 
     // ---- Views ----
@@ -333,8 +377,8 @@ class ProjectsRepository @Inject constructor(
     suspend fun createClass(projectId: String, name: String): ProjectClass =
         api.createClass(projectId, name).unwrap().`class`
 
-    suspend fun updateClass(projectId: String, classId: String, name: String) {
-        api.updateClass(projectId, classId, name).unwrap()
+    suspend fun updateClass(projectId: String, classId: String, name: String? = null, title: String? = null, requests: String? = null) {
+        api.updateClass(projectId, classId, name, title, requests).unwrap()
     }
 
     suspend fun deleteClass(projectId: String, classId: String) {

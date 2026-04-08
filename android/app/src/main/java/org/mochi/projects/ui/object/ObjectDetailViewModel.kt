@@ -15,6 +15,7 @@ import org.mochi.android.model.Attachment
 import org.mochi.android.model.Comment
 import org.mochi.projects.model.Activity
 import org.mochi.projects.model.Link
+import org.mochi.projects.model.MergeCheck
 import org.mochi.projects.model.MergeRequest
 import org.mochi.projects.model.ProjectObject
 import org.mochi.projects.model.Watcher
@@ -242,6 +243,58 @@ class ObjectDetailViewModel @Inject constructor(
         }
     }
 
+    private val _mergeCheck = MutableStateFlow<MergeCheck?>(null)
+    val mergeCheck: StateFlow<MergeCheck?> = _mergeCheck.asStateFlow()
+
+    private val _isCheckingMerge = MutableStateFlow(false)
+    val isCheckingMerge: StateFlow<Boolean> = _isCheckingMerge.asStateFlow()
+
+    private val _mergeSuccess = MutableStateFlow(false)
+    val mergeSuccess: StateFlow<Boolean> = _mergeSuccess.asStateFlow()
+
+    fun checkMerge(repo: String, source: String, target: String) {
+        viewModelScope.launch {
+            _isCheckingMerge.value = true
+            _mergeCheck.value = null
+            try {
+                _mergeCheck.value = repository.checkMerge(repo, source, target)
+            } catch (e: Exception) {
+                _uiState.value = _uiState.value.copy(error = e.toMochiError())
+            } finally {
+                _isCheckingMerge.value = false
+            }
+        }
+    }
+
+    fun performMerge(repo: String, source: String, target: String, message: String, method: String, requestId: String) {
+        viewModelScope.launch {
+            try {
+                repository.merge(repo, source, target, message, method)
+                // Mark request as merged
+                repository.updateRequest(currentProjectId, currentObjectId, requestId, null, null, "merged", null)
+                _mergeSuccess.value = true
+                loadRequests()
+            } catch (e: Exception) {
+                _uiState.value = _uiState.value.copy(error = e.toMochiError())
+            }
+        }
+    }
+
+    fun clearMergeState() {
+        _mergeCheck.value = null
+        _mergeSuccess.value = false
+    }
+
+    suspend fun searchUsers(query: String): List<org.mochi.android.ui.components.MentionSuggestion> {
+        return try {
+            repository.searchUsers(query).map {
+                org.mochi.android.ui.components.MentionSuggestion(id = it.id.toString(), name = it.name)
+            }
+        } catch (_: Exception) {
+            emptyList()
+        }
+    }
+
     // ---- Attachments ----
 
     private fun loadAttachments() {
@@ -313,10 +366,10 @@ class ObjectDetailViewModel @Inject constructor(
     private fun loadWatchers() {
         viewModelScope.launch {
             try {
-                val watchers = repository.getWatchers(currentProjectId, currentObjectId)
+                val result = repository.getWatchers(currentProjectId, currentObjectId)
                 _uiState.value = _uiState.value.copy(
-                    watchers = watchers,
-                    isWatching = watchers.any { it.user > 0 }
+                    watchers = result.watchers,
+                    isWatching = result.watching
                 )
             } catch (_: Exception) { }
         }

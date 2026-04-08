@@ -1017,6 +1017,7 @@ const projectsApi = {
         name: string;
         blurb: string;
         fingerprint: string;
+        server: string;
       }>;
     };
   }> => {

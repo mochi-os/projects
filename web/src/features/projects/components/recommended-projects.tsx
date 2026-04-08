@@ -13,6 +13,7 @@ interface RecommendedProject {
   name: string;
   blurb: string;
   fingerprint: string;
+  server: string;
 }
 
 export function RecommendedProjects({
@@ -51,7 +52,7 @@ export function RecommendedProjects({
   const handleSubscribe = async (project: RecommendedProject) => {
     setPendingId(project.id);
     try {
-      await projectsApi.subscribe(project.id);
+      await projectsApi.subscribe(project.id, project.server || undefined);
       onSubscribe();
       toast.success(`Subscribed to ${project.name}`);
       setRecommendations((prev) => prev.filter((p) => p.id !== project.id));

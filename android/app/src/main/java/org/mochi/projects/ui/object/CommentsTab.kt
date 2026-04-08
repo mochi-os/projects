@@ -36,6 +36,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import org.mochi.android.model.Comment
+import org.mochi.android.ui.components.MentionSuggestion
+import org.mochi.android.ui.components.MentionTextField
 import org.mochi.android.util.formatTimestamp
 
 @Composable
@@ -43,7 +45,8 @@ fun CommentsTab(
     comments: List<Comment>,
     onCreateComment: (String, String?) -> Unit,
     onUpdateComment: (String, String) -> Unit,
-    onDeleteComment: (String) -> Unit
+    onDeleteComment: (String) -> Unit,
+    onSearchUsers: (suspend (String) -> List<MentionSuggestion>)? = null
 ) {
     var newComment by remember { mutableStateOf("") }
     var replyToId by remember { mutableStateOf<String?>(null) }
@@ -76,9 +79,10 @@ fun CommentsTab(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.fillMaxWidth()
             ) {
-                OutlinedTextField(
+                MentionTextField(
                     value = newComment,
                     onValueChange = { newComment = it },
+                    onSearch = onSearchUsers ?: { emptyList() },
                     placeholder = { Text("Add a comment") },
                     maxLines = 4,
                     modifier = Modifier.weight(1f)

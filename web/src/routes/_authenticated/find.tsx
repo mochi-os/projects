@@ -59,7 +59,7 @@ function FindProjectsPage() {
       entityClass="project"
       searchEndpoint={endpoints.projects.search}
       icon={FolderKanban}
-      iconClassName="bg-blue-500/10 text-blue-600"
+      iconClassName="bg-primary/10 text-primary"
       title="Find projects"
       placeholder="Search by name, ID, fingerprint, or URL..."
       emptyMessage="No projects found"

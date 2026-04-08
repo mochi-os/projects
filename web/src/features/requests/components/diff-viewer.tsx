@@ -160,14 +160,14 @@ function UnifiedView({ file }: { file: DiffFile }) {
           const groups = pairLines(hunk.lines);
           return (
             <tbody key={hi}>
-              <tr className="bg-blue-50 dark:bg-blue-950/30">
+              <tr className="bg-primary/5 dark:bg-primary/10">
                 <td className="w-[1px] px-2 py-0.5 text-right text-muted-foreground select-none border-r whitespace-nowrap">
                   ...
                 </td>
                 <td className="w-[1px] px-2 py-0.5 text-right text-muted-foreground select-none border-r whitespace-nowrap">
                   ...
                 </td>
-                <td className="px-3 py-0.5 text-blue-600 dark:text-blue-400">
+                <td className="px-3 py-0.5 text-primary">
                   {hunk.header}
                 </td>
               </tr>
@@ -264,17 +264,17 @@ function SplitView({ file }: { file: DiffFile }) {
           const groups = pairLines(hunk.lines);
           return (
             <tbody key={hi}>
-              <tr className="bg-blue-50 dark:bg-blue-950/30">
+              <tr className="bg-primary/5 dark:bg-primary/10">
                 <td className="w-[1px] px-2 py-0.5 text-right text-muted-foreground select-none border-r whitespace-nowrap">
                   ...
                 </td>
-                <td className="w-1/2 px-3 py-0.5 text-blue-600 dark:text-blue-400 border-r">
+                <td className="w-1/2 px-3 py-0.5 text-primary border-r">
                   {hunk.header}
                 </td>
                 <td className="w-[1px] px-2 py-0.5 text-right text-muted-foreground select-none border-r whitespace-nowrap">
                   ...
                 </td>
-                <td className="w-1/2 px-3 py-0.5 text-blue-600 dark:text-blue-400">
+                <td className="w-1/2 px-3 py-0.5 text-primary">
                   {hunk.header}
                 </td>
               </tr>

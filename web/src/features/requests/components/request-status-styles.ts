@@ -4,7 +4,7 @@ const statusBadgeBaseClass =
 export const requestStateBadgeStyles = {
   draft: `${statusBadgeBaseClass} border-warning/30 bg-warning/15 text-warning-foreground dark:border-warning/35 dark:bg-warning/20 dark:text-warning`,
   merged: `${statusBadgeBaseClass} border-emerald-300 bg-emerald-50 text-emerald-900 dark:border-emerald-900/60 dark:bg-emerald-950/40 dark:text-emerald-100`,
-  open: `${statusBadgeBaseClass} border-blue-300 bg-blue-50 text-blue-900 dark:border-blue-900/60 dark:bg-blue-950/40 dark:text-blue-100`,
+  open: `${statusBadgeBaseClass} border-primary/30 bg-primary/10 text-primary dark:border-primary/35 dark:bg-primary/15 dark:text-primary`,
 } as const;
 
 export const diffFileStatusBadgeStyles = {
@@ -17,7 +17,7 @@ export const diffFileStatusBadgeStyles = {
 export const requestStatusTextStyles = {
   added: "text-emerald-800 dark:text-emerald-300",
   deleted: "text-red-700 dark:text-red-400",
-  info: "text-blue-800 dark:text-blue-300",
+  info: "text-primary",
   successIcon: "text-emerald-700 dark:text-emerald-400",
   warning: "text-warning-foreground dark:text-warning",
 } as const;
@@ -26,5 +26,5 @@ export const diffFileStatusDotStyles = {
   added: "bg-emerald-700 dark:bg-emerald-400",
   modified: "bg-amber-700 dark:bg-amber-400",
   deleted: "bg-red-700 dark:bg-red-400",
-  renamed: "bg-blue-700 dark:bg-blue-400",
+  renamed: "bg-primary",
 } as const;

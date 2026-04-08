@@ -19,6 +19,9 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.KeyboardArrowUp
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Checkbox
@@ -34,6 +37,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MenuAnchorType
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -70,6 +74,9 @@ fun ClassDetailScreen(
     onFieldClick: (String) -> Unit
 ) {
     var editName by remember { mutableStateOf(cls.name) }
+    var titleFieldId by remember { mutableStateOf(cls.title) }
+    var titleExpanded by remember { mutableStateOf(false) }
+    var requestsEnabled by remember { mutableStateOf(cls.requests.isNotBlank()) }
     var showAddFieldDialog by remember { mutableStateOf(false) }
     var showDeleteConfirm by remember { mutableStateOf(false) }
 
@@ -103,10 +110,85 @@ fun ClassDetailScreen(
         )
         if (editName != cls.name && editName.isNotBlank()) {
             TextButton(onClick = {
-                viewModel.updateClass(cls.id, editName)
+                viewModel.updateClass(cls.id, name = editName)
             }) {
                 Text("Save name")
             }
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        // Title field selector
+        Text("Title field", style = MaterialTheme.typography.titleSmall)
+        Spacer(modifier = Modifier.height(4.dp))
+        Text(
+            "Which field to use as the display title for objects of this class.",
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+        ExposedDropdownMenuBox(
+            expanded = titleExpanded,
+            onExpandedChange = { titleExpanded = it }
+        ) {
+            val titleFieldName = fields.find { it.id == titleFieldId }?.name ?: "Default (readable)"
+            OutlinedTextField(
+                value = titleFieldName,
+                onValueChange = {},
+                readOnly = true,
+                trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = titleExpanded) },
+                modifier = Modifier
+                    .menuAnchor(MenuAnchorType.PrimaryNotEditable)
+                    .fillMaxWidth()
+            )
+            ExposedDropdownMenu(
+                expanded = titleExpanded,
+                onDismissRequest = { titleExpanded = false }
+            ) {
+                DropdownMenuItem(
+                    text = { Text("Default (readable)") },
+                    onClick = {
+                        titleFieldId = ""
+                        titleExpanded = false
+                        viewModel.updateClass(cls.id, title = "")
+                    }
+                )
+                fields.forEach { field ->
+                    DropdownMenuItem(
+                        text = { Text(field.name) },
+                        onClick = {
+                            titleFieldId = field.id
+                            titleExpanded = false
+                            viewModel.updateClass(cls.id, title = field.id)
+                        }
+                    )
+                }
+            }
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        // Merge requests toggle
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Column(modifier = Modifier.weight(1f)) {
+                Text("Merge requests", style = MaterialTheme.typography.titleSmall)
+                Text(
+                    "Allow merge requests on objects of this class.",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
+            Switch(
+                checked = requestsEnabled,
+                onCheckedChange = { enabled ->
+                    requestsEnabled = enabled
+                    viewModel.updateClass(cls.id, requests = if (enabled) "merge" else "")
+                }
+            )
         }
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -153,14 +235,47 @@ fun ClassDetailScreen(
             }
         }
 
-        fields.sortedBy { it.rank }.forEach { field ->
+        val sortedFields = fields.sortedBy { it.rank }
+        sortedFields.forEachIndexed { index, field ->
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
                     .clickable { onFieldClick(field.id) }
-                    .padding(vertical = 12.dp),
+                    .padding(vertical = 8.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
+                // Reorder buttons
+                if (sortedFields.size > 1) {
+                    Column {
+                        if (index > 0) {
+                            IconButton(
+                                onClick = {
+                                    val newOrder = sortedFields.toMutableList()
+                                    newOrder.removeAt(index)
+                                    newOrder.add(index - 1, field)
+                                    viewModel.reorderFields(cls.id, newOrder.joinToString(",") { it.id })
+                                },
+                                modifier = Modifier.size(24.dp)
+                            ) {
+                                Icon(Icons.Default.KeyboardArrowUp, contentDescription = "Move up", modifier = Modifier.size(16.dp))
+                            }
+                        }
+                        if (index < sortedFields.lastIndex) {
+                            IconButton(
+                                onClick = {
+                                    val newOrder = sortedFields.toMutableList()
+                                    newOrder.removeAt(index)
+                                    newOrder.add(index + 1, field)
+                                    viewModel.reorderFields(cls.id, newOrder.joinToString(",") { it.id })
+                                },
+                                modifier = Modifier.size(24.dp)
+                            ) {
+                                Icon(Icons.Default.KeyboardArrowDown, contentDescription = "Move down", modifier = Modifier.size(16.dp))
+                            }
+                        }
+                    }
+                    Spacer(modifier = Modifier.width(4.dp))
+                }
                 Column(modifier = Modifier.weight(1f)) {
                     Text(
                         text = field.name,

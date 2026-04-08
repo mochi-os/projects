@@ -15,6 +15,7 @@ import org.mochi.projects.model.ProjectClass
 import org.mochi.projects.model.ProjectDetails
 import org.mochi.projects.model.ProjectField
 import org.mochi.projects.model.ProjectView
+import org.mochi.projects.model.Template
 import org.mochi.projects.repository.ProjectsRepository
 import javax.inject.Inject
 
@@ -24,7 +25,11 @@ data class DesignUiState(
     val error: MochiError? = null,
     val selectedClassId: String? = null,
     val selectedFieldId: String? = null,
-    val isSaving: Boolean = false
+    val isSaving: Boolean = false,
+    val exportedJson: String? = null,
+    val templates: List<Template> = emptyList(),
+    val isLoadingTemplates: Boolean = false,
+    val importSuccess: Boolean = false
 )
 
 @HiltViewModel
@@ -81,10 +86,10 @@ class DesignViewModel @Inject constructor(
         }
     }
 
-    fun updateClass(classId: String, name: String) {
+    fun updateClass(classId: String, name: String? = null, title: String? = null, requests: String? = null) {
         viewModelScope.launch {
             try {
-                repository.updateClass(projectId, classId, name)
+                repository.updateClass(projectId, classId, name, title, requests)
                 loadProject()
             } catch (e: Exception) {
                 _uiState.value = _uiState.value.copy(error = e.toMochiError())
@@ -289,5 +294,72 @@ class DesignViewModel @Inject constructor(
                 _uiState.value = _uiState.value.copy(error = e.toMochiError())
             }
         }
+    }
+
+    // ---- Design Export / Import ----
+
+    fun exportDesign() {
+        viewModelScope.launch {
+            try {
+                val json = repository.exportDesign(projectId)
+                _uiState.value = _uiState.value.copy(exportedJson = json.toString())
+            } catch (e: Exception) {
+                _uiState.value = _uiState.value.copy(error = e.toMochiError())
+            }
+        }
+    }
+
+    fun clearExportedJson() {
+        _uiState.value = _uiState.value.copy(exportedJson = null)
+    }
+
+    fun loadTemplates() {
+        viewModelScope.launch {
+            _uiState.value = _uiState.value.copy(isLoadingTemplates = true)
+            try {
+                val templates = repository.getTemplates()
+                _uiState.value = _uiState.value.copy(
+                    templates = templates,
+                    isLoadingTemplates = false
+                )
+            } catch (e: Exception) {
+                _uiState.value = _uiState.value.copy(
+                    isLoadingTemplates = false,
+                    error = e.toMochiError()
+                )
+            }
+        }
+    }
+
+    fun importFromTemplate(templateId: String, templateVersion: Int) {
+        viewModelScope.launch {
+            try {
+                repository.importDesign(projectId, template = templateId, templateVersion = templateVersion)
+                _uiState.value = _uiState.value.copy(importSuccess = true)
+                loadProject()
+            } catch (e: Exception) {
+                _uiState.value = _uiState.value.copy(error = e.toMochiError())
+            }
+        }
+    }
+
+    fun importFromJson(jsonText: String) {
+        viewModelScope.launch {
+            try {
+                repository.importDesign(projectId, data = jsonText)
+                _uiState.value = _uiState.value.copy(importSuccess = true)
+                loadProject()
+            } catch (e: Exception) {
+                _uiState.value = _uiState.value.copy(error = e.toMochiError())
+            }
+        }
+    }
+
+    fun clearImportSuccess() {
+        _uiState.value = _uiState.value.copy(importSuccess = false)
+    }
+
+    fun clearError() {
+        _uiState.value = _uiState.value.copy(error = null)
     }
 }

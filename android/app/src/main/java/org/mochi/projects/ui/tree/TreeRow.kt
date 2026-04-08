@@ -15,9 +15,16 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.DriveFileMove
 import androidx.compose.material.icons.filled.ExpandMore
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -42,9 +49,11 @@ fun TreeRow(
     viewModel: ProjectViewModel,
     onToggleExpand: () -> Unit,
     onClick: () -> Unit,
-    onDelete: () -> Unit
+    onDelete: () -> Unit,
+    onReparent: ((newParentId: String) -> Unit)? = null
 ) {
     var showContextMenu by remember { mutableStateOf(false) }
+    var showReparentDialog by remember { mutableStateOf(false) }
     val indent = (node.depth * 24).dp
     val obj = node.obj
     val projectDetails = viewModel.uiState.value.projectDetails
@@ -137,6 +146,18 @@ fun TreeRow(
                 expanded = showContextMenu,
                 onDismissRequest = { showContextMenu = false }
             ) {
+                if (onReparent != null) {
+                    DropdownMenuItem(
+                        text = { Text("Move") },
+                        onClick = {
+                            showContextMenu = false
+                            showReparentDialog = true
+                        },
+                        leadingIcon = {
+                            Icon(Icons.Default.DriveFileMove, contentDescription = null)
+                        }
+                    )
+                }
                 DropdownMenuItem(
                     text = { Text("Delete") },
                     onClick = {
@@ -149,5 +170,55 @@ fun TreeRow(
                 )
             }
         }
+    }
+
+    if (showReparentDialog && onReparent != null) {
+        val allObjects = viewModel.uiState.value.objects
+        val possibleParents = allObjects.filter { it.id != obj.id }
+        AlertDialog(
+            onDismissRequest = { showReparentDialog = false },
+            title = { Text("Move to parent") },
+            text = {
+                LazyColumn {
+                    item {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clickable {
+                                    onReparent("")
+                                    showReparentDialog = false
+                                }
+                                .padding(vertical = 10.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text("(Root level)", style = MaterialTheme.typography.bodyMedium)
+                        }
+                        HorizontalDivider()
+                    }
+                    items(possibleParents) { parent ->
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clickable {
+                                    onReparent(parent.id)
+                                    showReparentDialog = false
+                                }
+                                .padding(vertical = 10.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                text = parent.readable.ifBlank { "#${parent.number}" },
+                                style = MaterialTheme.typography.bodyMedium
+                            )
+                        }
+                        HorizontalDivider()
+                    }
+                }
+            },
+            confirmButton = {},
+            dismissButton = {
+                TextButton(onClick = { showReparentDialog = false }) { Text("Cancel") }
+            }
+        )
     }
 }

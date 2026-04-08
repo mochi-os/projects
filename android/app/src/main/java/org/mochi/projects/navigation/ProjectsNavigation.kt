@@ -6,6 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import androidx.navigation.navDeepLink
 import org.mochi.projects.ui.design.DesignScreen
 import org.mochi.projects.ui.find.FindProjectsScreen
 import org.mochi.projects.ui.`object`.DiffViewerScreen
@@ -31,11 +32,20 @@ object Routes {
 }
 
 @Composable
-fun ProjectsNavigation(onLogout: () -> Unit) {
+fun ProjectsNavigation(startEntityId: String? = null, onLogout: () -> Unit) {
     val navController = rememberNavController()
 
     NavHost(navController = navController, startDestination = Routes.PROJECT_LIST) {
         composable(Routes.PROJECT_LIST) {
+            // Navigate directly to project if launched via shortcut
+            if (startEntityId != null) {
+                androidx.compose.runtime.LaunchedEffect(Unit) {
+                    navController.navigate(Routes.project(startEntityId)) {
+                        launchSingleTop = true
+                    }
+                }
+                return@composable
+            }
             ProjectListScreen(
                 onProjectClick = { projectId ->
                     navController.navigate(Routes.project(projectId))
@@ -70,6 +80,9 @@ fun ProjectsNavigation(onLogout: () -> Unit) {
             arguments = listOf(
                 navArgument("projectId") { type = NavType.StringType },
                 navArgument("objectId") { type = NavType.StringType }
+            ),
+            deepLinks = listOf(
+                navDeepLink { uriPattern = "https://{host}/projects/{projectId}/{objectId}" }
             )
         ) {
             ProjectScreen(

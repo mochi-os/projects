@@ -31,9 +31,12 @@ import org.mochi.projects.ui.`object`.ConfirmDeleteDialog
 fun GeneralTab(
     uiState: ProjectSettingsUiState,
     viewModel: ProjectSettingsViewModel,
-    onProjectDeleted: () -> Unit
+    onProjectDeleted: () -> Unit,
+    onUnsubscribed: () -> Unit
 ) {
     var showDeleteConfirm by remember { mutableStateOf(false) }
+    var showUnsubscribeConfirm by remember { mutableStateOf(false) }
+    val isOwner = uiState.project?.owner == 1
 
     Column(
         modifier = Modifier
@@ -104,18 +107,33 @@ fun GeneralTab(
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        OutlinedButton(
-            onClick = { showDeleteConfirm = true },
-            enabled = !uiState.isDeleting,
-            colors = ButtonDefaults.outlinedButtonColors(
-                contentColor = MaterialTheme.colorScheme.error
-            ),
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            if (uiState.isDeleting) {
-                CircularProgressIndicator(modifier = Modifier.size(20.dp), strokeWidth = 2.dp)
-            } else {
-                Text("Delete project")
+        if (!isOwner) {
+            OutlinedButton(
+                onClick = { showUnsubscribeConfirm = true },
+                colors = ButtonDefaults.outlinedButtonColors(
+                    contentColor = MaterialTheme.colorScheme.error
+                ),
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text("Unsubscribe")
+            }
+            Spacer(modifier = Modifier.height(8.dp))
+        }
+
+        if (isOwner) {
+            OutlinedButton(
+                onClick = { showDeleteConfirm = true },
+                enabled = !uiState.isDeleting,
+                colors = ButtonDefaults.outlinedButtonColors(
+                    contentColor = MaterialTheme.colorScheme.error
+                ),
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                if (uiState.isDeleting) {
+                    CircularProgressIndicator(modifier = Modifier.size(20.dp), strokeWidth = 2.dp)
+                } else {
+                    Text("Delete project")
+                }
             }
         }
     }
@@ -129,6 +147,18 @@ fun GeneralTab(
                 viewModel.deleteProject { onProjectDeleted() }
             },
             onDismiss = { showDeleteConfirm = false }
+        )
+    }
+
+    if (showUnsubscribeConfirm) {
+        ConfirmDeleteDialog(
+            title = "Unsubscribe",
+            message = "Are you sure you want to unsubscribe from this project?",
+            onConfirm = {
+                showUnsubscribeConfirm = false
+                viewModel.unsubscribe { onUnsubscribed() }
+            },
+            onDismiss = { showUnsubscribeConfirm = false }
         )
     }
 }

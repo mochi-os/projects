@@ -64,7 +64,8 @@ fun ProjectSettingsScreen(
                 0 -> GeneralTab(
                     uiState = uiState,
                     viewModel = viewModel,
-                    onProjectDeleted = onProjectDeleted
+                    onProjectDeleted = onProjectDeleted,
+                    onUnsubscribed = onProjectDeleted
                 )
                 1 -> AccessTab(
                     uiState = uiState,

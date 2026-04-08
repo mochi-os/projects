@@ -1,6 +1,7 @@
 package org.mochi.projects.api
 
 import com.google.gson.JsonObject
+import com.google.gson.annotations.SerializedName
 import org.mochi.android.api.ApiResponse
 import org.mochi.android.model.AccessRule
 import org.mochi.android.model.Attachment
@@ -54,9 +55,9 @@ data class CommentResponse(val comment: Comment = Comment(id = ""))
 data class AttachmentListResponse(val attachments: List<Attachment> = emptyList())
 data class AttachmentResponse(val attachment: Attachment = Attachment(id = ""))
 data class ActivityListResponse(val activities: List<Activity> = emptyList())
-data class LinkListResponse(val links: List<Link> = emptyList())
+data class LinkListResponse(val incoming: List<Link> = emptyList(), val outgoing: List<Link> = emptyList())
 data class LinkResponse(val link: Link = Link())
-data class WatcherListResponse(val watchers: List<Watcher> = emptyList())
+data class WatcherListResponse(val watchers: List<Watcher> = emptyList(), val watching: Boolean = false)
 data class MergeRequestListResponse(val requests: List<MergeRequest> = emptyList())
 data class MergeRequestResponse(val request: MergeRequest = MergeRequest())
 data class PeopleResponse(val people: List<Person> = emptyList())
@@ -71,13 +72,17 @@ data class ViewListResponse(val views: List<ProjectView> = emptyList())
 data class ViewResponse(val view: ProjectView = ProjectView())
 data class RepositoryListResponse(val repositories: List<Repository> = emptyList())
 data class BranchListResponse(val branches: List<Branch> = emptyList())
-data class MergeCheckResponse(val mergeable: Boolean = false, val conflicts: List<String> = emptyList(), val ahead: Int = 0, val behind: Int = 0)
-data class DiffResponse(val diff: String = "")
+data class MergeCheckResponse(
+    @SerializedName("can_merge") val canMerge: Boolean = false,
+    val conflicts: List<String> = emptyList(),
+    val base: String = "",
+    val ahead: Int = 0,
+    val behind: Int = 0
+)
 data class SuccessResponse(val success: Boolean = false)
 data class NotificationCheckResponse(val exists: Boolean = false)
 data class UserSearchResponse(val users: List<Person> = emptyList())
 data class GroupListResponse(val groups: List<Group> = emptyList())
-data class DesignExportResponse(val design: JsonObject = JsonObject())
 data class HierarchyResponse(val parents: List<String> = emptyList())
 data class PreferenceResponse(val preference: String = "")
 
@@ -149,12 +154,13 @@ interface ProjectsApi {
         @Field("target") target: String
     ): Response<ApiResponse<MergeCheckResponse>>
 
-    @GET("-/repositories/{repo}/diff")
+    @FormUrlEncoded
+    @POST("-/repositories/{repo}/diff")
     suspend fun getDiff(
         @Path("repo") repo: String,
-        @Query("source") source: String,
-        @Query("target") target: String
-    ): Response<ApiResponse<DiffResponse>>
+        @Field("base") base: String,
+        @Field("head") head: String
+    ): Response<ApiResponse<String>>
 
     @FormUrlEncoded
     @POST("-/repositories/{repo}/merge")
@@ -162,7 +168,8 @@ interface ProjectsApi {
         @Path("repo") repo: String,
         @Field("source") source: String,
         @Field("target") target: String,
-        @Field("message") message: String
+        @Field("message") message: String,
+        @Field("method") method: String? = null
     ): Response<ApiResponse<SuccessResponse>>
 
     @GET("-/diff/preference")
@@ -368,12 +375,13 @@ interface ProjectsApi {
     suspend fun createRequest(
         @Path("projectId") projectId: String,
         @Path("objectId") objectId: String,
+        @Field("type") type: String?,
         @Field("repository") repository: String,
         @Field("source") source: String,
         @Field("target") target: String,
         @Field("title") title: String,
         @Field("description") description: String?,
-        @Field("draft") draft: Boolean?
+        @Field("draft") draft: String?
     ): Response<ApiResponse<MergeRequestResponse>>
 
     @FormUrlEncoded
@@ -385,7 +393,7 @@ interface ProjectsApi {
         @Field("title") title: String?,
         @Field("description") description: String?,
         @Field("status") status: String?,
-        @Field("draft") draft: Boolean?
+        @Field("draft") draft: String?
     ): Response<ApiResponse<SuccessResponse>>
 
     @POST("{projectId}/-/objects/{objectId}/requests/{requestId}/delete")
@@ -426,14 +434,15 @@ interface ProjectsApi {
     // ---- Design: Export / Import ----
 
     @GET("{projectId}/-/design/export")
-    suspend fun exportDesign(@Path("projectId") projectId: String): Response<ApiResponse<DesignExportResponse>>
+    suspend fun exportDesign(@Path("projectId") projectId: String): Response<ApiResponse<JsonObject>>
 
     @FormUrlEncoded
     @POST("{projectId}/-/design/import")
     suspend fun importDesign(
         @Path("projectId") projectId: String,
-        @Field("design") design: String?,
-        @Field("template") template: String?
+        @Field("data") data: String?,
+        @Field("template") template: String?,
+        @Field("template_version") templateVersion: Int?
     ): Response<ApiResponse<SuccessResponse>>
 
     // ---- Views ----
@@ -502,7 +511,9 @@ interface ProjectsApi {
     suspend fun updateClass(
         @Path("projectId") projectId: String,
         @Path("classId") classId: String,
-        @Field("name") name: String
+        @Field("name") name: String?,
+        @Field("title") title: String? = null,
+        @Field("requests") requests: String? = null
     ): Response<ApiResponse<SuccessResponse>>
 
     @POST("{projectId}/-/classes/{classId}/delete")

@@ -63,7 +63,26 @@ class ProjectViewModel @Inject constructor(
 
     fun loadProject() {
         viewModelScope.launch {
-            _uiState.value = _uiState.value.copy(isLoading = true, error = null)
+            _uiState.value = _uiState.value.copy(error = null)
+
+            // Show cached data immediately if available
+            val cachedDetails = repository.getCachedProjectInfo(projectId)
+            val cachedObjects = repository.getCachedObjects(projectId)
+            if (cachedDetails != null && cachedObjects != null) {
+                val activeViewId = _uiState.value.activeViewId
+                    ?: cachedDetails.views.firstOrNull()?.id
+                _uiState.value = _uiState.value.copy(
+                    projectDetails = cachedDetails,
+                    objects = cachedObjects,
+                    activeViewId = activeViewId,
+                    isLoading = false
+                )
+                // Refresh in background
+                refreshSilently()
+                return@launch
+            }
+
+            _uiState.value = _uiState.value.copy(isLoading = true)
             try {
                 val details = repository.getProjectInfo(projectId)
                 val objects = repository.getObjects(projectId)
@@ -81,6 +100,19 @@ class ProjectViewModel @Inject constructor(
                     error = e.toMochiError()
                 )
             }
+        }
+    }
+
+    private suspend fun refreshSilently() {
+        try {
+            val details = repository.getProjectInfo(projectId)
+            val objects = repository.getObjects(projectId)
+            _uiState.value = _uiState.value.copy(
+                projectDetails = details,
+                objects = objects
+            )
+        } catch (_: Exception) {
+            // Silent — cached data is still showing
         }
     }
 
@@ -237,8 +269,64 @@ class ProjectViewModel @Inject constructor(
         return emptyList()
     }
 
+    fun reparentObject(objectId: String, newParentId: String) {
+        viewModelScope.launch {
+            try {
+                repository.updateObject(projectId, objectId, null, newParentId)
+                refreshObjects()
+            } catch (e: Exception) {
+                _uiState.value = _uiState.value.copy(error = e.toMochiError())
+            }
+        }
+    }
+
     fun getClassById(classId: String): ProjectClass? {
         return _uiState.value.projectDetails?.classes?.find { it.id == classId }
+    }
+
+    /** Find the classId that owns a given fieldId. */
+    private fun findClassForField(fieldId: String): String? {
+        val details = _uiState.value.projectDetails ?: return null
+        for ((classId, fields) in details.fields) {
+            if (fields.any { it.id == fieldId }) return classId
+        }
+        return null
+    }
+
+    fun addColumnOption(fieldId: String, name: String, colour: String? = null) {
+        val classId = findClassForField(fieldId) ?: return
+        viewModelScope.launch {
+            try {
+                repository.createOption(projectId, classId, fieldId, name, colour)
+                loadProject()
+            } catch (e: Exception) {
+                _uiState.value = _uiState.value.copy(error = e.toMochiError())
+            }
+        }
+    }
+
+    fun renameColumnOption(fieldId: String, optionId: String, name: String) {
+        val classId = findClassForField(fieldId) ?: return
+        viewModelScope.launch {
+            try {
+                repository.updateOption(projectId, classId, fieldId, optionId, name, null, null)
+                loadProject()
+            } catch (e: Exception) {
+                _uiState.value = _uiState.value.copy(error = e.toMochiError())
+            }
+        }
+    }
+
+    fun deleteColumnOption(fieldId: String, optionId: String) {
+        val classId = findClassForField(fieldId) ?: return
+        viewModelScope.launch {
+            try {
+                repository.deleteOption(projectId, classId, fieldId, optionId)
+                loadProject()
+            } catch (e: Exception) {
+                _uiState.value = _uiState.value.copy(error = e.toMochiError())
+            }
+        }
     }
 
     fun getFilteredObjects(): List<ProjectObject> {

@@ -4273,6 +4273,12 @@ def action_recommendations(a):
 	if type(items) not in ["list", "tuple"]:
 		return {"data": {"projects": []}}
 
+	# Get the server location from the recommendations entity so subscribers can reach the projects
+	rec_dir = mochi.directory.get("1JYmMpQU7fxvTrwHpNpiwKCgUg3odWqX7s9t1cLswSMAro5M2P")
+	rec_server = ""
+	if rec_dir:
+		rec_server = rec_dir.get("location", "")
+
 	for item in items:
 		entity_id = item.get("entity", "")
 		if entity_id and entity_id not in existing_ids:
@@ -4281,6 +4287,7 @@ def action_recommendations(a):
 				"name": item.get("name", ""),
 				"blurb": item.get("blurb", ""),
 				"fingerprint": mochi.entity.fingerprint(entity_id),
+				"server": rec_server,
 			})
 
 	return {"data": {"projects": recommendations}}
@@ -4941,9 +4948,15 @@ def event_object_create(e):
 		mochi.websocket.write(fp, {"type": "object/create", "project": project_id, "id": object_id})
 	# Auto-watch creator locally (safety net for when forward_to_owner response is lost)
 	local_id = e.header("to")
+	mochi.log.debug("event_object_create: object=" + str(object_id) + " user=" + str(user) + " local_id=" + str(local_id) + " match=" + str(user == local_id))
 	if user and user == local_id:
+		mochi.log.debug("event_object_create: inserting watcher object=" + str(object_id) + " user=" + str(local_id))
 		mochi.db.execute("insert or ignore into watchers (object, user, created) values (?, ?, ?)",
 			object_id, local_id, e.content("created") or mochi.time.now())
+		exists = mochi.db.exists("select 1 from watchers where object=? and user=?", object_id, local_id)
+		mochi.log.debug("event_object_create: watcher exists after insert=" + str(exists))
+	else:
+		mochi.log.debug("event_object_create: skipped auto-watch, user=" + repr(user) + " local_id=" + repr(local_id))
 	# Notify local user about new object
 	if local_id and local_id != user:
 		project = get_project(project_id)

@@ -218,7 +218,10 @@ fun ProjectScreen(
                                     objects = allObjects,
                                     view = activeView,
                                     viewModel = viewModel,
-                                    onObjectClick = { viewModel.selectObject(it) }
+                                    onObjectClick = { viewModel.selectObject(it) },
+                                    onCreateObject = { classId, title, initialValues ->
+                                        viewModel.createObject(classId, title, initialValues)
+                                    }
                                 )
                             }
                             else -> {

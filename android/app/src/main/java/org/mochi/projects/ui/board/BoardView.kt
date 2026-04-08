@@ -1,6 +1,7 @@
 package org.mochi.projects.ui.board
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -18,9 +19,25 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.ChevronRight
+import androidx.compose.material.icons.filled.ExpandMore
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -38,7 +55,8 @@ fun BoardView(
     objects: List<ProjectObject>,
     view: ProjectView?,
     viewModel: ProjectViewModel,
-    onObjectClick: (String) -> Unit
+    onObjectClick: (String) -> Unit,
+    onCreateObject: ((classId: String, title: String, initialValues: Map<String, String>) -> Unit)? = null
 ) {
     if (view == null || view.columns.isBlank()) {
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
@@ -117,7 +135,18 @@ fun BoardView(
                 onObjectClick = onObjectClick,
                 onMoveObject = { objectId, rank ->
                     viewModel.moveObject(objectId, columnFieldId, columnOption.id, rank)
-                }
+                },
+                onRename = { newName -> viewModel.renameColumnOption(columnFieldId, columnOption.id, newName) },
+                onDelete = { viewModel.deleteColumnOption(columnFieldId, columnOption.id) },
+                onCreateInColumn = if (onCreateObject != null) {
+                    {
+                        val details = viewModel.uiState.value.projectDetails
+                        val classId = view.classes.firstOrNull() ?: details?.classes?.firstOrNull()?.id ?: ""
+                        if (classId.isNotBlank()) {
+                            onCreateObject(classId, "", mapOf(columnFieldId to columnOption.id))
+                        }
+                    }
+                } else null
             )
         }
 
@@ -133,12 +162,16 @@ fun BoardView(
                     borderFieldId = borderFieldId,
                     childrenByParent = childrenByParent,
                     onObjectClick = onObjectClick,
-                    onMoveObject = { _, _ -> }
+                    onMoveObject = { _, _ -> },
+                    onRename = null,
+                    onDelete = null
                 )
             }
         }
+
     }
 }
+
 
 @Composable
 private fun BoardColumn(
@@ -151,11 +184,16 @@ private fun BoardColumn(
     borderFieldId: String?,
     childrenByParent: Map<String, List<ProjectObject>>,
     onObjectClick: (String) -> Unit,
-    onMoveObject: (String, Int) -> Unit
+    onMoveObject: (String, Int) -> Unit,
+    onRename: ((String) -> Unit)? = null,
+    onDelete: (() -> Unit)? = null,
+    onCreateInColumn: (() -> Unit)? = null
 ) {
+    var collapsed by rememberSaveable(option.id) { mutableStateOf(false) }
+
     Column(
         modifier = Modifier
-            .width(280.dp)
+            .width(if (collapsed) 48.dp else 280.dp)
             .fillMaxHeight()
             .background(
                 MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.3f),
@@ -168,27 +206,118 @@ private fun BoardColumn(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.padding(horizontal = 4.dp, vertical = 8.dp)
         ) {
-            if (option.colour.isNotBlank()) {
-                Box(
-                    modifier = Modifier
-                        .size(10.dp)
-                        .clip(CircleShape)
-                        .background(parseColor(option.colour))
+            Icon(
+                imageVector = if (collapsed) Icons.Default.ChevronRight else Icons.Default.ExpandMore,
+                contentDescription = if (collapsed) "Expand" else "Collapse",
+                modifier = Modifier
+                    .size(18.dp)
+                    .clickable { collapsed = !collapsed },
+                tint = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+            if (!collapsed) {
+                if (option.colour.isNotBlank()) {
+                    Spacer(modifier = Modifier.width(4.dp))
+                    Box(
+                        modifier = Modifier
+                            .size(10.dp)
+                            .clip(CircleShape)
+                            .background(parseColor(option.colour))
+                    )
+                }
+                Spacer(modifier = Modifier.width(4.dp))
+                Text(
+                    text = option.name,
+                    style = MaterialTheme.typography.titleSmall,
+                    fontWeight = FontWeight.SemiBold,
+                    modifier = Modifier.weight(1f)
                 )
-                Spacer(modifier = Modifier.width(8.dp))
+                Text(
+                    text = "${objects.size}",
+                    style = MaterialTheme.typography.labelMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+                if (onCreateInColumn != null) {
+                    IconButton(
+                        onClick = onCreateInColumn,
+                        modifier = Modifier.size(24.dp)
+                    ) {
+                        Icon(
+                            Icons.Default.Add,
+                            contentDescription = "New",
+                            modifier = Modifier.size(16.dp)
+                        )
+                    }
+                }
+                if (onRename != null || onDelete != null) {
+                    var showMenu by remember { mutableStateOf(false) }
+                    var showRenameDialog by remember { mutableStateOf(false) }
+                    Box {
+                        IconButton(
+                            onClick = { showMenu = true },
+                            modifier = Modifier.size(24.dp)
+                        ) {
+                            Icon(
+                                Icons.Default.ExpandMore,
+                                contentDescription = "Column options",
+                                modifier = Modifier.size(16.dp)
+                            )
+                        }
+                        DropdownMenu(
+                            expanded = showMenu,
+                            onDismissRequest = { showMenu = false }
+                        ) {
+                            if (onRename != null) {
+                                DropdownMenuItem(
+                                    text = { Text("Rename") },
+                                    onClick = {
+                                        showMenu = false
+                                        showRenameDialog = true
+                                    }
+                                )
+                            }
+                            if (onDelete != null) {
+                                DropdownMenuItem(
+                                    text = { Text("Delete", color = MaterialTheme.colorScheme.error) },
+                                    onClick = {
+                                        showMenu = false
+                                        onDelete()
+                                    }
+                                )
+                            }
+                        }
+                    }
+                    if (showRenameDialog && onRename != null) {
+                        var newName by remember { mutableStateOf(option.name) }
+                        AlertDialog(
+                            onDismissRequest = { showRenameDialog = false },
+                            title = { Text("Rename column") },
+                            text = {
+                                OutlinedTextField(
+                                    value = newName,
+                                    onValueChange = { newName = it },
+                                    singleLine = true,
+                                    modifier = Modifier.fillMaxWidth()
+                                )
+                            },
+                            confirmButton = {
+                                TextButton(
+                                    onClick = {
+                                        onRename(newName)
+                                        showRenameDialog = false
+                                    },
+                                    enabled = newName.isNotBlank()
+                                ) { Text("Rename") }
+                            },
+                            dismissButton = {
+                                TextButton(onClick = { showRenameDialog = false }) { Text("Cancel") }
+                            }
+                        )
+                    }
+                }
             }
-            Text(
-                text = option.name,
-                style = MaterialTheme.typography.titleSmall,
-                fontWeight = FontWeight.SemiBold,
-                modifier = Modifier.weight(1f)
-            )
-            Text(
-                text = "${objects.size}",
-                style = MaterialTheme.typography.labelMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
         }
+
+        if (collapsed) return@Column
 
         // Column body
         if (rowFieldId != null && rowOptions.isNotEmpty()) {

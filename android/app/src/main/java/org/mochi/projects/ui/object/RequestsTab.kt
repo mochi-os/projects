@@ -46,6 +46,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -57,6 +58,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import org.mochi.projects.model.Branch
+import org.mochi.projects.model.MergeCheck
 import org.mochi.projects.model.MergeRequest
 import org.mochi.projects.model.Repository
 
@@ -209,6 +211,25 @@ private fun RequestDetailView(
     onBack: () -> Unit,
     onViewDiff: (String, String, String, String) -> Unit
 ) {
+    val mergeCheck by viewModel.mergeCheck.collectAsState()
+    val isCheckingMerge by viewModel.isCheckingMerge.collectAsState()
+    val mergeSuccess by viewModel.mergeSuccess.collectAsState()
+    var showMergeDialog by remember { mutableStateOf(false) }
+
+    LaunchedEffect(request.id) {
+        viewModel.clearMergeState()
+        if (request.status == "open" && !request.draft) {
+            viewModel.checkMerge(request.repository, request.source, request.target)
+        }
+    }
+
+    LaunchedEffect(mergeSuccess) {
+        if (mergeSuccess) {
+            onBack()
+            viewModel.clearMergeState()
+        }
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -255,6 +276,70 @@ private fun RequestDetailView(
             }
         }
 
+        // Merge check status
+        if (request.status == "open" && !request.draft) {
+            Spacer(modifier = Modifier.height(12.dp))
+            when {
+                isCheckingMerge -> {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        CircularProgressIndicator(modifier = Modifier.size(16.dp), strokeWidth = 2.dp)
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text("Checking merge status...", style = MaterialTheme.typography.bodySmall)
+                    }
+                }
+                mergeCheck != null -> {
+                    val check = mergeCheck!!
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Text(
+                            text = if (check.canMerge) "\u2705" else "\u274C",
+                            style = MaterialTheme.typography.bodyMedium
+                        )
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text(
+                            text = if (check.canMerge) "Can be merged" else "Cannot merge",
+                            style = MaterialTheme.typography.bodySmall,
+                            fontWeight = FontWeight.Medium,
+                            color = if (check.canMerge) Color(0xFF4CAF50) else MaterialTheme.colorScheme.error
+                        )
+                    }
+                    if (check.ahead > 0 || check.behind > 0) {
+                        Text(
+                            text = "${check.ahead} ahead, ${check.behind} behind",
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
+                    // Conflict list
+                    if (check.conflicts.isNotEmpty()) {
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Text(
+                            text = "${check.conflicts.size} conflicting file${if (check.conflicts.size != 1) "s" else ""}",
+                            style = MaterialTheme.typography.labelMedium,
+                            fontWeight = FontWeight.SemiBold,
+                            color = MaterialTheme.colorScheme.error
+                        )
+                        check.conflicts.forEach { file ->
+                            Text(
+                                text = file,
+                                style = MaterialTheme.typography.labelSmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                modifier = Modifier.padding(start = 8.dp)
+                            )
+                        }
+                    }
+                }
+            }
+        }
+
+        if (request.draft && request.status == "open") {
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(
+                text = "This is a draft. Mark as ready before merging.",
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        }
+
         Spacer(modifier = Modifier.height(16.dp))
 
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -264,11 +349,17 @@ private fun RequestDetailView(
                 Text("View diff")
             }
 
-            if (request.status == "open" && !request.draft) {
+            if (request.status == "open" && !request.draft && mergeCheck?.canMerge == true) {
+                TextButton(onClick = { showMergeDialog = true }) {
+                    Text("Merge", color = Color(0xFF4CAF50))
+                }
+            }
+
+            if (request.status == "open" && request.draft) {
                 TextButton(onClick = {
-                    viewModel.updateRequest(request.id, null, null, "merged", null)
+                    viewModel.updateRequest(request.id, null, null, null, false)
                 }) {
-                    Text("Merge")
+                    Text("Mark as ready")
                 }
             }
 
@@ -281,6 +372,74 @@ private fun RequestDetailView(
             }
         }
     }
+
+    if (showMergeDialog) {
+        MergeDialog(
+            request = request,
+            onDismiss = { showMergeDialog = false },
+            onMerge = { message, method ->
+                showMergeDialog = false
+                viewModel.performMerge(
+                    request.repository, request.source, request.target,
+                    message, method, request.id
+                )
+            }
+        )
+    }
+}
+
+@Composable
+private fun MergeDialog(
+    request: MergeRequest,
+    onDismiss: () -> Unit,
+    onMerge: (message: String, method: String) -> Unit
+) {
+    var message by remember { mutableStateOf("Merge ${request.source} into ${request.target}") }
+    var method by remember { mutableStateOf("merge") }
+
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text("Merge") },
+        text = {
+            Column {
+                OutlinedTextField(
+                    value = message,
+                    onValueChange = { message = it },
+                    label = { Text("Commit message") },
+                    modifier = Modifier.fillMaxWidth(),
+                    maxLines = 3
+                )
+                Spacer(modifier = Modifier.height(12.dp))
+                Text("Method", style = MaterialTheme.typography.labelMedium, fontWeight = FontWeight.SemiBold)
+                Spacer(modifier = Modifier.height(4.dp))
+                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    listOf("merge", "squash", "rebase").forEach { m ->
+                        SuggestionChip(
+                            onClick = { method = m },
+                            label = { Text(m.replaceFirstChar { it.uppercase() }) },
+                            colors = SuggestionChipDefaults.suggestionChipColors(
+                                containerColor = if (method == m) MaterialTheme.colorScheme.primaryContainer
+                                else MaterialTheme.colorScheme.surfaceVariant
+                            )
+                        )
+                    }
+                }
+            }
+        },
+        confirmButton = {
+            TextButton(
+                onClick = { onMerge(message, method) },
+                enabled = message.isNotBlank()
+            ) {
+                Text("Merge")
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = onDismiss) {
+                Text("Cancel")
+            }
+        }
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)

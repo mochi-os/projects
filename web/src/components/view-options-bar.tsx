@@ -1,10 +1,11 @@
 // Mochi Projects: Collapsible view options bar
 // Copyright Alistair Cunningham 2026
 
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import {
   Button,
   Input,
+  Label,
   PageUtilityBar,
   Select,
   SelectContent,
@@ -13,10 +14,15 @@ import {
   SelectSeparator,
   SelectTrigger,
   SelectValue,
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
   SortDirectionButton,
   cn,
 } from "@mochi/web";
-import { Eye, LayoutGrid, ListTree, Search, X } from "lucide-react";
+import { Eye, LayoutGrid, ListTree, SlidersHorizontal } from "lucide-react";
 import type { ProjectDetails, ProjectField, ProjectView, SortState } from "@/types";
 import type { FilterState } from "@/features/views/components/filter-bar";
 
@@ -50,11 +56,8 @@ export function ViewOptionsBar({
   onSortChange,
   showSort,
 }: ViewOptionsBarProps) {
-  const desktopSearchRef = useRef<HTMLInputElement>(null);
-  const mobileSearchRef = useRef<HTMLInputElement>(null);
-  const [isMobileSearchOpen, setIsMobileSearchOpen] = useState(false);
+  const [isMobileControlsOpen, setIsMobileControlsOpen] = useState(false);
   const hasSearchValue = filters.search.trim().length > 0;
-  const showMobileSearch = isMobileSearchOpen || hasSearchValue;
 
   // Build sort options: built-in + fields with 'sort' flag
   const sortFieldOptions = (fields || [])
@@ -65,154 +68,229 @@ export function ViewOptionsBar({
     onFilterChange({ ...filters, search });
   };
 
-  const closeMobileSearch = () => {
-    updateSearch("");
-    setIsMobileSearchOpen(false);
-  };
-
-  // Focus desktop search input when the bar mounts on larger screens
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      if (window.innerWidth >= 640) {
-        desktopSearchRef.current?.focus();
-      }
-    }, 0);
-
-    return () => clearTimeout(timer);
-  }, []);
-
-  // Focus the expanded mobile search field only after the user opens it
-  useEffect(() => {
-    if (!isMobileSearchOpen) {
-      return;
-    }
-
-    const timer = setTimeout(() => mobileSearchRef.current?.focus(), 0);
-    return () => clearTimeout(timer);
-  }, [isMobileSearchOpen]);
+  const hasActiveMobileControls =
+    hasSearchValue ||
+    filters.watched ||
+    (showSort && (sort?.field || "rank") !== "rank") ||
+    (showSort && (sort?.direction || "asc") !== "asc");
 
   return (
-    <PageUtilityBar compact scrollable>
-      {project.views.map((view: ProjectView) => (
-        <button
-          key={view.id}
-          onClick={() => onViewChange(view.id)}
-          className={cn(
-            "flex h-9 items-center gap-1.5 rounded-md px-2.5 text-xs transition-colors whitespace-nowrap",
-            activeViewId === view.id
-              ? "bg-primary text-primary-foreground"
-              : "hover:bg-muted"
-          )}
-        >
-          {view.viewtype === "list" ? (
-            <ListTree className="size-3.5" />
-          ) : (
-            <LayoutGrid className="size-3.5" />
-          )}
-          {view.name}
-        </button>
-      ))}
-
-      <div className="bg-border mx-1 h-6 w-px shrink-0" />
-
-      <Input
-        ref={desktopSearchRef}
-        type="search"
-        placeholder="Search..."
-        value={filters.search}
-        onChange={(e) => updateSearch(e.target.value)}
-        className="hidden h-9 w-[200px] text-xs sm:block"
-      />
-
-      {showMobileSearch ? (
-        <>
-          <Input
-            ref={mobileSearchRef}
-            type="search"
-            placeholder="Search..."
-            value={filters.search}
-            onChange={(e) => updateSearch(e.target.value)}
-            className="w-44 text-sm sm:hidden"
-          />
-          <Button
-            variant="ghost"
-            size="icon"
-            className="sm:hidden"
-            aria-label="Close search"
-            onClick={closeMobileSearch}
-          >
-            <X className="size-4" />
-          </Button>
-        </>
-      ) : (
-        <Button
-          variant="ghost"
-          size="icon"
-          className="size-11 sm:hidden"
-          aria-label="Open search"
-          onClick={() => setIsMobileSearchOpen(true)}
-        >
-          <Search className="size-4" />
-        </Button>
-      )}
-
-      <Button
-        variant={filters.watched ? "secondary" : "ghost"}
-        size="sm"
-        className="px-2 text-xs"
-        aria-label="Toggle watched filter"
-        onClick={() => onFilterChange({ ...filters, watched: !filters.watched })}
-      >
-        <Eye className="size-4 md:size-3.5 sm:mr-1" />
-        <span className="sr-only sm:not-sr-only">Watched</span>
-      </Button>
-
-      {showSort && (
-        <div className="flex items-center gap-2">
-          <Select
-            value={sort?.field || "rank"}
-            onValueChange={(value) =>
-              onSortChange({ field: value, direction: sort?.direction || "asc" })
-            }
-          >
-            <SelectTrigger className="w-[132px] text-xs">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              {sortFieldOptions.length > 0 && (
-                <>
-                  <SelectGroup>
-                    {sortFieldOptions.map((option) => (
-                      <SelectItem key={option.id} value={option.id}>
-                        {option.label}
-                      </SelectItem>
-                    ))}
-                  </SelectGroup>
-                  <SelectSeparator />
-                </>
-              )}
-              <SelectGroup>
-                {BUILT_IN_SORT_OPTIONS.map((option) => (
-                  <SelectItem key={option.id} value={option.id}>
-                    {option.label}
-                  </SelectItem>
-                ))}
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-          <SortDirectionButton
-            direction={sort?.direction || "asc"}
-            onToggle={() =>
-              onSortChange({
-                field: sort?.field || "rank",
-                direction: sort?.direction === "asc" ? "desc" : "asc",
-              })
-            }
-            size="sm"
-            className="size-9"
-          />
+    <>
+      <div className="sticky top-[calc(var(--sticky-top,0px)+56px)] z-20 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/90 sm:hidden">
+        <div className="flex items-center">
+          <div className="min-w-0 flex-1 overflow-x-auto no-scrollbar">
+            <div className="flex min-w-max items-center gap-1 px-4 py-2">
+              {project.views.map((view: ProjectView) => (
+                <ViewTab
+                  key={view.id}
+                  view={view}
+                  active={activeViewId === view.id}
+                  onClick={() => onViewChange(view.id)}
+                />
+              ))}
+            </div>
+          </div>
+          <div className="flex shrink-0 items-center border-l px-2">
+            <Button
+              variant={hasActiveMobileControls ? "secondary" : "ghost"}
+              size="icon"
+              className="size-9"
+              aria-label="Open view controls"
+              onClick={() => setIsMobileControlsOpen(true)}
+            >
+              <SlidersHorizontal className="size-4" />
+            </Button>
+          </div>
         </div>
+      </div>
+
+      <Sheet open={isMobileControlsOpen} onOpenChange={setIsMobileControlsOpen}>
+        <SheetContent
+          side="bottom"
+          className="max-h-[80vh] gap-0 rounded-t-lg p-0 sm:hidden"
+          onOpenAutoFocus={(event) => event.preventDefault()}
+        >
+          <SheetHeader>
+            <SheetTitle>View controls</SheetTitle>
+            <SheetDescription>Search, watch, and sort this view.</SheetDescription>
+          </SheetHeader>
+          <div className="space-y-5 overflow-y-auto p-4 pt-0">
+            <div className="space-y-2">
+              <Label htmlFor="project-mobile-view-search">Search</Label>
+              <Input
+                id="project-mobile-view-search"
+                type="search"
+                placeholder="Search..."
+                value={filters.search}
+                onChange={(e) => updateSearch(e.target.value)}
+              />
+            </div>
+
+            <Button
+              variant={filters.watched ? "secondary" : "outline"}
+              className="w-full justify-start"
+              aria-label="Toggle watched filter"
+              onClick={() => onFilterChange({ ...filters, watched: !filters.watched })}
+            >
+              <Eye className="size-4" />
+              Watched only
+            </Button>
+
+            {showSort && (
+              <div className="space-y-2">
+                <Label>Sort</Label>
+                <div className="flex items-center gap-2">
+                  <Select
+                    value={sort?.field || "rank"}
+                    onValueChange={(value) =>
+                      onSortChange({ field: value, direction: sort?.direction || "asc" })
+                    }
+                  >
+                    <SelectTrigger className="min-w-0 flex-1">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {sortFieldOptions.length > 0 && (
+                        <>
+                          <SelectGroup>
+                            {sortFieldOptions.map((option) => (
+                              <SelectItem key={option.id} value={option.id}>
+                                {option.label}
+                              </SelectItem>
+                            ))}
+                          </SelectGroup>
+                          <SelectSeparator />
+                        </>
+                      )}
+                      <SelectGroup>
+                        {BUILT_IN_SORT_OPTIONS.map((option) => (
+                          <SelectItem key={option.id} value={option.id}>
+                            {option.label}
+                          </SelectItem>
+                        ))}
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                  <SortDirectionButton
+                    direction={sort?.direction || "asc"}
+                    onToggle={() =>
+                      onSortChange({
+                        field: sort?.field || "rank",
+                        direction: sort?.direction === "asc" ? "desc" : "asc",
+                      })
+                    }
+                    size="sm"
+                  />
+                </div>
+              </div>
+            )}
+          </div>
+        </SheetContent>
+      </Sheet>
+
+      <PageUtilityBar compact scrollable className="hidden sm:block">
+        {project.views.map((view: ProjectView) => (
+          <ViewTab
+            key={view.id}
+            view={view}
+            active={activeViewId === view.id}
+            onClick={() => onViewChange(view.id)}
+          />
+        ))}
+
+        <div className="bg-border mx-1 h-6 w-px shrink-0" />
+
+        <Input
+          type="search"
+          placeholder="Search..."
+          value={filters.search}
+          onChange={(e) => updateSearch(e.target.value)}
+          className="h-9 w-[200px] text-xs"
+        />
+
+        <Button
+          variant={filters.watched ? "secondary" : "ghost"}
+          size="sm"
+          className="px-2 text-xs"
+          aria-label="Toggle watched filter"
+          onClick={() => onFilterChange({ ...filters, watched: !filters.watched })}
+        >
+          <Eye className="size-3.5 sm:mr-1" />
+          <span>Watched</span>
+        </Button>
+
+        {showSort && (
+          <div className="flex items-center gap-2">
+            <Select
+              value={sort?.field || "rank"}
+              onValueChange={(value) =>
+                onSortChange({ field: value, direction: sort?.direction || "asc" })
+              }
+            >
+              <SelectTrigger className="w-[132px] text-xs">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                {sortFieldOptions.length > 0 && (
+                  <>
+                    <SelectGroup>
+                      {sortFieldOptions.map((option) => (
+                        <SelectItem key={option.id} value={option.id}>
+                          {option.label}
+                        </SelectItem>
+                      ))}
+                    </SelectGroup>
+                    <SelectSeparator />
+                  </>
+                )}
+                <SelectGroup>
+                  {BUILT_IN_SORT_OPTIONS.map((option) => (
+                    <SelectItem key={option.id} value={option.id}>
+                      {option.label}
+                    </SelectItem>
+                  ))}
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+            <SortDirectionButton
+              direction={sort?.direction || "asc"}
+              onToggle={() =>
+                onSortChange({
+                  field: sort?.field || "rank",
+                  direction: sort?.direction === "asc" ? "desc" : "asc",
+                })
+              }
+              size="sm"
+              className="size-9"
+            />
+          </div>
+        )}
+      </PageUtilityBar>
+    </>
+  );
+}
+
+interface ViewTabProps {
+  view: ProjectView;
+  active: boolean;
+  onClick: () => void;
+}
+
+function ViewTab({ view, active, onClick }: ViewTabProps) {
+  return (
+    <button
+      onClick={onClick}
+      className={cn(
+        "flex h-9 items-center gap-1.5 rounded-md px-2.5 text-xs transition-colors whitespace-nowrap",
+        active ? "bg-primary text-primary-foreground" : "hover:bg-muted"
       )}
-    </PageUtilityBar>
+    >
+      {view.viewtype === "list" ? (
+        <ListTree className="size-3.5" />
+      ) : (
+        <LayoutGrid className="size-3.5" />
+      )}
+      {view.name}
+    </button>
   );
 }

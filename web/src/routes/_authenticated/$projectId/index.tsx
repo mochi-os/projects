@@ -777,11 +777,7 @@ export function ProjectPageContent({ project, projectId, search, initialObjectId
         menuAction={
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <IconButton
-                variant='ghost'
-                label='Open page actions'
-                className='size-11 md:size-9'
-              >
+              <IconButton variant='ghost' label='Open page actions'>
                 <Ellipsis className="size-4" />
               </IconButton>
             </DropdownMenuTrigger>

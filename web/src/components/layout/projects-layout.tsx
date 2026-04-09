@@ -87,6 +87,7 @@ function ProjectsLayoutInner() {
     <>
       <AuthenticatedLayout
         sidebarData={sidebarData}
+        usePageHeaderForMobileNav
         isLoadingSidebar={isLoading && projects.length === 0}
       />
       <CreateProjectDialog

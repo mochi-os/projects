@@ -29,7 +29,7 @@ import type { ProjectDetails, ProjectField, ProjectObject, SortState } from "@/t
 import { canDesign, canWrite } from "@/lib/access";
 import { BoardContainer } from "@/features/board/components";
 import { TreeView } from "@/features/tree";
-import { FilterBar, type FilterState } from "@/features/views";
+import type { FilterState } from "@/features/views";
 import {
   CreateObjectDialog,
   ObjectDetailPanel,
@@ -746,40 +746,42 @@ export function ProjectPageContent({ project, projectId, search, initialObjectId
     setPendingColumnOrder(null);
   };
 
+  const primaryActionLabel = (() => {
+    const viewClasses = activeView?.classes || [];
+    if (viewClasses.length === 1) {
+      const cls = project.classes.find((c) => c.id === viewClasses[0]);
+      if (cls) return `New ${cls.name.toLowerCase()}`;
+    }
+    return "New";
+  })();
+
   return (
     <>
       <PageHeader
         title={project.project.name}
         icon={<FolderKanban className="size-4 md:size-5" />}
-        actions={
-          <>
-            <FilterBar
-              filters={filters}
-              onFilterChange={setFilters}
-            />
-            {canWrite(access) && (
-              <Button
-                variant='ghost'
-                size='sm'
-                onClick={handleOpenCreateDialog}
-              >
-                <Plus className="size-4" />
-                {(() => {
-                  const viewClasses = activeView?.classes || [];
-                  if (viewClasses.length === 1) {
-                    const cls = project.classes.find((c) => c.id === viewClasses[0]);
-                    if (cls) return `New ${cls.name.toLowerCase()}`;
-                  }
-                  return "New";
-                })()}
-              </Button>
-            )}
-          </>
+        showSidebarTrigger
+        primaryAction={
+          canWrite(access) ? (
+            <Button
+              size='sm'
+              className='px-2.5'
+              onClick={handleOpenCreateDialog}
+            >
+              <Plus className="size-4" />
+              <span className='md:hidden'>New</span>
+              <span className='hidden md:inline'>{primaryActionLabel}</span>
+            </Button>
+          ) : undefined
         }
         menuAction={
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <IconButton variant='ghost' label='Open page actions'>
+              <IconButton
+                variant='ghost'
+                label='Open page actions'
+                className='size-11 md:size-9'
+              >
                 <Ellipsis className="size-4" />
               </IconButton>
             </DropdownMenuTrigger>

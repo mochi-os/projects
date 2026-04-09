@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import {
   Button,
   Input,
+  PageUtilityBar,
   Select,
   SelectContent,
   SelectGroup,
@@ -91,138 +92,127 @@ export function ViewOptionsBar({
   }, [isMobileSearchOpen]);
 
   return (
-    <div className="bg-muted/30">
-      {/* View switcher — scrolls horizontally on mobile */}
-      <div className="overflow-x-auto no-scrollbar">
-        <div className="flex items-center gap-1 px-4 pt-2 pb-1 min-w-max">
-          {project.views.map((view: ProjectView) => (
-            <button
-              key={view.id}
-              onClick={() => onViewChange(view.id)}
-              className={cn(
-                "flex items-center gap-1.5 px-2 py-1 rounded-md text-sm transition-colors whitespace-nowrap",
-                activeViewId === view.id
-                  ? "bg-primary text-primary-foreground"
-                  : "hover:bg-muted"
-              )}
-            >
-              {view.viewtype === "list" ? (
-                <ListTree className="size-3.5" />
-              ) : (
-                <LayoutGrid className="size-3.5" />
-              )}
-              {view.name}
-            </button>
-          ))}
-        </div>
-      </div>
+    <PageUtilityBar compact scrollable>
+      {project.views.map((view: ProjectView) => (
+        <button
+          key={view.id}
+          onClick={() => onViewChange(view.id)}
+          className={cn(
+            "flex h-9 items-center gap-1.5 rounded-md px-2.5 text-xs transition-colors whitespace-nowrap",
+            activeViewId === view.id
+              ? "bg-primary text-primary-foreground"
+              : "hover:bg-muted"
+          )}
+        >
+          {view.viewtype === "list" ? (
+            <ListTree className="size-3.5" />
+          ) : (
+            <LayoutGrid className="size-3.5" />
+          )}
+          {view.name}
+        </button>
+      ))}
 
-      {/* Controls row */}
-      <div className="px-4 pb-2">
-        {showMobileSearch && (
-          <div className="flex items-center gap-2 pb-2 sm:hidden">
-            <Input
-              ref={mobileSearchRef}
-              type="search"
-              placeholder="Search..."
-              value={filters.search}
-              onChange={(e) => updateSearch(e.target.value)}
-              className="h-7 min-w-0 flex-1 text-xs"
-            />
-            <Button
-              variant="ghost"
-              size="sm"
-              className="h-7 w-7 px-0"
-              aria-label="Close search"
-              onClick={closeMobileSearch}
-            >
-              <X className="size-3.5" />
-            </Button>
-          </div>
-        )}
+      <div className="bg-border mx-1 h-6 w-px shrink-0" />
 
-        <div className="flex flex-wrap items-center gap-2">
-          {/* Search */}
+      <Input
+        ref={desktopSearchRef}
+        type="search"
+        placeholder="Search..."
+        value={filters.search}
+        onChange={(e) => updateSearch(e.target.value)}
+        className="hidden h-9 w-[200px] text-xs sm:block"
+      />
+
+      {showMobileSearch ? (
+        <>
           <Input
-            ref={desktopSearchRef}
+            ref={mobileSearchRef}
             type="search"
             placeholder="Search..."
             value={filters.search}
             onChange={(e) => updateSearch(e.target.value)}
-            className="hidden h-7 w-[200px] text-xs sm:block"
+            className="w-44 text-sm sm:hidden"
           />
-          {!showMobileSearch && (
-            <Button
-              variant="ghost"
-              size="sm"
-              className="h-7 w-7 px-0 sm:hidden"
-              aria-label="Open search"
-              onClick={() => setIsMobileSearchOpen(true)}
-            >
-              <Search className="size-3.5" />
-            </Button>
-          )}
-
-          {/* Watched filter */}
           <Button
-            variant={filters.watched ? "secondary" : "ghost"}
-            size="sm"
-            className="h-7 px-2 text-xs"
-            aria-label="Toggle watched filter"
-            onClick={() => onFilterChange({ ...filters, watched: !filters.watched })}
+            variant="ghost"
+            size="icon"
+            className="sm:hidden"
+            aria-label="Close search"
+            onClick={closeMobileSearch}
           >
-            <Eye className="size-3.5 sm:mr-1" />
-            <span className="sr-only sm:not-sr-only">Watched</span>
+            <X className="size-4" />
           </Button>
+        </>
+      ) : (
+        <Button
+          variant="ghost"
+          size="icon"
+          className="size-11 sm:hidden"
+          aria-label="Open search"
+          onClick={() => setIsMobileSearchOpen(true)}
+        >
+          <Search className="size-4" />
+        </Button>
+      )}
 
-          {/* Sort (only for list view) */}
-          {showSort && (
-            <div className="ml-auto flex items-center gap-2">
-              <Select
-                value={sort?.field || "rank"}
-                onValueChange={(value) =>
-                  onSortChange({ field: value, direction: sort?.direction || "asc" })
-                }
-              >
-                <SelectTrigger className="h-7 text-xs w-auto">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  {sortFieldOptions.length > 0 && (
-                    <>
-                      <SelectGroup>
-                        {sortFieldOptions.map((option) => (
-                          <SelectItem key={option.id} value={option.id}>
-                            {option.label}
-                          </SelectItem>
-                        ))}
-                      </SelectGroup>
-                      <SelectSeparator />
-                    </>
-                  )}
+      <Button
+        variant={filters.watched ? "secondary" : "ghost"}
+        size="sm"
+        className="px-2 text-xs"
+        aria-label="Toggle watched filter"
+        onClick={() => onFilterChange({ ...filters, watched: !filters.watched })}
+      >
+        <Eye className="size-4 md:size-3.5 sm:mr-1" />
+        <span className="sr-only sm:not-sr-only">Watched</span>
+      </Button>
+
+      {showSort && (
+        <div className="flex items-center gap-2">
+          <Select
+            value={sort?.field || "rank"}
+            onValueChange={(value) =>
+              onSortChange({ field: value, direction: sort?.direction || "asc" })
+            }
+          >
+            <SelectTrigger className="w-[132px] text-xs">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              {sortFieldOptions.length > 0 && (
+                <>
                   <SelectGroup>
-                    {BUILT_IN_SORT_OPTIONS.map((option) => (
+                    {sortFieldOptions.map((option) => (
                       <SelectItem key={option.id} value={option.id}>
                         {option.label}
                       </SelectItem>
                     ))}
                   </SelectGroup>
-                </SelectContent>
-              </Select>
-              <SortDirectionButton
-                direction={sort?.direction || "asc"}
-                onToggle={() =>
-                  onSortChange({
-                    field: sort?.field || "rank",
-                    direction: sort?.direction === "asc" ? "desc" : "asc",
-                  })
-                }
-                size="sm"
-              />
-            </div>
-          )}
+                  <SelectSeparator />
+                </>
+              )}
+              <SelectGroup>
+                {BUILT_IN_SORT_OPTIONS.map((option) => (
+                  <SelectItem key={option.id} value={option.id}>
+                    {option.label}
+                  </SelectItem>
+                ))}
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+          <SortDirectionButton
+            direction={sort?.direction || "asc"}
+            onToggle={() =>
+              onSortChange({
+                field: sort?.field || "rank",
+                direction: sort?.direction === "asc" ? "desc" : "asc",
+              })
+            }
+            size="sm"
+            className="size-9"
+          />
         </div>
-      </div>
-    </div>
+      )}
+    </PageUtilityBar>
   );
 }

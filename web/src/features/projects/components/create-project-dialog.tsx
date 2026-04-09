@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
-import { Button, Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger, Input, Label, Switch, toast, getErrorMessage, cn } from "@mochi/web"
+import { Button, ResponsiveDialog, ResponsiveDialogContent, ResponsiveDialogDescription, ResponsiveDialogFooter, ResponsiveDialogHeader, ResponsiveDialogTitle, ResponsiveDialogTrigger, Input, Label, Switch, toast, getErrorMessage, cn } from "@mochi/web"
 import { ArrowLeft, ArrowRight, Check, File, FolderKanban, LayoutGrid, Plus, Ticket, Zap } from "lucide-react";
 import projectsApi from "@/api/projects";
 import { useProjectsStore } from "@/stores/projects-store";
@@ -120,25 +120,25 @@ export function CreateProjectDialog({
   });
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <ResponsiveDialog open={open} onOpenChange={onOpenChange}>
       {!hideTrigger && (
-        <DialogTrigger asChild>
+        <ResponsiveDialogTrigger asChild>
           <Button>
             <Plus className="mr-2 size-4" />
             Create project
           </Button>
-        </DialogTrigger>
+        </ResponsiveDialogTrigger>
       )}
-      <DialogContent className="sm:max-w-md">
-        <DialogHeader>
-          <DialogTitle className="flex items-center gap-2">
+      <ResponsiveDialogContent className="sm:max-w-md">
+        <ResponsiveDialogHeader>
+          <ResponsiveDialogTitle className="flex items-center gap-2">
             <div className="bg-primary/10 text-primary flex size-8 items-center justify-center rounded-lg">
               <FolderKanban className="size-4" />
             </div>
             {step === 1 ? "Create project" : "Choose a template"}
-          </DialogTitle>
-          <DialogDescription className="sr-only">Create a new project</DialogDescription>
-        </DialogHeader>
+          </ResponsiveDialogTitle>
+          <ResponsiveDialogDescription className="sr-only">Create a new project</ResponsiveDialogDescription>
+        </ResponsiveDialogHeader>
 
         {step === 1 ? (
           <div className="mt-4 space-y-4">
@@ -197,7 +197,7 @@ export function CreateProjectDialog({
               />
             </div>
 
-            <DialogFooter className="mt-6">
+            <ResponsiveDialogFooter className="mt-6">
               <Button
                 type="button"
                 variant="outline"
@@ -209,7 +209,7 @@ export function CreateProjectDialog({
                 Next
                 <ArrowRight className="ml-2 size-4" />
               </Button>
-            </DialogFooter>
+            </ResponsiveDialogFooter>
           </div>
         ) : (
           <form onSubmit={handleSubmit}>
@@ -271,7 +271,7 @@ export function CreateProjectDialog({
               )}
             </div>
 
-            <DialogFooter className="mt-6">
+            <ResponsiveDialogFooter className="mt-6">
               <Button
                 type="button"
                 variant="outline"
@@ -283,10 +283,10 @@ export function CreateProjectDialog({
               <Button type="submit" disabled={isPending || !selectedTemplate}>
                 {isPending ? "Creating..." : <><Plus className="mr-2 size-4" />Create project</>}
               </Button>
-            </DialogFooter>
+            </ResponsiveDialogFooter>
           </form>
         )}
-      </DialogContent>
-    </Dialog>
+      </ResponsiveDialogContent>
+    </ResponsiveDialog>
   );
 }

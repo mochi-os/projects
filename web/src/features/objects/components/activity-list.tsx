@@ -3,7 +3,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { Activity } from "lucide-react";
-import { EmptyState, ListSkeleton, formatTimestamp } from "@mochi/web";
+import { EmptyState, ListSkeleton, useFormat } from "@mochi/web";
 import projectsApi from "@/api/projects";
 
 interface ActivityListProps {
@@ -12,6 +12,7 @@ interface ActivityListProps {
 }
 
 export function ActivityList({ projectId, objectId }: ActivityListProps) {
+  const { formatTimestamp } = useFormat()
   const { data, isLoading } = useQuery({
     queryKey: ["activity", projectId, objectId],
     queryFn: async () => {

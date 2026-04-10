@@ -764,6 +764,7 @@ export function ProjectPageContent({ project, projectId, search, initialObjectId
         primaryAction={
           canWrite(access) ? (
             <Button
+              variant='outline'
               size='sm'
               className='px-2.5'
               onClick={handleOpenCreateDialog}

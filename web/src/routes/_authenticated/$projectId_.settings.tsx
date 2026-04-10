@@ -5,15 +5,8 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useCallback, useMemo, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
   Button,
+  ConfirmDialog,
   PageHeader,
   Main,
   cn,
@@ -98,6 +91,7 @@ function ProjectSettingsPage() {
   const [isDeleting, setIsDeleting] = useState(false);
   const [isUnsubscribing, setIsUnsubscribing] = useState(false);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+  const [showUnsubscribeDialog, setShowUnsubscribeDialog] = useState(false);
 
   const {
     data: projectData,
@@ -278,7 +272,9 @@ function ProjectSettingsPage() {
               isDeleting={isDeleting}
               isUnsubscribing={isUnsubscribing}
               showDeleteDialog={showDeleteDialog}
+              showUnsubscribeDialog={showUnsubscribeDialog}
               setShowDeleteDialog={setShowDeleteDialog}
+              setShowUnsubscribeDialog={setShowUnsubscribeDialog}
               onDelete={handleDelete}
               onUnsubscribe={handleUnsubscribe}
               onUpdate={handleUpdate}
@@ -299,7 +295,9 @@ interface GeneralTabProps {
   isDeleting: boolean;
   isUnsubscribing: boolean;
   showDeleteDialog: boolean;
+  showUnsubscribeDialog: boolean;
   setShowDeleteDialog: (show: boolean) => void;
+  setShowUnsubscribeDialog: (show: boolean) => void;
   onDelete: () => void;
   onUnsubscribe: () => void;
   onUpdate: (updates: {
@@ -315,7 +313,9 @@ function GeneralTab({
   isDeleting,
   isUnsubscribing,
   showDeleteDialog,
+  showUnsubscribeDialog,
   setShowDeleteDialog,
+  setShowUnsubscribeDialog,
   onDelete,
   onUnsubscribe,
   onUpdate,
@@ -378,7 +378,7 @@ function GeneralTab({
           action={
             <Button
               variant="outline"
-              onClick={onUnsubscribe}
+              onClick={() => setShowUnsubscribeDialog(true)}
               disabled={isUnsubscribing}
               size="sm"
             >
@@ -410,23 +410,26 @@ function GeneralTab({
         />
       )}
 
-      <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>Delete project?</AlertDialogTitle>
-            <AlertDialogDescription>
-              This will permanently delete "{project.project.name}" and all its
-              objects, comments, and attachments. This action cannot be undone.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction variant="destructive" onClick={onDelete}>
-              Delete project
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
+      <ConfirmDialog
+        open={showUnsubscribeDialog}
+        onOpenChange={setShowUnsubscribeDialog}
+        title="Unsubscribe from project?"
+        desc={`This will remove "${project.project.name}" from your sidebar and stop updates for this project.`}
+        confirmText="Unsubscribe"
+        handleConfirm={onUnsubscribe}
+        isLoading={isUnsubscribing}
+      />
+
+      <ConfirmDialog
+        open={showDeleteDialog}
+        onOpenChange={setShowDeleteDialog}
+        title="Delete project?"
+        desc={`This will permanently delete "${project.project.name}" and all its objects, comments, and attachments. This action cannot be undone.`}
+        confirmText="Delete project"
+        destructive
+        handleConfirm={onDelete}
+        isLoading={isDeleting}
+      />
     </div>
   );
 }

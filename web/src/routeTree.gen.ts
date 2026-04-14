@@ -93,6 +93,7 @@ const AuthenticatedProjectIdObjectIdRoute =
   } as any)
 
 export interface FileRoutesByFullPath {
+  '/': typeof AuthenticatedIndexRoute
   '/$projectId/diff': typeof ProjectIdDiffRoute
   '/401': typeof errors401Route
   '/403': typeof errors403Route
@@ -100,11 +101,10 @@ export interface FileRoutesByFullPath {
   '/500': typeof errors500Route
   '/503': typeof errors503Route
   '/find': typeof AuthenticatedFindRoute
-  '/': typeof AuthenticatedIndexRoute
   '/$projectId/$objectId': typeof AuthenticatedProjectIdObjectIdRoute
   '/$projectId/design': typeof AuthenticatedProjectIdDesignRoute
   '/$projectId/settings': typeof AuthenticatedProjectIdSettingsRoute
-  '/$projectId': typeof AuthenticatedProjectIdIndexRoute
+  '/$projectId/': typeof AuthenticatedProjectIdIndexRoute
 }
 export interface FileRoutesByTo {
   '/$projectId/diff': typeof ProjectIdDiffRoute
@@ -139,6 +139,7 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
+    | '/'
     | '/$projectId/diff'
     | '/401'
     | '/403'
@@ -146,11 +147,10 @@ export interface FileRouteTypes {
     | '/500'
     | '/503'
     | '/find'
-    | '/'
     | '/$projectId/$objectId'
     | '/$projectId/design'
     | '/$projectId/settings'
-    | '/$projectId'
+    | '/$projectId/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/$projectId/diff'
@@ -197,7 +197,7 @@ declare module '@tanstack/react-router' {
     '/_authenticated': {
       id: '/_authenticated'
       path: ''
-      fullPath: ''
+      fullPath: '/'
       preLoaderRoute: typeof AuthenticatedRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
@@ -260,7 +260,7 @@ declare module '@tanstack/react-router' {
     '/_authenticated/$projectId/': {
       id: '/_authenticated/$projectId/'
       path: '/$projectId'
-      fullPath: '/$projectId'
+      fullPath: '/$projectId/'
       preLoaderRoute: typeof AuthenticatedProjectIdIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }

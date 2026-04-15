@@ -171,7 +171,7 @@ export function ObjectDetailPanel({
       queryClient.invalidateQueries({
         queryKey: ["objects", projectId],
       });
-      onClose();
+      requestAnimationFrame(() => onClose());
     },
   });
 

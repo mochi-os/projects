@@ -66,14 +66,14 @@ export function ProjectsListPage() {
     if (!exists) {
       promptedNotifications.current = true;
       shellSubscribeNotifications('projects', [
-        { label: 'Updates', type: 'update', defaultEnabled: true },
-        { label: 'Assignments', type: 'assignment', defaultEnabled: true },
-        { label: 'Mentions', type: 'mention', defaultEnabled: true },
+        { label: 'Updates', topic: 'update', defaultEnabled: true },
+        { label: 'Assignments', topic: 'assignment', defaultEnabled: true },
+        { label: 'Mentions', topic: 'mention', defaultEnabled: true },
       ]).then(() => refetchSubscription());
     } else if (types && !types.includes('mention')) {
       promptedNotifications.current = true;
       shellSubscribeNotifications('projects', [
-        { label: 'Mentions', type: 'mention', defaultEnabled: true },
+        { label: 'Mentions', topic: 'mention', defaultEnabled: true },
       ]).then(() => refetchSubscription());
     }
   }, [isLoading, projects.length, subscriptionData?.data]);

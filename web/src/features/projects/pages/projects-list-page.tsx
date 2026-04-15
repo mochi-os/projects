@@ -66,7 +66,7 @@ export function ProjectsListPage() {
     if (!exists) {
       promptedNotifications.current = true;
       shellSubscribeNotifications('projects', [
-        { label: 'Project updates', type: 'update', defaultEnabled: true },
+        { label: 'Updates', type: 'update', defaultEnabled: true },
         { label: 'Assignments', type: 'assignment', defaultEnabled: true },
         { label: 'Mentions', type: 'mention', defaultEnabled: true },
       ]).then(() => refetchSubscription());

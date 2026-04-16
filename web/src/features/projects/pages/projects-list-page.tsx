@@ -1,6 +1,6 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link } from "@tanstack/react-router";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   Main,
   Card,
@@ -50,33 +50,15 @@ export function ProjectsListPage() {
 
   usePageTitle("Projects");
 
-  // Notification subscription check
-  const { data: subscriptionData, refetch: refetchSubscription } = useQuery({
-    queryKey: ["subscription-check", "projects"],
-    queryFn: () => projectsApi.checkSubscription(),
-    staleTime: Infinity,
-  });
-
-  // Prompt for notification subscription once on mount if user has projects but hasn't subscribed
-  const promptedNotifications = useRef(false);
   useEffect(() => {
-    if (promptedNotifications.current) return;
-    if (isLoading || projects.length === 0 || !subscriptionData?.data) return;
-    const { exists, types } = subscriptionData.data as { exists: boolean; types?: string[] };
-    if (!exists) {
-      promptedNotifications.current = true;
-      shellSubscribeNotifications('projects', [
-        { label: 'Project updates', type: 'update', defaultEnabled: true },
-        { label: 'Assignments', type: 'assignment', defaultEnabled: true },
-        { label: 'Mentions', type: 'mention', defaultEnabled: true },
-      ]).then(() => refetchSubscription());
-    } else if (types && !types.includes('mention')) {
-      promptedNotifications.current = true;
-      shellSubscribeNotifications('projects', [
-        { label: 'Mentions', type: 'mention', defaultEnabled: true },
-      ]).then(() => refetchSubscription());
-    }
-  }, [isLoading, projects.length, subscriptionData?.data]);
+    if (isLoading || projects.length === 0) return;
+    void shellSubscribeNotifications('projects', [
+      { label: 'New items', topic: 'update/created', defaultEnabled: true },
+      { label: 'Changes', topic: 'update/modified', defaultEnabled: true },
+      { label: 'Assignments', topic: 'assignment', defaultEnabled: true },
+      { label: 'Mentions', topic: 'mention', defaultEnabled: true },
+    ]);
+  }, [isLoading, projects.length]);
 
   useEffect(() => {
     void refresh();

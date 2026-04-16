@@ -6,9 +6,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Eye, EyeOff, Trash2, MessageSquare, Activity, Settings2, GitMerge } from "lucide-react";
 import {
   Button,
-  Input,
   ConfirmDialog,
-  DataChip,
   Sheet,
   SheetContent,
   SheetDescription,
@@ -51,8 +49,6 @@ export function ObjectDetailPanel({
   onClose,
 }: ObjectDetailPanelProps) {
   const [activeTab, setActiveTab] = useState<Tab>("properties");
-  const [editingTitle, setEditingTitle] = useState(false);
-  const [titleValue, setTitleValue] = useState("");
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [validationErrors, setValidationErrors] = useState<Set<string>>(new Set());
   const queryClient = useQueryClient();
@@ -175,7 +171,7 @@ export function ObjectDetailPanel({
       queryClient.invalidateQueries({
         queryKey: ["objects", projectId],
       });
-      onClose();
+      requestAnimationFrame(() => onClose());
     },
   });
 
@@ -240,7 +236,7 @@ export function ObjectDetailPanel({
   if (isLoading) {
     return (
       <Sheet open={true} onOpenChange={handleClose}>
-        <SheetContent className="w-full sm:max-w-2xl p-0 gap-0" onInteractOutside={() => {}}>
+        <SheetContent className="w-full sm:max-w-2xl p-0 gap-0" onInteractOutside={() => { }}>
           <SheetHeader className="sr-only">
             <SheetTitle>Loading item</SheetTitle>
             <SheetDescription>Loading item details</SheetDescription>
@@ -256,7 +252,7 @@ export function ObjectDetailPanel({
   if (error || !data) {
     return (
       <Sheet open={true} onOpenChange={handleClose}>
-        <SheetContent className="w-full sm:max-w-2xl p-6" onInteractOutside={() => {}}>
+        <SheetContent className="w-full sm:max-w-2xl p-6" onInteractOutside={() => { }}>
           <SheetHeader className="sr-only">
             <SheetTitle>Error</SheetTitle>
             <SheetDescription>Failed to load item</SheetDescription>
@@ -298,58 +294,27 @@ export function ObjectDetailPanel({
     { id: "activity", label: "Activity", icon: <Activity className="size-4" /> },
   ];
 
-  const handleTitleSave = () => {
-    const currentTitle = titleField ? data.values[titleField.id] : "";
-    if (titleField && titleValue !== currentTitle) {
-      updateValueMutation.mutate({ field: titleField.id, value: titleValue });
-    }
-    setEditingTitle(false);
-  };
-
   const handleFieldChange = (fieldId: string, value: string) => {
     updateValueMutation.mutate({ field: fieldId, value });
   };
 
   return (
     <Sheet open={true} onOpenChange={handleClose}>
-      <SheetContent className="w-full sm:max-w-3xl p-0 gap-0 [&>button:last-child]:hidden" onInteractOutside={() => {}}>
+      <SheetContent className="w-full sm:max-w-3xl p-0 gap-0 [&>button:last-child]:hidden" onInteractOutside={() => { }}>
         <SheetHeader className="sr-only">
           <SheetTitle>Item details</SheetTitle>
           <SheetDescription>View and edit item details</SheetDescription>
         </SheetHeader>
         {/* Header */}
         <div className="flex items-center gap-3 px-6 py-4 border-b shrink-0">
-          {editingTitle && canWrite(access) ? (
-            <Input
-              value={titleValue}
-              onChange={(e) => setTitleValue(e.target.value)}
-              onBlur={handleTitleSave}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  e.preventDefault();
-                  handleTitleSave();
-                }
-                if (e.key === "Escape") {
-                  setEditingTitle(false);
-                }
-              }}
-              className="text-xl font-bold flex-1"
-              autoFocus
-            />
-          ) : (
-            <h2
-              className={cn(
-                "text-xl font-bold leading-tight truncate flex-1 min-w-0",
-                canWrite(access) && "cursor-pointer hover:text-primary transition-colors"
-              )}
-              onClick={canWrite(access) && titleField ? () => {
-                setTitleValue(titleField ? data.values[titleField.id] || "" : "");
-                setEditingTitle(true);
-              } : undefined}
-            >
+          <div className="flex items-baseline gap-2 flex-1 min-w-0">
+            <h2 className="text-xl font-bold leading-tight truncate min-w-0">
               {title}
             </h2>
-          )}
+            <span className="text-sm text-muted-foreground truncate">
+              · {object.readable}
+            </span>
+          </div>
           <div className="flex items-center gap-1 shrink-0">
             <Button
               variant="ghost"
@@ -409,107 +374,118 @@ export function ObjectDetailPanel({
 
         {/* Tab content */}
         <div className="flex-1 overflow-y-auto p-6">
-          {activeTab === "properties" && <div className="max-w-2xl space-y-6">
-              {/* ID */}
+          <div className="max-w-2xl space-y-6" hidden={activeTab !== "properties"}>
+            {/* Title */}
+            {titleField && (
               <div className="grid grid-cols-[120px_1fr] gap-4 items-start">
                 <label className="text-sm font-medium text-muted-foreground pt-2">
-                  ID
+                  {titleField.name}
                 </label>
-                <DataChip value={object.readable} copyable chipClassName="bg-primary/10 border-primary/20 text-primary font-bold text-[11px]" />
+                <FieldEditor
+                  field={titleField}
+                  value={data.values[titleField.id] || ""}
+                  options={classOptions[titleField.id] || []}
+                  onChange={(value) => handleFieldChange(titleField.id, value)}
+                  readOnly={!canWrite(access)}
+                  hideLabel
+                  localPeople={peopleData}
+                  onValidationError={(hasError) => handleValidationError(titleField.id, hasError)}
+                />
               </div>
+            )}
 
-              {/* Parent */}
-              {(validParentOptions.length > 0 || currentParent) && (
-                <div className="grid grid-cols-[120px_1fr] gap-4 items-start">
+            {/* Parent */}
+            {(validParentOptions.length > 0 || currentParent) && (
+              <div className="grid grid-cols-[120px_1fr] gap-4 items-start">
+                <label className="text-sm font-medium text-muted-foreground pt-2">
+                  Parent
+                </label>
+                {!canWrite(access) ? (
+                  <span className="text-sm h-9 flex items-center">
+                    {currentParent
+                      ? objectTitle(currentParent)
+                      : "None"}
+                  </span>
+                ) : (
+                  <Select
+                    value={object.parent || "_none_"}
+                    onValueChange={(value) => updateParentMutation.mutate(value === "_none_" ? "" : value)}
+                    disabled={updateParentMutation.isPending}
+                  >
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="None">
+                        {currentParent
+                          ? objectTitle(currentParent)
+                          : "None"}
+                      </SelectValue>
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="_none_">None</SelectItem>
+                      {validParentOptions.map((obj) => (
+                        <SelectItem key={obj.id} value={obj.id}>
+                          {objectTitle(obj)}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                )}
+              </div>
+            )}
+
+            {classFields
+              .filter((f) => f.id !== cls?.title)
+              .map((field) => (
+                <div key={field.id} className="grid grid-cols-[120px_1fr] gap-4 items-start">
                   <label className="text-sm font-medium text-muted-foreground pt-2">
-                    Parent
+                    {field.name}
                   </label>
-                  {!canWrite(access) ? (
-                    <span className="text-sm h-9 flex items-center">
-                      {currentParent
-                        ? objectTitle(currentParent)
-                        : "None"}
-                    </span>
-                  ) : (
-                    <Select
-                      value={object.parent || "_none_"}
-                      onValueChange={(value) => updateParentMutation.mutate(value === "_none_" ? "" : value)}
-                      disabled={updateParentMutation.isPending}
-                    >
-                      <SelectTrigger className="w-full">
-                        <SelectValue placeholder="None">
-                          {currentParent
-                            ? objectTitle(currentParent)
-                            : "None"}
-                        </SelectValue>
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="_none_">None</SelectItem>
-                        {validParentOptions.map((obj) => (
-                          <SelectItem key={obj.id} value={obj.id}>
-                            {objectTitle(obj)}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  )}
+                  <FieldEditor
+                    field={field}
+                    value={data.values[field.id] || ""}
+                    options={classOptions[field.id] || []}
+                    onChange={(value) => handleFieldChange(field.id, value)}
+                    readOnly={!canWrite(access)}
+                    hideLabel
+                    localPeople={peopleData}
+                    onValidationError={(hasError) => handleValidationError(field.id, hasError)}
+                  />
                 </div>
-              )}
+              ))}
 
-              {classFields
-                .filter((f) => f.id !== cls?.title)
-                .map((field) => (
-                  <div key={field.id} className="grid grid-cols-[120px_1fr] gap-4 items-start">
-                    <label className="text-sm font-medium text-muted-foreground pt-2">
-                      {field.name}
-                    </label>
-                    <FieldEditor
-                      field={field}
-                      value={data.values[field.id] || ""}
-                      options={classOptions[field.id] || []}
-                      onChange={(value) => handleFieldChange(field.id, value)}
-                      readOnly={!canWrite(access)}
-                      hideLabel
-                      localPeople={peopleData}
-                      onValidationError={(hasError) => handleValidationError(field.id, hasError)}
-                    />
-                  </div>
-                ))}
+            <ObjectAttachments
+              projectId={projectId}
+              objectId={objectId!}
+              readOnly={!canWrite(access)}
+            />
 
-              <ObjectAttachments
-                projectId={projectId}
-                objectId={objectId!}
-                readOnly={!canWrite(access)}
-              />
-
-              <ObjectLinks
-                projectId={projectId}
-                objectId={objectId!}
-                outgoing={data.outgoing}
-                incoming={data.incoming}
-                prefix={project.project.prefix}
-                classes={project.classes}
-                readOnly={!canWrite(access)}
-              />
-            </div>}
+            <ObjectLinks
+              projectId={projectId}
+              objectId={objectId!}
+              outgoing={data.outgoing}
+              incoming={data.incoming}
+              prefix={project.project.prefix}
+              classes={project.classes}
+              readOnly={!canWrite(access)}
+            />
+          </div>
 
           {hasRequests && activeTab === "requests" && <div className="max-w-2xl">
-              <RequestPanel
-                projectId={projectId}
-                objectId={objectId!}
-                requests={data.requests || []}
-                objectTitle={title}
-                objectReadable={object.readable}
-                readOnly={!canWrite(access)}
-              />
-            </div>}
+            <RequestPanel
+              projectId={projectId}
+              objectId={objectId!}
+              requests={data.requests || []}
+              objectTitle={title}
+              objectReadable={object.readable}
+              readOnly={!canWrite(access)}
+            />
+          </div>}
 
           {activeTab === "comments" && <div className="max-w-2xl">
-              <CommentList projectId={projectId} objectId={objectId} readOnly={!canComment(access)} />
+            <CommentList projectId={projectId} objectId={objectId} readOnly={!canComment(access)} />
           </div>}
 
           {activeTab === "activity" && <div className="max-w-2xl">
-              <ActivityList projectId={projectId} objectId={objectId} />
+            <ActivityList projectId={projectId} objectId={objectId} />
           </div>}
         </div>
 

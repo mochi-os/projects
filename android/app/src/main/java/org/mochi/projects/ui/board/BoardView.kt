@@ -204,7 +204,11 @@ private fun BoardColumn(
         // Column header
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.padding(horizontal = 4.dp, vertical = 8.dp)
+            modifier = Modifier
+                .fillMaxWidth()
+                .clip(MaterialTheme.shapes.small)
+                .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.1f))
+                .padding(horizontal = 4.dp, vertical = 8.dp)
         ) {
             Icon(
                 imageVector = if (collapsed) Icons.Default.ChevronRight else Icons.Default.ExpandMore,
@@ -212,7 +216,7 @@ private fun BoardColumn(
                 modifier = Modifier
                     .size(18.dp)
                     .clickable { collapsed = !collapsed },
-                tint = MaterialTheme.colorScheme.onSurfaceVariant
+                tint = MaterialTheme.colorScheme.primary
             )
             if (!collapsed) {
                 if (option.colour.isNotBlank()) {
@@ -229,12 +233,13 @@ private fun BoardColumn(
                     text = option.name,
                     style = MaterialTheme.typography.titleSmall,
                     fontWeight = FontWeight.SemiBold,
+                    color = MaterialTheme.colorScheme.primary,
                     modifier = Modifier.weight(1f)
                 )
                 Text(
                     text = "${objects.size}",
                     style = MaterialTheme.typography.labelMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                    color = MaterialTheme.colorScheme.primary
                 )
                 if (onCreateInColumn != null) {
                     IconButton(

@@ -1206,7 +1206,7 @@ def notify_watchers(object_id, project_id, local_identity, user_id, body):
 	fp = mochi.entity.fingerprint(project_id)
 	url = "/projects/" + fp + "/" + object_id if fp else "/projects"
 	mochi.log.debug("notify_watchers: sending notification title=" + title)
-	mochi.service.call("notifications", "send", "update", title, body, object_id, url)
+	mochi.service.call("notifications", "send", "update/modified", title, body, object_id, url)
 
 def notify_mentions(object_id, project_id, content, author_id, author_name):
 	"""Notify subscribers who are @mentioned in a comment."""
@@ -4966,7 +4966,7 @@ def event_object_create(e):
 				title = get_object_display(project, obj, object_id)
 				fp2 = mochi.entity.fingerprint(project_id)
 				url = "/projects/" + fp2 + "/" + object_id if fp2 else "/projects"
-				mochi.service.call("notifications", "send", "update",
+				mochi.service.call("notifications", "send", "update/created",
 					title, "Created", object_id, url)
 
 # Object updated
@@ -6251,7 +6251,7 @@ def do_object_create(project_id, project, params, user_id):
 		display = get_object_display(project, obj, object_id)
 		fp = mochi.entity.fingerprint(project_id)
 		url = "/projects/" + fp + "/" + object_id if fp else "/projects"
-		mochi.service.call("notifications", "send", "update",
+		mochi.service.call("notifications", "send", "update/created",
 			display, "Created", object_id, url)
 	return {"id": object_id, "number": new_counter,
 			"readable": project["prefix"] + "-" + str(new_counter)}

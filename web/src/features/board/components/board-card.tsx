@@ -2,7 +2,7 @@
 // Copyright Alistair Cunningham 2026
 
 import { useRef } from "react";
-import { Card, cn, useFormat } from "@mochi/web";
+import { Card, EntityAvatar, cn, useFormat } from "@mochi/web";
 import { Check, CheckSquare } from "lucide-react";
 import type { ProjectObject, ProjectField, ProjectClass, FieldOption, ChecklistItem } from "@/types";
 
@@ -158,7 +158,8 @@ export function BoardCard({
       case "user": {
         const name = peopleMap?.[value] || value;
         return (
-          <span key={field.id} className="text-[10px] text-muted-foreground">
+          <span key={field.id} className="inline-flex items-center gap-1.5 text-[10px] text-muted-foreground">
+            <EntityAvatar fingerprint={value} name={name} size={18} />
             {truncate(name, 25)}
           </span>
         );
@@ -274,7 +275,7 @@ export function BoardCard({
                   )
                 : options;
               return (
-                <div key={child.id} data-card-id={child.id} className="rounded-[10px] data-[drop-target]:ring-2 data-[drop-target]:ring-primary">
+                <div key={child.id} data-card-id={child.id} className="rounded-lg data-[drop-target]:ring-2 data-[drop-target]:ring-primary">
                   <BoardCard
                     object={child}
                     fields={childFields}

@@ -429,7 +429,7 @@ export function DiffViewer({ diff, viewStyle }: DiffViewerProps) {
       {files.map((file) => (
         <div
           key={file.path}
-          className="border rounded-[10px] overflow-hidden"
+          className="border rounded-lg overflow-hidden"
         >
           <FileHeader
             file={file}

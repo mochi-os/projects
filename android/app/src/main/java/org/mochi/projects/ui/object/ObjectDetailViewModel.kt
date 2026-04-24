@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import org.mochi.android.api.MochiError
 import org.mochi.android.api.toMochiError
+import org.mochi.android.auth.SessionManager
 import org.mochi.android.model.Attachment
 import org.mochi.android.model.Comment
 import org.mochi.projects.model.Activity
@@ -40,11 +41,14 @@ data class ObjectDetailUiState(
 
 @HiltViewModel
 class ObjectDetailViewModel @Inject constructor(
-    private val repository: ProjectsRepository
+    private val repository: ProjectsRepository,
+    sessionManager: SessionManager
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(ObjectDetailUiState())
     val uiState: StateFlow<ObjectDetailUiState> = _uiState.asStateFlow()
+
+    val serverUrl: String = sessionManager.getServerUrlBlocking().trimEnd('/')
 
     private var debounceJobs = mutableMapOf<String, Job>()
     private var currentProjectId: String = ""

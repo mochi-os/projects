@@ -192,7 +192,10 @@ fun ObjectDetailSheet(
                             onDeleteComment = { id ->
                                 viewModel.deleteComment(id)
                             },
-                            onSearchUsers = { query -> viewModel.searchUsers(query) }
+                            onSearchUsers = { query -> viewModel.searchUsers(query) },
+                            avatarUrlBuilder = { comment ->
+                                "${viewModel.serverUrl}/projects/$projectId/-/comment/${comment.id}/asset/avatar"
+                            }
                         )
                         2 -> ActivityTab(
                             activity = uiState.activity,

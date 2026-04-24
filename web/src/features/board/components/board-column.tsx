@@ -40,6 +40,7 @@ interface BoardColumnProps {
   id: string;
   name: string;
   colour?: string;
+  projectId?: string;
   objects: ProjectObject[];
   fields: ProjectField[];
   options: Record<string, FieldOption[]>;
@@ -74,6 +75,7 @@ export function BoardColumn({
   id,
   name,
   colour,
+  projectId,
   objects,
   fields,
   options,
@@ -432,6 +434,7 @@ export function BoardColumn({
   const renderCard = (object: ProjectObject) => (
     <div key={object.id} data-card-id={object.id} className="rounded-lg transition-shadow data-[drop-target]:ring-2 data-[drop-target]:ring-primary">
       <BoardCard
+        projectId={projectId}
         object={object}
         fields={fields}
         options={options}

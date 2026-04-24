@@ -36,6 +36,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import org.mochi.android.model.Comment
+import org.mochi.android.ui.components.EntityAvatar
 import org.mochi.android.ui.components.MentionSuggestion
 import org.mochi.android.ui.components.MentionTextField
 import org.mochi.android.util.formatTimestamp
@@ -46,7 +47,11 @@ fun CommentsTab(
     onCreateComment: (String, String?) -> Unit,
     onUpdateComment: (String, String) -> Unit,
     onDeleteComment: (String) -> Unit,
-    onSearchUsers: (suspend (String) -> List<MentionSuggestion>)? = null
+    onSearchUsers: (suspend (String) -> List<MentionSuggestion>)? = null,
+    // Builds the avatar proxy URL for a commenter. Should return an absolute
+    // URL to the projects app's proxy action, e.g.
+    // "<server>/projects/<project>/-/comment/<comment.id>/asset/avatar".
+    avatarUrlBuilder: ((Comment) -> String?)? = null
 ) {
     var newComment by remember { mutableStateOf("") }
     var replyToId by remember { mutableStateOf<String?>(null) }
@@ -126,6 +131,7 @@ fun CommentsTab(
                     CommentItem(
                         comment = comment,
                         depth = 0,
+                        avatarUrlBuilder = avatarUrlBuilder,
                         onReply = { id, name ->
                             replyToId = id
                             replyToName = name
@@ -143,10 +149,12 @@ fun CommentsTab(
 private fun CommentItem(
     comment: Comment,
     depth: Int,
+    avatarUrlBuilder: ((Comment) -> String?)?,
     onReply: (String, String) -> Unit,
     onEdit: (String, String) -> Unit,
     onDelete: (String) -> Unit
 ) {
+    val avatarUrl = avatarUrlBuilder?.invoke(comment)
     var showOverflow by remember { mutableStateOf(false) }
     var isEditing by remember { mutableStateOf(false) }
     var editContent by remember { mutableStateOf(comment.text) }
@@ -158,6 +166,13 @@ private fun CommentItem(
             .padding(start = indent + 16.dp, end = 16.dp, top = 8.dp, bottom = 8.dp)
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
+            EntityAvatar(
+                name = comment.name.orEmpty(),
+                src = avatarUrl,
+                seed = comment.author,
+                size = 20.dp,
+            )
+            Spacer(modifier = Modifier.width(6.dp))
             Text(
                 text = comment.name.orEmpty(),
                 style = MaterialTheme.typography.labelMedium,
@@ -246,6 +261,7 @@ private fun CommentItem(
                 CommentItem(
                     comment = child,
                     depth = depth + 1,
+                    avatarUrlBuilder = avatarUrlBuilder,
                     onReply = onReply,
                     onEdit = onEdit,
                     onDelete = onDelete

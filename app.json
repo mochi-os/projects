@@ -2,7 +2,7 @@
 // Copyright Alistair Cunningham 2026
 
 {
-	"version": "1.89",
+	"version": "1.91",
 	"label": "app_name",
 	"classes": ["project"],
 	"paths": ["projects"],
@@ -72,6 +72,9 @@
 		":project/-/objects/:object/comments/create": {"function": "action_comment_create"},
 		":project/-/objects/:object/comments/:comment/update": {"function": "action_comment_update"},
 		":project/-/objects/:object/comments/:comment/delete": {"function": "action_comment_delete"},
+		":project/-/comment/:comment/asset/:asset": {"function": "action_comment_asset", "public": true},
+		":project/-/activity/:activity/asset/:asset": {"function": "action_activity_asset", "public": true},
+		":project/-/user/:user/asset/:asset": {"function": "action_user_asset", "public": true},
 
 		":project/-/objects/:object/attachments": {"function": "action_attachment_list"},
 		":project/-/objects/:object/attachments/create": {"function": "action_attachment_create"},

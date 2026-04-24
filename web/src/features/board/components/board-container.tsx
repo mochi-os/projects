@@ -681,6 +681,7 @@ export function BoardContainer({
           objects={previewObjects}
           fields={visibleFields}
           options={classOptions}
+          projectId={project.project.id}
           prefix={project.project.prefix}
           objectMap={objectMap}
           allFields={project.fields}
@@ -803,6 +804,7 @@ export function BoardContainer({
               objects={[]}
               fields={visibleFields}
               options={classOptions}
+              projectId={project.project.id}
               prefix={project.project.prefix}
               objectMap={objectMap}
               allFields={project.fields}
@@ -847,6 +849,7 @@ export function BoardContainer({
           objects={applyPreviewToList(objectsByStatus[""])}
           fields={visibleFields}
           options={classOptions}
+          projectId={project.project.id}
           prefix={project.project.prefix}
           objectMap={objectMap}
           allFields={project.fields}

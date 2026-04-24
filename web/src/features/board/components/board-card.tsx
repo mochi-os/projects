@@ -2,12 +2,13 @@
 // Copyright Alistair Cunningham 2026
 
 import { useRef } from "react";
-import { Card, EntityAvatar, cn, useFormat } from "@mochi/web";
+import { Card, EntityAvatar, cn, useFormat, getAppPath } from "@mochi/web";
 import { Check, CheckSquare } from "lucide-react";
 import type { ProjectObject, ProjectField, ProjectClass, FieldOption, ChecklistItem } from "@/types";
 
 interface BoardCardProps {
   object: ProjectObject;
+  projectId?: string;
   fields: ProjectField[];
   options: Record<string, FieldOption[]>;
   prefix: string;
@@ -38,6 +39,7 @@ function truncate(text: string, maxLength: number): string {
 }
 
 export function BoardCard({
+  projectId,
   object,
   fields,
   options,
@@ -159,7 +161,14 @@ export function BoardCard({
         const name = peopleMap?.[value] || value;
         return (
           <span key={field.id} className="inline-flex items-center gap-1.5 text-[10px] text-muted-foreground">
-            <EntityAvatar fingerprint={value} name={name} size={18} />
+            <EntityAvatar
+              src={projectId ? `${getAppPath()}/${projectId}/-/user/${value}/asset/avatar` : undefined}
+              styleUrl={projectId ? `${getAppPath()}/${projectId}/-/user/${value}/asset/style` : undefined}
+              fingerprint={projectId ? undefined : value}
+              seed={value}
+              name={name}
+              size={18}
+            />
             {truncate(name, 25)}
           </span>
         );
@@ -277,6 +286,7 @@ export function BoardCard({
               return (
                 <div key={child.id} data-card-id={child.id} className="rounded-lg data-[drop-target]:ring-2 data-[drop-target]:ring-primary">
                   <BoardCard
+                    projectId={projectId}
                     object={child}
                     fields={childFields}
                     options={childOptions}

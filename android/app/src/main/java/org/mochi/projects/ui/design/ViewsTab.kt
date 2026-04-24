@@ -96,7 +96,7 @@ fun ViewsTab(
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
-                    text = "Create a board or list view to organize objects",
+                    text = "Create a board or list view to group objects",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )

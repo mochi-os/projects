@@ -280,8 +280,8 @@ export function BoardCard({
               const childFields = allFields?.[child.class] || fields;
               const childOptions = allFields
                 ? Object.fromEntries(
-                    childFields.map((f) => [f.id, options[f.id] || []])
-                  )
+                  childFields.map((f) => [f.id, options[f.id] || []])
+                )
                 : options;
               return (
                 <div key={child.id} data-card-id={child.id} className="rounded-lg data-[drop-target]:ring-2 data-[drop-target]:ring-primary">

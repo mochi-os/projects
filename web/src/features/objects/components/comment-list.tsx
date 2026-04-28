@@ -10,12 +10,12 @@ import {
   toast,
   getErrorMessage,
   ListSkeleton,
+  MentionTextarea,
   useAuthStore,
   useImageObjectUrls,
 } from "@mochi/web";
 import projectsApi from "@/api/projects";
 import { CommentThread } from "./comment-thread";
-import { MentionTextarea } from "@mochi/web";
 
 interface CommentListProps {
   projectId: string;
@@ -94,12 +94,7 @@ export function CommentList({
       commentId: string;
       content: string;
     }) => {
-      return projectsApi.updateComment(
-        projectId,
-        objectId,
-        commentId,
-        content,
-      );
+      return projectsApi.updateComment(projectId, objectId, commentId, content);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
@@ -145,9 +140,11 @@ export function CommentList({
   const handleReply = async (parentId: string, files?: File[]) => {
     const trimmed = replyDraft.trim();
     if (!trimmed) return;
-    await createMutation.mutateAsync(
-      { content: trimmed, parent: parentId, files },
-    );
+    await createMutation.mutateAsync({
+      content: trimmed,
+      parent: parentId,
+      files,
+    });
     setReplyingTo(null);
     setReplyDraft("");
   };
@@ -169,9 +166,7 @@ export function CommentList({
   };
 
   if (isLoading) {
-    return (
-      <ListSkeleton count={3} variant="simple" height="h-12" />
-    );
+    return <ListSkeleton count={3} variant="simple" height="h-12" />;
   }
 
   const comments = data?.comments ?? [];
@@ -279,7 +274,11 @@ export function CommentList({
                 setReplyingTo(id);
                 const selected = window.getSelection()?.toString().trim();
                 if (selected) {
-                  const quoted = selected.split("\n").map((line) => `> ${line}`).join("\n") + "\n\n";
+                  const quoted =
+                    selected
+                      .split("\n")
+                      .map((line) => `> ${line}`)
+                      .join("\n") + "\n\n";
                   setReplyDraft(quoted);
                 } else {
                   setReplyDraft("");

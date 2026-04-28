@@ -3,7 +3,15 @@
 
 import { useState, useEffect, useRef, useMemo } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { Eye, EyeOff, Trash2, MessageSquare, Activity, Settings2, GitMerge } from "lucide-react";
+import {
+  Eye,
+  EyeOff,
+  Trash2,
+  MessageSquare,
+  Activity,
+  Settings2,
+  GitMerge,
+} from "lucide-react";
 import {
   Button,
   ConfirmDialog,
@@ -49,10 +57,12 @@ export function ObjectDetailPanel({
   access,
   onClose,
 }: ObjectDetailPanelProps) {
-  useShellOverlay()
+  useShellOverlay(!!objectId);
   const [activeTab, setActiveTab] = useState<Tab>("properties");
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
-  const [validationErrors, setValidationErrors] = useState<Set<string>>(new Set());
+  const [validationErrors, setValidationErrors] = useState<Set<string>>(
+    new Set(),
+  );
   const queryClient = useQueryClient();
 
   // Track validation errors from fields
@@ -87,7 +97,20 @@ export function ObjectDetailPanel({
     enabled: !!objectId,
     // Use cached objects list as placeholder so the panel renders immediately
     placeholderData: () => {
-      const cached = queryClient.getQueryData<{ objects: Array<{ id: string; project: string; class: string; number: number; parent: string; rank: number; created: number; updated: number; values: Record<string, string> }>; watched?: string[] }>(["objects", projectId]);
+      const cached = queryClient.getQueryData<{
+        objects: Array<{
+          id: string;
+          project: string;
+          class: string;
+          number: number;
+          parent: string;
+          rank: number;
+          created: number;
+          updated: number;
+          values: Record<string, string>;
+        }>;
+        watched?: string[];
+      }>(["objects", projectId]);
       if (!cached || !objectId) return undefined;
       const obj = cached.objects.find((o) => o.id === objectId);
       if (!obj) return undefined;
@@ -180,7 +203,9 @@ export function ObjectDetailPanel({
   const updateParentMutation = useMutation({
     mutationFn: async (newParent: string) => {
       if (!objectId) return;
-      return projectsApi.updateObject(projectId, objectId, { parent: newParent });
+      return projectsApi.updateObject(projectId, objectId, {
+        parent: newParent,
+      });
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
@@ -216,14 +241,29 @@ export function ObjectDetailPanel({
     };
     findDescendants(object.id);
 
-    const title = (obj: { class: string; number: number; values: Record<string, string> }) => {
+    const title = (obj: {
+      class: string;
+      number: number;
+      values: Record<string, string>;
+    }) => {
       const cls = project.classes.find((c) => c.id === obj.class);
-      return (cls?.title ? obj.values[cls.title] : "") || `${project.project.prefix}-${obj.number}`;
+      return (
+        (cls?.title ? obj.values[cls.title] : "") ||
+        `${project.project.prefix}-${obj.number}`
+      );
     };
     return objectsData
-      .filter((obj) => parentClassIds.includes(obj.class) && !descendants.has(obj.id))
+      .filter(
+        (obj) => parentClassIds.includes(obj.class) && !descendants.has(obj.id),
+      )
       .sort((a, b) => title(a).localeCompare(title(b)));
-  }, [objectsData, data, project.hierarchy]);
+  }, [
+    objectsData,
+    data,
+    project.classes,
+    project.hierarchy,
+    project.project.prefix,
+  ]);
 
   // Get current parent object info - must be before early returns
   const currentParent = useMemo(() => {
@@ -238,7 +278,10 @@ export function ObjectDetailPanel({
   if (isLoading) {
     return (
       <Sheet open={true} onOpenChange={handleClose}>
-        <SheetContent className="w-full sm:max-w-2xl p-0 gap-0" onInteractOutside={() => { }}>
+        <SheetContent
+          className="w-full sm:max-w-2xl p-0 gap-0"
+          onInteractOutside={() => {}}
+        >
           <SheetHeader className="sr-only">
             <SheetTitle>Loading item</SheetTitle>
             <SheetDescription>Loading item details</SheetDescription>
@@ -254,7 +297,10 @@ export function ObjectDetailPanel({
   if (error || !data) {
     return (
       <Sheet open={true} onOpenChange={handleClose}>
-        <SheetContent className="w-full sm:max-w-2xl p-6" onInteractOutside={() => { }}>
+        <SheetContent
+          className="w-full sm:max-w-2xl p-6"
+          onInteractOutside={() => {}}
+        >
           <SheetHeader className="sr-only">
             <SheetTitle>Error</SheetTitle>
             <SheetDescription>Failed to load item</SheetDescription>
@@ -276,24 +322,52 @@ export function ObjectDetailPanel({
   const classFields = project.fields[object.class] || [];
   const classOptions = project.options[object.class] || {};
   const cls = project.classes.find((c) => c.id === object.class);
-  const titleField = cls?.title ? classFields.find((f) => f.id === cls.title) : undefined;
-  const title = (titleField ? data.values[titleField.id] : "") || object.readable;
+  const titleField = cls?.title
+    ? classFields.find((f) => f.id === cls.title)
+    : undefined;
+  const title =
+    (titleField ? data.values[titleField.id] : "") || object.readable;
   const hasRequests = cls?.requests?.includes("merge") ?? false;
 
   // Get display title for any object using its class's title field
-  const objectTitle = (obj: { class: string; number: number; values: Record<string, string> }) => {
+  const objectTitle = (obj: {
+    class: string;
+    number: number;
+    values: Record<string, string>;
+  }) => {
     const objCls = project.classes.find((c) => c.id === obj.class);
-    return (objCls?.title ? obj.values[objCls.title] : "") || `${project.project.prefix}-${obj.number}`;
+    return (
+      (objCls?.title ? obj.values[objCls.title] : "") ||
+      `${project.project.prefix}-${obj.number}`
+    );
   };
   const requestCount = data.requests?.length || 0;
 
   const tabs: { id: Tab; label: string; icon: React.ReactNode }[] = [
-    { id: "properties", label: "Properties", icon: <Settings2 className="size-4" /> },
+    {
+      id: "properties",
+      label: "Properties",
+      icon: <Settings2 className="size-4" />,
+    },
     ...(hasRequests
-      ? [{ id: "requests" as Tab, label: `Merge requests (${requestCount})`, icon: <GitMerge className="size-4" /> }]
+      ? [
+          {
+            id: "requests" as Tab,
+            label: `Merge requests (${requestCount})`,
+            icon: <GitMerge className="size-4" />,
+          },
+        ]
       : []),
-    { id: "comments", label: `Comments (${data.comment_count || 0})`, icon: <MessageSquare className="size-4" /> },
-    { id: "activity", label: "Activity", icon: <Activity className="size-4" /> },
+    {
+      id: "comments",
+      label: `Comments (${data.comment_count || 0})`,
+      icon: <MessageSquare className="size-4" />,
+    },
+    {
+      id: "activity",
+      label: "Activity",
+      icon: <Activity className="size-4" />,
+    },
   ];
 
   const handleFieldChange = (fieldId: string, value: string) => {
@@ -302,7 +376,10 @@ export function ObjectDetailPanel({
 
   return (
     <Sheet open={true} onOpenChange={handleClose}>
-      <SheetContent className="w-full sm:max-w-3xl p-0 gap-0 [&>button:last-child]:hidden" onInteractOutside={() => { }}>
+      <SheetContent
+        className="w-full sm:max-w-3xl p-0 gap-0 [&>button:last-child]:hidden"
+        onInteractOutside={() => {}}
+      >
         <SheetHeader className="sr-only">
           <SheetTitle>Item details</SheetTitle>
           <SheetDescription>View and edit item details</SheetDescription>
@@ -366,7 +443,7 @@ export function ObjectDetailPanel({
                   "relative flex shrink-0 items-center gap-2 px-4 py-2 text-sm font-medium whitespace-nowrap transition-colors",
                   activeTab === tab.id
                     ? "text-foreground after:absolute after:inset-x-0 after:bottom-0 after:h-0.5 after:bg-primary"
-                    : "text-muted-foreground hover:text-foreground"
+                    : "text-muted-foreground hover:text-foreground",
                 )}
               >
                 {tab.icon}
@@ -378,7 +455,10 @@ export function ObjectDetailPanel({
 
         {/* Tab content */}
         <div className="flex-1 overflow-y-auto p-6">
-          <div className="max-w-2xl space-y-6" hidden={activeTab !== "properties"}>
+          <div
+            className="max-w-2xl space-y-6"
+            hidden={activeTab !== "properties"}
+          >
             {/* Title */}
             {titleField && (
               <div className="grid grid-cols-[120px_1fr] gap-4 items-start">
@@ -393,7 +473,9 @@ export function ObjectDetailPanel({
                   readOnly={!canWrite(access)}
                   hideLabel
                   localPeople={peopleData}
-                  onValidationError={(hasError) => handleValidationError(titleField.id, hasError)}
+                  onValidationError={(hasError) =>
+                    handleValidationError(titleField.id, hasError)
+                  }
                 />
               </div>
             )}
@@ -406,21 +488,21 @@ export function ObjectDetailPanel({
                 </label>
                 {!canWrite(access) ? (
                   <span className="text-sm h-9 flex items-center">
-                    {currentParent
-                      ? objectTitle(currentParent)
-                      : "None"}
+                    {currentParent ? objectTitle(currentParent) : "None"}
                   </span>
                 ) : (
                   <Select
                     value={object.parent || "_none_"}
-                    onValueChange={(value) => updateParentMutation.mutate(value === "_none_" ? "" : value)}
+                    onValueChange={(value) =>
+                      updateParentMutation.mutate(
+                        value === "_none_" ? "" : value,
+                      )
+                    }
                     disabled={updateParentMutation.isPending}
                   >
                     <SelectTrigger className="w-full">
                       <SelectValue placeholder="None">
-                        {currentParent
-                          ? objectTitle(currentParent)
-                          : "None"}
+                        {currentParent ? objectTitle(currentParent) : "None"}
                       </SelectValue>
                     </SelectTrigger>
                     <SelectContent>
@@ -439,7 +521,10 @@ export function ObjectDetailPanel({
             {classFields
               .filter((f) => f.id !== cls?.title)
               .map((field) => (
-                <div key={field.id} className="grid grid-cols-[120px_1fr] gap-4 items-start">
+                <div
+                  key={field.id}
+                  className="grid grid-cols-[120px_1fr] gap-4 items-start"
+                >
                   <label className="text-sm font-medium text-muted-foreground pt-2">
                     {field.name}
                   </label>
@@ -451,7 +536,9 @@ export function ObjectDetailPanel({
                     readOnly={!canWrite(access)}
                     hideLabel
                     localPeople={peopleData}
-                    onValidationError={(hasError) => handleValidationError(field.id, hasError)}
+                    onValidationError={(hasError) =>
+                      handleValidationError(field.id, hasError)
+                    }
                   />
                 </div>
               ))}
@@ -473,24 +560,34 @@ export function ObjectDetailPanel({
             />
           </div>
 
-          {hasRequests && activeTab === "requests" && <div className="max-w-2xl">
-            <RequestPanel
-              projectId={projectId}
-              objectId={objectId!}
-              requests={data.requests || []}
-              objectTitle={title}
-              objectReadable={object.readable}
-              readOnly={!canWrite(access)}
-            />
-          </div>}
+          {hasRequests && activeTab === "requests" && (
+            <div className="max-w-2xl">
+              <RequestPanel
+                projectId={projectId}
+                objectId={objectId!}
+                requests={data.requests || []}
+                objectTitle={title}
+                objectReadable={object.readable}
+                readOnly={!canWrite(access)}
+              />
+            </div>
+          )}
 
-          {activeTab === "comments" && <div className="max-w-2xl">
-            <CommentList projectId={projectId} objectId={objectId} readOnly={!canComment(access)} />
-          </div>}
+          {activeTab === "comments" && (
+            <div className="max-w-2xl">
+              <CommentList
+                projectId={projectId}
+                objectId={objectId}
+                readOnly={!canComment(access)}
+              />
+            </div>
+          )}
 
-          {activeTab === "activity" && <div className="max-w-2xl">
-            <ActivityList projectId={projectId} objectId={objectId} />
-          </div>}
+          {activeTab === "activity" && (
+            <div className="max-w-2xl">
+              <ActivityList projectId={projectId} objectId={objectId} />
+            </div>
+          )}
         </div>
 
         <ConfirmDialog

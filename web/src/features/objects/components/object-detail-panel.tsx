@@ -20,6 +20,7 @@ import {
   cn,
   GeneralError,
   ListSkeleton,
+  useShellOverlay,
 } from "@mochi/web";
 import projectsApi from "@/api/projects";
 import type { ProjectAccess, ProjectDetails } from "@/types";
@@ -48,6 +49,7 @@ export function ObjectDetailPanel({
   access,
   onClose,
 }: ObjectDetailPanelProps) {
+  useShellOverlay()
   const [activeTab, setActiveTab] = useState<Tab>("properties");
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [validationErrors, setValidationErrors] = useState<Set<string>>(new Set());

@@ -390,7 +390,7 @@ export function ObjectDetailPanel({
             <h2 className="text-xl font-bold leading-tight line-clamp-2 md:truncate min-w-0">
               {title}
             </h2>
-            <span className="hidden md:block">.</span>
+            <span className="hidden md:block">·</span>
             <span className="text-xs md:text-sm md:pt-1 text-muted-foreground truncate">
               {object.readable}
             </span>

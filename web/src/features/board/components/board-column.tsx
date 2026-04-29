@@ -432,7 +432,7 @@ export function BoardColumn({
 
   // Render a single card with its children
   const renderCard = (object: ProjectObject) => (
-    <div key={object.id} data-card-id={object.id} className="rounded-lg transition-shadow data-[drop-target]:ring-2 data-[drop-target]:ring-primary">
+    <div key={object.id} data-card-id={object.id} className="rounded-lg transition-shadow data-drop-target:ring-2 data-drop-target:ring-primary">
       <BoardCard
         projectId={projectId}
         object={object}
@@ -493,7 +493,7 @@ export function BoardColumn({
         "rounded-lg",
         rows ? "grid grid-rows-subgrid row-span-full" : "flex flex-col w-72 shrink-0 h-full",
         "bg-surface-1 overflow-hidden border border-border transition-colors",
-        "data-[drag-over]:border-primary data-[drag-over]:bg-primary/5",
+        "data-drag-over:border-primary data-drag-over:bg-primary/5",
         isReordering && !isDragging && "border-dashed border-border-strong",
         isDragging && "border-primary border-2 bg-background shadow-lg",
       )}

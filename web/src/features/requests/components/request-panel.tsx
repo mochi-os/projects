@@ -88,7 +88,7 @@ export function RequestPanel({
         </div>
         {!readOnly && (
           <Button
-            variant="ghost"
+            variant="outline"
             size="sm"
             className="h-7 text-xs"
             onClick={handleAdd}
@@ -363,7 +363,7 @@ function RequestItem({
                       <Button
                         variant="ghost"
                         size="icon"
-                        className="h-9 w-9 shrink-0 text-muted-foreground hover:text-destructive hover:bg-destructive/10"
+                        className="h-9 w-9 shrink-0 text-muted-foreground"
                         onClick={onDelete}
                         title="Delete merge request"
                       >
@@ -383,7 +383,7 @@ function RequestItem({
                     <Button
                       variant="ghost"
                       size="icon"
-                      className="h-9 w-9 shrink-0 text-muted-foreground hover:text-destructive hover:bg-destructive/10"
+                      className="h-9 w-9 shrink-0 text-muted-foreground"
                       onClick={onDelete}
                       title="Delete merge request"
                     >
@@ -400,7 +400,7 @@ function RequestItem({
               <Button
                 variant="ghost"
                 size="icon"
-                className="h-9 w-9 shrink-0 text-muted-foreground hover:text-destructive hover:bg-destructive/10"
+                className="h-9 w-9 shrink-0 text-muted-foreground"
                 onClick={onDelete}
                 title="Delete merge request"
               >

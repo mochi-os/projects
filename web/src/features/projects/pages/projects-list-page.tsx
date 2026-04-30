@@ -16,7 +16,6 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-  shellSubscribeNotifications,
   getErrorMessage,
   toast,
 } from "@mochi/web";
@@ -49,16 +48,6 @@ export function ProjectsListPage() {
   });
 
   usePageTitle("Projects");
-
-  useEffect(() => {
-    if (isLoading || projects.length === 0) return;
-    void shellSubscribeNotifications('projects', [
-      { label: 'New items', topic: 'update/created', defaultEnabled: true },
-      { label: 'Changes', topic: 'update/modified', defaultEnabled: true },
-      { label: 'Assignments', topic: 'assignment', defaultEnabled: true },
-      { label: 'Mentions', topic: 'mention', defaultEnabled: true },
-    ]);
-  }, [isLoading, projects.length]);
 
   useEffect(() => {
     void refresh();

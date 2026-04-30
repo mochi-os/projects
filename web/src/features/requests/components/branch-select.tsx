@@ -2,6 +2,7 @@
 // Copyright Alistair Cunningham 2026
 
 import { useQuery } from "@tanstack/react-query";
+import { Trans } from '@lingui/react/macro'
 import {
   Select,
   SelectContent,
@@ -64,7 +65,7 @@ export function BranchSelect({
         ))}
         {branches.length === 0 && repoId && !isLoading && (
           <div className="px-2 py-1.5 text-sm text-muted-foreground">
-            No branches found
+            <Trans>No branches found</Trans>
           </div>
         )}
       </SelectContent>

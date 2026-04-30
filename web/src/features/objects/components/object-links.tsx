@@ -2,6 +2,7 @@
 // Copyright Alistair Cunningham 2026
 
 import { useState, useMemo, useCallback } from "react";
+import { Trans, useLingui } from '@lingui/react/macro'
 import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
 import { Link2, Plus, X } from "lucide-react";
 import {
@@ -48,6 +49,7 @@ export function ObjectLinks({
   classes,
   readOnly,
 }: ObjectLinksProps) {
+  const { t } = useLingui()
   const [popoverOpen, setPopoverOpen] = useState(false);
   const [linkType, setLinkType] = useState("relates");
   const [search, setSearch] = useState("");
@@ -87,7 +89,7 @@ export function ObjectLinks({
       setLinkType("relates");
     },
     onError: (error) => {
-      toast.error(getErrorMessage(error, "Failed to create link"));
+      toast.error(getErrorMessage(error, t`Failed to create link`));
     },
   });
 
@@ -109,7 +111,7 @@ export function ObjectLinks({
       });
     },
     onError: (error) => {
-      toast.error(getErrorMessage(error, "Failed to delete link"));
+      toast.error(getErrorMessage(error, t`Failed to delete link`));
     },
   });
 
@@ -210,7 +212,7 @@ export function ObjectLinks({
     <div className="grid grid-cols-[120px_1fr] gap-4 items-start">
       <label className="text-sm font-medium text-muted-foreground pt-2 flex items-center gap-1.5">
         <Link2 className="size-3.5" />
-        Links
+        <Trans>Links</Trans>
       </label>
       <div className="space-y-1.5 pt-1">
         {displayLinks.map((link) => (
@@ -248,7 +250,7 @@ export function ObjectLinks({
             <PopoverTrigger asChild>
               <Button variant="outline" size="sm" className="h-7 text-xs">
                 <Plus className="size-3 mr-1.5" />
-                Add link
+                <Trans>Add link</Trans>
               </Button>
             </PopoverTrigger>
             <PopoverContent align="start" className="w-72 p-3 space-y-3">
@@ -265,7 +267,7 @@ export function ObjectLinks({
                 </SelectContent>
               </Select>
               <Input
-                placeholder="Search objects..."
+                placeholder={t`Search objects...`}
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 className="h-8 text-xs"
@@ -290,7 +292,7 @@ export function ObjectLinks({
               )}
               {search.trim() && searchResults.length === 0 && (
                 <p className="text-xs text-muted-foreground text-center py-2">
-                  No matching objects
+                  <Trans>No matching objects</Trans>
                 </p>
               )}
             </PopoverContent>

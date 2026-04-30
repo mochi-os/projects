@@ -2,6 +2,7 @@
 // Copyright Alistair Cunningham 2026
 
 import { useQuery } from "@tanstack/react-query";
+import { useLingui } from '@lingui/react/macro'
 import { Activity } from "lucide-react";
 import { EmptyState, EntityAvatar, ListSkeleton, useFormat, getAppPath } from "@mochi/web";
 import projectsApi from "@/api/projects";
@@ -12,6 +13,7 @@ interface ActivityListProps {
 }
 
 export function ActivityList({ projectId, objectId }: ActivityListProps) {
+  const { t } = useLingui()
   const { formatTimestamp } = useFormat()
   const { data, isLoading } = useQuery({
     queryKey: ["activity", projectId, objectId],
@@ -43,7 +45,7 @@ export function ActivityList({ projectId, objectId }: ActivityListProps) {
   const activities = data || [];
 
   if (activities.length === 0) {
-    return <EmptyState icon={Activity} title="No activity yet" className="py-4" />;
+    return <EmptyState icon={Activity} title={t`No activity yet`} className="py-4" />;
   }
 
   return (

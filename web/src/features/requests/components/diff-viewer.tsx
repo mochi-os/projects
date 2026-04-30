@@ -2,6 +2,7 @@
 // Copyright Alistair Cunningham 2026
 
 import { useState, useMemo, type ReactNode } from "react";
+import { Trans } from '@lingui/react/macro'
 import { diffWords } from "diff";
 import { ChevronDown, ChevronRight, FileCode2, Plus, Minus } from "lucide-react";
 import { cn } from "@mochi/web";
@@ -397,7 +398,7 @@ export function DiffViewer({ diff, viewStyle }: DiffViewerProps) {
   if (files.length === 0) {
     return (
       <div className="text-sm text-muted-foreground p-8 text-center">
-        No changes to display
+        <Trans>No changes to display</Trans>
       </div>
     );
   }

@@ -2,6 +2,7 @@
 // Copyright Alistair Cunningham 2026
 
 import { useState, useEffect, useRef, useMemo } from "react";
+import { Trans, useLingui } from '@lingui/react/macro'
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   Eye,
@@ -57,6 +58,7 @@ export function ObjectDetailPanel({
   access,
   onClose,
 }: ObjectDetailPanelProps) {
+  const { t } = useLingui()
   useShellOverlay(!!objectId);
   const [activeTab, setActiveTab] = useState<Tab>("properties");
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
@@ -283,8 +285,8 @@ export function ObjectDetailPanel({
           onInteractOutside={() => {}}
         >
           <SheetHeader className="sr-only">
-            <SheetTitle>Loading item</SheetTitle>
-            <SheetDescription>Loading item details</SheetDescription>
+            <SheetTitle><Trans>Loading item</Trans></SheetTitle>
+            <SheetDescription><Trans>Loading item details</Trans></SheetDescription>
           </SheetHeader>
           <div className="p-6">
             <ListSkeleton variant="simple" height="h-12" count={3} />
@@ -302,8 +304,8 @@ export function ObjectDetailPanel({
           onInteractOutside={() => {}}
         >
           <SheetHeader className="sr-only">
-            <SheetTitle>Error</SheetTitle>
-            <SheetDescription>Failed to load item</SheetDescription>
+            <SheetTitle><Trans>Error</Trans></SheetTitle>
+            <SheetDescription><Trans>Failed to load item</Trans></SheetDescription>
           </SheetHeader>
           <GeneralError
             error={error ?? new Error("Failed to load object")}
@@ -381,8 +383,8 @@ export function ObjectDetailPanel({
         onInteractOutside={() => {}}
       >
         <SheetHeader className="sr-only">
-          <SheetTitle>Item details</SheetTitle>
-          <SheetDescription>View and edit item details</SheetDescription>
+          <SheetTitle><Trans>Item details</Trans></SheetTitle>
+          <SheetDescription><Trans>View and edit item details</Trans></SheetDescription>
         </SheetHeader>
         {/* Header */}
         <div className="flex items-center gap-3 px-6 py-4 border-b shrink-0">
@@ -416,7 +418,7 @@ export function ObjectDetailPanel({
                 size="icon"
                 className="h-8 w-8 text-muted-foreground"
                 onClick={() => setShowDeleteDialog(true)}
-                title="Delete item"
+                title={t`Delete item`}
               >
                 <Trash2 className="size-4" />
               </Button>
@@ -427,7 +429,7 @@ export function ObjectDetailPanel({
               className="h-8"
               onClick={handleClose}
             >
-              Done
+              <Trans>Done</Trans>
             </Button>
           </div>
         </div>
@@ -484,7 +486,7 @@ export function ObjectDetailPanel({
             {(validParentOptions.length > 0 || currentParent) && (
               <div className="grid grid-cols-[120px_1fr] gap-4 items-start">
                 <label className="text-sm font-medium text-muted-foreground pt-2">
-                  Parent
+                  <Trans>Parent</Trans>
                 </label>
                 {!canWrite(access) ? (
                   <span className="text-sm h-9 flex items-center">
@@ -501,12 +503,12 @@ export function ObjectDetailPanel({
                     disabled={updateParentMutation.isPending}
                   >
                     <SelectTrigger className="w-full">
-                      <SelectValue placeholder="None">
+                      <SelectValue placeholder={t`None`}>
                         {currentParent ? objectTitle(currentParent) : "None"}
                       </SelectValue>
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="_none_">None</SelectItem>
+                      <SelectItem value="_none_"><Trans>None</Trans></SelectItem>
                       {validParentOptions.map((obj) => (
                         <SelectItem key={obj.id} value={obj.id}>
                           {objectTitle(obj)}
@@ -593,7 +595,7 @@ export function ObjectDetailPanel({
         <ConfirmDialog
           open={showDeleteDialog}
           onOpenChange={setShowDeleteDialog}
-          title="Delete item"
+          title={t`Delete item`}
           desc={`Are you sure you want to delete "${title}"? This action cannot be undone.`}
           confirmText="Delete"
           destructive

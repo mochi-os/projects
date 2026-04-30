@@ -2,6 +2,7 @@
 // Copyright Alistair Cunningham 2026
 
 import { useMemo } from "react";
+import { Trans } from '@lingui/react/macro'
 import { useQuery } from "@tanstack/react-query";
 import { FileCode2, Plus, Minus, Loader2, FileDiff } from "lucide-react";
 import { cn } from "@mochi/web";
@@ -45,14 +46,14 @@ export function DiffStats({ repoId, base, head, diffUrl }: DiffStatsProps) {
     return (
       <div className="flex items-center gap-2 text-sm text-muted-foreground">
         <Loader2 className="size-4 animate-spin" />
-        Loading diff...
+        <Trans>Loading diff...</Trans>
       </div>
     );
   }
 
   if (files.length === 0) {
     return (
-      <div className="text-sm text-muted-foreground">No changes detected</div>
+      <div className="text-sm text-muted-foreground"><Trans>No changes detected</Trans></div>
     );
   }
 
@@ -79,7 +80,7 @@ export function DiffStats({ repoId, base, head, diffUrl }: DiffStatsProps) {
             className="ml-auto inline-flex items-center gap-1.5 rounded-md border px-2 py-0.5 text-xs text-muted-foreground hover:bg-muted transition-colors shrink-0"
           >
             <FileDiff className="size-3" />
-            Diff
+            <Trans>Diff</Trans>
           </a>
         )}
       </div>

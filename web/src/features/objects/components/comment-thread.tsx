@@ -2,6 +2,7 @@
 // Copyright Alistair Cunningham 2026
 
 import { useCallback, useState } from "react";
+import { Trans, useLingui } from '@lingui/react/macro'
 import { Loader2, Pencil, Reply, Send, Trash2, X, Paperclip } from "lucide-react";
 import {
   Button,
@@ -55,6 +56,7 @@ export function CommentThread({
   people = [],
   depth = 0,
 }: CommentThreadProps) {
+  const { t } = useLingui()
   const { formatTimestamp } = useFormat();
   const [collapsed, setCollapsed] = useState(false);
   const [editing, setEditing] = useState(false);
@@ -163,7 +165,7 @@ export function CommentThread({
                 className="h-7 text-xs"
                 onClick={() => setEditing(false)}
               >
-                Cancel
+                <Trans>Cancel</Trans>
               </Button>
               <Button
                 size="sm"
@@ -174,7 +176,7 @@ export function CommentThread({
                   setEditing(false);
                 }}
               >
-                Save
+                <Trans>Save</Trans>
               </Button>
             </div>
           </div>
@@ -199,7 +201,7 @@ export function CommentThread({
                 onClick={() => onStartReply(comment.id)}
               >
                 <Reply className="size-3" />
-                <span>Reply</span>
+                <span><Trans>Reply</Trans></span>
               </button>
 
               {canEdit && (
@@ -212,7 +214,7 @@ export function CommentThread({
                   }}
                 >
                   <Pencil className="size-3" />
-                  <span>Edit</span>
+                  <span><Trans>Edit</Trans></span>
                 </button>
               )}
 
@@ -223,7 +225,7 @@ export function CommentThread({
                   onClick={() => setDeleting(true)}
                 >
                   <Trash2 className="size-3" />
-                  <span>Delete</span>
+                  <span><Trans>Delete</Trans></span>
                 </button>
               )}
             </div>
@@ -301,8 +303,8 @@ export function CommentThread({
               className="size-8"
               onClick={() => replyFileRef.current?.click()}
               disabled={isSubmittingReply}
-              aria-label="Attach reply files"
-              title="Attach reply files"
+              aria-label={t`Attach reply files`}
+              title={t`Attach reply files`}
             >
               <Paperclip className="size-4" />
             </Button>
@@ -313,8 +315,8 @@ export function CommentThread({
               className="size-8"
               onClick={onCancelReply}
               disabled={isSubmittingReply}
-              aria-label="Cancel reply"
-              title="Cancel reply"
+              aria-label={t`Cancel reply`}
+              title={t`Cancel reply`}
             >
               <X className="size-4" />
             </Button>
@@ -324,8 +326,8 @@ export function CommentThread({
               className="size-8"
               disabled={!replyDraft.trim() || isSubmittingReply}
               onClick={() => void handleSubmitReply()}
-              aria-label="Submit reply"
-              title="Submit reply"
+              aria-label={t`Submit reply`}
+              title={t`Submit reply`}
             >
               {isSubmittingReply ? <Loader2 className="size-4 animate-spin" /> : <Send className="size-4" />}
             </Button>
@@ -336,7 +338,7 @@ export function CommentThread({
       <ConfirmDialog
         open={deleting}
         onOpenChange={setDeleting}
-        title="Delete comment"
+        title={t`Delete comment`}
         desc="Are you sure you want to delete this comment? This will also delete all replies."
         confirmText="Delete"
         destructive

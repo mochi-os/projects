@@ -2,6 +2,7 @@
 // Copyright Alistair Cunningham 2026
 
 import { createFileRoute, redirect, useNavigate, useRouter } from "@tanstack/react-router";
+import { useLingui } from '@lingui/react/macro'
 import {
   GeneralError,
   extractStatus,
@@ -43,6 +44,7 @@ export const Route = createFileRoute("/_authenticated/$projectId/$objectId")({
 });
 
 function ObjectPage() {
+  const { t } = useLingui()
   const { project, loaderError } = Route.useLoaderData() as {
     project: ProjectDetails | null;
     loaderError: string | null;
@@ -56,7 +58,7 @@ function ObjectPage() {
     return (
       <>
         <PageHeader
-          title="Project"
+          title={t`Project`}
           icon={<FolderKanban className="size-4 md:size-5" />}
           back={{ label: "Back to projects", onFallback: () => navigate({ to: "/" }) }}
         />

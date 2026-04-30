@@ -2,6 +2,7 @@
 // Copyright Alistair Cunningham 2026
 
 import { useState, useRef } from "react";
+import { useLingui } from '@lingui/react/macro'
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { MessageSquare, Paperclip, Send, X } from "lucide-react";
 import {
@@ -28,6 +29,7 @@ export function CommentList({
   objectId,
   readOnly,
 }: CommentListProps) {
+  const { t } = useLingui()
   const [newComment, setNewComment] = useState("");
   const [newFiles, setNewFiles] = useState<File[]>([]);
   const newFileImageUrls = useImageObjectUrls(newFiles);
@@ -82,7 +84,7 @@ export function CommentList({
       });
     },
     onError: (err) => {
-      toast.error(getErrorMessage(err, "Failed to post comment"));
+      toast.error(getErrorMessage(err, t`Failed to post comment`));
     },
   });
 
@@ -102,7 +104,7 @@ export function CommentList({
       });
     },
     onError: (err) => {
-      toast.error(getErrorMessage(err, "Failed to update comment"));
+      toast.error(getErrorMessage(err, t`Failed to update comment`));
     },
   });
 
@@ -119,7 +121,7 @@ export function CommentList({
       });
     },
     onError: (err) => {
-      toast.error(getErrorMessage(err, "Failed to delete comment"));
+      toast.error(getErrorMessage(err, t`Failed to delete comment`));
     },
   });
 
@@ -184,7 +186,7 @@ export function CommentList({
                 handleCreate();
               }
             }}
-            placeholder="Add a comment..."
+            placeholder={t`Add a comment...`}
             rows={3}
             people={people}
           />
@@ -231,8 +233,8 @@ export function CommentList({
               size="icon"
               className="size-8"
               onClick={() => fileInputRef.current?.click()}
-              aria-label="Attach comment files"
-              title="Attach comment files"
+              aria-label={t`Attach comment files`}
+              title={t`Attach comment files`}
             >
               <Paperclip className="size-4" />
             </Button>
@@ -242,8 +244,8 @@ export function CommentList({
               className="size-8"
               disabled={!newComment.trim() || createMutation.isPending}
               onClick={handleCreate}
-              aria-label="Submit comment"
-              title="Submit comment"
+              aria-label={t`Submit comment`}
+              title={t`Submit comment`}
             >
               <Send className="size-4" />
             </Button>
@@ -254,8 +256,8 @@ export function CommentList({
       {comments.length === 0 ? (
         <EmptyState
           icon={MessageSquare}
-          title="No comments yet"
-          description="Start the discussion by adding the first comment."
+          title={t`No comments yet`}
+          description={t`Start the discussion by adding the first comment.`}
           className="py-4"
         />
       ) : (

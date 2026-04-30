@@ -2,6 +2,7 @@
 // Copyright Alistair Cunningham 2026
 
 import { useQuery } from "@tanstack/react-query";
+import { Trans } from '@lingui/react/macro'
 import { CheckCircle2, XCircle, AlertCircle, Loader2 } from "lucide-react";
 import { cn } from "@mochi/web";
 import projectsApi from "@/api/projects";
@@ -31,7 +32,7 @@ export function MergeStatus({ repoId, source, target }: MergeStatusProps) {
     return (
       <div className="flex items-center gap-2 text-sm text-muted-foreground">
         <Loader2 className="size-4 animate-spin" />
-        Checking merge status...
+        <Trans>Checking merge status...</Trans>
       </div>
     );
   }
@@ -40,7 +41,7 @@ export function MergeStatus({ repoId, source, target }: MergeStatusProps) {
     return (
       <div className="flex items-center gap-2 text-sm text-destructive">
         <AlertCircle className="size-4" />
-        Failed to check merge status
+        <Trans>Failed to check merge status</Trans>
       </div>
     );
   }

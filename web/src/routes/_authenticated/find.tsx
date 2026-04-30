@@ -1,4 +1,5 @@
 import { useCallback, useMemo } from 'react'
+import { useLingui } from '@lingui/react/macro'
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { useQuery } from '@tanstack/react-query'
 import { FolderKanban } from 'lucide-react'
@@ -13,6 +14,7 @@ export const Route = createFileRoute('/_authenticated/find')({
 })
 
 function FindProjectsPage() {
+  const { t } = useLingui()
   const projects = useProjectsStore((state) => state.projects)
   const refresh = useProjectsStore((state) => state.refresh)
   const navigate = useNavigate()
@@ -60,8 +62,8 @@ function FindProjectsPage() {
       searchEndpoint={endpoints.projects.search}
       icon={FolderKanban}
       iconClassName="bg-primary/10 text-primary"
-      title="Find projects"
-      placeholder="Search by name, ID, fingerprint, or URL..."
+      title={t`Find projects`}
+      placeholder={t`Search by name, ID, fingerprint, or URL...`}
       emptyMessage="No projects found"
       recommendations={recommendations}
       isLoadingRecommendations={isLoadingRecommendations}

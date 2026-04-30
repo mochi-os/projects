@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { Trans, useLingui } from '@lingui/react/macro'
 import { useNavigate } from "@tanstack/react-router";
 import { Button, ResponsiveDialog, ResponsiveDialogContent, ResponsiveDialogDescription, ResponsiveDialogFooter, ResponsiveDialogHeader, ResponsiveDialogTitle, ResponsiveDialogTrigger, Input, Label, Switch, toast, getErrorMessage, cn } from "@mochi/web"
 import { ArrowLeft, ArrowRight, Check, File, FolderKanban, LayoutGrid, Plus, Ticket, Zap } from "lucide-react";
@@ -25,6 +26,7 @@ export function CreateProjectDialog({
   onOpenChange,
   hideTrigger,
 }: CreateProjectDialogProps) {
+  const { t } = useLingui()
   const [step, setStep] = useState<1 | 2>(1);
   const [isPending, setIsPending] = useState(false);
   const [name, setName] = useState("");
@@ -69,7 +71,7 @@ export function CreateProjectDialog({
 
   const handleNext = () => {
     if (!name.trim()) {
-      toast.error("Name is required");
+      toast.error(t`Name is required`);
       return;
     }
     setStep(2);
@@ -79,7 +81,7 @@ export function CreateProjectDialog({
     e.preventDefault();
 
     if (!selectedTemplate) {
-      toast.error("Please select a template");
+      toast.error(t`Please select a template`);
       return;
     }
 
@@ -95,7 +97,7 @@ export function CreateProjectDialog({
       const fingerprint = response.data?.fingerprint;
       await refreshProjects();
 
-      toast.success("Project created");
+      toast.success(t`Project created`);
       onOpenChange?.(false);
 
       if (fingerprint) {
@@ -107,7 +109,7 @@ export function CreateProjectDialog({
         void navigate({ to: "/" });
       }
     } catch (err) {
-      toast.error(getErrorMessage(err, "Failed to create project"));
+      toast.error(getErrorMessage(err, t`Failed to create project`));
     } finally {
       setIsPending(false);
     }
@@ -125,7 +127,7 @@ export function CreateProjectDialog({
         <ResponsiveDialogTrigger asChild>
           <Button>
             <Plus className="mr-2 size-4" />
-            Create project
+            <Trans>Create project</Trans>
           </Button>
         </ResponsiveDialogTrigger>
       )}
@@ -137,13 +139,13 @@ export function CreateProjectDialog({
             </div>
             {step === 1 ? "Create project" : "Choose a template"}
           </ResponsiveDialogTitle>
-          <ResponsiveDialogDescription className="sr-only">Create a new project</ResponsiveDialogDescription>
+          <ResponsiveDialogDescription className="sr-only"><Trans>Create a new project</Trans></ResponsiveDialogDescription>
         </ResponsiveDialogHeader>
 
         {step === 1 ? (
           <div className="mt-4 space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="name">Name</Label>
+              <Label htmlFor="name"><Trans>Name</Trans></Label>
               <Input
                 id="name"
                 value={name}
@@ -153,7 +155,7 @@ export function CreateProjectDialog({
                     setPrefix(nameToPrefix(e.target.value));
                   }
                 }}
-                placeholder="My project"
+                placeholder={t`My project`}
                 autoFocus
                 onKeyDown={(e) => {
                   if (e.key === "Enter") {
@@ -165,7 +167,7 @@ export function CreateProjectDialog({
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="prefix">Prefix</Label>
+              <Label htmlFor="prefix"><Trans>Prefix</Trans></Label>
               <Input
                 id="prefix"
                 value={prefix}
@@ -188,7 +190,7 @@ export function CreateProjectDialog({
 
             <div className="flex items-center justify-between rounded-lg border px-4 py-3">
               <Label htmlFor="allow-search" className="text-sm font-medium cursor-pointer">
-                Allow anyone to search for project
+                <Trans>Allow anyone to search for project</Trans>
               </Label>
               <Switch
                 id="allow-search"
@@ -203,7 +205,7 @@ export function CreateProjectDialog({
                 variant="outline"
                 onClick={() => onOpenChange?.(false)}
               >
-                Cancel
+                <Trans>Cancel</Trans>
               </Button>
               <Button type="button" onClick={handleNext}>
                 Next
@@ -216,7 +218,7 @@ export function CreateProjectDialog({
             <div className="mt-4 space-y-3">
               {isLoadingTemplates ? (
                 <div className="text-muted-foreground py-8 text-center text-sm">
-                  Loading templates...
+                  <Trans>Loading templates...</Trans>
                 </div>
               ) : (
                 <div className="grid grid-cols-1 gap-3">
@@ -278,10 +280,10 @@ export function CreateProjectDialog({
                 onClick={() => setStep(1)}
               >
                 <ArrowLeft className="mr-2 size-4" />
-                Back
+                <Trans>Back</Trans>
               </Button>
               <Button type="submit" disabled={isPending || !selectedTemplate}>
-                {isPending ? "Creating..." : <><Plus className="mr-2 size-4" />Create project</>}
+                {isPending ? "Creating..." : <><Plus className="mr-2 size-4" /><Trans>Create project</Trans></>}
               </Button>
             </ResponsiveDialogFooter>
           </form>

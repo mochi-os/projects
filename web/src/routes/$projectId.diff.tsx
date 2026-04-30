@@ -2,6 +2,7 @@
 // Copyright Alistair Cunningham 2026
 
 import { createFileRoute } from "@tanstack/react-router";
+import { Trans, useLingui } from '@lingui/react/macro'
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Loader2, Rows3, Columns2 } from "lucide-react";
 import { EmptyState, GeneralError, Main, PageHeader, usePageTitle, useAuthStore } from "@mochi/web";
@@ -30,6 +31,7 @@ export const Route = createFileRoute("/$projectId/diff")({
 });
 
 function DiffPage() {
+  const { t } = useLingui()
   const { repo, source, target } = Route.useSearch();
   const queryClient = useQueryClient();
 
@@ -99,7 +101,7 @@ function DiffPage() {
               }`}
             >
               <Rows3 className="size-3.5" />
-              Unified
+              <Trans>Unified</Trans>
             </button>
             <button
               type="button"
@@ -111,7 +113,7 @@ function DiffPage() {
               }`}
             >
               <Columns2 className="size-3.5" />
-              Split
+              <Trans>Split</Trans>
             </button>
           </div>
         }
@@ -146,8 +148,8 @@ function DiffPage() {
           <div className="py-8">
             <EmptyState
               icon={Rows3}
-              title="No diff available"
-              description="No changes were found for the selected comparison."
+              title={t`No diff available`}
+              description={t`No changes were found for the selected comparison.`}
             />
           </div>
         )}

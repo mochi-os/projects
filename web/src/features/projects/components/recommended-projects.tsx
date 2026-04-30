@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
+import { Trans, useLingui } from '@lingui/react/macro'
 import { Button, GeneralError, Skeleton, toast, getErrorMessage } from "@mochi/web";
 import { FolderKanban, Loader2 } from "lucide-react";
 import projectsApi from "@/api/projects";
@@ -20,6 +21,7 @@ export function RecommendedProjects({
   subscribedIds,
   onSubscribe,
 }: RecommendedProjectsProps) {
+  const { t } = useLingui()
   const [recommendations, setRecommendations] = useState<
     RecommendedProject[]
   >([]);
@@ -57,7 +59,7 @@ export function RecommendedProjects({
       toast.success(`Subscribed to ${project.name}`);
       setRecommendations((prev) => prev.filter((p) => p.id !== project.id));
     } catch (error) {
-      toast.error(getErrorMessage(error, "Failed to subscribe"));
+      toast.error(getErrorMessage(error, t`Failed to subscribe`));
     } finally {
       setPendingId(null);
     }
@@ -98,7 +100,7 @@ export function RecommendedProjects({
         <hr className="my-6 w-full max-w-md border-t" />
         <div className="w-full max-w-md">
           <p className="text-muted-foreground mb-3 text-xs font-medium uppercase tracking-wide">
-            Recommended projects
+            <Trans>Recommended projects</Trans>
           </p>
           <GeneralError
             error={error}
@@ -120,7 +122,7 @@ export function RecommendedProjects({
       <hr className="my-6 w-full max-w-md border-t" />
       <div className="w-full max-w-md">
         <p className="text-muted-foreground mb-3 text-xs font-medium uppercase tracking-wide">
-          Recommended projects
+          <Trans>Recommended projects</Trans>
         </p>
         <div className="divide-border divide-y rounded-lg border text-left">
           {filteredRecommendations.map((project) => {

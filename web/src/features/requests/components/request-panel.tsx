@@ -2,6 +2,7 @@
 // Copyright Alistair Cunningham 2026
 
 import { useEffect, useRef, useState } from "react";
+import { Trans, useLingui } from '@lingui/react/macro'
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { ArrowRight, GitMerge, Plus, Trash2, ChevronDown, ChevronRight } from "lucide-react";
 import { Button, Card, ConfirmDialog, Input, Switch, Textarea, cn } from "@mochi/web";
@@ -35,6 +36,7 @@ export function RequestPanel({
   objectReadable = "",
   readOnly,
 }: RequestPanelProps) {
+  const { t } = useLingui()
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const [adding, setAdding] = useState(false);
   const [deleteId, setDeleteId] = useState<string | null>(null);
@@ -84,7 +86,7 @@ export function RequestPanel({
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2 text-sm font-medium">
           <GitMerge className="size-4" />
-          Merge requests
+          <Trans>Merge requests</Trans>
         </div>
         {!readOnly && (
           <Button
@@ -95,13 +97,13 @@ export function RequestPanel({
             disabled={createMutation.isPending}
           >
             <Plus className="size-3" />
-            Add
+            <Trans>Add</Trans>
           </Button>
         )}
       </div>
 
       {requests.length === 0 && !adding && (
-        <p className="text-sm text-muted-foreground">No merge requests</p>
+        <p className="text-sm text-muted-foreground"><Trans>No merge requests</Trans></p>
       )}
 
       {requests.map((req) => (
@@ -122,7 +124,7 @@ export function RequestPanel({
       <ConfirmDialog
         open={!!deleteId}
         onOpenChange={(open) => !open && setDeleteId(null)}
-        title="Delete merge request"
+        title={t`Delete merge request`}
         desc="Are you sure you want to delete this merge request?"
         confirmText="Delete"
         destructive
@@ -156,6 +158,7 @@ function RequestItem({
   projectId,
   readOnly,
 }: RequestItemProps) {
+  const { t } = useLingui()
   const ref = useRef<HTMLDivElement>(null);
   const isMerged = request.status === "merged";
   const isDraft = request.draft === 1;
@@ -247,13 +250,13 @@ function RequestItem({
         {!expanded && <span className="flex-1 truncate text-muted-foreground">{summary}</span>}
         {expanded && <span className="flex-1" />}
         {isDraft && !isMerged && (
-          <span className={requestStateBadgeStyles.draft}>Draft</span>
+          <span className={requestStateBadgeStyles.draft}><Trans>Draft</Trans></span>
         )}
         {isMerged && (
-          <span className={requestStateBadgeStyles.merged}>Merged</span>
+          <span className={requestStateBadgeStyles.merged}><Trans>Merged</Trans></span>
         )}
         {!isMerged && !isDraft && request.repository && request.source && request.target && (
-          <span className={requestStateBadgeStyles.open}>Open</span>
+          <span className={requestStateBadgeStyles.open}><Trans>Open</Trans></span>
         )}
       </button>
 
@@ -266,7 +269,7 @@ function RequestItem({
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 onBlur={handleTitleBlur}
-                placeholder="Title"
+                placeholder={t`Title`}
                 autoFocus={!title}
               />
             )}
@@ -279,7 +282,7 @@ function RequestItem({
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 onBlur={handleDescriptionBlur}
-                placeholder="Description"
+                placeholder={t`Description`}
                 rows={2}
               />
             )}
@@ -298,7 +301,7 @@ function RequestItem({
                 repoId={request.repository}
                 value={request.source}
                 onChange={handleSourceChange}
-                placeholder="Source"
+                placeholder={t`Source`}
                 disabled={readOnly || isMerged}
               />
               <ArrowRight className="size-4 text-muted-foreground mb-2.5" />
@@ -306,7 +309,7 @@ function RequestItem({
                 repoId={request.repository}
                 value={request.target}
                 onChange={handleTargetChange}
-                placeholder="Target"
+                placeholder={t`Target`}
                 disabled={readOnly || isMerged}
               />
             </div>
@@ -317,7 +320,7 @@ function RequestItem({
                   checked={isDraft}
                   onCheckedChange={handleDraftToggle}
                 />
-                <span className="text-muted-foreground">Draft</span>
+                <span className="text-muted-foreground"><Trans>Draft</Trans></span>
               </label>
             )}
           </div>
@@ -343,7 +346,7 @@ function RequestItem({
 
                   {isDraft && (
                     <p className={cn("text-sm", requestStatusTextStyles.warning)}>
-                      This merge request is a draft and cannot be merged.
+                      <Trans>This merge request is a draft and cannot be merged.</Trans>
                     </p>
                   )}
 
@@ -365,7 +368,7 @@ function RequestItem({
                         size="icon"
                         className="h-9 w-9 shrink-0 text-muted-foreground"
                         onClick={onDelete}
-                        title="Delete merge request"
+                        title={t`Delete merge request`}
                       >
                         <Trash2 className="size-4" />
                       </Button>
@@ -385,7 +388,7 @@ function RequestItem({
                       size="icon"
                       className="h-9 w-9 shrink-0 text-muted-foreground"
                       onClick={onDelete}
-                      title="Delete merge request"
+                      title={t`Delete merge request`}
                     >
                       <Trash2 className="size-4" />
                     </Button>
@@ -402,7 +405,7 @@ function RequestItem({
                 size="icon"
                 className="h-9 w-9 shrink-0 text-muted-foreground"
                 onClick={onDelete}
-                title="Delete merge request"
+                title={t`Delete merge request`}
               >
                 <Trash2 className="size-4" />
               </Button>

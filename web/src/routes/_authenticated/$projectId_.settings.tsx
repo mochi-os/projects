@@ -2,6 +2,7 @@
 // Copyright Alistair Cunningham 2026
 
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { Trans, useLingui } from '@lingui/react/macro'
 import { useCallback, useMemo, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import {
@@ -75,6 +76,7 @@ const tabs: Tab[] = [
 ];
 
 function ProjectSettingsPage() {
+  const { t } = useLingui()
   const { projectId } = Route.useParams();
   const navigate = useNavigate();
   const navigateSettings = Route.useNavigate();
@@ -130,10 +132,10 @@ function ProjectSettingsPage() {
     try {
       await projectsApi.delete(project.project.id);
       void refreshSidebar();
-      toast.success("Project deleted");
+      toast.success(t`Project deleted`);
       void navigate({ to: "/" });
     } catch (err) {
-      toast.error(getErrorMessage(err, "Failed to delete project"));
+      toast.error(getErrorMessage(err, t`Failed to delete project`));
     } finally {
       setIsDeleting(false);
     }
@@ -146,10 +148,10 @@ function ProjectSettingsPage() {
     try {
       await projectsApi.unsubscribe(project.project.id);
       void refreshSidebar();
-      toast.success("Unsubscribed");
+      toast.success(t`Unsubscribed`);
       void navigate({ to: "/" });
     } catch (err) {
-      toast.error(getErrorMessage(err, "Failed to unsubscribe"));
+      toast.error(getErrorMessage(err, t`Failed to unsubscribe`));
     } finally {
       setIsUnsubscribing(false);
     }
@@ -167,9 +169,9 @@ function ProjectSettingsPage() {
         await projectsApi.update(project.project.id, updates);
         void refreshSidebar();
         queryClient.invalidateQueries({ queryKey: ["project", projectId] });
-        toast.success("Project updated");
+        toast.success(t`Project updated`);
       } catch (err) {
-        toast.error(getErrorMessage(err, "Failed to update project"));
+        toast.error(getErrorMessage(err, t`Failed to update project`));
         throw err;
       }
     },
@@ -180,7 +182,7 @@ function ProjectSettingsPage() {
     return (
       <>
         <PageHeader
-          title="Settings"
+          title={t`Settings`}
           icon={<Settings className="size-4 md:size-5" />}
           back={{ label: "Back to project", onFallback: goBackToProject }}
         />
@@ -203,7 +205,7 @@ function ProjectSettingsPage() {
     return (
       <>
         <PageHeader
-          title="Settings"
+          title={t`Settings`}
           icon={<Settings className="size-4 md:size-5" />}
           back={{ label: "Back to project", onFallback: goBackToProject }}
         />
@@ -320,15 +322,16 @@ function GeneralTab({
   onUnsubscribe,
   onUpdate,
 }: GeneralTabProps) {
+  const { t } = useLingui()
   return (
     <div className="space-y-6">
       <Section
-        title="Identity"
-        description="Core information about this project"
+        title={t`Identity`}
+        description={t`Core information about this project`}
       >
         <div className="divide-y-0">
           <EditableFieldRow
-            label="Name"
+            label={t`Name`}
             value={project.project.name}
             isOwner={isOwner}
             onSave={(value) => onUpdate({ name: value })}
@@ -336,7 +339,7 @@ function GeneralTab({
           />
 
           <EditableFieldRow
-            label="Description"
+            label={t`Description`}
             value={project.project.description}
             isOwner={isOwner}
             onSave={(value) => onUpdate({ description: value })}
@@ -344,19 +347,19 @@ function GeneralTab({
           />
 
           <EditableFieldRow
-            label="Prefix"
+            label={t`Prefix`}
             value={project.project.prefix}
             isOwner={isOwner}
             onSave={(value) => onUpdate({ prefix: value })}
             validate={validatePrefix}
           />
 
-          <FieldRow label="Entity ID">
+          <FieldRow label={t`Entity ID`}>
             <DataChip value={project.project.id} truncate='middle' />
           </FieldRow>
 
           {project.project.fingerprint && (
-            <FieldRow label="Fingerprint">
+            <FieldRow label={t`Fingerprint`}>
               <DataChip
                 value={project.project.fingerprint}
                 truncate='middle'
@@ -365,7 +368,7 @@ function GeneralTab({
           )}
 
           {project.project.server && (
-            <FieldRow label="Server">
+            <FieldRow label={t`Server`}>
               <DataChip value={project.project.server} />
             </FieldRow>
           )}
@@ -374,7 +377,7 @@ function GeneralTab({
 
       {!isOwner && (
         <Section
-          title="Unsubscribe from project"
+          title={t`Unsubscribe from project`}
           action={
             <Button
               variant="outline"
@@ -394,8 +397,8 @@ function GeneralTab({
 
       {isOwner && (
         <Section
-          title="Delete project"
-          description="Permanently delete this project and all its content."
+          title={t`Delete project`}
+          description={t`Permanently delete this project and all its content.`}
           action={
             <Button
               variant="outline"
@@ -404,7 +407,7 @@ function GeneralTab({
               size="sm"
             >
               <Trash2 className="size-4 mr-2" />
-              Delete
+              <Trans>Delete</Trans>
             </Button>
           }
         />
@@ -413,7 +416,7 @@ function GeneralTab({
       <ConfirmDialog
         open={showUnsubscribeDialog}
         onOpenChange={setShowUnsubscribeDialog}
-        title="Unsubscribe from project?"
+        title={t`Unsubscribe from project?`}
         desc={`This will remove "${project.project.name}" from your sidebar and stop updates for this project.`}
         confirmText="Unsubscribe"
         handleConfirm={onUnsubscribe}
@@ -423,7 +426,7 @@ function GeneralTab({
       <ConfirmDialog
         open={showDeleteDialog}
         onOpenChange={setShowDeleteDialog}
-        title="Delete project?"
+        title={t`Delete project?`}
         desc={`This will permanently delete "${project.project.name}" and all its objects, comments, and attachments. This action cannot be undone.`}
         confirmText="Delete project"
         destructive
@@ -572,7 +575,7 @@ function EditableFieldRow({
               {value}
             </span>
           ) : (
-            <span className="text-muted-foreground italic">Not set</span>
+            <span className="text-muted-foreground italic"><Trans>Not set</Trans></span>
           )}
           {isOwner && (
             <Button
@@ -604,6 +607,7 @@ interface AccessTabProps {
 }
 
 function AccessTab({ projectId }: AccessTabProps) {
+  const { t } = useLingui()
   const [dialogOpen, setDialogOpen] = useState(false);
   const [userSearchQuery, setUserSearchQuery] = useState("");
 
@@ -671,7 +675,7 @@ function AccessTab({ projectId }: AccessTabProps) {
       toast.success(`Access set for ${subjectName}`);
       await refetchRules();
     } catch (err) {
-      toast.error(getErrorMessage(err, "Failed to set access level"));
+      toast.error(getErrorMessage(err, t`Failed to set access level`));
       throw err;
     }
   };
@@ -680,10 +684,10 @@ function AccessTab({ projectId }: AccessTabProps) {
     if (!canManageRules) return;
     try {
       await projectsApi.revokeAccess(projectId, subject);
-      toast.success("Access removed");
+      toast.success(t`Access removed`);
       await refetchRules();
     } catch (err) {
-      toast.error(getErrorMessage(err, "Failed to remove access"));
+      toast.error(getErrorMessage(err, t`Failed to remove access`));
     }
   };
 
@@ -691,23 +695,23 @@ function AccessTab({ projectId }: AccessTabProps) {
     if (!canManageRules) return;
     try {
       await projectsApi.setAccessLevel(projectId, subject, newLevel);
-      toast.success("Access level updated");
+      toast.success(t`Access level updated`);
       await refetchRules();
     } catch (err) {
-      toast.error(getErrorMessage(err, "Failed to update access level"));
+      toast.error(getErrorMessage(err, t`Failed to update access level`));
     }
   };
 
   return (
     <Section
-      title="Access Management"
-      description="Control who can view and interact with this project"
+      title={t`Access Management`}
+      description={t`Control who can view and interact with this project`}
     >
       <div className="space-y-4">
         <div className="flex justify-end">
           <Button onClick={() => setDialogOpen(true)} size="sm" disabled={!canManageRules}>
             <Plus className="h-4 w-4 mr-2" />
-            Add Rule
+            <Trans>Add Rule</Trans>
           </Button>
         </div>
 

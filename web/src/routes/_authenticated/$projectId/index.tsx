@@ -2,6 +2,7 @@
 // Copyright Alistair Cunningham 2026
 
 import { useState, useMemo, useCallback, useEffect, useRef } from "react";
+import { Trans, useLingui } from '@lingui/react/macro'
 import { createFileRoute, Link, redirect, useNavigate, useRouter } from "@tanstack/react-router";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import {
@@ -69,6 +70,7 @@ export const Route = createFileRoute("/_authenticated/$projectId/")({
 });
 
 function ProjectPage() {
+  const { t } = useLingui()
   const { project, loaderError } = Route.useLoaderData() as {
     project: ProjectDetails | null;
     loaderError: string | null;
@@ -82,7 +84,7 @@ function ProjectPage() {
     return (
       <>
         <PageHeader
-          title="Project"
+          title={t`Project`}
           icon={<FolderKanban className="size-4 md:size-5" />}
           back={{ label: "Back to projects", onFallback: () => navigate({ to: "/" }) }}
         />
@@ -770,7 +772,7 @@ export function ProjectPageContent({ project, projectId, search, initialObjectId
               onClick={handleOpenCreateDialog}
             >
               <Plus className="size-4" />
-              <span className='md:hidden'>New</span>
+              <span className='md:hidden'><Trans>New</Trans></span>
               <span className='hidden md:inline'>{primaryActionLabel}</span>
             </Button>
           ) : undefined
@@ -778,7 +780,7 @@ export function ProjectPageContent({ project, projectId, search, initialObjectId
         menuAction={
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <IconButton variant='ghost' label='Open page actions'>
+              <IconButton variant='ghost' label={"Open page actions"}>
                 <Ellipsis className="size-4" />
               </IconButton>
             </DropdownMenuTrigger>
@@ -798,11 +800,11 @@ export function ProjectPageContent({ project, projectId, search, initialObjectId
                 <>
                   <DropdownMenuItem onClick={() => setAddColumnDialogOpen(true)}>
                     <Columns3 className="size-4 mr-2" />
-                    Add column
+                    <Trans>Add column</Trans>
                   </DropdownMenuItem>
                   <DropdownMenuItem onClick={() => setIsReorderingColumns(true)}>
                     <GripVertical className="size-4 mr-2" />
-                    Re-order columns
+                    <Trans>Re-order columns</Trans>
                   </DropdownMenuItem>
                 </>
               )}
@@ -813,7 +815,7 @@ export function ProjectPageContent({ project, projectId, search, initialObjectId
                     params={{ projectId: params.projectId }}
                   >
                     <Settings2 className="size-4 mr-2" />
-                    Design
+                    <Trans>Design</Trans>
                   </Link>
                 </DropdownMenuItem>
               )}
@@ -823,7 +825,7 @@ export function ProjectPageContent({ project, projectId, search, initialObjectId
                   params={{ projectId: params.projectId }}
                 >
                   <Settings className="size-4 mr-2" />
-                  Settings
+                  <Trans>Settings</Trans>
                 </Link>
               </DropdownMenuItem>
             </DropdownMenuContent>
@@ -846,18 +848,18 @@ export function ProjectPageContent({ project, projectId, search, initialObjectId
       {isReorderingColumns && (
         <div className="flex items-center justify-between px-4 py-2 bg-muted border-b">
           <span className="text-sm text-muted-foreground">
-            Drag columns to re-order them
+            <Trans>Drag columns to re-order them</Trans>
           </span>
           <div className="flex items-center gap-2">
             <Button variant="outline" size="sm" onClick={handleCancelReorder}>
-              Cancel
+              <Trans>Cancel</Trans>
             </Button>
             <Button
               size="sm"
               onClick={handleSaveColumnOrder}
               disabled={!pendingColumnOrder || reorderColumnsMutation.isPending}
             >
-              Save
+              <Trans>Save</Trans>
             </Button>
           </div>
         </div>
@@ -865,15 +867,15 @@ export function ProjectPageContent({ project, projectId, search, initialObjectId
       {!hintDismissed && !isReorderingColumns && activeView?.viewtype !== "list" && (
         <div className="flex items-center justify-between px-4 py-2 bg-muted border-b">
           <span className="text-sm text-muted-foreground">
-            Double click on a column to add content
+            <Trans>Double click on a column to add content</Trans>
           </span>
           <Button
             variant="ghost"
             size="icon"
             className="size-6"
             onClick={dismissBoardHint}
-            aria-label="Dismiss board hint"
-            title="Dismiss board hint"
+            aria-label={"Dismiss board hint"}
+            title={"Dismiss board hint"}
           >
             <X className="size-4" />
           </Button>
@@ -956,7 +958,7 @@ export function ProjectPageContent({ project, projectId, search, initialObjectId
         open={addColumnDialogOpen}
         onOpenChange={setAddColumnDialogOpen}
         onAdd={handleAddColumn}
-        title="Add column"
+        title={"Add column"}
       />
     </>
   );

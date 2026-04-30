@@ -3,6 +3,7 @@
 
 import { AlertTriangle, FileWarning } from "lucide-react";
 
+import { Trans } from '@lingui/react/macro'
 interface ConflictListProps {
   conflicts: string[];
 }
@@ -30,7 +31,7 @@ export function ConflictList({ conflicts }: ConflictListProps) {
         </ul>
       </div>
       <p className="text-xs text-muted-foreground">
-        Resolve these conflicts manually before merging.
+        <Trans>Resolve these conflicts manually before merging.</Trans>
       </p>
     </div>
   );

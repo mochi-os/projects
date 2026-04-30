@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { Trans, useLingui } from '@lingui/react/macro'
 import { Link } from "@tanstack/react-router";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
@@ -27,6 +28,7 @@ import { RecommendedProjects } from "../components/recommended-projects";
 import projectsApi from "@/api/projects";
 
 export function ProjectsListPage() {
+  const { t } = useLingui()
   const projects = useProjectsStore((state) => state.projects);
   const isLoading = useProjectsStore((state) => state.isLoading);
   const error = useProjectsStore((state) => state.error);
@@ -43,11 +45,11 @@ export function ProjectsListPage() {
       setUnsubscribeId(null);
     },
     onError: (error) => {
-      toast.error(getErrorMessage(error, "Failed to unsubscribe"));
+      toast.error(getErrorMessage(error, t`Failed to unsubscribe`));
     },
   });
 
-  usePageTitle("Projects");
+  usePageTitle(t`Projects`);
 
   useEffect(() => {
     void refresh();
@@ -67,7 +69,7 @@ export function ProjectsListPage() {
   return (
     <>
       <PageHeader
-        title="Projects"
+        title={t`Projects`}
         icon={<FolderKanban className="size-4 md:size-5" />}
       />
       <Main>
@@ -88,13 +90,13 @@ export function ProjectsListPage() {
         ) : projects.length === 0 ? (
           <EntityOnboardingEmptyState
             icon={FolderKanban}
-            title="Projects"
-            description="You have no projects yet."
+            title={t`Projects`}
+            description={t`You have no projects yet.`}
             searchSlot={<InlineProjectSearch subscribedIds={subscribedProjectIds} />}
             primaryActionSlot={(
               <Button variant="outline" onClick={openCreateDialog}>
                 <Plus className="mr-2 h-4 w-4" />
-                Create a new project
+                <Trans>Create a new project</Trans>
               </Button>
             )}
             secondarySlot={(
@@ -141,7 +143,7 @@ export function ProjectsListPage() {
                                 setUnsubscribeId(project.id);
                               }}
                             >
-                              Unsubscribe
+                              <Trans>Unsubscribe</Trans>
                             </DropdownMenuItem>
                           </DropdownMenuContent>
                         </DropdownMenu>
@@ -158,7 +160,7 @@ export function ProjectsListPage() {
       <ConfirmDialog
         open={!!unsubscribeId}
         onOpenChange={(open) => { if (!open) setUnsubscribeId(null); }}
-        title="Unsubscribe"
+        title={t`Unsubscribe`}
         desc="Are you sure you want to unsubscribe from this project?"
         confirmText="Unsubscribe"
         destructive

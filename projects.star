@@ -5893,7 +5893,7 @@ def action_request_create(a):
 	# Verify class allows this request type
 	cls = mochi.db.row("select requests from classes where project=? and id=?", project_id, obj["class"])
 	if not cls or request_type not in cls["requests"].split(","):
-		a.error(400, "Request type '" + request_type + "' not enabled for this class")
+		a.error_label(400, "errors.request_type_not_enabled_for_class", type=request_type)
 		return
 
 	repository = a.input("repository")

@@ -605,6 +605,7 @@ interface AccessTabProps {
 }
 
 function AccessTab({ projectId }: AccessTabProps) {
+  const { t } = useLingui()
   const [dialogOpen, setDialogOpen] = useState(false);
   const [userSearchQuery, setUserSearchQuery] = useState("");
 
@@ -672,7 +673,7 @@ function AccessTab({ projectId }: AccessTabProps) {
       toast.success(`Access set for ${subjectName}`);
       await refetchRules();
     } catch (err) {
-      toast.error(getErrorMessage(err, "Failed to set access level"));
+      toast.error(getErrorMessage(err, t`Failed to set access level`));
       throw err;
     }
   };
@@ -681,10 +682,10 @@ function AccessTab({ projectId }: AccessTabProps) {
     if (!canManageRules) return;
     try {
       await projectsApi.revokeAccess(projectId, subject);
-      toast.success("Access removed");
+      toast.success(t`Access removed`);
       await refetchRules();
     } catch (err) {
-      toast.error(getErrorMessage(err, "Failed to remove access"));
+      toast.error(getErrorMessage(err, t`Failed to remove access`));
     }
   };
 
@@ -692,10 +693,10 @@ function AccessTab({ projectId }: AccessTabProps) {
     if (!canManageRules) return;
     try {
       await projectsApi.setAccessLevel(projectId, subject, newLevel);
-      toast.success("Access level updated");
+      toast.success(t`Access level updated`);
       await refetchRules();
     } catch (err) {
-      toast.error(getErrorMessage(err, "Failed to update access level"));
+      toast.error(getErrorMessage(err, t`Failed to update access level`));
     }
   };
 

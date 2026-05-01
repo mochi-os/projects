@@ -13,6 +13,10 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
+#: src/features/editor/components/edit-dialogs.tsx:787
+msgid "(itself)"
+msgstr "(itself)"
+
 #. placeholder {0}: project.project.name
 #: src/routes/_authenticated/$projectId_.settings.tsx:239
 msgid "{0} settings"
@@ -59,7 +63,7 @@ msgstr "Add a comment..."
 msgid "Add a new account"
 msgstr "Add a new account"
 
-#: src/features/editor/components/add-dialogs.tsx:107
+#: src/features/editor/components/add-dialogs.tsx:98
 msgid "Add a new field to this class"
 msgstr "Add a new field to this class"
 
@@ -68,15 +72,16 @@ msgid "Add access"
 msgstr "Add access"
 
 #: ../../../lib/web/src/features/accounts/account-add.tsx:115
-#: ../../../lib/web/src/features/accounts/account-manager.tsx:278
+#: ../../../lib/web/src/features/accounts/account-manager.tsx:279
 msgid "Add account"
 msgstr "Add account"
 
-#: ../../../lib/web/src/features/accounts/account-manager.tsx:287
+#: ../../../lib/web/src/features/accounts/account-manager.tsx:288
 msgid "Add an account to receive notifications and use services."
 msgstr "Add an account to receive notifications and use services."
 
-#: src/features/editor/components/edit-dialogs.tsx:885
+#: src/features/editor/components/edit-dialogs.tsx:690
+#: src/features/editor/components/edit-dialogs.tsx:887
 msgid "Add class"
 msgstr "Add class"
 
@@ -85,9 +90,9 @@ msgstr "Add class"
 msgid "Add column"
 msgstr "Add column"
 
-#: src/features/editor/components/add-dialogs.tsx:106
-#: src/features/editor/components/add-dialogs.tsx:221
-#: src/features/editor/components/edit-dialogs.tsx:880
+#: src/features/editor/components/add-dialogs.tsx:97
+#: src/features/editor/components/add-dialogs.tsx:214
+#: src/features/editor/components/edit-dialogs.tsx:882
 msgid "Add field"
 msgstr "Add field"
 
@@ -99,7 +104,7 @@ msgstr "Add link"
 msgid "Add new account"
 msgstr "Add new account"
 
-#: src/features/editor/components/edit-dialogs.tsx:1110
+#: src/features/editor/components/edit-dialogs.tsx:1112
 #: src/features/editor/components/option-dialog.tsx:142
 msgid "Add option"
 msgstr "Add option"
@@ -116,7 +121,8 @@ msgstr "Add team/app"
 msgid "Add to existing notifications"
 msgstr "Add to existing notifications"
 
-#: src/features/editor/components/edit-dialogs.tsx:509
+#: src/features/editor/components/edit-dialogs.tsx:266
+#: src/features/editor/components/edit-dialogs.tsx:511
 msgid "Add view"
 msgstr "Add view"
 
@@ -132,17 +138,21 @@ msgstr "AI"
 msgid "All"
 msgstr "All"
 
-#: src/components/layout/projects-layout.tsx:47
+#: src/components/layout/projects-layout.tsx:48
 msgid "All projects"
 msgstr "All projects"
 
-#: src/features/projects/components/create-project-dialog.tsx:193
+#: src/features/projects/components/create-project-dialog.tsx:194
 msgid "Allow anyone to search for project"
 msgstr "Allow anyone to search for project"
 
-#: src/features/editor/components/edit-dialogs.tsx:804
+#: src/features/editor/components/edit-dialogs.tsx:806
 msgid "Allow merge requests"
 msgstr "Allow merge requests"
+
+#: src/features/editor/components/edit-dialogs.tsx:1055
+msgid "Allow sort by"
+msgstr "Allow sort by"
 
 #: ../../../lib/web/src/components/data-table/column-header.tsx:56
 msgid "Asc"
@@ -158,7 +168,7 @@ msgid "Available keyboard shortcuts"
 msgstr "Available keyboard shortcuts"
 
 #: ../../../lib/web/src/components/place-picker.tsx:152
-#: src/features/projects/components/create-project-dialog.tsx:283
+#: src/features/projects/components/create-project-dialog.tsx:284
 msgid "Back"
 msgstr "Back"
 
@@ -181,11 +191,11 @@ msgstr "Back to project"
 msgid "Back to projects"
 msgstr "Back to projects"
 
-#: src/features/editor/components/edit-dialogs.tsx:308
+#: src/features/editor/components/edit-dialogs.tsx:310
 msgid "Board"
 msgstr "Board"
 
-#: src/features/editor/components/edit-dialogs.tsx:395
+#: src/features/editor/components/edit-dialogs.tsx:397
 msgid "Border colour"
 msgstr "Border colour"
 
@@ -193,7 +203,7 @@ msgstr "Border colour"
 msgid "Built-in templates"
 msgstr "Built-in templates"
 
-#: src/features/editor/components/edit-dialogs.tsx:767
+#: src/features/editor/components/edit-dialogs.tsx:769
 msgid "Can be child of"
 msgstr "Can be child of"
 
@@ -206,19 +216,27 @@ msgstr "Can be child of"
 #: src/features/board/components/board-column.tsx:607
 #: src/features/editor/components/option-dialog.tsx:134
 #: src/features/objects/components/comment-thread.tsx:167
-#: src/features/projects/components/create-project-dialog.tsx:208
+#: src/features/projects/components/create-project-dialog.tsx:209
 #: src/routes/_authenticated/$projectId/design.tsx:340
 #: src/routes/_authenticated/$projectId/index.tsx:859
 msgid "Cancel"
 msgstr "Cancel"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:129
+#: ../../../lib/web/src/components/notification-category-button.tsx:130
 msgid "Category for this notification"
 msgstr "Category for this notification"
+
+#: src/features/editor/components/add-dialogs.tsx:124
+msgid "Checkbox"
+msgstr "Checkbox"
 
 #: src/features/requests/components/merge-status.tsx:35
 msgid "Checking merge status..."
 msgstr "Checking merge status..."
+
+#: src/features/editor/components/add-dialogs.tsx:125
+msgid "Checklist"
+msgstr "Checklist"
 
 #: ../../../lib/web/src/components/config-drawer.tsx:315
 msgid "Choose between default expanded, compact icon-only, or full layout mode"
@@ -262,6 +280,11 @@ msgstr "Clear selection"
 msgid "Close"
 msgstr "Close"
 
+#: src/features/editor/components/edit-dialogs.tsx:269
+#: src/features/editor/components/edit-dialogs.tsx:693
+msgid "Close dialog"
+msgstr "Close dialog"
+
 #: ../../../lib/web/src/components/layout/app-sidebar.tsx:97
 msgid "Close navigation"
 msgstr "Close navigation"
@@ -278,7 +301,7 @@ msgstr "Collapse sidebar"
 msgid "Colour"
 msgstr "Colour"
 
-#: src/features/editor/components/edit-dialogs.tsx:343
+#: src/features/editor/components/edit-dialogs.tsx:345
 msgid "Columns group by"
 msgstr "Columns group by"
 
@@ -290,7 +313,7 @@ msgstr "Coming Soon!"
 msgid "Compact"
 msgstr "Compact"
 
-#: src/features/editor/components/edit-dialogs.tsx:689
+#: src/features/editor/components/edit-dialogs.tsx:691
 msgid "Configure class settings"
 msgstr "Configure class settings"
 
@@ -298,7 +321,7 @@ msgstr "Configure class settings"
 msgid "Configure option settings"
 msgstr "Configure option settings"
 
-#: src/features/editor/components/edit-dialogs.tsx:265
+#: src/features/editor/components/edit-dialogs.tsx:267
 msgid "Configure view settings"
 msgstr "Configure view settings"
 
@@ -321,31 +344,31 @@ msgstr "Core information about this project"
 
 #: src/features/board/components/board-column.tsx:543
 #: src/features/board/components/board-column.tsx:690
-#: src/features/objects/components/create-object-dialog.tsx:340
-#: src/features/tree/components/tree-view.tsx:365
+#: src/features/objects/components/create-object-dialog.tsx:341
+#: src/features/tree/components/tree-view.tsx:366
 msgid "Create"
 msgstr "Create"
 
-#: src/features/objects/components/create-object-dialog.tsx:318
+#: src/features/objects/components/create-object-dialog.tsx:319
 msgid "Create a new item in this project"
 msgstr "Create a new item in this project"
 
-#: src/features/projects/components/create-project-dialog.tsx:142
+#: src/features/projects/components/create-project-dialog.tsx:143
 #: src/features/projects/pages/projects-list-page.tsx:99
 msgid "Create a new project"
 msgstr "Create a new project"
 
-#: src/features/objects/components/create-object-dialog.tsx:317
+#: src/features/objects/components/create-object-dialog.tsx:318
 msgid "Create new item"
 msgstr "Create new item"
 
-#: src/components/layout/projects-layout.tsx:55
-#: src/features/projects/components/create-project-dialog.tsx:130
-#: src/features/projects/components/create-project-dialog.tsx:286
+#: src/components/layout/projects-layout.tsx:56
+#: src/features/projects/components/create-project-dialog.tsx:131
+#: src/features/projects/components/create-project-dialog.tsx:287
 msgid "Create project"
 msgstr "Create project"
 
-#: src/features/editor/components/edit-dialogs.tsx:488
+#: src/features/editor/components/edit-dialogs.tsx:490
 msgid "Created"
 msgstr "Created"
 
@@ -361,6 +384,10 @@ msgstr "Dark"
 msgid "Dark mode"
 msgstr "Dark mode"
 
+#: src/features/editor/components/add-dialogs.tsx:126
+msgid "Date"
+msgstr "Date"
+
 #: ../../../lib/web/src/components/config-drawer.tsx:297
 msgid "Default"
 msgstr "Default"
@@ -369,7 +396,7 @@ msgstr "Default"
 msgid "Default AI account"
 msgstr "Default AI account"
 
-#: src/features/editor/components/edit-dialogs.tsx:475
+#: src/features/editor/components/edit-dialogs.tsx:477
 msgid "Default sort"
 msgstr "Default sort"
 
@@ -383,17 +410,23 @@ msgstr "Delete"
 msgid "Delete attachment"
 msgstr "Delete attachment"
 
-#: src/features/editor/components/edit-dialogs.tsx:704
+#: src/features/editor/components/edit-dialogs.tsx:706
 msgid "Delete class"
 msgstr "Delete class"
 
-#: src/features/editor/components/edit-dialogs.tsx:1119
+#: src/features/editor/components/edit-dialogs.tsx:1121
 msgid "Delete field"
 msgstr "Delete field"
 
 #: src/features/editor/components/option-dialog.tsx:92
 msgid "Delete option"
 msgstr "Delete option"
+
+#. placeholder {0}: opt.name
+#: src/features/editor/components/edit-dialogs.tsx:1102
+#: src/features/editor/components/edit-dialogs.tsx:1103
+msgid "Delete option {0}"
+msgstr "Delete option {0}"
 
 #: src/routes/_authenticated/$projectId_.settings.tsx:399
 #: src/routes/_authenticated/$projectId_.settings.tsx:430
@@ -404,7 +437,7 @@ msgstr "Delete project"
 msgid "Delete project?"
 msgstr "Delete project?"
 
-#: src/features/editor/components/edit-dialogs.tsx:280
+#: src/features/editor/components/edit-dialogs.tsx:282
 msgid "Delete view"
 msgstr "Delete view"
 
@@ -446,10 +479,10 @@ msgstr "Dismiss board hint"
 msgid "Displays the mobile sidebar."
 msgstr "Displays the mobile sidebar."
 
-#: src/features/editor/components/edit-dialogs.tsx:514
-#: src/features/editor/components/edit-dialogs.tsx:890
-#: src/features/editor/components/edit-dialogs.tsx:1124
-#: src/features/objects/components/object-detail-panel.tsx:431
+#: src/features/editor/components/edit-dialogs.tsx:516
+#: src/features/editor/components/edit-dialogs.tsx:892
+#: src/features/editor/components/edit-dialogs.tsx:1126
+#: src/features/objects/components/object-detail-panel.tsx:432
 msgid "Done"
 msgstr "Done"
 
@@ -474,19 +507,33 @@ msgstr "Drag columns to re-order them"
 msgid "Edit"
 msgstr "Edit"
 
-#: src/features/editor/components/edit-dialogs.tsx:1001
+#: src/features/editor/components/edit-dialogs.tsx:690
+msgid "Edit class"
+msgstr "Edit class"
+
+#: src/features/editor/components/edit-dialogs.tsx:1003
 msgid "Edit field"
 msgstr "Edit field"
 
-#: src/features/editor/components/edit-dialogs.tsx:1002
+#: src/features/editor/components/edit-dialogs.tsx:1004
 msgid "Edit field settings"
 msgstr "Edit field settings"
+
+#. placeholder {0}: opt.name
+#: src/features/editor/components/edit-dialogs.tsx:1091
+#: src/features/editor/components/edit-dialogs.tsx:1092
+msgid "Edit option {0}"
+msgstr "Edit option {0}"
+
+#: src/features/editor/components/edit-dialogs.tsx:266
+msgid "Edit view"
+msgstr "Edit view"
 
 #: src/routes/_authenticated/$projectId_.settings.tsx:356
 msgid "Entity ID"
 msgstr "Entity ID"
 
-#: src/features/objects/components/object-detail-panel.tsx:306
+#: src/features/objects/components/object-detail-panel.tsx:307
 msgid "Error"
 msgstr "Error"
 
@@ -518,7 +565,7 @@ msgstr "Failed to create link"
 msgid "Failed to create option"
 msgstr "Failed to create option"
 
-#: src/features/projects/components/create-project-dialog.tsx:112
+#: src/features/projects/components/create-project-dialog.tsx:113
 msgid "Failed to create project"
 msgstr "Failed to create project"
 
@@ -554,7 +601,7 @@ msgstr "Failed to export design"
 msgid "Failed to import design"
 msgstr "Failed to import design"
 
-#: src/features/objects/components/object-detail-panel.tsx:307
+#: src/features/objects/components/object-detail-panel.tsx:308
 msgid "Failed to load item"
 msgstr "Failed to load item"
 
@@ -620,17 +667,17 @@ msgstr "Failed to update project"
 msgid "Failed to upload attachment"
 msgstr "Failed to upload attachment"
 
-#: src/features/editor/components/edit-dialogs.tsx:810
+#: src/features/editor/components/edit-dialogs.tsx:812
 msgid "Fields"
 msgstr "Fields"
 
-#: src/features/objects/components/create-object-dialog.tsx:426
+#: src/features/objects/components/create-object-dialog.tsx:427
 #: src/features/objects/components/object-attachments.tsx:106
 #: src/features/objects/components/object-attachments.tsx:123
 msgid "Files"
 msgstr "Files"
 
-#: src/components/layout/projects-layout.tsx:54
+#: src/components/layout/projects-layout.tsx:55
 #: src/routes/_authenticated/find.tsx:65
 msgid "Find projects"
 msgstr "Find projects"
@@ -639,7 +686,7 @@ msgstr "Find projects"
 msgid "Fingerprint"
 msgstr "Fingerprint"
 
-#: src/features/editor/components/edit-dialogs.tsx:1049
+#: src/features/editor/components/edit-dialogs.tsx:1051
 msgid "Flags"
 msgstr "Flags"
 
@@ -722,7 +769,7 @@ msgstr "Invalid date"
 msgid "Invalid JSON file"
 msgstr "Invalid JSON file"
 
-#: src/features/objects/components/object-detail-panel.tsx:385
+#: src/features/objects/components/object-detail-panel.tsx:386
 msgid "Item details"
 msgstr "Item details"
 
@@ -731,7 +778,7 @@ msgid "Keyboard shortcuts"
 msgstr "Keyboard shortcuts"
 
 #: ../../../lib/web/src/components/config-drawer.tsx:273
-#: src/features/editor/components/edit-dialogs.tsx:302
+#: src/features/editor/components/edit-dialogs.tsx:304
 msgid "Layout"
 msgstr "Layout"
 
@@ -751,7 +798,7 @@ msgstr "Light"
 msgid "Links"
 msgstr "Links"
 
-#: src/features/editor/components/edit-dialogs.tsx:314
+#: src/features/editor/components/edit-dialogs.tsx:316
 msgid "List"
 msgstr "List"
 
@@ -763,15 +810,15 @@ msgstr "Load more"
 msgid "Loading diff..."
 msgstr "Loading diff..."
 
-#: src/features/objects/components/object-detail-panel.tsx:287
+#: src/features/objects/components/object-detail-panel.tsx:288
 msgid "Loading item"
 msgstr "Loading item"
 
-#: src/features/objects/components/object-detail-panel.tsx:288
+#: src/features/objects/components/object-detail-panel.tsx:289
 msgid "Loading item details"
 msgstr "Loading item details"
 
-#: src/features/projects/components/create-project-dialog.tsx:221
+#: src/features/projects/components/create-project-dialog.tsx:222
 msgid "Loading templates..."
 msgstr "Loading templates..."
 
@@ -827,27 +874,27 @@ msgstr "Merging..."
 msgid "Missing repo, source, or target parameters"
 msgstr "Missing repo, source, or target parameters"
 
-#: src/features/projects/components/create-project-dialog.tsx:158
+#: src/features/projects/components/create-project-dialog.tsx:159
 msgid "My project"
 msgstr "My project"
 
 #: src/features/board/components/board-column.tsx:593
-#: src/features/editor/components/add-dialogs.tsx:114
-#: src/features/editor/components/edit-dialogs.tsx:289
-#: src/features/editor/components/edit-dialogs.tsx:713
-#: src/features/editor/components/edit-dialogs.tsx:1006
+#: src/features/editor/components/add-dialogs.tsx:105
+#: src/features/editor/components/edit-dialogs.tsx:291
+#: src/features/editor/components/edit-dialogs.tsx:715
+#: src/features/editor/components/edit-dialogs.tsx:1008
 #: src/features/editor/components/option-dialog.tsx:100
-#: src/features/projects/components/create-project-dialog.tsx:148
+#: src/features/projects/components/create-project-dialog.tsx:149
 #: src/routes/_authenticated/$projectId_.settings.tsx:333
 msgid "Name"
 msgstr "Name"
 
-#: src/features/projects/components/create-project-dialog.tsx:74
+#: src/features/projects/components/create-project-dialog.tsx:75
 msgid "Name is required"
 msgstr "Name is required"
 
 #: ../../../lib/web/src/components/ui/sort-selector.tsx:40
-#: src/features/objects/components/create-object-dialog.tsx:325
+#: src/features/objects/components/create-object-dialog.tsx:326
 #: src/routes/_authenticated/$projectId/index.tsx:761
 #: src/routes/_authenticated/$projectId/index.tsx:779
 msgid "New"
@@ -881,7 +928,7 @@ msgstr "No changes were found for the selected comparison."
 msgid "No comments yet"
 msgstr "No comments yet"
 
-#: ../../../lib/web/src/features/accounts/account-manager.tsx:285
+#: ../../../lib/web/src/features/accounts/account-manager.tsx:286
 msgid "No connected accounts"
 msgstr "No connected accounts"
 
@@ -893,11 +940,11 @@ msgstr "No diff available"
 msgid "No groups available"
 msgstr "No groups available"
 
-#: src/features/objects/components/create-object-dialog.tsx:360
+#: src/features/objects/components/create-object-dialog.tsx:361
 msgid "No item types can be created yet. Create the required parent items first."
 msgstr "No item types can be created yet. Create the required parent items first."
 
-#: ../../../lib/web/src/components/language-picker.tsx:96
+#: ../../../lib/web/src/components/language-picker.tsx:116
 msgid "No matches."
 msgstr "No matches."
 
@@ -935,7 +982,7 @@ msgstr "No results found."
 msgid "No time zone found."
 msgstr "No time zone found."
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:133
+#: ../../../lib/web/src/components/notification-category-button.tsx:134
 msgid "No topic record yet — try again after the next notification."
 msgstr "No topic record yet — try again after the next notification."
 
@@ -948,13 +995,17 @@ msgid "No views"
 msgstr "No views"
 
 #: ../../../lib/web/src/components/person-picker.tsx:332
-#: src/features/editor/components/edit-dialogs.tsx:355
-#: src/features/editor/components/edit-dialogs.tsx:381
-#: src/features/editor/components/edit-dialogs.tsx:411
-#: src/features/editor/components/edit-dialogs.tsx:487
-#: src/features/editor/components/edit-dialogs.tsx:754
-#: src/features/objects/components/create-object-dialog.tsx:383
-#: src/features/objects/components/object-detail-panel.tsx:510
+#: src/features/editor/components/edit-dialogs.tsx:357
+#: src/features/editor/components/edit-dialogs.tsx:380
+#: src/features/editor/components/edit-dialogs.tsx:383
+#: src/features/editor/components/edit-dialogs.tsx:410
+#: src/features/editor/components/edit-dialogs.tsx:413
+#: src/features/editor/components/edit-dialogs.tsx:486
+#: src/features/editor/components/edit-dialogs.tsx:489
+#: src/features/editor/components/edit-dialogs.tsx:753
+#: src/features/editor/components/edit-dialogs.tsx:756
+#: src/features/objects/components/create-object-dialog.tsx:384
+#: src/features/objects/components/object-detail-panel.tsx:511
 msgid "None"
 msgstr "None"
 
@@ -967,7 +1018,8 @@ msgstr "Not set"
 msgid "Notifications"
 msgstr "Notifications"
 
-#: src/features/editor/components/edit-dialogs.tsx:489
+#: src/features/editor/components/add-dialogs.tsx:127
+#: src/features/editor/components/edit-dialogs.tsx:491
 msgid "Number"
 msgstr "Number"
 
@@ -978,6 +1030,10 @@ msgstr "Oops! Page Not Found!"
 #: src/features/requests/components/request-panel.tsx:257
 msgid "Open"
 msgstr "Open"
+
+#: src/features/editor/components/edit-dialogs.tsx:699
+msgid "Open class actions"
+msgstr "Open class actions"
 
 #: src/routes/_authenticated/$projectId/design.tsx:162
 msgid "Open design actions"
@@ -991,8 +1047,16 @@ msgstr "Open page actions"
 msgid "Open theme settings"
 msgstr "Open theme settings"
 
-#: src/features/editor/components/add-dialogs.tsx:162
-#: src/features/editor/components/edit-dialogs.tsx:1068
+#: src/features/editor/components/edit-dialogs.tsx:275
+msgid "Open view actions"
+msgstr "Open view actions"
+
+#: src/features/editor/components/add-dialogs.tsx:187
+msgid "Option name"
+msgstr "Option name"
+
+#: src/features/editor/components/add-dialogs.tsx:155
+#: src/features/editor/components/edit-dialogs.tsx:1070
 msgid "Options"
 msgstr "Options"
 
@@ -1004,8 +1068,8 @@ msgstr "Other"
 msgid "Owner"
 msgstr "Owner"
 
-#: src/features/objects/components/create-object-dialog.tsx:368
-#: src/features/objects/components/object-detail-panel.tsx:488
+#: src/features/objects/components/create-object-dialog.tsx:369
+#: src/features/objects/components/object-detail-panel.tsx:489
 msgid "Parent"
 msgstr "Parent"
 
@@ -1013,11 +1077,11 @@ msgstr "Parent"
 msgid "Permanently delete this project and all its content."
 msgstr "Permanently delete this project and all its content."
 
-#: src/features/projects/components/create-project-dialog.tsx:84
+#: src/features/projects/components/create-project-dialog.tsx:85
 msgid "Please select a template"
 msgstr "Please select a template"
 
-#: src/features/projects/components/create-project-dialog.tsx:170
+#: src/features/projects/components/create-project-dialog.tsx:171
 #: src/routes/_authenticated/$projectId_.settings.tsx:349
 msgid "Prefix"
 msgstr "Prefix"
@@ -1032,7 +1096,7 @@ msgstr "Profile"
 msgid "Project"
 msgstr "Project"
 
-#: src/features/projects/components/create-project-dialog.tsx:100
+#: src/features/projects/components/create-project-dialog.tsx:101
 msgid "Project created"
 msgstr "Project created"
 
@@ -1052,7 +1116,7 @@ msgstr "Project unavailable"
 msgid "Project updated"
 msgstr "Project updated"
 
-#: src/components/layout/projects-layout.tsx:60
+#: src/components/layout/projects-layout.tsx:61
 #: src/features/projects/pages/projects-list-page.tsx:52
 #: src/features/projects/pages/projects-list-page.tsx:72
 #: src/features/projects/pages/projects-list-page.tsx:93
@@ -1078,14 +1142,20 @@ msgid "Redirecting to login."
 msgstr "Redirecting to login."
 
 #: ../../../lib/web/src/features/access/access-list.tsx:256
-#: ../../../lib/web/src/features/accounts/account-manager.tsx:170
-#: src/features/editor/components/add-dialogs.tsx:184
+#: ../../../lib/web/src/features/accounts/account-manager.tsx:171
+#: src/features/editor/components/add-dialogs.tsx:177
 msgid "Remove"
 msgstr "Remove"
 
 #: ../../../lib/web/src/features/access/access-list.tsx:248
 msgid "Remove access?"
 msgstr "Remove access?"
+
+#. placeholder {0}: field.name || field.id
+#: src/features/editor/components/edit-dialogs.tsx:852
+#: src/features/editor/components/edit-dialogs.tsx:853
+msgid "Remove field {0}"
+msgstr "Remove field {0}"
 
 #: src/features/board/components/board-column.tsx:554
 #: src/features/board/components/board-column.tsx:610
@@ -1112,9 +1182,13 @@ msgstr "Replacing..."
 msgid "Reply"
 msgstr "Reply"
 
-#: src/features/editor/components/edit-dialogs.tsx:792
+#: src/features/editor/components/edit-dialogs.tsx:794
 msgid "Requests"
 msgstr "Requests"
+
+#: src/features/editor/components/edit-dialogs.tsx:1054
+msgid "Required"
+msgstr "Required"
 
 #: ../../../lib/web/src/components/config-drawer.tsx:77
 msgid "Reset"
@@ -1128,7 +1202,7 @@ msgstr "Reset all settings to default values"
 msgid "Resolve these conflicts manually before merging."
 msgstr "Resolve these conflicts manually before merging."
 
-#: src/components/layout/projects-layout.tsx:67
+#: src/components/layout/projects-layout.tsx:68
 msgid "Retry projects load"
 msgstr "Retry projects load"
 
@@ -1136,12 +1210,12 @@ msgstr "Retry projects load"
 msgid "Right to Left"
 msgstr "Right to Left"
 
-#: src/features/editor/components/add-dialogs.tsx:144
-#: src/features/editor/components/edit-dialogs.tsx:1032
+#: src/features/editor/components/add-dialogs.tsx:137
+#: src/features/editor/components/edit-dialogs.tsx:1034
 msgid "Rows"
 msgstr "Rows"
 
-#: src/features/editor/components/edit-dialogs.tsx:369
+#: src/features/editor/components/edit-dialogs.tsx:371
 msgid "Rows group by"
 msgstr "Rows group by"
 
@@ -1189,6 +1263,14 @@ msgstr "Search, watch, and sort this view."
 msgid "Searching..."
 msgstr "Searching..."
 
+#: src/features/editor/components/add-dialogs.tsx:128
+msgid "Select"
+msgstr "Select"
+
+#: src/features/editor/components/edit-dialogs.tsx:354
+msgid "Select a field"
+msgstr "Select a field"
+
 #: ../../../lib/web/src/features/access/access-dialog.tsx:146
 msgid "Select a user, group, or other rule to grant access."
 msgstr "Select a user, group, or other rule to grant access."
@@ -1235,11 +1317,11 @@ msgstr "Set origin and destination"
 msgid "Settings"
 msgstr "Settings"
 
-#: src/features/editor/components/edit-dialogs.tsx:323
+#: src/features/editor/components/edit-dialogs.tsx:325
 msgid "Show classes"
 msgstr "Show classes"
 
-#: src/features/editor/components/edit-dialogs.tsx:424
+#: src/features/editor/components/edit-dialogs.tsx:426
 msgid "Show fields"
 msgstr "Show fields"
 
@@ -1257,8 +1339,8 @@ msgstr "Sidebar"
 msgid "Signing out..."
 msgstr "Signing out..."
 
-#: src/features/editor/components/add-dialogs.tsx:155
-#: src/features/editor/components/edit-dialogs.tsx:1043
+#: src/features/editor/components/add-dialogs.tsx:148
+#: src/features/editor/components/edit-dialogs.tsx:1045
 msgid "Single line of text only"
 msgstr "Single line of text only"
 
@@ -1299,6 +1381,10 @@ msgstr "Tag"
 msgid "Teams/Apps"
 msgstr "Teams/Apps"
 
+#: src/features/editor/components/add-dialogs.tsx:129
+msgid "Text"
+msgstr "Text"
+
 #: ../../../lib/web/src/components/config-drawer.tsx:181
 msgid "Theme"
 msgstr "Theme"
@@ -1327,7 +1413,7 @@ msgstr "This will permanently delete \"{projectName}\" and all its objects, comm
 msgid "This will remove \"{projectName}\" from your sidebar and stop updates for this project."
 msgstr "This will remove \"{projectName}\" from your sidebar and stop updates for this project."
 
-#: src/features/editor/components/edit-dialogs.tsx:736
+#: src/features/editor/components/edit-dialogs.tsx:738
 msgid "Title field"
 msgstr "Title field"
 
@@ -1351,7 +1437,7 @@ msgstr "Toggle theme"
 msgid "Top"
 msgstr "Top"
 
-#: src/features/editor/components/edit-dialogs.tsx:774
+#: src/features/editor/components/edit-dialogs.tsx:776
 msgid "Top level"
 msgstr "Top level"
 
@@ -1370,8 +1456,8 @@ msgstr "Try adjusting your search terms"
 msgid "Try again"
 msgstr "Try again"
 
-#: src/features/editor/components/add-dialogs.tsx:126
-#: src/features/editor/components/edit-dialogs.tsx:1026
+#: src/features/editor/components/add-dialogs.tsx:117
+#: src/features/editor/components/edit-dialogs.tsx:1028
 msgid "Type"
 msgstr "Type"
 
@@ -1406,15 +1492,15 @@ msgstr "Unsubscribe from project?"
 msgid "Unsubscribed"
 msgstr "Unsubscribed"
 
-#: ../../../lib/web/src/features/accounts/account-manager.tsx:129
+#: ../../../lib/web/src/features/accounts/account-manager.tsx:130
 msgid "Unverified"
 msgstr "Unverified"
 
-#: src/features/editor/components/edit-dialogs.tsx:490
+#: src/features/editor/components/edit-dialogs.tsx:492
 msgid "Updated"
 msgstr "Updated"
 
-#: src/features/objects/components/create-object-dialog.tsx:467
+#: src/features/objects/components/create-object-dialog.tsx:468
 msgid "Upload"
 msgstr "Upload"
 
@@ -1423,6 +1509,7 @@ msgid "Upload .json file"
 msgstr "Upload .json file"
 
 #: ../../../lib/web/src/features/access/access-dialog.tsx:154
+#: src/features/editor/components/add-dialogs.tsx:130
 msgid "User"
 msgstr "User"
 
@@ -1430,7 +1517,7 @@ msgstr "User"
 msgid "Verification code"
 msgstr "Verification code"
 
-#: ../../../lib/web/src/features/accounts/account-manager.tsx:162
+#: ../../../lib/web/src/features/accounts/account-manager.tsx:163
 msgid "Verify"
 msgstr "Verify"
 
@@ -1442,7 +1529,7 @@ msgstr "Verify email address"
 msgid "View"
 msgstr "View"
 
-#: src/features/objects/components/object-detail-panel.tsx:386
+#: src/features/objects/components/object-detail-panel.tsx:387
 msgid "View and edit item details"
 msgstr "View and edit item details"
 

@@ -3,6 +3,7 @@
 
 import { useState, useEffect, useMemo } from "react";
 import { Trans } from '@lingui/react/macro'
+import { t } from '@lingui/core/macro'
 import {
   Sheet,
   SheetContent,
@@ -35,6 +36,7 @@ import {
 import { Check, GripVertical, Minus, MoreHorizontal, Pencil, Plus, Trash2, X } from "lucide-react";
 import type { ProjectView, ProjectField, ProjectClass, FieldOption } from "@/types";
 import { AddFieldDialog } from "./add-dialogs";
+import { naturalCompare } from '@mochi/web'
 
 const NONE_SELECT_VALUE = "_none_";
 
@@ -261,16 +263,16 @@ export function ViewSheet({
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent className="w-full sm:max-w-md p-0 flex flex-col [&>button:last-child]:hidden">
         <div className="flex items-center justify-between px-6 py-4 border-b">
-          <SheetTitle>{mode === "create" ? "Add view" : "Edit view"}</SheetTitle>
+          <SheetTitle>{mode === "create" ? <Trans>Add view</Trans> : <Trans>Edit view</Trans>}</SheetTitle>
           <SheetDescription className="sr-only"><Trans>Configure view settings</Trans></SheetDescription>
           <div className="flex items-center gap-1">
-            <Button variant="ghost" size="icon" className="size-8" onClick={() => onOpenChange(false)} aria-label={"Close dialog"}>
+            <Button variant="ghost" size="icon" className="size-8" onClick={() => onOpenChange(false)} aria-label={t`Close dialog`}>
               <X className="size-4" />
             </Button>
             {mode === "edit" && onDelete && (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" size="icon" className="size-8" aria-label={"Open view actions"}>
+                  <Button variant="ghost" size="icon" className="size-8" aria-label={t`Open view actions`}>
                     <MoreHorizontal className="size-4" />
                   </Button>
                 </DropdownMenuTrigger>
@@ -349,7 +351,7 @@ export function ViewSheet({
                   }
                 >
                   <SelectTrigger className="w-full">
-                    <SelectValue placeholder={"Select a field"} />
+                    <SelectValue placeholder={t`Select a field`} />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value={NONE_SELECT_VALUE}><Trans>None</Trans></SelectItem>
@@ -375,7 +377,7 @@ export function ViewSheet({
                   }
                 >
                   <SelectTrigger className="w-full">
-                    <SelectValue placeholder={"None"} />
+                    <SelectValue placeholder={t`None`} />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value={NONE_SELECT_VALUE}><Trans>None</Trans></SelectItem>
@@ -405,7 +407,7 @@ export function ViewSheet({
                   }}
                 >
                   <SelectTrigger className="w-full">
-                    <SelectValue placeholder={"None"} />
+                    <SelectValue placeholder={t`None`} />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value={NONE_SELECT_VALUE}><Trans>None</Trans></SelectItem>
@@ -481,14 +483,14 @@ export function ViewSheet({
                 }
               >
                 <SelectTrigger className="flex-1">
-                  <SelectValue placeholder={"None"} />
+                  <SelectValue placeholder={t`None`} />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value={NONE_SELECT_VALUE}><Trans>None</Trans></SelectItem>
                   <SelectItem value="created"><Trans>Created</Trans></SelectItem>
                   <SelectItem value="number"><Trans>Number</Trans></SelectItem>
                   <SelectItem value="updated"><Trans>Updated</Trans></SelectItem>
-                  {[...fields].sort((a, b) => a.name.localeCompare(b.name)).map((field) => (
+                  {[...fields].sort((a, b) => naturalCompare(a.name, b.name)).map((field) => (
                     <SelectItem key={field.id} value={field.id}>
                       {field.name}
                     </SelectItem>
@@ -685,16 +687,16 @@ export function ClassSheet({
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent className="w-full sm:max-w-md p-0 flex flex-col [&>button:last-child]:hidden">
         <div className="flex items-center justify-between px-6 py-4 border-b">
-          <SheetTitle>{mode === "create" ? "Add class" : "Edit class"}</SheetTitle>
+          <SheetTitle>{mode === "create" ? <Trans>Add class</Trans> : <Trans>Edit class</Trans>}</SheetTitle>
           <SheetDescription className="sr-only"><Trans>Configure class settings</Trans></SheetDescription>
           <div className="flex items-center gap-1">
-            <Button variant="ghost" size="icon" className="size-8" onClick={() => onOpenChange(false)} aria-label={"Close dialog"}>
+            <Button variant="ghost" size="icon" className="size-8" onClick={() => onOpenChange(false)} aria-label={t`Close dialog`}>
               <X className="size-4" />
             </Button>
             {mode === "edit" && onDelete && (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" size="icon" className="size-8" aria-label={"Open class actions"}>
+                  <Button variant="ghost" size="icon" className="size-8" aria-label={t`Open class actions`}>
                     <MoreHorizontal className="size-4" />
                   </Button>
                 </DropdownMenuTrigger>
@@ -748,7 +750,7 @@ export function ClassSheet({
                   }}
                 >
                   <SelectTrigger className="w-full">
-                    <SelectValue placeholder={"None"} />
+                    <SelectValue placeholder={t`None`} />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value={NONE_SELECT_VALUE}><Trans>None</Trans></SelectItem>
@@ -773,7 +775,7 @@ export function ClassSheet({
                 />
                 <Trans>Top level</Trans>
               </label>
-              {[...classes].sort((a, b) => a.name.localeCompare(b.name)).map((c) => (
+              {[...classes].sort((a, b) => naturalCompare(a.name, b.name)).map((c) => (
                 <label
                   key={c.id}
                   className="flex items-center gap-2 text-sm cursor-pointer"
@@ -782,7 +784,7 @@ export function ClassSheet({
                     checked={currentHierarchy.includes(c.id)}
                     onCheckedChange={() => toggleParent(c.id)}
                   />
-                  {c.name}{c.id === cls?.id ? " (itself)" : ""}
+                  {c.name}{c.id === cls?.id ? <> <Trans>(itself)</Trans></> : ""}
                 </label>
               ))}
             </div>
@@ -847,8 +849,8 @@ export function ClassSheet({
                           size="icon"
                           className="size-6 shrink-0"
                           onClick={() => removePendingField(field.id)}
-                          aria-label={`Remove field ${field.name || field.id}`}
-                          title={`Remove field ${field.name || field.id}`}
+                          aria-label={t`Remove field ${field.name || field.id}`}
+                          title={t`Remove field ${field.name || field.id}`}
                         >
                           <X className="size-3" />
                         </Button>
@@ -1049,8 +1051,8 @@ export function EditFieldDialog({
             <Label><Trans>Flags</Trans></Label>
             <div className="pl-4 space-y-2">
               {[
-                { id: "required", label: "Required" },
-                { id: "sort", label: "Allow sort by" },
+                { id: "required", label: <Trans>Required</Trans> },
+                { id: "sort", label: <Trans>Allow sort by</Trans> },
               ].map((flag) => (
                 <label key={flag.id} className="flex items-center gap-2 text-sm cursor-pointer">
                   <Switch
@@ -1086,8 +1088,8 @@ export function EditFieldDialog({
                         size="icon"
                         className="size-7"
                         onClick={() => onEditOption(opt)}
-                        aria-label={`Edit option ${opt.name}`}
-                        title={`Edit option ${opt.name}`}
+                        aria-label={t`Edit option ${opt.name}`}
+                        title={t`Edit option ${opt.name}`}
                       >
                         <Pencil className="size-3.5" />
                       </Button>
@@ -1097,8 +1099,8 @@ export function EditFieldDialog({
                         size="icon"
                         className="size-7"
                         onClick={() => onDeleteOption(opt.id)}
-                        aria-label={`Delete option ${opt.name}`}
-                        title={`Delete option ${opt.name}`}
+                        aria-label={t`Delete option ${opt.name}`}
+                        title={t`Delete option ${opt.name}`}
                       >
                         <Trash2 className="size-3.5" />
                       </Button>

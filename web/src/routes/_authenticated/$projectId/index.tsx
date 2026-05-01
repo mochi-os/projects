@@ -793,10 +793,10 @@ export function ProjectPageContent({ project, projectId, search, initialObjectId
               <DropdownMenuItem
                 onSelect={(e) => e.preventDefault()}
               >
-                <SlidersHorizontal className="size-4 mr-2" />
+                <SlidersHorizontal className="size-4 me-2" />
                 <Trans>View options</Trans>
                 <Switch
-                  className="ml-auto"
+                  className="ms-auto"
                   checked={showViewOptions}
                   onCheckedChange={setShowViewOptions}
                 />
@@ -804,11 +804,11 @@ export function ProjectPageContent({ project, projectId, search, initialObjectId
               {canDesign(access) && activeView?.viewtype !== "list" && (
                 <>
                   <DropdownMenuItem onClick={() => setAddColumnDialogOpen(true)}>
-                    <Columns3 className="size-4 mr-2" />
+                    <Columns3 className="size-4 me-2" />
                     <Trans>Add column</Trans>
                   </DropdownMenuItem>
                   <DropdownMenuItem onClick={() => setIsReorderingColumns(true)}>
-                    <GripVertical className="size-4 mr-2" />
+                    <GripVertical className="size-4 me-2" />
                     <Trans>Re-order columns</Trans>
                   </DropdownMenuItem>
                 </>
@@ -819,7 +819,7 @@ export function ProjectPageContent({ project, projectId, search, initialObjectId
                     to="/$projectId/design"
                     params={{ projectId: params.projectId }}
                   >
-                    <Settings2 className="size-4 mr-2" />
+                    <Settings2 className="size-4 me-2" />
                     <Trans>Design</Trans>
                   </Link>
                 </DropdownMenuItem>
@@ -829,7 +829,7 @@ export function ProjectPageContent({ project, projectId, search, initialObjectId
                   to="/$projectId/settings"
                   params={{ projectId: params.projectId }}
                 >
-                  <Settings className="size-4 mr-2" />
+                  <Settings className="size-4 me-2" />
                   <Trans>Settings</Trans>
                 </Link>
               </DropdownMenuItem>

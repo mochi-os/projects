@@ -166,11 +166,11 @@ function DesignPage() {
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuItem onClick={handleExport}>
-                <Download className="size-4 mr-2" />
+                <Download className="size-4 me-2" />
                 <Trans>Export design</Trans>
               </DropdownMenuItem>
               <DropdownMenuItem onClick={() => setImportOpen(true)}>
-                <Upload className="size-4 mr-2" />
+                <Upload className="size-4 me-2" />
                 <Trans>Import design</Trans>
               </DropdownMenuItem>
             </DropdownMenuContent>
@@ -207,7 +207,7 @@ function DesignPage() {
         confirmText={
           importing ? (
             <>
-              <Loader2 className="size-4 mr-1.5 animate-spin" />
+              <Loader2 className="size-4 me-1.5 animate-spin" />
               <Trans>Replacing...</Trans>
             </>
           ) : (
@@ -218,7 +218,7 @@ function DesignPage() {
         isLoading={importing}
       >
         <Button variant="outline" className="w-full" onClick={handleExport} disabled={importing}>
-          <Download className="size-4 mr-1.5" />
+          <Download className="size-4 me-1.5" />
           <Trans>Download backup first</Trans>
         </Button>
       </ConfirmDialog>
@@ -301,7 +301,7 @@ function ImportDialog({
                   <button
                     key={template.id}
                     onClick={() => handleTemplateSelect(template)}
-                    className="w-full text-left px-3 py-2 text-sm rounded-lg border hover:bg-muted transition-colors"
+                    className="w-full text-start px-3 py-2 text-sm rounded-lg border hover:bg-muted transition-colors"
                   >
                     <div className="font-medium">{template.name}</div>
                     {template.description && (
@@ -329,7 +329,7 @@ function ImportDialog({
               className="w-full"
               onClick={() => fileInputRef.current?.click()}
             >
-              <Upload className="size-4 mr-1.5" />
+              <Upload className="size-4 me-1.5" />
               <Trans>Upload .json file</Trans>
             </Button>
           </div>

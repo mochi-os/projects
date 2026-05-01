@@ -95,7 +95,7 @@ export function ProjectsListPage() {
             searchSlot={<InlineProjectSearch subscribedIds={subscribedProjectIds} />}
             primaryActionSlot={(
               <Button variant="outline" onClick={openCreateDialog}>
-                <Plus className="mr-2 h-4 w-4" />
+                <Plus className="me-2 h-4 w-4" />
                 <Trans>Create a new project</Trans>
               </Button>
             )}

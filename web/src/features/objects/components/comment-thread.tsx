@@ -120,7 +120,7 @@ export function CommentThread({
       <button
         type="button"
         onClick={() => setCollapsed(false)}
-        className="text-primary ml-2 flex cursor-pointer items-center gap-1 hover:underline"
+        className="text-primary ms-2 flex cursor-pointer items-center gap-1 hover:underline"
       >
         {totalDescendants > 0 ? (
           <span>
@@ -272,7 +272,7 @@ export function CommentThread({
                     onClick={() =>
                       setReplyFiles((prev) => prev.filter((_, idx) => idx !== i))
                     }
-                    className="text-muted-foreground hover:text-foreground ml-0.5"
+                    className="text-muted-foreground hover:text-foreground ms-0.5"
                   >
                     <X className="size-3.5" />
                   </button>

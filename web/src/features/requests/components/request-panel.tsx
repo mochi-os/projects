@@ -239,12 +239,12 @@ function RequestItem({
       <button
         type="button"
         onClick={onToggle}
-        className="flex items-center gap-2 w-full px-3 py-2 text-sm hover:bg-muted/50 transition-colors text-left"
+        className="flex items-center gap-2 w-full px-3 py-2 text-sm hover:bg-muted/50 transition-colors text-start"
       >
         {expanded ? (
           <ChevronDown className="size-3.5 shrink-0 text-muted-foreground" />
         ) : (
-          <ChevronRight className="size-3.5 shrink-0 text-muted-foreground" />
+          <ChevronRight className="size-3.5 shrink-0 text-muted-foreground rtl:rotate-180" />
         )}
         {!expanded && <span className="flex-1 truncate text-muted-foreground">{summary}</span>}
         {expanded && <span className="flex-1" />}
@@ -303,7 +303,7 @@ function RequestItem({
                 placeholder={t`Source`}
                 disabled={readOnly || isMerged}
               />
-              <ArrowRight className="size-4 text-muted-foreground mb-2.5" />
+              <ArrowRight className="size-4 text-muted-foreground mb-2.5 rtl:rotate-180" />
               <BranchSelect
                 repoId={request.repository}
                 value={request.target}

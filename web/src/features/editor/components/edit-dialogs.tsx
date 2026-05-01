@@ -289,7 +289,7 @@ export function ViewSheet({
         <div className="flex-1 overflow-y-auto p-6 space-y-4">
           <div className="space-y-2">
             <Label htmlFor="view-name"><Trans>Name</Trans></Label>
-            <div className="pl-4">
+            <div className="ps-4">
               <Input
                 id="view-name"
                 value={name}
@@ -302,7 +302,7 @@ export function ViewSheet({
 
           <div className="space-y-2">
             <Label><Trans>Layout</Trans></Label>
-            <div className="pl-4">
+            <div className="ps-4">
               <RadioGroup value={viewtype} onValueChange={handleViewtypeChange}>
                 <div className="flex items-center gap-2">
                   <RadioGroupItem value="board" id="vt-board" />
@@ -323,7 +323,7 @@ export function ViewSheet({
           {classes.length > 1 && (
             <div className="space-y-2">
               <Label><Trans>Show classes</Trans></Label>
-              <div className="pl-4 space-y-1">
+              <div className="ps-4 space-y-1">
                 {classes.map((cls) => (
                   <label
                     key={cls.id}
@@ -343,7 +343,7 @@ export function ViewSheet({
           {viewtype === "board" && enumeratedFields.length > 0 && (
             <div className="space-y-2">
               <Label><Trans>Columns group by</Trans></Label>
-              <div className="pl-4">
+              <div className="ps-4">
                 <Select
                   value={columns || NONE_SELECT_VALUE}
                   onValueChange={(value) =>
@@ -369,7 +369,7 @@ export function ViewSheet({
           {viewtype === "board" && enumeratedFields.length > 0 && (
             <div className="space-y-2">
               <Label><Trans>Rows group by</Trans></Label>
-              <div className="pl-4">
+              <div className="ps-4">
                 <Select
                   value={rows || NONE_SELECT_VALUE}
                   onValueChange={(value) =>
@@ -395,7 +395,7 @@ export function ViewSheet({
           {viewtype === "board" && enumeratedFields.length > 0 && (
             <div className="space-y-2">
               <Label><Trans>Border colour</Trans></Label>
-              <div className="pl-4">
+              <div className="ps-4">
                 <Select
                   value={border || NONE_SELECT_VALUE}
                   onValueChange={(value) => {
@@ -424,7 +424,7 @@ export function ViewSheet({
 
           <div className="space-y-2">
             <Label><Trans>Show fields</Trans></Label>
-            <div className="pl-4 space-y-1">
+            <div className="ps-4 space-y-1">
               {selectedFields
                 .map((id) => fields.find((f) => f.id === id))
                 .filter(Boolean)
@@ -475,7 +475,7 @@ export function ViewSheet({
 
           <div className="space-y-2">
             <Label><Trans>Default sort</Trans></Label>
-            <div className="pl-4 flex gap-2">
+            <div className="ps-4 flex gap-2">
               <Select
                 value={sort || NONE_SELECT_VALUE}
                 onValueChange={(value) =>
@@ -713,7 +713,7 @@ export function ClassSheet({
         <div className="flex-1 overflow-y-auto p-6 space-y-6">
           <div className="space-y-2">
             <Label htmlFor="class-name"><Trans>Name</Trans></Label>
-            <div className="pl-4">
+            <div className="ps-4">
               <Input
                 id="class-name"
                 value={name}
@@ -727,7 +727,7 @@ export function ClassSheet({
           {mode === "edit" && cls && (
             <div className="space-y-2">
               <Label htmlFor="class-id">ID</Label>
-              <div className="pl-4">
+              <div className="ps-4">
                 <Input id="class-id" value={cls.id} readOnly className="text-muted-foreground" />
               </div>
             </div>
@@ -736,7 +736,7 @@ export function ClassSheet({
           {mode === "edit" && cls && fields && fields.length > 0 && (
             <div className="space-y-2">
               <Label><Trans>Title field</Trans></Label>
-              <div className="pl-4">
+              <div className="ps-4">
                 <Select
                   value={cls.title || NONE_SELECT_VALUE}
                   onValueChange={(value) => {
@@ -767,7 +767,7 @@ export function ClassSheet({
 
           <div className="space-y-2">
             <Label><Trans>Can be child of</Trans></Label>
-            <div className="pl-4 space-y-2">
+            <div className="ps-4 space-y-2">
               <label className="flex items-center gap-2 text-sm cursor-pointer">
                 <Switch
                   checked={currentHierarchy.includes("")}
@@ -792,7 +792,7 @@ export function ClassSheet({
 
           <div className="space-y-2">
             <Label><Trans>Requests</Trans></Label>
-            <div className="pl-4">
+            <div className="ps-4">
               <label className="flex items-center gap-2 text-sm cursor-pointer">
                 <Switch
                   checked={mergeRequests}
@@ -810,7 +810,7 @@ export function ClassSheet({
 
           <div className="space-y-2">
             <Label><Trans>Fields</Trans></Label>
-            <div className="pl-4 space-y-2">
+            <div className="ps-4 space-y-2">
               <div className="space-y-1">
                 {displayFields.map((field) => (
                   <div key={field.id}>
@@ -833,12 +833,12 @@ export function ClassSheet({
                         <button
                           type="button"
                           onClick={() => onEditField(field as ProjectField)}
-                          className="flex-1 text-left"
+                          className="flex-1 text-start"
                         >
                           <span className="font-medium">{field.name || field.id}</span>
                         </button>
                       ) : (
-                        <span className="flex-1 text-left font-medium">
+                        <span className="flex-1 text-start font-medium">
                           {field.name || field.id}
                         </span>
                       )}
@@ -1049,7 +1049,7 @@ export function EditFieldDialog({
 
           <div className="space-y-2">
             <Label><Trans>Flags</Trans></Label>
-            <div className="pl-4 space-y-2">
+            <div className="ps-4 space-y-2">
               {[
                 { id: "required", label: <Trans>Required</Trans> },
                 { id: "sort", label: <Trans>Allow sort by</Trans> },

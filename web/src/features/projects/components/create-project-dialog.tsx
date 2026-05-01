@@ -127,7 +127,7 @@ export function CreateProjectDialog({
       {!hideTrigger && (
         <ResponsiveDialogTrigger asChild>
           <Button>
-            <Plus className="mr-2 size-4" />
+            <Plus className="me-2 size-4" />
             <Trans>Create project</Trans>
           </Button>
         </ResponsiveDialogTrigger>
@@ -210,7 +210,7 @@ export function CreateProjectDialog({
               </Button>
               <Button type="button" onClick={handleNext}>
                 Next
-                <ArrowRight className="ml-2 size-4" />
+                <ArrowRight className="ms-2 size-4 rtl:rotate-180" />
               </Button>
             </ResponsiveDialogFooter>
           </div>
@@ -280,11 +280,11 @@ export function CreateProjectDialog({
                 variant="outline"
                 onClick={() => setStep(1)}
               >
-                <ArrowLeft className="mr-2 size-4" />
+                <ArrowLeft className="me-2 size-4 rtl:rotate-180" />
                 <Trans>Back</Trans>
               </Button>
               <Button type="submit" disabled={isPending || !selectedTemplate}>
-                {isPending ? "Creating..." : <><Plus className="mr-2 size-4" /><Trans>Create project</Trans></>}
+                {isPending ? "Creating..." : <><Plus className="me-2 size-4" /><Trans>Create project</Trans></>}
               </Button>
             </ResponsiveDialogFooter>
           </form>

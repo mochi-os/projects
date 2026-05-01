@@ -116,7 +116,7 @@ function FileHeader({
       className="flex items-center gap-2 w-full px-3 py-2 bg-muted/50 border-b text-sm font-mono hover:bg-muted/80 transition-colors sticky top-0 z-10"
     >
       {collapsed ? (
-        <ChevronRight className="size-3.5 shrink-0" />
+        <ChevronRight className="size-3.5 shrink-0 rtl:rotate-180" />
       ) : (
         <ChevronDown className="size-3.5 shrink-0" />
       )}
@@ -128,7 +128,7 @@ function FileHeader({
       >
         {file.status.charAt(0).toUpperCase()}
       </span>
-      <span className="truncate text-left flex-1">{file.path}</span>
+      <span className="truncate text-start flex-1">{file.path}</span>
       {file.oldPath && (
         <span className="text-muted-foreground text-xs font-sans shrink-0">
           (from {file.oldPath})
@@ -162,10 +162,10 @@ function UnifiedView({ file }: { file: DiffFile }) {
           return (
             <tbody key={hi}>
               <tr className="bg-primary/5 dark:bg-primary/10">
-                <td className="w-[1px] px-2 py-0.5 text-right text-muted-foreground select-none border-r whitespace-nowrap">
+                <td className="w-[1px] px-2 py-0.5 text-end text-muted-foreground select-none border-e whitespace-nowrap">
                   ...
                 </td>
-                <td className="w-[1px] px-2 py-0.5 text-right text-muted-foreground select-none border-r whitespace-nowrap">
+                <td className="w-[1px] px-2 py-0.5 text-end text-muted-foreground select-none border-e whitespace-nowrap">
                   ...
                 </td>
                 <td className="px-3 py-0.5 text-primary">
@@ -193,10 +193,10 @@ function UnifiedGroup({
       <>
         {group.contexts.map((line, i) => (
           <tr key={`c${i}`}>
-            <td className="w-[1px] px-2 py-0.5 text-right text-muted-foreground select-none border-r whitespace-nowrap">
+            <td className="w-[1px] px-2 py-0.5 text-end text-muted-foreground select-none border-e whitespace-nowrap">
               {line.oldNum}
             </td>
-            <td className="w-[1px] px-2 py-0.5 text-right text-muted-foreground select-none border-r whitespace-nowrap">
+            <td className="w-[1px] px-2 py-0.5 text-end text-muted-foreground select-none border-e whitespace-nowrap">
               {line.newNum}
             </td>
             <td className="px-3 py-0.5 whitespace-pre-wrap break-all">
@@ -214,10 +214,10 @@ function UnifiedGroup({
     <>
       {group.removes.map((line, i) => (
         <tr key={`r${i}`} className="bg-red-100 dark:bg-red-950/30">
-          <td className="w-[1px] px-2 py-0.5 text-right text-muted-foreground select-none border-r whitespace-nowrap">
+          <td className="w-[1px] px-2 py-0.5 text-end text-muted-foreground select-none border-e whitespace-nowrap">
             {line.oldNum}
           </td>
-          <td className="w-[1px] px-2 py-0.5 text-right text-muted-foreground select-none border-r whitespace-nowrap" />
+          <td className="w-[1px] px-2 py-0.5 text-end text-muted-foreground select-none border-e whitespace-nowrap" />
           <td className="px-3 py-0.5 whitespace-pre-wrap break-all">
             <span className="select-none text-red-500">-</span>
             {i < paired ? (
@@ -234,8 +234,8 @@ function UnifiedGroup({
       ))}
       {group.adds.map((line, i) => (
         <tr key={`a${i}`} className="bg-green-100 dark:bg-green-950/30">
-          <td className="w-[1px] px-2 py-0.5 text-right text-muted-foreground select-none border-r whitespace-nowrap" />
-          <td className="w-[1px] px-2 py-0.5 text-right text-muted-foreground select-none border-r whitespace-nowrap">
+          <td className="w-[1px] px-2 py-0.5 text-end text-muted-foreground select-none border-e whitespace-nowrap" />
+          <td className="w-[1px] px-2 py-0.5 text-end text-muted-foreground select-none border-e whitespace-nowrap">
             {line.newNum}
           </td>
           <td className="px-3 py-0.5 whitespace-pre-wrap break-all">
@@ -266,13 +266,13 @@ function SplitView({ file }: { file: DiffFile }) {
           return (
             <tbody key={hi}>
               <tr className="bg-primary/5 dark:bg-primary/10">
-                <td className="w-[1px] px-2 py-0.5 text-right text-muted-foreground select-none border-r whitespace-nowrap">
+                <td className="w-[1px] px-2 py-0.5 text-end text-muted-foreground select-none border-e whitespace-nowrap">
                   ...
                 </td>
-                <td className="w-1/2 px-3 py-0.5 text-primary border-r">
+                <td className="w-1/2 px-3 py-0.5 text-primary border-e">
                   {hunk.header}
                 </td>
-                <td className="w-[1px] px-2 py-0.5 text-right text-muted-foreground select-none border-r whitespace-nowrap">
+                <td className="w-[1px] px-2 py-0.5 text-end text-muted-foreground select-none border-e whitespace-nowrap">
                   ...
                 </td>
                 <td className="w-1/2 px-3 py-0.5 text-primary">
@@ -300,13 +300,13 @@ function SplitGroup({
       <>
         {group.contexts.map((line, i) => (
           <tr key={`c${i}`}>
-            <td className="w-[1px] px-2 py-0.5 text-right text-muted-foreground select-none border-r whitespace-nowrap">
+            <td className="w-[1px] px-2 py-0.5 text-end text-muted-foreground select-none border-e whitespace-nowrap">
               {line.oldNum}
             </td>
-            <td className="w-1/2 px-3 py-0.5 whitespace-pre-wrap break-all border-r">
+            <td className="w-1/2 px-3 py-0.5 whitespace-pre-wrap break-all border-e">
               {line.content}
             </td>
-            <td className="w-[1px] px-2 py-0.5 text-right text-muted-foreground select-none border-r whitespace-nowrap">
+            <td className="w-[1px] px-2 py-0.5 text-end text-muted-foreground select-none border-e whitespace-nowrap">
               {line.newNum}
             </td>
             <td className="w-1/2 px-3 py-0.5 whitespace-pre-wrap break-all">
@@ -330,7 +330,7 @@ function SplitGroup({
       <tr key={`s${i}`}>
         <td
           className={cn(
-            "w-[1px] px-2 py-0.5 text-right text-muted-foreground select-none border-r whitespace-nowrap",
+            "w-[1px] px-2 py-0.5 text-end text-muted-foreground select-none border-e whitespace-nowrap",
             rem && "bg-red-100 dark:bg-red-950/30",
           )}
         >
@@ -338,7 +338,7 @@ function SplitGroup({
         </td>
         <td
           className={cn(
-            "w-1/2 px-3 py-0.5 whitespace-pre-wrap break-all border-r",
+            "w-1/2 px-3 py-0.5 whitespace-pre-wrap break-all border-e",
             rem && "bg-red-100 dark:bg-red-950/30",
           )}
         >
@@ -358,7 +358,7 @@ function SplitGroup({
         </td>
         <td
           className={cn(
-            "w-[1px] px-2 py-0.5 text-right text-muted-foreground select-none border-r whitespace-nowrap",
+            "w-[1px] px-2 py-0.5 text-end text-muted-foreground select-none border-e whitespace-nowrap",
             add && "bg-green-100 dark:bg-green-950/30",
           )}
         >

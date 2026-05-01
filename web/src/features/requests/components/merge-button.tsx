@@ -78,12 +78,12 @@ export function MergeButton({
       >
         {mergeMutation.isPending ? (
           <>
-            <Loader2 className="size-4 mr-2 animate-spin" />
+            <Loader2 className="size-4 me-2 animate-spin" />
             <Trans>Merging...</Trans>
           </>
         ) : (
           <>
-            <GitMerge className="size-4 mr-2" />
+            <GitMerge className="size-4 me-2" />
             {methodLabels[method]}
           </>
         )}

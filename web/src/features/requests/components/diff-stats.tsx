@@ -77,7 +77,7 @@ export function DiffStats({ repoId, base, head, diffUrl }: DiffStatsProps) {
             href={diffUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="ml-auto inline-flex items-center gap-1.5 rounded-md border px-2 py-0.5 text-xs text-muted-foreground hover:bg-muted transition-colors shrink-0"
+            className="ms-auto inline-flex items-center gap-1.5 rounded-md border px-2 py-0.5 text-xs text-muted-foreground hover:bg-muted transition-colors shrink-0"
           >
             <FileDiff className="size-3" />
             <Trans>Diff</Trans>

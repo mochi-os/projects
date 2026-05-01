@@ -155,7 +155,7 @@ export function CreateProjectDialog({
                     setPrefix(nameToPrefix(e.target.value));
                   }
                 }}
-                placeholder={"My project"}
+                placeholder={t`My project`}
                 autoFocus
                 onKeyDown={(e) => {
                   if (e.key === "Enter") {

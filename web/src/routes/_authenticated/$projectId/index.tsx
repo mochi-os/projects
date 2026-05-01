@@ -117,6 +117,7 @@ export interface ProjectPageContentProps {
 }
 
 export function ProjectPageContent({ project, projectId, search, initialObjectId }: ProjectPageContentProps) {
+  const { t } = useLingui()
   const router = useRouter();
   const params = { projectId };
   const access = project.project.access;
@@ -752,9 +753,12 @@ export function ProjectPageContent({ project, projectId, search, initialObjectId
     const viewClasses = activeView?.classes || [];
     if (viewClasses.length === 1) {
       const cls = project.classes.find((c) => c.id === viewClasses[0]);
-      if (cls) return `New ${cls.name.toLowerCase()}`;
+      if (cls) {
+        const className = cls.name.toLowerCase();
+        return t`New ${className}`;
+      }
     }
-    return "New";
+    return t`New`;
   })();
 
   return (
@@ -780,7 +784,7 @@ export function ProjectPageContent({ project, projectId, search, initialObjectId
         menuAction={
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <IconButton variant='ghost' label={"Open page actions"}>
+              <IconButton variant='ghost' label={t`Open page actions`}>
                 <Ellipsis className="size-4" />
               </IconButton>
             </DropdownMenuTrigger>
@@ -789,7 +793,7 @@ export function ProjectPageContent({ project, projectId, search, initialObjectId
                 onSelect={(e) => e.preventDefault()}
               >
                 <SlidersHorizontal className="size-4 mr-2" />
-                View options
+                <Trans>View options</Trans>
                 <Switch
                   className="ml-auto"
                   checked={showViewOptions}
@@ -874,8 +878,8 @@ export function ProjectPageContent({ project, projectId, search, initialObjectId
             size="icon"
             className="size-6"
             onClick={dismissBoardHint}
-            aria-label={"Dismiss board hint"}
-            title={"Dismiss board hint"}
+            aria-label={t`Dismiss board hint`}
+            title={t`Dismiss board hint`}
           >
             <X className="size-4" />
           </Button>
@@ -958,7 +962,7 @@ export function ProjectPageContent({ project, projectId, search, initialObjectId
         open={addColumnDialogOpen}
         onOpenChange={setAddColumnDialogOpen}
         onAdd={handleAddColumn}
-        title={"Add column"}
+        title={t`Add column`}
       />
     </>
   );

@@ -13,6 +13,15 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
+#. placeholder {0}: project.project.name
+#: src/routes/_authenticated/$projectId_.settings.tsx:239
+msgid "{0} settings"
+msgstr "{0} settings"
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:77
+msgid "Access"
+msgstr "Access"
+
 #: ../../../lib/web/src/features/errors/forbidden.tsx:12
 msgid "Access Forbidden"
 msgstr "Access Forbidden"
@@ -21,11 +30,15 @@ msgstr "Access Forbidden"
 msgid "Access level"
 msgstr "Access level"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:696
+#: src/routes/_authenticated/$projectId_.settings.tsx:697
 msgid "Access level updated"
 msgstr "Access level updated"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:685
+#: src/routes/_authenticated/$projectId_.settings.tsx:706
+msgid "Access Management"
+msgstr "Access Management"
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:686
 msgid "Access removed"
 msgstr "Access removed"
 
@@ -37,6 +50,10 @@ msgstr "Account type"
 #: src/features/requests/components/request-panel.tsx:99
 msgid "Add"
 msgstr "Add"
+
+#: src/features/objects/components/comment-list.tsx:189
+msgid "Add a comment..."
+msgstr "Add a comment..."
 
 #: ../../../lib/web/src/features/accounts/account-add.tsx:116
 msgid "Add a new account"
@@ -63,7 +80,8 @@ msgstr "Add an account to receive notifications and use services."
 msgid "Add class"
 msgstr "Add class"
 
-#: src/routes/_authenticated/$projectId/index.tsx:803
+#: src/routes/_authenticated/$projectId/index.tsx:807
+#: src/routes/_authenticated/$projectId/index.tsx:965
 msgid "Add column"
 msgstr "Add column"
 
@@ -86,7 +104,7 @@ msgstr "Add new account"
 msgid "Add option"
 msgstr "Add option"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:712
+#: src/routes/_authenticated/$projectId_.settings.tsx:713
 msgid "Add Rule"
 msgstr "Add Rule"
 
@@ -105,6 +123,10 @@ msgstr "Add view"
 #: ../../../lib/web/src/components/config-drawer.tsx:62
 msgid "Adjust the appearance and layout to suit your preferences."
 msgstr "Adjust the appearance and layout to suit your preferences."
+
+#: ../../../lib/web/src/components/ui/sort-selector.tsx:38
+msgid "AI"
+msgstr "AI"
 
 #: ../../../lib/web/src/components/notifications-dropdown.tsx:158
 msgid "All"
@@ -126,6 +148,11 @@ msgstr "Allow merge requests"
 msgid "Asc"
 msgstr "Asc"
 
+#: src/features/objects/components/comment-list.tsx:236
+#: src/features/objects/components/comment-list.tsx:237
+msgid "Attach comment files"
+msgstr "Attach comment files"
+
 #: src/components/keyboard-shortcuts-help.tsx:41
 msgid "Available keyboard shortcuts"
 msgstr "Available keyboard shortcuts"
@@ -141,9 +168,9 @@ msgstr "Back"
 msgid "Back to Home"
 msgstr "Back to Home"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:187
-#: src/routes/_authenticated/$projectId_.settings.tsx:210
-#: src/routes/_authenticated/$projectId_.settings.tsx:242
+#: src/routes/_authenticated/$projectId_.settings.tsx:186
+#: src/routes/_authenticated/$projectId_.settings.tsx:209
+#: src/routes/_authenticated/$projectId_.settings.tsx:241
 #: src/routes/_authenticated/$projectId/design.tsx:130
 #: src/routes/_authenticated/$projectId/design.tsx:155
 msgid "Back to project"
@@ -181,7 +208,7 @@ msgstr "Can be child of"
 #: src/features/objects/components/comment-thread.tsx:167
 #: src/features/projects/components/create-project-dialog.tsx:208
 #: src/routes/_authenticated/$projectId/design.tsx:340
-#: src/routes/_authenticated/$projectId/index.tsx:855
+#: src/routes/_authenticated/$projectId/index.tsx:859
 msgid "Cancel"
 msgstr "Cancel"
 
@@ -235,6 +262,10 @@ msgstr "Clear selection"
 msgid "Close"
 msgstr "Close"
 
+#: ../../../lib/web/src/components/layout/app-sidebar.tsx:97
+msgid "Close navigation"
+msgstr "Close navigation"
+
 #: ../../../lib/web/src/components/layout/right-panel.tsx:254
 msgid "Close Panel"
 msgstr "Close Panel"
@@ -283,6 +314,10 @@ msgstr "Contextual information and details."
 #: ../../../lib/web/src/components/ui/copy-button.tsx:60
 msgid "Copy"
 msgstr "Copy"
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:329
+msgid "Core information about this project"
+msgstr "Core information about this project"
 
 #: src/features/board/components/board-column.tsx:543
 #: src/features/board/components/board-column.tsx:690
@@ -340,9 +375,13 @@ msgstr "Default sort"
 
 #: src/features/board/components/board-column.tsx:562
 #: src/features/objects/components/comment-thread.tsx:227
-#: src/routes/_authenticated/$projectId_.settings.tsx:408
+#: src/routes/_authenticated/$projectId_.settings.tsx:409
 msgid "Delete"
 msgstr "Delete"
+
+#: src/features/objects/components/object-attachments.tsx:231
+msgid "Delete attachment"
+msgstr "Delete attachment"
 
 #: src/features/editor/components/edit-dialogs.tsx:704
 msgid "Delete class"
@@ -356,6 +395,15 @@ msgstr "Delete field"
 msgid "Delete option"
 msgstr "Delete option"
 
+#: src/routes/_authenticated/$projectId_.settings.tsx:399
+#: src/routes/_authenticated/$projectId_.settings.tsx:430
+msgid "Delete project"
+msgstr "Delete project"
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:428
+msgid "Delete project?"
+msgstr "Delete project?"
+
 #: src/features/editor/components/edit-dialogs.tsx:280
 msgid "Delete view"
 msgstr "Delete view"
@@ -364,8 +412,12 @@ msgstr "Delete view"
 msgid "Desc"
 msgstr "Desc"
 
+#: src/routes/_authenticated/$projectId_.settings.tsx:341
+msgid "Description"
+msgstr "Description"
+
 #: src/routes/_authenticated/$projectId/design.tsx:128
-#: src/routes/_authenticated/$projectId/index.tsx:818
+#: src/routes/_authenticated/$projectId/index.tsx:822
 msgid "Design"
 msgstr "Design"
 
@@ -385,6 +437,11 @@ msgstr "Diff"
 msgid "Direction"
 msgstr "Direction"
 
+#: src/routes/_authenticated/$projectId/index.tsx:881
+#: src/routes/_authenticated/$projectId/index.tsx:882
+msgid "Dismiss board hint"
+msgstr "Dismiss board hint"
+
 #: ../../../lib/web/src/components/ui/sidebar.tsx:234
 msgid "Displays the mobile sidebar."
 msgstr "Displays the mobile sidebar."
@@ -396,7 +453,7 @@ msgstr "Displays the mobile sidebar."
 msgid "Done"
 msgstr "Done"
 
-#: src/routes/_authenticated/$projectId/index.tsx:870
+#: src/routes/_authenticated/$projectId/index.tsx:874
 msgid "Double click on a column to add content"
 msgstr "Double click on a column to add content"
 
@@ -409,7 +466,7 @@ msgstr "Download backup first"
 msgid "Draft"
 msgstr "Draft"
 
-#: src/routes/_authenticated/$projectId/index.tsx:851
+#: src/routes/_authenticated/$projectId/index.tsx:855
 msgid "Drag columns to re-order them"
 msgstr "Drag columns to re-order them"
 
@@ -424,6 +481,10 @@ msgstr "Edit field"
 #: src/features/editor/components/edit-dialogs.tsx:1002
 msgid "Edit field settings"
 msgstr "Edit field settings"
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:356
+msgid "Entity ID"
+msgstr "Entity ID"
 
 #: src/features/objects/components/object-detail-panel.tsx:306
 msgid "Error"
@@ -477,7 +538,7 @@ msgstr "Failed to delete comment"
 msgid "Failed to delete link"
 msgstr "Failed to delete link"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:138
+#: src/routes/_authenticated/$projectId_.settings.tsx:137
 msgid "Failed to delete project"
 msgstr "Failed to delete project"
 
@@ -513,7 +574,7 @@ msgstr "Failed to post comment"
 msgid "Failed to read file"
 msgstr "Failed to read file"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:688
+#: src/routes/_authenticated/$projectId_.settings.tsx:689
 msgid "Failed to remove access"
 msgstr "Failed to remove access"
 
@@ -525,7 +586,7 @@ msgstr "Failed to reorder fields"
 msgid "Failed to reorder views"
 msgstr "Failed to reorder views"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:676
+#: src/routes/_authenticated/$projectId_.settings.tsx:677
 msgid "Failed to set access level"
 msgstr "Failed to set access level"
 
@@ -535,11 +596,11 @@ msgid "Failed to subscribe"
 msgstr "Failed to subscribe"
 
 #: src/features/projects/pages/projects-list-page.tsx:48
-#: src/routes/_authenticated/$projectId_.settings.tsx:154
+#: src/routes/_authenticated/$projectId_.settings.tsx:153
 msgid "Failed to unsubscribe"
 msgstr "Failed to unsubscribe"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:699
+#: src/routes/_authenticated/$projectId_.settings.tsx:700
 msgid "Failed to update access level"
 msgstr "Failed to update access level"
 
@@ -551,7 +612,7 @@ msgstr "Failed to update comment"
 msgid "Failed to update field"
 msgstr "Failed to update field"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:174
+#: src/routes/_authenticated/$projectId_.settings.tsx:173
 msgid "Failed to update project"
 msgstr "Failed to update project"
 
@@ -573,6 +634,10 @@ msgstr "Files"
 #: src/routes/_authenticated/find.tsx:65
 msgid "Find projects"
 msgstr "Find projects"
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:361
+msgid "Fingerprint"
+msgstr "Fingerprint"
 
 #: src/features/editor/components/edit-dialogs.tsx:1049
 msgid "Flags"
@@ -624,6 +689,18 @@ msgstr "Group"
 msgid "Hide"
 msgstr "Hide"
 
+#: ../../../lib/web/src/components/layout/app-sidebar.tsx:82
+msgid "Home"
+msgstr "Home"
+
+#: ../../../lib/web/src/components/ui/sort-selector.tsx:41
+msgid "Hot"
+msgstr "Hot"
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:328
+msgid "Identity"
+msgstr "Identity"
+
 #: src/routes/_authenticated/$projectId/design.tsx:174
 #: src/routes/_authenticated/$projectId/design.tsx:290
 msgid "Import design"
@@ -632,6 +709,10 @@ msgstr "Import design"
 #: ../../../lib/web/src/components/config-drawer.tsx:239
 msgid "Inset"
 msgstr "Inset"
+
+#: ../../../lib/web/src/components/ui/sort-selector.tsx:39
+msgid "Interests"
+msgstr "Interests"
 
 #: src/features/objects/components/field-editor.tsx:363
 msgid "Invalid date"
@@ -674,6 +755,10 @@ msgstr "Links"
 msgid "List"
 msgstr "List"
 
+#: ../../../lib/web/src/components/ui/load-more.tsx:32
+msgid "Load more"
+msgstr "Load more"
+
 #: src/features/requests/components/diff-stats.tsx:49
 msgid "Loading diff..."
 msgstr "Loading diff..."
@@ -689,6 +774,10 @@ msgstr "Loading item details"
 #: src/features/projects/components/create-project-dialog.tsx:221
 msgid "Loading templates..."
 msgstr "Loading templates..."
+
+#: ../../../lib/web/src/components/ui/load-more.tsx:32
+msgid "Loading…"
+msgstr "Loading…"
 
 #: ../../../lib/web/src/components/layout/nav-user.tsx:98
 #: ../../../lib/web/src/components/layout/nav-user.tsx:164
@@ -714,6 +803,10 @@ msgstr "Mark all as read"
 msgid "Menu"
 msgstr "Menu"
 
+#: src/features/requests/components/merge-button.tsx:101
+msgid "Merge"
+msgstr "Merge"
+
 #: src/features/requests/components/request-panel.tsx:88
 msgid "Merge requests"
 msgstr "Merge requests"
@@ -734,6 +827,10 @@ msgstr "Merging..."
 msgid "Missing repo, source, or target parameters"
 msgstr "Missing repo, source, or target parameters"
 
+#: src/features/projects/components/create-project-dialog.tsx:158
+msgid "My project"
+msgstr "My project"
+
 #: src/features/board/components/board-column.tsx:593
 #: src/features/editor/components/add-dialogs.tsx:114
 #: src/features/editor/components/edit-dialogs.tsx:289
@@ -741,6 +838,7 @@ msgstr "Missing repo, source, or target parameters"
 #: src/features/editor/components/edit-dialogs.tsx:1006
 #: src/features/editor/components/option-dialog.tsx:100
 #: src/features/projects/components/create-project-dialog.tsx:148
+#: src/routes/_authenticated/$projectId_.settings.tsx:333
 msgid "Name"
 msgstr "Name"
 
@@ -748,10 +846,16 @@ msgstr "Name"
 msgid "Name is required"
 msgstr "Name is required"
 
+#: ../../../lib/web/src/components/ui/sort-selector.tsx:40
 #: src/features/objects/components/create-object-dialog.tsx:325
-#: src/routes/_authenticated/$projectId/index.tsx:775
+#: src/routes/_authenticated/$projectId/index.tsx:761
+#: src/routes/_authenticated/$projectId/index.tsx:779
 msgid "New"
 msgstr "New"
+
+#: src/routes/_authenticated/$projectId/index.tsx:758
+msgid "New {className}"
+msgstr "New {className}"
 
 #: ../../../lib/web/src/features/access/access-list.tsx:155
 msgid "No access rules configured. Add rules to control who can access this resource."
@@ -773,6 +877,10 @@ msgstr "No changes to display"
 msgid "No changes were found for the selected comparison."
 msgstr "No changes were found for the selected comparison."
 
+#: src/features/objects/components/comment-list.tsx:259
+msgid "No comments yet"
+msgstr "No comments yet"
+
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:285
 msgid "No connected accounts"
 msgstr "No connected accounts"
@@ -789,7 +897,7 @@ msgstr "No groups available"
 msgid "No item types can be created yet. Create the required parent items first."
 msgstr "No item types can be created yet. Create the required parent items first."
 
-#: ../../../lib/web/src/components/language-picker.tsx:99
+#: ../../../lib/web/src/components/language-picker.tsx:96
 msgid "No matches."
 msgstr "No matches."
 
@@ -850,7 +958,7 @@ msgstr "No views"
 msgid "None"
 msgstr "None"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:576
+#: src/routes/_authenticated/$projectId_.settings.tsx:577
 msgid "Not set"
 msgstr "Not set"
 
@@ -875,6 +983,10 @@ msgstr "Open"
 msgid "Open design actions"
 msgstr "Open design actions"
 
+#: src/routes/_authenticated/$projectId/index.tsx:787
+msgid "Open page actions"
+msgstr "Open page actions"
+
 #: ../../../lib/web/src/components/config-drawer.tsx:51
 msgid "Open theme settings"
 msgstr "Open theme settings"
@@ -897,11 +1009,16 @@ msgstr "Owner"
 msgid "Parent"
 msgstr "Parent"
 
+#: src/routes/_authenticated/$projectId_.settings.tsx:400
+msgid "Permanently delete this project and all its content."
+msgstr "Permanently delete this project and all its content."
+
 #: src/features/projects/components/create-project-dialog.tsx:84
 msgid "Please select a template"
 msgstr "Please select a template"
 
 #: src/features/projects/components/create-project-dialog.tsx:170
+#: src/routes/_authenticated/$projectId_.settings.tsx:349
 msgid "Prefix"
 msgstr "Prefix"
 
@@ -919,19 +1036,19 @@ msgstr "Project"
 msgid "Project created"
 msgstr "Project created"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:135
+#: src/routes/_authenticated/$projectId_.settings.tsx:134
 msgid "Project deleted"
 msgstr "Project deleted"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:225
+#: src/routes/_authenticated/$projectId_.settings.tsx:224
 msgid "Project not found"
 msgstr "Project not found"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:225
+#: src/routes/_authenticated/$projectId_.settings.tsx:224
 msgid "Project unavailable"
 msgstr "Project unavailable"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:172
+#: src/routes/_authenticated/$projectId_.settings.tsx:171
 msgid "Project updated"
 msgstr "Project updated"
 
@@ -942,7 +1059,7 @@ msgstr "Project updated"
 msgid "Projects"
 msgstr "Projects"
 
-#: src/routes/_authenticated/$projectId/index.tsx:807
+#: src/routes/_authenticated/$projectId/index.tsx:811
 msgid "Re-order columns"
 msgstr "Re-order columns"
 
@@ -1034,7 +1151,7 @@ msgstr "Rows per page"
 
 #: src/features/editor/components/option-dialog.tsx:137
 #: src/features/objects/components/comment-thread.tsx:178
-#: src/routes/_authenticated/$projectId/index.tsx:862
+#: src/routes/_authenticated/$projectId/index.tsx:866
 msgid "Save"
 msgstr "Save"
 
@@ -1049,6 +1166,14 @@ msgstr "Search by name, ID, fingerprint, or URL..."
 #: ../../../lib/web/src/components/place-picker.tsx:82
 msgid "Search for a place"
 msgstr "Search for a place"
+
+#: src/features/projects/components/inline-project-search.tsx:116
+msgid "Search for projects..."
+msgstr "Search for projects..."
+
+#: src/features/objects/components/object-links.tsx:270
+msgid "Search objects..."
+msgstr "Search objects..."
 
 #: ../../../lib/web/src/features/access/access-dialog.tsx:169
 msgid "Search users"
@@ -1092,6 +1217,10 @@ msgstr "Select site direction"
 msgid "Select theme preference"
 msgstr "Select theme preference"
 
+#: src/routes/_authenticated/$projectId_.settings.tsx:370
+msgid "Server"
+msgstr "Server"
+
 #: ../../../lib/web/src/components/travelling-picker.tsx:142
 msgid "Set origin and destination"
 msgstr "Set origin and destination"
@@ -1099,9 +1228,10 @@ msgstr "Set origin and destination"
 #: ../../../lib/web/src/components/layout/nav-user.tsx:81
 #: ../../../lib/web/src/components/layout/nav-user.tsx:145
 #: ../../../lib/web/src/components/layout/nav-user.tsx:195
-#: src/routes/_authenticated/$projectId_.settings.tsx:185
-#: src/routes/_authenticated/$projectId_.settings.tsx:208
-#: src/routes/_authenticated/$projectId/index.tsx:828
+#: src/routes/_authenticated/$projectId_.settings.tsx:76
+#: src/routes/_authenticated/$projectId_.settings.tsx:184
+#: src/routes/_authenticated/$projectId_.settings.tsx:207
+#: src/routes/_authenticated/$projectId/index.tsx:832
 msgid "Settings"
 msgstr "Settings"
 
@@ -1112,6 +1242,10 @@ msgstr "Show classes"
 #: src/features/editor/components/edit-dialogs.tsx:424
 msgid "Show fields"
 msgstr "Show fields"
+
+#: ../../../lib/web/src/components/ui/load-more.tsx:36
+msgid "Showing {totalShown} of {total}"
+msgstr "Showing {totalShown} of {total}"
 
 #: ../../../lib/web/src/components/config-drawer.tsx:225
 #: ../../../lib/web/src/components/config-drawer.tsx:249
@@ -1148,6 +1282,11 @@ msgstr "Stay tuned though!"
 msgid "Subject"
 msgstr "Subject"
 
+#: src/features/objects/components/comment-list.tsx:247
+#: src/features/objects/components/comment-list.tsx:248
+msgid "Submit comment"
+msgstr "Submit comment"
+
 #: ../../../lib/web/src/components/config-drawer.tsx:195
 msgid "System"
 msgstr "System"
@@ -1172,13 +1311,21 @@ msgstr "Theme Settings"
 msgid "This merge request is a draft and cannot be merged."
 msgstr "This merge request is a draft and cannot be merged."
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:228
+#: src/routes/_authenticated/$projectId_.settings.tsx:227
 msgid "This project could not be loaded right now."
 msgstr "This project could not be loaded right now."
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:228
+#: src/routes/_authenticated/$projectId_.settings.tsx:227
 msgid "This project may have been deleted or you don't have access to it."
 msgstr "This project may have been deleted or you don't have access to it."
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:429
+msgid "This will permanently delete \"{projectName}\" and all its objects, comments, and attachments. This action cannot be undone."
+msgstr "This will permanently delete \"{projectName}\" and all its objects, comments, and attachments. This action cannot be undone."
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:419
+msgid "This will remove \"{projectName}\" from your sidebar and stop updates for this project."
+msgstr "This will remove \"{projectName}\" from your sidebar and stop updates for this project."
 
 #: src/features/editor/components/edit-dialogs.tsx:736
 msgid "Title field"
@@ -1199,6 +1346,10 @@ msgstr "Toggle Sidebar"
 #: ../../../lib/web/src/components/theme-switch.tsx:31
 msgid "Toggle theme"
 msgstr "Toggle theme"
+
+#: ../../../lib/web/src/components/ui/sort-selector.tsx:42
+msgid "Top"
+msgstr "Top"
 
 #: src/features/editor/components/edit-dialogs.tsx:774
 msgid "Top level"
@@ -1238,10 +1389,20 @@ msgstr "Unified"
 
 #: src/features/projects/pages/projects-list-page.tsx:146
 #: src/features/projects/pages/projects-list-page.tsx:163
+#: src/routes/_authenticated/$projectId_.settings.tsx:390
+#: src/routes/_authenticated/$projectId_.settings.tsx:420
 msgid "Unsubscribe"
 msgstr "Unsubscribe"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:151
+#: src/routes/_authenticated/$projectId_.settings.tsx:379
+msgid "Unsubscribe from project"
+msgstr "Unsubscribe from project"
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:418
+msgid "Unsubscribe from project?"
+msgstr "Unsubscribe from project?"
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:150
 msgid "Unsubscribed"
 msgstr "Unsubscribed"
 
@@ -1288,6 +1449,10 @@ msgstr "View and edit item details"
 #: src/components/view-options-bar.tsx:115
 msgid "View controls"
 msgstr "View controls"
+
+#: src/routes/_authenticated/$projectId/index.tsx:796
+msgid "View options"
+msgstr "View options"
 
 #: src/features/editor/components/design-editor.tsx:451
 msgid "Views"

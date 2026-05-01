@@ -125,8 +125,8 @@ export function RequestPanel({
         open={!!deleteId}
         onOpenChange={(open) => !open && setDeleteId(null)}
         title={t`Delete merge request`}
-        desc="Are you sure you want to delete this merge request?"
-        confirmText="Delete"
+        desc={t`Are you sure you want to delete this merge request?`}
+        confirmText={t`Delete`}
         destructive
         isLoading={deleteMutation.isPending}
         handleConfirm={() => deleteId && deleteMutation.mutate(deleteId)}
@@ -281,7 +281,7 @@ function RequestItem({
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 onBlur={handleDescriptionBlur}
-                placeholder={"Description"}
+                placeholder={t`Description`}
                 rows={2}
               />
             )}
@@ -300,7 +300,7 @@ function RequestItem({
                 repoId={request.repository}
                 value={request.source}
                 onChange={handleSourceChange}
-                placeholder={"Source"}
+                placeholder={t`Source`}
                 disabled={readOnly || isMerged}
               />
               <ArrowRight className="size-4 text-muted-foreground mb-2.5" />
@@ -308,7 +308,7 @@ function RequestItem({
                 repoId={request.repository}
                 value={request.target}
                 onChange={handleTargetChange}
-                placeholder={"Target"}
+                placeholder={t`Target`}
                 disabled={readOnly || isMerged}
               />
             </div>

@@ -56,7 +56,7 @@ export function RecommendedProjects({
     try {
       await projectsApi.subscribe(project.id, project.server || undefined);
       onSubscribe();
-      toast.success(`Subscribed to ${project.name}`);
+      toast.success(t`Subscribed to ${project.name}`);
       setRecommendations((prev) => prev.filter((p) => p.id !== project.id));
     } catch (error) {
       toast.error(getErrorMessage(error, t`Failed to subscribe`));

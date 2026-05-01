@@ -214,7 +214,7 @@ export function ViewOptionsBar({
           variant={filters.watched ? "secondary" : "ghost"}
           size="sm"
           className="px-2 text-xs"
-          aria-label={"Toggle watched filter"}
+          aria-label={t`Toggle watched filter`}
           onClick={() => onFilterChange({ ...filters, watched: !filters.watched })}
         >
           <Eye className="size-3.5 sm:mr-1" />

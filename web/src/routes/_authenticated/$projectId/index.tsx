@@ -3,6 +3,7 @@
 
 import { useState, useMemo, useCallback, useEffect, useRef } from "react";
 import { Trans, useLingui } from '@lingui/react/macro'
+import { t } from '@lingui/core/macro'
 import { createFileRoute, Link, redirect, useNavigate, useRouter } from "@tanstack/react-router";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import {
@@ -62,7 +63,7 @@ export const Route = createFileRoute("/_authenticated/$projectId/")({
       return {
         project: null as ProjectDetails | null,
         loaderError:
-          getErrorMessage(error, "Failed to load project"),
+          getErrorMessage(error, t`Failed to load project`),
       };
     }
   },
@@ -612,7 +613,7 @@ export function ProjectPageContent({ project, projectId, search, initialObjectId
 
   const handleOpenCreateDialog = useCallback(() => {
     if (project.classes.length === 0) {
-      toast.error("Please add one or more classes to the project design.");
+      toast.error(t`Please add one or more classes to the project design.`);
       return;
     }
     setSelectedObjectId(null);
@@ -646,7 +647,7 @@ export function ProjectPageContent({ project, projectId, search, initialObjectId
 
   const handleCreateClick = (columnValue: string, rowValue?: string) => {
     if (project.classes.length === 0) {
-      toast.error("Please add one or more classes to the project design.");
+      toast.error(t`Please add one or more classes to the project design.`);
       return;
     }
     const fields = [{ field: columnField, value: columnValue }];

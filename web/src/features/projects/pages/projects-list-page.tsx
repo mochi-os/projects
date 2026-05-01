@@ -161,8 +161,8 @@ export function ProjectsListPage() {
         open={!!unsubscribeId}
         onOpenChange={(open) => { if (!open) setUnsubscribeId(null); }}
         title={t`Unsubscribe`}
-        desc="Are you sure you want to unsubscribe from this project?"
-        confirmText="Unsubscribe"
+        desc={t`Are you sure you want to unsubscribe from this project?`}
+        confirmText={t`Unsubscribe`}
         destructive
         isLoading={unsubscribeMutation.isPending}
         handleConfirm={() => {

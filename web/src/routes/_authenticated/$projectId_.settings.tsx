@@ -593,20 +593,19 @@ function EditableFieldRow({
 }
 
 // Access levels for projects
-const PROJECTS_ACCESS_LEVELS: AccessLevel[] = [
-  { value: "design", label: "Design, write, comment, and view" },
-  { value: "write", label: "Write, comment, and view" },
-  { value: "comment", label: "Comment and view" },
-  { value: "view", label: "View only" },
-  { value: "none", label: "No access" },
-];
-
 interface AccessTabProps {
   projectId: string;
 }
 
 function AccessTab({ projectId }: AccessTabProps) {
   const { t } = useLingui()
+  const PROJECTS_ACCESS_LEVELS: AccessLevel[] = [
+    { value: "design", label: t`Design, write, comment, and view` },
+    { value: "write", label: t`Write, comment, and view` },
+    { value: "comment", label: t`Comment and view` },
+    { value: "view", label: t`View only` },
+    { value: "none", label: t`No access` },
+  ];
   const [dialogOpen, setDialogOpen] = useState(false);
   const [userSearchQuery, setUserSearchQuery] = useState("");
 
@@ -671,7 +670,7 @@ function AccessTab({ projectId }: AccessTabProps) {
     if (!canManageRules) return;
     try {
       await projectsApi.setAccessLevel(projectId, subject, level);
-      toast.success(`Access set for ${subjectName}`);
+      toast.success(t`Access set for ${subjectName}`);
       await refetchRules();
     } catch (err) {
       toast.error(getErrorMessage(err, t`Failed to set access level`));
@@ -704,7 +703,7 @@ function AccessTab({ projectId }: AccessTabProps) {
   return (
     <Section
       title={t`Access Management`}
-      description={"Control who can view and interact with this project"}
+      description={t`Control who can view and interact with this project`}
     >
       <div className="space-y-4">
         <div className="flex justify-end">

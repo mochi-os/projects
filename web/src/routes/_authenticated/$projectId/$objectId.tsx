@@ -3,6 +3,7 @@
 
 import { createFileRoute, redirect, useNavigate, useRouter } from "@tanstack/react-router";
 import { useLingui } from '@lingui/react/macro'
+import { t } from '@lingui/core/macro'
 import {
   GeneralError,
   extractStatus,
@@ -36,7 +37,7 @@ export const Route = createFileRoute("/_authenticated/$projectId/$objectId")({
       return {
         project: null as ProjectDetails | null,
         loaderError:
-          getErrorMessage(error, "Failed to load project"),
+          getErrorMessage(error, t`Failed to load project`),
       };
     }
   },

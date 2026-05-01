@@ -34,24 +34,28 @@ msgstr "アクセスが禁止されています"
 msgid "Access level"
 msgstr "アクセスレベル"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:697
+#: src/routes/_authenticated/$projectId_.settings.tsx:696
 msgid "Access level updated"
 msgstr "アクセスレベルを更新しました"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:706
+#: src/routes/_authenticated/$projectId_.settings.tsx:705
 msgid "Access Management"
 msgstr "アクセス管理"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:686
+#: src/routes/_authenticated/$projectId_.settings.tsx:685
 msgid "Access removed"
 msgstr "アクセスを削除しました"
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:673
+msgid "Access set for {subjectName}"
+msgstr "{subjectName} のアクセス権を設定しました"
 
 #: ../../../lib/web/src/features/accounts/account-add.tsx:122
 msgid "Account type"
 msgstr "アカウントタイプ"
 
-#: src/features/objects/components/field-editor.tsx:531
-#: src/features/requests/components/request-panel.tsx:99
+#: src/features/objects/components/field-editor.tsx:532
+#: src/features/requests/components/request-panel.tsx:100
 msgid "Add"
 msgstr "追加"
 
@@ -80,13 +84,17 @@ msgstr "アカウントを追加"
 msgid "Add an account to receive notifications and use services."
 msgstr "通知を受け取り、サービスを利用するには、アカウントを追加してください。"
 
+#: src/features/objects/components/field-editor.tsx:503
+msgid "Add checklist item"
+msgstr "項目を追加"
+
 #: src/features/editor/components/edit-dialogs.tsx:690
 #: src/features/editor/components/edit-dialogs.tsx:887
 msgid "Add class"
 msgstr "クラスを追加"
 
-#: src/routes/_authenticated/$projectId/index.tsx:807
-#: src/routes/_authenticated/$projectId/index.tsx:965
+#: src/routes/_authenticated/$projectId/index.tsx:808
+#: src/routes/_authenticated/$projectId/index.tsx:966
 msgid "Add column"
 msgstr "列を追加"
 
@@ -95,6 +103,10 @@ msgstr "列を追加"
 #: src/features/editor/components/edit-dialogs.tsx:882
 msgid "Add field"
 msgstr "フィールドを追加"
+
+#: src/features/objects/components/field-editor.tsx:521
+msgid "Add item..."
+msgstr "項目を追加…"
 
 #: src/features/objects/components/object-links.tsx:253
 msgid "Add link"
@@ -105,11 +117,11 @@ msgid "Add new account"
 msgstr "新しいアカウントを追加"
 
 #: src/features/editor/components/edit-dialogs.tsx:1112
-#: src/features/editor/components/option-dialog.tsx:142
+#: src/features/editor/components/option-dialog.tsx:143
 msgid "Add option"
 msgstr "オプションを追加"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:713
+#: src/routes/_authenticated/$projectId_.settings.tsx:712
 msgid "Add Rule"
 msgstr "ルールを追加"
 
@@ -154,6 +166,31 @@ msgstr "マージリクエストを許可"
 msgid "Allow sort by"
 msgstr "並べ替えを許可"
 
+#. placeholder {0}: deleteTarget?.name
+#: src/features/objects/components/object-attachments.tsx:232
+msgid "Are you sure you want to delete \"{0}\"?"
+msgstr "「{0}」を削除しますか？"
+
+#: src/features/objects/components/object-detail-panel.tsx:600
+msgid "Are you sure you want to delete \"{title}\"? This action cannot be undone."
+msgstr "「{title}」を削除しますか？この操作は取り消せません。"
+
+#: src/features/board/components/board-column.tsx:622
+msgid "Are you sure you want to delete the \"{name}\" column? This cannot be undone."
+msgstr "「{name}」カラムを削除しますか？この操作は取り消せません。"
+
+#: src/features/objects/components/comment-thread.tsx:342
+msgid "Are you sure you want to delete this comment? This will also delete all replies."
+msgstr "このコメントを削除しますか？すべての返信も削除されます。"
+
+#: src/features/requests/components/request-panel.tsx:128
+msgid "Are you sure you want to delete this merge request?"
+msgstr "このマージリクエストを削除しますか？"
+
+#: src/features/projects/pages/projects-list-page.tsx:164
+msgid "Are you sure you want to unsubscribe from this project?"
+msgstr "このプロジェクトの購読を解除しますか？"
+
 #: ../../../lib/web/src/components/data-table/column-header.tsx:56
 msgid "Asc"
 msgstr "昇順"
@@ -162,6 +199,11 @@ msgstr "昇順"
 #: src/features/objects/components/comment-list.tsx:237
 msgid "Attach comment files"
 msgstr "コメントにファイルを添付"
+
+#: src/features/objects/components/comment-thread.tsx:306
+#: src/features/objects/components/comment-thread.tsx:307
+msgid "Attach reply files"
+msgstr "返信にファイルを添付"
 
 #: src/components/keyboard-shortcuts-help.tsx:41
 msgid "Available keyboard shortcuts"
@@ -186,8 +228,8 @@ msgstr "ホームに戻る"
 msgid "Back to project"
 msgstr "プロジェクトに戻る"
 
-#: src/routes/_authenticated/$projectId/$objectId.tsx:63
-#: src/routes/_authenticated/$projectId/index.tsx:89
+#: src/routes/_authenticated/$projectId/$objectId.tsx:64
+#: src/routes/_authenticated/$projectId/index.tsx:90
 msgid "Back to projects"
 msgstr "プロジェクト一覧に戻る"
 
@@ -213,14 +255,19 @@ msgstr "親にできるもの"
 #: ../../../lib/web/src/features/access/access-list.tsx:254
 #: ../../../lib/web/src/features/accounts/account-add.tsx:184
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:86
-#: src/features/board/components/board-column.tsx:607
-#: src/features/editor/components/option-dialog.tsx:134
-#: src/features/objects/components/comment-thread.tsx:167
+#: src/features/board/components/board-column.tsx:608
+#: src/features/editor/components/option-dialog.tsx:135
+#: src/features/objects/components/comment-thread.tsx:168
 #: src/features/projects/components/create-project-dialog.tsx:209
 #: src/routes/_authenticated/$projectId/design.tsx:340
-#: src/routes/_authenticated/$projectId/index.tsx:859
+#: src/routes/_authenticated/$projectId/index.tsx:860
 msgid "Cancel"
 msgstr "キャンセル"
+
+#: src/features/objects/components/comment-thread.tsx:318
+#: src/features/objects/components/comment-thread.tsx:319
+msgid "Cancel reply"
+msgstr "返信をキャンセル"
 
 #: ../../../lib/web/src/components/notification-category-button.tsx:130
 msgid "Category for this notification"
@@ -277,6 +324,7 @@ msgstr "選択をクリア"
 #: ../../../lib/web/src/components/ui/dialog.tsx:75
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:317
 #: ../../../lib/web/src/components/ui/sheet.tsx:76
+#: src/features/objects/components/create-object-dialog.tsx:350
 msgid "Close"
 msgstr "閉じる"
 
@@ -297,7 +345,7 @@ msgstr "パネルを閉じる"
 msgid "Collapse sidebar"
 msgstr "サイドバーを折りたたむ"
 
-#: src/features/editor/components/option-dialog.tsx:119
+#: src/features/editor/components/option-dialog.tsx:120
 msgid "Colour"
 msgstr "色"
 
@@ -309,6 +357,10 @@ msgstr "列のグループ化"
 msgid "Coming Soon!"
 msgstr "近日公開!"
 
+#: src/routes/_authenticated/$projectId_.settings.tsx:605
+msgid "Comment and view"
+msgstr "コメントと閲覧"
+
 #: ../../../lib/web/src/components/config-drawer.tsx:302
 msgid "Compact"
 msgstr "コンパクト"
@@ -317,7 +369,7 @@ msgstr "コンパクト"
 msgid "Configure class settings"
 msgstr "クラスの設定"
 
-#: src/features/editor/components/option-dialog.tsx:81
+#: src/features/editor/components/option-dialog.tsx:82
 msgid "Configure option settings"
 msgstr "オプションの設定"
 
@@ -334,6 +386,10 @@ msgstr "確認"
 msgid "Contextual information and details."
 msgstr "コンテキスト情報と詳細。"
 
+#: src/routes/_authenticated/$projectId_.settings.tsx:706
+msgid "Control who can view and interact with this project"
+msgstr "このプロジェクトを誰が表示・操作できるかを管理"
+
 #: ../../../lib/web/src/components/ui/copy-button.tsx:60
 msgid "Copy"
 msgstr "コピー"
@@ -342,14 +398,14 @@ msgstr "コピー"
 msgid "Core information about this project"
 msgstr "このプロジェクトの基本情報"
 
-#: src/features/board/components/board-column.tsx:543
-#: src/features/board/components/board-column.tsx:690
-#: src/features/objects/components/create-object-dialog.tsx:341
-#: src/features/tree/components/tree-view.tsx:366
+#: src/features/board/components/board-column.tsx:544
+#: src/features/board/components/board-column.tsx:691
+#: src/features/objects/components/create-object-dialog.tsx:342
+#: src/features/tree/components/tree-view.tsx:367
 msgid "Create"
 msgstr "作成"
 
-#: src/features/objects/components/create-object-dialog.tsx:319
+#: src/features/objects/components/create-object-dialog.tsx:320
 msgid "Create a new item in this project"
 msgstr "このプロジェクトに新しい項目を作成"
 
@@ -358,7 +414,7 @@ msgstr "このプロジェクトに新しい項目を作成"
 msgid "Create a new project"
 msgstr "新しいプロジェクトを作成"
 
-#: src/features/objects/components/create-object-dialog.tsx:318
+#: src/features/objects/components/create-object-dialog.tsx:319
 msgid "Create new item"
 msgstr "新しい項目を作成"
 
@@ -400,8 +456,13 @@ msgstr "デフォルト AI アカウント"
 msgid "Default sort"
 msgstr "デフォルトの並び順"
 
-#: src/features/board/components/board-column.tsx:562
-#: src/features/objects/components/comment-thread.tsx:227
+#: src/features/board/components/board-column.tsx:563
+#: src/features/board/components/board-column.tsx:623
+#: src/features/objects/components/comment-thread.tsx:228
+#: src/features/objects/components/comment-thread.tsx:343
+#: src/features/objects/components/object-attachments.tsx:233
+#: src/features/objects/components/object-detail-panel.tsx:601
+#: src/features/requests/components/request-panel.tsx:129
 #: src/routes/_authenticated/$projectId_.settings.tsx:409
 msgid "Delete"
 msgstr "削除"
@@ -414,11 +475,31 @@ msgstr "添付を削除"
 msgid "Delete class"
 msgstr "クラスを削除"
 
+#: src/features/board/components/board-column.tsx:621
+msgid "Delete column"
+msgstr "カラムを削除"
+
+#: src/features/objects/components/comment-thread.tsx:341
+msgid "Delete comment"
+msgstr "コメントを削除"
+
 #: src/features/editor/components/edit-dialogs.tsx:1121
 msgid "Delete field"
 msgstr "フィールドを削除"
 
-#: src/features/editor/components/option-dialog.tsx:92
+#: src/features/objects/components/object-detail-panel.tsx:422
+#: src/features/objects/components/object-detail-panel.tsx:599
+msgid "Delete item"
+msgstr "項目を削除"
+
+#: src/features/requests/components/request-panel.tsx:127
+#: src/features/requests/components/request-panel.tsx:370
+#: src/features/requests/components/request-panel.tsx:390
+#: src/features/requests/components/request-panel.tsx:407
+msgid "Delete merge request"
+msgstr "マージリクエストを削除"
+
+#: src/features/editor/components/option-dialog.tsx:93
 msgid "Delete option"
 msgstr "オプションを削除"
 
@@ -445,18 +526,23 @@ msgstr "ビューを削除"
 msgid "Desc"
 msgstr "降順"
 
+#: src/features/requests/components/request-panel.tsx:284
 #: src/routes/_authenticated/$projectId_.settings.tsx:341
 msgid "Description"
 msgstr "説明"
 
 #: src/routes/_authenticated/$projectId/design.tsx:128
-#: src/routes/_authenticated/$projectId/index.tsx:822
+#: src/routes/_authenticated/$projectId/index.tsx:823
 msgid "Design"
 msgstr "デザイン"
 
 #: src/routes/_authenticated/$projectId/design.tsx:105
 msgid "Design imported"
 msgstr "デザインをインポートしました"
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:603
+msgid "Design, write, comment, and view"
+msgstr "設計、編集、コメント、閲覧"
 
 #: ../../../lib/web/src/components/layout/right-panel.tsx:144
 msgid "Details Panel"
@@ -470,8 +556,8 @@ msgstr "差分"
 msgid "Direction"
 msgstr "方向"
 
-#: src/routes/_authenticated/$projectId/index.tsx:881
 #: src/routes/_authenticated/$projectId/index.tsx:882
+#: src/routes/_authenticated/$projectId/index.tsx:883
 msgid "Dismiss board hint"
 msgstr "ボードのヒントを閉じる"
 
@@ -482,11 +568,11 @@ msgstr "モバイルサイドバーを表示します。"
 #: src/features/editor/components/edit-dialogs.tsx:516
 #: src/features/editor/components/edit-dialogs.tsx:892
 #: src/features/editor/components/edit-dialogs.tsx:1126
-#: src/features/objects/components/object-detail-panel.tsx:432
+#: src/features/objects/components/object-detail-panel.tsx:433
 msgid "Done"
 msgstr "完了"
 
-#: src/routes/_authenticated/$projectId/index.tsx:874
+#: src/routes/_authenticated/$projectId/index.tsx:875
 msgid "Double click on a column to add content"
 msgstr "列をダブルクリックして内容を追加"
 
@@ -494,16 +580,16 @@ msgstr "列をダブルクリックして内容を追加"
 msgid "Download backup first"
 msgstr "先にバックアップをダウンロード"
 
-#: src/features/requests/components/request-panel.tsx:251
-#: src/features/requests/components/request-panel.tsx:321
+#: src/features/requests/components/request-panel.tsx:252
+#: src/features/requests/components/request-panel.tsx:322
 msgid "Draft"
 msgstr "下書き"
 
-#: src/routes/_authenticated/$projectId/index.tsx:855
+#: src/routes/_authenticated/$projectId/index.tsx:856
 msgid "Drag columns to re-order them"
 msgstr "列をドラッグして並べ替えます"
 
-#: src/features/objects/components/comment-thread.tsx:216
+#: src/features/objects/components/comment-thread.tsx:217
 msgid "Edit"
 msgstr "編集"
 
@@ -533,7 +619,7 @@ msgstr "ビューを編集"
 msgid "Entity ID"
 msgstr "エンティティ ID"
 
-#: src/features/objects/components/object-detail-panel.tsx:307
+#: src/features/objects/components/object-detail-panel.tsx:308
 msgid "Error"
 msgstr "エラー"
 
@@ -601,13 +687,22 @@ msgstr "デザインのエクスポートに失敗しました"
 msgid "Failed to import design"
 msgstr "デザインのインポートに失敗しました"
 
-#: src/features/objects/components/object-detail-panel.tsx:308
+#: src/features/objects/components/object-detail-panel.tsx:309
 msgid "Failed to load item"
 msgstr "項目の読み込みに失敗しました"
+
+#: src/routes/_authenticated/$projectId/$objectId.tsx:40
+#: src/routes/_authenticated/$projectId/index.tsx:66
+msgid "Failed to load project"
+msgstr "プロジェクトの読み込みに失敗しました"
 
 #: src/routes/_authenticated/$projectId/design.tsx:134
 msgid "Failed to load project design"
 msgstr "プロジェクトデザインの読み込みに失敗しました"
+
+#: src/stores/projects-store.ts:26
+msgid "Failed to load projects"
+msgstr "プロジェクトの読み込みに失敗しました"
 
 #: src/features/requests/components/merge-button.tsx:94
 msgid "Failed to merge"
@@ -621,7 +716,7 @@ msgstr "コメントの投稿に失敗しました"
 msgid "Failed to read file"
 msgstr "ファイルの読み取りに失敗しました"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:689
+#: src/routes/_authenticated/$projectId_.settings.tsx:688
 msgid "Failed to remove access"
 msgstr "アクセスの削除に失敗しました"
 
@@ -633,7 +728,7 @@ msgstr "フィールドの並べ替えに失敗しました"
 msgid "Failed to reorder views"
 msgstr "ビューの並べ替えに失敗しました"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:677
+#: src/routes/_authenticated/$projectId_.settings.tsx:676
 msgid "Failed to set access level"
 msgstr "アクセスレベルの設定に失敗しました"
 
@@ -647,7 +742,7 @@ msgstr "購読に失敗しました"
 msgid "Failed to unsubscribe"
 msgstr "購読解除に失敗しました"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:700
+#: src/routes/_authenticated/$projectId_.settings.tsx:699
 msgid "Failed to update access level"
 msgstr "アクセスレベルの更新に失敗しました"
 
@@ -671,7 +766,7 @@ msgstr "添付ファイルのアップロードに失敗しました"
 msgid "Fields"
 msgstr "フィールド"
 
-#: src/features/objects/components/create-object-dialog.tsx:427
+#: src/features/objects/components/create-object-dialog.tsx:428
 #: src/features/objects/components/object-attachments.tsx:106
 #: src/features/objects/components/object-attachments.tsx:123
 msgid "Files"
@@ -761,7 +856,7 @@ msgstr "インセット"
 msgid "Interests"
 msgstr "興味"
 
-#: src/features/objects/components/field-editor.tsx:363
+#: src/features/objects/components/field-editor.tsx:364
 msgid "Invalid date"
 msgstr "無効な日付"
 
@@ -769,7 +864,7 @@ msgstr "無効な日付"
 msgid "Invalid JSON file"
 msgstr "無効な JSON ファイル"
 
-#: src/features/objects/components/object-detail-panel.tsx:386
+#: src/features/objects/components/object-detail-panel.tsx:387
 msgid "Item details"
 msgstr "項目の詳細"
 
@@ -810,11 +905,11 @@ msgstr "もっと読み込む"
 msgid "Loading diff..."
 msgstr "差分を読み込み中..."
 
-#: src/features/objects/components/object-detail-panel.tsx:288
+#: src/features/objects/components/object-detail-panel.tsx:289
 msgid "Loading item"
 msgstr "項目を読み込み中"
 
-#: src/features/objects/components/object-detail-panel.tsx:289
+#: src/features/objects/components/object-detail-panel.tsx:290
 msgid "Loading item details"
 msgstr "項目の詳細を読み込み中"
 
@@ -854,11 +949,11 @@ msgstr "メニュー"
 msgid "Merge"
 msgstr "マージ"
 
-#: src/features/requests/components/request-panel.tsx:88
+#: src/features/requests/components/request-panel.tsx:89
 msgid "Merge requests"
 msgstr "マージリクエスト"
 
-#: src/features/requests/components/request-panel.tsx:254
+#: src/features/requests/components/request-panel.tsx:255
 msgid "Merged"
 msgstr "マージ済み"
 
@@ -878,12 +973,12 @@ msgstr "リポジトリ、ソース、またはターゲットのパラメータ
 msgid "My project"
 msgstr "マイプロジェクト"
 
-#: src/features/board/components/board-column.tsx:593
+#: src/features/board/components/board-column.tsx:594
 #: src/features/editor/components/add-dialogs.tsx:105
 #: src/features/editor/components/edit-dialogs.tsx:291
 #: src/features/editor/components/edit-dialogs.tsx:715
 #: src/features/editor/components/edit-dialogs.tsx:1008
-#: src/features/editor/components/option-dialog.tsx:100
+#: src/features/editor/components/option-dialog.tsx:101
 #: src/features/projects/components/create-project-dialog.tsx:149
 #: src/routes/_authenticated/$projectId_.settings.tsx:333
 msgid "Name"
@@ -894,19 +989,27 @@ msgid "Name is required"
 msgstr "名前が必要です"
 
 #: ../../../lib/web/src/components/ui/sort-selector.tsx:40
-#: src/features/objects/components/create-object-dialog.tsx:326
-#: src/routes/_authenticated/$projectId/index.tsx:761
-#: src/routes/_authenticated/$projectId/index.tsx:779
+#: src/features/objects/components/create-object-dialog.tsx:327
+#: src/routes/_authenticated/$projectId/index.tsx:762
+#: src/routes/_authenticated/$projectId/index.tsx:780
 msgid "New"
 msgstr "新規"
 
-#: src/routes/_authenticated/$projectId/index.tsx:758
+#: src/routes/_authenticated/$projectId/index.tsx:759
 msgid "New {className}"
 msgstr "新しい{className}"
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:607
+msgid "No access"
+msgstr "アクセスなし"
 
 #: ../../../lib/web/src/features/access/access-list.tsx:155
 msgid "No access rules configured. Add rules to control who can access this resource."
 msgstr "アクセスルールが設定されていません。このリソースへのアクセスを制御するルールを追加してください。"
+
+#: src/features/objects/components/activity-list.tsx:47
+msgid "No activity yet"
+msgstr "まだアクティビティがありません"
 
 #: src/features/requests/components/branch-select.tsx:68
 msgid "No branches found"
@@ -940,7 +1043,7 @@ msgstr "差分は利用できません"
 msgid "No groups available"
 msgstr "利用可能なグループがありません"
 
-#: src/features/objects/components/create-object-dialog.tsx:361
+#: src/features/objects/components/create-object-dialog.tsx:362
 msgid "No item types can be created yet. Create the required parent items first."
 msgstr "まだ作成可能な項目タイプがありません。必要な親項目を先に作成してください。"
 
@@ -952,7 +1055,7 @@ msgstr "一致するものがありません。"
 msgid "No matching objects"
 msgstr "一致するオブジェクトがありません"
 
-#: src/features/requests/components/request-panel.tsx:105
+#: src/features/requests/components/request-panel.tsx:106
 msgid "No merge requests"
 msgstr "マージリクエストはありません"
 
@@ -969,7 +1072,7 @@ msgstr "プロフィールがありません"
 msgid "No projects found"
 msgstr "プロジェクトが見つかりません"
 
-#: src/features/requests/components/repository-select.tsx:57
+#: src/features/requests/components/repository-select.tsx:58
 msgid "No repositories available"
 msgstr "利用可能なリポジトリがありません"
 
@@ -1004,14 +1107,20 @@ msgstr "ビューがありません"
 #: src/features/editor/components/edit-dialogs.tsx:489
 #: src/features/editor/components/edit-dialogs.tsx:753
 #: src/features/editor/components/edit-dialogs.tsx:756
-#: src/features/objects/components/create-object-dialog.tsx:384
-#: src/features/objects/components/object-detail-panel.tsx:511
+#: src/features/objects/components/create-object-dialog.tsx:378
+#: src/features/objects/components/create-object-dialog.tsx:385
+#: src/features/objects/components/object-detail-panel.tsx:507
+#: src/features/objects/components/object-detail-panel.tsx:512
 msgid "None"
 msgstr "なし"
 
 #: src/routes/_authenticated/$projectId_.settings.tsx:577
 msgid "Not set"
 msgstr "未設定"
+
+#: src/features/tree/components/tree-view.tsx:363
+msgid "Nothing found"
+msgstr "何も見つかりませんでした"
 
 #: ../../../lib/web/src/components/notifications-dropdown.tsx:145
 #: ../../../lib/web/src/components/notifications-dropdown.tsx:246
@@ -1027,7 +1136,7 @@ msgstr "数値"
 msgid "Oops! Page Not Found!"
 msgstr "ページが見つかりません!"
 
-#: src/features/requests/components/request-panel.tsx:257
+#: src/features/requests/components/request-panel.tsx:258
 msgid "Open"
 msgstr "開く"
 
@@ -1039,7 +1148,11 @@ msgstr "クラスのアクションを開く"
 msgid "Open design actions"
 msgstr "デザイン操作を開く"
 
-#: src/routes/_authenticated/$projectId/index.tsx:787
+#: src/features/editor/components/option-dialog.tsx:86
+msgid "Open option actions"
+msgstr "オプションのアクションを開く"
+
+#: src/routes/_authenticated/$projectId/index.tsx:788
 msgid "Open page actions"
 msgstr "ページ操作を開く"
 
@@ -1050,6 +1163,10 @@ msgstr "テーマ設定を開く"
 #: src/features/editor/components/edit-dialogs.tsx:275
 msgid "Open view actions"
 msgstr "ビューのアクションを開く"
+
+#: src/components/view-options-bar.tsx:100
+msgid "Open view controls"
+msgstr "ビューのコントロールを開く"
 
 #: src/features/editor/components/add-dialogs.tsx:187
 msgid "Option name"
@@ -1068,14 +1185,19 @@ msgstr "その他"
 msgid "Owner"
 msgstr "オーナー\"#. placeholder {0}: formatInterval(source.interval)"
 
-#: src/features/objects/components/create-object-dialog.tsx:369
-#: src/features/objects/components/object-detail-panel.tsx:489
+#: src/features/objects/components/create-object-dialog.tsx:370
+#: src/features/objects/components/object-detail-panel.tsx:490
 msgid "Parent"
 msgstr "親"
 
 #: src/routes/_authenticated/$projectId_.settings.tsx:400
 msgid "Permanently delete this project and all its content."
 msgstr "このプロジェクトとすべてのコンテンツを完全に削除します。"
+
+#: src/routes/_authenticated/$projectId/index.tsx:616
+#: src/routes/_authenticated/$projectId/index.tsx:650
+msgid "Please add one or more classes to the project design."
+msgstr "まずプロジェクトの設計に1つ以上のクラスを追加してください。"
 
 #: src/features/projects/components/create-project-dialog.tsx:85
 msgid "Please select a template"
@@ -1091,8 +1213,8 @@ msgstr "プレフィックス"
 msgid "Profile"
 msgstr "プロフィール"
 
-#: src/routes/_authenticated/$projectId/$objectId.tsx:61
-#: src/routes/_authenticated/$projectId/index.tsx:87
+#: src/routes/_authenticated/$projectId/$objectId.tsx:62
+#: src/routes/_authenticated/$projectId/index.tsx:88
 msgid "Project"
 msgstr "プロジェクト"
 
@@ -1123,7 +1245,7 @@ msgstr "プロジェクトを更新しました"
 msgid "Projects"
 msgstr "プロジェクト"
 
-#: src/routes/_authenticated/$projectId/index.tsx:811
+#: src/routes/_authenticated/$projectId/index.tsx:812
 msgid "Re-order columns"
 msgstr "列を並べ替え"
 
@@ -1157,16 +1279,20 @@ msgstr "アクセスを削除しますか?"
 msgid "Remove field {0}"
 msgstr "フィールド「{0}」を削除"
 
-#: src/features/board/components/board-column.tsx:554
-#: src/features/board/components/board-column.tsx:610
+#: src/features/objects/components/field-editor.tsx:487
+msgid "Remove item"
+msgstr "項目を削除"
+
+#: src/features/board/components/board-column.tsx:555
+#: src/features/board/components/board-column.tsx:611
 msgid "Rename"
 msgstr "名前を変更"
 
-#: src/features/board/components/board-column.tsx:589
+#: src/features/board/components/board-column.tsx:590
 msgid "Rename column"
 msgstr "列の名前を変更"
 
-#: src/features/board/components/board-column.tsx:590
+#: src/features/board/components/board-column.tsx:591
 msgid "Rename this board column"
 msgstr "このボード列の名前を変更"
 
@@ -1178,7 +1304,7 @@ msgstr "デザインを置き換えますか?"
 msgid "Replacing..."
 msgstr "置き換え中..."
 
-#: src/features/objects/components/comment-thread.tsx:203
+#: src/features/objects/components/comment-thread.tsx:204
 msgid "Reply"
 msgstr "返信"
 
@@ -1223,13 +1349,13 @@ msgstr "行のグループ化"
 msgid "Rows per page"
 msgstr "ページあたりの行数"
 
-#: src/features/editor/components/option-dialog.tsx:137
-#: src/features/objects/components/comment-thread.tsx:178
-#: src/routes/_authenticated/$projectId/index.tsx:866
+#: src/features/editor/components/option-dialog.tsx:138
+#: src/features/objects/components/comment-thread.tsx:179
+#: src/routes/_authenticated/$projectId/index.tsx:867
 msgid "Save"
 msgstr "保存"
 
-#: src/components/view-options-bar.tsx:120
+#: src/components/view-options-bar.tsx:121
 msgid "Search"
 msgstr "検索"
 
@@ -1253,9 +1379,14 @@ msgstr "オブジェクトを検索…"
 msgid "Search users"
 msgstr "ユーザーを検索"
 
-#: src/components/view-options-bar.tsx:116
+#: src/components/view-options-bar.tsx:117
 msgid "Search, watch, and sort this view."
 msgstr "このビューを検索、ウォッチ、並べ替えします。"
+
+#: src/components/view-options-bar.tsx:125
+#: src/components/view-options-bar.tsx:207
+msgid "Search..."
+msgstr "検索…"
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:174
 #: ../../../lib/web/src/components/search-entity-page.tsx:149
@@ -1287,6 +1418,10 @@ msgstr "グループを選択"
 msgid "Select layout style"
 msgstr "レイアウトスタイルを選択"
 
+#: src/features/requests/components/repository-select.tsx:47
+msgid "Select repository"
+msgstr "リポジトリを選択"
+
 #: ../../../lib/web/src/components/config-drawer.tsx:233
 msgid "Select sidebar style"
 msgstr "サイドバースタイルを選択"
@@ -1298,6 +1433,11 @@ msgstr "サイトの表示方向を選択"
 #: ../../../lib/web/src/components/config-drawer.tsx:189
 msgid "Select theme preference"
 msgstr "テーマの設定を選択"
+
+#: src/features/objects/components/field-editor.tsx:184
+#: src/features/objects/components/field-editor.tsx:263
+msgid "Select..."
+msgstr "選択…"
 
 #: src/routes/_authenticated/$projectId_.settings.tsx:370
 msgid "Server"
@@ -1313,7 +1453,7 @@ msgstr "出発地と目的地を設定"
 #: src/routes/_authenticated/$projectId_.settings.tsx:76
 #: src/routes/_authenticated/$projectId_.settings.tsx:184
 #: src/routes/_authenticated/$projectId_.settings.tsx:207
-#: src/routes/_authenticated/$projectId/index.tsx:832
+#: src/routes/_authenticated/$projectId/index.tsx:833
 msgid "Settings"
 msgstr "設定"
 
@@ -1348,13 +1488,21 @@ msgstr "1 行のテキストのみ"
 msgid "Skip to Main"
 msgstr "メインコンテンツへスキップ"
 
-#: src/components/view-options-bar.tsx:142
+#: src/components/view-options-bar.tsx:143
 msgid "Sort"
 msgstr "並べ替え"
+
+#: src/features/requests/components/request-panel.tsx:303
+msgid "Source"
+msgstr "ソース"
 
 #: src/routes/$projectId.diff.tsx:116
 msgid "Split"
 msgstr "分割"
+
+#: src/features/objects/components/comment-list.tsx:260
+msgid "Start the discussion by adding the first comment."
+msgstr "最初のコメントを追加してディスカッションを始めましょう。"
 
 #: ../../../lib/web/src/components/coming-soon.tsx:12
 msgid "Stay tuned though!"
@@ -1369,6 +1517,16 @@ msgstr "件名"
 msgid "Submit comment"
 msgstr "コメントを送信"
 
+#: src/features/objects/components/comment-thread.tsx:329
+#: src/features/objects/components/comment-thread.tsx:330
+msgid "Submit reply"
+msgstr "返信を送信"
+
+#. placeholder {0}: project.name
+#: src/features/projects/components/recommended-projects.tsx:59
+msgid "Subscribed to {0}"
+msgstr "{0} を購読しました"
+
 #: ../../../lib/web/src/components/config-drawer.tsx:195
 msgid "System"
 msgstr "システム"
@@ -1376,6 +1534,10 @@ msgstr "システム"
 #: ../../../lib/web/src/components/tag-input.tsx:91
 msgid "Tag"
 msgstr "タグ"
+
+#: src/features/requests/components/request-panel.tsx:311
+msgid "Target"
+msgstr "ターゲット"
 
 #: ../../../lib/web/src/components/layout/team-switcher.tsx:60
 msgid "Teams/Apps"
@@ -1393,7 +1555,7 @@ msgstr "テーマ"
 msgid "Theme Settings"
 msgstr "テーマ設定"
 
-#: src/features/requests/components/request-panel.tsx:347
+#: src/features/requests/components/request-panel.tsx:348
 msgid "This merge request is a draft and cannot be merged."
 msgstr "このマージリクエストは下書きのため、マージできません。"
 
@@ -1412,6 +1574,10 @@ msgstr "「{projectName}」とそのすべてのオブジェクト、コメン�
 #: src/routes/_authenticated/$projectId_.settings.tsx:419
 msgid "This will remove \"{projectName}\" from your sidebar and stop updates for this project."
 msgstr "「{projectName}」がサイドバーから削除され、このプロジェクトの更新が停止されます。"
+
+#: src/features/requests/components/request-panel.tsx:271
+msgid "Title"
+msgstr "タイトル"
 
 #: src/features/editor/components/edit-dialogs.tsx:738
 msgid "Title field"
@@ -1432,6 +1598,11 @@ msgstr "サイドバーを切り替え"
 #: ../../../lib/web/src/components/theme-switch.tsx:31
 msgid "Toggle theme"
 msgstr "テーマを切り替え"
+
+#: src/components/view-options-bar.tsx:134
+#: src/components/view-options-bar.tsx:217
+msgid "Toggle watched filter"
+msgstr "ウォッチ中フィルターを切り替え"
 
 #: ../../../lib/web/src/components/ui/sort-selector.tsx:42
 msgid "Top"
@@ -1475,6 +1646,7 @@ msgstr "統合"
 
 #: src/features/projects/pages/projects-list-page.tsx:146
 #: src/features/projects/pages/projects-list-page.tsx:163
+#: src/features/projects/pages/projects-list-page.tsx:165
 #: src/routes/_authenticated/$projectId_.settings.tsx:390
 #: src/routes/_authenticated/$projectId_.settings.tsx:420
 msgid "Unsubscribe"
@@ -1500,7 +1672,7 @@ msgstr "未認証"
 msgid "Updated"
 msgstr "更新日"
 
-#: src/features/objects/components/create-object-dialog.tsx:468
+#: src/features/objects/components/create-object-dialog.tsx:469
 msgid "Upload"
 msgstr "アップロード"
 
@@ -1529,15 +1701,19 @@ msgstr "メールアドレスを認証"
 msgid "View"
 msgstr "ビュー"
 
-#: src/features/objects/components/object-detail-panel.tsx:387
+#: src/features/objects/components/object-detail-panel.tsx:388
 msgid "View and edit item details"
 msgstr "項目の詳細を表示・編集"
 
-#: src/components/view-options-bar.tsx:115
+#: src/components/view-options-bar.tsx:116
 msgid "View controls"
 msgstr "ビューコントロール"
 
-#: src/routes/_authenticated/$projectId/index.tsx:796
+#: src/routes/_authenticated/$projectId_.settings.tsx:606
+msgid "View only"
+msgstr "閲覧のみ"
+
+#: src/routes/_authenticated/$projectId/index.tsx:797
 msgid "View options"
 msgstr "表示オプション"
 
@@ -1545,11 +1721,11 @@ msgstr "表示オプション"
 msgid "Views"
 msgstr "ビュー"
 
-#: src/components/view-options-bar.tsx:220
+#: src/components/view-options-bar.tsx:221
 msgid "Watched"
 msgstr "ウォッチ中"
 
-#: src/components/view-options-bar.tsx:137
+#: src/components/view-options-bar.tsx:138
 msgid "Watched only"
 msgstr "ウォッチ中のみ"
 
@@ -1560,6 +1736,10 @@ msgstr "まもなく復旧します。"
 #: ../../../lib/web/src/features/errors/maintenance-error.tsx:9
 msgid "Website is under maintenance!"
 msgstr "ウェブサイトはメンテナンス中です!"
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:604
+msgid "Write, comment, and view"
+msgstr "編集、コメント、閲覧"
 
 #: src/features/projects/pages/projects-list-page.tsx:94
 msgid "You have no projects yet."

@@ -3,6 +3,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Trans } from '@lingui/react/macro'
+import { t } from '@lingui/core/macro'
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { ArrowRight, GitMerge, Plus, Trash2, ChevronDown, ChevronRight } from "lucide-react";
 import { Button, Card, ConfirmDialog, Input, Switch, Textarea, cn } from "@mochi/web";
@@ -123,7 +124,7 @@ export function RequestPanel({
       <ConfirmDialog
         open={!!deleteId}
         onOpenChange={(open) => !open && setDeleteId(null)}
-        title={"Delete merge request"}
+        title={t`Delete merge request`}
         desc="Are you sure you want to delete this merge request?"
         confirmText="Delete"
         destructive
@@ -267,7 +268,7 @@ function RequestItem({
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 onBlur={handleTitleBlur}
-                placeholder={"Title"}
+                placeholder={t`Title`}
                 autoFocus={!title}
               />
             )}
@@ -366,7 +367,7 @@ function RequestItem({
                         size="icon"
                         className="h-9 w-9 shrink-0 text-muted-foreground"
                         onClick={onDelete}
-                        title={"Delete merge request"}
+                        title={t`Delete merge request`}
                       >
                         <Trash2 className="size-4" />
                       </Button>
@@ -386,7 +387,7 @@ function RequestItem({
                       size="icon"
                       className="h-9 w-9 shrink-0 text-muted-foreground"
                       onClick={onDelete}
-                      title={"Delete merge request"}
+                      title={t`Delete merge request`}
                     >
                       <Trash2 className="size-4" />
                     </Button>
@@ -403,7 +404,7 @@ function RequestItem({
                 size="icon"
                 className="h-9 w-9 shrink-0 text-muted-foreground"
                 onClick={onDelete}
-                title={"Delete merge request"}
+                title={t`Delete merge request`}
               >
                 <Trash2 className="size-4" />
               </Button>

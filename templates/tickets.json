@@ -1,55 +1,55 @@
 {
   "id": "tickets",
-  "version": 1,
-  "name": "Ticket system",
-  "description": "Development, support, and bug tracking",
+  "version": 2,
+  "name": "{labels.template_name}",
+  "description": "{labels.template_description}",
   "icon": "ticket",
   "classes": [
-    {"id": "ticket", "name": "Ticket", "rank": 0, "requests": "merge", "title": "title"},
-    {"id": "task", "name": "Task", "rank": 1, "requests": "merge", "title": "title"}
+    {"id": "ticket", "name": "{labels.class.ticket}", "rank": 0, "requests": "merge", "title": "title"},
+    {"id": "task", "name": "{labels.class.task}", "rank": 1, "requests": "merge", "title": "title"}
   ],
   "fields": {
     "ticket": [
-      {"id": "title", "name": "Title", "fieldtype": "text", "flags": "required,sort", "card": 1, "rank": 0, "rows": 1},
-      {"id": "description", "name": "Description", "fieldtype": "text", "flags": "", "card": 0, "rank": 1, "rows": 3},
-      {"id": "status", "name": "Status", "fieldtype": "enumerated", "flags": "required,sort", "card": 0, "rank": 2},
-      {"id": "priority", "name": "Priority", "fieldtype": "enumerated", "flags": "sort", "card": 1, "rank": 3},
-      {"id": "category", "name": "Category", "fieldtype": "enumerated", "flags": "sort", "card": 1, "rank": 4},
-      {"id": "owner", "name": "Owner", "fieldtype": "user", "flags": "", "card": 0, "rank": 5},
-      {"id": "due", "name": "Due", "fieldtype": "date", "flags": "sort", "card": 0, "rank": 6}
+      {"id": "title", "name": "{labels.field.title}", "fieldtype": "text", "flags": "required,sort", "card": 1, "rank": 0, "rows": 1},
+      {"id": "description", "name": "{labels.field.description}", "fieldtype": "text", "flags": "", "card": 0, "rank": 1, "rows": 3},
+      {"id": "status", "name": "{labels.field.status}", "fieldtype": "enumerated", "flags": "required,sort", "card": 0, "rank": 2},
+      {"id": "priority", "name": "{labels.field.priority}", "fieldtype": "enumerated", "flags": "sort", "card": 1, "rank": 3},
+      {"id": "category", "name": "{labels.field.category}", "fieldtype": "enumerated", "flags": "sort", "card": 1, "rank": 4},
+      {"id": "owner", "name": "{labels.field.owner}", "fieldtype": "user", "flags": "", "card": 0, "rank": 5},
+      {"id": "due", "name": "{labels.field.due}", "fieldtype": "date", "flags": "sort", "card": 0, "rank": 6}
     ],
     "task": [
-      {"id": "title", "name": "Title", "fieldtype": "text", "flags": "required,sort", "card": 1, "rank": 0, "rows": 1},
-      {"id": "description", "name": "Description", "fieldtype": "text", "flags": "", "card": 0, "rank": 1, "rows": 3},
-      {"id": "status", "name": "Status", "fieldtype": "enumerated", "flags": "required,sort", "card": 0, "rank": 2},
-      {"id": "owner", "name": "Owner", "fieldtype": "user", "flags": "", "card": 0, "rank": 3}
+      {"id": "title", "name": "{labels.field.title}", "fieldtype": "text", "flags": "required,sort", "card": 1, "rank": 0, "rows": 1},
+      {"id": "description", "name": "{labels.field.description}", "fieldtype": "text", "flags": "", "card": 0, "rank": 1, "rows": 3},
+      {"id": "status", "name": "{labels.field.status}", "fieldtype": "enumerated", "flags": "required,sort", "card": 0, "rank": 2},
+      {"id": "owner", "name": "{labels.field.owner}", "fieldtype": "user", "flags": "", "card": 0, "rank": 3}
     ]
   },
   "options": {
     "ticket": {
       "status": [
-        {"id": "open", "name": "Open", "colour": "#60a5fa", "rank": 0},
-        {"id": "progress", "name": "In Progress", "colour": "#fbbf24", "rank": 1},
-        {"id": "resolved", "name": "Resolved", "colour": "#4ade80", "rank": 2},
-        {"id": "closed", "name": "Closed", "colour": "#94a3b8", "rank": 3}
+        {"id": "open", "name": "{labels.option.status.open}", "colour": "#60a5fa", "rank": 0},
+        {"id": "progress", "name": "{labels.option.status.progress}", "colour": "#fbbf24", "rank": 1},
+        {"id": "resolved", "name": "{labels.option.status.resolved}", "colour": "#4ade80", "rank": 2},
+        {"id": "closed", "name": "{labels.option.status.closed}", "colour": "#94a3b8", "rank": 3}
       ],
       "priority": [
-        {"id": "low", "name": "Low", "colour": "#94a3b8", "rank": 0},
-        {"id": "medium", "name": "Medium", "colour": "#fbbf24", "rank": 1},
-        {"id": "high", "name": "High", "colour": "#f87171", "rank": 2}
+        {"id": "low", "name": "{labels.option.priority.low}", "colour": "#94a3b8", "rank": 0},
+        {"id": "medium", "name": "{labels.option.priority.medium}", "colour": "#fbbf24", "rank": 1},
+        {"id": "high", "name": "{labels.option.priority.high}", "colour": "#f87171", "rank": 2}
       ],
       "category": [
-        {"id": "bug", "name": "Bug", "colour": "#f87171", "rank": 0},
-        {"id": "feature", "name": "Feature", "colour": "#60a5fa", "rank": 1},
-        {"id": "question", "name": "Question", "colour": "#a78bfa", "rank": 2},
-        {"id": "support", "name": "Support", "colour": "#4ade80", "rank": 3}
+        {"id": "bug", "name": "{labels.option.category.bug}", "colour": "#f87171", "rank": 0},
+        {"id": "feature", "name": "{labels.option.category.feature}", "colour": "#60a5fa", "rank": 1},
+        {"id": "question", "name": "{labels.option.category.question}", "colour": "#a78bfa", "rank": 2},
+        {"id": "support", "name": "{labels.option.category.support}", "colour": "#4ade80", "rank": 3}
       ]
     },
     "task": {
       "status": [
-        {"id": "todo", "name": "To do", "colour": "#94a3b8", "rank": 0},
-        {"id": "progress", "name": "In Progress", "colour": "#fbbf24", "rank": 1},
-        {"id": "done", "name": "Done", "colour": "#4ade80", "rank": 2}
+        {"id": "todo", "name": "{labels.option.status.todo}", "colour": "#94a3b8", "rank": 0},
+        {"id": "progress", "name": "{labels.option.status.progress}", "colour": "#fbbf24", "rank": 1},
+        {"id": "done", "name": "{labels.option.status.done}", "colour": "#4ade80", "rank": 2}
       ]
     }
   },
@@ -58,7 +58,7 @@
     "task": ["ticket"]
   },
   "views": [
-    {"id": "tickets", "name": "Tickets", "viewtype": "board", "columns": "status", "fields": "title,category,owner", "border": "priority", "classes": ["ticket", "task"]},
-    {"id": "list", "name": "List", "viewtype": "list", "fields": "title,description,status,priority,category,owner,due"}
+    {"id": "tickets", "name": "{labels.view.tickets}", "viewtype": "board", "columns": "status", "fields": "title,category,owner", "border": "priority", "classes": ["ticket", "task"]},
+    {"id": "list", "name": "{labels.view.list}", "viewtype": "list", "fields": "title,description,status,priority,category,owner,due"}
   ]
 }

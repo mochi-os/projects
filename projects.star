@@ -269,8 +269,103 @@ def check_length(value, max_len):
 	"""Return True if value is a string exceeding max_len."""
 	return value != None and len(str(value)) > max_len
 
-# Get available project templates from JSON files
-def get_templates():
+# Read the user's BCP 47 language tag, or "en" if unset / anonymous
+def user_language(a):
+	if not a.user:
+		return "en"
+	pref = a.user.preference.get("language")
+	if not pref:
+		return "en"
+	return str(pref).strip().lower()
+
+# Strip the trailing hyphen-separated subtag. Mirrors core's strip_subtag.
+def strip_subtag(lang):
+	i = lang.rfind("-")
+	if i < 0:
+		return ""
+	return lang[:i]
+
+# Build the BCP 47 fallback chain for a language tag. Mirrors core's
+# language_fallbacks (lower-cased, parents stripped one subtag at a time,
+# always ending with "en"). The resolver caller skips uninstalled tags.
+def language_fallbacks(lang):
+	lang = lang.strip().lower() if lang else ""
+	if lang == "" or lang == "en":
+		return ["en"]
+	chain = [lang]
+	parent = strip_subtag(lang)
+	for _ in range(8):
+		if parent == "" or parent == "en":
+			break
+		chain.append(parent)
+		parent = strip_subtag(parent)
+	chain.append("en")
+	return chain
+
+# Parse the [labels] section of an INI string into a dict. Comments (# or ;)
+# and lines outside [labels] are ignored. Last value wins within one file.
+def parse_labels_conf(text):
+	out = {}
+	in_section = False
+	for raw in text.split("\n"):
+		line = raw.strip()
+		if line == "" or line.startswith("#") or line.startswith(";"):
+			continue
+		if line.startswith("[") and line.endswith("]"):
+			in_section = (line == "[labels]")
+			continue
+		if not in_section:
+			continue
+		eq = line.find("=")
+		if eq < 0:
+			continue
+		key = line[:eq].strip()
+		val = line[eq+1:].strip()
+		if key:
+			out[key] = val
+	return out
+
+# Load and merge labels for a template across the language fallback chain.
+# Returns {key: value}; first language in the chain wins, so a French entry
+# overrides English when both exist. Missing files are skipped silently.
+def template_labels(template_id, lang):
+	if not template_id or ".." in template_id or "/" in template_id:
+		return {}
+	available = {}
+	files = mochi.app.file.list("templates/" + template_id + "/labels") or []
+	for f in files:
+		if f.endswith(".conf"):
+			tag = f[:-5].lower()
+			available[tag] = f
+	merged = {}
+	for tag in language_fallbacks(lang):
+		if tag not in available:
+			continue
+		content = mochi.app.file.read("templates/" + template_id + "/labels/" + available[tag])
+		if not content:
+			continue
+		parsed = parse_labels_conf(str(content))
+		for k, v in parsed.items():
+			if k not in merged:
+				merged[k] = v
+	return merged
+
+# Replace {labels.X} placeholders in a string. Missing keys are left literal
+# so the bug is visible rather than silently producing English fallback text.
+def substitute_labels(text, labels):
+	if not text or "{labels." not in text:
+		return text
+	for k, v in labels.items():
+		ph = "{labels." + k + "}"
+		if ph in text:
+			text = text.replace(ph, v)
+	if "{labels." in text:
+		mochi.log.debug("Unresolved template label placeholder in: " + text)
+	return text
+
+# Get available project templates from JSON files. Resolves template_name and
+# template_description against `lang` so the picker shows localised entries.
+def get_templates(lang="en"):
 	templates = {}
 	files = mochi.app.file.list("templates") or []
 	for filename in files:
@@ -278,29 +373,38 @@ def get_templates():
 			content = mochi.app.file.read("templates/" + filename)
 			if content:
 				data = json.decode(str(content))
+				labels = template_labels(data["id"], lang)
 				templates[data["id"]] = {
 					"id": data["id"],
-					"name": data["name"],
-					"description": data.get("description", ""),
+					"name": substitute_labels(data["name"], labels),
+					"description": substitute_labels(data.get("description", ""), labels),
 					"icon": data.get("icon", ""),
 					"version": data.get("version", 1),
 				}
 	return templates
 
-# Apply a template to a project by loading from JSON or from provided data
-def apply_template(project_id, template_id, data=None):
+# Apply a template to a project by loading from JSON or from provided data.
+# `template_id` selects the labels directory for {labels.X} substitution; pass
+# the originating template's id when applying user-supplied data so placeholders
+# resolve correctly. Missing template_id or absent labels dir means no
+# substitution — literal strings pass through unchanged (back-compat with
+# user-exported templates).
+def apply_template(project_id, template_id, data=None, lang="en"):
 	# Load template JSON from file if no data provided
 	if not data:
-		if ".." in template_id or "/" in template_id:
+		if not template_id or ".." in template_id or "/" in template_id:
 			return
 		content = mochi.app.file.read("templates/" + template_id + ".json")
 		data = json.decode(str(content))
+
+	# Load labels once and apply substitution to every user-facing name
+	labels = template_labels(template_id, lang) if template_id else {}
 
 	# Create classes
 	for t in data.get("classes", []):
 		mochi.db.execute(
 			"insert into classes (project, id, name, rank, requests, title) values (?, ?, ?, ?, ?, ?)",
-			project_id, t["id"], t["name"], t.get("rank", 0), t.get("requests", ""), t.get("title", "title")
+			project_id, t["id"], substitute_labels(t["name"], labels), t.get("rank", 0), t.get("requests", ""), t.get("title", "title")
 		)
 
 	# Set hierarchy for each class
@@ -316,7 +420,7 @@ def apply_template(project_id, template_id, data=None):
 		for f in fields:
 			mochi.db.execute(
 				"insert into fields (project, class, id, name, fieldtype, flags, multi, rank, min, max, pattern, minlength, maxlength, prefix, suffix, format, card, position, rows) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-				project_id, cls_id, f["id"], f["name"], f.get("fieldtype", "text"),
+				project_id, cls_id, f["id"], substitute_labels(f["name"], labels), f.get("fieldtype", "text"),
 				f.get("flags", ""), f.get("multi", 0), f.get("rank", 0),
 				f.get("min", ""), f.get("max", ""), f.get("pattern", ""),
 				f.get("minlength", 0), f.get("maxlength", 0),
@@ -330,7 +434,7 @@ def apply_template(project_id, template_id, data=None):
 			for opt in field_options:
 				mochi.db.execute(
 					"insert into options (project, class, field, id, name, colour, icon, rank) values (?, ?, ?, ?, ?, ?, ?, ?)",
-					project_id, cls_id, field_id, opt["id"], opt["name"],
+					project_id, cls_id, field_id, opt["id"], substitute_labels(opt["name"], labels),
 					opt.get("colour", "#94a3b8"), opt.get("icon", ""), opt.get("rank", 0)
 				)
 
@@ -338,7 +442,7 @@ def apply_template(project_id, template_id, data=None):
 	for i, v in enumerate(data.get("views", [])):
 		mochi.db.execute(
 			"insert into views (project, id, name, viewtype, filter, columns, rows, sort, direction, rank, border) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-			project_id, v["id"], v["name"], v.get("viewtype", "board"),
+			project_id, v["id"], substitute_labels(v["name"], labels), v.get("viewtype", "board"),
 			v.get("filter", ""), v.get("columns", ""), v.get("rows", ""),
 			v.get("sort", ""), v.get("direction", "asc"), i, v.get("border", "")
 		)
@@ -358,7 +462,11 @@ def apply_template(project_id, template_id, data=None):
 				)
 
 
-# Export the current project design as template JSON
+# Export the current project design as template JSON. The exported JSON
+# contains literal strings (whatever the project DB currently holds) rather
+# than {labels.X} placeholders — the export is a snapshot of the user's live
+# project, not a Mochi-shipped multi-language template. Re-importing this
+# JSON will apply those literal names verbatim.
 def action_design_export(a):
 
 	project_id = resolve_project(a)
@@ -537,6 +645,7 @@ def action_design_import(a):
 	data_str = a.input("data")
 	template_id = a.input("template") or ""
 	template_version = safe_int(a.input("template_version"))
+	lang = user_language(a)
 
 	if data_str and len(data_str) > 1000000:
 		a.error_label(400, "errors.design_data_too_large")
@@ -551,7 +660,7 @@ def action_design_import(a):
 	if data_str:
 		data = json.decode(data_str)
 	elif template_id:
-		templates = get_templates()
+		templates = get_templates(lang)
 		if template_id not in templates:
 			a.error_label(400, "errors.invalid_template")
 			return
@@ -571,8 +680,11 @@ def action_design_import(a):
 	mochi.db.execute("delete from hierarchy where project=?", project_id)
 	mochi.db.execute("delete from classes where project=?", project_id)
 
-	# Apply the new design
-	apply_template(project_id, None, data)
+	# Apply the new design. template_id is passed so {labels.X} placeholders in
+	# Mochi-shipped templates resolve; user-exported templates with literal
+	# names pass through unchanged because substitute_labels short-circuits
+	# when no placeholder is present.
+	apply_template(project_id, template_id, data, lang)
 
 	# Update template tracking
 	mochi.db.execute(
@@ -589,7 +701,7 @@ def action_design_import(a):
 
 # List available templates
 def action_templates(a):
-	return {"data": {"templates": list(get_templates().values())}}
+	return {"data": {"templates": list(get_templates(user_language(a)).values())}}
 
 # List user's projects
 def action_project_list(a):
@@ -626,7 +738,8 @@ def action_project_create(a):
 		a.error_label(400, "errors.template_is_required")
 		return
 
-	templates = get_templates()
+	lang = user_language(a)
+	templates = get_templates(lang)
 	if template not in templates:
 		a.error_label(400, "errors.invalid_template")
 		return
@@ -667,7 +780,7 @@ def action_project_create(a):
 
 	# Apply template (blank template creates nothing)
 	if template != "blank":
-		apply_template(entity, template)
+		apply_template(entity, template, None, lang)
 
 	# Set up access control
 	resource = "project/" + entity

@@ -1,55 +1,55 @@
 {
   "id": "kanban",
-  "version": 1,
-  "name": "Kanban",
-  "description": "Simple board for general tasks",
+  "version": 2,
+  "name": "{labels.template_name}",
+  "description": "{labels.template_description}",
   "icon": "layout-grid",
   "classes": [
-    {"id": "card", "name": "Card", "rank": 0, "title": "title"},
-    {"id": "checklist", "name": "Checklist", "rank": 1, "title": "title"}
+    {"id": "card", "name": "{labels.class.card}", "rank": 0, "title": "title"},
+    {"id": "checklist", "name": "{labels.class.checklist}", "rank": 1, "title": "title"}
   ],
   "fields": {
     "card": [
-      {"id": "title", "name": "Title", "fieldtype": "text", "flags": "required,sort", "card": 1, "rank": 0, "rows": 1},
-      {"id": "description", "name": "Description", "fieldtype": "text", "flags": "", "card": 0, "rank": 1, "rows": 3},
-      {"id": "status", "name": "Status", "fieldtype": "enumerated", "flags": "required,sort", "card": 0, "rank": 2},
-      {"id": "priority", "name": "Priority", "fieldtype": "enumerated", "flags": "sort", "card": 1, "rank": 3},
-      {"id": "owner", "name": "Owner", "fieldtype": "user", "flags": "", "card": 0, "rank": 4},
-      {"id": "due", "name": "Due", "fieldtype": "date", "flags": "sort", "card": 0, "rank": 5}
+      {"id": "title", "name": "{labels.field.title}", "fieldtype": "text", "flags": "required,sort", "card": 1, "rank": 0, "rows": 1},
+      {"id": "description", "name": "{labels.field.description}", "fieldtype": "text", "flags": "", "card": 0, "rank": 1, "rows": 3},
+      {"id": "status", "name": "{labels.field.status}", "fieldtype": "enumerated", "flags": "required,sort", "card": 0, "rank": 2},
+      {"id": "priority", "name": "{labels.field.priority}", "fieldtype": "enumerated", "flags": "sort", "card": 1, "rank": 3},
+      {"id": "owner", "name": "{labels.field.owner}", "fieldtype": "user", "flags": "", "card": 0, "rank": 4},
+      {"id": "due", "name": "{labels.field.due}", "fieldtype": "date", "flags": "sort", "card": 0, "rank": 5}
     ],
     "checklist": [
-      {"id": "title", "name": "Title", "fieldtype": "text", "flags": "required,sort", "card": 1, "rank": 0, "rows": 1},
-      {"id": "description", "name": "Description", "fieldtype": "text", "flags": "", "card": 0, "rank": 1, "rows": 3},
-      {"id": "items", "name": "Items", "fieldtype": "checklist", "flags": "", "card": 1, "rank": 2},
-      {"id": "status", "name": "Status", "fieldtype": "enumerated", "flags": "required,sort", "card": 0, "rank": 3},
-      {"id": "priority", "name": "Priority", "fieldtype": "enumerated", "flags": "sort", "card": 1, "rank": 4},
-      {"id": "owner", "name": "Owner", "fieldtype": "user", "flags": "", "card": 0, "rank": 5},
-      {"id": "due", "name": "Due", "fieldtype": "date", "flags": "sort", "card": 0, "rank": 6}
+      {"id": "title", "name": "{labels.field.title}", "fieldtype": "text", "flags": "required,sort", "card": 1, "rank": 0, "rows": 1},
+      {"id": "description", "name": "{labels.field.description}", "fieldtype": "text", "flags": "", "card": 0, "rank": 1, "rows": 3},
+      {"id": "items", "name": "{labels.field.items}", "fieldtype": "checklist", "flags": "", "card": 1, "rank": 2},
+      {"id": "status", "name": "{labels.field.status}", "fieldtype": "enumerated", "flags": "required,sort", "card": 0, "rank": 3},
+      {"id": "priority", "name": "{labels.field.priority}", "fieldtype": "enumerated", "flags": "sort", "card": 1, "rank": 4},
+      {"id": "owner", "name": "{labels.field.owner}", "fieldtype": "user", "flags": "", "card": 0, "rank": 5},
+      {"id": "due", "name": "{labels.field.due}", "fieldtype": "date", "flags": "sort", "card": 0, "rank": 6}
     ]
   },
   "options": {
     "card": {
       "status": [
-        {"id": "todo", "name": "To do", "colour": "#94a3b8", "rank": 0},
-        {"id": "progress", "name": "In progress", "colour": "#fbbf24", "rank": 1},
-        {"id": "done", "name": "Done", "colour": "#4ade80", "rank": 2}
+        {"id": "todo", "name": "{labels.option.status.todo}", "colour": "#94a3b8", "rank": 0},
+        {"id": "progress", "name": "{labels.option.status.progress}", "colour": "#fbbf24", "rank": 1},
+        {"id": "done", "name": "{labels.option.status.done}", "colour": "#4ade80", "rank": 2}
       ],
       "priority": [
-        {"id": "high", "name": "High", "colour": "#f87171", "rank": 0},
-        {"id": "medium", "name": "Medium", "colour": "#fbbf24", "rank": 1},
-        {"id": "low", "name": "Low", "colour": "#94a3b8", "rank": 2}
+        {"id": "high", "name": "{labels.option.priority.high}", "colour": "#f87171", "rank": 0},
+        {"id": "medium", "name": "{labels.option.priority.medium}", "colour": "#fbbf24", "rank": 1},
+        {"id": "low", "name": "{labels.option.priority.low}", "colour": "#94a3b8", "rank": 2}
       ]
     },
     "checklist": {
       "status": [
-        {"id": "todo", "name": "To do", "colour": "#94a3b8", "rank": 0},
-        {"id": "progress", "name": "In progress", "colour": "#fbbf24", "rank": 1},
-        {"id": "done", "name": "Done", "colour": "#4ade80", "rank": 2}
+        {"id": "todo", "name": "{labels.option.status.todo}", "colour": "#94a3b8", "rank": 0},
+        {"id": "progress", "name": "{labels.option.status.progress}", "colour": "#fbbf24", "rank": 1},
+        {"id": "done", "name": "{labels.option.status.done}", "colour": "#4ade80", "rank": 2}
       ],
       "priority": [
-        {"id": "high", "name": "High", "colour": "#f87171", "rank": 0},
-        {"id": "medium", "name": "Medium", "colour": "#fbbf24", "rank": 1},
-        {"id": "low", "name": "Low", "colour": "#94a3b8", "rank": 2}
+        {"id": "high", "name": "{labels.option.priority.high}", "colour": "#f87171", "rank": 0},
+        {"id": "medium", "name": "{labels.option.priority.medium}", "colour": "#fbbf24", "rank": 1},
+        {"id": "low", "name": "{labels.option.priority.low}", "colour": "#94a3b8", "rank": 2}
       ]
     }
   },
@@ -58,7 +58,7 @@
     "checklist": [""]
   },
   "views": [
-    {"id": "board", "name": "Board", "viewtype": "board", "columns": "status", "rows": "priority", "fields": "title,description", "border": "priority"},
-    {"id": "list", "name": "List", "viewtype": "list", "fields": "title,description,status,priority,owner,due"}
+    {"id": "board", "name": "{labels.view.board}", "viewtype": "board", "columns": "status", "rows": "priority", "fields": "title,description", "border": "priority"},
+    {"id": "list", "name": "{labels.view.list}", "viewtype": "list", "fields": "title,description,status,priority,owner,due"}
   ]
 }

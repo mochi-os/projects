@@ -40,6 +40,7 @@ import { ActivityList } from "./activity-list";
 import { RequestPanel } from "@/features/requests";
 import { ObjectAttachments } from "./object-attachments";
 import { ObjectLinks } from "./object-links";
+import { naturalCompare } from '@mochi/web'
 
 interface ObjectDetailPanelProps {
   projectId: string;
@@ -257,7 +258,7 @@ export function ObjectDetailPanel({
       .filter(
         (obj) => parentClassIds.includes(obj.class) && !descendants.has(obj.id),
       )
-      .sort((a, b) => title(a).localeCompare(title(b)));
+      .sort((a, b) => naturalCompare(title(a), title(b)));
   }, [
     objectsData,
     data,

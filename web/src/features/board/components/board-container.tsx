@@ -5,6 +5,7 @@ import { useMemo, useState, useEffect, useLayoutEffect, useCallback, useRef } fr
 import { cn } from "@mochi/web";
 import { BoardColumn, type BoardColumnRow } from "./board-column";
 import type { ProjectObject, ProjectDetails, ProjectClass, FieldOption, SortState } from "@/types";
+import { naturalCompare } from '@mochi/web'
 
 // Check if objectId is a descendant of ancestorId
 function isDescendantOf(objectId: string, ancestorId: string, objectMap: Record<string, ProjectObject>): boolean {
@@ -69,7 +70,7 @@ function sortObjects(objects: ProjectObject[], sort?: SortState | null): Project
     if (typeof aVal === "number" && typeof bVal === "number") {
       return (aVal - bVal) * multiplier;
     }
-    return String(aVal).localeCompare(String(bVal)) * multiplier;
+    return naturalCompare(String(aVal), String(bVal)) * multiplier;
   });
 }
 

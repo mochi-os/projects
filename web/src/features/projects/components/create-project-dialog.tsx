@@ -6,6 +6,7 @@ import { ArrowLeft, ArrowRight, Check, File, FolderKanban, LayoutGrid, Plus, Tic
 import projectsApi from "@/api/projects";
 import { useProjectsStore } from "@/stores/projects-store";
 import type { ProjectTemplate } from "@/types";
+import { naturalCompare } from '@mochi/web'
 
 function nameToPrefix(name: string): string {
   return name
@@ -118,7 +119,7 @@ export function CreateProjectDialog({
   const sortedTemplates = [...templates].sort((a, b) => {
     if (a.id === "blank") return -1;
     if (b.id === "blank") return 1;
-    return a.name.localeCompare(b.name);
+    return naturalCompare(a.name, b.name);
   });
 
   return (

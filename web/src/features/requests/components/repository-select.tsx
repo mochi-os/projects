@@ -3,6 +3,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { Trans } from '@lingui/react/macro'
+import { t } from '@lingui/core/macro'
 import {
   Select,
   SelectContent,
@@ -43,7 +44,7 @@ export function RepositorySelect({
       <SelectTrigger className="w-full">
         <div className="flex items-center gap-2">
           <GitBranch className="size-4 text-muted-foreground" />
-          <SelectValue placeholder={"Select repository"} />
+          <SelectValue placeholder={t`Select repository`} />
         </div>
       </SelectTrigger>
       <SelectContent>

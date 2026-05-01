@@ -23,6 +23,7 @@ import {
 import projectsApi from "@/api/projects";
 import type { ProjectDetails } from "@/types";
 import { FieldEditor } from "./field-editor";
+import { naturalCompare } from '@mochi/web'
 
 interface CreateObjectDialogProps {
   open: boolean;
@@ -180,7 +181,7 @@ export function CreateObjectDialog({
 
     return objectsData
       .filter((obj) => parentClassIds.includes(obj.class))
-      .sort((a, b) => objectTitle(a).localeCompare(objectTitle(b)));
+      .sort((a, b) => naturalCompare(objectTitle(a), objectTitle(b)));
   }, [objectsData, selectedClass, allowedParentClasses]);
 
   // Get current parent object info

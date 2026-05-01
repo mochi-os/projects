@@ -10,6 +10,7 @@ import { useProjectsStore } from "@/stores/projects-store";
 import { SidebarProvider, useSidebarContext } from "@/context/sidebar-context";
 import { CreateProjectDialog } from "@/features/projects/components/create-project-dialog";
 import { APP_ROUTES } from "@/config/routes";
+import { naturalCompare } from '@mochi/web'
 
 function ProjectsLayoutInner() {
   const { t } = useLingui()
@@ -30,7 +31,7 @@ function ProjectsLayoutInner() {
   const sidebarData: SidebarData = useMemo(() => {
     // Sort projects alphabetically by name
     const sortedProjects = [...projects].sort((a, b) =>
-      a.name.localeCompare(b.name, undefined, { sensitivity: "base" }),
+      naturalCompare(a.name, b.name),
     );
 
     // Build project items - use fingerprint for shorter URLs

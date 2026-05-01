@@ -3,6 +3,7 @@
 
 import { useState } from "react";
 import { Trans } from '@lingui/react/macro'
+import { t } from '@lingui/core/macro'
 import {
   Button,
   Input,
@@ -96,7 +97,7 @@ export function ViewOptionsBar({
               variant={hasActiveMobileControls ? "secondary" : "ghost"}
               size="icon"
               className="size-9"
-              aria-label={"Open view controls"}
+              aria-label={t`Open view controls`}
               onClick={() => setIsMobileControlsOpen(true)}
             >
               <SlidersHorizontal className="size-4" />
@@ -121,7 +122,7 @@ export function ViewOptionsBar({
               <Input
                 id="project-mobile-view-search"
                 type="search"
-                placeholder={"Search..."}
+                placeholder={t`Search...`}
                 value={filters.search}
                 onChange={(e) => updateSearch(e.target.value)}
               />
@@ -130,7 +131,7 @@ export function ViewOptionsBar({
             <Button
               variant={filters.watched ? "secondary" : "outline"}
               className="w-full justify-start"
-              aria-label={"Toggle watched filter"}
+              aria-label={t`Toggle watched filter`}
               onClick={() => onFilterChange({ ...filters, watched: !filters.watched })}
             >
               <Eye className="size-4" />
@@ -203,7 +204,7 @@ export function ViewOptionsBar({
 
         <Input
           type="search"
-          placeholder={"Search..."}
+          placeholder={t`Search...`}
           value={filters.search}
           onChange={(e) => updateSearch(e.target.value)}
           className="h-9 w-[200px] text-xs"

@@ -2,7 +2,7 @@
 # Copyright Alistair Cunningham 2026
 
 def notify(topic, object="", title="", body="", url=""):
-	mochi.service.call("notifications", "send", topic, object, title, body, url, mochi.app.label("notification_topic_" + topic.replace("/", "_")))
+	mochi.service.call("notifications", "send", topic, object, title, body, url, mochi.app.label("notifications.topic." + topic.replace("/", ".")))
 
 # Helper to create P2P message headers
 def p2p_headers(from_id, to_id, event):
@@ -729,7 +729,7 @@ def action_project_list(a):
 def action_project_create(a):
 
 	name = a.input("name")
-	if not name or not mochi.valid(name, "name"):
+	if not name or not mochi.text.valid(name, "name"):
 		a.error_label(400, "errors.invalid_name")
 		return
 
@@ -933,7 +933,7 @@ def action_project_update(a):
 	now = mochi.time.now()
 
 	if name:
-		if not mochi.valid(name, "name"):
+		if not mochi.text.valid(name, "name"):
 			a.error_label(400, "errors.invalid_name")
 			return
 		mochi.db.execute("update projects set name=?, updated=? where id=?", name, now, project_id)
@@ -1249,7 +1249,7 @@ def resolve_project(a):
 	project_id = a.input("project")
 	if not project_id:
 		return None
-	if mochi.valid(project_id, "fingerprint"):
+	if mochi.text.valid(project_id, "fingerprint"):
 		row = mochi.db.row("select id from projects where fingerprint=?", project_id)
 		if row:
 			return row["id"]
@@ -4217,14 +4217,14 @@ def action_search(a):
 	all_projects = None
 
 	# Check if search term is an entity ID (49-51 word characters)
-	if mochi.valid(search, "entity"):
+	if mochi.text.valid(search, "entity"):
 		entry = mochi.directory.get(search)
 		if entry and entry.get("class") == "project":
 			results.append(entry)
 
 	# Check if search term is a fingerprint (9 alphanumeric, with or without hyphens)
 	fingerprint = search.replace("-", "")
-	if mochi.valid(fingerprint, "fingerprint"):
+	if mochi.text.valid(fingerprint, "fingerprint"):
 		matches = mochi.directory.search("project", "", False, fingerprint=fingerprint)
 		for entry in matches:
 			found = False
@@ -4257,7 +4257,7 @@ def action_search(a):
 				if "#" in project_id:
 					project_id = project_id.split("#")[0]
 
-			if mochi.valid(project_id, "entity"):
+			if mochi.text.valid(project_id, "entity"):
 				entry = mochi.directory.get(project_id)
 				if entry and entry.get("class") == "project":
 					# Avoid duplicates
@@ -4283,7 +4283,7 @@ def action_search(a):
 							})
 
 			# Try as fingerprint — check local directory first, then probe remote
-			elif mochi.valid(project_id, "fingerprint"):
+			elif mochi.text.valid(project_id, "fingerprint"):
 				if all_projects == None:
 					all_projects = mochi.directory.search("project", "", False)
 				for entry in all_projects:
@@ -4394,7 +4394,7 @@ def action_probe(a):
 		a.error_label(400, "errors.could_not_extract_server_from_url")
 		return
 
-	if not project_id or (not mochi.valid(project_id, "entity") and not mochi.valid(project_id, "fingerprint")):
+	if not project_id or (not mochi.text.valid(project_id, "entity") and not mochi.text.valid(project_id, "fingerprint")):
 		a.error_label(400, "errors.could_not_extract_valid_project_id_from_url")
 		return
 
@@ -4465,7 +4465,7 @@ def action_subscribe(a):
 
 	project_id = a.input("project")
 	server = a.input("server")
-	if not mochi.valid(project_id, "entity"):
+	if not mochi.text.valid(project_id, "entity"):
 		a.error_label(400, "errors.invalid_project_id")
 		return
 
@@ -4538,7 +4538,7 @@ def action_unsubscribe(a):
 	user_id = a.user.identity.id
 
 	project_id = a.input("project")
-	if not mochi.valid(project_id, "entity") and not mochi.valid(project_id, "fingerprint"):
+	if not mochi.text.valid(project_id, "entity") and not mochi.text.valid(project_id, "fingerprint"):
 		a.error_label(400, "errors.invalid_project_id")
 		return
 
@@ -4878,7 +4878,7 @@ def event_subscribe(e):
 		return
 
 	subscriber_id = e.header("from")
-	if not mochi.valid(subscriber_id, "entity"):
+	if not mochi.text.valid(subscriber_id, "entity"):
 		return
 
 	# Check subscriber has at least view access
@@ -4886,7 +4886,7 @@ def event_subscribe(e):
 		return
 
 	name = e.content("name")
-	if not mochi.valid(name, "line"):
+	if not mochi.text.valid(name, "line"):
 		return
 
 	now = mochi.time.now()

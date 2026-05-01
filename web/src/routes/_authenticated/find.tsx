@@ -64,7 +64,7 @@ function FindProjectsPage() {
       iconClassName="bg-primary/10 text-primary"
       title={t`Find projects`}
       placeholder={t`Search by name, ID, fingerprint, or URL...`}
-      emptyMessage="No projects found"
+      emptyMessage={t`No projects found`}
       recommendations={recommendations}
       isLoadingRecommendations={isLoadingRecommendations}
       isRecommendationsError={isRecommendationsError}

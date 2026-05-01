@@ -1,4 +1,5 @@
 import { useEffect, useMemo } from "react";
+import { useLingui } from '@lingui/react/macro'
 import {
   AuthenticatedLayout,
   type SidebarData,
@@ -11,6 +12,7 @@ import { CreateProjectDialog } from "@/features/projects/components/create-proje
 import { APP_ROUTES } from "@/config/routes";
 
 function ProjectsLayoutInner() {
+  const { t } = useLingui()
   const projects = useProjectsStore((state) => state.projects);
   const isLoading = useProjectsStore((state) => state.isLoading);
   const error = useProjectsStore((state) => state.error);
@@ -42,27 +44,27 @@ function ProjectsLayoutInner() {
     });
 
     const allProjectsItem: NavItem = {
-      title: "All projects",
+      title: t`All projects`,
       url: "/",
       icon: FolderKanban,
     };
 
     // Build action items (moved to bottom)
     const actionItems: NavItem[] = [
-      { title: "Find projects", icon: Search, url: "/find" },
-      { title: "Create project", icon: Plus, onClick: openCreateDialog },
+      { title: t`Find projects`, icon: Search, url: "/find" },
+      { title: t`Create project`, icon: Plus, onClick: openCreateDialog },
     ];
 
     const groups: SidebarData["navGroups"] = [
       {
-        title: "Projects",
+        title: t`Projects`,
         items: [
           allProjectsItem,
           ...projectItems,
           ...(error
             ? [
                 {
-                  title: "Retry projects load",
+                  title: t`Retry projects load`,
                   icon: RefreshCw,
                   onClick: () => {
                     void refresh();

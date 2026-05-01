@@ -127,11 +127,11 @@ function DesignPage() {
         <PageHeader
           title={t`Design`}
           icon={<Settings2 className="size-4 md:size-5" />}
-          back={{ label: "Back to project", onFallback: goBackToProject }}
+          back={{ label: t`Back to project`, onFallback: goBackToProject }}
         />
         <Main>
           <GeneralError
-            error={error ?? new Error("Failed to load project design")}
+            error={error ?? new Error(t`Failed to load project design`)}
             minimal
             mode="inline"
             reset={() => {
@@ -152,7 +152,7 @@ function DesignPage() {
       <PageHeader
         title={`${project.project.name} - Design`}
         icon={<Settings2 className="size-4 md:size-5" />}
-        back={{ label: "Back to project", onFallback: goBackToProject }}
+        back={{ label: t`Back to project`, onFallback: goBackToProject }}
         menuAction={
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -241,7 +241,6 @@ function ImportDialog({
     label: string,
   ) => void;
 }) {
-  const { t } = useLingui()
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const { data: templatesData } = useQuery({
@@ -271,11 +270,11 @@ function ImportDialog({
         const data = JSON.parse(reader.result as string);
         onSelect(data, undefined, undefined, file.name);
       } catch {
-        toast.error(t`Invalid JSON file`);
+        toast.error("Invalid JSON file");
       }
     };
     reader.onerror = () => {
-      toast.error(t`Failed to read file`);
+      toast.error("Failed to read file");
     };
     reader.readAsText(file);
 

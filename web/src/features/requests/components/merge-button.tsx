@@ -2,7 +2,7 @@
 // Copyright Alistair Cunningham 2026
 
 import { useState } from "react";
-import { Trans, useLingui } from '@lingui/react/macro'
+import { Trans } from '@lingui/react/macro'
 import { useMutation } from "@tanstack/react-query";
 import { GitMerge, Loader2, CheckCircle2 } from "lucide-react";
 import { Button, ConfirmDialog, cn, getErrorMessage } from "@mochi/web";
@@ -34,7 +34,6 @@ export function MergeButton({
   onMergeComplete,
   disabled,
 }: MergeButtonProps) {
-  const { t } = useLingui()
   const [showConfirm, setShowConfirm] = useState(false);
   const [method, setMethod] = useState<MergeMethod>("merge");
 
@@ -91,14 +90,14 @@ export function MergeButton({
 
       {mergeMutation.isError && (
         <p className="text-xs text-destructive mt-2">
-          {getErrorMessage(mergeMutation.error, t`Failed to merge`)}
+          {getErrorMessage(mergeMutation.error, "Failed to merge")}
         </p>
       )}
 
       <ConfirmDialog
         open={showConfirm}
         onOpenChange={setShowConfirm}
-        title={t`Merge`}
+        title={"Merge"}
         desc={`This will merge "${source}" into "${target}". This action cannot be undone.`}
         confirmText={methodLabels[method]}
         isLoading={mergeMutation.isPending}

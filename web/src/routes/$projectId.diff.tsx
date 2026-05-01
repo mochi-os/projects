@@ -74,7 +74,7 @@ function DiffPage() {
   };
 
   if (!repo || !source || !target) {
-    return <GeneralError error={new Error("Missing repo, source, or target parameters")} />;
+    return <GeneralError error={new Error(t`Missing repo, source, or target parameters`)} />;
   }
 
   if (diffLoading) {

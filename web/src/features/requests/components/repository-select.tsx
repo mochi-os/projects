@@ -2,7 +2,7 @@
 // Copyright Alistair Cunningham 2026
 
 import { useQuery } from "@tanstack/react-query";
-import { Trans, useLingui } from '@lingui/react/macro'
+import { Trans } from '@lingui/react/macro'
 import {
   Select,
   SelectContent,
@@ -24,7 +24,6 @@ export function RepositorySelect({
   onChange,
   disabled,
 }: RepositorySelectProps) {
-  const { t } = useLingui()
   const { data, isLoading } = useQuery({
     queryKey: ["repositories"],
     queryFn: async () => {
@@ -44,7 +43,7 @@ export function RepositorySelect({
       <SelectTrigger className="w-full">
         <div className="flex items-center gap-2">
           <GitBranch className="size-4 text-muted-foreground" />
-          <SelectValue placeholder={t`Select repository`} />
+          <SelectValue placeholder={"Select repository"} />
         </div>
       </SelectTrigger>
       <SelectContent>

@@ -2,7 +2,7 @@
 // Copyright Alistair Cunningham 2026
 
 import { useState, useMemo, useCallback } from "react";
-import { Trans, useLingui } from '@lingui/react/macro'
+import { Trans } from '@lingui/react/macro'
 import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
 import { Link2, Plus, X } from "lucide-react";
 import {
@@ -49,7 +49,6 @@ export function ObjectLinks({
   classes,
   readOnly,
 }: ObjectLinksProps) {
-  const { t } = useLingui()
   const [popoverOpen, setPopoverOpen] = useState(false);
   const [linkType, setLinkType] = useState("relates");
   const [search, setSearch] = useState("");
@@ -89,7 +88,7 @@ export function ObjectLinks({
       setLinkType("relates");
     },
     onError: (error) => {
-      toast.error(getErrorMessage(error, t`Failed to create link`));
+      toast.error(getErrorMessage(error, "Failed to create link"));
     },
   });
 
@@ -111,7 +110,7 @@ export function ObjectLinks({
       });
     },
     onError: (error) => {
-      toast.error(getErrorMessage(error, t`Failed to delete link`));
+      toast.error(getErrorMessage(error, "Failed to delete link"));
     },
   });
 
@@ -267,7 +266,7 @@ export function ObjectLinks({
                 </SelectContent>
               </Select>
               <Input
-                placeholder={t`Search objects...`}
+                placeholder={"Search objects..."}
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 className="h-8 text-xs"

@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { Trans, useLingui } from '@lingui/react/macro'
+import { Trans } from '@lingui/react/macro'
 import { Button, GeneralError, Skeleton, toast, getErrorMessage } from "@mochi/web";
 import { FolderKanban, Loader2 } from "lucide-react";
 import projectsApi from "@/api/projects";
@@ -21,7 +21,6 @@ export function RecommendedProjects({
   subscribedIds,
   onSubscribe,
 }: RecommendedProjectsProps) {
-  const { t } = useLingui()
   const [recommendations, setRecommendations] = useState<
     RecommendedProject[]
   >([]);
@@ -59,7 +58,7 @@ export function RecommendedProjects({
       toast.success(`Subscribed to ${project.name}`);
       setRecommendations((prev) => prev.filter((p) => p.id !== project.id));
     } catch (error) {
-      toast.error(getErrorMessage(error, t`Failed to subscribe`));
+      toast.error(getErrorMessage(error, "Failed to subscribe"));
     } finally {
       setPendingId(null);
     }

@@ -184,7 +184,7 @@ function ProjectSettingsPage() {
         <PageHeader
           title={t`Settings`}
           icon={<Settings className="size-4 md:size-5" />}
-          back={{ label: "Back to project", onFallback: goBackToProject }}
+          back={{ label: t`Back to project`, onFallback: goBackToProject }}
         />
         <Main className="space-y-6">
           <div className="flex gap-1 border-b">
@@ -207,7 +207,7 @@ function ProjectSettingsPage() {
         <PageHeader
           title={t`Settings`}
           icon={<Settings className="size-4 md:size-5" />}
-          back={{ label: "Back to project", onFallback: goBackToProject }}
+          back={{ label: t`Back to project`, onFallback: goBackToProject }}
         />
         <Main>
           {projectLookupError ? (
@@ -222,11 +222,10 @@ function ProjectSettingsPage() {
           ) : (
             <EmptyState
               icon={FolderKanban}
-              title={projectNotFound ? "Project not found" : "Project unavailable"}
+              title={projectNotFound ? t`Project not found` : t`Project unavailable`}
               description={
                 projectNotFound
-                  ? "This project may have been deleted or you don't have access to it."
-                  : "This project could not be loaded right now."
+                  ? t`This project may have been deleted or you don't have access to it.` : t`This project could not be loaded right now.`
               }
             />
           )}
@@ -240,7 +239,7 @@ function ProjectSettingsPage() {
       <PageHeader
         title={`${project.project.name} settings`}
         icon={<Settings className="size-4 md:size-5" />}
-        back={{ label: "Back to project", onFallback: goBackToProject }}
+        back={{ label: t`Back to project`, onFallback: goBackToProject }}
       />
       <Main className="space-y-6">
         {/* Tabs - only show for owners */}
@@ -322,16 +321,15 @@ function GeneralTab({
   onUnsubscribe,
   onUpdate,
 }: GeneralTabProps) {
-  const { t } = useLingui()
   return (
     <div className="space-y-6">
       <Section
-        title={t`Identity`}
-        description={t`Core information about this project`}
+        title={"Identity"}
+        description={"Core information about this project"}
       >
         <div className="divide-y-0">
           <EditableFieldRow
-            label={t`Name`}
+            label={"Name"}
             value={project.project.name}
             isOwner={isOwner}
             onSave={(value) => onUpdate({ name: value })}
@@ -339,7 +337,7 @@ function GeneralTab({
           />
 
           <EditableFieldRow
-            label={t`Description`}
+            label={"Description"}
             value={project.project.description}
             isOwner={isOwner}
             onSave={(value) => onUpdate({ description: value })}
@@ -347,19 +345,19 @@ function GeneralTab({
           />
 
           <EditableFieldRow
-            label={t`Prefix`}
+            label={"Prefix"}
             value={project.project.prefix}
             isOwner={isOwner}
             onSave={(value) => onUpdate({ prefix: value })}
             validate={validatePrefix}
           />
 
-          <FieldRow label={t`Entity ID`}>
+          <FieldRow label={"Entity ID"}>
             <DataChip value={project.project.id} truncate='middle' />
           </FieldRow>
 
           {project.project.fingerprint && (
-            <FieldRow label={t`Fingerprint`}>
+            <FieldRow label={"Fingerprint"}>
               <DataChip
                 value={project.project.fingerprint}
                 truncate='middle'
@@ -368,7 +366,7 @@ function GeneralTab({
           )}
 
           {project.project.server && (
-            <FieldRow label={t`Server`}>
+            <FieldRow label={"Server"}>
               <DataChip value={project.project.server} />
             </FieldRow>
           )}
@@ -377,7 +375,7 @@ function GeneralTab({
 
       {!isOwner && (
         <Section
-          title={t`Unsubscribe from project`}
+          title={"Unsubscribe from project"}
           action={
             <Button
               variant="outline"
@@ -397,8 +395,8 @@ function GeneralTab({
 
       {isOwner && (
         <Section
-          title={t`Delete project`}
-          description={t`Permanently delete this project and all its content.`}
+          title={"Delete project"}
+          description={"Permanently delete this project and all its content."}
           action={
             <Button
               variant="outline"
@@ -416,7 +414,7 @@ function GeneralTab({
       <ConfirmDialog
         open={showUnsubscribeDialog}
         onOpenChange={setShowUnsubscribeDialog}
-        title={t`Unsubscribe from project?`}
+        title={"Unsubscribe from project?"}
         desc={`This will remove "${project.project.name}" from your sidebar and stop updates for this project.`}
         confirmText="Unsubscribe"
         handleConfirm={onUnsubscribe}
@@ -426,7 +424,7 @@ function GeneralTab({
       <ConfirmDialog
         open={showDeleteDialog}
         onOpenChange={setShowDeleteDialog}
-        title={t`Delete project?`}
+        title={"Delete project?"}
         desc={`This will permanently delete "${project.project.name}" and all its objects, comments, and attachments. This action cannot be undone.`}
         confirmText="Delete project"
         destructive
@@ -607,7 +605,6 @@ interface AccessTabProps {
 }
 
 function AccessTab({ projectId }: AccessTabProps) {
-  const { t } = useLingui()
   const [dialogOpen, setDialogOpen] = useState(false);
   const [userSearchQuery, setUserSearchQuery] = useState("");
 
@@ -675,7 +672,7 @@ function AccessTab({ projectId }: AccessTabProps) {
       toast.success(`Access set for ${subjectName}`);
       await refetchRules();
     } catch (err) {
-      toast.error(getErrorMessage(err, t`Failed to set access level`));
+      toast.error(getErrorMessage(err, "Failed to set access level"));
       throw err;
     }
   };
@@ -684,10 +681,10 @@ function AccessTab({ projectId }: AccessTabProps) {
     if (!canManageRules) return;
     try {
       await projectsApi.revokeAccess(projectId, subject);
-      toast.success(t`Access removed`);
+      toast.success("Access removed");
       await refetchRules();
     } catch (err) {
-      toast.error(getErrorMessage(err, t`Failed to remove access`));
+      toast.error(getErrorMessage(err, "Failed to remove access"));
     }
   };
 
@@ -695,17 +692,17 @@ function AccessTab({ projectId }: AccessTabProps) {
     if (!canManageRules) return;
     try {
       await projectsApi.setAccessLevel(projectId, subject, newLevel);
-      toast.success(t`Access level updated`);
+      toast.success("Access level updated");
       await refetchRules();
     } catch (err) {
-      toast.error(getErrorMessage(err, t`Failed to update access level`));
+      toast.error(getErrorMessage(err, "Failed to update access level"));
     }
   };
 
   return (
     <Section
-      title={t`Access Management`}
-      description={t`Control who can view and interact with this project`}
+      title={"Access Management"}
+      description={"Control who can view and interact with this project"}
     >
       <div className="space-y-4">
         <div className="flex justify-end">

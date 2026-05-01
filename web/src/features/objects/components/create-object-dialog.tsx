@@ -2,7 +2,7 @@
 // Copyright Alistair Cunningham 2026
 
 import { useState, useMemo, useEffect, useRef } from "react";
-import { Trans, useLingui } from '@lingui/react/macro'
+import { Trans } from '@lingui/react/macro'
 import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
 import { Check, Paperclip, Upload, X } from "lucide-react";
 import {
@@ -45,7 +45,6 @@ export function CreateObjectDialog({
   allowedClasses,
   onCreated,
 }: CreateObjectDialogProps) {
-  const { t } = useLingui()
   const [error, setError] = useState<string | null>(null);
   const [selectedClass, setSelectedType] = useState(project.classes[0]?.id || "");
   const [fieldValues, setFieldValues] = useState<Record<string, string>>({});
@@ -346,7 +345,7 @@ export function CreateObjectDialog({
             size="icon"
             className="h-8 w-8"
             onClick={handleClose}
-            title={t`Close`}
+            title={"Close"}
           >
             <X className="size-4" />
           </Button>
@@ -374,7 +373,7 @@ export function CreateObjectDialog({
                       onValueChange={(v) => setParent(v === "_none_" ? "" : v)}
                     >
                       <SelectTrigger className="w-full">
-                        <SelectValue placeholder={t`None`}>
+                        <SelectValue placeholder={"None"}>
                           {currentParent
                             ? objectTitle(currentParent)
                             : "None"}

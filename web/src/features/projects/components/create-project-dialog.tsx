@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Trans, useLingui } from '@lingui/react/macro'
+import { Trans } from '@lingui/react/macro'
 import { useNavigate } from "@tanstack/react-router";
 import { Button, ResponsiveDialog, ResponsiveDialogContent, ResponsiveDialogDescription, ResponsiveDialogFooter, ResponsiveDialogHeader, ResponsiveDialogTitle, ResponsiveDialogTrigger, Input, Label, Switch, toast, getErrorMessage, cn } from "@mochi/web"
 import { ArrowLeft, ArrowRight, Check, File, FolderKanban, LayoutGrid, Plus, Ticket, Zap } from "lucide-react";
@@ -26,7 +26,6 @@ export function CreateProjectDialog({
   onOpenChange,
   hideTrigger,
 }: CreateProjectDialogProps) {
-  const { t } = useLingui()
   const [step, setStep] = useState<1 | 2>(1);
   const [isPending, setIsPending] = useState(false);
   const [name, setName] = useState("");
@@ -71,7 +70,7 @@ export function CreateProjectDialog({
 
   const handleNext = () => {
     if (!name.trim()) {
-      toast.error(t`Name is required`);
+      toast.error("Name is required");
       return;
     }
     setStep(2);
@@ -81,7 +80,7 @@ export function CreateProjectDialog({
     e.preventDefault();
 
     if (!selectedTemplate) {
-      toast.error(t`Please select a template`);
+      toast.error("Please select a template");
       return;
     }
 
@@ -97,7 +96,7 @@ export function CreateProjectDialog({
       const fingerprint = response.data?.fingerprint;
       await refreshProjects();
 
-      toast.success(t`Project created`);
+      toast.success("Project created");
       onOpenChange?.(false);
 
       if (fingerprint) {
@@ -109,7 +108,7 @@ export function CreateProjectDialog({
         void navigate({ to: "/" });
       }
     } catch (err) {
-      toast.error(getErrorMessage(err, t`Failed to create project`));
+      toast.error(getErrorMessage(err, "Failed to create project"));
     } finally {
       setIsPending(false);
     }
@@ -155,7 +154,7 @@ export function CreateProjectDialog({
                     setPrefix(nameToPrefix(e.target.value));
                   }
                 }}
-                placeholder={t`My project`}
+                placeholder={"My project"}
                 autoFocus
                 onKeyDown={(e) => {
                   if (e.key === "Enter") {

@@ -2,7 +2,7 @@
 // Copyright Alistair Cunningham 2026
 
 import { useEffect, useRef, useState } from "react";
-import { Trans, useLingui } from '@lingui/react/macro'
+import { Trans } from '@lingui/react/macro'
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { ArrowRight, GitMerge, Plus, Trash2, ChevronDown, ChevronRight } from "lucide-react";
 import { Button, Card, ConfirmDialog, Input, Switch, Textarea, cn } from "@mochi/web";
@@ -36,7 +36,6 @@ export function RequestPanel({
   objectReadable = "",
   readOnly,
 }: RequestPanelProps) {
-  const { t } = useLingui()
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const [adding, setAdding] = useState(false);
   const [deleteId, setDeleteId] = useState<string | null>(null);
@@ -124,7 +123,7 @@ export function RequestPanel({
       <ConfirmDialog
         open={!!deleteId}
         onOpenChange={(open) => !open && setDeleteId(null)}
-        title={t`Delete merge request`}
+        title={"Delete merge request"}
         desc="Are you sure you want to delete this merge request?"
         confirmText="Delete"
         destructive
@@ -158,7 +157,6 @@ function RequestItem({
   projectId,
   readOnly,
 }: RequestItemProps) {
-  const { t } = useLingui()
   const ref = useRef<HTMLDivElement>(null);
   const isMerged = request.status === "merged";
   const isDraft = request.draft === 1;
@@ -269,7 +267,7 @@ function RequestItem({
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 onBlur={handleTitleBlur}
-                placeholder={t`Title`}
+                placeholder={"Title"}
                 autoFocus={!title}
               />
             )}
@@ -282,7 +280,7 @@ function RequestItem({
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 onBlur={handleDescriptionBlur}
-                placeholder={t`Description`}
+                placeholder={"Description"}
                 rows={2}
               />
             )}
@@ -301,7 +299,7 @@ function RequestItem({
                 repoId={request.repository}
                 value={request.source}
                 onChange={handleSourceChange}
-                placeholder={t`Source`}
+                placeholder={"Source"}
                 disabled={readOnly || isMerged}
               />
               <ArrowRight className="size-4 text-muted-foreground mb-2.5" />
@@ -309,7 +307,7 @@ function RequestItem({
                 repoId={request.repository}
                 value={request.target}
                 onChange={handleTargetChange}
-                placeholder={t`Target`}
+                placeholder={"Target"}
                 disabled={readOnly || isMerged}
               />
             </div>
@@ -368,7 +366,7 @@ function RequestItem({
                         size="icon"
                         className="h-9 w-9 shrink-0 text-muted-foreground"
                         onClick={onDelete}
-                        title={t`Delete merge request`}
+                        title={"Delete merge request"}
                       >
                         <Trash2 className="size-4" />
                       </Button>
@@ -388,7 +386,7 @@ function RequestItem({
                       size="icon"
                       className="h-9 w-9 shrink-0 text-muted-foreground"
                       onClick={onDelete}
-                      title={t`Delete merge request`}
+                      title={"Delete merge request"}
                     >
                       <Trash2 className="size-4" />
                     </Button>
@@ -405,7 +403,7 @@ function RequestItem({
                 size="icon"
                 className="h-9 w-9 shrink-0 text-muted-foreground"
                 onClick={onDelete}
-                title={t`Delete merge request`}
+                title={"Delete merge request"}
               >
                 <Trash2 className="size-4" />
               </Button>

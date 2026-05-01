@@ -2,7 +2,7 @@
 // Copyright Alistair Cunningham 2026
 
 import { useState, useRef, useEffect, useCallback } from "react";
-import { Trans, useLingui } from '@lingui/react/macro'
+import { Trans } from '@lingui/react/macro'
 import { createPortal } from "react-dom";
 import {
   cn,
@@ -106,7 +106,6 @@ export function BoardColumn({
   rows,
   preview,
 }: BoardColumnProps) {
-  const { t } = useLingui()
   const [showRenameDialog, setShowRenameDialog] = useState(false);
   const [newName, setNewName] = useState(name);
   const [isRenaming, setIsRenaming] = useState(false);
@@ -618,7 +617,7 @@ export function BoardColumn({
       <ConfirmDialog
         open={showDeleteDialog}
         onOpenChange={setShowDeleteDialog}
-        title={t`Delete column`}
+        title={"Delete column"}
         desc={`Are you sure you want to delete the "${name}" column? This cannot be undone.`}
         confirmText="Delete"
         destructive

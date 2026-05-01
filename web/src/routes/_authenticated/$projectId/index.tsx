@@ -86,7 +86,7 @@ function ProjectPage() {
         <PageHeader
           title={t`Project`}
           icon={<FolderKanban className="size-4 md:size-5" />}
-          back={{ label: "Back to projects", onFallback: () => navigate({ to: "/" }) }}
+          back={{ label: t`Back to projects`, onFallback: () => navigate({ to: "/" }) }}
         />
         <Main>
           <GeneralError

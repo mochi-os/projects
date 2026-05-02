@@ -471,20 +471,20 @@ def action_design_export(a):
 
 	project_id = resolve_project(a)
 	if not project_id:
-		a.error_label(400, "errors.project_id_required")
+		a.error.label(400, "errors.project_id_required")
 		return
 
 	project = get_project(project_id)
 	if not project:
-		a.error_label(404, "errors.project_not_found")
+		a.error.label(404, "errors.project_not_found")
 		return
 
 	if project["owner"] != 1:
-		a.error_label(400, "errors.cannot_export_remote_project_design")
+		a.error.label(400, "errors.cannot_export_remote_project_design")
 		return
 
 	if not check_project_access(a.user.identity.id, project_id, "design"):
-		a.error_label(403, "errors.access_denied")
+		a.error.label(403, "errors.access_denied")
 		return
 
 	# Read classes
@@ -626,20 +626,20 @@ def action_design_import(a):
 
 	project_id = resolve_project(a)
 	if not project_id:
-		a.error_label(400, "errors.project_id_required")
+		a.error.label(400, "errors.project_id_required")
 		return
 
 	project = get_project(project_id)
 	if not project:
-		a.error_label(404, "errors.project_not_found")
+		a.error.label(404, "errors.project_not_found")
 		return
 
 	if project["owner"] != 1:
-		a.error_label(400, "errors.cannot_import_design_to_remote_project")
+		a.error.label(400, "errors.cannot_import_design_to_remote_project")
 		return
 
 	if not check_project_access(a.user.identity.id, project_id, "design"):
-		a.error_label(403, "errors.access_denied")
+		a.error.label(403, "errors.access_denied")
 		return
 
 	data_str = a.input("data")
@@ -648,11 +648,11 @@ def action_design_import(a):
 	lang = user_language(a)
 
 	if data_str and len(data_str) > 1000000:
-		a.error_label(400, "errors.design_data_too_large")
+		a.error.label(400, "errors.design_data_too_large")
 		return
 
 	if len(template_id) > 100:
-		a.error_label(400, "errors.template_id_too_long")
+		a.error.label(400, "errors.template_id_too_long")
 		return
 
 	# Load design data from JSON string or from built-in template file
@@ -662,13 +662,13 @@ def action_design_import(a):
 	elif template_id:
 		templates = get_templates(lang)
 		if template_id not in templates:
-			a.error_label(400, "errors.invalid_template")
+			a.error.label(400, "errors.invalid_template")
 			return
 		content = mochi.app.asset.read("templates/" + template_id + ".json")
 		data = json.decode(str(content))
 		template_version = templates[template_id]["version"]
 	else:
-		a.error_label(400, "errors.design_data_or_template_is_required")
+		a.error.label(400, "errors.design_data_or_template_is_required")
 		return
 
 	# Delete existing design in correct order (foreign key dependencies)
@@ -730,18 +730,18 @@ def action_project_create(a):
 
 	name = a.input("name")
 	if not name or not mochi.text.valid(name, "name"):
-		a.error_label(400, "errors.invalid_name")
+		a.error.label(400, "errors.invalid_name")
 		return
 
 	template = a.input("template")
 	if not template:
-		a.error_label(400, "errors.template_is_required")
+		a.error.label(400, "errors.template_is_required")
 		return
 
 	lang = user_language(a)
 	templates = get_templates(lang)
 	if template not in templates:
-		a.error_label(400, "errors.invalid_template")
+		a.error.label(400, "errors.invalid_template")
 		return
 
 	tmpl_version = templates[template]["version"]
@@ -750,16 +750,16 @@ def action_project_create(a):
 	privacy = a.input("privacy") or "private"
 
 	if len(description) > 10000:
-		a.error_label(400, "errors.description_too_long")
+		a.error.label(400, "errors.description_too_long")
 		return
 	if len(prefix) > 20:
-		a.error_label(400, "errors.prefix_too_long")
+		a.error.label(400, "errors.prefix_too_long")
 		return
 
 	# Create Mochi entity
 	entity = mochi.entity.create("project", name, privacy, description)
 	if not entity:
-		a.error_label(500, "errors.failed_to_create_project_entity")
+		a.error.label(500, "errors.failed_to_create_project_entity")
 		return
 
 	now = mochi.time.now()
@@ -799,12 +799,12 @@ def action_project_get(a):
 
 	project_id = resolve_project(a)
 	if not project_id:
-		a.error_label(400, "errors.project_id_required")
+		a.error.label(400, "errors.project_id_required")
 		return
 
 	row = mochi.db.row("select id, name, description, prefix, counter, owner, server, template, template_version, created, updated from projects where id=?", project_id)
 	if not row:
-		a.error_label(404, "errors.project_not_found")
+		a.error.label(404, "errors.project_not_found")
 		return
 
 	# Get classes
@@ -858,7 +858,7 @@ def action_project_get(a):
 		elif check_project_access(a.user.identity.id, project_id, "view"):
 			access = "view"
 		else:
-			a.error_label(403, "errors.access_denied")
+			a.error.label(403, "errors.access_denied")
 			return
 	else:
 		server = row["server"] or ""
@@ -876,10 +876,10 @@ def action_project_get(a):
 			elif response.get("view"):
 				access = "view"
 			else:
-				a.error_label(403, "errors.access_denied")
+				a.error.label(403, "errors.access_denied")
 				return
 		else:
-			a.error_label(403, "errors.access_denied")
+			a.error.label(403, "errors.access_denied")
 			return
 
 	return {"data": {
@@ -910,20 +910,20 @@ def action_project_update(a):
 
 	project_id = resolve_project(a)
 	if not project_id:
-		a.error_label(400, "errors.project_id_required")
+		a.error.label(400, "errors.project_id_required")
 		return
 
 	row = mochi.db.row("select id, owner from projects where id=?", project_id)
 	if not row:
-		a.error_label(404, "errors.project_not_found")
+		a.error.label(404, "errors.project_not_found")
 		return
 
 	if row["owner"] != 1:
-		a.error_label(403, "errors.cannot_update_remote_project")
+		a.error.label(403, "errors.cannot_update_remote_project")
 		return
 
 	if not mochi.access.check(a.user.identity.id, "project/" + project_id, "*"):
-		a.error_label(403, "errors.access_denied")
+		a.error.label(403, "errors.access_denied")
 		return
 
 	name = a.input("name")
@@ -934,20 +934,20 @@ def action_project_update(a):
 
 	if name:
 		if not mochi.text.valid(name, "name"):
-			a.error_label(400, "errors.invalid_name")
+			a.error.label(400, "errors.invalid_name")
 			return
 		mochi.db.execute("update projects set name=?, updated=? where id=?", name, now, project_id)
 		mochi.entity.update(project_id, name=name)
 
 	if a.input("description") != None:
 		if len(description) > 10000:
-			a.error_label(400, "errors.description_too_long")
+			a.error.label(400, "errors.description_too_long")
 			return
 		mochi.db.execute("update projects set description=?, updated=? where id=?", description, now, project_id)
 
 	if prefix:
 		if len(prefix) > 20:
-			a.error_label(400, "errors.prefix_too_long")
+			a.error.label(400, "errors.prefix_too_long")
 			return
 		mochi.db.execute("update projects set prefix=?, updated=? where id=?", prefix, now, project_id)
 
@@ -967,20 +967,20 @@ def action_project_delete(a):
 
 	project_id = resolve_project(a)
 	if not project_id:
-		a.error_label(400, "errors.project_id_required")
+		a.error.label(400, "errors.project_id_required")
 		return
 
 	row = mochi.db.row("select id, owner from projects where id=?", project_id)
 	if not row:
-		a.error_label(404, "errors.project_not_found")
+		a.error.label(404, "errors.project_not_found")
 		return
 
 	if row["owner"] != 1:
-		a.error_label(403, "errors.cannot_delete_remote_project")
+		a.error.label(403, "errors.cannot_delete_remote_project")
 		return
 
 	if not mochi.access.check(a.user.identity.id, "project/" + project_id, "*"):
-		a.error_label(403, "errors.access_denied")
+		a.error.label(403, "errors.access_denied")
 		return
 
 	# Delete in reverse dependency order
@@ -1082,7 +1082,7 @@ def forward_to_owner(a, project_id, action, params):
 		"params": params,
 	}, peer)
 	if not result:
-		a.error_label(502, "errors.could_not_reach_project_owner")
+		a.error.label(502, "errors.could_not_reach_project_owner")
 		return None
 	if result.get("error"):
 		a.error(result.get("code", 500), result["error"])
@@ -1094,20 +1094,20 @@ def action_access_list(a):
 
 	project_id = resolve_project(a)
 	if not project_id:
-		a.error_label(400, "errors.project_id_required")
+		a.error.label(400, "errors.project_id_required")
 		return
 
 	project = get_project(project_id)
 	if not project:
-		a.error_label(404, "errors.project_not_found")
+		a.error.label(404, "errors.project_not_found")
 		return
 
 	# Only owner can manage access
 	if project["owner"] != 1:
-		a.error_label(403, "errors.access_denied")
+		a.error.label(403, "errors.access_denied")
 		return
 	if not mochi.access.check(a.user.identity.id, "project/" + project_id, "*"):
-		a.error_label(403, "errors.access_denied")
+		a.error.label(403, "errors.access_denied")
 		return
 
 	# Get owner info
@@ -1143,38 +1143,38 @@ def action_access_set(a):
 
 	project_id = resolve_project(a)
 	if not project_id:
-		a.error_label(400, "errors.project_id_required")
+		a.error.label(400, "errors.project_id_required")
 		return
 
 	project = get_project(project_id)
 	if not project:
-		a.error_label(404, "errors.project_not_found")
+		a.error.label(404, "errors.project_not_found")
 		return
 
 	# Only owner can manage access
 	if project["owner"] != 1:
-		a.error_label(403, "errors.access_denied")
+		a.error.label(403, "errors.access_denied")
 		return
 	if not mochi.access.check(a.user.identity.id, "project/" + project_id, "*"):
-		a.error_label(403, "errors.access_denied")
+		a.error.label(403, "errors.access_denied")
 		return
 
 	subject = a.input("subject")
 	level = a.input("level")
 
 	if not subject:
-		a.error_label(400, "errors.subject_is_required")
+		a.error.label(400, "errors.subject_is_required")
 		return
 	if len(subject) > 255:
-		a.error_label(400, "errors.subject_too_long")
+		a.error.label(400, "errors.subject_too_long")
 		return
 
 	if not level:
-		a.error_label(400, "errors.level_is_required")
+		a.error.label(400, "errors.level_is_required")
 		return
 
 	if level not in ["view", "comment", "write", "design", "none"]:
-		a.error_label(400, "errors.invalid_level")
+		a.error.label(400, "errors.invalid_level")
 		return
 
 	resource = "project/" + project_id
@@ -1200,29 +1200,29 @@ def action_access_revoke(a):
 
 	project_id = resolve_project(a)
 	if not project_id:
-		a.error_label(400, "errors.project_id_required")
+		a.error.label(400, "errors.project_id_required")
 		return
 
 	project = get_project(project_id)
 	if not project:
-		a.error_label(404, "errors.project_not_found")
+		a.error.label(404, "errors.project_not_found")
 		return
 
 	# Only owner can manage access
 	if project["owner"] != 1:
-		a.error_label(403, "errors.access_denied")
+		a.error.label(403, "errors.access_denied")
 		return
 	if not mochi.access.check(a.user.identity.id, "project/" + project_id, "*"):
-		a.error_label(403, "errors.access_denied")
+		a.error.label(403, "errors.access_denied")
 		return
 
 	subject = a.input("subject")
 
 	if not subject:
-		a.error_label(400, "errors.subject_is_required")
+		a.error.label(400, "errors.subject_is_required")
 		return
 	if len(subject) > 255:
-		a.error_label(400, "errors.subject_too_long")
+		a.error.label(400, "errors.subject_too_long")
 		return
 
 	resource = "project/" + project_id
@@ -1267,14 +1267,14 @@ def require_project(a, level="view"):
 	"""Resolve project, check existence and access. Returns (project_id, project) or (None, None) on error."""
 	project_id = resolve_project(a)
 	if not project_id:
-		a.error_label(400, "errors.project_id_required")
+		a.error.label(400, "errors.project_id_required")
 		return None, None
 	project = get_project(project_id)
 	if not project:
-		a.error_label(404, "errors.project_not_found")
+		a.error.label(404, "errors.project_not_found")
 		return None, None
 	if project["owner"] == 1 and not check_project_access(a.user.identity.id, project_id, level):
-		a.error_label(403, "errors.access_denied")
+		a.error.label(403, "errors.access_denied")
 		return None, None
 	return project_id, project
 
@@ -1460,12 +1460,12 @@ def action_object_create(a):
 
 	project_id = resolve_project(a)
 	if not project_id:
-		a.error_label(400, "errors.project_id_required")
+		a.error.label(400, "errors.project_id_required")
 		return
 
 	project = get_project(project_id)
 	if not project:
-		a.error_label(404, "errors.project_not_found")
+		a.error.label(404, "errors.project_not_found")
 		return
 
 	obj_class = a.input("class")
@@ -1473,7 +1473,7 @@ def action_object_create(a):
 	title = a.input("title") or ""
 
 	if len(title) > 500:
-		a.error_label(400, "errors.title_too_long")
+		a.error.label(400, "errors.title_too_long")
 		return
 
 	# Look up the title field for this class
@@ -1504,17 +1504,17 @@ def action_object_create(a):
 		return result
 
 	if not check_project_access(a.user.identity.id, project_id, "write"):
-		a.error_label(403, "errors.access_denied")
+		a.error.label(403, "errors.access_denied")
 		return
 
 	if not obj_class:
-		a.error_label(400, "errors.class_is_required")
+		a.error.label(400, "errors.class_is_required")
 		return
 
 	# Verify class exists
 	class_row = mochi.db.row("select id from classes where project=? and id=?", project_id, obj_class)
 	if not class_row:
-		a.error_label(400, "errors.invalid_class")
+		a.error.label(400, "errors.invalid_class")
 		return
 
 	# Check hierarchy rules
@@ -1522,12 +1522,12 @@ def action_object_create(a):
 	if parent:
 		parent_row = mochi.db.row("select class from objects where id=? and project=?", parent, project_id)
 		if not parent_row:
-			a.error_label(404, "errors.parent_object_not_found")
+			a.error.label(404, "errors.parent_object_not_found")
 			return
 		parent_class = parent_row["class"]
 	allowed = mochi.db.exists("select 1 from hierarchy where project=? and class=? and parent=?", project_id, obj_class, parent_class)
 	if not allowed:
-		a.error_label(400, "errors.cannot_create_here_hierarchy_rules_do_not_allow_this_relatio")
+		a.error.label(400, "errors.cannot_create_here_hierarchy_rules_do_not_allow_this_relatio")
 		return
 
 	# Increment counter atomically and get number
@@ -1580,12 +1580,12 @@ def action_object_get(a):
 
 	object_id = a.input("object")
 	if not object_id:
-		a.error_label(400, "errors.object_id_required")
+		a.error.label(400, "errors.object_id_required")
 		return
 
 	row = mochi.db.row("select * from objects where id=? and project=?", object_id, project_id)
 	if not row:
-		a.error_label(404, "errors.object_not_found")
+		a.error.label(404, "errors.object_not_found")
 		return
 
 	project = get_project(project_id)
@@ -1637,12 +1637,12 @@ def action_object_update(a):
 
 	project_id = resolve_project(a)
 	if not project_id:
-		a.error_label(400, "errors.project_id_required")
+		a.error.label(400, "errors.project_id_required")
 		return
 
 	project = get_project(project_id)
 	if not project:
-		a.error_label(404, "errors.project_not_found")
+		a.error.label(404, "errors.project_not_found")
 		return
 
 	object_id = a.input("object")
@@ -1665,16 +1665,16 @@ def action_object_update(a):
 		return result
 
 	if not check_project_access(a.user.identity.id, project_id, "write"):
-		a.error_label(403, "errors.access_denied")
+		a.error.label(403, "errors.access_denied")
 		return
 
 	if not object_id:
-		a.error_label(400, "errors.object_id_required")
+		a.error.label(400, "errors.object_id_required")
 		return
 
 	row = mochi.db.row("select * from objects where id=? and project=?", object_id, project_id)
 	if not row:
-		a.error_label(404, "errors.object_not_found")
+		a.error.label(404, "errors.object_not_found")
 		return
 
 	now = mochi.time.now()
@@ -1686,20 +1686,20 @@ def action_object_update(a):
 		if parent != old_parent:
 			# Check for cycles
 			if parent and would_create_cycle(object_id, parent):
-				a.error_label(400, "errors.cannot_set_parent_would_create_a_cycle")
+				a.error.label(400, "errors.cannot_set_parent_would_create_a_cycle")
 				return
 			# Check hierarchy rules
 			if parent:
 				parent_row = mochi.db.row("select class from objects where id=? and project=?", parent, project_id)
 				if not parent_row:
-					a.error_label(404, "errors.parent_object_not_found")
+					a.error.label(404, "errors.parent_object_not_found")
 					return
 				parent_class = parent_row["class"]
 			else:
 				parent_class = ""
 			allowed = mochi.db.exists("select 1 from hierarchy where project=? and class=? and parent=?", project_id, row["class"], parent_class)
 			if not allowed:
-				a.error_label(400, "errors.cannot_set_parent_hierarchy_rules_do_not_allow_this_relation")
+				a.error.label(400, "errors.cannot_set_parent_hierarchy_rules_do_not_allow_this_relation")
 				return
 			mochi.db.execute("update objects set parent=?, updated=? where id=?", parent, now, object_id)
 			log_activity(object_id, a.user.identity.id, "moved", "parent", old_parent, parent)
@@ -1745,12 +1745,12 @@ def action_object_delete(a):
 
 	project_id = resolve_project(a)
 	if not project_id:
-		a.error_label(400, "errors.project_id_required")
+		a.error.label(400, "errors.project_id_required")
 		return
 
 	project = get_project(project_id)
 	if not project:
-		a.error_label(404, "errors.project_not_found")
+		a.error.label(404, "errors.project_not_found")
 		return
 
 	object_id = a.input("object")
@@ -1768,16 +1768,16 @@ def action_object_delete(a):
 		return result
 
 	if not check_project_access(a.user.identity.id, project_id, "write"):
-		a.error_label(403, "errors.access_denied")
+		a.error.label(403, "errors.access_denied")
 		return
 
 	if not object_id:
-		a.error_label(400, "errors.object_id_required")
+		a.error.label(400, "errors.object_id_required")
 		return
 
 	row = mochi.db.row("select id from objects where id=? and project=?", object_id, project_id)
 	if not row:
-		a.error_label(404, "errors.object_not_found")
+		a.error.label(404, "errors.object_not_found")
 		return
 
 	# Cascade delete this object and all its children
@@ -1790,12 +1790,12 @@ def action_object_move(a):
 
 	project_id = resolve_project(a)
 	if not project_id:
-		a.error_label(400, "errors.project_id_required")
+		a.error.label(400, "errors.project_id_required")
 		return
 
 	project = get_project(project_id)
 	if not project:
-		a.error_label(404, "errors.project_not_found")
+		a.error.label(404, "errors.project_not_found")
 		return
 
 	object_id = a.input("object")
@@ -1847,16 +1847,16 @@ def action_object_move(a):
 		return result
 
 	if not check_project_access(a.user.identity.id, project_id, "write"):
-		a.error_label(403, "errors.access_denied")
+		a.error.label(403, "errors.access_denied")
 		return
 
 	if not object_id:
-		a.error_label(400, "errors.object_id_required")
+		a.error.label(400, "errors.object_id_required")
 		return
 
 	row = mochi.db.row("select id, class, rank from objects where id=? and project=?", object_id, project_id)
 	if not row:
-		a.error_label(404, "errors.object_not_found")
+		a.error.label(404, "errors.object_not_found")
 		return
 
 	old_rank = row["rank"]
@@ -1866,15 +1866,15 @@ def action_object_move(a):
 	new_rank = a.input("rank")
 
 	if field and len(field) > 100:
-		a.error_label(400, "errors.field_name_too_long")
+		a.error.label(400, "errors.field_name_too_long")
 		return
 
 	if field and not mochi.db.exists("select 1 from fields where project=? and class=? and id=?", project_id, obj_class, field):
-		a.error_label(400, "errors.field_not_found")
+		a.error.label(400, "errors.field_not_found")
 		return
 
 	if value and len(str(value)) > 10000:
-		a.error_label(400, "errors.value_too_long")
+		a.error.label(400, "errors.value_too_long")
 		return
 
 	# Get old field value
@@ -1936,13 +1936,13 @@ def action_object_move(a):
 	row_field = a.input("row_field")
 	row_value = a.input("row_value")
 	if row_field and len(row_field) > 100:
-		a.error_label(400, "errors.field_name_too_long")
+		a.error.label(400, "errors.field_name_too_long")
 		return
 	if row_field and not mochi.db.exists("select 1 from fields where project=? and class=? and id=?", project_id, obj_class, row_field):
-		a.error_label(400, "errors.field_not_found")
+		a.error.label(400, "errors.field_not_found")
 		return
 	if row_value and len(str(row_value)) > 10000:
-		a.error_label(400, "errors.value_too_long")
+		a.error.label(400, "errors.value_too_long")
 		return
 	row_changed = False
 	if row_field:
@@ -1998,22 +1998,22 @@ def action_values_set(a):
 
 	project_id = resolve_project(a)
 	if not project_id:
-		a.error_label(400, "errors.project_id_required")
+		a.error.label(400, "errors.project_id_required")
 		return
 
 	project = get_project(project_id)
 	if not project:
-		a.error_label(404, "errors.project_not_found")
+		a.error.label(404, "errors.project_not_found")
 		return
 
 	object_id = a.input("object")
 	if not object_id:
-		a.error_label(400, "errors.object_id_required")
+		a.error.label(400, "errors.object_id_required")
 		return
 
 	row = mochi.db.row("select id, class from objects where id=? and project=?", object_id, project_id)
 	if not row:
-		a.error_label(404, "errors.object_not_found")
+		a.error.label(404, "errors.object_not_found")
 		return
 
 	# Get valid fields for this class
@@ -2041,7 +2041,7 @@ def action_values_set(a):
 		return result
 
 	if not check_project_access(a.user.identity.id, project_id, "write"):
-		a.error_label(403, "errors.access_denied")
+		a.error.label(403, "errors.access_denied")
 		return
 
 	now = mochi.time.now()
@@ -2053,7 +2053,7 @@ def action_values_set(a):
 			continue
 		new_value = a.input(field_id)
 		if len(str(new_value)) > 10000:
-			a.error_label(400, "errors.value_too_long")
+			a.error.label(400, "errors.value_too_long")
 			return
 		# Get old value
 		old_row = mochi.db.row("select value from \"values\" where object=? and field=?", object_id, field_id)
@@ -2092,12 +2092,12 @@ def action_value_set(a):
 
 	project_id = resolve_project(a)
 	if not project_id:
-		a.error_label(400, "errors.project_id_required")
+		a.error.label(400, "errors.project_id_required")
 		return
 
 	project = get_project(project_id)
 	if not project:
-		a.error_label(404, "errors.project_not_found")
+		a.error.label(404, "errors.project_not_found")
 		return
 
 	if project["owner"] != 1:
@@ -2114,33 +2114,33 @@ def action_value_set(a):
 		return result
 
 	if not check_project_access(a.user.identity.id, project_id, "write"):
-		a.error_label(403, "errors.access_denied")
+		a.error.label(403, "errors.access_denied")
 		return
 
 	object_id = a.input("object")
 	if not object_id:
-		a.error_label(400, "errors.object_id_required")
+		a.error.label(400, "errors.object_id_required")
 		return
 
 	field_id = a.input("field")
 	if not field_id:
-		a.error_label(400, "errors.field_id_required")
+		a.error.label(400, "errors.field_id_required")
 		return
 
 	row = mochi.db.row("select id, class from objects where id=? and project=?", object_id, project_id)
 	if not row:
-		a.error_label(404, "errors.object_not_found")
+		a.error.label(404, "errors.object_not_found")
 		return
 
 	# Verify field exists for this class
 	field_row = mochi.db.row("select id, fieldtype from fields where project=? and class=? and id=?", project_id, row["class"], field_id)
 	if not field_row:
-		a.error_label(400, "errors.invalid_field_for_this_class")
+		a.error.label(400, "errors.invalid_field_for_this_class")
 		return
 
 	new_value = a.input("value") or ""
 	if len(new_value) > 10000:
-		a.error_label(400, "errors.value_too_long")
+		a.error.label(400, "errors.value_too_long")
 		return
 
 	# Get old value
@@ -2177,12 +2177,12 @@ def action_link_list(a):
 
 	object_id = a.input("object")
 	if not object_id:
-		a.error_label(400, "errors.object_id_required")
+		a.error.label(400, "errors.object_id_required")
 		return
 
 	row = mochi.db.row("select id from objects where id=? and project=?", object_id, project_id)
 	if not row:
-		a.error_label(404, "errors.object_not_found")
+		a.error.label(404, "errors.object_not_found")
 		return
 
 	# Get outgoing links
@@ -2209,12 +2209,12 @@ def action_link_create(a):
 
 	project_id = resolve_project(a)
 	if not project_id:
-		a.error_label(400, "errors.project_id_required")
+		a.error.label(400, "errors.project_id_required")
 		return
 
 	project = get_project(project_id)
 	if not project:
-		a.error_label(404, "errors.project_not_found")
+		a.error.label(404, "errors.project_not_found")
 		return
 
 	if project["owner"] != 1:
@@ -2224,26 +2224,26 @@ def action_link_create(a):
 		})
 
 	if not check_project_access(a.user.identity.id, project_id, "write"):
-		a.error_label(403, "errors.access_denied")
+		a.error.label(403, "errors.access_denied")
 		return
 
 	object_id = a.input("object")
 	if not object_id:
-		a.error_label(400, "errors.object_id_required")
+		a.error.label(400, "errors.object_id_required")
 		return
 
 	target_id = a.input("target")
 	if not target_id:
-		a.error_label(400, "errors.target_object_is_required")
+		a.error.label(400, "errors.target_object_is_required")
 		return
 
 	linktype = a.input("linktype")
 	if not linktype:
-		a.error_label(400, "errors.link_type_is_required")
+		a.error.label(400, "errors.link_type_is_required")
 		return
 
 	if linktype not in ["blocks", "relates", "duplicates"]:
-		a.error_label(400, "errors.invalid_link_type")
+		a.error.label(400, "errors.invalid_link_type")
 		return
 
 	# Verify both objects exist in same project
@@ -2251,17 +2251,17 @@ def action_link_create(a):
 	target_row = mochi.db.row("select id from objects where id=? and project=?", target_id, project_id)
 
 	if not source_row or not target_row:
-		a.error_label(404, "errors.object_not_found")
+		a.error.label(404, "errors.object_not_found")
 		return
 
 	if object_id == target_id:
-		a.error_label(400, "errors.cannot_link_object_to_itself")
+		a.error.label(400, "errors.cannot_link_object_to_itself")
 		return
 
 	# Check if link already exists
 	existing = mochi.db.exists("select 1 from links where source=? and target=? and linktype=?", object_id, target_id, linktype)
 	if existing:
-		a.error_label(400, "errors.link_already_exists")
+		a.error.label(400, "errors.link_already_exists")
 		return
 
 	now = mochi.time.now()
@@ -2284,12 +2284,12 @@ def action_link_delete(a):
 
 	project_id = resolve_project(a)
 	if not project_id:
-		a.error_label(400, "errors.project_id_required")
+		a.error.label(400, "errors.project_id_required")
 		return
 
 	project = get_project(project_id)
 	if not project:
-		a.error_label(404, "errors.project_not_found")
+		a.error.label(404, "errors.project_not_found")
 		return
 
 	if project["owner"] != 1:
@@ -2299,7 +2299,7 @@ def action_link_delete(a):
 		})
 
 	if not check_project_access(a.user.identity.id, project_id, "write"):
-		a.error_label(403, "errors.access_denied")
+		a.error.label(403, "errors.access_denied")
 		return
 
 	object_id = a.input("object")
@@ -2307,11 +2307,11 @@ def action_link_delete(a):
 	linktype = a.input("linktype")
 
 	if not object_id or not target_id or not linktype:
-		a.error_label(400, "errors.object_target_and_linktype_are_required")
+		a.error.label(400, "errors.object_target_and_linktype_are_required")
 		return
 
 	if linktype not in ["blocks", "relates", "duplicates"]:
-		a.error_label(400, "errors.invalid_link_type")
+		a.error.label(400, "errors.invalid_link_type")
 		return
 
 	mochi.db.execute("delete from links where project=? and source=? and target=? and linktype=?", project_id, object_id, target_id, linktype)
@@ -2395,7 +2395,7 @@ _PERSON_ASSETS = ("avatar", "banner", "favicon", "style", "information")
 def action_comment_asset(a):
 	asset = a.input("asset")
 	if asset not in _PERSON_ASSETS:
-		a.error_label(404, "errors.unknown_asset")
+		a.error.label(404, "errors.unknown_asset")
 		return
 	row = mochi.db.row("select author from comments where id=?", a.input("comment"))
 	return stream_asset(a, row["author"] if row else "", "people", asset)
@@ -2403,7 +2403,7 @@ def action_comment_asset(a):
 def action_activity_asset(a):
 	asset = a.input("asset")
 	if asset not in _PERSON_ASSETS:
-		a.error_label(404, "errors.unknown_asset")
+		a.error.label(404, "errors.unknown_asset")
 		return
 	row = mochi.db.row("select user from activity where id=?", a.input("activity"))
 	return stream_asset(a, row["user"] if row else "", "people", asset)
@@ -2411,7 +2411,7 @@ def action_activity_asset(a):
 def action_user_asset(a):
 	asset = a.input("asset")
 	if asset not in _PERSON_ASSETS:
-		a.error_label(404, "errors.unknown_asset")
+		a.error.label(404, "errors.unknown_asset")
 		return
 	return stream_asset(a, a.input("user") or "", "people", asset)
 
@@ -2428,12 +2428,12 @@ def action_comment_list(a):
 
 	object_id = a.input("object")
 	if not object_id:
-		a.error_label(400, "errors.object_id_required")
+		a.error.label(400, "errors.object_id_required")
 		return
 
 	row = mochi.db.row("select id from objects where id=? and project=?", object_id, project_id)
 	if not row:
-		a.error_label(404, "errors.object_not_found")
+		a.error.label(404, "errors.object_not_found")
 		return
 
 	comments = object_comments(project_id, object_id, "", 0)
@@ -2446,12 +2446,12 @@ def action_comment_create(a):
 
 	project_id = resolve_project(a)
 	if not project_id:
-		a.error_label(400, "errors.project_id_required")
+		a.error.label(400, "errors.project_id_required")
 		return
 
 	project = get_project(project_id)
 	if not project:
-		a.error_label(404, "errors.project_not_found")
+		a.error.label(404, "errors.project_not_found")
 		return
 
 	object_id = a.input("object")
@@ -2459,18 +2459,18 @@ def action_comment_create(a):
 	parent = a.input("parent") or ""
 
 	if not content or not content.strip():
-		a.error_label(400, "errors.content_is_required")
+		a.error.label(400, "errors.content_is_required")
 		return
 	if len(content) > 50000:
-		a.error_label(400, "errors.content_too_long")
+		a.error.label(400, "errors.content_too_long")
 		return
 
 	if project["owner"] != 1:
 		if not object_id:
-			a.error_label(400, "errors.object_id_required")
+			a.error.label(400, "errors.object_id_required")
 			return
 		if not mochi.db.row("select id from objects where id=? and project=?", object_id, project_id):
-			a.error_label(404, "errors.object_not_found")
+			a.error.label(404, "errors.object_not_found")
 			return
 		comment_id = mochi.uid()
 		now = mochi.time.now()
@@ -2502,25 +2502,25 @@ def action_comment_create(a):
 		}}
 
 	if not check_project_access(a.user.identity.id, project_id, "comment"):
-		a.error_label(403, "errors.access_denied")
+		a.error.label(403, "errors.access_denied")
 		return
 
 	if not object_id:
-		a.error_label(400, "errors.object_id_required")
+		a.error.label(400, "errors.object_id_required")
 		return
 
 	row = mochi.db.row("select id from objects where id=? and project=?", object_id, project_id)
 	if not row:
-		a.error_label(404, "errors.object_not_found")
+		a.error.label(404, "errors.object_not_found")
 		return
 
 	if not content or not content.strip():
-		a.error_label(400, "errors.content_is_required")
+		a.error.label(400, "errors.content_is_required")
 		return
 
 	if parent:
 		if not mochi.db.row("select id from comments where id=? and object=?", parent, object_id):
-			a.error_label(404, "errors.parent_comment_not_found")
+			a.error.label(404, "errors.parent_comment_not_found")
 			return
 
 	comment_id = mochi.uid()
@@ -2564,12 +2564,12 @@ def action_comment_update(a):
 
 	project_id = resolve_project(a)
 	if not project_id:
-		a.error_label(400, "errors.project_id_required")
+		a.error.label(400, "errors.project_id_required")
 		return
 
 	project = get_project(project_id)
 	if not project:
-		a.error_label(404, "errors.project_not_found")
+		a.error.label(404, "errors.project_not_found")
 		return
 
 	object_id = a.input("object")
@@ -2577,7 +2577,7 @@ def action_comment_update(a):
 	content = a.input("content")
 
 	if content and len(content) > 50000:
-		a.error_label(400, "errors.content_too_long")
+		a.error.label(400, "errors.content_too_long")
 		return
 
 	if project["owner"] != 1:
@@ -2587,25 +2587,25 @@ def action_comment_update(a):
 		})
 
 	if not check_project_access(a.user.identity.id, project_id, "comment"):
-		a.error_label(403, "errors.access_denied")
+		a.error.label(403, "errors.access_denied")
 		return
 
 	if not object_id or not comment_id:
-		a.error_label(400, "errors.object_and_comment_id_required")
+		a.error.label(400, "errors.object_and_comment_id_required")
 		return
 
 	comment = mochi.db.row("select * from comments where id=? and object=?", comment_id, object_id)
 	if not comment:
-		a.error_label(404, "errors.comment_not_found")
+		a.error.label(404, "errors.comment_not_found")
 		return
 
 	# Only author can edit
 	if comment["author"] != a.user.identity.id:
-		a.error_label(403, "errors.cannot_edit_another_user_s_comment")
+		a.error.label(403, "errors.cannot_edit_another_user_s_comment")
 		return
 
 	if not content or not content.strip():
-		a.error_label(400, "errors.content_is_required")
+		a.error.label(400, "errors.content_is_required")
 		return
 
 	now = mochi.time.now()
@@ -2623,12 +2623,12 @@ def action_comment_delete(a):
 
 	project_id = resolve_project(a)
 	if not project_id:
-		a.error_label(400, "errors.project_id_required")
+		a.error.label(400, "errors.project_id_required")
 		return
 
 	project = get_project(project_id)
 	if not project:
-		a.error_label(404, "errors.project_not_found")
+		a.error.label(404, "errors.project_not_found")
 		return
 
 	object_id = a.input("object")
@@ -2641,21 +2641,21 @@ def action_comment_delete(a):
 		})
 
 	if not check_project_access(a.user.identity.id, project_id, "comment"):
-		a.error_label(403, "errors.access_denied")
+		a.error.label(403, "errors.access_denied")
 		return
 
 	if not object_id or not comment_id:
-		a.error_label(400, "errors.object_and_comment_id_required")
+		a.error.label(400, "errors.object_and_comment_id_required")
 		return
 
 	comment = mochi.db.row("select * from comments where id=? and object=?", comment_id, object_id)
 	if not comment:
-		a.error_label(404, "errors.comment_not_found")
+		a.error.label(404, "errors.comment_not_found")
 		return
 
 	# Only author can delete
 	if comment["author"] != a.user.identity.id:
-		a.error_label(403, "errors.cannot_delete_another_user_s_comment")
+		a.error.label(403, "errors.cannot_delete_another_user_s_comment")
 		return
 
 	delete_comment_tree(comment_id, project_id)
@@ -2680,12 +2680,12 @@ def action_attachment_list(a):
 
 	object_id = a.input("object")
 	if not object_id:
-		a.error_label(400, "errors.object_id_required")
+		a.error.label(400, "errors.object_id_required")
 		return
 
 	row = mochi.db.row("select id from objects where id=? and project=?", object_id, project_id)
 	if not row:
-		a.error_label(404, "errors.object_not_found")
+		a.error.label(404, "errors.object_not_found")
 		return
 
 	attachments = mochi.attachment.list(object_id, project_id) or []
@@ -2696,28 +2696,28 @@ def action_attachment_create(a):
 
 	project_id = resolve_project(a)
 	if not project_id:
-		a.error_label(400, "errors.project_id_required")
+		a.error.label(400, "errors.project_id_required")
 		return
 
 	project = get_project(project_id)
 	if not project:
-		a.error_label(404, "errors.project_not_found")
+		a.error.label(404, "errors.project_not_found")
 		return
 
 	object_id = a.input("object")
 	if not object_id:
-		a.error_label(400, "errors.object_id_required")
+		a.error.label(400, "errors.object_id_required")
 		return
 
 	if project["owner"] != 1:
 		row = mochi.db.row("select id from objects where id=? and project=?", object_id, project_id)
 		if not row:
-			a.error_label(404, "errors.object_not_found")
+			a.error.label(404, "errors.object_not_found")
 			return
 		# Save locally
 		attachments = mochi.attachment.save(object_id, "files", [], [], []) or []
 		if not attachments:
-			a.error_label(400, "errors.file_is_required")
+			a.error.label(400, "errors.file_is_required")
 			return
 		# Fire-and-forget to project owner with attachment metadata
 		submit_data = {"object": object_id, "names": [att["name"] for att in attachments]}
@@ -2729,12 +2729,12 @@ def action_attachment_create(a):
 		return {"data": {"attachments": attachments}}
 
 	if not check_project_access(a.user.identity.id, project_id, "write"):
-		a.error_label(403, "errors.access_denied")
+		a.error.label(403, "errors.access_denied")
 		return
 
 	row = mochi.db.row("select id from objects where id=? and project=?", object_id, project_id)
 	if not row:
-		a.error_label(404, "errors.object_not_found")
+		a.error.label(404, "errors.object_not_found")
 		return
 
 	now = mochi.time.now()
@@ -2743,7 +2743,7 @@ def action_attachment_create(a):
 	attachments = mochi.attachment.save(object_id, "files", [], [], []) or []
 
 	if not attachments:
-		a.error_label(400, "errors.file_is_required")
+		a.error.label(400, "errors.file_is_required")
 		return
 
 	mochi.db.execute("update objects set updated=? where id=?", now, object_id)
@@ -2762,12 +2762,12 @@ def action_attachment_delete(a):
 
 	project_id = resolve_project(a)
 	if not project_id:
-		a.error_label(400, "errors.project_id_required")
+		a.error.label(400, "errors.project_id_required")
 		return
 
 	project = get_project(project_id)
 	if not project:
-		a.error_label(404, "errors.project_not_found")
+		a.error.label(404, "errors.project_not_found")
 		return
 
 	if project["owner"] != 1:
@@ -2777,22 +2777,22 @@ def action_attachment_delete(a):
 		})
 
 	if not check_project_access(a.user.identity.id, project_id, "write"):
-		a.error_label(403, "errors.access_denied")
+		a.error.label(403, "errors.access_denied")
 		return
 
 	object_id = a.input("object")
 	attachment_id = a.input("attachment")
 	if not attachment_id:
-		a.error_label(400, "errors.attachment_id_required")
+		a.error.label(400, "errors.attachment_id_required")
 		return
 
 	if object_id:
 		if not mochi.db.exists("select 1 from objects where id=? and project=?", object_id, project_id):
-			a.error_label(404, "errors.object_not_found")
+			a.error.label(404, "errors.object_not_found")
 			return
 
 	if not mochi.attachment.exists(attachment_id):
-		a.error_label(404, "errors.attachment_not_found")
+		a.error.label(404, "errors.attachment_not_found")
 		return
 
 	mochi.attachment.delete(attachment_id, [])
@@ -2817,12 +2817,12 @@ def action_activity_list(a):
 
 	object_id = a.input("object")
 	if not object_id:
-		a.error_label(400, "errors.object_id_required")
+		a.error.label(400, "errors.object_id_required")
 		return
 
 	row = mochi.db.row("select id from objects where id=? and project=?", object_id, project_id)
 	if not row:
-		a.error_label(404, "errors.object_not_found")
+		a.error.label(404, "errors.object_not_found")
 		return
 
 	limit = safe_int(a.input("limit"), 100)
@@ -2866,12 +2866,12 @@ def action_watcher_list(a):
 
 	object_id = a.input("object")
 	if not object_id:
-		a.error_label(400, "errors.object_id_required")
+		a.error.label(400, "errors.object_id_required")
 		return
 
 	row = mochi.db.row("select id from objects where id=? and project=?", object_id, project_id)
 	if not row:
-		a.error_label(404, "errors.object_not_found")
+		a.error.label(404, "errors.object_not_found")
 		return
 
 	watchers = mochi.db.rows("select user, created from watchers where object=?", object_id) or []
@@ -2889,12 +2889,12 @@ def action_watcher_add(a):
 
 	object_id = a.input("object")
 	if not object_id:
-		a.error_label(400, "errors.object_id_required")
+		a.error.label(400, "errors.object_id_required")
 		return
 
 	row = mochi.db.row("select id from objects where id=? and project=?", object_id, project_id)
 	if not row:
-		a.error_label(404, "errors.object_not_found")
+		a.error.label(404, "errors.object_not_found")
 		return
 
 	# Add current user as watcher
@@ -2914,12 +2914,12 @@ def action_watcher_remove(a):
 
 	object_id = a.input("object")
 	if not object_id:
-		a.error_label(400, "errors.object_id_required")
+		a.error.label(400, "errors.object_id_required")
 		return
 
 	row = mochi.db.row("select id from objects where id=? and project=?", object_id, project_id)
 	if not row:
-		a.error_label(404, "errors.object_not_found")
+		a.error.label(404, "errors.object_not_found")
 		return
 
 	# Remove current user as watcher
@@ -2962,12 +2962,12 @@ def action_view_create(a):
 
 	project_id = resolve_project(a)
 	if not project_id:
-		a.error_label(400, "errors.project_id_required")
+		a.error.label(400, "errors.project_id_required")
 		return
 
 	project = get_project(project_id)
 	if not project:
-		a.error_label(404, "errors.project_not_found")
+		a.error.label(404, "errors.project_not_found")
 		return
 
 	if project["owner"] != 1:
@@ -2985,20 +2985,20 @@ def action_view_create(a):
 		})
 
 	if not check_project_access(a.user.identity.id, project_id, "design"):
-		a.error_label(403, "errors.access_denied")
+		a.error.label(403, "errors.access_denied")
 		return
 
 	name = a.input("name")
 	if not name or not name.strip():
-		a.error_label(400, "errors.name_is_required")
+		a.error.label(400, "errors.name_is_required")
 		return
 	if len(name) > 100:
-		a.error_label(400, "errors.name_too_long")
+		a.error.label(400, "errors.name_too_long")
 		return
 
 	viewtype = a.input("viewtype") or "board"
 	if viewtype not in ["board", "list"]:
-		a.error_label(400, "errors.invalid_view_type")
+		a.error.label(400, "errors.invalid_view_type")
 		return
 
 	# Generate view ID from name
@@ -3007,13 +3007,13 @@ def action_view_create(a):
 	# Check if ID already exists
 	existing = mochi.db.exists("select 1 from views where project=? and id=?", project_id, view_id)
 	if existing:
-		a.error_label(400, "errors.a_view_with_this_name_already_exists")
+		a.error.label(400, "errors.a_view_with_this_name_already_exists")
 		return
 
 	filter_str = a.input("filter") or ""
 	columns = a.input("columns") or ""
 	if viewtype == "board" and not columns:
-		a.error_label(400, "errors.columns_field_is_required_for_board_views")
+		a.error.label(400, "errors.columns_field_is_required_for_board_views")
 		return
 	rows = a.input("rows") or ""
 	fields = a.input("fields") or "title,priority,owner,due"
@@ -3064,12 +3064,12 @@ def action_view_update(a):
 
 	project_id = resolve_project(a)
 	if not project_id:
-		a.error_label(400, "errors.project_id_required")
+		a.error.label(400, "errors.project_id_required")
 		return
 
 	project = get_project(project_id)
 	if not project:
-		a.error_label(404, "errors.project_not_found")
+		a.error.label(404, "errors.project_not_found")
 		return
 
 	if project["owner"] != 1:
@@ -3080,17 +3080,17 @@ def action_view_update(a):
 		return forward_to_owner(a, project_id, "view/update", params)
 
 	if not check_project_access(a.user.identity.id, project_id, "design"):
-		a.error_label(403, "errors.access_denied")
+		a.error.label(403, "errors.access_denied")
 		return
 
 	view_id = a.input("view")
 	if not view_id:
-		a.error_label(400, "errors.view_id_required")
+		a.error.label(400, "errors.view_id_required")
 		return
 
 	view = mochi.db.row("select * from views where project=? and id=?", project_id, view_id)
 	if not view:
-		a.error_label(404, "errors.view_not_found")
+		a.error.label(404, "errors.view_not_found")
 		return
 
 	# Update fields if provided
@@ -3107,7 +3107,7 @@ def action_view_update(a):
 		mochi.db.execute("update views set name=? where project=? and id=?", name.strip(), project_id, view_id)
 	if a.input("viewtype") != None and viewtype != "":
 		if viewtype not in ["board", "list"]:
-			a.error_label(400, "errors.invalid_view_type")
+			a.error.label(400, "errors.invalid_view_type")
 			return
 		mochi.db.execute("update views set viewtype=? where project=? and id=?", viewtype, project_id, view_id)
 	if a.input("filter") != None:
@@ -3129,7 +3129,7 @@ def action_view_update(a):
 		mochi.db.execute("update views set sort=? where project=? and id=?", sort, project_id, view_id)
 	if a.input("direction") != None and direction != "":
 		if direction not in ["asc", "desc"]:
-			a.error_label(400, "errors.invalid_direction")
+			a.error.label(400, "errors.invalid_direction")
 			return
 		mochi.db.execute("update views set direction=? where project=? and id=?", direction, project_id, view_id)
 
@@ -3172,12 +3172,12 @@ def action_view_delete(a):
 
 	project_id = resolve_project(a)
 	if not project_id:
-		a.error_label(400, "errors.project_id_required")
+		a.error.label(400, "errors.project_id_required")
 		return
 
 	project = get_project(project_id)
 	if not project:
-		a.error_label(404, "errors.project_not_found")
+		a.error.label(404, "errors.project_not_found")
 		return
 
 	if project["owner"] != 1:
@@ -3186,18 +3186,18 @@ def action_view_delete(a):
 		})
 
 	if not check_project_access(a.user.identity.id, project_id, "design"):
-		a.error_label(403, "errors.access_denied")
+		a.error.label(403, "errors.access_denied")
 		return
 
 	view_id = a.input("view")
 	if not view_id:
-		a.error_label(400, "errors.view_id_required")
+		a.error.label(400, "errors.view_id_required")
 		return
 
 	# Don't allow deleting the last view
 	count = mochi.db.row("select count(*) as cnt from views where project=?", project_id)
 	if count and count["cnt"] <= 1:
-		a.error_label(400, "errors.cannot_delete_the_last_view")
+		a.error.label(400, "errors.cannot_delete_the_last_view")
 		return
 
 	mochi.db.execute("delete from view_fields where project=? and view=?", project_id, view_id)
@@ -3212,12 +3212,12 @@ def action_view_reorder(a):
 
 	project_id = resolve_project(a)
 	if not project_id:
-		a.error_label(400, "errors.project_id_required")
+		a.error.label(400, "errors.project_id_required")
 		return
 
 	project = get_project(project_id)
 	if not project:
-		a.error_label(404, "errors.project_not_found")
+		a.error.label(404, "errors.project_not_found")
 		return
 
 	if project["owner"] != 1:
@@ -3226,7 +3226,7 @@ def action_view_reorder(a):
 		})
 
 	if not check_project_access(a.user.identity.id, project_id, "design"):
-		a.error_label(403, "errors.access_denied")
+		a.error.label(403, "errors.access_denied")
 		return
 
 	# Get order (comma-separated view IDs)
@@ -3263,12 +3263,12 @@ def action_class_create(a):
 
 	project_id = resolve_project(a)
 	if not project_id:
-		a.error_label(400, "errors.project_id_required")
+		a.error.label(400, "errors.project_id_required")
 		return
 
 	project = get_project(project_id)
 	if not project:
-		a.error_label(404, "errors.project_not_found")
+		a.error.label(404, "errors.project_not_found")
 		return
 
 	if project["owner"] != 1:
@@ -3278,15 +3278,15 @@ def action_class_create(a):
 		})
 
 	if not check_project_access(a.user.identity.id, project_id, "design"):
-		a.error_label(403, "errors.access_denied")
+		a.error.label(403, "errors.access_denied")
 		return
 
 	name = a.input("name")
 	if not name or not name.strip():
-		a.error_label(400, "errors.name_is_required")
+		a.error.label(400, "errors.name_is_required")
 		return
 	if len(name) > 100:
-		a.error_label(400, "errors.name_too_long")
+		a.error.label(400, "errors.name_too_long")
 		return
 
 	# Generate class ID from name
@@ -3295,7 +3295,7 @@ def action_class_create(a):
 	# Check if ID already exists
 	existing = mochi.db.exists("select 1 from classes where project=? and id=?", project_id, class_id)
 	if existing:
-		a.error_label(400, "errors.a_class_with_this_name_already_exists")
+		a.error.label(400, "errors.a_class_with_this_name_already_exists")
 		return
 
 	# Get max rank
@@ -3331,12 +3331,12 @@ def action_class_update(a):
 
 	project_id = resolve_project(a)
 	if not project_id:
-		a.error_label(400, "errors.project_id_required")
+		a.error.label(400, "errors.project_id_required")
 		return
 
 	project = get_project(project_id)
 	if not project:
-		a.error_label(404, "errors.project_not_found")
+		a.error.label(404, "errors.project_not_found")
 		return
 
 	if project["owner"] != 1:
@@ -3353,17 +3353,17 @@ def action_class_update(a):
 		return forward_to_owner(a, project_id, "class/update", params)
 
 	if not check_project_access(a.user.identity.id, project_id, "design"):
-		a.error_label(403, "errors.access_denied")
+		a.error.label(403, "errors.access_denied")
 		return
 
 	class_id = a.input("class")
 	if not class_id:
-		a.error_label(400, "errors.type_id_required")
+		a.error.label(400, "errors.type_id_required")
 		return
 
 	class_row = mochi.db.row("select * from classes where project=? and id=?", project_id, class_id)
 	if not class_row:
-		a.error_label(404, "errors.class_not_found")
+		a.error.label(404, "errors.class_not_found")
 		return
 
 	name = a.input("name")
@@ -3391,12 +3391,12 @@ def action_class_delete(a):
 
 	project_id = resolve_project(a)
 	if not project_id:
-		a.error_label(400, "errors.project_id_required")
+		a.error.label(400, "errors.project_id_required")
 		return
 
 	project = get_project(project_id)
 	if not project:
-		a.error_label(404, "errors.project_not_found")
+		a.error.label(404, "errors.project_not_found")
 		return
 
 	if project["owner"] != 1:
@@ -3405,18 +3405,18 @@ def action_class_delete(a):
 		})
 
 	if not check_project_access(a.user.identity.id, project_id, "design"):
-		a.error_label(403, "errors.access_denied")
+		a.error.label(403, "errors.access_denied")
 		return
 
 	class_id = a.input("class")
 	if not class_id:
-		a.error_label(400, "errors.class_id_required")
+		a.error.label(400, "errors.class_id_required")
 		return
 
 	# Check if there are objects of this class
 	has_objects = mochi.db.exists("select 1 from objects where project=? and class=?", project_id, class_id)
 	if has_objects:
-		a.error_label(400, "errors.cannot_delete_class_with_existing_objects")
+		a.error.label(400, "errors.cannot_delete_class_with_existing_objects")
 		return
 
 	# Delete in order: options, fields, hierarchy, class
@@ -3442,7 +3442,7 @@ def action_hierarchy_get(a):
 
 	class_id = a.input("class")
 	if not class_id:
-		a.error_label(400, "errors.type_id_required")
+		a.error.label(400, "errors.type_id_required")
 		return
 
 	parents = mochi.db.rows("select parent from hierarchy where project=? and class=?", project_id, class_id) or []
@@ -3454,12 +3454,12 @@ def action_hierarchy_set(a):
 
 	project_id = resolve_project(a)
 	if not project_id:
-		a.error_label(400, "errors.project_id_required")
+		a.error.label(400, "errors.project_id_required")
 		return
 
 	project = get_project(project_id)
 	if not project:
-		a.error_label(404, "errors.project_not_found")
+		a.error.label(404, "errors.project_not_found")
 		return
 
 	if project["owner"] != 1:
@@ -3469,17 +3469,17 @@ def action_hierarchy_set(a):
 		})
 
 	if not check_project_access(a.user.identity.id, project_id, "design"):
-		a.error_label(403, "errors.access_denied")
+		a.error.label(403, "errors.access_denied")
 		return
 
 	class_id = a.input("class")
 	if not class_id:
-		a.error_label(400, "errors.type_id_required")
+		a.error.label(400, "errors.type_id_required")
 		return
 
 	class_row = mochi.db.row("select id from classes where project=? and id=?", project_id, class_id)
 	if not class_row:
-		a.error_label(404, "errors.type_not_found")
+		a.error.label(404, "errors.type_not_found")
 		return
 
 	# Get parents list (comma-separated)
@@ -3528,7 +3528,7 @@ def action_field_list(a):
 
 	class_id = a.input("class")
 	if not class_id:
-		a.error_label(400, "errors.class_id_required")
+		a.error.label(400, "errors.class_id_required")
 		return
 
 	fields = mochi.db.rows(
@@ -3542,12 +3542,12 @@ def action_field_create(a):
 
 	project_id = resolve_project(a)
 	if not project_id:
-		a.error_label(400, "errors.project_id_required")
+		a.error.label(400, "errors.project_id_required")
 		return
 
 	project = get_project(project_id)
 	if not project:
-		a.error_label(404, "errors.project_not_found")
+		a.error.label(404, "errors.project_not_found")
 		return
 
 	if project["owner"] != 1:
@@ -3559,30 +3559,30 @@ def action_field_create(a):
 		})
 
 	if not check_project_access(a.user.identity.id, project_id, "design"):
-		a.error_label(403, "errors.access_denied")
+		a.error.label(403, "errors.access_denied")
 		return
 
 	class_id = a.input("class")
 	if not class_id:
-		a.error_label(400, "errors.type_id_required")
+		a.error.label(400, "errors.type_id_required")
 		return
 
 	class_row = mochi.db.row("select id from classes where project=? and id=?", project_id, class_id)
 	if not class_row:
-		a.error_label(404, "errors.type_not_found")
+		a.error.label(404, "errors.type_not_found")
 		return
 
 	name = a.input("name")
 	if not name or not name.strip():
-		a.error_label(400, "errors.name_is_required")
+		a.error.label(400, "errors.name_is_required")
 		return
 	if len(name) > 100:
-		a.error_label(400, "errors.name_too_long")
+		a.error.label(400, "errors.name_too_long")
 		return
 
 	fieldtype = a.input("fieldtype") or "text"
 	if fieldtype not in ["text", "number", "date", "enumerated", "user", "object", "checkbox", "checklist"]:
-		a.error_label(400, "errors.invalid_field_type")
+		a.error.label(400, "errors.invalid_field_type")
 		return
 
 	# Generate field ID from name
@@ -3591,7 +3591,7 @@ def action_field_create(a):
 	# Check if ID already exists
 	existing = mochi.db.exists("select 1 from fields where project=? and class=? and id=?", project_id, class_id, field_id)
 	if existing:
-		a.error_label(400, "errors.a_field_with_this_name_already_exists")
+		a.error.label(400, "errors.a_field_with_this_name_already_exists")
 		return
 
 	# Get max rank
@@ -3620,12 +3620,12 @@ def action_field_update(a):
 
 	project_id = resolve_project(a)
 	if not project_id:
-		a.error_label(400, "errors.project_id_required")
+		a.error.label(400, "errors.project_id_required")
 		return
 
 	project = get_project(project_id)
 	if not project:
-		a.error_label(404, "errors.project_not_found")
+		a.error.label(404, "errors.project_not_found")
 		return
 
 	if project["owner"] != 1:
@@ -3636,18 +3636,18 @@ def action_field_update(a):
 		return forward_to_owner(a, project_id, "field/update", params)
 
 	if not check_project_access(a.user.identity.id, project_id, "design"):
-		a.error_label(403, "errors.access_denied")
+		a.error.label(403, "errors.access_denied")
 		return
 
 	class_id = a.input("class")
 	field_id = a.input("field")
 	if not class_id or not field_id:
-		a.error_label(400, "errors.type_and_field_id_required")
+		a.error.label(400, "errors.type_and_field_id_required")
 		return
 
 	field_row = mochi.db.row("select * from fields where project=? and class=? and id=?", project_id, class_id, field_id)
 	if not field_row:
-		a.error_label(404, "errors.field_not_found")
+		a.error.label(404, "errors.field_not_found")
 		return
 
 	# Update fields if provided
@@ -3714,17 +3714,17 @@ def action_field_update(a):
 	if a.input("id") != None:
 		new_id = a.input("id").strip().lower()
 		if not new_id:
-			a.error_label(400, "errors.field_id_cannot_be_empty")
+			a.error.label(400, "errors.field_id_cannot_be_empty")
 			return
 		if new_id != field_id:
 			# Validate: lowercase alphanumeric + underscores only
 			for ch in new_id.elems():
 				if ch != "_" and not ch.isalnum():
-					a.error_label(400, "errors.field_id_must_contain_only_lowercase_letters_numbers_and_und")
+					a.error.label(400, "errors.field_id_must_contain_only_lowercase_letters_numbers_and_und")
 					return
 			# Check for duplicates
 			if mochi.db.exists("select 1 from fields where project=? and class=? and id=?", project_id, class_id, new_id):
-				a.error_label(400, "errors.a_field_with_this_id_already_exists")
+				a.error.label(400, "errors.a_field_with_this_id_already_exists")
 				return
 			rename_field_id(project_id, class_id, field_id, new_id)
 			update_data["old_id"] = field_id
@@ -3738,12 +3738,12 @@ def action_field_delete(a):
 
 	project_id = resolve_project(a)
 	if not project_id:
-		a.error_label(400, "errors.project_id_required")
+		a.error.label(400, "errors.project_id_required")
 		return
 
 	project = get_project(project_id)
 	if not project:
-		a.error_label(404, "errors.project_not_found")
+		a.error.label(404, "errors.project_not_found")
 		return
 
 	if project["owner"] != 1:
@@ -3753,13 +3753,13 @@ def action_field_delete(a):
 		})
 
 	if not check_project_access(a.user.identity.id, project_id, "design"):
-		a.error_label(403, "errors.access_denied")
+		a.error.label(403, "errors.access_denied")
 		return
 
 	class_id = a.input("class")
 	field_id = a.input("field")
 	if not class_id or not field_id:
-		a.error_label(400, "errors.type_and_field_id_required")
+		a.error.label(400, "errors.type_and_field_id_required")
 		return
 
 	# Delete options for this field
@@ -3776,12 +3776,12 @@ def action_field_reorder(a):
 
 	project_id = resolve_project(a)
 	if not project_id:
-		a.error_label(400, "errors.project_id_required")
+		a.error.label(400, "errors.project_id_required")
 		return
 
 	project = get_project(project_id)
 	if not project:
-		a.error_label(404, "errors.project_not_found")
+		a.error.label(404, "errors.project_not_found")
 		return
 
 	if project["owner"] != 1:
@@ -3791,12 +3791,12 @@ def action_field_reorder(a):
 		})
 
 	if not check_project_access(a.user.identity.id, project_id, "design"):
-		a.error_label(403, "errors.access_denied")
+		a.error.label(403, "errors.access_denied")
 		return
 
 	class_id = a.input("class")
 	if not class_id:
-		a.error_label(400, "errors.type_id_required")
+		a.error.label(400, "errors.type_id_required")
 		return
 
 	# Get order (comma-separated field IDs)
@@ -3828,7 +3828,7 @@ def action_option_list(a):
 	class_id = a.input("class")
 	field_id = a.input("field")
 	if not class_id or not field_id:
-		a.error_label(400, "errors.type_and_field_id_required")
+		a.error.label(400, "errors.type_and_field_id_required")
 		return
 
 	options = mochi.db.rows(
@@ -3842,12 +3842,12 @@ def action_option_create(a):
 
 	project_id = resolve_project(a)
 	if not project_id:
-		a.error_label(400, "errors.project_id_required")
+		a.error.label(400, "errors.project_id_required")
 		return
 
 	project = get_project(project_id)
 	if not project:
-		a.error_label(404, "errors.project_not_found")
+		a.error.label(404, "errors.project_not_found")
 		return
 
 	if project["owner"] != 1:
@@ -3859,30 +3859,30 @@ def action_option_create(a):
 		})
 
 	if not check_project_access(a.user.identity.id, project_id, "design"):
-		a.error_label(403, "errors.access_denied")
+		a.error.label(403, "errors.access_denied")
 		return
 
 	class_id = a.input("class")
 	field_id = a.input("field")
 	if not class_id or not field_id:
-		a.error_label(400, "errors.type_and_field_id_required")
+		a.error.label(400, "errors.type_and_field_id_required")
 		return
 
 	# Verify field exists and is enumerated
 	field_row = mochi.db.row("select fieldtype from fields where project=? and class=? and id=?", project_id, class_id, field_id)
 	if not field_row:
-		a.error_label(404, "errors.field_not_found")
+		a.error.label(404, "errors.field_not_found")
 		return
 	if field_row["fieldtype"] != "enumerated":
-		a.error_label(400, "errors.options_can_only_be_added_to_enumerated_fields")
+		a.error.label(400, "errors.options_can_only_be_added_to_enumerated_fields")
 		return
 
 	name = a.input("name")
 	if not name or not name.strip():
-		a.error_label(400, "errors.name_is_required")
+		a.error.label(400, "errors.name_is_required")
 		return
 	if len(name) > 100:
-		a.error_label(400, "errors.name_too_long")
+		a.error.label(400, "errors.name_too_long")
 		return
 
 	# Generate option ID from name
@@ -3891,7 +3891,7 @@ def action_option_create(a):
 	# Check if ID already exists
 	existing = mochi.db.exists("select 1 from options where project=? and class=? and field=? and id=?", project_id, class_id, field_id, option_id)
 	if existing:
-		a.error_label(400, "errors.an_option_with_this_name_already_exists")
+		a.error.label(400, "errors.an_option_with_this_name_already_exists")
 		return
 
 	# Get max rank
@@ -3900,11 +3900,11 @@ def action_option_create(a):
 
 	colour = a.input("colour") or "#94a3b8"
 	if len(colour) > 20:
-		a.error_label(400, "errors.colour_too_long")
+		a.error.label(400, "errors.colour_too_long")
 		return
 	icon = a.input("icon") or ""
 	if len(icon) > 100:
-		a.error_label(400, "errors.icon_too_long")
+		a.error.label(400, "errors.icon_too_long")
 		return
 
 	mochi.db.execute(
@@ -3923,12 +3923,12 @@ def action_option_update(a):
 
 	project_id = resolve_project(a)
 	if not project_id:
-		a.error_label(400, "errors.project_id_required")
+		a.error.label(400, "errors.project_id_required")
 		return
 
 	project = get_project(project_id)
 	if not project:
-		a.error_label(404, "errors.project_not_found")
+		a.error.label(404, "errors.project_not_found")
 		return
 
 	if project["owner"] != 1:
@@ -3940,19 +3940,19 @@ def action_option_update(a):
 		return forward_to_owner(a, project_id, "option/update", params)
 
 	if not check_project_access(a.user.identity.id, project_id, "design"):
-		a.error_label(403, "errors.access_denied")
+		a.error.label(403, "errors.access_denied")
 		return
 
 	class_id = a.input("class")
 	field_id = a.input("field")
 	option_id = a.input("option")
 	if not class_id or not field_id or not option_id:
-		a.error_label(400, "errors.type_field_and_option_id_required")
+		a.error.label(400, "errors.type_field_and_option_id_required")
 		return
 
 	option_row = mochi.db.row("select * from options where project=? and class=? and field=? and id=?", project_id, class_id, field_id, option_id)
 	if not option_row:
-		a.error_label(404, "errors.option_not_found")
+		a.error.label(404, "errors.option_not_found")
 		return
 
 	name = a.input("name")
@@ -3961,20 +3961,20 @@ def action_option_update(a):
 
 	if a.input("name") != None:
 		if not name or not name.strip():
-			a.error_label(400, "errors.name_is_required")
+			a.error.label(400, "errors.name_is_required")
 			return
 		if len(name) > 100:
-			a.error_label(400, "errors.name_too_long")
+			a.error.label(400, "errors.name_too_long")
 			return
 		mochi.db.execute("update options set name=? where project=? and class=? and field=? and id=?", name.strip(), project_id, class_id, field_id, option_id)
 	if a.input("colour") != None:
 		if len(colour) > 20:
-			a.error_label(400, "errors.colour_too_long")
+			a.error.label(400, "errors.colour_too_long")
 			return
 		mochi.db.execute("update options set colour=? where project=? and class=? and field=? and id=?", colour, project_id, class_id, field_id, option_id)
 	if a.input("icon") != None:
 		if len(icon) > 100:
-			a.error_label(400, "errors.icon_too_long")
+			a.error.label(400, "errors.icon_too_long")
 			return
 		mochi.db.execute("update options set icon=? where project=? and class=? and field=? and id=?", icon, project_id, class_id, field_id, option_id)
 
@@ -3993,12 +3993,12 @@ def action_option_delete(a):
 
 	project_id = resolve_project(a)
 	if not project_id:
-		a.error_label(400, "errors.project_id_required")
+		a.error.label(400, "errors.project_id_required")
 		return
 
 	project = get_project(project_id)
 	if not project:
-		a.error_label(404, "errors.project_not_found")
+		a.error.label(404, "errors.project_not_found")
 		return
 
 	if project["owner"] != 1:
@@ -4008,14 +4008,14 @@ def action_option_delete(a):
 		})
 
 	if not check_project_access(a.user.identity.id, project_id, "design"):
-		a.error_label(403, "errors.access_denied")
+		a.error.label(403, "errors.access_denied")
 		return
 
 	class_id = a.input("class")
 	field_id = a.input("field")
 	option_id = a.input("option")
 	if not class_id or not field_id or not option_id:
-		a.error_label(400, "errors.type_field_and_option_id_required")
+		a.error.label(400, "errors.type_field_and_option_id_required")
 		return
 
 	mochi.db.execute("delete from options where project=? and class=? and field=? and id=?", project_id, class_id, field_id, option_id)
@@ -4028,12 +4028,12 @@ def action_option_reorder(a):
 
 	project_id = resolve_project(a)
 	if not project_id:
-		a.error_label(400, "errors.project_id_required")
+		a.error.label(400, "errors.project_id_required")
 		return
 
 	project = get_project(project_id)
 	if not project:
-		a.error_label(404, "errors.project_not_found")
+		a.error.label(404, "errors.project_not_found")
 		return
 
 	if project["owner"] != 1:
@@ -4043,13 +4043,13 @@ def action_option_reorder(a):
 		})
 
 	if not check_project_access(a.user.identity.id, project_id, "design"):
-		a.error_label(403, "errors.access_denied")
+		a.error.label(403, "errors.access_denied")
 		return
 
 	class_id = a.input("class")
 	field_id = a.input("field")
 	if not class_id or not field_id:
-		a.error_label(400, "errors.type_and_field_id_required")
+		a.error.label(400, "errors.type_and_field_id_required")
 		return
 
 	# Get order (comma-separated option IDs)
@@ -4085,7 +4085,7 @@ def action_repositories_branches(a):
 
 	repo_id = a.input("repo")
 	if not repo_id:
-		a.error_label(400, "errors.repository_id_required")
+		a.error.label(400, "errors.repository_id_required")
 		return
 
 	result = mochi.service.call("repositories", "branches", {"repo": repo_id})
@@ -4101,7 +4101,7 @@ def action_repositories_merge_check(a):
 	target = a.input("target")
 
 	if not repo_id or not source or not target:
-		a.error_label(400, "errors.repository_source_branch_and_target_branch_required")
+		a.error.label(400, "errors.repository_source_branch_and_target_branch_required")
 		return
 
 	result = mochi.service.call("repositories", "merge/check", {
@@ -4122,7 +4122,7 @@ def action_repositories_diff(a):
 	head = a.input("head")
 
 	if not repo_id or not base or not head:
-		a.error_label(400, "errors.repository_base_and_head_required")
+		a.error.label(400, "errors.repository_base_and_head_required")
 		return
 
 	result = mochi.service.call("repositories", "diff", {
@@ -4140,12 +4140,12 @@ def action_repositories_merge(a):
 
 	project_id = resolve_project(a)
 	if not project_id:
-		a.error_label(400, "errors.project_id_required")
+		a.error.label(400, "errors.project_id_required")
 		return
 
 	project = get_project(project_id)
 	if not project:
-		a.error_label(404, "errors.project_not_found")
+		a.error.label(404, "errors.project_not_found")
 		return
 
 	repo_id = a.input("repo")
@@ -4155,12 +4155,12 @@ def action_repositories_merge(a):
 	method = a.input("method") or "merge"
 
 	if not repo_id or not source or not target:
-		a.error_label(400, "errors.repository_source_and_target_required")
+		a.error.label(400, "errors.repository_source_and_target_required")
 		return
 
 	if project["owner"] == 1:
 		if not check_project_access(a.user.identity.id, project_id, "write"):
-			a.error_label(403, "errors.access_denied")
+			a.error.label(403, "errors.access_denied")
 			return
 		# Owner: merge directly via local service
 		result = mochi.service.call("repositories", "merge", {
@@ -4173,13 +4173,13 @@ def action_repositories_merge(a):
 			"author_email": a.user.username,
 		})
 		if result == None:
-			a.error_label(500, "errors.repositories_service_unavailable")
+			a.error.label(500, "errors.repositories_service_unavailable")
 			return
 		return {"data": result}
 	else:
 		# Subscriber: check local access, then send P2P request to owner
 		if not mochi.access.check(a.user.identity.id, "project/" + project_id, "write"):
-			a.error_label(403, "errors.write_access_required_to_merge")
+			a.error.label(403, "errors.write_access_required_to_merge")
 			return
 
 		server = project["server"] or ""
@@ -4195,7 +4195,7 @@ def action_repositories_merge(a):
 			"author_email": a.user.username,
 		}, peer)
 		if not result:
-			a.error_label(502, "errors.could_not_reach_project_owner")
+			a.error.label(502, "errors.could_not_reach_project_owner")
 			return
 		if result.get("error"):
 			a.error(result.get("code", 500), result["error"])
@@ -4207,10 +4207,10 @@ def action_search(a):
 
 	search = a.input("search")
 	if not search:
-		a.error_label(400, "errors.no_search_entered")
+		a.error.label(400, "errors.no_search_entered")
 		return
 	if len(search) > 500:
-		a.error_label(400, "errors.search_query_too_long")
+		a.error.label(400, "errors.search_query_too_long")
 		return
 
 	results = []
@@ -4356,7 +4356,7 @@ def action_probe(a):
 
 	url = a.input("url")
 	if not url:
-		a.error_label(400, "errors.no_url_provided")
+		a.error.label(400, "errors.no_url_provided")
 		return
 
 	# Parse URL to extract server and project ID
@@ -4387,20 +4387,20 @@ def action_probe(a):
 		else:
 			project_id = project_path
 	else:
-		a.error_label(400, "errors.invalid_url_format_expected_https_server_projects_project_id")
+		a.error.label(400, "errors.invalid_url_format_expected_https_server_projects_project_id")
 		return
 
 	if not server or server == protocol:
-		a.error_label(400, "errors.could_not_extract_server_from_url")
+		a.error.label(400, "errors.could_not_extract_server_from_url")
 		return
 
 	if not project_id or (not mochi.text.valid(project_id, "entity") and not mochi.text.valid(project_id, "fingerprint")):
-		a.error_label(400, "errors.could_not_extract_valid_project_id_from_url")
+		a.error.label(400, "errors.could_not_extract_valid_project_id_from_url")
 		return
 
 	peer = mochi.remote.peer(server)
 	if not peer:
-		a.error_label(502, "errors.unable_to_connect_to_server")
+		a.error.label(502, "errors.unable_to_connect_to_server")
 		return
 	response = mochi.remote.request(project_id, "projects", "info", {"project": project_id}, peer)
 	if response.get("error"):
@@ -4466,14 +4466,14 @@ def action_subscribe(a):
 	project_id = a.input("project")
 	server = a.input("server")
 	if not mochi.text.valid(project_id, "entity"):
-		a.error_label(400, "errors.invalid_project_id")
+		a.error.label(400, "errors.invalid_project_id")
 		return
 
 	# Check if already subscribed
 	existing = mochi.db.row("select id, owner from projects where id=?", project_id)
 	if existing:
 		if existing["owner"] == 1:
-			a.error_label(400, "errors.you_own_this_project")
+			a.error.label(400, "errors.you_own_this_project")
 			return
 		# Already subscribed, just return success
 		return {"data": {"fingerprint": mochi.entity.fingerprint(project_id)}}
@@ -4483,7 +4483,7 @@ def action_subscribe(a):
 	if server:
 		peer = mochi.remote.peer(server)
 		if not peer:
-			a.error_label(502, "errors.unable_to_connect_to_server")
+			a.error.label(502, "errors.unable_to_connect_to_server")
 			return
 		response = mochi.remote.request(project_id, "projects", "info", {"project": project_id}, peer)
 		if response.get("error"):
@@ -4498,7 +4498,7 @@ def action_subscribe(a):
 		# Use directory lookup when no server specified
 		directory = mochi.directory.get(project_id)
 		if directory == None or len(directory) == 0:
-			a.error_label(404, "errors.unable_to_find_project_in_directory")
+			a.error.label(404, "errors.unable_to_find_project_in_directory")
 			return
 		project_name = directory.get("name", "")
 		project_desc = ""
@@ -4539,7 +4539,7 @@ def action_unsubscribe(a):
 
 	project_id = a.input("project")
 	if not mochi.text.valid(project_id, "entity") and not mochi.text.valid(project_id, "fingerprint"):
-		a.error_label(400, "errors.invalid_project_id")
+		a.error.label(400, "errors.invalid_project_id")
 		return
 
 	# Look up by ID or fingerprint
@@ -4550,11 +4550,11 @@ def action_unsubscribe(a):
 			project_id = project["id"]
 
 	if not project:
-		a.error_label(404, "errors.project_not_found")
+		a.error.label(404, "errors.project_not_found")
 		return
 
 	if project["owner"] == 1:
-		a.error_label(400, "errors.you_own_this_project")
+		a.error.label(400, "errors.you_own_this_project")
 		return
 
 	# Delete all local data for this remote project
@@ -5839,7 +5839,7 @@ def action_request_list(a):
 
 	object_id = a.input("object")
 	if not object_id:
-		a.error_label(400, "errors.object_id_required")
+		a.error.label(400, "errors.object_id_required")
 		return
 
 	type = a.input("type") or ""
@@ -5854,12 +5854,12 @@ def action_request_create(a):
 
 	project_id = resolve_project(a)
 	if not project_id:
-		a.error_label(400, "errors.project_id_required")
+		a.error.label(400, "errors.project_id_required")
 		return
 
 	project = get_project(project_id)
 	if not project:
-		a.error_label(404, "errors.project_not_found")
+		a.error.label(404, "errors.project_not_found")
 		return
 
 	if project["owner"] != 1:
@@ -5875,17 +5875,17 @@ def action_request_create(a):
 		})
 
 	if not check_project_access(a.user.identity.id, project_id, "write"):
-		a.error_label(403, "errors.access_denied")
+		a.error.label(403, "errors.access_denied")
 		return
 
 	object_id = a.input("object")
 	if not object_id:
-		a.error_label(400, "errors.object_id_required")
+		a.error.label(400, "errors.object_id_required")
 		return
 
 	obj = mochi.db.row("select * from objects where id=? and project=?", object_id, project_id)
 	if not obj:
-		a.error_label(404, "errors.object_not_found")
+		a.error.label(404, "errors.object_not_found")
 		return
 
 	request_type = a.input("type") or "merge"
@@ -5893,7 +5893,7 @@ def action_request_create(a):
 	# Verify class allows this request type
 	cls = mochi.db.row("select requests from classes where project=? and id=?", project_id, obj["class"])
 	if not cls or request_type not in cls["requests"].split(","):
-		a.error_label(400, "errors.request_type_not_enabled_for_class", type=request_type)
+		a.error.label(400, "errors.request_type_not_enabled_for_class", type=request_type)
 		return
 
 	repository = a.input("repository")
@@ -5904,10 +5904,10 @@ def action_request_create(a):
 	draft = 1 if a.input("draft") == "1" else 0
 
 	if title and len(title) > 500:
-		a.error_label(400, "errors.title_too_long")
+		a.error.label(400, "errors.title_too_long")
 		return
 	if description and len(description) > 50000:
-		a.error_label(400, "errors.description_too_long")
+		a.error.label(400, "errors.description_too_long")
 		return
 
 	now = mochi.time.now()
@@ -5937,12 +5937,12 @@ def action_request_update(a):
 
 	project_id = resolve_project(a)
 	if not project_id:
-		a.error_label(400, "errors.project_id_required")
+		a.error.label(400, "errors.project_id_required")
 		return
 
 	project = get_project(project_id)
 	if not project:
-		a.error_label(404, "errors.project_not_found")
+		a.error.label(404, "errors.project_not_found")
 		return
 
 	if project["owner"] != 1:
@@ -5953,17 +5953,17 @@ def action_request_update(a):
 		return forward_to_owner(a, project_id, "request/update", params)
 
 	if not check_project_access(a.user.identity.id, project_id, "write"):
-		a.error_label(403, "errors.access_denied")
+		a.error.label(403, "errors.access_denied")
 		return
 
 	request_id = a.input("request")
 	if not request_id:
-		a.error_label(400, "errors.request_id_required")
+		a.error.label(400, "errors.request_id_required")
 		return
 
 	req = mochi.db.row("select r.* from requests r join objects o on r.object=o.id where r.id=? and o.project=?", request_id, project_id)
 	if not req:
-		a.error_label(404, "errors.request_not_found")
+		a.error.label(404, "errors.request_not_found")
 		return
 
 	now = mochi.time.now()
@@ -6005,12 +6005,12 @@ def action_request_delete(a):
 
 	project_id = resolve_project(a)
 	if not project_id:
-		a.error_label(400, "errors.project_id_required")
+		a.error.label(400, "errors.project_id_required")
 		return
 
 	project = get_project(project_id)
 	if not project:
-		a.error_label(404, "errors.project_not_found")
+		a.error.label(404, "errors.project_not_found")
 		return
 
 	if project["owner"] != 1:
@@ -6020,17 +6020,17 @@ def action_request_delete(a):
 		})
 
 	if not check_project_access(a.user.identity.id, project_id, "write"):
-		a.error_label(403, "errors.access_denied")
+		a.error.label(403, "errors.access_denied")
 		return
 
 	request_id = a.input("request")
 	if not request_id:
-		a.error_label(400, "errors.request_id_required")
+		a.error.label(400, "errors.request_id_required")
 		return
 
 	req = mochi.db.row("select r.* from requests r join objects o on r.object=o.id where r.id=? and o.project=?", request_id, project_id)
 	if not req:
-		a.error_label(404, "errors.request_not_found")
+		a.error.label(404, "errors.request_not_found")
 		return
 
 	mochi.db.execute("delete from requests where id=?", request_id)
@@ -6056,7 +6056,7 @@ def action_diff_preference_get(a):
 def action_diff_preference_set(a):
 	style = a.input("style")
 	if style not in ("unified", "split"):
-		a.error_label(400, "errors.style_must_be_unified_or_split")
+		a.error.label(400, "errors.style_must_be_unified_or_split")
 		return
 	a.user.preference.set("diff_view", style)
 	return {"data": {"style": style}}

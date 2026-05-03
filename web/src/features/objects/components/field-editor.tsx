@@ -21,6 +21,7 @@ import {
 } from "@mochi/web";
 import { Plus, Trash2 } from "lucide-react";
 import type { ProjectField, FieldOption, ChecklistItem } from "@/types";
+import projectsApi from "@/api/projects";
 
 interface FieldEditorProps {
   field: ProjectField;
@@ -257,8 +258,8 @@ export function FieldEditor({
             value={value}
             onChange={(v) => onChange(v as string)}
             local={localPeople}
-            friends
             directory
+            directoryFn={async (q) => (await projectsApi.searchUsers(q)).data.results}
             disabled={disabled}
             placeholder={t`Select...`}
             emptyMessage={"No people found"}

@@ -81,10 +81,28 @@ class DiffViewerViewModel @Inject constructor(
     val uiState: StateFlow<DiffViewerUiState> = _uiState.asStateFlow()
 
     init {
+        loadPreference()
         loadDiff()
     }
 
     private var rawDiff: String = ""
+
+    private fun loadPreference() {
+        viewModelScope.launch {
+            try {
+                val pref = repository.getDiffPreference()
+                val unified = pref != "split"
+                if (unified != _uiState.value.isUnified) {
+                    _uiState.value = _uiState.value.copy(
+                        isUnified = unified,
+                        diffHtml = if (rawDiff.isNotEmpty()) renderDiff(rawDiff, unified) else _uiState.value.diffHtml
+                    )
+                }
+            } catch (_: Exception) {
+                // Default ("unified") already set; ignore failures.
+            }
+        }
+    }
 
     fun loadDiff() {
         viewModelScope.launch {
@@ -113,6 +131,13 @@ class DiffViewerViewModel @Inject constructor(
             isUnified = newUnified,
             diffHtml = renderDiff(rawDiff, newUnified)
         )
+        viewModelScope.launch {
+            try {
+                repository.setDiffPreference(if (newUnified) "unified" else "split")
+            } catch (_: Exception) {
+                // Persistence failure is non-fatal; UI already reflects toggle.
+            }
+        }
     }
 
     private fun parseFileStats(diff: String): List<FileStats> {

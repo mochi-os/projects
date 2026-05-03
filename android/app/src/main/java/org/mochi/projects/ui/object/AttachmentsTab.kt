@@ -3,7 +3,6 @@ package org.mochi.projects.ui.`object`
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -11,7 +10,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -36,10 +34,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import coil3.compose.AsyncImage
-import coil3.request.ImageRequest
-import coil3.request.crossfade
+import org.mochi.android.i18n.LocalFormat
 import org.mochi.android.model.Attachment
+import org.mochi.android.ui.components.AttachmentGallery
 import org.mochi.projects.R
 import java.io.File
 import org.mochi.android.R as MochiR
@@ -48,6 +45,7 @@ import org.mochi.android.R as MochiR
 fun AttachmentsTab(
     attachments: List<Attachment>,
     projectId: String,
+    serverUrl: String,
     onAddAttachment: (File) -> Unit,
     onDeleteAttachment: (String) -> Unit
 ) {
@@ -71,6 +69,13 @@ fun AttachmentsTab(
         }
     }
 
+    val urlBuilder: (Attachment) -> String = { attachment ->
+        "$serverUrl/projects/$projectId/-/attachments/${attachment.id}"
+    }
+    val thumbnailUrlBuilder: (Attachment) -> String = { attachment ->
+        "$serverUrl/projects/$projectId/-/attachments/${attachment.id}/thumbnail"
+    }
+
     Box(modifier = Modifier.fillMaxSize()) {
         if (attachments.isEmpty()) {
             Box(
@@ -84,9 +89,22 @@ fun AttachmentsTab(
                 )
             }
         } else {
-            LazyColumn(modifier = Modifier.fillMaxSize()) {
+            LazyColumn(
+                modifier = Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                item(key = "gallery") {
+                    AttachmentGallery(
+                        attachments = attachments,
+                        urlBuilder = urlBuilder,
+                        thumbnailUrlBuilder = thumbnailUrlBuilder,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp, vertical = 8.dp)
+                    )
+                }
                 items(attachments, key = { it.id }) { attachment ->
-                    AttachmentItem(
+                    AttachmentRow(
                         attachment = attachment,
                         onDelete = { onDeleteAttachment(attachment.id) }
                     )
@@ -107,7 +125,7 @@ fun AttachmentsTab(
 }
 
 @Composable
-private fun AttachmentItem(
+private fun AttachmentRow(
     attachment: Attachment,
     onDelete: () -> Unit
 ) {
@@ -117,28 +135,17 @@ private fun AttachmentItem(
             .padding(horizontal = 16.dp, vertical = 12.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        if (attachment.isImage && attachment.thumbnailUrl != null) {
-            AsyncImage(
-                model = ImageRequest.Builder(LocalContext.current)
-                    .data(attachment.thumbnailUrl)
-                    .crossfade(true)
-                    .build(),
-                contentDescription = attachment.name,
-                modifier = Modifier.size(48.dp)
-            )
-        } else {
-            val icon = when {
-                attachment.isImage -> Icons.Default.Image
-                attachment.isVideo -> Icons.Default.VideoFile
-                else -> Icons.Default.AttachFile
-            }
-            Icon(
-                imageVector = icon,
-                contentDescription = null,
-                modifier = Modifier.size(48.dp),
-                tint = MaterialTheme.colorScheme.onSurfaceVariant
-            )
+        val icon = when {
+            attachment.isImage -> Icons.Default.Image
+            attachment.isVideo -> Icons.Default.VideoFile
+            else -> Icons.Default.AttachFile
         }
+        Icon(
+            imageVector = icon,
+            contentDescription = null,
+            modifier = Modifier.size(32.dp),
+            tint = MaterialTheme.colorScheme.onSurfaceVariant
+        )
 
         Spacer(modifier = Modifier.width(12.dp))
 
@@ -150,7 +157,7 @@ private fun AttachmentItem(
                 overflow = TextOverflow.Ellipsis
             )
             Text(
-                text = formatFileSize(attachment.size),
+                text = LocalFormat.current.formatFileSize(attachment.size),
                 style = MaterialTheme.typography.labelSmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
@@ -163,15 +170,5 @@ private fun AttachmentItem(
                 tint = MaterialTheme.colorScheme.error
             )
         }
-    }
-}
-
-@Composable
-private fun formatFileSize(bytes: Long): String {
-    return when {
-        bytes < 1024 -> stringResource(R.string.projects_attachment_size_bytes, bytes.toInt())
-        bytes < 1024 * 1024 -> stringResource(R.string.projects_attachment_size_kb, (bytes / 1024).toInt())
-        bytes < 1024 * 1024 * 1024 -> stringResource(R.string.projects_attachment_size_mb, (bytes / (1024 * 1024)).toInt())
-        else -> stringResource(R.string.projects_attachment_size_gb, (bytes / (1024 * 1024 * 1024)).toInt())
     }
 }

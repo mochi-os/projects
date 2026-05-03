@@ -19,8 +19,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.CalendarToday
-import androidx.compose.material.icons.filled.CheckBox
-import androidx.compose.material.icons.filled.CheckBoxOutlineBlank
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.DatePicker
@@ -30,7 +28,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.FilterChip
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -40,6 +37,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -51,15 +49,15 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import org.mochi.android.model.User
+import org.mochi.android.ui.components.PersonPicker
 import org.mochi.projects.R
+import org.mochi.android.i18n.LocalFormat
 import org.mochi.projects.model.ChecklistItem
 import org.mochi.projects.model.FieldOption
 import org.mochi.projects.model.ProjectDetails
 import org.mochi.projects.model.ProjectField
 import org.mochi.projects.model.ProjectObject
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 import org.mochi.android.R as MochiR
 
 @Composable
@@ -68,8 +66,10 @@ fun PropertiesTab(
     projectDetails: ProjectDetails,
     viewModel: ObjectDetailViewModel
 ) {
+    val uiState by viewModel.uiState.collectAsState()
     val fields = projectDetails.fields[obj.objectClass] ?: emptyList()
     val classOptions = projectDetails.options[obj.objectClass] ?: emptyMap()
+    val canWrite = canWriteAccess(uiState.access)
 
     Column(
         modifier = Modifier
@@ -77,19 +77,159 @@ fun PropertiesTab(
             .verticalScroll(rememberScrollState())
             .padding(16.dp)
     ) {
+        // Parent picker
+        val allowedParentClasses = (projectDetails.hierarchy[obj.objectClass] ?: emptyList())
+            .filter { it.isNotBlank() }
+        val descendants = remember(uiState.siblingObjects, obj.id) {
+            collectDescendants(uiState.siblingObjects, obj.id)
+        }
+        val parentOptions = uiState.siblingObjects
+            .filter { it.objectClass in allowedParentClasses && it.id !in descendants }
+        val currentParent = uiState.siblingObjects.find { it.id == obj.parent }
+
+        if (parentOptions.isNotEmpty() || currentParent != null) {
+            ParentPicker(
+                projectDetails = projectDetails,
+                currentParent = currentParent,
+                parentOptions = parentOptions,
+                canWrite = canWrite,
+                onSelect = { newParent -> viewModel.updateParent(newParent) }
+            )
+            Spacer(modifier = Modifier.height(12.dp))
+        }
+
         // Dynamic fields
         fields.sortedBy { it.rank }.forEach { field ->
             FieldEditor(
                 field = field,
                 value = obj.values[field.id],
                 options = classOptions[field.id] ?: emptyList(),
+                canWrite = canWrite,
+                people = uiState.people,
                 onValueChange = { viewModel.setValue(field.id, it) },
-                onMultiValueChange = { viewModel.setMultiValue(field.id, it) }
+                onMultiValueChange = { viewModel.setMultiValue(field.id, it) },
+                onSearchUsers = { query -> viewModel.searchPeople(query) }
             )
             Spacer(modifier = Modifier.height(12.dp))
         }
 
         Spacer(modifier = Modifier.height(32.dp))
+    }
+}
+
+private fun canWriteAccess(access: String): Boolean =
+    access == "owner" || access == "design" || access == "write"
+
+private fun collectDescendants(objects: List<ProjectObject>, rootId: String): Set<String> {
+    val result = mutableSetOf<String>()
+    fun walk(id: String) {
+        if (id in result) return
+        result.add(id)
+        for (o in objects) {
+            if (o.parent == id) walk(o.id)
+        }
+    }
+    walk(rootId)
+    return result
+}
+
+private fun objectDisplayTitle(obj: ProjectObject, projectDetails: ProjectDetails): String {
+    val cls = projectDetails.classes.find { it.id == obj.objectClass }
+    val titleField = cls?.title.orEmpty()
+    val titleVal = if (titleField.isNotBlank()) obj.values[titleField]?.toString().orEmpty() else ""
+    if (titleVal.isNotBlank()) return titleVal
+    val prefix = projectDetails.project.prefix
+    return if (prefix.isNotBlank()) "$prefix-${obj.number}" else "#${obj.number}"
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun ParentPicker(
+    projectDetails: ProjectDetails,
+    currentParent: ProjectObject?,
+    parentOptions: List<ProjectObject>,
+    canWrite: Boolean,
+    onSelect: (String) -> Unit
+) {
+    val noParentLabel = stringResource(R.string.projects_parent_none)
+    val displayText = currentParent?.let { objectDisplayTitle(it, projectDetails) } ?: noParentLabel
+
+    if (!canWrite) {
+        Column(modifier = Modifier.fillMaxWidth()) {
+            Text(
+                text = stringResource(R.string.projects_parent_label),
+                style = MaterialTheme.typography.labelLarge,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+            Spacer(modifier = Modifier.height(4.dp))
+            Text(text = displayText, style = MaterialTheme.typography.bodyLarge)
+        }
+        return
+    }
+
+    var expanded by remember { mutableStateOf(false) }
+    var query by remember { mutableStateOf("") }
+
+    ExposedDropdownMenuBox(
+        expanded = expanded,
+        onExpandedChange = { expanded = it }
+    ) {
+        OutlinedTextField(
+            value = displayText,
+            onValueChange = {},
+            readOnly = true,
+            label = { Text(stringResource(R.string.projects_parent_label)) },
+            trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
+            modifier = Modifier
+                .menuAnchor(MenuAnchorType.PrimaryNotEditable)
+                .fillMaxWidth()
+        )
+        ExposedDropdownMenu(
+            expanded = expanded,
+            onDismissRequest = {
+                expanded = false
+                query = ""
+            }
+        ) {
+            // Search filter
+            OutlinedTextField(
+                value = query,
+                onValueChange = { query = it },
+                placeholder = { Text(stringResource(R.string.projects_parent_search_placeholder)) },
+                singleLine = true,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 8.dp, vertical = 4.dp)
+            )
+            // (no parent) option
+            DropdownMenuItem(
+                text = {
+                    Text(
+                        text = stringResource(R.string.projects_parent_none),
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                },
+                onClick = {
+                    onSelect("")
+                    expanded = false
+                    query = ""
+                }
+            )
+            val q = query.trim().lowercase()
+            parentOptions
+                .map { it to objectDisplayTitle(it, projectDetails) }
+                .filter { (_, title) -> q.isEmpty() || title.lowercase().contains(q) }
+                .forEach { (parentObj, title) ->
+                    DropdownMenuItem(
+                        text = { Text(title) },
+                        onClick = {
+                            onSelect(parentObj.id)
+                            expanded = false
+                            query = ""
+                        }
+                    )
+                }
+        }
     }
 }
 
@@ -99,41 +239,53 @@ private fun FieldEditor(
     field: ProjectField,
     value: Any?,
     options: List<FieldOption>,
+    canWrite: Boolean,
+    people: List<org.mochi.projects.model.Person>,
     onValueChange: (String) -> Unit,
-    onMultiValueChange: (List<String>) -> Unit
+    onMultiValueChange: (List<String>) -> Unit,
+    onSearchUsers: suspend (String) -> List<User>
 ) {
     val stringValue = value?.toString() ?: ""
     val listValue = (value as? List<*>)?.mapNotNull { it?.toString() } ?: emptyList()
+    // Effective read-only: field-readonly OR user lacks write access
+    val readOnly = field.isReadonly || !canWrite
 
     Column(modifier = Modifier.fillMaxWidth()) {
         when (field.fieldtype) {
             "text" -> {
-                OutlinedTextField(
-                    value = stringValue,
-                    onValueChange = onValueChange,
-                    label = { Text(field.name) },
-                    readOnly = field.isReadonly,
-                    singleLine = field.rows <= 1,
-                    maxLines = if (field.rows > 1) field.rows else 1,
-                    minLines = if (field.rows > 1) field.rows.coerceAtMost(3) else 1,
-                    modifier = Modifier.fillMaxWidth()
-                )
+                if (readOnly) {
+                    ReadOnlyDisplay(field.name, stringValue)
+                } else {
+                    OutlinedTextField(
+                        value = stringValue,
+                        onValueChange = onValueChange,
+                        label = { Text(field.name) },
+                        readOnly = false,
+                        singleLine = field.rows <= 1,
+                        maxLines = if (field.rows > 1) field.rows else 1,
+                        minLines = if (field.rows > 1) field.rows.coerceAtMost(3) else 1,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                }
             }
 
             "number" -> {
-                OutlinedTextField(
-                    value = stringValue,
-                    onValueChange = { newVal ->
-                        if (newVal.isEmpty() || newVal.toDoubleOrNull() != null) {
-                            onValueChange(newVal)
-                        }
-                    },
-                    label = { Text(field.name) },
-                    readOnly = field.isReadonly,
-                    singleLine = true,
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                    modifier = Modifier.fillMaxWidth()
-                )
+                if (readOnly) {
+                    ReadOnlyDisplay(field.name, stringValue)
+                } else {
+                    OutlinedTextField(
+                        value = stringValue,
+                        onValueChange = { newVal ->
+                            if (newVal.isEmpty() || newVal.toDoubleOrNull() != null) {
+                                onValueChange(newVal)
+                            }
+                        },
+                        label = { Text(field.name) },
+                        singleLine = true,
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                }
             }
 
             "enumerated" -> {
@@ -145,67 +297,79 @@ private fun FieldEditor(
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                     Spacer(modifier = Modifier.height(4.dp))
-                    FlowRow(
-                        horizontalArrangement = Arrangement.spacedBy(6.dp),
-                        verticalArrangement = Arrangement.spacedBy(4.dp)
-                    ) {
-                        options.sortedBy { it.rank }.forEach { option ->
-                            val isSelected = option.id in listValue || option.id == stringValue
-                            FilterChip(
-                                selected = isSelected,
-                                onClick = {
-                                    if (field.isReadonly) return@FilterChip
-                                    val current = listValue.toMutableList()
-                                    if (isSelected) {
-                                        current.remove(option.id)
-                                    } else {
-                                        current.add(option.id)
-                                    }
-                                    onMultiValueChange(current)
-                                },
-                                label = { Text(option.name) },
-                                enabled = !field.isReadonly
-                            )
+                    if (readOnly) {
+                        val selectedNames = options
+                            .filter { it.id in listValue || it.id == stringValue }
+                            .sortedBy { it.rank }
+                            .joinToString(", ") { it.name }
+                        Text(
+                            text = if (selectedNames.isBlank()) "—" else selectedNames,
+                            style = MaterialTheme.typography.bodyLarge
+                        )
+                    } else {
+                        FlowRow(
+                            horizontalArrangement = Arrangement.spacedBy(6.dp),
+                            verticalArrangement = Arrangement.spacedBy(4.dp)
+                        ) {
+                            options.sortedBy { it.rank }.forEach { option ->
+                                val isSelected = option.id in listValue || option.id == stringValue
+                                FilterChip(
+                                    selected = isSelected,
+                                    onClick = {
+                                        val current = listValue.toMutableList()
+                                        if (isSelected) {
+                                            current.remove(option.id)
+                                        } else {
+                                            current.add(option.id)
+                                        }
+                                        onMultiValueChange(current)
+                                    },
+                                    label = { Text(option.name) }
+                                )
+                            }
                         }
                     }
                 } else {
                     // Single select dropdown
-                    var expanded by remember { mutableStateOf(false) }
                     val selectedOption = options.find { it.id == stringValue }
-
-                    ExposedDropdownMenuBox(
-                        expanded = expanded,
-                        onExpandedChange = { if (!field.isReadonly) expanded = it }
-                    ) {
-                        OutlinedTextField(
-                            value = selectedOption?.name ?: "",
-                            onValueChange = {},
-                            readOnly = true,
-                            label = { Text(field.name) },
-                            trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
-                            modifier = Modifier
-                                .menuAnchor(MenuAnchorType.PrimaryNotEditable)
-                                .fillMaxWidth()
-                        )
-                        ExposedDropdownMenu(
+                    if (readOnly) {
+                        ReadOnlyDisplay(field.name, selectedOption?.name.orEmpty())
+                    } else {
+                        var expanded by remember { mutableStateOf(false) }
+                        ExposedDropdownMenuBox(
                             expanded = expanded,
-                            onDismissRequest = { expanded = false }
+                            onExpandedChange = { expanded = it }
                         ) {
-                            DropdownMenuItem(
-                                text = { Text(stringResource(R.string.projects_property_option_none), color = MaterialTheme.colorScheme.onSurfaceVariant) },
-                                onClick = {
-                                    onValueChange("")
-                                    expanded = false
-                                }
+                            OutlinedTextField(
+                                value = selectedOption?.name ?: "",
+                                onValueChange = {},
+                                readOnly = true,
+                                label = { Text(field.name) },
+                                trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
+                                modifier = Modifier
+                                    .menuAnchor(MenuAnchorType.PrimaryNotEditable)
+                                    .fillMaxWidth()
                             )
-                            options.sortedBy { it.rank }.forEach { option ->
+                            ExposedDropdownMenu(
+                                expanded = expanded,
+                                onDismissRequest = { expanded = false }
+                            ) {
                                 DropdownMenuItem(
-                                    text = { Text(option.name) },
+                                    text = { Text(stringResource(R.string.projects_property_option_none), color = MaterialTheme.colorScheme.onSurfaceVariant) },
                                     onClick = {
-                                        onValueChange(option.id)
+                                        onValueChange("")
                                         expanded = false
                                     }
                                 )
+                                options.sortedBy { it.rank }.forEach { option ->
+                                    DropdownMenuItem(
+                                        text = { Text(option.name) },
+                                        onClick = {
+                                            onValueChange(option.id)
+                                            expanded = false
+                                        }
+                                    )
+                                }
                             }
                         }
                     }
@@ -213,24 +377,58 @@ private fun FieldEditor(
             }
 
             "user" -> {
-                // Simple text field for user - in a full implementation this would use PersonPicker
-                OutlinedTextField(
-                    value = stringValue,
-                    onValueChange = onValueChange,
-                    label = { Text(field.name) },
-                    readOnly = field.isReadonly,
-                    singleLine = true,
-                    modifier = Modifier.fillMaxWidth()
+                Text(
+                    text = field.name,
+                    style = MaterialTheme.typography.labelLarge,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
+                Spacer(modifier = Modifier.height(4.dp))
+                val resolvedName = people.find { it.id == stringValue }?.name
+                val displayName = when {
+                    stringValue.isBlank() -> "—"
+                    !resolvedName.isNullOrBlank() -> resolvedName
+                    else -> stringValue
+                }
+                if (readOnly) {
+                    Text(text = displayName, style = MaterialTheme.typography.bodyLarge)
+                } else {
+                    if (stringValue.isNotBlank()) {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Text(
+                                text = displayName,
+                                style = MaterialTheme.typography.bodyLarge,
+                                modifier = Modifier.weight(1f)
+                            )
+                            IconButton(onClick = { onValueChange("") }) {
+                                Icon(
+                                    Icons.Default.Close,
+                                    contentDescription = stringResource(R.string.projects_property_remove),
+                                    modifier = Modifier.size(16.dp)
+                                )
+                            }
+                        }
+                        Spacer(modifier = Modifier.height(4.dp))
+                    }
+                    PersonPicker(
+                        onSelect = { user ->
+                            // Person.id is stored in fingerprint by the search adapter
+                            val entityId = user.fingerprint.orEmpty()
+                            if (entityId.isNotBlank()) onValueChange(entityId)
+                        },
+                        onSearch = onSearchUsers,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                }
             }
 
             "date" -> {
                 var showDatePicker by remember { mutableStateOf(false) }
+                val format = LocalFormat.current
                 val displayDate = if (stringValue.isNotBlank()) {
                     try {
-                        val millis = stringValue.toLongOrNull()
-                        if (millis != null) {
-                            SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date(millis * 1000))
+                        val seconds = stringValue.toLongOrNull()
+                        if (seconds != null) {
+                            format.formatDate(seconds)
                         } else {
                             stringValue
                         }
@@ -239,45 +437,78 @@ private fun FieldEditor(
                     }
                 } else ""
 
-                OutlinedTextField(
-                    value = displayDate,
-                    onValueChange = {},
-                    readOnly = true,
-                    label = { Text(field.name) },
-                    trailingIcon = {
-                        IconButton(onClick = { if (!field.isReadonly) showDatePicker = true }) {
-                            Icon(Icons.Default.CalendarToday, contentDescription = stringResource(R.string.projects_property_pick_date))
-                        }
-                    },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .clickable { if (!field.isReadonly) showDatePicker = true }
-                )
-
-                if (showDatePicker) {
-                    val datePickerState = rememberDatePickerState(
-                        initialSelectedDateMillis = stringValue.toLongOrNull()?.times(1000)
-                    )
-                    DatePickerDialog(
-                        onDismissRequest = { showDatePicker = false },
-                        confirmButton = {
-                            TextButton(onClick = {
-                                val selectedMillis = datePickerState.selectedDateMillis
-                                if (selectedMillis != null) {
-                                    onValueChange((selectedMillis / 1000).toString())
-                                }
-                                showDatePicker = false
-                            }) {
-                                Text(stringResource(R.string.projects_property_ok))
+                if (readOnly) {
+                    ReadOnlyDisplay(field.name, displayDate)
+                } else {
+                    OutlinedTextField(
+                        value = displayDate,
+                        onValueChange = {},
+                        readOnly = true,
+                        label = { Text(field.name) },
+                        trailingIcon = {
+                            IconButton(onClick = { showDatePicker = true }) {
+                                Icon(Icons.Default.CalendarToday, contentDescription = stringResource(R.string.projects_property_pick_date))
                             }
                         },
-                        dismissButton = {
-                            TextButton(onClick = { showDatePicker = false }) {
-                                Text(stringResource(MochiR.string.common_cancel))
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clickable { showDatePicker = true }
+                    )
+
+                    if (showDatePicker) {
+                        val datePickerState = rememberDatePickerState(
+                            initialSelectedDateMillis = stringValue.toLongOrNull()?.times(1000)
+                        )
+                        DatePickerDialog(
+                            onDismissRequest = { showDatePicker = false },
+                            confirmButton = {
+                                TextButton(onClick = {
+                                    val selectedMillis = datePickerState.selectedDateMillis
+                                    if (selectedMillis != null) {
+                                        onValueChange((selectedMillis / 1000).toString())
+                                    }
+                                    showDatePicker = false
+                                }) {
+                                    Text(stringResource(R.string.projects_property_ok))
+                                }
+                            },
+                            dismissButton = {
+                                TextButton(onClick = { showDatePicker = false }) {
+                                    Text(stringResource(MochiR.string.common_cancel))
+                                }
                             }
+                        ) {
+                            DatePicker(state = datePickerState)
                         }
-                    ) {
-                        DatePicker(state = datePickerState)
+                    }
+                }
+            }
+
+            "checkbox" -> {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    val checked = stringValue == "1" || stringValue.equals("true", ignoreCase = true)
+                    if (readOnly) {
+                        Column(modifier = Modifier.weight(1f)) {
+                            Text(
+                                text = field.name,
+                                style = MaterialTheme.typography.labelLarge,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                            Text(
+                                text = if (checked) stringResource(R.string.projects_field_yes) else stringResource(R.string.projects_field_no),
+                                style = MaterialTheme.typography.bodyLarge
+                            )
+                        }
+                    } else {
+                        Checkbox(
+                            checked = checked,
+                            onCheckedChange = { onValueChange(if (it) "1" else "0") }
+                        )
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text(text = field.name, style = MaterialTheme.typography.bodyLarge)
                     }
                 }
             }
@@ -286,21 +517,23 @@ private fun FieldEditor(
                 ChecklistEditor(
                     fieldName = field.name,
                     value = stringValue,
-                    isReadonly = field.isReadonly,
+                    isReadonly = readOnly,
                     onValueChange = onValueChange
                 )
             }
 
             else -> {
-                // Fallback: text field
-                OutlinedTextField(
-                    value = stringValue,
-                    onValueChange = onValueChange,
-                    label = { Text(field.name) },
-                    readOnly = field.isReadonly,
-                    singleLine = true,
-                    modifier = Modifier.fillMaxWidth()
-                )
+                if (readOnly) {
+                    ReadOnlyDisplay(field.name, stringValue)
+                } else {
+                    OutlinedTextField(
+                        value = stringValue,
+                        onValueChange = onValueChange,
+                        label = { Text(field.name) },
+                        singleLine = true,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                }
             }
         }
 
@@ -312,6 +545,22 @@ private fun FieldEditor(
                 modifier = Modifier.padding(top = 2.dp)
             )
         }
+    }
+}
+
+@Composable
+private fun ReadOnlyDisplay(label: String, value: String) {
+    Column {
+        Text(
+            text = label,
+            style = MaterialTheme.typography.labelLarge,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
+        Spacer(modifier = Modifier.height(4.dp))
+        Text(
+            text = if (value.isBlank()) "—" else value,
+            style = MaterialTheme.typography.bodyLarge
+        )
     }
 }
 

@@ -336,10 +336,10 @@ private fun BoardColumn(
                 verticalArrangement = Arrangement.spacedBy(4.dp)
             ) {
                 rowOptions.forEach { rowOption ->
-                    val rowObjects = objects.filter { obj ->
+                    val rowObjects = viewModel.sortObjects(objects.filter { obj ->
                         obj.stringValue(rowFieldId) == rowOption.id ||
                             obj.listValue(rowFieldId).contains(rowOption.id)
-                    }.sortedBy { it.rank }
+                    })
 
                     item(key = "header_${rowOption.id}") {
                         Text(
@@ -372,7 +372,7 @@ private fun BoardColumn(
                             obj.listValue(rowFieldId).contains(rowOpt.id)
                     }.map { it.id }
                 }.toSet()
-                val unassignedRow = objects.filter { it.id !in rowAssignedIds }.sortedBy { it.rank }
+                val unassignedRow = viewModel.sortObjects(objects.filter { it.id !in rowAssignedIds })
                 if (unassignedRow.isNotEmpty()) {
                     item(key = "header_unassigned_row") {
                         Text(
@@ -401,7 +401,7 @@ private fun BoardColumn(
                 modifier = Modifier.fillMaxWidth(),
                 verticalArrangement = Arrangement.spacedBy(4.dp)
             ) {
-                val sortedObjects = objects.sortedBy { it.rank }
+                val sortedObjects = viewModel.sortObjects(objects)
                 items(sortedObjects, key = { it.id }) { obj ->
                     BoardCard(
                         obj = obj,

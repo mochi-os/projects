@@ -13,6 +13,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.ArrowDownward
+import androidx.compose.material.icons.filled.ArrowUpward
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Search
@@ -23,11 +25,15 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MenuAnchorType
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.ScrollableTabRow
@@ -164,28 +170,29 @@ fun ProjectScreen(
 
             // Search and filter bar
             if (showSearch) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp, vertical = 8.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    OutlinedTextField(
-                        value = uiState.searchQuery,
-                        onValueChange = viewModel::updateSearchQuery,
-                        placeholder = { Text(stringResource(R.string.projects_search_objects_placeholder)) },
-                        singleLine = true,
-                        modifier = Modifier.weight(1f)
-                    )
-                    Spacer(modifier = Modifier.width(8.dp))
-                    FilterChip(
-                        selected = uiState.watchedOnly,
-                        onClick = { viewModel.toggleWatchedOnly() },
-                        label = { Text(stringResource(R.string.projects_watched)) },
-                        leadingIcon = if (uiState.watchedOnly) {
-                            { Icon(Icons.Default.Visibility, contentDescription = null, modifier = Modifier.size(16.dp)) }
-                        } else null
-                    )
+                Column(modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)) {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        OutlinedTextField(
+                            value = uiState.searchQuery,
+                            onValueChange = viewModel::updateSearchQuery,
+                            placeholder = { Text(stringResource(R.string.projects_search_objects_placeholder)) },
+                            singleLine = true,
+                            modifier = Modifier.weight(1f)
+                        )
+                        Spacer(modifier = Modifier.width(8.dp))
+                        FilterChip(
+                            selected = uiState.watchedOnly,
+                            onClick = { viewModel.toggleWatchedOnly() },
+                            label = { Text(stringResource(R.string.projects_watched)) },
+                            leadingIcon = if (uiState.watchedOnly) {
+                                { Icon(Icons.Default.Visibility, contentDescription = null, modifier = Modifier.size(16.dp)) }
+                            } else null
+                        )
+                    }
+                    if (activeView != null) {
+                        Spacer(modifier = Modifier.height(8.dp))
+                        SortRow(viewModel = viewModel)
+                    }
                 }
             }
 
@@ -268,7 +275,89 @@ fun ProjectScreen(
                 viewModel.selectObject(null)
                 viewModel.refresh()
             },
-            onViewDiff = onViewDiff
+            onViewDiff = onViewDiff,
+            onNavigateToObject = { id -> viewModel.selectObject(id) }
         )
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun SortRow(viewModel: ProjectViewModel) {
+    val activeField = viewModel.getActiveSortField()
+    val activeDirection = viewModel.getActiveSortDirection()
+    val customOptions = viewModel.getSortFieldOptions()
+
+    val builtIn = listOf(
+        "rank" to stringResource(R.string.projects_sort_rank),
+        "number" to stringResource(R.string.projects_sort_number),
+        "created" to stringResource(R.string.projects_sort_created),
+        "updated" to stringResource(R.string.projects_sort_updated)
+    )
+    val all = customOptions + builtIn
+    val activeLabel = all.firstOrNull { it.first == activeField }?.second
+        ?: stringResource(R.string.projects_sort_rank)
+
+    var expanded by remember { mutableStateOf(false) }
+
+    Row(verticalAlignment = Alignment.CenterVertically) {
+        Text(
+            text = stringResource(R.string.projects_sort_label),
+            style = MaterialTheme.typography.labelMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
+        Spacer(modifier = Modifier.width(8.dp))
+        ExposedDropdownMenuBox(
+            expanded = expanded,
+            onExpandedChange = { expanded = it },
+            modifier = Modifier.weight(1f)
+        ) {
+            OutlinedTextField(
+                value = activeLabel,
+                onValueChange = {},
+                readOnly = true,
+                singleLine = true,
+                trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .menuAnchor(MenuAnchorType.PrimaryNotEditable)
+            )
+            DropdownMenu(
+                expanded = expanded,
+                onDismissRequest = { expanded = false }
+            ) {
+                if (customOptions.isNotEmpty()) {
+                    customOptions.forEach { (id, label) ->
+                        DropdownMenuItem(
+                            text = { Text(label) },
+                            onClick = {
+                                viewModel.setSortField(id)
+                                expanded = false
+                            }
+                        )
+                    }
+                    HorizontalDivider()
+                }
+                builtIn.forEach { (id, label) ->
+                    DropdownMenuItem(
+                        text = { Text(label) },
+                        onClick = {
+                            viewModel.setSortField(id)
+                            expanded = false
+                        }
+                    )
+                }
+            }
+        }
+        Spacer(modifier = Modifier.width(8.dp))
+        IconButton(onClick = { viewModel.toggleSortDirection() }) {
+            Icon(
+                imageVector = if (activeDirection == "desc") Icons.Default.ArrowDownward else Icons.Default.ArrowUpward,
+                contentDescription = stringResource(
+                    if (activeDirection == "desc") R.string.projects_sort_direction_desc
+                    else R.string.projects_sort_direction_asc
+                )
+            )
+        }
     }
 }

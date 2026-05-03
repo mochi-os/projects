@@ -53,6 +53,7 @@ fun ObjectDetailSheet(
     onDismiss: () -> Unit,
     onObjectDeleted: () -> Unit,
     onViewDiff: (String, String, String, String) -> Unit,
+    onNavigateToObject: (String) -> Unit = {},
     viewModel: ObjectDetailViewModel = hiltViewModel()
 ) {
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
@@ -61,7 +62,7 @@ fun ObjectDetailSheet(
     var showDeleteConfirm by remember { mutableStateOf(false) }
 
     LaunchedEffect(projectId, objectId) {
-        viewModel.loadWithInitialObject(projectId, objectId, initialObject)
+        viewModel.loadWithInitialObject(projectId, objectId, initialObject, projectDetails.project.access)
     }
 
     ModalBottomSheet(
@@ -168,7 +169,8 @@ fun ObjectDetailSheet(
                         stringResource(R.string.projects_object_tab_comments),
                         stringResource(R.string.projects_object_tab_activity),
                         stringResource(R.string.projects_object_tab_requests),
-                        stringResource(R.string.projects_object_tab_attachments)
+                        stringResource(R.string.projects_object_tab_attachments),
+                        stringResource(R.string.projects_object_tab_links)
                     )
                     ScrollableTabRow(
                         selectedTabIndex = uiState.selectedTab,
@@ -192,8 +194,8 @@ fun ObjectDetailSheet(
                         )
                         1 -> CommentsTab(
                             comments = uiState.comments,
-                            onCreateComment = { content, parent ->
-                                viewModel.createComment(content, parent)
+                            onCreateComment = { content, parent, files ->
+                                viewModel.createComment(content, parent, files)
                             },
                             onUpdateComment = { id, content ->
                                 viewModel.updateComment(id, content)
@@ -208,7 +210,10 @@ fun ObjectDetailSheet(
                         )
                         2 -> ActivityTab(
                             activity = uiState.activity,
-                            projectDetails = projectDetails
+                            projectDetails = projectDetails,
+                            avatarUrlBuilder = { entry ->
+                                "${viewModel.serverUrl}/projects/$projectId/-/activity/${entry.id}/asset/avatar"
+                            }
                         )
                         3 -> RequestsTab(
                             requests = uiState.requests,
@@ -219,8 +224,15 @@ fun ObjectDetailSheet(
                         4 -> AttachmentsTab(
                             attachments = uiState.attachments,
                             projectId = projectId,
+                            serverUrl = viewModel.serverUrl,
                             onAddAttachment = { file -> viewModel.createAttachment(file) },
                             onDeleteAttachment = { id -> viewModel.deleteAttachment(id) }
+                        )
+                        5 -> LinksTab(
+                            obj = obj,
+                            projectDetails = projectDetails,
+                            viewModel = viewModel,
+                            onNavigateToObject = onNavigateToObject
                         )
                     }
                 }

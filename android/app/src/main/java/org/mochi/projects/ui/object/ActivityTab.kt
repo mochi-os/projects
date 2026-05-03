@@ -27,7 +27,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import org.mochi.android.util.formatTimestamp
+import org.mochi.android.i18n.LocalFormat
+import org.mochi.android.i18n.formatTimestamp
+import org.mochi.android.ui.components.EntityAvatar
 import org.mochi.projects.R
 import org.mochi.projects.model.Activity
 import org.mochi.projects.model.ProjectDetails
@@ -35,7 +37,11 @@ import org.mochi.projects.model.ProjectDetails
 @Composable
 fun ActivityTab(
     activity: List<Activity>,
-    projectDetails: ProjectDetails
+    projectDetails: ProjectDetails,
+    // Builds the avatar proxy URL for an activity actor. Should return an
+    // absolute URL to the projects app's proxy action, e.g.
+    // "<server>/projects/<project>/-/activity/<activity.id>/asset/avatar".
+    avatarUrlBuilder: ((Activity) -> String?)? = null
 ) {
     if (activity.isEmpty()) {
         Box(
@@ -55,7 +61,11 @@ fun ActivityTab(
         modifier = Modifier.fillMaxSize()
     ) {
         items(activity, key = { it.id }) { item ->
-            ActivityItem(item = item, projectDetails = projectDetails)
+            ActivityItem(
+                item = item,
+                projectDetails = projectDetails,
+                avatarUrl = avatarUrlBuilder?.invoke(item)
+            )
             HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
         }
     }
@@ -64,7 +74,8 @@ fun ActivityTab(
 @Composable
 private fun ActivityItem(
     item: Activity,
-    projectDetails: ProjectDetails
+    projectDetails: ProjectDetails,
+    avatarUrl: String?
 ) {
     val icon = when (item.action) {
         "created" -> Icons.Default.Add
@@ -126,6 +137,13 @@ private fun ActivityItem(
             .padding(horizontal = 16.dp, vertical = 12.dp),
         verticalAlignment = Alignment.Top
     ) {
+        EntityAvatar(
+            name = item.name,
+            src = avatarUrl,
+            seed = item.user,
+            size = 20.dp
+        )
+        Spacer(modifier = Modifier.width(8.dp))
         Icon(
             imageVector = icon,
             contentDescription = null,
@@ -150,7 +168,7 @@ private fun ActivityItem(
         }
         Spacer(modifier = Modifier.width(8.dp))
         Text(
-            text = item.created.formatTimestamp(),
+            text = LocalFormat.current.formatTimestamp(item.created),
             style = MaterialTheme.typography.labelSmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )

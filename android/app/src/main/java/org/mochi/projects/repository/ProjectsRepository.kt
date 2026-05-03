@@ -204,16 +204,19 @@ class ProjectsRepository @Inject constructor(
 
     // ---- Links ----
 
-    suspend fun getLinks(projectId: String, objectId: String): List<Link> {
+    data class LinksResult(val incoming: List<Link>, val outgoing: List<Link>)
+
+    suspend fun getLinks(projectId: String, objectId: String): LinksResult {
         val response = api.getLinks(projectId, objectId).unwrap()
-        return response.incoming + response.outgoing
+        return LinksResult(incoming = response.incoming, outgoing = response.outgoing)
     }
 
-    suspend fun createLink(projectId: String, objectId: String, target: String, linktype: String): Link =
-        api.createLink(projectId, objectId, target, linktype).unwrap().link
+    suspend fun createLink(projectId: String, objectId: String, target: String, linktype: String) {
+        api.createLink(projectId, objectId, target, linktype).unwrap()
+    }
 
-    suspend fun deleteLink(projectId: String, objectId: String, id: String) {
-        api.deleteLink(projectId, objectId, id).unwrap()
+    suspend fun deleteLink(projectId: String, objectId: String, target: String, linktype: String) {
+        api.deleteLink(projectId, objectId, target, linktype).unwrap()
     }
 
     // ---- Comments ----

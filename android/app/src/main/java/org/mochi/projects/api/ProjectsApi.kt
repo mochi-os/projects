@@ -56,7 +56,6 @@ data class AttachmentListResponse(val attachments: List<Attachment> = emptyList(
 data class AttachmentResponse(val attachment: Attachment = Attachment(id = ""))
 data class ActivityListResponse(val activities: List<Activity> = emptyList())
 data class LinkListResponse(val incoming: List<Link> = emptyList(), val outgoing: List<Link> = emptyList())
-data class LinkResponse(val link: Link = Link())
 data class WatcherListResponse(val watchers: List<Watcher> = emptyList(), val watching: Boolean = false)
 data class MergeRequestListResponse(val requests: List<MergeRequest> = emptyList())
 data class MergeRequestResponse(val request: MergeRequest = MergeRequest())
@@ -295,14 +294,15 @@ interface ProjectsApi {
         @Path("objectId") objectId: String,
         @Field("target") target: String,
         @Field("linktype") linktype: String
-    ): Response<ApiResponse<LinkResponse>>
+    ): Response<ApiResponse<SuccessResponse>>
 
     @FormUrlEncoded
     @POST("{projectId}/-/objects/{objectId}/links/delete")
     suspend fun deleteLink(
         @Path("projectId") projectId: String,
         @Path("objectId") objectId: String,
-        @Field("id") id: String
+        @Field("target") target: String,
+        @Field("linktype") linktype: String
     ): Response<ApiResponse<SuccessResponse>>
 
     // ---- Comments ----

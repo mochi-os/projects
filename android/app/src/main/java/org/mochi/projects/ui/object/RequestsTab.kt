@@ -463,49 +463,59 @@ private fun CreateRequestDialog(
     var title by remember { mutableStateOf("") }
     var description by remember { mutableStateOf("") }
     var draft by remember { mutableStateOf(false) }
-    var selectedRepo by remember { mutableStateOf("") }
-    var selectedSource by remember { mutableStateOf("") }
-    var selectedTarget by remember { mutableStateOf("") }
+    var selectedRepo by remember { mutableStateOf<Repository?>(null) }
+    var selectedSource by remember { mutableStateOf<Branch?>(null) }
+    var selectedTarget by remember { mutableStateOf<Branch?>(null) }
     var repositories by remember { mutableStateOf<List<Repository>>(emptyList()) }
     var branches by remember { mutableStateOf<List<Branch>>(emptyList()) }
-    var repoExpanded by remember { mutableStateOf(false) }
-    var sourceExpanded by remember { mutableStateOf(false) }
-    var targetExpanded by remember { mutableStateOf(false) }
-    var isLoadingRepos by remember { mutableStateOf(true) }
+    var isLoadingBranches by remember { mutableStateOf(false) }
 
-    // Load repositories lazily - we cannot call the repository directly,
-    // but since this is a dialog composed alongside the viewModel we can use a side effect
-    // The repos/branches are loaded from the ProjectsRepository at the class level
-    // For simplicity, we just show text fields for repo/branch names
-    // A full implementation would load these from the API
+    // Load repositories on open
+    LaunchedEffect(Unit) {
+        repositories = viewModel.loadRepositories()
+    }
+
+    // Load branches when repo changes; reset both branch picks
+    LaunchedEffect(selectedRepo?.id) {
+        selectedSource = null
+        selectedTarget = null
+        val repo = selectedRepo
+        if (repo == null) {
+            branches = emptyList()
+            return@LaunchedEffect
+        }
+        isLoadingBranches = true
+        branches = viewModel.loadBranches(repo.id)
+        isLoadingBranches = false
+        // Default target to repository's default branch if available
+        selectedTarget = branches.firstOrNull { it.isDefault }
+    }
 
     AlertDialog(
         onDismissRequest = onDismiss,
         title = { Text(stringResource(R.string.projects_request_create_title)) },
         text = {
             Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
-                OutlinedTextField(
-                    value = selectedRepo,
-                    onValueChange = { selectedRepo = it },
-                    label = { Text(stringResource(R.string.projects_request_field_repository)) },
-                    singleLine = true,
-                    modifier = Modifier.fillMaxWidth()
+                RepositoryDropdown(
+                    repositories = repositories,
+                    selected = selectedRepo,
+                    onSelect = { selectedRepo = it }
                 )
                 Spacer(modifier = Modifier.height(8.dp))
-                OutlinedTextField(
-                    value = selectedSource,
-                    onValueChange = { selectedSource = it },
-                    label = { Text(stringResource(R.string.projects_request_field_source)) },
-                    singleLine = true,
-                    modifier = Modifier.fillMaxWidth()
+                BranchDropdown(
+                    label = stringResource(R.string.projects_request_field_source),
+                    branches = branches,
+                    selected = selectedSource,
+                    enabled = selectedRepo != null && !isLoadingBranches,
+                    onSelect = { selectedSource = it }
                 )
                 Spacer(modifier = Modifier.height(8.dp))
-                OutlinedTextField(
-                    value = selectedTarget,
-                    onValueChange = { selectedTarget = it },
-                    label = { Text(stringResource(R.string.projects_request_field_target)) },
-                    singleLine = true,
-                    modifier = Modifier.fillMaxWidth()
+                BranchDropdown(
+                    label = stringResource(R.string.projects_request_field_target),
+                    branches = branches,
+                    selected = selectedTarget,
+                    enabled = selectedRepo != null && !isLoadingBranches,
+                    onSelect = { selectedTarget = it }
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 OutlinedTextField(
@@ -536,17 +546,20 @@ private fun CreateRequestDialog(
         confirmButton = {
             TextButton(
                 onClick = {
+                    val repo = selectedRepo ?: return@TextButton
+                    val source = selectedSource ?: return@TextButton
+                    val target = selectedTarget ?: return@TextButton
                     onCreate(
-                        selectedRepo,
-                        selectedSource,
-                        selectedTarget,
+                        repo.id,
+                        source.name,
+                        target.name,
                         title,
                         description.ifBlank { null },
                         draft
                     )
                 },
-                enabled = title.isNotBlank() && selectedRepo.isNotBlank() &&
-                    selectedSource.isNotBlank() && selectedTarget.isNotBlank()
+                enabled = title.isNotBlank() && selectedRepo != null &&
+                    selectedSource != null && selectedTarget != null
             ) {
                 Text(stringResource(R.string.projects_request_create_action))
             }
@@ -557,4 +570,87 @@ private fun CreateRequestDialog(
             }
         }
     )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun RepositoryDropdown(
+    repositories: List<Repository>,
+    selected: Repository?,
+    onSelect: (Repository) -> Unit
+) {
+    var expanded by remember { mutableStateOf(false) }
+    ExposedDropdownMenuBox(
+        expanded = expanded,
+        onExpandedChange = { expanded = it }
+    ) {
+        OutlinedTextField(
+            value = selected?.name ?: "",
+            onValueChange = {},
+            readOnly = true,
+            singleLine = true,
+            label = { Text(stringResource(R.string.projects_request_field_repository)) },
+            trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
+            modifier = Modifier
+                .fillMaxWidth()
+                .menuAnchor(MenuAnchorType.PrimaryNotEditable)
+        )
+        DropdownMenu(
+            expanded = expanded,
+            onDismissRequest = { expanded = false }
+        ) {
+            repositories.forEach { repo ->
+                DropdownMenuItem(
+                    text = { Text(repo.name) },
+                    onClick = {
+                        onSelect(repo)
+                        expanded = false
+                    }
+                )
+            }
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun BranchDropdown(
+    label: String,
+    branches: List<Branch>,
+    selected: Branch?,
+    enabled: Boolean,
+    onSelect: (Branch) -> Unit
+) {
+    var expanded by remember { mutableStateOf(false) }
+    ExposedDropdownMenuBox(
+        expanded = expanded && enabled,
+        onExpandedChange = { if (enabled) expanded = it }
+    ) {
+        OutlinedTextField(
+            value = selected?.name ?: "",
+            onValueChange = {},
+            readOnly = true,
+            singleLine = true,
+            enabled = enabled,
+            label = { Text(label) },
+            trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
+            modifier = Modifier
+                .fillMaxWidth()
+                .menuAnchor(MenuAnchorType.PrimaryNotEditable)
+        )
+        DropdownMenu(
+            expanded = expanded && enabled,
+            onDismissRequest = { expanded = false }
+        ) {
+            branches.forEach { branch ->
+                DropdownMenuItem(
+                    text = { Text(branch.name) },
+                    onClick = {
+                        onSelect(branch)
+                        expanded = false
+                    }
+                )
+            }
+        }
+    }
 }

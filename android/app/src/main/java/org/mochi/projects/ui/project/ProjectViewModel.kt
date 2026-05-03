@@ -33,7 +33,15 @@ data class ProjectUiState(
     val error: MochiError? = null,
     val showCreateObjectDialog: Boolean = false,
     val isCreatingObject: Boolean = false,
-    val selectedObjectId: String? = null
+    val selectedObjectId: String? = null,
+    /**
+     * Sort field per view id. Field is one of "rank", "number", "created",
+     * "updated", or "field:<fieldId>" matching the web sort key scheme.
+     * Null entry => fall back to view.sort or "rank".
+     */
+    val sortByView: Map<String, String> = emptyMap(),
+    /** Sort direction per view id. "asc" or "desc". */
+    val sortDirByView: Map<String, String> = emptyMap()
 )
 
 @HiltViewModel
@@ -147,6 +155,80 @@ class ProjectViewModel @Inject constructor(
 
     fun toggleWatchedOnly() {
         _uiState.value = _uiState.value.copy(watchedOnly = !_uiState.value.watchedOnly)
+    }
+
+    /**
+     * Active sort field for the current view. Mirrors the web sort key scheme:
+     * "rank" | "number" | "created" | "updated" | "field:<fieldId>".
+     * Defaults to view.sort (when set) or "rank".
+     */
+    fun getActiveSortField(): String {
+        val viewId = _uiState.value.activeViewId ?: return "rank"
+        val override = _uiState.value.sortByView[viewId]
+        if (override != null) return override
+        val view = getActiveView() ?: return "rank"
+        if (view.sort.isNotBlank()) {
+            // view.sort stores a bare fieldId; project it onto the field: prefix
+            // unless it matches a built-in.
+            return when (view.sort) {
+                "rank", "number", "created", "updated" -> view.sort
+                else -> "field:${view.sort}"
+            }
+        }
+        return "rank"
+    }
+
+    /** Active sort direction for the current view. "asc" or "desc". */
+    fun getActiveSortDirection(): String {
+        val viewId = _uiState.value.activeViewId ?: return "asc"
+        val override = _uiState.value.sortDirByView[viewId]
+        if (override != null) return override
+        val view = getActiveView()
+        return if (view?.direction == "desc") "desc" else "asc"
+    }
+
+    fun setSortField(field: String) {
+        val viewId = _uiState.value.activeViewId ?: return
+        _uiState.value = _uiState.value.copy(
+            sortByView = _uiState.value.sortByView + (viewId to field)
+        )
+    }
+
+    fun setSortDirection(direction: String) {
+        val viewId = _uiState.value.activeViewId ?: return
+        _uiState.value = _uiState.value.copy(
+            sortDirByView = _uiState.value.sortDirByView + (viewId to direction)
+        )
+    }
+
+    fun toggleSortDirection() {
+        setSortDirection(if (getActiveSortDirection() == "asc") "desc" else "asc")
+    }
+
+    /**
+     * Sort field options available for the current view. Matches the web bar:
+     * built-in fields plus class fields whose flags include "sort". When a view
+     * filters to specific classes, only those classes' fields are offered.
+     */
+    fun getSortFieldOptions(): List<Pair<String, String>> {
+        val details = _uiState.value.projectDetails ?: return emptyList()
+        val view = getActiveView()
+        val classIds = if (view != null && view.classes.isNotEmpty()) {
+            view.classes
+        } else {
+            details.classes.map { it.id }
+        }
+        val seen = mutableSetOf<String>()
+        val result = mutableListOf<Pair<String, String>>()
+        for (classId in classIds) {
+            val fields = details.fields[classId] ?: continue
+            for (field in fields) {
+                if (!field.isSortable) continue
+                if (!seen.add(field.id)) continue
+                result += "field:${field.id}" to field.name
+            }
+        }
+        return result
     }
 
     fun showCreateObjectDialog() {
@@ -331,7 +413,7 @@ class ProjectViewModel @Inject constructor(
 
     fun getFilteredObjects(): List<ProjectObject> {
         val state = _uiState.value
-        val view = getActiveView() ?: return state.objects
+        val view = getActiveView() ?: return sortObjects(state.objects)
         var objects = state.objects
 
         // Filter by view's class filter
@@ -358,16 +440,45 @@ class ProjectViewModel @Inject constructor(
             }
         }
 
-        // Sort
-        if (view.sort.isNotBlank()) {
-            objects = objects.sortedWith(compareBy<ProjectObject> {
-                it.stringValue(view.sort).lowercase()
-            }.let {
-                if (view.direction == "desc") it.reversed() else it
+        return sortObjects(objects)
+    }
+
+    /**
+     * Sort objects by the active sort field/direction. Mirrors the web logic
+     * in `web/src/features/board/components/board-container.tsx::sortObjects`
+     * — built-in numeric fields compare numerically, custom fields compare as
+     * strings (case-insensitive).
+     */
+    fun sortObjects(objects: List<ProjectObject>): List<ProjectObject> {
+        val field = getActiveSortField()
+        val multiplier = if (getActiveSortDirection() == "desc") -1 else 1
+        val numericFields = setOf("rank", "number", "created", "updated")
+        return if (field in numericFields) {
+            objects.sortedWith(Comparator { a, b ->
+                val av = when (field) {
+                    "rank" -> a.rank.toLong()
+                    "number" -> a.number.toLong()
+                    "created" -> a.created
+                    "updated" -> a.updated
+                    else -> 0L
+                }
+                val bv = when (field) {
+                    "rank" -> b.rank.toLong()
+                    "number" -> b.number.toLong()
+                    "created" -> b.created
+                    "updated" -> b.updated
+                    else -> 0L
+                }
+                av.compareTo(bv) * multiplier
+            })
+        } else {
+            val fieldId = if (field.startsWith("field:")) field.substring(6) else field
+            objects.sortedWith(Comparator { a, b ->
+                val av = a.stringValue(fieldId).lowercase()
+                val bv = b.stringValue(fieldId).lowercase()
+                av.compareTo(bv) * multiplier
             })
         }
-
-        return objects
     }
 
     fun getCardFields(classId: String): List<ProjectField> {

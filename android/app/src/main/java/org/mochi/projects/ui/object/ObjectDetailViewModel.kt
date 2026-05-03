@@ -14,11 +14,15 @@ import org.mochi.android.api.toMochiError
 import org.mochi.android.auth.SessionManager
 import org.mochi.android.model.Attachment
 import org.mochi.android.model.Comment
+import org.mochi.android.model.WebSocketEvent
+import org.mochi.android.websocket.MochiWebSocket
 import org.mochi.projects.model.Activity
+import org.mochi.projects.model.Branch
 import org.mochi.projects.model.Link
 import org.mochi.projects.model.MergeCheck
 import org.mochi.projects.model.MergeRequest
 import org.mochi.projects.model.ProjectObject
+import org.mochi.projects.model.Repository
 import org.mochi.projects.model.Watcher
 import org.mochi.projects.repository.ProjectsRepository
 import java.io.File
@@ -30,19 +34,24 @@ data class ObjectDetailUiState(
     val activity: List<Activity> = emptyList(),
     val requests: List<MergeRequest> = emptyList(),
     val attachments: List<Attachment> = emptyList(),
-    val links: List<Link> = emptyList(),
+    val outgoingLinks: List<Link> = emptyList(),
+    val incomingLinks: List<Link> = emptyList(),
     val watchers: List<Watcher> = emptyList(),
     val isWatching: Boolean = false,
     val isLoading: Boolean = false,
     val error: MochiError? = null,
     val selectedTab: Int = 0,
-    val isSaving: Boolean = false
+    val isSaving: Boolean = false,
+    val access: String = "",
+    val siblingObjects: List<ProjectObject> = emptyList(),
+    val people: List<org.mochi.projects.model.Person> = emptyList()
 )
 
 @HiltViewModel
 class ObjectDetailViewModel @Inject constructor(
     private val repository: ProjectsRepository,
-    sessionManager: SessionManager
+    private val sessionManager: SessionManager,
+    private val webSocket: MochiWebSocket
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(ObjectDetailUiState())
@@ -53,13 +62,23 @@ class ObjectDetailViewModel @Inject constructor(
     private var debounceJobs = mutableMapOf<String, Job>()
     private var currentProjectId: String = ""
     private var currentObjectId: String = ""
+    private var wsSubscriptionId: String? = null
+    private var wsSubscribedProjectId: String = ""
 
-    fun loadWithInitialObject(projectId: String, objectId: String, initialObject: ProjectObject?) {
+    override fun onCleared() {
+        super.onCleared()
+        wsSubscriptionId?.let { webSocket.unsubscribe(it) }
+    }
+
+    fun loadWithInitialObject(projectId: String, objectId: String, initialObject: ProjectObject?, access: String = "") {
         currentProjectId = projectId
         currentObjectId = objectId
         if (initialObject != null) {
-            _uiState.value = _uiState.value.copy(obj = initialObject)
+            _uiState.value = _uiState.value.copy(obj = initialObject, access = access)
+        } else {
+            _uiState.value = _uiState.value.copy(access = access)
         }
+        subscribeWebSocket(projectId)
         viewModelScope.launch {
             _uiState.value = _uiState.value.copy(isLoading = _uiState.value.obj == null, error = null)
             try {
@@ -78,12 +97,94 @@ class ObjectDetailViewModel @Inject constructor(
                 loadAttachments()
                 loadWatchers()
                 loadLinks()
+                loadSiblingObjects()
+                loadPeople()
             } catch (e: Exception) {
                 _uiState.value = _uiState.value.copy(
                     isLoading = false,
                     error = e.toMochiError()
                 )
             }
+        }
+    }
+
+    private fun subscribeWebSocket(projectId: String) {
+        if (projectId.isBlank() || projectId == wsSubscribedProjectId) return
+        wsSubscriptionId?.let { webSocket.unsubscribe(it) }
+        wsSubscribedProjectId = projectId
+        viewModelScope.launch {
+            val url = sessionManager.getServerUrlBlocking()
+            wsSubscriptionId = webSocket.subscribe(url, projectId) { event ->
+                handleWebSocketEvent(event)
+            }
+        }
+    }
+
+    private fun handleWebSocketEvent(event: WebSocketEvent) {
+        // Filter to events scoped to the object we're currently displaying.
+        // Some server events use "object" for the affected object id (comment/*,
+        // attachment/*) while others use "id" (values/update, object/update,
+        // object/delete) — handle both keys per event type.
+        when (event.type) {
+            "comment/create", "comment/update", "comment/delete" -> {
+                if (event.objectId == currentObjectId) {
+                    loadComments()
+                    loadActivity()
+                }
+            }
+            "values/update" -> {
+                if (event.id == currentObjectId) {
+                    loadObjectOnly()
+                    loadActivity()
+                }
+            }
+            "object/update" -> {
+                if (event.id == currentObjectId) {
+                    loadObjectOnly()
+                    loadActivity()
+                }
+            }
+            "attachment/create", "attachment/add" -> {
+                if (event.objectId == currentObjectId) {
+                    loadAttachments()
+                }
+            }
+            "attachment/delete", "attachment/remove" -> {
+                // No object id on these events — refetch our slice unconditionally.
+                // The list endpoint is scoped to the current object so this is cheap.
+                loadAttachments()
+            }
+            "request/create", "request/update" -> {
+                // Event payload nests the request object under "request" which the
+                // shared model doesn't expose. Refetch unconditionally — the list
+                // endpoint is scoped to the current object server-side.
+                loadRequests()
+            }
+            "request/delete" -> {
+                if (event.objectId == null || event.objectId == currentObjectId) {
+                    loadRequests()
+                }
+            }
+            "link/create", "link/delete" -> {
+                if (event.source == currentObjectId || event.target == currentObjectId) {
+                    loadLinks()
+                }
+            }
+        }
+    }
+
+    private fun loadObjectOnly() {
+        viewModelScope.launch {
+            try {
+                val fetched = repository.getObject(currentProjectId, currentObjectId)
+                val existing = _uiState.value.obj
+                val merged = if (fetched.values.isEmpty() && existing != null && existing.values.isNotEmpty()) {
+                    fetched.copy(values = existing.values)
+                } else {
+                    fetched
+                }
+                _uiState.value = _uiState.value.copy(obj = merged)
+            } catch (_: Exception) { }
         }
     }
 
@@ -236,6 +337,18 @@ class ObjectDetailViewModel @Inject constructor(
         }
     }
 
+    suspend fun loadRepositories(): List<Repository> = try {
+        repository.getRepositories()
+    } catch (_: Exception) {
+        emptyList()
+    }
+
+    suspend fun loadBranches(repo: String): List<Branch> = try {
+        repository.getBranches(repo)
+    } catch (_: Exception) {
+        emptyList()
+    }
+
     fun deleteRequest(requestId: String) {
         viewModelScope.launch {
             try {
@@ -299,6 +412,18 @@ class ObjectDetailViewModel @Inject constructor(
         }
     }
 
+    // PersonPicker expects List<User>. Person.id is an entity-id string; we
+    // round-trip it via User.fingerprint since User.id is a (numeric) Int.
+    suspend fun searchPeople(query: String): List<org.mochi.android.model.User> {
+        return try {
+            repository.searchUsers(query).map {
+                org.mochi.android.model.User(id = 0, name = it.name, fingerprint = it.id)
+            }
+        } catch (_: Exception) {
+            emptyList()
+        }
+    }
+
     // ---- Attachments ----
 
     private fun loadAttachments() {
@@ -337,8 +462,11 @@ class ObjectDetailViewModel @Inject constructor(
     private fun loadLinks() {
         viewModelScope.launch {
             try {
-                val links = repository.getLinks(currentProjectId, currentObjectId)
-                _uiState.value = _uiState.value.copy(links = links)
+                val result = repository.getLinks(currentProjectId, currentObjectId)
+                _uiState.value = _uiState.value.copy(
+                    incomingLinks = result.incoming,
+                    outgoingLinks = result.outgoing
+                )
             } catch (_: Exception) { }
         }
     }
@@ -354,11 +482,76 @@ class ObjectDetailViewModel @Inject constructor(
         }
     }
 
-    fun deleteLink(id: String) {
+    fun createReverseLink(source: String, linktype: String) {
+        // Creates a link FROM source TO the current object (e.g. for "blocked by")
         viewModelScope.launch {
             try {
-                repository.deleteLink(currentProjectId, currentObjectId, id)
+                repository.createLink(currentProjectId, source, currentObjectId, linktype)
                 loadLinks()
+            } catch (e: Exception) {
+                _uiState.value = _uiState.value.copy(error = e.toMochiError())
+            }
+        }
+    }
+
+    fun deleteOutgoingLink(target: String, linktype: String) {
+        viewModelScope.launch {
+            try {
+                repository.deleteLink(currentProjectId, currentObjectId, target, linktype)
+                loadLinks()
+            } catch (e: Exception) {
+                _uiState.value = _uiState.value.copy(error = e.toMochiError())
+            }
+        }
+    }
+
+    fun deleteIncomingLink(source: String, linktype: String) {
+        // To delete an incoming link, ask the source object to delete its outgoing link to us
+        viewModelScope.launch {
+            try {
+                repository.deleteLink(currentProjectId, source, currentObjectId, linktype)
+                loadLinks()
+            } catch (e: Exception) {
+                _uiState.value = _uiState.value.copy(error = e.toMochiError())
+            }
+        }
+    }
+
+    // ---- People (project members, used for resolving user-field display names) ----
+
+    private fun loadPeople() {
+        viewModelScope.launch {
+            try {
+                val people = repository.getPeople(currentProjectId)
+                _uiState.value = _uiState.value.copy(people = people)
+            } catch (_: Exception) { }
+        }
+    }
+
+    // ---- Sibling objects (for parent / link pickers) ----
+
+    private fun loadSiblingObjects() {
+        viewModelScope.launch {
+            try {
+                val cached = repository.getCachedObjects(currentProjectId)
+                if (cached != null) {
+                    _uiState.value = _uiState.value.copy(siblingObjects = cached)
+                    return@launch
+                }
+                val objects = repository.getObjects(currentProjectId)
+                _uiState.value = _uiState.value.copy(siblingObjects = objects)
+            } catch (_: Exception) { }
+        }
+    }
+
+    // ---- Parent ----
+
+    fun updateParent(newParent: String) {
+        val obj = _uiState.value.obj ?: return
+        _uiState.value = _uiState.value.copy(obj = obj.copy(parent = newParent))
+        viewModelScope.launch {
+            try {
+                repository.updateObject(currentProjectId, currentObjectId, parent = newParent)
             } catch (e: Exception) {
                 _uiState.value = _uiState.value.copy(error = e.toMochiError())
             }

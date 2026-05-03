@@ -30,9 +30,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import org.mochi.projects.R
 import org.mochi.projects.model.ProjectClass
+import org.mochi.android.R as MochiR
 
 @Composable
 fun ClassesTab(
@@ -46,7 +49,7 @@ fun ClassesTab(
         if (classes.isEmpty()) {
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                 Text(
-                    text = "No classes defined",
+                    text = stringResource(R.string.projects_classes_empty),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -84,7 +87,7 @@ fun ClassesTab(
                 .align(Alignment.BottomEnd)
                 .padding(16.dp)
         ) {
-            Icon(Icons.Default.Add, contentDescription = "Add class")
+            Icon(Icons.Default.Add, contentDescription = stringResource(R.string.projects_classes_add))
         }
     }
 
@@ -92,12 +95,12 @@ fun ClassesTab(
         var name by remember { mutableStateOf("") }
         AlertDialog(
             onDismissRequest = { showAddDialog = false },
-            title = { Text("Add class") },
+            title = { Text(stringResource(R.string.projects_classes_add_dialog_title)) },
             text = {
                 OutlinedTextField(
                     value = name,
                     onValueChange = { name = it },
-                    label = { Text("Name") },
+                    label = { Text(stringResource(R.string.projects_class_name)) },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth()
                 )
@@ -110,12 +113,12 @@ fun ClassesTab(
                     },
                     enabled = name.isNotBlank()
                 ) {
-                    Text("Create")
+                    Text(stringResource(R.string.projects_classes_create))
                 }
             },
             dismissButton = {
                 TextButton(onClick = { showAddDialog = false }) {
-                    Text("Cancel")
+                    Text(stringResource(MochiR.string.common_cancel))
                 }
             }
         )

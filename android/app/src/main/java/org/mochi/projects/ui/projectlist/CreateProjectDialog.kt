@@ -27,8 +27,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import org.mochi.projects.R
 import org.mochi.projects.model.Template
+import org.mochi.android.R as MochiR
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -45,15 +48,16 @@ fun CreateProjectDialog(
     var selectedTemplate by remember { mutableStateOf<String?>(null) }
     var templateExpanded by remember { mutableStateOf(false) }
 
+    val templateNoneLabel = stringResource(R.string.projects_create_template_none)
     AlertDialog(
         onDismissRequest = { if (!isCreating) onDismiss() },
-        title = { Text("Create project") },
+        title = { Text(stringResource(R.string.projects_create_title)) },
         text = {
             Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
                 OutlinedTextField(
                     value = name,
                     onValueChange = { name = it },
-                    label = { Text("Name") },
+                    label = { Text(stringResource(R.string.projects_create_name)) },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth()
                 )
@@ -61,7 +65,7 @@ fun CreateProjectDialog(
                 OutlinedTextField(
                     value = description,
                     onValueChange = { description = it },
-                    label = { Text("Description") },
+                    label = { Text(stringResource(R.string.projects_create_description)) },
                     maxLines = 3,
                     modifier = Modifier.fillMaxWidth()
                 )
@@ -69,24 +73,24 @@ fun CreateProjectDialog(
                 OutlinedTextField(
                     value = prefix,
                     onValueChange = { prefix = it.uppercase() },
-                    label = { Text("Prefix") },
+                    label = { Text(stringResource(R.string.projects_create_prefix)) },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth()
                 )
                 Spacer(modifier = Modifier.height(12.dp))
 
-                Text("Privacy")
+                Text(stringResource(R.string.projects_create_privacy))
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     RadioButton(
                         selected = privacy == "private",
                         onClick = { privacy = "private" }
                     )
-                    Text("Private", modifier = Modifier.padding(end = 16.dp))
+                    Text(stringResource(R.string.projects_create_private), modifier = Modifier.padding(end = 16.dp))
                     RadioButton(
                         selected = privacy == "public",
                         onClick = { privacy = "public" }
                     )
-                    Text("Public")
+                    Text(stringResource(R.string.projects_create_public))
                 }
 
                 if (templates.isNotEmpty()) {
@@ -96,10 +100,10 @@ fun CreateProjectDialog(
                         onExpandedChange = { templateExpanded = it }
                     ) {
                         OutlinedTextField(
-                            value = templates.find { it.id == selectedTemplate }?.name ?: "None",
+                            value = templates.find { it.id == selectedTemplate }?.name ?: templateNoneLabel,
                             onValueChange = {},
                             readOnly = true,
-                            label = { Text("Template") },
+                            label = { Text(stringResource(R.string.projects_create_template)) },
                             trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = templateExpanded) },
                             modifier = Modifier
                                 .menuAnchor(MenuAnchorType.PrimaryNotEditable)
@@ -110,7 +114,7 @@ fun CreateProjectDialog(
                             onDismissRequest = { templateExpanded = false }
                         ) {
                             DropdownMenuItem(
-                                text = { Text("None") },
+                                text = { Text(templateNoneLabel) },
                                 onClick = {
                                     selectedTemplate = null
                                     templateExpanded = false
@@ -138,13 +142,13 @@ fun CreateProjectDialog(
                 if (isCreating) {
                     CircularProgressIndicator(modifier = Modifier.size(16.dp), strokeWidth = 2.dp)
                 } else {
-                    Text("Create")
+                    Text(stringResource(R.string.projects_create_action))
                 }
             }
         },
         dismissButton = {
             TextButton(onClick = onDismiss, enabled = !isCreating) {
-                Text("Cancel")
+                Text(stringResource(MochiR.string.common_cancel))
             }
         }
     )

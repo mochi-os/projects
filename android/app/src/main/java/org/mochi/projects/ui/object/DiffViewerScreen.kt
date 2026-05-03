@@ -32,6 +32,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -46,8 +47,10 @@ import kotlinx.coroutines.launch
 import org.mochi.android.api.MochiError
 import org.mochi.android.api.toMochiError
 import org.mochi.android.api.userMessage
+import org.mochi.projects.R
 import org.mochi.projects.repository.ProjectsRepository
 import javax.inject.Inject
+import org.mochi.android.R as MochiR
 
 data class FileStats(
     val file: String,
@@ -248,17 +251,17 @@ fun DiffViewerScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Diff: ${viewModel.source} -> ${viewModel.target}") },
+                title = { Text(stringResource(R.string.projects_diff_title, viewModel.source, viewModel.target)) },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(MochiR.string.common_back))
                     }
                 },
                 actions = {
                     FilterChip(
                         selected = uiState.isUnified,
                         onClick = { viewModel.toggleViewMode() },
-                        label = { Text(if (uiState.isUnified) "Unified" else "Split") },
+                        label = { Text(if (uiState.isUnified) stringResource(R.string.projects_diff_unified) else stringResource(R.string.projects_diff_split)) },
                         leadingIcon = { Icon(Icons.Default.SwapHoriz, contentDescription = null, modifier = androidx.compose.ui.Modifier.height(16.dp)) }
                     )
                 }
@@ -345,7 +348,7 @@ fun DiffViewerScreen(
 
                 else -> {
                     Text(
-                        text = "No diff available",
+                        text = stringResource(R.string.projects_diff_empty),
                         modifier = Modifier.align(Alignment.Center),
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )

@@ -37,10 +37,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import org.mochi.projects.R
 import org.mochi.projects.ui.project.ProjectViewModel
+import org.mochi.android.R as MochiR
 
 @OptIn(ExperimentalFoundationApi::class, ExperimentalLayoutApi::class)
 @Composable
@@ -78,7 +81,7 @@ fun TreeRow(
             ) {
                 Icon(
                     imageVector = if (node.isExpanded) Icons.Default.ExpandMore else Icons.Default.ChevronRight,
-                    contentDescription = if (node.isExpanded) "Collapse" else "Expand",
+                    contentDescription = if (node.isExpanded) stringResource(MochiR.string.common_collapse) else stringResource(MochiR.string.common_expand),
                     modifier = Modifier.size(20.dp)
                 )
             }
@@ -148,7 +151,7 @@ fun TreeRow(
             ) {
                 if (onReparent != null) {
                     DropdownMenuItem(
-                        text = { Text("Move") },
+                        text = { Text(stringResource(R.string.projects_tree_move)) },
                         onClick = {
                             showContextMenu = false
                             showReparentDialog = true
@@ -159,7 +162,7 @@ fun TreeRow(
                     )
                 }
                 DropdownMenuItem(
-                    text = { Text("Delete") },
+                    text = { Text(stringResource(MochiR.string.common_delete)) },
                     onClick = {
                         showContextMenu = false
                         onDelete()
@@ -177,7 +180,7 @@ fun TreeRow(
         val possibleParents = allObjects.filter { it.id != obj.id }
         AlertDialog(
             onDismissRequest = { showReparentDialog = false },
-            title = { Text("Move to parent") },
+            title = { Text(stringResource(R.string.projects_tree_move_to_parent)) },
             text = {
                 LazyColumn {
                     item {
@@ -191,7 +194,7 @@ fun TreeRow(
                                 .padding(vertical = 10.dp),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
-                            Text("(Root level)", style = MaterialTheme.typography.bodyMedium)
+                            Text(stringResource(R.string.projects_tree_root_level), style = MaterialTheme.typography.bodyMedium)
                         }
                         HorizontalDivider()
                     }
@@ -217,7 +220,7 @@ fun TreeRow(
             },
             confirmButton = {},
             dismissButton = {
-                TextButton(onClick = { showReparentDialog = false }) { Text("Cancel") }
+                TextButton(onClick = { showReparentDialog = false }) { Text(stringResource(MochiR.string.common_cancel)) }
             }
         )
     }

@@ -21,9 +21,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import org.mochi.projects.R
 import org.mochi.projects.model.ProjectClass
 import org.mochi.projects.model.ProjectView
+import org.mochi.android.R as MochiR
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -49,7 +52,7 @@ fun CreateObjectDialog(
 
     AlertDialog(
         onDismissRequest = { if (!isCreating) onDismiss() },
-        title = { Text("Create object") },
+        title = { Text(stringResource(R.string.projects_create_object_title)) },
         text = {
             Column {
                 if (classes.size > 1) {
@@ -61,7 +64,7 @@ fun CreateObjectDialog(
                             value = classes.find { it.id == selectedClassId }?.name ?: "",
                             onValueChange = {},
                             readOnly = true,
-                            label = { Text("Type") },
+                            label = { Text(stringResource(R.string.projects_create_object_type)) },
                             trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = classExpanded) },
                             modifier = Modifier
                                 .menuAnchor(MenuAnchorType.PrimaryNotEditable)
@@ -88,7 +91,7 @@ fun CreateObjectDialog(
                 OutlinedTextField(
                     value = title,
                     onValueChange = { title = it },
-                    label = { Text("Title") },
+                    label = { Text(stringResource(R.string.projects_create_object_title_field)) },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth()
                 )
@@ -112,13 +115,13 @@ fun CreateObjectDialog(
                 if (isCreating) {
                     CircularProgressIndicator(modifier = Modifier.size(16.dp), strokeWidth = 2.dp)
                 } else {
-                    Text("Create")
+                    Text(stringResource(R.string.projects_create_action))
                 }
             }
         },
         dismissButton = {
             TextButton(onClick = onDismiss, enabled = !isCreating) {
-                Text("Cancel")
+                Text(stringResource(MochiR.string.common_cancel))
             }
         }
     )

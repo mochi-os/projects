@@ -20,7 +20,10 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
+import org.mochi.projects.R
+import org.mochi.android.R as MochiR
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -35,10 +38,10 @@ fun ProjectSettingsScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Settings") },
+                title = { Text(stringResource(R.string.projects_settings_title)) },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(MochiR.string.common_back))
                     }
                 }
             )
@@ -49,7 +52,10 @@ fun ProjectSettingsScreen(
                 .padding(padding)
                 .fillMaxSize()
         ) {
-            val tabs = listOf("General", "Access")
+            val tabs = listOf(
+                stringResource(R.string.projects_settings_tab_general),
+                stringResource(R.string.projects_settings_tab_access)
+            )
             TabRow(selectedTabIndex = selectedTab) {
                 tabs.forEachIndexed { index, title ->
                     Tab(

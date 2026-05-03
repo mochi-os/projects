@@ -45,20 +45,37 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import org.mochi.projects.R
 import org.mochi.projects.model.FieldOption
 import org.mochi.projects.model.ProjectField
 import org.mochi.projects.ui.`object`.ConfirmDeleteDialog
+import org.mochi.android.R as MochiR
 
-private val FIELD_TYPES = listOf(
-    "text" to "Text",
-    "number" to "Number",
-    "enumerated" to "Enumerated",
-    "user" to "User",
-    "date" to "Date",
-    "checklist" to "Checklist"
-)
+private val FIELD_TYPE_KEYS = listOf("text", "number", "enumerated", "user", "date", "checklist")
+
+@Composable
+private fun fieldTypeLabel(type: String): String = when (type) {
+    "text" -> stringResource(R.string.projects_field_type_text)
+    "number" -> stringResource(R.string.projects_field_type_number)
+    "enumerated" -> stringResource(R.string.projects_field_type_enumerated)
+    "user" -> stringResource(R.string.projects_field_type_user)
+    "date" -> stringResource(R.string.projects_field_type_date)
+    "checklist" -> stringResource(R.string.projects_field_type_checklist)
+    else -> type
+}
+
+private val POSITION_KEYS = listOf("", "header", "body", "sidebar")
+
+@Composable
+private fun positionLabel(value: String): String = when (value) {
+    "header" -> stringResource(R.string.projects_field_position_header)
+    "body" -> stringResource(R.string.projects_field_position_body)
+    "sidebar" -> stringResource(R.string.projects_field_position_sidebar)
+    else -> stringResource(R.string.projects_field_position_default)
+}
 
 private fun parseColor(hex: String): Color {
     return try {
@@ -105,10 +122,10 @@ fun FieldDetailScreen(
         // Header
         Row(verticalAlignment = Alignment.CenterVertically) {
             IconButton(onClick = onBack) {
-                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(MochiR.string.common_back))
             }
             Text(
-                text = "Field: ${field.name}",
+                text = stringResource(R.string.projects_field_label, field.name),
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.SemiBold
             )
@@ -120,7 +137,7 @@ fun FieldDetailScreen(
         OutlinedTextField(
             value = editName,
             onValueChange = { editName = it },
-            label = { Text("Name") },
+            label = { Text(stringResource(R.string.projects_field_name)) },
             singleLine = true,
             modifier = Modifier.fillMaxWidth()
         )
@@ -133,10 +150,10 @@ fun FieldDetailScreen(
             onExpandedChange = { typeExpanded = it }
         ) {
             OutlinedTextField(
-                value = FIELD_TYPES.find { it.first == editFieldtype }?.second ?: editFieldtype,
+                value = fieldTypeLabel(editFieldtype),
                 onValueChange = {},
                 readOnly = true,
-                label = { Text("Type") },
+                label = { Text(stringResource(R.string.projects_field_type)) },
                 trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = typeExpanded) },
                 modifier = Modifier
                     .menuAnchor(MenuAnchorType.PrimaryNotEditable)
@@ -146,9 +163,9 @@ fun FieldDetailScreen(
                 expanded = typeExpanded,
                 onDismissRequest = { typeExpanded = false }
             ) {
-                FIELD_TYPES.forEach { (value, label) ->
+                FIELD_TYPE_KEYS.forEach { value ->
                     DropdownMenuItem(
-                        text = { Text(label) },
+                        text = { Text(fieldTypeLabel(value)) },
                         onClick = {
                             editFieldtype = value
                             typeExpanded = false
@@ -163,32 +180,31 @@ fun FieldDetailScreen(
         Spacer(modifier = Modifier.height(16.dp))
 
         // Flags
-        Text("Flags", style = MaterialTheme.typography.titleSmall)
+        Text(stringResource(R.string.projects_field_flags), style = MaterialTheme.typography.titleSmall)
         Spacer(modifier = Modifier.height(8.dp))
 
-        FlagRow("Required", isRequired) { isRequired = it }
-        FlagRow("Read-only", isReadonly) { isReadonly = it }
-        FlagRow("Sortable", isSortable) { isSortable = it }
-        FlagRow("Filterable", isFilterable) { isFilterable = it }
-        FlagRow("Show on card", showOnCard) { showOnCard = it }
+        FlagRow(stringResource(R.string.projects_field_required), isRequired) { isRequired = it }
+        FlagRow(stringResource(R.string.projects_field_readonly), isReadonly) { isReadonly = it }
+        FlagRow(stringResource(R.string.projects_field_sortable), isSortable) { isSortable = it }
+        FlagRow(stringResource(R.string.projects_field_filterable), isFilterable) { isFilterable = it }
+        FlagRow(stringResource(R.string.projects_field_show_on_card), showOnCard) { showOnCard = it }
 
         if (editFieldtype == "enumerated") {
-            FlagRow("Multi-select", isMulti) { isMulti = it }
+            FlagRow(stringResource(R.string.projects_field_multi), isMulti) { isMulti = it }
         }
 
         Spacer(modifier = Modifier.height(12.dp))
 
         // Display position
         var posExpanded by remember { mutableStateOf(false) }
-        val positions = listOf("" to "Default", "header" to "Header", "body" to "Body", "sidebar" to "Sidebar")
-        Text("Display position", style = MaterialTheme.typography.labelMedium)
+        Text(stringResource(R.string.projects_field_position), style = MaterialTheme.typography.labelMedium)
         Spacer(modifier = Modifier.height(4.dp))
         ExposedDropdownMenuBox(
             expanded = posExpanded,
             onExpandedChange = { posExpanded = it }
         ) {
             OutlinedTextField(
-                value = positions.find { it.first == editPosition }?.second ?: "Default",
+                value = positionLabel(editPosition),
                 onValueChange = {},
                 readOnly = true,
                 trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = posExpanded) },
@@ -200,9 +216,9 @@ fun FieldDetailScreen(
                 expanded = posExpanded,
                 onDismissRequest = { posExpanded = false }
             ) {
-                positions.forEach { (value, label) ->
+                POSITION_KEYS.forEach { value ->
                     DropdownMenuItem(
-                        text = { Text(label) },
+                        text = { Text(positionLabel(value)) },
                         onClick = {
                             editPosition = value
                             posExpanded = false
@@ -217,7 +233,7 @@ fun FieldDetailScreen(
         Spacer(modifier = Modifier.height(16.dp))
 
         // Validation
-        Text("Validation", style = MaterialTheme.typography.titleSmall)
+        Text(stringResource(R.string.projects_field_validation), style = MaterialTheme.typography.titleSmall)
         Spacer(modifier = Modifier.height(8.dp))
 
         if (editFieldtype == "text") {
@@ -225,14 +241,14 @@ fun FieldDetailScreen(
                 OutlinedTextField(
                     value = editMinlength,
                     onValueChange = { editMinlength = it.filter { c -> c.isDigit() } },
-                    label = { Text("Min length") },
+                    label = { Text(stringResource(R.string.projects_field_min_length)) },
                     singleLine = true,
                     modifier = Modifier.weight(1f)
                 )
                 OutlinedTextField(
                     value = editMaxlength,
                     onValueChange = { editMaxlength = it.filter { c -> c.isDigit() } },
-                    label = { Text("Max length") },
+                    label = { Text(stringResource(R.string.projects_field_max_length)) },
                     singleLine = true,
                     modifier = Modifier.weight(1f)
                 )
@@ -241,7 +257,7 @@ fun FieldDetailScreen(
             OutlinedTextField(
                 value = editPattern,
                 onValueChange = { editPattern = it },
-                label = { Text("Pattern (regex)") },
+                label = { Text(stringResource(R.string.projects_field_pattern)) },
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth()
             )
@@ -251,7 +267,7 @@ fun FieldDetailScreen(
         OutlinedTextField(
             value = editRows,
             onValueChange = { editRows = it.filter { c -> c.isDigit() } },
-            label = { Text("Rows (textarea height)") },
+            label = { Text(stringResource(R.string.projects_field_rows)) },
             singleLine = true,
             modifier = Modifier.fillMaxWidth()
         )
@@ -291,7 +307,7 @@ fun FieldDetailScreen(
                 },
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text("Save changes")
+                Text(stringResource(R.string.projects_field_save))
             }
         }
 
@@ -306,9 +322,9 @@ fun FieldDetailScreen(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text("Options", style = MaterialTheme.typography.titleSmall)
+                Text(stringResource(R.string.projects_field_options), style = MaterialTheme.typography.titleSmall)
                 IconButton(onClick = { showAddOptionDialog = true }) {
-                    Icon(Icons.Default.Add, contentDescription = "Add option")
+                    Icon(Icons.Default.Add, contentDescription = stringResource(R.string.projects_field_add_option))
                 }
             }
 
@@ -347,7 +363,7 @@ fun FieldDetailScreen(
                     ) {
                         Icon(
                             Icons.Default.Edit,
-                            contentDescription = "Edit",
+                            contentDescription = stringResource(MochiR.string.common_edit),
                             modifier = Modifier.size(18.dp)
                         )
                     }
@@ -357,7 +373,7 @@ fun FieldDetailScreen(
                     ) {
                         Icon(
                             Icons.Default.Delete,
-                            contentDescription = "Delete",
+                            contentDescription = stringResource(MochiR.string.common_delete),
                             tint = MaterialTheme.colorScheme.error,
                             modifier = Modifier.size(18.dp)
                         )
@@ -368,7 +384,7 @@ fun FieldDetailScreen(
 
             if (options.isEmpty()) {
                 Text(
-                    text = "No options defined",
+                    text = stringResource(R.string.projects_field_no_options),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.padding(vertical = 12.dp)
@@ -390,13 +406,13 @@ fun FieldDetailScreen(
         ) {
             Icon(Icons.Default.Delete, contentDescription = null)
             Spacer(modifier = Modifier.width(8.dp))
-            Text("Delete field")
+            Text(stringResource(R.string.projects_field_delete))
         }
     }
 
     if (showAddOptionDialog) {
         OptionDialog(
-            title = "Add option",
+            title = stringResource(R.string.projects_option_add),
             initialName = "",
             initialColour = "",
             onDismiss = { showAddOptionDialog = false },
@@ -409,7 +425,7 @@ fun FieldDetailScreen(
 
     editingOption?.let { option ->
         OptionDialog(
-            title = "Edit option",
+            title = stringResource(R.string.projects_option_edit),
             initialName = option.name,
             initialColour = option.colour,
             onDismiss = { editingOption = null },
@@ -422,8 +438,8 @@ fun FieldDetailScreen(
 
     if (showDeleteConfirm) {
         ConfirmDeleteDialog(
-            title = "Delete field",
-            message = "Are you sure you want to delete the field \"${field.name}\"? All options and values will be lost.",
+            title = stringResource(R.string.projects_field_delete_title),
+            message = stringResource(R.string.projects_field_delete_message, field.name),
             onConfirm = {
                 showDeleteConfirm = false
                 viewModel.deleteField(classId, field.id)
@@ -478,12 +494,12 @@ private fun OptionDialog(
                 OutlinedTextField(
                     value = name,
                     onValueChange = { name = it },
-                    label = { Text("Name") },
+                    label = { Text(stringResource(R.string.projects_field_name)) },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth()
                 )
                 Spacer(modifier = Modifier.height(12.dp))
-                Text("Color", style = MaterialTheme.typography.labelMedium)
+                Text(stringResource(R.string.projects_option_color), style = MaterialTheme.typography.labelMedium)
                 Spacer(modifier = Modifier.height(8.dp))
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
@@ -526,12 +542,12 @@ private fun OptionDialog(
                 onClick = { onSave(name, colour.ifBlank { null }) },
                 enabled = name.isNotBlank()
             ) {
-                Text("Save")
+                Text(stringResource(MochiR.string.common_save))
             }
         },
         dismissButton = {
             TextButton(onClick = onDismiss) {
-                Text("Cancel")
+                Text(stringResource(MochiR.string.common_cancel))
             }
         }
     )

@@ -13,7 +13,9 @@ import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import org.mochi.projects.R
 import org.mochi.projects.model.ProjectObject
 import org.mochi.projects.model.ProjectView
 import org.mochi.projects.ui.project.ProjectViewModel
@@ -37,7 +39,7 @@ fun TreeView(
     if (objects.isEmpty()) {
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
             Text(
-                text = "No objects",
+                text = stringResource(R.string.projects_tree_empty),
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )

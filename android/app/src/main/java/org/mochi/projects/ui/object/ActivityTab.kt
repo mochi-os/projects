@@ -24,9 +24,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import org.mochi.android.util.formatTimestamp
+import org.mochi.projects.R
 import org.mochi.projects.model.Activity
 import org.mochi.projects.model.ProjectDetails
 
@@ -41,7 +43,7 @@ fun ActivityTab(
             contentAlignment = Alignment.Center
         ) {
             Text(
-                text = "No activity",
+                text = stringResource(R.string.projects_activity_empty),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
@@ -99,21 +101,21 @@ private fun ActivityItem(
     val newDisplay = resolveValue(item.newvalue)
 
     val description = when (item.action) {
-        "created" -> "created this object"
-        "deleted" -> "deleted this object"
+        "created" -> stringResource(R.string.projects_activity_created)
+        "deleted" -> stringResource(R.string.projects_activity_deleted)
         else -> {
             if (fieldName.isNotBlank()) {
                 if (oldDisplay.isNotBlank() && newDisplay.isNotBlank()) {
-                    "changed $fieldName: $oldDisplay \u2192 $newDisplay"
+                    stringResource(R.string.projects_activity_changed, fieldName, oldDisplay, newDisplay)
                 } else if (newDisplay.isNotBlank()) {
-                    "set $fieldName to $newDisplay"
+                    stringResource(R.string.projects_activity_set, fieldName, newDisplay)
                 } else if (oldDisplay.isNotBlank()) {
-                    "cleared $fieldName"
+                    stringResource(R.string.projects_activity_cleared, fieldName)
                 } else {
-                    "updated $fieldName"
+                    stringResource(R.string.projects_activity_updated, fieldName)
                 }
             } else {
-                "made a change"
+                stringResource(R.string.projects_activity_made_change)
             }
         }
     }

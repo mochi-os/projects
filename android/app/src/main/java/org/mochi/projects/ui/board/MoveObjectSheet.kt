@@ -28,7 +28,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import org.mochi.projects.R
 import org.mochi.projects.model.ProjectObject
 import org.mochi.projects.ui.project.ProjectViewModel
 
@@ -60,7 +62,7 @@ fun MoveObjectSheet(
         Column(modifier = Modifier.padding(horizontal = 16.dp)) {
             // Column selection
             Text(
-                text = "Move to column",
+                text = stringResource(R.string.projects_move_to_column),
                 style = MaterialTheme.typography.titleMedium,
                 modifier = Modifier.padding(bottom = 8.dp)
             )
@@ -99,7 +101,7 @@ fun MoveObjectSheet(
                         if (isSelected) {
                             Icon(
                                 Icons.Default.Check,
-                                contentDescription = "Current",
+                                contentDescription = stringResource(R.string.projects_move_current),
                                 tint = MaterialTheme.colorScheme.primary,
                                 modifier = Modifier.size(20.dp)
                             )
@@ -114,7 +116,7 @@ fun MoveObjectSheet(
                         HorizontalDivider()
                         Spacer(modifier = Modifier.height(8.dp))
                         Text(
-                            text = "Move to row",
+                            text = stringResource(R.string.projects_move_to_row),
                             style = MaterialTheme.typography.titleMedium,
                             modifier = Modifier.padding(bottom = 8.dp)
                         )
@@ -141,7 +143,7 @@ fun MoveObjectSheet(
                             if (isSelected) {
                                 Icon(
                                     Icons.Default.Check,
-                                    contentDescription = "Current",
+                                    contentDescription = stringResource(R.string.projects_move_current),
                                     tint = MaterialTheme.colorScheme.primary,
                                     modifier = Modifier.size(20.dp)
                                 )
@@ -157,7 +159,7 @@ fun MoveObjectSheet(
                         HorizontalDivider()
                         Spacer(modifier = Modifier.height(8.dp))
                         Text(
-                            text = "Position",
+                            text = stringResource(R.string.projects_move_position),
                             style = MaterialTheme.typography.titleMedium,
                             modifier = Modifier.padding(bottom = 8.dp)
                         )
@@ -173,7 +175,7 @@ fun MoveObjectSheet(
                                 .padding(vertical = 12.dp, horizontal = 8.dp),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
-                            Text("Top", style = MaterialTheme.typography.bodyLarge)
+                            Text(stringResource(R.string.projects_move_position_top), style = MaterialTheme.typography.bodyLarge)
                         }
                     }
                     items(columnObjects, key = { "after_${it.id}" }) { other ->
@@ -189,7 +191,7 @@ fun MoveObjectSheet(
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Text(
-                                text = "After $label",
+                                text = stringResource(R.string.projects_move_after, label),
                                 style = MaterialTheme.typography.bodyLarge,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                             )

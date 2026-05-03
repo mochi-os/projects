@@ -36,18 +36,25 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import org.mochi.android.model.AccessRule
+import org.mochi.projects.R
+import org.mochi.android.R as MochiR
 
-private val ACCESS_LEVELS = listOf(
-    "owner" to "Owner",
-    "design" to "Design",
-    "write" to "Write",
-    "comment" to "Comment",
-    "view" to "View",
-    "none" to "None"
-)
+private val ACCESS_LEVEL_KEYS = listOf("owner", "design", "write", "comment", "view", "none")
+
+@Composable
+private fun accessLevelLabel(value: String): String = when (value) {
+    "owner" -> stringResource(R.string.projects_access_level_owner)
+    "design" -> stringResource(R.string.projects_access_level_design)
+    "write" -> stringResource(R.string.projects_access_level_write)
+    "comment" -> stringResource(R.string.projects_access_level_comment)
+    "view" -> stringResource(R.string.projects_access_level_view)
+    "none" -> stringResource(R.string.projects_access_level_none)
+    else -> value
+}
 
 @Composable
 fun AccessTab(
@@ -65,7 +72,7 @@ fun AccessTab(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = "No access rules",
+                    text = stringResource(MochiR.string.access_no_rules),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -91,7 +98,7 @@ fun AccessTab(
             FloatingActionButton(
                 onClick = { showAddDialog = true }
             ) {
-                Icon(Icons.Default.Add, contentDescription = "Add access rule")
+                Icon(Icons.Default.Add, contentDescription = stringResource(MochiR.string.access_add_rule))
             }
         }
     }
@@ -131,7 +138,7 @@ private fun AccessRuleItem(
                 fontWeight = FontWeight.Medium
             )
             Text(
-                text = ACCESS_LEVELS.find { it.first == rule.operation }?.second ?: rule.operation,
+                text = accessLevelLabel(rule.operation),
                 style = MaterialTheme.typography.labelSmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
@@ -140,7 +147,7 @@ private fun AccessRuleItem(
             IconButton(onClick = onRevoke) {
                 Icon(
                     Icons.Default.Close,
-                    contentDescription = "Revoke",
+                    contentDescription = stringResource(MochiR.string.access_revoke),
                     tint = MaterialTheme.colorScheme.error
                 )
             }
@@ -160,13 +167,13 @@ private fun AddAccessDialog(
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Add access rule") },
+        title = { Text(stringResource(MochiR.string.access_add_rule_title)) },
         text = {
             Column {
                 OutlinedTextField(
                     value = subject,
                     onValueChange = { subject = it },
-                    label = { Text("User fingerprint") },
+                    label = { Text(stringResource(R.string.projects_access_user_fingerprint)) },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth()
                 )
@@ -176,10 +183,10 @@ private fun AddAccessDialog(
                     onExpandedChange = { operationExpanded = it }
                 ) {
                     OutlinedTextField(
-                        value = ACCESS_LEVELS.find { it.first == operation }?.second ?: operation,
+                        value = accessLevelLabel(operation),
                         onValueChange = {},
                         readOnly = true,
-                        label = { Text("Access level") },
+                        label = { Text(stringResource(MochiR.string.access_level)) },
                         trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = operationExpanded) },
                         modifier = Modifier
                             .menuAnchor(MenuAnchorType.PrimaryNotEditable)
@@ -189,9 +196,9 @@ private fun AddAccessDialog(
                         expanded = operationExpanded,
                         onDismissRequest = { operationExpanded = false }
                     ) {
-                        ACCESS_LEVELS.forEach { (value, label) ->
+                        ACCESS_LEVEL_KEYS.forEach { value ->
                             DropdownMenuItem(
-                                text = { Text(label) },
+                                text = { Text(accessLevelLabel(value)) },
                                 onClick = {
                                     operation = value
                                     operationExpanded = false
@@ -207,12 +214,12 @@ private fun AddAccessDialog(
                 onClick = { onAdd(subject, operation) },
                 enabled = subject.isNotBlank()
             ) {
-                Text("Add")
+                Text(stringResource(MochiR.string.common_add))
             }
         },
         dismissButton = {
             TextButton(onClick = onDismiss) {
-                Text("Cancel")
+                Text(stringResource(MochiR.string.common_cancel))
             }
         }
     )

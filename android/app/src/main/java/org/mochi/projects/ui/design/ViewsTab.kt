@@ -47,12 +47,15 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import org.mochi.projects.R
 import org.mochi.projects.model.ProjectClass
 import org.mochi.projects.model.ProjectField
 import org.mochi.projects.model.ProjectView
 import org.mochi.projects.ui.`object`.ConfirmDeleteDialog
+import org.mochi.android.R as MochiR
 
 @Composable
 fun ViewsTab(
@@ -76,7 +79,7 @@ fun ViewsTab(
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(onClick = { showAddDialog = true }) {
-                Icon(Icons.Default.Add, contentDescription = "Add view")
+                Icon(Icons.Default.Add, contentDescription = stringResource(R.string.projects_views_add))
             }
         }
     ) { padding ->
@@ -90,13 +93,13 @@ fun ViewsTab(
                 verticalArrangement = Arrangement.Center
             ) {
                 Text(
-                    text = "No views defined",
+                    text = stringResource(R.string.projects_views_empty),
                     style = MaterialTheme.typography.bodyLarge,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
-                    text = "Create a board or list view to group objects",
+                    text = stringResource(R.string.projects_views_empty_subtitle),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -122,7 +125,7 @@ fun ViewsTab(
 
     if (showAddDialog) {
         ViewDialog(
-            title = "Add view",
+            title = stringResource(R.string.projects_views_add_dialog_title),
             initialView = null,
             classes = classes,
             enumeratedFields = enumeratedFields,
@@ -147,7 +150,7 @@ fun ViewsTab(
 
     editingView?.let { view ->
         ViewDialog(
-            title = "Edit view",
+            title = stringResource(R.string.projects_views_edit_dialog_title),
             initialView = view,
             classes = classes,
             enumeratedFields = enumeratedFields,
@@ -173,8 +176,8 @@ fun ViewsTab(
 
     deletingView?.let { view ->
         ConfirmDeleteDialog(
-            title = "Delete view",
-            message = "Are you sure you want to delete the view \"${view.name}\"?",
+            title = stringResource(R.string.projects_views_delete_title),
+            message = stringResource(R.string.projects_views_delete_message, view.name),
             onConfirm = {
                 viewModel.deleteView(view.id)
                 deletingView = null
@@ -212,14 +215,16 @@ private fun ViewRow(
                 style = MaterialTheme.typography.bodyMedium,
                 fontWeight = FontWeight.Medium
             )
+            val viewBoardLabel = stringResource(R.string.projects_views_type_board)
+            val viewListLabel = stringResource(R.string.projects_views_type_list)
             val details = buildList {
-                add(if (view.viewtype == "board") "Board" else "List")
+                add(if (view.viewtype == "board") viewBoardLabel else viewListLabel)
                 if (view.columns.isNotBlank()) {
                     val field = allFields.find { it.id == view.columns }
-                    if (field != null) add("by ${field.name}")
+                    if (field != null) add(stringResource(R.string.projects_views_by, field.name))
                 }
                 if (view.sort.isNotBlank()) {
-                    add("sorted ${view.direction}")
+                    add(stringResource(R.string.projects_views_sorted, view.direction))
                 }
             }.joinToString(" · ")
             Text(
@@ -229,12 +234,12 @@ private fun ViewRow(
             )
         }
         IconButton(onClick = onEdit, modifier = Modifier.size(32.dp)) {
-            Icon(Icons.Default.Edit, contentDescription = "Edit", modifier = Modifier.size(18.dp))
+            Icon(Icons.Default.Edit, contentDescription = stringResource(MochiR.string.common_edit), modifier = Modifier.size(18.dp))
         }
         IconButton(onClick = onDelete, modifier = Modifier.size(32.dp)) {
             Icon(
                 Icons.Default.Delete,
-                contentDescription = "Delete",
+                contentDescription = stringResource(MochiR.string.common_delete),
                 tint = MaterialTheme.colorScheme.error,
                 modifier = Modifier.size(18.dp)
             )
@@ -289,7 +294,7 @@ private fun ViewDialog(
                 OutlinedTextField(
                     value = name,
                     onValueChange = { name = it },
-                    label = { Text("Name") },
+                    label = { Text(stringResource(R.string.projects_class_name)) },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth()
                 )
@@ -297,7 +302,7 @@ private fun ViewDialog(
                 Spacer(modifier = Modifier.height(12.dp))
 
                 // View type
-                Text("Type", style = MaterialTheme.typography.labelMedium)
+                Text(stringResource(R.string.projects_views_type), style = MaterialTheme.typography.labelMedium)
                 Spacer(modifier = Modifier.height(4.dp))
                 SingleChoiceSegmentedButtonRow(modifier = Modifier.fillMaxWidth()) {
                     SegmentedButton(
@@ -306,7 +311,7 @@ private fun ViewDialog(
                         shape = SegmentedButtonDefaults.itemShape(index = 0, count = 2),
                         icon = { Icon(Icons.Default.Dashboard, contentDescription = null, modifier = Modifier.size(18.dp)) }
                     ) {
-                        Text("Board")
+                        Text(stringResource(R.string.projects_views_type_board))
                     }
                     SegmentedButton(
                         selected = viewtype == "list",
@@ -314,7 +319,7 @@ private fun ViewDialog(
                         shape = SegmentedButtonDefaults.itemShape(index = 1, count = 2),
                         icon = { Icon(Icons.Default.FormatListBulleted, contentDescription = null, modifier = Modifier.size(18.dp)) }
                     ) {
-                        Text("List")
+                        Text(stringResource(R.string.projects_views_type_list))
                     }
                 }
 
@@ -323,7 +328,7 @@ private fun ViewDialog(
                 // Columns field (for board view - which enumerated field drives columns)
                 if (viewtype == "board") {
                     FieldDropdown(
-                        label = "Columns field",
+                        label = stringResource(R.string.projects_views_columns_field),
                         selectedId = columnsField,
                         fields = enumeratedFields,
                         expanded = columnsExpanded,
@@ -334,7 +339,7 @@ private fun ViewDialog(
 
                     // Rows field (swimlanes)
                     FieldDropdown(
-                        label = "Rows field (swimlanes)",
+                        label = stringResource(R.string.projects_views_rows_field),
                         selectedId = rowsField,
                         fields = enumeratedFields,
                         expanded = rowsExpanded,
@@ -346,7 +351,7 @@ private fun ViewDialog(
 
                     // Border field
                     FieldDropdown(
-                        label = "Border color field",
+                        label = stringResource(R.string.projects_views_border_field),
                         selectedId = borderField,
                         fields = enumeratedFields,
                         expanded = borderExpanded,
@@ -360,20 +365,25 @@ private fun ViewDialog(
 
                 // Sort
                 FieldDropdown(
-                    label = "Sort by",
+                    label = stringResource(R.string.projects_views_sort_by),
                     selectedId = sortField,
                     fields = allFields.filter { it.isSortable || it.fieldtype in listOf("number", "date", "text") },
                     expanded = sortExpanded,
                     onExpandedChange = { sortExpanded = it },
                     onSelect = { sortField = it },
                     allowNone = true,
-                    extraOptions = listOf("number" to "Number", "created" to "Created", "updated" to "Updated", "rank" to "Rank")
+                    extraOptions = listOf(
+                        "number" to stringResource(R.string.projects_views_sort_number),
+                        "created" to stringResource(R.string.projects_views_sort_created),
+                        "updated" to stringResource(R.string.projects_views_sort_updated),
+                        "rank" to stringResource(R.string.projects_views_sort_rank)
+                    )
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
 
                 // Direction
-                Text("Direction", style = MaterialTheme.typography.labelMedium)
+                Text(stringResource(R.string.projects_views_direction), style = MaterialTheme.typography.labelMedium)
                 Spacer(modifier = Modifier.height(4.dp))
                 SingleChoiceSegmentedButtonRow(modifier = Modifier.fillMaxWidth()) {
                     SegmentedButton(
@@ -381,21 +391,21 @@ private fun ViewDialog(
                         onClick = { direction = "asc" },
                         shape = SegmentedButtonDefaults.itemShape(index = 0, count = 2)
                     ) {
-                        Text("Ascending")
+                        Text(stringResource(R.string.projects_views_direction_asc))
                     }
                     SegmentedButton(
                         selected = direction == "desc",
                         onClick = { direction = "desc" },
                         shape = SegmentedButtonDefaults.itemShape(index = 1, count = 2)
                     ) {
-                        Text("Descending")
+                        Text(stringResource(R.string.projects_views_direction_desc))
                     }
                 }
 
                 // Class filter
                 if (classes.size > 1) {
                     Spacer(modifier = Modifier.height(12.dp))
-                    Text("Filter to classes", style = MaterialTheme.typography.labelMedium)
+                    Text(stringResource(R.string.projects_views_filter_classes), style = MaterialTheme.typography.labelMedium)
                     Spacer(modifier = Modifier.height(4.dp))
                     FlowRow(
                         horizontalArrangement = Arrangement.spacedBy(6.dp),
@@ -434,12 +444,12 @@ private fun ViewDialog(
                 },
                 enabled = name.isNotBlank()
             ) {
-                Text("Save")
+                Text(stringResource(MochiR.string.common_save))
             }
         },
         dismissButton = {
             TextButton(onClick = onDismiss) {
-                Text("Cancel")
+                Text(stringResource(MochiR.string.common_cancel))
             }
         }
     )
@@ -457,9 +467,10 @@ private fun FieldDropdown(
     allowNone: Boolean = false,
     extraOptions: List<Pair<String, String>> = emptyList()
 ) {
+    val noneLabel = stringResource(R.string.projects_create_template_none)
     val selectedName = fields.find { it.id == selectedId }?.name
         ?: extraOptions.find { it.first == selectedId }?.second
-        ?: if (selectedId.isBlank() && allowNone) "None" else selectedId
+        ?: if (selectedId.isBlank() && allowNone) noneLabel else selectedId
 
     ExposedDropdownMenuBox(
         expanded = expanded,
@@ -481,7 +492,7 @@ private fun FieldDropdown(
         ) {
             if (allowNone) {
                 DropdownMenuItem(
-                    text = { Text("None") },
+                    text = { Text(noneLabel) },
                     onClick = {
                         onSelect("")
                         onExpandedChange(false)

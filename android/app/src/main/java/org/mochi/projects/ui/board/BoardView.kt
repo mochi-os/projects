@@ -43,12 +43,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import org.mochi.projects.R
 import org.mochi.projects.model.FieldOption
 import org.mochi.projects.model.ProjectObject
 import org.mochi.projects.model.ProjectView
 import org.mochi.projects.ui.project.ProjectViewModel
+import org.mochi.android.R as MochiR
 
 @Composable
 fun BoardView(
@@ -61,7 +64,7 @@ fun BoardView(
     if (view == null || view.columns.isBlank()) {
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
             Text(
-                text = "No columns configured for this view",
+                text = stringResource(R.string.projects_board_no_columns),
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
@@ -96,7 +99,7 @@ fun BoardView(
     if (columnOptions.isEmpty()) {
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
             Text(
-                text = "No options configured for column field",
+                text = stringResource(R.string.projects_board_no_options),
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
@@ -115,6 +118,7 @@ fun BoardView(
     // Add unassigned column
     val assignedIds = objectsByColumn.values.flatten().map { it.id }.toSet()
     val unassigned = filteredObjects.filter { it.id !in assignedIds }
+    val unassignedLabel = stringResource(R.string.projects_board_unassigned)
 
     LazyRow(
         modifier = Modifier.fillMaxSize(),
@@ -153,7 +157,7 @@ fun BoardView(
         if (unassigned.isNotEmpty()) {
             item {
                 BoardColumn(
-                    option = FieldOption(id = "", name = "Unassigned", colour = ""),
+                    option = FieldOption(id = "", name = unassignedLabel, colour = ""),
                     objects = unassigned,
                     viewModel = viewModel,
                     columnFieldId = columnFieldId,
@@ -212,7 +216,7 @@ private fun BoardColumn(
         ) {
             Icon(
                 imageVector = if (collapsed) Icons.Default.ChevronRight else Icons.Default.ExpandMore,
-                contentDescription = if (collapsed) "Expand" else "Collapse",
+                contentDescription = if (collapsed) stringResource(MochiR.string.common_expand) else stringResource(MochiR.string.common_collapse),
                 modifier = Modifier
                     .size(18.dp)
                     .clickable { collapsed = !collapsed },
@@ -248,7 +252,7 @@ private fun BoardColumn(
                     ) {
                         Icon(
                             Icons.Default.Add,
-                            contentDescription = "New",
+                            contentDescription = stringResource(R.string.projects_board_new),
                             modifier = Modifier.size(16.dp)
                         )
                     }
@@ -263,7 +267,7 @@ private fun BoardColumn(
                         ) {
                             Icon(
                                 Icons.Default.ExpandMore,
-                                contentDescription = "Column options",
+                                contentDescription = stringResource(R.string.projects_board_column_options),
                                 modifier = Modifier.size(16.dp)
                             )
                         }
@@ -273,7 +277,7 @@ private fun BoardColumn(
                         ) {
                             if (onRename != null) {
                                 DropdownMenuItem(
-                                    text = { Text("Rename") },
+                                    text = { Text(stringResource(R.string.projects_board_rename)) },
                                     onClick = {
                                         showMenu = false
                                         showRenameDialog = true
@@ -282,7 +286,7 @@ private fun BoardColumn(
                             }
                             if (onDelete != null) {
                                 DropdownMenuItem(
-                                    text = { Text("Delete", color = MaterialTheme.colorScheme.error) },
+                                    text = { Text(stringResource(MochiR.string.common_delete), color = MaterialTheme.colorScheme.error) },
                                     onClick = {
                                         showMenu = false
                                         onDelete()
@@ -295,7 +299,7 @@ private fun BoardColumn(
                         var newName by remember { mutableStateOf(option.name) }
                         AlertDialog(
                             onDismissRequest = { showRenameDialog = false },
-                            title = { Text("Rename column") },
+                            title = { Text(stringResource(R.string.projects_board_rename_column)) },
                             text = {
                                 OutlinedTextField(
                                     value = newName,
@@ -311,10 +315,10 @@ private fun BoardColumn(
                                         showRenameDialog = false
                                     },
                                     enabled = newName.isNotBlank()
-                                ) { Text("Rename") }
+                                ) { Text(stringResource(R.string.projects_board_rename)) }
                             },
                             dismissButton = {
-                                TextButton(onClick = { showRenameDialog = false }) { Text("Cancel") }
+                                TextButton(onClick = { showRenameDialog = false }) { Text(stringResource(MochiR.string.common_cancel)) }
                             }
                         )
                     }
@@ -372,7 +376,7 @@ private fun BoardColumn(
                 if (unassignedRow.isNotEmpty()) {
                     item(key = "header_unassigned_row") {
                         Text(
-                            text = "Unassigned",
+                            text = stringResource(R.string.projects_board_unassigned),
                             style = MaterialTheme.typography.labelMedium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                             modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp)

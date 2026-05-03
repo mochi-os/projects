@@ -54,13 +54,17 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.pluralStringResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import org.mochi.projects.R
 import org.mochi.projects.model.Branch
 import org.mochi.projects.model.MergeCheck
 import org.mochi.projects.model.MergeRequest
 import org.mochi.projects.model.Repository
+import org.mochi.android.R as MochiR
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -80,7 +84,7 @@ fun RequestsTab(
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = "No merge requests",
+                    text = stringResource(R.string.projects_request_empty),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -112,7 +116,7 @@ fun RequestsTab(
                 .align(Alignment.BottomEnd)
                 .padding(16.dp)
         ) {
-            Icon(Icons.Default.Add, contentDescription = "New merge request")
+            Icon(Icons.Default.Add, contentDescription = stringResource(R.string.projects_request_new))
         }
     }
 
@@ -164,14 +168,14 @@ private fun RequestItem(
         }
         Box {
             IconButton(onClick = { showOverflow = true }) {
-                Icon(Icons.Default.MoreVert, contentDescription = "More")
+                Icon(Icons.Default.MoreVert, contentDescription = stringResource(MochiR.string.common_more_options))
             }
             DropdownMenu(
                 expanded = showOverflow,
                 onDismissRequest = { showOverflow = false }
             ) {
                 DropdownMenuItem(
-                    text = { Text("Delete") },
+                    text = { Text(stringResource(MochiR.string.common_delete)) },
                     onClick = {
                         showOverflow = false
                         onDelete()
@@ -188,10 +192,10 @@ private fun RequestItem(
 @Composable
 private fun StatusChip(status: String, draft: Boolean) {
     val (label, color) = when {
-        draft -> "Draft" to MaterialTheme.colorScheme.outlineVariant
-        status == "open" -> "Open" to Color(0xFF4CAF50)
-        status == "merged" -> "Merged" to Color(0xFF9C27B0)
-        status == "closed" -> "Closed" to Color(0xFFF44336)
+        draft -> stringResource(R.string.projects_request_status_draft) to MaterialTheme.colorScheme.outlineVariant
+        status == "open" -> stringResource(R.string.projects_request_status_open) to Color(0xFF4CAF50)
+        status == "merged" -> stringResource(R.string.projects_request_status_merged) to Color(0xFF9C27B0)
+        status == "closed" -> stringResource(R.string.projects_request_status_closed) to Color(0xFFF44336)
         else -> status.replaceFirstChar { it.uppercase() } to MaterialTheme.colorScheme.outlineVariant
     }
     SuggestionChip(
@@ -237,7 +241,7 @@ private fun RequestDetailView(
             .padding(16.dp)
     ) {
         TextButton(onClick = onBack) {
-            Text("Back to list")
+            Text(stringResource(R.string.projects_request_back_to_list))
         }
 
         Spacer(modifier = Modifier.height(8.dp))
@@ -270,9 +274,9 @@ private fun RequestDetailView(
             modifier = Modifier.fillMaxWidth()
         ) {
             Column(modifier = Modifier.padding(12.dp)) {
-                Text("Repository: ${request.repository}", style = MaterialTheme.typography.bodySmall)
-                Text("Source: ${request.source}", style = MaterialTheme.typography.bodySmall)
-                Text("Target: ${request.target}", style = MaterialTheme.typography.bodySmall)
+                Text(stringResource(R.string.projects_request_repository, request.repository), style = MaterialTheme.typography.bodySmall)
+                Text(stringResource(R.string.projects_request_source, request.source), style = MaterialTheme.typography.bodySmall)
+                Text(stringResource(R.string.projects_request_target, request.target), style = MaterialTheme.typography.bodySmall)
             }
         }
 
@@ -284,7 +288,7 @@ private fun RequestDetailView(
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         CircularProgressIndicator(modifier = Modifier.size(16.dp), strokeWidth = 2.dp)
                         Spacer(modifier = Modifier.width(8.dp))
-                        Text("Checking merge status...", style = MaterialTheme.typography.bodySmall)
+                        Text(stringResource(R.string.projects_request_checking_merge), style = MaterialTheme.typography.bodySmall)
                     }
                 }
                 mergeCheck != null -> {
@@ -296,7 +300,7 @@ private fun RequestDetailView(
                         )
                         Spacer(modifier = Modifier.width(8.dp))
                         Text(
-                            text = if (check.canMerge) "Can be merged" else "Cannot merge",
+                            text = if (check.canMerge) stringResource(R.string.projects_request_can_merge) else stringResource(R.string.projects_request_cannot_merge),
                             style = MaterialTheme.typography.bodySmall,
                             fontWeight = FontWeight.Medium,
                             color = if (check.canMerge) Color(0xFF4CAF50) else MaterialTheme.colorScheme.error
@@ -304,7 +308,7 @@ private fun RequestDetailView(
                     }
                     if (check.ahead > 0 || check.behind > 0) {
                         Text(
-                            text = "${check.ahead} ahead, ${check.behind} behind",
+                            text = stringResource(R.string.projects_request_ahead_behind, check.ahead, check.behind),
                             style = MaterialTheme.typography.labelSmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
@@ -313,7 +317,7 @@ private fun RequestDetailView(
                     if (check.conflicts.isNotEmpty()) {
                         Spacer(modifier = Modifier.height(8.dp))
                         Text(
-                            text = "${check.conflicts.size} conflicting file${if (check.conflicts.size != 1) "s" else ""}",
+                            text = pluralStringResource(R.plurals.projects_request_conflicts, check.conflicts.size, check.conflicts.size),
                             style = MaterialTheme.typography.labelMedium,
                             fontWeight = FontWeight.SemiBold,
                             color = MaterialTheme.colorScheme.error
@@ -334,7 +338,7 @@ private fun RequestDetailView(
         if (request.draft && request.status == "open") {
             Spacer(modifier = Modifier.height(8.dp))
             Text(
-                text = "This is a draft. Mark as ready before merging.",
+                text = stringResource(R.string.projects_request_draft_notice),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
@@ -346,12 +350,12 @@ private fun RequestDetailView(
             TextButton(onClick = {
                 onViewDiff(projectId, request.repository, request.source, request.target)
             }) {
-                Text("View diff")
+                Text(stringResource(R.string.projects_request_view_diff))
             }
 
             if (request.status == "open" && !request.draft && mergeCheck?.canMerge == true) {
                 TextButton(onClick = { showMergeDialog = true }) {
-                    Text("Merge", color = Color(0xFF4CAF50))
+                    Text(stringResource(R.string.projects_request_merge), color = Color(0xFF4CAF50))
                 }
             }
 
@@ -359,7 +363,7 @@ private fun RequestDetailView(
                 TextButton(onClick = {
                     viewModel.updateRequest(request.id, null, null, null, false)
                 }) {
-                    Text("Mark as ready")
+                    Text(stringResource(R.string.projects_request_mark_ready))
                 }
             }
 
@@ -367,7 +371,7 @@ private fun RequestDetailView(
                 TextButton(onClick = {
                     viewModel.updateRequest(request.id, null, null, "closed", null)
                 }) {
-                    Text("Close")
+                    Text(stringResource(R.string.projects_request_close))
                 }
             }
         }
@@ -394,29 +398,36 @@ private fun MergeDialog(
     onDismiss: () -> Unit,
     onMerge: (message: String, method: String) -> Unit
 ) {
-    var message by remember { mutableStateOf("Merge ${request.source} into ${request.target}") }
+    val defaultMessage = stringResource(R.string.projects_request_merge_default_message, request.source, request.target)
+    var message by remember(defaultMessage) { mutableStateOf(defaultMessage) }
     var method by remember { mutableStateOf("merge") }
+
+    val methodLabels = mapOf(
+        "merge" to stringResource(R.string.projects_request_method_merge),
+        "squash" to stringResource(R.string.projects_request_method_squash),
+        "rebase" to stringResource(R.string.projects_request_method_rebase)
+    )
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Merge") },
+        title = { Text(stringResource(R.string.projects_request_merge_dialog_title)) },
         text = {
             Column {
                 OutlinedTextField(
                     value = message,
                     onValueChange = { message = it },
-                    label = { Text("Commit message") },
+                    label = { Text(stringResource(R.string.projects_request_commit_message)) },
                     modifier = Modifier.fillMaxWidth(),
                     maxLines = 3
                 )
                 Spacer(modifier = Modifier.height(12.dp))
-                Text("Method", style = MaterialTheme.typography.labelMedium, fontWeight = FontWeight.SemiBold)
+                Text(stringResource(R.string.projects_request_method), style = MaterialTheme.typography.labelMedium, fontWeight = FontWeight.SemiBold)
                 Spacer(modifier = Modifier.height(4.dp))
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     listOf("merge", "squash", "rebase").forEach { m ->
                         SuggestionChip(
                             onClick = { method = m },
-                            label = { Text(m.replaceFirstChar { it.uppercase() }) },
+                            label = { Text(methodLabels[m] ?: m) },
                             colors = SuggestionChipDefaults.suggestionChipColors(
                                 containerColor = if (method == m) MaterialTheme.colorScheme.primaryContainer
                                 else MaterialTheme.colorScheme.surfaceVariant
@@ -431,12 +442,12 @@ private fun MergeDialog(
                 onClick = { onMerge(message, method) },
                 enabled = message.isNotBlank()
             ) {
-                Text("Merge")
+                Text(stringResource(R.string.projects_request_merge))
             }
         },
         dismissButton = {
             TextButton(onClick = onDismiss) {
-                Text("Cancel")
+                Text(stringResource(MochiR.string.common_cancel))
             }
         }
     )
@@ -470,13 +481,13 @@ private fun CreateRequestDialog(
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Create merge request") },
+        title = { Text(stringResource(R.string.projects_request_create_title)) },
         text = {
             Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
                 OutlinedTextField(
                     value = selectedRepo,
                     onValueChange = { selectedRepo = it },
-                    label = { Text("Repository") },
+                    label = { Text(stringResource(R.string.projects_request_field_repository)) },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth()
                 )
@@ -484,7 +495,7 @@ private fun CreateRequestDialog(
                 OutlinedTextField(
                     value = selectedSource,
                     onValueChange = { selectedSource = it },
-                    label = { Text("Source branch") },
+                    label = { Text(stringResource(R.string.projects_request_field_source)) },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth()
                 )
@@ -492,7 +503,7 @@ private fun CreateRequestDialog(
                 OutlinedTextField(
                     value = selectedTarget,
                     onValueChange = { selectedTarget = it },
-                    label = { Text("Target branch") },
+                    label = { Text(stringResource(R.string.projects_request_field_target)) },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth()
                 )
@@ -500,7 +511,7 @@ private fun CreateRequestDialog(
                 OutlinedTextField(
                     value = title,
                     onValueChange = { title = it },
-                    label = { Text("Title") },
+                    label = { Text(stringResource(R.string.projects_request_field_title)) },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth()
                 )
@@ -508,7 +519,7 @@ private fun CreateRequestDialog(
                 OutlinedTextField(
                     value = description,
                     onValueChange = { description = it },
-                    label = { Text("Description") },
+                    label = { Text(stringResource(R.string.projects_request_field_description)) },
                     maxLines = 4,
                     modifier = Modifier.fillMaxWidth()
                 )
@@ -518,7 +529,7 @@ private fun CreateRequestDialog(
                         checked = draft,
                         onCheckedChange = { draft = it }
                     )
-                    Text("Draft")
+                    Text(stringResource(R.string.projects_request_field_draft))
                 }
             }
         },
@@ -537,12 +548,12 @@ private fun CreateRequestDialog(
                 enabled = title.isNotBlank() && selectedRepo.isNotBlank() &&
                     selectedSource.isNotBlank() && selectedTarget.isNotBlank()
             ) {
-                Text("Create")
+                Text(stringResource(R.string.projects_request_create_action))
             }
         },
         dismissButton = {
             TextButton(onClick = onDismiss) {
-                Text("Cancel")
+                Text(stringResource(MochiR.string.common_cancel))
             }
         }
     )

@@ -46,10 +46,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import org.mochi.projects.R
 import org.mochi.projects.model.ChecklistItem
 import org.mochi.projects.model.FieldOption
 import org.mochi.projects.model.ProjectDetails
@@ -58,6 +60,7 @@ import org.mochi.projects.model.ProjectObject
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import org.mochi.android.R as MochiR
 
 @Composable
 fun PropertiesTab(
@@ -189,7 +192,7 @@ private fun FieldEditor(
                             onDismissRequest = { expanded = false }
                         ) {
                             DropdownMenuItem(
-                                text = { Text("None", color = MaterialTheme.colorScheme.onSurfaceVariant) },
+                                text = { Text(stringResource(R.string.projects_property_option_none), color = MaterialTheme.colorScheme.onSurfaceVariant) },
                                 onClick = {
                                     onValueChange("")
                                     expanded = false
@@ -243,7 +246,7 @@ private fun FieldEditor(
                     label = { Text(field.name) },
                     trailingIcon = {
                         IconButton(onClick = { if (!field.isReadonly) showDatePicker = true }) {
-                            Icon(Icons.Default.CalendarToday, contentDescription = "Pick date")
+                            Icon(Icons.Default.CalendarToday, contentDescription = stringResource(R.string.projects_property_pick_date))
                         }
                     },
                     modifier = Modifier
@@ -265,12 +268,12 @@ private fun FieldEditor(
                                 }
                                 showDatePicker = false
                             }) {
-                                Text("OK")
+                                Text(stringResource(R.string.projects_property_ok))
                             }
                         },
                         dismissButton = {
                             TextButton(onClick = { showDatePicker = false }) {
-                                Text("Cancel")
+                                Text(stringResource(MochiR.string.common_cancel))
                             }
                         }
                     ) {
@@ -303,7 +306,7 @@ private fun FieldEditor(
 
         if (field.isRequired && stringValue.isBlank() && (value as? List<*>).isNullOrEmpty()) {
             Text(
-                text = "${field.name} is required",
+                text = stringResource(R.string.projects_property_required, field.name),
                 style = MaterialTheme.typography.labelSmall,
                 color = MaterialTheme.colorScheme.error,
                 modifier = Modifier.padding(top = 2.dp)
@@ -380,7 +383,7 @@ private fun ChecklistEditor(
                         },
                         modifier = Modifier.size(32.dp)
                     ) {
-                        Icon(Icons.Default.Close, contentDescription = "Remove", modifier = Modifier.size(16.dp))
+                        Icon(Icons.Default.Close, contentDescription = stringResource(R.string.projects_property_remove), modifier = Modifier.size(16.dp))
                     }
                 }
             }
@@ -394,7 +397,7 @@ private fun ChecklistEditor(
             ) {
                 Icon(Icons.Default.Add, contentDescription = null, modifier = Modifier.size(16.dp))
                 Spacer(modifier = Modifier.width(4.dp))
-                Text("Add item")
+                Text(stringResource(R.string.projects_property_add_item))
             }
         }
     }

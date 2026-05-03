@@ -35,12 +35,15 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import org.mochi.projects.R
 import org.mochi.projects.model.ProjectObject
 import org.mochi.projects.ui.project.ProjectViewModel
+import org.mochi.android.R as MochiR
 
 private const val MAX_NESTING_DEPTH = 3
 
@@ -111,7 +114,7 @@ fun BoardCard(
                     if (hasChildren) {
                         Icon(
                             imageVector = if (collapsed) Icons.Default.ChevronRight else Icons.Default.ExpandMore,
-                            contentDescription = if (collapsed) "Expand" else "Collapse",
+                            contentDescription = if (collapsed) stringResource(MochiR.string.common_expand) else stringResource(MochiR.string.common_collapse),
                             tint = MaterialTheme.colorScheme.onSurfaceVariant,
                             modifier = Modifier
                                 .size(16.dp)
@@ -211,7 +214,7 @@ fun BoardCard(
                     } else {
                         val deepCount = countDeepChildren(obj.id, childrenByParent)
                         Text(
-                            text = "+$deepCount nested",
+                            text = stringResource(R.string.projects_board_nested_count, deepCount),
                             fontSize = 10.sp,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )

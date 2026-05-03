@@ -48,6 +48,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.core.content.pm.ShortcutInfoCompat
@@ -73,27 +74,27 @@ fun ProjectListScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Projects") },
+                title = { Text(stringResource(R.string.projects_list_title)) },
                 actions = {
                     IconButton(onClick = { viewModel.toggleSearch() }) {
                         Icon(
                             if (uiState.showSearch) Icons.Default.Close else Icons.Default.Search,
-                            contentDescription = if (uiState.showSearch) "Close search" else "Search"
+                            contentDescription = if (uiState.showSearch) stringResource(R.string.projects_list_close_search) else stringResource(R.string.projects_list_search)
                         )
                     }
                     IconButton(onClick = onFindProjects) {
-                        Icon(Icons.Default.Explore, contentDescription = "Find projects")
+                        Icon(Icons.Default.Explore, contentDescription = stringResource(R.string.projects_list_find))
                     }
                     Box {
                         IconButton(onClick = { showOverflow = true }) {
-                            Icon(Icons.Default.MoreVert, contentDescription = "More")
+                            Icon(Icons.Default.MoreVert, contentDescription = stringResource(R.string.projects_list_more))
                         }
                         DropdownMenu(
                             expanded = showOverflow,
                             onDismissRequest = { showOverflow = false }
                         ) {
                             DropdownMenuItem(
-                                text = { Text("Log out") },
+                                text = { Text(stringResource(R.string.projects_list_logout)) },
                                 onClick = {
                                     showOverflow = false
                                     onLogout()
@@ -107,7 +108,7 @@ fun ProjectListScreen(
         },
         floatingActionButton = {
             FloatingActionButton(onClick = { viewModel.showCreateDialog() }) {
-                Icon(Icons.Default.Add, contentDescription = "Create project")
+                Icon(Icons.Default.Add, contentDescription = stringResource(R.string.projects_list_create))
             }
         }
     ) { padding ->
@@ -116,7 +117,7 @@ fun ProjectListScreen(
                 OutlinedTextField(
                     value = uiState.searchQuery,
                     onValueChange = viewModel::updateSearchQuery,
-                    placeholder = { Text("Search projects") },
+                    placeholder = { Text(stringResource(R.string.projects_list_search_placeholder)) },
                     singleLine = true,
                     modifier = Modifier
                         .fillMaxWidth()
@@ -153,7 +154,7 @@ fun ProjectListScreen(
                         if (filteredProjects.isEmpty()) {
                             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                                 Text(
-                                    text = if (uiState.searchQuery.isNotBlank()) "No matching projects" else "No projects yet",
+                                    text = if (uiState.searchQuery.isNotBlank()) stringResource(R.string.projects_list_no_matching) else stringResource(R.string.projects_list_empty),
                                     style = MaterialTheme.typography.bodyLarge,
                                     color = MaterialTheme.colorScheme.onSurfaceVariant
                                 )
@@ -233,7 +234,7 @@ private fun ProjectCard(
             onDismissRequest = { showMenu = false }
         ) {
             DropdownMenuItem(
-                text = { Text("Add to home screen") },
+                text = { Text(stringResource(R.string.projects_list_add_to_home)) },
                 onClick = {
                     showMenu = false
                     val intent = Intent(context, MainActivity::class.java).apply {

@@ -35,10 +35,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import org.mochi.android.api.userMessage
+import org.mochi.projects.R
 import org.mochi.projects.model.ProjectDetails
+import org.mochi.android.R as MochiR
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -126,21 +129,21 @@ fun ObjectDetailSheet(
                         IconButton(onClick = { viewModel.toggleWatch() }) {
                             Icon(
                                 imageVector = if (uiState.isWatching) Icons.Default.Visibility else Icons.Default.VisibilityOff,
-                                contentDescription = if (uiState.isWatching) "Unwatch" else "Watch",
+                                contentDescription = if (uiState.isWatching) stringResource(R.string.projects_object_unwatch) else stringResource(R.string.projects_object_watch),
                                 tint = if (uiState.isWatching) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant
                             )
                         }
 
                         Box {
                             IconButton(onClick = { showOverflow = true }) {
-                                Icon(Icons.Default.MoreVert, contentDescription = "More")
+                                Icon(Icons.Default.MoreVert, contentDescription = stringResource(MochiR.string.common_more_options))
                             }
                             DropdownMenu(
                                 expanded = showOverflow,
                                 onDismissRequest = { showOverflow = false }
                             ) {
                                 DropdownMenuItem(
-                                    text = { Text("Delete") },
+                                    text = { Text(stringResource(MochiR.string.common_delete)) },
                                     onClick = {
                                         showOverflow = false
                                         showDeleteConfirm = true
@@ -160,7 +163,13 @@ fun ObjectDetailSheet(
                     Spacer(modifier = Modifier.height(8.dp))
 
                     // Tabs
-                    val tabs = listOf("Properties", "Comments", "Activity", "Requests", "Attachments")
+                    val tabs = listOf(
+                        stringResource(R.string.projects_object_tab_properties),
+                        stringResource(R.string.projects_object_tab_comments),
+                        stringResource(R.string.projects_object_tab_activity),
+                        stringResource(R.string.projects_object_tab_requests),
+                        stringResource(R.string.projects_object_tab_attachments)
+                    )
                     ScrollableTabRow(
                         selectedTabIndex = uiState.selectedTab,
                         edgePadding = 16.dp
@@ -221,8 +230,8 @@ fun ObjectDetailSheet(
 
     if (showDeleteConfirm) {
         ConfirmDeleteDialog(
-            title = "Delete object",
-            message = "Are you sure you want to delete this object? This action cannot be undone.",
+            title = stringResource(R.string.projects_object_delete_title),
+            message = stringResource(R.string.projects_object_delete_message),
             onConfirm = {
                 showDeleteConfirm = false
                 onObjectDeleted()

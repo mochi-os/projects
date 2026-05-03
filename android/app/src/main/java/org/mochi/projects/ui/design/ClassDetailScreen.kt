@@ -47,20 +47,27 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import org.mochi.projects.R
 import org.mochi.projects.model.ProjectClass
 import org.mochi.projects.model.ProjectField
 import org.mochi.projects.ui.`object`.ConfirmDeleteDialog
+import org.mochi.android.R as MochiR
 
-private val FIELD_TYPES = listOf(
-    "text" to "Text",
-    "number" to "Number",
-    "enumerated" to "Enumerated",
-    "user" to "User",
-    "date" to "Date",
-    "checklist" to "Checklist"
-)
+private val FIELD_TYPE_KEYS = listOf("text", "number", "enumerated", "user", "date", "checklist")
+
+@Composable
+private fun fieldTypeLabel(type: String): String = when (type) {
+    "text" -> stringResource(R.string.projects_field_type_text)
+    "number" -> stringResource(R.string.projects_field_type_number)
+    "enumerated" -> stringResource(R.string.projects_field_type_enumerated)
+    "user" -> stringResource(R.string.projects_field_type_user)
+    "date" -> stringResource(R.string.projects_field_type_date)
+    "checklist" -> stringResource(R.string.projects_field_type_checklist)
+    else -> type
+}
 
 @OptIn(ExperimentalLayoutApi::class, ExperimentalMaterial3Api::class)
 @Composable
@@ -89,10 +96,10 @@ fun ClassDetailScreen(
         // Back button
         Row(verticalAlignment = Alignment.CenterVertically) {
             IconButton(onClick = onBack) {
-                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(MochiR.string.common_back))
             }
             Text(
-                text = "Class: ${cls.name}",
+                text = stringResource(R.string.projects_class_label, cls.name),
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.SemiBold
             )
@@ -104,7 +111,7 @@ fun ClassDetailScreen(
         OutlinedTextField(
             value = editName,
             onValueChange = { editName = it },
-            label = { Text("Name") },
+            label = { Text(stringResource(R.string.projects_class_name)) },
             singleLine = true,
             modifier = Modifier.fillMaxWidth()
         )
@@ -112,26 +119,27 @@ fun ClassDetailScreen(
             TextButton(onClick = {
                 viewModel.updateClass(cls.id, name = editName)
             }) {
-                Text("Save name")
+                Text(stringResource(R.string.projects_class_save_name))
             }
         }
 
         Spacer(modifier = Modifier.height(16.dp))
 
         // Title field selector
-        Text("Title field", style = MaterialTheme.typography.titleSmall)
+        Text(stringResource(R.string.projects_class_title_field), style = MaterialTheme.typography.titleSmall)
         Spacer(modifier = Modifier.height(4.dp))
         Text(
-            "Which field to use as the display title for objects of this class.",
+            stringResource(R.string.projects_class_title_field_description),
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
         Spacer(modifier = Modifier.height(8.dp))
+        val defaultReadableLabel = stringResource(R.string.projects_class_title_field_default)
         ExposedDropdownMenuBox(
             expanded = titleExpanded,
             onExpandedChange = { titleExpanded = it }
         ) {
-            val titleFieldName = fields.find { it.id == titleFieldId }?.name ?: "Default (readable)"
+            val titleFieldName = fields.find { it.id == titleFieldId }?.name ?: defaultReadableLabel
             OutlinedTextField(
                 value = titleFieldName,
                 onValueChange = {},
@@ -146,7 +154,7 @@ fun ClassDetailScreen(
                 onDismissRequest = { titleExpanded = false }
             ) {
                 DropdownMenuItem(
-                    text = { Text("Default (readable)") },
+                    text = { Text(defaultReadableLabel) },
                     onClick = {
                         titleFieldId = ""
                         titleExpanded = false
@@ -175,9 +183,9 @@ fun ClassDetailScreen(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Column(modifier = Modifier.weight(1f)) {
-                Text("Merge requests", style = MaterialTheme.typography.titleSmall)
+                Text(stringResource(R.string.projects_class_merge_requests), style = MaterialTheme.typography.titleSmall)
                 Text(
-                    "Allow merge requests on objects of this class.",
+                    stringResource(R.string.projects_class_merge_requests_description),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -196,7 +204,7 @@ fun ClassDetailScreen(
         Spacer(modifier = Modifier.height(16.dp))
 
         // Hierarchy
-        Text("Parent classes", style = MaterialTheme.typography.titleSmall)
+        Text(stringResource(R.string.projects_class_parents), style = MaterialTheme.typography.titleSmall)
         Spacer(modifier = Modifier.height(8.dp))
         val otherClasses = allClasses.filter { it.id != cls.id }
         FlowRow(
@@ -229,9 +237,9 @@ fun ClassDetailScreen(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text("Fields", style = MaterialTheme.typography.titleSmall)
+            Text(stringResource(R.string.projects_class_fields), style = MaterialTheme.typography.titleSmall)
             IconButton(onClick = { showAddFieldDialog = true }) {
-                Icon(Icons.Default.Add, contentDescription = "Add field")
+                Icon(Icons.Default.Add, contentDescription = stringResource(R.string.projects_class_add_field))
             }
         }
 
@@ -257,7 +265,7 @@ fun ClassDetailScreen(
                                 },
                                 modifier = Modifier.size(24.dp)
                             ) {
-                                Icon(Icons.Default.KeyboardArrowUp, contentDescription = "Move up", modifier = Modifier.size(16.dp))
+                                Icon(Icons.Default.KeyboardArrowUp, contentDescription = stringResource(R.string.projects_class_move_up), modifier = Modifier.size(16.dp))
                             }
                         }
                         if (index < sortedFields.lastIndex) {
@@ -270,7 +278,7 @@ fun ClassDetailScreen(
                                 },
                                 modifier = Modifier.size(24.dp)
                             ) {
-                                Icon(Icons.Default.KeyboardArrowDown, contentDescription = "Move down", modifier = Modifier.size(16.dp))
+                                Icon(Icons.Default.KeyboardArrowDown, contentDescription = stringResource(R.string.projects_class_move_down), modifier = Modifier.size(16.dp))
                             }
                         }
                     }
@@ -283,7 +291,7 @@ fun ClassDetailScreen(
                         fontWeight = FontWeight.Medium
                     )
                     Text(
-                        text = FIELD_TYPES.find { it.first == field.fieldtype }?.second ?: field.fieldtype,
+                        text = fieldTypeLabel(field.fieldtype),
                         style = MaterialTheme.typography.labelSmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
@@ -311,7 +319,7 @@ fun ClassDetailScreen(
         ) {
             Icon(Icons.Default.Delete, contentDescription = null)
             Spacer(modifier = Modifier.width(8.dp))
-            Text("Delete class")
+            Text(stringResource(R.string.projects_class_delete))
         }
     }
 
@@ -327,8 +335,8 @@ fun ClassDetailScreen(
 
     if (showDeleteConfirm) {
         ConfirmDeleteDialog(
-            title = "Delete class",
-            message = "Are you sure you want to delete the class \"${cls.name}\"? All fields and their options will also be deleted.",
+            title = stringResource(R.string.projects_class_delete_title),
+            message = stringResource(R.string.projects_class_delete_message, cls.name),
             onConfirm = {
                 showDeleteConfirm = false
                 viewModel.deleteClass(cls.id)
@@ -356,13 +364,13 @@ private fun AddFieldDialog(
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Add field") },
+        title = { Text(stringResource(R.string.projects_field_add_field_dialog_title)) },
         text = {
             Column {
                 OutlinedTextField(
                     value = name,
                     onValueChange = { name = it },
-                    label = { Text("Name") },
+                    label = { Text(stringResource(R.string.projects_field_name)) },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth()
                 )
@@ -372,10 +380,10 @@ private fun AddFieldDialog(
                     onExpandedChange = { typeExpanded = it }
                 ) {
                     OutlinedTextField(
-                        value = FIELD_TYPES.find { it.first == fieldtype }?.second ?: fieldtype,
+                        value = fieldTypeLabel(fieldtype),
                         onValueChange = {},
                         readOnly = true,
-                        label = { Text("Type") },
+                        label = { Text(stringResource(R.string.projects_field_type)) },
                         trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = typeExpanded) },
                         modifier = Modifier
                             .menuAnchor(MenuAnchorType.PrimaryNotEditable)
@@ -385,9 +393,9 @@ private fun AddFieldDialog(
                         expanded = typeExpanded,
                         onDismissRequest = { typeExpanded = false }
                     ) {
-                        FIELD_TYPES.forEach { (value, label) ->
+                        FIELD_TYPE_KEYS.forEach { value ->
                             DropdownMenuItem(
-                                text = { Text(label) },
+                                text = { Text(fieldTypeLabel(value)) },
                                 onClick = {
                                     fieldtype = value
                                     typeExpanded = false
@@ -399,24 +407,24 @@ private fun AddFieldDialog(
                 Spacer(modifier = Modifier.height(8.dp))
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Checkbox(checked = isRequired, onCheckedChange = { isRequired = it })
-                    Text("Required")
+                    Text(stringResource(R.string.projects_field_required))
                 }
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Checkbox(checked = isReadonly, onCheckedChange = { isReadonly = it })
-                    Text("Read-only")
+                    Text(stringResource(R.string.projects_field_readonly))
                 }
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Checkbox(checked = isSortable, onCheckedChange = { isSortable = it })
-                    Text("Sortable")
+                    Text(stringResource(R.string.projects_field_sortable))
                 }
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Checkbox(checked = isFilterable, onCheckedChange = { isFilterable = it })
-                    Text("Filterable")
+                    Text(stringResource(R.string.projects_field_filterable))
                 }
                 if (fieldtype == "enumerated") {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Checkbox(checked = isMulti, onCheckedChange = { isMulti = it })
-                        Text("Multi-select")
+                        Text(stringResource(R.string.projects_field_multi))
                     }
                 }
             }
@@ -434,12 +442,12 @@ private fun AddFieldDialog(
                 },
                 enabled = name.isNotBlank()
             ) {
-                Text("Create")
+                Text(stringResource(R.string.projects_classes_create))
             }
         },
         dismissButton = {
             TextButton(onClick = onDismiss) {
-                Text("Cancel")
+                Text(stringResource(MochiR.string.common_cancel))
             }
         }
     )

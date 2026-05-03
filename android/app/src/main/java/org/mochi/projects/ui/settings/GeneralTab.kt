@@ -23,8 +23,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import org.mochi.android.api.userMessage
+import org.mochi.projects.R
 import org.mochi.projects.ui.`object`.ConfirmDeleteDialog
 
 @Composable
@@ -47,7 +49,7 @@ fun GeneralTab(
         OutlinedTextField(
             value = uiState.name,
             onValueChange = viewModel::updateName,
-            label = { Text("Name") },
+            label = { Text(stringResource(R.string.projects_create_name)) },
             singleLine = true,
             modifier = Modifier.fillMaxWidth()
         )
@@ -57,7 +59,7 @@ fun GeneralTab(
         OutlinedTextField(
             value = uiState.description,
             onValueChange = viewModel::updateDescription,
-            label = { Text("Description") },
+            label = { Text(stringResource(R.string.projects_create_description)) },
             maxLines = 4,
             modifier = Modifier.fillMaxWidth()
         )
@@ -67,7 +69,7 @@ fun GeneralTab(
         OutlinedTextField(
             value = uiState.prefix,
             onValueChange = { viewModel.updatePrefix(it.uppercase()) },
-            label = { Text("Prefix") },
+            label = { Text(stringResource(R.string.projects_create_prefix)) },
             singleLine = true,
             modifier = Modifier.fillMaxWidth()
         )
@@ -91,7 +93,7 @@ fun GeneralTab(
             if (uiState.isSaving) {
                 CircularProgressIndicator(modifier = Modifier.size(20.dp), strokeWidth = 2.dp)
             } else {
-                Text("Save changes")
+                Text(stringResource(R.string.projects_settings_save))
             }
         }
 
@@ -100,7 +102,7 @@ fun GeneralTab(
         Spacer(modifier = Modifier.height(16.dp))
 
         Text(
-            text = "Danger zone",
+            text = stringResource(R.string.projects_settings_danger_zone),
             style = MaterialTheme.typography.titleSmall,
             color = MaterialTheme.colorScheme.error
         )
@@ -115,7 +117,7 @@ fun GeneralTab(
                 ),
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text("Unsubscribe")
+                Text(stringResource(R.string.projects_settings_unsubscribe))
             }
             Spacer(modifier = Modifier.height(8.dp))
         }
@@ -132,7 +134,7 @@ fun GeneralTab(
                 if (uiState.isDeleting) {
                     CircularProgressIndicator(modifier = Modifier.size(20.dp), strokeWidth = 2.dp)
                 } else {
-                    Text("Delete project")
+                    Text(stringResource(R.string.projects_settings_delete_project))
                 }
             }
         }
@@ -140,8 +142,8 @@ fun GeneralTab(
 
     if (showDeleteConfirm) {
         ConfirmDeleteDialog(
-            title = "Delete project",
-            message = "Are you sure you want to delete this project? All objects, comments, and settings will be permanently removed.",
+            title = stringResource(R.string.projects_settings_delete_confirm_title),
+            message = stringResource(R.string.projects_settings_delete_confirm_message),
             onConfirm = {
                 showDeleteConfirm = false
                 viewModel.deleteProject { onProjectDeleted() }
@@ -152,8 +154,8 @@ fun GeneralTab(
 
     if (showUnsubscribeConfirm) {
         ConfirmDeleteDialog(
-            title = "Unsubscribe",
-            message = "Are you sure you want to unsubscribe from this project?",
+            title = stringResource(R.string.projects_settings_unsubscribe_title),
+            message = stringResource(R.string.projects_settings_unsubscribe_message),
             onConfirm = {
                 showUnsubscribeConfirm = false
                 viewModel.unsubscribe { onUnsubscribed() }

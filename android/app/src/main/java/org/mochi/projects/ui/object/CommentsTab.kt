@@ -33,6 +33,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import org.mochi.android.model.Comment
@@ -40,6 +41,8 @@ import org.mochi.android.ui.components.EntityAvatar
 import org.mochi.android.ui.components.MentionSuggestion
 import org.mochi.android.ui.components.MentionTextField
 import org.mochi.android.util.formatTimestamp
+import org.mochi.projects.R
+import org.mochi.android.R as MochiR
 
 @Composable
 fun CommentsTab(
@@ -63,7 +66,7 @@ fun CommentsTab(
             if (replyToName != null) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(
-                        text = "Replying to $replyToName",
+                        text = stringResource(R.string.projects_comment_replying_to, replyToName!!),
                         style = MaterialTheme.typography.labelSmall,
                         color = MaterialTheme.colorScheme.primary
                     )
@@ -75,7 +78,10 @@ fun CommentsTab(
                         },
                         modifier = Modifier.size(16.dp)
                     ) {
-                        Text("x", style = MaterialTheme.typography.labelSmall)
+                        Text(
+                            "x",
+                            style = MaterialTheme.typography.labelSmall
+                        )
                     }
                 }
                 Spacer(modifier = Modifier.height(4.dp))
@@ -88,7 +94,7 @@ fun CommentsTab(
                     value = newComment,
                     onValueChange = { newComment = it },
                     onSearch = onSearchUsers ?: { emptyList() },
-                    placeholder = { Text("Add a comment") },
+                    placeholder = { Text(stringResource(R.string.projects_comment_placeholder)) },
                     maxLines = 4,
                     modifier = Modifier.weight(1f)
                 )
@@ -104,7 +110,7 @@ fun CommentsTab(
                     },
                     enabled = newComment.isNotBlank()
                 ) {
-                    Icon(Icons.AutoMirrored.Filled.Send, contentDescription = "Send")
+                    Icon(Icons.AutoMirrored.Filled.Send, contentDescription = stringResource(R.string.projects_comment_send))
                 }
             }
         }
@@ -120,7 +126,7 @@ fun CommentsTab(
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = "No comments yet",
+                    text = stringResource(R.string.projects_comment_empty),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -191,7 +197,7 @@ private fun CommentItem(
                 ) {
                     Icon(
                         Icons.Default.MoreVert,
-                        contentDescription = "More",
+                        contentDescription = stringResource(MochiR.string.common_more_options),
                         modifier = Modifier.size(16.dp)
                     )
                 }
@@ -200,7 +206,7 @@ private fun CommentItem(
                     onDismissRequest = { showOverflow = false }
                 ) {
                     DropdownMenuItem(
-                        text = { Text("Reply") },
+                        text = { Text(stringResource(MochiR.string.comment_reply)) },
                         onClick = {
                             showOverflow = false
                             onReply(comment.id, comment.name)
@@ -208,7 +214,7 @@ private fun CommentItem(
                         leadingIcon = { Icon(Icons.Default.Reply, contentDescription = null) }
                     )
                     DropdownMenuItem(
-                        text = { Text("Edit") },
+                        text = { Text(stringResource(MochiR.string.common_edit)) },
                         onClick = {
                             showOverflow = false
                             isEditing = true
@@ -217,7 +223,7 @@ private fun CommentItem(
                         leadingIcon = { Icon(Icons.Default.Edit, contentDescription = null) }
                     )
                     DropdownMenuItem(
-                        text = { Text("Delete") },
+                        text = { Text(stringResource(MochiR.string.common_delete)) },
                         onClick = {
                             showOverflow = false
                             onDelete(comment.id)
@@ -242,10 +248,10 @@ private fun CommentItem(
                     onEdit(comment.id, editContent)
                     isEditing = false
                 }) {
-                    Icon(Icons.AutoMirrored.Filled.Send, contentDescription = "Save")
+                    Icon(Icons.AutoMirrored.Filled.Send, contentDescription = stringResource(MochiR.string.common_save))
                 }
                 IconButton(onClick = { isEditing = false }) {
-                    Text("Cancel", style = MaterialTheme.typography.labelSmall)
+                    Text(stringResource(MochiR.string.common_cancel), style = MaterialTheme.typography.labelSmall)
                 }
             }
         } else {

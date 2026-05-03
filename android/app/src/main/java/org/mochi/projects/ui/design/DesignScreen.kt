@@ -52,11 +52,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import org.mochi.android.api.userMessage
+import org.mochi.projects.R
 import org.mochi.projects.model.Template
+import org.mochi.android.R as MochiR
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -73,26 +76,31 @@ fun DesignScreen(
 
     val context = LocalContext.current
     val snackbarHostState = remember { SnackbarHostState() }
+    val clipboardLabel = stringResource(R.string.projects_design_clipboard_label)
+    val exportSubject = stringResource(R.string.projects_design_export_subject)
+    val shareChooser = stringResource(R.string.projects_design_share_chooser)
+    val exportCopiedMsg = stringResource(R.string.projects_design_export_copied)
+    val importedMsg = stringResource(R.string.projects_design_imported)
 
     LaunchedEffect(uiState.exportedJson) {
         uiState.exportedJson?.let { json ->
             // Copy to clipboard and offer share
             val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-            clipboard.setPrimaryClip(ClipData.newPlainText("Design JSON", json))
+            clipboard.setPrimaryClip(ClipData.newPlainText(clipboardLabel, json))
             val shareIntent = Intent(Intent.ACTION_SEND).apply {
                 type = "application/json"
                 putExtra(Intent.EXTRA_TEXT, json)
-                putExtra(Intent.EXTRA_SUBJECT, "Project design")
+                putExtra(Intent.EXTRA_SUBJECT, exportSubject)
             }
-            context.startActivity(Intent.createChooser(shareIntent, "Share design"))
-            snackbarHostState.showSnackbar("Design copied to clipboard")
+            context.startActivity(Intent.createChooser(shareIntent, shareChooser))
+            snackbarHostState.showSnackbar(exportCopiedMsg)
             viewModel.clearExportedJson()
         }
     }
 
     LaunchedEffect(uiState.importSuccess) {
         if (uiState.importSuccess) {
-            snackbarHostState.showSnackbar("Design imported")
+            snackbarHostState.showSnackbar(importedMsg)
             viewModel.clearImportSuccess()
         }
     }
@@ -108,23 +116,23 @@ fun DesignScreen(
         snackbarHost = { SnackbarHost(snackbarHostState) },
         topBar = {
             TopAppBar(
-                title = { Text("Design") },
+                title = { Text(stringResource(R.string.projects_design_title)) },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(MochiR.string.common_back))
                     }
                 },
                 actions = {
                     Box {
                         IconButton(onClick = { showOverflowMenu = true }) {
-                            Icon(Icons.Default.MoreVert, contentDescription = "More options")
+                            Icon(Icons.Default.MoreVert, contentDescription = stringResource(R.string.projects_design_more_options))
                         }
                         DropdownMenu(
                             expanded = showOverflowMenu,
                             onDismissRequest = { showOverflowMenu = false }
                         ) {
                             DropdownMenuItem(
-                                text = { Text("Export design") },
+                                text = { Text(stringResource(R.string.projects_design_export)) },
                                 leadingIcon = { Icon(Icons.Default.Download, contentDescription = null) },
                                 onClick = {
                                     showOverflowMenu = false
@@ -132,7 +140,7 @@ fun DesignScreen(
                                 }
                             )
                             DropdownMenuItem(
-                                text = { Text("Import design") },
+                                text = { Text(stringResource(R.string.projects_design_import)) },
                                 leadingIcon = { Icon(Icons.Default.Upload, contentDescription = null) },
                                 onClick = {
                                     showOverflowMenu = false
@@ -207,7 +215,10 @@ fun DesignScreen(
                         }
 
                         else -> {
-                            val tabs = listOf("Classes", "Views")
+                            val tabs = listOf(
+                                stringResource(R.string.projects_design_tab_classes),
+                                stringResource(R.string.projects_design_tab_views)
+                            )
                             TabRow(selectedTabIndex = selectedTab) {
                                 tabs.forEachIndexed { index, title ->
                                     Tab(
@@ -267,7 +278,7 @@ fun DesignScreen(
 
     confirmPastedJson?.let { json ->
         ConfirmReplaceDialog(
-            label = "pasted JSON",
+            label = stringResource(R.string.projects_design_pasted_json_label),
             onDismiss = { confirmPastedJson = null },
             onConfirm = {
                 viewModel.importFromJson(json)
@@ -289,11 +300,11 @@ private fun ImportDesignDialog(
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Import design") },
+        title = { Text(stringResource(R.string.projects_design_import_dialog_title)) },
         text = {
             Column {
                 Text(
-                    text = "Choose a template",
+                    text = stringResource(R.string.projects_design_import_choose_template),
                     style = MaterialTheme.typography.labelMedium,
                     fontWeight = FontWeight.SemiBold
                 )
@@ -307,7 +318,7 @@ private fun ImportDesignDialog(
                     }
                 } else if (templates.isEmpty()) {
                     Text(
-                        text = "No templates available",
+                        text = stringResource(R.string.projects_design_no_templates),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
@@ -345,7 +356,7 @@ private fun ImportDesignDialog(
                                         }
                                     }
                                     TextButton(onClick = { onSelectTemplate(template) }) {
-                                        Text("Use")
+                                        Text(stringResource(R.string.projects_design_use))
                                     }
                                 }
                             }
@@ -355,7 +366,7 @@ private fun ImportDesignDialog(
 
                 Spacer(modifier = Modifier.height(16.dp))
                 Text(
-                    text = "Or paste JSON",
+                    text = stringResource(R.string.projects_design_or_paste_json),
                     style = MaterialTheme.typography.labelMedium,
                     fontWeight = FontWeight.SemiBold
                 )
@@ -363,7 +374,7 @@ private fun ImportDesignDialog(
                 OutlinedTextField(
                     value = pastedJson,
                     onValueChange = { pastedJson = it },
-                    placeholder = { Text("Paste exported design JSON") },
+                    placeholder = { Text(stringResource(R.string.projects_design_paste_placeholder)) },
                     modifier = Modifier.fillMaxWidth().height(120.dp)
                 )
             }
@@ -373,12 +384,12 @@ private fun ImportDesignDialog(
                 onClick = { onPasteJson(pastedJson) },
                 enabled = pastedJson.isNotBlank()
             ) {
-                Text("Import JSON")
+                Text(stringResource(R.string.projects_design_import_json))
             }
         },
         dismissButton = {
             TextButton(onClick = onDismiss) {
-                Text("Cancel")
+                Text(stringResource(MochiR.string.common_cancel))
             }
         }
     )
@@ -392,20 +403,20 @@ private fun ConfirmReplaceDialog(
 ) {
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Replace design?") },
+        title = { Text(stringResource(R.string.projects_design_replace_title)) },
         text = {
-            Text("This will replace the current design with $label. All existing classes, fields, options, and views will be deleted. Existing objects will not be deleted but may no longer appear in views.")
+            Text(stringResource(R.string.projects_design_replace_message, label))
         },
         confirmButton = {
             TextButton(
                 onClick = onConfirm
             ) {
-                Text("Replace", color = MaterialTheme.colorScheme.error)
+                Text(stringResource(R.string.projects_design_replace), color = MaterialTheme.colorScheme.error)
             }
         },
         dismissButton = {
             TextButton(onClick = onDismiss) {
-                Text("Cancel")
+                Text(stringResource(MochiR.string.common_cancel))
             }
         }
     )

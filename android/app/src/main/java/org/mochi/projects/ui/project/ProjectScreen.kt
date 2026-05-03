@@ -44,13 +44,16 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import org.mochi.android.api.userMessage
+import org.mochi.projects.R
 import org.mochi.projects.ui.board.BoardView
 import org.mochi.projects.ui.`object`.ObjectDetailSheet
 import org.mochi.projects.ui.tree.TreeView
+import org.mochi.android.R as MochiR
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -80,33 +83,33 @@ fun ProjectScreen(
             TopAppBar(
                 title = {
                     Text(
-                        text = details?.project?.name ?: "Loading...",
+                        text = details?.project?.name ?: stringResource(R.string.projects_loading),
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
                     )
                 },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(MochiR.string.common_back))
                     }
                 },
                 actions = {
                     IconButton(onClick = { showSearch = !showSearch }) {
                         Icon(
                             if (showSearch) Icons.Default.Close else Icons.Default.Search,
-                            contentDescription = "Search"
+                            contentDescription = stringResource(R.string.projects_search)
                         )
                     }
                     Box {
                         IconButton(onClick = { showOverflow = true }) {
-                            Icon(Icons.Default.MoreVert, contentDescription = "More")
+                            Icon(Icons.Default.MoreVert, contentDescription = stringResource(R.string.projects_more))
                         }
                         DropdownMenu(
                             expanded = showOverflow,
                             onDismissRequest = { showOverflow = false }
                         ) {
                             DropdownMenuItem(
-                                text = { Text("Settings") },
+                                text = { Text(stringResource(R.string.projects_settings)) },
                                 onClick = {
                                     showOverflow = false
                                     onSettings(viewModel.projectId)
@@ -114,7 +117,7 @@ fun ProjectScreen(
                                 leadingIcon = { Icon(Icons.Default.Settings, contentDescription = null) }
                             )
                             DropdownMenuItem(
-                                text = { Text("Design") },
+                                text = { Text(stringResource(R.string.projects_design)) },
                                 onClick = {
                                     showOverflow = false
                                     onDesign(viewModel.projectId)
@@ -129,7 +132,7 @@ fun ProjectScreen(
         floatingActionButton = {
             if (details != null) {
                 FloatingActionButton(onClick = { viewModel.showCreateObjectDialog() }) {
-                    Icon(Icons.Default.Add, contentDescription = "Create object")
+                    Icon(Icons.Default.Add, contentDescription = stringResource(R.string.projects_create_object))
                 }
             }
         }
@@ -170,7 +173,7 @@ fun ProjectScreen(
                     OutlinedTextField(
                         value = uiState.searchQuery,
                         onValueChange = viewModel::updateSearchQuery,
-                        placeholder = { Text("Search objects") },
+                        placeholder = { Text(stringResource(R.string.projects_search_objects_placeholder)) },
                         singleLine = true,
                         modifier = Modifier.weight(1f)
                     )
@@ -178,7 +181,7 @@ fun ProjectScreen(
                     FilterChip(
                         selected = uiState.watchedOnly,
                         onClick = { viewModel.toggleWatchedOnly() },
-                        label = { Text("Watched") },
+                        label = { Text(stringResource(R.string.projects_watched)) },
                         leadingIcon = if (uiState.watchedOnly) {
                             { Icon(Icons.Default.Visibility, contentDescription = null, modifier = Modifier.size(16.dp)) }
                         } else null

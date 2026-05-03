@@ -38,11 +38,14 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import org.mochi.projects.R
 import org.mochi.projects.model.Project
+import org.mochi.android.R as MochiR
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -56,10 +59,10 @@ fun FindProjectsScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Find projects") },
+                title = { Text(stringResource(R.string.projects_find_title)) },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(MochiR.string.common_back))
                     }
                 }
             )
@@ -74,7 +77,7 @@ fun FindProjectsScreen(
             OutlinedTextField(
                 value = uiState.searchQuery,
                 onValueChange = viewModel::updateSearchQuery,
-                placeholder = { Text("Search projects or paste URL") },
+                placeholder = { Text(stringResource(R.string.projects_find_search_placeholder)) },
                 singleLine = true,
                 leadingIcon = { Icon(Icons.Default.Search, contentDescription = null) },
                 keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
@@ -121,7 +124,7 @@ fun FindProjectsScreen(
 
                 uiState.recommendations.isNotEmpty() -> {
                     Text(
-                        text = "Recommended",
+                        text = stringResource(R.string.projects_find_recommended),
                         style = MaterialTheme.typography.titleSmall,
                         modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
                     )
@@ -146,7 +149,7 @@ fun FindProjectsScreen(
                 else -> {
                     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                         Text(
-                            text = "Search for projects to subscribe to",
+                            text = stringResource(R.string.projects_find_search_hint),
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
@@ -226,7 +229,7 @@ private fun DiscoveredProjectCard(
                             strokeWidth = 2.dp
                         )
                     } else {
-                        Text("Subscribe")
+                        Text(stringResource(MochiR.string.common_subscribe))
                     }
                 }
             }

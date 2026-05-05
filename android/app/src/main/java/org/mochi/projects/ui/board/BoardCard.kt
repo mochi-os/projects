@@ -80,7 +80,7 @@ fun BoardCard(
 ) {
     var showMoveSheet by rememberSaveable(obj.id) { mutableStateOf(false) }
     var showOverflow by remember(obj.id) { mutableStateOf(false) }
-    var collapsed by rememberSaveable(obj.id) { mutableStateOf(true) }
+    var collapsed by rememberSaveable(obj.id) { mutableStateOf(false) }
 
     val children = childrenByParent[obj.id] ?: emptyList()
     val hasChildren = children.isNotEmpty()

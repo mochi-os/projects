@@ -139,4 +139,17 @@ class ProjectListViewModel @Inject constructor(
                 it.description.lowercase().contains(query)
         }
     }
+
+    fun unsubscribe(projectId: String) {
+        viewModelScope.launch {
+            try {
+                repository.unsubscribe(projectId)
+                _uiState.value = _uiState.value.copy(
+                    projects = _uiState.value.projects.filterNot { it.id == projectId }
+                )
+            } catch (e: Exception) {
+                _uiState.value = _uiState.value.copy(error = e.toMochiError())
+            }
+        }
+    }
 }

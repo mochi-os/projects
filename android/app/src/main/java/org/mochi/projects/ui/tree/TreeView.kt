@@ -58,7 +58,7 @@ fun TreeView(
         val result = mutableListOf<TreeNode>()
         for (item in items) {
             val children = childMap[item.id] ?: emptyList()
-            val isExpanded = expandedState[item.id] ?: (depth == 0)
+            val isExpanded = expandedState[item.id] ?: true
             result.add(
                 TreeNode(
                     obj = item,
@@ -87,7 +87,7 @@ fun TreeView(
                 viewModel = viewModel,
                 dragState = dragState,
                 onToggleExpand = {
-                    expandedState[node.obj.id] = !(expandedState[node.obj.id] ?: (node.depth == 0))
+                    expandedState[node.obj.id] = !(expandedState[node.obj.id] ?: true)
                 },
                 onClick = { onObjectClick(node.obj.id) },
                 onDelete = { viewModel.deleteObject(node.obj.id) },

@@ -24,7 +24,10 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ChevronRight
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.ExpandMore
+import androidx.compose.material.icons.filled.MoreHoriz
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -347,20 +350,11 @@ private fun BoardColumn(
                     color = MaterialTheme.colorScheme.primary,
                     modifier = Modifier.weight(1f)
                 )
-                Text(
-                    text = "${objects.size}",
-                    style = MaterialTheme.typography.labelMedium,
-                    color = MaterialTheme.colorScheme.primary
-                )
                 if (onCreateInColumn != null) {
-                    IconButton(
-                        onClick = onCreateInColumn,
-                        modifier = Modifier.size(24.dp)
-                    ) {
+                    IconButton(onClick = onCreateInColumn) {
                         Icon(
                             Icons.Default.Add,
-                            contentDescription = stringResource(R.string.projects_board_new),
-                            modifier = Modifier.size(16.dp)
+                            contentDescription = stringResource(R.string.projects_board_new)
                         )
                     }
                 }
@@ -368,14 +362,10 @@ private fun BoardColumn(
                     var showMenu by remember { mutableStateOf(false) }
                     var showRenameDialog by remember { mutableStateOf(false) }
                     Box {
-                        IconButton(
-                            onClick = { showMenu = true },
-                            modifier = Modifier.size(24.dp)
-                        ) {
+                        IconButton(onClick = { showMenu = true }) {
                             Icon(
-                                Icons.Default.ExpandMore,
-                                contentDescription = stringResource(R.string.projects_board_column_options),
-                                modifier = Modifier.size(16.dp)
+                                Icons.Default.MoreHoriz,
+                                contentDescription = stringResource(MochiR.string.common_more_options)
                             )
                         }
                         DropdownMenu(
@@ -385,6 +375,7 @@ private fun BoardColumn(
                             if (onRename != null) {
                                 DropdownMenuItem(
                                     text = { Text(stringResource(R.string.projects_board_rename)) },
+                                    leadingIcon = { Icon(Icons.Default.Edit, contentDescription = null) },
                                     onClick = {
                                         showMenu = false
                                         showRenameDialog = true
@@ -393,7 +384,8 @@ private fun BoardColumn(
                             }
                             if (onDelete != null) {
                                 DropdownMenuItem(
-                                    text = { Text(stringResource(MochiR.string.common_delete), color = MaterialTheme.colorScheme.error) },
+                                    text = { Text(stringResource(MochiR.string.common_delete)) },
+                                    leadingIcon = { Icon(Icons.Default.Delete, contentDescription = null) },
                                     onClick = {
                                         showMenu = false
                                         onDelete()
@@ -435,11 +427,13 @@ private fun BoardColumn(
 
         if (collapsed) return@Column
 
+        Spacer(modifier = Modifier.height(8.dp))
+
         // Column body
         if (rowFieldId != null && rowOptions.isNotEmpty()) {
             // Swimlane mode
             LazyColumn(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxSize(),
                 verticalArrangement = Arrangement.spacedBy(4.dp)
             ) {
                 rowOptions.forEach { rowOption ->
@@ -514,7 +508,7 @@ private fun BoardColumn(
             // Simple list mode
             val sortedObjects = viewModel.sortObjects(objects)
             LazyColumn(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxSize(),
                 verticalArrangement = Arrangement.spacedBy(4.dp)
             ) {
                 itemsIndexed(sortedObjects, key = { _, o -> o.id }) { index, obj ->

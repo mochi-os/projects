@@ -1,5 +1,8 @@
 package org.mochi.projects.ui.project
 
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.rememberScrollableState
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -143,6 +146,12 @@ fun ProjectScreen(
             }
         }
     ) { padding ->
+        // No-op vertical scrollable so the tabs/search header above the
+        // columns also dispatches pull-down gestures up to PullToRefreshBox.
+        // (Tabs and the search bar aren't scrollable on their own, so without
+        // this modifier pull-to-refresh wouldn't fire when the user pulls on
+        // the top section.)
+        val passThroughVerticalScroll = rememberScrollableState { 0f }
         PullToRefreshBox(
             isRefreshing = uiState.isRefreshing,
             onRefresh = { viewModel.refresh() },
@@ -150,7 +159,14 @@ fun ProjectScreen(
                 .fillMaxSize()
                 .padding(padding)
         ) {
-            Column(modifier = Modifier.fillMaxSize()) {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .scrollable(
+                        state = passThroughVerticalScroll,
+                        orientation = Orientation.Vertical
+                    )
+            ) {
                 // View tabs
                 if (details != null && details.views.isNotEmpty()) {
                     val views = details.views

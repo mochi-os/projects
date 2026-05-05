@@ -34,18 +34,10 @@ object Routes {
 @Composable
 fun ProjectsNavigation(startEntityId: String? = null, onLogout: () -> Unit) {
     val navController = rememberNavController()
+    val startDestination = if (startEntityId != null) Routes.project(startEntityId) else Routes.PROJECT_LIST
 
-    NavHost(navController = navController, startDestination = Routes.PROJECT_LIST) {
+    NavHost(navController = navController, startDestination = startDestination) {
         composable(Routes.PROJECT_LIST) {
-            // Navigate directly to project if launched via shortcut
-            if (startEntityId != null) {
-                androidx.compose.runtime.LaunchedEffect(Unit) {
-                    navController.navigate(Routes.project(startEntityId)) {
-                        launchSingleTop = true
-                    }
-                }
-                return@composable
-            }
             ProjectListScreen(
                 onProjectClick = { projectId ->
                     navController.navigate(Routes.project(projectId))

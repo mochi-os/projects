@@ -1,8 +1,7 @@
 package org.mochi.projects.ui.projectlist
 
 import android.content.Intent
-import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -20,8 +19,12 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Explore
+import androidx.compose.material.icons.filled.Folder
+import androidx.compose.material.icons.filled.HomeMax
 import androidx.compose.material.icons.filled.Logout
+import androidx.compose.material.icons.filled.MoreHoriz
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Card
@@ -56,9 +59,11 @@ import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.graphics.drawable.IconCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import org.mochi.android.api.userMessage
+import org.mochi.android.ui.components.ConfirmDialog
 import org.mochi.projects.MainActivity
 import org.mochi.projects.R
 import org.mochi.projects.model.Project
+import org.mochi.android.R as MochiR
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -183,7 +188,8 @@ fun ProjectListScreen(
                                         onClick = {
                                             val id = project.fingerprint.ifEmpty { project.id }
                                             onProjectClick(id)
-                                        }
+                                        },
+                                        onUnsubscribe = { viewModel.unsubscribe(project.id) }
                                     )
                                 }
                             }
@@ -206,63 +212,113 @@ fun ProjectListScreen(
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun ProjectCard(
     project: Project,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    onUnsubscribe: () -> Unit
 ) {
     val context = LocalContext.current
     var showMenu by remember { mutableStateOf(false) }
+    var showUnsubscribeConfirm by remember { mutableStateOf(false) }
     val projectId = project.fingerprint.ifEmpty { project.id }
+    val canUnsubscribe = project.owner != 1
+    val unsubscribeTitle = stringResource(R.string.projects_settings_unsubscribe_title)
+    val unsubscribeMessage = stringResource(R.string.projects_settings_unsubscribe_message)
+    val unsubscribeLabel = stringResource(R.string.projects_settings_unsubscribe)
+    val cancelLabel = stringResource(MochiR.string.common_cancel)
 
-    Box {
-        Card(
-            modifier = Modifier
-                .fillMaxWidth()
-                .combinedClickable(
-                    onClick = onClick,
-                    onLongClick = { showMenu = true }
-                ),
-            shape = MaterialTheme.shapes.medium,
-            colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.surfaceVariant
-            )
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable(onClick = onClick),
+        shape = MaterialTheme.shapes.medium
+    ) {
+        Row(
+            modifier = Modifier.padding(start = 16.dp, top = 12.dp, bottom = 12.dp, end = 4.dp),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Row(
-                modifier = Modifier.padding(start = 16.dp, top = 12.dp, bottom = 12.dp, end = 4.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
+            Icon(
+                imageVector = Icons.Default.Folder,
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.size(24.dp)
+            )
+            Spacer(modifier = Modifier.width(12.dp))
+            Column(modifier = Modifier.weight(1f)) {
                 Text(
                     text = project.name,
                     style = MaterialTheme.typography.titleMedium,
                     maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                    modifier = Modifier.weight(1f)
+                    overflow = TextOverflow.Ellipsis
                 )
+                if (project.description.isNotBlank()) {
+                    Spacer(modifier = Modifier.height(2.dp))
+                    Text(
+                        text = project.description,
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        maxLines = 2,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                }
+            }
+            Box {
+                IconButton(onClick = { showMenu = true }) {
+                    Icon(
+                        Icons.Default.MoreHoriz,
+                        contentDescription = stringResource(MochiR.string.common_more_options)
+                    )
+                }
+                DropdownMenu(
+                    expanded = showMenu,
+                    onDismissRequest = { showMenu = false }
+                ) {
+                    DropdownMenuItem(
+                        text = { Text(stringResource(R.string.projects_list_add_to_home)) },
+                        leadingIcon = { Icon(Icons.Default.HomeMax, contentDescription = null) },
+                        onClick = {
+                            showMenu = false
+                            val intent = Intent(context, MainActivity::class.java).apply {
+                                action = Intent.ACTION_VIEW
+                                putExtra("entityId", projectId)
+                            }
+                            val shortcut = ShortcutInfoCompat.Builder(context, "project_$projectId")
+                                .setShortLabel(project.name)
+                                .setLongLabel(project.name)
+                                .setIcon(IconCompat.createWithResource(context, R.mipmap.ic_launcher))
+                                .setIntent(intent)
+                                .build()
+                            ShortcutManagerCompat.requestPinShortcut(context, shortcut, null)
+                        }
+                    )
+                    if (canUnsubscribe) {
+                        DropdownMenuItem(
+                            text = { Text(unsubscribeLabel) },
+                            leadingIcon = { Icon(Icons.Default.Delete, contentDescription = null) },
+                            onClick = {
+                                showMenu = false
+                                showUnsubscribeConfirm = true
+                            }
+                        )
+                    }
+                }
             }
         }
-        DropdownMenu(
-            expanded = showMenu,
-            onDismissRequest = { showMenu = false }
-        ) {
-            DropdownMenuItem(
-                text = { Text(stringResource(R.string.projects_list_add_to_home)) },
-                onClick = {
-                    showMenu = false
-                    val intent = Intent(context, MainActivity::class.java).apply {
-                        action = Intent.ACTION_VIEW
-                        putExtra("entityId", projectId)
-                    }
-                    val shortcut = ShortcutInfoCompat.Builder(context, "project_$projectId")
-                        .setShortLabel(project.name)
-                        .setLongLabel(project.name)
-                        .setIcon(IconCompat.createWithResource(context, R.mipmap.ic_launcher))
-                        .setIntent(intent)
-                        .build()
-                    ShortcutManagerCompat.requestPinShortcut(context, shortcut, null)
-                }
-            )
-        }
+    }
+
+    if (showUnsubscribeConfirm) {
+        ConfirmDialog(
+            title = unsubscribeTitle,
+            message = unsubscribeMessage,
+            confirmLabel = unsubscribeLabel,
+            dismissLabel = cancelLabel,
+            isDestructive = true,
+            onConfirm = {
+                showUnsubscribeConfirm = false
+                onUnsubscribe()
+            },
+            onDismiss = { showUnsubscribeConfirm = false }
+        )
     }
 }

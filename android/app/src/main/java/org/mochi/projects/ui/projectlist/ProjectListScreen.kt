@@ -112,7 +112,7 @@ fun ProjectListScreen(
             }
         }
     ) { padding ->
-        Column(modifier = Modifier.padding(padding)) {
+        Column(modifier = Modifier.padding(padding).fillMaxSize()) {
             if (uiState.showSearch) {
                 OutlinedTextField(
                     value = uiState.searchQuery,

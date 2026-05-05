@@ -1,6 +1,7 @@
 package org.mochi.projects.ui.board
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -18,6 +19,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -34,18 +36,29 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import org.mochi.android.ui.components.dnd.DragEdge
+import org.mochi.android.ui.components.dnd.DragState
+import org.mochi.android.ui.components.dnd.DropOrientation
+import org.mochi.android.ui.components.dnd.draggableItem
+import org.mochi.android.ui.components.dnd.dropTarget
+import org.mochi.android.ui.components.dnd.isDragging
+import org.mochi.android.ui.components.dnd.rememberDragState
 import org.mochi.projects.R
 import org.mochi.projects.model.FieldOption
 import org.mochi.projects.model.ProjectObject
@@ -120,12 +133,31 @@ fun BoardView(
     val unassigned = filteredObjects.filter { it.id !in assignedIds }
     val unassignedLabel = stringResource(R.string.projects_board_unassigned)
 
+    // Card drag-drop state shared across all columns. Re-keyed when the
+    // column field changes so a leftover registration doesn't survive a view
+    // switch.
+    val cardDragState = rememberDragState()
+
+    // Column-reorder state. Long-press a column header and drag horizontally
+    // to reorder. Mirrors the web's reorder-mode column rail but driven by
+    // long-press instead of an explicit toggle.
+    val columnDragState = rememberDragState()
+    val columnOrder = remember(columnOptions) { mutableStateListOf<String>().apply { addAll(columnOptions.map { it.id }) } }
+    LaunchedEffect(columnOptions) {
+        // Reset local order when server data changes, so a refresh after
+        // reorder doesn't leave us with a stale list.
+        columnOrder.clear()
+        columnOrder.addAll(columnOptions.map { it.id })
+    }
+    val columnOptionsById = columnOptions.associateBy { it.id }
+    val orderedColumns: List<FieldOption> = columnOrder.mapNotNull { columnOptionsById[it] }
+
     LazyRow(
         modifier = Modifier.fillMaxSize(),
         contentPadding = PaddingValues(horizontal = 8.dp, vertical = 4.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        items(columnOptions, key = { it.id }) { columnOption ->
+        items(orderedColumns, key = { it.id }) { columnOption ->
             val columnObjects = objectsByColumn[columnOption.id] ?: emptyList()
             BoardColumn(
                 option = columnOption,
@@ -136,6 +168,24 @@ fun BoardView(
                 rowOptions = rowOptions,
                 borderFieldId = borderFieldId,
                 childrenByParent = childrenByParent,
+                cardDragState = cardDragState,
+                columnDragState = columnDragState,
+                onColumnDrop = { sourceColumnId, edge ->
+                    val sourceIndex = columnOrder.indexOf(sourceColumnId)
+                    val targetIndex = columnOrder.indexOf(columnOption.id)
+                    if (sourceIndex < 0 || targetIndex < 0 || sourceIndex == targetIndex) return@BoardColumn
+                    val dropIndex = when (edge) {
+                        DragEdge.Start -> targetIndex
+                        DragEdge.End -> targetIndex + 1
+                        else -> targetIndex
+                    }.let {
+                        // Adjust for the removal of the source from earlier in the list.
+                        if (sourceIndex < it) it - 1 else it
+                    }
+                    columnOrder.removeAt(sourceIndex)
+                    columnOrder.add(dropIndex.coerceIn(0, columnOrder.size), sourceColumnId)
+                    viewModel.reorderColumnOptions(columnFieldId, columnOrder.toList())
+                },
                 onObjectClick = onObjectClick,
                 onMoveObject = { objectId, rank ->
                     viewModel.moveObject(objectId, columnFieldId, columnOption.id, rank)
@@ -165,6 +215,10 @@ fun BoardView(
                     rowOptions = rowOptions,
                     borderFieldId = borderFieldId,
                     childrenByParent = childrenByParent,
+                    cardDragState = cardDragState,
+                    columnDragState = columnDragState,
+                    onColumnDrop = { _, _ -> /* unassigned column is not reorderable */ },
+                    columnReorderEnabled = false,
                     onObjectClick = onObjectClick,
                     onMoveObject = { _, _ -> },
                     onRename = null,
@@ -187,6 +241,10 @@ private fun BoardColumn(
     rowOptions: List<FieldOption>,
     borderFieldId: String?,
     childrenByParent: Map<String, List<ProjectObject>>,
+    cardDragState: DragState,
+    columnDragState: DragState,
+    onColumnDrop: (sourceColumnId: String, edge: DragEdge) -> Unit,
+    columnReorderEnabled: Boolean = true,
     onObjectClick: (String) -> Unit,
     onMoveObject: (String, Int) -> Unit,
     onRename: ((String) -> Unit)? = null,
@@ -194,6 +252,30 @@ private fun BoardColumn(
     onCreateInColumn: (() -> Unit)? = null
 ) {
     var collapsed by rememberSaveable(option.id) { mutableStateOf(false) }
+
+    // The whole column is a drop target for "drop on column" — append to end.
+    // Cards inside register their own (smaller) drop targets that win when the
+    // pointer is over them; this catches drops on empty space or on the
+    // header.
+    val columnDropModifier = if (option.id.isNotBlank()) {
+        Modifier.dropTarget(
+            state = cardDragState,
+            itemId = "column:${option.id}",
+            orientation = DropOrientation.OnOnly,
+            onDrop = { sourceId, _ ->
+                // Append: rank past the last card of this column.
+                val rank = objects.size + 1
+                viewModel.moveObject(sourceId, columnFieldId, option.id, rank)
+            }
+        )
+    } else Modifier
+
+    val isColumnDragging = columnDragState.isDragging(option.id)
+    val isColumnTarget = columnReorderEnabled &&
+        columnDragState.targetItemId == "header:${option.id}" &&
+        columnDragState.draggingItemId != null &&
+        columnDragState.draggingItemId != option.id
+    val columnTargetEdge = columnDragState.targetEdge
 
     Column(
         modifier = Modifier
@@ -203,14 +285,46 @@ private fun BoardColumn(
                 MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.3f),
                 MaterialTheme.shapes.medium
             )
+            .then(columnDropModifier)
             .padding(8.dp)
+            .alpha(if (isColumnDragging) 0.6f else 1f)
     ) {
-        // Column header
+        // Column header — draggable for column reorder when enabled.
+        val headerDragModifier = if (columnReorderEnabled) {
+            Modifier
+                .draggableItem(state = columnDragState, itemId = option.id)
+                .dropTarget(
+                    state = columnDragState,
+                    itemId = "header:${option.id}",
+                    orientation = DropOrientation.Horizontal,
+                    acceptedEdges = setOf(DragEdge.Start, DragEdge.End),
+                    onDrop = { sourceId, edge -> onColumnDrop(sourceId, edge) }
+                )
+        } else Modifier
+
+        val edgeBorderModifier = if (isColumnTarget) {
+            when (columnTargetEdge) {
+                DragEdge.Start -> Modifier.border(
+                    width = 2.dp,
+                    color = MaterialTheme.colorScheme.primary,
+                    shape = MaterialTheme.shapes.small
+                )
+                DragEdge.End -> Modifier.border(
+                    width = 2.dp,
+                    color = MaterialTheme.colorScheme.primary,
+                    shape = MaterialTheme.shapes.small
+                )
+                else -> Modifier
+            }
+        } else Modifier
+
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
                 .fillMaxWidth()
                 .clip(MaterialTheme.shapes.small)
+                .then(headerDragModifier)
+                .then(edgeBorderModifier)
                 .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.1f))
                 .padding(horizontal = 4.dp, vertical = 8.dp)
         ) {
@@ -349,7 +463,7 @@ private fun BoardColumn(
                             modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp)
                         )
                     }
-                    items(rowObjects, key = { it.id }) { obj ->
+                    itemsIndexed(rowObjects, key = { _, o -> o.id }) { index, obj ->
                         BoardCard(
                             obj = obj,
                             viewModel = viewModel,
@@ -357,6 +471,10 @@ private fun BoardColumn(
                             childrenByParent = childrenByParent,
                             columnFieldId = columnFieldId,
                             rowFieldId = rowFieldId,
+                            cardDragState = cardDragState,
+                            cardIndexInColumn = index,
+                            columnObjectsForDrop = rowObjects,
+                            targetColumnId = option.id,
                             onClick = { onObjectClick(obj.id) }
                         )
                     }
@@ -382,7 +500,7 @@ private fun BoardColumn(
                             modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp)
                         )
                     }
-                    items(unassignedRow, key = { it.id }) { obj ->
+                    itemsIndexed(unassignedRow, key = { _, o -> o.id }) { index, obj ->
                         BoardCard(
                             obj = obj,
                             viewModel = viewModel,
@@ -390,6 +508,10 @@ private fun BoardColumn(
                             childrenByParent = childrenByParent,
                             columnFieldId = columnFieldId,
                             rowFieldId = rowFieldId,
+                            cardDragState = cardDragState,
+                            cardIndexInColumn = index,
+                            columnObjectsForDrop = unassignedRow,
+                            targetColumnId = option.id,
                             onClick = { onObjectClick(obj.id) }
                         )
                     }
@@ -397,17 +519,21 @@ private fun BoardColumn(
             }
         } else {
             // Simple list mode
+            val sortedObjects = viewModel.sortObjects(objects)
             LazyColumn(
                 modifier = Modifier.fillMaxWidth(),
                 verticalArrangement = Arrangement.spacedBy(4.dp)
             ) {
-                val sortedObjects = viewModel.sortObjects(objects)
-                items(sortedObjects, key = { it.id }) { obj ->
+                itemsIndexed(sortedObjects, key = { _, o -> o.id }) { index, obj ->
                     BoardCard(
                         obj = obj,
                         viewModel = viewModel,
                         borderFieldId = borderFieldId,
                         childrenByParent = childrenByParent,
+                        cardDragState = cardDragState,
+                        cardIndexInColumn = index,
+                        columnObjectsForDrop = sortedObjects,
+                        targetColumnId = option.id,
                         onClick = { onObjectClick(obj.id) }
                     )
                 }

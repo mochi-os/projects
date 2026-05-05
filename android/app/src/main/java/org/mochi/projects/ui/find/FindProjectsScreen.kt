@@ -31,6 +31,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
@@ -87,6 +88,11 @@ fun FindProjectsScreen(
                     .padding(horizontal = 16.dp, vertical = 8.dp)
             )
 
+            PullToRefreshBox(
+                isRefreshing = uiState.isRefreshing,
+                onRefresh = { viewModel.refresh() },
+                modifier = Modifier.fillMaxSize()
+            ) {
             when {
                 uiState.isLoading -> {
                     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
@@ -123,25 +129,27 @@ fun FindProjectsScreen(
                 }
 
                 uiState.recommendations.isNotEmpty() -> {
-                    Text(
-                        text = stringResource(R.string.projects_find_recommended),
-                        style = MaterialTheme.typography.titleSmall,
-                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
-                    )
-                    LazyColumn(
-                        contentPadding = PaddingValues(16.dp),
-                        verticalArrangement = Arrangement.spacedBy(8.dp)
-                    ) {
-                        items(uiState.recommendations, key = { it.fingerprint.ifEmpty { it.id } }) { project ->
-                            DiscoveredProjectCard(
-                                project = project,
-                                isSubscribing = uiState.subscribingId == (project.fingerprint.ifEmpty { project.id }),
-                                onSubscribe = {
-                                    viewModel.subscribe(project) {
-                                        onProjectSubscribed()
+                    Column {
+                        Text(
+                            text = stringResource(R.string.projects_find_recommended),
+                            style = MaterialTheme.typography.titleSmall,
+                            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
+                        )
+                        LazyColumn(
+                            contentPadding = PaddingValues(16.dp),
+                            verticalArrangement = Arrangement.spacedBy(8.dp)
+                        ) {
+                            items(uiState.recommendations, key = { it.fingerprint.ifEmpty { it.id } }) { project ->
+                                DiscoveredProjectCard(
+                                    project = project,
+                                    isSubscribing = uiState.subscribingId == (project.fingerprint.ifEmpty { project.id }),
+                                    onSubscribe = {
+                                        viewModel.subscribe(project) {
+                                            onProjectSubscribed()
+                                        }
                                     }
-                                }
-                            )
+                                )
+                            }
                         }
                     }
                 }
@@ -155,6 +163,7 @@ fun FindProjectsScreen(
                         )
                     }
                 }
+            }
             }
         }
     }

@@ -1,6 +1,8 @@
 package org.mochi.projects.ui.design
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
@@ -41,6 +43,7 @@ import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -52,6 +55,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import org.mochi.projects.R
 import org.mochi.projects.model.ProjectClass
+import org.mochi.projects.model.ProjectDetails
 import org.mochi.projects.model.ProjectField
 import org.mochi.projects.model.ProjectView
 import org.mochi.projects.ui.`object`.ConfirmDeleteDialog
@@ -75,6 +79,9 @@ fun ViewsTab(
     val enumeratedFields = remember(allFields) {
         allFields.filter { it.fieldtype == "enumerated" }
     }
+
+    val uiState by viewModel.uiState.collectAsState()
+    val projectDetails = uiState.projectDetails
 
     Scaffold(
         floatingActionButton = {
@@ -110,6 +117,16 @@ fun ViewsTab(
                     .fillMaxSize()
                     .padding(padding)
             ) {
+                if (projectDetails != null) {
+                    val previewView = views.sortedBy { it.rank }.firstOrNull()
+                    item(key = "preview") {
+                        DesignPreview(
+                            project = projectDetails,
+                            view = previewView,
+                            modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp)
+                        )
+                    }
+                }
                 items(views.sortedBy { it.rank }, key = { it.id }) { view ->
                     ViewRow(
                         view = view,
@@ -130,6 +147,7 @@ fun ViewsTab(
             classes = classes,
             enumeratedFields = enumeratedFields,
             allFields = allFields,
+            projectDetails = projectDetails,
             onDismiss = { showAddDialog = false },
             onSave = { name, viewtype, columns, rows, sort, direction, selectedClasses, border ->
                 viewModel.createView(
@@ -155,6 +173,7 @@ fun ViewsTab(
             classes = classes,
             enumeratedFields = enumeratedFields,
             allFields = allFields,
+            projectDetails = projectDetails,
             onDismiss = { editingView = null },
             onSave = { name, viewtype, columns, rows, sort, direction, selectedClasses, border ->
                 viewModel.updateView(
@@ -255,6 +274,7 @@ private fun ViewDialog(
     classes: List<ProjectClass>,
     enumeratedFields: List<ProjectField>,
     allFields: List<ProjectField>,
+    projectDetails: ProjectDetails?,
     onDismiss: () -> Unit,
     onSave: (
         name: String,
@@ -283,13 +303,39 @@ private fun ViewDialog(
     var sortExpanded by remember { mutableStateOf(false) }
     var borderExpanded by remember { mutableStateOf(false) }
 
+    // Build a synthesized ProjectView reflecting the dialog's current edit
+    // state, so the inline preview tracks the user's changes in real-time.
+    val previewView = ProjectView(
+        id = initialView?.id ?: "preview",
+        name = name.ifBlank { initialView?.name.orEmpty() },
+        viewtype = viewtype,
+        filter = initialView?.filter.orEmpty(),
+        columns = columnsField,
+        rows = rowsField,
+        fields = initialView?.fields.orEmpty(),
+        sort = sortField,
+        direction = direction,
+        classes = selectedClasses.toList(),
+        rank = initialView?.rank ?: 0,
+        border = borderField
+    )
+
     AlertDialog(
         onDismissRequest = onDismiss,
         title = { Text(title) },
         text = {
             Column(
-                modifier = Modifier.padding(vertical = 4.dp)
+                modifier = Modifier
+                    .padding(vertical = 4.dp)
+                    .verticalScroll(rememberScrollState())
             ) {
+                if (projectDetails != null) {
+                    DesignPreview(
+                        project = projectDetails,
+                        view = previewView
+                    )
+                    Spacer(modifier = Modifier.height(12.dp))
+                }
                 // Name
                 OutlinedTextField(
                     value = name,

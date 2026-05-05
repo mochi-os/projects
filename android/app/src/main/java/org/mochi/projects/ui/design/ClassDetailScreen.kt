@@ -41,6 +41,7 @@ import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -87,6 +88,15 @@ fun ClassDetailScreen(
     var showAddFieldDialog by remember { mutableStateOf(false) }
     var showDeleteConfirm by remember { mutableStateOf(false) }
 
+    val uiState by viewModel.uiState.collectAsState()
+    val projectDetails = uiState.projectDetails
+
+    // Pick the first view that includes this class (or any view if none filter
+    // by class) so the preview shows how this class's objects would lay out.
+    val previewView = projectDetails?.views?.sortedBy { it.rank }?.firstOrNull { v ->
+        v.classes.isEmpty() || cls.id in v.classes
+    } ?: projectDetails?.views?.sortedBy { it.rank }?.firstOrNull()
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -102,6 +112,15 @@ fun ClassDetailScreen(
                 text = stringResource(R.string.projects_class_label, cls.name),
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.SemiBold
+            )
+        }
+
+        if (projectDetails != null) {
+            Spacer(modifier = Modifier.height(8.dp))
+            DesignPreview(
+                project = projectDetails,
+                view = previewView,
+                classFilter = cls
             )
         }
 

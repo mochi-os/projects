@@ -22,6 +22,7 @@ import javax.inject.Inject
 data class DesignUiState(
     val projectDetails: ProjectDetails? = null,
     val isLoading: Boolean = false,
+    val isRefreshing: Boolean = false,
     val error: MochiError? = null,
     val selectedClassId: String? = null,
     val selectedFieldId: String? = null,
@@ -59,6 +60,24 @@ class DesignViewModel @Inject constructor(
             } catch (e: Exception) {
                 _uiState.value = _uiState.value.copy(
                     isLoading = false,
+                    error = e.toMochiError()
+                )
+            }
+        }
+    }
+
+    fun refresh() {
+        viewModelScope.launch {
+            _uiState.value = _uiState.value.copy(isRefreshing = true, error = null)
+            try {
+                val details = repository.getProjectInfo(projectId)
+                _uiState.value = _uiState.value.copy(
+                    projectDetails = details,
+                    isRefreshing = false
+                )
+            } catch (e: Exception) {
+                _uiState.value = _uiState.value.copy(
+                    isRefreshing = false,
                     error = e.toMochiError()
                 )
             }

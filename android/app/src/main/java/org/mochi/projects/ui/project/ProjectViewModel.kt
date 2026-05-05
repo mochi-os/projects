@@ -411,6 +411,42 @@ class ProjectViewModel @Inject constructor(
         }
     }
 
+    /**
+     * Persist a new column-option ordering after a drag-reorder. [order] is
+     * the full list of option ids in display order — the server replaces the
+     * stored ranks accordingly.
+     */
+    fun reorderColumnOptions(fieldId: String, order: List<String>) {
+        val classId = findClassForField(fieldId) ?: return
+        viewModelScope.launch {
+            try {
+                repository.reorderOptions(projectId, classId, fieldId, order.joinToString(","))
+                loadProject()
+            } catch (e: Exception) {
+                _uiState.value = _uiState.value.copy(error = e.toMochiError())
+            }
+        }
+    }
+
+    /**
+     * Returns descendant ids of [objectId] in the current object set. Used
+     * for tree drag-drop cycle prevention — a row may not be reparented under
+     * itself or any of its own descendants.
+     */
+    fun collectDescendants(objectId: String): Set<String> {
+        val byParent = _uiState.value.objects.groupBy { it.parent }
+        val result = mutableSetOf<String>()
+        val stack = ArrayDeque<String>()
+        stack.add(objectId)
+        while (stack.isNotEmpty()) {
+            val id = stack.removeLast()
+            for (child in byParent[id].orEmpty()) {
+                if (result.add(child.id)) stack.add(child.id)
+            }
+        }
+        return result
+    }
+
     fun getFilteredObjects(): List<ProjectObject> {
         val state = _uiState.value
         val view = getActiveView() ?: return sortObjects(state.objects)

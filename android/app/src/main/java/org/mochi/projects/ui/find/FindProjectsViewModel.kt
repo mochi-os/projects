@@ -16,6 +16,7 @@ data class FindProjectsUiState(
     val searchResults: List<Project> = emptyList(),
     val recommendations: List<Project> = emptyList(),
     val isLoading: Boolean = false,
+    val isRefreshing: Boolean = false,
     val error: String? = null,
     val subscribingId: String? = null
 )
@@ -38,6 +39,35 @@ class FindProjectsViewModel @Inject constructor(
                 val recommendations = repository.getRecommendations()
                 _uiState.value = _uiState.value.copy(recommendations = recommendations)
             } catch (_: Exception) { }
+        }
+    }
+
+    fun refresh() {
+        viewModelScope.launch {
+            _uiState.value = _uiState.value.copy(isRefreshing = true, error = null)
+            try {
+                val recommendations = repository.getRecommendations()
+                val query = _uiState.value.searchQuery.trim()
+                if (query.isNotBlank()) {
+                    val isUrl = query.startsWith("http://") || query.startsWith("https://")
+                    val results = if (isUrl) listOf(repository.probe(query)) else repository.searchDirectory(query)
+                    _uiState.value = _uiState.value.copy(
+                        recommendations = recommendations,
+                        searchResults = results,
+                        isRefreshing = false
+                    )
+                } else {
+                    _uiState.value = _uiState.value.copy(
+                        recommendations = recommendations,
+                        isRefreshing = false
+                    )
+                }
+            } catch (e: Exception) {
+                _uiState.value = _uiState.value.copy(
+                    isRefreshing = false,
+                    error = e.message ?: "Refresh failed"
+                )
+            }
         }
     }
 

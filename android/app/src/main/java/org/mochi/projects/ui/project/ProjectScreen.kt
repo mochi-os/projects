@@ -143,7 +143,7 @@ fun ProjectScreen(
             }
         }
     ) { padding ->
-        Column(modifier = Modifier.padding(padding)) {
+        Column(modifier = Modifier.padding(padding).fillMaxSize()) {
             // View tabs
             if (details != null && details.views.isNotEmpty()) {
                 val views = details.views

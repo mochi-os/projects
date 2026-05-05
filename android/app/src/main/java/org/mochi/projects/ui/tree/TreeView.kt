@@ -15,6 +15,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import org.mochi.android.ui.components.dnd.DragEdge
+import org.mochi.android.ui.components.dnd.rememberDragState
 import org.mochi.projects.R
 import org.mochi.projects.model.ProjectObject
 import org.mochi.projects.model.ProjectView
@@ -35,6 +37,7 @@ fun TreeView(
     onObjectClick: (String) -> Unit
 ) {
     val expandedState = remember { mutableStateMapOf<String, Boolean>() }
+    val dragState = rememberDragState()
 
     if (objects.isEmpty()) {
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
@@ -82,13 +85,91 @@ fun TreeView(
             TreeRow(
                 node = node,
                 viewModel = viewModel,
+                dragState = dragState,
                 onToggleExpand = {
                     expandedState[node.obj.id] = !(expandedState[node.obj.id] ?: (node.depth == 0))
                 },
                 onClick = { onObjectClick(node.obj.id) },
                 onDelete = { viewModel.deleteObject(node.obj.id) },
-                onReparent = { newParentId -> viewModel.reparentObject(node.obj.id, newParentId) }
+                onReparent = { newParentId -> viewModel.reparentObject(node.obj.id, newParentId) },
+                onDragDrop = { sourceId, edge ->
+                    handleTreeDrop(
+                        sourceId = sourceId,
+                        targetNode = node,
+                        edge = edge,
+                        viewModel = viewModel,
+                    )
+                }
             )
         }
+    }
+}
+
+/**
+ * Resolve a tree drag-drop into [ProjectViewModel.moveObject] /
+ * [ProjectViewModel.reparentObject] calls. Cycle prevention rejects drops
+ * onto the source's own descendants. Sibling reorder ([DragEdge.Top] /
+ * [DragEdge.Bottom]) issues a `moveObject` with `scope_parent` set to the
+ * target's parent so the server renumbers ranks within that subtree only.
+ */
+private fun handleTreeDrop(
+    sourceId: String,
+    targetNode: TreeNode,
+    edge: DragEdge,
+    viewModel: ProjectViewModel,
+) {
+    if (sourceId == targetNode.obj.id) return
+    val descendants = viewModel.collectDescendants(sourceId)
+    if (targetNode.obj.id in descendants) return
+
+    val allObjects = viewModel.uiState.value.objects
+    val sourceObj = allObjects.find { it.id == sourceId } ?: return
+
+    when (edge) {
+        DragEdge.On -> {
+            // Reparent under the target. The server appends to the end of
+            // the new parent's children automatically.
+            if (sourceObj.parent != targetNode.obj.id) {
+                viewModel.reparentObject(sourceId, targetNode.obj.id)
+            }
+        }
+        DragEdge.Top, DragEdge.Bottom -> {
+            // Insert as sibling of the target under target's parent.
+            val newParent = targetNode.obj.parent
+            if (sourceObj.parent != newParent) {
+                // Cross-parent move. Reparent only; the server appends to
+                // the new parent's children. We don't immediately follow
+                // up with a rank update because the two requests would
+                // race — by the time the rank update reaches the server,
+                // the reparent may not have applied yet, leading to a
+                // sibling-rank update against the wrong parent. Users
+                // wanting precise positioning can drag again after the
+                // reparent settles.
+                viewModel.reparentObject(sourceId, newParent)
+                return
+            }
+            // Same-parent: pure sibling reorder. Server's
+            // action_object_move treats `scope_parent` as falsy when empty
+            // (root level), so we can only reorder under a non-root
+            // parent here. Root-level sibling reorder via drag is a known
+            // limitation; the row's overflow menu's "Move" dialog still
+            // works, and "Move" → root-level happens to leave rank up to
+            // the server (which appends).
+            if (newParent.isBlank()) return
+            val siblings = allObjects
+                .filter { it.parent == newParent && it.id != sourceId }
+                .sortedBy { it.rank }
+            val targetIndex = siblings.indexOfFirst { it.id == targetNode.obj.id }
+            if (targetIndex < 0) return
+            val rank = if (edge == DragEdge.Top) targetIndex + 1 else targetIndex + 2
+            viewModel.moveObject(
+                objectId = sourceId,
+                field = "",
+                value = null,
+                rank = rank,
+                scopeParent = newParent,
+            )
+        }
+        else -> { /* Start/End not used in vertical tree */ }
     }
 }

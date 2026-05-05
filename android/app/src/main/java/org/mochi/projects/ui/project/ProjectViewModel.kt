@@ -279,10 +279,18 @@ class ProjectViewModel @Inject constructor(
         }
     }
 
-    fun moveObject(objectId: String, field: String?, value: String?, rank: Int?, row: String? = null) {
+    fun moveObject(
+        objectId: String,
+        field: String?,
+        value: String?,
+        rank: Int?,
+        row: String? = null,
+        scopeParent: String? = null,
+        promote: Boolean = false
+    ) {
         viewModelScope.launch {
             try {
-                repository.moveObject(projectId, objectId, field, value, rank, row)
+                repository.moveObject(projectId, objectId, field, value, rank, row, scopeParent, promote)
                 refreshObjects()
             } catch (e: Exception) {
                 _uiState.value = _uiState.value.copy(error = e.toMochiError())

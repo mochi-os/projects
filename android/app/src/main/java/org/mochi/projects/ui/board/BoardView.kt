@@ -31,7 +31,6 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -39,7 +38,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.Composable
@@ -47,9 +45,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import org.mochi.android.ui.components.dnd.DragEdge
@@ -142,12 +141,9 @@ fun BoardView(
     // to reorder. Mirrors the web's reorder-mode column rail but driven by
     // long-press instead of an explicit toggle.
     val columnDragState = rememberDragState()
-    val columnOrder = remember(columnOptions) { mutableStateListOf<String>().apply { addAll(columnOptions.map { it.id }) } }
-    LaunchedEffect(columnOptions) {
-        // Reset local order when server data changes, so a refresh after
-        // reorder doesn't leave us with a stale list.
-        columnOrder.clear()
-        columnOrder.addAll(columnOptions.map { it.id })
+    val columnIdsKey = columnOptions.map { it.id }.joinToString(",")
+    val columnOrder = remember(columnIdsKey) {
+        mutableStateListOf<String>().apply { addAll(columnOptions.map { it.id }) }
     }
     val columnOptionsById = columnOptions.associateBy { it.id }
     val orderedColumns: List<FieldOption> = columnOrder.mapNotNull { columnOptionsById[it] }
@@ -187,9 +183,6 @@ fun BoardView(
                     viewModel.reorderColumnOptions(columnFieldId, columnOrder.toList())
                 },
                 onObjectClick = onObjectClick,
-                onMoveObject = { objectId, rank ->
-                    viewModel.moveObject(objectId, columnFieldId, columnOption.id, rank)
-                },
                 onRename = { newName -> viewModel.renameColumnOption(columnFieldId, columnOption.id, newName) },
                 onDelete = { viewModel.deleteColumnOption(columnFieldId, columnOption.id) },
                 onCreateInColumn = if (onCreateObject != null) {
@@ -220,7 +213,6 @@ fun BoardView(
                     onColumnDrop = { _, _ -> /* unassigned column is not reorderable */ },
                     columnReorderEnabled = false,
                     onObjectClick = onObjectClick,
-                    onMoveObject = { _, _ -> },
                     onRename = null,
                     onDelete = null
                 )
@@ -246,7 +238,6 @@ private fun BoardColumn(
     onColumnDrop: (sourceColumnId: String, edge: DragEdge) -> Unit,
     columnReorderEnabled: Boolean = true,
     onObjectClick: (String) -> Unit,
-    onMoveObject: (String, Int) -> Unit,
     onRename: ((String) -> Unit)? = null,
     onDelete: (() -> Unit)? = null,
     onCreateInColumn: (() -> Unit)? = null
@@ -290,8 +281,10 @@ private fun BoardColumn(
             .alpha(if (isColumnDragging) 0.6f else 1f)
     ) {
         // Column header — draggable for column reorder when enabled.
+        val columnDragHint = if (columnReorderEnabled) stringResource(R.string.projects_drag_column) else ""
         val headerDragModifier = if (columnReorderEnabled) {
             Modifier
+                .semantics { contentDescription = columnDragHint }
                 .draggableItem(state = columnDragState, itemId = option.id)
                 .dropTarget(
                     state = columnDragState,

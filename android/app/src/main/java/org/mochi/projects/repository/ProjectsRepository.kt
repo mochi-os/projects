@@ -190,8 +190,21 @@ class ProjectsRepository @Inject constructor(
         api.deleteObject(projectId, objectId).unwrap()
     }
 
-    suspend fun moveObject(projectId: String, objectId: String, field: String? = null, value: String? = null, rank: Int? = null, row: String? = null) {
-        api.moveObject(projectId, objectId, field, value, rank, row).unwrap()
+    suspend fun moveObject(
+        projectId: String,
+        objectId: String,
+        field: String? = null,
+        value: String? = null,
+        rank: Int? = null,
+        row: String? = null,
+        scopeParent: String? = null,
+        promote: Boolean = false
+    ) {
+        api.moveObject(
+            projectId, objectId, field, value, rank, row,
+            scopeParent,
+            if (promote) "true" else null
+        ).unwrap()
     }
 
     suspend fun setValues(projectId: String, objectId: String, values: Map<String, String>) {

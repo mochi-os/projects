@@ -259,7 +259,9 @@ interface ProjectsApi {
         @Field("field") field: String?,
         @Field("value") value: String?,
         @Field("rank") rank: Int?,
-        @Field("row") row: String?
+        @Field("row") row: String?,
+        @Field("scope_parent") scopeParent: String? = null,
+        @Field("promote") promote: String? = null
     ): Response<ApiResponse<SuccessResponse>>
 
     @FormUrlEncoded

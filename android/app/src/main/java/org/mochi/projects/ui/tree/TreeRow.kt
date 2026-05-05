@@ -1,8 +1,9 @@
 package org.mochi.projects.ui.tree
 
-import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
@@ -17,6 +18,7 @@ import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.DriveFileMove
 import androidx.compose.material.icons.filled.ExpandMore
+import androidx.compose.material.icons.filled.MoreHoriz
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -37,15 +39,26 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.scale
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import org.mochi.android.ui.components.dnd.DragEdge
+import org.mochi.android.ui.components.dnd.DragState
+import org.mochi.android.ui.components.dnd.DropOrientation
+import org.mochi.android.ui.components.dnd.draggableItem
+import org.mochi.android.ui.components.dnd.dropTarget
+import org.mochi.android.ui.components.dnd.isDragging
 import org.mochi.projects.R
 import org.mochi.projects.ui.project.ProjectViewModel
 import org.mochi.android.R as MochiR
 
-@OptIn(ExperimentalFoundationApi::class, ExperimentalLayoutApi::class)
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun TreeRow(
     node: TreeNode,
@@ -53,7 +66,9 @@ fun TreeRow(
     onToggleExpand: () -> Unit,
     onClick: () -> Unit,
     onDelete: () -> Unit,
-    onReparent: ((newParentId: String) -> Unit)? = null
+    onReparent: ((newParentId: String) -> Unit)? = null,
+    dragState: DragState? = null,
+    onDragDrop: ((sourceId: String, edge: DragEdge) -> Unit)? = null,
 ) {
     var showContextMenu by remember { mutableStateOf(false) }
     var showReparentDialog by remember { mutableStateOf(false) }
@@ -63,13 +78,66 @@ fun TreeRow(
     val prefix = projectDetails?.project?.prefix ?: ""
     val cardFields = viewModel.getCardFields(obj.objectClass)
 
+    val isBeingDragged = dragState != null && dragState.isDragging(obj.id)
+    val isDropTarget = dragState != null &&
+        dragState.targetItemId == obj.id &&
+        dragState.draggingItemId != null &&
+        dragState.draggingItemId != obj.id
+    val targetEdge = dragState?.targetEdge
+
+    // Validate the drop target up-front so the modifier can reject self/descendant
+    // drops without showing a misleading hover affordance.
+    val acceptDrop: (String, DragEdge) -> Boolean = { sourceId, _ ->
+        sourceId != obj.id && obj.id !in viewModel.collectDescendants(sourceId)
+    }
+
+    val dragHintLabel = if (dragState != null && onDragDrop != null) stringResource(R.string.projects_drag_row) else ""
+    val dragModifier = if (dragState != null && onDragDrop != null) {
+        Modifier
+            .semantics { contentDescription = dragHintLabel }
+            .draggableItem(state = dragState, itemId = obj.id)
+            .dropTarget(
+                state = dragState,
+                itemId = obj.id,
+                orientation = DropOrientation.Vertical,
+                acceptedEdges = setOf(DragEdge.Top, DragEdge.Bottom, DragEdge.On),
+                accept = acceptDrop,
+                onDrop = { sourceId, edge -> onDragDrop(sourceId, edge) }
+            )
+    } else Modifier
+
+    val edgeBorderModifier = if (isDropTarget) {
+        when (targetEdge) {
+            DragEdge.Top, DragEdge.Bottom -> Modifier.border(
+                width = 2.dp,
+                color = MaterialTheme.colorScheme.primary,
+                shape = MaterialTheme.shapes.small
+            )
+            DragEdge.On -> Modifier.border(
+                width = 2.dp,
+                color = MaterialTheme.colorScheme.primary,
+                shape = MaterialTheme.shapes.small
+            ).background(
+                MaterialTheme.colorScheme.primary.copy(alpha = 0.08f)
+            )
+            else -> Modifier
+        }
+    } else Modifier
+
+    val visualModifier = if (isBeingDragged) {
+        Modifier
+            .shadow(elevation = 8.dp, shape = MaterialTheme.shapes.small)
+            .scale(1.05f)
+            .alpha(0.9f)
+    } else Modifier
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .combinedClickable(
-                onClick = onClick,
-                onLongClick = { showContextMenu = true }
-            )
+            .then(dragModifier)
+            .then(visualModifier)
+            .then(edgeBorderModifier)
+            .clickable(onClick = onClick)
             .padding(start = indent + 4.dp, end = 8.dp, top = 8.dp, bottom = 8.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -143,8 +211,20 @@ fun TreeRow(
             }
         }
 
-        // Context menu
-        if (showContextMenu) {
+        // Overflow menu — accessible fallback for the move/delete actions
+        // now that long-press is reserved for drag-start.
+        Box {
+            IconButton(
+                onClick = { showContextMenu = true },
+                modifier = Modifier.size(28.dp)
+            ) {
+                Icon(
+                    Icons.Default.MoreHoriz,
+                    contentDescription = stringResource(MochiR.string.common_more_options),
+                    modifier = Modifier.size(20.dp),
+                    tint = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
             DropdownMenu(
                 expanded = showContextMenu,
                 onDismissRequest = { showContextMenu = false }

@@ -143,83 +143,85 @@ fun ProjectScreen(
             }
         }
     ) { padding ->
-        Column(modifier = Modifier.padding(padding).fillMaxSize()) {
-            // View tabs
-            if (details != null && details.views.isNotEmpty()) {
-                val views = details.views
-                val selectedIndex = views.indexOfFirst { it.id == uiState.activeViewId }.coerceAtLeast(0)
-                ScrollableTabRow(
-                    selectedTabIndex = selectedIndex,
-                    edgePadding = 16.dp
-                ) {
-                    views.forEachIndexed { index, view ->
-                        Tab(
-                            selected = index == selectedIndex,
-                            onClick = { viewModel.setActiveView(view.id) },
-                            text = {
-                                Text(
-                                    text = view.name,
-                                    maxLines = 1,
-                                    overflow = TextOverflow.Ellipsis
-                                )
-                            }
-                        )
-                    }
-                }
-            }
-
-            // Search and filter bar
-            if (showSearch) {
-                Column(modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)) {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        OutlinedTextField(
-                            value = uiState.searchQuery,
-                            onValueChange = viewModel::updateSearchQuery,
-                            placeholder = { Text(stringResource(R.string.projects_search_objects_placeholder)) },
-                            singleLine = true,
-                            modifier = Modifier.weight(1f)
-                        )
-                        Spacer(modifier = Modifier.width(8.dp))
-                        FilterChip(
-                            selected = uiState.watchedOnly,
-                            onClick = { viewModel.toggleWatchedOnly() },
-                            label = { Text(stringResource(R.string.projects_watched)) },
-                            leadingIcon = if (uiState.watchedOnly) {
-                                { Icon(Icons.Default.Visibility, contentDescription = null, modifier = Modifier.size(16.dp)) }
-                            } else null
-                        )
-                    }
-                    if (activeView != null) {
-                        Spacer(modifier = Modifier.height(8.dp))
-                        SortRow(viewModel = viewModel)
-                    }
-                }
-            }
-
-            // Main content
-            when {
-                uiState.isLoading && details == null -> {
-                    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                        CircularProgressIndicator()
-                    }
-                }
-
-                uiState.error != null && details == null -> {
-                    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                        Text(
-                            text = uiState.error!!.userMessage(),
-                            color = MaterialTheme.colorScheme.error,
-                            style = MaterialTheme.typography.bodyLarge
-                        )
-                    }
-                }
-
-                details != null -> {
-                    PullToRefreshBox(
-                        isRefreshing = uiState.isRefreshing,
-                        onRefresh = { viewModel.refresh() },
-                        modifier = Modifier.fillMaxSize()
+        PullToRefreshBox(
+            isRefreshing = uiState.isRefreshing,
+            onRefresh = { viewModel.refresh() },
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(padding)
+        ) {
+            Column(modifier = Modifier.fillMaxSize()) {
+                // View tabs
+                if (details != null && details.views.isNotEmpty()) {
+                    val views = details.views
+                    val selectedIndex = views.indexOfFirst { it.id == uiState.activeViewId }.coerceAtLeast(0)
+                    ScrollableTabRow(
+                        selectedTabIndex = selectedIndex,
+                        edgePadding = 16.dp
                     ) {
+                        views.forEachIndexed { index, view ->
+                            Tab(
+                                selected = index == selectedIndex,
+                                onClick = { viewModel.setActiveView(view.id) },
+                                text = {
+                                    Text(
+                                        text = view.name,
+                                        maxLines = 1,
+                                        overflow = TextOverflow.Ellipsis
+                                    )
+                                }
+                            )
+                        }
+                    }
+                }
+
+                // Search and filter bar
+                if (showSearch) {
+                    Column(modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)) {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            OutlinedTextField(
+                                value = uiState.searchQuery,
+                                onValueChange = viewModel::updateSearchQuery,
+                                placeholder = { Text(stringResource(R.string.projects_search_objects_placeholder)) },
+                                singleLine = true,
+                                modifier = Modifier.weight(1f)
+                            )
+                            Spacer(modifier = Modifier.width(8.dp))
+                            FilterChip(
+                                selected = uiState.watchedOnly,
+                                onClick = { viewModel.toggleWatchedOnly() },
+                                label = { Text(stringResource(R.string.projects_watched)) },
+                                leadingIcon = if (uiState.watchedOnly) {
+                                    { Icon(Icons.Default.Visibility, contentDescription = null, modifier = Modifier.size(16.dp)) }
+                                } else null
+                            )
+                        }
+                        if (activeView != null) {
+                            Spacer(modifier = Modifier.height(8.dp))
+                            SortRow(viewModel = viewModel)
+                        }
+                    }
+                }
+
+                // Main content
+                when {
+                    uiState.isLoading && details == null -> {
+                        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                            CircularProgressIndicator()
+                        }
+                    }
+
+                    uiState.error != null && details == null -> {
+                        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                            Text(
+                                text = uiState.error!!.userMessage(),
+                                color = MaterialTheme.colorScheme.error,
+                                style = MaterialTheme.typography.bodyLarge
+                            )
+                        }
+                    }
+
+                    details != null -> {
                         val filteredObjects = viewModel.getFilteredObjects()
                         val allObjects = uiState.objects
                         when (activeView?.viewtype) {

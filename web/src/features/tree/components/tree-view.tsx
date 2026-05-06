@@ -4,11 +4,10 @@
 import { useState, useMemo, useLayoutEffect, useCallback, useRef } from "react";
 import { Trans } from '@lingui/react/macro'
 import { t } from '@lingui/core/macro'
-import { Button, EmptyState, useShellStorage } from "@mochi/web";
+import { Button, EmptyState, naturalCompare, useShellStorage } from "@mochi/web";
 import { Folder, Plus } from 'lucide-react';
 import { TreeRow } from "./tree-row";
 import type { ProjectDetails, ProjectObject, SortState } from "@/types";
-import { naturalCompare } from '@mochi/web'
 
 interface TreeViewProps {
   project: ProjectDetails;
@@ -264,6 +263,7 @@ export function TreeView({
 
     document.body.getBoundingClientRect(); // force reflow
     for (const el of animations) {
+      // eslint-disable-next-line lingui/no-unlocalized-strings
       el.style.transition = 'transform 200ms ease-out';
       el.style.transform = '';
       el.addEventListener('transitionend', () => { el.style.transition = ''; }, { once: true });

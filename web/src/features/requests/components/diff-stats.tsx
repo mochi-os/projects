@@ -62,7 +62,7 @@ export function DiffStats({ repoId, base, head, diffUrl }: DiffStatsProps) {
       <div className="flex items-center gap-4 text-sm">
         <span className="flex items-center gap-1">
           <FileCode2 className="size-4 text-muted-foreground" />
-          {files.length} files changed
+          <Trans>{files.length} files changed</Trans>
         </span>
         <span className={cn("flex items-center gap-1", requestStatusTextStyles.added)}>
           <Plus className="size-3" />

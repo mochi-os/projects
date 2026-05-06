@@ -1,3 +1,4 @@
+/* eslint-disable lingui/no-unlocalized-strings */
 // Tests for the projects store
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { useProjectsStore } from "./projects-store";

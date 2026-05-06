@@ -619,7 +619,7 @@ export function ProjectPageContent({ project, projectId, search, initialObjectId
     setSelectedObjectId(null);
     setCreateDefaultFields(getDefaultColumnValue());
     setCreateDialogOpen(true);
-  }, [project.classes.length, getDefaultColumnValue]);
+  }, [project.classes.length, getDefaultColumnValue, t]);
 
   // Keyboard shortcuts
   useKeyboardShortcuts({

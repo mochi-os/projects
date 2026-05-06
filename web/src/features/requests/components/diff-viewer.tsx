@@ -415,7 +415,7 @@ export function DiffViewer({ diff, viewStyle }: DiffViewerProps) {
       <div className="flex items-center gap-4 text-sm px-1">
         <span className="flex items-center gap-1.5 text-muted-foreground">
           <FileCode2 className="size-4" />
-          {files.length} files changed
+          <Trans>{files.length} files changed</Trans>
         </span>
         <span className={cn("flex items-center gap-1", requestStatusTextStyles.added)}>
           <Plus className="size-3" />

@@ -1,3 +1,4 @@
+/* eslint-disable lingui/no-unlocalized-strings */
 const statusBadgeBaseClass =
   "inline-flex items-center rounded-md border px-1.5 py-0.5 text-xs font-medium leading-none shrink-0";
 

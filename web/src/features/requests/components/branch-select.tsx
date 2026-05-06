@@ -2,7 +2,7 @@
 // Copyright Alistair Cunningham 2026
 
 import { useQuery } from "@tanstack/react-query";
-import { Trans } from '@lingui/react/macro'
+import { Trans, useLingui } from '@lingui/react/macro'
 import {
   Select,
   SelectContent,
@@ -25,9 +25,11 @@ export function BranchSelect({
   repoId,
   value,
   onChange,
-  placeholder = "Select branch",
+  placeholder,
   disabled,
 }: BranchSelectProps) {
+  const { t } = useLingui();
+  const placeholderText = placeholder ?? t`Select branch`;
   const { data, isLoading } = useQuery({
     queryKey: ["branches", repoId],
     queryFn: async () => {
@@ -49,7 +51,7 @@ export function BranchSelect({
       <SelectTrigger className="w-full">
         <div className="flex items-center gap-2">
           <GitBranch className="size-4 text-muted-foreground" />
-          <SelectValue placeholder={placeholder} />
+          <SelectValue placeholder={placeholderText} />
         </div>
       </SelectTrigger>
       <SelectContent>

@@ -57,7 +57,7 @@ function DesignPage() {
   });
 
   const project = projectData as ProjectDetails | undefined;
-  usePageTitle(project ? `${project.project.name} - Design` : "Design");
+  usePageTitle(project ? t`${project.project.name} - Design` : t`Design`);
 
   // Import dialog state
   const [importOpen, setImportOpen] = useState(false);
@@ -88,7 +88,7 @@ function DesignPage() {
     } catch (err) {
       toast.error(getErrorMessage(err, t`Failed to export design`));
     }
-  }, [projectId, project]);
+  }, [projectId, project, t]);
 
   // Import confirmation handler
   const handleConfirmImport = useCallback(async () => {
@@ -111,7 +111,7 @@ function DesignPage() {
     } finally {
       setImporting(false);
     }
-  }, [projectId, pendingImport, queryClient]);
+  }, [projectId, pendingImport, queryClient, t]);
 
   if (isLoading) {
     return (
@@ -150,7 +150,7 @@ function DesignPage() {
   return (
     <>
       <PageHeader
-        title={`${project.project.name} - Design`}
+        title={t`${project.project.name} - Design`}
         icon={<Settings2 className="size-4 md:size-5" />}
         back={{ label: t`Back to project`, onFallback: goBackToProject }}
         menuAction={
@@ -197,12 +197,12 @@ function DesignPage() {
         onOpenChange={setConfirmOpen}
         title={t`Replace design?`}
         desc={
-          <>
+          <Trans>
             This will replace the current design with{" "}
             <strong>{pendingImport?.label}</strong>. All existing classes,
             fields, options, and views will be deleted. Existing objects will
             not be deleted but may no longer appear in views.
-          </>
+          </Trans>
         }
         confirmText={
           importing ? (
@@ -211,7 +211,7 @@ function DesignPage() {
               <Trans>Replacing...</Trans>
             </>
           ) : (
-            "Replace design"
+            <Trans>Replace design</Trans>
           )
         }
         handleConfirm={handleConfirmImport}

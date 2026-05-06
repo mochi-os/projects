@@ -35,7 +35,7 @@ function DiffPage() {
   const { repo, source, target } = Route.useSearch();
   const queryClient = useQueryClient();
 
-  usePageTitle(`Diff: ${source} → ${target}`);
+  usePageTitle(t`Diff: ${source} → ${target}`);
 
   const {
     data: diffData,

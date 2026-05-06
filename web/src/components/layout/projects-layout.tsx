@@ -2,6 +2,7 @@ import { useEffect, useMemo } from "react";
 import { useLingui } from '@lingui/react/macro'
 import {
   AuthenticatedLayout,
+  naturalCompare,
   type SidebarData,
   type NavItem,
 } from "@mochi/web";
@@ -10,7 +11,6 @@ import { useProjectsStore } from "@/stores/projects-store";
 import { SidebarProvider, useSidebarContext } from "@/context/sidebar-context";
 import { CreateProjectDialog } from "@/features/projects/components/create-project-dialog";
 import { APP_ROUTES } from "@/config/routes";
-import { naturalCompare } from '@mochi/web'
 
 function ProjectsLayoutInner() {
   const { t } = useLingui()
@@ -84,7 +84,7 @@ function ProjectsLayoutInner() {
     ];
 
     return { navGroups: groups };
-  }, [projects, openCreateDialog, error, refresh]);
+  }, [projects, openCreateDialog, error, refresh, t]);
 
   return (
     <>

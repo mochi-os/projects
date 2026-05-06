@@ -1,12 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import { Trans, useLingui } from '@lingui/react/macro'
 import { useNavigate } from "@tanstack/react-router";
-import { Button, ResponsiveDialog, ResponsiveDialogContent, ResponsiveDialogDescription, ResponsiveDialogFooter, ResponsiveDialogHeader, ResponsiveDialogTitle, ResponsiveDialogTrigger, Input, Label, Switch, toast, getErrorMessage, cn } from "@mochi/web"
+import { Button, cn, getErrorMessage, Input, Label, naturalCompare, ResponsiveDialog, ResponsiveDialogContent, ResponsiveDialogDescription, ResponsiveDialogFooter, ResponsiveDialogHeader, ResponsiveDialogTitle, ResponsiveDialogTrigger, Switch, toast } from "@mochi/web"
 import { ArrowLeft, ArrowRight, Check, File, FolderKanban, LayoutGrid, Plus, Ticket, Zap } from "lucide-react";
 import projectsApi from "@/api/projects";
 import { useProjectsStore } from "@/stores/projects-store";
 import type { ProjectTemplate } from "@/types";
-import { naturalCompare } from '@mochi/web'
 
 function nameToPrefix(name: string): string {
   return name
@@ -138,7 +137,7 @@ export function CreateProjectDialog({
             <div className="bg-primary/10 text-primary flex size-8 items-center justify-center rounded-lg">
               <FolderKanban className="size-4" />
             </div>
-            {step === 1 ? "Create project" : "Choose a template"}
+            {step === 1 ? <Trans>Create project</Trans> : <Trans>Choose a template</Trans>}
           </ResponsiveDialogTitle>
           <ResponsiveDialogDescription className="sr-only"><Trans>Create a new project</Trans></ResponsiveDialogDescription>
         </ResponsiveDialogHeader>
@@ -185,7 +184,7 @@ export function CreateProjectDialog({
                 }}
               />
               <p className="text-muted-foreground text-xs">
-                Used for readable IDs like {prefix || "project"}-1, {prefix || "project"}-2
+                <Trans>Used for readable IDs like {prefix || "project"}-1, {prefix || "project"}-2</Trans>
               </p>
             </div>
 
@@ -209,7 +208,7 @@ export function CreateProjectDialog({
                 <Trans>Cancel</Trans>
               </Button>
               <Button type="button" onClick={handleNext}>
-                Next
+                <Trans>Next</Trans>
                 <ArrowRight className="ms-2 size-4 rtl:rotate-180" />
               </Button>
             </ResponsiveDialogFooter>
@@ -284,7 +283,7 @@ export function CreateProjectDialog({
                 <Trans>Back</Trans>
               </Button>
               <Button type="submit" disabled={isPending || !selectedTemplate}>
-                {isPending ? "Creating..." : <><Plus className="me-2 size-4" /><Trans>Create project</Trans></>}
+                {isPending ? <Trans>Creating...</Trans> : <><Plus className="me-2 size-4" /><Trans>Create project</Trans></>}
               </Button>
             </ResponsiveDialogFooter>
           </form>

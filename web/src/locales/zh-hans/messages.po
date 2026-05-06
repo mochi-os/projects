@@ -17,10 +17,45 @@ msgstr ""
 msgid "(itself)"
 msgstr "(自身)"
 
+#: src/features/board/components/board-container.tsx:738
+msgid "[not set]"
+msgstr "[未设置]"
+
 #. placeholder {0}: project.project.name
+#: src/routes/_authenticated/$projectId/design.tsx:60
+#: src/routes/_authenticated/$projectId/design.tsx:153
+msgid "{0} - Design"
+msgstr "{0} - 设计"
+
+#. placeholder {0}: data.behind
+#: src/features/requests/components/merge-status.tsx:74
+msgid "{0} behind"
+msgstr "{0} 个落后"
+
+#. placeholder {0}: files.length
+#: src/features/requests/components/diff-stats.tsx:65
+#: src/features/requests/components/diff-viewer.tsx:418
+msgid "{0} files changed"
+msgstr "{0} 个文件已更改"
+
+#. placeholder {0}: project.project.name
+#: src/routes/_authenticated/$projectId_.settings.tsx:124
 #: src/routes/_authenticated/$projectId_.settings.tsx:239
 msgid "{0} settings"
 msgstr "{0} 设置"
+
+#. placeholder {0}: data.ahead
+#: src/features/requests/components/merge-status.tsx:73
+msgid "+{0} ahead"
+msgstr "+{0} 个领先"
+
+#: src/features/objects/components/comment-thread.tsx:129
+msgid "+{totalDescendants} more replies"
+msgstr "+{totalDescendants} 条回复"
+
+#: src/features/objects/components/comment-thread.tsx:128
+msgid "1 reply"
+msgstr "1 条回复"
 
 #: ../../../lib/web/src/lib/preference-utils.ts:52
 msgid "12 hours"
@@ -46,19 +81,19 @@ msgstr "禁止访问"
 msgid "Access level"
 msgstr "访问级别"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:696
+#: src/routes/_authenticated/$projectId_.settings.tsx:699
 msgid "Access level updated"
 msgstr "访问级别已更新"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:705
+#: src/routes/_authenticated/$projectId_.settings.tsx:708
 msgid "Access Management"
 msgstr "访问管理"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:685
+#: src/routes/_authenticated/$projectId_.settings.tsx:688
 msgid "Access removed"
 msgstr "访问权限已移除"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:673
+#: src/routes/_authenticated/$projectId_.settings.tsx:676
 msgid "Access set for {subjectName}"
 msgstr "已为 {subjectName} 设置访问权限"
 
@@ -78,7 +113,11 @@ msgstr "账户类型"
 msgid "Account verified"
 msgstr "账户已验证"
 
-#: src/features/objects/components/field-editor.tsx:533
+#: src/features/objects/components/object-detail-panel.tsx:371
+msgid "Activity"
+msgstr "动态"
+
+#: src/features/objects/components/field-editor.tsx:534
 #: src/features/requests/components/request-panel.tsx:100
 msgid "Add"
 msgstr "添加"
@@ -108,7 +147,7 @@ msgstr "添加账户"
 msgid "Add an account to receive notifications and use services."
 msgstr "添加账户以接收通知并使用服务。"
 
-#: src/features/objects/components/field-editor.tsx:504
+#: src/features/objects/components/field-editor.tsx:505
 msgid "Add checklist item"
 msgstr "添加清单项"
 
@@ -128,11 +167,11 @@ msgstr "添加列"
 msgid "Add field"
 msgstr "添加字段"
 
-#: src/features/objects/components/field-editor.tsx:522
+#: src/features/objects/components/field-editor.tsx:523
 msgid "Add item..."
 msgstr "添加条目..."
 
-#: src/features/objects/components/object-links.tsx:253
+#: src/features/objects/components/object-links.tsx:260
 msgid "Add link"
 msgstr "添加链接"
 
@@ -141,11 +180,12 @@ msgid "Add new account"
 msgstr "添加新账户"
 
 #: src/features/editor/components/edit-dialogs.tsx:1112
+#: src/features/editor/components/option-dialog.tsx:81
 #: src/features/editor/components/option-dialog.tsx:143
 msgid "Add option"
 msgstr "添加选项"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:712
+#: src/routes/_authenticated/$projectId_.settings.tsx:715
 msgid "Add Rule"
 msgstr "添加规则"
 
@@ -183,7 +223,7 @@ msgstr "全部"
 msgid "All projects"
 msgstr "所有项目"
 
-#: src/features/projects/components/create-project-dialog.tsx:194
+#: src/features/projects/components/create-project-dialog.tsx:193
 msgid "Allow anyone to search for project"
 msgstr "允许任何人搜索项目"
 
@@ -238,12 +278,12 @@ msgstr "附加评论文件"
 msgid "Attach reply files"
 msgstr "附加回复文件"
 
-#: src/components/keyboard-shortcuts-help.tsx:41
+#: src/components/keyboard-shortcuts-help.tsx:47
 msgid "Available keyboard shortcuts"
 msgstr "可用键盘快捷键"
 
 #: ../../../lib/web/src/components/place-picker.tsx:152
-#: src/features/projects/components/create-project-dialog.tsx:284
+#: src/features/projects/components/create-project-dialog.tsx:283
 msgid "Back"
 msgstr "返回"
 
@@ -265,6 +305,15 @@ msgstr "返回项目"
 #: src/routes/_authenticated/$projectId/index.tsx:90
 msgid "Back to projects"
 msgstr "返回项目列表"
+
+#: src/features/objects/components/object-links.tsx:43
+#: src/features/objects/components/object-links.tsx:160
+msgid "Blocked by"
+msgstr "被以下阻止"
+
+#: src/features/objects/components/object-links.tsx:41
+msgid "Blocks"
+msgstr "阻止"
 
 #: src/features/editor/components/edit-dialogs.tsx:310
 msgid "Board"
@@ -296,7 +345,7 @@ msgstr "可作为子项的父级"
 #: src/features/board/components/board-column.tsx:608
 #: src/features/editor/components/option-dialog.tsx:135
 #: src/features/objects/components/comment-thread.tsx:168
-#: src/features/projects/components/create-project-dialog.tsx:209
+#: src/features/projects/components/create-project-dialog.tsx:208
 #: src/routes/_authenticated/$projectId/design.tsx:340
 #: src/routes/_authenticated/$projectId/index.tsx:860
 msgid "Cancel"
@@ -306,6 +355,10 @@ msgstr "取消"
 #: src/features/objects/components/comment-thread.tsx:319
 msgid "Cancel reply"
 msgstr "取消回复"
+
+#: src/features/requests/components/merge-status.tsx:68
+msgid "Cannot merge automatically"
+msgstr "无法自动合并"
 
 #: ../../../lib/web/src/components/notification-category-button.tsx:131
 msgid "Category for this notification"
@@ -319,13 +372,17 @@ msgstr "更改通知分类"
 msgid "Checkbox"
 msgstr "复选框"
 
-#: src/features/requests/components/merge-status.tsx:35
+#: src/features/requests/components/merge-status.tsx:36
 msgid "Checking merge status..."
 msgstr "正在检查合并状态..."
 
 #: src/features/editor/components/add-dialogs.tsx:125
 msgid "Checklist"
 msgstr "清单"
+
+#: src/features/projects/components/create-project-dialog.tsx:140
+msgid "Choose a template"
+msgstr "选择模板"
 
 #: ../../../lib/web/src/components/config-drawer.tsx:315
 msgid "Choose between default expanded, compact icon-only, or full layout mode"
@@ -392,6 +449,10 @@ msgstr "关闭导航"
 msgid "Close Panel"
 msgstr "关闭面板"
 
+#: src/components/keyboard-shortcuts-help.tsx:31
+msgid "Close panel / cancel"
+msgstr "关闭面板 / 取消"
+
 #: ../../../lib/web/src/components/header-search.tsx:51
 msgid "Close search"
 msgstr "关闭搜索"
@@ -412,9 +473,14 @@ msgstr "列分组依据"
 msgid "Coming Soon!"
 msgstr "即将推出!"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:605
+#: src/routes/_authenticated/$projectId_.settings.tsx:608
 msgid "Comment and view"
 msgstr "评论和查看"
+
+#. placeholder {0}: data.comment_count || 0
+#: src/features/objects/components/object-detail-panel.tsx:366
+msgid "Comments ({0})"
+msgstr "评论 ({0})"
 
 #: ../../../lib/web/src/components/config-drawer.tsx:302
 msgid "Compact"
@@ -449,7 +515,7 @@ msgstr "上下文信息和详情。"
 msgid "Continue"
 msgstr "继续"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:706
+#: src/routes/_authenticated/$projectId_.settings.tsx:709
 msgid "Control who can view and interact with this project"
 msgstr "控制谁可以查看此项目并与之互动"
 
@@ -464,6 +530,7 @@ msgstr "关于此项目的核心信息"
 #: src/features/board/components/board-column.tsx:544
 #: src/features/board/components/board-column.tsx:691
 #: src/features/objects/components/create-object-dialog.tsx:342
+#: src/features/objects/components/create-object-dialog.tsx:485
 #: src/features/tree/components/tree-view.tsx:367
 msgid "Create"
 msgstr "创建"
@@ -472,24 +539,32 @@ msgstr "创建"
 msgid "Create a new item in this project"
 msgstr "在此项目中创建新条目"
 
-#: src/features/projects/components/create-project-dialog.tsx:143
+#: src/features/projects/components/create-project-dialog.tsx:142
 #: src/features/projects/pages/projects-list-page.tsx:99
 msgid "Create a new project"
 msgstr "创建新项目"
 
+#: src/components/keyboard-shortcuts-help.tsx:24
 #: src/features/objects/components/create-object-dialog.tsx:319
 msgid "Create new item"
 msgstr "创建新条目"
 
 #: src/components/layout/projects-layout.tsx:56
-#: src/features/projects/components/create-project-dialog.tsx:131
-#: src/features/projects/components/create-project-dialog.tsx:287
+#: src/features/projects/components/create-project-dialog.tsx:130
+#: src/features/projects/components/create-project-dialog.tsx:140
+#: src/features/projects/components/create-project-dialog.tsx:286
 msgid "Create project"
 msgstr "创建项目"
 
+#: src/components/view-options-bar.tsx:37
 #: src/features/editor/components/edit-dialogs.tsx:490
 msgid "Created"
 msgstr "已创建"
+
+#: src/features/objects/components/create-object-dialog.tsx:485
+#: src/features/projects/components/create-project-dialog.tsx:286
+msgid "Creating..."
+msgstr "创建中..."
 
 #: ../../../lib/web/src/components/config-drawer.tsx:205
 #: ../../../lib/web/src/lib/preference-utils.ts:17
@@ -595,6 +670,7 @@ msgstr "降序"
 msgid "Description"
 msgstr "描述"
 
+#: src/routes/_authenticated/$projectId/design.tsx:60
 #: src/routes/_authenticated/$projectId/design.tsx:128
 #: src/routes/_authenticated/$projectId/index.tsx:823
 msgid "Design"
@@ -604,7 +680,7 @@ msgstr "设计"
 msgid "Design imported"
 msgstr "设计已导入"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:603
+#: src/routes/_authenticated/$projectId_.settings.tsx:606
 msgid "Design, write, comment, and view"
 msgstr "设计、撰写、评论和查看"
 
@@ -626,6 +702,10 @@ msgstr "从浏览器检测"
 #: src/features/requests/components/diff-stats.tsx:83
 msgid "Diff"
 msgstr "差异"
+
+#: src/routes/$projectId.diff.tsx:38
+msgid "Diff: {source} → {target}"
+msgstr "差异: {source} → {target}"
 
 #: ../../../lib/web/src/components/config-drawer.tsx:327
 msgid "Direction"
@@ -668,6 +748,10 @@ msgstr "草稿"
 msgid "Drag columns to re-order them"
 msgstr "拖动列以重新排序"
 
+#: src/features/objects/components/object-links.tsx:42
+msgid "Duplicates"
+msgstr "重复"
+
 #: src/features/objects/components/comment-thread.tsx:217
 msgid "Edit"
 msgstr "编辑"
@@ -684,11 +768,19 @@ msgstr "编辑字段"
 msgid "Edit field settings"
 msgstr "编辑字段设置"
 
+#: src/features/editor/components/option-dialog.tsx:81
+msgid "Edit option"
+msgstr "编辑选项"
+
 #. placeholder {0}: opt.name
 #: src/features/editor/components/edit-dialogs.tsx:1091
 #: src/features/editor/components/edit-dialogs.tsx:1092
 msgid "Edit option {0}"
 msgstr "编辑选项 {0}"
+
+#: src/components/keyboard-shortcuts-help.tsx:30
+msgid "Edit selected card"
+msgstr "编辑选中的卡片"
 
 #: src/features/editor/components/edit-dialogs.tsx:266
 msgid "Edit view"
@@ -714,7 +806,7 @@ msgstr "导出设计"
 msgid "Failed to add account"
 msgstr "添加账户失败"
 
-#: src/features/requests/components/merge-status.tsx:44
+#: src/features/requests/components/merge-status.tsx:45
 msgid "Failed to check merge status"
 msgstr "检查合并状态失败"
 
@@ -726,7 +818,7 @@ msgstr "创建类别失败"
 msgid "Failed to create field"
 msgstr "创建字段失败"
 
-#: src/features/objects/components/object-links.tsx:92
+#: src/features/objects/components/object-links.tsx:99
 msgid "Failed to create link"
 msgstr "创建链接失败"
 
@@ -734,7 +826,7 @@ msgstr "创建链接失败"
 msgid "Failed to create option"
 msgstr "创建选项失败"
 
-#: src/features/projects/components/create-project-dialog.tsx:113
+#: src/features/projects/components/create-project-dialog.tsx:112
 msgid "Failed to create project"
 msgstr "创建项目失败"
 
@@ -750,7 +842,7 @@ msgstr "删除附件失败"
 msgid "Failed to delete comment"
 msgstr "删除评论失败"
 
-#: src/features/objects/components/object-links.tsx:114
+#: src/features/objects/components/object-links.tsx:121
 msgid "Failed to delete link"
 msgstr "删除链接失败"
 
@@ -799,7 +891,7 @@ msgstr "发布评论失败"
 msgid "Failed to read file"
 msgstr "读取文件失败"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:688
+#: src/routes/_authenticated/$projectId_.settings.tsx:691
 msgid "Failed to remove access"
 msgstr "移除访问权限失败"
 
@@ -819,7 +911,7 @@ msgstr "重新排序视图失败"
 msgid "Failed to send verification code"
 msgstr "发送验证码失败"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:676
+#: src/routes/_authenticated/$projectId_.settings.tsx:679
 msgid "Failed to set access level"
 msgstr "设置访问级别失败"
 
@@ -833,7 +925,7 @@ msgstr "订阅失败"
 msgid "Failed to unsubscribe"
 msgstr "取消订阅失败"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:699
+#: src/routes/_authenticated/$projectId_.settings.tsx:702
 msgid "Failed to update access level"
 msgstr "更新访问级别失败"
 
@@ -962,7 +1054,7 @@ msgstr "嵌入"
 msgid "Interests"
 msgstr "兴趣"
 
-#: src/features/objects/components/field-editor.tsx:365
+#: src/features/objects/components/field-editor.tsx:366
 msgid "Invalid date"
 msgstr "日期无效"
 
@@ -978,7 +1070,7 @@ msgstr "验证码无效"
 msgid "Item details"
 msgstr "条目详情"
 
-#: src/components/keyboard-shortcuts-help.tsx:40
+#: src/components/keyboard-shortcuts-help.tsx:46
 msgid "Keyboard shortcuts"
 msgstr "键盘快捷键"
 
@@ -1000,7 +1092,7 @@ msgstr "从左到右"
 msgid "Light"
 msgstr "浅色"
 
-#: src/features/objects/components/object-links.tsx:215
+#: src/features/objects/components/object-links.tsx:222
 msgid "Links"
 msgstr "链接"
 
@@ -1024,7 +1116,7 @@ msgstr "正在加载条目"
 msgid "Loading item details"
 msgstr "正在加载条目详情"
 
-#: src/features/projects/components/create-project-dialog.tsx:222
+#: src/features/projects/components/create-project-dialog.tsx:221
 msgid "Loading templates..."
 msgstr "正在加载模板..."
 
@@ -1058,6 +1150,10 @@ msgstr "正在退出登录…"
 msgid "Luma (Default)"
 msgstr "Luma(默认)"
 
+#: src/components/view-options-bar.tsx:35
+msgid "Manual"
+msgstr "手动"
+
 #: ../../../lib/web/src/components/layout/notification-menu.tsx:86
 #: ../../../lib/web/src/components/notifications-dropdown.tsx:220
 msgid "Mark all as read"
@@ -1071,9 +1167,21 @@ msgstr "菜单"
 msgid "Merge"
 msgstr "合并"
 
+#: src/features/requests/components/merge-button.tsx:43
+msgid "Merge {objectReadable}: {objectTitle}"
+msgstr "合并 {objectReadable}: {objectTitle}"
+
+#: src/features/requests/components/merge-button.tsx:67
+msgid "Merge commit"
+msgstr "合并提交"
+
 #: src/features/requests/components/request-panel.tsx:89
 msgid "Merge requests"
 msgstr "合并请求"
+
+#: src/features/objects/components/object-detail-panel.tsx:359
+msgid "Merge requests ({requestCount})"
+msgstr "合并请求 ({requestCount})"
 
 #: src/features/requests/components/request-panel.tsx:255
 msgid "Merged"
@@ -1099,7 +1207,7 @@ msgstr "缺少 repo、source 或 target 参数"
 msgid "Monday"
 msgstr "星期一"
 
-#: src/features/projects/components/create-project-dialog.tsx:159
+#: src/features/projects/components/create-project-dialog.tsx:158
 msgid "My project"
 msgstr "我的项目"
 
@@ -1109,12 +1217,12 @@ msgstr "我的项目"
 #: src/features/editor/components/edit-dialogs.tsx:715
 #: src/features/editor/components/edit-dialogs.tsx:1008
 #: src/features/editor/components/option-dialog.tsx:101
-#: src/features/projects/components/create-project-dialog.tsx:149
+#: src/features/projects/components/create-project-dialog.tsx:148
 #: src/routes/_authenticated/$projectId_.settings.tsx:333
 msgid "Name"
 msgstr "名称"
 
-#: src/features/projects/components/create-project-dialog.tsx:75
+#: src/features/projects/components/create-project-dialog.tsx:74
 msgid "Name is required"
 msgstr "名称为必填项"
 
@@ -1129,11 +1237,19 @@ msgstr "新建"
 msgid "New {className}"
 msgstr "新建 {className}"
 
+#: src/features/projects/components/create-project-dialog.tsx:211
+msgid "Next"
+msgstr "下一步"
+
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:342
 msgid "Next image"
 msgstr "下一张图片"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:607
+#: src/features/objects/components/create-object-dialog.tsx:395
+msgid "No {parentClassNames} to add to"
+msgstr "没有可添加到的 {parentClassNames}"
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:610
 msgid "No access"
 msgstr "无访问权限"
 
@@ -1145,7 +1261,7 @@ msgstr "尚未配置访问规则。添加规则以控制谁可以访问此资源
 msgid "No activity yet"
 msgstr "暂无活动"
 
-#: src/features/requests/components/branch-select.tsx:68
+#: src/features/requests/components/branch-select.tsx:70
 msgid "No branches found"
 msgstr "未找到分支"
 
@@ -1185,13 +1301,17 @@ msgstr "尚无可创建的条目类型。请先创建所需的父级条目。"
 msgid "No matches."
 msgstr "无匹配项。"
 
-#: src/features/objects/components/object-links.tsx:295
+#: src/features/objects/components/object-links.tsx:302
 msgid "No matching objects"
 msgstr "无匹配的对象"
 
 #: src/features/requests/components/request-panel.tsx:106
 msgid "No merge requests"
 msgstr "无合并请求"
+
+#: src/features/objects/components/field-editor.tsx:266
+msgid "No people found"
+msgstr "未找到任何人"
 
 #: ../../../lib/web/src/components/place-picker.tsx:129
 msgid "No places found"
@@ -1214,6 +1334,11 @@ msgstr "无可用仓库"
 #: ../../../lib/web/src/components/data-table/faceted-filter.tsx:87
 msgid "No results found."
 msgstr "未找到结果。"
+
+#: src/features/board/components/board-container.tsx:809
+#: src/features/board/components/board-container.tsx:854
+msgid "No status"
+msgstr "无状态"
 
 #: ../../../lib/web/src/components/timezone-select.tsx:64
 msgid "No time zone found."
@@ -1243,12 +1368,17 @@ msgstr "无浏览量"
 #: src/features/editor/components/edit-dialogs.tsx:756
 #: src/features/objects/components/create-object-dialog.tsx:378
 #: src/features/objects/components/create-object-dialog.tsx:385
+#: src/features/objects/components/object-detail-panel.tsx:494
 #: src/features/objects/components/object-detail-panel.tsx:507
 #: src/features/objects/components/object-detail-panel.tsx:512
 msgid "None"
 msgstr "无"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:577
+#: src/features/requests/components/request-panel.tsx:228
+msgid "Not configured"
+msgstr "未配置"
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:580
 msgid "Not set"
 msgstr "未设置"
 
@@ -1262,6 +1392,7 @@ msgstr "未找到任何内容"
 msgid "Notifications"
 msgstr "通知"
 
+#: src/components/view-options-bar.tsx:36
 #: src/features/editor/components/add-dialogs.tsx:127
 #: src/features/editor/components/edit-dialogs.tsx:491
 msgid "Number"
@@ -1305,6 +1436,10 @@ msgstr "打开选项操作"
 msgid "Open page actions"
 msgstr "打开页面操作"
 
+#: src/components/keyboard-shortcuts-help.tsx:29
+msgid "Open selected card"
+msgstr "打开选中的卡片"
+
 #: ../../../lib/web/src/components/config-drawer.tsx:51
 msgid "Open theme settings"
 msgstr "打开主题设置"
@@ -1313,11 +1448,12 @@ msgstr "打开主题设置"
 msgid "Open view actions"
 msgstr "打开视图操作"
 
-#: src/components/view-options-bar.tsx:100
+#: src/components/view-options-bar.tsx:107
 msgid "Open view controls"
 msgstr "打开视图控件"
 
 #: src/features/editor/components/add-dialogs.tsx:187
+#: src/features/editor/components/option-dialog.tsx:128
 msgid "Option name"
 msgstr "选项名称"
 
@@ -1348,11 +1484,11 @@ msgstr "永久删除此项目及其所有内容。"
 msgid "Please add one or more classes to the project design."
 msgstr "请在项目设计中添加一个或多个类。"
 
-#: src/features/projects/components/create-project-dialog.tsx:85
+#: src/features/projects/components/create-project-dialog.tsx:84
 msgid "Please select a template"
 msgstr "请选择一个模板"
 
-#: src/features/projects/components/create-project-dialog.tsx:171
+#: src/features/projects/components/create-project-dialog.tsx:170
 #: src/routes/_authenticated/$projectId_.settings.tsx:349
 msgid "Prefix"
 msgstr "前缀"
@@ -1371,7 +1507,7 @@ msgstr "个人资料"
 msgid "Project"
 msgstr "项目"
 
-#: src/features/projects/components/create-project-dialog.tsx:101
+#: src/features/projects/components/create-project-dialog.tsx:100
 msgid "Project created"
 msgstr "项目已创建"
 
@@ -1382,6 +1518,10 @@ msgstr "项目已删除"
 #: src/routes/_authenticated/$projectId_.settings.tsx:224
 msgid "Project not found"
 msgstr "项目未找到"
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:124
+msgid "Project settings"
+msgstr "项目设置"
 
 #: src/routes/_authenticated/$projectId_.settings.tsx:224
 msgid "Project unavailable"
@@ -1398,9 +1538,21 @@ msgstr "项目已更新"
 msgid "Projects"
 msgstr "项目"
 
+#: src/features/objects/components/object-detail-panel.tsx:352
+msgid "Properties"
+msgstr "属性"
+
 #: src/routes/_authenticated/$projectId/index.tsx:812
 msgid "Re-order columns"
 msgstr "重新排序列"
+
+#: src/features/requests/components/merge-status.tsx:68
+msgid "Ready to merge"
+msgstr "准备合并"
+
+#: src/features/requests/components/merge-button.tsx:69
+msgid "Rebase and merge"
+msgstr "变基并合并"
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:216
 #: ../../../lib/web/src/components/search-entity-page.tsx:191
@@ -1419,6 +1571,10 @@ msgstr "正在重定向到登录。"
 #: ../../../lib/web/src/components/post-tags.tsx:175
 msgid "Reduce interest"
 msgstr "降低兴趣"
+
+#: src/features/objects/components/object-links.tsx:40
+msgid "Relates"
+msgstr "关联"
 
 #: ../../../lib/web/src/lib/preference-utils.ts:60
 msgid "Relative (5m, 3h, 2d)"
@@ -1453,7 +1609,7 @@ msgstr "移除字段 {0}"
 msgid "Remove interest"
 msgstr "移除兴趣"
 
-#: src/features/objects/components/field-editor.tsx:488
+#: src/features/objects/components/field-editor.tsx:489
 msgid "Remove item"
 msgstr "移除条目"
 
@@ -1470,6 +1626,10 @@ msgstr "重命名列"
 msgid "Rename this board column"
 msgstr "重命名此看板列"
 
+#: src/routes/_authenticated/$projectId/design.tsx:214
+msgid "Replace design"
+msgstr "替换设计"
+
 #: src/routes/_authenticated/$projectId/design.tsx:198
 msgid "Replace design?"
 msgstr "替换设计?"
@@ -1481,6 +1641,11 @@ msgstr "正在替换..."
 #: src/features/objects/components/comment-thread.tsx:204
 msgid "Reply"
 msgstr "回复"
+
+#. placeholder {0}: comment.name || comment.author
+#: src/features/objects/components/comment-thread.tsx:239
+msgid "Reply to {0}..."
+msgstr "回复 {0}..."
 
 #: src/features/editor/components/edit-dialogs.tsx:794
 msgid "Requests"
@@ -1533,7 +1698,7 @@ msgstr "星期六"
 msgid "Save"
 msgstr "保存"
 
-#: src/components/view-options-bar.tsx:121
+#: src/components/view-options-bar.tsx:128
 msgid "Search"
 msgstr "搜索"
 
@@ -1557,7 +1722,7 @@ msgstr "搜索起点..."
 msgid "Search for projects..."
 msgstr "搜索项目..."
 
-#: src/features/objects/components/object-links.tsx:270
+#: src/features/objects/components/object-links.tsx:277
 msgid "Search objects..."
 msgstr "搜索对象..."
 
@@ -1569,13 +1734,13 @@ msgstr "搜索时区..."
 msgid "Search users"
 msgstr "搜索用户"
 
-#: src/components/view-options-bar.tsx:117
+#: src/components/view-options-bar.tsx:124
 msgid "Search, watch, and sort this view."
 msgstr "搜索、关注并排序此视图。"
 
 #: ../../../lib/web/src/components/person-picker.tsx:323
-#: src/components/view-options-bar.tsx:125
-#: src/components/view-options-bar.tsx:207
+#: src/components/view-options-bar.tsx:132
+#: src/components/view-options-bar.tsx:214
 msgid "Search..."
 msgstr "搜索..."
 
@@ -1609,6 +1774,10 @@ msgstr "选择访问规则"
 msgid "Select account type"
 msgstr "选择账户类型"
 
+#: src/features/requests/components/branch-select.tsx:32
+msgid "Select branch"
+msgstr "选择分支"
+
 #: ../../../lib/web/src/features/access/access-dialog.tsx:228
 msgid "Select group"
 msgstr "选择群组"
@@ -1616,6 +1785,14 @@ msgstr "选择群组"
 #: ../../../lib/web/src/components/config-drawer.tsx:291
 msgid "Select layout style"
 msgstr "选择布局样式"
+
+#: src/components/keyboard-shortcuts-help.tsx:27
+msgid "Select next card"
+msgstr "选择下一张卡片"
+
+#: src/components/keyboard-shortcuts-help.tsx:28
+msgid "Select previous card"
+msgstr "选择上一张卡片"
 
 #: src/features/requests/components/repository-select.tsx:47
 msgid "Select repository"
@@ -1633,8 +1810,8 @@ msgstr "选择站点方向"
 msgid "Select theme preference"
 msgstr "选择主题偏好"
 
-#: src/features/objects/components/field-editor.tsx:185
-#: src/features/objects/components/field-editor.tsx:264
+#: src/features/objects/components/field-editor.tsx:186
+#: src/features/objects/components/field-editor.tsx:265
 msgid "Select..."
 msgstr "选择..."
 
@@ -1668,6 +1845,10 @@ msgstr "显示分类"
 msgid "Show fields"
 msgstr "显示字段"
 
+#: src/components/keyboard-shortcuts-help.tsx:32
+msgid "Show this help"
+msgstr "显示此帮助"
+
 #: ../../../lib/web/src/components/ui/load-more.tsx:36
 msgid "Showing {totalShown} of {total}"
 msgstr "显示 {total} 中的 {totalShown} 条"
@@ -1691,7 +1872,7 @@ msgstr "仅限单行文本"
 msgid "Skip to Main"
 msgstr "跳至主内容"
 
-#: src/components/view-options-bar.tsx:143
+#: src/components/view-options-bar.tsx:150
 msgid "Sort"
 msgstr "排序"
 
@@ -1703,6 +1884,10 @@ msgstr "来源"
 msgid "Split"
 msgstr "分割"
 
+#: src/features/requests/components/merge-button.tsx:68
+msgid "Squash and merge"
+msgstr "压缩并合并"
+
 #: src/features/objects/components/comment-list.tsx:260
 msgid "Start the discussion by adding the first comment."
 msgstr "添加第一条评论以开始讨论。"
@@ -1710,6 +1895,10 @@ msgstr "添加第一条评论以开始讨论。"
 #: ../../../lib/web/src/components/coming-soon.tsx:12
 msgid "Stay tuned though!"
 msgstr "敬请期待!"
+
+#: src/features/objects/components/object-detail-panel.tsx:408
+msgid "Stop watching"
+msgstr "停止关注"
 
 #: ../../../lib/web/src/features/access/access-list.tsx:187
 msgid "Subject"
@@ -1725,6 +1914,11 @@ msgstr "提交评论"
 msgid "Submit reply"
 msgstr "提交回复"
 
+#: src/features/projects/components/inline-project-search.tsx:185
+#: src/features/projects/components/recommended-projects.tsx:159
+msgid "Subscribe"
+msgstr "订阅"
+
 #. placeholder {0}: project.name
 #: src/features/projects/components/recommended-projects.tsx:59
 msgid "Subscribed to {0}"
@@ -1733,6 +1927,10 @@ msgstr "已订阅 {0}"
 #: ../../../lib/web/src/lib/preference-utils.ts:75
 msgid "Sunday"
 msgstr "星期日"
+
+#: src/components/keyboard-shortcuts-help.tsx:26
+msgid "Switch to view 1-9"
+msgstr "切换到视图 1-9"
 
 #: ../../../lib/web/src/components/config-drawer.tsx:195
 #: ../../../lib/web/src/lib/preference-utils.ts:18
@@ -1763,6 +1961,11 @@ msgstr "主题"
 msgid "Theme Settings"
 msgstr "主题设置"
 
+#. placeholder {0}: request.target
+#: src/features/requests/components/request-panel.tsx:382
+msgid "This merge request has been merged into {0}."
+msgstr "此合并请求已合并到 {0}。"
+
 #: src/features/requests/components/request-panel.tsx:348
 msgid "This merge request is a draft and cannot be merged."
 msgstr "此合并请求为草稿,无法合并。"
@@ -1775,6 +1978,10 @@ msgstr "目前无法加载此项目。"
 msgid "This project may have been deleted or you don't have access to it."
 msgstr "此项目可能已被删除,或您没有访问权限。"
 
+#: src/features/requests/components/merge-button.tsx:102
+msgid "This will merge \"{source}\" into \"{target}\". This action cannot be undone."
+msgstr "这将把 \"{source}\" 合并到 \"{target}\"。此操作无法撤销。"
+
 #: src/routes/_authenticated/$projectId_.settings.tsx:429
 msgid "This will permanently delete \"{projectName}\" and all its objects, comments, and attachments. This action cannot be undone."
 msgstr "这将永久删除“{projectName}”及其所有对象、评论和附件。此操作无法撤销。"
@@ -1783,10 +1990,16 @@ msgstr "这将永久删除“{projectName}”及其所有对象、评论和附�
 msgid "This will remove \"{projectName}\" from your sidebar and stop updates for this project."
 msgstr "这将从您的侧边栏中移除“{projectName}”并停止此项目的更新。"
 
+#. placeholder {0}: pendingImport?.label
+#: src/routes/_authenticated/$projectId/design.tsx:200
+msgid "This will replace the current design with <0>{0}</0>. All existing classes, fields, options, and views will be deleted. Existing objects will not be deleted but may no longer appear in views."
+msgstr "此操作会将当前设计替换为 <0>{0}</0>。所有现有的类、字段、选项和视图都将被删除。现有对象不会被删除，但可能不再出现在视图中。"
+
 #: ../../../lib/web/src/lib/preference-utils.ts:72
 msgid "Thursday"
 msgstr "星期四"
 
+#: src/features/editor/components/edit-dialogs.tsx:577
 #: src/features/requests/components/request-panel.tsx:271
 msgid "Title"
 msgstr "标题"
@@ -1813,8 +2026,12 @@ msgstr "切换侧边栏"
 msgid "Toggle theme"
 msgstr "切换主题"
 
-#: src/components/view-options-bar.tsx:134
-#: src/components/view-options-bar.tsx:217
+#: src/components/keyboard-shortcuts-help.tsx:25
+msgid "Toggle view options"
+msgstr "切换视图选项"
+
+#: src/components/view-options-bar.tsx:141
+#: src/components/view-options-bar.tsx:224
 msgid "Toggle watched filter"
 msgstr "切换已关注筛选"
 
@@ -1907,17 +2124,25 @@ msgstr "已取消订阅"
 msgid "Unverified"
 msgstr "未验证"
 
+#: src/components/view-options-bar.tsx:38
 #: src/features/editor/components/edit-dialogs.tsx:492
 msgid "Updated"
 msgstr "已更新"
 
 #: src/features/objects/components/create-object-dialog.tsx:469
+#: src/features/objects/components/object-attachments.tsx:210
 msgid "Upload"
 msgstr "上传"
 
 #: src/routes/_authenticated/$projectId/design.tsx:333
 msgid "Upload .json file"
 msgstr "上传 .json 文件"
+
+#. placeholder {0}: prefix || "project"
+#. placeholder {1}: prefix || "project"
+#: src/features/projects/components/create-project-dialog.tsx:187
+msgid "Used for readable IDs like {0}-1, {1}-2"
+msgstr "用于可读 IDs,如 {0}-1、{1}-2"
 
 #: ../../../lib/web/src/features/access/access-dialog.tsx:155
 #: src/features/editor/components/add-dialogs.tsx:130
@@ -1960,11 +2185,11 @@ msgstr "查看所有通知"
 msgid "View and edit item details"
 msgstr "查看并编辑条目详情"
 
-#: src/components/view-options-bar.tsx:116
+#: src/components/view-options-bar.tsx:123
 msgid "View controls"
 msgstr "视图控制"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:606
+#: src/routes/_authenticated/$projectId_.settings.tsx:609
 msgid "View only"
 msgstr "仅查看"
 
@@ -1976,11 +2201,15 @@ msgstr "查看选项"
 msgid "Views"
 msgstr "查看"
 
-#: src/components/view-options-bar.tsx:221
+#: src/features/objects/components/object-detail-panel.tsx:408
+msgid "Watch"
+msgstr "关注"
+
+#: src/components/view-options-bar.tsx:228
 msgid "Watched"
 msgstr "已关注"
 
-#: src/components/view-options-bar.tsx:138
+#: src/components/view-options-bar.tsx:145
 msgid "Watched only"
 msgstr "仅显示已关注"
 
@@ -1996,7 +2225,7 @@ msgstr "网站正在维护中!"
 msgid "Wednesday"
 msgstr "星期三"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:604
+#: src/routes/_authenticated/$projectId_.settings.tsx:607
 msgid "Write, comment, and view"
 msgstr "撰写、评论和查看"
 

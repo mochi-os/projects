@@ -2,7 +2,7 @@
 // Copyright Alistair Cunningham 2026
 
 import { useQuery } from "@tanstack/react-query";
-import { Trans } from '@lingui/react/macro'
+import { Trans, useLingui } from '@lingui/react/macro'
 import { CheckCircle2, XCircle, AlertCircle, Loader2 } from "lucide-react";
 import { cn } from "@mochi/web";
 import projectsApi from "@/api/projects";
@@ -15,6 +15,7 @@ interface MergeStatusProps {
 }
 
 export function MergeStatus({ repoId, source, target }: MergeStatusProps) {
+  const { t } = useLingui();
   const { data, isLoading, error } = useQuery({
     queryKey: ["merge-check", repoId, source, target],
     queryFn: async () => {
@@ -64,13 +65,13 @@ export function MergeStatus({ repoId, source, target }: MergeStatusProps) {
             data.can_merge ? requestStatusTextStyles.added : "text-destructive",
           )}
         >
-          {data.can_merge ? "Ready to merge" : "Cannot merge automatically"}
+          {data.can_merge ? t`Ready to merge` : t`Cannot merge automatically`}
         </span>
         {(data.ahead > 0 || data.behind > 0) && (
           <span className="text-xs text-muted-foreground">
             {[
-              data.ahead > 0 && `+${data.ahead} ahead`,
-              data.behind > 0 && `${data.behind} behind`,
+              data.ahead > 0 && t`+${data.ahead} ahead`,
+              data.behind > 0 && t`${data.behind} behind`,
             ]
               .filter(Boolean)
               .join(", ")}

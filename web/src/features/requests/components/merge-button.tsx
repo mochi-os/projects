@@ -40,7 +40,7 @@ export function MergeButton({
 
   const mergeMutation = useMutation({
     mutationFn: async () => {
-      const message = `Merge ${objectReadable}: ${objectTitle}`;
+      const message = t`Merge ${objectReadable}: ${objectTitle}`;
       const response = await projectsApi.merge(repoId, source, target, message, projectId, method);
       return response.data;
     },
@@ -64,9 +64,9 @@ export function MergeButton({
   }
 
   const methodLabels: Record<MergeMethod, string> = {
-    merge: "Merge commit",
-    squash: "Squash and merge",
-    rebase: "Rebase and merge",
+    merge: t`Merge commit`,
+    squash: t`Squash and merge`,
+    rebase: t`Rebase and merge`,
   };
 
   return (
@@ -99,7 +99,7 @@ export function MergeButton({
         open={showConfirm}
         onOpenChange={setShowConfirm}
         title={t`Merge`}
-        desc={`This will merge "${source}" into "${target}". This action cannot be undone.`}
+        desc={t`This will merge "${source}" into "${target}". This action cannot be undone.`}
         confirmText={methodLabels[method]}
         isLoading={mergeMutation.isPending}
         handleConfirm={handleMerge}

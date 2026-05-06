@@ -16,7 +16,11 @@ import {
 } from "lucide-react";
 import {
   Button,
+  cn,
   ConfirmDialog,
+  GeneralError,
+  ListSkeleton,
+  naturalCompare,
   Sheet,
   SheetContent,
   SheetDescription,
@@ -27,9 +31,6 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-  cn,
-  GeneralError,
-  ListSkeleton,
   useShellOverlay,
 } from "@mochi/web";
 import projectsApi from "@/api/projects";
@@ -41,7 +42,6 @@ import { ActivityList } from "./activity-list";
 import { RequestPanel } from "@/features/requests";
 import { ObjectAttachments } from "./object-attachments";
 import { ObjectLinks } from "./object-links";
-import { naturalCompare } from '@mochi/web'
 
 interface ObjectDetailPanelProps {
   projectId: string;
@@ -349,26 +349,26 @@ export function ObjectDetailPanel({
   const tabs: { id: Tab; label: string; icon: React.ReactNode }[] = [
     {
       id: "properties",
-      label: "Properties",
+      label: t`Properties`,
       icon: <Settings2 className="size-4" />,
     },
     ...(hasRequests
       ? [
           {
             id: "requests" as Tab,
-            label: `Merge requests (${requestCount})`,
+            label: t`Merge requests (${requestCount})`,
             icon: <GitMerge className="size-4" />,
           },
         ]
       : []),
     {
       id: "comments",
-      label: `Comments (${data.comment_count || 0})`,
+      label: t`Comments (${data.comment_count || 0})`,
       icon: <MessageSquare className="size-4" />,
     },
     {
       id: "activity",
-      label: "Activity",
+      label: t`Activity`,
       icon: <Activity className="size-4" />,
     },
   ];
@@ -405,7 +405,7 @@ export function ObjectDetailPanel({
               className="h-8 w-8"
               onClick={() => watchMutation.mutate(data.watching)}
               disabled={watchMutation.isPending}
-              title={data.watching ? "Stop watching" : "Watch"}
+              title={data.watching ? t`Stop watching` : t`Watch`}
             >
               {data.watching ? (
                 <Eye className="size-4" />
@@ -491,7 +491,7 @@ export function ObjectDetailPanel({
                 </label>
                 {!canWrite(access) ? (
                   <span className="text-sm h-9 flex items-center">
-                    {currentParent ? objectTitle(currentParent) : "None"}
+                    {currentParent ? objectTitle(currentParent) : t`None`}
                   </span>
                 ) : (
                   <Select

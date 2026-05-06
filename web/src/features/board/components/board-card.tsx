@@ -153,6 +153,7 @@ export function BoardCard({
       case "date":
         return (
           <span key={field.id} className="text-[10px] text-muted-foreground">
+            {/* eslint-disable-next-line lingui/no-unlocalized-strings */}
             {formatDate(new Date(value + "T00:00:00"))}
           </span>
         );

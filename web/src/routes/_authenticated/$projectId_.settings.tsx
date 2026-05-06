@@ -121,7 +121,7 @@ function ProjectSettingsPage() {
     (projectStatus === 403 || projectStatus === 404 || (!isLoading && !error));
 
   usePageTitle(
-    project ? `${project.project.name} settings` : "Project settings"
+    project ? t`${project.project.name} settings` : t`Project settings`
   );
 
   const handleDelete = useCallback(async () => {
@@ -138,7 +138,7 @@ function ProjectSettingsPage() {
     } finally {
       setIsDeleting(false);
     }
-  }, [project, isOwner, isDeleting, refreshSidebar, navigate]);
+  }, [project, isOwner, isDeleting, refreshSidebar, navigate, t]);
 
   const handleUnsubscribe = useCallback(async () => {
     if (!project || isUnsubscribing) return;
@@ -154,7 +154,7 @@ function ProjectSettingsPage() {
     } finally {
       setIsUnsubscribing(false);
     }
-  }, [project, isUnsubscribing, refreshSidebar, navigate]);
+  }, [project, isUnsubscribing, refreshSidebar, navigate, t]);
 
   const handleUpdate = useCallback(
     async (updates: {
@@ -174,7 +174,7 @@ function ProjectSettingsPage() {
         throw err;
       }
     },
-    [project, isOwner, refreshSidebar, queryClient, projectId]
+    [project, isOwner, refreshSidebar, queryClient, projectId, t]
   );
 
   if (isLoading) {
@@ -436,18 +436,20 @@ function GeneralTab({
   );
 }
 
-function validateName(name: string): string | null {
-  if (!name.trim()) return "Project name is required";
-  if (name.length > 1000) return "Name must be 1000 characters or less";
+type Translator = ReturnType<typeof useLingui>["t"];
+
+function validateName(t: Translator, name: string): string | null {
+  if (!name.trim()) return t`Project name is required`;
+  if (name.length > 1000) return t`Name must be 1000 characters or less`;
   if (DISALLOWED_NAME_CHARS.test(name))
-    return "Name cannot contain < or > characters";
+    return t`Name cannot contain < or > characters`;
   return null;
 }
 
-function validatePrefix(prefix: string): string | null {
+function validatePrefix(t: Translator, prefix: string): string | null {
   if (prefix && !/^[A-Za-z0-9-]+$/.test(prefix))
-    return "Prefix can only contain letters, numbers, and hyphens";
-  if (prefix.length > 10) return "Prefix must be 10 characters or less";
+    return t`Prefix can only contain letters, numbers, and hyphens`;
+  if (prefix.length > 10) return t`Prefix must be 10 characters or less`;
   return null;
 }
 
@@ -456,7 +458,7 @@ interface EditableFieldRowProps {
   value: string;
   isOwner: boolean;
   onSave: (value: string) => Promise<void>;
-  validate?: (value: string) => string | null;
+  validate?: (t: Translator, value: string) => string | null;
   multiline?: boolean;
 }
 
@@ -468,6 +470,7 @@ function EditableFieldRow({
   validate,
   multiline,
 }: EditableFieldRowProps) {
+  const { t } = useLingui();
   const [isEditing, setIsEditing] = useState(false);
   const [editValue, setEditValue] = useState(value);
   const [isSaving, setIsSaving] = useState(false);
@@ -488,7 +491,7 @@ function EditableFieldRow({
   const handleSaveEdit = async () => {
     const trimmedValue = editValue.trim();
     if (validate) {
-      const validationError = validate(trimmedValue);
+      const validationError = validate(t, trimmedValue);
       if (validationError) {
         setError(validationError);
         return;

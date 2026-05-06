@@ -9,6 +9,7 @@ import { Check, Paperclip, Upload, X } from "lucide-react";
 import {
   Button,
   Label,
+  naturalCompare,
   Sheet,
   SheetContent,
   SheetDescription,
@@ -24,7 +25,6 @@ import {
 import projectsApi from "@/api/projects";
 import type { ProjectDetails } from "@/types";
 import { FieldEditor } from "./field-editor";
-import { naturalCompare } from '@mochi/web'
 
 interface CreateObjectDialogProps {
   open: boolean;
@@ -392,7 +392,7 @@ export function CreateObjectDialog({
                     </Select>
                   ) : (
                     <p className="text-sm text-muted-foreground pt-2">
-                      {"No " + parentClassNames + " to add to"}
+                      {t`No ${parentClassNames} to add to`}
                     </p>
                   )}
                 </div>
@@ -482,7 +482,7 @@ export function CreateObjectDialog({
           <SheetFooter className="px-6 py-4 border-t">
             <Button type="submit" disabled={createMutation.isPending || (parentRequired && !parent) || missingRequired || creatableClasses.length === 0}>
               <Check className="size-4" />
-              {createMutation.isPending ? "Creating..." : "Create"}
+              {createMutation.isPending ? t`Creating...` : t`Create`}
             </Button>
           </SheetFooter>
         </form>

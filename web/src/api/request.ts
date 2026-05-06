@@ -34,6 +34,7 @@ projectsClient.interceptors.request.use((config) => {
   if (token) {
     config.headers.Authorization = token.startsWith("Bearer ")
       ? token
+      // eslint-disable-next-line lingui/no-unlocalized-strings
       : `Bearer ${token}`;
   }
 

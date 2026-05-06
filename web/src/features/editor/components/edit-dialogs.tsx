@@ -19,6 +19,7 @@ import {
   Button,
   Input,
   Label,
+  naturalCompare,
   RadioGroup,
   RadioGroupItem,
   DropdownMenu,
@@ -36,7 +37,6 @@ import {
 import { Check, GripVertical, Minus, MoreHorizontal, Pencil, Plus, Trash2, X } from "lucide-react";
 import type { ProjectView, ProjectField, ProjectClass, FieldOption } from "@/types";
 import { AddFieldDialog } from "./add-dialogs";
-import { naturalCompare } from '@mochi/web'
 
 const NONE_SELECT_VALUE = "_none_";
 
@@ -574,7 +574,7 @@ export function ClassSheet({
     if (mode === "create") {
       setName("");
       setPendingParents([]);
-      setPendingFields([{ id: "title", name: "Title", fieldtype: "text", flags: "required,sort" }]);
+      setPendingFields([{ id: "title", name: t`Title`, fieldtype: "text", flags: "required,sort" }]);
       setMergeRequests(false);
     } else if (cls) {
       setName(cls.name);

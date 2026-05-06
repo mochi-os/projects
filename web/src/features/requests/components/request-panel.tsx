@@ -225,7 +225,7 @@ function RequestItem({
     ? request.title
     : request.repository
       ? `${request.source || "?"} → ${request.target || "?"}`
-      : "Not configured";
+      : t`Not configured`;
 
   const borderColor = isMerged
     ? "border-green-500/40"
@@ -379,7 +379,7 @@ function RequestItem({
               {isMerged && (
                 <div className="flex items-center justify-between">
                   <div className="text-sm text-muted-foreground">
-                    This merge request has been merged into {request.target}.
+                    <Trans>This merge request has been merged into {request.target}.</Trans>
                   </div>
                   {!readOnly && (
                     <Button

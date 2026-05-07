@@ -5149,7 +5149,7 @@ def event_object_create(e):
 				title = get_object_display(project, obj, object_id)
 				fp2 = mochi.entity.fingerprint(project_id)
 				url = "/projects/" + fp2 + "/" + object_id if fp2 else "/projects"
-				notify("update/created", project_id, title, "Created", url)
+				notify("update/created", project_id, title, mochi.app.label("notifications.body.created"), url)
 
 # Object updated
 def event_object_update(e):
@@ -5242,7 +5242,7 @@ def event_values_update(e):
 									title = get_object_display(project, obj, object_id)
 									fp2 = mochi.entity.fingerprint(project_id)
 									url = "/projects/" + fp2 + "/" + object_id if fp2 else "/projects"
-									notify("assignment", project_id, title, "Assigned to you", url)
+									notify("assignment", project_id, title, mochi.app.label("notifications.body.assigned_to_you"), url)
 							# Auto-watch on assignment
 							mochi.db.execute(
 								"insert or ignore into watchers (object, user, created) values (?, ?, ?)",
@@ -6431,7 +6431,7 @@ def do_object_create(project_id, project, params, user_id):
 		display = get_object_display(project, obj, object_id)
 		fp = mochi.entity.fingerprint(project_id)
 		url = "/projects/" + fp + "/" + object_id if fp else "/projects"
-		notify("update/created", project_id, display, "Created", url)
+		notify("update/created", project_id, display, mochi.app.label("notifications.body.created"), url)
 	return {"id": object_id, "number": new_counter,
 			"readable": project["prefix"] + "-" + str(new_counter)}
 

@@ -389,12 +389,12 @@ export function ObjectDetailPanel({
         </SheetHeader>
         {/* Header */}
         <div className="flex items-center gap-3 px-6 py-4 border-b shrink-0">
-          <div className="flex flex-col md:flex-row gap-0.5 md:gap-2 flex-1 min-w-0">
+          <div className="flex flex-col md:flex-row md:items-baseline gap-0.5 md:gap-2 flex-1 min-w-0">
             <h2 className="text-xl font-bold leading-tight line-clamp-2 md:truncate min-w-0">
               {title}
             </h2>
-            <span className="hidden md:block">·</span>
-            <span className="text-xs md:text-sm md:pt-1 text-muted-foreground truncate">
+            <span className="hidden md:block shrink-0 text-muted-foreground">·</span>
+            <span className="text-xs md:text-sm text-muted-foreground shrink-0 whitespace-nowrap">
               {object.readable}
             </span>
           </div>
@@ -576,15 +576,15 @@ export function ObjectDetailPanel({
             </div>
           )}
 
-          {activeTab === "comments" && (
-            <div className="max-w-2xl">
-              <CommentList
-                projectId={projectId}
-                objectId={objectId}
-                readOnly={!canComment(access)}
-              />
-            </div>
-          )}
+          {/* Comments tab stays mounted so the new-comment draft survives
+              tab switches — same pattern as the properties tab. */}
+          <div className="max-w-2xl" hidden={activeTab !== "comments"}>
+            <CommentList
+              projectId={projectId}
+              objectId={objectId}
+              readOnly={!canComment(access)}
+            />
+          </div>
 
           {activeTab === "activity" && (
             <div className="max-w-2xl">

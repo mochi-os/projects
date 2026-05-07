@@ -7,11 +7,11 @@ plugins {
 }
 
 android {
-    namespace = "org.mochi.projects"
+    namespace = "org.mochios.projects"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "org.mochi.projects"
+        applicationId = "org.mochios.projects"
         minSdk = 26
         targetSdk = 35
         versionCode = 1

@@ -400,7 +400,7 @@ msgstr "Vælg mellem venstre-mod-højre eller højre-mod-venstre sideretning"
 msgid "Choose between system preference, light mode, or dark mode"
 msgstr "Vælg mellem systemindstilling, lys tilstand eller mørk tilstand"
 
-#: ../../../lib/web/src/components/language-picker.tsx:167
+#: ../../../lib/web/src/components/language-picker.tsx:176
 msgid "Choose language"
 msgstr "Vælg sprog"
 
@@ -469,6 +469,10 @@ msgstr "Farve"
 msgid "Columns group by"
 msgstr "Kolonner grupperer efter"
 
+#: ../../../lib/web/src/lib/preference-utils.ts:93
+msgid "Comfortable"
+msgstr "Komfortabel"
+
 #: ../../../lib/web/src/components/coming-soon.tsx:9
 msgid "Coming Soon!"
 msgstr "Kommer snart!"
@@ -483,6 +487,7 @@ msgid "Comments ({0})"
 msgstr "Kommentarer ({0})"
 
 #: ../../../lib/web/src/components/config-drawer.tsx:302
+#: ../../../lib/web/src/lib/preference-utils.ts:92
 msgid "Compact"
 msgstr "Kompakt"
 
@@ -688,7 +693,7 @@ msgstr "Design, skriv, kommenter og se"
 msgid "Details Panel"
 msgstr "Detaljepanel"
 
-#: ../../../lib/web/src/components/language-picker.tsx:145
+#: ../../../lib/web/src/components/language-picker.tsx:154
 #: ../../../lib/web/src/components/timezone-select.tsx:43
 #: ../../../lib/web/src/components/timezone-select.tsx:80
 #: ../../../lib/web/src/lib/preference-utils.ts:25
@@ -752,6 +757,10 @@ msgstr "Træk kolonner for at omarrangere dem"
 msgid "Duplicates"
 msgstr "Duplikerer"
 
+#: ../../../lib/web/src/lib/preference-utils.ts:134
+msgid "Dyslexia-friendly"
+msgstr "Ordblindevenlig"
+
 #: src/features/objects/components/comment-thread.tsx:217
 msgid "Edit"
 msgstr "Redigér"
@@ -801,6 +810,10 @@ msgstr "Udvid sidebjælke"
 #: src/routes/_authenticated/$projectId/design.tsx:170
 msgid "Export design"
 msgstr "Eksportér design"
+
+#: ../../../lib/web/src/lib/preference-utils.ts:124
+msgid "Extra large"
+msgstr "Ekstra stor"
 
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:217
 msgid "Failed to add account"
@@ -988,6 +1001,14 @@ msgstr "Fra"
 msgid "From file"
 msgstr "Fra fil"
 
+#: ../../../lib/web/src/lib/preference-utils.ts:91
+#: ../../../lib/web/src/lib/preference-utils.ts:101
+#: ../../../lib/web/src/lib/preference-utils.ts:112
+#: ../../../lib/web/src/lib/preference-utils.ts:120
+#: ../../../lib/web/src/lib/preference-utils.ts:131
+msgid "From theme"
+msgstr "Fra tema"
+
 #: ../../../lib/web/src/components/config-drawer.tsx:307
 msgid "Full layout"
 msgstr "Fuldt layout"
@@ -1074,6 +1095,11 @@ msgstr "Elementdetaljer"
 msgid "Keyboard shortcuts"
 msgstr "Tastaturgenveje"
 
+#: ../../../lib/web/src/lib/preference-utils.ts:105
+#: ../../../lib/web/src/lib/preference-utils.ts:123
+msgid "Large"
+msgstr "Stor"
+
 #: ../../../lib/web/src/components/config-drawer.tsx:273
 #: src/features/editor/components/edit-dialogs.tsx:304
 msgid "Layout"
@@ -1154,6 +1180,10 @@ msgstr "Manuel"
 #: ../../../lib/web/src/components/notifications-dropdown.tsx:220
 msgid "Mark all as read"
 msgstr "Markér alle som læst"
+
+#: ../../../lib/web/src/lib/preference-utils.ts:104
+msgid "Medium"
+msgstr "Mellem"
 
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx:152
 msgid "Menu"
@@ -1293,7 +1323,7 @@ msgstr "Ingen grupper tilgængelige"
 msgid "No item types can be created yet. Create the required parent items first."
 msgstr "Ingen emnetyper kan oprettes endnu. Opret først de nødvendige overordnede emner."
 
-#: ../../../lib/web/src/components/language-picker.tsx:177
+#: ../../../lib/web/src/components/language-picker.tsx:186
 msgid "No matches."
 msgstr "Ingen match."
 
@@ -1353,6 +1383,8 @@ msgid "No views"
 msgstr "Ingen visninger"
 
 #: ../../../lib/web/src/components/person-picker.tsx:349
+#: ../../../lib/web/src/lib/preference-utils.ts:102
+#: ../../../lib/web/src/lib/preference-utils.ts:113
 #: src/features/editor/components/edit-dialogs.tsx:357
 #: src/features/editor/components/edit-dialogs.tsx:380
 #: src/features/editor/components/edit-dialogs.tsx:383
@@ -1369,6 +1401,10 @@ msgstr "Ingen visninger"
 #: src/features/objects/components/object-detail-panel.tsx:512
 msgid "None"
 msgstr "Ingen"
+
+#: ../../../lib/web/src/lib/preference-utils.ts:122
+msgid "Normal"
+msgstr "Normal"
 
 #: src/features/requests/components/request-panel.tsx:228
 msgid "Not configured"
@@ -1399,8 +1435,9 @@ msgid "Oops! Page Not Found!"
 msgstr "Ups! Siden blev ikke fundet!"
 
 #: src/features/requests/components/request-panel.tsx:258
+msgctxt "state"
 msgid "Open"
-msgstr "Åbn"
+msgstr "Åben"
 
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:150
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:151
@@ -1740,7 +1777,7 @@ msgstr "Søg, overvåg og sortér denne visning."
 msgid "Search..."
 msgstr "Søg..."
 
-#: ../../../lib/web/src/components/language-picker.tsx:175
+#: ../../../lib/web/src/components/language-picker.tsx:184
 msgid "Search…"
 msgstr "Søg…"
 
@@ -1811,6 +1848,10 @@ msgstr "Vælg temapræference"
 msgid "Select..."
 msgstr "Vælg..."
 
+#: ../../../lib/web/src/lib/preference-utils.ts:133
+msgid "Serif"
+msgstr "Serif"
+
 #: src/routes/_authenticated/$projectId_.settings.tsx:370
 msgid "Server"
 msgstr "Server"
@@ -1868,6 +1909,11 @@ msgstr "Kun en enkelt tekstlinje"
 msgid "Skip to Main"
 msgstr "Spring til hovedindhold"
 
+#: ../../../lib/web/src/lib/preference-utils.ts:103
+#: ../../../lib/web/src/lib/preference-utils.ts:121
+msgid "Small"
+msgstr "Lille"
+
 #: src/components/view-options-bar.tsx:150
 msgid "Sort"
 msgstr "Sortér"
@@ -1875,6 +1921,10 @@ msgstr "Sortér"
 #: src/features/requests/components/request-panel.tsx:303
 msgid "Source"
 msgstr "Kilde"
+
+#: ../../../lib/web/src/lib/preference-utils.ts:94
+msgid "Spacious"
+msgstr "Rummeligt"
 
 #: src/routes/$projectId.diff.tsx:116
 msgid "Split"
@@ -1930,6 +1980,7 @@ msgstr "Skift til visning 1-9"
 
 #: ../../../lib/web/src/components/config-drawer.tsx:195
 #: ../../../lib/web/src/lib/preference-utils.ts:18
+#: ../../../lib/web/src/lib/preference-utils.ts:132
 msgid "System"
 msgstr "System"
 

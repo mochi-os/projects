@@ -400,7 +400,7 @@ msgstr "Di navbera arasteya malperê ya çep-bo-rast an rast-bo-çep de hilbijê
 msgid "Choose between system preference, light mode, or dark mode"
 msgstr "Di navbera tercîha sîstemê, awayê ronî, an awayê tarî de hilbijêre"
 
-#: ../../../lib/web/src/components/language-picker.tsx:167
+#: ../../../lib/web/src/components/language-picker.tsx:176
 msgid "Choose language"
 msgstr "Ziman hilbijêre"
 
@@ -469,6 +469,10 @@ msgstr "Reng"
 msgid "Columns group by"
 msgstr "Stûn li gor … kom dike"
 
+#: ../../../lib/web/src/lib/preference-utils.ts:93
+msgid "Comfortable"
+msgstr "Rehet"
+
 #: ../../../lib/web/src/components/coming-soon.tsx:9
 msgid "Coming Soon!"
 msgstr "Zû tê!"
@@ -483,6 +487,7 @@ msgid "Comments ({0})"
 msgstr "Şîrove ({0})"
 
 #: ../../../lib/web/src/components/config-drawer.tsx:302
+#: ../../../lib/web/src/lib/preference-utils.ts:92
 msgid "Compact"
 msgstr "Kompakt"
 
@@ -688,7 +693,7 @@ msgstr "Sêwiran, nivîsîn, şîrove, û dîtin"
 msgid "Details Panel"
 msgstr "Panela hûragahiyan"
 
-#: ../../../lib/web/src/components/language-picker.tsx:145
+#: ../../../lib/web/src/components/language-picker.tsx:154
 #: ../../../lib/web/src/components/timezone-select.tsx:43
 #: ../../../lib/web/src/components/timezone-select.tsx:80
 #: ../../../lib/web/src/lib/preference-utils.ts:25
@@ -752,6 +757,10 @@ msgstr "Stûnan ji nû ve rêz bikin"
 msgid "Duplicates"
 msgstr "Dubare"
 
+#: ../../../lib/web/src/lib/preference-utils.ts:134
+msgid "Dyslexia-friendly"
+msgstr "Hevhewş ji bo dîslêksiyê"
+
 #: src/features/objects/components/comment-thread.tsx:217
 msgid "Edit"
 msgstr "Sererast bike"
@@ -801,6 +810,10 @@ msgstr "Bargeyê fireh bike"
 #: src/routes/_authenticated/$projectId/design.tsx:170
 msgid "Export design"
 msgstr "Sêwiranê derxe"
+
+#: ../../../lib/web/src/lib/preference-utils.ts:124
+msgid "Extra large"
+msgstr "Pir mezin"
 
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:217
 msgid "Failed to add account"
@@ -988,6 +1001,14 @@ msgstr "Ji"
 msgid "From file"
 msgstr "Ji pelê"
 
+#: ../../../lib/web/src/lib/preference-utils.ts:91
+#: ../../../lib/web/src/lib/preference-utils.ts:101
+#: ../../../lib/web/src/lib/preference-utils.ts:112
+#: ../../../lib/web/src/lib/preference-utils.ts:120
+#: ../../../lib/web/src/lib/preference-utils.ts:131
+msgid "From theme"
+msgstr "Ji temayê"
+
 #: ../../../lib/web/src/components/config-drawer.tsx:307
 msgid "Full layout"
 msgstr "Bargeyê tev"
@@ -1074,6 +1095,11 @@ msgstr "Hûrgiliyên xalê"
 msgid "Keyboard shortcuts"
 msgstr "Kurtek klavyeyê"
 
+#: ../../../lib/web/src/lib/preference-utils.ts:105
+#: ../../../lib/web/src/lib/preference-utils.ts:123
+msgid "Large"
+msgstr "Mezin"
+
 #: ../../../lib/web/src/components/config-drawer.tsx:273
 #: src/features/editor/components/edit-dialogs.tsx:304
 msgid "Layout"
@@ -1154,6 +1180,10 @@ msgstr "Destî"
 #: ../../../lib/web/src/components/notifications-dropdown.tsx:220
 msgid "Mark all as read"
 msgstr "Hemû wek xwendî nîşan bike"
+
+#: ../../../lib/web/src/lib/preference-utils.ts:104
+msgid "Medium"
+msgstr "Navîn"
 
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx:152
 msgid "Menu"
@@ -1293,7 +1323,7 @@ msgstr "Tu kom berdest nîn in"
 msgid "No item types can be created yet. Create the required parent items first."
 msgstr "Hêj tu cure babetan nikarin werin afirandin. Pêşî babetên dê yên pêwîst biafirîne."
 
-#: ../../../lib/web/src/components/language-picker.tsx:177
+#: ../../../lib/web/src/components/language-picker.tsx:186
 msgid "No matches."
 msgstr "Tu encam tune."
 
@@ -1353,6 +1383,8 @@ msgid "No views"
 msgstr "Tu dîtin tune"
 
 #: ../../../lib/web/src/components/person-picker.tsx:349
+#: ../../../lib/web/src/lib/preference-utils.ts:102
+#: ../../../lib/web/src/lib/preference-utils.ts:113
 #: src/features/editor/components/edit-dialogs.tsx:357
 #: src/features/editor/components/edit-dialogs.tsx:380
 #: src/features/editor/components/edit-dialogs.tsx:383
@@ -1369,6 +1401,10 @@ msgstr "Tu dîtin tune"
 #: src/features/objects/components/object-detail-panel.tsx:512
 msgid "None"
 msgstr "Tu"
+
+#: ../../../lib/web/src/lib/preference-utils.ts:122
+msgid "Normal"
+msgstr "Asayî"
 
 #: src/features/requests/components/request-panel.tsx:228
 msgid "Not configured"
@@ -1399,8 +1435,9 @@ msgid "Oops! Page Not Found!"
 msgstr "Wey! Rûpel nehat dîtin!"
 
 #: src/features/requests/components/request-panel.tsx:258
+msgctxt "state"
 msgid "Open"
-msgstr "Veke"
+msgstr "Vekirî"
 
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:150
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:151
@@ -1740,7 +1777,7 @@ msgstr "Bigere, temaşe bike, û vê dîtinê rêz bike."
 msgid "Search..."
 msgstr "Bigere..."
 
-#: ../../../lib/web/src/components/language-picker.tsx:175
+#: ../../../lib/web/src/components/language-picker.tsx:184
 msgid "Search…"
 msgstr "Bigere…"
 
@@ -1811,6 +1848,10 @@ msgstr "Tercîha temayê hilbijêre"
 msgid "Select..."
 msgstr "Hilbijêre..."
 
+#: ../../../lib/web/src/lib/preference-utils.ts:133
+msgid "Serif"
+msgstr "Serîf"
+
 #: src/routes/_authenticated/$projectId_.settings.tsx:370
 msgid "Server"
 msgstr "Server"
@@ -1868,6 +1909,11 @@ msgstr "Tenê rêza yek a nivîsê"
 msgid "Skip to Main"
 msgstr "Bibihure ji bo Sereke"
 
+#: ../../../lib/web/src/lib/preference-utils.ts:103
+#: ../../../lib/web/src/lib/preference-utils.ts:121
+msgid "Small"
+msgstr "Biçûk"
+
 #: src/components/view-options-bar.tsx:150
 msgid "Sort"
 msgstr "Rêz bike"
@@ -1875,6 +1921,10 @@ msgstr "Rêz bike"
 #: src/features/requests/components/request-panel.tsx:303
 msgid "Source"
 msgstr "Çavkanî"
+
+#: ../../../lib/web/src/lib/preference-utils.ts:94
+msgid "Spacious"
+msgstr "Berfireh"
 
 #: src/routes/$projectId.diff.tsx:116
 msgid "Split"
@@ -1930,6 +1980,7 @@ msgstr "Veguherîne dîtina 1-9"
 
 #: ../../../lib/web/src/components/config-drawer.tsx:195
 #: ../../../lib/web/src/lib/preference-utils.ts:18
+#: ../../../lib/web/src/lib/preference-utils.ts:132
 msgid "System"
 msgstr "Pergal"
 

@@ -6,6 +6,12 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: @lingui/cli\n"
 "Language: su\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Plural-Forms: \n"
 
 #: src/features/editor/components/edit-dialogs.tsx:787
 msgid "(itself)"
@@ -394,7 +400,7 @@ msgstr "Pilih antara arah situs kénca-ka-katuhu atawa katuhu-ka-kénca"
 msgid "Choose between system preference, light mode, or dark mode"
 msgstr "Pilih antara préferénsi sistem, modeu caang, atawa modeu poék"
 
-#: ../../../lib/web/src/components/language-picker.tsx:167
+#: ../../../lib/web/src/components/language-picker.tsx:176
 msgid "Choose language"
 msgstr "Pilih basa"
 
@@ -463,6 +469,10 @@ msgstr "Warna"
 msgid "Columns group by"
 msgstr "Kolom dikelompokkeun ku"
 
+#: ../../../lib/web/src/lib/preference-utils.ts:93
+msgid "Comfortable"
+msgstr "Lugina"
+
 #: ../../../lib/web/src/components/coming-soon.tsx:9
 msgid "Coming Soon!"
 msgstr "Geura Datang!"
@@ -477,6 +487,7 @@ msgid "Comments ({0})"
 msgstr "Koméntar ({0})"
 
 #: ../../../lib/web/src/components/config-drawer.tsx:302
+#: ../../../lib/web/src/lib/preference-utils.ts:92
 msgid "Compact"
 msgstr "Kompak"
 
@@ -682,7 +693,7 @@ msgstr "Désain, tulis, koméntar, jeung tempo"
 msgid "Details Panel"
 msgstr "Panel Détil"
 
-#: ../../../lib/web/src/components/language-picker.tsx:145
+#: ../../../lib/web/src/components/language-picker.tsx:154
 #: ../../../lib/web/src/components/timezone-select.tsx:43
 #: ../../../lib/web/src/components/timezone-select.tsx:80
 #: ../../../lib/web/src/lib/preference-utils.ts:25
@@ -746,6 +757,10 @@ msgstr "Sered kolom pikeun nyusun deui"
 msgid "Duplicates"
 msgstr "Duplikat"
 
+#: ../../../lib/web/src/lib/preference-utils.ts:134
+msgid "Dyslexia-friendly"
+msgstr "Cocog pikeun disléksia"
+
 #: src/features/objects/components/comment-thread.tsx:217
 msgid "Edit"
 msgstr "Édit"
@@ -795,6 +810,10 @@ msgstr "Lugar sidebar"
 #: src/routes/_authenticated/$projectId/design.tsx:170
 msgid "Export design"
 msgstr "Ékspor desain"
+
+#: ../../../lib/web/src/lib/preference-utils.ts:124
+msgid "Extra large"
+msgstr "Gedé pisan"
 
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:217
 msgid "Failed to add account"
@@ -982,6 +1001,14 @@ msgstr "Ti"
 msgid "From file"
 msgstr "Ti berkas"
 
+#: ../../../lib/web/src/lib/preference-utils.ts:91
+#: ../../../lib/web/src/lib/preference-utils.ts:101
+#: ../../../lib/web/src/lib/preference-utils.ts:112
+#: ../../../lib/web/src/lib/preference-utils.ts:120
+#: ../../../lib/web/src/lib/preference-utils.ts:131
+msgid "From theme"
+msgstr "Tina téma"
+
 #: ../../../lib/web/src/components/config-drawer.tsx:307
 msgid "Full layout"
 msgstr "Tata letak lengkep"
@@ -1068,6 +1095,11 @@ msgstr "Detil item"
 msgid "Keyboard shortcuts"
 msgstr "Pintasan keyboard"
 
+#: ../../../lib/web/src/lib/preference-utils.ts:105
+#: ../../../lib/web/src/lib/preference-utils.ts:123
+msgid "Large"
+msgstr "Gedé"
+
 #: ../../../lib/web/src/components/config-drawer.tsx:273
 #: src/features/editor/components/edit-dialogs.tsx:304
 msgid "Layout"
@@ -1148,6 +1180,10 @@ msgstr "Manual"
 #: ../../../lib/web/src/components/notifications-dropdown.tsx:220
 msgid "Mark all as read"
 msgstr "Tandaan sadayana sakumaha dibaca"
+
+#: ../../../lib/web/src/lib/preference-utils.ts:104
+msgid "Medium"
+msgstr "Sedeng"
 
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx:152
 msgid "Menu"
@@ -1287,7 +1323,7 @@ msgstr "Teu aya grup"
 msgid "No item types can be created yet. Create the required parent items first."
 msgstr "Teu aya jenis item nu bisa dijieun. Jieun heula item kolot nu diperlukeun."
 
-#: ../../../lib/web/src/components/language-picker.tsx:177
+#: ../../../lib/web/src/components/language-picker.tsx:186
 msgid "No matches."
 msgstr "Teu aya nu cocog."
 
@@ -1347,6 +1383,8 @@ msgid "No views"
 msgstr "Teu aya tempoan"
 
 #: ../../../lib/web/src/components/person-picker.tsx:349
+#: ../../../lib/web/src/lib/preference-utils.ts:102
+#: ../../../lib/web/src/lib/preference-utils.ts:113
 #: src/features/editor/components/edit-dialogs.tsx:357
 #: src/features/editor/components/edit-dialogs.tsx:380
 #: src/features/editor/components/edit-dialogs.tsx:383
@@ -1363,6 +1401,10 @@ msgstr "Teu aya tempoan"
 #: src/features/objects/components/object-detail-panel.tsx:512
 msgid "None"
 msgstr "Euweuh"
+
+#: ../../../lib/web/src/lib/preference-utils.ts:122
+msgid "Normal"
+msgstr "Normal"
 
 #: src/features/requests/components/request-panel.tsx:228
 msgid "Not configured"
@@ -1393,8 +1435,9 @@ msgid "Oops! Page Not Found!"
 msgstr "Aduh! Kaca Teu Kapanggih!"
 
 #: src/features/requests/components/request-panel.tsx:258
+msgctxt "state"
 msgid "Open"
-msgstr "Buka"
+msgstr "Muka"
 
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:150
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:151
@@ -1734,7 +1777,7 @@ msgstr "Paluruh, tonton, jeung urut tempoan ieu."
 msgid "Search..."
 msgstr "Paluruh..."
 
-#: ../../../lib/web/src/components/language-picker.tsx:175
+#: ../../../lib/web/src/components/language-picker.tsx:184
 msgid "Search…"
 msgstr "Paluruh…"
 
@@ -1805,6 +1848,10 @@ msgstr "Pilih préferénsi téma"
 msgid "Select..."
 msgstr "Pilih..."
 
+#: ../../../lib/web/src/lib/preference-utils.ts:133
+msgid "Serif"
+msgstr "Serif"
+
 #: src/routes/_authenticated/$projectId_.settings.tsx:370
 msgid "Server"
 msgstr "Server"
@@ -1862,6 +1909,11 @@ msgstr "Hiji baris téks wungkul"
 msgid "Skip to Main"
 msgstr "Liwat ka Utama"
 
+#: ../../../lib/web/src/lib/preference-utils.ts:103
+#: ../../../lib/web/src/lib/preference-utils.ts:121
+msgid "Small"
+msgstr "Leutik"
+
 #: src/components/view-options-bar.tsx:150
 msgid "Sort"
 msgstr "Sortir"
@@ -1869,6 +1921,10 @@ msgstr "Sortir"
 #: src/features/requests/components/request-panel.tsx:303
 msgid "Source"
 msgstr "Sumber"
+
+#: ../../../lib/web/src/lib/preference-utils.ts:94
+msgid "Spacious"
+msgstr "Lega"
 
 #: src/routes/$projectId.diff.tsx:116
 msgid "Split"
@@ -1924,6 +1980,7 @@ msgstr "Pindah ka tampilan 1-9"
 
 #: ../../../lib/web/src/components/config-drawer.tsx:195
 #: ../../../lib/web/src/lib/preference-utils.ts:18
+#: ../../../lib/web/src/lib/preference-utils.ts:132
 msgid "System"
 msgstr "Sistem"
 

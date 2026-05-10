@@ -400,7 +400,7 @@ msgstr "Зүүнээс баруун эсвэл баруунаас зүүн чи�
 msgid "Choose between system preference, light mode, or dark mode"
 msgstr "Системийн тохиргоо, гэрэл горим, эсвэл харанхуй горимоос сонгоно"
 
-#: ../../../lib/web/src/components/language-picker.tsx:167
+#: ../../../lib/web/src/components/language-picker.tsx:176
 msgid "Choose language"
 msgstr "Хэл сонгох"
 
@@ -469,6 +469,10 @@ msgstr "Өнгө"
 msgid "Columns group by"
 msgstr "Багануудыг бүлэглэх"
 
+#: ../../../lib/web/src/lib/preference-utils.ts:93
+msgid "Comfortable"
+msgstr "Тав тухтай"
+
 #: ../../../lib/web/src/components/coming-soon.tsx:9
 msgid "Coming Soon!"
 msgstr "Удахгүй!"
@@ -483,6 +487,7 @@ msgid "Comments ({0})"
 msgstr "Сэтгэгдэлүүд ({0})"
 
 #: ../../../lib/web/src/components/config-drawer.tsx:302
+#: ../../../lib/web/src/lib/preference-utils.ts:92
 msgid "Compact"
 msgstr "Хумисан"
 
@@ -688,7 +693,7 @@ msgstr "Дизайн, бичих, сэтгэгдэл, харах"
 msgid "Details Panel"
 msgstr "Дэлгэрэнгүй самбар"
 
-#: ../../../lib/web/src/components/language-picker.tsx:145
+#: ../../../lib/web/src/components/language-picker.tsx:154
 #: ../../../lib/web/src/components/timezone-select.tsx:43
 #: ../../../lib/web/src/components/timezone-select.tsx:80
 #: ../../../lib/web/src/lib/preference-utils.ts:25
@@ -752,6 +757,10 @@ msgstr "Багануудыг дарааллыг өөрчлөхийн тулд ч
 msgid "Duplicates"
 msgstr "Давхардлууд"
 
+#: ../../../lib/web/src/lib/preference-utils.ts:134
+msgid "Dyslexia-friendly"
+msgstr "Дислексид зориулсан"
+
 #: src/features/objects/components/comment-thread.tsx:217
 msgid "Edit"
 msgstr "Засах"
@@ -801,6 +810,10 @@ msgstr "Хажуугийн самбарыг тэлэх"
 #: src/routes/_authenticated/$projectId/design.tsx:170
 msgid "Export design"
 msgstr "Дизайн экспортлох"
+
+#: ../../../lib/web/src/lib/preference-utils.ts:124
+msgid "Extra large"
+msgstr "Маш том"
 
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:217
 msgid "Failed to add account"
@@ -988,6 +1001,14 @@ msgstr "Эхлэх"
 msgid "From file"
 msgstr "Файлаас"
 
+#: ../../../lib/web/src/lib/preference-utils.ts:91
+#: ../../../lib/web/src/lib/preference-utils.ts:101
+#: ../../../lib/web/src/lib/preference-utils.ts:112
+#: ../../../lib/web/src/lib/preference-utils.ts:120
+#: ../../../lib/web/src/lib/preference-utils.ts:131
+msgid "From theme"
+msgstr "Загвараас"
+
 #: ../../../lib/web/src/components/config-drawer.tsx:307
 msgid "Full layout"
 msgstr "Бүрэн зохион байгуулалт"
@@ -1074,6 +1095,11 @@ msgstr "Зүйлийн дэлгэрэнгүй"
 msgid "Keyboard shortcuts"
 msgstr "Гарын товчлолууд"
 
+#: ../../../lib/web/src/lib/preference-utils.ts:105
+#: ../../../lib/web/src/lib/preference-utils.ts:123
+msgid "Large"
+msgstr "Том"
+
 #: ../../../lib/web/src/components/config-drawer.tsx:273
 #: src/features/editor/components/edit-dialogs.tsx:304
 msgid "Layout"
@@ -1154,6 +1180,10 @@ msgstr "Гар аргаар"
 #: ../../../lib/web/src/components/notifications-dropdown.tsx:220
 msgid "Mark all as read"
 msgstr "Бүгдийг уншсан гэж тэмдэглэх"
+
+#: ../../../lib/web/src/lib/preference-utils.ts:104
+msgid "Medium"
+msgstr "Дунд"
 
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx:152
 msgid "Menu"
@@ -1293,7 +1323,7 @@ msgstr "Боломжит групп байхгүй"
 msgid "No item types can be created yet. Create the required parent items first."
 msgstr "Одоогоор зүйл үүсгэх боломжгүй. Эхлээд шаардлагатай эх зүйлийг үүсгэнэ үү."
 
-#: ../../../lib/web/src/components/language-picker.tsx:177
+#: ../../../lib/web/src/components/language-picker.tsx:186
 msgid "No matches."
 msgstr "Тохирох зүйл алга."
 
@@ -1353,6 +1383,8 @@ msgid "No views"
 msgstr "Үзэлт алга"
 
 #: ../../../lib/web/src/components/person-picker.tsx:349
+#: ../../../lib/web/src/lib/preference-utils.ts:102
+#: ../../../lib/web/src/lib/preference-utils.ts:113
 #: src/features/editor/components/edit-dialogs.tsx:357
 #: src/features/editor/components/edit-dialogs.tsx:380
 #: src/features/editor/components/edit-dialogs.tsx:383
@@ -1369,6 +1401,10 @@ msgstr "Үзэлт алга"
 #: src/features/objects/components/object-detail-panel.tsx:512
 msgid "None"
 msgstr "Алга"
+
+#: ../../../lib/web/src/lib/preference-utils.ts:122
+msgid "Normal"
+msgstr "Энгийн"
 
 #: src/features/requests/components/request-panel.tsx:228
 msgid "Not configured"
@@ -1399,8 +1435,9 @@ msgid "Oops! Page Not Found!"
 msgstr "Уучлаарай! Хуудас олдсонгүй!"
 
 #: src/features/requests/components/request-panel.tsx:258
+msgctxt "state"
 msgid "Open"
-msgstr "Нээх"
+msgstr "Нээлттэй"
 
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:150
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:151
@@ -1740,7 +1777,7 @@ msgstr "Энэ үзэмжээр хайх, ажиглах, эрэмбэлэх."
 msgid "Search..."
 msgstr "Хайх..."
 
-#: ../../../lib/web/src/components/language-picker.tsx:175
+#: ../../../lib/web/src/components/language-picker.tsx:184
 msgid "Search…"
 msgstr "Хайх…"
 
@@ -1811,6 +1848,10 @@ msgstr "Загварын тохируулга сонгох"
 msgid "Select..."
 msgstr "Сонгох..."
 
+#: ../../../lib/web/src/lib/preference-utils.ts:133
+msgid "Serif"
+msgstr "Сериф"
+
 #: src/routes/_authenticated/$projectId_.settings.tsx:370
 msgid "Server"
 msgstr "Сервер"
@@ -1868,6 +1909,11 @@ msgstr "Зөвхөн нэг мөр текст"
 msgid "Skip to Main"
 msgstr "Үндсэн рүү алгасах"
 
+#: ../../../lib/web/src/lib/preference-utils.ts:103
+#: ../../../lib/web/src/lib/preference-utils.ts:121
+msgid "Small"
+msgstr "Жижиг"
+
 #: src/components/view-options-bar.tsx:150
 msgid "Sort"
 msgstr "Эрэмбэлэх"
@@ -1875,6 +1921,10 @@ msgstr "Эрэмбэлэх"
 #: src/features/requests/components/request-panel.tsx:303
 msgid "Source"
 msgstr "Эх сурвалж"
+
+#: ../../../lib/web/src/lib/preference-utils.ts:94
+msgid "Spacious"
+msgstr "Уужим"
 
 #: src/routes/$projectId.diff.tsx:116
 msgid "Split"
@@ -1930,6 +1980,7 @@ msgstr "1-9 харагдац руу шилжих"
 
 #: ../../../lib/web/src/components/config-drawer.tsx:195
 #: ../../../lib/web/src/lib/preference-utils.ts:18
+#: ../../../lib/web/src/lib/preference-utils.ts:132
 msgid "System"
 msgstr "Систем"
 

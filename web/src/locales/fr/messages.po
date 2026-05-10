@@ -400,7 +400,7 @@ msgstr "Choisissez entre l'écriture de gauche à droite ou de droite à gauche"
 msgid "Choose between system preference, light mode, or dark mode"
 msgstr "Choisissez entre la préférence système, le mode clair ou le mode sombre"
 
-#: ../../../lib/web/src/components/language-picker.tsx:167
+#: ../../../lib/web/src/components/language-picker.tsx:176
 msgid "Choose language"
 msgstr "Choisir la langue"
 
@@ -469,6 +469,10 @@ msgstr "Couleur"
 msgid "Columns group by"
 msgstr "Colonnes regroupées par"
 
+#: ../../../lib/web/src/lib/preference-utils.ts:93
+msgid "Comfortable"
+msgstr "Confortable"
+
 #: ../../../lib/web/src/components/coming-soon.tsx:9
 msgid "Coming Soon!"
 msgstr "Bientôt disponible !"
@@ -483,6 +487,7 @@ msgid "Comments ({0})"
 msgstr "Commentaires ({0})"
 
 #: ../../../lib/web/src/components/config-drawer.tsx:302
+#: ../../../lib/web/src/lib/preference-utils.ts:92
 msgid "Compact"
 msgstr "Compact"
 
@@ -688,7 +693,7 @@ msgstr "Concevoir, modifier, commenter et voir"
 msgid "Details Panel"
 msgstr "Panneau des détails"
 
-#: ../../../lib/web/src/components/language-picker.tsx:145
+#: ../../../lib/web/src/components/language-picker.tsx:154
 #: ../../../lib/web/src/components/timezone-select.tsx:43
 #: ../../../lib/web/src/components/timezone-select.tsx:80
 #: ../../../lib/web/src/lib/preference-utils.ts:25
@@ -752,6 +757,10 @@ msgstr "Faites glisser les colonnes pour les réorganiser"
 msgid "Duplicates"
 msgstr "Duplique"
 
+#: ../../../lib/web/src/lib/preference-utils.ts:134
+msgid "Dyslexia-friendly"
+msgstr "Adapté à la dyslexie"
+
 #: src/features/objects/components/comment-thread.tsx:217
 msgid "Edit"
 msgstr "Modifier"
@@ -801,6 +810,10 @@ msgstr "Développer la barre latérale"
 #: src/routes/_authenticated/$projectId/design.tsx:170
 msgid "Export design"
 msgstr "Exporter la conception"
+
+#: ../../../lib/web/src/lib/preference-utils.ts:124
+msgid "Extra large"
+msgstr "Très grand"
 
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:217
 msgid "Failed to add account"
@@ -988,6 +1001,14 @@ msgstr "De"
 msgid "From file"
 msgstr "Depuis un fichier"
 
+#: ../../../lib/web/src/lib/preference-utils.ts:91
+#: ../../../lib/web/src/lib/preference-utils.ts:101
+#: ../../../lib/web/src/lib/preference-utils.ts:112
+#: ../../../lib/web/src/lib/preference-utils.ts:120
+#: ../../../lib/web/src/lib/preference-utils.ts:131
+msgid "From theme"
+msgstr "Du thème"
+
 #: ../../../lib/web/src/components/config-drawer.tsx:307
 msgid "Full layout"
 msgstr "Disposition complète"
@@ -1074,6 +1095,11 @@ msgstr "Détails de l'élément"
 msgid "Keyboard shortcuts"
 msgstr "Raccourcis clavier"
 
+#: ../../../lib/web/src/lib/preference-utils.ts:105
+#: ../../../lib/web/src/lib/preference-utils.ts:123
+msgid "Large"
+msgstr "Grand"
+
 #: ../../../lib/web/src/components/config-drawer.tsx:273
 #: src/features/editor/components/edit-dialogs.tsx:304
 msgid "Layout"
@@ -1154,6 +1180,10 @@ msgstr "Manuel"
 #: ../../../lib/web/src/components/notifications-dropdown.tsx:220
 msgid "Mark all as read"
 msgstr "Tout marquer comme lu"
+
+#: ../../../lib/web/src/lib/preference-utils.ts:104
+msgid "Medium"
+msgstr "Moyen"
 
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx:152
 msgid "Menu"
@@ -1293,7 +1323,7 @@ msgstr "Aucun groupe disponible"
 msgid "No item types can be created yet. Create the required parent items first."
 msgstr "Aucun type d'élément ne peut encore être créé. Créez d'abord les éléments parents requis."
 
-#: ../../../lib/web/src/components/language-picker.tsx:177
+#: ../../../lib/web/src/components/language-picker.tsx:186
 msgid "No matches."
 msgstr "Aucune correspondance."
 
@@ -1353,6 +1383,8 @@ msgid "No views"
 msgstr "Aucune vue"
 
 #: ../../../lib/web/src/components/person-picker.tsx:349
+#: ../../../lib/web/src/lib/preference-utils.ts:102
+#: ../../../lib/web/src/lib/preference-utils.ts:113
 #: src/features/editor/components/edit-dialogs.tsx:357
 #: src/features/editor/components/edit-dialogs.tsx:380
 #: src/features/editor/components/edit-dialogs.tsx:383
@@ -1369,6 +1401,10 @@ msgstr "Aucune vue"
 #: src/features/objects/components/object-detail-panel.tsx:512
 msgid "None"
 msgstr "Aucun"
+
+#: ../../../lib/web/src/lib/preference-utils.ts:122
+msgid "Normal"
+msgstr "Normal"
 
 #: src/features/requests/components/request-panel.tsx:228
 msgid "Not configured"
@@ -1399,8 +1435,9 @@ msgid "Oops! Page Not Found!"
 msgstr "Oups ! Page introuvable !"
 
 #: src/features/requests/components/request-panel.tsx:258
+msgctxt "state"
 msgid "Open"
-msgstr "Ouvrir"
+msgstr "Ouvert"
 
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:150
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:151
@@ -1740,7 +1777,7 @@ msgstr "Rechercher, surveiller et trier cette vue."
 msgid "Search..."
 msgstr "Rechercher…"
 
-#: ../../../lib/web/src/components/language-picker.tsx:175
+#: ../../../lib/web/src/components/language-picker.tsx:184
 msgid "Search…"
 msgstr "Rechercher…"
 
@@ -1811,6 +1848,10 @@ msgstr "Sélectionner la préférence de thème"
 msgid "Select..."
 msgstr "Sélectionner…"
 
+#: ../../../lib/web/src/lib/preference-utils.ts:133
+msgid "Serif"
+msgstr "Serif"
+
 #: src/routes/_authenticated/$projectId_.settings.tsx:370
 msgid "Server"
 msgstr "Serveur"
@@ -1868,6 +1909,11 @@ msgstr "Une seule ligne de texte"
 msgid "Skip to Main"
 msgstr "Aller au contenu principal"
 
+#: ../../../lib/web/src/lib/preference-utils.ts:103
+#: ../../../lib/web/src/lib/preference-utils.ts:121
+msgid "Small"
+msgstr "Petit"
+
 #: src/components/view-options-bar.tsx:150
 msgid "Sort"
 msgstr "Trier"
@@ -1875,6 +1921,10 @@ msgstr "Trier"
 #: src/features/requests/components/request-panel.tsx:303
 msgid "Source"
 msgstr "Source"
+
+#: ../../../lib/web/src/lib/preference-utils.ts:94
+msgid "Spacious"
+msgstr "Spacieux"
 
 #: src/routes/$projectId.diff.tsx:116
 msgid "Split"
@@ -1930,6 +1980,7 @@ msgstr "Basculer vers la vue 1-9"
 
 #: ../../../lib/web/src/components/config-drawer.tsx:195
 #: ../../../lib/web/src/lib/preference-utils.ts:18
+#: ../../../lib/web/src/lib/preference-utils.ts:132
 msgid "System"
 msgstr "Système"
 

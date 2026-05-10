@@ -400,7 +400,7 @@ msgstr "Chapdan oʻngga yoki oʻngdan chapga sayt yoʻnalishi orasidan tanlang"
 msgid "Choose between system preference, light mode, or dark mode"
 msgstr "Tizim sozlamasi, yorugʻ yoki qorongʻi rejim orasidan tanlang"
 
-#: ../../../lib/web/src/components/language-picker.tsx:167
+#: ../../../lib/web/src/components/language-picker.tsx:176
 msgid "Choose language"
 msgstr "Tilni tanlang"
 
@@ -469,6 +469,10 @@ msgstr "Rang"
 msgid "Columns group by"
 msgstr "Ustunlarni guruhlash boʻyicha"
 
+#: ../../../lib/web/src/lib/preference-utils.ts:93
+msgid "Comfortable"
+msgstr "Qulay"
+
 #: ../../../lib/web/src/components/coming-soon.tsx:9
 msgid "Coming Soon!"
 msgstr "Tez orada!"
@@ -483,6 +487,7 @@ msgid "Comments ({0})"
 msgstr "Izohlar ({0})"
 
 #: ../../../lib/web/src/components/config-drawer.tsx:302
+#: ../../../lib/web/src/lib/preference-utils.ts:92
 msgid "Compact"
 msgstr "Ixcham"
 
@@ -688,7 +693,7 @@ msgstr "Dizayn, yozish, izoh va koʻrish"
 msgid "Details Panel"
 msgstr "Tafsilotlar paneli"
 
-#: ../../../lib/web/src/components/language-picker.tsx:145
+#: ../../../lib/web/src/components/language-picker.tsx:154
 #: ../../../lib/web/src/components/timezone-select.tsx:43
 #: ../../../lib/web/src/components/timezone-select.tsx:80
 #: ../../../lib/web/src/lib/preference-utils.ts:25
@@ -752,6 +757,10 @@ msgstr "Tartibni oʻzgartirish uchun ustunlarni sudrab oʻtkazing"
 msgid "Duplicates"
 msgstr "Dublikatlar"
 
+#: ../../../lib/web/src/lib/preference-utils.ts:134
+msgid "Dyslexia-friendly"
+msgstr "Disleksiyaga moslashtirilgan"
+
 #: src/features/objects/components/comment-thread.tsx:217
 msgid "Edit"
 msgstr "Tahrirlash"
@@ -801,6 +810,10 @@ msgstr "Yon panelni kengaytirish"
 #: src/routes/_authenticated/$projectId/design.tsx:170
 msgid "Export design"
 msgstr "Dizaynni eksport qilish"
+
+#: ../../../lib/web/src/lib/preference-utils.ts:124
+msgid "Extra large"
+msgstr "Juda katta"
 
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:217
 msgid "Failed to add account"
@@ -988,6 +1001,14 @@ msgstr "Kimdan"
 msgid "From file"
 msgstr "Fayldan"
 
+#: ../../../lib/web/src/lib/preference-utils.ts:91
+#: ../../../lib/web/src/lib/preference-utils.ts:101
+#: ../../../lib/web/src/lib/preference-utils.ts:112
+#: ../../../lib/web/src/lib/preference-utils.ts:120
+#: ../../../lib/web/src/lib/preference-utils.ts:131
+msgid "From theme"
+msgstr "Mavzudan"
+
 #: ../../../lib/web/src/components/config-drawer.tsx:307
 msgid "Full layout"
 msgstr "Toʻliq tartib"
@@ -1074,6 +1095,11 @@ msgstr "Element tafsilotlari"
 msgid "Keyboard shortcuts"
 msgstr "Klaviatura yorliqlari"
 
+#: ../../../lib/web/src/lib/preference-utils.ts:105
+#: ../../../lib/web/src/lib/preference-utils.ts:123
+msgid "Large"
+msgstr "Katta"
+
 #: ../../../lib/web/src/components/config-drawer.tsx:273
 #: src/features/editor/components/edit-dialogs.tsx:304
 msgid "Layout"
@@ -1154,6 +1180,10 @@ msgstr "Qoʻlda"
 #: ../../../lib/web/src/components/notifications-dropdown.tsx:220
 msgid "Mark all as read"
 msgstr "Hammasini oʻqilgan deb belgilash"
+
+#: ../../../lib/web/src/lib/preference-utils.ts:104
+msgid "Medium"
+msgstr "Oʻrta"
 
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx:152
 msgid "Menu"
@@ -1293,7 +1323,7 @@ msgstr "Mavjud guruhlar yoʻq"
 msgid "No item types can be created yet. Create the required parent items first."
 msgstr "Hozircha hech qanday element turi yaratib boʻlmaydi. Avval kerakli ota elementlarni yarating."
 
-#: ../../../lib/web/src/components/language-picker.tsx:177
+#: ../../../lib/web/src/components/language-picker.tsx:186
 msgid "No matches."
 msgstr "Mosliklar yoʻq."
 
@@ -1353,6 +1383,8 @@ msgid "No views"
 msgstr "Koʻrishlar yoʻq"
 
 #: ../../../lib/web/src/components/person-picker.tsx:349
+#: ../../../lib/web/src/lib/preference-utils.ts:102
+#: ../../../lib/web/src/lib/preference-utils.ts:113
 #: src/features/editor/components/edit-dialogs.tsx:357
 #: src/features/editor/components/edit-dialogs.tsx:380
 #: src/features/editor/components/edit-dialogs.tsx:383
@@ -1369,6 +1401,10 @@ msgstr "Koʻrishlar yoʻq"
 #: src/features/objects/components/object-detail-panel.tsx:512
 msgid "None"
 msgstr "Hech qanday"
+
+#: ../../../lib/web/src/lib/preference-utils.ts:122
+msgid "Normal"
+msgstr "Oddiy"
 
 #: src/features/requests/components/request-panel.tsx:228
 msgid "Not configured"
@@ -1399,6 +1435,7 @@ msgid "Oops! Page Not Found!"
 msgstr "Voy! Sahifa topilmadi!"
 
 #: src/features/requests/components/request-panel.tsx:258
+msgctxt "state"
 msgid "Open"
 msgstr "Ochiq"
 
@@ -1740,7 +1777,7 @@ msgstr "Bu koʻrinishni qidirish, kuzatish va tartiblash."
 msgid "Search..."
 msgstr "Qidirish..."
 
-#: ../../../lib/web/src/components/language-picker.tsx:175
+#: ../../../lib/web/src/components/language-picker.tsx:184
 msgid "Search…"
 msgstr "Qidirish…"
 
@@ -1811,6 +1848,10 @@ msgstr "Mavzu sozlamasini tanlang"
 msgid "Select..."
 msgstr "Tanlang..."
 
+#: ../../../lib/web/src/lib/preference-utils.ts:133
+msgid "Serif"
+msgstr "Serif"
+
 #: src/routes/_authenticated/$projectId_.settings.tsx:370
 msgid "Server"
 msgstr "Server"
@@ -1868,6 +1909,11 @@ msgstr "Faqat bir qator matn"
 msgid "Skip to Main"
 msgstr "Asosiyga oʻtish"
 
+#: ../../../lib/web/src/lib/preference-utils.ts:103
+#: ../../../lib/web/src/lib/preference-utils.ts:121
+msgid "Small"
+msgstr "Kichik"
+
 #: src/components/view-options-bar.tsx:150
 msgid "Sort"
 msgstr "Saralash"
@@ -1875,6 +1921,10 @@ msgstr "Saralash"
 #: src/features/requests/components/request-panel.tsx:303
 msgid "Source"
 msgstr "Manba"
+
+#: ../../../lib/web/src/lib/preference-utils.ts:94
+msgid "Spacious"
+msgstr "Keng"
 
 #: src/routes/$projectId.diff.tsx:116
 msgid "Split"
@@ -1930,6 +1980,7 @@ msgstr "1-9 koʻrinishiga oʻtish"
 
 #: ../../../lib/web/src/components/config-drawer.tsx:195
 #: ../../../lib/web/src/lib/preference-utils.ts:18
+#: ../../../lib/web/src/lib/preference-utils.ts:132
 msgid "System"
 msgstr "Tizim"
 

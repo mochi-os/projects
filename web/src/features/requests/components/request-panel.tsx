@@ -255,7 +255,7 @@ function RequestItem({
           <span className={requestStateBadgeStyles.merged}><Trans>Merged</Trans></span>
         )}
         {!isMerged && !isDraft && request.repository && request.source && request.target && (
-          <span className={requestStateBadgeStyles.open}><Trans>Open</Trans></span>
+          <span className={requestStateBadgeStyles.open}><Trans context='state'>Open</Trans></span>
         )}
       </button>
 

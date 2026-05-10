@@ -400,7 +400,7 @@ msgstr "Scegli tra direzione del sito da sinistra a destra o da destra a sinistr
 msgid "Choose between system preference, light mode, or dark mode"
 msgstr "Scegli tra preferenza di sistema, modalità chiara o modalità scura"
 
-#: ../../../lib/web/src/components/language-picker.tsx:167
+#: ../../../lib/web/src/components/language-picker.tsx:176
 msgid "Choose language"
 msgstr "Scegli la lingua"
 
@@ -469,6 +469,10 @@ msgstr "Colore"
 msgid "Columns group by"
 msgstr "Le colonne raggruppano per"
 
+#: ../../../lib/web/src/lib/preference-utils.ts:93
+msgid "Comfortable"
+msgstr "Comodo"
+
 #: ../../../lib/web/src/components/coming-soon.tsx:9
 msgid "Coming Soon!"
 msgstr "In arrivo!"
@@ -483,6 +487,7 @@ msgid "Comments ({0})"
 msgstr "Commenti ({0})"
 
 #: ../../../lib/web/src/components/config-drawer.tsx:302
+#: ../../../lib/web/src/lib/preference-utils.ts:92
 msgid "Compact"
 msgstr "Compatto"
 
@@ -688,7 +693,7 @@ msgstr "Progetta, scrivi, commenta e visualizza"
 msgid "Details Panel"
 msgstr "Pannello dei dettagli"
 
-#: ../../../lib/web/src/components/language-picker.tsx:145
+#: ../../../lib/web/src/components/language-picker.tsx:154
 #: ../../../lib/web/src/components/timezone-select.tsx:43
 #: ../../../lib/web/src/components/timezone-select.tsx:80
 #: ../../../lib/web/src/lib/preference-utils.ts:25
@@ -752,6 +757,10 @@ msgstr "Trascina le colonne per riordinarle"
 msgid "Duplicates"
 msgstr "Duplica"
 
+#: ../../../lib/web/src/lib/preference-utils.ts:134
+msgid "Dyslexia-friendly"
+msgstr "Adatto alla dislessia"
+
 #: src/features/objects/components/comment-thread.tsx:217
 msgid "Edit"
 msgstr "Modifica"
@@ -801,6 +810,10 @@ msgstr "Espandi barra laterale"
 #: src/routes/_authenticated/$projectId/design.tsx:170
 msgid "Export design"
 msgstr "Esporta progettazione"
+
+#: ../../../lib/web/src/lib/preference-utils.ts:124
+msgid "Extra large"
+msgstr "Extra grande"
 
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:217
 msgid "Failed to add account"
@@ -988,6 +1001,14 @@ msgstr "Da"
 msgid "From file"
 msgstr "Da file"
 
+#: ../../../lib/web/src/lib/preference-utils.ts:91
+#: ../../../lib/web/src/lib/preference-utils.ts:101
+#: ../../../lib/web/src/lib/preference-utils.ts:112
+#: ../../../lib/web/src/lib/preference-utils.ts:120
+#: ../../../lib/web/src/lib/preference-utils.ts:131
+msgid "From theme"
+msgstr "Dal tema"
+
 #: ../../../lib/web/src/components/config-drawer.tsx:307
 msgid "Full layout"
 msgstr "Layout completo"
@@ -1074,6 +1095,11 @@ msgstr "Dettagli elemento"
 msgid "Keyboard shortcuts"
 msgstr "Scorciatoie da tastiera"
 
+#: ../../../lib/web/src/lib/preference-utils.ts:105
+#: ../../../lib/web/src/lib/preference-utils.ts:123
+msgid "Large"
+msgstr "Grande"
+
 #: ../../../lib/web/src/components/config-drawer.tsx:273
 #: src/features/editor/components/edit-dialogs.tsx:304
 msgid "Layout"
@@ -1154,6 +1180,10 @@ msgstr "Manuale"
 #: ../../../lib/web/src/components/notifications-dropdown.tsx:220
 msgid "Mark all as read"
 msgstr "Segna tutto come letto"
+
+#: ../../../lib/web/src/lib/preference-utils.ts:104
+msgid "Medium"
+msgstr "Medio"
 
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx:152
 msgid "Menu"
@@ -1293,7 +1323,7 @@ msgstr "Nessun gruppo disponibile"
 msgid "No item types can be created yet. Create the required parent items first."
 msgstr "Nessun tipo di elemento può essere creato per ora. Crea prima gli elementi padre richiesti."
 
-#: ../../../lib/web/src/components/language-picker.tsx:177
+#: ../../../lib/web/src/components/language-picker.tsx:186
 msgid "No matches."
 msgstr "Nessuna corrispondenza."
 
@@ -1353,6 +1383,8 @@ msgid "No views"
 msgstr "Nessuna visualizzazione"
 
 #: ../../../lib/web/src/components/person-picker.tsx:349
+#: ../../../lib/web/src/lib/preference-utils.ts:102
+#: ../../../lib/web/src/lib/preference-utils.ts:113
 #: src/features/editor/components/edit-dialogs.tsx:357
 #: src/features/editor/components/edit-dialogs.tsx:380
 #: src/features/editor/components/edit-dialogs.tsx:383
@@ -1369,6 +1401,10 @@ msgstr "Nessuna visualizzazione"
 #: src/features/objects/components/object-detail-panel.tsx:512
 msgid "None"
 msgstr "Nessuno"
+
+#: ../../../lib/web/src/lib/preference-utils.ts:122
+msgid "Normal"
+msgstr "Normale"
 
 #: src/features/requests/components/request-panel.tsx:228
 msgid "Not configured"
@@ -1399,8 +1435,9 @@ msgid "Oops! Page Not Found!"
 msgstr "Oops! Pagina non trovata!"
 
 #: src/features/requests/components/request-panel.tsx:258
+msgctxt "state"
 msgid "Open"
-msgstr "Apri"
+msgstr "Aperto"
 
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:150
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:151
@@ -1740,7 +1777,7 @@ msgstr "Cerca, osserva e ordina questa vista."
 msgid "Search..."
 msgstr "Cerca..."
 
-#: ../../../lib/web/src/components/language-picker.tsx:175
+#: ../../../lib/web/src/components/language-picker.tsx:184
 msgid "Search…"
 msgstr "Cerca…"
 
@@ -1811,6 +1848,10 @@ msgstr "Seleziona preferenza del tema"
 msgid "Select..."
 msgstr "Seleziona..."
 
+#: ../../../lib/web/src/lib/preference-utils.ts:133
+msgid "Serif"
+msgstr "Serif"
+
 #: src/routes/_authenticated/$projectId_.settings.tsx:370
 msgid "Server"
 msgstr "Server"
@@ -1868,6 +1909,11 @@ msgstr "Solo una singola riga di testo"
 msgid "Skip to Main"
 msgstr "Vai al contenuto principale"
 
+#: ../../../lib/web/src/lib/preference-utils.ts:103
+#: ../../../lib/web/src/lib/preference-utils.ts:121
+msgid "Small"
+msgstr "Piccolo"
+
 #: src/components/view-options-bar.tsx:150
 msgid "Sort"
 msgstr "Ordina"
@@ -1875,6 +1921,10 @@ msgstr "Ordina"
 #: src/features/requests/components/request-panel.tsx:303
 msgid "Source"
 msgstr "Sorgente"
+
+#: ../../../lib/web/src/lib/preference-utils.ts:94
+msgid "Spacious"
+msgstr "Spazioso"
 
 #: src/routes/$projectId.diff.tsx:116
 msgid "Split"
@@ -1930,6 +1980,7 @@ msgstr "Passa alla vista 1-9"
 
 #: ../../../lib/web/src/components/config-drawer.tsx:195
 #: ../../../lib/web/src/lib/preference-utils.ts:18
+#: ../../../lib/web/src/lib/preference-utils.ts:132
 msgid "System"
 msgstr "Sistema"
 

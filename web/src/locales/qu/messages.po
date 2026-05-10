@@ -400,7 +400,7 @@ msgstr "Lluq'i-paña utaq paña-lluq'i pi akllay"
 msgid "Choose between system preference, light mode, or dark mode"
 msgstr "Sistema munay, k'illa, utaq tutayaq pi akllay"
 
-#: ../../../lib/web/src/components/language-picker.tsx:167
+#: ../../../lib/web/src/components/language-picker.tsx:176
 msgid "Choose language"
 msgstr "Simi akllay"
 
@@ -469,6 +469,10 @@ msgstr "Llinp'i"
 msgid "Columns group by"
 msgstr "Columnas huñuy"
 
+#: ../../../lib/web/src/lib/preference-utils.ts:93
+msgid "Comfortable"
+msgstr "Allin"
+
 #: ../../../lib/web/src/components/coming-soon.tsx:9
 msgid "Coming Soon!"
 msgstr "Hamuchkan!"
@@ -483,6 +487,7 @@ msgid "Comments ({0})"
 msgstr "Comentarios ({0})"
 
 #: ../../../lib/web/src/components/config-drawer.tsx:302
+#: ../../../lib/web/src/lib/preference-utils.ts:92
 msgid "Compact"
 msgstr "Pisi"
 
@@ -688,7 +693,7 @@ msgstr "Diseñay, qillqay, comentariy, hinaspa qhaway"
 msgid "Details Panel"
 msgstr "Willariykuna Panel"
 
-#: ../../../lib/web/src/components/language-picker.tsx:145
+#: ../../../lib/web/src/components/language-picker.tsx:154
 #: ../../../lib/web/src/components/timezone-select.tsx:43
 #: ../../../lib/web/src/components/timezone-select.tsx:80
 #: ../../../lib/web/src/lib/preference-utils.ts:25
@@ -752,6 +757,10 @@ msgstr "Columnakunata aysay kaqmanta churanaykipaq"
 msgid "Duplicates"
 msgstr "Iskaynisqakuna"
 
+#: ../../../lib/web/src/lib/preference-utils.ts:134
+msgid "Dyslexia-friendly"
+msgstr "Disleksia llamkaywanmi"
+
 #: src/features/objects/components/comment-thread.tsx:217
 msgid "Edit"
 msgstr "Hukchay"
@@ -801,6 +810,10 @@ msgstr "Sidebarta kichay"
 #: src/routes/_authenticated/$projectId/design.tsx:170
 msgid "Export design"
 msgstr "Diseñota hurquy"
+
+#: ../../../lib/web/src/lib/preference-utils.ts:124
+msgid "Extra large"
+msgstr "Sinchi hatun"
 
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:217
 msgid "Failed to add account"
@@ -988,6 +1001,14 @@ msgstr "Manta"
 msgid "From file"
 msgstr "Archivomanta"
 
+#: ../../../lib/web/src/lib/preference-utils.ts:91
+#: ../../../lib/web/src/lib/preference-utils.ts:101
+#: ../../../lib/web/src/lib/preference-utils.ts:112
+#: ../../../lib/web/src/lib/preference-utils.ts:120
+#: ../../../lib/web/src/lib/preference-utils.ts:131
+msgid "From theme"
+msgstr "Temamanta"
+
 #: ../../../lib/web/src/components/config-drawer.tsx:307
 msgid "Full layout"
 msgstr "Hunt'asqa layout"
@@ -1074,6 +1095,11 @@ msgstr "Item willakuy"
 msgid "Keyboard shortcuts"
 msgstr "Teclado pisi ñankuna"
 
+#: ../../../lib/web/src/lib/preference-utils.ts:105
+#: ../../../lib/web/src/lib/preference-utils.ts:123
+msgid "Large"
+msgstr "Hatun"
+
 #: ../../../lib/web/src/components/config-drawer.tsx:273
 #: src/features/editor/components/edit-dialogs.tsx:304
 msgid "Layout"
@@ -1154,6 +1180,10 @@ msgstr "Maki ruway"
 #: ../../../lib/web/src/components/notifications-dropdown.tsx:220
 msgid "Mark all as read"
 msgstr "Llapanta ñawinchasqaman churay"
+
+#: ../../../lib/web/src/lib/preference-utils.ts:104
+msgid "Medium"
+msgstr "Chawpi"
 
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx:152
 msgid "Menu"
@@ -1293,7 +1323,7 @@ msgstr "Mana grupokuna atikuq"
 msgid "No item types can be created yet. Create the required parent items first."
 msgstr "Manaraq item niraqkuna ruwakuyta atin. Ñawpaqta munasqa parent itemkunata ruway."
 
-#: ../../../lib/web/src/components/language-picker.tsx:177
+#: ../../../lib/web/src/components/language-picker.tsx:186
 msgid "No matches."
 msgstr "Mana tupaqkuna."
 
@@ -1353,6 +1383,8 @@ msgid "No views"
 msgstr "Mana qhawaykuna"
 
 #: ../../../lib/web/src/components/person-picker.tsx:349
+#: ../../../lib/web/src/lib/preference-utils.ts:102
+#: ../../../lib/web/src/lib/preference-utils.ts:113
 #: src/features/editor/components/edit-dialogs.tsx:357
 #: src/features/editor/components/edit-dialogs.tsx:380
 #: src/features/editor/components/edit-dialogs.tsx:383
@@ -1369,6 +1401,10 @@ msgstr "Mana qhawaykuna"
 #: src/features/objects/components/object-detail-panel.tsx:512
 msgid "None"
 msgstr "Mana"
+
+#: ../../../lib/web/src/lib/preference-utils.ts:122
+msgid "Normal"
+msgstr "Walliq"
 
 #: src/features/requests/components/request-panel.tsx:228
 msgid "Not configured"
@@ -1399,8 +1435,9 @@ msgid "Oops! Page Not Found!"
 msgstr "¡Ay! ¡Página Mana Tarisqachu!"
 
 #: src/features/requests/components/request-panel.tsx:258
+msgctxt "state"
 msgid "Open"
-msgstr "Kichay"
+msgstr "Kicharisqa"
 
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:150
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:151
@@ -1740,7 +1777,7 @@ msgstr "Kay vistapi maskay, qhaway, hinaspa allichay."
 msgid "Search..."
 msgstr "Maskay..."
 
-#: ../../../lib/web/src/components/language-picker.tsx:175
+#: ../../../lib/web/src/components/language-picker.tsx:184
 msgid "Search…"
 msgstr "Maskay…"
 
@@ -1811,6 +1848,10 @@ msgstr "Tema munayta akllay"
 msgid "Select..."
 msgstr "Akllay..."
 
+#: ../../../lib/web/src/lib/preference-utils.ts:133
+msgid "Serif"
+msgstr "Serif"
+
 #: src/routes/_authenticated/$projectId_.settings.tsx:370
 msgid "Server"
 msgstr "Server"
@@ -1868,6 +1909,11 @@ msgstr "Huk siqi qillqayllata"
 msgid "Skip to Main"
 msgstr "Mainman pasay"
 
+#: ../../../lib/web/src/lib/preference-utils.ts:103
+#: ../../../lib/web/src/lib/preference-utils.ts:121
+msgid "Small"
+msgstr "Huch'uy"
+
 #: src/components/view-options-bar.tsx:150
 msgid "Sort"
 msgstr "Allichay"
@@ -1875,6 +1921,10 @@ msgstr "Allichay"
 #: src/features/requests/components/request-panel.tsx:303
 msgid "Source"
 msgstr "Pukyu"
+
+#: ../../../lib/web/src/lib/preference-utils.ts:94
+msgid "Spacious"
+msgstr "Hatun"
 
 #: src/routes/$projectId.diff.tsx:116
 msgid "Split"
@@ -1930,6 +1980,7 @@ msgstr "1-9 vistaman tikray"
 
 #: ../../../lib/web/src/components/config-drawer.tsx:195
 #: ../../../lib/web/src/lib/preference-utils.ts:18
+#: ../../../lib/web/src/lib/preference-utils.ts:132
 msgid "System"
 msgstr "Sistema"
 

@@ -400,7 +400,7 @@ msgstr "왼쪽에서 오른쪽 또는 오른쪽에서 왼쪽 사이트 방향 �
 msgid "Choose between system preference, light mode, or dark mode"
 msgstr "시스템 설정, 라이트 모드, 다크 모드 중에서 선택하세요"
 
-#: ../../../lib/web/src/components/language-picker.tsx:167
+#: ../../../lib/web/src/components/language-picker.tsx:176
 msgid "Choose language"
 msgstr "언어 선택"
 
@@ -469,6 +469,10 @@ msgstr "색상"
 msgid "Columns group by"
 msgstr "컬럼 그룹화 기준"
 
+#: ../../../lib/web/src/lib/preference-utils.ts:93
+msgid "Comfortable"
+msgstr "편안한"
+
 #: ../../../lib/web/src/components/coming-soon.tsx:9
 msgid "Coming Soon!"
 msgstr "곧 출시!"
@@ -483,6 +487,7 @@ msgid "Comments ({0})"
 msgstr "댓글 ({0})"
 
 #: ../../../lib/web/src/components/config-drawer.tsx:302
+#: ../../../lib/web/src/lib/preference-utils.ts:92
 msgid "Compact"
 msgstr "컴팩트"
 
@@ -688,7 +693,7 @@ msgstr "디자인, 작성, 댓글, 보기"
 msgid "Details Panel"
 msgstr "세부 정보 패널"
 
-#: ../../../lib/web/src/components/language-picker.tsx:145
+#: ../../../lib/web/src/components/language-picker.tsx:154
 #: ../../../lib/web/src/components/timezone-select.tsx:43
 #: ../../../lib/web/src/components/timezone-select.tsx:80
 #: ../../../lib/web/src/lib/preference-utils.ts:25
@@ -752,6 +757,10 @@ msgstr "열을 드래그하여 순서를 변경하세요"
 msgid "Duplicates"
 msgstr "중복"
 
+#: ../../../lib/web/src/lib/preference-utils.ts:134
+msgid "Dyslexia-friendly"
+msgstr "난독증 친화적"
+
 #: src/features/objects/components/comment-thread.tsx:217
 msgid "Edit"
 msgstr "편집"
@@ -801,6 +810,10 @@ msgstr "사이드바 펼치기"
 #: src/routes/_authenticated/$projectId/design.tsx:170
 msgid "Export design"
 msgstr "디자인 내보내기"
+
+#: ../../../lib/web/src/lib/preference-utils.ts:124
+msgid "Extra large"
+msgstr "아주 크게"
 
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:217
 msgid "Failed to add account"
@@ -988,6 +1001,14 @@ msgstr "보낸이"
 msgid "From file"
 msgstr "파일에서"
 
+#: ../../../lib/web/src/lib/preference-utils.ts:91
+#: ../../../lib/web/src/lib/preference-utils.ts:101
+#: ../../../lib/web/src/lib/preference-utils.ts:112
+#: ../../../lib/web/src/lib/preference-utils.ts:120
+#: ../../../lib/web/src/lib/preference-utils.ts:131
+msgid "From theme"
+msgstr "테마에서"
+
 #: ../../../lib/web/src/components/config-drawer.tsx:307
 msgid "Full layout"
 msgstr "전체 레이아웃"
@@ -1074,6 +1095,11 @@ msgstr "항목 세부 정보"
 msgid "Keyboard shortcuts"
 msgstr "키보드 단축키"
 
+#: ../../../lib/web/src/lib/preference-utils.ts:105
+#: ../../../lib/web/src/lib/preference-utils.ts:123
+msgid "Large"
+msgstr "크게"
+
 #: ../../../lib/web/src/components/config-drawer.tsx:273
 #: src/features/editor/components/edit-dialogs.tsx:304
 msgid "Layout"
@@ -1154,6 +1180,10 @@ msgstr "수동"
 #: ../../../lib/web/src/components/notifications-dropdown.tsx:220
 msgid "Mark all as read"
 msgstr "모두 읽음으로 표시"
+
+#: ../../../lib/web/src/lib/preference-utils.ts:104
+msgid "Medium"
+msgstr "보통"
 
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx:152
 msgid "Menu"
@@ -1293,7 +1323,7 @@ msgstr "이용 가능한 그룹이 없어요"
 msgid "No item types can be created yet. Create the required parent items first."
 msgstr "아직 항목 유형을 만들 수 없어요. 먼저 필요한 상위 항목을 만들어 주세요."
 
-#: ../../../lib/web/src/components/language-picker.tsx:177
+#: ../../../lib/web/src/components/language-picker.tsx:186
 msgid "No matches."
 msgstr "일치하는 항목이 없어요."
 
@@ -1353,6 +1383,8 @@ msgid "No views"
 msgstr "조회수가 없어요"
 
 #: ../../../lib/web/src/components/person-picker.tsx:349
+#: ../../../lib/web/src/lib/preference-utils.ts:102
+#: ../../../lib/web/src/lib/preference-utils.ts:113
 #: src/features/editor/components/edit-dialogs.tsx:357
 #: src/features/editor/components/edit-dialogs.tsx:380
 #: src/features/editor/components/edit-dialogs.tsx:383
@@ -1369,6 +1401,10 @@ msgstr "조회수가 없어요"
 #: src/features/objects/components/object-detail-panel.tsx:512
 msgid "None"
 msgstr "없음"
+
+#: ../../../lib/web/src/lib/preference-utils.ts:122
+msgid "Normal"
+msgstr "기본"
 
 #: src/features/requests/components/request-panel.tsx:228
 msgid "Not configured"
@@ -1399,8 +1435,9 @@ msgid "Oops! Page Not Found!"
 msgstr "이런! 페이지를 찾을 수 없어요!"
 
 #: src/features/requests/components/request-panel.tsx:258
+msgctxt "state"
 msgid "Open"
-msgstr "열기"
+msgstr "열림"
 
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:150
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:151
@@ -1740,7 +1777,7 @@ msgstr "이 화면을 검색, 관찰하고 정렬해요."
 msgid "Search..."
 msgstr "검색..."
 
-#: ../../../lib/web/src/components/language-picker.tsx:175
+#: ../../../lib/web/src/components/language-picker.tsx:184
 msgid "Search…"
 msgstr "검색…"
 
@@ -1811,6 +1848,10 @@ msgstr "테마 환경설정 선택"
 msgid "Select..."
 msgstr "선택..."
 
+#: ../../../lib/web/src/lib/preference-utils.ts:133
+msgid "Serif"
+msgstr "세리프"
+
 #: src/routes/_authenticated/$projectId_.settings.tsx:370
 msgid "Server"
 msgstr "서버"
@@ -1868,6 +1909,11 @@ msgstr "한 줄 텍스트만"
 msgid "Skip to Main"
 msgstr "본문으로 건너뛰기"
 
+#: ../../../lib/web/src/lib/preference-utils.ts:103
+#: ../../../lib/web/src/lib/preference-utils.ts:121
+msgid "Small"
+msgstr "작게"
+
 #: src/components/view-options-bar.tsx:150
 msgid "Sort"
 msgstr "정렬"
@@ -1875,6 +1921,10 @@ msgstr "정렬"
 #: src/features/requests/components/request-panel.tsx:303
 msgid "Source"
 msgstr "소스"
+
+#: ../../../lib/web/src/lib/preference-utils.ts:94
+msgid "Spacious"
+msgstr "여유로운"
 
 #: src/routes/$projectId.diff.tsx:116
 msgid "Split"
@@ -1930,6 +1980,7 @@ msgstr "보기 1-9로 전환"
 
 #: ../../../lib/web/src/components/config-drawer.tsx:195
 #: ../../../lib/web/src/lib/preference-utils.ts:18
+#: ../../../lib/web/src/lib/preference-utils.ts:132
 msgid "System"
 msgstr "시스템"
 

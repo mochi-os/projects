@@ -400,7 +400,7 @@ msgstr "Pasirinkite tarp svetainės krypties iš kairės į dešinę arba iš de
 msgid "Choose between system preference, light mode, or dark mode"
 msgstr "Pasirinkite tarp sistemos nustatymo, šviesaus arba tamsaus režimo"
 
-#: ../../../lib/web/src/components/language-picker.tsx:167
+#: ../../../lib/web/src/components/language-picker.tsx:176
 msgid "Choose language"
 msgstr "Pasirinkite kalbą"
 
@@ -469,6 +469,10 @@ msgstr "Spalva"
 msgid "Columns group by"
 msgstr "Stulpelius grupuoti pagal"
 
+#: ../../../lib/web/src/lib/preference-utils.ts:93
+msgid "Comfortable"
+msgstr "Patogus"
+
 #: ../../../lib/web/src/components/coming-soon.tsx:9
 msgid "Coming Soon!"
 msgstr "Netrukus!"
@@ -483,6 +487,7 @@ msgid "Comments ({0})"
 msgstr "Komentarai ({0})"
 
 #: ../../../lib/web/src/components/config-drawer.tsx:302
+#: ../../../lib/web/src/lib/preference-utils.ts:92
 msgid "Compact"
 msgstr "Kompaktiškas"
 
@@ -688,7 +693,7 @@ msgstr "Dizainas, rašymas, komentavimas ir peržiūra"
 msgid "Details Panel"
 msgstr "Detalių skydelis"
 
-#: ../../../lib/web/src/components/language-picker.tsx:145
+#: ../../../lib/web/src/components/language-picker.tsx:154
 #: ../../../lib/web/src/components/timezone-select.tsx:43
 #: ../../../lib/web/src/components/timezone-select.tsx:80
 #: ../../../lib/web/src/lib/preference-utils.ts:25
@@ -752,6 +757,10 @@ msgstr "Vilkite stulpelius, kad pakeistumėte jų eiliškumą"
 msgid "Duplicates"
 msgstr "Dublikatai"
 
+#: ../../../lib/web/src/lib/preference-utils.ts:134
+msgid "Dyslexia-friendly"
+msgstr "Tinkama disleksijai"
+
 #: src/features/objects/components/comment-thread.tsx:217
 msgid "Edit"
 msgstr "Redaguoti"
@@ -801,6 +810,10 @@ msgstr "Išskleisti šoninę juostą"
 #: src/routes/_authenticated/$projectId/design.tsx:170
 msgid "Export design"
 msgstr "Eksportuoti dizainą"
+
+#: ../../../lib/web/src/lib/preference-utils.ts:124
+msgid "Extra large"
+msgstr "Labai didelis"
 
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:217
 msgid "Failed to add account"
@@ -988,6 +1001,14 @@ msgstr "Nuo"
 msgid "From file"
 msgstr "Iš failo"
 
+#: ../../../lib/web/src/lib/preference-utils.ts:91
+#: ../../../lib/web/src/lib/preference-utils.ts:101
+#: ../../../lib/web/src/lib/preference-utils.ts:112
+#: ../../../lib/web/src/lib/preference-utils.ts:120
+#: ../../../lib/web/src/lib/preference-utils.ts:131
+msgid "From theme"
+msgstr "Iš temos"
+
 #: ../../../lib/web/src/components/config-drawer.tsx:307
 msgid "Full layout"
 msgstr "Pilnas išdėstymas"
@@ -1074,6 +1095,11 @@ msgstr "Elemento informacija"
 msgid "Keyboard shortcuts"
 msgstr "Klaviatūros sparčiosios klavišų kombinacijos"
 
+#: ../../../lib/web/src/lib/preference-utils.ts:105
+#: ../../../lib/web/src/lib/preference-utils.ts:123
+msgid "Large"
+msgstr "Didelis"
+
 #: ../../../lib/web/src/components/config-drawer.tsx:273
 #: src/features/editor/components/edit-dialogs.tsx:304
 msgid "Layout"
@@ -1154,6 +1180,10 @@ msgstr "Rankinis"
 #: ../../../lib/web/src/components/notifications-dropdown.tsx:220
 msgid "Mark all as read"
 msgstr "Pažymėti visus kaip skaitytus"
+
+#: ../../../lib/web/src/lib/preference-utils.ts:104
+msgid "Medium"
+msgstr "Vidutinis"
 
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx:152
 msgid "Menu"
@@ -1293,7 +1323,7 @@ msgstr "Grupių nėra"
 msgid "No item types can be created yet. Create the required parent items first."
 msgstr "Kol kas negalima sukurti jokių elementų tipų. Pirma sukurkite reikalingus tėvinius elementus."
 
-#: ../../../lib/web/src/components/language-picker.tsx:177
+#: ../../../lib/web/src/components/language-picker.tsx:186
 msgid "No matches."
 msgstr "Atitikmenų nėra."
 
@@ -1353,6 +1383,8 @@ msgid "No views"
 msgstr "Peržiūrų nėra"
 
 #: ../../../lib/web/src/components/person-picker.tsx:349
+#: ../../../lib/web/src/lib/preference-utils.ts:102
+#: ../../../lib/web/src/lib/preference-utils.ts:113
 #: src/features/editor/components/edit-dialogs.tsx:357
 #: src/features/editor/components/edit-dialogs.tsx:380
 #: src/features/editor/components/edit-dialogs.tsx:383
@@ -1369,6 +1401,10 @@ msgstr "Peržiūrų nėra"
 #: src/features/objects/components/object-detail-panel.tsx:512
 msgid "None"
 msgstr "Nėra"
+
+#: ../../../lib/web/src/lib/preference-utils.ts:122
+msgid "Normal"
+msgstr "Normalus"
 
 #: src/features/requests/components/request-panel.tsx:228
 msgid "Not configured"
@@ -1399,8 +1435,9 @@ msgid "Oops! Page Not Found!"
 msgstr "Oi! Puslapis nerastas!"
 
 #: src/features/requests/components/request-panel.tsx:258
+msgctxt "state"
 msgid "Open"
-msgstr "Atidaryti"
+msgstr "Atvira"
 
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:150
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:151
@@ -1740,7 +1777,7 @@ msgstr "Ieškoti, stebėti ir rūšiuoti šį rodinį."
 msgid "Search..."
 msgstr "Ieškoti..."
 
-#: ../../../lib/web/src/components/language-picker.tsx:175
+#: ../../../lib/web/src/components/language-picker.tsx:184
 msgid "Search…"
 msgstr "Ieškoti…"
 
@@ -1811,6 +1848,10 @@ msgstr "Pasirinkite temos nustatymą"
 msgid "Select..."
 msgstr "Pasirinkite..."
 
+#: ../../../lib/web/src/lib/preference-utils.ts:133
+msgid "Serif"
+msgstr "Serifinis"
+
 #: src/routes/_authenticated/$projectId_.settings.tsx:370
 msgid "Server"
 msgstr "Serveris"
@@ -1868,6 +1909,11 @@ msgstr "Tik viena teksto eilutė"
 msgid "Skip to Main"
 msgstr "Pereiti prie pagrindinio"
 
+#: ../../../lib/web/src/lib/preference-utils.ts:103
+#: ../../../lib/web/src/lib/preference-utils.ts:121
+msgid "Small"
+msgstr "Mažas"
+
 #: src/components/view-options-bar.tsx:150
 msgid "Sort"
 msgstr "Rūšiuoti"
@@ -1875,6 +1921,10 @@ msgstr "Rūšiuoti"
 #: src/features/requests/components/request-panel.tsx:303
 msgid "Source"
 msgstr "Šaltinis"
+
+#: ../../../lib/web/src/lib/preference-utils.ts:94
+msgid "Spacious"
+msgstr "Erdvus"
 
 #: src/routes/$projectId.diff.tsx:116
 msgid "Split"
@@ -1930,6 +1980,7 @@ msgstr "Perjungti į rodinį 1-9"
 
 #: ../../../lib/web/src/components/config-drawer.tsx:195
 #: ../../../lib/web/src/lib/preference-utils.ts:18
+#: ../../../lib/web/src/lib/preference-utils.ts:132
 msgid "System"
 msgstr "Sistema"
 

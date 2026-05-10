@@ -400,7 +400,7 @@ msgstr "بین جهت چپ‌به‌راست یا راست‌به‌چپ سای�
 msgid "Choose between system preference, light mode, or dark mode"
 msgstr "بین ترجیح سیستم، حالت روشن یا حالت تیره انتخاب کنید"
 
-#: ../../../lib/web/src/components/language-picker.tsx:167
+#: ../../../lib/web/src/components/language-picker.tsx:176
 msgid "Choose language"
 msgstr "انتخاب زبان"
 
@@ -469,6 +469,10 @@ msgstr "رنگ"
 msgid "Columns group by"
 msgstr "گروه‌بندی ستون‌ها بر اساس"
 
+#: ../../../lib/web/src/lib/preference-utils.ts:93
+msgid "Comfortable"
+msgstr "راحت"
+
 #: ../../../lib/web/src/components/coming-soon.tsx:9
 msgid "Coming Soon!"
 msgstr "به‌زودی!"
@@ -483,6 +487,7 @@ msgid "Comments ({0})"
 msgstr "نظرها ({0})"
 
 #: ../../../lib/web/src/components/config-drawer.tsx:302
+#: ../../../lib/web/src/lib/preference-utils.ts:92
 msgid "Compact"
 msgstr "فشرده"
 
@@ -688,7 +693,7 @@ msgstr "طراحی، نوشتن، نظر دادن و دیدن"
 msgid "Details Panel"
 msgstr "پنل جزئیات"
 
-#: ../../../lib/web/src/components/language-picker.tsx:145
+#: ../../../lib/web/src/components/language-picker.tsx:154
 #: ../../../lib/web/src/components/timezone-select.tsx:43
 #: ../../../lib/web/src/components/timezone-select.tsx:80
 #: ../../../lib/web/src/lib/preference-utils.ts:25
@@ -752,6 +757,10 @@ msgstr "برای مرتب‌سازی مجدد، ستون‌ها را بکشید"
 msgid "Duplicates"
 msgstr "موارد تکراری"
 
+#: ../../../lib/web/src/lib/preference-utils.ts:134
+msgid "Dyslexia-friendly"
+msgstr "مناسب برای دیسلکسی"
+
 #: src/features/objects/components/comment-thread.tsx:217
 msgid "Edit"
 msgstr "ویرایش"
@@ -801,6 +810,10 @@ msgstr "گسترش نوار کناری"
 #: src/routes/_authenticated/$projectId/design.tsx:170
 msgid "Export design"
 msgstr "خروجی طراحی"
+
+#: ../../../lib/web/src/lib/preference-utils.ts:124
+msgid "Extra large"
+msgstr "خیلی بزرگ"
 
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:217
 msgid "Failed to add account"
@@ -988,6 +1001,14 @@ msgstr "از"
 msgid "From file"
 msgstr "از فایل"
 
+#: ../../../lib/web/src/lib/preference-utils.ts:91
+#: ../../../lib/web/src/lib/preference-utils.ts:101
+#: ../../../lib/web/src/lib/preference-utils.ts:112
+#: ../../../lib/web/src/lib/preference-utils.ts:120
+#: ../../../lib/web/src/lib/preference-utils.ts:131
+msgid "From theme"
+msgstr "از تم"
+
 #: ../../../lib/web/src/components/config-drawer.tsx:307
 msgid "Full layout"
 msgstr "چیدمان کامل"
@@ -1074,6 +1095,11 @@ msgstr "جزئیات مورد"
 msgid "Keyboard shortcuts"
 msgstr "میانبرهای صفحه‌کلید"
 
+#: ../../../lib/web/src/lib/preference-utils.ts:105
+#: ../../../lib/web/src/lib/preference-utils.ts:123
+msgid "Large"
+msgstr "بزرگ"
+
 #: ../../../lib/web/src/components/config-drawer.tsx:273
 #: src/features/editor/components/edit-dialogs.tsx:304
 msgid "Layout"
@@ -1154,6 +1180,10 @@ msgstr "دستی"
 #: ../../../lib/web/src/components/notifications-dropdown.tsx:220
 msgid "Mark all as read"
 msgstr "علامت‌گذاری همه به‌عنوان خوانده‌شده"
+
+#: ../../../lib/web/src/lib/preference-utils.ts:104
+msgid "Medium"
+msgstr "متوسط"
 
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx:152
 msgid "Menu"
@@ -1293,7 +1323,7 @@ msgstr "هیچ گروهی در دسترس نیست"
 msgid "No item types can be created yet. Create the required parent items first."
 msgstr "هیچ نوع آیتمی هنوز قابل ایجاد نیست. ابتدا آیتم‌های والد مورد نیاز را ایجاد کنید."
 
-#: ../../../lib/web/src/components/language-picker.tsx:177
+#: ../../../lib/web/src/components/language-picker.tsx:186
 msgid "No matches."
 msgstr "تطبیقی وجود ندارد."
 
@@ -1353,6 +1383,8 @@ msgid "No views"
 msgstr "بدون بازدید"
 
 #: ../../../lib/web/src/components/person-picker.tsx:349
+#: ../../../lib/web/src/lib/preference-utils.ts:102
+#: ../../../lib/web/src/lib/preference-utils.ts:113
 #: src/features/editor/components/edit-dialogs.tsx:357
 #: src/features/editor/components/edit-dialogs.tsx:380
 #: src/features/editor/components/edit-dialogs.tsx:383
@@ -1369,6 +1401,10 @@ msgstr "بدون بازدید"
 #: src/features/objects/components/object-detail-panel.tsx:512
 msgid "None"
 msgstr "هیچ‌کدام"
+
+#: ../../../lib/web/src/lib/preference-utils.ts:122
+msgid "Normal"
+msgstr "معمولی"
 
 #: src/features/requests/components/request-panel.tsx:228
 msgid "Not configured"
@@ -1399,8 +1435,9 @@ msgid "Oops! Page Not Found!"
 msgstr "اوه! صفحه پیدا نشد!"
 
 #: src/features/requests/components/request-panel.tsx:258
+msgctxt "state"
 msgid "Open"
-msgstr "باز کردن"
+msgstr "باز"
 
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:150
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:151
@@ -1740,7 +1777,7 @@ msgstr "این نما را جست‌وجو، تماشا و مرتب کنید."
 msgid "Search..."
 msgstr "جست‌وجو..."
 
-#: ../../../lib/web/src/components/language-picker.tsx:175
+#: ../../../lib/web/src/components/language-picker.tsx:184
 msgid "Search…"
 msgstr "جست‌وجو…"
 
@@ -1811,6 +1848,10 @@ msgstr "انتخاب ترجیح تم"
 msgid "Select..."
 msgstr "انتخاب..."
 
+#: ../../../lib/web/src/lib/preference-utils.ts:133
+msgid "Serif"
+msgstr "سریف"
+
 #: src/routes/_authenticated/$projectId_.settings.tsx:370
 msgid "Server"
 msgstr "سرور"
@@ -1868,6 +1909,11 @@ msgstr "فقط یک خط متن"
 msgid "Skip to Main"
 msgstr "پرش به محتوای اصلی"
 
+#: ../../../lib/web/src/lib/preference-utils.ts:103
+#: ../../../lib/web/src/lib/preference-utils.ts:121
+msgid "Small"
+msgstr "کوچک"
+
 #: src/components/view-options-bar.tsx:150
 msgid "Sort"
 msgstr "مرتب‌سازی"
@@ -1875,6 +1921,10 @@ msgstr "مرتب‌سازی"
 #: src/features/requests/components/request-panel.tsx:303
 msgid "Source"
 msgstr "منبع"
+
+#: ../../../lib/web/src/lib/preference-utils.ts:94
+msgid "Spacious"
+msgstr "گسترده"
 
 #: src/routes/$projectId.diff.tsx:116
 msgid "Split"
@@ -1930,6 +1980,7 @@ msgstr "تغییر به نمای ۱ تا ۹"
 
 #: ../../../lib/web/src/components/config-drawer.tsx:195
 #: ../../../lib/web/src/lib/preference-utils.ts:18
+#: ../../../lib/web/src/lib/preference-utils.ts:132
 msgid "System"
 msgstr "سیستم"
 

@@ -400,7 +400,7 @@ msgstr "Chọn hướng trang web từ trái sang phải hoặc phải sang trá
 msgid "Choose between system preference, light mode, or dark mode"
 msgstr "Chọn giữa theo hệ thống, chế độ sáng, hoặc chế độ tối"
 
-#: ../../../lib/web/src/components/language-picker.tsx:167
+#: ../../../lib/web/src/components/language-picker.tsx:176
 msgid "Choose language"
 msgstr "Chọn ngôn ngữ"
 
@@ -469,6 +469,10 @@ msgstr "Màu"
 msgid "Columns group by"
 msgstr "Cột nhóm theo"
 
+#: ../../../lib/web/src/lib/preference-utils.ts:93
+msgid "Comfortable"
+msgstr "Thoải mái"
+
 #: ../../../lib/web/src/components/coming-soon.tsx:9
 msgid "Coming Soon!"
 msgstr "Sắp ra mắt!"
@@ -483,6 +487,7 @@ msgid "Comments ({0})"
 msgstr "Bình luận ({0})"
 
 #: ../../../lib/web/src/components/config-drawer.tsx:302
+#: ../../../lib/web/src/lib/preference-utils.ts:92
 msgid "Compact"
 msgstr "Gọn"
 
@@ -688,7 +693,7 @@ msgstr "Thiết kế, viết, bình luận và xem"
 msgid "Details Panel"
 msgstr "Bảng chi tiết"
 
-#: ../../../lib/web/src/components/language-picker.tsx:145
+#: ../../../lib/web/src/components/language-picker.tsx:154
 #: ../../../lib/web/src/components/timezone-select.tsx:43
 #: ../../../lib/web/src/components/timezone-select.tsx:80
 #: ../../../lib/web/src/lib/preference-utils.ts:25
@@ -752,6 +757,10 @@ msgstr "Kéo các cột để sắp xếp lại"
 msgid "Duplicates"
 msgstr "Trùng lặp"
 
+#: ../../../lib/web/src/lib/preference-utils.ts:134
+msgid "Dyslexia-friendly"
+msgstr "Thân thiện với chứng khó đọc"
+
 #: src/features/objects/components/comment-thread.tsx:217
 msgid "Edit"
 msgstr "Sửa"
@@ -801,6 +810,10 @@ msgstr "Mở rộng thanh bên"
 #: src/routes/_authenticated/$projectId/design.tsx:170
 msgid "Export design"
 msgstr "Xuất thiết kế"
+
+#: ../../../lib/web/src/lib/preference-utils.ts:124
+msgid "Extra large"
+msgstr "Rất lớn"
 
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:217
 msgid "Failed to add account"
@@ -988,6 +1001,14 @@ msgstr "Từ"
 msgid "From file"
 msgstr "Từ tệp"
 
+#: ../../../lib/web/src/lib/preference-utils.ts:91
+#: ../../../lib/web/src/lib/preference-utils.ts:101
+#: ../../../lib/web/src/lib/preference-utils.ts:112
+#: ../../../lib/web/src/lib/preference-utils.ts:120
+#: ../../../lib/web/src/lib/preference-utils.ts:131
+msgid "From theme"
+msgstr "Từ giao diện"
+
 #: ../../../lib/web/src/components/config-drawer.tsx:307
 msgid "Full layout"
 msgstr "Bố cục đầy đủ"
@@ -1074,6 +1095,11 @@ msgstr "Chi tiết mục"
 msgid "Keyboard shortcuts"
 msgstr "Phím tắt"
 
+#: ../../../lib/web/src/lib/preference-utils.ts:105
+#: ../../../lib/web/src/lib/preference-utils.ts:123
+msgid "Large"
+msgstr "Lớn"
+
 #: ../../../lib/web/src/components/config-drawer.tsx:273
 #: src/features/editor/components/edit-dialogs.tsx:304
 msgid "Layout"
@@ -1154,6 +1180,10 @@ msgstr "Thủ công"
 #: ../../../lib/web/src/components/notifications-dropdown.tsx:220
 msgid "Mark all as read"
 msgstr "Đánh dấu tất cả là đã đọc"
+
+#: ../../../lib/web/src/lib/preference-utils.ts:104
+msgid "Medium"
+msgstr "Vừa"
 
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx:152
 msgid "Menu"
@@ -1293,7 +1323,7 @@ msgstr "Không có nhóm nào"
 msgid "No item types can be created yet. Create the required parent items first."
 msgstr "Chưa thể tạo loại mục nào. Hãy tạo các mục cha cần thiết trước."
 
-#: ../../../lib/web/src/components/language-picker.tsx:177
+#: ../../../lib/web/src/components/language-picker.tsx:186
 msgid "No matches."
 msgstr "Không có kết quả khớp."
 
@@ -1353,6 +1383,8 @@ msgid "No views"
 msgstr "Không có lượt xem"
 
 #: ../../../lib/web/src/components/person-picker.tsx:349
+#: ../../../lib/web/src/lib/preference-utils.ts:102
+#: ../../../lib/web/src/lib/preference-utils.ts:113
 #: src/features/editor/components/edit-dialogs.tsx:357
 #: src/features/editor/components/edit-dialogs.tsx:380
 #: src/features/editor/components/edit-dialogs.tsx:383
@@ -1369,6 +1401,10 @@ msgstr "Không có lượt xem"
 #: src/features/objects/components/object-detail-panel.tsx:512
 msgid "None"
 msgstr "Không có"
+
+#: ../../../lib/web/src/lib/preference-utils.ts:122
+msgid "Normal"
+msgstr "Thường"
 
 #: src/features/requests/components/request-panel.tsx:228
 msgid "Not configured"
@@ -1399,8 +1435,9 @@ msgid "Oops! Page Not Found!"
 msgstr "Rất tiếc! Không tìm thấy trang!"
 
 #: src/features/requests/components/request-panel.tsx:258
+msgctxt "state"
 msgid "Open"
-msgstr "Mở"
+msgstr "Đang mở"
 
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:150
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:151
@@ -1740,7 +1777,7 @@ msgstr "Tìm kiếm, theo dõi và sắp xếp chế độ xem này."
 msgid "Search..."
 msgstr "Tìm kiếm..."
 
-#: ../../../lib/web/src/components/language-picker.tsx:175
+#: ../../../lib/web/src/components/language-picker.tsx:184
 msgid "Search…"
 msgstr "Tìm kiếm…"
 
@@ -1811,6 +1848,10 @@ msgstr "Chọn tùy chọn giao diện"
 msgid "Select..."
 msgstr "Chọn..."
 
+#: ../../../lib/web/src/lib/preference-utils.ts:133
+msgid "Serif"
+msgstr "Có chân"
+
 #: src/routes/_authenticated/$projectId_.settings.tsx:370
 msgid "Server"
 msgstr "Máy chủ"
@@ -1868,6 +1909,11 @@ msgstr "Chỉ một dòng văn bản"
 msgid "Skip to Main"
 msgstr "Chuyển đến nội dung chính"
 
+#: ../../../lib/web/src/lib/preference-utils.ts:103
+#: ../../../lib/web/src/lib/preference-utils.ts:121
+msgid "Small"
+msgstr "Nhỏ"
+
 #: src/components/view-options-bar.tsx:150
 msgid "Sort"
 msgstr "Sắp xếp"
@@ -1875,6 +1921,10 @@ msgstr "Sắp xếp"
 #: src/features/requests/components/request-panel.tsx:303
 msgid "Source"
 msgstr "Nguồn"
+
+#: ../../../lib/web/src/lib/preference-utils.ts:94
+msgid "Spacious"
+msgstr "Rộng rãi"
 
 #: src/routes/$projectId.diff.tsx:116
 msgid "Split"
@@ -1930,6 +1980,7 @@ msgstr "Chuyển sang chế độ xem 1-9"
 
 #: ../../../lib/web/src/components/config-drawer.tsx:195
 #: ../../../lib/web/src/lib/preference-utils.ts:18
+#: ../../../lib/web/src/lib/preference-utils.ts:132
 msgid "System"
 msgstr "Hệ thống"
 

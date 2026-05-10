@@ -400,7 +400,7 @@ msgstr "Valitse vasemmalta oikealle tai oikealta vasemmalle -sivun suunta"
 msgid "Choose between system preference, light mode, or dark mode"
 msgstr "Valitse järjestelmän asetus, vaalea tila tai tumma tila"
 
-#: ../../../lib/web/src/components/language-picker.tsx:167
+#: ../../../lib/web/src/components/language-picker.tsx:176
 msgid "Choose language"
 msgstr "Valitse kieli"
 
@@ -469,6 +469,10 @@ msgstr "Väri"
 msgid "Columns group by"
 msgstr "Sarakkeiden ryhmittely"
 
+#: ../../../lib/web/src/lib/preference-utils.ts:93
+msgid "Comfortable"
+msgstr "Mukava"
+
 #: ../../../lib/web/src/components/coming-soon.tsx:9
 msgid "Coming Soon!"
 msgstr "Tulossa pian!"
@@ -483,6 +487,7 @@ msgid "Comments ({0})"
 msgstr "Kommentit ({0})"
 
 #: ../../../lib/web/src/components/config-drawer.tsx:302
+#: ../../../lib/web/src/lib/preference-utils.ts:92
 msgid "Compact"
 msgstr "Tiivis"
 
@@ -688,7 +693,7 @@ msgstr "Suunnittele, kirjoita, kommentoi ja katsele"
 msgid "Details Panel"
 msgstr "Tietopaneeli"
 
-#: ../../../lib/web/src/components/language-picker.tsx:145
+#: ../../../lib/web/src/components/language-picker.tsx:154
 #: ../../../lib/web/src/components/timezone-select.tsx:43
 #: ../../../lib/web/src/components/timezone-select.tsx:80
 #: ../../../lib/web/src/lib/preference-utils.ts:25
@@ -752,6 +757,10 @@ msgstr "Järjestä sarakkeet uudelleen vetämällä niitä"
 msgid "Duplicates"
 msgstr "Duplikoi"
 
+#: ../../../lib/web/src/lib/preference-utils.ts:134
+msgid "Dyslexia-friendly"
+msgstr "Lukihäiriöystävällinen"
+
 #: src/features/objects/components/comment-thread.tsx:217
 msgid "Edit"
 msgstr "Muokkaa"
@@ -801,6 +810,10 @@ msgstr "Laajenna sivupalkki"
 #: src/routes/_authenticated/$projectId/design.tsx:170
 msgid "Export design"
 msgstr "Vie rakenne"
+
+#: ../../../lib/web/src/lib/preference-utils.ts:124
+msgid "Extra large"
+msgstr "Erittäin suuri"
 
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:217
 msgid "Failed to add account"
@@ -988,6 +1001,14 @@ msgstr "Lähettäjä"
 msgid "From file"
 msgstr "Tiedostosta"
 
+#: ../../../lib/web/src/lib/preference-utils.ts:91
+#: ../../../lib/web/src/lib/preference-utils.ts:101
+#: ../../../lib/web/src/lib/preference-utils.ts:112
+#: ../../../lib/web/src/lib/preference-utils.ts:120
+#: ../../../lib/web/src/lib/preference-utils.ts:131
+msgid "From theme"
+msgstr "Teemasta"
+
 #: ../../../lib/web/src/components/config-drawer.tsx:307
 msgid "Full layout"
 msgstr "Täysi asettelu"
@@ -1074,6 +1095,11 @@ msgstr "Kohteen tiedot"
 msgid "Keyboard shortcuts"
 msgstr "Pikanäppäimet"
 
+#: ../../../lib/web/src/lib/preference-utils.ts:105
+#: ../../../lib/web/src/lib/preference-utils.ts:123
+msgid "Large"
+msgstr "Suuri"
+
 #: ../../../lib/web/src/components/config-drawer.tsx:273
 #: src/features/editor/components/edit-dialogs.tsx:304
 msgid "Layout"
@@ -1154,6 +1180,10 @@ msgstr "Manuaalinen"
 #: ../../../lib/web/src/components/notifications-dropdown.tsx:220
 msgid "Mark all as read"
 msgstr "Merkitse kaikki luetuiksi"
+
+#: ../../../lib/web/src/lib/preference-utils.ts:104
+msgid "Medium"
+msgstr "Keskikoko"
 
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx:152
 msgid "Menu"
@@ -1293,7 +1323,7 @@ msgstr "Ei saatavilla olevia ryhmiä"
 msgid "No item types can be created yet. Create the required parent items first."
 msgstr "Mitään kohdetyyppiä ei voi vielä luoda. Luo ensin vaaditut yläkohteet."
 
-#: ../../../lib/web/src/components/language-picker.tsx:177
+#: ../../../lib/web/src/components/language-picker.tsx:186
 msgid "No matches."
 msgstr "Ei osumia."
 
@@ -1353,6 +1383,8 @@ msgid "No views"
 msgstr "Ei näkymiä"
 
 #: ../../../lib/web/src/components/person-picker.tsx:349
+#: ../../../lib/web/src/lib/preference-utils.ts:102
+#: ../../../lib/web/src/lib/preference-utils.ts:113
 #: src/features/editor/components/edit-dialogs.tsx:357
 #: src/features/editor/components/edit-dialogs.tsx:380
 #: src/features/editor/components/edit-dialogs.tsx:383
@@ -1369,6 +1401,10 @@ msgstr "Ei näkymiä"
 #: src/features/objects/components/object-detail-panel.tsx:512
 msgid "None"
 msgstr "Ei mitään"
+
+#: ../../../lib/web/src/lib/preference-utils.ts:122
+msgid "Normal"
+msgstr "Normaali"
 
 #: src/features/requests/components/request-panel.tsx:228
 msgid "Not configured"
@@ -1399,8 +1435,9 @@ msgid "Oops! Page Not Found!"
 msgstr "Hups! Sivua ei löytynyt!"
 
 #: src/features/requests/components/request-panel.tsx:258
+msgctxt "state"
 msgid "Open"
-msgstr "Avaa"
+msgstr "Avoin"
 
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:150
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:151
@@ -1740,7 +1777,7 @@ msgstr "Hae, seuraa ja lajittele tätä näkymää."
 msgid "Search..."
 msgstr "Hae..."
 
-#: ../../../lib/web/src/components/language-picker.tsx:175
+#: ../../../lib/web/src/components/language-picker.tsx:184
 msgid "Search…"
 msgstr "Hae…"
 
@@ -1811,6 +1848,10 @@ msgstr "Valitse teeman asetus"
 msgid "Select..."
 msgstr "Valitse..."
 
+#: ../../../lib/web/src/lib/preference-utils.ts:133
+msgid "Serif"
+msgstr "Pääteviivallinen"
+
 #: src/routes/_authenticated/$projectId_.settings.tsx:370
 msgid "Server"
 msgstr "Palvelin"
@@ -1868,6 +1909,11 @@ msgstr "Vain yksi tekstirivi"
 msgid "Skip to Main"
 msgstr "Siirry pääsisältöön"
 
+#: ../../../lib/web/src/lib/preference-utils.ts:103
+#: ../../../lib/web/src/lib/preference-utils.ts:121
+msgid "Small"
+msgstr "Pieni"
+
 #: src/components/view-options-bar.tsx:150
 msgid "Sort"
 msgstr "Lajittele"
@@ -1875,6 +1921,10 @@ msgstr "Lajittele"
 #: src/features/requests/components/request-panel.tsx:303
 msgid "Source"
 msgstr "Lähde"
+
+#: ../../../lib/web/src/lib/preference-utils.ts:94
+msgid "Spacious"
+msgstr "Tilava"
 
 #: src/routes/$projectId.diff.tsx:116
 msgid "Split"
@@ -1930,6 +1980,7 @@ msgstr "Vaihda näkymään 1-9"
 
 #: ../../../lib/web/src/components/config-drawer.tsx:195
 #: ../../../lib/web/src/lib/preference-utils.ts:18
+#: ../../../lib/web/src/lib/preference-utils.ts:132
 msgid "System"
 msgstr "Järjestelmä"
 

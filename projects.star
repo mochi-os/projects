@@ -7391,3 +7391,233 @@ def do_view_reorder(project_id, project, params):
 	broadcast_event(project_id, "view/reorder", {"project": project_id, "order": order})
 	return {"success": True}
 
+
+# Internal: subscribe `user` to project `project_id`. Idempotent.
+# Returns {"fingerprint": fp, "already_subscribed": bool} or {"error": key, "code": N}.
+def _subscribe_to_project(user, project_id, server):
+	user_id = user.identity.id
+
+	if not mochi.text.valid(project_id, "entity"):
+		return {"error": "errors.invalid_project_id", "code": 400}
+
+	existing = mochi.db.row("select id, owner from projects where id=?", project_id)
+	if existing:
+		if existing["owner"] == 1:
+			return {"error": "errors.you_own_this_project", "code": 400}
+		fp = mochi.entity.fingerprint(project_id) or ""
+		return {"fingerprint": fp, "already_subscribed": True}
+
+	schema = None
+	project_name = ""
+	project_desc = ""
+	project_prefix = "PROJ"
+	if server:
+		peer = mochi.remote.peer(server)
+		if not peer:
+			return {"error": "errors.unable_to_connect_to_server", "code": 502}
+		response = mochi.remote.request(project_id, "projects", "info", {"project": project_id}, peer)
+		if response.get("error"):
+			return {"error": response["error"], "code": response.get("code", 404)}
+		project_name = response.get("name", "")
+		project_desc = response.get("description", "")
+		project_prefix = response.get("prefix", "PROJ")
+		schema = mochi.remote.request(project_id, "projects", "schema", {}, peer)
+	else:
+		directory = mochi.directory.get(project_id)
+		if directory == None or len(directory) == 0:
+			return {"error": "errors.unable_to_find_project_in_directory", "code": 404}
+		project_name = directory.get("name", "")
+		server = directory.get("location", "")
+		if server:
+			peer = mochi.remote.peer(server)
+			if peer:
+				response = mochi.remote.request(project_id, "projects", "info", {"project": project_id}, peer)
+				if response and not response.get("error"):
+					project_name = response.get("name", project_name)
+					project_desc = response.get("description", "")
+					project_prefix = response.get("prefix", "PROJ")
+				schema = mochi.remote.request(project_id, "projects", "schema", {}, peer)
+
+	now = mochi.time.now()
+	fp = mochi.entity.fingerprint(project_id) or ""
+
+	mochi.db.execute(
+		"insert into projects (id, name, description, prefix, counter, owner, server, fingerprint, created, updated) values (?, ?, ?, ?, 0, 0, ?, ?, ?, ?)",
+		project_id, project_name, project_desc, project_prefix, server or "", fp, now, now
+	)
+
+	if schema and not schema.get("error"):
+		insert_schema(project_id, schema)
+
+	mochi.message.send(p2p_headers(user_id, project_id, "subscribe"), {"name": user.identity.name})
+
+	return {"fingerprint": fp, "already_subscribed": False}
+
+
+# Internal: forward an action to the project owner via P2P. Used by the
+# subscriber-side helpers below; mirrors `forward_to_owner` but takes raw
+# args so it can be called from event handlers too.
+def _forward_to_owner(user, project_id, action_name, params):
+	params["_user"] = user.identity.id
+	params["_name"] = user.identity.name
+	server_row = mochi.db.row("select server from projects where id=?", project_id)
+	server = server_row["server"] if server_row else ""
+	peer = mochi.remote.peer(server) if server else None
+	result = mochi.remote.request(project_id, "projects", "request", {
+		"action": action_name,
+		"params": params,
+	}, peer)
+	if not result:
+		return {"error": "errors.could_not_reach_project_owner", "code": 502}
+	if result.get("error"):
+		return {"error": result["error"], "code": result.get("code", 500)}
+	return {"data": result}
+
+
+# Internal: create an object in `project_id`, subscriber-side. Optional `values`
+# dict sets additional field values via per-field "value/set" forwards after
+# creation (used by help to set category="bug" / "feature" on tickets).
+# Returns {"id", "number", "readable", "fingerprint"} or {"error", "code"}.
+def _create_project_object(user, project_id, obj_class, title, parent="", values={}):
+	if len(title) > 500:
+		return {"error": "errors.title_too_long", "code": 400}
+
+	project = get_project(project_id)
+	if not project:
+		return {"error": "errors.project_not_found", "code": 404}
+	if project["owner"] == 1:
+		return {"error": "errors.help_for_remote_project_only", "code": 400}
+
+	title_field_row = mochi.db.row("select title from classes where project=? and id=?", project_id, obj_class)
+	title_field = title_field_row["title"] if title_field_row else ""
+
+	forward_result = _forward_to_owner(user, project_id, "object/create", {
+		"project": project_id, "class": obj_class, "title": title, "parent": parent,
+	})
+	if "error" in forward_result:
+		return {"error": forward_result["error"], "code": forward_result["code"]}
+
+	d = forward_result.get("data", {})
+	if not d.get("id"):
+		return {"error": "errors.no_object_returned", "code": 502}
+
+	now = mochi.time.now()
+	rank = d.get("rank", 0)
+	created = d.get("created") or now
+	updated = d.get("updated") or now
+	mochi.db.execute(
+		"insert or ignore into objects (id, project, class, number, parent, rank, created, updated) values (?, ?, ?, ?, ?, ?, ?, ?)",
+		d["id"], project_id, obj_class, d.get("number", 0), parent, rank, created, updated
+	)
+	if title and title_field:
+		mochi.db.execute("insert or replace into \"values\" (object, field, value) values (?, ?, ?)", d["id"], title_field, title)
+	mochi.db.execute("update projects set counter=counter+1, updated=? where id=?", now, project_id)
+	mochi.db.execute("insert or ignore into watchers (object, user, created) values (?, ?, ?)", d["id"], user.identity.id, now)
+
+	# Optional follow-up values (e.g. category=bug/feature). One forward per
+	# field. Failures are non-fatal — the ticket still got created; the field
+	# stays at its default and the user can adjust it later.
+	for field_id, field_value in values.items():
+		if not field_value:
+			continue
+		set_result = _forward_to_owner(user, project_id, "value/set", {
+			"project": project_id, "object": d["id"],
+			"field": field_id, "value": field_value,
+		})
+		if "error" not in set_result:
+			mochi.db.execute(
+				"insert or replace into \"values\" (object, field, value) values (?, ?, ?)",
+				d["id"], field_id, field_value
+			)
+
+	return {
+		"id": d["id"],
+		"number": d.get("number", 0),
+		"readable": d.get("readable", ""),
+		"fingerprint": mochi.entity.fingerprint(project_id) or "",
+	}
+
+
+# Internal: post a comment on an object on behalf of `user`, subscriber-side.
+# Returns {"id"} or {"error", "code"}.
+def _create_project_comment(user, project_id, object_id, content):
+	if not content or not content.strip():
+		return {"error": "errors.content_is_required", "code": 400}
+	if len(content) > 50000:
+		return {"error": "errors.content_too_long", "code": 400}
+
+	if not mochi.db.row("select id from objects where id=? and project=?", object_id, project_id):
+		return {"error": "errors.object_not_found", "code": 404}
+
+	user_id = user.identity.id
+	user_name = user.identity.name
+	comment_id = mochi.uid()
+	now = mochi.time.now()
+
+	mochi.db.execute(
+		"insert into comments (id, object, parent, author, name, content, created, edited) values (?, ?, ?, ?, ?, ?, ?, ?)",
+		comment_id, object_id, "", user_id, user_name, content.strip(), now, 0
+	)
+	mochi.message.send(
+		{"from": user_id, "to": project_id, "service": "projects", "event": "comment/submit"},
+		{"id": comment_id, "object": object_id, "parent": "", "content": content.strip(), "name": user_name}
+	)
+	mochi.db.execute(
+		"insert or ignore into watchers (object, user, created) values (?, ?, ?)",
+		object_id, user_id, now)
+
+	return {"id": comment_id}
+
+
+# Service event: another local app asks us to subscribe the user to a project.
+def event_app_subscribe(e):
+	project_id = e.content("project") or ""
+	result = _subscribe_to_project(e.user, project_id, "")
+	if "error" in result:
+		e.write({"error": result["error"], "code": result["code"]})
+		return
+	e.write({
+		"fingerprint": result.get("fingerprint", ""),
+		"already_subscribed": result.get("already_subscribed", False),
+	})
+
+
+# Service event: another local app asks us to create an object on behalf of
+# the user. Subscribes first as a safety net (idempotent), creates the object
+# via the subscriber-side path, optionally sets per-field values (e.g.
+# category), and (if `body` is provided) appends a comment carrying the
+# description so it lands in the ticket discussion.
+#
+# Event payload:
+#   project: project entity ID
+#   class:   object class (e.g. "ticket")
+#   title:   object title
+#   body:    optional description (becomes a comment)
+#   values:  optional dict of field_id → value to set after creation
+def event_app_object_create(e):
+	project_id = e.content("project") or ""
+	obj_class = e.content("class") or ""
+	title = e.content("title") or ""
+	body = e.content("body") or ""
+	values = e.content("values") or {}
+
+	sub_result = _subscribe_to_project(e.user, project_id, "")
+	if "error" in sub_result:
+		e.write({"error": sub_result["error"], "code": sub_result["code"]})
+		return
+
+	obj_result = _create_project_object(e.user, project_id, obj_class, title, "", values)
+	if "error" in obj_result:
+		e.write({"error": obj_result["error"], "code": obj_result["code"]})
+		return
+
+	if body:
+		_create_project_comment(e.user, project_id, obj_result["id"], body)
+
+	e.write({
+		"id": obj_result["id"],
+		"number": obj_result["number"],
+		"readable": obj_result["readable"],
+		"fingerprint": obj_result["fingerprint"],
+	})
+

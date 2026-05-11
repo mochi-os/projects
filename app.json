@@ -178,6 +178,9 @@
 		"request/delete": {"function": "event_request_delete"},
 
 		"request": {"function": "event_request"},
-		"access/check": {"function": "event_access_check"}
+		"access/check": {"function": "event_access_check"},
+
+		"app/subscribe": {"function": "event_app_subscribe", "apps": ["help"]},
+		"app/object/create": {"function": "event_app_object_create", "apps": ["help"]}
 	}
 }

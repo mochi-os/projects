@@ -39,8 +39,8 @@ msgid "{0} files changed"
 msgstr "{0} файл өөрчлөгдсөн"
 
 #. placeholder {0}: project.project.name
-#: src/routes/_authenticated/$projectId_.settings.tsx:124
-#: src/routes/_authenticated/$projectId_.settings.tsx:239
+#: src/routes/_authenticated/$projectId_.settings.tsx:122
+#: src/routes/_authenticated/$projectId_.settings.tsx:221
 msgid "{0} settings"
 msgstr "{0}-н тохиргоо"
 
@@ -81,19 +81,19 @@ msgstr "Хандалт хориотой"
 msgid "Access level"
 msgstr "Хандалтын түвшин"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:699
+#: src/routes/_authenticated/$projectId_.settings.tsx:639
 msgid "Access level updated"
 msgstr "Хандалтын түвшин шинэчлэгдсэн"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:708
+#: src/routes/_authenticated/$projectId_.settings.tsx:648
 msgid "Access Management"
 msgstr "Хандалтын удирдлага"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:688
+#: src/routes/_authenticated/$projectId_.settings.tsx:628
 msgid "Access removed"
 msgstr "Хандалтыг хассан"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:676
+#: src/routes/_authenticated/$projectId_.settings.tsx:616
 msgid "Access set for {subjectName}"
 msgstr "{subjectName}-д хандалт тохируулсан"
 
@@ -156,8 +156,8 @@ msgstr "Жагсаалтын зүйл нэмэх"
 msgid "Add class"
 msgstr "Анги нэмэх"
 
-#: src/routes/_authenticated/$projectId/index.tsx:808
-#: src/routes/_authenticated/$projectId/index.tsx:966
+#: src/routes/_authenticated/$projectId/index.tsx:829
+#: src/routes/_authenticated/$projectId/index.tsx:996
 msgid "Add column"
 msgstr "Багана нэмэх"
 
@@ -185,7 +185,7 @@ msgstr "Шинэ бүртгэл нэмэх"
 msgid "Add option"
 msgstr "Сонголт нэмэх"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:715
+#: src/routes/_authenticated/$projectId_.settings.tsx:655
 msgid "Add Rule"
 msgstr "Дүрэм нэмэх"
 
@@ -293,16 +293,16 @@ msgstr "Буцах"
 msgid "Back to Home"
 msgstr "Нүүр хуудас руу буцах"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:186
-#: src/routes/_authenticated/$projectId_.settings.tsx:209
-#: src/routes/_authenticated/$projectId_.settings.tsx:241
+#: src/routes/_authenticated/$projectId_.settings.tsx:168
+#: src/routes/_authenticated/$projectId_.settings.tsx:191
+#: src/routes/_authenticated/$projectId_.settings.tsx:223
 #: src/routes/_authenticated/$projectId/design.tsx:130
 #: src/routes/_authenticated/$projectId/design.tsx:155
 msgid "Back to project"
 msgstr "Төсөл рүү буцах"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:64
-#: src/routes/_authenticated/$projectId/index.tsx:90
+#: src/routes/_authenticated/$projectId/index.tsx:93
 msgid "Back to projects"
 msgstr "Төслүүд рүү буцах"
 
@@ -347,7 +347,7 @@ msgstr "Хүүхэд байж болох"
 #: src/features/objects/components/comment-thread.tsx:168
 #: src/features/projects/components/create-project-dialog.tsx:208
 #: src/routes/_authenticated/$projectId/design.tsx:340
-#: src/routes/_authenticated/$projectId/index.tsx:860
+#: src/routes/_authenticated/$projectId/index.tsx:890
 msgid "Cancel"
 msgstr "Цуцлах"
 
@@ -400,7 +400,7 @@ msgstr "Зүүнээс баруун эсвэл баруунаас зүүн чи�
 msgid "Choose between system preference, light mode, or dark mode"
 msgstr "Системийн тохиргоо, гэрэл горим, эсвэл харанхуй горимоос сонгоно"
 
-#: ../../../lib/web/src/components/language-picker.tsx:176
+#: ../../../lib/web/src/components/language-picker.tsx:174
 msgid "Choose language"
 msgstr "Хэл сонгох"
 
@@ -477,7 +477,7 @@ msgstr "Тав тухтай"
 msgid "Coming Soon!"
 msgstr "Удахгүй!"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:608
+#: src/routes/_authenticated/$projectId_.settings.tsx:548
 msgid "Comment and view"
 msgstr "Сэтгэгдэл болон харах"
 
@@ -520,7 +520,7 @@ msgstr "Контекст мэдээлэл ба дэлгэрэнгүй."
 msgid "Continue"
 msgstr "Үргэлжлүүлэх"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:709
+#: src/routes/_authenticated/$projectId_.settings.tsx:649
 msgid "Control who can view and interact with this project"
 msgstr "Энэ төслийг хэн харах, ашиглах боломжтойг хянах"
 
@@ -528,9 +528,13 @@ msgstr "Энэ төслийг хэн харах, ашиглах боломжто
 msgid "Copy"
 msgstr "Хуулах"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:329
+#: src/routes/_authenticated/$projectId_.settings.tsx:299
 msgid "Core information about this project"
 msgstr "Энэ төслийн үндсэн мэдээлэл"
+
+#: ../../../lib/web/src/features/document/document-page.tsx:81
+msgid "Could not load this document. Please try again later."
+msgstr "Энэ баримт бичгийг ачаалж чадсангүй. Дараа дахин оролдоно уу."
 
 #: src/features/board/components/board-column.tsx:530
 #: src/features/board/components/board-column.tsx:668
@@ -607,7 +611,7 @@ msgstr "Үндсэн эрэмбэлэлт"
 #: src/features/objects/components/object-attachments.tsx:233
 #: src/features/objects/components/object-detail-panel.tsx:601
 #: src/features/requests/components/request-panel.tsx:129
-#: src/routes/_authenticated/$projectId_.settings.tsx:409
+#: src/routes/_authenticated/$projectId_.settings.tsx:359
 msgid "Delete"
 msgstr "Устгах"
 
@@ -653,12 +657,12 @@ msgstr "Сонголтыг устгах"
 msgid "Delete option {0}"
 msgstr "{0} сонголтыг устгах"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:399
-#: src/routes/_authenticated/$projectId_.settings.tsx:430
+#: src/routes/_authenticated/$projectId_.settings.tsx:349
+#: src/routes/_authenticated/$projectId_.settings.tsx:370
 msgid "Delete project"
 msgstr "Төсөл устгах"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:428
+#: src/routes/_authenticated/$projectId_.settings.tsx:368
 msgid "Delete project?"
 msgstr "Төсөл устгах уу?"
 
@@ -671,13 +675,13 @@ msgid "Desc"
 msgstr "Буурах"
 
 #: src/features/requests/components/request-panel.tsx:284
-#: src/routes/_authenticated/$projectId_.settings.tsx:341
+#: src/routes/_authenticated/$projectId_.settings.tsx:311
 msgid "Description"
 msgstr "Тайлбар"
 
 #: src/routes/_authenticated/$projectId/design.tsx:60
 #: src/routes/_authenticated/$projectId/design.tsx:128
-#: src/routes/_authenticated/$projectId/index.tsx:823
+#: src/routes/_authenticated/$projectId/index.tsx:844
 msgid "Design"
 msgstr "Дизайн"
 
@@ -685,7 +689,7 @@ msgstr "Дизайн"
 msgid "Design imported"
 msgstr "Дизайн оруулсан"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:606
+#: src/routes/_authenticated/$projectId_.settings.tsx:546
 msgid "Design, write, comment, and view"
 msgstr "Дизайн, бичих, сэтгэгдэл, харах"
 
@@ -693,7 +697,7 @@ msgstr "Дизайн, бичих, сэтгэгдэл, харах"
 msgid "Details Panel"
 msgstr "Дэлгэрэнгүй самбар"
 
-#: ../../../lib/web/src/components/language-picker.tsx:154
+#: ../../../lib/web/src/components/language-picker.tsx:152
 #: ../../../lib/web/src/components/timezone-select.tsx:43
 #: ../../../lib/web/src/components/timezone-select.tsx:80
 #: ../../../lib/web/src/lib/preference-utils.ts:25
@@ -716,8 +720,8 @@ msgstr "Diff: {source} → {target}"
 msgid "Direction"
 msgstr "Чиглэл"
 
-#: src/routes/_authenticated/$projectId/index.tsx:882
-#: src/routes/_authenticated/$projectId/index.tsx:883
+#: src/routes/_authenticated/$projectId/index.tsx:912
+#: src/routes/_authenticated/$projectId/index.tsx:913
 msgid "Dismiss board hint"
 msgstr "Самбарын зөвлөмжийг хаах"
 
@@ -732,7 +736,7 @@ msgstr "Гар утасны хажуугийн самбарыг харуулна
 msgid "Done"
 msgstr "Дууссан"
 
-#: src/routes/_authenticated/$projectId/index.tsx:875
+#: src/routes/_authenticated/$projectId/index.tsx:905
 msgid "Double click on a column to add content"
 msgstr "Агуулга нэмэхийн тулд баганан дээр давхар товшино уу"
 
@@ -749,7 +753,7 @@ msgstr "Эхлээд нөөцлөлт татаж авах"
 msgid "Draft"
 msgstr "Ноорог"
 
-#: src/routes/_authenticated/$projectId/index.tsx:856
+#: src/routes/_authenticated/$projectId/index.tsx:886
 msgid "Drag columns to re-order them"
 msgstr "Багануудыг дарааллыг өөрчлөхийн тулд чирнэ үү"
 
@@ -795,7 +799,7 @@ msgstr "Сонгосон карт засах"
 msgid "Edit view"
 msgstr "Харагдац засах"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:356
+#: src/routes/_authenticated/$projectId_.settings.tsx:326
 msgid "Entity ID"
 msgstr "Entity ID"
 
@@ -859,7 +863,7 @@ msgstr "Сэтгэгдэл устгаж чадсангүй"
 msgid "Failed to delete link"
 msgstr "Холбоос устгаж чадсангүй"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:137
+#: src/routes/_authenticated/$projectId_.settings.tsx:135
 msgid "Failed to delete project"
 msgstr "Төсөл устгаж чадсангүй"
 
@@ -880,7 +884,7 @@ msgid "Failed to load item"
 msgstr "Зүйл ачаалж чадсангүй"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:40
-#: src/routes/_authenticated/$projectId/index.tsx:66
+#: src/routes/_authenticated/$projectId/index.tsx:69
 msgid "Failed to load project"
 msgstr "Төсөл ачаалж чадсангүй"
 
@@ -904,7 +908,7 @@ msgstr "Сэтгэгдэл нийтэлж чадсангүй"
 msgid "Failed to read file"
 msgstr "Файл уншиж чадсангүй"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:691
+#: src/routes/_authenticated/$projectId_.settings.tsx:631
 msgid "Failed to remove access"
 msgstr "Хандалтыг хасч чадсангүй"
 
@@ -924,7 +928,7 @@ msgstr "Харагдацыг дахин эрэмбэлж чадсангүй"
 msgid "Failed to send verification code"
 msgstr "Баталгаажуулах код илгээж чадсангүй"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:679
+#: src/routes/_authenticated/$projectId_.settings.tsx:619
 msgid "Failed to set access level"
 msgstr "Хандалтын түвшинг тохируулж чадсангүй"
 
@@ -934,11 +938,11 @@ msgid "Failed to subscribe"
 msgstr "Захиалж чадсангүй"
 
 #: src/features/projects/pages/projects-list-page.tsx:48
-#: src/routes/_authenticated/$projectId_.settings.tsx:153
+#: src/routes/_authenticated/$projectId/index.tsx:545
 msgid "Failed to unsubscribe"
 msgstr "Захиалга цуцалж чадсангүй"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:702
+#: src/routes/_authenticated/$projectId_.settings.tsx:642
 msgid "Failed to update access level"
 msgstr "Хандалтын түвшинг шинэчилж чадсангүй"
 
@@ -954,7 +958,7 @@ msgstr "Сэтгэгдэл шинэчилж чадсангүй"
 msgid "Failed to update field"
 msgstr "Талбар шинэчилж чадсангүй"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:173
+#: src/routes/_authenticated/$projectId_.settings.tsx:155
 msgid "Failed to update project"
 msgstr "Төсөл шинэчилж чадсангүй"
 
@@ -977,7 +981,7 @@ msgstr "Файлууд"
 msgid "Find projects"
 msgstr "Төсөл хайх"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:361
+#: src/routes/_authenticated/$projectId_.settings.tsx:331
 msgid "Fingerprint"
 msgstr "Fingerprint"
 
@@ -1054,7 +1058,7 @@ msgstr "Нүүр"
 msgid "Hot"
 msgstr "Хот"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:328
+#: src/routes/_authenticated/$projectId_.settings.tsx:298
 msgid "Identity"
 msgstr "Identity"
 
@@ -1147,6 +1151,7 @@ msgid "Loading templates..."
 msgstr "Загварууд ачаалж байна..."
 
 #: ../../../lib/web/src/components/ui/load-more.tsx:32
+#: ../../../lib/web/src/features/document/document-page.tsx:87
 msgid "Loading…"
 msgstr "Ачаалж байна…"
 
@@ -1244,7 +1249,7 @@ msgstr "Миний төсөл"
 #: src/features/editor/components/edit-dialogs.tsx:1008
 #: src/features/editor/components/option-dialog.tsx:101
 #: src/features/projects/components/create-project-dialog.tsx:148
-#: src/routes/_authenticated/$projectId_.settings.tsx:333
+#: src/routes/_authenticated/$projectId_.settings.tsx:303
 msgid "Name"
 msgstr "Нэр"
 
@@ -1254,12 +1259,12 @@ msgstr "Нэр шаардлагатай"
 
 #: ../../../lib/web/src/components/ui/sort-selector.tsx:40
 #: src/features/objects/components/create-object-dialog.tsx:327
-#: src/routes/_authenticated/$projectId/index.tsx:762
-#: src/routes/_authenticated/$projectId/index.tsx:780
+#: src/routes/_authenticated/$projectId/index.tsx:783
+#: src/routes/_authenticated/$projectId/index.tsx:801
 msgid "New"
 msgstr "Шинэ"
 
-#: src/routes/_authenticated/$projectId/index.tsx:759
+#: src/routes/_authenticated/$projectId/index.tsx:780
 msgid "New {className}"
 msgstr "Шинэ {className}"
 
@@ -1275,7 +1280,7 @@ msgstr "Дараагийн зураг"
 msgid "No {parentClassNames} to add to"
 msgstr "Нэмэх {parentClassNames} алга"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:610
+#: src/routes/_authenticated/$projectId_.settings.tsx:550
 msgid "No access"
 msgstr "Хандах эрх байхгүй"
 
@@ -1324,8 +1329,8 @@ msgid "No item types can be created yet. Create the required parent items first.
 msgstr "Одоогоор зүйл үүсгэх боломжгүй. Эхлээд шаардлагатай эх зүйлийг үүсгэнэ үү."
 
 #: ../../../lib/web/src/components/language-picker.tsx:186
-msgid "No matches."
-msgstr "Тохирох зүйл алга."
+#~ msgid "No matches."
+#~ msgstr "Тохирох зүйл алга."
 
 #: src/features/objects/components/object-links.tsx:302
 msgid "No matching objects"
@@ -1410,7 +1415,7 @@ msgstr "Энгийн"
 msgid "Not configured"
 msgstr "Тохируулаагүй"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:580
+#: src/routes/_authenticated/$projectId_.settings.tsx:520
 msgid "Not set"
 msgstr "Тохируулаагүй"
 
@@ -1465,7 +1470,7 @@ msgstr "Навигацийн цэс нээх"
 msgid "Open option actions"
 msgstr "Сонголтын үйлдлүүдийг нээх"
 
-#: src/routes/_authenticated/$projectId/index.tsx:788
+#: src/routes/_authenticated/$projectId/index.tsx:809
 msgid "Open page actions"
 msgstr "Хуудасны үйлдлүүдийг нээх"
 
@@ -1508,12 +1513,12 @@ msgstr "Эзэмшигч"
 msgid "Parent"
 msgstr "Эх"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:400
+#: src/routes/_authenticated/$projectId_.settings.tsx:350
 msgid "Permanently delete this project and all its content."
 msgstr "Энэ төслийг түүний бүх агуулгатай нь бүр мөсөн устгах."
 
-#: src/routes/_authenticated/$projectId/index.tsx:616
-#: src/routes/_authenticated/$projectId/index.tsx:650
+#: src/routes/_authenticated/$projectId/index.tsx:637
+#: src/routes/_authenticated/$projectId/index.tsx:671
 msgid "Please add one or more classes to the project design."
 msgstr "Төслийн загварт нэг буюу хэд хэдэн анги нэмнэ үү."
 
@@ -1522,7 +1527,7 @@ msgid "Please select a template"
 msgstr "Загвар сонгоно уу"
 
 #: src/features/projects/components/create-project-dialog.tsx:170
-#: src/routes/_authenticated/$projectId_.settings.tsx:349
+#: src/routes/_authenticated/$projectId_.settings.tsx:319
 msgid "Prefix"
 msgstr "Угтвар"
 
@@ -1530,13 +1535,18 @@ msgstr "Угтвар"
 msgid "Previous image"
 msgstr "Өмнөх зураг"
 
+#: ../../../lib/web/src/components/server-documents-footer.tsx:24
+#: ../../../lib/web/src/features/document/document-page.tsx:41
+msgid "Privacy"
+msgstr "Нууцлал"
+
 #: ../../../lib/web/src/components/layout/nav-user.tsx:134
 #: ../../../lib/web/src/components/profile-dropdown.tsx:111
 msgid "Profile"
 msgstr "Профайл"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:62
-#: src/routes/_authenticated/$projectId/index.tsx:88
+#: src/routes/_authenticated/$projectId/index.tsx:91
 msgid "Project"
 msgstr "Төсөл"
 
@@ -1544,23 +1554,23 @@ msgstr "Төсөл"
 msgid "Project created"
 msgstr "Төсөл үүсгэгдсэн"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:134
+#: src/routes/_authenticated/$projectId_.settings.tsx:132
 msgid "Project deleted"
 msgstr "Төсөл устгагдсан"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:224
+#: src/routes/_authenticated/$projectId_.settings.tsx:206
 msgid "Project not found"
 msgstr "Төсөл олдсонгүй"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:124
+#: src/routes/_authenticated/$projectId_.settings.tsx:122
 msgid "Project settings"
 msgstr "Төслийн тохиргоо"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:224
+#: src/routes/_authenticated/$projectId_.settings.tsx:206
 msgid "Project unavailable"
 msgstr "Төсөл боломжгүй"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:171
+#: src/routes/_authenticated/$projectId_.settings.tsx:153
 msgid "Project updated"
 msgstr "Төсөл шинэчлэгдсэн"
 
@@ -1575,7 +1585,7 @@ msgstr "Төслүүд"
 msgid "Properties"
 msgstr "Шинж чанарууд"
 
-#: src/routes/_authenticated/$projectId/index.tsx:812
+#: src/routes/_authenticated/$projectId/index.tsx:833
 msgid "Re-order columns"
 msgstr "Баганыг дахин эрэмбэлэх"
 
@@ -1727,7 +1737,7 @@ msgstr "Бямба"
 
 #: src/features/editor/components/option-dialog.tsx:138
 #: src/features/objects/components/comment-thread.tsx:179
-#: src/routes/_authenticated/$projectId/index.tsx:867
+#: src/routes/_authenticated/$projectId/index.tsx:897
 msgid "Save"
 msgstr "Хадгалах"
 
@@ -1778,8 +1788,8 @@ msgid "Search..."
 msgstr "Хайх..."
 
 #: ../../../lib/web/src/components/language-picker.tsx:184
-msgid "Search…"
-msgstr "Хайх…"
+#~ msgid "Search…"
+#~ msgstr "Хайх…"
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:174
 #: ../../../lib/web/src/components/search-entity-page.tsx:149
@@ -1852,9 +1862,14 @@ msgstr "Сонгох..."
 msgid "Serif"
 msgstr "Сериф"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:370
+#: src/routes/_authenticated/$projectId_.settings.tsx:340
 msgid "Server"
 msgstr "Сервер"
+
+#: ../../../lib/web/src/components/server-documents-footer.tsx:16
+#: ../../../lib/web/src/features/document/document-page.tsx:37
+msgid "Server rules"
+msgstr "Серверийн дүрэм"
 
 #: ../../../lib/web/src/lib/api-client.ts:224
 msgid "Session expired"
@@ -1868,9 +1883,9 @@ msgstr "Эхлэл, очих газрыг тогтоох"
 #: ../../../lib/web/src/components/layout/nav-user.tsx:145
 #: ../../../lib/web/src/components/layout/nav-user.tsx:195
 #: src/routes/_authenticated/$projectId_.settings.tsx:76
-#: src/routes/_authenticated/$projectId_.settings.tsx:184
-#: src/routes/_authenticated/$projectId_.settings.tsx:207
-#: src/routes/_authenticated/$projectId/index.tsx:833
+#: src/routes/_authenticated/$projectId_.settings.tsx:166
+#: src/routes/_authenticated/$projectId_.settings.tsx:189
+#: src/routes/_authenticated/$projectId/index.tsx:854
 msgid "Settings"
 msgstr "Тохиргоо"
 
@@ -1996,6 +2011,11 @@ msgstr "Зорилт"
 msgid "Teams/Apps"
 msgstr "Баг/Программууд"
 
+#: ../../../lib/web/src/components/server-documents-footer.tsx:20
+#: ../../../lib/web/src/features/document/document-page.tsx:39
+msgid "Terms and conditions"
+msgstr "Нөхцөл"
+
 #: src/features/editor/components/add-dialogs.tsx:129
 msgid "Text"
 msgstr "Текст"
@@ -2017,11 +2037,11 @@ msgstr "Энэ нэгтгэх хүсэлт {0}-д нэгтгэгдсэн."
 msgid "This merge request is a draft and cannot be merged."
 msgstr "Энэ нэгтгэх хүсэлт ноорог байгаа тул нэгтгэх боломжгүй."
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:227
+#: src/routes/_authenticated/$projectId_.settings.tsx:209
 msgid "This project could not be loaded right now."
 msgstr "Энэ төслийг одоо ачаалах боломжгүй байна."
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:227
+#: src/routes/_authenticated/$projectId_.settings.tsx:209
 msgid "This project may have been deleted or you don't have access to it."
 msgstr "Энэ төсөл устгагдсан байж болно эсвэл та хандах эрхгүй байна."
 
@@ -2029,13 +2049,18 @@ msgstr "Энэ төсөл устгагдсан байж болно эсвэл т
 msgid "This will merge \"{source}\" into \"{target}\". This action cannot be undone."
 msgstr "Энэ нь \"{source}\"-г \"{target}\"-д нэгтгэнэ. Үүнийг буцаах боломжгүй."
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:429
+#: src/routes/_authenticated/$projectId_.settings.tsx:369
 msgid "This will permanently delete \"{projectName}\" and all its objects, comments, and attachments. This action cannot be undone."
 msgstr "Энэ нь \"{projectName}\" болон бүх объектууд, сэтгэгдлүүд, хавсралтуудыг бүрмөсөн устгана. Үүнийг буцаах боломжгүй."
 
+#. placeholder {0}: project.project.name
+#: src/routes/_authenticated/$projectId/index.tsx:1003
+msgid "This will remove \"{0}\" from your sidebar and stop updates for this project."
+msgstr "Энэ нь \"{0}\"-г таны хажуугийн самбараас хасч, энэ төслийн шинэчлэлтийг зогсооно."
+
 #: src/routes/_authenticated/$projectId_.settings.tsx:419
-msgid "This will remove \"{projectName}\" from your sidebar and stop updates for this project."
-msgstr "Энэ нь \"{projectName}\"-г таны хажуугийн самбараас хасч, энэ төслийн шинэчлэлтийг зогсооно."
+#~ msgid "This will remove \"{projectName}\" from your sidebar and stop updates for this project."
+#~ msgstr "Энэ нь \"{projectName}\"-г таны хажуугийн самбараас хасч, энэ төслийн шинэчлэлтийг зогсооно."
 
 #. placeholder {0}: pendingImport?.label
 #: src/routes/_authenticated/$projectId/design.tsx:200
@@ -2150,20 +2175,20 @@ msgstr "АНУ"
 #: src/features/projects/pages/projects-list-page.tsx:146
 #: src/features/projects/pages/projects-list-page.tsx:163
 #: src/features/projects/pages/projects-list-page.tsx:165
-#: src/routes/_authenticated/$projectId_.settings.tsx:390
-#: src/routes/_authenticated/$projectId_.settings.tsx:420
+#: src/routes/_authenticated/$projectId/index.tsx:862
+#: src/routes/_authenticated/$projectId/index.tsx:1004
 msgid "Unsubscribe"
 msgstr "Захиалгаас гарах"
 
 #: src/routes/_authenticated/$projectId_.settings.tsx:379
-msgid "Unsubscribe from project"
-msgstr "Төслөөс захиалгаа гаргах"
+#~ msgid "Unsubscribe from project"
+#~ msgstr "Төслөөс захиалгаа гаргах"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:418
+#: src/routes/_authenticated/$projectId/index.tsx:1002
 msgid "Unsubscribe from project?"
 msgstr "Төслөөс захиалгаа гаргах уу?"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:150
+#: src/routes/_authenticated/$projectId/index.tsx:541
 msgid "Unsubscribed"
 msgstr "Захиалгаас гарсан"
 
@@ -2236,11 +2261,11 @@ msgstr "Зүйлийн дэлгэрэнгүйг үзэх, засварлах"
 msgid "View controls"
 msgstr "Хяналт үзэх"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:609
+#: src/routes/_authenticated/$projectId_.settings.tsx:549
 msgid "View only"
 msgstr "Зөвхөн үзэх"
 
-#: src/routes/_authenticated/$projectId/index.tsx:797
+#: src/routes/_authenticated/$projectId/index.tsx:818
 msgid "View options"
 msgstr "Харах сонголтууд"
 
@@ -2272,7 +2297,7 @@ msgstr "Вэбсайт засвартай байна!"
 msgid "Wednesday"
 msgstr "Лхагва гараг"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:607
+#: src/routes/_authenticated/$projectId_.settings.tsx:547
 msgid "Write, comment, and view"
 msgstr "Бичих, тайлбарлах, үзэх"
 

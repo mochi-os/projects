@@ -1764,9 +1764,11 @@ def action_object_delete(a):
 			"project": project_id, "object": object_id,
 		})
 		if result and object_id:
-			mochi.db.execute("delete from \"values\" where object=?", object_id)
+			mochi.db.execute("delete from requests where object=?", object_id)
 			mochi.db.execute("delete from watchers where object=?", object_id)
+			mochi.db.execute("delete from activity where object=?", object_id)
 			delete_object_comments(object_id, project_id)
+			mochi.db.execute("delete from \"values\" where object=?", object_id)
 			mochi.db.execute("delete from links where source=? or target=?", object_id, object_id)
 			mochi.db.execute("delete from objects where id=?", object_id)
 		return result
@@ -4581,6 +4583,7 @@ def action_unsubscribe(a):
 	delete_project_comment_attachments(project_id)
 	objects = mochi.db.rows("select id from objects where project=?", project_id)
 	for obj in objects:
+		mochi.db.execute("delete from requests where object=?", obj["id"])
 		mochi.db.execute("delete from watchers where object=?", obj["id"])
 		mochi.db.execute("delete from activity where object=?", obj["id"])
 		mochi.db.execute("delete from comments where object=?", obj["id"])
@@ -4968,6 +4971,7 @@ def event_deleted(e):
 	delete_project_comment_attachments(project_id)
 	objects = mochi.db.rows("select id from objects where project=?", project_id)
 	for obj in objects:
+		mochi.db.execute("delete from requests where object=?", obj["id"])
 		mochi.db.execute("delete from watchers where object=?", obj["id"])
 		mochi.db.execute("delete from activity where object=?", obj["id"])
 		mochi.db.execute("delete from comments where object=?", obj["id"])
@@ -5196,6 +5200,7 @@ def event_object_delete(e):
 	local_id = e.header("to")
 	if local_id:
 		notify_watchers(object_id, project_id, local_id, user, "Deleted")
+	mochi.db.execute("delete from requests where object=?", object_id)
 	mochi.db.execute("delete from watchers where object=?", object_id)
 	mochi.db.execute("delete from activity where object=?", object_id)
 	delete_object_comments(object_id, project_id)
@@ -7514,10 +7519,32 @@ def _create_project_object(user, project_id, obj_class, title, parent="", values
 	mochi.db.execute("update projects set counter=counter+1, updated=? where id=?", now, project_id)
 	mochi.db.execute("insert or ignore into watchers (object, user, created) values (?, ?, ?)", d["id"], user.identity.id, now)
 
-	# Optional follow-up values (e.g. category=bug/feature). One forward per
-	# field. Failures are non-fatal — the ticket still got created; the field
-	# stays at its default and the user can adjust it later.
-	for field_id, field_value in values.items():
+	# Auto-fill every required enumerated field the caller didn't supply,
+	# picking each field's lowest-rank option. Mirrors the SPA create dialog
+	# (apps/projects/web/.../create-object-dialog.tsx) — without this, a help
+	# bug submission lands with no status, hides from any status-grouped view,
+	# and the owner has to set it before triaging. Skips the title field; it's
+	# already written above. Uses the synced subscriber-local schema (filled
+	# from event_schema at subscribe time).
+	filled = dict(values)
+	required_enums = mochi.db.rows(
+		"select id from fields where project=? and class=? and fieldtype='enumerated' and flags like '%required%'",
+		project_id, obj_class,
+	) or []
+	for f in required_enums:
+		fid = f["id"]
+		if fid == title_field or fid in filled:
+			continue
+		first = mochi.db.row(
+			"select id from options where project=? and class=? and field=? order by rank limit 1",
+			project_id, obj_class, fid,
+		)
+		if first:
+			filled[fid] = first["id"]
+
+	# One forward per field. Failures are non-fatal — the ticket still got
+	# created; the field stays at its default and the user can adjust it later.
+	for field_id, field_value in filled.items():
 		if not field_value:
 			continue
 		set_result = _forward_to_owner(user, project_id, "value/set", {

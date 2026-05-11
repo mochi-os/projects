@@ -7,6 +7,7 @@ import { t } from '@lingui/core/macro'
 import { createFileRoute, Link, redirect, useNavigate, useRouter } from "@tanstack/react-router";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import {
+  ConfirmDialog,
   GeneralError,
   extractStatus,
   getErrorMessage,
@@ -25,10 +26,11 @@ import {
   toast,
   getAppPath,
 } from "@mochi/web";
-import { Columns3, Ellipsis, FolderKanban, GripVertical, Plus, Settings, Settings2, SlidersHorizontal, X } from "lucide-react";
+import { Columns3, Ellipsis, FolderKanban, GripVertical, LogOut, Plus, Settings, Settings2, SlidersHorizontal, X } from "lucide-react";
 import projectsApi from "@/api/projects";
 import type { ProjectDetails, ProjectField, ProjectObject, SortState } from "@/types";
 import { canDesign, canWrite } from "@/lib/access";
+import { useProjectsStore } from "@/stores/projects-store";
 import { BoardContainer } from "@/features/board/components";
 import { TreeView } from "@/features/tree";
 import type { FilterState } from "@/features/views";
@@ -120,8 +122,12 @@ export interface ProjectPageContentProps {
 export function ProjectPageContent({ project, projectId, search, initialObjectId }: ProjectPageContentProps) {
   const { t } = useLingui()
   const router = useRouter();
+  const navigate = useNavigate();
   const params = { projectId };
   const access = project.project.access;
+  const isOwner = project.project.owner === 1;
+  const refreshSidebar = useProjectsStore((state) => state.refresh);
+  const [unsubscribeOpen, setUnsubscribeOpen] = useState(false);
 
   usePageTitle(project.project.name);
   useProjectWebsocket(project.project.fingerprint);
@@ -525,6 +531,20 @@ export function ProjectPageContent({ project, projectId, search, initialObjectId
     },
   });
 
+  const unsubscribeMutation = useMutation({
+    mutationFn: () => projectsApi.unsubscribe(project.project.id),
+    onSuccess: () => {
+      setUnsubscribeOpen(false);
+      void refreshSidebar();
+      queryClient.invalidateQueries({ queryKey: ["projects"] });
+      toast.success(t`Unsubscribed`);
+      void navigate({ to: "/" });
+    },
+    onError: (error) => {
+      toast.error(getErrorMessage(error, t`Failed to unsubscribe`));
+    },
+  });
+
   // Filter objects
   const filteredObjects = useMemo(() => {
     let result = objectsData || [];
@@ -833,6 +853,12 @@ export function ProjectPageContent({ project, projectId, search, initialObjectId
                   <Trans>Settings</Trans>
                 </Link>
               </DropdownMenuItem>
+              {!isOwner && (
+                <DropdownMenuItem onClick={() => setUnsubscribeOpen(true)}>
+                  <LogOut className="size-4 me-2" />
+                  <Trans>Unsubscribe</Trans>
+                </DropdownMenuItem>
+              )}
             </DropdownMenuContent>
           </DropdownMenu>
         }
@@ -964,6 +990,16 @@ export function ProjectPageContent({ project, projectId, search, initialObjectId
         onOpenChange={setAddColumnDialogOpen}
         onAdd={handleAddColumn}
         title={t`Add column`}
+      />
+
+      <ConfirmDialog
+        open={unsubscribeOpen}
+        onOpenChange={setUnsubscribeOpen}
+        title={t`Unsubscribe from project?`}
+        desc={t`This will remove "${project.project.name}" from your sidebar and stop updates for this project.`}
+        confirmText={t`Unsubscribe`}
+        handleConfirm={() => unsubscribeMutation.mutate()}
+        isLoading={unsubscribeMutation.isPending}
       />
     </>
   );

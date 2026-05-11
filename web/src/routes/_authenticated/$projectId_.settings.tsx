@@ -90,9 +90,7 @@ function ProjectSettingsPage() {
   };
 
   const [isDeleting, setIsDeleting] = useState(false);
-  const [isUnsubscribing, setIsUnsubscribing] = useState(false);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
-  const [showUnsubscribeDialog, setShowUnsubscribeDialog] = useState(false);
 
   const {
     data: projectData,
@@ -139,22 +137,6 @@ function ProjectSettingsPage() {
       setIsDeleting(false);
     }
   }, [project, isOwner, isDeleting, refreshSidebar, navigate, t]);
-
-  const handleUnsubscribe = useCallback(async () => {
-    if (!project || isUnsubscribing) return;
-
-    setIsUnsubscribing(true);
-    try {
-      await projectsApi.unsubscribe(project.project.id);
-      void refreshSidebar();
-      toast.success(t`Unsubscribed`);
-      void navigate({ to: "/" });
-    } catch (err) {
-      toast.error(getErrorMessage(err, t`Failed to unsubscribe`));
-    } finally {
-      setIsUnsubscribing(false);
-    }
-  }, [project, isUnsubscribing, refreshSidebar, navigate, t]);
 
   const handleUpdate = useCallback(
     async (updates: {
@@ -270,13 +252,9 @@ function ProjectSettingsPage() {
               project={project}
               isOwner={isOwner}
               isDeleting={isDeleting}
-              isUnsubscribing={isUnsubscribing}
               showDeleteDialog={showDeleteDialog}
-              showUnsubscribeDialog={showUnsubscribeDialog}
               setShowDeleteDialog={setShowDeleteDialog}
-              setShowUnsubscribeDialog={setShowUnsubscribeDialog}
               onDelete={handleDelete}
-              onUnsubscribe={handleUnsubscribe}
               onUpdate={handleUpdate}
             />
           )}
@@ -293,13 +271,9 @@ interface GeneralTabProps {
   project: ProjectDetails;
   isOwner: boolean;
   isDeleting: boolean;
-  isUnsubscribing: boolean;
   showDeleteDialog: boolean;
-  showUnsubscribeDialog: boolean;
   setShowDeleteDialog: (show: boolean) => void;
-  setShowUnsubscribeDialog: (show: boolean) => void;
   onDelete: () => void;
-  onUnsubscribe: () => void;
   onUpdate: (updates: {
     name?: string;
     description?: string;
@@ -311,13 +285,9 @@ function GeneralTab({
   project,
   isOwner,
   isDeleting,
-  isUnsubscribing,
   showDeleteDialog,
-  showUnsubscribeDialog,
   setShowDeleteDialog,
-  setShowUnsubscribeDialog,
   onDelete,
-  onUnsubscribe,
   onUpdate,
 }: GeneralTabProps) {
   const { t } = useLingui()
@@ -374,26 +344,6 @@ function GeneralTab({
         </div>
       </Section>
 
-      {!isOwner && (
-        <Section
-          title={t`Unsubscribe from project`}
-          action={
-            <Button
-              variant="outline"
-              onClick={() => setShowUnsubscribeDialog(true)}
-              disabled={isUnsubscribing}
-              size="sm"
-            >
-              {isUnsubscribing ? (
-                <Loader2 className="me-2 size-4 animate-spin" />
-              ) : (
-                <Trans>Unsubscribe</Trans>
-              )}
-            </Button>
-          }
-        />
-      )}
-
       {isOwner && (
         <Section
           title={t`Delete project`}
@@ -411,16 +361,6 @@ function GeneralTab({
           }
         />
       )}
-
-      <ConfirmDialog
-        open={showUnsubscribeDialog}
-        onOpenChange={setShowUnsubscribeDialog}
-        title={t`Unsubscribe from project?`}
-        desc={t`This will remove "${projectName}" from your sidebar and stop updates for this project.`}
-        confirmText={t`Unsubscribe`}
-        handleConfirm={onUnsubscribe}
-        isLoading={isUnsubscribing}
-      />
 
       <ConfirmDialog
         open={showDeleteDialog}

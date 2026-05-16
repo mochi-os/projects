@@ -21,6 +21,36 @@ def broadcast_event(project_id, event, data, exclude=None):
 			continue
 		mochi.message.send(p2p_headers(project_id, sub["id"], event), data)
 
+# request_resync pulls a fresh schema dump from the project owner when an
+# incoming event references data we don't have yet. Out-of-order delivery,
+# lost messages, and the strict FK enforcement on ncruces all surface as
+# the same symptom — a values/update or comment/create arriving for an
+# object the subscriber hasn't seen. The owner's event_schema is the
+# canonical source; insert_schema applies it idempotently. Throttled so a
+# burst of bad events can't spam the owner.
+def request_resync(project_id):
+	row = mochi.db.row("select server, synced from projects where id=? and owner=0", project_id)
+	if not row:
+		return
+	now = mochi.time.now()
+	if row["synced"] and now - row["synced"] < 60:
+		return
+	# Stamp the throttle window even before the request completes — a
+	# slow owner shouldn't let concurrent events queue up duplicate
+	# resync calls.
+	mochi.db.execute("update projects set synced=? where id=?", now, project_id)
+	server = row["server"] or ""
+	peer = ""
+	if server:
+		peer = mochi.remote.peer(server)
+	schema = mochi.remote.request(project_id, "projects", "schema", {}, peer)
+	if not schema or schema.get("error"):
+		return
+	insert_schema(project_id, schema)
+	fp = mochi.entity.fingerprint(project_id)
+	if fp:
+		mochi.websocket.write(fp, {"type": "project/resynced", "project": project_id})
+
 # Create database with all 16 tables
 def database_create():
 	# 1. projects - the container, a Mochi entity
@@ -36,7 +66,8 @@ def database_create():
 		template text not null default '',
 		template_version integer not null default 0,
 		created integer not null,
-		updated integer not null
+		updated integer not null,
+		synced integer not null default 0
 	)""")
 	mochi.db.execute("create index if not exists projects_fingerprint on projects(fingerprint)")
 
@@ -249,7 +280,12 @@ def database_create():
 
 # Upgrade database schema (called once per version step with target version)
 def database_upgrade(version):
-	pass
+	if version == 8:
+		# Add projects.synced for throttled resync requests when an
+		# incoming event references an object/class we haven't seen yet.
+		cols = [r["name"] for r in mochi.db.table("projects") or []]
+		if "synced" not in cols:
+			mochi.db.execute("alter table projects add column synced integer not null default 0")
 
 
 # ============================================================================
@@ -961,6 +997,32 @@ def action_project_update(a):
 	broadcast_event(project_id, "project/update", update)
 
 	return {"data": {"success": True}}
+
+# Force a fresh schema pull from the project owner. Subscribers fall behind
+# when an inbound event references data they don't have (out-of-order P2P
+# delivery, missed events while offline). The event handlers self-heal via
+# request_resync on the next bad event, but this action lets the UI / a
+# user trigger it on demand — useful when the subscriber knows they're
+# stale (just came online, or saw something missing).
+def action_project_resync(a):
+	if not a.user:
+		a.error.label(401, "errors.not_logged_in")
+		return
+	project_id = resolve_project(a)
+	if not project_id:
+		a.error.label(400, "errors.project_id_required")
+		return
+	row = mochi.db.row("select id, owner from projects where id=?", project_id)
+	if not row:
+		a.error.label(404, "errors.project_not_found")
+		return
+	if row["owner"] != 0:
+		# Owners are the canonical source; nothing to resync from.
+		return {"data": {"synced": False}}
+	# Reset the throttle so an explicit user request always runs.
+	mochi.db.execute("update projects set synced=0 where id=?", project_id)
+	request_resync(project_id)
+	return {"data": {"synced": True}}
 
 # Delete project
 def action_project_delete(a):
@@ -5122,9 +5184,17 @@ def event_object_create(e):
 	if not project_id:
 		return
 	object_id = e.content("id")
+	class_id = e.content("class") or ""
+	# Skip when the class isn't local yet — objects(project,class) FK would
+	# otherwise abort the handler. Happens when the owner adds a new class
+	# (or option-value, etc.) after the subscriber's last sync; resync
+	# pulls the canonical schema so future events apply cleanly.
+	if class_id and not mochi.db.exists("select 1 from classes where project=? and id=?", project_id, class_id):
+		request_resync(project_id)
+		return
 	mochi.db.execute(
 		"insert or ignore into objects (id, project, class, number, parent, rank, created, updated) values (?, ?, ?, ?, ?, ?, ?, ?)",
-		object_id, project_id, e.content("class") or "",
+		object_id, project_id, class_id,
 		e.content("number") or 0, e.content("parent") or "", e.content("rank") or 0,
 		e.content("created") or mochi.time.now(), e.content("updated") or mochi.time.now()
 	)
@@ -5167,6 +5237,13 @@ def event_object_update(e):
 		return
 	object_id = e.content("id")
 	if not object_id:
+		return
+
+	# Skip when the object isn't local yet — the UPDATE would silently
+	# no-op, leaving us with stale or missing rows until something else
+	# triggers a sync.
+	if not mochi.db.exists("select 1 from objects where id=? and project=?", object_id, project_id):
+		request_resync(project_id)
 		return
 
 	# LWW gate: drop events whose `updated` is no newer than the local
@@ -5238,6 +5315,13 @@ def event_values_update(e):
 		return
 	values = e.content("values")
 	if not values:
+		return
+	# Skip when the referenced object isn't local yet. The values.object FK
+	# would otherwise abort the handler and the update would be lost
+	# forever (the owner has no idea we couldn't apply it). request_resync
+	# pulls the canonical schema so we converge on the next event.
+	if not mochi.db.exists("select 1 from objects where id=? and project=?", object_id, project_id):
+		request_resync(project_id)
 		return
 	for field in values:
 		mochi.db.execute("replace into \"values\" (object, field, value) values (?, ?, ?)", object_id, field, values[field])
@@ -5391,9 +5475,15 @@ def event_comment_create(e):
 	if not project_id:
 		return
 	comment_id = e.content("id")
+	object_id = e.content("object") or ""
+	# Skip when the comment's object isn't local yet — comments.object FK
+	# would otherwise abort the handler and the comment would be lost.
+	if not object_id or not mochi.db.exists("select 1 from objects where id=? and project=?", object_id, project_id):
+		request_resync(project_id)
+		return
 	mochi.db.execute(
 		"insert or ignore into comments (id, object, parent, author, name, content, created, edited) values (?, ?, ?, ?, ?, ?, ?, ?)",
-		comment_id, e.content("object") or "", e.content("parent") or "",
+		comment_id, object_id, e.content("parent") or "",
 		e.content("author") or "", e.content("name") or "",
 		e.content("content") or "", e.content("created") or mochi.time.now(), 0
 	)
@@ -5426,6 +5516,12 @@ def event_comment_update(e):
 	comment_id = e.content("id")
 	if not comment_id:
 		return
+	# Skip when the comment isn't local yet — the UPDATE would silently
+	# no-op, leaving us with an out-of-date row until something else
+	# triggers a sync.
+	if not mochi.db.exists("select 1 from comments where id=?", comment_id):
+		request_resync(project_id)
+		return
 	content = e.content("content")
 	if content:
 		mochi.db.execute("update comments set content=?, edited=? where id=?", content, mochi.time.now(), comment_id)
@@ -5451,9 +5547,18 @@ def event_link_create(e):
 	project_id = verify_subscription(e)
 	if not project_id:
 		return
+	source = e.content("source") or ""
+	target = e.content("target") or ""
+	# Skip when either endpoint isn't local yet — links FKs would abort.
+	if not source or not target:
+		return
+	if not mochi.db.exists("select 1 from objects where id=? and project=?", source, project_id) or \
+		not mochi.db.exists("select 1 from objects where id=? and project=?", target, project_id):
+		request_resync(project_id)
+		return
 	mochi.db.execute(
 		"insert or ignore into links (project, source, target, linktype, created) values (?, ?, ?, ?, ?)",
-		project_id, e.content("source") or "", e.content("target") or "",
+		project_id, source, target,
 		e.content("linktype") or "related", e.content("created") or mochi.time.now()
 	)
 	fp = mochi.entity.fingerprint(project_id)

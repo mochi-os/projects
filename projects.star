@@ -29,12 +29,16 @@ def broadcast_event(project_id, event, data, exclude=None):
 # canonical source; insert_schema applies it idempotently. Throttled so a
 # burst of bad events can't spam the owner.
 def request_resync(project_id):
+	"""Returns True iff a fresh schema was actually fetched and applied.
+	Returns False when we're not a subscriber, the throttle window blocks
+	the call, or the remote request fails — so callers don't lie about
+	convergence."""
 	row = mochi.db.row("select server, synced from projects where id=? and owner=0", project_id)
 	if not row:
-		return
+		return False
 	now = mochi.time.now()
 	if row["synced"] and now - row["synced"] < 60:
-		return
+		return False
 	# Stamp the throttle window even before the request completes — a
 	# slow owner shouldn't let concurrent events queue up duplicate
 	# resync calls.
@@ -45,11 +49,12 @@ def request_resync(project_id):
 		peer = mochi.remote.peer(server)
 	schema = mochi.remote.request(project_id, "projects", "schema", {}, peer)
 	if not schema or schema.get("error"):
-		return
+		return False
 	insert_schema(project_id, schema)
 	fp = mochi.entity.fingerprint(project_id)
 	if fp:
 		mochi.websocket.write(fp, {"type": "project/resynced", "project": project_id})
+	return True
 
 # Create database with all 16 tables
 def database_create():
@@ -1021,8 +1026,8 @@ def action_project_resync(a):
 		return {"data": {"synced": False}}
 	# Reset the throttle so an explicit user request always runs.
 	mochi.db.execute("update projects set synced=0 where id=?", project_id)
-	request_resync(project_id)
-	return {"data": {"synced": True}}
+	synced = request_resync(project_id)
+	return {"data": {"synced": synced}}
 
 # Delete project
 def action_project_delete(a):

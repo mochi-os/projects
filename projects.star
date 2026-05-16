@@ -1346,13 +1346,25 @@ def require_project(a, level="view"):
 	return project_id, project
 
 def log_activity(object_id, user, action, field="", oldvalue="", newvalue=""):
-	"""Log an activity entry for an object."""
+	"""Log an activity entry for an object and replicate it to subscribers
+	when this host owns the project. Subscribers insert the same row by UID
+	so the activity table stays a converged append-only log."""
 	activity_id = mochi.uid()
 	now = mochi.time.now()
 	mochi.db.execute(
 		"insert into activity (id, object, user, action, field, oldvalue, newvalue, created) values (?, ?, ?, ?, ?, ?, ?, ?)",
 		activity_id, object_id, user, action, field, str(oldvalue), str(newvalue), now
 	)
+	owned = mochi.db.row(
+		"select o.project from objects o join projects p on p.id=o.project where o.id=? and p.owner=1",
+		object_id
+	)
+	if owned:
+		broadcast_event(owned["project"], "activity/log", {
+			"project": owned["project"], "id": activity_id, "object": object_id,
+			"user": user, "action": action, "field": field,
+			"oldvalue": str(oldvalue), "newvalue": str(newvalue), "created": now,
+		})
 
 def get_owner_identity(project_id):
 	"""Get the project owner's identity from the first subscriber."""
@@ -4769,12 +4781,21 @@ def event_schema(e):
 		for c in all_comments:
 			comments_map.setdefault(c["object"], []).append(c)
 
+	activity_map = {}
+	if object_ids:
+		placeholders = ",".join(["?" for _ in object_ids])
+		all_activity = mochi.db.rows("select object, id, user, action, field, oldvalue, newvalue, created from activity where object in (" + placeholders + ") order by created", *object_ids) or []
+		for a in all_activity:
+			activity_map.setdefault(a["object"], []).append(a)
+
 	objects = []
 	for obj in all_objects:
 		if obj["id"] in values_map:
 			obj["values"] = values_map[obj["id"]]
 		if obj["id"] in comments_map:
 			obj["comments"] = comments_map[obj["id"]]
+		if obj["id"] in activity_map:
+			obj["activity"] = activity_map[obj["id"]]
 		objects.append(obj)
 
 	# Links
@@ -4854,6 +4875,14 @@ def insert_schema(project_id, schema):
 				c.get("id", ""), obj.get("id", ""), c.get("parent", ""),
 				c.get("author", ""), c.get("name", ""),
 				c.get("content", ""), c.get("created", ""), c.get("edited", 0)
+			)
+		for act in (obj.get("activity") or []):
+			mochi.db.execute(
+				"insert or ignore into activity (id, object, user, action, field, oldvalue, newvalue, created) values (?, ?, ?, ?, ?, ?, ?, ?)",
+				act.get("id", ""), obj.get("id", ""), act.get("user", ""),
+				act.get("action", ""), act.get("field", ""),
+				act.get("oldvalue", ""), act.get("newvalue", ""),
+				act.get("created", 0)
 			)
 	for l in (schema.get("links") or []):
 		mochi.db.execute(
@@ -4949,6 +4978,11 @@ def send_project_data(project_id, subscriber_id):
 		obj_attachments = mochi.attachment.list(obj["id"], project_id) or []
 		if obj_attachments:
 			obj_data["attachments"] = obj_attachments
+
+		# Activity history
+		acts = mochi.db.rows("select id, user, action, field, oldvalue, newvalue, created from activity where object=? order by created", obj["id"]) or []
+		if acts:
+			obj_data["activity"] = acts
 
 		batch["objects"].append(obj_data)
 
@@ -5141,6 +5175,14 @@ def event_sync_batch(e):
 				c["id"], obj["id"], c.get("parent", ""),
 				c.get("author", ""), c.get("name", ""), c.get("content", ""), c.get("created", now), c.get("edited", 0)
 			)
+		# Activity history
+		for act in (obj.get("activity") or []):
+			mochi.db.execute(
+				"insert or ignore into activity (id, object, user, action, field, oldvalue, newvalue, created) values (?, ?, ?, ?, ?, ?, ?, ?)",
+				act["id"], obj["id"], act.get("user", ""), act.get("action", ""),
+				act.get("field", ""), act.get("oldvalue", ""), act.get("newvalue", ""),
+				act.get("created", now)
+			)
 
 	# Process links
 	for l in (e.content("links") or []):
@@ -5208,8 +5250,9 @@ def event_object_create(e):
 	for field, value in values.items():
 		mochi.db.execute("insert or replace into \"values\" (object, field, value) values (?, ?, ?)", object_id, field, value)
 	user = e.content("user") or ""
-	if user:
-		log_activity(object_id, user, "created")
+	# Activity history arrives separately via the activity/log broadcast,
+	# so we don't insert a local row here (it would have a different UID
+	# from the owner's authoritative row).
 	fp = mochi.entity.fingerprint(project_id)
 	if fp:
 		mochi.websocket.write(fp, {"type": "object/create", "project": project_id, "id": object_id})
@@ -5364,6 +5407,37 @@ def event_values_update(e):
 								object_id, local_id, mochi.time.now())
 			if not assigned:
 				notify_watchers(object_id, project_id, local_id, user, "Fields changed")
+
+# Activity row replicated from owner — insert with the same UID so the
+# activity table converges across hosts. If the referenced object isn't
+# local yet (out-of-order delivery) we resync; the fresh schema pulls in
+# both the missing object and its activity history together.
+def event_activity_log(e):
+	project_id = verify_subscription(e)
+	if not project_id:
+		return
+	activity_id = e.content("id")
+	object_id = e.content("object")
+	if not activity_id or not object_id:
+		return
+	if not mochi.db.exists("select 1 from objects where id=? and project=?", object_id, project_id):
+		request_resync(project_id)
+		return
+	created = e.content("created")
+	if not mochi.text.valid(str(created), "integer"):
+		created = mochi.time.now()
+	else:
+		created = int(created)
+	mochi.db.execute(
+		"insert or ignore into activity (id, object, user, action, field, oldvalue, newvalue, created) values (?, ?, ?, ?, ?, ?, ?, ?)",
+		activity_id, object_id, e.content("user") or "",
+		e.content("action") or "", e.content("field") or "",
+		e.content("oldvalue") or "", e.content("newvalue") or "",
+		created
+	)
+	fp = mochi.entity.fingerprint(project_id)
+	if fp:
+		mochi.websocket.write(fp, {"type": "activity/log", "project": project_id, "object": object_id})
 
 # Comment submitted by remote subscriber (fire-and-forget)
 def event_comment_submit(e):

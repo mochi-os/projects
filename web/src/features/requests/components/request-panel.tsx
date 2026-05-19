@@ -368,6 +368,7 @@ function RequestItem({
                         className="h-9 w-9 shrink-0 text-muted-foreground"
                         onClick={onDelete}
                         title={t`Delete merge request`}
+                        aria-label={t`Delete merge request`}
                       >
                         <Trash2 className="size-4" />
                       </Button>
@@ -388,6 +389,7 @@ function RequestItem({
                       className="h-9 w-9 shrink-0 text-muted-foreground"
                       onClick={onDelete}
                       title={t`Delete merge request`}
+                      aria-label={t`Delete merge request`}
                     >
                       <Trash2 className="size-4" />
                     </Button>
@@ -405,6 +407,7 @@ function RequestItem({
                 className="h-9 w-9 shrink-0 text-muted-foreground"
                 onClick={onDelete}
                 title={t`Delete merge request`}
+                aria-label={t`Delete merge request`}
               >
                 <Trash2 className="size-4" />
               </Button>

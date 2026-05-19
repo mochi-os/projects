@@ -17,7 +17,7 @@ msgstr ""
 msgid "(itself)"
 msgstr "(сам)"
 
-#: src/features/board/components/board-container.tsx:739
+#: src/features/board/components/board-container.tsx:742
 msgid "[not set]"
 msgstr "[не задано]"
 
@@ -73,7 +73,7 @@ msgstr "Абсолютне (дата й час)"
 msgid "Access"
 msgstr "Доступ"
 
-#: ../../../lib/web/src/features/errors/forbidden.tsx:12
+#: ../../../lib/web/src/features/errors/forbidden.tsx:13
 msgid "Access Forbidden"
 msgstr "Доступ заборонено"
 
@@ -81,19 +81,19 @@ msgstr "Доступ заборонено"
 msgid "Access level"
 msgstr "Рівень доступу"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:639
+#: src/routes/_authenticated/$projectId_.settings.tsx:641
 msgid "Access level updated"
 msgstr "Рівень доступу оновлено"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:648
+#: src/routes/_authenticated/$projectId_.settings.tsx:650
 msgid "Access Management"
 msgstr "Керування доступом"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:628
+#: src/routes/_authenticated/$projectId_.settings.tsx:630
 msgid "Access removed"
 msgstr "Доступ скасовано"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:616
+#: src/routes/_authenticated/$projectId_.settings.tsx:618
 msgid "Access set for {subjectName}"
 msgstr "Доступ налаштовано для {subjectName}"
 
@@ -117,7 +117,8 @@ msgstr "Обліковий запис підтверджено"
 msgid "Activity"
 msgstr "Активність"
 
-#: src/features/objects/components/field-editor.tsx:534
+#: ../../../lib/web/src/features/accounts/account-add.tsx:193
+#: src/features/objects/components/field-editor.tsx:535
 #: src/features/requests/components/request-panel.tsx:100
 msgid "Add"
 msgstr "Додати"
@@ -151,18 +152,19 @@ msgstr "Додайте обліковий запис, щоб отримуват�
 msgid "Add checklist item"
 msgstr "Додати пункт списку"
 
+#: src/features/editor/components/design-editor.tsx:505
 #: src/features/editor/components/edit-dialogs.tsx:690
 #: src/features/editor/components/edit-dialogs.tsx:887
 msgid "Add class"
 msgstr "Додати клас"
 
-#: src/routes/_authenticated/$projectId/index.tsx:829
-#: src/routes/_authenticated/$projectId/index.tsx:996
+#: src/routes/_authenticated/$projectId/index.tsx:828
+#: src/routes/_authenticated/$projectId/index.tsx:992
 msgid "Add column"
 msgstr "Додати стовпець"
 
 #: src/features/editor/components/add-dialogs.tsx:97
-#: src/features/editor/components/add-dialogs.tsx:214
+#: src/features/editor/components/add-dialogs.tsx:215
 #: src/features/editor/components/edit-dialogs.tsx:882
 msgid "Add field"
 msgstr "Додати поле"
@@ -179,15 +181,16 @@ msgstr "Додати посилання"
 msgid "Add new account"
 msgstr "Додати новий обліковий запис"
 
-#: src/features/editor/components/edit-dialogs.tsx:1112
+#: src/features/editor/components/add-dialogs.tsx:200
+#: src/features/editor/components/edit-dialogs.tsx:1113
 #: src/features/editor/components/option-dialog.tsx:81
 #: src/features/editor/components/option-dialog.tsx:143
 msgid "Add option"
 msgstr "Додати варіант"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:655
-msgid "Add Rule"
-msgstr "Додати правило"
+#: src/routes/_authenticated/$projectId_.settings.tsx:657
+msgid "Add rule"
+msgstr ""
 
 #: ../../../lib/web/src/components/post-tags.tsx:119
 msgid "Add tag..."
@@ -202,6 +205,7 @@ msgid "Add to existing notifications"
 msgstr "Додати до наявних сповіщень"
 
 #: ../../../lib/web/src/components/view-tabs.tsx:57
+#: src/features/editor/components/design-editor.tsx:456
 #: src/features/editor/components/edit-dialogs.tsx:266
 #: src/features/editor/components/edit-dialogs.tsx:511
 msgid "Add view"
@@ -240,7 +244,7 @@ msgstr "Дозволити сортування за"
 msgid "Are you sure you want to delete \"{0}\"?"
 msgstr "Ви впевнені, що хочете видалити \"{0}\"?"
 
-#: src/features/objects/components/object-detail-panel.tsx:600
+#: src/features/objects/components/object-detail-panel.tsx:602
 msgid "Are you sure you want to delete \"{title}\"? This action cannot be undone."
 msgstr "Ви впевнені, що хочете видалити \"{title}\"? Цю дію не можна скасувати."
 
@@ -287,11 +291,11 @@ msgstr "Доступні комбінації клавіш"
 msgid "Back"
 msgstr "Назад"
 
-#: ../../../lib/web/src/features/errors/forbidden.tsx:21
-#: ../../../lib/web/src/features/errors/not-found-error.tsx:21
-#: ../../../lib/web/src/features/errors/unauthorized-error.tsx:21
-msgid "Back to Home"
-msgstr "Назад на головну"
+#: ../../../lib/web/src/features/errors/forbidden.tsx:23
+#: ../../../lib/web/src/features/errors/not-found-error.tsx:23
+#: ../../../lib/web/src/features/errors/unauthorized-error.tsx:23
+msgid "Back to home"
+msgstr ""
 
 #: src/routes/_authenticated/$projectId_.settings.tsx:168
 #: src/routes/_authenticated/$projectId_.settings.tsx:191
@@ -302,7 +306,7 @@ msgid "Back to project"
 msgstr "Назад до проєкту"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:64
-#: src/routes/_authenticated/$projectId/index.tsx:93
+#: src/routes/_authenticated/$projectId/index.tsx:92
 msgid "Back to projects"
 msgstr "Назад до проєктів"
 
@@ -347,9 +351,13 @@ msgstr "Може бути дочірнім для"
 #: src/features/objects/components/comment-thread.tsx:168
 #: src/features/projects/components/create-project-dialog.tsx:208
 #: src/routes/_authenticated/$projectId/design.tsx:340
-#: src/routes/_authenticated/$projectId/index.tsx:890
+#: src/routes/_authenticated/$projectId/index.tsx:886
 msgid "Cancel"
 msgstr "Скасувати"
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:507
+msgid "Cancel edit"
+msgstr ""
 
 #: src/features/objects/components/comment-thread.tsx:318
 #: src/features/objects/components/comment-thread.tsx:319
@@ -404,7 +412,7 @@ msgstr "Виберіть між системними налаштуванням�
 msgid "Choose language"
 msgstr "Виберіть мову"
 
-#: src/features/editor/components/design-editor.tsx:499
+#: src/features/editor/components/design-editor.tsx:500
 msgid "Classes"
 msgstr "Класи"
 
@@ -433,9 +441,11 @@ msgstr "Очистити вибір (Escape)"
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:318
 #: ../../../lib/web/src/components/ui/sheet.tsx:76
 #: src/features/objects/components/create-object-dialog.tsx:350
+#: src/features/objects/components/create-object-dialog.tsx:351
 msgid "Close"
 msgstr "Закрити"
 
+#: src/features/editor/components/add-dialogs.tsx:99
 #: src/features/editor/components/edit-dialogs.tsx:269
 #: src/features/editor/components/edit-dialogs.tsx:693
 msgid "Close dialog"
@@ -446,8 +456,8 @@ msgid "Close navigation"
 msgstr "Закрити навігацію"
 
 #: ../../../lib/web/src/components/layout/right-panel.tsx:254
-msgid "Close Panel"
-msgstr "Закрити панель"
+msgid "Close panel"
+msgstr ""
 
 #: src/components/keyboard-shortcuts-help.tsx:31
 msgid "Close panel / cancel"
@@ -477,7 +487,7 @@ msgstr "Зручний"
 msgid "Coming Soon!"
 msgstr "Скоро!"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:548
+#: src/routes/_authenticated/$projectId_.settings.tsx:550
 msgid "Comment and view"
 msgstr "Коментувати й переглядати"
 
@@ -520,7 +530,7 @@ msgstr "Контекстна інформація та деталі."
 msgid "Continue"
 msgstr "Продовжити"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:649
+#: src/routes/_authenticated/$projectId_.settings.tsx:651
 msgid "Control who can view and interact with this project"
 msgstr "Керуйте тим, хто може переглядати та взаємодіяти з цим проєктом"
 
@@ -539,7 +549,7 @@ msgstr "Не вдалося завантажити цей документ. Сп
 #: src/features/board/components/board-column.tsx:530
 #: src/features/board/components/board-column.tsx:668
 #: src/features/objects/components/create-object-dialog.tsx:342
-#: src/features/objects/components/create-object-dialog.tsx:485
+#: src/features/objects/components/create-object-dialog.tsx:486
 #: src/features/tree/components/tree-view.tsx:367
 msgid "Create"
 msgstr "Створити"
@@ -570,7 +580,7 @@ msgstr "Створити проєкт"
 msgid "Created"
 msgstr "Створено"
 
-#: src/features/objects/components/create-object-dialog.tsx:485
+#: src/features/objects/components/create-object-dialog.tsx:486
 #: src/features/projects/components/create-project-dialog.tsx:286
 msgid "Creating..."
 msgstr "Створення..."
@@ -609,7 +619,7 @@ msgstr "Сортування за замовчуванням"
 #: src/features/objects/components/comment-thread.tsx:228
 #: src/features/objects/components/comment-thread.tsx:343
 #: src/features/objects/components/object-attachments.tsx:233
-#: src/features/objects/components/object-detail-panel.tsx:601
+#: src/features/objects/components/object-detail-panel.tsx:603
 #: src/features/requests/components/request-panel.tsx:129
 #: src/routes/_authenticated/$projectId_.settings.tsx:359
 msgid "Delete"
@@ -631,19 +641,23 @@ msgstr "Видалити стовпець"
 msgid "Delete comment"
 msgstr "Видалити коментар"
 
-#: src/features/editor/components/edit-dialogs.tsx:1121
+#: src/features/editor/components/edit-dialogs.tsx:1122
 msgid "Delete field"
 msgstr "Видалити поле"
 
-#: src/features/objects/components/object-detail-panel.tsx:422
-#: src/features/objects/components/object-detail-panel.tsx:599
+#: src/features/objects/components/object-detail-panel.tsx:423
+#: src/features/objects/components/object-detail-panel.tsx:424
+#: src/features/objects/components/object-detail-panel.tsx:601
 msgid "Delete item"
 msgstr "Видалити елемент"
 
 #: src/features/requests/components/request-panel.tsx:127
 #: src/features/requests/components/request-panel.tsx:370
-#: src/features/requests/components/request-panel.tsx:390
-#: src/features/requests/components/request-panel.tsx:407
+#: src/features/requests/components/request-panel.tsx:371
+#: src/features/requests/components/request-panel.tsx:391
+#: src/features/requests/components/request-panel.tsx:392
+#: src/features/requests/components/request-panel.tsx:409
+#: src/features/requests/components/request-panel.tsx:410
 msgid "Delete merge request"
 msgstr "Видалити merge request"
 
@@ -681,7 +695,7 @@ msgstr "Опис"
 
 #: src/routes/_authenticated/$projectId/design.tsx:60
 #: src/routes/_authenticated/$projectId/design.tsx:128
-#: src/routes/_authenticated/$projectId/index.tsx:844
+#: src/routes/_authenticated/$projectId/index.tsx:843
 msgid "Design"
 msgstr "Дизайн"
 
@@ -689,7 +703,7 @@ msgstr "Дизайн"
 msgid "Design imported"
 msgstr "Дизайн імпортовано"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:546
+#: src/routes/_authenticated/$projectId_.settings.tsx:548
 msgid "Design, write, comment, and view"
 msgstr "Розробляти, писати, коментувати та переглядати"
 
@@ -720,8 +734,8 @@ msgstr "Різниця: {source} → {target}"
 msgid "Direction"
 msgstr "Напрямок"
 
-#: src/routes/_authenticated/$projectId/index.tsx:912
-#: src/routes/_authenticated/$projectId/index.tsx:913
+#: src/routes/_authenticated/$projectId/index.tsx:908
+#: src/routes/_authenticated/$projectId/index.tsx:909
 msgid "Dismiss board hint"
 msgstr "Закрити підказку дошки"
 
@@ -731,12 +745,12 @@ msgstr "Відображає мобільну бічну панель."
 
 #: src/features/editor/components/edit-dialogs.tsx:516
 #: src/features/editor/components/edit-dialogs.tsx:892
-#: src/features/editor/components/edit-dialogs.tsx:1126
-#: src/features/objects/components/object-detail-panel.tsx:433
+#: src/features/editor/components/edit-dialogs.tsx:1127
+#: src/features/objects/components/object-detail-panel.tsx:435
 msgid "Done"
 msgstr "Готово"
 
-#: src/routes/_authenticated/$projectId/index.tsx:905
+#: src/routes/_authenticated/$projectId/index.tsx:901
 msgid "Double click on a column to add content"
 msgstr "Двічі клацніть на колонці, щоб додати вміст"
 
@@ -753,7 +767,7 @@ msgstr "Спочатку завантажте резервну копію"
 msgid "Draft"
 msgstr "Чернетка"
 
-#: src/routes/_authenticated/$projectId/index.tsx:886
+#: src/routes/_authenticated/$projectId/index.tsx:882
 msgid "Drag columns to re-order them"
 msgstr "Перетягніть колонки, щоб змінити їх порядок"
 
@@ -774,6 +788,7 @@ msgid "Edit class"
 msgstr "Редагувати клас"
 
 #: src/features/editor/components/edit-dialogs.tsx:1003
+#: src/routes/_authenticated/$projectId_.settings.tsx:529
 msgid "Edit field"
 msgstr "Редагувати поле"
 
@@ -831,7 +846,7 @@ msgstr "Не вдалося перевірити статус об'єднанн�
 msgid "Failed to create class"
 msgstr "Не вдалося створити клас"
 
-#: src/features/editor/components/design-editor.tsx:593
+#: src/features/editor/components/design-editor.tsx:595
 msgid "Failed to create field"
 msgstr "Не вдалося створити поле"
 
@@ -839,7 +854,7 @@ msgstr "Не вдалося створити поле"
 msgid "Failed to create link"
 msgstr "Не вдалося створити посилання"
 
-#: src/features/editor/components/design-editor.tsx:613
+#: src/features/editor/components/design-editor.tsx:615
 msgid "Failed to create option"
 msgstr "Не вдалося створити параметр"
 
@@ -884,7 +899,7 @@ msgid "Failed to load item"
 msgstr "Не вдалося завантажити елемент"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:40
-#: src/routes/_authenticated/$projectId/index.tsx:69
+#: src/routes/_authenticated/$projectId/index.tsx:68
 msgid "Failed to load project"
 msgstr "Не вдалося завантажити проєкт"
 
@@ -908,7 +923,7 @@ msgstr "Не вдалося опублікувати коментар"
 msgid "Failed to read file"
 msgstr "Не вдалося прочитати файл"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:631
+#: src/routes/_authenticated/$projectId_.settings.tsx:633
 msgid "Failed to remove access"
 msgstr "Не вдалося видалити доступ"
 
@@ -928,7 +943,7 @@ msgstr "Не вдалося змінити порядок виглядів"
 msgid "Failed to send verification code"
 msgstr "Не вдалося надіслати код підтвердження"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:619
+#: src/routes/_authenticated/$projectId_.settings.tsx:621
 msgid "Failed to set access level"
 msgstr "Не вдалося встановити рівень доступу"
 
@@ -938,11 +953,11 @@ msgid "Failed to subscribe"
 msgstr "Не вдалося підписатися"
 
 #: src/features/projects/pages/projects-list-page.tsx:48
-#: src/routes/_authenticated/$projectId/index.tsx:545
+#: src/routes/_authenticated/$projectId/index.tsx:544
 msgid "Failed to unsubscribe"
 msgstr "Не вдалося відписатися"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:642
+#: src/routes/_authenticated/$projectId_.settings.tsx:644
 msgid "Failed to update access level"
 msgstr "Не вдалося оновити рівень доступу"
 
@@ -970,7 +985,7 @@ msgstr "Не вдалося завантажити вкладення"
 msgid "Fields"
 msgstr "Поля"
 
-#: src/features/objects/components/create-object-dialog.tsx:428
+#: src/features/objects/components/create-object-dialog.tsx:429
 #: src/features/objects/components/object-attachments.tsx:106
 #: src/features/objects/components/object-attachments.tsx:123
 msgid "Files"
@@ -1017,11 +1032,11 @@ msgstr "З теми"
 msgid "Full layout"
 msgstr "Повний макет"
 
-#: ../../../lib/web/src/features/errors/forbidden.tsx:19
-#: ../../../lib/web/src/features/errors/not-found-error.tsx:19
-#: ../../../lib/web/src/features/errors/unauthorized-error.tsx:19
-msgid "Go Back"
-msgstr "Назад"
+#: ../../../lib/web/src/features/errors/forbidden.tsx:21
+#: ../../../lib/web/src/features/errors/not-found-error.tsx:21
+#: ../../../lib/web/src/features/errors/unauthorized-error.tsx:21
+msgid "Go back"
+msgstr ""
 
 #: ../../../lib/web/src/components/data-table/pagination.tsx:75
 msgid "Go to first page"
@@ -1034,6 +1049,10 @@ msgstr "Перейти на останню сторінку"
 #: ../../../lib/web/src/components/data-table/pagination.tsx:112
 msgid "Go to next page"
 msgstr "Перейти на наступну сторінку"
+
+#: ../../../lib/web/src/components/data-table/pagination.tsx:99
+msgid "Go to page {pageNumber}"
+msgstr ""
 
 #: ../../../lib/web/src/components/data-table/pagination.tsx:84
 msgid "Go to previous page"
@@ -1259,12 +1278,12 @@ msgstr "Ім'я обов'язкове"
 
 #: ../../../lib/web/src/components/ui/sort-selector.tsx:40
 #: src/features/objects/components/create-object-dialog.tsx:327
-#: src/routes/_authenticated/$projectId/index.tsx:783
-#: src/routes/_authenticated/$projectId/index.tsx:801
+#: src/routes/_authenticated/$projectId/index.tsx:782
+#: src/routes/_authenticated/$projectId/index.tsx:800
 msgid "New"
 msgstr "Нове"
 
-#: src/routes/_authenticated/$projectId/index.tsx:780
+#: src/routes/_authenticated/$projectId/index.tsx:779
 msgid "New {className}"
 msgstr "Новий {className}"
 
@@ -1276,11 +1295,11 @@ msgstr "Далі"
 msgid "Next image"
 msgstr "Наступне зображення"
 
-#: src/features/objects/components/create-object-dialog.tsx:395
+#: src/features/objects/components/create-object-dialog.tsx:396
 msgid "No {parentClassNames} to add to"
 msgstr "Немає {parentClassNames} для додавання"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:550
+#: src/routes/_authenticated/$projectId_.settings.tsx:552
 msgid "No access"
 msgstr "Немає доступу"
 
@@ -1324,13 +1343,9 @@ msgstr "Diff недоступний"
 msgid "No groups available"
 msgstr "Немає доступних груп"
 
-#: src/features/objects/components/create-object-dialog.tsx:362
+#: src/features/objects/components/create-object-dialog.tsx:363
 msgid "No item types can be created yet. Create the required parent items first."
 msgstr "Жоден тип елемента ще не можна створити. Спершу створіть необхідні батьківські елементи."
-
-#: ../../../lib/web/src/components/language-picker.tsx:186
-#~ msgid "No matches."
-#~ msgstr "Збігів немає."
 
 #: src/features/objects/components/object-links.tsx:302
 msgid "No matching objects"
@@ -1366,8 +1381,8 @@ msgstr "Немає доступних репозиторіїв"
 msgid "No results found."
 msgstr "Результатів не знайдено."
 
-#: src/features/board/components/board-container.tsx:810
-#: src/features/board/components/board-container.tsx:855
+#: src/features/board/components/board-container.tsx:813
+#: src/features/board/components/board-container.tsx:858
 msgid "No status"
 msgstr "Немає статусу"
 
@@ -1399,11 +1414,11 @@ msgstr "Немає переглядів"
 #: src/features/editor/components/edit-dialogs.tsx:489
 #: src/features/editor/components/edit-dialogs.tsx:753
 #: src/features/editor/components/edit-dialogs.tsx:756
-#: src/features/objects/components/create-object-dialog.tsx:378
-#: src/features/objects/components/create-object-dialog.tsx:385
-#: src/features/objects/components/object-detail-panel.tsx:494
-#: src/features/objects/components/object-detail-panel.tsx:507
-#: src/features/objects/components/object-detail-panel.tsx:512
+#: src/features/objects/components/create-object-dialog.tsx:379
+#: src/features/objects/components/create-object-dialog.tsx:386
+#: src/features/objects/components/object-detail-panel.tsx:496
+#: src/features/objects/components/object-detail-panel.tsx:509
+#: src/features/objects/components/object-detail-panel.tsx:514
 msgid "None"
 msgstr "Немає"
 
@@ -1415,7 +1430,7 @@ msgstr "Звичайний"
 msgid "Not configured"
 msgstr "Не налаштовано"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:520
+#: src/routes/_authenticated/$projectId_.settings.tsx:521
 msgid "Not set"
 msgstr "Не встановлено"
 
@@ -1435,7 +1450,7 @@ msgstr "Сповіщення"
 msgid "Number"
 msgstr "Число"
 
-#: ../../../lib/web/src/features/errors/not-found-error.tsx:12
+#: ../../../lib/web/src/features/errors/not-found-error.tsx:13
 msgid "Oops! Page Not Found!"
 msgstr "Ой! Сторінку не знайдено!"
 
@@ -1470,7 +1485,7 @@ msgstr "Відкрити меню навігації"
 msgid "Open option actions"
 msgstr "Відкрити дії параметра"
 
-#: src/routes/_authenticated/$projectId/index.tsx:809
+#: src/routes/_authenticated/$projectId/index.tsx:808
 msgid "Open page actions"
 msgstr "Відкрити дії сторінки"
 
@@ -1508,8 +1523,8 @@ msgstr "Інше"
 msgid "Owner"
 msgstr "Власник"
 
-#: src/features/objects/components/create-object-dialog.tsx:370
-#: src/features/objects/components/object-detail-panel.tsx:490
+#: src/features/objects/components/create-object-dialog.tsx:371
+#: src/features/objects/components/object-detail-panel.tsx:492
 msgid "Parent"
 msgstr "Батьківський"
 
@@ -1517,8 +1532,8 @@ msgstr "Батьківський"
 msgid "Permanently delete this project and all its content."
 msgstr "Остаточно видалити цей проєкт та весь його вміст."
 
-#: src/routes/_authenticated/$projectId/index.tsx:637
-#: src/routes/_authenticated/$projectId/index.tsx:671
+#: src/routes/_authenticated/$projectId/index.tsx:636
+#: src/routes/_authenticated/$projectId/index.tsx:670
 msgid "Please add one or more classes to the project design."
 msgstr "Будь ласка, додайте один або кілька класів до дизайну проєкту."
 
@@ -1546,7 +1561,7 @@ msgid "Profile"
 msgstr "Профіль"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:62
-#: src/routes/_authenticated/$projectId/index.tsx:91
+#: src/routes/_authenticated/$projectId/index.tsx:90
 msgid "Project"
 msgstr "Проєкт"
 
@@ -1585,7 +1600,7 @@ msgstr "Проєкти"
 msgid "Properties"
 msgstr "Властивості"
 
-#: src/routes/_authenticated/$projectId/index.tsx:833
+#: src/routes/_authenticated/$projectId/index.tsx:832
 msgid "Re-order columns"
 msgstr "Змінити порядок стовпців"
 
@@ -1699,6 +1714,7 @@ msgid "Required"
 msgstr "Обов'язково"
 
 #: ../../../lib/web/src/components/config-drawer.tsx:77
+#: ../../../lib/web/src/components/data-table/toolbar.tsx:78
 msgid "Reset"
 msgstr "Скинути"
 
@@ -1737,7 +1753,7 @@ msgstr "Субота"
 
 #: src/features/editor/components/option-dialog.tsx:138
 #: src/features/objects/components/comment-thread.tsx:179
-#: src/routes/_authenticated/$projectId/index.tsx:897
+#: src/routes/_authenticated/$projectId/index.tsx:893
 msgid "Save"
 msgstr "Зберегти"
 
@@ -1786,10 +1802,6 @@ msgstr "Шукайте, відстежуйте та сортуйте цей ви
 #: src/components/view-options-bar.tsx:214
 msgid "Search..."
 msgstr "Пошук..."
-
-#: ../../../lib/web/src/components/language-picker.tsx:184
-#~ msgid "Search…"
-#~ msgstr "Пошук…"
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:174
 #: ../../../lib/web/src/components/search-entity-page.tsx:149
@@ -1858,6 +1870,10 @@ msgstr "Виберіть тему"
 msgid "Select..."
 msgstr "Виберіть..."
 
+#: ../../../lib/web/src/features/accounts/account-verify.tsx:95
+msgid "Send again"
+msgstr ""
+
 #: ../../../lib/web/src/lib/preference-utils.ts:133
 msgid "Serif"
 msgstr "Із засічками"
@@ -1885,7 +1901,7 @@ msgstr "Встановити пункти відправлення та приз
 #: src/routes/_authenticated/$projectId_.settings.tsx:76
 #: src/routes/_authenticated/$projectId_.settings.tsx:166
 #: src/routes/_authenticated/$projectId_.settings.tsx:189
-#: src/routes/_authenticated/$projectId/index.tsx:854
+#: src/routes/_authenticated/$projectId/index.tsx:853
 msgid "Settings"
 msgstr "Налаштування"
 
@@ -1958,6 +1974,7 @@ msgid "Stay tuned though!"
 msgstr "Слідкуйте за оновленнями!"
 
 #: src/features/objects/components/object-detail-panel.tsx:408
+#: src/features/objects/components/object-detail-panel.tsx:409
 msgid "Stop watching"
 msgstr "Припинити стеження"
 
@@ -2029,7 +2046,7 @@ msgid "Theme Settings"
 msgstr "Налаштування теми"
 
 #. placeholder {0}: request.target
-#: src/features/requests/components/request-panel.tsx:382
+#: src/features/requests/components/request-panel.tsx:383
 msgid "This merge request has been merged into {0}."
 msgstr "Цей запит об'єднання було об'єднано в {0}."
 
@@ -2054,13 +2071,9 @@ msgid "This will permanently delete \"{projectName}\" and all its objects, comme
 msgstr "Це остаточно видалить «{projectName}» та всі його обʼєкти, коментарі й вкладення. Цю дію не можна скасувати."
 
 #. placeholder {0}: project.project.name
-#: src/routes/_authenticated/$projectId/index.tsx:1003
+#: src/routes/_authenticated/$projectId/index.tsx:999
 msgid "This will remove \"{0}\" from your sidebar and stop updates for this project."
 msgstr "Це видалить «{0}» з вашої бічної панелі та припинить оновлення цього проєкту."
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:419
-#~ msgid "This will remove \"{projectName}\" from your sidebar and stop updates for this project."
-#~ msgstr "Це видалить «{projectName}» з вашої бічної панелі та припинить оновлення цього проєкту."
 
 #. placeholder {0}: pendingImport?.label
 #: src/routes/_authenticated/$projectId/design.tsx:200
@@ -2085,10 +2098,13 @@ msgid "Toggle columns"
 msgstr "Перемкнути стовпці"
 
 #: ../../../lib/web/src/components/layout/right-panel.tsx:227
-msgid "Toggle Right Panel"
-msgstr "Перемкнути праву панель"
+msgid "Toggle right panel"
+msgstr ""
 
 #: ../../../lib/web/src/components/ui/sidebar.tsx:312
+msgid "Toggle sidebar"
+msgstr ""
+
 #: ../../../lib/web/src/components/ui/sidebar.tsx:324
 #: ../../../lib/web/src/components/ui/sidebar.tsx:327
 msgid "Toggle Sidebar"
@@ -2126,7 +2142,7 @@ msgstr "Спробуйте змінити пошукові терміни"
 
 #: ../../../lib/web/src/features/errors/general-error.tsx:125
 #: ../../../lib/web/src/features/errors/general-error.tsx:165
-#: ../../../lib/web/src/features/errors/maintenance-error.tsx:15
+#: ../../../lib/web/src/features/errors/maintenance-error.tsx:16
 msgid "Try again"
 msgstr "Спробувати знову"
 
@@ -2160,7 +2176,7 @@ msgstr "Не вдається перенаправити на сторінку �
 msgid "Unassigned"
 msgstr "Не призначено"
 
-#: ../../../lib/web/src/features/errors/unauthorized-error.tsx:12
+#: ../../../lib/web/src/features/errors/unauthorized-error.tsx:13
 msgid "Unauthorized Access"
 msgstr "Неавторизований доступ"
 
@@ -2175,20 +2191,16 @@ msgstr "Сполучені Штати"
 #: src/features/projects/pages/projects-list-page.tsx:146
 #: src/features/projects/pages/projects-list-page.tsx:163
 #: src/features/projects/pages/projects-list-page.tsx:165
-#: src/routes/_authenticated/$projectId/index.tsx:862
-#: src/routes/_authenticated/$projectId/index.tsx:1004
+#: src/routes/_authenticated/$projectId/index.tsx:859
+#: src/routes/_authenticated/$projectId/index.tsx:1000
 msgid "Unsubscribe"
 msgstr "Відписатися"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:379
-#~ msgid "Unsubscribe from project"
-#~ msgstr "Відписатися від проєкту"
-
-#: src/routes/_authenticated/$projectId/index.tsx:1002
+#: src/routes/_authenticated/$projectId/index.tsx:998
 msgid "Unsubscribe from project?"
 msgstr "Відписатися від проєкту?"
 
-#: src/routes/_authenticated/$projectId/index.tsx:541
+#: src/routes/_authenticated/$projectId/index.tsx:540
 msgid "Unsubscribed"
 msgstr "Відписано"
 
@@ -2201,7 +2213,7 @@ msgstr "Не перевірено"
 msgid "Updated"
 msgstr "Оновлено"
 
-#: src/features/objects/components/create-object-dialog.tsx:469
+#: src/features/objects/components/create-object-dialog.tsx:470
 #: src/features/objects/components/object-attachments.tsx:210
 msgid "Upload"
 msgstr "Завантажити"
@@ -2234,6 +2246,7 @@ msgid "Verification failed"
 msgstr "Перевірка не вдалася"
 
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:164
+#: ../../../lib/web/src/features/accounts/account-verify.tsx:106
 msgid "Verify"
 msgstr "Перевірити"
 
@@ -2261,11 +2274,11 @@ msgstr "Переглянути та змінити деталі елемента
 msgid "View controls"
 msgstr "Елементи керування виглядом"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:549
+#: src/routes/_authenticated/$projectId_.settings.tsx:551
 msgid "View only"
 msgstr "Лише перегляд"
 
-#: src/routes/_authenticated/$projectId/index.tsx:818
+#: src/routes/_authenticated/$projectId/index.tsx:817
 msgid "View options"
 msgstr "Параметри перегляду"
 
@@ -2274,6 +2287,7 @@ msgid "Views"
 msgstr "Перегляди"
 
 #: src/features/objects/components/object-detail-panel.tsx:408
+#: src/features/objects/components/object-detail-panel.tsx:409
 msgid "Watch"
 msgstr "Стежити"
 
@@ -2285,11 +2299,11 @@ msgstr "Відстежується"
 msgid "Watched only"
 msgstr "Лише відстежувані"
 
-#: ../../../lib/web/src/features/errors/maintenance-error.tsx:12
+#: ../../../lib/web/src/features/errors/maintenance-error.tsx:13
 msgid "We'll be back online shortly."
 msgstr "Ми скоро повернемося онлайн."
 
-#: ../../../lib/web/src/features/errors/maintenance-error.tsx:9
+#: ../../../lib/web/src/features/errors/maintenance-error.tsx:10
 msgid "Website is under maintenance!"
 msgstr "Вебсайт на технічному обслуговуванні!"
 
@@ -2297,7 +2311,7 @@ msgstr "Вебсайт на технічному обслуговуванні!"
 msgid "Wednesday"
 msgstr "Середа"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:547
+#: src/routes/_authenticated/$projectId_.settings.tsx:549
 msgid "Write, comment, and view"
 msgstr "Писати, коментувати та переглядати"
 

@@ -17,7 +17,7 @@ msgstr ""
 msgid "(itself)"
 msgstr "(ise)"
 
-#: src/features/board/components/board-container.tsx:739
+#: src/features/board/components/board-container.tsx:742
 msgid "[not set]"
 msgstr "[määramata]"
 
@@ -73,7 +73,7 @@ msgstr "Absoluutne (kuupäev ja kellaaeg)"
 msgid "Access"
 msgstr "Juurdepääs"
 
-#: ../../../lib/web/src/features/errors/forbidden.tsx:12
+#: ../../../lib/web/src/features/errors/forbidden.tsx:13
 msgid "Access Forbidden"
 msgstr "Juurdepääs keelatud"
 
@@ -81,19 +81,19 @@ msgstr "Juurdepääs keelatud"
 msgid "Access level"
 msgstr "Juurdepääsu tase"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:639
+#: src/routes/_authenticated/$projectId_.settings.tsx:641
 msgid "Access level updated"
 msgstr "Juurdepääsu tase uuendatud"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:648
+#: src/routes/_authenticated/$projectId_.settings.tsx:650
 msgid "Access Management"
 msgstr "Juurdepääsu haldus"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:628
+#: src/routes/_authenticated/$projectId_.settings.tsx:630
 msgid "Access removed"
 msgstr "Juurdepääs eemaldatud"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:616
+#: src/routes/_authenticated/$projectId_.settings.tsx:618
 msgid "Access set for {subjectName}"
 msgstr "Juurdepääs määratud kasutajale {subjectName}"
 
@@ -117,7 +117,8 @@ msgstr "Konto kinnitatud"
 msgid "Activity"
 msgstr "Tegevus"
 
-#: src/features/objects/components/field-editor.tsx:534
+#: ../../../lib/web/src/features/accounts/account-add.tsx:193
+#: src/features/objects/components/field-editor.tsx:535
 #: src/features/requests/components/request-panel.tsx:100
 msgid "Add"
 msgstr "Lisa"
@@ -151,18 +152,19 @@ msgstr "Lisa konto teavituste saamiseks ja teenuste kasutamiseks."
 msgid "Add checklist item"
 msgstr "Lisa kontrollnimekirja kirje"
 
+#: src/features/editor/components/design-editor.tsx:505
 #: src/features/editor/components/edit-dialogs.tsx:690
 #: src/features/editor/components/edit-dialogs.tsx:887
 msgid "Add class"
 msgstr "Lisa klass"
 
-#: src/routes/_authenticated/$projectId/index.tsx:829
-#: src/routes/_authenticated/$projectId/index.tsx:996
+#: src/routes/_authenticated/$projectId/index.tsx:828
+#: src/routes/_authenticated/$projectId/index.tsx:992
 msgid "Add column"
 msgstr "Lisa veerg"
 
 #: src/features/editor/components/add-dialogs.tsx:97
-#: src/features/editor/components/add-dialogs.tsx:214
+#: src/features/editor/components/add-dialogs.tsx:215
 #: src/features/editor/components/edit-dialogs.tsx:882
 msgid "Add field"
 msgstr "Lisa väli"
@@ -179,15 +181,16 @@ msgstr "Lisa link"
 msgid "Add new account"
 msgstr "Lisa uus konto"
 
-#: src/features/editor/components/edit-dialogs.tsx:1112
+#: src/features/editor/components/add-dialogs.tsx:200
+#: src/features/editor/components/edit-dialogs.tsx:1113
 #: src/features/editor/components/option-dialog.tsx:81
 #: src/features/editor/components/option-dialog.tsx:143
 msgid "Add option"
 msgstr "Lisa valik"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:655
-msgid "Add Rule"
-msgstr "Lisa reegel"
+#: src/routes/_authenticated/$projectId_.settings.tsx:657
+msgid "Add rule"
+msgstr ""
 
 #: ../../../lib/web/src/components/post-tags.tsx:119
 msgid "Add tag..."
@@ -202,6 +205,7 @@ msgid "Add to existing notifications"
 msgstr "Lisa olemasolevatele teavitustele"
 
 #: ../../../lib/web/src/components/view-tabs.tsx:57
+#: src/features/editor/components/design-editor.tsx:456
 #: src/features/editor/components/edit-dialogs.tsx:266
 #: src/features/editor/components/edit-dialogs.tsx:511
 msgid "Add view"
@@ -240,7 +244,7 @@ msgstr "Luba sortimine"
 msgid "Are you sure you want to delete \"{0}\"?"
 msgstr "Kas oled kindel, et soovid kustutada \"{0}\"?"
 
-#: src/features/objects/components/object-detail-panel.tsx:600
+#: src/features/objects/components/object-detail-panel.tsx:602
 msgid "Are you sure you want to delete \"{title}\"? This action cannot be undone."
 msgstr "Kas oled kindel, et soovid kustutada \"{title}\"? Seda toimingut ei saa tagasi võtta."
 
@@ -287,11 +291,11 @@ msgstr "Saadaolevad klahvikombinatsioonid"
 msgid "Back"
 msgstr "Tagasi"
 
-#: ../../../lib/web/src/features/errors/forbidden.tsx:21
-#: ../../../lib/web/src/features/errors/not-found-error.tsx:21
-#: ../../../lib/web/src/features/errors/unauthorized-error.tsx:21
-msgid "Back to Home"
-msgstr "Tagasi avalehele"
+#: ../../../lib/web/src/features/errors/forbidden.tsx:23
+#: ../../../lib/web/src/features/errors/not-found-error.tsx:23
+#: ../../../lib/web/src/features/errors/unauthorized-error.tsx:23
+msgid "Back to home"
+msgstr ""
 
 #: src/routes/_authenticated/$projectId_.settings.tsx:168
 #: src/routes/_authenticated/$projectId_.settings.tsx:191
@@ -302,7 +306,7 @@ msgid "Back to project"
 msgstr "Tagasi projekti"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:64
-#: src/routes/_authenticated/$projectId/index.tsx:93
+#: src/routes/_authenticated/$projectId/index.tsx:92
 msgid "Back to projects"
 msgstr "Tagasi projektide juurde"
 
@@ -347,9 +351,13 @@ msgstr "Saab olla alamliik"
 #: src/features/objects/components/comment-thread.tsx:168
 #: src/features/projects/components/create-project-dialog.tsx:208
 #: src/routes/_authenticated/$projectId/design.tsx:340
-#: src/routes/_authenticated/$projectId/index.tsx:890
+#: src/routes/_authenticated/$projectId/index.tsx:886
 msgid "Cancel"
 msgstr "Tühista"
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:507
+msgid "Cancel edit"
+msgstr ""
 
 #: src/features/objects/components/comment-thread.tsx:318
 #: src/features/objects/components/comment-thread.tsx:319
@@ -404,7 +412,7 @@ msgstr "Vali süsteemi eelistus, hele või tume režiim"
 msgid "Choose language"
 msgstr "Vali keel"
 
-#: src/features/editor/components/design-editor.tsx:499
+#: src/features/editor/components/design-editor.tsx:500
 msgid "Classes"
 msgstr "Klassid"
 
@@ -433,9 +441,11 @@ msgstr "Tühjenda valik (Escape)"
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:318
 #: ../../../lib/web/src/components/ui/sheet.tsx:76
 #: src/features/objects/components/create-object-dialog.tsx:350
+#: src/features/objects/components/create-object-dialog.tsx:351
 msgid "Close"
 msgstr "Sulge"
 
+#: src/features/editor/components/add-dialogs.tsx:99
 #: src/features/editor/components/edit-dialogs.tsx:269
 #: src/features/editor/components/edit-dialogs.tsx:693
 msgid "Close dialog"
@@ -446,8 +456,8 @@ msgid "Close navigation"
 msgstr "Sulge navigatsioon"
 
 #: ../../../lib/web/src/components/layout/right-panel.tsx:254
-msgid "Close Panel"
-msgstr "Sulge paneel"
+msgid "Close panel"
+msgstr ""
 
 #: src/components/keyboard-shortcuts-help.tsx:31
 msgid "Close panel / cancel"
@@ -477,7 +487,7 @@ msgstr "Mugav"
 msgid "Coming Soon!"
 msgstr "Tulekul!"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:548
+#: src/routes/_authenticated/$projectId_.settings.tsx:550
 msgid "Comment and view"
 msgstr "Kommenteeri ja vaata"
 
@@ -520,7 +530,7 @@ msgstr "Kontekstuaalne teave ja üksikasjad."
 msgid "Continue"
 msgstr "Jätka"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:649
+#: src/routes/_authenticated/$projectId_.settings.tsx:651
 msgid "Control who can view and interact with this project"
 msgstr "Halda, kes saab seda projekti vaadata ja sellega suhelda"
 
@@ -539,7 +549,7 @@ msgstr "Selle dokumendi laadimine ebaõnnestus. Palun proovi hiljem uuesti."
 #: src/features/board/components/board-column.tsx:530
 #: src/features/board/components/board-column.tsx:668
 #: src/features/objects/components/create-object-dialog.tsx:342
-#: src/features/objects/components/create-object-dialog.tsx:485
+#: src/features/objects/components/create-object-dialog.tsx:486
 #: src/features/tree/components/tree-view.tsx:367
 msgid "Create"
 msgstr "Loo"
@@ -570,7 +580,7 @@ msgstr "Loo projekt"
 msgid "Created"
 msgstr "Loodud"
 
-#: src/features/objects/components/create-object-dialog.tsx:485
+#: src/features/objects/components/create-object-dialog.tsx:486
 #: src/features/projects/components/create-project-dialog.tsx:286
 msgid "Creating..."
 msgstr "Loomine..."
@@ -609,7 +619,7 @@ msgstr "Vaikimisi sortimine"
 #: src/features/objects/components/comment-thread.tsx:228
 #: src/features/objects/components/comment-thread.tsx:343
 #: src/features/objects/components/object-attachments.tsx:233
-#: src/features/objects/components/object-detail-panel.tsx:601
+#: src/features/objects/components/object-detail-panel.tsx:603
 #: src/features/requests/components/request-panel.tsx:129
 #: src/routes/_authenticated/$projectId_.settings.tsx:359
 msgid "Delete"
@@ -631,19 +641,23 @@ msgstr "Kustuta veerg"
 msgid "Delete comment"
 msgstr "Kustuta kommentaar"
 
-#: src/features/editor/components/edit-dialogs.tsx:1121
+#: src/features/editor/components/edit-dialogs.tsx:1122
 msgid "Delete field"
 msgstr "Kustuta väli"
 
-#: src/features/objects/components/object-detail-panel.tsx:422
-#: src/features/objects/components/object-detail-panel.tsx:599
+#: src/features/objects/components/object-detail-panel.tsx:423
+#: src/features/objects/components/object-detail-panel.tsx:424
+#: src/features/objects/components/object-detail-panel.tsx:601
 msgid "Delete item"
 msgstr "Kustuta kirje"
 
 #: src/features/requests/components/request-panel.tsx:127
 #: src/features/requests/components/request-panel.tsx:370
-#: src/features/requests/components/request-panel.tsx:390
-#: src/features/requests/components/request-panel.tsx:407
+#: src/features/requests/components/request-panel.tsx:371
+#: src/features/requests/components/request-panel.tsx:391
+#: src/features/requests/components/request-panel.tsx:392
+#: src/features/requests/components/request-panel.tsx:409
+#: src/features/requests/components/request-panel.tsx:410
 msgid "Delete merge request"
 msgstr "Kustuta liitmistaotlus"
 
@@ -681,7 +695,7 @@ msgstr "Kirjeldus"
 
 #: src/routes/_authenticated/$projectId/design.tsx:60
 #: src/routes/_authenticated/$projectId/design.tsx:128
-#: src/routes/_authenticated/$projectId/index.tsx:844
+#: src/routes/_authenticated/$projectId/index.tsx:843
 msgid "Design"
 msgstr "Disain"
 
@@ -689,7 +703,7 @@ msgstr "Disain"
 msgid "Design imported"
 msgstr "Disain imporditud"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:546
+#: src/routes/_authenticated/$projectId_.settings.tsx:548
 msgid "Design, write, comment, and view"
 msgstr "Disainida, kirjutada, kommenteerida ja vaadata"
 
@@ -720,8 +734,8 @@ msgstr "Diff: {source} → {target}"
 msgid "Direction"
 msgstr "Suund"
 
-#: src/routes/_authenticated/$projectId/index.tsx:912
-#: src/routes/_authenticated/$projectId/index.tsx:913
+#: src/routes/_authenticated/$projectId/index.tsx:908
+#: src/routes/_authenticated/$projectId/index.tsx:909
 msgid "Dismiss board hint"
 msgstr "Sulge laua vihje"
 
@@ -731,12 +745,12 @@ msgstr "Kuvab mobiilse külgriba."
 
 #: src/features/editor/components/edit-dialogs.tsx:516
 #: src/features/editor/components/edit-dialogs.tsx:892
-#: src/features/editor/components/edit-dialogs.tsx:1126
-#: src/features/objects/components/object-detail-panel.tsx:433
+#: src/features/editor/components/edit-dialogs.tsx:1127
+#: src/features/objects/components/object-detail-panel.tsx:435
 msgid "Done"
 msgstr "Tehtud"
 
-#: src/routes/_authenticated/$projectId/index.tsx:905
+#: src/routes/_authenticated/$projectId/index.tsx:901
 msgid "Double click on a column to add content"
 msgstr "Tee veerul topeltklikk, et lisada sisu"
 
@@ -753,7 +767,7 @@ msgstr "Laadi esmalt varukoopia alla"
 msgid "Draft"
 msgstr "Mustand"
 
-#: src/routes/_authenticated/$projectId/index.tsx:886
+#: src/routes/_authenticated/$projectId/index.tsx:882
 msgid "Drag columns to re-order them"
 msgstr "Lohista veerge ümberjärjestamiseks"
 
@@ -774,6 +788,7 @@ msgid "Edit class"
 msgstr "Muuda klassi"
 
 #: src/features/editor/components/edit-dialogs.tsx:1003
+#: src/routes/_authenticated/$projectId_.settings.tsx:529
 msgid "Edit field"
 msgstr "Muuda välja"
 
@@ -831,7 +846,7 @@ msgstr "Liitmise oleku kontroll ebaõnnestus"
 msgid "Failed to create class"
 msgstr "Klassi loomine ebaõnnestus"
 
-#: src/features/editor/components/design-editor.tsx:593
+#: src/features/editor/components/design-editor.tsx:595
 msgid "Failed to create field"
 msgstr "Välja loomine ebaõnnestus"
 
@@ -839,7 +854,7 @@ msgstr "Välja loomine ebaõnnestus"
 msgid "Failed to create link"
 msgstr "Lingi loomine ebaõnnestus"
 
-#: src/features/editor/components/design-editor.tsx:613
+#: src/features/editor/components/design-editor.tsx:615
 msgid "Failed to create option"
 msgstr "Valiku loomine ebaõnnestus"
 
@@ -884,7 +899,7 @@ msgid "Failed to load item"
 msgstr "Elemendi laadimine ebaõnnestus"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:40
-#: src/routes/_authenticated/$projectId/index.tsx:69
+#: src/routes/_authenticated/$projectId/index.tsx:68
 msgid "Failed to load project"
 msgstr "Projekti laadimine ebaõnnestus"
 
@@ -908,7 +923,7 @@ msgstr "Kommentaari postitamine ebaõnnestus"
 msgid "Failed to read file"
 msgstr "Faili lugemine ebaõnnestus"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:631
+#: src/routes/_authenticated/$projectId_.settings.tsx:633
 msgid "Failed to remove access"
 msgstr "Pääsu eemaldamine ebaõnnestus"
 
@@ -928,7 +943,7 @@ msgstr "Vaadete ümberjärjestamine ebaõnnestus"
 msgid "Failed to send verification code"
 msgstr "Kinnituskoodi saatmine ebaõnnestus"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:619
+#: src/routes/_authenticated/$projectId_.settings.tsx:621
 msgid "Failed to set access level"
 msgstr "Pääsutaseme määramine ebaõnnestus"
 
@@ -938,11 +953,11 @@ msgid "Failed to subscribe"
 msgstr "Tellimine ebaõnnestus"
 
 #: src/features/projects/pages/projects-list-page.tsx:48
-#: src/routes/_authenticated/$projectId/index.tsx:545
+#: src/routes/_authenticated/$projectId/index.tsx:544
 msgid "Failed to unsubscribe"
 msgstr "Tellimusest loobumine ebaõnnestus"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:642
+#: src/routes/_authenticated/$projectId_.settings.tsx:644
 msgid "Failed to update access level"
 msgstr "Pääsutaseme värskendamine ebaõnnestus"
 
@@ -970,7 +985,7 @@ msgstr "Manuse üleslaadimine ebaõnnestus"
 msgid "Fields"
 msgstr "Väljad"
 
-#: src/features/objects/components/create-object-dialog.tsx:428
+#: src/features/objects/components/create-object-dialog.tsx:429
 #: src/features/objects/components/object-attachments.tsx:106
 #: src/features/objects/components/object-attachments.tsx:123
 msgid "Files"
@@ -1017,11 +1032,11 @@ msgstr "Teemast"
 msgid "Full layout"
 msgstr "Täislaotus"
 
-#: ../../../lib/web/src/features/errors/forbidden.tsx:19
-#: ../../../lib/web/src/features/errors/not-found-error.tsx:19
-#: ../../../lib/web/src/features/errors/unauthorized-error.tsx:19
-msgid "Go Back"
-msgstr "Mine tagasi"
+#: ../../../lib/web/src/features/errors/forbidden.tsx:21
+#: ../../../lib/web/src/features/errors/not-found-error.tsx:21
+#: ../../../lib/web/src/features/errors/unauthorized-error.tsx:21
+msgid "Go back"
+msgstr ""
 
 #: ../../../lib/web/src/components/data-table/pagination.tsx:75
 msgid "Go to first page"
@@ -1034,6 +1049,10 @@ msgstr "Mine viimasele lehele"
 #: ../../../lib/web/src/components/data-table/pagination.tsx:112
 msgid "Go to next page"
 msgstr "Mine järgmisele lehele"
+
+#: ../../../lib/web/src/components/data-table/pagination.tsx:99
+msgid "Go to page {pageNumber}"
+msgstr ""
 
 #: ../../../lib/web/src/components/data-table/pagination.tsx:84
 msgid "Go to previous page"
@@ -1259,12 +1278,12 @@ msgstr "Nimi on kohustuslik"
 
 #: ../../../lib/web/src/components/ui/sort-selector.tsx:40
 #: src/features/objects/components/create-object-dialog.tsx:327
-#: src/routes/_authenticated/$projectId/index.tsx:783
-#: src/routes/_authenticated/$projectId/index.tsx:801
+#: src/routes/_authenticated/$projectId/index.tsx:782
+#: src/routes/_authenticated/$projectId/index.tsx:800
 msgid "New"
 msgstr "Uus"
 
-#: src/routes/_authenticated/$projectId/index.tsx:780
+#: src/routes/_authenticated/$projectId/index.tsx:779
 msgid "New {className}"
 msgstr "Uus {className}"
 
@@ -1276,11 +1295,11 @@ msgstr "Edasi"
 msgid "Next image"
 msgstr "Järgmine pilt"
 
-#: src/features/objects/components/create-object-dialog.tsx:395
+#: src/features/objects/components/create-object-dialog.tsx:396
 msgid "No {parentClassNames} to add to"
 msgstr "Pole {parentClassNames}, kuhu lisada"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:550
+#: src/routes/_authenticated/$projectId_.settings.tsx:552
 msgid "No access"
 msgstr "Juurdepääs puudub"
 
@@ -1324,13 +1343,9 @@ msgstr "Erinevus pole saadaval"
 msgid "No groups available"
 msgstr "Saadaolevaid gruppe pole"
 
-#: src/features/objects/components/create-object-dialog.tsx:362
+#: src/features/objects/components/create-object-dialog.tsx:363
 msgid "No item types can be created yet. Create the required parent items first."
 msgstr "Ühtegi tüüpi ei saa veel luua. Loo kõigepealt vajalikud vanemüksused."
-
-#: ../../../lib/web/src/components/language-picker.tsx:186
-#~ msgid "No matches."
-#~ msgstr "Vasteid pole."
 
 #: src/features/objects/components/object-links.tsx:302
 msgid "No matching objects"
@@ -1366,8 +1381,8 @@ msgstr "Saadaolevaid repositooriume pole"
 msgid "No results found."
 msgstr "Tulemusi ei leitud."
 
-#: src/features/board/components/board-container.tsx:810
-#: src/features/board/components/board-container.tsx:855
+#: src/features/board/components/board-container.tsx:813
+#: src/features/board/components/board-container.tsx:858
 msgid "No status"
 msgstr "Olek puudub"
 
@@ -1399,11 +1414,11 @@ msgstr "Vaatamisi pole"
 #: src/features/editor/components/edit-dialogs.tsx:489
 #: src/features/editor/components/edit-dialogs.tsx:753
 #: src/features/editor/components/edit-dialogs.tsx:756
-#: src/features/objects/components/create-object-dialog.tsx:378
-#: src/features/objects/components/create-object-dialog.tsx:385
-#: src/features/objects/components/object-detail-panel.tsx:494
-#: src/features/objects/components/object-detail-panel.tsx:507
-#: src/features/objects/components/object-detail-panel.tsx:512
+#: src/features/objects/components/create-object-dialog.tsx:379
+#: src/features/objects/components/create-object-dialog.tsx:386
+#: src/features/objects/components/object-detail-panel.tsx:496
+#: src/features/objects/components/object-detail-panel.tsx:509
+#: src/features/objects/components/object-detail-panel.tsx:514
 msgid "None"
 msgstr "Puudub"
 
@@ -1415,7 +1430,7 @@ msgstr "Tavaline"
 msgid "Not configured"
 msgstr "Pole seadistatud"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:520
+#: src/routes/_authenticated/$projectId_.settings.tsx:521
 msgid "Not set"
 msgstr "Pole määratud"
 
@@ -1435,7 +1450,7 @@ msgstr "Teavitused"
 msgid "Number"
 msgstr "Number"
 
-#: ../../../lib/web/src/features/errors/not-found-error.tsx:12
+#: ../../../lib/web/src/features/errors/not-found-error.tsx:13
 msgid "Oops! Page Not Found!"
 msgstr "Oih! Lehte ei leitud!"
 
@@ -1470,7 +1485,7 @@ msgstr "Ava navigatsioonimenüü"
 msgid "Open option actions"
 msgstr "Ava valiku tegevused"
 
-#: src/routes/_authenticated/$projectId/index.tsx:809
+#: src/routes/_authenticated/$projectId/index.tsx:808
 msgid "Open page actions"
 msgstr "Ava lehe tegevused"
 
@@ -1508,8 +1523,8 @@ msgstr "Muu"
 msgid "Owner"
 msgstr "Omanik"
 
-#: src/features/objects/components/create-object-dialog.tsx:370
-#: src/features/objects/components/object-detail-panel.tsx:490
+#: src/features/objects/components/create-object-dialog.tsx:371
+#: src/features/objects/components/object-detail-panel.tsx:492
 msgid "Parent"
 msgstr "Vanem"
 
@@ -1517,8 +1532,8 @@ msgstr "Vanem"
 msgid "Permanently delete this project and all its content."
 msgstr "Kustuta see projekt ja kogu selle sisu jäädavalt."
 
-#: src/routes/_authenticated/$projectId/index.tsx:637
-#: src/routes/_authenticated/$projectId/index.tsx:671
+#: src/routes/_authenticated/$projectId/index.tsx:636
+#: src/routes/_authenticated/$projectId/index.tsx:670
 msgid "Please add one or more classes to the project design."
 msgstr "Lisa projekti kujundusele üks või rohkem klassi."
 
@@ -1546,7 +1561,7 @@ msgid "Profile"
 msgstr "Profiil"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:62
-#: src/routes/_authenticated/$projectId/index.tsx:91
+#: src/routes/_authenticated/$projectId/index.tsx:90
 msgid "Project"
 msgstr "Projekt"
 
@@ -1585,7 +1600,7 @@ msgstr "Projektid"
 msgid "Properties"
 msgstr "Atribuudid"
 
-#: src/routes/_authenticated/$projectId/index.tsx:833
+#: src/routes/_authenticated/$projectId/index.tsx:832
 msgid "Re-order columns"
 msgstr "Järjesta veerud ümber"
 
@@ -1699,6 +1714,7 @@ msgid "Required"
 msgstr "Kohustuslik"
 
 #: ../../../lib/web/src/components/config-drawer.tsx:77
+#: ../../../lib/web/src/components/data-table/toolbar.tsx:78
 msgid "Reset"
 msgstr "Lähtesta"
 
@@ -1737,7 +1753,7 @@ msgstr "Laupäev"
 
 #: src/features/editor/components/option-dialog.tsx:138
 #: src/features/objects/components/comment-thread.tsx:179
-#: src/routes/_authenticated/$projectId/index.tsx:897
+#: src/routes/_authenticated/$projectId/index.tsx:893
 msgid "Save"
 msgstr "Salvesta"
 
@@ -1786,10 +1802,6 @@ msgstr "Otsi, jälgi ja sorteeri seda vaadet."
 #: src/components/view-options-bar.tsx:214
 msgid "Search..."
 msgstr "Otsi..."
-
-#: ../../../lib/web/src/components/language-picker.tsx:184
-#~ msgid "Search…"
-#~ msgstr "Otsi…"
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:174
 #: ../../../lib/web/src/components/search-entity-page.tsx:149
@@ -1858,6 +1870,10 @@ msgstr "Vali teema eelistus"
 msgid "Select..."
 msgstr "Vali..."
 
+#: ../../../lib/web/src/features/accounts/account-verify.tsx:95
+msgid "Send again"
+msgstr ""
+
 #: ../../../lib/web/src/lib/preference-utils.ts:133
 msgid "Serif"
 msgstr "Seriif"
@@ -1885,7 +1901,7 @@ msgstr "Määra lähtekoht ja sihtkoht"
 #: src/routes/_authenticated/$projectId_.settings.tsx:76
 #: src/routes/_authenticated/$projectId_.settings.tsx:166
 #: src/routes/_authenticated/$projectId_.settings.tsx:189
-#: src/routes/_authenticated/$projectId/index.tsx:854
+#: src/routes/_authenticated/$projectId/index.tsx:853
 msgid "Settings"
 msgstr "Seaded"
 
@@ -1958,6 +1974,7 @@ msgid "Stay tuned though!"
 msgstr "Aga jää kuulma!"
 
 #: src/features/objects/components/object-detail-panel.tsx:408
+#: src/features/objects/components/object-detail-panel.tsx:409
 msgid "Stop watching"
 msgstr "Lõpeta jälgimine"
 
@@ -2029,7 +2046,7 @@ msgid "Theme Settings"
 msgstr "Teema seaded"
 
 #. placeholder {0}: request.target
-#: src/features/requests/components/request-panel.tsx:382
+#: src/features/requests/components/request-panel.tsx:383
 msgid "This merge request has been merged into {0}."
 msgstr "See ühendamistaotlus on liidetud {0}-sse."
 
@@ -2054,13 +2071,9 @@ msgid "This will permanently delete \"{projectName}\" and all its objects, comme
 msgstr "See kustutab jäädavalt \"{projectName}\" ja kõik selle objektid, kommentaarid ja manused. Seda toimingut ei saa tagasi võtta."
 
 #. placeholder {0}: project.project.name
-#: src/routes/_authenticated/$projectId/index.tsx:1003
+#: src/routes/_authenticated/$projectId/index.tsx:999
 msgid "This will remove \"{0}\" from your sidebar and stop updates for this project."
 msgstr "See eemaldab \"{0}\" sinu külgribalt ja peatab selle projekti uuendused."
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:419
-#~ msgid "This will remove \"{projectName}\" from your sidebar and stop updates for this project."
-#~ msgstr "See eemaldab \"{projectName}\" sinu külgribalt ja peatab selle projekti uuendused."
 
 #. placeholder {0}: pendingImport?.label
 #: src/routes/_authenticated/$projectId/design.tsx:200
@@ -2085,10 +2098,13 @@ msgid "Toggle columns"
 msgstr "Lülita veerud"
 
 #: ../../../lib/web/src/components/layout/right-panel.tsx:227
-msgid "Toggle Right Panel"
-msgstr "Lülita parem paneel"
+msgid "Toggle right panel"
+msgstr ""
 
 #: ../../../lib/web/src/components/ui/sidebar.tsx:312
+msgid "Toggle sidebar"
+msgstr ""
+
 #: ../../../lib/web/src/components/ui/sidebar.tsx:324
 #: ../../../lib/web/src/components/ui/sidebar.tsx:327
 msgid "Toggle Sidebar"
@@ -2126,7 +2142,7 @@ msgstr "Proovi otsingusõnu kohandada"
 
 #: ../../../lib/web/src/features/errors/general-error.tsx:125
 #: ../../../lib/web/src/features/errors/general-error.tsx:165
-#: ../../../lib/web/src/features/errors/maintenance-error.tsx:15
+#: ../../../lib/web/src/features/errors/maintenance-error.tsx:16
 msgid "Try again"
 msgstr "Proovi uuesti"
 
@@ -2160,7 +2176,7 @@ msgstr "Sisselogimisele ei õnnestu ümber suunata. Palun proovi uuesti."
 msgid "Unassigned"
 msgstr "Määramata"
 
-#: ../../../lib/web/src/features/errors/unauthorized-error.tsx:12
+#: ../../../lib/web/src/features/errors/unauthorized-error.tsx:13
 msgid "Unauthorized Access"
 msgstr "Volitamata juurdepääs"
 
@@ -2175,20 +2191,16 @@ msgstr "Ameerika Ühendriigid"
 #: src/features/projects/pages/projects-list-page.tsx:146
 #: src/features/projects/pages/projects-list-page.tsx:163
 #: src/features/projects/pages/projects-list-page.tsx:165
-#: src/routes/_authenticated/$projectId/index.tsx:862
-#: src/routes/_authenticated/$projectId/index.tsx:1004
+#: src/routes/_authenticated/$projectId/index.tsx:859
+#: src/routes/_authenticated/$projectId/index.tsx:1000
 msgid "Unsubscribe"
 msgstr "Tühista tellimus"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:379
-#~ msgid "Unsubscribe from project"
-#~ msgstr "Tühista projekti tellimus"
-
-#: src/routes/_authenticated/$projectId/index.tsx:1002
+#: src/routes/_authenticated/$projectId/index.tsx:998
 msgid "Unsubscribe from project?"
 msgstr "Tühistada projekti tellimus?"
 
-#: src/routes/_authenticated/$projectId/index.tsx:541
+#: src/routes/_authenticated/$projectId/index.tsx:540
 msgid "Unsubscribed"
 msgstr "Tellimus tühistatud"
 
@@ -2201,7 +2213,7 @@ msgstr "Kontrollimata"
 msgid "Updated"
 msgstr "Uuendatud"
 
-#: src/features/objects/components/create-object-dialog.tsx:469
+#: src/features/objects/components/create-object-dialog.tsx:470
 #: src/features/objects/components/object-attachments.tsx:210
 msgid "Upload"
 msgstr "Lae üles"
@@ -2234,6 +2246,7 @@ msgid "Verification failed"
 msgstr "Kontrollimine ebaõnnestus"
 
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:164
+#: ../../../lib/web/src/features/accounts/account-verify.tsx:106
 msgid "Verify"
 msgstr "Kontrolli"
 
@@ -2261,11 +2274,11 @@ msgstr "Vaata ja muuda elemendi üksikasju"
 msgid "View controls"
 msgstr "Vaate juhtelemendid"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:549
+#: src/routes/_authenticated/$projectId_.settings.tsx:551
 msgid "View only"
 msgstr "Ainult vaatamine"
 
-#: src/routes/_authenticated/$projectId/index.tsx:818
+#: src/routes/_authenticated/$projectId/index.tsx:817
 msgid "View options"
 msgstr "Vaate valikud"
 
@@ -2274,6 +2287,7 @@ msgid "Views"
 msgstr "Vaatamised"
 
 #: src/features/objects/components/object-detail-panel.tsx:408
+#: src/features/objects/components/object-detail-panel.tsx:409
 msgid "Watch"
 msgstr "Jälgi"
 
@@ -2285,11 +2299,11 @@ msgstr "Jälgitud"
 msgid "Watched only"
 msgstr "Ainult jälgitud"
 
-#: ../../../lib/web/src/features/errors/maintenance-error.tsx:12
+#: ../../../lib/web/src/features/errors/maintenance-error.tsx:13
 msgid "We'll be back online shortly."
 msgstr "Oleme peagi taas võrgus."
 
-#: ../../../lib/web/src/features/errors/maintenance-error.tsx:9
+#: ../../../lib/web/src/features/errors/maintenance-error.tsx:10
 msgid "Website is under maintenance!"
 msgstr "Veebileht on hooldustöödel!"
 
@@ -2297,7 +2311,7 @@ msgstr "Veebileht on hooldustöödel!"
 msgid "Wednesday"
 msgstr "Kolmapäev"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:547
+#: src/routes/_authenticated/$projectId_.settings.tsx:549
 msgid "Write, comment, and view"
 msgstr "Kirjuta, kommenteeri ja vaata"
 

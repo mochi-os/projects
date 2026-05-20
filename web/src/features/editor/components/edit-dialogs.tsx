@@ -1109,6 +1109,7 @@ export function EditFieldDialog({
                 ))}
               </div>
               <Button type="button" variant="outline" size="sm" onClick={onAddOption}>
+                <Plus className="size-3.5" />
                 <Trans>Add option</Trans>
               </Button>
             </div>

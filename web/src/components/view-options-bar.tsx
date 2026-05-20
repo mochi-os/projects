@@ -101,7 +101,7 @@ export function ViewOptionsBar({
           </div>
           <div className="flex shrink-0 items-center border-s px-2">
             <Button
-              variant={hasActiveMobileControls ? "secondary" : "ghost"}
+              variant={hasActiveMobileControls ? "default" : "ghost"}
               size="icon"
               className="size-9"
               aria-label={t`Open view controls`}
@@ -136,7 +136,7 @@ export function ViewOptionsBar({
             </div>
 
             <Button
-              variant={filters.watched ? "secondary" : "outline"}
+              variant={filters.watched ? "default" : "outline"}
               className="w-full justify-start"
               aria-label={t`Toggle watched filter`}
               onClick={() => onFilterChange({ ...filters, watched: !filters.watched })}
@@ -218,7 +218,7 @@ export function ViewOptionsBar({
         />
 
         <Button
-          variant={filters.watched ? "secondary" : "ghost"}
+          variant={filters.watched ? "default" : "ghost"}
           size="sm"
           className="px-2 text-xs"
           aria-label={t`Toggle watched filter`}

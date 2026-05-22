@@ -3,7 +3,7 @@
 
 import { useEffect } from "react";
 import { useQueryClient } from "@tanstack/react-query";
-import { isInShell } from "@mochi/web";
+import { useAuthStore } from "@mochi/web";
 
 interface ProjectWebsocketEvent {
   type: string;
@@ -18,7 +18,10 @@ const RECONNECT_DELAY = 3000;
 
 function getWebSocketUrl(key: string): string {
   const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
-  return `${protocol}//${window.location.host}/_/websocket?key=${key}`;
+  const raw = useAuthStore.getState().token;
+  const token = raw?.startsWith("Bearer ") ? raw.slice(7) : raw;
+  const tokenParam = token ? `&token=${encodeURIComponent(token)}` : "";
+  return `${protocol}//${window.location.host}/_/websocket?key=${key}${tokenParam}`;
 }
 
 // Singleton WebSocket manager to prevent duplicate connections
@@ -145,9 +148,12 @@ const wsManager = new WebSocketManager();
 // Subscribe to project WebSocket events and invalidate relevant queries
 export function useProjectWebsocket(projectFingerprint?: string) {
   const queryClient = useQueryClient();
+  const authReady = useAuthStore((state) => state.isInitialized);
+  const authToken = useAuthStore((state) => state.token);
 
   useEffect(() => {
-    if (!projectFingerprint || isInShell()) return;
+    if (!authReady) return;
+    if (!projectFingerprint) return;
 
     const handleMessage = (data: ProjectWebsocketEvent) => {
       const pid = projectFingerprint;
@@ -236,5 +242,5 @@ export function useProjectWebsocket(projectFingerprint?: string) {
     };
 
     return wsManager.subscribe(projectFingerprint, handleMessage);
-  }, [projectFingerprint, queryClient]);
+  }, [authReady, authToken, projectFingerprint, queryClient]);
 }

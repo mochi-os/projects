@@ -5408,7 +5408,7 @@ def event_values_update(e):
 								"insert or ignore into watchers (object, user, created) values (?, ?, ?)",
 								object_id, local_id, mochi.time.now())
 			if not assigned:
-				notify_watchers(object_id, project_id, local_id, user, "Fields changed")
+				notify_watchers(object_id, project_id, local_id, user, "Updated")
 
 # Activity row replicated from owner — insert with the same UID so the
 # activity table converges across hosts. If the referenced object isn't

@@ -1,8 +1,8 @@
 # Mochi Projects app
 # Copyright Alistair Cunningham 2026
 
-def notify(topic, object="", title="", body="", url=""):
-	mochi.service.call("notifications", "send", topic, object, title, body, url, mochi.app.label("notifications.topic." + topic.replace("/", ".")))
+def notify(topic, object="", title="", body="", url="", event_id=""):
+	mochi.service.call("notifications", "send", topic, object, title, body, url, mochi.app.label("notifications.topic." + topic.replace("/", ".")), "", "", None, event_id)
 
 # Helper to create P2P message headers
 def p2p_headers(from_id, to_id, event):
@@ -1402,7 +1402,7 @@ def notify_watchers(object_id, project_id, local_identity, user_id, body):
 	fp = mochi.entity.fingerprint(project_id)
 	url = "/projects/" + fp + "/" + object_id if fp else "/projects"
 	mochi.log.debug("notify_watchers: sending notification title=" + title)
-	notify("update/modified", project_id, title, body, url)
+	notify("update/modified", project_id, title, body, url, event_id="update/modified:" + object_id)
 
 def notify_mentions(object_id, project_id, content, author_id, author_name):
 	"""Notify subscribers who are @mentioned in a comment."""
@@ -1428,7 +1428,7 @@ def notify_mentions(object_id, project_id, content, author_id, author_name):
 	fp = mochi.entity.fingerprint(project_id)
 	url = "/projects/" + fp + "/" + object_id if fp else "/projects"
 	excerpt = content.strip()[:80]
-	notify("mention", project_id, title, author_name + " mentioned you: " + excerpt, url)
+	notify("mention", project_id, title, author_name + " mentioned you: " + excerpt, url, event_id="mention:" + object_id)
 
 def would_create_cycle(object_id, new_parent_id):
 	"""Check if setting new_parent_id as parent of object_id would create a cycle."""
@@ -5293,7 +5293,7 @@ def event_object_create(e):
 				title = get_object_display(project, obj, object_id)
 				fp2 = mochi.entity.fingerprint(project_id)
 				url = "/projects/" + fp2 + "/" + object_id if fp2 else "/projects"
-				notify("update/created", project_id, title, mochi.app.label("notifications.body.created"), url)
+				notify("update/created", project_id, title, mochi.app.label("notifications.body.created"), url, event_id="update/created:" + object_id)
 
 # Object updated
 def event_object_update(e):
@@ -5417,7 +5417,7 @@ def event_values_update(e):
 									title = get_object_display(project, obj, object_id)
 									fp2 = mochi.entity.fingerprint(project_id)
 									url = "/projects/" + fp2 + "/" + object_id if fp2 else "/projects"
-									notify("assignment", project_id, title, mochi.app.label("notifications.body.assigned_to_you"), url)
+									notify("assignment", project_id, title, mochi.app.label("notifications.body.assigned_to_you"), url, event_id="assignment:" + object_id + ":" + local_id)
 							# Auto-watch on assignment
 							mochi.db.execute(
 								"insert or ignore into watchers (object, user, created) values (?, ?, ?)",
@@ -6658,7 +6658,7 @@ def do_object_create(project_id, project, params, user_id):
 		display = get_object_display(project, obj, object_id)
 		fp = mochi.entity.fingerprint(project_id)
 		url = "/projects/" + fp + "/" + object_id if fp else "/projects"
-		notify("update/created", project_id, display, mochi.app.label("notifications.body.created"), url)
+		notify("update/created", project_id, display, mochi.app.label("notifications.body.created"), url, event_id="update/created:" + object_id)
 	return {"id": object_id, "number": new_counter, "rank": initial_rank,
 			"created": now, "updated": now,
 			"readable": project["prefix"] + "-" + str(new_counter)}

@@ -4866,13 +4866,13 @@ def insert_schema(project_id, schema):
 		)
 	for c in (schema.get("classes") or []):
 		mochi.db.execute(
-			"insert into classes (id, project, name, rank, requests, title) values (?, ?, ?, ?, ?, ?) "
+			"insert into classes (id, project, name, rank, requests, title) values (?, ?, ?, ?, ?, ?) " +
 			"on conflict (project, id) do update set name=excluded.name, rank=excluded.rank, requests=excluded.requests, title=excluded.title",
 			c.get("id", ""), project_id, c.get("name", ""), c.get("rank", 0), c.get("requests", ""), c.get("title", "")
 		)
 	for f in (schema.get("fields") or []):
 		mochi.db.execute(
-			"insert into fields (project, class, id, name, fieldtype, flags, multi, rank, card, position, rows) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) "
+			"insert into fields (project, class, id, name, fieldtype, flags, multi, rank, card, position, rows) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) " +
 			"on conflict (project, class, id) do update set name=excluded.name, fieldtype=excluded.fieldtype, flags=excluded.flags, multi=excluded.multi, rank=excluded.rank, card=excluded.card, position=excluded.position, rows=excluded.rows",
 			project_id, f.get("class", ""), f.get("id", ""), f.get("name", ""),
 			f.get("fieldtype", "text"), f.get("flags", ""), f.get("multi", 0),
@@ -4880,7 +4880,7 @@ def insert_schema(project_id, schema):
 		)
 	for o in (schema.get("options") or []):
 		mochi.db.execute(
-			"insert into options (project, class, field, id, name, colour, icon, rank) values (?, ?, ?, ?, ?, ?, ?, ?) "
+			"insert into options (project, class, field, id, name, colour, icon, rank) values (?, ?, ?, ?, ?, ?, ?, ?) " +
 			"on conflict (project, class, field, id) do update set name=excluded.name, colour=excluded.colour, icon=excluded.icon, rank=excluded.rank",
 			project_id, o.get("class", ""), o.get("field", ""), o.get("id", ""),
 			o.get("name", ""), o.get("colour", "#94a3b8"), o.get("icon", ""), o.get("rank", 0)
@@ -4896,7 +4896,7 @@ def insert_schema(project_id, schema):
 	for v in (schema.get("views") or []):
 		view_id = v.get("id", "")
 		mochi.db.execute(
-			"insert into views (id, project, name, viewtype, filter, columns, rows, sort, direction, rank, border) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) "
+			"insert into views (id, project, name, viewtype, filter, columns, rows, sort, direction, rank, border) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) " +
 			"on conflict (project, id) do update set name=excluded.name, viewtype=excluded.viewtype, filter=excluded.filter, columns=excluded.columns, rows=excluded.rows, sort=excluded.sort, direction=excluded.direction, rank=excluded.rank, border=excluded.border",
 			view_id, project_id, v.get("name", ""), v.get("viewtype", "board"),
 			v.get("filter", ""), v.get("columns", ""), v.get("rows", ""),
@@ -4910,7 +4910,7 @@ def insert_schema(project_id, schema):
 				if field_id:
 					# view_fields has an editable rank; reconcile it.
 					mochi.db.execute(
-						"insert into view_fields (project, view, field, rank) values (?, ?, ?, ?) "
+						"insert into view_fields (project, view, field, rank) values (?, ?, ?, ?) " +
 						"on conflict (project, view, field) do update set rank=excluded.rank",
 						project_id, view_id, field_id, rank
 					)
@@ -4923,7 +4923,7 @@ def insert_schema(project_id, schema):
 					mochi.db.execute("insert or ignore into view_classes (project, view, class) values (?, ?, ?)", project_id, view_id, class_id)
 	for obj in (schema.get("objects") or []):
 		mochi.db.execute(
-			"insert into objects (id, project, class, number, parent, rank, created, updated) values (?, ?, ?, ?, ?, ?, ?, ?) "
+			"insert into objects (id, project, class, number, parent, rank, created, updated) values (?, ?, ?, ?, ?, ?, ?, ?) " +
 			"on conflict (id) do update set class=excluded.class, parent=excluded.parent, rank=excluded.rank, updated=excluded.updated",
 			obj.get("id", ""), project_id, obj.get("class", ""),
 			obj.get("number", 0), obj.get("parent", ""), obj.get("rank", 0),
@@ -4938,7 +4938,7 @@ def insert_schema(project_id, schema):
 				mochi.db.execute("replace into \"values\" (object, field, value) values (?, ?, ?)", obj.get("id", ""), field, values[field])
 		for c in (obj.get("comments") or []):
 			mochi.db.execute(
-				"insert into comments (id, object, parent, author, name, content, created, edited) values (?, ?, ?, ?, ?, ?, ?, ?) "
+				"insert into comments (id, object, parent, author, name, content, created, edited) values (?, ?, ?, ?, ?, ?, ?, ?) " +
 				"on conflict (id) do update set content=excluded.content, edited=excluded.edited",
 				c.get("id", ""), obj.get("id", ""), c.get("parent", ""),
 				c.get("author", ""), c.get("name", ""),

@@ -45,6 +45,12 @@ def error_broadcast_gap(e):
 # object the subscriber hasn't seen. The owner's event_schema is the
 # canonical source; insert_schema applies it idempotently. Throttled so a
 # burst of bad events can't spam the owner.
+
+# idle_resync_age: how long without applying any broadcast from a subscribed
+# project before the next view re-subscribes (the owner may have pruned us
+# after a long idle). Matches core's broadcast_log_age.
+idle_resync_age = 7 * 86400
+
 def request_resync(project_id):
 	"""Returns True iff a fresh schema was actually fetched and applied.
 	Returns False when we're not a subscriber, the throttle window blocks
@@ -68,10 +74,27 @@ def request_resync(project_id):
 	if not schema or schema.get("error"):
 		return False
 	insert_schema(project_id, schema)
+	mochi.broadcast.touch(project_id)
 	fp = mochi.entity.fingerprint(project_id)
 	if fp:
 		mochi.websocket.write(fp, {"type": "project/resynced", "project": project_id})
 	return True
+
+# maybe_resubscribe re-establishes a subscribed project with its owner when the
+# subscription has gone idle (idle_resync_age). The owner's event_subscribe is
+# idempotent and pushes catch-up, so a bare re-subscribe re-adds us and re-syncs;
+# touch() stamps the idle timer so a quiet project re-subscribes at most once per
+# window and a dead owner isn't re-poked per view.
+def maybe_resubscribe(a, project_id):
+	user_id = a.user.identity.id if a.user else None
+	if not user_id:
+		return
+	if not mochi.db.row("select 1 from projects where id=? and owner=0", project_id):
+		return
+	if mochi.time.now() - mochi.broadcast.seen(project_id) <= idle_resync_age:
+		return
+	mochi.message.send(p2p_headers(user_id, project_id, "subscribe"), {"name": a.user.identity.name})
+	mochi.broadcast.touch(project_id)
 
 # Create database with all 16 tables
 def database_create():
@@ -864,6 +887,9 @@ def action_project_get(a):
 	if not row:
 		a.error.label(404, "errors.project_not_found")
 		return
+
+	# Re-establish with the owner if this subscription has gone idle.
+	maybe_resubscribe(a, project_id)
 
 	# Get classes
 	classes = mochi.db.rows("select id, name, rank, requests, title from classes where project=? order by rank", project_id) or []
@@ -4657,6 +4683,7 @@ def action_subscribe(a):
 
 	# Send P2P subscribe message to project owner
 	mochi.message.send(p2p_headers(user_id, project_id, "subscribe"), {"name": a.user.identity.name})
+	mochi.broadcast.touch(project_id)
 
 	return {"data": {"fingerprint": fp}}
 
@@ -7796,6 +7823,7 @@ def _subscribe_to_project(user, project_id, server):
 		insert_schema(project_id, schema)
 
 	mochi.message.send(p2p_headers(user_id, project_id, "subscribe"), {"name": user.identity.name})
+	mochi.broadcast.touch(project_id)
 
 	return {"fingerprint": fp, "already_subscribed": False}
 

@@ -1,8 +1,8 @@
 # Mochi Projects app
 # Copyright Alistair Cunningham 2026
 
-def notify(topic, object="", title="", body="", url=""):
-	mochi.service.call("notifications", "send", topic, object, title, body, url, mochi.app.label("notifications.topic." + topic.replace("/", ".")))
+def notify(topic, object="", title="", body="", url="", event_id=""):
+	mochi.service.call("notifications", "send", topic, object, title, body, url, mochi.app.label("notifications.topic." + topic.replace("/", ".")), "", "", None, event_id)
 
 # Helper to create P2P message headers
 def p2p_headers(from_id, to_id, event):
@@ -13,15 +13,30 @@ def p2p_headers(from_id, to_id, event):
 		"event": event
 	}
 
-# Broadcast an event to all subscribers of a project via the durable
-# broadcast log. mochi.broadcast.send allocates a monotonic sequence,
-# writes the event to the per-app _log table, and fans out to each
-# subscriber with _key and _sequence headers. The receiver-side gap
-# detection in core handles dedup, NACK-on-gap, and async resync.
+# Helper: Broadcast event to all subscribers of a project via the
+# durable broadcast log. Sequence + log + gap-detection live in core.
 def broadcast_event(project_id, event, data, exclude=None):
+	if not project_id:
+		return
 	subscribers = mochi.db.rows("select id from subscribers where project=?", project_id)
-	subscriber_ids = [sub["id"] for sub in subscribers]
+	subscriber_ids = [s["id"] for s in subscribers]
 	mochi.broadcast.send(project_id, project_id, subscriber_ids, "projects", event, data, exclude or "")
+
+# error_message_timeout: core calls this when a fan-out to a subscriber aged
+# out undelivered. Remove them only when the directory shows no host left
+# (locations == 0) - definitely gone, not a transient outage or a server
+# migration in progress.
+def error_message_timeout(e):
+	if e.detail.get("locations", 1) != 0:
+		return
+	mochi.db.execute("delete from subscribers where id=?", e.entity)
+
+# error_broadcast_gap: core calls this when an unfillable broadcast gap was
+# skipped and events were permanently lost. broadcast/resync can't replay a
+# pruned gap, so pull a fresh full snapshot.
+def error_broadcast_gap(e):
+	request_resync(e.entity)
+
 
 # request_resync pulls a fresh schema dump from the project owner when an
 # incoming event references data we don't have yet. Out-of-order delivery,
@@ -30,6 +45,12 @@ def broadcast_event(project_id, event, data, exclude=None):
 # object the subscriber hasn't seen. The owner's event_schema is the
 # canonical source; insert_schema applies it idempotently. Throttled so a
 # burst of bad events can't spam the owner.
+
+# idle_resync_age: how long without applying any broadcast from a subscribed
+# project before the next view re-subscribes (the owner may have pruned us
+# after a long idle). Matches core's broadcast_log_age.
+idle_resync_age = 7 * 86400
+
 def request_resync(project_id):
 	"""Returns True iff a fresh schema was actually fetched and applied.
 	Returns False when we're not a subscriber, the throttle window blocks
@@ -53,10 +74,27 @@ def request_resync(project_id):
 	if not schema or schema.get("error"):
 		return False
 	insert_schema(project_id, schema)
+	mochi.broadcast.touch(project_id)
 	fp = mochi.entity.fingerprint(project_id)
 	if fp:
 		mochi.websocket.write(fp, {"type": "project/resynced", "project": project_id})
 	return True
+
+# maybe_resubscribe re-establishes a subscribed project with its owner when the
+# subscription has gone idle (idle_resync_age). The owner's event_subscribe is
+# idempotent and pushes catch-up, so a bare re-subscribe re-adds us and re-syncs;
+# touch() stamps the idle timer so a quiet project re-subscribes at most once per
+# window and a dead owner isn't re-poked per view.
+def maybe_resubscribe(a, project_id):
+	user_id = a.user.identity.id if a.user else None
+	if not user_id:
+		return
+	if not mochi.db.row("select 1 from projects where id=? and owner=0", project_id):
+		return
+	if mochi.time.now() - mochi.broadcast.seen(project_id) <= idle_resync_age:
+		return
+	mochi.message.send(p2p_headers(user_id, project_id, "subscribe"), {"name": a.user.identity.name})
+	mochi.broadcast.touch(project_id)
 
 # Create database with all 16 tables
 def database_create():
@@ -850,6 +888,9 @@ def action_project_get(a):
 		a.error.label(404, "errors.project_not_found")
 		return
 
+	# Re-establish with the owner if this subscription has gone idle.
+	maybe_resubscribe(a, project_id)
+
 	# Get classes
 	classes = mochi.db.rows("select id, name, rank, requests, title from classes where project=? order by rank", project_id) or []
 
@@ -1403,7 +1444,7 @@ def notify_watchers(object_id, project_id, local_identity, user_id, body):
 	fp = mochi.entity.fingerprint(project_id)
 	url = "/projects/" + fp + "/" + object_id if fp else "/projects"
 	mochi.log.debug("notify_watchers: sending notification title=" + title)
-	notify("update/modified", project_id, title, body, url)
+	notify("update/modified", project_id, title, body, url, event_id="update/modified:" + object_id)
 
 def notify_mentions(object_id, project_id, content, author_id, author_name):
 	"""Notify subscribers who are @mentioned in a comment."""
@@ -1429,7 +1470,7 @@ def notify_mentions(object_id, project_id, content, author_id, author_name):
 	fp = mochi.entity.fingerprint(project_id)
 	url = "/projects/" + fp + "/" + object_id if fp else "/projects"
 	excerpt = content.strip()[:80]
-	notify("mention", project_id, title, author_name + " mentioned you: " + excerpt, url)
+	notify("mention", project_id, title, author_name + " mentioned you: " + excerpt, url, event_id="mention:" + object_id)
 
 def would_create_cycle(object_id, new_parent_id):
 	"""Check if setting new_parent_id as parent of object_id would create a cycle."""
@@ -2074,7 +2115,13 @@ def action_object_move(a):
 			"values": updated_values, "user": a.user.identity.id
 		})
 
-	# Broadcast rank changes to subscribers
+	# Broadcast rank changes as a single batched event. The previous shape
+	# broadcast one object/update per in-scope object, which on a project
+	# with N objects in the target scope and S subscribers wrote N log
+	# rows plus N*S queue inserts — for a busy column (~100 objects) and
+	# a popular project (~30 subscribers) this could take >10s and cause
+	# the originating user's optimistic UI update to be overwritten by
+	# stale refetches before the action returned.
 	if a.input("rank") != None:
 		if scope_parent:
 			all_in_scope = mochi.db.rows("select id, rank from objects where project=? and parent=? order by rank asc", project_id, scope_parent) or []
@@ -2085,9 +2132,11 @@ def action_object_move(a):
 				where o.project=? and coalesce(v.value, '')=?
 				order by o.rank asc
 			""", field, project_id, target_value) or []
-		for obj in all_in_scope:
-			broadcast_event(project_id, "object/update", {
-				"project": project_id, "id": obj["id"], "rank": obj["rank"], "user": a.user.identity.id
+		if all_in_scope:
+			broadcast_event(project_id, "object/ranks", {
+				"project": project_id,
+				"ranks": [{"id": obj["id"], "rank": obj["rank"]} for obj in all_in_scope],
+				"user": a.user.identity.id,
 			})
 
 	return {"data": {"success": True}}
@@ -4634,6 +4683,7 @@ def action_subscribe(a):
 
 	# Send P2P subscribe message to project owner
 	mochi.message.send(p2p_headers(user_id, project_id, "subscribe"), {"name": a.user.identity.name})
+	mochi.broadcast.touch(project_id)
 
 	return {"data": {"fingerprint": fp}}
 
@@ -4661,16 +4711,24 @@ def action_unsubscribe(a):
 		a.error.label(400, "errors.you_own_this_project")
 		return
 
-	# Delete all local data for this remote project
+	# Delete all local data for this remote project.
+	#
+	# Each mochi.db.execute is a pair-replicated sql/op event - one
+	# per call, regardless of how many rows it touches. The previous
+	# shape (per-object loop, 6 statements each) emitted ~1000
+	# sql/op events for a 166-object project and took ~10s to drain
+	# through the per-(target, from-entity) bucket cap=1 (task #94).
+	# The subquery shape below collapses each table's deletion to
+	# one event regardless of object count. Receiver applies the
+	# same SQL; the pair-replicated `objects` rows match locally so
+	# the subquery resolves to the same id set.
 	delete_project_comment_attachments(project_id)
-	objects = mochi.db.rows("select id from objects where project=?", project_id)
-	for obj in objects:
-		mochi.db.execute("delete from requests where object=?", obj["id"])
-		mochi.db.execute("delete from watchers where object=?", obj["id"])
-		mochi.db.execute("delete from activity where object=?", obj["id"])
-		mochi.db.execute("delete from comments where object=?", obj["id"])
-		mochi.db.execute("delete from \"values\" where object=?", obj["id"])
-		mochi.db.execute("delete from links where source=? or target=?", obj["id"], obj["id"])
+	mochi.db.execute("delete from requests where object in (select id from objects where project=?)", project_id)
+	mochi.db.execute("delete from watchers where object in (select id from objects where project=?)", project_id)
+	mochi.db.execute("delete from activity where object in (select id from objects where project=?)", project_id)
+	mochi.db.execute("delete from comments where object in (select id from objects where project=?)", project_id)
+	mochi.db.execute("delete from \"values\" where object in (select id from objects where project=?)", project_id)
+	mochi.db.execute("delete from links where source in (select id from objects where project=?) or target in (select id from objects where project=?)", project_id, project_id)
 
 	mochi.db.execute("delete from objects where project=?", project_id)
 	mochi.db.execute("delete from view_fields where project=?", project_id)
@@ -4723,7 +4781,13 @@ def event_info(e):
 # Return the full project schema (classes, fields, options, hierarchy, views)
 def event_schema(e):
 	project_id = e.header("to")
-	project = mochi.db.row("select id from projects where id=? and owner=1", project_id)
+	# Include the project row's own metadata (name/description/prefix)
+	# so the subscriber's resync reconciles renames - the directory
+	# rename via mochi.entity.update doesn't fire project/update, so
+	# without this dump the row-level name drifts forever. Audit
+	# follow-up from claude/sessions/2026-05-25-broadcast-resync-
+	# stuck-diagnosis.md, task #86.
+	project = mochi.db.row("select id, name, description, prefix from projects where id=? and owner=1", project_id)
 	if not project:
 		e.stream.write({"error": "Project not found"})
 		return
@@ -4795,15 +4859,33 @@ def event_schema(e):
 		if obj["id"] in values_map:
 			obj["values"] = values_map[obj["id"]]
 		if obj["id"] in comments_map:
+			# Attach per-comment attachment metadata before nesting.
+			for c in comments_map[obj["id"]]:
+				c_atts = mochi.attachment.list(c["id"])
+				if c_atts:
+					c["attachments"] = c_atts
 			obj["comments"] = comments_map[obj["id"]]
 		if obj["id"] in activity_map:
 			obj["activity"] = activity_map[obj["id"]]
+		# Inline object-level attachment metadata so subscribers don't have to
+		# rely on real-time events arriving after the initial schema dump.
+		obj_atts = mochi.attachment.list(obj["id"])
+		if obj_atts:
+			obj["attachments"] = obj_atts
 		objects.append(obj)
 
 	# Links
 	links = mochi.db.rows("select l.source, l.target, l.linktype from links l join objects o on l.source = o.id where o.project=?", project_id) or []
 
 	e.stream.write({
+		# Project row first so subscribers can reconcile metadata
+		# (name / description / prefix) on resync without waiting
+		# for a project/update broadcast that might never come.
+		"project": {
+			"name": project.get("name", ""),
+			"description": project.get("description", ""),
+			"prefix": project.get("prefix", "PROJ"),
+		},
 		"classes": classes,
 		"fields": fields,
 		"options": options,
@@ -4813,28 +4895,59 @@ def event_schema(e):
 		"links": links,
 	})
 
-# Insert project schema and objects into local database
+# Insert project schema and objects into local database.
+#
+# Pre-task-#86 every insert was `insert or ignore`, so a resync only
+# filled GAPS in the subscriber's local state - renames, reorders,
+# edited comments, changed view configurations all stayed at their
+# old values until manually fixed. Task #86 converts to UPSERTs that
+# update the editable columns in place; primary-key identity stays
+# stable so child FKs (fields->classes, options->fields, etc.) are
+# never broken by a delete-then-insert.
+#
+# Append-only tables (activity) and natural-key tables that have no
+# editable columns once created (links, view_classes, view_fields,
+# hierarchy) stay as `insert or ignore` - the row's existence IS the
+# data; there's nothing to reconcile.
 def insert_schema(project_id, schema):
+	# Reconcile the project row itself (name / description / prefix).
+	# UPDATE only - the project row was created at subscribe time and
+	# we never want to flip owner away from 0 on a resync. Idempotent
+	# when the subscriber's row already matches.
+	project_data = schema.get("project")
+	if project_data:
+		mochi.db.execute(
+			"update projects set name=?, description=?, prefix=? where id=? and owner=0",
+			project_data.get("name", ""),
+			project_data.get("description", ""),
+			project_data.get("prefix", "PROJ"),
+			project_id
+		)
 	for c in (schema.get("classes") or []):
 		mochi.db.execute(
-			"insert or ignore into classes (id, project, name, rank, requests, title) values (?, ?, ?, ?, ?, ?)",
+			"insert into classes (id, project, name, rank, requests, title) values (?, ?, ?, ?, ?, ?) " +
+			"on conflict (project, id) do update set name=excluded.name, rank=excluded.rank, requests=excluded.requests, title=excluded.title",
 			c.get("id", ""), project_id, c.get("name", ""), c.get("rank", 0), c.get("requests", ""), c.get("title", "")
 		)
 	for f in (schema.get("fields") or []):
 		mochi.db.execute(
-			"insert or ignore into fields (project, class, id, name, fieldtype, flags, multi, rank, card, position, rows) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+			"insert into fields (project, class, id, name, fieldtype, flags, multi, rank, card, position, rows) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) " +
+			"on conflict (project, class, id) do update set name=excluded.name, fieldtype=excluded.fieldtype, flags=excluded.flags, multi=excluded.multi, rank=excluded.rank, card=excluded.card, position=excluded.position, rows=excluded.rows",
 			project_id, f.get("class", ""), f.get("id", ""), f.get("name", ""),
 			f.get("fieldtype", "text"), f.get("flags", ""), f.get("multi", 0),
 			f.get("rank", 0), f.get("card", 1), f.get("position", ""), f.get("rows", 1)
 		)
 	for o in (schema.get("options") or []):
 		mochi.db.execute(
-			"insert or ignore into options (project, class, field, id, name, colour, icon, rank) values (?, ?, ?, ?, ?, ?, ?, ?)",
+			"insert into options (project, class, field, id, name, colour, icon, rank) values (?, ?, ?, ?, ?, ?, ?, ?) " +
+			"on conflict (project, class, field, id) do update set name=excluded.name, colour=excluded.colour, icon=excluded.icon, rank=excluded.rank",
 			project_id, o.get("class", ""), o.get("field", ""), o.get("id", ""),
 			o.get("name", ""), o.get("colour", "#94a3b8"), o.get("icon", ""), o.get("rank", 0)
 		)
 	for h in (schema.get("hierarchy") or []):
 		for parent in (h.get("parents") or []):
+			# (project, class, parent) is the full primary key; there
+			# is no editable payload to reconcile, so ignore is right.
 			mochi.db.execute(
 				"insert or ignore into hierarchy (project, class, parent) values (?, ?, ?)",
 				project_id, h.get("class", ""), parent
@@ -4842,7 +4955,8 @@ def insert_schema(project_id, schema):
 	for v in (schema.get("views") or []):
 		view_id = v.get("id", "")
 		mochi.db.execute(
-			"insert or ignore into views (id, project, name, viewtype, filter, columns, rows, sort, direction, rank, border) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+			"insert into views (id, project, name, viewtype, filter, columns, rows, sort, direction, rank, border) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) " +
+			"on conflict (project, id) do update set name=excluded.name, viewtype=excluded.viewtype, filter=excluded.filter, columns=excluded.columns, rows=excluded.rows, sort=excluded.sort, direction=excluded.direction, rank=excluded.rank, border=excluded.border",
 			view_id, project_id, v.get("name", ""), v.get("viewtype", "board"),
 			v.get("filter", ""), v.get("columns", ""), v.get("rows", ""),
 			v.get("sort", ""), v.get("direction", "asc"), v.get("rank", 0),
@@ -4853,32 +4967,47 @@ def insert_schema(project_id, schema):
 			rank = 0
 			for field_id in fields_csv.split(","):
 				if field_id:
-					mochi.db.execute("insert or ignore into view_fields (project, view, field, rank) values (?, ?, ?, ?)", project_id, view_id, field_id, rank)
+					# view_fields has an editable rank; reconcile it.
+					mochi.db.execute(
+						"insert into view_fields (project, view, field, rank) values (?, ?, ?, ?) " +
+						"on conflict (project, view, field) do update set rank=excluded.rank",
+						project_id, view_id, field_id, rank
+					)
 					rank += 1
 		classes_csv = v.get("classes", "")
 		if classes_csv:
 			for class_id in classes_csv.split(","):
 				if class_id:
+					# (project, view, class) has no payload columns.
 					mochi.db.execute("insert or ignore into view_classes (project, view, class) values (?, ?, ?)", project_id, view_id, class_id)
 	for obj in (schema.get("objects") or []):
 		mochi.db.execute(
-			"insert or ignore into objects (id, project, class, number, parent, rank, created, updated) values (?, ?, ?, ?, ?, ?, ?, ?)",
+			"insert into objects (id, project, class, number, parent, rank, created, updated) values (?, ?, ?, ?, ?, ?, ?, ?) " +
+			"on conflict (id) do update set class=excluded.class, parent=excluded.parent, rank=excluded.rank, updated=excluded.updated",
 			obj.get("id", ""), project_id, obj.get("class", ""),
 			obj.get("number", 0), obj.get("parent", ""), obj.get("rank", 0),
 			obj.get("created", 0), obj.get("updated", 0)
 		)
+		obj_atts = obj.get("attachments") or []
+		if obj_atts:
+			mochi.attachment.store(obj_atts, project_id, obj.get("id", ""))
 		values = obj.get("values")
 		if values:
 			for field in values:
 				mochi.db.execute("replace into \"values\" (object, field, value) values (?, ?, ?)", obj.get("id", ""), field, values[field])
 		for c in (obj.get("comments") or []):
 			mochi.db.execute(
-				"insert or ignore into comments (id, object, parent, author, name, content, created, edited) values (?, ?, ?, ?, ?, ?, ?, ?)",
+				"insert into comments (id, object, parent, author, name, content, created, edited) values (?, ?, ?, ?, ?, ?, ?, ?) " +
+				"on conflict (id) do update set content=excluded.content, edited=excluded.edited",
 				c.get("id", ""), obj.get("id", ""), c.get("parent", ""),
 				c.get("author", ""), c.get("name", ""),
 				c.get("content", ""), c.get("created", ""), c.get("edited", 0)
 			)
+			c_atts = c.get("attachments") or []
+			if c_atts:
+				mochi.attachment.store(c_atts, project_id, c.get("id", ""))
 		for act in (obj.get("activity") or []):
+			# Activity is append-only; ignore is correct.
 			mochi.db.execute(
 				"insert or ignore into activity (id, object, user, action, field, oldvalue, newvalue, created) values (?, ?, ?, ?, ?, ?, ?, ?)",
 				act.get("id", ""), obj.get("id", ""), act.get("user", ""),
@@ -4887,6 +5016,8 @@ def insert_schema(project_id, schema):
 				act.get("created", 0)
 			)
 	for l in (schema.get("links") or []):
+		# (project, source, target, linktype) is the full key; links
+		# are created/deleted, never edited in place.
 		mochi.db.execute(
 			"insert or ignore into links (project, source, target, linktype, created) values (?, ?, ?, ?, ?)",
 			project_id, l.get("source", ""), l.get("target", ""), l.get("linktype", ""), 0
@@ -5071,16 +5202,24 @@ def event_deleted(e):
 	if not project:
 		return
 
-	# Delete all local data for this remote project
+	# Delete all local data for this remote project.
+	#
+	# Each mochi.db.execute is a pair-replicated sql/op event - one
+	# per call, regardless of how many rows it touches. The previous
+	# shape (per-object loop, 6 statements each) emitted ~1000
+	# sql/op events for a 166-object project and took ~10s to drain
+	# through the per-(target, from-entity) bucket cap=1 (task #94).
+	# The subquery shape below collapses each table's deletion to
+	# one event regardless of object count. Receiver applies the
+	# same SQL; the pair-replicated `objects` rows match locally so
+	# the subquery resolves to the same id set.
 	delete_project_comment_attachments(project_id)
-	objects = mochi.db.rows("select id from objects where project=?", project_id)
-	for obj in objects:
-		mochi.db.execute("delete from requests where object=?", obj["id"])
-		mochi.db.execute("delete from watchers where object=?", obj["id"])
-		mochi.db.execute("delete from activity where object=?", obj["id"])
-		mochi.db.execute("delete from comments where object=?", obj["id"])
-		mochi.db.execute("delete from \"values\" where object=?", obj["id"])
-		mochi.db.execute("delete from links where source=? or target=?", obj["id"], obj["id"])
+	mochi.db.execute("delete from requests where object in (select id from objects where project=?)", project_id)
+	mochi.db.execute("delete from watchers where object in (select id from objects where project=?)", project_id)
+	mochi.db.execute("delete from activity where object in (select id from objects where project=?)", project_id)
+	mochi.db.execute("delete from comments where object in (select id from objects where project=?)", project_id)
+	mochi.db.execute("delete from \"values\" where object in (select id from objects where project=?)", project_id)
+	mochi.db.execute("delete from links where source in (select id from objects where project=?) or target in (select id from objects where project=?)", project_id, project_id)
 
 	mochi.db.execute("delete from objects where project=?", project_id)
 	mochi.db.execute("delete from view_fields where project=?", project_id)
@@ -5278,7 +5417,7 @@ def event_object_create(e):
 				title = get_object_display(project, obj, object_id)
 				fp2 = mochi.entity.fingerprint(project_id)
 				url = "/projects/" + fp2 + "/" + object_id if fp2 else "/projects"
-				notify("update/created", project_id, title, mochi.app.label("notifications.body.created"), url)
+				notify("update/created", project_id, title, mochi.app.label("notifications.body.created"), url, event_id="update/created:" + object_id)
 
 # Object updated
 def event_object_update(e):
@@ -5329,7 +5468,31 @@ def event_object_update(e):
 		user = e.content("user") or ""
 		local_id = e.header("to")
 		if local_id:
-			notify_watchers(object_id, project_id, local_id, user, "Updated")
+			notify_watchers(object_id, project_id, local_id, user, mochi.app.label("notifications.body.updated"))
+
+# Batched rank update from a move. One inbound event carries the new rank
+# for every object in the affected scope; we apply them all under the same
+# subscription verification + websocket notification as a single
+# object/update. No LWW gate because rank-only updates are derived from
+# the owner's authoritative renumber — applying them out of order with
+# concurrent moves still converges since the next move re-broadcasts the
+# whole scope.
+def event_object_ranks(e):
+	project_id = verify_subscription(e)
+	if not project_id:
+		return
+	ranks = e.content("ranks") or []
+	if not ranks:
+		return
+	now = mochi.time.now()
+	for r in ranks:
+		obj_id = r.get("id")
+		rank = r.get("rank")
+		if obj_id and rank != None:
+			mochi.db.execute("update objects set rank=?, updated=? where id=? and project=?", rank, now, obj_id, project_id)
+	fp = mochi.entity.fingerprint(project_id)
+	if fp:
+		mochi.websocket.write(fp, {"type": "object/ranks", "project": project_id})
 
 # Object deleted
 def event_object_delete(e):
@@ -5343,7 +5506,7 @@ def event_object_delete(e):
 	user = e.content("user") or ""
 	local_id = e.header("to")
 	if local_id:
-		notify_watchers(object_id, project_id, local_id, user, "Deleted")
+		notify_watchers(object_id, project_id, local_id, user, mochi.app.label("notifications.body.deleted"))
 	mochi.db.execute("delete from requests where object=?", object_id)
 	mochi.db.execute("delete from watchers where object=?", object_id)
 	mochi.db.execute("delete from activity where object=?", object_id)
@@ -5402,13 +5565,13 @@ def event_values_update(e):
 									title = get_object_display(project, obj, object_id)
 									fp2 = mochi.entity.fingerprint(project_id)
 									url = "/projects/" + fp2 + "/" + object_id if fp2 else "/projects"
-									notify("assignment", project_id, title, mochi.app.label("notifications.body.assigned_to_you"), url)
+									notify("assignment", project_id, title, mochi.app.label("notifications.body.assigned_to_you"), url, event_id="assignment:" + object_id + ":" + local_id)
 							# Auto-watch on assignment
 							mochi.db.execute(
 								"insert or ignore into watchers (object, user, created) values (?, ?, ?)",
 								object_id, local_id, mochi.time.now())
 			if not assigned:
-				notify_watchers(object_id, project_id, local_id, user, "Fields changed")
+				notify_watchers(object_id, project_id, local_id, user, mochi.app.label("notifications.body.updated"))
 
 # Activity row replicated from owner — insert with the same UID so the
 # activity table converges across hosts. If the referenced object isn't
@@ -5651,7 +5814,7 @@ def event_link_create(e):
 		local_id = e.header("to")
 		source = e.content("source")
 		if source and local_id:
-			notify_watchers(source, project_id, local_id, user, "Link added")
+			notify_watchers(source, project_id, local_id, user, mochi.app.label("notifications.body.link_added"))
 
 # Link deleted
 def event_link_delete(e):
@@ -6643,7 +6806,7 @@ def do_object_create(project_id, project, params, user_id):
 		display = get_object_display(project, obj, object_id)
 		fp = mochi.entity.fingerprint(project_id)
 		url = "/projects/" + fp + "/" + object_id if fp else "/projects"
-		notify("update/created", project_id, display, mochi.app.label("notifications.body.created"), url)
+		notify("update/created", project_id, display, mochi.app.label("notifications.body.created"), url, event_id="update/created:" + object_id)
 	return {"id": object_id, "number": new_counter, "rank": initial_rank,
 			"created": now, "updated": now,
 			"readable": project["prefix"] + "-" + str(new_counter)}
@@ -6707,7 +6870,7 @@ def do_object_update(project_id, project, params, user_id):
 	})
 	# Notify owner if watching
 	owner_id = get_owner_identity(project_id)
-	notify_watchers(object_id, project_id, owner_id, user_id, "Updated")
+	notify_watchers(object_id, project_id, owner_id, user_id, mochi.app.label("notifications.body.updated"))
 	return {"success": True}
 
 def do_object_delete(project_id, project, params, user_id):
@@ -6719,7 +6882,7 @@ def do_object_delete(project_id, project, params, user_id):
 		return {"error": "Object not found", "code": 404}
 	# Notify owner before cascade (watchers get deleted in cascade)
 	owner_id = get_owner_identity(project_id)
-	notify_watchers(object_id, project_id, owner_id, user_id, "Deleted")
+	notify_watchers(object_id, project_id, owner_id, user_id, mochi.app.label("notifications.body.deleted"))
 	delete_object_cascade(project_id, object_id, user_id)
 	return {"success": True}
 
@@ -6831,11 +6994,11 @@ def do_object_move(project_id, project, params, user_id):
 		})
 		# Notify owner if watching
 		owner_id = get_owner_identity(project_id)
-		notify_watchers(object_id, project_id, owner_id, user_id, "Fields changed")
+		notify_watchers(object_id, project_id, owner_id, user_id, mochi.app.label("notifications.body.updated"))
 
-	# Broadcast rank changes to subscribers
+	# Broadcast rank changes as a single batched event — see the matching
+	# comment in action_object_move for why we don't loop here.
 	if new_rank != None:
-		# Read final ranks from DB and broadcast them all
 		if scope_parent:
 			all_in_scope = mochi.db.rows("select id, rank from objects where project=? and parent=? order by rank asc", project_id, scope_parent) or []
 		else:
@@ -6845,9 +7008,11 @@ def do_object_move(project_id, project, params, user_id):
 				where o.project=? and coalesce(v.value, '')=?
 				order by o.rank asc
 			""", field, project_id, target_value) or []
-		for obj in all_in_scope:
-			broadcast_event(project_id, "object/update", {
-				"project": project_id, "id": obj["id"], "rank": obj["rank"], "user": user_id
+		if all_in_scope:
+			broadcast_event(project_id, "object/ranks", {
+				"project": project_id,
+				"ranks": [{"id": obj["id"], "rank": obj["rank"]} for obj in all_in_scope],
+				"user": user_id,
 			})
 
 	return {"success": True}
@@ -6894,7 +7059,7 @@ def do_values_set(project_id, project, params, user_id):
 		})
 		# Notify owner if watching
 		owner_id = get_owner_identity(project_id)
-		notify_watchers(object_id, project_id, owner_id, user_id, "Fields changed")
+		notify_watchers(object_id, project_id, owner_id, user_id, mochi.app.label("notifications.body.updated"))
 		# Auto-watch assigned users
 		for fid in changes:
 			if field_types.get(fid) == "user":
@@ -6934,7 +7099,7 @@ def do_value_set(project_id, project, params, user_id):
 		})
 		# Notify owner if watching
 		owner_id = get_owner_identity(project_id)
-		notify_watchers(object_id, project_id, owner_id, user_id, "Fields changed")
+		notify_watchers(object_id, project_id, owner_id, user_id, mochi.app.label("notifications.body.updated"))
 		# Auto-watch assigned user
 		if field_row["fieldtype"] == "user" and str(new_value):
 			mochi.db.execute(
@@ -6972,7 +7137,7 @@ def do_link_create(project_id, project, params, user_id):
 	})
 	# Notify owner if watching
 	owner_id = get_owner_identity(project_id)
-	notify_watchers(object_id, project_id, owner_id, user_id, "Link added")
+	notify_watchers(object_id, project_id, owner_id, user_id, mochi.app.label("notifications.body.link_added"))
 	return {"success": True}
 
 def do_link_delete(project_id, project, params, user_id):
@@ -6988,7 +7153,7 @@ def do_link_delete(project_id, project, params, user_id):
 	})
 	# Notify owner if watching
 	owner_id = get_owner_identity(project_id)
-	notify_watchers(object_id, project_id, owner_id, user_id, "Link removed")
+	notify_watchers(object_id, project_id, owner_id, user_id, mochi.app.label("notifications.body.link_removed"))
 	return {"success": True}
 
 # Attachment helper
@@ -7658,6 +7823,7 @@ def _subscribe_to_project(user, project_id, server):
 		insert_schema(project_id, schema)
 
 	mochi.message.send(p2p_headers(user_id, project_id, "subscribe"), {"name": user.identity.name})
+	mochi.broadcast.touch(project_id)
 
 	return {"fingerprint": fp, "already_subscribed": False}
 

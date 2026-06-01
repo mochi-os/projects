@@ -2,7 +2,7 @@
 // Copyright Alistair Cunningham 2026
 
 {
-	"version": "2.24",
+	"version": "2.37",
 	"label": "app.name",
 	"classes": ["project"],
 	"paths": ["projects"],
@@ -136,6 +136,11 @@
 		"-/repositories/:repo/merge": {"function": "action_repositories_merge"}
 	},
 
+	"errors": {
+		"message/timeout": {"function": "error_message_timeout"},
+		"broadcast/gap": {"function": "error_broadcast_gap"}
+	},
+
 	"events": {
 		"info": {"function": "event_info"},
 		"schema": {"function": "event_schema"},
@@ -147,6 +152,7 @@
 		"project/update": {"function": "event_project_update"},
 		"object/create": {"function": "event_object_create"},
 		"object/update": {"function": "event_object_update"},
+		"object/ranks": {"function": "event_object_ranks"},
 		"object/delete": {"function": "event_object_delete"},
 		"values/update": {"function": "event_values_update"},
 		"activity/log": {"function": "event_activity_log"},

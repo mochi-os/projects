@@ -171,7 +171,7 @@ export function BoardCard({
               fingerprint={projectId ? undefined : value}
               seed={value}
               name={name}
-              size={18}
+              size="xs"
             />
             {truncate(name, 25)}
           </span>

@@ -10,6 +10,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
+  naturalCompare,
 } from "@mochi/web";
 import { GitBranch } from "lucide-react";
 import projectsApi from "@/api/projects";
@@ -33,7 +34,9 @@ export function RepositorySelect({
     },
   });
 
-  const repositories = data || [];
+  const repositories = [...(data || [])].sort((a, b) =>
+    naturalCompare(a.name, b.name),
+  );
 
   return (
     <Select

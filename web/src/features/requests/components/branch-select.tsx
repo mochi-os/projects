@@ -4,6 +4,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { Trans, useLingui } from '@lingui/react/macro'
 import {
+  naturalCompare,
   Select,
   SelectContent,
   SelectItem,
@@ -40,7 +41,9 @@ export function BranchSelect({
     enabled: !!repoId,
   });
 
-  const branches = data || [];
+  const branches = [...(data || [])].sort((a, b) =>
+    naturalCompare(a.name, b.name),
+  );
 
   return (
     <Select

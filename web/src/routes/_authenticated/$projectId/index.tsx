@@ -29,7 +29,7 @@ import {
 import { Columns3, Ellipsis, FolderKanban, GripVertical, LogOut, Plus, Settings, Settings2, SlidersHorizontal, X } from "lucide-react";
 import projectsApi from "@/api/projects";
 import type { ProjectDetails, ProjectField, ProjectObject, SortState } from "@/types";
-import { canDesign, canWrite } from "@/lib/access";
+import { canDesign, canCreate, canWrite } from "@/lib/access";
 import { useProjectsStore } from "@/stores/projects-store";
 import { BoardContainer } from "@/features/board/components";
 import { TreeView } from "@/features/tree";
@@ -55,17 +55,20 @@ export const Route = createFileRoute("/_authenticated/$projectId/")({
   loader: async ({ params }) => {
     try {
       const projectResponse = await projectsApi.get(params.projectId);
-      return { project: projectResponse.data, loaderError: null };
+      return { project: projectResponse.data, loaderError: null, loaderStatus: null };
     } catch (error) {
       const status = extractStatus(error);
-      if (status === 403 || status === 404) {
+      if (status === 403) {
+        return { project: null as ProjectDetails | null, loaderError: null, loaderStatus: 403 };
+      }
+      if (status === 404) {
         throw redirect({ to: "/" });
       }
 
       return {
         project: null as ProjectDetails | null,
-        loaderError:
-          getErrorMessage(error, t`Failed to load project`),
+        loaderError: getErrorMessage(error, t`Failed to load project`),
+        loaderStatus: status,
       };
     }
   },
@@ -74,14 +77,25 @@ export const Route = createFileRoute("/_authenticated/$projectId/")({
 
 function ProjectPage() {
   const { t } = useLingui()
-  const { project, loaderError } = Route.useLoaderData() as {
+  const { project, loaderError, loaderStatus } = Route.useLoaderData() as {
     project: ProjectDetails | null;
     loaderError: string | null;
+    loaderStatus: number | null;
   };
   const params = Route.useParams();
   const search = Route.useSearch();
   const navigate = useNavigate();
   const router = useRouter();
+
+  useEffect(() => {
+    if (loaderStatus === 403) {
+      toast.error(t`You don't have access to this project.`);
+      void navigate({ to: "/" });
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  if (loaderStatus === 403) return null;
 
   if (!project) {
     return (
@@ -643,7 +657,7 @@ export function ProjectPageContent({ project, projectId, search, initialObjectId
 
   // Keyboard shortcuts
   useKeyboardShortcuts({
-    onCreateNew: handleOpenCreateDialog,
+    onCreateNew: canCreate(access) ? handleOpenCreateDialog : undefined,
     onFocusSearch: () => setShowViewOptions(!showViewOptions),
     onSwitchView: handleSwitchView,
     onSelectNext: handleSelectNext,
@@ -789,7 +803,7 @@ export function ProjectPageContent({ project, projectId, search, initialObjectId
         icon={<FolderKanban className="size-4 md:size-5" />}
         showSidebarTrigger
         primaryAction={
-          canWrite(access) ? (
+          canCreate(access) ? (
             <Button
               variant='outline'
               size='sm'
@@ -895,7 +909,7 @@ export function ProjectPageContent({ project, projectId, search, initialObjectId
           </div>
         </div>
       )}
-      {!hintDismissed && !isReorderingColumns && activeView?.viewtype !== "list" && (
+      {!hintDismissed && !isReorderingColumns && activeView?.viewtype !== "list" && canCreate(access) && (
         <div className="flex items-center justify-between px-4 py-2 bg-muted border-b">
           <span className="text-sm text-muted-foreground">
             <Trans>Double click on a column to add content</Trans>
@@ -928,7 +942,7 @@ export function ProjectPageContent({ project, projectId, search, initialObjectId
                 onCardClick={handleCardClick}
                 onReparent={canWrite(access) ? handleReparent : undefined}
                 onReorder={canWrite(access) ? handleReorder : undefined}
-                onCreateClick={canWrite(access) ? handleOpenCreateDialog : undefined}
+                onCreateClick={canCreate(access) ? handleOpenCreateDialog : undefined}
               />
             </div>
           ) : (
@@ -944,8 +958,8 @@ export function ProjectPageContent({ project, projectId, search, initialObjectId
                 sort={sort}
                 peopleMap={peopleMap}
                 onCardClick={handleCardClick}
-                onCardDoubleClick={canWrite(access) ? handleCreateChild : undefined}
-                onCreateClick={canWrite(access) ? handleCreateClick : undefined}
+                onCardDoubleClick={canCreate(access) ? handleCreateChild : undefined}
+                onCreateClick={canCreate(access) ? handleCreateClick : undefined}
                 onMoveObject={canWrite(access) ? handleMoveObject : undefined}
                 onReparentObject={canWrite(access) ? handleReparent : undefined}
                 onRenameColumn={canDesign(access) ? handleRenameColumn : undefined}
@@ -967,7 +981,7 @@ export function ProjectPageContent({ project, projectId, search, initialObjectId
         onClose={() => setSelectedObjectId(null)}
       />
 
-      {canWrite(access) && (
+      {canCreate(access) && (
         <CreateObjectDialog
           open={createDialogOpen}
           onOpenChange={setCreateDialogOpen}

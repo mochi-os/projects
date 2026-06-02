@@ -104,7 +104,6 @@ def database_create():
 		name text not null,
 		description text not null default '',
 		prefix text not null default 'PROJ',
-		counter integer not null default 0,
 		owner integer not null default 1,
 		server text not null default '',
 		fingerprint text not null default '',
@@ -241,6 +240,7 @@ def database_create():
 	)""")
 	mochi.db.execute("create index if not exists objects_project on objects(project)")
 	mochi.db.execute("create index if not exists objects_class on objects(project, class)")
+	mochi.db.execute("create index if not exists objects_number on objects(project, number)")
 	mochi.db.execute("create index if not exists objects_parent on objects(parent)")
 	mochi.db.execute("create index if not exists objects_rank on objects(rank)")
 	mochi.db.execute("create index if not exists objects_created on objects(created)")
@@ -331,6 +331,16 @@ def database_upgrade(version):
 		cols = [r["name"] for r in mochi.db.table("projects") or []]
 		if "synced" not in cols:
 			mochi.db.execute("alter table projects add column synced integer not null default 0")
+
+	if version == 9:
+		# objects.number is now derived from max(number) per project instead of a
+		# mutated projects.counter cell (replication-safe). The composite index
+		# turns the per-project max() into an index seek; the counter column is
+		# no longer used by any code path.
+		mochi.db.execute("create index if not exists objects_number on objects(project, number)")
+		cols = [r["name"] for r in mochi.db.table("projects") or []]
+		if "counter" in cols:
+			mochi.db.execute("alter table projects drop column counter")
 
 
 # ============================================================================
@@ -849,8 +859,8 @@ def action_project_create(a):
 	# Insert project record
 	fp = mochi.entity.fingerprint(entity) or ""
 	mochi.db.execute(
-		"insert into projects (id, name, description, prefix, counter, owner, server, fingerprint, template, template_version, created, updated) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-		entity, name, description, prefix, 0, 1, "", fp, template, tmpl_version, now, now
+		"insert into projects (id, name, description, prefix, owner, server, fingerprint, template, template_version, created, updated) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+		entity, name, description, prefix, 1, "", fp, template, tmpl_version, now, now
 	)
 
 	# Add creator as subscriber
@@ -883,7 +893,7 @@ def action_project_get(a):
 		a.error.label(400, "errors.project_id_required")
 		return
 
-	row = mochi.db.row("select id, name, description, prefix, counter, owner, server, template, template_version, created, updated from projects where id=?", project_id)
+	row = mochi.db.row("select id, name, description, prefix, owner, server, template, template_version, created, updated from projects where id=?", project_id)
 	if not row:
 		a.error.label(404, "errors.project_not_found")
 		return
@@ -973,7 +983,6 @@ def action_project_get(a):
 			"name": row["name"],
 			"description": row["description"],
 			"prefix": row["prefix"],
-			"counter": row["counter"],
 			"owner": row["owner"],
 			"server": row["server"],
 			"template": row["template"],
@@ -1111,10 +1120,12 @@ def action_project_delete(a):
 	mochi.db.execute("delete from fields where project=?", project_id)
 	mochi.db.execute("delete from hierarchy where project=?", project_id)
 	mochi.db.execute("delete from classes where project=?", project_id)
-	# Notify subscribers that project is being deleted (before removing subscriber list)
+	# Notify subscribers that project is being deleted (before removing subscriber
+	# list). Send from the project entity so receivers can verify the sender,
+	# matching broadcast_event and the verify_subscription check.
 	subscribers = mochi.db.rows("select id from subscribers where project=?", project_id)
 	for sub in subscribers:
-		mochi.message.send(p2p_headers(a.user.identity.id, sub["id"], "deleted"), {"project": project_id})
+		mochi.message.send(p2p_headers(project_id, sub["id"], "deleted"), {"project": project_id})
 
 	mochi.db.execute("delete from subscribers where project=?", project_id)
 	mochi.db.execute("delete from projects where id=?", project_id)
@@ -1181,7 +1192,8 @@ def check_project_access(user_id, project_id, level):
 
 # Forward a subscriber action to the project owner via P2P
 def forward_to_owner(a, project_id, action, params):
-	params["_user"] = a.user.identity.id
+	# Authorship is set from the authenticated P2P sender on the owner side, so
+	# we only pass the display name here, not an identity the owner would trust.
 	params["_name"] = a.user.identity.name
 	# Look up the server for this remote project and resolve peer
 	server_row = mochi.db.row("select server from projects where id=?", project_id)
@@ -1195,7 +1207,9 @@ def forward_to_owner(a, project_id, action, params):
 		a.error.label(502, "errors.could_not_reach_project_owner")
 		return None
 	if result.get("error"):
-		a.error(result.get("code", 500), result["error"])
+		# The error field is a label key; resolve it in the requester's language,
+		# with any ICU args the owner returned alongside it.
+		a.error.label(result.get("code", 500), result["error"], **(result.get("args") or {}))
 		return None
 	return {"data": result}
 
@@ -1470,7 +1484,7 @@ def notify_mentions(object_id, project_id, content, author_id, author_name):
 	fp = mochi.entity.fingerprint(project_id)
 	url = "/projects/" + fp + "/" + object_id if fp else "/projects"
 	excerpt = content.strip()[:80]
-	notify("mention", project_id, title, author_name + " mentioned you: " + excerpt, url, event_id="mention:" + object_id)
+	notify("mention", project_id, title, mochi.app.label("notifications.body.mentioned_you", author=author_name, excerpt=excerpt), url, event_id="mention:" + object_id)
 
 def would_create_cycle(object_id, new_parent_id):
 	"""Check if setting new_parent_id as parent of object_id would create a cycle."""
@@ -1623,8 +1637,7 @@ def action_object_create(a):
 				)
 				if title and title_field:
 					mochi.db.execute("insert or replace into \"values\" (object, field, value) values (?, ?, ?)", d["id"], title_field, title)
-				# Update local counter
-				mochi.db.execute("update projects set counter=counter+1, updated=? where id=?", now, project_id)
+				mochi.db.execute("update projects set updated=? where id=?", now, project_id)
 				# Auto-watch creator locally so subscriber gets notifications
 				mochi.db.execute("insert or ignore into watchers (object, user, created) values (?, ?, ?)", d["id"], a.user.identity.id, now)
 		return result
@@ -1656,9 +1669,11 @@ def action_object_create(a):
 		a.error.label(400, "errors.hierarchy_disallowed")
 		return
 
-	# Increment counter atomically and get number
-	mochi.db.execute("update projects set counter=counter+1, updated=? where id=?", mochi.time.now(), project_id)
-	new_counter = mochi.db.row("select counter from projects where id=?", project_id)["counter"]
+	# Derive the next per-project number from the objects log (replication-safe;
+	# no mutated shared counter). The objects(project, number) index makes the
+	# max() an index seek.
+	new_counter = mochi.db.row("select coalesce(max(number), 0) + 1 as next from objects where project=?", project_id)["next"]
+	mochi.db.execute("update projects set updated=? where id=?", mochi.time.now(), project_id)
 
 	# Calculate initial rank (add to end of parent or project)
 	max_rank_row = mochi.db.row("select coalesce(max(rank), 0) as max_rank from objects where project=? and parent=?", project_id, parent)
@@ -2208,6 +2223,10 @@ def action_values_set(a):
 		if len(str(new_value)) > 10000:
 			a.error.label(400, "errors.value_too_long")
 			return
+		invalid = validate_field_value(project_id, row["class"], field_id, new_value)
+		if invalid:
+			a.error.label(400, invalid["key"], **(invalid.get("args") or {}))
+			return
 		# Get old value
 		old_row = mochi.db.row("select value from \"values\" where object=? and field=?", object_id, field_id)
 		old_value = old_row["value"] if old_row else ""
@@ -2294,6 +2313,11 @@ def action_value_set(a):
 	new_value = a.input("value") or ""
 	if len(new_value) > 10000:
 		a.error.label(400, "errors.value_too_long")
+		return
+
+	invalid = validate_field_value(project_id, row["class"], field_id, new_value)
+	if invalid:
+		a.error.label(400, invalid["key"], **(invalid.get("args") or {}))
 		return
 
 	# Get old value
@@ -4264,7 +4288,7 @@ def action_repositories_merge_check(a):
 	})
 
 	if result == None:
-		return {"data": {"can_merge": False, "error": "Could not check merge status"}}
+		return {"data": {"can_merge": False, "error": mochi.app.label("errors.repositories_service_unavailable")}}
 	return {"data": result}
 
 def action_repositories_diff(a):
@@ -4285,7 +4309,7 @@ def action_repositories_diff(a):
 	})
 
 	if result == None:
-		return {"data": {"diff": None, "error": "Could not get diff"}}
+		return {"data": {"diff": None, "error": mochi.app.label("errors.repositories_service_unavailable")}}
 	return {"data": result}
 
 def action_repositories_merge(a):
@@ -4351,7 +4375,7 @@ def action_repositories_merge(a):
 			a.error.label(502, "errors.could_not_reach_project_owner")
 			return
 		if result.get("error"):
-			a.error(result.get("code", 500), result["error"])
+			a.error.label(result.get("code", 500), result["error"], **(result.get("args") or {}))
 			return
 		return {"data": result}
 
@@ -4557,7 +4581,7 @@ def action_probe(a):
 		return
 	response = mochi.remote.request(project_id, "projects", "info", {"project": project_id}, peer)
 	if response.get("error"):
-		a.error(response.get("code", 404), response["error"])
+		a.error.label(response.get("code", 404), response["error"])
 		return
 
 	return {"data": {
@@ -4640,7 +4664,7 @@ def action_subscribe(a):
 			return
 		response = mochi.remote.request(project_id, "projects", "info", {"project": project_id}, peer)
 		if response.get("error"):
-			a.error(response.get("code", 404), response["error"])
+			a.error.label(response.get("code", 404), response["error"])
 			return
 		project_name = response.get("name", "")
 		project_desc = response.get("description", "")
@@ -4673,7 +4697,7 @@ def action_subscribe(a):
 
 	# Insert the remote project
 	mochi.db.execute(
-		"insert into projects (id, name, description, prefix, counter, owner, server, fingerprint, created, updated) values (?, ?, ?, ?, 0, 0, ?, ?, ?, ?)",
+		"insert into projects (id, name, description, prefix, owner, server, fingerprint, created, updated) values (?, ?, ?, ?, 0, ?, ?, ?, ?)",
 		project_id, project_name, project_desc, project_prefix, server or "", fp, now, now
 	)
 
@@ -4757,17 +4781,17 @@ def event_info(e):
 
 	entity = mochi.entity.info(project_id)
 	if not entity or entity.get("class") != "project":
-		e.stream.write({"error": "Project not found"})
+		e.stream.write({"error": "errors.project_not_found"})
 		return
 
 	project = mochi.db.row("select * from projects where id=?", project_id)
 	if not project:
-		e.stream.write({"error": "Project not found"})
+		e.stream.write({"error": "errors.project_not_found"})
 		return
 
 	requester = e.header("from")
 	if project["owner"] == 1 and not check_project_access(requester, project_id, "view"):
-		e.stream.write({"error": "Access denied"})
+		e.stream.write({"error": "errors.access_denied"})
 		return
 
 	e.stream.write({
@@ -4789,12 +4813,12 @@ def event_schema(e):
 	# stuck-diagnosis.md, task #86.
 	project = mochi.db.row("select id, name, description, prefix from projects where id=? and owner=1", project_id)
 	if not project:
-		e.stream.write({"error": "Project not found"})
+		e.stream.write({"error": "errors.project_not_found"})
 		return
 
 	requester = e.header("from")
 	if not check_project_access(requester, project_id, "view"):
-		e.stream.write({"error": "Access denied"})
+		e.stream.write({"error": "errors.access_denied"})
 		return
 
 	# Classes
@@ -5193,9 +5217,10 @@ def event_unsubscribe(e):
 
 # Handle notification that a project has been deleted by its owner
 def event_deleted(e):
-	project_id = e.content("project")
-	if not project_id:
-		project_id = e.header("from")
+	# The deletion notice is sent from the project entity itself, so the
+	# authenticated sender IS the project. Using the from header (rather than a
+	# spoofable content field) stops any peer wiping a project we subscribe to.
+	project_id = e.header("from")
 
 	# Only delete if we don't own this project
 	project = mochi.db.row("select * from projects where id=? and owner=0", project_id)
@@ -5239,7 +5264,10 @@ def event_deleted(e):
 
 # Handle batched sync data from owner (single message with all project data)
 def event_sync_batch(e):
-	project_id = e.content("project")
+	# Sync is sent from the project entity (p2p_headers(project_id, ...)), so the
+	# authenticated sender is the project. Trust the from header, not a spoofable
+	# content field, so a peer can't inject forged data into a subscribed project.
+	project_id = e.header("from")
 	if not project_id:
 		return
 	project = mochi.db.row("select id from projects where id=? and owner=0", project_id)
@@ -5339,7 +5367,11 @@ def event_sync_batch(e):
 
 # Helper to verify a content event is for a project we subscribe to
 def verify_subscription(e):
-	project_id = e.content("project")
+	# Broadcasts are sent from the project entity itself (broadcast_event uses
+	# from=project_id), so the authenticated P2P sender IS the project. Trust the
+	# from header as the project id rather than a spoofable content field, so a
+	# peer can't push forged state into a project we subscribe to.
+	project_id = e.header("from")
 	if not project_id:
 		return None
 	project = mochi.db.row("select id from projects where id=? and owner=0", project_id)
@@ -6184,12 +6216,12 @@ def event_merge_request(e):
 
 	project = mochi.db.row("select * from projects where id=? and owner=1", project_id)
 	if not project:
-		e.stream.write({"error": "Project not found", "code": 404})
+		e.stream.write({"error": "errors.project_not_found", "code": 404})
 		return
 
 	# Check the requester has write access
 	if not mochi.access.check(requester, "project/" + project_id, "write"):
-		e.stream.write({"error": "Write access required", "code": 403})
+		e.stream.write({"error": "errors.access_denied", "code": 403})
 		return
 
 	repo_id = e.content("repo")
@@ -6211,7 +6243,7 @@ def event_merge_request(e):
 	})
 
 	if result == None:
-		e.stream.write({"error": "Repositories service unavailable", "code": 500})
+		e.stream.write({"error": "errors.repositories_service_unavailable", "code": 500})
 		return
 
 	e.stream.write(result)
@@ -6365,6 +6397,10 @@ def action_request_update(a):
 	title = a.input("title")
 	description = a.input("description")
 	draft_input = a.input("draft")
+
+	if status and status not in REQUEST_STATUSES:
+		a.error.label(400, "errors.invalid_status")
+		return
 
 	if repository:
 		mochi.db.execute("update requests set repository=?, updated=? where id=?", repository, now, request_id)
@@ -6534,31 +6570,38 @@ REQUEST_LEVELS = {
 	"view/reorder": "design",
 }
 
+# Allowed request statuses. A request is created "open" and moves to "merged";
+# reject anything else so arbitrary strings can't be stored and surfaced raw.
+REQUEST_STATUSES = ("open", "merged")
+
 # Handle incoming request from a subscriber
 def event_request(e):
 	requester = e.header("from")
 	action = e.content("action")
 	params = e.content("params") or {}
-	user_id = params.get("_user", requester)
+	# Authorship and ownership are governed by the authenticated P2P sender, not
+	# a content-supplied id: a content "_user" is spoofable and would let a peer
+	# post as, or edit/delete the comments of, another user.
+	user_id = requester
 	user_name = params.get("_name", "")
 
 	project_id = params.get("project")
 	if not project_id:
-		e.stream.write({"error": "Project required", "code": 400})
+		e.stream.write({"error": "errors.project_id_required", "code": 400})
 		return
 
 	project = mochi.db.row("select * from projects where id=? and owner=1", project_id)
 	if not project:
-		e.stream.write({"error": "Project not found", "code": 404})
+		e.stream.write({"error": "errors.project_not_found", "code": 404})
 		return
 
 	level = REQUEST_LEVELS.get(action)
 	if not level:
-		e.stream.write({"error": "Unknown action", "code": 400})
+		e.stream.write({"error": "errors.unknown_action", "code": 400})
 		return
 
 	if not check_project_access(requester, project_id, level):
-		e.stream.write({"error": "Access denied", "code": 403})
+		e.stream.write({"error": "errors.access_denied", "code": 403})
 		return
 
 	# Dispatch to handler
@@ -6629,7 +6672,7 @@ def event_request(e):
 	elif action == "view/reorder":
 		result = do_view_reorder(project_id, project, params)
 	else:
-		result = {"error": "Not implemented", "code": 501}
+		result = {"error": "errors.not_implemented", "code": 501}
 
 	e.stream.write(result)
 
@@ -6654,11 +6697,11 @@ def do_comment_create(project_id, project, params, user_id, user_name):
 	parent = params.get("parent", "")
 	row = mochi.db.row("select id from objects where id=? and project=?", object_id, project_id)
 	if not row:
-		return {"error": "Object not found", "code": 404}
+		return {"error": "errors.object_not_found", "code": 404}
 	if not content or not content.strip():
-		return {"error": "Content is required", "code": 400}
+		return {"error": "errors.content_is_required", "code": 400}
 	if check_length(content, 50000):
-		return {"error": "Content too long", "code": 400}
+		return {"error": "errors.content_too_long", "code": 400}
 	comment_id = params.get("id") or mochi.uid()
 	now = mochi.time.now()
 	mochi.db.execute(
@@ -6684,7 +6727,7 @@ def do_comment_create(project_id, project, params, user_id, user_name):
 	# Notify owner if watching
 	owner_id = get_owner_identity(project_id)
 	excerpt = (content.strip())[:80]
-	notify_watchers(object_id, project_id, owner_id, user_id, user_name + ": " + excerpt)
+	notify_watchers(object_id, project_id, owner_id, user_id, mochi.app.label("notifications.body.commented", name=user_name, excerpt=excerpt))
 	return {"id": comment_id, "author": user_id, "name": user_name,
 			"content": content.strip(), "created": now}
 
@@ -6693,16 +6736,16 @@ def do_comment_update(project_id, project, params, user_id):
 	comment_id = params.get("comment")
 	content = params.get("content")
 	if not object_id or not comment_id:
-		return {"error": "Object and comment ID required", "code": 400}
+		return {"error": "errors.object_and_comment_id_required", "code": 400}
 	comment = mochi.db.row("select * from comments where id=? and object=?", comment_id, object_id)
 	if not comment:
-		return {"error": "Comment not found", "code": 404}
+		return {"error": "errors.comment_not_found", "code": 404}
 	if comment["author"] != user_id:
-		return {"error": "Cannot edit another user's comment", "code": 403}
+		return {"error": "errors.cannot_edit_others_comment", "code": 403}
 	if not content or not content.strip():
-		return {"error": "Content is required", "code": 400}
+		return {"error": "errors.content_is_required", "code": 400}
 	if check_length(content, 50000):
-		return {"error": "Content too long", "code": 400}
+		return {"error": "errors.content_too_long", "code": 400}
 	now = mochi.time.now()
 	mochi.db.execute("update comments set content=?, edited=? where id=?", content.strip(), now, comment_id)
 	broadcast_event(project_id, "comment/update", {
@@ -6715,12 +6758,12 @@ def do_comment_delete(project_id, project, params, user_id):
 	object_id = params.get("object")
 	comment_id = params.get("comment")
 	if not object_id or not comment_id:
-		return {"error": "Object and comment ID required", "code": 400}
+		return {"error": "errors.object_and_comment_id_required", "code": 400}
 	comment = mochi.db.row("select * from comments where id=? and object=?", comment_id, object_id)
 	if not comment:
-		return {"error": "Comment not found", "code": 404}
+		return {"error": "errors.comment_not_found", "code": 404}
 	if comment["author"] != user_id:
-		return {"error": "Cannot delete another user's comment", "code": 403}
+		return {"error": "errors.cannot_delete_another_user_s_comment", "code": 403}
 	delete_comment_tree(comment_id, project_id)
 	broadcast_event(project_id, "comment/delete", {
 		"project": project_id, "object": object_id, "id": comment_id, "user": user_id
@@ -6731,10 +6774,10 @@ def do_comment_delete(project_id, project, params, user_id):
 def do_watcher_add(project_id, params, user_id):
 	object_id = params.get("object")
 	if not object_id:
-		return {"error": "Object ID required", "code": 400}
+		return {"error": "errors.object_id_required", "code": 400}
 	row = mochi.db.row("select id from objects where id=? and project=?", object_id, project_id)
 	if not row:
-		return {"error": "Object not found", "code": 404}
+		return {"error": "errors.object_not_found", "code": 404}
 	now = mochi.time.now()
 	mochi.db.execute(
 		"insert or ignore into watchers (object, user, created) values (?, ?, ?)",
@@ -6745,10 +6788,10 @@ def do_watcher_add(project_id, params, user_id):
 def do_watcher_remove(project_id, params, user_id):
 	object_id = params.get("object")
 	if not object_id:
-		return {"error": "Object ID required", "code": 400}
+		return {"error": "errors.object_id_required", "code": 400}
 	row = mochi.db.row("select id from objects where id=? and project=?", object_id, project_id)
 	if not row:
-		return {"error": "Object not found", "code": 404}
+		return {"error": "errors.object_not_found", "code": 404}
 	mochi.db.execute("delete from watchers where object=? and user=?", object_id, user_id)
 	return {"success": True, "watching": False}
 
@@ -6756,30 +6799,33 @@ def do_watcher_remove(project_id, params, user_id):
 def do_object_create(project_id, project, params, user_id):
 	obj_class = params.get("class")
 	if not obj_class:
-		return {"error": "Class is required", "code": 400}
+		return {"error": "errors.class_is_required", "code": 400}
 	class_row = mochi.db.row("select id from classes where project=? and id=?", project_id, obj_class)
 	if not class_row:
-		return {"error": "Invalid class", "code": 400}
+		return {"error": "errors.invalid_class", "code": 400}
 	parent = params.get("parent", "")
 	title = params.get("title", "")
 	if check_length(title, 500):
-		return {"error": "Title too long", "code": 400}
+		return {"error": "errors.title_too_long", "code": 400}
 
 	# Check hierarchy rules
 	parent_class = ""
 	if parent:
 		parent_row = mochi.db.row("select class from objects where id=? and project=?", parent, project_id)
 		if not parent_row:
-			return {"error": "Parent object not found", "code": 404}
+			return {"error": "errors.parent_object_not_found", "code": 404}
 		parent_class = parent_row["class"]
 	allowed = mochi.db.exists("select 1 from hierarchy where project=? and class=? and parent=?", project_id, obj_class, parent_class)
 	if not allowed:
-		return {"error": "Cannot create here: hierarchy rules do not allow this relationship", "code": 400}
+		return {"error": "errors.hierarchy_disallowed", "code": 400}
 
 	title_field_row = mochi.db.row("select title from classes where project=? and id=?", project_id, obj_class)
 	title_field = title_field_row["title"] if title_field_row else ""
-	mochi.db.execute("update projects set counter=counter+1, updated=? where id=?", mochi.time.now(), project_id)
-	new_counter = mochi.db.row("select counter from projects where id=?", project_id)["counter"]
+	# Derive the next per-project number from the objects log (replication-safe;
+	# no mutated shared counter). The objects(project, number) index makes the
+	# max() an index seek.
+	new_counter = mochi.db.row("select coalesce(max(number), 0) + 1 as next from objects where project=?", project_id)["next"]
+	mochi.db.execute("update projects set updated=? where id=?", mochi.time.now(), project_id)
 	max_rank_row = mochi.db.row("select coalesce(max(rank), 0) as max_rank from objects where project=? and parent=?", project_id, parent)
 	initial_rank = (max_rank_row["max_rank"] if max_rank_row else 0) + 1
 	object_id = mochi.uid()
@@ -6814,27 +6860,27 @@ def do_object_create(project_id, project, params, user_id):
 def do_object_update(project_id, project, params, user_id):
 	object_id = params.get("object")
 	if not object_id:
-		return {"error": "Object ID required", "code": 400}
+		return {"error": "errors.object_id_required", "code": 400}
 	row = mochi.db.row("select * from objects where id=? and project=?", object_id, project_id)
 	if not row:
-		return {"error": "Object not found", "code": 404}
+		return {"error": "errors.object_not_found", "code": 404}
 	now = mochi.time.now()
 	parent = params.get("parent")
 	if parent != None:
 		old_parent = row["parent"]
 		if parent != old_parent:
 			if parent and would_create_cycle(object_id, parent):
-				return {"error": "Cannot set parent: would create a cycle", "code": 400}
+				return {"error": "errors.cannot_set_parent_would_create_a_cycle", "code": 400}
 			if parent:
 				parent_row = mochi.db.row("select class from objects where id=? and project=?", parent, project_id)
 				if not parent_row:
-					return {"error": "Parent object not found", "code": 404}
+					return {"error": "errors.parent_object_not_found", "code": 404}
 				parent_class = parent_row["class"]
 			else:
 				parent_class = ""
 			allowed = mochi.db.exists("select 1 from hierarchy where project=? and class=? and parent=?", project_id, row["class"], parent_class)
 			if not allowed:
-				return {"error": "Cannot set parent: hierarchy rules do not allow this relationship", "code": 400}
+				return {"error": "errors.parent_hierarchy_disallowed", "code": 400}
 			mochi.db.execute("update objects set parent=?, updated=? where id=?", parent, now, object_id)
 			log_activity(object_id, user_id, "moved", "parent", old_parent, parent)
 
@@ -6876,10 +6922,10 @@ def do_object_update(project_id, project, params, user_id):
 def do_object_delete(project_id, project, params, user_id):
 	object_id = params.get("object")
 	if not object_id:
-		return {"error": "Object ID required", "code": 400}
+		return {"error": "errors.object_id_required", "code": 400}
 	row = mochi.db.row("select id from objects where id=? and project=?", object_id, project_id)
 	if not row:
-		return {"error": "Object not found", "code": 404}
+		return {"error": "errors.object_not_found", "code": 404}
 	# Notify owner before cascade (watchers get deleted in cascade)
 	owner_id = get_owner_identity(project_id)
 	notify_watchers(object_id, project_id, owner_id, user_id, mochi.app.label("notifications.body.deleted"))
@@ -6889,21 +6935,21 @@ def do_object_delete(project_id, project, params, user_id):
 def do_object_move(project_id, project, params, user_id):
 	object_id = params.get("object")
 	if not object_id:
-		return {"error": "Object ID required", "code": 400}
+		return {"error": "errors.object_id_required", "code": 400}
 	row = mochi.db.row("select id, class, rank from objects where id=? and project=?", object_id, project_id)
 	if not row:
-		return {"error": "Object not found", "code": 404}
+		return {"error": "errors.object_not_found", "code": 404}
 	if check_length(params.get("value"), 50000):
-		return {"error": "Value too long", "code": 400}
+		return {"error": "errors.value_too_long", "code": 400}
 	if check_length(params.get("row_value"), 50000):
-		return {"error": "Row value too long", "code": 400}
+		return {"error": "errors.value_too_long", "code": 400}
 	old_rank = row["rank"]
 	obj_class = row["class"]
 	field = params.get("field", "")
 	if check_length(field, 100):
-		return {"error": "Field name too long", "code": 400}
+		return {"error": "errors.field_name_too_long", "code": 400}
 	if field and not mochi.db.exists("select 1 from fields where project=? and class=? and id=?", project_id, obj_class, field):
-		return {"error": "Field not found", "code": 400}
+		return {"error": "errors.field_not_found", "code": 400}
 	value = params.get("value")
 	new_rank = params.get("rank")
 	old_value_row = mochi.db.row("select value from \"values\" where object=? and field=?", object_id, field)
@@ -6948,9 +6994,9 @@ def do_object_move(project_id, project, params, user_id):
 	row_field = params.get("row_field")
 	row_value = params.get("row_value")
 	if check_length(row_field, 100):
-		return {"error": "Field name too long", "code": 400}
+		return {"error": "errors.field_name_too_long", "code": 400}
 	if row_field and not mochi.db.exists("select 1 from fields where project=? and class=? and id=?", project_id, obj_class, row_field):
-		return {"error": "Field not found", "code": 400}
+		return {"error": "errors.field_not_found", "code": 400}
 	row_changed = False
 	if row_field:
 		old_row_row = mochi.db.row("select value from \"values\" where object=? and field=?", object_id, row_field)
@@ -7017,14 +7063,77 @@ def do_object_move(project_id, project, params, user_id):
 
 	return {"success": True}
 
+# Validate a YYYY-MM-DD calendar date.
+def is_iso_date(value):
+	parts = value.split("-")
+	if len(parts) != 3:
+		return False
+	if len(parts[0]) != 4 or len(parts[1]) != 2 or len(parts[2]) != 2:
+		return False
+	for p in parts:
+		if not mochi.text.valid(p, "natural"):
+			return False
+	month = int(parts[1])
+	day = int(parts[2])
+	return month >= 1 and month <= 12 and day >= 1 and day <= 31
+
+# Validate a value against a field's type and declared constraints. Returns
+# {"key", "args"} describing the first violation, or None if acceptable. Empty
+# values are always allowed (clearing the field); "required" is a separate
+# concern. The custom-regex `pattern` constraint is not enforced here - Starlark
+# has no general regex API.
+def validate_field_value(project_id, class_id, field_id, value):
+	value = "" if value == None else str(value)
+	if value == "":
+		return None
+	field = mochi.db.row("select fieldtype, min, max, minlength, maxlength from fields where project=? and class=? and id=?", project_id, class_id, field_id)
+	if not field:
+		return None
+	ftype = field["fieldtype"]
+
+	if ftype == "enumerated":
+		if not mochi.db.exists("select 1 from options where project=? and class=? and field=? and id=?", project_id, class_id, field_id, value):
+			return {"key": "errors.invalid_option"}
+
+	elif ftype == "number":
+		if not mochi.text.valid(value, "numeric"):
+			return {"key": "errors.value_not_a_number"}
+		number = float(value)
+		if field["min"] != "" and mochi.text.valid(field["min"], "numeric") and number < float(field["min"]):
+			return {"key": "errors.value_below_minimum", "args": {"minimum": field["min"]}}
+		if field["max"] != "" and mochi.text.valid(field["max"], "numeric") and number > float(field["max"]):
+			return {"key": "errors.value_above_maximum", "args": {"maximum": field["max"]}}
+
+	elif ftype == "date":
+		if not is_iso_date(value):
+			return {"key": "errors.invalid_date"}
+		# ISO dates compare correctly as strings.
+		if field["min"] != "" and value < field["min"]:
+			return {"key": "errors.value_below_minimum", "args": {"minimum": field["min"]}}
+		if field["max"] != "" and value > field["max"]:
+			return {"key": "errors.value_above_maximum", "args": {"maximum": field["max"]}}
+
+	elif ftype == "text":
+		length = len(value)
+		if field["minlength"] and length < field["minlength"]:
+			return {"key": "errors.minimum_length", "args": {"minimum": field["minlength"]}}
+		if field["maxlength"] and length > field["maxlength"]:
+			return {"key": "errors.maximum_length", "args": {"maximum": field["maxlength"]}}
+
+	elif ftype == "checkbox":
+		if value not in ("0", "1", "true", "false"):
+			return {"key": "errors.invalid_value"}
+
+	return None
+
 # Value helpers
 def do_values_set(project_id, project, params, user_id):
 	object_id = params.get("object")
 	if not object_id:
-		return {"error": "Object ID required", "code": 400}
+		return {"error": "errors.object_id_required", "code": 400}
 	row = mochi.db.row("select id, class from objects where id=? and project=?", object_id, project_id)
 	if not row:
-		return {"error": "Object not found", "code": 404}
+		return {"error": "errors.object_not_found", "code": 404}
 	valid_fields = {}
 	field_types = {}
 	field_rows = mochi.db.rows("select id, name, fieldtype from fields where project=? and class=?", project_id, row["class"]) or []
@@ -7036,11 +7145,14 @@ def do_values_set(project_id, project, params, user_id):
 	values = params.get("values", {})
 	for v in values.values():
 		if check_length(v, 50000):
-			return {"error": "Value too long", "code": 400}
+			return {"error": "errors.value_too_long", "code": 400}
 	for field_id in values:
 		if field_id not in valid_fields:
 			continue
 		new_value = values[field_id]
+		invalid = validate_field_value(project_id, row["class"], field_id, new_value)
+		if invalid:
+			return {"error": invalid["key"], "args": invalid.get("args"), "code": 400}
 		old_row = mochi.db.row("select value from \"values\" where object=? and field=?", object_id, field_id)
 		old_value = old_row["value"] if old_row else ""
 		if str(new_value) != old_value:
@@ -7074,18 +7186,21 @@ def do_value_set(project_id, project, params, user_id):
 	object_id = params.get("object")
 	field_id = params.get("field")
 	if not object_id:
-		return {"error": "Object ID required", "code": 400}
+		return {"error": "errors.object_id_required", "code": 400}
 	if not field_id:
-		return {"error": "Field ID required", "code": 400}
+		return {"error": "errors.field_id_required", "code": 400}
 	row = mochi.db.row("select id, class from objects where id=? and project=?", object_id, project_id)
 	if not row:
-		return {"error": "Object not found", "code": 404}
+		return {"error": "errors.object_not_found", "code": 404}
 	field_row = mochi.db.row("select id, fieldtype from fields where project=? and class=? and id=?", project_id, row["class"], field_id)
 	if not field_row:
-		return {"error": "Invalid field for this class", "code": 400}
+		return {"error": "errors.invalid_field_for_this_class", "code": 400}
 	new_value = params.get("value", "")
 	if check_length(new_value, 50000):
-		return {"error": "Value too long", "code": 400}
+		return {"error": "errors.value_too_long", "code": 400}
+	invalid = validate_field_value(project_id, row["class"], field_id, new_value)
+	if invalid:
+		return {"error": invalid["key"], "args": invalid.get("args"), "code": 400}
 	old_row = mochi.db.row("select value from \"values\" where object=? and field=?", object_id, field_id)
 	old_value = old_row["value"] if old_row else ""
 	if str(new_value) != old_value:
@@ -7113,18 +7228,18 @@ def do_link_create(project_id, project, params, user_id):
 	target_id = params.get("target")
 	linktype = params.get("linktype")
 	if not object_id or not target_id or not linktype:
-		return {"error": "Object, target, and linktype are required", "code": 400}
+		return {"error": "errors.object_target_and_linktype_are_required", "code": 400}
 	if linktype not in ["blocks", "relates", "duplicates"]:
-		return {"error": "Invalid link type", "code": 400}
+		return {"error": "errors.invalid_link_type", "code": 400}
 	source_row = mochi.db.row("select id from objects where id=? and project=?", object_id, project_id)
 	target_row = mochi.db.row("select id from objects where id=? and project=?", target_id, project_id)
 	if not source_row or not target_row:
-		return {"error": "Object not found", "code": 404}
+		return {"error": "errors.object_not_found", "code": 404}
 	if object_id == target_id:
-		return {"error": "Cannot link object to itself", "code": 400}
+		return {"error": "errors.cannot_link_object_to_itself", "code": 400}
 	existing = mochi.db.exists("select 1 from links where source=? and target=? and linktype=?", object_id, target_id, linktype)
 	if existing:
-		return {"error": "Link already exists", "code": 400}
+		return {"error": "errors.link_already_exists", "code": 400}
 	now = mochi.time.now()
 	mochi.db.execute(
 		"insert into links (project, source, target, linktype, created) values (?, ?, ?, ?, ?)",
@@ -7145,7 +7260,7 @@ def do_link_delete(project_id, project, params, user_id):
 	target_id = params.get("target")
 	linktype = params.get("linktype")
 	if not object_id or not target_id or not linktype:
-		return {"error": "Object, target, and linktype are required", "code": 400}
+		return {"error": "errors.object_target_and_linktype_are_required", "code": 400}
 	mochi.db.execute("delete from links where project=? and source=? and target=? and linktype=?", project_id, object_id, target_id, linktype)
 	broadcast_event(project_id, "link/delete", {
 		"project": project_id, "source": object_id,
@@ -7161,12 +7276,12 @@ def do_attachment_delete(project_id, project, params, user_id):
 	attachment_id = params.get("attachment")
 	object_id = params.get("object")
 	if not attachment_id:
-		return {"error": "Attachment ID required", "code": 400}
+		return {"error": "errors.attachment_id_required", "code": 400}
 	if object_id:
 		if not mochi.db.exists("select 1 from objects where id=? and project=?", object_id, project_id):
-			return {"error": "Object not found", "code": 404}
+			return {"error": "errors.object_not_found", "code": 404}
 	if not mochi.attachment.exists(attachment_id):
-		return {"error": "Attachment not found", "code": 404}
+		return {"error": "errors.attachment_not_found", "code": 404}
 	mochi.attachment.delete(attachment_id, [])
 	broadcast_event(project_id, "attachment/remove", {
 		"project": project_id, "attachment": attachment_id
@@ -7177,24 +7292,24 @@ def do_attachment_delete(project_id, project, params, user_id):
 def do_request_create(project_id, project, params, user_id):
 	object_id = params.get("object")
 	if not object_id:
-		return {"error": "Object ID required", "code": 400}
+		return {"error": "errors.object_id_required", "code": 400}
 	obj = mochi.db.row("select * from objects where id=? and project=?", object_id, project_id)
 	if not obj:
-		return {"error": "Object not found", "code": 404}
+		return {"error": "errors.object_not_found", "code": 404}
 	if check_length(params.get("title"), 500):
-		return {"error": "Title too long", "code": 400}
+		return {"error": "errors.title_too_long", "code": 400}
 	if check_length(params.get("description"), 50000):
-		return {"error": "Description too long", "code": 400}
+		return {"error": "errors.description_too_long", "code": 400}
 	if check_length(params.get("repository"), 500):
-		return {"error": "Repository too long", "code": 400}
+		return {"error": "errors.value_too_long", "code": 400}
 	if check_length(params.get("source"), 500):
-		return {"error": "Source too long", "code": 400}
+		return {"error": "errors.value_too_long", "code": 400}
 	if check_length(params.get("target"), 500):
-		return {"error": "Target too long", "code": 400}
+		return {"error": "errors.value_too_long", "code": 400}
 	request_type = params.get("type", "merge")
 	cls = mochi.db.row("select requests from classes where project=? and id=?", project_id, obj["class"])
 	if not cls or request_type not in cls["requests"].split(","):
-		return {"error": "Request type '" + request_type + "' not enabled for this class", "code": 400}
+		return {"error": "errors.request_type_not_enabled_for_class", "args": {"type": request_type}, "code": 400}
 	repository = params.get("repository", "")
 	source = params.get("source", "")
 	target = params.get("target", "")
@@ -7219,20 +7334,20 @@ def do_request_create(project_id, project, params, user_id):
 def do_request_update(project_id, project, params, user_id):
 	request_id = params.get("request")
 	if not request_id:
-		return {"error": "Request ID required", "code": 400}
+		return {"error": "errors.request_id_required", "code": 400}
 	req = mochi.db.row("select r.* from requests r join objects o on r.object=o.id where r.id=? and o.project=?", request_id, project_id)
 	if not req:
-		return {"error": "Request not found", "code": 404}
+		return {"error": "errors.request_not_found", "code": 404}
 	if check_length(params.get("title"), 500):
-		return {"error": "Title too long", "code": 400}
+		return {"error": "errors.title_too_long", "code": 400}
 	if check_length(params.get("description"), 50000):
-		return {"error": "Description too long", "code": 400}
+		return {"error": "errors.description_too_long", "code": 400}
 	if check_length(params.get("repository"), 500):
-		return {"error": "Repository too long", "code": 400}
+		return {"error": "errors.value_too_long", "code": 400}
 	if check_length(params.get("source"), 500):
-		return {"error": "Source too long", "code": 400}
+		return {"error": "errors.value_too_long", "code": 400}
 	if check_length(params.get("target"), 500):
-		return {"error": "Target too long", "code": 400}
+		return {"error": "errors.value_too_long", "code": 400}
 	now = mochi.time.now()
 	repository = params.get("repository")
 	source = params.get("source")
@@ -7241,6 +7356,8 @@ def do_request_update(project_id, project, params, user_id):
 	title = params.get("title")
 	description = params.get("description")
 	draft_input = params.get("draft")
+	if status and status not in REQUEST_STATUSES:
+		return {"error": "errors.invalid_status", "code": 400}
 	if repository:
 		mochi.db.execute("update requests set repository=?, updated=? where id=?", repository, now, request_id)
 	if source:
@@ -7263,10 +7380,10 @@ def do_request_update(project_id, project, params, user_id):
 def do_request_delete(project_id, project, params, user_id):
 	request_id = params.get("request")
 	if not request_id:
-		return {"error": "Request ID required", "code": 400}
+		return {"error": "errors.request_id_required", "code": 400}
 	req = mochi.db.row("select r.* from requests r join objects o on r.object=o.id where r.id=? and o.project=?", request_id, project_id)
 	if not req:
-		return {"error": "Request not found", "code": 404}
+		return {"error": "errors.request_not_found", "code": 404}
 	mochi.db.execute("delete from requests where id=?", request_id)
 	broadcast_event(project_id, "request/delete", {
 		"project": project_id, "id": request_id, "object": req["object"]
@@ -7277,13 +7394,13 @@ def do_request_delete(project_id, project, params, user_id):
 def do_class_create(project_id, project, params):
 	name = params.get("name")
 	if not name or not name.strip():
-		return {"error": "Name is required", "code": 400}
+		return {"error": "errors.name_is_required", "code": 400}
 	if check_length(name, 100):
-		return {"error": "Name too long", "code": 400}
+		return {"error": "errors.name_too_long", "code": 400}
 	class_id = name.strip().lower().replace(" ", "_")
 	existing = mochi.db.exists("select 1 from classes where project=? and id=?", project_id, class_id)
 	if existing:
-		return {"error": "A class with this name already exists", "code": 400}
+		return {"error": "errors.class_name_taken", "code": 400}
 	max_rank = mochi.db.row("select max(rank) as m from classes where project=?", project_id)
 	rank = (max_rank["m"] or 0) + 1 if max_rank else 0
 	requests = params.get("requests", "")
@@ -7307,15 +7424,15 @@ def do_class_create(project_id, project, params):
 def do_class_update(project_id, project, params):
 	class_id = params.get("class")
 	if not class_id:
-		return {"error": "Type ID required", "code": 400}
+		return {"error": "errors.type_id_required", "code": 400}
 	class_row = mochi.db.row("select * from classes where project=? and id=?", project_id, class_id)
 	if not class_row:
-		return {"error": "Class not found", "code": 404}
+		return {"error": "errors.class_not_found", "code": 404}
 	name = params.get("name")
 	if check_length(name, 100):
-		return {"error": "Name too long", "code": 400}
+		return {"error": "errors.name_too_long", "code": 400}
 	if check_length(params.get("title"), 100):
-		return {"error": "Title too long", "code": 400}
+		return {"error": "errors.title_too_long", "code": 400}
 	if name:
 		mochi.db.execute("update classes set name=? where project=? and id=?", name.strip(), project_id, class_id)
 	requests_input = params.get("requests")
@@ -7335,10 +7452,10 @@ def do_class_update(project_id, project, params):
 def do_class_delete(project_id, project, params):
 	class_id = params.get("class")
 	if not class_id:
-		return {"error": "Class ID required", "code": 400}
+		return {"error": "errors.class_id_required", "code": 400}
 	has_objects = mochi.db.exists("select 1 from objects where project=? and class=?", project_id, class_id)
 	if has_objects:
-		return {"error": "Cannot delete class with existing objects", "code": 400}
+		return {"error": "errors.class_in_use", "code": 400}
 	mochi.db.execute("delete from options where project=? and class=?", project_id, class_id)
 	mochi.db.execute("delete from fields where project=? and class=?", project_id, class_id)
 	mochi.db.execute("delete from hierarchy where project=? and class=?", project_id, class_id)
@@ -7350,24 +7467,24 @@ def do_class_delete(project_id, project, params):
 def do_field_create(project_id, project, params):
 	class_id = params.get("class")
 	if not class_id:
-		return {"error": "Type ID required", "code": 400}
+		return {"error": "errors.type_id_required", "code": 400}
 	class_row = mochi.db.row("select id from classes where project=? and id=?", project_id, class_id)
 	if not class_row:
-		return {"error": "Type not found", "code": 404}
+		return {"error": "errors.type_not_found", "code": 404}
 	name = params.get("name")
 	if not name or not name.strip():
-		return {"error": "Name is required", "code": 400}
+		return {"error": "errors.name_is_required", "code": 400}
 	if check_length(name, 100):
-		return {"error": "Name too long", "code": 400}
+		return {"error": "errors.name_too_long", "code": 400}
 	if check_length(params.get("flags"), 200):
-		return {"error": "Flags too long", "code": 400}
+		return {"error": "errors.value_too_long", "code": 400}
 	fieldtype = params.get("fieldtype", "text")
 	if fieldtype not in ["text", "number", "date", "enumerated", "user", "object", "checkbox", "checklist"]:
-		return {"error": "Invalid field type", "code": 400}
+		return {"error": "errors.invalid_field_type", "code": 400}
 	field_id = name.strip().lower().replace(" ", "_")
 	existing = mochi.db.exists("select 1 from fields where project=? and class=? and id=?", project_id, class_id, field_id)
 	if existing:
-		return {"error": "A field with this name already exists", "code": 400}
+		return {"error": "errors.a_field_with_this_name_already_exists", "code": 400}
 	max_rank = mochi.db.row("select max(rank) as m from fields where project=? and class=?", project_id, class_id)
 	rank = (max_rank["m"] or 0) + 1 if max_rank else 0
 	flags = params.get("flags", "")
@@ -7404,16 +7521,16 @@ def do_field_update(project_id, project, params):
 	class_id = params.get("class")
 	field_id = params.get("field")
 	if not class_id or not field_id:
-		return {"error": "Type and field ID required", "code": 400}
+		return {"error": "errors.type_and_field_id_required", "code": 400}
 	field_row = mochi.db.row("select * from fields where project=? and class=? and id=?", project_id, class_id, field_id)
 	if not field_row:
-		return {"error": "Field not found", "code": 404}
+		return {"error": "errors.field_not_found", "code": 404}
 	if check_length(params.get("name"), 100):
-		return {"error": "Name too long", "code": 400}
+		return {"error": "errors.name_too_long", "code": 400}
 	if check_length(params.get("flags"), 200):
-		return {"error": "Flags too long", "code": 400}
+		return {"error": "errors.value_too_long", "code": 400}
 	if check_length(params.get("id"), 100):
-		return {"error": "Field ID too long", "code": 400}
+		return {"error": "errors.value_too_long", "code": 400}
 	name = params.get("name")
 	flags = params.get("flags")
 	multi = params.get("multi")
@@ -7441,9 +7558,9 @@ def do_field_update(project_id, project, params):
 		if new_id and new_id != field_id:
 			for ch in new_id.elems():
 				if ch != "_" and not ch.isalnum():
-					return {"error": "Field ID must contain only lowercase letters, numbers, and underscores", "code": 400}
+					return {"error": "errors.invalid_field_id", "code": 400}
 			if mochi.db.exists("select 1 from fields where project=? and class=? and id=?", project_id, class_id, new_id):
-				return {"error": "A field with this ID already exists", "code": 400}
+				return {"error": "errors.a_field_with_this_id_already_exists", "code": 400}
 			rename_field_id(project_id, class_id, field_id, new_id)
 	update_data = {"project": project_id, "class": class_id, "id": new_id if (new_id != None and new_id and new_id != field_id) else field_id}
 	if new_id != None and new_id and new_id != field_id:
@@ -7467,7 +7584,7 @@ def do_field_delete(project_id, project, params):
 	class_id = params.get("class")
 	field_id = params.get("field")
 	if not class_id or not field_id:
-		return {"error": "Type and field ID required", "code": 400}
+		return {"error": "errors.type_and_field_id_required", "code": 400}
 	mochi.db.execute("delete from options where project=? and class=? and field=?", project_id, class_id, field_id)
 	mochi.db.execute("delete from fields where project=? and class=? and id=?", project_id, class_id, field_id)
 	broadcast_event(project_id, "field/delete", {"project": project_id, "class": class_id, "id": field_id})
@@ -7476,7 +7593,7 @@ def do_field_delete(project_id, project, params):
 def do_field_reorder(project_id, project, params):
 	class_id = params.get("class")
 	if not class_id:
-		return {"error": "Type ID required", "code": 400}
+		return {"error": "errors.type_id_required", "code": 400}
 	order_str = params.get("order", "")
 	order = [f.strip() for f in order_str.split(",") if f.strip()]
 	for i, field_id in enumerate(order):
@@ -7492,25 +7609,25 @@ def do_option_create(project_id, project, params):
 	class_id = params.get("class")
 	field_id = params.get("field")
 	if not class_id or not field_id:
-		return {"error": "Type and field ID required", "code": 400}
+		return {"error": "errors.type_and_field_id_required", "code": 400}
 	field_row = mochi.db.row("select fieldtype from fields where project=? and class=? and id=?", project_id, class_id, field_id)
 	if not field_row:
-		return {"error": "Field not found", "code": 404}
+		return {"error": "errors.field_not_found", "code": 404}
 	if field_row["fieldtype"] != "enumerated":
-		return {"error": "Options can only be added to enumerated fields", "code": 400}
+		return {"error": "errors.field_not_enumerated", "code": 400}
 	name = params.get("name")
 	if not name or not name.strip():
-		return {"error": "Name is required", "code": 400}
+		return {"error": "errors.name_is_required", "code": 400}
 	if check_length(name, 100):
-		return {"error": "Name too long", "code": 400}
+		return {"error": "errors.name_too_long", "code": 400}
 	if check_length(params.get("colour"), 20):
-		return {"error": "Colour too long", "code": 400}
+		return {"error": "errors.colour_too_long", "code": 400}
 	if check_length(params.get("icon"), 100):
-		return {"error": "Icon too long", "code": 400}
+		return {"error": "errors.icon_too_long", "code": 400}
 	option_id = name.strip().lower().replace(" ", "_")
 	existing = mochi.db.exists("select 1 from options where project=? and class=? and field=? and id=?", project_id, class_id, field_id, option_id)
 	if existing:
-		return {"error": "An option with this name already exists", "code": 400}
+		return {"error": "errors.an_option_with_this_name_already_exists", "code": 400}
 	max_rank = mochi.db.row("select max(rank) as m from options where project=? and class=? and field=?", project_id, class_id, field_id)
 	rank = (max_rank["m"] or 0) + 1 if max_rank else 0
 	colour = params.get("colour", "#94a3b8")
@@ -7530,16 +7647,16 @@ def do_option_update(project_id, project, params):
 	field_id = params.get("field")
 	option_id = params.get("option")
 	if not class_id or not field_id or not option_id:
-		return {"error": "Type, field, and option ID required", "code": 400}
+		return {"error": "errors.option_id_required", "code": 400}
 	option_row = mochi.db.row("select * from options where project=? and class=? and field=? and id=?", project_id, class_id, field_id, option_id)
 	if not option_row:
-		return {"error": "Option not found", "code": 404}
+		return {"error": "errors.option_not_found", "code": 404}
 	if check_length(params.get("name"), 100):
-		return {"error": "Name too long", "code": 400}
+		return {"error": "errors.name_too_long", "code": 400}
 	if check_length(params.get("colour"), 20):
-		return {"error": "Colour too long", "code": 400}
+		return {"error": "errors.colour_too_long", "code": 400}
 	if check_length(params.get("icon"), 100):
-		return {"error": "Icon too long", "code": 400}
+		return {"error": "errors.icon_too_long", "code": 400}
 	name = params.get("name")
 	colour = params.get("colour")
 	icon = params.get("icon")
@@ -7564,7 +7681,7 @@ def do_option_delete(project_id, project, params):
 	field_id = params.get("field")
 	option_id = params.get("option")
 	if not class_id or not field_id or not option_id:
-		return {"error": "Type, field, and option ID required", "code": 400}
+		return {"error": "errors.option_id_required", "code": 400}
 	mochi.db.execute("delete from options where project=? and class=? and field=? and id=?", project_id, class_id, field_id, option_id)
 	broadcast_event(project_id, "option/delete", {"project": project_id, "class": class_id, "field": field_id, "id": option_id})
 	return {"success": True}
@@ -7573,7 +7690,7 @@ def do_option_reorder(project_id, project, params):
 	class_id = params.get("class")
 	field_id = params.get("field")
 	if not class_id or not field_id:
-		return {"error": "Type and field ID required", "code": 400}
+		return {"error": "errors.type_and_field_id_required", "code": 400}
 	order_str = params.get("order", "")
 	order = [o.strip() for o in order_str.split(",") if o.strip()]
 	for i, option_id in enumerate(order):
@@ -7588,10 +7705,10 @@ def do_option_reorder(project_id, project, params):
 def do_hierarchy_set(project_id, project, params):
 	class_id = params.get("class")
 	if not class_id:
-		return {"error": "Type ID required", "code": 400}
+		return {"error": "errors.type_id_required", "code": 400}
 	class_row = mochi.db.row("select id from classes where project=? and id=?", project_id, class_id)
 	if not class_row:
-		return {"error": "Type not found", "code": 404}
+		return {"error": "errors.type_not_found", "code": 404}
 	parents_str = params.get("parents")
 	if parents_str == None or parents_str == "_none_":
 		parents = []
@@ -7618,23 +7735,23 @@ def do_hierarchy_set(project_id, project, params):
 def do_view_create(project_id, project, params):
 	name = params.get("name")
 	if not name or not name.strip():
-		return {"error": "Name is required", "code": 400}
+		return {"error": "errors.name_is_required", "code": 400}
 	if check_length(name, 100):
-		return {"error": "Name too long", "code": 400}
+		return {"error": "errors.name_too_long", "code": 400}
 	for vf in ["filter", "columns", "rows", "fields", "sort", "border"]:
 		if check_length(params.get(vf), 10000):
 			return {"error": vf.capitalize() + " too long", "code": 400}
 	viewtype = params.get("viewtype", "board")
 	if viewtype not in ["board", "list"]:
-		return {"error": "Invalid view type", "code": 400}
+		return {"error": "errors.invalid_view_type", "code": 400}
 	view_id = name.strip().lower().replace(" ", "_")
 	existing = mochi.db.exists("select 1 from views where project=? and id=?", project_id, view_id)
 	if existing:
-		return {"error": "A view with this name already exists", "code": 400}
+		return {"error": "errors.view_name_taken", "code": 400}
 	filter_str = params.get("filter", "")
 	columns = params.get("columns", "")
 	if viewtype == "board" and not columns:
-		return {"error": "Columns field is required for board views", "code": 400}
+		return {"error": "errors.columns_field_is_required_for_board_views", "code": 400}
 	rows = params.get("rows", "")
 	fields = params.get("fields", "title,priority,owner,due")
 	sort = params.get("sort", "")
@@ -7670,12 +7787,12 @@ def do_view_create(project_id, project, params):
 def do_view_update(project_id, project, params):
 	view_id = params.get("view")
 	if not view_id:
-		return {"error": "View ID required", "code": 400}
+		return {"error": "errors.view_id_required", "code": 400}
 	view = mochi.db.row("select * from views where project=? and id=?", project_id, view_id)
 	if not view:
-		return {"error": "View not found", "code": 404}
+		return {"error": "errors.view_not_found", "code": 404}
 	if check_length(params.get("name"), 100):
-		return {"error": "Name too long", "code": 400}
+		return {"error": "errors.name_too_long", "code": 400}
 	for vf in ["filter", "columns", "rows", "fields", "sort", "border"]:
 		if check_length(params.get(vf), 10000):
 			return {"error": vf.capitalize() + " too long", "code": 400}
@@ -7691,7 +7808,7 @@ def do_view_update(project_id, project, params):
 		mochi.db.execute("update views set name=? where project=? and id=?", name.strip(), project_id, view_id)
 	if viewtype != None and viewtype != "":
 		if viewtype not in ["board", "list"]:
-			return {"error": "Invalid view type", "code": 400}
+			return {"error": "errors.invalid_view_type", "code": 400}
 		mochi.db.execute("update views set viewtype=? where project=? and id=?", viewtype, project_id, view_id)
 	if filter_str != None:
 		mochi.db.execute("update views set filter=? where project=? and id=?", filter_str, project_id, view_id)
@@ -7711,7 +7828,7 @@ def do_view_update(project_id, project, params):
 		mochi.db.execute("update views set sort=? where project=? and id=?", sort, project_id, view_id)
 	if direction != None and direction != "":
 		if direction not in ["asc", "desc"]:
-			return {"error": "Invalid direction", "code": 400}
+			return {"error": "errors.invalid_direction", "code": 400}
 		mochi.db.execute("update views set direction=? where project=? and id=?", direction, project_id, view_id)
 	border = params.get("border")
 	if border != None:
@@ -7743,10 +7860,10 @@ def do_view_update(project_id, project, params):
 def do_view_delete(project_id, project, params):
 	view_id = params.get("view")
 	if not view_id:
-		return {"error": "View ID required", "code": 400}
+		return {"error": "errors.view_id_required", "code": 400}
 	count = mochi.db.row("select count(*) as cnt from views where project=?", project_id)
 	if count and count["cnt"] <= 1:
-		return {"error": "Cannot delete the last view", "code": 400}
+		return {"error": "errors.cannot_delete_the_last_view", "code": 400}
 	mochi.db.execute("delete from view_fields where project=? and view=?", project_id, view_id)
 	mochi.db.execute("delete from view_classes where project=? and view=?", project_id, view_id)
 	mochi.db.execute("delete from views where project=? and id=?", project_id, view_id)
@@ -7815,7 +7932,7 @@ def _subscribe_to_project(user, project_id, server):
 	fp = mochi.entity.fingerprint(project_id) or ""
 
 	mochi.db.execute(
-		"insert into projects (id, name, description, prefix, counter, owner, server, fingerprint, created, updated) values (?, ?, ?, ?, 0, 0, ?, ?, ?, ?)",
+		"insert into projects (id, name, description, prefix, owner, server, fingerprint, created, updated) values (?, ?, ?, ?, 0, ?, ?, ?, ?)",
 		project_id, project_name, project_desc, project_prefix, server or "", fp, now, now
 	)
 
@@ -7832,7 +7949,8 @@ def _subscribe_to_project(user, project_id, server):
 # subscriber-side helpers below; mirrors `forward_to_owner` but takes raw
 # args so it can be called from event handlers too.
 def _forward_to_owner(user, project_id, action_name, params):
-	params["_user"] = user.identity.id
+	# Authorship is set from the authenticated P2P sender on the owner side, so
+	# we only pass the display name here, not an identity the owner would trust.
 	params["_name"] = user.identity.name
 	server_row = mochi.db.row("select server from projects where id=?", project_id)
 	server = server_row["server"] if server_row else ""
@@ -7885,7 +8003,7 @@ def _create_project_object(user, project_id, obj_class, title, parent="", values
 	)
 	if title and title_field:
 		mochi.db.execute("insert or replace into \"values\" (object, field, value) values (?, ?, ?)", d["id"], title_field, title)
-	mochi.db.execute("update projects set counter=counter+1, updated=? where id=?", now, project_id)
+	mochi.db.execute("update projects set updated=? where id=?", now, project_id)
 	mochi.db.execute("insert or ignore into watchers (object, user, created) values (?, ?, ?)", d["id"], user.identity.id, now)
 
 	# Auto-fill every required enumerated field the caller didn't supply,

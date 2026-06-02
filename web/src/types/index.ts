@@ -7,7 +7,6 @@ export interface Project {
   name: string;
   description: string;
   prefix: string;
-  counter: number;
   owner: number;
   ownername: string;
   server: string;

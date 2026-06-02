@@ -59,7 +59,6 @@ export function createMockProject(overrides?: Partial<Project>): Project {
     name: "Test Project",
     description: "A test project",
     prefix: "TEST",
-    counter: 10,
     owner: 1,
     ownername: "testuser",
     server: "local",

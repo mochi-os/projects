@@ -158,8 +158,8 @@ msgstr "افزودن مورد چک‌لیست"
 msgid "Add class"
 msgstr "افزودن کلاس"
 
-#: src/routes/_authenticated/$projectId/index.tsx:828
-#: src/routes/_authenticated/$projectId/index.tsx:992
+#: src/routes/_authenticated/$projectId/index.tsx:842
+#: src/routes/_authenticated/$projectId/index.tsx:1006
 msgid "Add column"
 msgstr "افزودن ستون"
 
@@ -240,7 +240,7 @@ msgid "Allow sort by"
 msgstr "اجازهٔ مرتب‌سازی بر اساس"
 
 #. placeholder {0}: deleteTarget?.name
-#: src/features/objects/components/object-attachments.tsx:232
+#: src/features/objects/components/object-attachments.tsx:209
 msgid "Are you sure you want to delete \"{0}\"?"
 msgstr "آیا از حذف «{0}» مطمئن هستید؟"
 
@@ -282,6 +282,10 @@ msgstr "پیوست فایل‌های نظر"
 msgid "Attach reply files"
 msgstr "پیوست فایل‌های پاسخ"
 
+#: ../../../lib/web/src/components/step-up-dialog.tsx:312
+msgid "Authenticator code"
+msgstr "کد احراز هویت"
+
 #: src/components/keyboard-shortcuts-help.tsx:47
 msgid "Available keyboard shortcuts"
 msgstr "میان‌برهای صفحه‌کلید موجود"
@@ -306,7 +310,7 @@ msgid "Back to project"
 msgstr "بازگشت به پروژه"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:64
-#: src/routes/_authenticated/$projectId/index.tsx:92
+#: src/routes/_authenticated/$projectId/index.tsx:106
 msgid "Back to projects"
 msgstr "بازگشت به پروژه‌ها"
 
@@ -340,6 +344,7 @@ msgid "Can be child of"
 msgstr "می‌تواند فرزند باشد از"
 
 #: ../../../lib/web/src/components/responsive-confirm-dialog.tsx:64
+#: ../../../lib/web/src/components/step-up-dialog.tsx:360
 #: ../../../lib/web/src/components/travelling-picker.tsx:292
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:245
 #: ../../../lib/web/src/features/access/access-dialog.tsx:325
@@ -351,7 +356,7 @@ msgstr "می‌تواند فرزند باشد از"
 #: src/features/objects/components/comment-thread.tsx:168
 #: src/features/projects/components/create-project-dialog.tsx:208
 #: src/routes/_authenticated/$projectId/design.tsx:340
-#: src/routes/_authenticated/$projectId/index.tsx:886
+#: src/routes/_authenticated/$projectId/index.tsx:900
 msgid "Cancel"
 msgstr "لغو"
 
@@ -368,11 +373,11 @@ msgstr "لغو پاسخ"
 msgid "Cannot merge automatically"
 msgstr "نمی‌توان به‌طور خودکار merge کرد"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:131
+#: ../../../lib/web/src/components/notification-category-button.tsx:135
 msgid "Category for this notification"
 msgstr "دستهٔ این اعلان"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:115
+#: ../../../lib/web/src/components/notification-category-button.tsx:119
 msgid "Change notification category"
 msgstr "تغییر دستهٔ اعلان"
 
@@ -530,6 +535,10 @@ msgstr "اطلاعات زمینه‌ای و جزئیات."
 msgid "Continue"
 msgstr "ادامه"
 
+#: ../../../lib/web/src/components/step-up-dialog.tsx:349
+msgid "Continue with {label}"
+msgstr "ادامه با {label}"
+
 #: src/routes/_authenticated/$projectId_.settings.tsx:651
 msgid "Control who can view and interact with this project"
 msgstr "کنترل کنید چه کسانی می‌توانند این پروژه را ببینند و با آن تعامل کنند"
@@ -545,6 +554,18 @@ msgstr "اطلاعات اصلی این پروژه"
 #: ../../../lib/web/src/features/document/document-page.tsx:81
 msgid "Could not load this document. Please try again later."
 msgstr "بارگذاری این سند ممکن نشد. لطفاً بعداً دوباره تلاش کنید."
+
+#: ../../../lib/web/src/components/step-up-dialog.tsx:181
+msgid "Couldn't send the code. Please try again."
+msgstr "ارسال کد ممکن نشد. لطفاً دوباره تلاش کنید."
+
+#: ../../../lib/web/src/components/step-up-dialog.tsx:133
+msgid "Couldn't start re-authentication. Please try again."
+msgstr "شروع احراز هویت مجدد ممکن نشد. لطفاً دوباره تلاش کنید."
+
+#: ../../../lib/web/src/components/step-up-dialog.tsx:218
+msgid "Couldn't verify with that account. Please try again."
+msgstr "تأیید با آن حساب ممکن نشد. لطفاً دوباره تلاش کنید."
 
 #: src/features/board/components/board-column.tsx:530
 #: src/features/board/components/board-column.tsx:668
@@ -618,14 +639,14 @@ msgstr "مرتب‌سازی پیش‌فرض"
 #: src/features/board/components/board-column.tsx:609
 #: src/features/objects/components/comment-thread.tsx:228
 #: src/features/objects/components/comment-thread.tsx:343
-#: src/features/objects/components/object-attachments.tsx:233
+#: src/features/objects/components/object-attachments.tsx:210
 #: src/features/objects/components/object-detail-panel.tsx:603
 #: src/features/requests/components/request-panel.tsx:129
 #: src/routes/_authenticated/$projectId_.settings.tsx:359
 msgid "Delete"
 msgstr "حذف"
 
-#: src/features/objects/components/object-attachments.tsx:231
+#: src/features/objects/components/object-attachments.tsx:208
 msgid "Delete attachment"
 msgstr "حذف پیوست"
 
@@ -684,6 +705,10 @@ msgstr "حذف پروژه؟"
 msgid "Delete view"
 msgstr "حذف نما"
 
+#: ../../../lib/web/src/components/restore-banner.tsx:90
+msgid "Delete your account on the old server"
+msgstr "حساب کاربری خود را در سرور قدیمی حذف کنید"
+
 #: ../../../lib/web/src/components/data-table/column-header.tsx:60
 msgid "Desc"
 msgstr "نزولی"
@@ -695,7 +720,7 @@ msgstr "توضیحات"
 
 #: src/routes/_authenticated/$projectId/design.tsx:60
 #: src/routes/_authenticated/$projectId/design.tsx:128
-#: src/routes/_authenticated/$projectId/index.tsx:843
+#: src/routes/_authenticated/$projectId/index.tsx:857
 msgid "Design"
 msgstr "طراحی"
 
@@ -704,8 +729,8 @@ msgid "Design imported"
 msgstr "طرح وارد شد"
 
 #: src/routes/_authenticated/$projectId_.settings.tsx:548
-msgid "Design, write, comment, and view"
-msgstr "طراحی، نوشتن، نظر دادن و دیدن"
+msgid "Design, create, edit, comment, and view"
+msgstr "طراحی، ساخت، ویرایش، نظردادن و مشاهده"
 
 #: ../../../lib/web/src/components/layout/right-panel.tsx:144
 msgid "Details Panel"
@@ -734,8 +759,12 @@ msgstr "Diff: {source} → {target}"
 msgid "Direction"
 msgstr "جهت"
 
-#: src/routes/_authenticated/$projectId/index.tsx:908
-#: src/routes/_authenticated/$projectId/index.tsx:909
+#: ../../../lib/web/src/components/restore-banner.tsx:73
+msgid "Dismiss"
+msgstr "بستن"
+
+#: src/routes/_authenticated/$projectId/index.tsx:922
+#: src/routes/_authenticated/$projectId/index.tsx:923
 msgid "Dismiss board hint"
 msgstr "بستن راهنمای تخته"
 
@@ -750,7 +779,7 @@ msgstr "نوار کناری موبایل را نمایش می‌دهد."
 msgid "Done"
 msgstr "انجام شد"
 
-#: src/routes/_authenticated/$projectId/index.tsx:901
+#: src/routes/_authenticated/$projectId/index.tsx:915
 msgid "Double click on a column to add content"
 msgstr "برای افزودن محتوا روی ستون دوبار کلیک کنید"
 
@@ -767,7 +796,7 @@ msgstr "ابتدا از پشتیبان دانلود کنید"
 msgid "Draft"
 msgstr "پیش‌نویس"
 
-#: src/routes/_authenticated/$projectId/index.tsx:882
+#: src/routes/_authenticated/$projectId/index.tsx:896
 msgid "Drag columns to re-order them"
 msgstr "برای مرتب‌سازی مجدد، ستون‌ها را بکشید"
 
@@ -813,6 +842,22 @@ msgstr "ویرایش کارت انتخاب‌شده"
 #: src/features/editor/components/edit-dialogs.tsx:266
 msgid "Edit view"
 msgstr "ویرایش نما"
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:549
+msgid "Edit, comment, and view"
+msgstr "ویرایش، نظردادن و مشاهده"
+
+#: ../../../lib/web/src/components/step-up-dialog.tsx:286
+msgid "Email code"
+msgstr "کد ایمیل"
+
+#: ../../../lib/web/src/components/step-up-dialog.tsx:296
+msgid "Enter the code from your email"
+msgstr "کد دریافتی از ایمیل خود را وارد کنید"
+
+#: ../../../lib/web/src/components/step-up-dialog.tsx:321
+msgid "Enter your authenticator code"
+msgstr "کد برنامه احرازکننده هویت خود را وارد کنید"
 
 #: src/routes/_authenticated/$projectId_.settings.tsx:326
 msgid "Entity ID"
@@ -866,7 +911,7 @@ msgstr "ایجاد پروژه ناموفق بود"
 msgid "Failed to create view"
 msgstr "ایجاد نما ناموفق بود"
 
-#: src/features/objects/components/object-attachments.tsx:75
+#: src/features/objects/components/object-attachments.tsx:73
 msgid "Failed to delete attachment"
 msgstr "حذف پیوست ناموفق بود"
 
@@ -899,7 +944,7 @@ msgid "Failed to load item"
 msgstr "بارگذاری مورد ناموفق بود"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:40
-#: src/routes/_authenticated/$projectId/index.tsx:68
+#: src/routes/_authenticated/$projectId/index.tsx:70
 msgid "Failed to load project"
 msgstr "بارگذاری پروژه ناموفق بود"
 
@@ -953,7 +998,7 @@ msgid "Failed to subscribe"
 msgstr "اشتراک ناموفق بود"
 
 #: src/features/projects/pages/projects-list-page.tsx:48
-#: src/routes/_authenticated/$projectId/index.tsx:544
+#: src/routes/_authenticated/$projectId/index.tsx:558
 msgid "Failed to unsubscribe"
 msgstr "لغو اشتراک ناموفق بود"
 
@@ -961,7 +1006,7 @@ msgstr "لغو اشتراک ناموفق بود"
 msgid "Failed to update access level"
 msgstr "به‌روزرسانی سطح دسترسی ناموفق بود"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:104
+#: ../../../lib/web/src/components/notification-category-button.tsx:108
 msgid "Failed to update category"
 msgstr "به‌روزرسانی دسته ناموفق بود"
 
@@ -977,7 +1022,7 @@ msgstr "به‌روزرسانی فیلد ناموفق بود"
 msgid "Failed to update project"
 msgstr "به‌روزرسانی پروژه ناموفق بود"
 
-#: src/features/objects/components/object-attachments.tsx:60
+#: src/features/objects/components/object-attachments.tsx:58
 msgid "Failed to upload attachment"
 msgstr "بارگذاری پیوست ناموفق بود"
 
@@ -986,8 +1031,8 @@ msgid "Fields"
 msgstr "فیلدها"
 
 #: src/features/objects/components/create-object-dialog.tsx:429
-#: src/features/objects/components/object-attachments.tsx:106
-#: src/features/objects/components/object-attachments.tsx:123
+#: src/features/objects/components/object-attachments.tsx:96
+#: src/features/objects/components/object-attachments.tsx:113
 msgid "Files"
 msgstr "فایل‌ها"
 
@@ -999,6 +1044,10 @@ msgstr "یافتن پروژه‌ها"
 #: src/routes/_authenticated/$projectId_.settings.tsx:331
 msgid "Fingerprint"
 msgstr "اثر انگشت"
+
+#: ../../../lib/web/src/components/restore-banner.tsx:79
+msgid "Finish moving your account"
+msgstr "انتقال حساب کاربری خود را تکمیل کنید"
 
 #: src/features/editor/components/edit-dialogs.tsx:1051
 msgid "Flags"
@@ -1278,12 +1327,12 @@ msgstr "نام الزامی است"
 
 #: ../../../lib/web/src/components/ui/sort-selector.tsx:40
 #: src/features/objects/components/create-object-dialog.tsx:327
-#: src/routes/_authenticated/$projectId/index.tsx:782
-#: src/routes/_authenticated/$projectId/index.tsx:800
+#: src/routes/_authenticated/$projectId/index.tsx:796
+#: src/routes/_authenticated/$projectId/index.tsx:814
 msgid "New"
 msgstr "جدید"
 
-#: src/routes/_authenticated/$projectId/index.tsx:779
+#: src/routes/_authenticated/$projectId/index.tsx:793
 msgid "New {className}"
 msgstr "{className} جدید"
 
@@ -1311,7 +1360,7 @@ msgstr "هیچ قاعده دسترسی پیکربندی نشده است. برا�
 msgid "No activity yet"
 msgstr "هنوز فعالیتی وجود ندارد"
 
-#: src/features/requests/components/branch-select.tsx:70
+#: src/features/requests/components/branch-select.tsx:73
 msgid "No branches found"
 msgstr "شاخه‌ای یافت نشد"
 
@@ -1372,7 +1421,7 @@ msgstr "بدون پروفایل"
 msgid "No projects found"
 msgstr "پروژه‌ای یافت نشد"
 
-#: src/features/requests/components/repository-select.tsx:58
+#: src/features/requests/components/repository-select.tsx:61
 msgid "No repositories available"
 msgstr "مخزنی در دسترس نیست"
 
@@ -1390,7 +1439,7 @@ msgstr "بدون وضعیت"
 msgid "No time zone found."
 msgstr "منطقه زمانی یافت نشد."
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:135
+#: ../../../lib/web/src/components/notification-category-button.tsx:139
 msgid "No topic record yet — try again after the next notification."
 msgstr "هنوز هیچ رکوردی برای موضوع وجود ندارد — پس از اعلان بعدی دوباره تلاش کنید."
 
@@ -1485,7 +1534,7 @@ msgstr "باز کردن منوی ناوبری"
 msgid "Open option actions"
 msgstr "باز کردن اقدامات گزینه"
 
-#: src/routes/_authenticated/$projectId/index.tsx:808
+#: src/routes/_authenticated/$projectId/index.tsx:822
 msgid "Open page actions"
 msgstr "باز کردن اقدامات صفحه"
 
@@ -1528,12 +1577,24 @@ msgstr "مالک"
 msgid "Parent"
 msgstr "والد"
 
+#: ../../../lib/web/src/components/step-up-dialog.tsx:331
+msgid "Passkey"
+msgstr "پسکی"
+
+#: ../../../lib/web/src/components/step-up-dialog.tsx:206
+msgid "Passkey verification failed. Please try again."
+msgstr "تأیید با کلید عبور ناموفق بود. لطفاً دوباره تلاش کنید."
+
+#: ../../../lib/web/src/components/restore-banner.tsx:126
+msgid "Passkeys"
+msgstr "پسکی‌ها"
+
 #: src/routes/_authenticated/$projectId_.settings.tsx:350
 msgid "Permanently delete this project and all its content."
 msgstr "این پروژه و تمام محتوای آن را به طور دائم حذف کنید."
 
-#: src/routes/_authenticated/$projectId/index.tsx:636
-#: src/routes/_authenticated/$projectId/index.tsx:670
+#: src/routes/_authenticated/$projectId/index.tsx:650
+#: src/routes/_authenticated/$projectId/index.tsx:684
 msgid "Please add one or more classes to the project design."
 msgstr "لطفاً یک یا چند کلاس به طراحی پروژه اضافه کنید."
 
@@ -1561,7 +1622,7 @@ msgid "Profile"
 msgstr "پروفایل"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:62
-#: src/routes/_authenticated/$projectId/index.tsx:90
+#: src/routes/_authenticated/$projectId/index.tsx:104
 msgid "Project"
 msgstr "پروژه"
 
@@ -1600,9 +1661,17 @@ msgstr "پروژه‌ها"
 msgid "Properties"
 msgstr "ویژگی‌ها"
 
-#: src/routes/_authenticated/$projectId/index.tsx:832
+#: ../../../lib/web/src/components/restore-banner.tsx:98
+msgid "Re-link your accounts on this server"
+msgstr "حساب‌های خود را در این سرور مجدداً پیوند دهید"
+
+#: src/routes/_authenticated/$projectId/index.tsx:846
 msgid "Re-order columns"
 msgstr "مرتب‌سازی مجدد ستون‌ها"
+
+#: ../../../lib/web/src/components/restore-banner.tsx:120
+msgid "Re-register your passkeys on this server"
+msgstr "کلیدهای عبور خود را دوباره در این سرور ثبت کنید"
 
 #: src/features/requests/components/merge-status.tsx:68
 msgid "Ready to merge"
@@ -1713,6 +1782,10 @@ msgstr "درخواست‌ها"
 msgid "Required"
 msgstr "الزامی"
 
+#: ../../../lib/web/src/components/step-up-dialog.tsx:364
+msgid "Resend email"
+msgstr "ارسال مجدد ایمیل"
+
 #: ../../../lib/web/src/components/config-drawer.tsx:77
 #: ../../../lib/web/src/components/data-table/toolbar.tsx:78
 msgid "Reset"
@@ -1753,7 +1826,7 @@ msgstr "شنبه"
 
 #: src/features/editor/components/option-dialog.tsx:138
 #: src/features/objects/components/comment-thread.tsx:179
-#: src/routes/_authenticated/$projectId/index.tsx:893
+#: src/routes/_authenticated/$projectId/index.tsx:907
 msgid "Save"
 msgstr "ذخیره"
 
@@ -1829,7 +1902,7 @@ msgstr "انتخاب قاعده دسترسی"
 msgid "Select account type"
 msgstr "انتخاب نوع حساب"
 
-#: src/features/requests/components/branch-select.tsx:32
+#: src/features/requests/components/branch-select.tsx:33
 msgid "Select branch"
 msgstr "انتخاب شاخه"
 
@@ -1849,7 +1922,7 @@ msgstr "انتخاب کارت بعدی"
 msgid "Select previous card"
 msgstr "انتخاب کارت قبلی"
 
-#: src/features/requests/components/repository-select.tsx:47
+#: src/features/requests/components/repository-select.tsx:50
 msgid "Select repository"
 msgstr "انتخاب مخزن"
 
@@ -1873,6 +1946,10 @@ msgstr "انتخاب..."
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:95
 msgid "Send again"
 msgstr "ارسال مجدد"
+
+#: ../../../lib/web/src/components/step-up-dialog.tsx:304
+msgid "Send email"
+msgstr "ارسال ایمیل"
 
 #: ../../../lib/web/src/lib/preference-utils.ts:133
 msgid "Serif"
@@ -1901,7 +1978,7 @@ msgstr "تنظیم مبدأ و مقصد"
 #: src/routes/_authenticated/$projectId_.settings.tsx:76
 #: src/routes/_authenticated/$projectId_.settings.tsx:166
 #: src/routes/_authenticated/$projectId_.settings.tsx:189
-#: src/routes/_authenticated/$projectId/index.tsx:853
+#: src/routes/_authenticated/$projectId/index.tsx:867
 msgid "Settings"
 msgstr "تنظیمات"
 
@@ -2037,6 +2114,10 @@ msgstr "شرایط و ضوابط"
 msgid "Text"
 msgstr "متن"
 
+#: ../../../lib/web/src/components/step-up-dialog.tsx:192
+msgid "That code is incorrect or has expired."
+msgstr "این کد نادرست است یا منقضی شده است."
+
 #: ../../../lib/web/src/components/config-drawer.tsx:181
 msgid "Theme"
 msgstr "تم"
@@ -2071,7 +2152,7 @@ msgid "This will permanently delete \"{projectName}\" and all its objects, comme
 msgstr "این کار «{projectName}» و تمام اشیاء، نظرات و پیوست‌های آن را به‌طور دائمی حذف می‌کند. این عمل قابل بازگشت نیست."
 
 #. placeholder {0}: project.project.name
-#: src/routes/_authenticated/$projectId/index.tsx:999
+#: src/routes/_authenticated/$projectId/index.tsx:1013
 msgid "This will remove \"{0}\" from your sidebar and stop updates for this project."
 msgstr "این کار «{0}» را از نوار کناری شما حذف می‌کند و به‌روزرسانی‌های این پروژه را متوقف می‌کند."
 
@@ -2172,7 +2253,7 @@ msgstr "برای جست‌وجو تایپ کنید..."
 msgid "Unable to redirect to login. Please try again."
 msgstr "ریدایرکت به ورود ممکن نیست. لطفاً دوباره تلاش کنید."
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:143
+#: ../../../lib/web/src/components/notification-category-button.tsx:147
 msgid "Unassigned"
 msgstr "بدون اختصاص"
 
@@ -2191,16 +2272,16 @@ msgstr "ایالات متحده"
 #: src/features/projects/pages/projects-list-page.tsx:146
 #: src/features/projects/pages/projects-list-page.tsx:163
 #: src/features/projects/pages/projects-list-page.tsx:165
-#: src/routes/_authenticated/$projectId/index.tsx:859
-#: src/routes/_authenticated/$projectId/index.tsx:1000
+#: src/routes/_authenticated/$projectId/index.tsx:873
+#: src/routes/_authenticated/$projectId/index.tsx:1014
 msgid "Unsubscribe"
 msgstr "لغو اشتراک"
 
-#: src/routes/_authenticated/$projectId/index.tsx:998
+#: src/routes/_authenticated/$projectId/index.tsx:1012
 msgid "Unsubscribe from project?"
 msgstr "لغو اشتراک از پروژه؟"
 
-#: src/routes/_authenticated/$projectId/index.tsx:540
+#: src/routes/_authenticated/$projectId/index.tsx:554
 msgid "Unsubscribed"
 msgstr "لغو اشتراک شد"
 
@@ -2214,13 +2295,17 @@ msgid "Updated"
 msgstr "به‌روزرسانی شد"
 
 #: src/features/objects/components/create-object-dialog.tsx:470
-#: src/features/objects/components/object-attachments.tsx:210
+#: src/features/objects/components/object-attachments.tsx:197
 msgid "Upload"
 msgstr "بارگذاری"
 
 #: src/routes/_authenticated/$projectId/design.tsx:333
 msgid "Upload .json file"
 msgstr "بارگذاری فایل .json"
+
+#: ../../../lib/web/src/components/step-up-dialog.tsx:335
+msgid "Use your passkey"
+msgstr "از کلید عبور خود استفاده کنید"
 
 #. placeholder {0}: prefix || "project"
 #. placeholder {1}: prefix || "project"
@@ -2245,6 +2330,7 @@ msgstr "کد تأیید ارسال شد"
 msgid "Verification failed"
 msgstr "تأیید ناموفق بود"
 
+#: ../../../lib/web/src/components/step-up-dialog.tsx:385
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:164
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:106
 msgid "Verify"
@@ -2253,6 +2339,10 @@ msgstr "تأیید"
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:58
 msgid "Verify email address"
 msgstr "تأیید نشانی ایمیل"
+
+#: ../../../lib/web/src/components/attachment-gallery.tsx:63
+msgid "Video thumbnail"
+msgstr "بندانگشتی ویدیو"
 
 #: ../../../lib/web/src/components/data-table/view-options.tsx:30
 msgid "View"
@@ -2278,7 +2368,7 @@ msgstr "کنترل‌های نمایش"
 msgid "View only"
 msgstr "فقط نمایش"
 
-#: src/routes/_authenticated/$projectId/index.tsx:817
+#: src/routes/_authenticated/$projectId/index.tsx:831
 msgid "View options"
 msgstr "گزینه‌های نمایش"
 
@@ -2311,10 +2401,14 @@ msgstr "وب‌سایت در حال نگهداری است!"
 msgid "Wednesday"
 msgstr "چهارشنبه"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:549
-msgid "Write, comment, and view"
-msgstr "نوشتن، اظهار نظر و نمایش"
+#: src/routes/_authenticated/$projectId/index.tsx:92
+msgid "You don't have access to this project."
+msgstr "شما به این پروژه دسترسی ندارید."
 
 #: src/features/projects/pages/projects-list-page.tsx:94
 msgid "You have no projects yet."
 msgstr "شما هنوز هیچ پروژه‌ای ندارید."
+
+#: ../../../lib/web/src/components/restore-banner.tsx:82
+msgid "Your account was moved here from {source}. Until you delete it there, messages and notifications may reach both servers, some of your content keeps being served from the old server, and followers may take a few minutes to find you here."
+msgstr "حساب کاربری شما از {source} به اینجا منتقل شده است. تا زمانی که آن را آنجا حذف نکنید، پیام‌ها و اعلان‌ها ممکن است به هر دو سرور برسند، بخشی از محتوای شما همچنان از سرور قدیمی ارائه می‌شود، و دنبال‌کنندگان ممکن است چند دقیقه‌ای طول بکشد تا شما را اینجا پیدا کنند."

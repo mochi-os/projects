@@ -158,8 +158,8 @@ msgstr "चेकलिस्ट वस्तु थप्नुहोस्"
 msgid "Add class"
 msgstr "क्लास थप्नुहोस्"
 
-#: src/routes/_authenticated/$projectId/index.tsx:828
-#: src/routes/_authenticated/$projectId/index.tsx:992
+#: src/routes/_authenticated/$projectId/index.tsx:842
+#: src/routes/_authenticated/$projectId/index.tsx:1006
 msgid "Add column"
 msgstr "स्तम्भ थप्नुहोस्"
 
@@ -240,7 +240,7 @@ msgid "Allow sort by"
 msgstr "क्रमबद्धताको आधारमा अनुमति दिनुहोस्"
 
 #. placeholder {0}: deleteTarget?.name
-#: src/features/objects/components/object-attachments.tsx:232
+#: src/features/objects/components/object-attachments.tsx:209
 msgid "Are you sure you want to delete \"{0}\"?"
 msgstr "के तपाईं \"{0}\" मेटाउन निश्चित हुनुहुन्छ?"
 
@@ -282,6 +282,10 @@ msgstr "टिप्पणी फाइलहरू एट्याच गर्
 msgid "Attach reply files"
 msgstr "जवाफ फाइलहरू एट्याच गर्नुहोस्"
 
+#: ../../../lib/web/src/components/step-up-dialog.tsx:312
+msgid "Authenticator code"
+msgstr "Authenticator कोड"
+
 #: src/components/keyboard-shortcuts-help.tsx:47
 msgid "Available keyboard shortcuts"
 msgstr "उपलब्ध किबोर्ड सर्टकटहरू"
@@ -306,7 +310,7 @@ msgid "Back to project"
 msgstr "परियोजनामा फर्कनुहोस्"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:64
-#: src/routes/_authenticated/$projectId/index.tsx:92
+#: src/routes/_authenticated/$projectId/index.tsx:106
 msgid "Back to projects"
 msgstr "परियोजनाहरूमा फर्कनुहोस्"
 
@@ -340,6 +344,7 @@ msgid "Can be child of"
 msgstr "यसको बच्चा हुन सक्छ"
 
 #: ../../../lib/web/src/components/responsive-confirm-dialog.tsx:64
+#: ../../../lib/web/src/components/step-up-dialog.tsx:360
 #: ../../../lib/web/src/components/travelling-picker.tsx:292
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:245
 #: ../../../lib/web/src/features/access/access-dialog.tsx:325
@@ -351,7 +356,7 @@ msgstr "यसको बच्चा हुन सक्छ"
 #: src/features/objects/components/comment-thread.tsx:168
 #: src/features/projects/components/create-project-dialog.tsx:208
 #: src/routes/_authenticated/$projectId/design.tsx:340
-#: src/routes/_authenticated/$projectId/index.tsx:886
+#: src/routes/_authenticated/$projectId/index.tsx:900
 msgid "Cancel"
 msgstr "रद्द गर्नुहोस्"
 
@@ -368,11 +373,11 @@ msgstr "जवाफ रद्द गर्नुहोस्"
 msgid "Cannot merge automatically"
 msgstr "स्वचालित रूपमा मर्ज गर्न सकिँदैन"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:131
+#: ../../../lib/web/src/components/notification-category-button.tsx:135
 msgid "Category for this notification"
 msgstr "यस सूचनाका लागि श्रेणी"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:115
+#: ../../../lib/web/src/components/notification-category-button.tsx:119
 msgid "Change notification category"
 msgstr "सूचना श्रेणी परिवर्तन गर्नुहोस्"
 
@@ -530,6 +535,10 @@ msgstr "प्रासङ्गिक जानकारी र विवरण
 msgid "Continue"
 msgstr "जारी राख्नुहोस्"
 
+#: ../../../lib/web/src/components/step-up-dialog.tsx:349
+msgid "Continue with {label}"
+msgstr "{label} सँग जारी राख्नुहोस्"
+
 #: src/routes/_authenticated/$projectId_.settings.tsx:651
 msgid "Control who can view and interact with this project"
 msgstr "यो परियोजना कसले हेर्न र अन्तर्क्रिया गर्न सक्छ नियन्त्रण गर्नुहोस्"
@@ -545,6 +554,18 @@ msgstr "यस परियोजनाबारे मूल जानकार
 #: ../../../lib/web/src/features/document/document-page.tsx:81
 msgid "Could not load this document. Please try again later."
 msgstr "यो कागजात लोड गर्न सकिएन। कृपया पछि फेरि प्रयास गर्नुहोस्।"
+
+#: ../../../lib/web/src/components/step-up-dialog.tsx:181
+msgid "Couldn't send the code. Please try again."
+msgstr "कोड पठाउन सकिएन। कृपया फेरि प्रयास गर्नुहोस्।"
+
+#: ../../../lib/web/src/components/step-up-dialog.tsx:133
+msgid "Couldn't start re-authentication. Please try again."
+msgstr "पुन: प्रमाणीकरण सुरु गर्न सकिएन। कृपया फेरि प्रयास गर्नुहोस्।"
+
+#: ../../../lib/web/src/components/step-up-dialog.tsx:218
+msgid "Couldn't verify with that account. Please try again."
+msgstr "त्यो खातासँग प्रमाणित गर्न सकिएन। कृपया फेरि प्रयास गर्नुहोस्।"
 
 #: src/features/board/components/board-column.tsx:530
 #: src/features/board/components/board-column.tsx:668
@@ -618,14 +639,14 @@ msgstr "पूर्वनिर्धारित क्रमबद्ध"
 #: src/features/board/components/board-column.tsx:609
 #: src/features/objects/components/comment-thread.tsx:228
 #: src/features/objects/components/comment-thread.tsx:343
-#: src/features/objects/components/object-attachments.tsx:233
+#: src/features/objects/components/object-attachments.tsx:210
 #: src/features/objects/components/object-detail-panel.tsx:603
 #: src/features/requests/components/request-panel.tsx:129
 #: src/routes/_authenticated/$projectId_.settings.tsx:359
 msgid "Delete"
 msgstr "मेटाउनुहोस्"
 
-#: src/features/objects/components/object-attachments.tsx:231
+#: src/features/objects/components/object-attachments.tsx:208
 msgid "Delete attachment"
 msgstr "एट्याचमेन्ट मेटाउनुहोस्"
 
@@ -684,6 +705,10 @@ msgstr "परियोजना मेटाउने?"
 msgid "Delete view"
 msgstr "दृश्य मेटाउनुहोस्"
 
+#: ../../../lib/web/src/components/restore-banner.tsx:90
+msgid "Delete your account on the old server"
+msgstr "पुरानो सर्भरमा आफ्नो खाता मेटाउनुहोस्"
+
 #: ../../../lib/web/src/components/data-table/column-header.tsx:60
 msgid "Desc"
 msgstr "घट्दो"
@@ -695,7 +720,7 @@ msgstr "विवरण"
 
 #: src/routes/_authenticated/$projectId/design.tsx:60
 #: src/routes/_authenticated/$projectId/design.tsx:128
-#: src/routes/_authenticated/$projectId/index.tsx:843
+#: src/routes/_authenticated/$projectId/index.tsx:857
 msgid "Design"
 msgstr "डिजाइन"
 
@@ -704,8 +729,8 @@ msgid "Design imported"
 msgstr "डिजाइन आयात गरियो"
 
 #: src/routes/_authenticated/$projectId_.settings.tsx:548
-msgid "Design, write, comment, and view"
-msgstr "डिजाइन, लेख्नुहोस्, टिप्पणी गर्नुहोस्, र हेर्नुहोस्"
+msgid "Design, create, edit, comment, and view"
+msgstr "डिजाइन गर्नुहोस्, सिर्जना गर्नुहोस्, सम्पादन गर्नुहोस्, टिप्पणी गर्नुहोस् र हेर्नुहोस्"
 
 #: ../../../lib/web/src/components/layout/right-panel.tsx:144
 msgid "Details Panel"
@@ -734,8 +759,12 @@ msgstr "भिन्नता: {source} → {target}"
 msgid "Direction"
 msgstr "दिशा"
 
-#: src/routes/_authenticated/$projectId/index.tsx:908
-#: src/routes/_authenticated/$projectId/index.tsx:909
+#: ../../../lib/web/src/components/restore-banner.tsx:73
+msgid "Dismiss"
+msgstr "हटाउनुहोस्"
+
+#: src/routes/_authenticated/$projectId/index.tsx:922
+#: src/routes/_authenticated/$projectId/index.tsx:923
 msgid "Dismiss board hint"
 msgstr "बोर्ड संकेत हटाउनुहोस्"
 
@@ -750,7 +779,7 @@ msgstr "मोबाइल साइडबार देखाउँछ।"
 msgid "Done"
 msgstr "सम्पन्न"
 
-#: src/routes/_authenticated/$projectId/index.tsx:901
+#: src/routes/_authenticated/$projectId/index.tsx:915
 msgid "Double click on a column to add content"
 msgstr "सामग्री थप्न स्तम्भमा डबल क्लिक गर्नुहोस्"
 
@@ -767,7 +796,7 @@ msgstr "पहिले ब्याकअप डाउनलोड गर्न
 msgid "Draft"
 msgstr "मस्यौदा"
 
-#: src/routes/_authenticated/$projectId/index.tsx:882
+#: src/routes/_authenticated/$projectId/index.tsx:896
 msgid "Drag columns to re-order them"
 msgstr "स्तम्भहरूको क्रम मिलाउन तानेर सार्नुहोस्"
 
@@ -813,6 +842,22 @@ msgstr "चयनित कार्ड सम्पादन गर्नुह
 #: src/features/editor/components/edit-dialogs.tsx:266
 msgid "Edit view"
 msgstr "दृश्य सम्पादन गर्नुहोस्"
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:549
+msgid "Edit, comment, and view"
+msgstr "सम्पादन गर्नुहोस्, टिप्पणी गर्नुहोस् र हेर्नुहोस्"
+
+#: ../../../lib/web/src/components/step-up-dialog.tsx:286
+msgid "Email code"
+msgstr "इमेल कोड"
+
+#: ../../../lib/web/src/components/step-up-dialog.tsx:296
+msgid "Enter the code from your email"
+msgstr "तपाईंको इमेलमा आएको कोड प्रविष्ट गर्नुहोस्"
+
+#: ../../../lib/web/src/components/step-up-dialog.tsx:321
+msgid "Enter your authenticator code"
+msgstr "आफ्नो प्रमाणक कोड हाल्नुहोस्"
 
 #: src/routes/_authenticated/$projectId_.settings.tsx:326
 msgid "Entity ID"
@@ -866,7 +911,7 @@ msgstr "प्रोजेक्ट सिर्जना गर्न असफ
 msgid "Failed to create view"
 msgstr "दृश्य सिर्जना गर्न असफल"
 
-#: src/features/objects/components/object-attachments.tsx:75
+#: src/features/objects/components/object-attachments.tsx:73
 msgid "Failed to delete attachment"
 msgstr "एट्याचमेन्ट मेटाउन असफल"
 
@@ -899,7 +944,7 @@ msgid "Failed to load item"
 msgstr "वस्तु लोड गर्न असफल"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:40
-#: src/routes/_authenticated/$projectId/index.tsx:68
+#: src/routes/_authenticated/$projectId/index.tsx:70
 msgid "Failed to load project"
 msgstr "प्रोजेक्ट लोड गर्न असफल"
 
@@ -953,7 +998,7 @@ msgid "Failed to subscribe"
 msgstr "सदस्यता लिन असफल"
 
 #: src/features/projects/pages/projects-list-page.tsx:48
-#: src/routes/_authenticated/$projectId/index.tsx:544
+#: src/routes/_authenticated/$projectId/index.tsx:558
 msgid "Failed to unsubscribe"
 msgstr "सदस्यता हटाउन असफल"
 
@@ -961,7 +1006,7 @@ msgstr "सदस्यता हटाउन असफल"
 msgid "Failed to update access level"
 msgstr "पहुँच स्तर अद्यावधिक गर्न असफल"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:104
+#: ../../../lib/web/src/components/notification-category-button.tsx:108
 msgid "Failed to update category"
 msgstr "वर्ग अद्यावधिक गर्न असफल"
 
@@ -977,7 +1022,7 @@ msgstr "फिल्ड अद्यावधिक गर्न असफल"
 msgid "Failed to update project"
 msgstr "प्रोजेक्ट अद्यावधिक गर्न असफल"
 
-#: src/features/objects/components/object-attachments.tsx:60
+#: src/features/objects/components/object-attachments.tsx:58
 msgid "Failed to upload attachment"
 msgstr "एट्याचमेन्ट अपलोड गर्न असफल"
 
@@ -986,8 +1031,8 @@ msgid "Fields"
 msgstr "फिल्डहरू"
 
 #: src/features/objects/components/create-object-dialog.tsx:429
-#: src/features/objects/components/object-attachments.tsx:106
-#: src/features/objects/components/object-attachments.tsx:123
+#: src/features/objects/components/object-attachments.tsx:96
+#: src/features/objects/components/object-attachments.tsx:113
 msgid "Files"
 msgstr "फाइलहरू"
 
@@ -999,6 +1044,10 @@ msgstr "प्रोजेक्टहरू खोज्नुहोस्"
 #: src/routes/_authenticated/$projectId_.settings.tsx:331
 msgid "Fingerprint"
 msgstr "औंलाछाप"
+
+#: ../../../lib/web/src/components/restore-banner.tsx:79
+msgid "Finish moving your account"
+msgstr "आफ्नो खाता सार्ने काम सम्पन्न गर्नुहोस्"
 
 #: src/features/editor/components/edit-dialogs.tsx:1051
 msgid "Flags"
@@ -1278,12 +1327,12 @@ msgstr "नाम आवश्यक छ"
 
 #: ../../../lib/web/src/components/ui/sort-selector.tsx:40
 #: src/features/objects/components/create-object-dialog.tsx:327
-#: src/routes/_authenticated/$projectId/index.tsx:782
-#: src/routes/_authenticated/$projectId/index.tsx:800
+#: src/routes/_authenticated/$projectId/index.tsx:796
+#: src/routes/_authenticated/$projectId/index.tsx:814
 msgid "New"
 msgstr "नयाँ"
 
-#: src/routes/_authenticated/$projectId/index.tsx:779
+#: src/routes/_authenticated/$projectId/index.tsx:793
 msgid "New {className}"
 msgstr "नयाँ {className}"
 
@@ -1311,7 +1360,7 @@ msgstr "कुनै पहुँच नियम कन्फिगर गर�
 msgid "No activity yet"
 msgstr "अहिलेसम्म कुनै गतिविधि छैन"
 
-#: src/features/requests/components/branch-select.tsx:70
+#: src/features/requests/components/branch-select.tsx:73
 msgid "No branches found"
 msgstr "कुनै ब्रान्च भेटिएन"
 
@@ -1372,7 +1421,7 @@ msgstr "कुनै प्रोफाइल छैन"
 msgid "No projects found"
 msgstr "कुनै प्रोजेक्ट भेटिएन"
 
-#: src/features/requests/components/repository-select.tsx:58
+#: src/features/requests/components/repository-select.tsx:61
 msgid "No repositories available"
 msgstr "कुनै रिपोजिटरी उपलब्ध छैन"
 
@@ -1390,7 +1439,7 @@ msgstr "स्थिति छैन"
 msgid "No time zone found."
 msgstr "कुनै समय क्षेत्र भेटिएन।"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:135
+#: ../../../lib/web/src/components/notification-category-button.tsx:139
 msgid "No topic record yet — try again after the next notification."
 msgstr "अहिलेसम्म कुनै टपिक रेकर्ड छैन — अर्को सूचना पछि फेरि प्रयास गर्नुहोस्।"
 
@@ -1485,7 +1534,7 @@ msgstr "नेभिगेसन मेनु खोल्नुहोस्"
 msgid "Open option actions"
 msgstr "विकल्प कार्यहरू खोल्नुहोस्"
 
-#: src/routes/_authenticated/$projectId/index.tsx:808
+#: src/routes/_authenticated/$projectId/index.tsx:822
 msgid "Open page actions"
 msgstr "पृष्ठ कार्यहरू खोल्नुहोस्"
 
@@ -1528,12 +1577,24 @@ msgstr "मालिक"
 msgid "Parent"
 msgstr "अभिभावक"
 
+#: ../../../lib/web/src/components/step-up-dialog.tsx:331
+msgid "Passkey"
+msgstr "पासकी"
+
+#: ../../../lib/web/src/components/step-up-dialog.tsx:206
+msgid "Passkey verification failed. Please try again."
+msgstr "पासकी प्रमाणीकरण असफल भयो। कृपया फेरि प्रयास गर्नुहोस्।"
+
+#: ../../../lib/web/src/components/restore-banner.tsx:126
+msgid "Passkeys"
+msgstr "पासकीहरू"
+
 #: src/routes/_authenticated/$projectId_.settings.tsx:350
 msgid "Permanently delete this project and all its content."
 msgstr "यो प्रोजेक्ट र यसका सम्पूर्ण सामग्री स्थायी रूपमा मेटाउनुहोस्।"
 
-#: src/routes/_authenticated/$projectId/index.tsx:636
-#: src/routes/_authenticated/$projectId/index.tsx:670
+#: src/routes/_authenticated/$projectId/index.tsx:650
+#: src/routes/_authenticated/$projectId/index.tsx:684
 msgid "Please add one or more classes to the project design."
 msgstr "कृपया प्रोजेक्ट डिजाइनमा एक वा बढी क्लासहरू थप्नुहोस्।"
 
@@ -1561,7 +1622,7 @@ msgid "Profile"
 msgstr "प्रोफाइल"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:62
-#: src/routes/_authenticated/$projectId/index.tsx:90
+#: src/routes/_authenticated/$projectId/index.tsx:104
 msgid "Project"
 msgstr "प्रोजेक्ट"
 
@@ -1600,9 +1661,17 @@ msgstr "प्रोजेक्टहरू"
 msgid "Properties"
 msgstr "गुणहरू"
 
-#: src/routes/_authenticated/$projectId/index.tsx:832
+#: ../../../lib/web/src/components/restore-banner.tsx:98
+msgid "Re-link your accounts on this server"
+msgstr "यस सर्भरमा आफ्ना खाताहरू पुनः लिङ्क गर्नुहोस्"
+
+#: src/routes/_authenticated/$projectId/index.tsx:846
 msgid "Re-order columns"
 msgstr "स्तम्भहरू पुन: क्रमबद्ध गर्नुहोस्"
+
+#: ../../../lib/web/src/components/restore-banner.tsx:120
+msgid "Re-register your passkeys on this server"
+msgstr "यस सर्भरमा तपाईंका पासकीहरू पुन: दर्ता गर्नुहोस्"
 
 #: src/features/requests/components/merge-status.tsx:68
 msgid "Ready to merge"
@@ -1713,6 +1782,10 @@ msgstr "अनुरोधहरू"
 msgid "Required"
 msgstr "आवश्यक"
 
+#: ../../../lib/web/src/components/step-up-dialog.tsx:364
+msgid "Resend email"
+msgstr "इमेल फेरि पठाउनुहोस्"
+
 #: ../../../lib/web/src/components/config-drawer.tsx:77
 #: ../../../lib/web/src/components/data-table/toolbar.tsx:78
 msgid "Reset"
@@ -1753,7 +1826,7 @@ msgstr "शनिबार"
 
 #: src/features/editor/components/option-dialog.tsx:138
 #: src/features/objects/components/comment-thread.tsx:179
-#: src/routes/_authenticated/$projectId/index.tsx:893
+#: src/routes/_authenticated/$projectId/index.tsx:907
 msgid "Save"
 msgstr "सुरक्षित गर्नुहोस्"
 
@@ -1829,7 +1902,7 @@ msgstr "पहुँच नियम छान्नुहोस्"
 msgid "Select account type"
 msgstr "खाता प्रकार छान्नुहोस्"
 
-#: src/features/requests/components/branch-select.tsx:32
+#: src/features/requests/components/branch-select.tsx:33
 msgid "Select branch"
 msgstr "ब्रान्च छान्नुहोस्"
 
@@ -1849,7 +1922,7 @@ msgstr "अर्को कार्ड चयन गर्नुहोस्"
 msgid "Select previous card"
 msgstr "अघिल्लो कार्ड चयन गर्नुहोस्"
 
-#: src/features/requests/components/repository-select.tsx:47
+#: src/features/requests/components/repository-select.tsx:50
 msgid "Select repository"
 msgstr "रिपोजिटरी छान्नुहोस्"
 
@@ -1873,6 +1946,10 @@ msgstr "छान्नुहोस्..."
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:95
 msgid "Send again"
 msgstr "फेरि पठाउनुहोस्"
+
+#: ../../../lib/web/src/components/step-up-dialog.tsx:304
+msgid "Send email"
+msgstr "इमेल पठाउनुहोस्"
 
 #: ../../../lib/web/src/lib/preference-utils.ts:133
 msgid "Serif"
@@ -1901,7 +1978,7 @@ msgstr "उत्पत्ति र गन्तव्य सेट गर्�
 #: src/routes/_authenticated/$projectId_.settings.tsx:76
 #: src/routes/_authenticated/$projectId_.settings.tsx:166
 #: src/routes/_authenticated/$projectId_.settings.tsx:189
-#: src/routes/_authenticated/$projectId/index.tsx:853
+#: src/routes/_authenticated/$projectId/index.tsx:867
 msgid "Settings"
 msgstr "सेटिङहरू"
 
@@ -2037,6 +2114,10 @@ msgstr "नियम र सर्तहरू"
 msgid "Text"
 msgstr "पाठ"
 
+#: ../../../lib/web/src/components/step-up-dialog.tsx:192
+msgid "That code is incorrect or has expired."
+msgstr "त्यो कोड गलत छ वा म्याद सकिएको छ।"
+
 #: ../../../lib/web/src/components/config-drawer.tsx:181
 msgid "Theme"
 msgstr "थिम"
@@ -2071,7 +2152,7 @@ msgid "This will permanently delete \"{projectName}\" and all its objects, comme
 msgstr "यसले \"{projectName}\" र यसका सबै वस्तु, टिप्पणी र एट्याचमेन्टहरूलाई स्थायी रूपमा मेटाउनेछ। यो कार्य फिर्ता गर्न सकिँदैन।"
 
 #. placeholder {0}: project.project.name
-#: src/routes/_authenticated/$projectId/index.tsx:999
+#: src/routes/_authenticated/$projectId/index.tsx:1013
 msgid "This will remove \"{0}\" from your sidebar and stop updates for this project."
 msgstr "यसले \"{0}\" लाई तपाईंको साइडबारबाट हटाउनेछ र यो प्रोजेक्टका लागि अद्यावधिकहरू रोक्नेछ।"
 
@@ -2172,7 +2253,7 @@ msgstr "खोज्न टाइप गर्नुहोस्..."
 msgid "Unable to redirect to login. Please try again."
 msgstr "लगइनमा रिडाइरेक्ट गर्न असमर्थ। कृपया फेरि प्रयास गर्नुहोस्।"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:143
+#: ../../../lib/web/src/components/notification-category-button.tsx:147
 msgid "Unassigned"
 msgstr "नतोकिएको"
 
@@ -2191,16 +2272,16 @@ msgstr "संयुक्त राज्य अमेरिका"
 #: src/features/projects/pages/projects-list-page.tsx:146
 #: src/features/projects/pages/projects-list-page.tsx:163
 #: src/features/projects/pages/projects-list-page.tsx:165
-#: src/routes/_authenticated/$projectId/index.tsx:859
-#: src/routes/_authenticated/$projectId/index.tsx:1000
+#: src/routes/_authenticated/$projectId/index.tsx:873
+#: src/routes/_authenticated/$projectId/index.tsx:1014
 msgid "Unsubscribe"
 msgstr "सदस्यता हटाउनुहोस्"
 
-#: src/routes/_authenticated/$projectId/index.tsx:998
+#: src/routes/_authenticated/$projectId/index.tsx:1012
 msgid "Unsubscribe from project?"
 msgstr "प्रोजेक्टबाट सदस्यता हटाउने हो?"
 
-#: src/routes/_authenticated/$projectId/index.tsx:540
+#: src/routes/_authenticated/$projectId/index.tsx:554
 msgid "Unsubscribed"
 msgstr "सदस्यता हटाइयो"
 
@@ -2214,13 +2295,17 @@ msgid "Updated"
 msgstr "अद्यावधिक गरियो"
 
 #: src/features/objects/components/create-object-dialog.tsx:470
-#: src/features/objects/components/object-attachments.tsx:210
+#: src/features/objects/components/object-attachments.tsx:197
 msgid "Upload"
 msgstr "अपलोड गर्नुहोस्"
 
 #: src/routes/_authenticated/$projectId/design.tsx:333
 msgid "Upload .json file"
 msgstr ".json फाइल अपलोड गर्नुहोस्"
+
+#: ../../../lib/web/src/components/step-up-dialog.tsx:335
+msgid "Use your passkey"
+msgstr "आफ्नो पासकी प्रयोग गर्नुहोस्"
 
 #. placeholder {0}: prefix || "project"
 #. placeholder {1}: prefix || "project"
@@ -2245,6 +2330,7 @@ msgstr "प्रमाणीकरण कोड पठाइयो"
 msgid "Verification failed"
 msgstr "प्रमाणीकरण असफल भयो"
 
+#: ../../../lib/web/src/components/step-up-dialog.tsx:385
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:164
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:106
 msgid "Verify"
@@ -2253,6 +2339,10 @@ msgstr "प्रमाणित गर्नुहोस्"
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:58
 msgid "Verify email address"
 msgstr "इमेल ठेगाना प्रमाणित गर्नुहोस्"
+
+#: ../../../lib/web/src/components/attachment-gallery.tsx:63
+msgid "Video thumbnail"
+msgstr "भिडियो थम्बनेल"
 
 #: ../../../lib/web/src/components/data-table/view-options.tsx:30
 msgid "View"
@@ -2278,7 +2368,7 @@ msgstr "दृश्य नियन्त्रणहरू"
 msgid "View only"
 msgstr "मात्र हेर्नुहोस्"
 
-#: src/routes/_authenticated/$projectId/index.tsx:817
+#: src/routes/_authenticated/$projectId/index.tsx:831
 msgid "View options"
 msgstr "दृश्य विकल्पहरू"
 
@@ -2311,10 +2401,14 @@ msgstr "वेबसाइट मर्मतसम्भारमा छ!"
 msgid "Wednesday"
 msgstr "बुधबार"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:549
-msgid "Write, comment, and view"
-msgstr "लेख्नुहोस्, टिप्पणी गर्नुहोस् र हेर्नुहोस्"
+#: src/routes/_authenticated/$projectId/index.tsx:92
+msgid "You don't have access to this project."
+msgstr "तपाईंलाई यो परियोजनामा पहुँच छैन।"
 
 #: src/features/projects/pages/projects-list-page.tsx:94
 msgid "You have no projects yet."
 msgstr "तपाईंको अहिलेसम्म कुनै प्रोजेक्ट छैन।"
+
+#: ../../../lib/web/src/components/restore-banner.tsx:82
+msgid "Your account was moved here from {source}. Until you delete it there, messages and notifications may reach both servers, some of your content keeps being served from the old server, and followers may take a few minutes to find you here."
+msgstr "तपाईंको खाता {source} बाट यहाँ सारिएको छ। त्यहाँ मेटाउनु नभएसम्म, सन्देश र सूचनाहरू दुवै सर्भरमा पुग्न सक्छन्, तपाईंको केही सामग्री पुरानो सर्भरबाट आउन सक्छ, र अनुयायीहरूलाई तपाईंलाई यहाँ भेट्न केही मिनेट लाग्न सक्छ।"

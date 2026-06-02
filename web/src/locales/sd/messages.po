@@ -158,8 +158,8 @@ msgstr "چيڪ لسٽ شيءِ شامل ڪريو"
 msgid "Add class"
 msgstr "ڪلاس شامل ڪريو"
 
-#: src/routes/_authenticated/$projectId/index.tsx:828
-#: src/routes/_authenticated/$projectId/index.tsx:992
+#: src/routes/_authenticated/$projectId/index.tsx:842
+#: src/routes/_authenticated/$projectId/index.tsx:1006
 msgid "Add column"
 msgstr "ڪالم شامل ڪريو"
 
@@ -240,7 +240,7 @@ msgid "Allow sort by"
 msgstr "ترتيب جي اجازت ڏيو"
 
 #. placeholder {0}: deleteTarget?.name
-#: src/features/objects/components/object-attachments.tsx:232
+#: src/features/objects/components/object-attachments.tsx:209
 msgid "Are you sure you want to delete \"{0}\"?"
 msgstr "ڇا توهان پڪ سان \"{0}\" ختم ڪرڻ چاهيو ٿا؟"
 
@@ -282,6 +282,10 @@ msgstr "تبصري جون فائلون ڳنڍيو"
 msgid "Attach reply files"
 msgstr "جواب جون فائلون ڳنڍيو"
 
+#: ../../../lib/web/src/components/step-up-dialog.tsx:312
+msgid "Authenticator code"
+msgstr "Authenticator ڪوڊ"
+
 #: src/components/keyboard-shortcuts-help.tsx:47
 msgid "Available keyboard shortcuts"
 msgstr "موجود ڪيبورڊ شارٽ ڪٽ"
@@ -306,7 +310,7 @@ msgid "Back to project"
 msgstr "پروجيڪٽ ڏانهن واپس"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:64
-#: src/routes/_authenticated/$projectId/index.tsx:92
+#: src/routes/_authenticated/$projectId/index.tsx:106
 msgid "Back to projects"
 msgstr "پروجيڪٽن ڏانهن واپس"
 
@@ -340,6 +344,7 @@ msgid "Can be child of"
 msgstr "جي اولاد ٿي سگهي ٿو"
 
 #: ../../../lib/web/src/components/responsive-confirm-dialog.tsx:64
+#: ../../../lib/web/src/components/step-up-dialog.tsx:360
 #: ../../../lib/web/src/components/travelling-picker.tsx:292
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:245
 #: ../../../lib/web/src/features/access/access-dialog.tsx:325
@@ -351,7 +356,7 @@ msgstr "جي اولاد ٿي سگهي ٿو"
 #: src/features/objects/components/comment-thread.tsx:168
 #: src/features/projects/components/create-project-dialog.tsx:208
 #: src/routes/_authenticated/$projectId/design.tsx:340
-#: src/routes/_authenticated/$projectId/index.tsx:886
+#: src/routes/_authenticated/$projectId/index.tsx:900
 msgid "Cancel"
 msgstr "منسوخ ڪريو"
 
@@ -368,11 +373,11 @@ msgstr "جواب منسوخ ڪريو"
 msgid "Cannot merge automatically"
 msgstr "خودڪار طور merge نه ٿو ٿي سگهي"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:131
+#: ../../../lib/web/src/components/notification-category-button.tsx:135
 msgid "Category for this notification"
 msgstr "هن اطلاع لاءِ زمرو"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:115
+#: ../../../lib/web/src/components/notification-category-button.tsx:119
 msgid "Change notification category"
 msgstr "اطلاع جو زمرو تبديل ڪريو"
 
@@ -530,6 +535,10 @@ msgstr "حوالي جي معلومات ۽ تفصيل."
 msgid "Continue"
 msgstr "جاري رکو"
 
+#: ../../../lib/web/src/components/step-up-dialog.tsx:349
+msgid "Continue with {label}"
+msgstr "{label} سان جاري رکو"
+
 #: src/routes/_authenticated/$projectId_.settings.tsx:651
 msgid "Control who can view and interact with this project"
 msgstr "سنڀاليو ته ڪير هن پروجيڪٽ کي ڏسي ۽ ان سان رابطو ڪري سگهي ٿو"
@@ -545,6 +554,18 @@ msgstr "هن پروجيڪٽ بابت بنيادي معلومات"
 #: ../../../lib/web/src/features/document/document-page.tsx:81
 msgid "Could not load this document. Please try again later."
 msgstr "هي دستاويز لوڊ نه ٿي سگهيو. مهرباني ڪري بعد ۾ ٻيهر ڪوشش ڪريو."
+
+#: ../../../lib/web/src/components/step-up-dialog.tsx:181
+msgid "Couldn't send the code. Please try again."
+msgstr "ڪوڊ موڪلي نه سگهيو. مهرباني ڪري ٻيهر ڪوشش ڪريو."
+
+#: ../../../lib/web/src/components/step-up-dialog.tsx:133
+msgid "Couldn't start re-authentication. Please try again."
+msgstr "ٻيهر تصديق شروع نه ٿي سگهي. مهرباني ڪري ٻيهر ڪوشش ڪريو."
+
+#: ../../../lib/web/src/components/step-up-dialog.tsx:218
+msgid "Couldn't verify with that account. Please try again."
+msgstr "ان اڪائونٽ سان تصديق نه ٿي سگهي. مهرباني ڪري ٻيهر ڪوشش ڪريو."
 
 #: src/features/board/components/board-column.tsx:530
 #: src/features/board/components/board-column.tsx:668
@@ -618,14 +639,14 @@ msgstr "ڊفالٽ ترتيب"
 #: src/features/board/components/board-column.tsx:609
 #: src/features/objects/components/comment-thread.tsx:228
 #: src/features/objects/components/comment-thread.tsx:343
-#: src/features/objects/components/object-attachments.tsx:233
+#: src/features/objects/components/object-attachments.tsx:210
 #: src/features/objects/components/object-detail-panel.tsx:603
 #: src/features/requests/components/request-panel.tsx:129
 #: src/routes/_authenticated/$projectId_.settings.tsx:359
 msgid "Delete"
 msgstr "ختم ڪريو"
 
-#: src/features/objects/components/object-attachments.tsx:231
+#: src/features/objects/components/object-attachments.tsx:208
 msgid "Delete attachment"
 msgstr "ڳنڍيل فائل ختم ڪريو"
 
@@ -684,6 +705,10 @@ msgstr "پروجيڪٽ ختم ڪجي؟"
 msgid "Delete view"
 msgstr "نظارو ختم ڪريو"
 
+#: ../../../lib/web/src/components/restore-banner.tsx:90
+msgid "Delete your account on the old server"
+msgstr "پراڻي سرور تي پنهنجو اڪائونٽ ختم ڪريو"
+
 #: ../../../lib/web/src/components/data-table/column-header.tsx:60
 msgid "Desc"
 msgstr "گهٽبڙ"
@@ -695,7 +720,7 @@ msgstr "تفصيل"
 
 #: src/routes/_authenticated/$projectId/design.tsx:60
 #: src/routes/_authenticated/$projectId/design.tsx:128
-#: src/routes/_authenticated/$projectId/index.tsx:843
+#: src/routes/_authenticated/$projectId/index.tsx:857
 msgid "Design"
 msgstr "ڊزائن"
 
@@ -704,8 +729,8 @@ msgid "Design imported"
 msgstr "ڊزائن درآمد ڪئي وئي"
 
 #: src/routes/_authenticated/$projectId_.settings.tsx:548
-msgid "Design, write, comment, and view"
-msgstr "ڊزائن، لکڻ، تبصرو، ۽ ڏسڻ"
+msgid "Design, create, edit, comment, and view"
+msgstr "ڊيزائن، تخليق، ترميم، تبصرو ۽ ڏسڻ"
 
 #: ../../../lib/web/src/components/layout/right-panel.tsx:144
 msgid "Details Panel"
@@ -734,8 +759,12 @@ msgstr "Diff: {source} → {target}"
 msgid "Direction"
 msgstr "هدايت"
 
-#: src/routes/_authenticated/$projectId/index.tsx:908
-#: src/routes/_authenticated/$projectId/index.tsx:909
+#: ../../../lib/web/src/components/restore-banner.tsx:73
+msgid "Dismiss"
+msgstr "رد ڪريو"
+
+#: src/routes/_authenticated/$projectId/index.tsx:922
+#: src/routes/_authenticated/$projectId/index.tsx:923
 msgid "Dismiss board hint"
 msgstr "بورڊ جو اشارو رد ڪريو"
 
@@ -750,7 +779,7 @@ msgstr "موبائل سائڊبار ڏيکاري ٿو."
 msgid "Done"
 msgstr "مڪمل"
 
-#: src/routes/_authenticated/$projectId/index.tsx:901
+#: src/routes/_authenticated/$projectId/index.tsx:915
 msgid "Double click on a column to add content"
 msgstr "مواد شامل ڪرڻ لاءِ ڪالم تي ڊبل ڪلڪ ڪريو"
 
@@ -767,7 +796,7 @@ msgstr "پهرين بيڪ اپ ڊائون لوڊ ڪريو"
 msgid "Draft"
 msgstr "مسودو"
 
-#: src/routes/_authenticated/$projectId/index.tsx:882
+#: src/routes/_authenticated/$projectId/index.tsx:896
 msgid "Drag columns to re-order them"
 msgstr "ڪالمن کي ٻيهر ترتيب ڏيڻ لاءِ ڇڪيو"
 
@@ -813,6 +842,22 @@ msgstr "چونڊيل ڪارڊ ۾ ترميم ڪريو"
 #: src/features/editor/components/edit-dialogs.tsx:266
 msgid "Edit view"
 msgstr "ڏيک ۾ ترميم ڪريو"
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:549
+msgid "Edit, comment, and view"
+msgstr "ترميم، تبصرو ۽ ڏسڻ"
+
+#: ../../../lib/web/src/components/step-up-dialog.tsx:286
+msgid "Email code"
+msgstr "اي ميل ڪوڊ"
+
+#: ../../../lib/web/src/components/step-up-dialog.tsx:296
+msgid "Enter the code from your email"
+msgstr "پنھنجي اِيميل مان ڪوڊ داخل ڪريو"
+
+#: ../../../lib/web/src/components/step-up-dialog.tsx:321
+msgid "Enter your authenticator code"
+msgstr "پنهنجو تصديق ڪندڙ ڪوڊ داخل ڪريو"
 
 #: src/routes/_authenticated/$projectId_.settings.tsx:326
 msgid "Entity ID"
@@ -866,7 +911,7 @@ msgstr "پروجيڪٽ ٺاهڻ ۾ ناڪام"
 msgid "Failed to create view"
 msgstr "ڏيک ٺاهڻ ۾ ناڪام"
 
-#: src/features/objects/components/object-attachments.tsx:75
+#: src/features/objects/components/object-attachments.tsx:73
 msgid "Failed to delete attachment"
 msgstr "ضميمو ختم ڪرڻ ۾ ناڪام"
 
@@ -899,7 +944,7 @@ msgid "Failed to load item"
 msgstr "شيءِ لوڊ ڪرڻ ۾ ناڪام"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:40
-#: src/routes/_authenticated/$projectId/index.tsx:68
+#: src/routes/_authenticated/$projectId/index.tsx:70
 msgid "Failed to load project"
 msgstr "پروجيڪٽ لوڊ ڪرڻ ۾ ناڪام"
 
@@ -953,7 +998,7 @@ msgid "Failed to subscribe"
 msgstr "سبسڪرائيب ڪرڻ ۾ ناڪام"
 
 #: src/features/projects/pages/projects-list-page.tsx:48
-#: src/routes/_authenticated/$projectId/index.tsx:544
+#: src/routes/_authenticated/$projectId/index.tsx:558
 msgid "Failed to unsubscribe"
 msgstr "ان سبسڪرائيب ڪرڻ ۾ ناڪام"
 
@@ -961,7 +1006,7 @@ msgstr "ان سبسڪرائيب ڪرڻ ۾ ناڪام"
 msgid "Failed to update access level"
 msgstr "رسائي جي سطح اپڊيٽ ڪرڻ ۾ ناڪام"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:104
+#: ../../../lib/web/src/components/notification-category-button.tsx:108
 msgid "Failed to update category"
 msgstr "زمرو اپڊيٽ ڪرڻ ۾ ناڪام"
 
@@ -977,7 +1022,7 @@ msgstr "فيلڊ اپڊيٽ ڪرڻ ۾ ناڪام"
 msgid "Failed to update project"
 msgstr "پروجيڪٽ اپڊيٽ ڪرڻ ۾ ناڪام"
 
-#: src/features/objects/components/object-attachments.tsx:60
+#: src/features/objects/components/object-attachments.tsx:58
 msgid "Failed to upload attachment"
 msgstr "ضميمو اپ لوڊ ڪرڻ ۾ ناڪام"
 
@@ -986,8 +1031,8 @@ msgid "Fields"
 msgstr "فيلڊز"
 
 #: src/features/objects/components/create-object-dialog.tsx:429
-#: src/features/objects/components/object-attachments.tsx:106
-#: src/features/objects/components/object-attachments.tsx:123
+#: src/features/objects/components/object-attachments.tsx:96
+#: src/features/objects/components/object-attachments.tsx:113
 msgid "Files"
 msgstr "فائلون"
 
@@ -999,6 +1044,10 @@ msgstr "پروجيڪٽَ ڳوليو"
 #: src/routes/_authenticated/$projectId_.settings.tsx:331
 msgid "Fingerprint"
 msgstr "فنگر پرنٽ"
+
+#: ../../../lib/web/src/components/restore-banner.tsx:79
+msgid "Finish moving your account"
+msgstr "پنهنجو اڪائونٽ منتقل ڪرڻ پورو ڪريو"
 
 #: src/features/editor/components/edit-dialogs.tsx:1051
 msgid "Flags"
@@ -1278,12 +1327,12 @@ msgstr "نالو گهربل آهي"
 
 #: ../../../lib/web/src/components/ui/sort-selector.tsx:40
 #: src/features/objects/components/create-object-dialog.tsx:327
-#: src/routes/_authenticated/$projectId/index.tsx:782
-#: src/routes/_authenticated/$projectId/index.tsx:800
+#: src/routes/_authenticated/$projectId/index.tsx:796
+#: src/routes/_authenticated/$projectId/index.tsx:814
 msgid "New"
 msgstr "نئون"
 
-#: src/routes/_authenticated/$projectId/index.tsx:779
+#: src/routes/_authenticated/$projectId/index.tsx:793
 msgid "New {className}"
 msgstr "نئون {className}"
 
@@ -1311,7 +1360,7 @@ msgstr "ڪي به رسائي قاعدا ترتيب نه ڏنا ويا. هن وس
 msgid "No activity yet"
 msgstr "اڃا ڪا سرگرمي نه آهي"
 
-#: src/features/requests/components/branch-select.tsx:70
+#: src/features/requests/components/branch-select.tsx:73
 msgid "No branches found"
 msgstr "ڪا برانچ نه ملي"
 
@@ -1372,7 +1421,7 @@ msgstr "ڪو پروفائيل نه آهي"
 msgid "No projects found"
 msgstr "ڪو پروجيڪٽ نه مليو"
 
-#: src/features/requests/components/repository-select.tsx:58
+#: src/features/requests/components/repository-select.tsx:61
 msgid "No repositories available"
 msgstr "ڪي repositories دستياب ناهن"
 
@@ -1390,7 +1439,7 @@ msgstr "ڪا حالت نه آهي"
 msgid "No time zone found."
 msgstr "ڪو ٽائيم زون نه مليو."
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:135
+#: ../../../lib/web/src/components/notification-category-button.tsx:139
 msgid "No topic record yet — try again after the next notification."
 msgstr "اڃا ڪو ٽاپڪ رڪارڊ نه آهي — اڳيون اطلاع کان پوءِ ٻيهر ڪوشش ڪريو."
 
@@ -1485,7 +1534,7 @@ msgstr "نيويگيشن مينيو کوليو"
 msgid "Open option actions"
 msgstr "اختيار ڪارناما کوليو"
 
-#: src/routes/_authenticated/$projectId/index.tsx:808
+#: src/routes/_authenticated/$projectId/index.tsx:822
 msgid "Open page actions"
 msgstr "صفحو ڪارناما کوليو"
 
@@ -1528,12 +1577,24 @@ msgstr "مالڪ"
 msgid "Parent"
 msgstr "والدين"
 
+#: ../../../lib/web/src/components/step-up-dialog.tsx:331
+msgid "Passkey"
+msgstr "پاس ڪيئي"
+
+#: ../../../lib/web/src/components/step-up-dialog.tsx:206
+msgid "Passkey verification failed. Please try again."
+msgstr "پاس ڪي جي تصديق ناڪام ٿي. مهرباني ڪري ٻيهر ڪوشش ڪريو."
+
+#: ../../../lib/web/src/components/restore-banner.tsx:126
+msgid "Passkeys"
+msgstr "پاسي ڪيز"
+
 #: src/routes/_authenticated/$projectId_.settings.tsx:350
 msgid "Permanently delete this project and all its content."
 msgstr "هن پروجيڪٽ ۽ ان جي سموري مواد کي مستقل طور تي حذف ڪريو."
 
-#: src/routes/_authenticated/$projectId/index.tsx:636
-#: src/routes/_authenticated/$projectId/index.tsx:670
+#: src/routes/_authenticated/$projectId/index.tsx:650
+#: src/routes/_authenticated/$projectId/index.tsx:684
 msgid "Please add one or more classes to the project design."
 msgstr "مهرباني ڪري پروجيڪٽ ڊيزائن ۾ هڪ يا وڌيڪ ڪلاس شامل ڪريو."
 
@@ -1561,7 +1622,7 @@ msgid "Profile"
 msgstr "پروفائيل"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:62
-#: src/routes/_authenticated/$projectId/index.tsx:90
+#: src/routes/_authenticated/$projectId/index.tsx:104
 msgid "Project"
 msgstr "پروجيڪٽ"
 
@@ -1600,9 +1661,17 @@ msgstr "پروجيڪٽ"
 msgid "Properties"
 msgstr "خاصيتون"
 
-#: src/routes/_authenticated/$projectId/index.tsx:832
+#: ../../../lib/web/src/components/restore-banner.tsx:98
+msgid "Re-link your accounts on this server"
+msgstr "هن سرور تي پنهنجا اڪائونٽ ٻيهر ڳنڍيو"
+
+#: src/routes/_authenticated/$projectId/index.tsx:846
 msgid "Re-order columns"
 msgstr "ڪالم ٻيهر ترتيب ڏيو"
+
+#: ../../../lib/web/src/components/restore-banner.tsx:120
+msgid "Re-register your passkeys on this server"
+msgstr "هن سرور تي پنهنجون پاسي ڪيز ٻيهر رجسٽر ڪريو"
 
 #: src/features/requests/components/merge-status.tsx:68
 msgid "Ready to merge"
@@ -1713,6 +1782,10 @@ msgstr "درخواستون"
 msgid "Required"
 msgstr "گهربل"
 
+#: ../../../lib/web/src/components/step-up-dialog.tsx:364
+msgid "Resend email"
+msgstr "اي ميل ٻيهر موڪليو"
+
 #: ../../../lib/web/src/components/config-drawer.tsx:77
 #: ../../../lib/web/src/components/data-table/toolbar.tsx:78
 msgid "Reset"
@@ -1753,7 +1826,7 @@ msgstr "ڇنڇر"
 
 #: src/features/editor/components/option-dialog.tsx:138
 #: src/features/objects/components/comment-thread.tsx:179
-#: src/routes/_authenticated/$projectId/index.tsx:893
+#: src/routes/_authenticated/$projectId/index.tsx:907
 msgid "Save"
 msgstr "محفوظ ڪريو"
 
@@ -1829,7 +1902,7 @@ msgstr "رسائي قاعدو چونڊيو"
 msgid "Select account type"
 msgstr "اڪائونٽ قسم چونڊيو"
 
-#: src/features/requests/components/branch-select.tsx:32
+#: src/features/requests/components/branch-select.tsx:33
 msgid "Select branch"
 msgstr "شاخ چونڊيو"
 
@@ -1849,7 +1922,7 @@ msgstr "اڳيون ڪارڊ چونڊيو"
 msgid "Select previous card"
 msgstr "پويون ڪارڊ چونڊيو"
 
-#: src/features/requests/components/repository-select.tsx:47
+#: src/features/requests/components/repository-select.tsx:50
 msgid "Select repository"
 msgstr "ريپازيٽري چونڊيو"
 
@@ -1873,6 +1946,10 @@ msgstr "چونڊيو..."
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:95
 msgid "Send again"
 msgstr "ٻيهر موڪليو"
+
+#: ../../../lib/web/src/components/step-up-dialog.tsx:304
+msgid "Send email"
+msgstr "اي ميل موڪليو"
 
 #: ../../../lib/web/src/lib/preference-utils.ts:133
 msgid "Serif"
@@ -1901,7 +1978,7 @@ msgstr "اصل ۽ منزل مقرر ڪريو"
 #: src/routes/_authenticated/$projectId_.settings.tsx:76
 #: src/routes/_authenticated/$projectId_.settings.tsx:166
 #: src/routes/_authenticated/$projectId_.settings.tsx:189
-#: src/routes/_authenticated/$projectId/index.tsx:853
+#: src/routes/_authenticated/$projectId/index.tsx:867
 msgid "Settings"
 msgstr "سيٽنگون"
 
@@ -2037,6 +2114,10 @@ msgstr "شرطون ۽ ضابطا"
 msgid "Text"
 msgstr "ٽيڪسٽ"
 
+#: ../../../lib/web/src/components/step-up-dialog.tsx:192
+msgid "That code is incorrect or has expired."
+msgstr "اهو ڪوڊ غلط آهي يا ختم ٿي ويو آهي."
+
 #: ../../../lib/web/src/components/config-drawer.tsx:181
 msgid "Theme"
 msgstr "ٿيم"
@@ -2071,7 +2152,7 @@ msgid "This will permanently delete \"{projectName}\" and all its objects, comme
 msgstr "ھي \"{projectName}\" ۽ ان جا سڀ آبجيڪٽ، تبصرا ۽ منسلڪات مستقل طور تي حذف ڪندو. ھي عمل واپس نه ٿو ٿي سگھي."
 
 #. placeholder {0}: project.project.name
-#: src/routes/_authenticated/$projectId/index.tsx:999
+#: src/routes/_authenticated/$projectId/index.tsx:1013
 msgid "This will remove \"{0}\" from your sidebar and stop updates for this project."
 msgstr "ھي \"{0}\" کي توھان جي سائيڊبار مان ھٽائيندو ۽ ھن پروجيڪٽ لاءِ اپڊيٽون روڪيندو."
 
@@ -2172,7 +2253,7 @@ msgstr "ڳولڻ لاءِ ٽائپ ڪريو..."
 msgid "Unable to redirect to login. Please try again."
 msgstr "لاگ ان ڏانھن ريڊائريڪٽ ڪرڻ ۾ ناڪام. مھرباني ڪري ٻيھر ڪوشش ڪريو."
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:143
+#: ../../../lib/web/src/components/notification-category-button.tsx:147
 msgid "Unassigned"
 msgstr "غير تفويض ٿيل"
 
@@ -2191,16 +2272,16 @@ msgstr "آمريڪا"
 #: src/features/projects/pages/projects-list-page.tsx:146
 #: src/features/projects/pages/projects-list-page.tsx:163
 #: src/features/projects/pages/projects-list-page.tsx:165
-#: src/routes/_authenticated/$projectId/index.tsx:859
-#: src/routes/_authenticated/$projectId/index.tsx:1000
+#: src/routes/_authenticated/$projectId/index.tsx:873
+#: src/routes/_authenticated/$projectId/index.tsx:1014
 msgid "Unsubscribe"
 msgstr "ان سبسڪرائب ڪريو"
 
-#: src/routes/_authenticated/$projectId/index.tsx:998
+#: src/routes/_authenticated/$projectId/index.tsx:1012
 msgid "Unsubscribe from project?"
 msgstr "پروجيڪٽ کان ان سبسڪرائب ڪريو؟"
 
-#: src/routes/_authenticated/$projectId/index.tsx:540
+#: src/routes/_authenticated/$projectId/index.tsx:554
 msgid "Unsubscribed"
 msgstr "ان سبسڪرائبڊ"
 
@@ -2214,13 +2295,17 @@ msgid "Updated"
 msgstr "اپڊيٽ ٿيو"
 
 #: src/features/objects/components/create-object-dialog.tsx:470
-#: src/features/objects/components/object-attachments.tsx:210
+#: src/features/objects/components/object-attachments.tsx:197
 msgid "Upload"
 msgstr "اپ لوڊ ڪريو"
 
 #: src/routes/_authenticated/$projectId/design.tsx:333
 msgid "Upload .json file"
 msgstr ".json فائل اپ لوڊ ڪريو"
+
+#: ../../../lib/web/src/components/step-up-dialog.tsx:335
+msgid "Use your passkey"
+msgstr "پنهنجي پاس ڪي استعمال ڪريو"
 
 #. placeholder {0}: prefix || "project"
 #. placeholder {1}: prefix || "project"
@@ -2245,6 +2330,7 @@ msgstr "تصديق ڪوڊ موڪليو ويو"
 msgid "Verification failed"
 msgstr "تصديق ناڪام ٿي"
 
+#: ../../../lib/web/src/components/step-up-dialog.tsx:385
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:164
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:106
 msgid "Verify"
@@ -2253,6 +2339,10 @@ msgstr "تصديق ڪريو"
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:58
 msgid "Verify email address"
 msgstr "اي ميل ايڊريس جي تصديق ڪريو"
+
+#: ../../../lib/web/src/components/attachment-gallery.tsx:63
+msgid "Video thumbnail"
+msgstr "وڊيو ٿمب نيل"
 
 #: ../../../lib/web/src/components/data-table/view-options.tsx:30
 msgid "View"
@@ -2278,7 +2368,7 @@ msgstr "ڏيک ڪنٽرول"
 msgid "View only"
 msgstr "صرف ڏسڻ"
 
-#: src/routes/_authenticated/$projectId/index.tsx:817
+#: src/routes/_authenticated/$projectId/index.tsx:831
 msgid "View options"
 msgstr "ڏيک اختيار"
 
@@ -2311,10 +2401,14 @@ msgstr "ويب سائيٽ مرمت ھيٺان آھي!"
 msgid "Wednesday"
 msgstr "اربع"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:549
-msgid "Write, comment, and view"
-msgstr "لکو، تبصرو ڪريو، ۽ ڏسو"
+#: src/routes/_authenticated/$projectId/index.tsx:92
+msgid "You don't have access to this project."
+msgstr "توهان کي هن منصوبي تائين رسائي ناهي."
 
 #: src/features/projects/pages/projects-list-page.tsx:94
 msgid "You have no projects yet."
 msgstr "توھان وٽ اڃا ڪا پروجيڪٽ نه آھن."
+
+#: ../../../lib/web/src/components/restore-banner.tsx:82
+msgid "Your account was moved here from {source}. Until you delete it there, messages and notifications may reach both servers, some of your content keeps being served from the old server, and followers may take a few minutes to find you here."
+msgstr "توهان جو اڪائونٽ {source} کان هتي منتقل ڪيو ويو. جيستائين توهان اتي ان کي نه ختم ڪيو، پيغام ۽ اطلاع ٻنهي سرورن تي پهچي سگهن ٿا، توهان جو ڪجهه مواد اڃا به پراڻي سرور کان فراهم ٿئي ٿو، ۽ پيروڪارن کي هتي توهان کي ڳولڻ ۾ ڪجهه منٽ لڳي سگهن ٿا."

@@ -158,8 +158,8 @@ msgstr "Ավելացնել դաս"
 msgid "Add class"
 msgstr "Ավելացնել սյունակ"
 
-#: src/routes/_authenticated/$projectId/index.tsx:828
-#: src/routes/_authenticated/$projectId/index.tsx:992
+#: src/routes/_authenticated/$projectId/index.tsx:842
+#: src/routes/_authenticated/$projectId/index.tsx:1006
 msgid "Add column"
 msgstr "Ավելացնել պատվիրակություն"
 
@@ -240,7 +240,7 @@ msgid "Allow sort by"
 msgstr "Թույլատրել օգտատերերին տեղադրել հավելվածներ"
 
 #. placeholder {0}: deleteTarget?.name
-#: src/features/objects/components/object-attachments.tsx:232
+#: src/features/objects/components/object-attachments.tsx:209
 msgid "Are you sure you want to delete \"{0}\"?"
 msgstr "Վստա՞հ եք, որ ուզում եք ջնջել «{title}»-ը։ Այս գործողությունն անդառնալի է։"
 
@@ -282,6 +282,10 @@ msgstr "Կցել ֆայլեր"
 msgid "Attach reply files"
 msgstr "Կցորդը ջնջված է"
 
+#: ../../../lib/web/src/components/step-up-dialog.tsx:312
+msgid "Authenticator code"
+msgstr "Հեղինակ"
+
 #: src/components/keyboard-shortcuts-help.tsx:47
 msgid "Available keyboard shortcuts"
 msgstr "Հասանելի տարբերակ՝"
@@ -306,7 +310,7 @@ msgid "Back to project"
 msgstr "Հետ դեպի նախագծեր"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:64
-#: src/routes/_authenticated/$projectId/index.tsx:92
+#: src/routes/_authenticated/$projectId/index.tsx:106
 msgid "Back to projects"
 msgstr "Հետ դեպի wiki-ներ"
 
@@ -340,6 +344,7 @@ msgid "Can be child of"
 msgstr "Չեղարկել"
 
 #: ../../../lib/web/src/components/responsive-confirm-dialog.tsx:64
+#: ../../../lib/web/src/components/step-up-dialog.tsx:360
 #: ../../../lib/web/src/components/travelling-picker.tsx:292
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:245
 #: ../../../lib/web/src/features/access/access-dialog.tsx:325
@@ -351,7 +356,7 @@ msgstr "Չեղարկել"
 #: src/features/objects/components/comment-thread.tsx:168
 #: src/features/projects/components/create-project-dialog.tsx:208
 #: src/routes/_authenticated/$projectId/design.tsx:340
-#: src/routes/_authenticated/$projectId/index.tsx:886
+#: src/routes/_authenticated/$projectId/index.tsx:900
 msgid "Cancel"
 msgstr "Չեղարկել մեկնաբանությունը"
 
@@ -368,11 +373,11 @@ msgstr "Չեղարկել բաժանորդագրությունը"
 msgid "Cannot merge automatically"
 msgstr "Փոխադրող"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:131
+#: ../../../lib/web/src/components/notification-category-button.tsx:135
 msgid "Category for this notification"
 msgstr "Կատեգորիան թարմացված է"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:115
+#: ../../../lib/web/src/components/notification-category-button.tsx:119
 msgid "Change notification category"
 msgstr "Փոփոխություններ"
 
@@ -530,6 +535,10 @@ msgstr "Շարունակել"
 msgid "Continue"
 msgstr "Շարունակել վճարումը"
 
+#: ../../../lib/web/src/components/step-up-dialog.tsx:349
+msgid "Continue with {label}"
+msgstr "Շարունակել {label}-ով"
+
 #: src/routes/_authenticated/$projectId_.settings.tsx:651
 msgid "Control who can view and interact with this project"
 msgstr "Պատճենված է"
@@ -545,6 +554,18 @@ msgstr "Չհաջողվեց չեղարկել"
 #: ../../../lib/web/src/features/document/document-page.tsx:81
 msgid "Could not load this document. Please try again later."
 msgstr "Չհաջողվեց մշակել {slot} պատկերը"
+
+#: ../../../lib/web/src/components/step-up-dialog.tsx:181
+msgid "Couldn't send the code. Please try again."
+msgstr "Չհաջողվեց ուղարկել կոդը։ Խնդրում ենք նորից փորձել։"
+
+#: ../../../lib/web/src/components/step-up-dialog.tsx:133
+msgid "Couldn't start re-authentication. Please try again."
+msgstr "Չհաջողվեց սկսել վերանույնականացումը։ Խնդրում ենք նորից փորձել։"
+
+#: ../../../lib/web/src/components/step-up-dialog.tsx:218
+msgid "Couldn't verify with that account. Please try again."
+msgstr "Չհաջողվեց ստուգել այդ հաշվով։ Խնդրում ենք նորից փորձել։"
 
 #: src/features/board/components/board-column.tsx:530
 #: src/features/board/components/board-column.tsx:668
@@ -618,14 +639,14 @@ msgstr "Լռելյայն տեսակավորում"
 #: src/features/board/components/board-column.tsx:609
 #: src/features/objects/components/comment-thread.tsx:228
 #: src/features/objects/components/comment-thread.tsx:343
-#: src/features/objects/components/object-attachments.tsx:233
+#: src/features/objects/components/object-attachments.tsx:210
 #: src/features/objects/components/object-detail-panel.tsx:603
 #: src/features/requests/components/request-panel.tsx:129
 #: src/routes/_authenticated/$projectId_.settings.tsx:359
 msgid "Delete"
 msgstr "Ջնջել"
 
-#: src/features/objects/components/object-attachments.tsx:231
+#: src/features/objects/components/object-attachments.tsx:208
 msgid "Delete attachment"
 msgstr "Ջնջել կցորդը"
 
@@ -684,6 +705,10 @@ msgstr "Ջնջե՞լ նախագիծը։"
 msgid "Delete view"
 msgstr "Ջնջել տեսքը"
 
+#: ../../../lib/web/src/components/restore-banner.tsx:90
+msgid "Delete your account on the old server"
+msgstr "Ջնջեք ձեր հաշիվը հին սերվերում"
+
 #: ../../../lib/web/src/components/data-table/column-header.tsx:60
 msgid "Desc"
 msgstr "Նվազող"
@@ -695,7 +720,7 @@ msgstr "Նկարագրություն"
 
 #: src/routes/_authenticated/$projectId/design.tsx:60
 #: src/routes/_authenticated/$projectId/design.tsx:128
-#: src/routes/_authenticated/$projectId/index.tsx:843
+#: src/routes/_authenticated/$projectId/index.tsx:857
 msgid "Design"
 msgstr "Դիզայն"
 
@@ -704,8 +729,8 @@ msgid "Design imported"
 msgstr "Դիզայնը ներմուծված է"
 
 #: src/routes/_authenticated/$projectId_.settings.tsx:548
-msgid "Design, write, comment, and view"
-msgstr "Դիզայն, գրել, մեկնաբանել և դիտել"
+msgid "Design, create, edit, comment, and view"
+msgstr "Ձևավորել, ստեղծել, խմբագրել, մեկնաբանել և դիտել"
 
 #: ../../../lib/web/src/components/layout/right-panel.tsx:144
 msgid "Details Panel"
@@ -734,8 +759,12 @@ msgstr "Diff՝ {source} → {target}"
 msgid "Direction"
 msgstr "Ուղղություն"
 
-#: src/routes/_authenticated/$projectId/index.tsx:908
-#: src/routes/_authenticated/$projectId/index.tsx:909
+#: ../../../lib/web/src/components/restore-banner.tsx:73
+msgid "Dismiss"
+msgstr "Հեռացնել"
+
+#: src/routes/_authenticated/$projectId/index.tsx:922
+#: src/routes/_authenticated/$projectId/index.tsx:923
 msgid "Dismiss board hint"
 msgstr "Հեռացնել տախտակի հուշումը"
 
@@ -750,7 +779,7 @@ msgstr "Ցուցադրում է բջջային կողագոտին։"
 msgid "Done"
 msgstr "Կատարված է"
 
-#: src/routes/_authenticated/$projectId/index.tsx:901
+#: src/routes/_authenticated/$projectId/index.tsx:915
 msgid "Double click on a column to add content"
 msgstr "Կրկնակի սեղմեք սյունակի վրա բովանդակություն ավելացնելու համար"
 
@@ -767,7 +796,7 @@ msgstr "Նախ ներբեռնեք պահուստավորումը"
 msgid "Draft"
 msgstr "Սևագիր"
 
-#: src/routes/_authenticated/$projectId/index.tsx:882
+#: src/routes/_authenticated/$projectId/index.tsx:896
 msgid "Drag columns to re-order them"
 msgstr "Քաշեք սյունակները՝ դրանք վերադասավորելու համար"
 
@@ -813,6 +842,22 @@ msgstr "Խմբագրել ընտրված քարտը"
 #: src/features/editor/components/edit-dialogs.tsx:266
 msgid "Edit view"
 msgstr "Խմբագրել տեսքը"
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:549
+msgid "Edit, comment, and view"
+msgstr "Խմբագրել, մեկնաբանել և դիտել"
+
+#: ../../../lib/web/src/components/step-up-dialog.tsx:286
+msgid "Email code"
+msgstr "Էլ․ փոստի կոդ"
+
+#: ../../../lib/web/src/components/step-up-dialog.tsx:296
+msgid "Enter the code from your email"
+msgstr "Մուտքագրեք ձեր էլ. փոստից ստացած կոդը"
+
+#: ../../../lib/web/src/components/step-up-dialog.tsx:321
+msgid "Enter your authenticator code"
+msgstr "Մուտքագրեք ձեր նույնականացուցիչի կոդը"
 
 #: src/routes/_authenticated/$projectId_.settings.tsx:326
 msgid "Entity ID"
@@ -866,7 +911,7 @@ msgstr "Չհաջողվեց ստեղծել նախագիծը"
 msgid "Failed to create view"
 msgstr "Չհաջողվեց ստեղծել տեսքը"
 
-#: src/features/objects/components/object-attachments.tsx:75
+#: src/features/objects/components/object-attachments.tsx:73
 msgid "Failed to delete attachment"
 msgstr "Չհաջողվեց ջնջել կցորդը"
 
@@ -899,7 +944,7 @@ msgid "Failed to load item"
 msgstr "Չհաջողվեց բեռնել տարրը"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:40
-#: src/routes/_authenticated/$projectId/index.tsx:68
+#: src/routes/_authenticated/$projectId/index.tsx:70
 msgid "Failed to load project"
 msgstr "Չհաջողվեց բեռնել նախագիծը"
 
@@ -953,7 +998,7 @@ msgid "Failed to subscribe"
 msgstr "Չհաջողվեց բաժանորդագրվել"
 
 #: src/features/projects/pages/projects-list-page.tsx:48
-#: src/routes/_authenticated/$projectId/index.tsx:544
+#: src/routes/_authenticated/$projectId/index.tsx:558
 msgid "Failed to unsubscribe"
 msgstr "Չհաջողվեց ապաբաժանորդագրվել"
 
@@ -961,7 +1006,7 @@ msgstr "Չհաջողվեց ապաբաժանորդագրվել"
 msgid "Failed to update access level"
 msgstr "Չհաջողվեց թարմացնել մուտքի մակարդակը"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:104
+#: ../../../lib/web/src/components/notification-category-button.tsx:108
 msgid "Failed to update category"
 msgstr "Չհաջողվեց թարմացնել կատեգորիան"
 
@@ -977,7 +1022,7 @@ msgstr "Չհաջողվեց թարմացնել դաշտը"
 msgid "Failed to update project"
 msgstr "Չհաջողվեց թարմացնել նախագիծը"
 
-#: src/features/objects/components/object-attachments.tsx:60
+#: src/features/objects/components/object-attachments.tsx:58
 msgid "Failed to upload attachment"
 msgstr "Չհաջողվեց վերբեռնել կցորդը"
 
@@ -986,8 +1031,8 @@ msgid "Fields"
 msgstr "Դաշտեր"
 
 #: src/features/objects/components/create-object-dialog.tsx:429
-#: src/features/objects/components/object-attachments.tsx:106
-#: src/features/objects/components/object-attachments.tsx:123
+#: src/features/objects/components/object-attachments.tsx:96
+#: src/features/objects/components/object-attachments.tsx:113
 msgid "Files"
 msgstr "Ֆայլեր"
 
@@ -999,6 +1044,10 @@ msgstr "Գտնել նախագծեր"
 #: src/routes/_authenticated/$projectId_.settings.tsx:331
 msgid "Fingerprint"
 msgstr "Մատնահետք"
+
+#: ../../../lib/web/src/components/restore-banner.tsx:79
+msgid "Finish moving your account"
+msgstr "Ավարտեք ձեր հաշվի տեղափոխությունը"
 
 #: src/features/editor/components/edit-dialogs.tsx:1051
 msgid "Flags"
@@ -1278,12 +1327,12 @@ msgstr "Անունը պարտադիր է"
 
 #: ../../../lib/web/src/components/ui/sort-selector.tsx:40
 #: src/features/objects/components/create-object-dialog.tsx:327
-#: src/routes/_authenticated/$projectId/index.tsx:782
-#: src/routes/_authenticated/$projectId/index.tsx:800
+#: src/routes/_authenticated/$projectId/index.tsx:796
+#: src/routes/_authenticated/$projectId/index.tsx:814
 msgid "New"
 msgstr "Նոր"
 
-#: src/routes/_authenticated/$projectId/index.tsx:779
+#: src/routes/_authenticated/$projectId/index.tsx:793
 msgid "New {className}"
 msgstr "Նոր {className}"
 
@@ -1311,7 +1360,7 @@ msgstr "Մուտքի կանոններ կարգավորված չեն։ Ավելա
 msgid "No activity yet"
 msgstr "Դեռ ակտիվություն չկա"
 
-#: src/features/requests/components/branch-select.tsx:70
+#: src/features/requests/components/branch-select.tsx:73
 msgid "No branches found"
 msgstr "Ճյուղեր չեն գտնվել"
 
@@ -1372,7 +1421,7 @@ msgstr "Պրոֆիլ չկա"
 msgid "No projects found"
 msgstr "Նախագծեր չեն գտնվել"
 
-#: src/features/requests/components/repository-select.tsx:58
+#: src/features/requests/components/repository-select.tsx:61
 msgid "No repositories available"
 msgstr "Հասանելի պահոցներ չկան"
 
@@ -1390,7 +1439,7 @@ msgstr "Կարգավիճակ չկա"
 msgid "No time zone found."
 msgstr "Ժամային գոտի չի գտնվել։"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:135
+#: ../../../lib/web/src/components/notification-category-button.tsx:139
 msgid "No topic record yet — try again after the next notification."
 msgstr "Դեռ թեմայի գրառում չկա — փորձեք նորից հաջորդ ծանուցումից հետո։"
 
@@ -1485,7 +1534,7 @@ msgstr "Բացել նավիգացիոն մենյուն"
 msgid "Open option actions"
 msgstr "Բացել տարբերակի գործողությունները"
 
-#: src/routes/_authenticated/$projectId/index.tsx:808
+#: src/routes/_authenticated/$projectId/index.tsx:822
 msgid "Open page actions"
 msgstr "Բացել էջի գործողությունները"
 
@@ -1528,12 +1577,24 @@ msgstr "Սեփականատեր"
 msgid "Parent"
 msgstr "Ծնող"
 
+#: ../../../lib/web/src/components/step-up-dialog.tsx:331
+msgid "Passkey"
+msgstr "Անցաբանալի"
+
+#: ../../../lib/web/src/components/step-up-dialog.tsx:206
+msgid "Passkey verification failed. Please try again."
+msgstr "Անցաբանալու ստուգումը ձախողվեց։ Խնդրում ենք նորից փորձել։"
+
+#: ../../../lib/web/src/components/restore-banner.tsx:126
+msgid "Passkeys"
+msgstr "Անցաբանալիներ"
+
 #: src/routes/_authenticated/$projectId_.settings.tsx:350
 msgid "Permanently delete this project and all its content."
 msgstr "Ընդմիշտ ջնջել այս նախագիծը և ամբողջ պարունակությունը։"
 
-#: src/routes/_authenticated/$projectId/index.tsx:636
-#: src/routes/_authenticated/$projectId/index.tsx:670
+#: src/routes/_authenticated/$projectId/index.tsx:650
+#: src/routes/_authenticated/$projectId/index.tsx:684
 msgid "Please add one or more classes to the project design."
 msgstr "Խնդրում ենք ավելացնել մեկ կամ ավելի դասեր նախագծի ձևավորմանը։"
 
@@ -1561,7 +1622,7 @@ msgid "Profile"
 msgstr "Պրոֆիլ"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:62
-#: src/routes/_authenticated/$projectId/index.tsx:90
+#: src/routes/_authenticated/$projectId/index.tsx:104
 msgid "Project"
 msgstr "Նախագիծ"
 
@@ -1600,9 +1661,17 @@ msgstr "Նախագծեր"
 msgid "Properties"
 msgstr "Հատկություններ"
 
-#: src/routes/_authenticated/$projectId/index.tsx:832
+#: ../../../lib/web/src/components/restore-banner.tsx:98
+msgid "Re-link your accounts on this server"
+msgstr "Նորից կապեք ձեր հաշիվները այս սերվերում"
+
+#: src/routes/_authenticated/$projectId/index.tsx:846
 msgid "Re-order columns"
 msgstr "Վերադասավորել սյունակները"
+
+#: ../../../lib/web/src/components/restore-banner.tsx:120
+msgid "Re-register your passkeys on this server"
+msgstr "Կրկին գրանցեք ձեր անցաբառերը այս սերվերում"
 
 #: src/features/requests/components/merge-status.tsx:68
 msgid "Ready to merge"
@@ -1713,6 +1782,10 @@ msgstr "Հարցումներ"
 msgid "Required"
 msgstr "Պարտադիր է"
 
+#: ../../../lib/web/src/components/step-up-dialog.tsx:364
+msgid "Resend email"
+msgstr "Կրկին ուղարկել նամակը"
+
 #: ../../../lib/web/src/components/config-drawer.tsx:77
 #: ../../../lib/web/src/components/data-table/toolbar.tsx:78
 msgid "Reset"
@@ -1753,7 +1826,7 @@ msgstr "Շաբաթ"
 
 #: src/features/editor/components/option-dialog.tsx:138
 #: src/features/objects/components/comment-thread.tsx:179
-#: src/routes/_authenticated/$projectId/index.tsx:893
+#: src/routes/_authenticated/$projectId/index.tsx:907
 msgid "Save"
 msgstr "Պահպանել"
 
@@ -1829,7 +1902,7 @@ msgstr "Ընտրել մուտքի կանոնը"
 msgid "Select account type"
 msgstr "Ընտրել հաշվի տեսակը"
 
-#: src/features/requests/components/branch-select.tsx:32
+#: src/features/requests/components/branch-select.tsx:33
 msgid "Select branch"
 msgstr "Ընտրել ճյուղը"
 
@@ -1849,7 +1922,7 @@ msgstr "Ընտրել հաջորդ քարտը"
 msgid "Select previous card"
 msgstr "Ընտրել նախորդ քարտը"
 
-#: src/features/requests/components/repository-select.tsx:47
+#: src/features/requests/components/repository-select.tsx:50
 msgid "Select repository"
 msgstr "Ընտրել պահոցը"
 
@@ -1873,6 +1946,10 @@ msgstr "Ընտրել..."
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:95
 msgid "Send again"
 msgstr "Ուղարկել կրկին"
+
+#: ../../../lib/web/src/components/step-up-dialog.tsx:304
+msgid "Send email"
+msgstr "Ուղարկել էլ. փոստ"
 
 #: ../../../lib/web/src/lib/preference-utils.ts:133
 msgid "Serif"
@@ -1901,7 +1978,7 @@ msgstr "Սահմանել ծագումը և նպատակակետը"
 #: src/routes/_authenticated/$projectId_.settings.tsx:76
 #: src/routes/_authenticated/$projectId_.settings.tsx:166
 #: src/routes/_authenticated/$projectId_.settings.tsx:189
-#: src/routes/_authenticated/$projectId/index.tsx:853
+#: src/routes/_authenticated/$projectId/index.tsx:867
 msgid "Settings"
 msgstr "Կարգավորումներ"
 
@@ -2037,6 +2114,10 @@ msgstr "Պայմաններ և կանոններ"
 msgid "Text"
 msgstr "Տեքստ"
 
+#: ../../../lib/web/src/components/step-up-dialog.tsx:192
+msgid "That code is incorrect or has expired."
+msgstr "Այդ կոդը սխալ է կամ ժամկետանց է։"
+
 #: ../../../lib/web/src/components/config-drawer.tsx:181
 msgid "Theme"
 msgstr "Թեմա"
@@ -2071,7 +2152,7 @@ msgid "This will permanently delete \"{projectName}\" and all its objects, comme
 msgstr "Սա մշտապես կջնջի \"{projectName}\"-ը և նրա բոլոր օբյեկտները, մեկնաբանությունները և կցորդները: Այս գործողությունը հնարավոր չէ չեղարկել:"
 
 #. placeholder {0}: project.project.name
-#: src/routes/_authenticated/$projectId/index.tsx:999
+#: src/routes/_authenticated/$projectId/index.tsx:1013
 msgid "This will remove \"{0}\" from your sidebar and stop updates for this project."
 msgstr "Սա կհեռացնի \"{0}\"-ը ձեր կողագոտուց և կդադարեցնի թարմացումներն այս նախագծի համար:"
 
@@ -2172,7 +2253,7 @@ msgstr "Մուտքագրեք որոնելու համար..."
 msgid "Unable to redirect to login. Please try again."
 msgstr "Հնարավոր չէ վերահղել մուտք: Խնդրում ենք կրկին փորձել:"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:143
+#: ../../../lib/web/src/components/notification-category-button.tsx:147
 msgid "Unassigned"
 msgstr "Չվերագրված"
 
@@ -2191,16 +2272,16 @@ msgstr "Միացյալ Նահանգներ"
 #: src/features/projects/pages/projects-list-page.tsx:146
 #: src/features/projects/pages/projects-list-page.tsx:163
 #: src/features/projects/pages/projects-list-page.tsx:165
-#: src/routes/_authenticated/$projectId/index.tsx:859
-#: src/routes/_authenticated/$projectId/index.tsx:1000
+#: src/routes/_authenticated/$projectId/index.tsx:873
+#: src/routes/_authenticated/$projectId/index.tsx:1014
 msgid "Unsubscribe"
 msgstr "Բաժանորդագրությունից հրաժարվել"
 
-#: src/routes/_authenticated/$projectId/index.tsx:998
+#: src/routes/_authenticated/$projectId/index.tsx:1012
 msgid "Unsubscribe from project?"
 msgstr "Հրաժարվե՞լ նախագծի բաժանորդագրությունից:"
 
-#: src/routes/_authenticated/$projectId/index.tsx:540
+#: src/routes/_authenticated/$projectId/index.tsx:554
 msgid "Unsubscribed"
 msgstr "Բաժանորդագրությունից հրաժարված"
 
@@ -2214,13 +2295,17 @@ msgid "Updated"
 msgstr "Թարմացված"
 
 #: src/features/objects/components/create-object-dialog.tsx:470
-#: src/features/objects/components/object-attachments.tsx:210
+#: src/features/objects/components/object-attachments.tsx:197
 msgid "Upload"
 msgstr "Վերբեռնել"
 
 #: src/routes/_authenticated/$projectId/design.tsx:333
 msgid "Upload .json file"
 msgstr "Վերբեռնել .json ֆայլ"
+
+#: ../../../lib/web/src/components/step-up-dialog.tsx:335
+msgid "Use your passkey"
+msgstr "Օգտագործեք ձեր անցաբանալին"
 
 #. placeholder {0}: prefix || "project"
 #. placeholder {1}: prefix || "project"
@@ -2245,6 +2330,7 @@ msgstr "Ստուգման կոդը ուղարկվեց"
 msgid "Verification failed"
 msgstr "Ստուգումը ձախողվեց"
 
+#: ../../../lib/web/src/components/step-up-dialog.tsx:385
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:164
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:106
 msgid "Verify"
@@ -2253,6 +2339,10 @@ msgstr "Ստուգել"
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:58
 msgid "Verify email address"
 msgstr "Ստուգել էլ. փոստի հասցեն"
+
+#: ../../../lib/web/src/components/attachment-gallery.tsx:63
+msgid "Video thumbnail"
+msgstr "Տեսանյութի մանրապատկեր"
 
 #: ../../../lib/web/src/components/data-table/view-options.tsx:30
 msgid "View"
@@ -2278,7 +2368,7 @@ msgstr "Դիտել կառավարակետերը"
 msgid "View only"
 msgstr "Միայն դիտել"
 
-#: src/routes/_authenticated/$projectId/index.tsx:817
+#: src/routes/_authenticated/$projectId/index.tsx:831
 msgid "View options"
 msgstr "Դիտել տարբերակները"
 
@@ -2311,10 +2401,14 @@ msgstr "Կայքը գտնվում է սպասարկման փուլում:"
 msgid "Wednesday"
 msgstr "Չորեքշաբթի"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:549
-msgid "Write, comment, and view"
-msgstr "Գրել, մեկնաբանել և դիտել"
+#: src/routes/_authenticated/$projectId/index.tsx:92
+msgid "You don't have access to this project."
+msgstr "Դու այս նախագծին հասանելիություն չունես։"
 
 #: src/features/projects/pages/projects-list-page.tsx:94
 msgid "You have no projects yet."
 msgstr "Դուք դեռ չունեք նախագծեր:"
+
+#: ../../../lib/web/src/components/restore-banner.tsx:82
+msgid "Your account was moved here from {source}. Until you delete it there, messages and notifications may reach both servers, some of your content keeps being served from the old server, and followers may take a few minutes to find you here."
+msgstr "Ձեր հաշիվը տեղափոխվել է այստեղ {source}-ից: Մինչ այն ջնջեք այնտեղ, հաղորդագրություններն ու ծանուցումները կարող են հասնել երկու սերվերներին, ձեր որոշ բովանդակություն դեռ մատուցվում է հին սերվերից, և հետևորդները կարող են մի քանի րոպե պահանջել ձեզ գտնելու համար:"

@@ -158,8 +158,8 @@ msgstr "צולייגן טשעקליסטע פּונקט"
 msgid "Add class"
 msgstr "צולייגן קלאַס"
 
-#: src/routes/_authenticated/$projectId/index.tsx:828
-#: src/routes/_authenticated/$projectId/index.tsx:992
+#: src/routes/_authenticated/$projectId/index.tsx:842
+#: src/routes/_authenticated/$projectId/index.tsx:1006
 msgid "Add column"
 msgstr "צולייגן זײַל"
 
@@ -240,7 +240,7 @@ msgid "Allow sort by"
 msgstr "דערלויבן סאָרטירן לויט"
 
 #. placeholder {0}: deleteTarget?.name
-#: src/features/objects/components/object-attachments.tsx:232
+#: src/features/objects/components/object-attachments.tsx:209
 msgid "Are you sure you want to delete \"{0}\"?"
 msgstr "זענט איר זיכער איר ווילט אויסמעקן \"{0}\"?"
 
@@ -282,6 +282,10 @@ msgstr "צוהענקען קאָמענטאַר פֿײַלן"
 msgid "Attach reply files"
 msgstr "צוהענקען ענטפֿער פֿײַלן"
 
+#: ../../../lib/web/src/components/step-up-dialog.tsx:312
+msgid "Authenticator code"
+msgstr "Authenticator קאָד"
+
 #: src/components/keyboard-shortcuts-help.tsx:47
 msgid "Available keyboard shortcuts"
 msgstr "פֿאַראַנענע קלאַוויאַטור קורצוועגן"
@@ -306,7 +310,7 @@ msgid "Back to project"
 msgstr "צוריק צו פּראָיעקט"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:64
-#: src/routes/_authenticated/$projectId/index.tsx:92
+#: src/routes/_authenticated/$projectId/index.tsx:106
 msgid "Back to projects"
 msgstr "צוריק צו פּראָיעקטן"
 
@@ -340,6 +344,7 @@ msgid "Can be child of"
 msgstr "קען זײַן קינד פֿון"
 
 #: ../../../lib/web/src/components/responsive-confirm-dialog.tsx:64
+#: ../../../lib/web/src/components/step-up-dialog.tsx:360
 #: ../../../lib/web/src/components/travelling-picker.tsx:292
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:245
 #: ../../../lib/web/src/features/access/access-dialog.tsx:325
@@ -351,7 +356,7 @@ msgstr "קען זײַן קינד פֿון"
 #: src/features/objects/components/comment-thread.tsx:168
 #: src/features/projects/components/create-project-dialog.tsx:208
 #: src/routes/_authenticated/$projectId/design.tsx:340
-#: src/routes/_authenticated/$projectId/index.tsx:886
+#: src/routes/_authenticated/$projectId/index.tsx:900
 msgid "Cancel"
 msgstr "אָפּזאָגן"
 
@@ -368,11 +373,11 @@ msgstr "אָפּזאָגן ענטפֿער"
 msgid "Cannot merge automatically"
 msgstr "קען נישט אויטאָמאַטיש צונויפֿשמעלצן"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:131
+#: ../../../lib/web/src/components/notification-category-button.tsx:135
 msgid "Category for this notification"
 msgstr "קאַטעגאָריע פֿאַר דעם נאָטיפֿיקאַציע"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:115
+#: ../../../lib/web/src/components/notification-category-button.tsx:119
 msgid "Change notification category"
 msgstr "ענדערן נאָטיפֿיקאַציע קאַטעגאָריע"
 
@@ -530,6 +535,10 @@ msgstr "קאָנטעקסטועלע אינפֿאָרמאַציע און פּרט�
 msgid "Continue"
 msgstr "ממשיך"
 
+#: ../../../lib/web/src/components/step-up-dialog.tsx:349
+msgid "Continue with {label}"
+msgstr "המשך מיט {label}"
+
 #: src/routes/_authenticated/$projectId_.settings.tsx:651
 msgid "Control who can view and interact with this project"
 msgstr "קאָנטראָלירט ווער קען זען און וועקסל מיט דעם פּראָיעקט"
@@ -545,6 +554,18 @@ msgstr "צענטראַלע אינפֿאָרמאַציע וועגן דעם פּר
 #: ../../../lib/web/src/features/document/document-page.tsx:81
 msgid "Could not load this document. Please try again later."
 msgstr "האָט נישט געקאָנט לאָדן דעם דאָקומענט. פּרובירט שפּעטער ווידער."
+
+#: ../../../lib/web/src/components/step-up-dialog.tsx:181
+msgid "Couldn't send the code. Please try again."
+msgstr "מע האָט נישט געקענט שיקן דעם קאָד. ביטע פּרוביר ווידער."
+
+#: ../../../lib/web/src/components/step-up-dialog.tsx:133
+msgid "Couldn't start re-authentication. Please try again."
+msgstr "מע האָט נישט געקענט אָנהייבן ווידער־פֿאַריפֿיצירונג. ביטע פּרוביר ווידער."
+
+#: ../../../lib/web/src/components/step-up-dialog.tsx:218
+msgid "Couldn't verify with that account. Please try again."
+msgstr "מע האָט נישט געקענט באַשטעטיקן מיט יענעם קאָנטע. ביטע פּרובירט נאָך אַ מאָל."
 
 #: src/features/board/components/board-column.tsx:530
 #: src/features/board/components/board-column.tsx:668
@@ -618,14 +639,14 @@ msgstr "פֿאַרשטאַנדלעך סאָרט"
 #: src/features/board/components/board-column.tsx:609
 #: src/features/objects/components/comment-thread.tsx:228
 #: src/features/objects/components/comment-thread.tsx:343
-#: src/features/objects/components/object-attachments.tsx:233
+#: src/features/objects/components/object-attachments.tsx:210
 #: src/features/objects/components/object-detail-panel.tsx:603
 #: src/features/requests/components/request-panel.tsx:129
 #: src/routes/_authenticated/$projectId_.settings.tsx:359
 msgid "Delete"
 msgstr "אויסמעקן"
 
-#: src/features/objects/components/object-attachments.tsx:231
+#: src/features/objects/components/object-attachments.tsx:208
 msgid "Delete attachment"
 msgstr "אויסמעקן בײַלאַגע"
 
@@ -684,6 +705,10 @@ msgstr "אויסמעקן פּראָיעקט?"
 msgid "Delete view"
 msgstr "אויסמעקן זעהן"
 
+#: ../../../lib/web/src/components/restore-banner.tsx:90
+msgid "Delete your account on the old server"
+msgstr "לעש אויס דיין קאנטע אויפן אלטן סערווער"
+
 #: ../../../lib/web/src/components/data-table/column-header.tsx:60
 msgid "Desc"
 msgstr "אַראָפּ"
@@ -695,7 +720,7 @@ msgstr "באַשרײַבונג"
 
 #: src/routes/_authenticated/$projectId/design.tsx:60
 #: src/routes/_authenticated/$projectId/design.tsx:128
-#: src/routes/_authenticated/$projectId/index.tsx:843
+#: src/routes/_authenticated/$projectId/index.tsx:857
 msgid "Design"
 msgstr "אויסזען"
 
@@ -704,8 +729,8 @@ msgid "Design imported"
 msgstr "אויסזען אימפּאָרטירט"
 
 #: src/routes/_authenticated/$projectId_.settings.tsx:548
-msgid "Design, write, comment, and view"
-msgstr "צייכן, שרײַבן, קאָמענטירן, און זען"
+msgid "Design, create, edit, comment, and view"
+msgstr "פּלאַנירן, שאַפֿן, רעדאַקטירן, קאָמענטירן, און באַקוקן"
 
 #: ../../../lib/web/src/components/layout/right-panel.tsx:144
 msgid "Details Panel"
@@ -734,8 +759,12 @@ msgstr "Diff: {source} → {target}"
 msgid "Direction"
 msgstr "ריכטונג"
 
-#: src/routes/_authenticated/$projectId/index.tsx:908
-#: src/routes/_authenticated/$projectId/index.tsx:909
+#: ../../../lib/web/src/components/restore-banner.tsx:73
+msgid "Dismiss"
+msgstr "אַראָפּזאָגן"
+
+#: src/routes/_authenticated/$projectId/index.tsx:922
+#: src/routes/_authenticated/$projectId/index.tsx:923
 msgid "Dismiss board hint"
 msgstr "אַראָפּזאָגן ברעט הינט"
 
@@ -750,7 +779,7 @@ msgstr "ווײַזט די מאָבילע סײַדבאַר."
 msgid "Done"
 msgstr "געטאָן"
 
-#: src/routes/_authenticated/$projectId/index.tsx:901
+#: src/routes/_authenticated/$projectId/index.tsx:915
 msgid "Double click on a column to add content"
 msgstr "טאָפּלקליק אויף אַ זײַל צו צוגעבן אינהאַלט"
 
@@ -767,7 +796,7 @@ msgstr "לאָדט אַראָפּ זיכערונג צוערשט"
 msgid "Draft"
 msgstr "אָנטוואָרף"
 
-#: src/routes/_authenticated/$projectId/index.tsx:882
+#: src/routes/_authenticated/$projectId/index.tsx:896
 msgid "Drag columns to re-order them"
 msgstr "שלעפּט זײַלן צו רעאָרדענירן זיי"
 
@@ -813,6 +842,22 @@ msgstr "רעדאַקטירן אויסגעקליבענע קאַרטל"
 #: src/features/editor/components/edit-dialogs.tsx:266
 msgid "Edit view"
 msgstr "רעדאַקטירן בליק"
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:549
+msgid "Edit, comment, and view"
+msgstr "רעדאַקטירן, קאָמענטירן, און באַקוקן"
+
+#: ../../../lib/web/src/components/step-up-dialog.tsx:286
+msgid "Email code"
+msgstr "בליצפּאָסט־קאָד"
+
+#: ../../../lib/web/src/components/step-up-dialog.tsx:296
+msgid "Enter the code from your email"
+msgstr "גיט אַרײַן דעם קאָד פֿון אײַער בליצפּאָסט"
+
+#: ../../../lib/web/src/components/step-up-dialog.tsx:321
+msgid "Enter your authenticator code"
+msgstr "גיט אַרײַן אײַער אויטענטיפֿיקאַטאָר־קאָד"
 
 #: src/routes/_authenticated/$projectId_.settings.tsx:326
 msgid "Entity ID"
@@ -866,7 +911,7 @@ msgstr "ניט געלונגען צו שאַפֿן פּראָיעקט"
 msgid "Failed to create view"
 msgstr "ניט געלונגען צו שאַפֿן בליק"
 
-#: src/features/objects/components/object-attachments.tsx:75
+#: src/features/objects/components/object-attachments.tsx:73
 msgid "Failed to delete attachment"
 msgstr "ניט געלונגען צו מעקן בײַלאַגע"
 
@@ -899,7 +944,7 @@ msgid "Failed to load item"
 msgstr "ניט געלונגען צו לאָדן פּונקט"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:40
-#: src/routes/_authenticated/$projectId/index.tsx:68
+#: src/routes/_authenticated/$projectId/index.tsx:70
 msgid "Failed to load project"
 msgstr "ניט געלונגען צו לאָדן פּראָיעקט"
 
@@ -953,7 +998,7 @@ msgid "Failed to subscribe"
 msgstr "ניט געלונגען צו אַבאָנירן"
 
 #: src/features/projects/pages/projects-list-page.tsx:48
-#: src/routes/_authenticated/$projectId/index.tsx:544
+#: src/routes/_authenticated/$projectId/index.tsx:558
 msgid "Failed to unsubscribe"
 msgstr "ניט געלונגען צו דעאַבאָנירן"
 
@@ -961,7 +1006,7 @@ msgstr "ניט געלונגען צו דעאַבאָנירן"
 msgid "Failed to update access level"
 msgstr "ניט געלונגען צו דערהײַנטיקן צוטריט־ניוואָ"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:104
+#: ../../../lib/web/src/components/notification-category-button.tsx:108
 msgid "Failed to update category"
 msgstr "ניט געלונגען צו דערהײַנטיקן קאַטעגאָריע"
 
@@ -977,7 +1022,7 @@ msgstr "ניט געלונגען צו דערהײַנטיקן פֿעלד"
 msgid "Failed to update project"
 msgstr "ניט געלונגען צו דערהײַנטיקן פּראָיעקט"
 
-#: src/features/objects/components/object-attachments.tsx:60
+#: src/features/objects/components/object-attachments.tsx:58
 msgid "Failed to upload attachment"
 msgstr "ניט געלונגען אַרויפֿצולאָדן בײַלאַגע"
 
@@ -986,8 +1031,8 @@ msgid "Fields"
 msgstr "פֿעלדער"
 
 #: src/features/objects/components/create-object-dialog.tsx:429
-#: src/features/objects/components/object-attachments.tsx:106
-#: src/features/objects/components/object-attachments.tsx:123
+#: src/features/objects/components/object-attachments.tsx:96
+#: src/features/objects/components/object-attachments.tsx:113
 msgid "Files"
 msgstr "פֿײַלן"
 
@@ -999,6 +1044,10 @@ msgstr "געפֿינען פּראָיעקטן"
 #: src/routes/_authenticated/$projectId_.settings.tsx:331
 msgid "Fingerprint"
 msgstr "פֿינגער־אָפּדרוק"
+
+#: ../../../lib/web/src/components/restore-banner.tsx:79
+msgid "Finish moving your account"
+msgstr "פארטיק מאכן דעם אריבערטראג פון דיין קאנטע"
 
 #: src/features/editor/components/edit-dialogs.tsx:1051
 msgid "Flags"
@@ -1278,12 +1327,12 @@ msgstr "נאָמען איז נייטיק"
 
 #: ../../../lib/web/src/components/ui/sort-selector.tsx:40
 #: src/features/objects/components/create-object-dialog.tsx:327
-#: src/routes/_authenticated/$projectId/index.tsx:782
-#: src/routes/_authenticated/$projectId/index.tsx:800
+#: src/routes/_authenticated/$projectId/index.tsx:796
+#: src/routes/_authenticated/$projectId/index.tsx:814
 msgid "New"
 msgstr "נײַ"
 
-#: src/routes/_authenticated/$projectId/index.tsx:779
+#: src/routes/_authenticated/$projectId/index.tsx:793
 msgid "New {className}"
 msgstr "נײַ {className}"
 
@@ -1311,7 +1360,7 @@ msgstr "קיין צוטריט כּללים קאָנפֿיגורירט. צולי�
 msgid "No activity yet"
 msgstr "נאָך קיין אַקטיוויטעט"
 
-#: src/features/requests/components/branch-select.tsx:70
+#: src/features/requests/components/branch-select.tsx:73
 msgid "No branches found"
 msgstr "קיין צווײַגן ניט געפֿונען"
 
@@ -1372,7 +1421,7 @@ msgstr "קיין פּראָפֿיל"
 msgid "No projects found"
 msgstr "קיין פּראָיעקטן ניט געפֿונען"
 
-#: src/features/requests/components/repository-select.tsx:58
+#: src/features/requests/components/repository-select.tsx:61
 msgid "No repositories available"
 msgstr "קיין ריפּאָזיטאָריעס פֿאַראַן"
 
@@ -1390,7 +1439,7 @@ msgstr "קיין סטאַטוס"
 msgid "No time zone found."
 msgstr "קיין צײַט זאָנע ניט געפֿונען."
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:135
+#: ../../../lib/web/src/components/notification-category-button.tsx:139
 msgid "No topic record yet — try again after the next notification."
 msgstr "נאָך קיין טעמע רעקאָרד — פּרוּוו ווידער נאָך דער ווײַטערדיקער מעלדונג."
 
@@ -1485,7 +1534,7 @@ msgstr "עפֿן נאַוויגאַציע מעניו"
 msgid "Open option actions"
 msgstr "עפֿן אָפּציע אַקציעס"
 
-#: src/routes/_authenticated/$projectId/index.tsx:808
+#: src/routes/_authenticated/$projectId/index.tsx:822
 msgid "Open page actions"
 msgstr "עפֿן זײַטל אַקציעס"
 
@@ -1528,12 +1577,24 @@ msgstr "אייגנטימער"
 msgid "Parent"
 msgstr "עלטער"
 
+#: ../../../lib/web/src/components/step-up-dialog.tsx:331
+msgid "Passkey"
+msgstr "פּאַסקיי"
+
+#: ../../../lib/web/src/components/step-up-dialog.tsx:206
+msgid "Passkey verification failed. Please try again."
+msgstr "די passkey פֿאַריפֿיצירונג איז דורכגעפֿאַלן. ביטע פּרוביר ווידער."
+
+#: ../../../lib/web/src/components/restore-banner.tsx:126
+msgid "Passkeys"
+msgstr "פּאַסקייס"
+
 #: src/routes/_authenticated/$projectId_.settings.tsx:350
 msgid "Permanently delete this project and all its content."
 msgstr "אויסמעקן שטענדיק דעם פּראָיעקט און אַלע זײַן אינהאַלט."
 
-#: src/routes/_authenticated/$projectId/index.tsx:636
-#: src/routes/_authenticated/$projectId/index.tsx:670
+#: src/routes/_authenticated/$projectId/index.tsx:650
+#: src/routes/_authenticated/$projectId/index.tsx:684
 msgid "Please add one or more classes to the project design."
 msgstr "זײַ אַזוי גוט און צולייג איין אָדער מער קלאַסן צו דעם פּראָיעקט פּלאַן."
 
@@ -1561,7 +1622,7 @@ msgid "Profile"
 msgstr "פּראָפֿיל"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:62
-#: src/routes/_authenticated/$projectId/index.tsx:90
+#: src/routes/_authenticated/$projectId/index.tsx:104
 msgid "Project"
 msgstr "פּראָיעקט"
 
@@ -1600,9 +1661,17 @@ msgstr "פּראָיעקטן"
 msgid "Properties"
 msgstr "אייגנשאַפֿטן"
 
-#: src/routes/_authenticated/$projectId/index.tsx:832
+#: ../../../lib/web/src/components/restore-banner.tsx:98
+msgid "Re-link your accounts on this server"
+msgstr "פארבינד ווידער דיינע קאנטעס אויף דעם סערווער"
+
+#: src/routes/_authenticated/$projectId/index.tsx:846
 msgid "Re-order columns"
 msgstr "איבער-סדר זײַלן"
+
+#: ../../../lib/web/src/components/restore-banner.tsx:120
+msgid "Re-register your passkeys on this server"
+msgstr "רעגיסטרירט איבער אייערע צוטריט שליסלען אויף דעם סערווער"
 
 #: src/features/requests/components/merge-status.tsx:68
 msgid "Ready to merge"
@@ -1713,6 +1782,10 @@ msgstr "פֿאָדערונגען"
 msgid "Required"
 msgstr "נייטיק"
 
+#: ../../../lib/web/src/components/step-up-dialog.tsx:364
+msgid "Resend email"
+msgstr "שיק די בליצפּאָסט נאָך אַ מאָל"
+
 #: ../../../lib/web/src/components/config-drawer.tsx:77
 #: ../../../lib/web/src/components/data-table/toolbar.tsx:78
 msgid "Reset"
@@ -1753,7 +1826,7 @@ msgstr "שבת"
 
 #: src/features/editor/components/option-dialog.tsx:138
 #: src/features/objects/components/comment-thread.tsx:179
-#: src/routes/_authenticated/$projectId/index.tsx:893
+#: src/routes/_authenticated/$projectId/index.tsx:907
 msgid "Save"
 msgstr "היט אויף"
 
@@ -1829,7 +1902,7 @@ msgstr "קלײַב צוטריט כּלל"
 msgid "Select account type"
 msgstr "קלײַב קאָנטע טיפּ"
 
-#: src/features/requests/components/branch-select.tsx:32
+#: src/features/requests/components/branch-select.tsx:33
 msgid "Select branch"
 msgstr "קלײַב צווײַג"
 
@@ -1849,7 +1922,7 @@ msgstr "קלײַב נעקסטע קאַרטל"
 msgid "Select previous card"
 msgstr "קלײַב פֿריִערדיקע קאַרטל"
 
-#: src/features/requests/components/repository-select.tsx:47
+#: src/features/requests/components/repository-select.tsx:50
 msgid "Select repository"
 msgstr "קלײַב רעפּאָזיטאָריע"
 
@@ -1873,6 +1946,10 @@ msgstr "קלײַב..."
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:95
 msgid "Send again"
 msgstr "שיקן ווידער"
+
+#: ../../../lib/web/src/components/step-up-dialog.tsx:304
+msgid "Send email"
+msgstr "שיק בליצפּאָסט"
 
 #: ../../../lib/web/src/lib/preference-utils.ts:133
 msgid "Serif"
@@ -1901,7 +1978,7 @@ msgstr "שטעל אָנהייב און ציל"
 #: src/routes/_authenticated/$projectId_.settings.tsx:76
 #: src/routes/_authenticated/$projectId_.settings.tsx:166
 #: src/routes/_authenticated/$projectId_.settings.tsx:189
-#: src/routes/_authenticated/$projectId/index.tsx:853
+#: src/routes/_authenticated/$projectId/index.tsx:867
 msgid "Settings"
 msgstr "אײַנשטעלונגען"
 
@@ -2037,6 +2114,10 @@ msgstr "תּנאָים"
 msgid "Text"
 msgstr "טעקסט"
 
+#: ../../../lib/web/src/components/step-up-dialog.tsx:192
+msgid "That code is incorrect or has expired."
+msgstr "יענער קאָד איז אומריכטיק אָדער איז אויסגעגאַנגען."
+
 #: ../../../lib/web/src/components/config-drawer.tsx:181
 msgid "Theme"
 msgstr "טעמע"
@@ -2071,7 +2152,7 @@ msgid "This will permanently delete \"{projectName}\" and all its objects, comme
 msgstr "דאָס וועט אויף שטענדיק אויסמעקן „{projectName}\" און אַלע זײַנע אָביעקטן, קאָמענטאַרן, און בייגלייגונגען. די אַקציע קאָן נישט ווערן צוריקגעקערט."
 
 #. placeholder {0}: project.project.name
-#: src/routes/_authenticated/$projectId/index.tsx:999
+#: src/routes/_authenticated/$projectId/index.tsx:1013
 msgid "This will remove \"{0}\" from your sidebar and stop updates for this project."
 msgstr "דאָס וועט אַראָפּנעמען „{0}\" פֿון אײַער זײַטנשטאַנג און אויפֿהערן באַנײַונגען פֿאַר דעם פּראָיעקט."
 
@@ -2172,7 +2253,7 @@ msgstr "טיפּט צו זוכן..."
 msgid "Unable to redirect to login. Please try again."
 msgstr "קאָן נישט רעדירעקטירן צו אַרײַנמעלדונג. פּרוּווט נאָך אַ מאָל."
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:143
+#: ../../../lib/web/src/components/notification-category-button.tsx:147
 msgid "Unassigned"
 msgstr "אומצוגעטיילט"
 
@@ -2191,16 +2272,16 @@ msgstr "פֿאַראייניקטע שטאַטן"
 #: src/features/projects/pages/projects-list-page.tsx:146
 #: src/features/projects/pages/projects-list-page.tsx:163
 #: src/features/projects/pages/projects-list-page.tsx:165
-#: src/routes/_authenticated/$projectId/index.tsx:859
-#: src/routes/_authenticated/$projectId/index.tsx:1000
+#: src/routes/_authenticated/$projectId/index.tsx:873
+#: src/routes/_authenticated/$projectId/index.tsx:1014
 msgid "Unsubscribe"
 msgstr "אַבאַבאָנירן"
 
-#: src/routes/_authenticated/$projectId/index.tsx:998
+#: src/routes/_authenticated/$projectId/index.tsx:1012
 msgid "Unsubscribe from project?"
 msgstr "אַבאַבאָנירן פֿון פּראָיעקט?"
 
-#: src/routes/_authenticated/$projectId/index.tsx:540
+#: src/routes/_authenticated/$projectId/index.tsx:554
 msgid "Unsubscribed"
 msgstr "אַבאַבאָנירט"
 
@@ -2214,13 +2295,17 @@ msgid "Updated"
 msgstr "באַנײַט"
 
 #: src/features/objects/components/create-object-dialog.tsx:470
-#: src/features/objects/components/object-attachments.tsx:210
+#: src/features/objects/components/object-attachments.tsx:197
 msgid "Upload"
 msgstr "אַרויפֿלאָדן"
 
 #: src/routes/_authenticated/$projectId/design.tsx:333
 msgid "Upload .json file"
 msgstr "אַרויפֿלאָדן .json טעקע"
+
+#: ../../../lib/web/src/components/step-up-dialog.tsx:335
+msgid "Use your passkey"
+msgstr "ניצט אײַער passkey"
 
 #. placeholder {0}: prefix || "project"
 #. placeholder {1}: prefix || "project"
@@ -2245,6 +2330,7 @@ msgstr "פֿאַריפֿיקאַציע־קאָד געשיקט"
 msgid "Verification failed"
 msgstr "פֿאַריפֿיקאַציע דורכגעפֿאַלן"
 
+#: ../../../lib/web/src/components/step-up-dialog.tsx:385
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:164
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:106
 msgid "Verify"
@@ -2253,6 +2339,10 @@ msgstr "פֿאַריפֿיצירן"
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:58
 msgid "Verify email address"
 msgstr "פֿאַריפֿיצירן אי־מייל אַדרעס"
+
+#: ../../../lib/web/src/components/attachment-gallery.tsx:63
+msgid "Video thumbnail"
+msgstr "ווידעאָ־טאַמבניל"
 
 #: ../../../lib/web/src/components/data-table/view-options.tsx:30
 msgid "View"
@@ -2278,7 +2368,7 @@ msgstr "בליק־קאָנטראָלן"
 msgid "View only"
 msgstr "בלויז זען"
 
-#: src/routes/_authenticated/$projectId/index.tsx:817
+#: src/routes/_authenticated/$projectId/index.tsx:831
 msgid "View options"
 msgstr "בליק־אָפּציעס"
 
@@ -2311,10 +2401,14 @@ msgstr "וועבזײַטל איז אונטער פֿאַרריכטונג!"
 msgid "Wednesday"
 msgstr "מיטוואָך"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:549
-msgid "Write, comment, and view"
-msgstr "שרײַב, קאָמענטיר, און זע"
+#: src/routes/_authenticated/$projectId/index.tsx:92
+msgid "You don't have access to this project."
+msgstr "איר האָט ניט קיין צוטריט צו דעם פּראָיעקט."
 
 #: src/features/projects/pages/projects-list-page.tsx:94
 msgid "You have no projects yet."
 msgstr "איר האָט נאָך קיין פּראָיעקטן."
+
+#: ../../../lib/web/src/components/restore-banner.tsx:82
+msgid "Your account was moved here from {source}. Until you delete it there, messages and notifications may reach both servers, some of your content keeps being served from the old server, and followers may take a few minutes to find you here."
+msgstr "דיין קאנטע איז אהערגעברענגט ווארן פון {source}. ביז דו לעשסט עס דארט, קענען מעסאזשן און הודעות דערגרייכן ביידע סערווערס, עטלעכע פון דיין אינהאלט ווערט ווייטאר פארזאמלט פונם אלטן סערווער, און פאלגערס קענען נעמען עטלעכע מינוטן צו דיך דא געפינען."

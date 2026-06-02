@@ -158,8 +158,8 @@ msgstr "Fi ohun ìmọ́ ìṣàyẹ̀wò kún"
 msgid "Add class"
 msgstr "Fi kíláàsì kún"
 
-#: src/routes/_authenticated/$projectId/index.tsx:828
-#: src/routes/_authenticated/$projectId/index.tsx:992
+#: src/routes/_authenticated/$projectId/index.tsx:842
+#: src/routes/_authenticated/$projectId/index.tsx:1006
 msgid "Add column"
 msgstr "Fi ọ̀wọ́n kún"
 
@@ -240,7 +240,7 @@ msgid "Allow sort by"
 msgstr "Jẹ́ kí a tò nípa"
 
 #. placeholder {0}: deleteTarget?.name
-#: src/features/objects/components/object-attachments.tsx:232
+#: src/features/objects/components/object-attachments.tsx:209
 msgid "Are you sure you want to delete \"{0}\"?"
 msgstr "Ṣé o dájú pé o fẹ́ pa \"{0}\" rẹ́?"
 
@@ -282,6 +282,10 @@ msgstr "So àwọn fáìlì àlàyé pọ̀"
 msgid "Attach reply files"
 msgstr "So àwọn fáìlì ìdáhùn pọ̀"
 
+#: ../../../lib/web/src/components/step-up-dialog.tsx:312
+msgid "Authenticator code"
+msgstr "Kóòdù olùfọwọ́sí"
+
 #: src/components/keyboard-shortcuts-help.tsx:47
 msgid "Available keyboard shortcuts"
 msgstr "Àwọn ọ̀nà kúkúrú keyboard tó wà"
@@ -306,7 +310,7 @@ msgid "Back to project"
 msgstr "Padà sí iṣẹ́ àkànṣe"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:64
-#: src/routes/_authenticated/$projectId/index.tsx:92
+#: src/routes/_authenticated/$projectId/index.tsx:106
 msgid "Back to projects"
 msgstr "Padà sí àwọn iṣẹ́ àkànṣe"
 
@@ -340,6 +344,7 @@ msgid "Can be child of"
 msgstr "Ó lè jẹ́ ọmọ ti"
 
 #: ../../../lib/web/src/components/responsive-confirm-dialog.tsx:64
+#: ../../../lib/web/src/components/step-up-dialog.tsx:360
 #: ../../../lib/web/src/components/travelling-picker.tsx:292
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:245
 #: ../../../lib/web/src/features/access/access-dialog.tsx:325
@@ -351,7 +356,7 @@ msgstr "Ó lè jẹ́ ọmọ ti"
 #: src/features/objects/components/comment-thread.tsx:168
 #: src/features/projects/components/create-project-dialog.tsx:208
 #: src/routes/_authenticated/$projectId/design.tsx:340
-#: src/routes/_authenticated/$projectId/index.tsx:886
+#: src/routes/_authenticated/$projectId/index.tsx:900
 msgid "Cancel"
 msgstr "Fagilé"
 
@@ -368,11 +373,11 @@ msgstr "Fagilé ìdáhùn"
 msgid "Cannot merge automatically"
 msgstr "Kò lè dàpọ̀ lọ́nà àdáṣe"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:131
+#: ../../../lib/web/src/components/notification-category-button.tsx:135
 msgid "Category for this notification"
 msgstr "Ẹ̀ka fún ìfitónilétí yìí"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:115
+#: ../../../lib/web/src/components/notification-category-button.tsx:119
 msgid "Change notification category"
 msgstr "Yí ẹ̀ka ìfitónilétí padà"
 
@@ -530,6 +535,10 @@ msgstr "Ìròyìn àti ẹ̀kúnrẹ́rẹ́ ipò."
 msgid "Continue"
 msgstr "Tẹ̀síwájú"
 
+#: ../../../lib/web/src/components/step-up-dialog.tsx:349
+msgid "Continue with {label}"
+msgstr "Tẹ̀síwájú pẹ̀lú {label}"
+
 #: src/routes/_authenticated/$projectId_.settings.tsx:651
 msgid "Control who can view and interact with this project"
 msgstr "Darí ẹni tó lè wò àti bá iṣẹ́ àkànṣe yìí ṣiṣẹ́"
@@ -545,6 +554,18 @@ msgstr "Ìròyìn pàtàkì nípa iṣẹ́ àkànṣe yìí"
 #: ../../../lib/web/src/features/document/document-page.tsx:81
 msgid "Could not load this document. Please try again later."
 msgstr "Kò lè kó ìwé yìí. Jọ̀wọ́ gbìyànjú lẹ́ẹ̀kan sí i."
+
+#: ../../../lib/web/src/components/step-up-dialog.tsx:181
+msgid "Couldn't send the code. Please try again."
+msgstr "Kò lè fi kóòdù náà ránṣẹ́. Jọ̀wọ́ gbìyànjú lẹ́ẹ̀kan sí i."
+
+#: ../../../lib/web/src/components/step-up-dialog.tsx:133
+msgid "Couldn't start re-authentication. Please try again."
+msgstr "Kò lè bẹ̀rẹ̀ ìjẹ́rìísí-padà. Jọ̀wọ́ gbìyànjú lẹ́ẹ̀kan sí i."
+
+#: ../../../lib/web/src/components/step-up-dialog.tsx:218
+msgid "Couldn't verify with that account. Please try again."
+msgstr "A kò lè fọwọ́sí pẹ̀lú àkàùntì yẹn. Jọ̀wọ́ gbìyànjú lẹ́ẹ̀kansí."
 
 #: src/features/board/components/board-column.tsx:530
 #: src/features/board/components/board-column.tsx:668
@@ -618,14 +639,14 @@ msgstr "Ìtò àìpé"
 #: src/features/board/components/board-column.tsx:609
 #: src/features/objects/components/comment-thread.tsx:228
 #: src/features/objects/components/comment-thread.tsx:343
-#: src/features/objects/components/object-attachments.tsx:233
+#: src/features/objects/components/object-attachments.tsx:210
 #: src/features/objects/components/object-detail-panel.tsx:603
 #: src/features/requests/components/request-panel.tsx:129
 #: src/routes/_authenticated/$projectId_.settings.tsx:359
 msgid "Delete"
 msgstr "Pa rẹ́"
 
-#: src/features/objects/components/object-attachments.tsx:231
+#: src/features/objects/components/object-attachments.tsx:208
 msgid "Delete attachment"
 msgstr "Pa ìsomọ́ rẹ́"
 
@@ -684,6 +705,10 @@ msgstr "Pa iṣẹ́ àkànṣe rẹ́?"
 msgid "Delete view"
 msgstr "Pa ìran rẹ́"
 
+#: ../../../lib/web/src/components/restore-banner.tsx:90
+msgid "Delete your account on the old server"
+msgstr "Pa akonti rẹ rẹ lori olupin atijọ"
+
 #: ../../../lib/web/src/components/data-table/column-header.tsx:60
 msgid "Desc"
 msgstr "Desc"
@@ -695,7 +720,7 @@ msgstr "Àpèjúwe"
 
 #: src/routes/_authenticated/$projectId/design.tsx:60
 #: src/routes/_authenticated/$projectId/design.tsx:128
-#: src/routes/_authenticated/$projectId/index.tsx:843
+#: src/routes/_authenticated/$projectId/index.tsx:857
 msgid "Design"
 msgstr "Àpẹẹrẹ"
 
@@ -704,8 +729,8 @@ msgid "Design imported"
 msgstr "A ti kó àpẹẹrẹ wọlé"
 
 #: src/routes/_authenticated/$projectId_.settings.tsx:548
-msgid "Design, write, comment, and view"
-msgstr "Ṣe àpẹẹrẹ, kọ, ṣàlàyé, àti wò"
+msgid "Design, create, edit, comment, and view"
+msgstr "Ṣe àpẹrẹ, ṣẹ̀dá, ṣàtúnṣe, sọ̀rọ̀, kí o sì wò"
 
 #: ../../../lib/web/src/components/layout/right-panel.tsx:144
 msgid "Details Panel"
@@ -734,8 +759,12 @@ msgstr "Ìyàtọ̀: {source} → {target}"
 msgid "Direction"
 msgstr "Ìtọ́sọ́nà"
 
-#: src/routes/_authenticated/$projectId/index.tsx:908
-#: src/routes/_authenticated/$projectId/index.tsx:909
+#: ../../../lib/web/src/components/restore-banner.tsx:73
+msgid "Dismiss"
+msgstr "Mú kúrò"
+
+#: src/routes/_authenticated/$projectId/index.tsx:922
+#: src/routes/_authenticated/$projectId/index.tsx:923
 msgid "Dismiss board hint"
 msgstr "Mú ìtọ́ka pátákó kúrò"
 
@@ -750,7 +779,7 @@ msgstr "Ó ń fi sidebar fóònù hàn."
 msgid "Done"
 msgstr "Ti parí"
 
-#: src/routes/_authenticated/$projectId/index.tsx:901
+#: src/routes/_authenticated/$projectId/index.tsx:915
 msgid "Double click on a column to add content"
 msgstr "Tẹ̀ ní ẹ̀ẹ̀mejì lórí kọ́lọ́mù láti fi àkóónú kún"
 
@@ -767,7 +796,7 @@ msgstr "Gbà backup sílẹ̀ ní àkọ́kọ́"
 msgid "Draft"
 msgstr "Àkọsílẹ̀ àkọ́kọ́"
 
-#: src/routes/_authenticated/$projectId/index.tsx:882
+#: src/routes/_authenticated/$projectId/index.tsx:896
 msgid "Drag columns to re-order them"
 msgstr "Wọ́ àwọn kọ́lọ́mù láti tún wọ́n tò"
 
@@ -813,6 +842,22 @@ msgstr "Ṣàtúnṣe káàdì tó yàn"
 #: src/features/editor/components/edit-dialogs.tsx:266
 msgid "Edit view"
 msgstr "Ṣàtúnṣe wíwò"
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:549
+msgid "Edit, comment, and view"
+msgstr "Ṣàtúnṣe, sọ̀rọ̀, kí o sì wò"
+
+#: ../../../lib/web/src/components/step-up-dialog.tsx:286
+msgid "Email code"
+msgstr "Kóòdù ímẹ́ẹ̀lì"
+
+#: ../../../lib/web/src/components/step-up-dialog.tsx:296
+msgid "Enter the code from your email"
+msgstr "Tẹ koodu láti inú ímeèlì rẹ"
+
+#: ../../../lib/web/src/components/step-up-dialog.tsx:321
+msgid "Enter your authenticator code"
+msgstr "Tẹ kóòdù authenticator rẹ"
 
 #: src/routes/_authenticated/$projectId_.settings.tsx:326
 msgid "Entity ID"
@@ -866,7 +911,7 @@ msgstr "Kò lè dá iṣẹ́"
 msgid "Failed to create view"
 msgstr "Kò lè dá wíwò"
 
-#: src/features/objects/components/object-attachments.tsx:75
+#: src/features/objects/components/object-attachments.tsx:73
 msgid "Failed to delete attachment"
 msgstr "Kò lè pa àfikún rẹ́"
 
@@ -899,7 +944,7 @@ msgid "Failed to load item"
 msgstr "Kò lè ṣí ohun lọ̀"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:40
-#: src/routes/_authenticated/$projectId/index.tsx:68
+#: src/routes/_authenticated/$projectId/index.tsx:70
 msgid "Failed to load project"
 msgstr "Kò lè ṣí iṣẹ́ lọ̀"
 
@@ -953,7 +998,7 @@ msgid "Failed to subscribe"
 msgstr "Kò lè ṣe alábàápín"
 
 #: src/features/projects/pages/projects-list-page.tsx:48
-#: src/routes/_authenticated/$projectId/index.tsx:544
+#: src/routes/_authenticated/$projectId/index.tsx:558
 msgid "Failed to unsubscribe"
 msgstr "Kò lè yọ alábàápín"
 
@@ -961,7 +1006,7 @@ msgstr "Kò lè yọ alábàápín"
 msgid "Failed to update access level"
 msgstr "Kò lè mú ìpele àyè dòde"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:104
+#: ../../../lib/web/src/components/notification-category-button.tsx:108
 msgid "Failed to update category"
 msgstr "Kò lè mú ẹ̀ka dòde"
 
@@ -977,7 +1022,7 @@ msgstr "Kò lè mú field dòde"
 msgid "Failed to update project"
 msgstr "Kò lè mú iṣẹ́ dòde"
 
-#: src/features/objects/components/object-attachments.tsx:60
+#: src/features/objects/components/object-attachments.tsx:58
 msgid "Failed to upload attachment"
 msgstr "Kò lè gbé àfikún sókè"
 
@@ -986,8 +1031,8 @@ msgid "Fields"
 msgstr "Àwọn field"
 
 #: src/features/objects/components/create-object-dialog.tsx:429
-#: src/features/objects/components/object-attachments.tsx:106
-#: src/features/objects/components/object-attachments.tsx:123
+#: src/features/objects/components/object-attachments.tsx:96
+#: src/features/objects/components/object-attachments.tsx:113
 msgid "Files"
 msgstr "Àwọn fáìlì"
 
@@ -999,6 +1044,10 @@ msgstr "Wa àwọn iṣẹ́"
 #: src/routes/_authenticated/$projectId_.settings.tsx:331
 msgid "Fingerprint"
 msgstr "Àmì-ìka"
+
+#: ../../../lib/web/src/components/restore-banner.tsx:79
+msgid "Finish moving your account"
+msgstr "Pari gbigbe akonti rẹ"
 
 #: src/features/editor/components/edit-dialogs.tsx:1051
 msgid "Flags"
@@ -1278,12 +1327,12 @@ msgstr "A nílò orúkọ"
 
 #: ../../../lib/web/src/components/ui/sort-selector.tsx:40
 #: src/features/objects/components/create-object-dialog.tsx:327
-#: src/routes/_authenticated/$projectId/index.tsx:782
-#: src/routes/_authenticated/$projectId/index.tsx:800
+#: src/routes/_authenticated/$projectId/index.tsx:796
+#: src/routes/_authenticated/$projectId/index.tsx:814
 msgid "New"
 msgstr "Tuntun"
 
-#: src/routes/_authenticated/$projectId/index.tsx:779
+#: src/routes/_authenticated/$projectId/index.tsx:793
 msgid "New {className}"
 msgstr "{className} tuntun"
 
@@ -1311,7 +1360,7 @@ msgstr "A kò ṣètò àwọn òfin àyè kankan. Fi àwọn òfin kún láti �
 msgid "No activity yet"
 msgstr "Kò sí iṣẹ́ síbẹ̀"
 
-#: src/features/requests/components/branch-select.tsx:70
+#: src/features/requests/components/branch-select.tsx:73
 msgid "No branches found"
 msgstr "A kò rí branch kankan"
 
@@ -1372,7 +1421,7 @@ msgstr "Kò sí profile"
 msgid "No projects found"
 msgstr "A kò rí project kankan"
 
-#: src/features/requests/components/repository-select.tsx:58
+#: src/features/requests/components/repository-select.tsx:61
 msgid "No repositories available"
 msgstr "Kò sí repo tó wà"
 
@@ -1390,7 +1439,7 @@ msgstr "Kò sí ipò"
 msgid "No time zone found."
 msgstr "A kò rí àgbègbè àkókò kankan."
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:135
+#: ../../../lib/web/src/components/notification-category-button.tsx:139
 msgid "No topic record yet — try again after the next notification."
 msgstr "Kò sí àkọsílẹ̀ kókó síbẹ̀ — gbìyànjú lẹ́ẹ̀kan síi lẹ́yìn ìfìtọ́nisí tó kàn."
 
@@ -1485,7 +1534,7 @@ msgstr "Ṣí ìtòlẹ́sẹẹsẹ ìṣàkóso"
 msgid "Open option actions"
 msgstr "Ṣí àwọn iṣẹ́ àṣàyàn"
 
-#: src/routes/_authenticated/$projectId/index.tsx:808
+#: src/routes/_authenticated/$projectId/index.tsx:822
 msgid "Open page actions"
 msgstr "Ṣí àwọn iṣẹ́ ojú-ìwé"
 
@@ -1528,12 +1577,24 @@ msgstr "Onílé"
 msgid "Parent"
 msgstr "Òbí"
 
+#: ../../../lib/web/src/components/step-up-dialog.tsx:331
+msgid "Passkey"
+msgstr "Kọ́kọ́rọ́-ìwọlé"
+
+#: ../../../lib/web/src/components/step-up-dialog.tsx:206
+msgid "Passkey verification failed. Please try again."
+msgstr "Ìjẹ́rìísí passkey kùnà. Jọ̀wọ́ gbìyànjú lẹ́ẹ̀kan sí i."
+
+#: ../../../lib/web/src/components/restore-banner.tsx:126
+msgid "Passkeys"
+msgstr "Àwọn passkey"
+
 #: src/routes/_authenticated/$projectId_.settings.tsx:350
 msgid "Permanently delete this project and all its content."
 msgstr "Pa project yìí àti gbogbo àkóónú rẹ̀ rẹ́ pátápátá."
 
-#: src/routes/_authenticated/$projectId/index.tsx:636
-#: src/routes/_authenticated/$projectId/index.tsx:670
+#: src/routes/_authenticated/$projectId/index.tsx:650
+#: src/routes/_authenticated/$projectId/index.tsx:684
 msgid "Please add one or more classes to the project design."
 msgstr "Jọ̀wọ́ fi kíláàsì kan tàbí jù bẹ́ẹ̀ lọ kún àpẹrẹ project."
 
@@ -1561,7 +1622,7 @@ msgid "Profile"
 msgstr "Profile"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:62
-#: src/routes/_authenticated/$projectId/index.tsx:90
+#: src/routes/_authenticated/$projectId/index.tsx:104
 msgid "Project"
 msgstr "Iṣẹ́"
 
@@ -1600,9 +1661,17 @@ msgstr "Àwọn project"
 msgid "Properties"
 msgstr "Àwọn àmì"
 
-#: src/routes/_authenticated/$projectId/index.tsx:832
+#: ../../../lib/web/src/components/restore-banner.tsx:98
+msgid "Re-link your accounts on this server"
+msgstr "Tun so akonti rẹ pọ lori olupin yii"
+
+#: src/routes/_authenticated/$projectId/index.tsx:846
 msgid "Re-order columns"
 msgstr "Tún àwọn ọ̀wọ́n tò"
+
+#: ../../../lib/web/src/components/restore-banner.tsx:120
+msgid "Re-register your passkeys on this server"
+msgstr "Tún àwọn bọ́tìnì ìwọlé rẹ forúkọsílẹ̀ lórí olùpèsè yìí"
 
 #: src/features/requests/components/merge-status.tsx:68
 msgid "Ready to merge"
@@ -1713,6 +1782,10 @@ msgstr "Àwọn ìbéèrè"
 msgid "Required"
 msgstr "Pọn dandan"
 
+#: ../../../lib/web/src/components/step-up-dialog.tsx:364
+msgid "Resend email"
+msgstr "Tún ìmélì náà ránṣẹ́"
+
 #: ../../../lib/web/src/components/config-drawer.tsx:77
 #: ../../../lib/web/src/components/data-table/toolbar.tsx:78
 msgid "Reset"
@@ -1753,7 +1826,7 @@ msgstr "Ọjọ́ Àbámẹ́ta"
 
 #: src/features/editor/components/option-dialog.tsx:138
 #: src/features/objects/components/comment-thread.tsx:179
-#: src/routes/_authenticated/$projectId/index.tsx:893
+#: src/routes/_authenticated/$projectId/index.tsx:907
 msgid "Save"
 msgstr "Fi pamọ́"
 
@@ -1829,7 +1902,7 @@ msgstr "Yan òfin ààyè"
 msgid "Select account type"
 msgstr "Yan irú account"
 
-#: src/features/requests/components/branch-select.tsx:32
+#: src/features/requests/components/branch-select.tsx:33
 msgid "Select branch"
 msgstr "Yan branch"
 
@@ -1849,7 +1922,7 @@ msgstr "Yan káàdì tó kàn"
 msgid "Select previous card"
 msgstr "Yan káàdì tó wà ṣáájú"
 
-#: src/features/requests/components/repository-select.tsx:47
+#: src/features/requests/components/repository-select.tsx:50
 msgid "Select repository"
 msgstr "Yan repository"
 
@@ -1873,6 +1946,10 @@ msgstr "Yan..."
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:95
 msgid "Send again"
 msgstr "Fi ránṣẹ́ lẹ́ẹ̀kan sí i"
+
+#: ../../../lib/web/src/components/step-up-dialog.tsx:304
+msgid "Send email"
+msgstr "Fi ímeèlì ránṣẹ́"
 
 #: ../../../lib/web/src/lib/preference-utils.ts:133
 msgid "Serif"
@@ -1901,7 +1978,7 @@ msgstr "Ṣètò ibi tí o ti wá àti ibi tí o ń lọ"
 #: src/routes/_authenticated/$projectId_.settings.tsx:76
 #: src/routes/_authenticated/$projectId_.settings.tsx:166
 #: src/routes/_authenticated/$projectId_.settings.tsx:189
-#: src/routes/_authenticated/$projectId/index.tsx:853
+#: src/routes/_authenticated/$projectId/index.tsx:867
 msgid "Settings"
 msgstr "Àwọn ìṣètò"
 
@@ -2037,6 +2114,10 @@ msgstr "Àwọn ọ̀rọ̀ àti àwọn ipò"
 msgid "Text"
 msgstr "Ọ̀rọ̀"
 
+#: ../../../lib/web/src/components/step-up-dialog.tsx:192
+msgid "That code is incorrect or has expired."
+msgstr "Kóòdù yẹn kò tọ̀nà tàbí ó ti pé."
+
 #: ../../../lib/web/src/components/config-drawer.tsx:181
 msgid "Theme"
 msgstr "Theme"
@@ -2071,7 +2152,7 @@ msgid "This will permanently delete \"{projectName}\" and all its objects, comme
 msgstr "Èyí yóò pa \"{projectName}\" àti gbogbo àwọn nǹkan, àsọyé, àti attachments rẹ̀ rẹ́ títí láé. A kò lè yí ìṣe yìí padà."
 
 #. placeholder {0}: project.project.name
-#: src/routes/_authenticated/$projectId/index.tsx:999
+#: src/routes/_authenticated/$projectId/index.tsx:1013
 msgid "This will remove \"{0}\" from your sidebar and stop updates for this project."
 msgstr "Èyí yóò yọ \"{0}\" kúrò nínú sidebar rẹ yóò sì dáwọ́ àwọn imudojúìwọ̀n dúró fún project yìí."
 
@@ -2172,7 +2253,7 @@ msgstr "Tẹ láti wá..."
 msgid "Unable to redirect to login. Please try again."
 msgstr "A kò lè darí sí ojú-ìwé wíwọlé. Jọ̀wọ́ gbìyànjú lẹ́ẹ̀kan sí i."
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:143
+#: ../../../lib/web/src/components/notification-category-button.tsx:147
 msgid "Unassigned"
 msgstr "Aláìyàn"
 
@@ -2191,16 +2272,16 @@ msgstr "United States"
 #: src/features/projects/pages/projects-list-page.tsx:146
 #: src/features/projects/pages/projects-list-page.tsx:163
 #: src/features/projects/pages/projects-list-page.tsx:165
-#: src/routes/_authenticated/$projectId/index.tsx:859
-#: src/routes/_authenticated/$projectId/index.tsx:1000
+#: src/routes/_authenticated/$projectId/index.tsx:873
+#: src/routes/_authenticated/$projectId/index.tsx:1014
 msgid "Unsubscribe"
 msgstr "Yọ ìforúkọsílẹ̀ kúrò"
 
-#: src/routes/_authenticated/$projectId/index.tsx:998
+#: src/routes/_authenticated/$projectId/index.tsx:1012
 msgid "Unsubscribe from project?"
 msgstr "Yọ ìforúkọsílẹ̀ kúrò lórí project?"
 
-#: src/routes/_authenticated/$projectId/index.tsx:540
+#: src/routes/_authenticated/$projectId/index.tsx:554
 msgid "Unsubscribed"
 msgstr "Ti yọ ìforúkọsílẹ̀ kúrò"
 
@@ -2214,13 +2295,17 @@ msgid "Updated"
 msgstr "Ti ṣe imudojúìwọ̀n"
 
 #: src/features/objects/components/create-object-dialog.tsx:470
-#: src/features/objects/components/object-attachments.tsx:210
+#: src/features/objects/components/object-attachments.tsx:197
 msgid "Upload"
 msgstr "Gbé jáde"
 
 #: src/routes/_authenticated/$projectId/design.tsx:333
 msgid "Upload .json file"
 msgstr "Gbé fáìlì .json jáde"
+
+#: ../../../lib/web/src/components/step-up-dialog.tsx:335
+msgid "Use your passkey"
+msgstr "Lo passkey rẹ"
 
 #. placeholder {0}: prefix || "project"
 #. placeholder {1}: prefix || "project"
@@ -2245,6 +2330,7 @@ msgstr "Kóòdù ìjẹ́rìísí ti ránṣẹ́"
 msgid "Verification failed"
 msgstr "Ìjẹ́rìísí kùnà"
 
+#: ../../../lib/web/src/components/step-up-dialog.tsx:385
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:164
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:106
 msgid "Verify"
@@ -2253,6 +2339,10 @@ msgstr "Jẹ́rìí sí"
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:58
 msgid "Verify email address"
 msgstr "Jẹ́rìí sí àdírẹ́sì email"
+
+#: ../../../lib/web/src/components/attachment-gallery.tsx:63
+msgid "Video thumbnail"
+msgstr "Àwòrán kékeré fídíò"
 
 #: ../../../lib/web/src/components/data-table/view-options.tsx:30
 msgid "View"
@@ -2278,7 +2368,7 @@ msgstr "Àwọn ìṣàkóso ìwòye"
 msgid "View only"
 msgstr "Wíwò nìkan"
 
-#: src/routes/_authenticated/$projectId/index.tsx:817
+#: src/routes/_authenticated/$projectId/index.tsx:831
 msgid "View options"
 msgstr "Àwọn àyàn ìwòye"
 
@@ -2311,10 +2401,14 @@ msgstr "Síìtì wà lábẹ́ ìtọ́jú!"
 msgid "Wednesday"
 msgstr "Ọjọ́rú"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:549
-msgid "Write, comment, and view"
-msgstr "Kọ, sọ àsọyé, kí o sì wò"
+#: src/routes/_authenticated/$projectId/index.tsx:92
+msgid "You don't have access to this project."
+msgstr "O kò ní ìwọlé sí iṣẹ́ àkànṣe yìí."
 
 #: src/features/projects/pages/projects-list-page.tsx:94
 msgid "You have no projects yet."
 msgstr "O kò ní projects kankan síbẹ̀."
+
+#: ../../../lib/web/src/components/restore-banner.tsx:82
+msgid "Your account was moved here from {source}. Until you delete it there, messages and notifications may reach both servers, some of your content keeps being served from the old server, and followers may take a few minutes to find you here."
+msgstr "A gbe akonti rẹ wá ibi lati {source}. Titi iwọ o fi pa rẹ nibẹ, awọn ifiranṣẹ ati awọn iwifunni le de olupin mejeeji, diẹ ninu akoonu rẹ tẹsiwaju lati sin lati olupin atijọ, ati awọn olutẹle le gba iṣẹju diẹ lati wa ọ nibi."

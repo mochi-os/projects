@@ -1642,7 +1642,7 @@ def action_object_create(a):
 				mochi.db.execute("insert or ignore into watchers (object, user, created) values (?, ?, ?)", d["id"], a.user.identity.id, now)
 		return result
 
-	if not check_project_access(a.user.identity.id, project_id, "write"):
+	if not check_project_access(a.user.identity.id, project_id, "design"):
 		a.error.label(403, "errors.access_denied")
 		return
 
@@ -6555,7 +6555,7 @@ def event_request_delete(e):
 REQUEST_LEVELS = {
 	"comment/create": "comment", "comment/update": "comment", "comment/delete": "comment",
 	"watcher/add": "view", "watcher/remove": "view",
-	"object/create": "write", "object/update": "write", "object/delete": "write",
+	"object/create": "design", "object/update": "write", "object/delete": "write",
 	"object/move": "write", "values/set": "write", "value/set": "write",
 	"link/create": "write", "link/delete": "write",
 	"attachment/delete": "write",

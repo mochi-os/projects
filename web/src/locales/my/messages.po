@@ -158,8 +158,8 @@ msgstr "checklist အရာ ထည့်မည်"
 msgid "Add class"
 msgstr "class ထည့်မည်"
 
-#: src/routes/_authenticated/$projectId/index.tsx:828
-#: src/routes/_authenticated/$projectId/index.tsx:992
+#: src/routes/_authenticated/$projectId/index.tsx:842
+#: src/routes/_authenticated/$projectId/index.tsx:1006
 msgid "Add column"
 msgstr "ကော်လံ ထည့်မည်"
 
@@ -240,7 +240,7 @@ msgid "Allow sort by"
 msgstr "စီစဉ်ခွင့်ပြုသည်"
 
 #. placeholder {0}: deleteTarget?.name
-#: src/features/objects/components/object-attachments.tsx:232
+#: src/features/objects/components/object-attachments.tsx:209
 msgid "Are you sure you want to delete \"{0}\"?"
 msgstr "\"{0}\" ကို ဖျက်မှာသေချာပါသလား?"
 
@@ -282,6 +282,10 @@ msgstr "မှတ်ချက်ဖိုင်များ ပူးတွဲ�
 msgid "Attach reply files"
 msgstr "အကြောင်းပြန်ဖိုင်များ ပူးတွဲမည်"
 
+#: ../../../lib/web/src/components/step-up-dialog.tsx:312
+msgid "Authenticator code"
+msgstr "Authenticator ကုဒ်"
+
 #: src/components/keyboard-shortcuts-help.tsx:47
 msgid "Available keyboard shortcuts"
 msgstr "ရရှိနိုင်သော ကီးဘုတ်ဖြတ်လမ်းများ"
@@ -306,7 +310,7 @@ msgid "Back to project"
 msgstr "project သို့ ပြန်သွားမည်"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:64
-#: src/routes/_authenticated/$projectId/index.tsx:92
+#: src/routes/_authenticated/$projectId/index.tsx:106
 msgid "Back to projects"
 msgstr "project များသို့ ပြန်သွားမည်"
 
@@ -340,6 +344,7 @@ msgid "Can be child of"
 msgstr "ကလေးဖြစ်နိုင်သည်"
 
 #: ../../../lib/web/src/components/responsive-confirm-dialog.tsx:64
+#: ../../../lib/web/src/components/step-up-dialog.tsx:360
 #: ../../../lib/web/src/components/travelling-picker.tsx:292
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:245
 #: ../../../lib/web/src/features/access/access-dialog.tsx:325
@@ -351,7 +356,7 @@ msgstr "ကလေးဖြစ်နိုင်သည်"
 #: src/features/objects/components/comment-thread.tsx:168
 #: src/features/projects/components/create-project-dialog.tsx:208
 #: src/routes/_authenticated/$projectId/design.tsx:340
-#: src/routes/_authenticated/$projectId/index.tsx:886
+#: src/routes/_authenticated/$projectId/index.tsx:900
 msgid "Cancel"
 msgstr "မလုပ်တော့ပါ"
 
@@ -368,11 +373,11 @@ msgstr "အကြောင်းပြန်ချက် မလုပ်တေ�
 msgid "Cannot merge automatically"
 msgstr "အလိုအလျောက် ပေါင်းစည်း၍ မရပါ"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:131
+#: ../../../lib/web/src/components/notification-category-button.tsx:135
 msgid "Category for this notification"
 msgstr "ဤအကြောင်းကြားချက်အတွက် အမျိုးအစား"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:115
+#: ../../../lib/web/src/components/notification-category-button.tsx:119
 msgid "Change notification category"
 msgstr "အကြောင်းကြားချက် အမျိုးအစား ပြောင်းမည်"
 
@@ -530,6 +535,10 @@ msgstr "ဆက်စပ်အချက်အလက်နှင့် အသေ�
 msgid "Continue"
 msgstr "ဆက်လက်လုပ်ဆောင်မည်"
 
+#: ../../../lib/web/src/components/step-up-dialog.tsx:349
+msgid "Continue with {label}"
+msgstr "{label} ဖြင့် ဆက်လက်လုပ်ဆောင်ပါ"
+
 #: src/routes/_authenticated/$projectId_.settings.tsx:651
 msgid "Control who can view and interact with this project"
 msgstr "ဤ project ကို မည်သူများ ကြည့်ရှု၍ ပါဝင်နိုင်သည်ကို ထိန်းချုပ်ပါ"
@@ -545,6 +554,18 @@ msgstr "ဤ project အကြောင်း အဓိက အချက်အလ�
 #: ../../../lib/web/src/features/document/document-page.tsx:81
 msgid "Could not load this document. Please try again later."
 msgstr "ဤစာရွက်စာတမ်းကို ဖွင့်၍ မရပါ။ နောက်မှ ထပ်စမ်းကြည့်ပါ။"
+
+#: ../../../lib/web/src/components/step-up-dialog.tsx:181
+msgid "Couldn't send the code. Please try again."
+msgstr "ကုဒ်ကို ပို့၍မရပါ။ ကျေးဇူးပြု၍ ထပ်စမ်းကြည့်ပါ။"
+
+#: ../../../lib/web/src/components/step-up-dialog.tsx:133
+msgid "Couldn't start re-authentication. Please try again."
+msgstr "ပြန်လည်အတည်ပြုခြင်းကို စတင်၍မရပါ။ ကျေးဇူးပြု၍ ထပ်စမ်းကြည့်ပါ။"
+
+#: ../../../lib/web/src/components/step-up-dialog.tsx:218
+msgid "Couldn't verify with that account. Please try again."
+msgstr "ထိုအကောင့်ဖြင့် အတည်ပြု၍မရပါ။ ကျေးဇူးပြု၍ ထပ်မံကြိုးစားပါ။"
 
 #: src/features/board/components/board-column.tsx:530
 #: src/features/board/components/board-column.tsx:668
@@ -618,14 +639,14 @@ msgstr "မူရင်း sort"
 #: src/features/board/components/board-column.tsx:609
 #: src/features/objects/components/comment-thread.tsx:228
 #: src/features/objects/components/comment-thread.tsx:343
-#: src/features/objects/components/object-attachments.tsx:233
+#: src/features/objects/components/object-attachments.tsx:210
 #: src/features/objects/components/object-detail-panel.tsx:603
 #: src/features/requests/components/request-panel.tsx:129
 #: src/routes/_authenticated/$projectId_.settings.tsx:359
 msgid "Delete"
 msgstr "ဖျက်မည်"
 
-#: src/features/objects/components/object-attachments.tsx:231
+#: src/features/objects/components/object-attachments.tsx:208
 msgid "Delete attachment"
 msgstr "ပူးတွဲဖိုင် ဖျက်မည်"
 
@@ -684,6 +705,10 @@ msgstr "project ဖျက်မလား?"
 msgid "Delete view"
 msgstr "ကြည့်ရှုမှု ဖျက်မည်"
 
+#: ../../../lib/web/src/components/restore-banner.tsx:90
+msgid "Delete your account on the old server"
+msgstr "ဟောင်းသောဆာဗာမှ သင်၏အကောင့်ကို ဖျက်ပါ"
+
 #: ../../../lib/web/src/components/data-table/column-header.tsx:60
 msgid "Desc"
 msgstr "Desc"
@@ -695,7 +720,7 @@ msgstr "ဖော်ပြချက်"
 
 #: src/routes/_authenticated/$projectId/design.tsx:60
 #: src/routes/_authenticated/$projectId/design.tsx:128
-#: src/routes/_authenticated/$projectId/index.tsx:843
+#: src/routes/_authenticated/$projectId/index.tsx:857
 msgid "Design"
 msgstr "ဒီဇိုင်း"
 
@@ -704,8 +729,8 @@ msgid "Design imported"
 msgstr "ဒီဇိုင်း တင်သွင်းပြီး"
 
 #: src/routes/_authenticated/$projectId_.settings.tsx:548
-msgid "Design, write, comment, and view"
-msgstr "ဒီဇိုင်းရေးခြင်း၊ ရေးခြင်း၊ မှတ်ချက်ပြုခြင်း၊ နှင့် ကြည့်ရှုခြင်း"
+msgid "Design, create, edit, comment, and view"
+msgstr "ဒီဇိုင်းဆွဲ၊ ဖန်တီး၊ တည်းဖြတ်၊ မှတ်ချက်ပေး၊ ကြည့်ရှု"
 
 #: ../../../lib/web/src/components/layout/right-panel.tsx:144
 msgid "Details Panel"
@@ -734,8 +759,12 @@ msgstr "Diff: {source} → {target}"
 msgid "Direction"
 msgstr "ဦးတည်ရာ"
 
-#: src/routes/_authenticated/$projectId/index.tsx:908
-#: src/routes/_authenticated/$projectId/index.tsx:909
+#: ../../../lib/web/src/components/restore-banner.tsx:73
+msgid "Dismiss"
+msgstr "ပယ်မည်"
+
+#: src/routes/_authenticated/$projectId/index.tsx:922
+#: src/routes/_authenticated/$projectId/index.tsx:923
 msgid "Dismiss board hint"
 msgstr "ဘုတ် အကြံပေးချက် ပယ်မည်"
 
@@ -750,7 +779,7 @@ msgstr "မိုဘိုင်း ဘေးဘားကို ပြသသည�
 msgid "Done"
 msgstr "ပြီးပါပြီ"
 
-#: src/routes/_authenticated/$projectId/index.tsx:901
+#: src/routes/_authenticated/$projectId/index.tsx:915
 msgid "Double click on a column to add content"
 msgstr "အကြောင်းအရာထည့်ရန် ကော်လံကို နှစ်ချက်နှိပ်ပါ"
 
@@ -767,7 +796,7 @@ msgstr "အရန်ကို ဦးစွာ ဒေါင်းလုဒ်လ�
 msgid "Draft"
 msgstr "မူကြမ်း"
 
-#: src/routes/_authenticated/$projectId/index.tsx:882
+#: src/routes/_authenticated/$projectId/index.tsx:896
 msgid "Drag columns to re-order them"
 msgstr "ကော်လံများကို ပြန်စီရန် ဆွဲပါ"
 
@@ -813,6 +842,22 @@ msgstr "ရွေးချယ်ထားသော ကတ် တည်းဖြ�
 #: src/features/editor/components/edit-dialogs.tsx:266
 msgid "Edit view"
 msgstr "မြင်ကွင်း တည်းဖြတ်"
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:549
+msgid "Edit, comment, and view"
+msgstr "တည်းဖြတ်၊ မှတ်ချက်ပေး၊ ကြည့်ရှု"
+
+#: ../../../lib/web/src/components/step-up-dialog.tsx:286
+msgid "Email code"
+msgstr "အီးမေးလ် ကုဒ်"
+
+#: ../../../lib/web/src/components/step-up-dialog.tsx:296
+msgid "Enter the code from your email"
+msgstr "သင့်အီးမေးလ်မှ ကုဒ်ကို ထည့်ပါ"
+
+#: ../../../lib/web/src/components/step-up-dialog.tsx:321
+msgid "Enter your authenticator code"
+msgstr "သင့်အထောက်အထားစိစစ်ရေးကုဒ်ကို ထည့်ပါ"
 
 #: src/routes/_authenticated/$projectId_.settings.tsx:326
 msgid "Entity ID"
@@ -866,7 +911,7 @@ msgstr "ပရောဂျက် ဖန်တီး၍ မရပါ"
 msgid "Failed to create view"
 msgstr "မြင်ကွင်း ဖန်တီး၍ မရပါ"
 
-#: src/features/objects/components/object-attachments.tsx:75
+#: src/features/objects/components/object-attachments.tsx:73
 msgid "Failed to delete attachment"
 msgstr "တွဲဖက်ဖိုင် ဖျက်၍ မရပါ"
 
@@ -899,7 +944,7 @@ msgid "Failed to load item"
 msgstr "ပစ္စည်း တင်၍ မရပါ"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:40
-#: src/routes/_authenticated/$projectId/index.tsx:68
+#: src/routes/_authenticated/$projectId/index.tsx:70
 msgid "Failed to load project"
 msgstr "ပရောဂျက် တင်၍ မရပါ"
 
@@ -953,7 +998,7 @@ msgid "Failed to subscribe"
 msgstr "စာရင်းသွင်း၍ မရပါ"
 
 #: src/features/projects/pages/projects-list-page.tsx:48
-#: src/routes/_authenticated/$projectId/index.tsx:544
+#: src/routes/_authenticated/$projectId/index.tsx:558
 msgid "Failed to unsubscribe"
 msgstr "စာရင်းမှ ထွက်၍ မရပါ"
 
@@ -961,7 +1006,7 @@ msgstr "စာရင်းမှ ထွက်၍ မရပါ"
 msgid "Failed to update access level"
 msgstr "ဝင်ရောက်ခွင့် အဆင့် ပြင်ဆင်၍ မရပါ"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:104
+#: ../../../lib/web/src/components/notification-category-button.tsx:108
 msgid "Failed to update category"
 msgstr "အမျိုးအစား ပြင်ဆင်၍ မရပါ"
 
@@ -977,7 +1022,7 @@ msgstr "အကွက် ပြင်ဆင်၍ မရပါ"
 msgid "Failed to update project"
 msgstr "ပရောဂျက် ပြင်ဆင်၍ မရပါ"
 
-#: src/features/objects/components/object-attachments.tsx:60
+#: src/features/objects/components/object-attachments.tsx:58
 msgid "Failed to upload attachment"
 msgstr "တွဲဖက်ဖိုင် တင်၍ မရပါ"
 
@@ -986,8 +1031,8 @@ msgid "Fields"
 msgstr "အကွက်များ"
 
 #: src/features/objects/components/create-object-dialog.tsx:429
-#: src/features/objects/components/object-attachments.tsx:106
-#: src/features/objects/components/object-attachments.tsx:123
+#: src/features/objects/components/object-attachments.tsx:96
+#: src/features/objects/components/object-attachments.tsx:113
 msgid "Files"
 msgstr "ဖိုင်များ"
 
@@ -999,6 +1044,10 @@ msgstr "ပရောဂျက်များ ရှာ"
 #: src/routes/_authenticated/$projectId_.settings.tsx:331
 msgid "Fingerprint"
 msgstr "လက်ဗွေ"
+
+#: ../../../lib/web/src/components/restore-banner.tsx:79
+msgid "Finish moving your account"
+msgstr "အကောင့်ရွှေ့ပြောင်းခြင်း ပြီးဆုံးပါ"
 
 #: src/features/editor/components/edit-dialogs.tsx:1051
 msgid "Flags"
@@ -1278,12 +1327,12 @@ msgstr "အမည် လိုအပ်သည်"
 
 #: ../../../lib/web/src/components/ui/sort-selector.tsx:40
 #: src/features/objects/components/create-object-dialog.tsx:327
-#: src/routes/_authenticated/$projectId/index.tsx:782
-#: src/routes/_authenticated/$projectId/index.tsx:800
+#: src/routes/_authenticated/$projectId/index.tsx:796
+#: src/routes/_authenticated/$projectId/index.tsx:814
 msgid "New"
 msgstr "အသစ်"
 
-#: src/routes/_authenticated/$projectId/index.tsx:779
+#: src/routes/_authenticated/$projectId/index.tsx:793
 msgid "New {className}"
 msgstr "{className} အသစ်"
 
@@ -1311,7 +1360,7 @@ msgstr "ဝင်ရောက်ခွင့်စည်းမျဉ်းမျ
 msgid "No activity yet"
 msgstr "လှုပ်ရှားမှုများ မရှိသေးပါ"
 
-#: src/features/requests/components/branch-select.tsx:70
+#: src/features/requests/components/branch-select.tsx:73
 msgid "No branches found"
 msgstr "branch များ မတွေ့ပါ"
 
@@ -1372,7 +1421,7 @@ msgstr "ပရိုဖိုင် မရှိ"
 msgid "No projects found"
 msgstr "ပရောဂျက်များ မတွေ့ပါ"
 
-#: src/features/requests/components/repository-select.tsx:58
+#: src/features/requests/components/repository-select.tsx:61
 msgid "No repositories available"
 msgstr "repository များ မရရှိနိုင်ပါ"
 
@@ -1390,7 +1439,7 @@ msgstr "အခြေအနေ မရှိ"
 msgid "No time zone found."
 msgstr "အချိန်ဇုန် မတွေ့ပါ။"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:135
+#: ../../../lib/web/src/components/notification-category-button.tsx:139
 msgid "No topic record yet — try again after the next notification."
 msgstr "topic မှတ်တမ်း မရှိသေးပါ — နောက်အသိပေးချက်ပြီးနောက် ထပ်စမ်းကြည့်ပါ။"
 
@@ -1485,7 +1534,7 @@ msgstr "navigation menu ကို ဖွင့်"
 msgid "Open option actions"
 msgstr "ရွေးချယ်စရာ လုပ်ဆောင်ချက်များကို ဖွင့်"
 
-#: src/routes/_authenticated/$projectId/index.tsx:808
+#: src/routes/_authenticated/$projectId/index.tsx:822
 msgid "Open page actions"
 msgstr "စာမျက်နှာ လုပ်ဆောင်ချက်များကို ဖွင့်"
 
@@ -1528,12 +1577,24 @@ msgstr "ပိုင်ရှင်"
 msgid "Parent"
 msgstr "Parent"
 
+#: ../../../lib/web/src/components/step-up-dialog.tsx:331
+msgid "Passkey"
+msgstr "Passkey"
+
+#: ../../../lib/web/src/components/step-up-dialog.tsx:206
+msgid "Passkey verification failed. Please try again."
+msgstr "ပတ်စ်ကီးအတည်ပြုခြင်း မအောင်မြင်ပါ။ ကျေးဇူးပြု၍ ထပ်စမ်းကြည့်ပါ။"
+
+#: ../../../lib/web/src/components/restore-banner.tsx:126
+msgid "Passkeys"
+msgstr "Passkey များ"
+
 #: src/routes/_authenticated/$projectId_.settings.tsx:350
 msgid "Permanently delete this project and all its content."
 msgstr "ဤပရောဂျက်နှင့် အကြောင်းအရာအားလုံးကို အပြီးတိုင်ဖျက်ပါ။"
 
-#: src/routes/_authenticated/$projectId/index.tsx:636
-#: src/routes/_authenticated/$projectId/index.tsx:670
+#: src/routes/_authenticated/$projectId/index.tsx:650
+#: src/routes/_authenticated/$projectId/index.tsx:684
 msgid "Please add one or more classes to the project design."
 msgstr "ပရောဂျက် ဒီဇိုင်းတွင် class တစ်ခု သို့မဟုတ် ထို့ထက်ပိုပြီး ထည့်ပါ။"
 
@@ -1561,7 +1622,7 @@ msgid "Profile"
 msgstr "ပရိုဖိုင်"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:62
-#: src/routes/_authenticated/$projectId/index.tsx:90
+#: src/routes/_authenticated/$projectId/index.tsx:104
 msgid "Project"
 msgstr "ပရောဂျက်"
 
@@ -1600,9 +1661,17 @@ msgstr "ပရောဂျက်များ"
 msgid "Properties"
 msgstr "ဂုဏ်သတ္တိများ"
 
-#: src/routes/_authenticated/$projectId/index.tsx:832
+#: ../../../lib/web/src/components/restore-banner.tsx:98
+msgid "Re-link your accounts on this server"
+msgstr "ဤဆာဗာပေါ်တွင် သင်၏အကောင့်များကို ပြန်လည်ချိတ်ဆက်ပါ"
+
+#: src/routes/_authenticated/$projectId/index.tsx:846
 msgid "Re-order columns"
 msgstr "ကော်လံများ ပြန်စီ"
+
+#: ../../../lib/web/src/components/restore-banner.tsx:120
+msgid "Re-register your passkeys on this server"
+msgstr "ဤဆာဗာတွင် သင်၏ passkey များကို ပြန်လည်မှတ်ပုံတင်ပါ"
 
 #: src/features/requests/components/merge-status.tsx:68
 msgid "Ready to merge"
@@ -1713,6 +1782,10 @@ msgstr "တောင်းခံချက်များ"
 msgid "Required"
 msgstr "လိုအပ်"
 
+#: ../../../lib/web/src/components/step-up-dialog.tsx:364
+msgid "Resend email"
+msgstr "အီးမေးလ်ပြန်ပို့ရန်"
+
 #: ../../../lib/web/src/components/config-drawer.tsx:77
 #: ../../../lib/web/src/components/data-table/toolbar.tsx:78
 msgid "Reset"
@@ -1753,7 +1826,7 @@ msgstr "စနေနေ့"
 
 #: src/features/editor/components/option-dialog.tsx:138
 #: src/features/objects/components/comment-thread.tsx:179
-#: src/routes/_authenticated/$projectId/index.tsx:893
+#: src/routes/_authenticated/$projectId/index.tsx:907
 msgid "Save"
 msgstr "သိမ်းမည်"
 
@@ -1829,7 +1902,7 @@ msgstr "ဝင်ရောက်ခွင့် စည်းမျဉ်း ရ�
 msgid "Select account type"
 msgstr "အကောင့်အမျိုးအစား ရွေးချယ်"
 
-#: src/features/requests/components/branch-select.tsx:32
+#: src/features/requests/components/branch-select.tsx:33
 msgid "Select branch"
 msgstr "ဌာနခွဲကို ရွေးပါ"
 
@@ -1849,7 +1922,7 @@ msgstr "နောက်ကတ်ကို ရွေးပါ"
 msgid "Select previous card"
 msgstr "ယခင်ကတ်ကို ရွေးပါ"
 
-#: src/features/requests/components/repository-select.tsx:47
+#: src/features/requests/components/repository-select.tsx:50
 msgid "Select repository"
 msgstr "သိုလှောင်ရာနေရာကို ရွေးပါ"
 
@@ -1873,6 +1946,10 @@ msgstr "ရွေးပါ..."
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:95
 msgid "Send again"
 msgstr "ထပ်ပို့ပါ"
+
+#: ../../../lib/web/src/components/step-up-dialog.tsx:304
+msgid "Send email"
+msgstr "အီးမေးလ်ပို့ရန်"
 
 #: ../../../lib/web/src/lib/preference-utils.ts:133
 msgid "Serif"
@@ -1901,7 +1978,7 @@ msgstr "မူရင်းနှင့် ဦးတည်ရာ သတ်မှ�
 #: src/routes/_authenticated/$projectId_.settings.tsx:76
 #: src/routes/_authenticated/$projectId_.settings.tsx:166
 #: src/routes/_authenticated/$projectId_.settings.tsx:189
-#: src/routes/_authenticated/$projectId/index.tsx:853
+#: src/routes/_authenticated/$projectId/index.tsx:867
 msgid "Settings"
 msgstr "ဆက်တင်များ"
 
@@ -2037,6 +2114,10 @@ msgstr "စည်းကမ်းချက်များ"
 msgid "Text"
 msgstr "စာသား"
 
+#: ../../../lib/web/src/components/step-up-dialog.tsx:192
+msgid "That code is incorrect or has expired."
+msgstr "ထိုကုဒ်မှားနေသည် သို့မဟုတ် သက်တမ်းကုန်သွားပြီ။"
+
 #: ../../../lib/web/src/components/config-drawer.tsx:181
 msgid "Theme"
 msgstr "အပြင်အဆင်"
@@ -2071,7 +2152,7 @@ msgid "This will permanently delete \"{projectName}\" and all its objects, comme
 msgstr "၎င်းသည် \"{projectName}\" နှင့် ၎င်း၏ object များ၊ မှတ်ချက်များနှင့် ပူးတွဲဖိုင်များ အားလုံးကို အပြီးတိုင် ဖျက်ပါမည်။ ဤလုပ်ဆောင်ချက်ကို ပြန်လုပ်၍မရပါ။"
 
 #. placeholder {0}: project.project.name
-#: src/routes/_authenticated/$projectId/index.tsx:999
+#: src/routes/_authenticated/$projectId/index.tsx:1013
 msgid "This will remove \"{0}\" from your sidebar and stop updates for this project."
 msgstr "၎င်းသည် \"{0}\" ကို သင်၏ ဘေးဘားမှ ဖယ်ရှားပြီး ဤ project အတွက် အပ်ဒိတ်များကို ရပ်ပါမည်။"
 
@@ -2172,7 +2253,7 @@ msgstr "ရှာရန် ရိုက်ပါ..."
 msgid "Unable to redirect to login. Please try again."
 msgstr "Login သို့ redirect လုပ်၍ မရပါ။ ထပ်ကြိုးစားပါ။"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:143
+#: ../../../lib/web/src/components/notification-category-button.tsx:147
 msgid "Unassigned"
 msgstr "မသတ်မှတ်ထား"
 
@@ -2191,16 +2272,16 @@ msgstr "United States"
 #: src/features/projects/pages/projects-list-page.tsx:146
 #: src/features/projects/pages/projects-list-page.tsx:163
 #: src/features/projects/pages/projects-list-page.tsx:165
-#: src/routes/_authenticated/$projectId/index.tsx:859
-#: src/routes/_authenticated/$projectId/index.tsx:1000
+#: src/routes/_authenticated/$projectId/index.tsx:873
+#: src/routes/_authenticated/$projectId/index.tsx:1014
 msgid "Unsubscribe"
 msgstr "Subscribe ဖြုတ်မည်"
 
-#: src/routes/_authenticated/$projectId/index.tsx:998
+#: src/routes/_authenticated/$projectId/index.tsx:1012
 msgid "Unsubscribe from project?"
 msgstr "Project မှ subscribe ဖြုတ်မှာလား?"
 
-#: src/routes/_authenticated/$projectId/index.tsx:540
+#: src/routes/_authenticated/$projectId/index.tsx:554
 msgid "Unsubscribed"
 msgstr "Subscribe ဖြုတ်ပြီး"
 
@@ -2214,13 +2295,17 @@ msgid "Updated"
 msgstr "အပ်ဒိတ်လုပ်ပြီး"
 
 #: src/features/objects/components/create-object-dialog.tsx:470
-#: src/features/objects/components/object-attachments.tsx:210
+#: src/features/objects/components/object-attachments.tsx:197
 msgid "Upload"
 msgstr "Upload လုပ်မည်"
 
 #: src/routes/_authenticated/$projectId/design.tsx:333
 msgid "Upload .json file"
 msgstr ".json ဖိုင် Upload လုပ်မည်"
+
+#: ../../../lib/web/src/components/step-up-dialog.tsx:335
+msgid "Use your passkey"
+msgstr "သင့်ပတ်စ်ကီးကို သုံးပါ"
 
 #. placeholder {0}: prefix || "project"
 #. placeholder {1}: prefix || "project"
@@ -2245,6 +2330,7 @@ msgstr "အတည်ပြု ကုဒ် ပို့ပြီး"
 msgid "Verification failed"
 msgstr "အတည်ပြုခြင်း မအောင်မြင်ပါ"
 
+#: ../../../lib/web/src/components/step-up-dialog.tsx:385
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:164
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:106
 msgid "Verify"
@@ -2253,6 +2339,10 @@ msgstr "အတည်ပြုမည်"
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:58
 msgid "Verify email address"
 msgstr "အီးမေးလ် လိပ်စာ အတည်ပြုမည်"
+
+#: ../../../lib/web/src/components/attachment-gallery.tsx:63
+msgid "Video thumbnail"
+msgstr "ဗီဒီယို thumbnail"
 
 #: ../../../lib/web/src/components/data-table/view-options.tsx:30
 msgid "View"
@@ -2278,7 +2368,7 @@ msgstr "ထိန်းချုပ်မှုများ ကြည့်ရ�
 msgid "View only"
 msgstr "ကြည့်ရှုရုံသာ"
 
-#: src/routes/_authenticated/$projectId/index.tsx:817
+#: src/routes/_authenticated/$projectId/index.tsx:831
 msgid "View options"
 msgstr "ကြည့်ရှုရွေးချယ်စရာများ"
 
@@ -2311,10 +2401,14 @@ msgstr "ဝက်ဘ်ဆိုက်ကို ပြုပြင်နေပ�
 msgid "Wednesday"
 msgstr "ဗုဒ္ဓဟူး"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:549
-msgid "Write, comment, and view"
-msgstr "ရေးပြီး မှတ်ချက်ပေး၍ ကြည့်ပါ"
+#: src/routes/_authenticated/$projectId/index.tsx:92
+msgid "You don't have access to this project."
+msgstr "ဤပရောဂျက်ကို သင် ဝင်ရောက်ခွင့် မရှိပါ။"
 
 #: src/features/projects/pages/projects-list-page.tsx:94
 msgid "You have no projects yet."
 msgstr "သင့်တွင် project များ မရှိသေးပါ။"
+
+#: ../../../lib/web/src/components/restore-banner.tsx:82
+msgid "Your account was moved here from {source}. Until you delete it there, messages and notifications may reach both servers, some of your content keeps being served from the old server, and followers may take a few minutes to find you here."
+msgstr "သင်၏အကောင့်ကို {source} မှ ဤနေရာသို့ ရွှေ့ပြောင်းခဲ့သည်။ သင်ကာကိုဖျက်မသည်အထိ၊ မက်ဆေ့ချ်များနှင့် အကြောင်းကြားချက်များ ဆာဗာနှစ်ခုလုံးသို့ ရောက်နိုင်သည်၊ သင်၏အချို့သောအကြောင်းအရာများကို ဟောင်းသောဆာဗာမှ ဆက်လက်ပေးဆောင်နေမည်ဖြစ်ပြီး ကြည့်ရှုသူများ သင်ကိုဤနေရာတွင် ရှာဖွေရန် မိနစ်အနည်းငယ် ကြာနိုင်သည်။"

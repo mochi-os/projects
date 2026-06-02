@@ -158,8 +158,8 @@ msgstr "चेकलिस्ट आइटम जोड़ीं"
 msgid "Add class"
 msgstr "वर्ग जोड़ीं"
 
-#: src/routes/_authenticated/$projectId/index.tsx:828
-#: src/routes/_authenticated/$projectId/index.tsx:992
+#: src/routes/_authenticated/$projectId/index.tsx:842
+#: src/routes/_authenticated/$projectId/index.tsx:1006
 msgid "Add column"
 msgstr "कॉलम जोड़ीं"
 
@@ -240,7 +240,7 @@ msgid "Allow sort by"
 msgstr "एकर अनुसार छांटे के अनुमति दीं"
 
 #. placeholder {0}: deleteTarget?.name
-#: src/features/objects/components/object-attachments.tsx:232
+#: src/features/objects/components/object-attachments.tsx:209
 msgid "Are you sure you want to delete \"{0}\"?"
 msgstr "का रउआ \"{0}\" के मेटावे चाहत बानी?"
 
@@ -282,6 +282,10 @@ msgstr "टिप्पणी फाइल संलग्न करीं"
 msgid "Attach reply files"
 msgstr "जवाब फाइल संलग्न करीं"
 
+#: ../../../lib/web/src/components/step-up-dialog.tsx:312
+msgid "Authenticator code"
+msgstr "Authenticator कोड"
+
 #: src/components/keyboard-shortcuts-help.tsx:47
 msgid "Available keyboard shortcuts"
 msgstr "उपलब्ध कीबोर्ड शॉर्टकट"
@@ -306,7 +310,7 @@ msgid "Back to project"
 msgstr "परियोजना पर वापस"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:64
-#: src/routes/_authenticated/$projectId/index.tsx:92
+#: src/routes/_authenticated/$projectId/index.tsx:106
 msgid "Back to projects"
 msgstr "परियोजना पर वापस"
 
@@ -340,6 +344,7 @@ msgid "Can be child of"
 msgstr "एकर बच्चा हो सके"
 
 #: ../../../lib/web/src/components/responsive-confirm-dialog.tsx:64
+#: ../../../lib/web/src/components/step-up-dialog.tsx:360
 #: ../../../lib/web/src/components/travelling-picker.tsx:292
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:245
 #: ../../../lib/web/src/features/access/access-dialog.tsx:325
@@ -351,7 +356,7 @@ msgstr "एकर बच्चा हो सके"
 #: src/features/objects/components/comment-thread.tsx:168
 #: src/features/projects/components/create-project-dialog.tsx:208
 #: src/routes/_authenticated/$projectId/design.tsx:340
-#: src/routes/_authenticated/$projectId/index.tsx:886
+#: src/routes/_authenticated/$projectId/index.tsx:900
 msgid "Cancel"
 msgstr "रद्द करीं"
 
@@ -368,11 +373,11 @@ msgstr "जवाब रद्द करीं"
 msgid "Cannot merge automatically"
 msgstr "स्वतः मर्ज ना हो सके"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:131
+#: ../../../lib/web/src/components/notification-category-button.tsx:135
 msgid "Category for this notification"
 msgstr "एह सूचना खातिर श्रेणी"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:115
+#: ../../../lib/web/src/components/notification-category-button.tsx:119
 msgid "Change notification category"
 msgstr "सूचना श्रेणी बदलीं"
 
@@ -530,6 +535,10 @@ msgstr "प्रासंगिक जानकारी आ विवरण।
 msgid "Continue"
 msgstr "जारी रखीं"
 
+#: ../../../lib/web/src/components/step-up-dialog.tsx:349
+msgid "Continue with {label}"
+msgstr "{label} के साथ आगे बढ़ीं"
+
 #: src/routes/_authenticated/$projectId_.settings.tsx:651
 msgid "Control who can view and interact with this project"
 msgstr "नियंत्रित करीं कि के एह परियोजना के देख आ ओकरा से बात कर सकेला"
@@ -545,6 +554,18 @@ msgstr "एह परियोजना के बारे में मूल 
 #: ../../../lib/web/src/features/document/document-page.tsx:81
 msgid "Could not load this document. Please try again later."
 msgstr "एह दस्तावेज के लोड ना कर सकल। बाद में फिर कोशिश करीं।"
+
+#: ../../../lib/web/src/components/step-up-dialog.tsx:181
+msgid "Couldn't send the code. Please try again."
+msgstr "कोड भेजल ना जा सकल। कृपया फिर से कोशिश करीं।"
+
+#: ../../../lib/web/src/components/step-up-dialog.tsx:133
+msgid "Couldn't start re-authentication. Please try again."
+msgstr "फिर से प्रमाणीकरण शुरू ना हो सकल। कृपया फिर से कोशिश करीं।"
+
+#: ../../../lib/web/src/components/step-up-dialog.tsx:218
+msgid "Couldn't verify with that account. Please try again."
+msgstr "ओह खाता से सत्यापन ना हो सकल। कृपया फेर से कोसिस करीं।"
 
 #: src/features/board/components/board-column.tsx:530
 #: src/features/board/components/board-column.tsx:668
@@ -618,14 +639,14 @@ msgstr "डिफ़ॉल्ट छंटाई"
 #: src/features/board/components/board-column.tsx:609
 #: src/features/objects/components/comment-thread.tsx:228
 #: src/features/objects/components/comment-thread.tsx:343
-#: src/features/objects/components/object-attachments.tsx:233
+#: src/features/objects/components/object-attachments.tsx:210
 #: src/features/objects/components/object-detail-panel.tsx:603
 #: src/features/requests/components/request-panel.tsx:129
 #: src/routes/_authenticated/$projectId_.settings.tsx:359
 msgid "Delete"
 msgstr "मेटाईं"
 
-#: src/features/objects/components/object-attachments.tsx:231
+#: src/features/objects/components/object-attachments.tsx:208
 msgid "Delete attachment"
 msgstr "संलग्नक मेटाईं"
 
@@ -684,6 +705,10 @@ msgstr "परियोजना मेटाईं?"
 msgid "Delete view"
 msgstr "दृश्य मेटाईं"
 
+#: ../../../lib/web/src/components/restore-banner.tsx:90
+msgid "Delete your account on the old server"
+msgstr "पुरान सर्वर पर आपन खाता मेटाईं"
+
 #: ../../../lib/web/src/components/data-table/column-header.tsx:60
 msgid "Desc"
 msgstr "घटत"
@@ -695,7 +720,7 @@ msgstr "विवरण"
 
 #: src/routes/_authenticated/$projectId/design.tsx:60
 #: src/routes/_authenticated/$projectId/design.tsx:128
-#: src/routes/_authenticated/$projectId/index.tsx:843
+#: src/routes/_authenticated/$projectId/index.tsx:857
 msgid "Design"
 msgstr "डिज़ाइन"
 
@@ -704,8 +729,8 @@ msgid "Design imported"
 msgstr "डिज़ाइन आयात कइल गइल"
 
 #: src/routes/_authenticated/$projectId_.settings.tsx:548
-msgid "Design, write, comment, and view"
-msgstr "डिज़ाइन, लिखीं, टिप्पणी, आ देखीं"
+msgid "Design, create, edit, comment, and view"
+msgstr "डिजाइन करीं, बनाईं, संपादित करीं, टिप्पणी करीं, आ देखीं"
 
 #: ../../../lib/web/src/components/layout/right-panel.tsx:144
 msgid "Details Panel"
@@ -734,8 +759,12 @@ msgstr "Diff: {source} → {target}"
 msgid "Direction"
 msgstr "दिशा"
 
-#: src/routes/_authenticated/$projectId/index.tsx:908
-#: src/routes/_authenticated/$projectId/index.tsx:909
+#: ../../../lib/web/src/components/restore-banner.tsx:73
+msgid "Dismiss"
+msgstr "खारिज करीं"
+
+#: src/routes/_authenticated/$projectId/index.tsx:922
+#: src/routes/_authenticated/$projectId/index.tsx:923
 msgid "Dismiss board hint"
 msgstr "बोर्ड संकेत खारिज करीं"
 
@@ -750,7 +779,7 @@ msgstr "मोबाइल साइडबार देखावेला।"
 msgid "Done"
 msgstr "हो गइल"
 
-#: src/routes/_authenticated/$projectId/index.tsx:901
+#: src/routes/_authenticated/$projectId/index.tsx:915
 msgid "Double click on a column to add content"
 msgstr "सामग्री जोड़े खातिर कॉलम पर डबल क्लिक करीं"
 
@@ -767,7 +796,7 @@ msgstr "पहिले बैकअप डाउनलोड करीं"
 msgid "Draft"
 msgstr "ड्राफ्ट"
 
-#: src/routes/_authenticated/$projectId/index.tsx:882
+#: src/routes/_authenticated/$projectId/index.tsx:896
 msgid "Drag columns to re-order them"
 msgstr "कॉलम के दोबारा क्रमबद्ध करे खातिर खींचीं"
 
@@ -813,6 +842,22 @@ msgstr "चुनल कार्ड संपादित करीं"
 #: src/features/editor/components/edit-dialogs.tsx:266
 msgid "Edit view"
 msgstr "व्यू संपादित करीं"
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:549
+msgid "Edit, comment, and view"
+msgstr "संपादित करीं, टिप्पणी करीं, आ देखीं"
+
+#: ../../../lib/web/src/components/step-up-dialog.tsx:286
+msgid "Email code"
+msgstr "ईमेल कोड"
+
+#: ../../../lib/web/src/components/step-up-dialog.tsx:296
+msgid "Enter the code from your email"
+msgstr "आपन ईमेल से आइल कोड डालीं"
+
+#: ../../../lib/web/src/components/step-up-dialog.tsx:321
+msgid "Enter your authenticator code"
+msgstr "आपन प्रमाणक कोड डालीं"
 
 #: src/routes/_authenticated/$projectId_.settings.tsx:326
 msgid "Entity ID"
@@ -866,7 +911,7 @@ msgstr "प्रोजेक्ट बनावे में विफल"
 msgid "Failed to create view"
 msgstr "व्यू बनावे में विफल"
 
-#: src/features/objects/components/object-attachments.tsx:75
+#: src/features/objects/components/object-attachments.tsx:73
 msgid "Failed to delete attachment"
 msgstr "अटैचमेंट मेटावे में विफल"
 
@@ -899,7 +944,7 @@ msgid "Failed to load item"
 msgstr "आइटम लोड करे में विफल"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:40
-#: src/routes/_authenticated/$projectId/index.tsx:68
+#: src/routes/_authenticated/$projectId/index.tsx:70
 msgid "Failed to load project"
 msgstr "प्रोजेक्ट लोड करे में विफल"
 
@@ -953,7 +998,7 @@ msgid "Failed to subscribe"
 msgstr "सब्सक्राइब करे में विफल"
 
 #: src/features/projects/pages/projects-list-page.tsx:48
-#: src/routes/_authenticated/$projectId/index.tsx:544
+#: src/routes/_authenticated/$projectId/index.tsx:558
 msgid "Failed to unsubscribe"
 msgstr "अनसब्सक्राइब करे में विफल"
 
@@ -961,7 +1006,7 @@ msgstr "अनसब्सक्राइब करे में विफल"
 msgid "Failed to update access level"
 msgstr "पहुँच स्तर अपडेट करे में विफल"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:104
+#: ../../../lib/web/src/components/notification-category-button.tsx:108
 msgid "Failed to update category"
 msgstr "श्रेणी अपडेट करे में विफल"
 
@@ -977,7 +1022,7 @@ msgstr "फील्ड अपडेट करे में विफल"
 msgid "Failed to update project"
 msgstr "प्रोजेक्ट अपडेट करे में विफल"
 
-#: src/features/objects/components/object-attachments.tsx:60
+#: src/features/objects/components/object-attachments.tsx:58
 msgid "Failed to upload attachment"
 msgstr "अटैचमेंट अपलोड करे में विफल"
 
@@ -986,8 +1031,8 @@ msgid "Fields"
 msgstr "फील्ड"
 
 #: src/features/objects/components/create-object-dialog.tsx:429
-#: src/features/objects/components/object-attachments.tsx:106
-#: src/features/objects/components/object-attachments.tsx:123
+#: src/features/objects/components/object-attachments.tsx:96
+#: src/features/objects/components/object-attachments.tsx:113
 msgid "Files"
 msgstr "फाइल"
 
@@ -999,6 +1044,10 @@ msgstr "प्रोजेक्ट खोजीं"
 #: src/routes/_authenticated/$projectId_.settings.tsx:331
 msgid "Fingerprint"
 msgstr "फिंगरप्रिंट"
+
+#: ../../../lib/web/src/components/restore-banner.tsx:79
+msgid "Finish moving your account"
+msgstr "आपन खाता हिलावल पूरा करीं"
 
 #: src/features/editor/components/edit-dialogs.tsx:1051
 msgid "Flags"
@@ -1278,12 +1327,12 @@ msgstr "नाम जरूरी बा"
 
 #: ../../../lib/web/src/components/ui/sort-selector.tsx:40
 #: src/features/objects/components/create-object-dialog.tsx:327
-#: src/routes/_authenticated/$projectId/index.tsx:782
-#: src/routes/_authenticated/$projectId/index.tsx:800
+#: src/routes/_authenticated/$projectId/index.tsx:796
+#: src/routes/_authenticated/$projectId/index.tsx:814
 msgid "New"
 msgstr "नया"
 
-#: src/routes/_authenticated/$projectId/index.tsx:779
+#: src/routes/_authenticated/$projectId/index.tsx:793
 msgid "New {className}"
 msgstr "नया {className}"
 
@@ -1311,7 +1360,7 @@ msgstr "कौनो पहुँच नियम सेट नइखे। ए 
 msgid "No activity yet"
 msgstr "अबहीं तक कौनो गतिविधि नइखे"
 
-#: src/features/requests/components/branch-select.tsx:70
+#: src/features/requests/components/branch-select.tsx:73
 msgid "No branches found"
 msgstr "कौनो ब्रांच ना मिलल"
 
@@ -1372,7 +1421,7 @@ msgstr "कौनो प्रोफाइल नइखे"
 msgid "No projects found"
 msgstr "कौनो प्रोजेक्ट ना मिलल"
 
-#: src/features/requests/components/repository-select.tsx:58
+#: src/features/requests/components/repository-select.tsx:61
 msgid "No repositories available"
 msgstr "कौनो रिपॉजिटरी उपलब्ध नइखे"
 
@@ -1390,7 +1439,7 @@ msgstr "कौनो स्थिति नइखे"
 msgid "No time zone found."
 msgstr "कौनो टाइम जोन ना मिलल।"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:135
+#: ../../../lib/web/src/components/notification-category-button.tsx:139
 msgid "No topic record yet — try again after the next notification."
 msgstr "अबहीं तक कौनो विषय रिकॉर्ड नइखे — अगिला सूचना के बाद फेर कोशिश करीं।"
 
@@ -1485,7 +1534,7 @@ msgstr "नेविगेशन मेनू खोलीं"
 msgid "Open option actions"
 msgstr "विकल्प क्रिया खोलीं"
 
-#: src/routes/_authenticated/$projectId/index.tsx:808
+#: src/routes/_authenticated/$projectId/index.tsx:822
 msgid "Open page actions"
 msgstr "पन्ना क्रिया खोलीं"
 
@@ -1528,12 +1577,24 @@ msgstr "मालिक"
 msgid "Parent"
 msgstr "मूल"
 
+#: ../../../lib/web/src/components/step-up-dialog.tsx:331
+msgid "Passkey"
+msgstr "पासकी"
+
+#: ../../../lib/web/src/components/step-up-dialog.tsx:206
+msgid "Passkey verification failed. Please try again."
+msgstr "पासकी सत्यापन विफल हो गइल। कृपया फिर से कोशिश करीं।"
+
+#: ../../../lib/web/src/components/restore-banner.tsx:126
+msgid "Passkeys"
+msgstr "Passkey"
+
 #: src/routes/_authenticated/$projectId_.settings.tsx:350
 msgid "Permanently delete this project and all its content."
 msgstr "ए प्रोजेक्ट आ ओकर सब सामग्री के स्थायी रूप से मिटाईं।"
 
-#: src/routes/_authenticated/$projectId/index.tsx:636
-#: src/routes/_authenticated/$projectId/index.tsx:670
+#: src/routes/_authenticated/$projectId/index.tsx:650
+#: src/routes/_authenticated/$projectId/index.tsx:684
 msgid "Please add one or more classes to the project design."
 msgstr "प्रोजेक्ट डिजाइन में एक भा अधिक क्लास जोड़ीं।"
 
@@ -1561,7 +1622,7 @@ msgid "Profile"
 msgstr "प्रोफाइल"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:62
-#: src/routes/_authenticated/$projectId/index.tsx:90
+#: src/routes/_authenticated/$projectId/index.tsx:104
 msgid "Project"
 msgstr "प्रोजेक्ट"
 
@@ -1600,9 +1661,17 @@ msgstr "प्रोजेक्ट"
 msgid "Properties"
 msgstr "गुण"
 
-#: src/routes/_authenticated/$projectId/index.tsx:832
+#: ../../../lib/web/src/components/restore-banner.tsx:98
+msgid "Re-link your accounts on this server"
+msgstr "एह सर्वर पर आपन खाता फिर से जोड़ीं"
+
+#: src/routes/_authenticated/$projectId/index.tsx:846
 msgid "Re-order columns"
 msgstr "कॉलम के फेर से क्रम लगाईं"
+
+#: ../../../lib/web/src/components/restore-banner.tsx:120
+msgid "Re-register your passkeys on this server"
+msgstr "एह सर्वर पर आपन पासकी फिर से रजिस्टर करीं"
 
 #: src/features/requests/components/merge-status.tsx:68
 msgid "Ready to merge"
@@ -1713,6 +1782,10 @@ msgstr "अनुरोध"
 msgid "Required"
 msgstr "जरूरी"
 
+#: ../../../lib/web/src/components/step-up-dialog.tsx:364
+msgid "Resend email"
+msgstr "ईमेल फिर से भेजीं"
+
 #: ../../../lib/web/src/components/config-drawer.tsx:77
 #: ../../../lib/web/src/components/data-table/toolbar.tsx:78
 msgid "Reset"
@@ -1753,7 +1826,7 @@ msgstr "शनिवार"
 
 #: src/features/editor/components/option-dialog.tsx:138
 #: src/features/objects/components/comment-thread.tsx:179
-#: src/routes/_authenticated/$projectId/index.tsx:893
+#: src/routes/_authenticated/$projectId/index.tsx:907
 msgid "Save"
 msgstr "सहेजीं"
 
@@ -1829,7 +1902,7 @@ msgstr "पहुँच नियम चुनीं"
 msgid "Select account type"
 msgstr "खाता प्रकार चुनीं"
 
-#: src/features/requests/components/branch-select.tsx:32
+#: src/features/requests/components/branch-select.tsx:33
 msgid "Select branch"
 msgstr "शाखा चुनीं"
 
@@ -1849,7 +1922,7 @@ msgstr "अगिला कार्ड चुनीं"
 msgid "Select previous card"
 msgstr "पिछला कार्ड चुनीं"
 
-#: src/features/requests/components/repository-select.tsx:47
+#: src/features/requests/components/repository-select.tsx:50
 msgid "Select repository"
 msgstr "रिपॉजिटरी चुनीं"
 
@@ -1873,6 +1946,10 @@ msgstr "चुनीं..."
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:95
 msgid "Send again"
 msgstr "फेरु भेजीं"
+
+#: ../../../lib/web/src/components/step-up-dialog.tsx:304
+msgid "Send email"
+msgstr "ईमेल भेजीं"
 
 #: ../../../lib/web/src/lib/preference-utils.ts:133
 msgid "Serif"
@@ -1901,7 +1978,7 @@ msgstr "मूल आ गंतव्य सेट करीं"
 #: src/routes/_authenticated/$projectId_.settings.tsx:76
 #: src/routes/_authenticated/$projectId_.settings.tsx:166
 #: src/routes/_authenticated/$projectId_.settings.tsx:189
-#: src/routes/_authenticated/$projectId/index.tsx:853
+#: src/routes/_authenticated/$projectId/index.tsx:867
 msgid "Settings"
 msgstr "सेटिंग सब"
 
@@ -2037,6 +2114,10 @@ msgstr "नियम आ शर्त"
 msgid "Text"
 msgstr "टेक्स्ट"
 
+#: ../../../lib/web/src/components/step-up-dialog.tsx:192
+msgid "That code is incorrect or has expired."
+msgstr "ऊ कोड गलत बा भा ओकर मियाद खतम हो गइल बा।"
+
 #: ../../../lib/web/src/components/config-drawer.tsx:181
 msgid "Theme"
 msgstr "थीम"
@@ -2071,7 +2152,7 @@ msgid "This will permanently delete \"{projectName}\" and all its objects, comme
 msgstr "ई \"{projectName}\" आ ओकर सब वस्तु, टिप्पणी, आ अनुलग्नक के स्थायी रूप से हटा दी। ई कार्य पूर्ववत ना कइल जा सके।"
 
 #. placeholder {0}: project.project.name
-#: src/routes/_authenticated/$projectId/index.tsx:999
+#: src/routes/_authenticated/$projectId/index.tsx:1013
 msgid "This will remove \"{0}\" from your sidebar and stop updates for this project."
 msgstr "ई \"{0}\" के आपके साइडबार से हटा दी आ एह परियोजना खातिर अपडेट रोक दी।"
 
@@ -2172,7 +2253,7 @@ msgstr "खोजे खातिर टाइप करीं..."
 msgid "Unable to redirect to login. Please try again."
 msgstr "लॉगिन पर रीडायरेक्ट ना हो सकल। कृपया फेर से कोशिश करीं।"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:143
+#: ../../../lib/web/src/components/notification-category-button.tsx:147
 msgid "Unassigned"
 msgstr "अनसौंपल"
 
@@ -2191,16 +2272,16 @@ msgstr "संयुक्त राज्य अमेरिका"
 #: src/features/projects/pages/projects-list-page.tsx:146
 #: src/features/projects/pages/projects-list-page.tsx:163
 #: src/features/projects/pages/projects-list-page.tsx:165
-#: src/routes/_authenticated/$projectId/index.tsx:859
-#: src/routes/_authenticated/$projectId/index.tsx:1000
+#: src/routes/_authenticated/$projectId/index.tsx:873
+#: src/routes/_authenticated/$projectId/index.tsx:1014
 msgid "Unsubscribe"
 msgstr "सदस्यता रद्द करीं"
 
-#: src/routes/_authenticated/$projectId/index.tsx:998
+#: src/routes/_authenticated/$projectId/index.tsx:1012
 msgid "Unsubscribe from project?"
 msgstr "परियोजना से सदस्यता रद्द करीं?"
 
-#: src/routes/_authenticated/$projectId/index.tsx:540
+#: src/routes/_authenticated/$projectId/index.tsx:554
 msgid "Unsubscribed"
 msgstr "सदस्यता रद्द भइल"
 
@@ -2214,13 +2295,17 @@ msgid "Updated"
 msgstr "अपडेट भइल"
 
 #: src/features/objects/components/create-object-dialog.tsx:470
-#: src/features/objects/components/object-attachments.tsx:210
+#: src/features/objects/components/object-attachments.tsx:197
 msgid "Upload"
 msgstr "अपलोड करीं"
 
 #: src/routes/_authenticated/$projectId/design.tsx:333
 msgid "Upload .json file"
 msgstr ".json फ़ाइल अपलोड करीं"
+
+#: ../../../lib/web/src/components/step-up-dialog.tsx:335
+msgid "Use your passkey"
+msgstr "आपन पासकी इस्तेमाल करीं"
 
 #. placeholder {0}: prefix || "project"
 #. placeholder {1}: prefix || "project"
@@ -2245,6 +2330,7 @@ msgstr "सत्यापन कोड भेजल गइल"
 msgid "Verification failed"
 msgstr "सत्यापन विफल भइल"
 
+#: ../../../lib/web/src/components/step-up-dialog.tsx:385
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:164
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:106
 msgid "Verify"
@@ -2253,6 +2339,10 @@ msgstr "सत्यापित करीं"
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:58
 msgid "Verify email address"
 msgstr "ईमेल पता सत्यापित करीं"
+
+#: ../../../lib/web/src/components/attachment-gallery.tsx:63
+msgid "Video thumbnail"
+msgstr "वीडियो थंबनेल"
 
 #: ../../../lib/web/src/components/data-table/view-options.tsx:30
 msgid "View"
@@ -2278,7 +2368,7 @@ msgstr "नियंत्रण देखीं"
 msgid "View only"
 msgstr "खाली देखीं"
 
-#: src/routes/_authenticated/$projectId/index.tsx:817
+#: src/routes/_authenticated/$projectId/index.tsx:831
 msgid "View options"
 msgstr "विकल्प देखीं"
 
@@ -2311,10 +2401,14 @@ msgstr "वेबसाइट रखरखाव में बा!"
 msgid "Wednesday"
 msgstr "बुधवार"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:549
-msgid "Write, comment, and view"
-msgstr "लिखीं, टिप्पणी करीं, आ देखीं"
+#: src/routes/_authenticated/$projectId/index.tsx:92
+msgid "You don't have access to this project."
+msgstr "रउरा लगे ई परियोजना के पहुँच नइखे।"
 
 #: src/features/projects/pages/projects-list-page.tsx:94
 msgid "You have no projects yet."
 msgstr "आपके अबही ले कवनो परियोजना नइखे।"
+
+#: ../../../lib/web/src/components/restore-banner.tsx:82
+msgid "Your account was moved here from {source}. Until you delete it there, messages and notifications may reach both servers, some of your content keeps being served from the old server, and followers may take a few minutes to find you here."
+msgstr "आपन खाता {source} से इहाँ हिलावल गइल। जब तक उहाँ से ना मेटाईं, संदेश आ सूचना दुनो सर्वर पर पहुँच सकेला, कुछ सामग्री पुरान सर्वर से आवत रही, आ फॉलोअर्स के इहाँ ढूंढे में कुछ मिनट लाग सकेला।"

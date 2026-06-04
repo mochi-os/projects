@@ -1,15 +1,9 @@
 // Mochi Projects: Comment attachment display
 // Copyright Alistair Cunningham 2026
 
-import { useState } from "react";
-import { Download } from "lucide-react";
 import {
+  AttachmentGallery,
   getAppPath,
-  useFormat,
-  isImage,
-  getFileIcon,
-  ImageLightbox,
-  type LightboxMedia,
   authenticatedUrl,
 } from "@mochi/web";
 import type { CommentAttachment } from "@/types";
@@ -23,73 +17,18 @@ export function CommentAttachments({
   attachments,
   projectId,
 }: CommentAttachmentsProps) {
-  const [lightboxIndex, setLightboxIndex] = useState(-1);
-  const { formatFileSize } = useFormat();
-
   if (!attachments || attachments.length === 0) return null;
 
   const basePath = `${getAppPath()}/${projectId}/-/attachments/`;
   const attUrl = (id: string, suffix = "") => authenticatedUrl(`${basePath}${id}${suffix}`);
-  const images = attachments.filter((a) => isImage(a.type));
-  const files = attachments.filter((a) => !isImage(a.type));
-
-  const lightboxMedia: LightboxMedia[] = images.map((img) => ({
-    id: img.id,
-    name: img.name,
-    url: attUrl(img.id),
-    type: "image",
-  }));
 
   return (
-    <div className="mt-1 space-y-1">
-      {images.length > 0 && (
-        <div className="flex flex-wrap gap-1">
-          {images.map((img, i) => (
-            <button
-              key={img.id}
-              type="button"
-              className="overflow-hidden rounded"
-              onClick={() => setLightboxIndex(i)}
-            >
-              <img
-                src={attUrl(img.id, "/thumbnail")}
-                alt={img.name}
-                className="h-20 w-auto object-cover"
-              />
-            </button>
-          ))}
-        </div>
-      )}
-      {files.length > 0 && (
-        <div className="space-y-0.5">
-          {files.map((file) => {
-            const FileIcon = getFileIcon(file.type);
-            return (
-              <a
-                key={file.id}
-                href={attUrl(file.id)}
-                download={file.name}
-                className="text-muted-foreground hover:text-foreground flex items-center gap-1.5 text-xs"
-              >
-                <FileIcon className="size-3" />
-                <span>{file.name}</span>
-                <span className="text-muted-foreground">
-                  ({formatFileSize(file.size)})
-                </span>
-                <Download className="size-3" />
-              </a>
-            );
-          })}
-        </div>
-      )}
-      <ImageLightbox
-        images={lightboxMedia}
-        currentIndex={lightboxIndex}
-        open={lightboxIndex >= 0}
-        onOpenChange={(open) => {
-          if (!open) setLightboxIndex(-1);
-        }}
-        onIndexChange={setLightboxIndex}
+    <div className="mt-1">
+      <AttachmentGallery
+        attachments={attachments}
+        getUrl={(att) => attUrl(att.id)}
+        getThumbnailUrl={(att) => attUrl(att.id, "/thumbnail")}
+        rowHeight={80}
       />
     </div>
   );

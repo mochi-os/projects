@@ -12,6 +12,7 @@ import {
   getAppPath,
   useFormat,
   isImage,
+  isVideo,
   getFileIcon,
   getErrorMessage,
   authenticatedUrl,
@@ -85,8 +86,8 @@ export function ObjectAttachments({
   const basePath = `${getAppPath()}/${projectId}/-/attachments/`;
   const attUrl = (id: string, suffix = "") => authenticatedUrl(`${basePath}${id}${suffix}`);
   const attachments: Attachment[] = data || [];
-  const images = attachments.filter((a) => isImage(a.type));
-  const files = attachments.filter((a) => !isImage(a.type));
+  const images = attachments.filter((a) => isImage(a.type) || isVideo(a.type));
+  const files = attachments.filter((a) => !isImage(a.type) && !isVideo(a.type));
 
   if (isLoading) {
     return (

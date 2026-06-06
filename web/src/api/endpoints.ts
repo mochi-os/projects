@@ -153,9 +153,6 @@ const endpoints = {
     ) =>
       `${projectId}/-/classes/${classId}/fields/${fieldId}/options/${optionId}/delete`,
 
-    // Notification endpoints
-    notificationsCheck: "-/notifications/check",
-
     // User and group endpoints
     usersSearch: "-/users/search",
     groups: "-/groups",

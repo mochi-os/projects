@@ -5272,6 +5272,7 @@ def event_sync_batch(e):
 		return
 	project = mochi.db.row("select id from projects where id=? and owner=0", project_id)
 	if not project:
+		unsubscribe_stale(e)
 		return
 	now = mochi.time.now()
 
@@ -5366,6 +5367,19 @@ def event_sync_batch(e):
 		mochi.websocket.write(fp, {"type": "project/update", "project": project_id})
 
 # Helper to verify a content event is for a project we subscribe to
+# unsubscribe_stale tells a project owner to drop this member when a broadcast
+# arrives for a project the member no longer holds locally. Subscribe writes the
+# local projects(owner=0) row before notifying the owner, so a missing row in a
+# broadcast handler always means a stale roster entry, never an in-flight
+# subscribe. event_unsubscribe deletes by (project, member), so a non-member
+# unsubscribe is a harmless no-op. The broadcast headers invert: from=project,
+# to=this member.
+def unsubscribe_stale(e):
+	project_id = e.header("from")
+	member_id = e.header("to")
+	if project_id and member_id:
+		mochi.message.send(p2p_headers(member_id, project_id, "unsubscribe"), {})
+
 def verify_subscription(e):
 	# Broadcasts are sent from the project entity itself (broadcast_event uses
 	# from=project_id), so the authenticated P2P sender IS the project. Trust the
@@ -5376,6 +5390,7 @@ def verify_subscription(e):
 		return None
 	project = mochi.db.row("select id from projects where id=? and owner=0", project_id)
 	if not project:
+		unsubscribe_stale(e)
 		return None
 	return project_id
 

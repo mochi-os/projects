@@ -4335,11 +4335,15 @@ def action_repositories_merge(a):
 		a.error.label(400, "errors.repository_source_and_target_required")
 		return
 
+	# Authorization for a merge is the repository's own ACL (repository/<id>
+	# write) - the same grant a git push requires - NOT project access. Core's
+	# git layer enforces it for the local service call, and the repositories
+	# merge event enforces it against the verified P2P sender for the remote
+	# case. A project member with write can author a merge-request record, but
+	# only a repository writer can perform the merge.
 	if project["owner"] == 1:
-		if not check_project_access(a.user.identity.id, project_id, "write"):
-			a.error.label(403, "errors.access_denied")
-			return
-		# Owner: merge directly via local service
+		# Repository reachable on this host: merge via the local repositories
+		# service. Core's git_can_write gates on this user's repository write.
 		result = mochi.service.call("repositories", "merge", {
 			"repo": repo_id,
 			"source": source,
@@ -4354,23 +4358,18 @@ def action_repositories_merge(a):
 			return
 		return {"data": result}
 	else:
-		# Subscriber: check local access, then send P2P request to owner
-		if not mochi.access.check(a.user.identity.id, "project/" + project_id, "write"):
-			a.error.label(403, "errors.write_access_required_to_merge")
-			return
-
-		server = project["server"] or ""
-		peer = mochi.remote.peer(server) if server else None
-		result = mochi.remote.request(project_id, "projects", "merge/request", {
-			"project": project_id,
-			"repo": repo_id,
+		# Forward to the repository's host, authenticated as this user. Core
+		# resolves the repository entity's peer from the directory; the
+		# repositories merge event checks repository/<id> write against the
+		# verified sender.
+		result = mochi.remote.request(repo_id, "repositories", "merge", {
 			"source": source,
 			"target": target,
 			"message": message,
 			"method": method,
 			"author_name": a.user.identity.name,
 			"author_email": a.user.username,
-		}, peer)
+		})
 		if not result:
 			a.error.label(502, "errors.could_not_reach_project_owner")
 			return
@@ -6223,46 +6222,6 @@ def event_option_reorder(e):
 	fp = mochi.entity.fingerprint(project_id)
 	if fp:
 		mochi.websocket.write(fp, {"type": "option/reorder", "project": project_id})
-
-# Handle merge request from subscriber (P2P request-response)
-def event_merge_request(e):
-	requester = e.header("from")
-	project_id = e.content("project")
-
-	project = mochi.db.row("select * from projects where id=? and owner=1", project_id)
-	if not project:
-		e.stream.write({"error": "errors.project_not_found", "code": 404})
-		return
-
-	# Check the requester has write access
-	if not mochi.access.check(requester, "project/" + project_id, "write"):
-		e.stream.write({"error": "errors.access_denied", "code": 403})
-		return
-
-	repo_id = e.content("repo")
-	source = e.content("source")
-	target = e.content("target")
-	message = e.content("message") or "Merge branch"
-	method = e.content("method") or "merge"
-	author_name = e.content("author_name") or "Mochi"
-	author_email = e.content("author_email") or ""
-
-	result = mochi.service.call("repositories", "merge", {
-		"repo": repo_id,
-		"source": source,
-		"target": target,
-		"message": message,
-		"method": method,
-		"author_name": author_name,
-		"author_email": author_email,
-	})
-
-	if result == None:
-		e.stream.write({"error": "errors.repositories_service_unavailable", "code": 500})
-		return
-
-	e.stream.write(result)
-
 
 # ============================================================================
 # Request Actions

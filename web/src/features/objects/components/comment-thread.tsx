@@ -4,7 +4,7 @@
 import { useCallback, useState } from "react";
 import { Trans } from '@lingui/react/macro'
 import { t } from '@lingui/core/macro'
-import { Loader2, Pencil, Reply, Send, Trash2, X, Paperclip } from "lucide-react";
+import { Check, Loader2, Pencil, Reply, Send, Trash2, X, Paperclip } from "lucide-react";
 import {
   Button,
   CommentTreeLayout,
@@ -176,6 +176,7 @@ export function CommentThread({
                   setEditing(false);
                 }}
               >
+                <Check className="size-4" />
                 <Trans>Save</Trans>
               </Button>
             </div>

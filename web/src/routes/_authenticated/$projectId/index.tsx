@@ -26,7 +26,7 @@ import {
   toast,
   getAppPath,
 } from "@mochi/web";
-import { Columns3, Ellipsis, FolderKanban, GripVertical, LogOut, Plus, Settings, Settings2, SlidersHorizontal, X } from "lucide-react";
+import { Check, Columns3, Ellipsis, FolderKanban, GripVertical, LogOut, Plus, Settings, Settings2, SlidersHorizontal, X } from "lucide-react";
 import projectsApi from "@/api/projects";
 import type { ProjectDetails, ProjectField, ProjectObject, SortState } from "@/types";
 import { canDesign, canCreate, canWrite } from "@/lib/access";
@@ -904,6 +904,7 @@ export function ProjectPageContent({ project, projectId, search, initialObjectId
               onClick={handleSaveColumnOrder}
               disabled={!pendingColumnOrder || reorderColumnsMutation.isPending}
             >
+              <Check className="size-4" />
               <Trans>Save</Trans>
             </Button>
           </div>

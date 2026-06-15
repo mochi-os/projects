@@ -22,10 +22,10 @@ import {
   SheetHeader,
   SheetTitle,
   SortDirectionButton,
-  cn,
+  ViewTabs,
 } from "@mochi/web";
-import { Eye, LayoutGrid, ListTree, SlidersHorizontal } from "lucide-react";
-import type { ProjectDetails, ProjectField, ProjectView, SortState } from "@/types";
+import { Eye, SlidersHorizontal } from "lucide-react";
+import type { ProjectDetails, ProjectField, SortState } from "@/types";
 import type { FilterState } from "@/features/views/components/filter-bar";
 
 function useBuiltInSortOptions() {
@@ -89,16 +89,7 @@ export function ViewOptionsBar({
         <div className="flex items-center">
           <div className="min-w-0 flex-1 overflow-x-auto no-scrollbar">
             <div className="flex min-w-max items-center px-4 py-2">
-              <div className="inline-flex items-center gap-1 rounded-lg bg-muted p-[3px]">
-                {project.views.map((view: ProjectView) => (
-                  <ViewTab
-                    key={view.id}
-                    view={view}
-                    active={activeViewId === view.id}
-                    onClick={() => onViewChange(view.id)}
-                  />
-                ))}
-              </div>
+              <ViewTabs variant="pill" views={project.views} activeViewId={activeViewId} onViewChange={onViewChange} />
             </div>
           </div>
           <div className="flex shrink-0 items-center border-s px-2">
@@ -200,16 +191,7 @@ export function ViewOptionsBar({
       </Sheet>
 
       <PageUtilityBar compact scrollable className="hidden sm:block">
-        <div className="inline-flex items-center gap-1 rounded-lg bg-muted p-[3px]">
-          {project.views.map((view: ProjectView) => (
-            <ViewTab
-              key={view.id}
-              view={view}
-              active={activeViewId === view.id}
-              onClick={() => onViewChange(view.id)}
-            />
-          ))}
-        </div>
+        <ViewTabs variant="pill" views={project.views} activeViewId={activeViewId} onViewChange={onViewChange} />
 
         <div className="bg-border mx-1 h-6 w-px shrink-0" />
 
@@ -283,30 +265,3 @@ export function ViewOptionsBar({
   );
 }
 
-interface ViewTabProps {
-  view: ProjectView;
-  active: boolean;
-  onClick: () => void;
-}
-
-function ViewTab({ view, active, onClick }: ViewTabProps) {
-  return (
-    <button
-      onClick={onClick}
-      data-state={active ? "active" : "inactive"}
-      className={cn(
-        "inline-flex h-8 items-center gap-1.5 whitespace-nowrap rounded-md border border-transparent px-2.5 text-sm font-medium transition-[color,box-shadow]",
-        active
-          ? "bg-primary text-primary-foreground shadow-sm"
-          : "text-muted-foreground hover:text-foreground"
-      )}
-    >
-      {view.viewtype === "list" ? (
-        <ListTree className="size-3.5" />
-      ) : (
-        <LayoutGrid className="size-3.5" />
-      )}
-      {view.name}
-    </button>
-  );
-}

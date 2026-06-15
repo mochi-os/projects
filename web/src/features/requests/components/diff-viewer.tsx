@@ -76,7 +76,7 @@ function IntraLineHighlight({
         if (change.added) {
           if (side === "new") {
             return (
-              <span key={i} className="bg-green-300/60 dark:bg-green-500/40">
+              <span key={i} className="bg-success/25 dark:bg-success/40">
                 {change.value}
               </span>
             );
@@ -86,7 +86,7 @@ function IntraLineHighlight({
         if (change.removed) {
           if (side === "old") {
             return (
-              <span key={i} className="bg-red-300/60 dark:bg-red-500/40">
+              <span key={i} className="bg-destructive/20 dark:bg-destructive/40">
                 {change.value}
               </span>
             );
@@ -213,13 +213,13 @@ function UnifiedGroup({
   return (
     <>
       {group.removes.map((line, i) => (
-        <tr key={`r${i}`} className="bg-red-100 dark:bg-red-950/30">
+        <tr key={`r${i}`} className="bg-destructive/10 dark:bg-destructive/15">
           <td className="w-[1px] px-2 py-0.5 text-end text-muted-foreground select-none border-e whitespace-nowrap">
             {line.oldNum}
           </td>
           <td className="w-[1px] px-2 py-0.5 text-end text-muted-foreground select-none border-e whitespace-nowrap" />
           <td className="px-3 py-0.5 whitespace-pre-wrap break-all">
-            <span className="select-none text-red-500">-</span>
+            <span className="select-none text-destructive">-</span>
             {i < paired ? (
               <IntraLineHighlight
                 oldContent={line.content}
@@ -233,13 +233,13 @@ function UnifiedGroup({
         </tr>
       ))}
       {group.adds.map((line, i) => (
-        <tr key={`a${i}`} className="bg-green-100 dark:bg-green-950/30">
+        <tr key={`a${i}`} className="bg-success/10 dark:bg-success/15">
           <td className="w-[1px] px-2 py-0.5 text-end text-muted-foreground select-none border-e whitespace-nowrap" />
           <td className="w-[1px] px-2 py-0.5 text-end text-muted-foreground select-none border-e whitespace-nowrap">
             {line.newNum}
           </td>
           <td className="px-3 py-0.5 whitespace-pre-wrap break-all">
-            <span className="select-none text-green-500">+</span>
+            <span className="select-none text-success">+</span>
             {i < paired ? (
               <IntraLineHighlight
                 oldContent={group.removes[i].content}
@@ -331,7 +331,7 @@ function SplitGroup({
         <td
           className={cn(
             "w-[1px] px-2 py-0.5 text-end text-muted-foreground select-none border-e whitespace-nowrap",
-            rem && "bg-red-100 dark:bg-red-950/30",
+            rem && "bg-destructive/10 dark:bg-destructive/15",
           )}
         >
           {rem?.oldNum}
@@ -339,7 +339,7 @@ function SplitGroup({
         <td
           className={cn(
             "w-1/2 px-3 py-0.5 whitespace-pre-wrap break-all border-e",
-            rem && "bg-red-100 dark:bg-red-950/30",
+            rem && "bg-destructive/10 dark:bg-destructive/15",
           )}
         >
           {rem && (
@@ -359,7 +359,7 @@ function SplitGroup({
         <td
           className={cn(
             "w-[1px] px-2 py-0.5 text-end text-muted-foreground select-none border-e whitespace-nowrap",
-            add && "bg-green-100 dark:bg-green-950/30",
+            add && "bg-success/10 dark:bg-success/15",
           )}
         >
           {add?.newNum}
@@ -367,7 +367,7 @@ function SplitGroup({
         <td
           className={cn(
             "w-1/2 px-3 py-0.5 whitespace-pre-wrap break-all",
-            add && "bg-green-100 dark:bg-green-950/30",
+            add && "bg-success/10 dark:bg-success/15",
           )}
         >
           {add && (

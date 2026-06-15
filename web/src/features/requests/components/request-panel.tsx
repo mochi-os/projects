@@ -228,7 +228,7 @@ function RequestItem({
       : t`Not configured`;
 
   const borderColor = isMerged
-    ? "border-green-500/40"
+    ? "border-success/40"
     : request.repository && request.source && request.target
       ? "border-primary/40"
       : "border-border";

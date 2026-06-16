@@ -15,7 +15,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-  cn,
+  ListCard,
   getErrorMessage,
   toast,
 } from "@mochi/web";
@@ -110,53 +110,40 @@ export function ProjectsListPage() {
             {projects.map((project) => {
               const isSubscribed = project.owner !== 1
               return (
-                <div
+                <ListCard
                   key={project.id}
-                  className="group relative flex flex-col rounded-xl border bg-card p-4 transition-all hover:border-primary/40 hover:shadow-md"
+                  icon={<FolderKanban className="size-5" />}
+                  title={project.name}
+                  highlighted={isSubscribed}
+                  renderLink={(className) => (
+                    <Link to="/$projectId" params={{ projectId: project.fingerprint }} className={className}>
+                      <span className="sr-only"><Trans>Open {project.name}</Trans></span>
+                    </Link>
+                  )}
+                  menu={isSubscribed && (
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          aria-label={t`Project actions`}
+                          className="size-8 opacity-0 transition-opacity group-hover:opacity-100 data-[state=open]:opacity-100"
+                        >
+                          <Ellipsis className="size-4" />
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end">
+                        <DropdownMenuItem onSelect={() => setUnsubscribeId(project.id)}>
+                          <Trans>Unsubscribe</Trans>
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  )}
                 >
-                  <Link
-                    to="/$projectId"
-                    params={{ projectId: project.fingerprint }}
-                    className="absolute inset-0 rounded-xl focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-                  >
-                    <span className="sr-only"><Trans>Open {project.name}</Trans></span>
-                  </Link>
-
-                  <div className="mb-3 flex items-start justify-between">
-                    <div className={cn(
-                      "flex h-10 w-10 items-center justify-center rounded-lg",
-                      isSubscribed ? "bg-primary/10 text-primary" : "bg-muted text-foreground"
-                    )}>
-                      <FolderKanban className="size-5" />
-                    </div>
-                    {isSubscribed && (
-                      <div className="relative z-10 -me-1 -mt-1">
-                        <DropdownMenu>
-                          <DropdownMenuTrigger asChild>
-                            <Button
-                              variant="ghost"
-                              size="icon"
-                              aria-label={t`Project actions`}
-                              className="size-8 opacity-0 transition-opacity group-hover:opacity-100 data-[state=open]:opacity-100"
-                            >
-                              <Ellipsis className="size-4" />
-                            </Button>
-                          </DropdownMenuTrigger>
-                          <DropdownMenuContent align="end">
-                            <DropdownMenuItem onSelect={() => setUnsubscribeId(project.id)}>
-                              <Trans>Unsubscribe</Trans>
-                            </DropdownMenuItem>
-                          </DropdownMenuContent>
-                        </DropdownMenu>
-                      </div>
-                    )}
-                  </div>
-
-                  <p className="truncate font-semibold leading-snug">{project.name}</p>
                   {project.description && (
                     <p className="text-muted-foreground mt-1 line-clamp-2 text-sm">{project.description}</p>
                   )}
-                </div>
+                </ListCard>
               )
             })}
           </div>

@@ -3596,10 +3596,15 @@ def action_class_delete(a):
 		a.error.label(400, "errors.class_in_use")
 		return
 
-	# Delete in order: options, fields, hierarchy, class
+	# Delete in dependency order. view_classes has a foreign key to
+	# classes(project, id), so its rows MUST go before the class row or the
+	# delete fails with "FOREIGN KEY constraint failed". hierarchy rows where
+	# this class is a parent have no FK but would be left dangling, so clear them.
 	mochi.db.execute("delete from options where project=? and class=?", project_id, class_id)
 	mochi.db.execute("delete from fields where project=? and class=?", project_id, class_id)
+	mochi.db.execute("delete from view_classes where project=? and class=?", project_id, class_id)
 	mochi.db.execute("delete from hierarchy where project=? and class=?", project_id, class_id)
+	mochi.db.execute("delete from hierarchy where project=? and parent=?", project_id, class_id)
 	mochi.db.execute("delete from classes where project=? and id=?", project_id, class_id)
 
 	broadcast_event(project_id, "class/delete", {"project": project_id, "id": class_id})
@@ -6020,7 +6025,9 @@ def event_class_delete(e):
 		return
 	mochi.db.execute("delete from options where project=? and class=?", project_id, class_id)
 	mochi.db.execute("delete from fields where project=? and class=?", project_id, class_id)
+	mochi.db.execute("delete from view_classes where project=? and class=?", project_id, class_id)
 	mochi.db.execute("delete from hierarchy where project=? and class=?", project_id, class_id)
+	mochi.db.execute("delete from hierarchy where project=? and parent=?", project_id, class_id)
 	mochi.db.execute("delete from classes where id=? and project=?", class_id, project_id)
 	fp = mochi.entity.fingerprint(project_id)
 	if fp:
@@ -7430,9 +7437,14 @@ def do_class_delete(project_id, project, params):
 	has_objects = mochi.db.exists("select 1 from objects where project=? and class=?", project_id, class_id)
 	if has_objects:
 		return {"error": "errors.class_in_use", "code": 400}
+	# view_classes has a foreign key to classes(project, id); delete its rows
+	# before the class row or the delete fails with "FOREIGN KEY constraint
+	# failed". Also clear hierarchy rows where this class is a parent.
 	mochi.db.execute("delete from options where project=? and class=?", project_id, class_id)
 	mochi.db.execute("delete from fields where project=? and class=?", project_id, class_id)
+	mochi.db.execute("delete from view_classes where project=? and class=?", project_id, class_id)
 	mochi.db.execute("delete from hierarchy where project=? and class=?", project_id, class_id)
+	mochi.db.execute("delete from hierarchy where project=? and parent=?", project_id, class_id)
 	mochi.db.execute("delete from classes where project=? and id=?", project_id, class_id)
 	broadcast_event(project_id, "class/delete", {"project": project_id, "id": class_id})
 	return {"success": True}

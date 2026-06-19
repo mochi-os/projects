@@ -113,7 +113,7 @@ function FileHeader({
     <button
       type="button"
       onClick={onToggle}
-      className="flex items-center gap-2 w-full px-3 py-2 bg-muted/50 border-b text-sm font-mono hover:bg-muted/80 transition-colors sticky top-0 z-10"
+      className="flex items-center gap-2 w-full px-3 py-2 bg-muted/50 border-b text-sm font-mono hover:bg-hover/80 transition-colors sticky top-0 z-10"
     >
       {collapsed ? (
         <ChevronRight className="size-3.5 shrink-0 rtl:rotate-180" />

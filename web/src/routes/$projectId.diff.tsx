@@ -97,7 +97,7 @@ function DiffPage() {
               className={`flex items-center gap-1.5 px-3 py-1.5 transition-colors ${
                 viewStyle === "unified"
                   ? "bg-primary text-primary-foreground"
-                  : "hover:bg-muted"
+                  : "hover:bg-hover"
               }`}
             >
               <Rows3 className="size-3.5" />
@@ -109,7 +109,7 @@ function DiffPage() {
               className={`flex items-center gap-1.5 px-3 py-1.5 border-s transition-colors ${
                 viewStyle === "split"
                   ? "bg-primary text-primary-foreground"
-                  : "hover:bg-muted"
+                  : "hover:bg-hover"
               }`}
             >
               <Columns2 className="size-3.5" />

@@ -237,7 +237,7 @@ export function CreateProjectDialog({
                           "relative flex cursor-pointer items-start gap-4 rounded-xl border-2 p-4 transition-all duration-200",
                           isSelected
                             ? "border-primary bg-primary/5 shadow-sm"
-                            : "border-border hover:border-primary/30 hover:bg-accent/50",
+                            : "border-border hover:border-primary/30 hover:bg-hover/50",
                         )}
                         onClick={() => setSelectedTemplate(template.id)}
                       >

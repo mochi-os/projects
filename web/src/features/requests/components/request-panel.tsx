@@ -239,7 +239,7 @@ function RequestItem({
       <button
         type="button"
         onClick={onToggle}
-        className="flex items-center gap-2 w-full px-3 py-2 text-sm hover:bg-muted/50 transition-colors text-start"
+        className="flex items-center gap-2 w-full px-3 py-2 text-sm hover:bg-hover transition-colors text-start"
       >
         {expanded ? (
           <ChevronDown className="size-3.5 shrink-0 text-muted-foreground" />

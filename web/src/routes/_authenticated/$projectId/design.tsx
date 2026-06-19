@@ -301,7 +301,7 @@ function ImportDialog({
                   <button
                     key={template.id}
                     onClick={() => handleTemplateSelect(template)}
-                    className="w-full text-start px-3 py-2 text-sm rounded-lg border hover:bg-muted transition-colors"
+                    className="w-full text-start px-3 py-2 text-sm rounded-lg border hover:bg-hover transition-colors"
                   >
                     <div className="font-medium">{template.name}</div>
                     {template.description && (

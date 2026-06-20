@@ -1,3 +1,8 @@
+// Copyright © 2026 Mochi OÜ
+// SPDX-License-Identifier: AGPL-3.0-only
+// This file is part of Mochi, licensed under the GNU AGPL v3 with the
+// Mochi Application Interface Exception - see license.txt and license-exception.md.
+
 /* eslint-disable lingui/no-unlocalized-strings */
 const statusBadgeBaseClass =
   "inline-flex items-center rounded-md border px-1.5 py-0.5 text-xs font-medium leading-none shrink-0";

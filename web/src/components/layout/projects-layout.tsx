@@ -53,6 +53,7 @@ function ProjectsLayoutInner() {
       title: t`All projects`,
       url: "/",
       icon: FolderKanban,
+      aggregate: true,
     };
 
     // Build action items (moved to bottom)

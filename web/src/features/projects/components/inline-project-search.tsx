@@ -7,7 +7,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { Trans, useLingui } from '@lingui/react/macro'
 import { useNavigate } from "@tanstack/react-router";
 import { Search, Loader2, FolderKanban } from "lucide-react";
-import { Button, GeneralError, Input, toast, getErrorMessage } from "@mochi/web";
+import { Button, GeneralError, Input, toastAction, getErrorMessage } from "@mochi/web";
 import projectsApi from "@/api/projects";
 import { useProjectsStore } from "@/stores/projects-store";
 
@@ -96,15 +96,18 @@ export function InlineProjectSearch({
   const handleSubscribe = async (project: DirectoryEntry) => {
     setPendingProjectId(project.id);
     try {
-      await projectsApi.subscribe(project.id, project.location || undefined);
+      await toastAction(projectsApi.subscribe(project.id, project.location || undefined), {
+        loading: t`Subscribing...`,
+        success: t`Subscribed`,
+        error: (e) => getErrorMessage(e, t`Failed to subscribe`),
+      });
       void refresh();
       onRefresh?.();
       void navigate({
         to: "/$projectId",
         params: { projectId: project.fingerprint || project.id },
       });
-    } catch (error) {
-      toast.error(getErrorMessage(error, t`Failed to subscribe`));
+    } catch {
       setPendingProjectId(null);
     }
   };

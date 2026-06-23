@@ -23,7 +23,7 @@ import {
   FieldRow,
   EditableFieldRow,
   DataChip,
-  toast,
+  toastAction,
   getErrorMessage,
   extractStatus,
   AccessDialog,
@@ -127,12 +127,15 @@ function ProjectSettingsPage() {
 
     setIsDeleting(true);
     try {
-      await projectsApi.delete(project.project.id);
+      await toastAction(projectsApi.delete(project.project.id), {
+        loading: t`Deleting project...`,
+        success: t`Project deleted`,
+        error: (e) => getErrorMessage(e, t`Failed to delete project`),
+      });
       void refreshSidebar();
-      toast.success(t`Project deleted`);
       void navigate({ to: "/" });
-    } catch (err) {
-      toast.error(getErrorMessage(err, t`Failed to delete project`));
+    } catch {
+      // toast already shown
     } finally {
       setIsDeleting(false);
     }
@@ -147,12 +150,14 @@ function ProjectSettingsPage() {
       if (!project || !isOwner) return;
 
       try {
-        await projectsApi.update(project.project.id, updates);
+        await toastAction(projectsApi.update(project.project.id, updates), {
+          loading: t`Saving...`,
+          success: t`Project updated`,
+          error: (e) => getErrorMessage(e, t`Failed to update project`),
+        });
         void refreshSidebar();
         queryClient.invalidateQueries({ queryKey: ["project", projectId] });
-        toast.success(t`Project updated`);
       } catch (err) {
-        toast.error(getErrorMessage(err, t`Failed to update project`));
         throw err;
       }
     },
@@ -467,35 +472,39 @@ function AccessTab({ projectId }: AccessTabProps) {
     level: string
   ) => {
     if (!canManageRules) return;
-    try {
-      await projectsApi.setAccessLevel(projectId, subject, level);
-      toast.success(t`Access set for ${subjectName}`);
-      await refetchRules();
-    } catch (err) {
-      toast.error(getErrorMessage(err, t`Failed to set access level`));
-      throw err;
-    }
+    await toastAction(projectsApi.setAccessLevel(projectId, subject, level), {
+      loading: t`Setting access...`,
+      success: t`Access set for ${subjectName}`,
+      error: (e) => getErrorMessage(e, t`Failed to set access level`),
+    });
+    await refetchRules();
   };
 
   const handleRevoke = async (subject: string) => {
     if (!canManageRules) return;
     try {
-      await projectsApi.revokeAccess(projectId, subject);
-      toast.success(t`Access removed`);
+      await toastAction(projectsApi.revokeAccess(projectId, subject), {
+        loading: t`Removing access...`,
+        success: t`Access removed`,
+        error: (e) => getErrorMessage(e, t`Failed to remove access`),
+      });
       await refetchRules();
-    } catch (err) {
-      toast.error(getErrorMessage(err, t`Failed to remove access`));
+    } catch {
+      // toast already shown
     }
   };
 
   const handleLevelChange = async (subject: string, newLevel: string) => {
     if (!canManageRules) return;
     try {
-      await projectsApi.setAccessLevel(projectId, subject, newLevel);
-      toast.success(t`Access level updated`);
+      await toastAction(projectsApi.setAccessLevel(projectId, subject, newLevel), {
+        loading: t`Updating access...`,
+        success: t`Access level updated`,
+        error: (e) => getErrorMessage(e, t`Failed to update access level`),
+      });
       await refetchRules();
-    } catch (err) {
-      toast.error(getErrorMessage(err, t`Failed to update access level`));
+    } catch {
+      // toast already shown
     }
   };
 

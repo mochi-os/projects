@@ -6,7 +6,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Trans, useLingui } from '@lingui/react/macro'
 import { useNavigate } from "@tanstack/react-router";
-import { Button, cn, getErrorMessage, Input, Label, naturalCompare, ResponsiveDialog, ResponsiveDialogContent, ResponsiveDialogDescription, ResponsiveDialogFooter, ResponsiveDialogHeader, ResponsiveDialogTitle, ResponsiveDialogTrigger, Switch, toast } from "@mochi/web"
+import { Button, cn, getErrorMessage, Input, Label, naturalCompare, ResponsiveDialog, ResponsiveDialogContent, ResponsiveDialogDescription, ResponsiveDialogFooter, ResponsiveDialogHeader, ResponsiveDialogTitle, ResponsiveDialogTrigger, Switch, toast, toastAction } from "@mochi/web"
 import { ArrowLeft, ArrowRight, Check, File, FolderKanban, LayoutGrid, Plus, Ticket, Zap } from "lucide-react";
 import projectsApi from "@/api/projects";
 import { useProjectsStore } from "@/stores/projects-store";
@@ -92,17 +92,23 @@ export function CreateProjectDialog({
 
     setIsPending(true);
     try {
-      const response = await projectsApi.create({
-        name: name.trim(),
-        prefix: prefix.trim().toLowerCase() || "project",
-        template: selectedTemplate,
-        privacy: allowSearch ? "public" : "private",
-      });
+      const response = await toastAction(
+        projectsApi.create({
+          name: name.trim(),
+          prefix: prefix.trim().toLowerCase() || "project",
+          template: selectedTemplate,
+          privacy: allowSearch ? "public" : "private",
+        }),
+        {
+          loading: t`Creating project...`,
+          success: t`Project created`,
+          error: (e) => getErrorMessage(e, t`Failed to create project`),
+        }
+      );
 
       const fingerprint = response.data?.fingerprint;
       await refreshProjects();
 
-      toast.success(t`Project created`);
       onOpenChange?.(false);
 
       if (fingerprint) {
@@ -113,8 +119,8 @@ export function CreateProjectDialog({
       } else {
         void navigate({ to: "/" });
       }
-    } catch (err) {
-      toast.error(getErrorMessage(err, t`Failed to create project`));
+    } catch {
+      // toast already shown
     } finally {
       setIsPending(false);
     }

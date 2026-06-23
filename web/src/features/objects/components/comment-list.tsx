@@ -17,6 +17,9 @@ import {
   MentionTextarea,
   useAuthStore,
   useImageObjectUrls,
+  Tooltip,
+  TooltipTrigger,
+  TooltipContent,
 } from "@mochi/web";
 import projectsApi from "@/api/projects";
 import { CommentThread } from "./comment-thread";
@@ -209,15 +212,21 @@ export function CommentList({
                   )}
                   <Paperclip className="text-muted-foreground size-3 shrink-0" />
                   <span className="max-w-40 truncate">{file.name}</span>
-                  <button
-                    type="button"
-                    onClick={() =>
-                      setNewFiles((prev) => prev.filter((_, idx) => idx !== i))
-                    }
-                    className="text-muted-foreground hover:text-foreground ms-0.5"
-                  >
-                    <X className="size-3.5" />
-                  </button>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setNewFiles((prev) => prev.filter((_, idx) => idx !== i))
+                        }
+                        className="text-muted-foreground hover:text-foreground ms-0.5"
+                        aria-label={t`Remove`}
+                      >
+                        <X className="size-3.5" />
+                      </button>
+                    </TooltipTrigger>
+                    <TooltipContent>{t`Remove`}</TooltipContent>
+                  </Tooltip>
                 </div>
               ))}
             </div>
@@ -230,28 +239,36 @@ export function CommentList({
               onChange={handleFileSelect}
               className="hidden"
             />
-            <Button
-              type="button"
-              variant="ghost"
-              size="icon"
-              className="size-8"
-              onClick={() => fileInputRef.current?.click()}
-              aria-label={t`Attach comment files`}
-              title={t`Attach comment files`}
-            >
-              <Paperclip className="size-4" />
-            </Button>
-            <Button
-              type="button"
-              size="icon"
-              className="size-8"
-              disabled={!newComment.trim() || createMutation.isPending}
-              onClick={handleCreate}
-              aria-label={t`Submit comment`}
-              title={t`Submit comment`}
-            >
-              <Send className="size-4" />
-            </Button>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="icon"
+                  className="size-8"
+                  onClick={() => fileInputRef.current?.click()}
+                  aria-label={t`Attach comment files`}
+                >
+                  <Paperclip className="size-4" />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>{t`Attach comment files`}</TooltipContent>
+            </Tooltip>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  type="button"
+                  size="icon"
+                  className="size-8"
+                  disabled={!newComment.trim() || createMutation.isPending}
+                  onClick={handleCreate}
+                  aria-label={t`Submit comment`}
+                >
+                  <Send className="size-4" />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>{t`Submit comment`}</TooltipContent>
+            </Tooltip>
           </div>
         </div>
       )}

@@ -521,11 +521,16 @@ export function BoardColumn({
         </div>
         {!isReordering && (preview || onCreateClick || onRenameColumn || (totalCount === 0 && onDeleteColumn)) && (
           <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <button type="button" data-column-menu className="rounded p-1 transition-colors hover:bg-hover active:bg-interactive-active">
-                <MoreHorizontal className="size-4 text-muted-foreground" />
-              </button>
-            </DropdownMenuTrigger>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <DropdownMenuTrigger asChild>
+                  <button type="button" data-column-menu aria-label={t`Open column actions`} className="rounded p-1 transition-colors hover:bg-hover active:bg-interactive-active">
+                    <MoreHorizontal className="size-4 text-muted-foreground" />
+                  </button>
+                </DropdownMenuTrigger>
+              </TooltipTrigger>
+              <TooltipContent>{t`Open column actions`}</TooltipContent>
+            </Tooltip>
             <DropdownMenuContent align="end">
               {(onCreateClick || preview) && (
                 <DropdownMenuItem onClick={preview ? undefined : onCreateClick}>

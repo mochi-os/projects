@@ -23,6 +23,9 @@ import {
   ListCard,
   getErrorMessage,
   toast,
+  Tooltip,
+  TooltipTrigger,
+  TooltipContent,
 } from "@mochi/web";
 import { Ellipsis, FolderKanban, Plus } from "lucide-react";
 import { useProjectsStore } from "@/stores/projects-store";
@@ -127,16 +130,21 @@ export function ProjectsListPage() {
                   )}
                   menu={isSubscribed && (
                     <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          aria-label={t`Project actions`}
-                          className="size-8 opacity-0 transition-opacity group-hover:opacity-100 data-[state=open]:opacity-100"
-                        >
-                          <Ellipsis className="size-4" />
-                        </Button>
-                      </DropdownMenuTrigger>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <DropdownMenuTrigger asChild>
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              aria-label={t`Project actions`}
+                              className="size-8 opacity-0 transition-opacity group-hover:opacity-100 data-[state=open]:opacity-100"
+                            >
+                              <Ellipsis className="size-4" />
+                            </Button>
+                          </DropdownMenuTrigger>
+                        </TooltipTrigger>
+                        <TooltipContent>{t`Project actions`}</TooltipContent>
+                      </Tooltip>
                       <DropdownMenuContent align="end">
                         <DropdownMenuItem onSelect={() => setUnsubscribeId(project.id)}>
                           <Trans>Unsubscribe</Trans>

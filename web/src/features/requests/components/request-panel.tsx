@@ -9,7 +9,7 @@ import { Trans } from '@lingui/react/macro'
 import { t } from '@lingui/core/macro'
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { ArrowRight, GitMerge, Plus, Trash2, ChevronDown, ChevronRight } from "lucide-react";
-import { Button, Card, ConfirmDialog, Input, Switch, Textarea, cn } from "@mochi/web";
+import { Button, Card, ConfirmDialog, Input, Switch, Textarea, cn, Tooltip, TooltipTrigger, TooltipContent } from "@mochi/web";
 import projectsApi from "@/api/projects";
 import type { RequestData } from "@/types";
 import { RepositorySelect } from "./repository-select";
@@ -365,16 +365,20 @@ function RequestItem({
                       disabled={readOnly || isDraft}
                     />
                     {!readOnly && (
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="h-9 w-9 shrink-0 text-muted-foreground"
-                        onClick={onDelete}
-                        title={t`Delete merge request`}
-                        aria-label={t`Delete merge request`}
-                      >
-                        <Trash2 className="size-4" />
-                      </Button>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="h-9 w-9 shrink-0 text-muted-foreground"
+                            onClick={onDelete}
+                            aria-label={t`Delete merge request`}
+                          >
+                            <Trash2 className="size-4" />
+                          </Button>
+                        </TooltipTrigger>
+                        <TooltipContent>{t`Delete merge request`}</TooltipContent>
+                      </Tooltip>
                     )}
                   </div>
                 </>
@@ -386,16 +390,20 @@ function RequestItem({
                     <Trans>This merge request has been merged into {request.target}.</Trans>
                   </div>
                   {!readOnly && (
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className="h-9 w-9 shrink-0 text-muted-foreground"
-                      onClick={onDelete}
-                      title={t`Delete merge request`}
-                      aria-label={t`Delete merge request`}
-                    >
-                      <Trash2 className="size-4" />
-                    </Button>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="h-9 w-9 shrink-0 text-muted-foreground"
+                          onClick={onDelete}
+                          aria-label={t`Delete merge request`}
+                        >
+                          <Trash2 className="size-4" />
+                        </Button>
+                      </TooltipTrigger>
+                      <TooltipContent>{t`Delete merge request`}</TooltipContent>
+                    </Tooltip>
                   )}
                 </div>
               )}
@@ -404,16 +412,20 @@ function RequestItem({
 
           {!readOnly && !(request.repository && request.source && request.target) && (
             <div className="flex justify-end">
-              <Button
-                variant="ghost"
-                size="icon"
-                className="h-9 w-9 shrink-0 text-muted-foreground"
-                onClick={onDelete}
-                title={t`Delete merge request`}
-                aria-label={t`Delete merge request`}
-              >
-                <Trash2 className="size-4" />
-              </Button>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="h-9 w-9 shrink-0 text-muted-foreground"
+                    onClick={onDelete}
+                    aria-label={t`Delete merge request`}
+                  >
+                    <Trash2 className="size-4" />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>{t`Delete merge request`}</TooltipContent>
+              </Tooltip>
             </div>
           )}
         </div>

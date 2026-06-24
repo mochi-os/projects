@@ -27,6 +27,7 @@ import {
   useSearch,
   useShellStorage,
   toast,
+  toastAction,
   getAppPath,
   Tooltip,
   TooltipTrigger,
@@ -555,16 +556,24 @@ export function ProjectPageContent({ project, projectId, search, initialObjectId
   const unsubscribeMutation = useMutation({
     mutationFn: () => projectsApi.unsubscribe(project.project.id),
     onSuccess: () => {
-      setUnsubscribeOpen(false);
       void refreshSidebar();
       queryClient.invalidateQueries({ queryKey: ["projects"] });
-      toast.success(t`Unsubscribed`);
-      void navigate({ to: "/" });
-    },
-    onError: (error) => {
-      toast.error(getErrorMessage(error, t`Failed to unsubscribe`));
     },
   });
+
+  const handleUnsubscribe = async () => {
+    try {
+      await toastAction(unsubscribeMutation.mutateAsync(), {
+        loading: t`Unsubscribing...`,
+        success: t`Unsubscribed`,
+        error: (e) => getErrorMessage(e, t`Failed to unsubscribe`),
+      });
+      setUnsubscribeOpen(false);
+      void navigate({ to: "/" });
+    } catch {
+      // toast already shown
+    }
+  };
 
   // Filter objects
   const filteredObjects = useMemo(() => {
@@ -1028,7 +1037,7 @@ export function ProjectPageContent({ project, projectId, search, initialObjectId
         title={t`Unsubscribe from project?`}
         desc={t`This will remove "${project.project.name}" from your sidebar and stop updates for this project.`}
         confirmText={t`Unsubscribe`}
-        handleConfirm={() => unsubscribeMutation.mutate()}
+        handleConfirm={() => void handleUnsubscribe()}
         isLoading={unsubscribeMutation.isPending}
       />
     </>

@@ -222,8 +222,19 @@ export function useProjectWebsocket(projectFingerprint?: string) {
           }
           break;
         case "project/update":
+          // A project/update arrives after a bulk sync batch (event_sync_batch)
+          // lands all of a subscribed project's data at once. Refresh the
+          // schema AND the objects + people, so a freshly-subscribed project
+          // populates the moment its data arrives instead of staying empty
+          // until the next window refocus/remount.
           void queryClient.invalidateQueries({
             queryKey: ["project", pid],
+          });
+          void queryClient.invalidateQueries({
+            queryKey: ["objects", pid],
+          });
+          void queryClient.invalidateQueries({
+            queryKey: ["people", pid],
           });
           break;
         case "class/create":

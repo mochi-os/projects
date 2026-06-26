@@ -32,6 +32,7 @@ import {
   Tooltip,
   TooltipTrigger,
   TooltipContent,
+  LoadingContent,
 } from "@mochi/web";
 import { Check, Columns3, Ellipsis, FolderKanban, GripVertical, LogOut, Plus, Settings, Settings2, SlidersHorizontal, X } from "lucide-react";
 import projectsApi from "@/api/projects";
@@ -241,7 +242,7 @@ export function ProjectPageContent({ project, projectId, search, initialObjectId
   const queryClient = useQueryClient();
 
   // Load objects
-  const { data: objectListData } = useQuery({
+  const { data: objectListData, isLoading: objectsLoading } = useQuery({
     queryKey: ["objects", params.projectId],
     queryFn: async () => {
       const response = await projectsApi.listObjects(params.projectId);
@@ -966,7 +967,9 @@ export function ProjectPageContent({ project, projectId, search, initialObjectId
       <Main fluid className="flex flex-col min-h-0 min-w-0 flex-1 !p-0">
         {/* Content area */}
         <div className={activeView?.viewtype === "list" ? "flex-1 min-h-0 overflow-auto" : "flex-1 min-h-0 overflow-x-auto"}>
-          {activeView?.viewtype === "list" ? (
+          {objectsLoading ? (
+            <LoadingContent />
+          ) : activeView?.viewtype === "list" ? (
             <div className="p-4">
               <TreeView
                 project={project}

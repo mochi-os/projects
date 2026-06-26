@@ -90,7 +90,10 @@ export interface ProjectObject {
   class: string;
   number: number;
   parent: string;
-  rank: number;
+  // Fractional-index ordering key (#53): an opaque base-62 string, compared
+  // lexicographically. Not a position — the move action still sends a 1-based
+  // target index, the server computes the key.
+  rank: string;
   created: number;
   updated: number;
   readable?: string;

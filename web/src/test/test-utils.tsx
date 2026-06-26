@@ -8,6 +8,8 @@
 import React, { type ReactElement } from "react";
 import { render, type RenderOptions } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { i18n } from "@lingui/core";
+import { I18nProvider } from "@lingui/react";
 import type {
   Project,
   ProjectDetails,
@@ -37,10 +39,17 @@ interface WrapperProps {
   children: React.ReactNode;
 }
 
+// Activate a minimal i18n so <Trans> / useLingui render under an I18nProvider.
+// The Lingui macro embeds the source string, so an empty catalog falls back to
+// the English source text the component tests assert on.
+i18n.loadAndActivate({ locale: "en", messages: {} });
+
 function AllProviders({ children }: WrapperProps) {
   const queryClient = createTestQueryClient();
   return (
-    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+    <I18nProvider i18n={i18n}>
+      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+    </I18nProvider>
   );
 }
 
@@ -138,7 +147,7 @@ export function createMockObject(
     class: "task",
     number: 1,
     parent: "",
-    rank: 1,
+    rank: "V",
     created: Date.now(),
     updated: Date.now(),
     readable: "TEST-1",

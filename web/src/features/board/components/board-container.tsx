@@ -9,6 +9,7 @@ import { useLingui } from '@lingui/react/macro'
 import { cn, naturalCompare } from "@mochi/web";
 import { BoardColumn, type BoardColumnRow } from "./board-column";
 import type { ProjectObject, ProjectDetails, ProjectClass, FieldOption, SortState } from "@/types";
+import { rankCompare } from "@/lib/rank";
 
 // Check if objectId is a descendant of ancestorId
 function isDescendantOf(objectId: string, ancestorId: string, objectMap: Record<string, ProjectObject>): boolean {
@@ -53,8 +54,8 @@ function sortObjects(objects: ProjectObject[], sort?: SortState | null): Project
     let bVal: string | number;
 
     if (sortField === "rank") {
-      aVal = a.rank || 0;
-      bVal = b.rank || 0;
+      aVal = a.rank || "";
+      bVal = b.rank || "";
     } else if (sortField === "created") {
       aVal = a.created || 0;
       bVal = b.created || 0;
@@ -487,7 +488,7 @@ export function BoardContainer({
       // Build flat list of all objects in scope (same status), sorted by rank
       const allInScope = objects
         .filter(o => o.id !== objectId && (o.values[statusField] || "") === columnId)
-        .sort((a, b) => (a.rank || 0) - (b.rank || 0));
+        .sort((a, b) => rankCompare(a.rank, b.rank));
       const topLevelIds = new Set(topLevel.map(o => o.id));
       // Walk the flat list until we reach the newRank-th top-level card,
       // then insert just before it. flatPos counts items we've passed.

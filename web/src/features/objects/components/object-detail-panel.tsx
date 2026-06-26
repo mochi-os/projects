@@ -113,7 +113,7 @@ export function ObjectDetailPanel({
           class: string;
           number: number;
           parent: string;
-          rank: number;
+          rank: string;
           created: number;
           updated: number;
           values: Record<string, string>;

@@ -743,6 +743,18 @@ export function ProjectPageContent({ project, projectId, search, initialObjectId
     });
   };
 
+  const handleListMoveObject = useCallback(
+    (objectId: string, statusFieldId: string, newStatus: string, newRank?: number) => {
+      moveMutation.mutate({
+        objectId,
+        field: statusFieldId,
+        value: newStatus,
+        rank: newRank,
+      });
+    },
+    [moveMutation],
+  );
+
   const handleReparent = (objectId: string, newParentId: string | null) => {
     reparentMutation.mutate({ objectId, parentId: newParentId });
   };
@@ -963,13 +975,13 @@ export function ProjectPageContent({ project, projectId, search, initialObjectId
                 peopleMap={peopleMap}
                 viewFields={activeView?.fields}
                 viewClasses={activeView?.classes}
-                statusField={columnField}
+                statusField={activeView?.columns}
                 borderField={activeView?.border}
                 sort={sort}
                 onCardClick={handleCardClick}
                 onReparent={canWrite(access) ? handleReparent : undefined}
                 onReorder={canWrite(access) ? handleReorder : undefined}
-                onMoveObject={canWrite(access) && columnField ? handleMoveObject : undefined}
+                onMoveObject={canWrite(access) ? handleListMoveObject : undefined}
                 selectedObjectId={selectedObjectId}
                 onCreateClick={canCreate(access) ? handleOpenCreateDialog : undefined}
               />

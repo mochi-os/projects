@@ -39,11 +39,8 @@ interface WrapperProps {
   children: React.ReactNode;
 }
 
-// Activate a minimal i18n so <Trans> / useLingui render under an I18nProvider.
-// The Lingui macro embeds the source string, so an empty catalog falls back to
-// the English source text the component tests assert on.
-i18n.loadAndActivate({ locale: "en", messages: {} });
-
+// i18n is activated globally in src/test/setup.ts; here we just provide it to
+// the React tree so <Trans> / useLingui resolve.
 function AllProviders({ children }: WrapperProps) {
   const queryClient = createTestQueryClient();
   return (

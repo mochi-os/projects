@@ -103,7 +103,9 @@ describe("useProjectsStore", () => {
     const state = useProjectsStore.getState();
     expect(state.projects).toEqual([]);
     expect(state.isLoading).toBe(false);
-    expect(state.error).toBe("Failed to load projects");
+    // The store surfaces the real error message via getErrorMessage(error, …);
+    // the "Failed to load projects" fallback only applies when the error has none.
+    expect(state.error).toBe("Network error");
   });
 
   it("should handle empty projects list", async () => {

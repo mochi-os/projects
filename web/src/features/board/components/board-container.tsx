@@ -74,6 +74,12 @@ function sortObjects(objects: ProjectObject[], sort?: SortState | null): Project
     if (typeof aVal === "number" && typeof bVal === "number") {
       return (aVal - bVal) * multiplier;
     }
+    // Rank keys are opaque fractional-index strings — compare BINARY (rankCompare),
+    // never naturalCompare (case/accent-insensitive + numeric-aware reorders them
+    // and lands dragged cards at the wrong slot, #53).
+    if (sortField === "rank") {
+      return rankCompare(String(aVal), String(bVal)) * multiplier;
+    }
     return naturalCompare(String(aVal), String(bVal)) * multiplier;
   });
 }

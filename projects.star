@@ -261,7 +261,38 @@ def rank_move_key(project_id, object_id, field, target_value, scope_parent, pos)
 		pos = n + 1
 	before = others[pos - 2]["rank"] if pos >= 2 else None
 	after = others[pos - 1]["rank"] if (pos - 1) < n else None
+	if after == None:
+		# Appending to the end of this scope: anchor on the project-wide max so
+		# the minted key is globally unique (see rank_after_all). A pure increment
+		# of this scope's last re-mints keys that cards in other scopes still hold.
+		return rank_after_all(project_id, object_id)
 	return rank_between(before, after)
+
+def rank_after_all(project_id, exclude_id):
+	# A new rank key strictly greater than every existing key in the PROJECT
+	# (excluding exclude_id, the row being moved). Appends and creates anchor on
+	# the project-wide max — not a per-column/per-parent max — so a freshly minted
+	# end key is globally unique and can't collide with a key a card in another
+	# scope still holds. (The #53 duplicate-key source: incrementing a per-scope
+	# max re-mints keys departed cards keep; two columns whose local max was equal
+	# minted the same global key.) project-max >= any scope's last, so the new key
+	# still sorts to the end of the target scope.
+	if exclude_id != None:
+		row = mochi.db.row("select max(rank) as r from objects where project=? and id!=?", project_id, exclude_id)
+	else:
+		row = mochi.db.row("select max(rank) as r from objects where project=?", project_id)
+	return rank_between(row["r"] if (row and row["r"]) else None, None)
+
+def rank_resequence(project_id):
+	# Assign fresh, globally-unique sequential keys to every object in the project,
+	# preserving the current (rank, id) order (id breaks ties between duplicate
+	# keys). Deterministic and convergent across replicas; used by the #53
+	# backfill/repair migrations.
+	ids = mochi.db.rows("select id from objects where project=? order by rank, id", project_id) or []
+	previous = None
+	for row in ids:
+		previous = rank_between(previous, None)
+		mochi.db.execute("update objects set rank=? where id=?", previous, row["id"])
 
 # Create database with all 16 tables
 def database_create():
@@ -519,11 +550,19 @@ def database_upgrade(version):
 		# affinity column is stored as text, so no table rebuild is needed.)
 		project_ids = mochi.db.rows("select distinct project from objects") or []
 		for p in project_ids:
-			ids = mochi.db.rows("select id from objects where project=? order by rank, id", p["project"]) or []
-			previous = None
-			for row in ids:
-				previous = rank_between(previous, None)
-				mochi.db.execute("update objects set rank=? where id=?", previous, row["id"])
+			rank_resequence(p["project"])
+
+	if version == 11:
+		# Repair #53 duplicate keys: the original append path minted end keys by
+		# incrementing a per-column/per-parent max, so two scopes whose local max
+		# was equal produced the same global key (harmless only while the halves
+		# stay in different columns — a collision the moment one moves into the
+		# other's scope). Re-sequence every project to fresh globally-unique keys,
+		# preserving the current (rank, id) order. Appends now anchor on the
+		# project-wide max (rank_after_all), so duplicates can't reappear.
+		project_ids = mochi.db.rows("select distinct project from objects") or []
+		for p in project_ids:
+			rank_resequence(p["project"])
 
 
 # ============================================================================
@@ -1859,8 +1898,7 @@ def action_object_create(a):
 	mochi.db.execute("update projects set updated=? where id=?", mochi.time.now(), project_id)
 
 	# Calculate initial rank (add to end of parent or project)
-	last_rank_row = mochi.db.row("select max(rank) as r from objects where project=? and parent=?", project_id, parent)
-	initial_rank = rank_between(last_rank_row["r"] if (last_rank_row and last_rank_row["r"]) else None, None)
+	initial_rank = rank_after_all(project_id, None)
 
 	# Create object
 	object_id = mochi.uid()
@@ -2217,12 +2255,9 @@ def action_object_move(a):
 		mochi.db.execute("update objects set rank=? where id=?", new_key, object_id)
 	elif value_changed:
 		# Moving to a new column without a specific rank — append to its end.
-		last_row = mochi.db.row("""
-			select max(o.rank) as r from objects o
-			left join "values" v on v.object = o.id and v.field=?
-			where o.project=? and coalesce(v.value, '')=? and o.id!=?
-		""", field, project_id, target_value, object_id)
-		new_key = rank_between(last_row["r"] if (last_row and last_row["r"]) else None, None)
+		# Anchor on the project-wide max for a globally-unique key (see
+		# rank_after_all); project-max >= the column's last, so it still lands last.
+		new_key = rank_after_all(project_id, object_id)
 		mochi.db.execute("update objects set rank=? where id=?", new_key, object_id)
 
 	# Handle row field change (for swimlane drag-drop)
@@ -6944,8 +6979,7 @@ def do_object_create(project_id, project, params, user_id):
 	# max() an index seek.
 	new_counter = mochi.db.row("select coalesce(max(number), 0) + 1 as next from objects where project=?", project_id)["next"]
 	mochi.db.execute("update projects set updated=? where id=?", mochi.time.now(), project_id)
-	last_rank_row = mochi.db.row("select max(rank) as r from objects where project=? and parent=?", project_id, parent)
-	initial_rank = rank_between(last_rank_row["r"] if (last_rank_row and last_rank_row["r"]) else None, None)
+	initial_rank = rank_after_all(project_id, None)
 	object_id = mochi.uid()
 	now = mochi.time.now()
 	mochi.db.execute(
@@ -7085,12 +7119,9 @@ def do_object_move(project_id, project, params, user_id):
 		mochi.db.execute("update objects set rank=? where id=?", new_key, object_id)
 	elif value_changed:
 		# Moving to a new column without a specific rank — append to its end.
-		last_row = mochi.db.row("""
-			select max(o.rank) as r from objects o
-			left join "values" v on v.object = o.id and v.field=?
-			where o.project=? and coalesce(v.value, '')=? and o.id!=?
-		""", field, project_id, target_value, object_id)
-		new_key = rank_between(last_row["r"] if (last_row and last_row["r"]) else None, None)
+		# Anchor on the project-wide max for a globally-unique key (see
+		# rank_after_all); project-max >= the column's last, so it still lands last.
+		new_key = rank_after_all(project_id, object_id)
 		mochi.db.execute("update objects set rank=? where id=?", new_key, object_id)
 	row_field = params.get("row_field")
 	row_value = params.get("row_value")

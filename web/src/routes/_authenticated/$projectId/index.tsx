@@ -153,7 +153,20 @@ export function ProjectPageContent({ project, projectId, search, initialObjectId
   const [unsubscribeOpen, setUnsubscribeOpen] = useState(false);
 
   usePageTitle(project.project.name);
-  useProjectWebsocket(project.project.fingerprint);
+  // onSync re-runs the route loader (where the project, schema, and `populated`
+  // flag live) when a sync batch lands, flipping the board out of its loading
+  // state once the freshly-subscribed data has arrived.
+  useProjectWebsocket(project.project.fingerprint, () => void router.invalidate());
+
+  // Fallback for the websocket race: if project/update is missed (fired before
+  // the socket connected), poll the loader while the project is still filling so
+  // the board never stays stuck on the loading spinner.
+  const populated = project.project.populated;
+  useEffect(() => {
+    if (populated) return;
+    const timer = setInterval(() => void router.invalidate(), 3000);
+    return () => clearInterval(timer);
+  }, [populated, router]);
 
   // Disable global Ctrl+K search shortcut so we can use it for view options
   const { setShortcutEnabled } = useSearch();
@@ -940,7 +953,7 @@ export function ProjectPageContent({ project, projectId, search, initialObjectId
       <Main fluid className="flex flex-col min-h-0 min-w-0 flex-1 !p-0">
         {/* Content area */}
         <div className={activeView?.viewtype === "list" ? "flex-1 min-h-0 overflow-auto" : "flex-1 min-h-0 overflow-x-auto"}>
-          {objectsLoading ? (
+          {!populated || objectsLoading ? (
             <LoadingContent />
           ) : activeView?.viewtype === "list" ? (
             <div className="p-4">

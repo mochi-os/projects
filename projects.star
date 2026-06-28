@@ -309,7 +309,8 @@ def database_create():
 		template_version integer not null default 0,
 		created integer not null,
 		updated integer not null,
-		synced integer not null default 0
+		synced integer not null default 0,
+		populated integer not null default 1
 	)""")
 	mochi.db.execute("create index if not exists projects_fingerprint on projects(fingerprint)")
 
@@ -563,6 +564,15 @@ def database_upgrade(version):
 		project_ids = mochi.db.rows("select distinct project from objects") or []
 		for p in project_ids:
 			rank_resequence(p["project"])
+
+	if version == 12:
+		# Add projects.populated: 0 while a freshly-subscribed project's bulk
+		# content is still arriving over P2P (set 1 by event_sync_batch), so the
+		# board shows a loading state instead of partial/empty data rather than a
+		# half-synced board. Existing rows already hold their data, hence default 1.
+		cols = [r["name"] for r in mochi.db.table("projects") or []]
+		if "populated" not in cols:
+			mochi.db.execute("alter table projects add column populated integer not null default 1")
 
 
 # ============================================================================
@@ -1115,7 +1125,7 @@ def action_project_get(a):
 		a.error.label(400, "errors.project_id_required")
 		return
 
-	row = mochi.db.row("select id, name, description, prefix, owner, server, template, template_version, created, updated from projects where id=?", project_id)
+	row = mochi.db.row("select id, name, description, prefix, owner, server, template, template_version, created, updated, populated from projects where id=?", project_id)
 	if not row:
 		a.error.label(404, "errors.project_not_found")
 		return
@@ -1211,6 +1221,7 @@ def action_project_get(a):
 			"template_version": row["template_version"],
 			"created": row["created"],
 			"updated": row["updated"],
+			"populated": row["populated"],
 			"access": access,
 		},
 		"classes": classes,
@@ -4872,8 +4883,11 @@ def action_subscribe(a):
 	fp = mochi.entity.fingerprint(project_id) or ""
 
 	# Insert the remote project
+	# populated=0: the schema is fetched synchronously below, but the bulk
+	# object data arrives asynchronously via the owner's sync/batch. The board
+	# shows a loading state until event_sync_batch flips this to 1.
 	mochi.db.execute(
-		"insert into projects (id, name, description, prefix, owner, server, fingerprint, created, updated) values (?, ?, ?, ?, 0, ?, ?, ?, ?)",
+		"insert into projects (id, name, description, prefix, owner, server, fingerprint, created, updated, populated) values (?, ?, ?, ?, 0, ?, ?, ?, ?, 0)",
 		project_id, project_name, project_desc, project_prefix, server or "", fp, now, now
 	)
 
@@ -5536,6 +5550,10 @@ def event_sync_batch(e):
 			"insert or ignore into links (source, target, linktype) values (?, ?, ?)",
 			l["source"], l["target"], l.get("linktype", "relates")
 		)
+
+	# Mark the subscription's initial bulk content as arrived so the board stops
+	# showing its loading state and renders the now-complete data.
+	mochi.db.execute("update projects set populated=1 where id=? and owner=0", project_id)
 
 	# Notify UI
 	fp = mochi.entity.fingerprint(project_id)
@@ -8060,8 +8078,10 @@ def _subscribe_to_project(user, project_id, server):
 	now = mochi.time.now()
 	fp = mochi.entity.fingerprint(project_id) or ""
 
+	# populated=0: schema fetched synchronously above, objects arrive async via
+	# the owner's sync/batch (set 1 by event_sync_batch).
 	mochi.db.execute(
-		"insert into projects (id, name, description, prefix, owner, server, fingerprint, created, updated) values (?, ?, ?, ?, 0, ?, ?, ?, ?)",
+		"insert into projects (id, name, description, prefix, owner, server, fingerprint, created, updated, populated) values (?, ?, ?, ?, 0, ?, ?, ?, ?, 0)",
 		project_id, project_name, project_desc, project_prefix, server or "", fp, now, now
 	)
 

@@ -66,6 +66,7 @@ describe("useProjectsStore", () => {
         server: "local",
         created: Date.now(),
         updated: Date.now(),
+        populated: 1,
         access: "owner",
       },
       {
@@ -79,6 +80,7 @@ describe("useProjectsStore", () => {
         server: "local",
         created: Date.now(),
         updated: Date.now(),
+        populated: 1,
         access: "owner",
       },
     ];

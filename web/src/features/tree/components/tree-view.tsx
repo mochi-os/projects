@@ -10,6 +10,7 @@ import { t } from '@lingui/core/macro'
 import { Button, EmptyState, ListSectionHeader, naturalCompare, TreeTableHeader, useShellStorage } from "@mochi/web";
 import { Folder, Plus } from 'lucide-react';
 import { TreeRow } from "./tree-row";
+import { rankCompare } from "@/lib/rank";
 import type { ProjectDetails, ProjectObject, SortState, FieldOption } from "@/types";
 
 interface TreeViewProps {
@@ -147,7 +148,7 @@ function resolveGroupField(
   return match?.id || "";
 }
 
-function compareObjects<T extends { rank?: number; created?: number; updated?: number; number?: number; values: Record<string, string> }>(
+function compareObjects<T extends { rank?: string; created?: number; updated?: number; number?: number; values: Record<string, string> }>(
   a: T,
   b: T,
   sort?: SortState | null,
@@ -160,8 +161,8 @@ function compareObjects<T extends { rank?: number; created?: number; updated?: n
   let bVal: string | number;
 
   if (sortField === "rank") {
-    aVal = a.rank || 0;
-    bVal = b.rank || 0;
+    aVal = a.rank || "";
+    bVal = b.rank || "";
   } else if (sortField === "created") {
     aVal = a.created || 0;
     bVal = b.created || 0;
@@ -180,10 +181,16 @@ function compareObjects<T extends { rank?: number; created?: number; updated?: n
   if (typeof aVal === "number" && typeof bVal === "number") {
     return (aVal - bVal) * multiplier;
   }
+  // Rank keys are opaque fractional-index strings — compare BINARY (rankCompare),
+  // never naturalCompare (case/accent-insensitive + numeric-aware reorders them
+  // and lands dragged cards at the wrong slot, #53).
+  if (sortField === "rank") {
+    return rankCompare(String(aVal), String(bVal)) * multiplier;
+  }
   return naturalCompare(String(aVal), String(bVal)) * multiplier;
 }
 
-function sortObjects<T extends { rank?: number; created?: number; updated?: number; number?: number; values: Record<string, string> }>(
+function sortObjects<T extends { rank?: string; created?: number; updated?: number; number?: number; values: Record<string, string> }>(
   objects: T[],
   sort?: SortState | null,
 ): T[] {

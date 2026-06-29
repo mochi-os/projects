@@ -99,6 +99,201 @@ def maybe_resubscribe(a, project_id):
 	mochi.message.send(p2p_headers(user_id, project_id, "subscribe"), {"name": a.user.identity.name})
 	mochi.broadcast.touch(project_id)
 
+# --- Fractional-index rank keys (#53) ---------------------------------------
+# A reorder writes ONE row's key, computed between its neighbours, so per-row
+# last-write-wins converges under multi-master (no whole-scope renumber, no
+# whole-scope broadcast). ASCII-sorted base-62 alphabet, so SQLite BINARY order
+# == this order; non-numeric text stored in the INTEGER-affinity `rank` column
+# is kept as text, so no column rebuild is needed.
+# Canonical fractional indexing (Evan Wallace's algorithm): a key is an integer
+# header (length-prefixed magnitude) + a fractional part. Append/prepend
+# increment/decrement the header (base-62 counting -> logarithmic key growth);
+# only a true between-insert bisects the fraction. So append/prepend never need a
+# rebalance, and the only growth case is repeated insertion into the same gap.
+RANK_ALPHABET = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+RANK_HEADERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+RANK_SMALLEST = "A00000000000000000000000000"  # 'A' + 26 zeros: smallest integer header
+
+def rank_int_length(head):
+	i = RANK_HEADERS.index(head)
+	return (i - 26) + 2 if i >= 26 else (25 - i) + 2
+
+def rank_int_part(key):
+	return key[:rank_int_length(key[0])]
+
+def rank_increment(x):
+	# Next integer after header+digits x, or None on overflow.
+	head = x[0]
+	digits = [x[i] for i in range(1, len(x))]
+	carry = True
+	for i in range(len(digits) - 1, -1, -1):
+		if not carry:
+			break
+		d = RANK_ALPHABET.index(digits[i]) + 1
+		if d == 62:
+			digits[i] = RANK_ALPHABET[0]
+		else:
+			digits[i] = RANK_ALPHABET[d]
+			carry = False
+	if not carry:
+		return head + "".join(digits)
+	if head == "Z":
+		return "a" + RANK_ALPHABET[0]
+	if head == "z":
+		return None
+	h = RANK_HEADERS[RANK_HEADERS.index(head) + 1]
+	if RANK_HEADERS.index(h) >= 26:
+		digits.append(RANK_ALPHABET[0])
+	else:
+		digits.pop()
+	return h + "".join(digits)
+
+def rank_decrement(x):
+	# Previous integer before header+digits x, or None on underflow.
+	head = x[0]
+	digits = [x[i] for i in range(1, len(x))]
+	borrow = True
+	for i in range(len(digits) - 1, -1, -1):
+		if not borrow:
+			break
+		d = RANK_ALPHABET.index(digits[i]) - 1
+		if d == -1:
+			digits[i] = RANK_ALPHABET[61]
+		else:
+			digits[i] = RANK_ALPHABET[d]
+			borrow = False
+	if not borrow:
+		return head + "".join(digits)
+	if head == "a":
+		return "Z" + RANK_ALPHABET[61]
+	if head == "A":
+		return None
+	h = RANK_HEADERS[RANK_HEADERS.index(head) - 1]
+	if RANK_HEADERS.index(h) < 26:
+		digits.append(RANK_ALPHABET[61])
+	else:
+		digits.pop()
+	return h + "".join(digits)
+
+def rank_midpoint(a, b):
+	# A fractional string strictly between a and b (b None = open upper bound).
+	zero = RANK_ALPHABET[0]
+	if b != None and len(b) > 0:
+		n = 0
+		for _ in range(4096):
+			ca = a[n] if n < len(a) else zero
+			if ca != b[n]:
+				break
+			n += 1
+			if n >= len(b):
+				break
+		if n > 0:
+			return b[:n] + rank_midpoint(a[n:], b[n:])
+	da = RANK_ALPHABET.index(a[0]) if len(a) > 0 else 0
+	db = RANK_ALPHABET.index(b[0]) if (b != None and len(b) > 0) else 62
+	if db - da > 1:
+		return RANK_ALPHABET[(da + db) // 2]
+	if b != None and len(b) > 1:
+		return b[:1]
+	return RANK_ALPHABET[da] + rank_midpoint(a[1:] if len(a) > 0 else "", None)
+
+def rank_canonical(key):
+	# True if key is a valid canonical fractional-index key, vs a legacy INTEGER
+	# rank from before #53 (read from the DB as a Starlark int, or as a numeric
+	# string). TRANSITIONAL — remove with the tolerance guards in rank_between
+	# once every host has migrated.
+	if key == None or type(key) != "string" or len(key) == 0:
+		return False
+	if RANK_HEADERS.find(key[0]) < 0:
+		return False
+	return rank_int_length(key[0]) <= len(key)
+
+def rank_between(a, b):
+	# A key strictly between a and b (either None = before-all / after-all).
+	# TRANSITIONAL tolerance (#53): during the migrate-on-replica window a paired
+	# host may still hold legacy INTEGER ranks. A legacy neighbour can't be placed
+	# on the canonical scale, so treat it as an open boundary instead of crashing
+	# in rank_int_part — the position self-heals once both hosts converge on
+	# canonical keys. REMOVE these two guards (and rank_canonical) once all hosts
+	# are migrated and every rank is a canonical key.
+	if not rank_canonical(a):
+		a = None
+	if not rank_canonical(b):
+		b = None
+	if a == None and b == None:
+		return "a" + RANK_ALPHABET[0]
+	if a == None:
+		ib = rank_int_part(b)
+		fb = b[len(ib):]
+		if ib == RANK_SMALLEST:
+			return ib + rank_midpoint("", fb)
+		if ib < b:
+			return ib
+		return rank_decrement(ib)
+	if b == None:
+		ia = rank_int_part(a)
+		fa = a[len(ia):]
+		i = rank_increment(ia)
+		return (ia + rank_midpoint(fa, None)) if i == None else i
+	ia = rank_int_part(a)
+	fa = a[len(ia):]
+	ib = rank_int_part(b)
+	fb = b[len(ib):]
+	if ia == ib:
+		return ia + rank_midpoint(fa, fb)
+	i = rank_increment(ia)
+	if i != None and i < b:
+		return i
+	return ia + rank_midpoint(fa, None)
+
+def rank_move_key(project_id, object_id, field, target_value, scope_parent, pos):
+	# Fractional key for placing object_id at 1-based position `pos` within its
+	# scope (a status column, or a parent's children), from the neighbours either
+	# side of the drop slot. Reads only; the caller writes the one row.
+	if scope_parent != None:
+		others = mochi.db.rows("select id, rank from objects where project=? and parent=? and id!=? order by rank asc", project_id, scope_parent, object_id) or []
+	else:
+		others = mochi.db.rows("select o.id, o.rank from objects o left join \"values\" v on v.object = o.id and v.field=? where o.project=? and coalesce(v.value, '')=? and o.id!=? order by o.rank asc", field, project_id, target_value, object_id) or []
+	n = len(others)
+	if pos < 1:
+		pos = 1
+	if pos > n + 1:
+		pos = n + 1
+	before = others[pos - 2]["rank"] if pos >= 2 else None
+	after = others[pos - 1]["rank"] if (pos - 1) < n else None
+	if after == None:
+		# Appending to the end of this scope: anchor on the project-wide max so
+		# the minted key is globally unique (see rank_after_all). A pure increment
+		# of this scope's last re-mints keys that cards in other scopes still hold.
+		return rank_after_all(project_id, object_id)
+	return rank_between(before, after)
+
+def rank_after_all(project_id, exclude_id):
+	# A new rank key strictly greater than every existing key in the PROJECT
+	# (excluding exclude_id, the row being moved). Appends and creates anchor on
+	# the project-wide max — not a per-column/per-parent max — so a freshly minted
+	# end key is globally unique and can't collide with a key a card in another
+	# scope still holds. (The #53 duplicate-key source: incrementing a per-scope
+	# max re-mints keys departed cards keep; two columns whose local max was equal
+	# minted the same global key.) project-max >= any scope's last, so the new key
+	# still sorts to the end of the target scope.
+	if exclude_id != None:
+		row = mochi.db.row("select max(rank) as r from objects where project=? and id!=?", project_id, exclude_id)
+	else:
+		row = mochi.db.row("select max(rank) as r from objects where project=?", project_id)
+	return rank_between(row["r"] if (row and row["r"]) else None, None)
+
+def rank_resequence(project_id):
+	# Assign fresh, globally-unique sequential keys to every object in the project,
+	# preserving the current (rank, id) order (id breaks ties between duplicate
+	# keys). Deterministic and convergent across replicas; used by the #53
+	# backfill/repair migrations.
+	ids = mochi.db.rows("select id from objects where project=? order by rank, id", project_id) or []
+	previous = None
+	for row in ids:
+		previous = rank_between(previous, None)
+		mochi.db.execute("update objects set rank=? where id=?", previous, row["id"])
+
 # Create database with all 16 tables
 def database_create():
 	# 1. projects - the container, a Mochi entity
@@ -114,7 +309,8 @@ def database_create():
 		template_version integer not null default 0,
 		created integer not null,
 		updated integer not null,
-		synced integer not null default 0
+		synced integer not null default 0,
+		populated integer not null default 1
 	)""")
 	mochi.db.execute("create index if not exists projects_fingerprint on projects(fingerprint)")
 
@@ -344,6 +540,39 @@ def database_upgrade(version):
 		cols = [r["name"] for r in mochi.db.table("projects") or []]
 		if "counter" in cols:
 			mochi.db.execute("alter table projects drop column counter")
+
+	if version == 10:
+		# objects.rank becomes a fractional-index text key so a reorder writes ONE
+		# row and converges under multi-master (#53). Backfill per project, ordered
+		# by the existing integer rank (id tiebreak) so every replica's run agrees;
+		# within-column order is preserved by any global order respecting per-column
+		# rank order. Migrations run replication-suppressed, so these deterministic
+		# keys converge with no emitted ops. (Non-numeric text in the INTEGER-
+		# affinity column is stored as text, so no table rebuild is needed.)
+		project_ids = mochi.db.rows("select distinct project from objects") or []
+		for p in project_ids:
+			rank_resequence(p["project"])
+
+	if version == 11:
+		# Repair #53 duplicate keys: the original append path minted end keys by
+		# incrementing a per-column/per-parent max, so two scopes whose local max
+		# was equal produced the same global key (harmless only while the halves
+		# stay in different columns — a collision the moment one moves into the
+		# other's scope). Re-sequence every project to fresh globally-unique keys,
+		# preserving the current (rank, id) order. Appends now anchor on the
+		# project-wide max (rank_after_all), so duplicates can't reappear.
+		project_ids = mochi.db.rows("select distinct project from objects") or []
+		for p in project_ids:
+			rank_resequence(p["project"])
+
+	if version == 12:
+		# Add projects.populated: 0 while a freshly-subscribed project's bulk
+		# content is still arriving over P2P (set 1 by event_sync_batch), so the
+		# board shows a loading state instead of partial/empty data rather than a
+		# half-synced board. Existing rows already hold their data, hence default 1.
+		cols = [r["name"] for r in mochi.db.table("projects") or []]
+		if "populated" not in cols:
+			mochi.db.execute("alter table projects add column populated integer not null default 1")
 
 
 # ============================================================================
@@ -896,7 +1125,7 @@ def action_project_get(a):
 		a.error.label(400, "errors.project_id_required")
 		return
 
-	row = mochi.db.row("select id, name, description, prefix, owner, server, template, template_version, created, updated from projects where id=?", project_id)
+	row = mochi.db.row("select id, name, description, prefix, owner, server, template, template_version, created, updated, populated from projects where id=?", project_id)
 	if not row:
 		a.error.label(404, "errors.project_not_found")
 		return
@@ -992,6 +1221,7 @@ def action_project_get(a):
 			"template_version": row["template_version"],
 			"created": row["created"],
 			"updated": row["updated"],
+			"populated": row["populated"],
 			"access": access,
 		},
 		"classes": classes,
@@ -1679,8 +1909,7 @@ def action_object_create(a):
 	mochi.db.execute("update projects set updated=? where id=?", mochi.time.now(), project_id)
 
 	# Calculate initial rank (add to end of parent or project)
-	max_rank_row = mochi.db.row("select coalesce(max(rank), 0) as max_rank from objects where project=? and parent=?", project_id, parent)
-	initial_rank = (max_rank_row["max_rank"] if max_rank_row else 0) + 1
+	initial_rank = rank_after_all(project_id, None)
 
 	# Create object
 	object_id = mochi.uid()
@@ -1971,21 +2200,13 @@ def action_object_move(a):
 			if value:
 				mochi.db.execute("replace into \"values\" (object, field, value) values (?, ?, ?)", object_id, field, value)
 			if rank:
-				new_rank = int(rank)
 				old_value_row = mochi.db.row("select value from \"values\" where object=? and field=?", object_id, field)
 				old_value = old_value_row["value"] if old_value_row else ""
 				target_value = value if value else old_value
-				if sp != None:
-					objects_in_scope = mochi.db.rows("select o.id, o.rank from objects o where o.project=? and o.parent=? and o.id!=? order by o.rank asc", project_id, sp, object_id) or []
-				else:
-					objects_in_scope = mochi.db.rows("select o.id, o.rank from objects o left join \"values\" v on v.object = o.id and v.field=? where o.project=? and coalesce(v.value, '')=? and o.id!=? order by o.rank asc", field, project_id, target_value, object_id) or []
-				r = 1
-				for obj in objects_in_scope:
-					if r == new_rank:
-						r += 1
-					mochi.db.execute("update objects set rank=? where id=?", r, obj["id"])
-					r += 1
-				mochi.db.execute("update objects set rank=?, updated=? where id=?", new_rank, now, object_id)
+				# Fractional key between the neighbours at the drop slot (#53): one
+				# write, converges under multi-master — no whole-scope renumber.
+				new_key = rank_move_key(project_id, object_id, field, target_value, sp, int(rank))
+				mochi.db.execute("update objects set rank=?, updated=? where id=?", new_key, now, object_id)
 			if rf:
 				mochi.db.execute("replace into \"values\" (object, field, value) values (?, ?, ?)", object_id, rf, a.input("row_value"))
 			if a.input("promote") == "true":
@@ -2037,47 +2258,18 @@ def action_object_move(a):
 		mochi.db.execute("replace into \"values\" (object, field, value) values (?, ?, ?)", object_id, field, target_value)
 		log_activity(object_id, a.user.identity.id, "updated", field, old_value, target_value)
 
-	# Handle rank change
+	# Handle rank change. Fractional key between the neighbours at the drop slot
+	# (#53): one write, converges under multi-master — no whole-scope renumber.
 	scope_parent = a.input("scope_parent")
 	if a.input("rank") != None:
-		new_rank = int(new_rank)
-		# Shift other objects to make room
-		if value_changed or new_rank != old_rank:
-			if scope_parent != None:
-				# Scope renumbering to siblings of the same parent
-				objects_in_scope = mochi.db.rows("""
-					select o.id, o.rank from objects o
-					where o.project=? and o.parent=? and o.id!=?
-					order by o.rank asc
-				""", project_id, scope_parent, object_id) or []
-			else:
-				# Get all objects in the target column
-				objects_in_scope = mochi.db.rows("""
-					select o.id, o.rank from objects o
-					left join "values" v on v.object = o.id and v.field=?
-					where o.project=? and coalesce(v.value, '')=? and o.id!=?
-					order by o.rank asc
-				""", field, project_id, target_value, object_id) or []
-
-			# Renumber objects, inserting this one at the new position
-			rank = 1
-			for obj in objects_in_scope:
-				if rank == new_rank:
-					rank += 1  # Skip the position for our object
-				mochi.db.execute("update objects set rank=? where id=?", rank, obj["id"])
-				rank += 1
-
-			# Set our object's rank
-			mochi.db.execute("update objects set rank=? where id=?", new_rank, object_id)
+		new_key = rank_move_key(project_id, object_id, field, target_value, scope_parent, int(new_rank))
+		mochi.db.execute("update objects set rank=? where id=?", new_key, object_id)
 	elif value_changed:
-		# Moving to new column without specific rank - add to end
-		max_rank_row = mochi.db.row("""
-			select coalesce(max(o.rank), 0) as max_rank from objects o
-			left join "values" v on v.object = o.id and v.field=?
-			where o.project=? and coalesce(v.value, '')=? and o.id!=?
-		""", field, project_id, target_value, object_id)
-		new_rank = (max_rank_row["max_rank"] if max_rank_row else 0) + 1
-		mochi.db.execute("update objects set rank=? where id=?", new_rank, object_id)
+		# Moving to a new column without a specific rank — append to its end.
+		# Anchor on the project-wide max for a globally-unique key (see
+		# rank_after_all); project-max >= the column's last, so it still lands last.
+		new_key = rank_after_all(project_id, object_id)
+		mochi.db.execute("update objects set rank=? where id=?", new_key, object_id)
 
 	# Handle row field change (for swimlane drag-drop)
 	row_field = a.input("row_field")
@@ -2133,27 +2325,15 @@ def action_object_move(a):
 			"values": updated_values, "user": a.user.identity.id
 		})
 
-	# Broadcast rank changes as a single batched event. The previous shape
-	# broadcast one object/update per in-scope object, which on a project
-	# with N objects in the target scope and S subscribers wrote N log
-	# rows plus N*S queue inserts — for a busy column (~100 objects) and
-	# a popular project (~30 subscribers) this could take >10s and cause
-	# the originating user's optimistic UI update to be overwritten by
-	# stale refetches before the action returned.
+	# Only the moved object's fractional key changed (#53), so broadcast just that
+	# one row — no whole-scope read, no N-row replication. event_object_ranks
+	# applies each entry by id, so a single-element list converges everywhere.
 	if a.input("rank") != None:
-		if scope_parent != None:
-			all_in_scope = mochi.db.rows("select id, rank from objects where project=? and parent=? order by rank asc", project_id, scope_parent) or []
-		else:
-			all_in_scope = mochi.db.rows("""
-				select o.id, o.rank from objects o
-				left join "values" v on v.object = o.id and v.field=?
-				where o.project=? and coalesce(v.value, '')=?
-				order by o.rank asc
-			""", field, project_id, target_value) or []
-		if all_in_scope:
+		moved = mochi.db.row("select rank from objects where id=? and project=?", object_id, project_id)
+		if moved:
 			broadcast_event(project_id, "object/ranks", {
 				"project": project_id,
-				"ranks": [{"id": obj["id"], "rank": obj["rank"]} for obj in all_in_scope],
+				"ranks": [{"id": object_id, "rank": moved["rank"]}],
 				"user": a.user.identity.id,
 			})
 
@@ -4703,8 +4883,11 @@ def action_subscribe(a):
 	fp = mochi.entity.fingerprint(project_id) or ""
 
 	# Insert the remote project
+	# populated=0: the schema is fetched synchronously below, but the bulk
+	# object data arrives asynchronously via the owner's sync/batch. The board
+	# shows a loading state until event_sync_batch flips this to 1.
 	mochi.db.execute(
-		"insert into projects (id, name, description, prefix, owner, server, fingerprint, created, updated) values (?, ?, ?, ?, 0, ?, ?, ?, ?)",
+		"insert into projects (id, name, description, prefix, owner, server, fingerprint, created, updated, populated) values (?, ?, ?, ?, 0, ?, ?, ?, ?, 0)",
 		project_id, project_name, project_desc, project_prefix, server or "", fp, now, now
 	)
 
@@ -5367,6 +5550,10 @@ def event_sync_batch(e):
 			"insert or ignore into links (source, target, linktype) values (?, ?, ?)",
 			l["source"], l["target"], l.get("linktype", "relates")
 		)
+
+	# Mark the subscription's initial bulk content as arrived so the board stops
+	# showing its loading state and renders the now-complete data.
+	mochi.db.execute("update projects set populated=1 where id=? and owner=0", project_id)
 
 	# Notify UI
 	fp = mochi.entity.fingerprint(project_id)
@@ -6810,8 +6997,7 @@ def do_object_create(project_id, project, params, user_id):
 	# max() an index seek.
 	new_counter = mochi.db.row("select coalesce(max(number), 0) + 1 as next from objects where project=?", project_id)["next"]
 	mochi.db.execute("update projects set updated=? where id=?", mochi.time.now(), project_id)
-	max_rank_row = mochi.db.row("select coalesce(max(rank), 0) as max_rank from objects where project=? and parent=?", project_id, parent)
-	initial_rank = (max_rank_row["max_rank"] if max_rank_row else 0) + 1
+	initial_rank = rank_after_all(project_id, None)
 	object_id = mochi.uid()
 	now = mochi.time.now()
 	mochi.db.execute(
@@ -6945,36 +7131,16 @@ def do_object_move(project_id, project, params, user_id):
 		log_activity(object_id, user_id, "updated", field, old_value, target_value)
 	scope_parent = params.get("scope_parent", None)
 	if new_rank != None:
-		new_rank = int(new_rank)
-		if value_changed or new_rank != old_rank:
-			if scope_parent != None:
-				objects_in_scope = mochi.db.rows("""
-					select o.id, o.rank from objects o
-					where o.project=? and o.parent=? and o.id!=?
-					order by o.rank asc
-				""", project_id, scope_parent, object_id) or []
-			else:
-				objects_in_scope = mochi.db.rows("""
-					select o.id, o.rank from objects o
-					left join "values" v on v.object = o.id and v.field=?
-					where o.project=? and coalesce(v.value, '')=? and o.id!=?
-					order by o.rank asc
-				""", field, project_id, target_value, object_id) or []
-			rank = 1
-			for obj in objects_in_scope:
-				if rank == new_rank:
-					rank += 1
-				mochi.db.execute("update objects set rank=? where id=?", rank, obj["id"])
-				rank += 1
-			mochi.db.execute("update objects set rank=? where id=?", new_rank, object_id)
+		# Fractional key between the neighbours at the drop slot (#53): one write,
+		# converges under multi-master — no whole-scope renumber.
+		new_key = rank_move_key(project_id, object_id, field, target_value, scope_parent, int(new_rank))
+		mochi.db.execute("update objects set rank=? where id=?", new_key, object_id)
 	elif value_changed:
-		max_rank_row = mochi.db.row("""
-			select coalesce(max(o.rank), 0) as max_rank from objects o
-			left join "values" v on v.object = o.id and v.field=?
-			where o.project=? and coalesce(v.value, '')=? and o.id!=?
-		""", field, project_id, target_value, object_id)
-		new_rank = (max_rank_row["max_rank"] if max_rank_row else 0) + 1
-		mochi.db.execute("update objects set rank=? where id=?", new_rank, object_id)
+		# Moving to a new column without a specific rank — append to its end.
+		# Anchor on the project-wide max for a globally-unique key (see
+		# rank_after_all); project-max >= the column's last, so it still lands last.
+		new_key = rank_after_all(project_id, object_id)
+		mochi.db.execute("update objects set rank=? where id=?", new_key, object_id)
 	row_field = params.get("row_field")
 	row_value = params.get("row_value")
 	if check_length(row_field, 100):
@@ -7026,22 +7192,14 @@ def do_object_move(project_id, project, params, user_id):
 		owner_id = get_owner_identity(project_id)
 		notify_watchers(object_id, project_id, owner_id, user_id, mochi.app.label("notifications.body.updated"))
 
-	# Broadcast rank changes as a single batched event — see the matching
-	# comment in action_object_move for why we don't loop here.
+	# Only the moved object's fractional key changed (#53) — broadcast just that
+	# one row; event_object_ranks applies each entry by id.
 	if new_rank != None:
-		if scope_parent != None:
-			all_in_scope = mochi.db.rows("select id, rank from objects where project=? and parent=? order by rank asc", project_id, scope_parent) or []
-		else:
-			all_in_scope = mochi.db.rows("""
-				select o.id, o.rank from objects o
-				left join "values" v on v.object = o.id and v.field=?
-				where o.project=? and coalesce(v.value, '')=?
-				order by o.rank asc
-			""", field, project_id, target_value) or []
-		if all_in_scope:
+		moved = mochi.db.row("select rank from objects where id=? and project=?", object_id, project_id)
+		if moved:
 			broadcast_event(project_id, "object/ranks", {
 				"project": project_id,
-				"ranks": [{"id": obj["id"], "rank": obj["rank"]} for obj in all_in_scope],
+				"ranks": [{"id": object_id, "rank": moved["rank"]}],
 				"user": user_id,
 			})
 
@@ -7920,8 +8078,10 @@ def _subscribe_to_project(user, project_id, server):
 	now = mochi.time.now()
 	fp = mochi.entity.fingerprint(project_id) or ""
 
+	# populated=0: schema fetched synchronously above, objects arrive async via
+	# the owner's sync/batch (set 1 by event_sync_batch).
 	mochi.db.execute(
-		"insert into projects (id, name, description, prefix, owner, server, fingerprint, created, updated) values (?, ?, ?, ?, 0, ?, ?, ?, ?)",
+		"insert into projects (id, name, description, prefix, owner, server, fingerprint, created, updated, populated) values (?, ?, ?, ?, 0, ?, ?, ?, ?, 0)",
 		project_id, project_name, project_desc, project_prefix, server or "", fp, now, now
 	)
 

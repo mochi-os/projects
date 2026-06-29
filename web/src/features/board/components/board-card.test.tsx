@@ -13,15 +13,19 @@ import {
   createMockObject,
   createMockField,
   createMockOption,
+  createMockClass,
 } from "@/test/test-utils";
 import { BoardCard } from "./board-card";
 
 describe("BoardCard", () => {
+  // The card derives its header from the class's title field, so provide a
+  // classMap (class "task" → title field "title") and a matching field.
   const defaultProps = {
     object: createMockObject(),
-    fields: [],
+    fields: [createMockField({ id: "title", name: "Title" })],
     options: {},
     prefix: "TEST",
+    classMap: { task: createMockClass() },
   };
 
   it("should render object title", () => {
@@ -197,8 +201,10 @@ describe("BoardCard", () => {
       />,
     );
 
+    // The option colour renders as a leading dot, not as the label's text color.
     const badge = screen.getByText("Bug");
-    expect(badge).toHaveStyle({ color: "#6b7280" });
+    const dot = badge.querySelector("span.rounded-full");
+    expect(dot).toHaveStyle({ backgroundColor: "#6b7280" });
   });
 
   it("should render multiple card fields", () => {
@@ -249,56 +255,11 @@ describe("BoardCard", () => {
     expect(screen.getByText("Urgent")).toBeInTheDocument();
   });
 
-  it("should show priority color strip when priority is set", () => {
-    const object = createMockObject({
-      values: {
-        title: "Test Task",
-        priority: "high",
-      },
-    });
-
-    const priorityOptions = [
-      createMockOption({ id: "high", name: "High", colour: "#ef4444" }),
-    ];
-
-    const { container } = render(
-      <BoardCard
-        {...defaultProps}
-        object={object}
-        options={{ priority: priorityOptions }}
-      />,
-    );
-
-    // Look for the priority strip element
-    const strip = container.querySelector(".w-1.rounded-r-full");
-    expect(strip).toBeInTheDocument();
-    expect(strip).toHaveStyle({ backgroundColor: "rgb(239, 68, 68)" });
-  });
-
-  it("should show parent icon when parent is set", () => {
-    const parentObject = createMockObject({
-      id: "parent-1",
-      class: "epic",
-      number: 5,
-      values: { title: "Parent Epic" },
-    });
-
-    const childObject = createMockObject({
-      parent: "parent-1",
-      values: { title: "Child Task" },
-    });
-
-    const objectMap = { "parent-1": parentObject };
-
-    const { container } = render(
-      <BoardCard
-        {...defaultProps}
-        object={childObject}
-        objectMap={objectMap}
-      />,
-    );
-
-    // Parent indicator icon should be rendered
-    expect(container.querySelector("svg")).toBeInTheDocument();
-  });
+  // Removed: "should show priority color strip" and "should show parent icon".
+  // Both asserted markup the current BoardCard no longer renders — there is no
+  // priority colour strip (priority is now a normal enumerated badge) and no
+  // parent-indicator icon. The tests had never run (blocked by the macro import
+  // error) so they encoded an earlier design; rather than test fictional markup
+  // they are dropped. Priority badge rendering is covered by the enumerated
+  // field tests above.
 });

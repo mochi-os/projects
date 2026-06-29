@@ -360,10 +360,13 @@ describe("projectsApi", () => {
 
       await projectsApi.createComment("proj123", "obj1", "New comment");
 
-      expect(projectsRequest.post).toHaveBeenCalledWith(
-        "proj123/-/objects/obj1/comments/create",
-        { content: "New comment", parent: undefined },
-      );
+      // createComment posts multipart FormData (to carry optional attachments),
+      // so assert on the FormData entries rather than a plain object.
+      const [url, body] = vi.mocked(projectsRequest.post).mock.calls[0];
+      expect(url).toBe("proj123/-/objects/obj1/comments/create");
+      expect(body).toBeInstanceOf(FormData);
+      expect((body as FormData).get("content")).toBe("New comment");
+      expect((body as FormData).get("parent")).toBeNull();
     });
 
     it("should create a reply comment", async () => {
@@ -372,10 +375,11 @@ describe("projectsApi", () => {
 
       await projectsApi.createComment("proj123", "obj1", "Reply", "c1");
 
-      expect(projectsRequest.post).toHaveBeenCalledWith(
-        "proj123/-/objects/obj1/comments/create",
-        { content: "Reply", parent: "c1" },
-      );
+      const [url, body] = vi.mocked(projectsRequest.post).mock.calls[0];
+      expect(url).toBe("proj123/-/objects/obj1/comments/create");
+      expect(body).toBeInstanceOf(FormData);
+      expect((body as FormData).get("content")).toBe("Reply");
+      expect((body as FormData).get("parent")).toBe("c1");
     });
   });
 

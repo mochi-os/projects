@@ -139,10 +139,13 @@ export function BoardColumn({
   onDragPreviewRef.current = onDragPreview;
 
   useEffect(() => {
-    // Clear preview on dragend (cancelled drag, escape key, etc.)
+    // Reset this column's drag source on dragend. The preview teardown is owned
+    // by board-container (data-driven: cleared when the moved row's data lands,
+    // or immediately on a cancelled drag), so it isn't cleared here — clearing on
+    // dragend reveals the card in its source column for a frame before the move
+    // applies (the flash).
     const onDragEnd = () => {
       dragSourceRef.current = null;
-      onDragPreviewRef.current?.(null);
     };
     document.addEventListener("dragend", onDragEnd);
     return () => {
@@ -401,12 +404,13 @@ export function BoardColumn({
     clearDragState();
     const objectId = e.dataTransfer.getData("text/plain");
     if (objectId && onDrop) {
-      // Trigger the optimistic update first, then clear the preview, so React
-      // batches both into a single render with the card already at its new position.
       onDrop(objectId, id, rank, rowId, dropOnCardId, childReorder?.parentId, childReorder?.rank);
     }
-    // Clear the drag preview in the same event handler so React batches it.
-    onDragPreviewRef.current?.(null);
+    // Do NOT clear the preview here: the optimistic move's data lands a render
+    // later (not batched with this handler), so clearing now reveals the card in
+    // its source column for that gap (the flash). board-container tears the
+    // preview down data-driven — when the moved row's data lands, or immediately
+    // on a cancelled drag (dragend with dropEffect "none").
   }, [id, onDrop, clearDragState]);
 
   // Render a gap placeholder where the dragged card will land.

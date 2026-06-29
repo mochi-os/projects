@@ -38,6 +38,7 @@ import {
   Tooltip,
   TooltipTrigger,
   TooltipContent,
+  textUnchanged,
 } from "@mochi/web";
 import projectsApi from "@/api/projects";
 import type { ProjectAccess, ProjectDetails } from "@/types";
@@ -380,6 +381,7 @@ export function ObjectDetailPanel({
   ];
 
   const handleFieldChange = (fieldId: string, value: string) => {
+    if (textUnchanged(value, data.values[fieldId] ?? "")) return;
     updateValueMutation.mutate({ field: fieldId, value });
   };
 
@@ -512,11 +514,11 @@ export function ObjectDetailPanel({
                 ) : (
                   <Select
                     value={object.parent || "_none_"}
-                    onValueChange={(value) =>
-                      updateParentMutation.mutate(
-                        value === "_none_" ? "" : value,
-                      )
-                    }
+                    onValueChange={(value) => {
+                      const newParent = value === "_none_" ? "" : value;
+                      if (textUnchanged(newParent, object.parent ?? "")) return;
+                      updateParentMutation.mutate(newParent);
+                    }}
                     disabled={updateParentMutation.isPending}
                   >
                     <SelectTrigger className="w-full">

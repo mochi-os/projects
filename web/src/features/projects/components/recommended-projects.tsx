@@ -5,7 +5,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { Trans, useLingui } from '@lingui/react/macro'
-import { Button, GeneralError, Skeleton, toastAction, getErrorMessage } from "@mochi/web";
+import { Button, GeneralError, Skeleton, toastAction, getErrorMessage, callWithServerFallback } from "@mochi/web";
 import { FolderKanban, Loader2 } from "lucide-react";
 import projectsApi from "@/api/projects";
 
@@ -59,7 +59,12 @@ export function RecommendedProjects({
   const handleSubscribe = async (project: RecommendedProject) => {
     setPendingId(project.id);
     try {
-      await toastAction(projectsApi.subscribe(project.id, project.server || undefined), {
+      await toastAction(
+        callWithServerFallback(
+          (server) => projectsApi.subscribe(project.id, server),
+          project.server || undefined,
+        ),
+        {
         loading: t`Subscribing...`,
         success: t`Subscribed to ${project.name}`,
         error: (e) => getErrorMessage(e, t`Failed to subscribe`),

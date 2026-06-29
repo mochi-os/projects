@@ -8,7 +8,7 @@ import { useLingui } from '@lingui/react/macro'
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { useQuery } from '@tanstack/react-query'
 import { FolderKanban } from 'lucide-react'
-import { FindEntityPage, toastAction, getErrorMessage } from '@mochi/web'
+import { FindEntityPage, toastAction, getErrorMessage, callWithServerFallback } from '@mochi/web'
 import { useProjectsStore } from '@/stores/projects-store'
 import { APP_ROUTES } from '@/config/routes'
 import endpoints from '@/api/endpoints'
@@ -52,7 +52,12 @@ function FindProjectsPage() {
   const handleSubscribe = useCallback(
     async (projectId: string, entity: { fingerprint?: string; server?: string }) => {
       try {
-        await toastAction(projectsApi.subscribe(projectId, entity.server), {
+        await toastAction(
+          callWithServerFallback(
+            (server) => projectsApi.subscribe(projectId, server),
+            entity.server,
+          ),
+          {
           loading: t`Subscribing...`,
           success: t`Subscribed`,
           error: (e) => getErrorMessage(e, t`Failed to subscribe`),

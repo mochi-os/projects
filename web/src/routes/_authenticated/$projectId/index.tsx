@@ -33,6 +33,7 @@ import {
   TooltipTrigger,
   TooltipContent,
   LoadingContent,
+  arraysEqual,
 } from "@mochi/web";
 import { Check, Columns3, Ellipsis, FolderKanban, GripVertical, LogOut, Plus, Settings, Settings2, SlidersHorizontal, X } from "lucide-react";
 import projectsApi from "@/api/projects";
@@ -650,15 +651,26 @@ export function ProjectPageContent({ project, projectId, search, initialObjectId
 
   // Get default column value (first option of column field for the view's class)
   const viewClasses = activeView?.classes;
+  const boardClass = useMemo(() => {
+    if (viewClasses?.length) {
+      return project.classes.find((c) => c.id === viewClasses[0]) ?? project.classes[0];
+    }
+    return project.classes[0];
+  }, [project.classes, viewClasses]);
+
   const getDefaultColumnValue = useCallback(() => {
-    const effectiveType = viewClasses && viewClasses.length > 0
-      ? viewClasses[0]
-      : project.classes[0]?.id;
+    const effectiveType = boardClass?.id;
     if (effectiveType && project.options[effectiveType]?.[columnField]?.length > 0) {
       return [{ field: columnField, value: project.options[effectiveType][columnField][0].id }];
     }
     return undefined;
-  }, [project.classes, project.options, columnField, viewClasses]);
+  }, [boardClass, project.options, columnField]);
+
+  const baselineColumnOrder = useMemo(() => {
+    const effectiveType = boardClass?.id;
+    if (!effectiveType || !columnField) return [];
+    return project.options[effectiveType]?.[columnField]?.map((o) => o.id) ?? [];
+  }, [boardClass, project.options, columnField]);
 
   const handleOpenCreateDialog = useCallback(() => {
     if (project.classes.length === 0) {
@@ -786,10 +798,9 @@ export function ProjectPageContent({ project, projectId, search, initialObjectId
   };
 
   const handleAddColumn = (name: string, colour: string) => {
-    const defaultClass = project.classes[0];
-    if (!defaultClass) return;
+    if (!boardClass) return;
     createColumnMutation.mutate({
-      classId: defaultClass.id,
+      classId: boardClass.id,
       fieldId: columnField,
       name,
       colour,
@@ -801,10 +812,13 @@ export function ProjectPageContent({ project, projectId, search, initialObjectId
   };
 
   const handleSaveColumnOrder = () => {
-    const defaultClass = project.classes[0];
-    if (!defaultClass || !pendingColumnOrder) return;
+    if (!boardClass || !pendingColumnOrder) return;
+    if (arraysEqual(pendingColumnOrder, baselineColumnOrder)) {
+      handleCancelReorder();
+      return;
+    }
     reorderColumnsMutation.mutate({
-      classId: defaultClass.id,
+      classId: boardClass.id,
       fieldId: columnField,
       order: pendingColumnOrder,
     });
@@ -933,7 +947,11 @@ export function ProjectPageContent({ project, projectId, search, initialObjectId
             <Button
               size="sm"
               onClick={handleSaveColumnOrder}
-              disabled={!pendingColumnOrder || reorderColumnsMutation.isPending}
+              disabled={
+                !pendingColumnOrder ||
+                reorderColumnsMutation.isPending ||
+                arraysEqual(pendingColumnOrder, baselineColumnOrder)
+              }
             >
               <Check className="size-4" />
               <Trans>Save</Trans>

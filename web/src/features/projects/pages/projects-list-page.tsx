@@ -121,7 +121,7 @@ export function ProjectsListPage() {
                   title={project.name}
                   highlighted={isSubscribed}
                   renderLink={(className) => (
-                    <Link to="/$projectId" params={{ projectId: project.fingerprint }} className={className}>
+                    <Link preload={false} to="/$projectId" params={{ projectId: project.fingerprint }} className={className}>
                       <span className="sr-only"><Trans>Open {project.name}</Trans></span>
                     </Link>
                   )}

@@ -1965,10 +1965,8 @@ def action_object_create(a):
 				rank = d.get("rank", 0)
 				created = d.get("created") or now
 				updated = d.get("updated") or now
-				mochi.db.execute(
-					"insert or ignore into objects (id, project, class, number, parent, rank, created, updated) values (?, ?, ?, ?, ?, ?, ?, ?)",
-					d["id"], project_id, obj_class, d.get("number", 0), parent, rank, created, updated
-				)
+				if not mochi.db.exists("select 1 from objects_all where id=?", d["id"]):
+					object_merge({"id": d["id"], "project": project_id, "class": obj_class, "number": d.get("number", 0), "parent": parent, "rank": rank, "created": created, "updated": updated})
 				if title and title_field:
 					value_merge(d["id"], title_field, title)
 				reg_set("projects", ["id"], "id=?", [project_id], {"updated": now})
@@ -5450,12 +5448,8 @@ def event_sync_batch(e):
 					reg_merge("view_classes", ["project", "view", "class"], {"project": project_id, "view": v["id"], "class": class_id})
 	# Process objects
 	for obj in (e.content("objects") or []):
-		mochi.db.execute(
-			"insert or ignore into objects (id, project, class, number, parent, rank, created, updated) values (?, ?, ?, ?, ?, ?, ?, ?)",
-			obj["id"], project_id, obj.get("class", ""), obj.get("number", 0),
-			obj.get("parent", ""), obj.get("rank", 0),
-			obj.get("created", now), obj.get("updated", now)
-		)
+		if not mochi.db.exists("select 1 from objects_all where id=?", obj["id"]):
+			object_merge({"id": obj["id"], "project": project_id, "class": obj.get("class", ""), "number": obj.get("number", 0), "parent": obj.get("parent", ""), "rank": obj.get("rank", 0), "created": obj.get("created", now), "updated": obj.get("updated", now)})
 		# Values
 		values = obj.get("values")
 		if values:
@@ -5463,11 +5457,8 @@ def event_sync_batch(e):
 				value_merge(obj["id"], field, value)
 		# Comments
 		for c in (obj.get("comments") or []):
-			mochi.db.execute(
-				"insert or ignore into comments (id, object, parent, author, name, content, created, edited) values (?, ?, ?, ?, ?, ?, ?, ?)",
-				c["id"], obj["id"], c.get("parent", ""),
-				c.get("author", ""), c.get("name", ""), c.get("content", ""), c.get("created", now), c.get("edited", 0)
-			)
+			if not mochi.db.exists("select 1 from comments_all where id=?", c["id"]):
+				comment_merge({"id": c["id"], "object": obj["id"], "parent": c.get("parent", ""), "author": c.get("author", ""), "name": c.get("name", ""), "content": c.get("content", ""), "created": c.get("created", now), "edited": c.get("edited", 0)})
 		# Activity history
 		for act in (obj.get("activity") or []):
 			mochi.db.execute(
@@ -5550,12 +5541,8 @@ def event_object_create(e):
 	if class_id and not mochi.db.exists("select 1 from classes where project=? and id=?", project_id, class_id):
 		request_resync(project_id)
 		return
-	mochi.db.execute(
-		"insert or ignore into objects (id, project, class, number, parent, rank, created, updated) values (?, ?, ?, ?, ?, ?, ?, ?)",
-		object_id, project_id, class_id,
-		e.content("number") or 0, e.content("parent") or "", e.content("rank") or 0,
-		e.content("created") or mochi.time.now(), e.content("updated") or mochi.time.now()
-	)
+	if not mochi.db.exists("select 1 from objects_all where id=?", object_id):
+		object_merge({"id": object_id, "project": project_id, "class": class_id, "number": e.content("number") or 0, "parent": e.content("parent") or "", "rank": e.content("rank") or 0, "created": e.content("created") or mochi.time.now(), "updated": e.content("updated") or mochi.time.now()})
 	# Store field values included in the broadcast
 	values = e.content("values") or {}
 	for field, value in values.items():
@@ -5798,10 +5785,8 @@ def event_comment_submit(e):
 	if not content.strip():
 		return
 	now = mochi.time.now()
-	mochi.db.execute(
-		"insert or ignore into comments (id, object, parent, author, name, content, created, edited) values (?, ?, ?, ?, ?, ?, ?, ?)",
-		comment_id, object_id, parent, sender, name, content.strip(), now, 0
-	)
+	if not mochi.db.exists("select 1 from comments_all where id=?", comment_id):
+		comment_merge({"id": comment_id, "object": object_id, "parent": parent, "author": sender, "name": name, "content": content.strip(), "created": now, "edited": 0})
 	# Store attachment metadata from the subscriber's event
 	attachments = e.content("attachments") or []
 	if attachments:
@@ -5898,12 +5883,8 @@ def event_comment_create(e):
 	if not object_id or not mochi.db.exists("select 1 from objects where id=? and project=?", object_id, project_id):
 		request_resync(project_id)
 		return
-	mochi.db.execute(
-		"insert or ignore into comments (id, object, parent, author, name, content, created, edited) values (?, ?, ?, ?, ?, ?, ?, ?)",
-		comment_id, object_id, e.content("parent") or "",
-		e.content("author") or "", e.content("name") or "",
-		e.content("content") or "", e.content("created") or mochi.time.now(), 0
-	)
+	if not mochi.db.exists("select 1 from comments_all where id=?", comment_id):
+		comment_merge({"id": comment_id, "object": object_id, "parent": e.content("parent") or "", "author": e.content("author") or "", "name": e.content("name") or "", "content": e.content("content") or "", "created": e.content("created") or mochi.time.now(), "edited": 0})
 	# Store attachment metadata from the event
 	attachments = e.content("attachments") or []
 	if attachments:
@@ -6760,10 +6741,8 @@ def do_comment_create(project_id, project, params, user_id, user_name):
 		return {"error": "errors.content_too_long", "code": 400}
 	comment_id = params.get("id") or mochi.uid()
 	now = mochi.time.now()
-	mochi.db.execute(
-		"insert or ignore into comments (id, object, parent, author, name, content, created, edited) values (?, ?, ?, ?, ?, ?, ?, ?)",
-		comment_id, object_id, parent, user_id, user_name, content.strip(), now, 0
-	)
+	if not mochi.db.exists("select 1 from comments_all where id=?", comment_id):
+		comment_merge({"id": comment_id, "object": object_id, "parent": parent, "author": user_id, "name": user_name, "content": content.strip(), "created": now, "edited": 0})
 	object_set(object_id, {"updated": now})
 	log_activity(object_id, user_id, "commented")
 	# Auto-watch commenter on owner's server
@@ -7968,10 +7947,8 @@ def _create_project_object(user, project_id, obj_class, title, parent="", values
 	rank = d.get("rank", 0)
 	created = d.get("created") or now
 	updated = d.get("updated") or now
-	mochi.db.execute(
-		"insert or ignore into objects (id, project, class, number, parent, rank, created, updated) values (?, ?, ?, ?, ?, ?, ?, ?)",
-		d["id"], project_id, obj_class, d.get("number", 0), parent, rank, created, updated
-	)
+	if not mochi.db.exists("select 1 from objects_all where id=?", d["id"]):
+		object_merge({"id": d["id"], "project": project_id, "class": obj_class, "number": d.get("number", 0), "parent": parent, "rank": rank, "created": created, "updated": updated})
 	if title and title_field:
 		value_merge(d["id"], title_field, title)
 	reg_set("projects", ["id"], "id=?", [project_id], {"updated": now})

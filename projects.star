@@ -705,18 +705,32 @@ def comments_remove_object(object_id):
 	for row in mochi.db.rows("select id, object, parent, author, name, content, created, edited from comments_all where object=? and removed=0", object_id):
 		mochi.db.tombstone("comments_all", ["id"], row)
 
-def objects_remove_project(project_id):
-	for row in mochi.db.rows("select id, project, class, number, parent, rank, created, updated from objects_all where project=? and removed=0", project_id):
-		mochi.db.tombstone("objects_all", ["id"], row)
-
-def comments_remove_project(project_id):
-	for row in mochi.db.rows("select id, object, parent, author, name, content, created, edited from comments_all where object in (select id from objects_all where project=?) and removed=0", project_id):
-		mochi.db.tombstone("comments_all", ["id"], row)
-
-def values_remove_project(project_id):
-	for row in mochi.db.rows("select object, field from values_all where object in (select id from objects_all where project=?) and removed=0", project_id):
-		mochi.db.tombstone("values_all", ["object", "field"], {"object": row["object"], "field": row["field"]})
-
+# Remove every local row of a project — physical deletes, NOT tombstones. Used
+# only by the whole-project cleanup paths (unsubscribe, owner delete, the
+# owner's deleted notice): those are per-host housekeeping, not user-intent
+# removals that must converge, and tombstones there poison a later
+# re-subscribe — the sync import (and the old insert-or-ignore) skips rows
+# that still exist in <t>_all, so a re-subscribed project would come back as
+# an empty shell with every object and comment invisible (#466 follow-up).
+# Each execute pair-replicates as one statement, so the user's own hosts purge
+# identically. Children before parents so the foreign keys stay satisfied.
+def purge_project(project_id):
+	mochi.db.execute("delete from requests_all where object in (select id from objects_all where project=?)", project_id)
+	mochi.db.execute("delete from watchers_all where object in (select id from objects_all where project=?)", project_id)
+	mochi.db.execute("delete from activity where object in (select id from objects_all where project=?)", project_id)
+	mochi.db.execute("delete from comments_all where object in (select id from objects_all where project=?)", project_id)
+	mochi.db.execute("delete from values_all where object in (select id from objects_all where project=?)", project_id)
+	mochi.db.execute("delete from links_all where project=?", project_id)
+	mochi.db.execute("delete from objects_all where project=?", project_id)
+	mochi.db.execute("delete from view_fields_all where project=?", project_id)
+	mochi.db.execute("delete from view_classes_all where project=?", project_id)
+	mochi.db.execute("delete from views_all where project=?", project_id)
+	mochi.db.execute("delete from options_all where project=?", project_id)
+	mochi.db.execute("delete from fields_all where project=?", project_id)
+	mochi.db.execute("delete from hierarchy_all where project=?", project_id)
+	mochi.db.execute("delete from classes_all where project=?", project_id)
+	mochi.db.execute("delete from subscribers_all where project=?", project_id)
+	mochi.db.execute("delete from projects_all where id=?", project_id)
 
 # ============================================================================
 # Templates
@@ -1437,33 +1451,17 @@ def action_project_delete(a):
 		a.error.label(403, "errors.access_denied")
 		return
 
-	# Delete in reverse dependency order
 	delete_project_comment_attachments(project_id)
 	for obj in (mochi.db.rows("select id from objects where project=?", project_id) or []):
 		mochi.attachment.clear(obj["id"])
-	reg_remove("watchers", ["object", "user"], "object in (select id from objects where project=?)", [project_id])
-	mochi.db.execute("delete from activity where object in (select id from objects where project=?)", project_id)
-	comments_remove_project(project_id)
-	values_remove_project(project_id)
-	reg_remove("requests", ["id"], "object in (select id from objects where project=?)", [project_id])
-	reg_remove("links", ["source", "target", "linktype"], "project=?", [project_id])
-	objects_remove_project(project_id)
-	reg_remove("view_fields", ["project", "view", "field"], "project=?", [project_id])
-	reg_remove("view_classes", ["project", "view", "class"], "project=?", [project_id])
-	reg_remove("views", ["project", "id"], "project=?", [project_id])
-	reg_remove("options", ["project", "class", "field", "id"], "project=?", [project_id])
-	reg_remove("fields", ["project", "class", "id"], "project=?", [project_id])
-	reg_remove("hierarchy", ["project", "class", "parent"], "project=?", [project_id])
-	reg_remove("classes", ["project", "id"], "project=?", [project_id])
-	# Notify subscribers that project is being deleted (before removing subscriber
-	# list). Send from the project entity so receivers can verify the sender,
-	# matching broadcast_event and the verify_subscription check.
+	# Notify subscribers that project is being deleted (before purging the
+	# subscriber list). Send from the project entity so receivers can verify
+	# the sender, matching broadcast_event and the verify_subscription check.
 	subscribers = mochi.db.rows("select id from subscribers where project=?", project_id)
 	for sub in subscribers:
 		mochi.message.send(p2p_headers(project_id, sub["id"], "deleted"), {"project": project_id})
 
-	reg_remove("subscribers", ["project", "id"], "project=?", [project_id])
-	reg_remove("projects", ["id"], "id=?", [project_id])
+	purge_project(project_id)
 	# Delete entity
 	mochi.entity.delete(project_id)
 
@@ -1524,8 +1522,11 @@ def check_project_access(user_id, project_id, level):
 				return True
 	return False
 
-# Forward a subscriber action to the project owner via P2P
-def forward_to_owner(a, project_id, action, params):
+# Forward a subscriber action to the project owner via P2P. `handled` names
+# error keys the CALLER recovers from itself — those return the raw error
+# dict instead of writing the response, so the caller can fall back (e.g. the
+# phantom-comment cleanup in action_comment_delete).
+def forward_to_owner(a, project_id, action, params, handled=None):
 	# Authorship is set from the authenticated P2P sender on the owner side, so
 	# we only pass the display name here, not an identity the owner would trust.
 	params["_name"] = a.user.identity.name
@@ -1541,6 +1542,8 @@ def forward_to_owner(a, project_id, action, params):
 		a.error.label(502, "errors.could_not_reach_project_owner")
 		return None
 	if result.get("error"):
+		if handled and result["error"] in handled:
+			return {"error": result["error"], "code": result.get("code", 500), "args": result.get("args")}
 		# The error field is a label key; resolve it in the requester's language,
 		# with any ICU args the owner returned alongside it.
 		a.error.label(result.get("code", 500), result["error"], **(result.get("args") or {}))
@@ -3064,10 +3067,24 @@ def action_comment_delete(a):
 	comment_id = a.input("comment")
 
 	if project["owner"] != 1:
-		return forward_to_owner(a, project_id, "comment/delete", {
+		result = forward_to_owner(a, project_id, "comment/delete", {
 			"project": project_id, "object": object_id,
 			"comment": comment_id,
-		})
+		}, handled=["errors.comment_not_found"])
+		if result and result.get("error") == "errors.comment_not_found":
+			# The owner has no such comment. If a local copy authored by this
+			# user exists, it is a phantom — an optimistic write whose submit
+			# never reached the owner (e.g. the 2.63 outage) — and no remote
+			# delete can ever succeed, so clean it up locally instead of
+			# leaving it stuck forever (#466). The local tombstone replicates
+			# only to this user's own hosts, where the phantom lives.
+			comment = mochi.db.row("select * from comments where id=? and object=?", comment_id, object_id)
+			if comment and comment["author"] == a.user.identity.id:
+				delete_comment_tree(comment_id, project_id)
+				return {"data": {"success": True}}
+			a.error.label(404, "errors.comment_not_found")
+			return
+		return result
 
 	if not check_project_access(a.user.identity.id, project_id, "comment"):
 		a.error.label(403, "errors.access_denied")
@@ -4933,34 +4950,10 @@ def action_unsubscribe(a):
 		a.error.label(400, "errors.you_own_this_project")
 		return
 
-	# Delete all local data for this remote project.
-	#
-	# Each mochi.db.execute is a pair-replicated sql/op event - one
-	# per call, regardless of how many rows it touches. The previous
-	# shape (per-object loop, 6 statements each) emitted ~1000
-	# sql/op events for a 166-object project and took ~10s to drain
-	# through the per-(target, from-entity) bucket cap=1 (task #94).
-	# The subquery shape below collapses each table's deletion to
-	# one event regardless of object count. Receiver applies the
-	# same SQL; the pair-replicated `objects` rows match locally so
-	# the subquery resolves to the same id set.
+	# Delete all local data for this remote project — physical purge, so a
+	# later re-subscribe imports cleanly (see purge_project).
 	delete_project_comment_attachments(project_id)
-	reg_remove("requests", ["id"], "object in (select id from objects where project=?)", [project_id])
-	reg_remove("watchers", ["object", "user"], "object in (select id from objects where project=?)", [project_id])
-	mochi.db.execute("delete from activity where object in (select id from objects where project=?)", project_id)
-	comments_remove_project(project_id)
-	values_remove_project(project_id)
-	reg_remove("links", ["source", "target", "linktype"], "source in (select id from objects where project=?) or target in (select id from objects where project=?)", [project_id, project_id])
-	objects_remove_project(project_id)
-	reg_remove("view_fields", ["project", "view", "field"], "project=?", [project_id])
-	reg_remove("view_classes", ["project", "view", "class"], "project=?", [project_id])
-	reg_remove("views", ["project", "id"], "project=?", [project_id])
-	reg_remove("options", ["project", "class", "field", "id"], "project=?", [project_id])
-	reg_remove("fields", ["project", "class", "id"], "project=?", [project_id])
-	reg_remove("hierarchy", ["project", "class", "parent"], "project=?", [project_id])
-	reg_remove("classes", ["project", "id"], "project=?", [project_id])
-	reg_remove("subscribers", ["project", "id"], "project=?", [project_id])
-	reg_remove("projects", ["id"], "id=?", [project_id])
+	purge_project(project_id)
 	# Send P2P unsubscribe message
 	mochi.message.send(p2p_headers(user_id, project_id, "unsubscribe"), {})
 
@@ -5366,34 +5359,10 @@ def event_deleted(e):
 	if not project:
 		return
 
-	# Delete all local data for this remote project.
-	#
-	# Each mochi.db.execute is a pair-replicated sql/op event - one
-	# per call, regardless of how many rows it touches. The previous
-	# shape (per-object loop, 6 statements each) emitted ~1000
-	# sql/op events for a 166-object project and took ~10s to drain
-	# through the per-(target, from-entity) bucket cap=1 (task #94).
-	# The subquery shape below collapses each table's deletion to
-	# one event regardless of object count. Receiver applies the
-	# same SQL; the pair-replicated `objects` rows match locally so
-	# the subquery resolves to the same id set.
+	# Delete all local data for this remote project — physical purge, so a
+	# later re-share imports cleanly (see purge_project).
 	delete_project_comment_attachments(project_id)
-	reg_remove("requests", ["id"], "object in (select id from objects where project=?)", [project_id])
-	reg_remove("watchers", ["object", "user"], "object in (select id from objects where project=?)", [project_id])
-	mochi.db.execute("delete from activity where object in (select id from objects where project=?)", project_id)
-	comments_remove_project(project_id)
-	values_remove_project(project_id)
-	reg_remove("links", ["source", "target", "linktype"], "source in (select id from objects where project=?) or target in (select id from objects where project=?)", [project_id, project_id])
-	objects_remove_project(project_id)
-	reg_remove("view_fields", ["project", "view", "field"], "project=?", [project_id])
-	reg_remove("view_classes", ["project", "view", "class"], "project=?", [project_id])
-	reg_remove("views", ["project", "id"], "project=?", [project_id])
-	reg_remove("options", ["project", "class", "field", "id"], "project=?", [project_id])
-	reg_remove("fields", ["project", "class", "id"], "project=?", [project_id])
-	reg_remove("hierarchy", ["project", "class", "parent"], "project=?", [project_id])
-	reg_remove("classes", ["project", "id"], "project=?", [project_id])
-	reg_remove("subscribers", ["project", "id"], "project=?", [project_id])
-	reg_remove("projects", ["id"], "id=?", [project_id])
+	purge_project(project_id)
 # ============================================================================
 # Content Sync Event Handlers (received by subscribers)
 # ============================================================================

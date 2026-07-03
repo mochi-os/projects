@@ -49,11 +49,11 @@ msgstr "{0} 设置"
 msgid "+{0} ahead"
 msgstr "+{0} 个领先"
 
-#: src/features/objects/components/comment-thread.tsx:135
+#: src/features/objects/components/comment-thread.tsx:136
 msgid "+{totalDescendants} more replies"
 msgstr "+{totalDescendants} 条回复"
 
-#: src/features/objects/components/comment-thread.tsx:134
+#: src/features/objects/components/comment-thread.tsx:135
 msgid "1 reply"
 msgstr "1 条回复"
 
@@ -113,17 +113,17 @@ msgstr "账户类型"
 msgid "Account verified"
 msgstr "账户已验证"
 
-#: src/features/objects/components/object-detail-panel.tsx:377
+#: src/features/objects/components/object-detail-panel.tsx:406
 msgid "Activity"
 msgstr "动态"
 
 #: ../../../lib/web/src/features/accounts/account-add.tsx:196
-#: src/features/objects/components/field-editor.tsx:538
+#: src/features/objects/components/field-editor.tsx:545
 #: src/features/requests/components/request-panel.tsx:103
 msgid "Add"
 msgstr "添加"
 
-#: src/features/objects/components/comment-list.tsx:195
+#: src/features/objects/components/comment-list.tsx:205
 msgid "Add a comment..."
 msgstr "添加评论..."
 
@@ -148,7 +148,7 @@ msgstr "添加账户"
 msgid "Add an account to receive notifications and use services."
 msgstr "添加账户以接收通知并使用服务。"
 
-#: src/features/objects/components/field-editor.tsx:508
+#: src/features/objects/components/field-editor.tsx:515
 msgid "Add checklist item"
 msgstr "添加清单项"
 
@@ -158,8 +158,8 @@ msgstr "添加清单项"
 msgid "Add class"
 msgstr "添加类"
 
-#: src/routes/_authenticated/$projectId/index.tsx:873
-#: src/routes/_authenticated/$projectId/index.tsx:1048
+#: src/routes/_authenticated/$projectId/index.tsx:887
+#: src/routes/_authenticated/$projectId/index.tsx:1066
 msgid "Add column"
 msgstr "添加列"
 
@@ -169,7 +169,7 @@ msgstr "添加列"
 msgid "Add field"
 msgstr "添加字段"
 
-#: src/features/objects/components/field-editor.tsx:526
+#: src/features/objects/components/field-editor.tsx:533
 msgid "Add item..."
 msgstr "添加条目..."
 
@@ -240,11 +240,11 @@ msgstr "允许合并请求"
 msgid "Allow sort by"
 msgstr "允许排序方式"
 
-#: ../../../lib/web/src/lib/api-client.ts:192
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:159
 msgid "An error occurred"
 msgstr "发生错误"
 
-#: ../../../lib/web/src/lib/api-client.ts:255
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:241
 msgid "An unexpected error occurred"
 msgstr "发生意外错误"
 
@@ -253,7 +253,7 @@ msgstr "发生意外错误"
 msgid "Are you sure you want to delete \"{0}\"?"
 msgstr "确定要删除 \"{0}\" 吗?"
 
-#: src/features/objects/components/object-detail-panel.tsx:616
+#: src/features/objects/components/object-detail-panel.tsx:656
 msgid "Are you sure you want to delete \"{title}\"? This action cannot be undone."
 msgstr "确定要删除 \"{title}\" 吗?此操作无法撤销。"
 
@@ -261,7 +261,7 @@ msgstr "确定要删除 \"{title}\" 吗?此操作无法撤销。"
 msgid "Are you sure you want to delete the \"{name}\" column? This cannot be undone."
 msgstr "确定要删除列 \"{name}\" 吗?此操作无法撤销。"
 
-#: src/features/objects/components/comment-thread.tsx:367
+#: src/features/objects/components/comment-thread.tsx:376
 msgid "Are you sure you want to delete this comment? This will also delete all replies."
 msgstr "确定要删除此评论吗?这将同时删除所有回复。"
 
@@ -285,13 +285,13 @@ msgstr "升序"
 msgid "Ascending"
 msgstr "升序"
 
-#: src/features/objects/components/comment-list.tsx:250
-#: src/features/objects/components/comment-list.tsx:255
+#: src/features/objects/components/comment-list.tsx:260
+#: src/features/objects/components/comment-list.tsx:265
 msgid "Attach comment files"
 msgstr "附加评论文件"
 
-#: src/features/objects/components/comment-thread.tsx:321
-#: src/features/objects/components/comment-thread.tsx:326
+#: src/features/objects/components/comment-thread.tsx:330
+#: src/features/objects/components/comment-thread.tsx:335
 msgid "Attach reply files"
 msgstr "附加回复文件"
 
@@ -323,7 +323,7 @@ msgid "Back to project"
 msgstr "返回项目"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:67
-#: src/routes/_authenticated/$projectId/index.tsx:115
+#: src/routes/_authenticated/$projectId/index.tsx:116
 msgid "Back to projects"
 msgstr "返回项目列表"
 
@@ -368,15 +368,15 @@ msgstr "可作为子项的父级"
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:89
 #: src/features/board/components/board-column.tsx:606
 #: src/features/editor/components/option-dialog.tsx:146
-#: src/features/objects/components/comment-thread.tsx:174
+#: src/features/objects/components/comment-thread.tsx:175
 #: src/features/projects/components/create-project-dialog.tsx:219
 #: src/routes/_authenticated/$projectId/design.tsx:343
-#: src/routes/_authenticated/$projectId/index.tsx:931
+#: src/routes/_authenticated/$projectId/index.tsx:945
 msgid "Cancel"
 msgstr "取消"
 
-#: src/features/objects/components/comment-thread.tsx:337
-#: src/features/objects/components/comment-thread.tsx:342
+#: src/features/objects/components/comment-thread.tsx:346
+#: src/features/objects/components/comment-thread.tsx:351
 msgid "Cancel reply"
 msgstr "取消回复"
 
@@ -528,7 +528,7 @@ msgid "Comment and view"
 msgstr "评论和查看"
 
 #. placeholder {0}: data.comment_count || 0
-#: src/features/objects/components/object-detail-panel.tsx:363
+#: src/features/objects/components/object-detail-panel.tsx:392
 msgid "Comments ({0})"
 msgstr "评论 ({0})"
 
@@ -680,14 +680,14 @@ msgstr "默认排序"
 
 #: src/features/board/components/board-column.tsx:561
 #: src/features/board/components/board-column.tsx:622
-#: src/features/objects/components/comment-thread.tsx:235
-#: src/features/objects/components/comment-thread.tsx:368
+#: src/features/objects/components/comment-thread.tsx:244
+#: src/features/objects/components/comment-thread.tsx:377
 #: src/features/objects/components/object-attachments.tsx:143
 #: src/features/objects/components/object-attachments.tsx:148
 #: src/features/objects/components/object-attachments.tsx:182
 #: src/features/objects/components/object-attachments.tsx:187
 #: src/features/objects/components/object-attachments.tsx:229
-#: src/features/objects/components/object-detail-panel.tsx:617
+#: src/features/objects/components/object-detail-panel.tsx:657
 #: src/features/requests/components/request-panel.tsx:132
 #: src/routes/_authenticated/$projectId_.settings.tsx:361
 msgid "Delete"
@@ -705,7 +705,7 @@ msgstr "删除类"
 msgid "Delete column"
 msgstr "删除列"
 
-#: src/features/objects/components/comment-thread.tsx:366
+#: src/features/objects/components/comment-thread.tsx:375
 msgid "Delete comment"
 msgstr "删除评论"
 
@@ -713,9 +713,9 @@ msgstr "删除评论"
 msgid "Delete field"
 msgstr "删除字段"
 
-#: src/features/objects/components/object-detail-panel.tsx:435
-#: src/features/objects/components/object-detail-panel.tsx:440
-#: src/features/objects/components/object-detail-panel.tsx:615
+#: src/features/objects/components/object-detail-panel.tsx:466
+#: src/features/objects/components/object-detail-panel.tsx:471
+#: src/features/objects/components/object-detail-panel.tsx:655
 msgid "Delete item"
 msgstr "删除条目"
 
@@ -775,7 +775,7 @@ msgstr "描述"
 
 #: src/routes/_authenticated/$projectId/design.tsx:63
 #: src/routes/_authenticated/$projectId/design.tsx:131
-#: src/routes/_authenticated/$projectId/index.tsx:888
+#: src/routes/_authenticated/$projectId/index.tsx:902
 msgid "Design"
 msgstr "设计"
 
@@ -819,8 +819,8 @@ msgstr "方向"
 msgid "Dismiss"
 msgstr "关闭"
 
-#: src/routes/_authenticated/$projectId/index.tsx:956
-#: src/routes/_authenticated/$projectId/index.tsx:961
+#: src/routes/_authenticated/$projectId/index.tsx:974
+#: src/routes/_authenticated/$projectId/index.tsx:979
 msgid "Dismiss board hint"
 msgstr "关闭看板提示"
 
@@ -831,11 +831,11 @@ msgstr "显示移动端侧边栏。"
 #: src/features/editor/components/edit-dialogs.tsx:532
 #: src/features/editor/components/edit-dialogs.tsx:922
 #: src/features/editor/components/edit-dialogs.tsx:1228
-#: src/features/objects/components/object-detail-panel.tsx:449
+#: src/features/objects/components/object-detail-panel.tsx:480
 msgid "Done"
 msgstr "完成"
 
-#: src/routes/_authenticated/$projectId/index.tsx:947
+#: src/routes/_authenticated/$projectId/index.tsx:965
 msgid "Double click on a column to add content"
 msgstr "双击列以添加内容"
 
@@ -857,7 +857,7 @@ msgstr "下载失败"
 msgid "Draft"
 msgstr "草稿"
 
-#: src/routes/_authenticated/$projectId/index.tsx:927
+#: src/routes/_authenticated/$projectId/index.tsx:941
 msgid "Drag columns to re-order them"
 msgstr "拖动列以重新排序"
 
@@ -869,7 +869,7 @@ msgstr "重复"
 msgid "Dyslexia-friendly"
 msgstr "阅读障碍友好"
 
-#: src/features/objects/components/comment-thread.tsx:224
+#: src/features/objects/components/comment-thread.tsx:233
 msgid "Edit"
 msgstr "编辑"
 
@@ -923,7 +923,7 @@ msgstr "请输入您的身份验证器代码"
 msgid "Entity ID"
 msgstr "实体 ID"
 
-#: src/features/objects/components/object-detail-panel.tsx:314
+#: src/features/objects/components/object-detail-panel.tsx:343
 msgid "Error"
 msgstr "错误"
 
@@ -982,7 +982,7 @@ msgstr "创建视图失败"
 msgid "Failed to delete attachment"
 msgstr "删除附件失败"
 
-#: src/features/objects/components/comment-list.tsx:130
+#: src/features/objects/components/comment-list.tsx:132
 msgid "Failed to delete comment"
 msgstr "删除评论失败"
 
@@ -1006,12 +1006,12 @@ msgstr "导出设计失败"
 msgid "Failed to import design"
 msgstr "导入设计失败"
 
-#: src/features/objects/components/object-detail-panel.tsx:315
+#: src/features/objects/components/object-detail-panel.tsx:344
 msgid "Failed to load item"
 msgstr "加载条目失败"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:43
-#: src/routes/_authenticated/$projectId/index.tsx:79
+#: src/routes/_authenticated/$projectId/index.tsx:80
 msgid "Failed to load project"
 msgstr "加载项目失败"
 
@@ -1027,7 +1027,7 @@ msgstr "加载项目失败"
 msgid "Failed to merge"
 msgstr "合并失败"
 
-#: src/features/objects/components/comment-list.tsx:93
+#: src/features/objects/components/comment-list.tsx:95
 msgid "Failed to post comment"
 msgstr "发布评论失败"
 
@@ -1066,7 +1066,7 @@ msgid "Failed to subscribe"
 msgstr "订阅失败"
 
 #: src/features/projects/pages/projects-list-page.tsx:177
-#: src/routes/_authenticated/$projectId/index.tsx:568
+#: src/routes/_authenticated/$projectId/index.tsx:569
 msgid "Failed to unsubscribe"
 msgstr "取消订阅失败"
 
@@ -1078,7 +1078,7 @@ msgstr "更新访问级别失败"
 msgid "Failed to update category"
 msgstr "更新分类失败"
 
-#: src/features/objects/components/comment-list.tsx:113
+#: src/features/objects/components/comment-list.tsx:115
 msgid "Failed to update comment"
 msgstr "更新评论失败"
 
@@ -1228,7 +1228,7 @@ msgstr "嵌入"
 msgid "Interests"
 msgstr "兴趣"
 
-#: src/features/objects/components/field-editor.tsx:369
+#: src/features/objects/components/field-editor.tsx:376
 msgid "Invalid date"
 msgstr "日期无效"
 
@@ -1240,7 +1240,7 @@ msgstr "无效的 JSON 文件"
 msgid "Invalid verification code"
 msgstr "验证码无效"
 
-#: src/features/objects/components/object-detail-panel.tsx:393
+#: src/features/objects/components/object-detail-panel.tsx:424
 msgid "Item details"
 msgstr "条目详情"
 
@@ -1292,11 +1292,11 @@ msgstr "正在加载内容…"
 msgid "Loading diff..."
 msgstr "正在加载差异..."
 
-#: src/features/objects/components/object-detail-panel.tsx:295
+#: src/features/objects/components/object-detail-panel.tsx:324
 msgid "Loading item"
 msgstr "正在加载条目"
 
-#: src/features/objects/components/object-detail-panel.tsx:296
+#: src/features/objects/components/object-detail-panel.tsx:325
 msgid "Loading item details"
 msgstr "正在加载条目详情"
 
@@ -1369,7 +1369,7 @@ msgstr "合并提交"
 msgid "Merge requests"
 msgstr "合并请求"
 
-#: src/features/objects/components/object-detail-panel.tsx:370
+#: src/features/objects/components/object-detail-panel.tsx:399
 msgid "Merge requests ({requestCount})"
 msgstr "合并请求 ({requestCount})"
 
@@ -1420,18 +1420,18 @@ msgstr "名称"
 msgid "Name is required"
 msgstr "名称为必填项"
 
-#: ../../../lib/web/src/lib/api-client.ts:300
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:288
 msgid "Network error"
 msgstr "网络错误"
 
 #: ../../../lib/web/src/components/ui/sort-selector.tsx:43
 #: src/features/objects/components/create-object-dialog.tsx:333
-#: src/routes/_authenticated/$projectId/index.tsx:827
-#: src/routes/_authenticated/$projectId/index.tsx:845
+#: src/routes/_authenticated/$projectId/index.tsx:841
+#: src/routes/_authenticated/$projectId/index.tsx:859
 msgid "New"
 msgstr "新建"
 
-#: src/routes/_authenticated/$projectId/index.tsx:824
+#: src/routes/_authenticated/$projectId/index.tsx:838
 msgid "New {className}"
 msgstr "新建 {className}"
 
@@ -1476,7 +1476,7 @@ msgstr "无更改可显示"
 msgid "No changes were found for the selected comparison."
 msgstr "所选对比中未发现任何更改。"
 
-#: src/features/objects/components/comment-list.tsx:279
+#: src/features/objects/components/comment-list.tsx:289
 msgid "No comments yet"
 msgstr "暂无评论"
 
@@ -1504,7 +1504,7 @@ msgstr "无匹配的对象"
 msgid "No merge requests"
 msgstr "无合并请求"
 
-#: src/features/objects/components/field-editor.tsx:269
+#: src/features/objects/components/field-editor.tsx:276
 msgid "No people found"
 msgstr "未找到任何人"
 
@@ -1566,9 +1566,9 @@ msgstr "无浏览量"
 #: src/features/editor/components/edit-dialogs.tsx:782
 #: src/features/objects/components/create-object-dialog.tsx:389
 #: src/features/objects/components/create-object-dialog.tsx:396
-#: src/features/objects/components/object-detail-panel.tsx:510
-#: src/features/objects/components/object-detail-panel.tsx:523
-#: src/features/objects/components/object-detail-panel.tsx:528
+#: src/features/objects/components/object-detail-panel.tsx:548
+#: src/features/objects/components/object-detail-panel.tsx:561
+#: src/features/objects/components/object-detail-panel.tsx:566
 msgid "None"
 msgstr "无"
 
@@ -1655,7 +1655,7 @@ msgstr "打开导航菜单"
 msgid "Open option actions"
 msgstr "打开选项操作"
 
-#: src/routes/_authenticated/$projectId/index.tsx:853
+#: src/routes/_authenticated/$projectId/index.tsx:867
 msgid "Open page actions"
 msgstr "打开页面操作"
 
@@ -1697,7 +1697,7 @@ msgid "Owner"
 msgstr "所有者"
 
 #: src/features/objects/components/create-object-dialog.tsx:381
-#: src/features/objects/components/object-detail-panel.tsx:506
+#: src/features/objects/components/object-detail-panel.tsx:544
 msgid "Parent"
 msgstr "父级"
 
@@ -1721,12 +1721,12 @@ msgstr "模式(正则表达式)"
 msgid "Permanently delete this project and all its content."
 msgstr "永久删除此项目及其所有内容。"
 
-#: src/routes/_authenticated/$projectId/index.tsx:665
-#: src/routes/_authenticated/$projectId/index.tsx:699
+#: src/routes/_authenticated/$projectId/index.tsx:677
+#: src/routes/_authenticated/$projectId/index.tsx:711
 msgid "Please add one or more classes to the project design."
 msgstr "请在项目设计中添加一个或多个类。"
 
-#: ../../../lib/web/src/lib/api-client.ts:301
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:289
 msgid "Please check your internet connection and try again."
 msgstr "请检查您的网络连接后重试。"
 
@@ -1755,7 +1755,7 @@ msgid "Profile"
 msgstr "个人资料"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:65
-#: src/routes/_authenticated/$projectId/index.tsx:113
+#: src/routes/_authenticated/$projectId/index.tsx:114
 msgid "Project"
 msgstr "项目"
 
@@ -1795,7 +1795,7 @@ msgstr "项目已更新"
 msgid "Projects"
 msgstr "项目"
 
-#: src/features/objects/components/object-detail-panel.tsx:358
+#: src/features/objects/components/object-detail-panel.tsx:387
 msgid "Properties"
 msgstr "属性"
 
@@ -1807,7 +1807,7 @@ msgstr "凸起"
 msgid "Re-link your accounts on this server"
 msgstr "在此服务器上重新关联账户"
 
-#: src/routes/_authenticated/$projectId/index.tsx:877
+#: src/routes/_authenticated/$projectId/index.tsx:891
 msgid "Re-order columns"
 msgstr "重新排序列"
 
@@ -1857,10 +1857,10 @@ msgstr "24 小时内显示相对时间,否则显示绝对时间"
 #: ../../../lib/web/src/features/access/access-list.tsx:265
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:180
 #: src/features/editor/components/add-dialogs.tsx:188
-#: src/features/objects/components/comment-list.tsx:223
-#: src/features/objects/components/comment-list.tsx:228
-#: src/features/objects/components/comment-thread.tsx:285
-#: src/features/objects/components/comment-thread.tsx:290
+#: src/features/objects/components/comment-list.tsx:233
+#: src/features/objects/components/comment-list.tsx:238
+#: src/features/objects/components/comment-thread.tsx:294
+#: src/features/objects/components/comment-thread.tsx:299
 #: src/features/objects/components/create-object-dialog.tsx:453
 #: src/features/objects/components/create-object-dialog.tsx:458
 msgid "Remove"
@@ -1886,7 +1886,7 @@ msgstr "移除字段 {0}"
 msgid "Remove interest"
 msgstr "移除兴趣"
 
-#: src/features/objects/components/field-editor.tsx:492
+#: src/features/objects/components/field-editor.tsx:499
 msgid "Remove item"
 msgstr "移除条目"
 
@@ -1924,12 +1924,12 @@ msgstr "替换设计?"
 msgid "Replacing..."
 msgstr "正在替换..."
 
-#: src/features/objects/components/comment-thread.tsx:211
+#: src/features/objects/components/comment-thread.tsx:220
 msgid "Reply"
 msgstr "回复"
 
 #. placeholder {0}: comment.name || comment.author
-#: src/features/objects/components/comment-thread.tsx:246
+#: src/features/objects/components/comment-thread.tsx:255
 msgid "Reply to {0}..."
 msgstr "回复 {0}..."
 
@@ -1986,8 +1986,8 @@ msgstr "星期六"
 #: ../../../lib/web/src/components/ui/editable-field-row.tsx:122
 #: ../../../lib/web/src/components/ui/secret-field.tsx:77
 #: src/features/editor/components/option-dialog.tsx:150
-#: src/features/objects/components/comment-thread.tsx:186
-#: src/routes/_authenticated/$projectId/index.tsx:939
+#: src/features/objects/components/comment-thread.tsx:195
+#: src/routes/_authenticated/$projectId/index.tsx:957
 msgid "Save"
 msgstr "保存"
 
@@ -2103,8 +2103,8 @@ msgstr "选择站点方向"
 msgid "Select theme preference"
 msgstr "选择主题偏好"
 
-#: src/features/objects/components/field-editor.tsx:189
-#: src/features/objects/components/field-editor.tsx:268
+#: src/features/objects/components/field-editor.tsx:196
+#: src/features/objects/components/field-editor.tsx:275
 msgid "Select..."
 msgstr "选择..."
 
@@ -2124,8 +2124,8 @@ msgstr "衬线体"
 msgid "Server"
 msgstr "服务器"
 
-#: ../../../lib/web/src/lib/api-client.ts:259
-#: ../../../lib/web/src/lib/api-client.ts:284
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:245
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:271
 msgid "Server error"
 msgstr "服务器错误"
 
@@ -2134,7 +2134,7 @@ msgstr "服务器错误"
 msgid "Server rules"
 msgstr "服务器规则"
 
-#: ../../../lib/web/src/lib/api-client.ts:227
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:209
 msgid "Session expired"
 msgstr "会话已过期"
 
@@ -2154,7 +2154,7 @@ msgstr "正在设置访问权限..."
 #: src/routes/_authenticated/$projectId_.settings.tsx:76
 #: src/routes/_authenticated/$projectId_.settings.tsx:171
 #: src/routes/_authenticated/$projectId_.settings.tsx:194
-#: src/routes/_authenticated/$projectId/index.tsx:898
+#: src/routes/_authenticated/$projectId/index.tsx:912
 msgid "Settings"
 msgstr "设置"
 
@@ -2227,7 +2227,7 @@ msgstr "分割"
 msgid "Squash and merge"
 msgstr "压缩并合并"
 
-#: src/features/objects/components/comment-list.tsx:280
+#: src/features/objects/components/comment-list.tsx:290
 msgid "Start the discussion by adding the first comment."
 msgstr "添加第一条评论以开始讨论。"
 
@@ -2235,8 +2235,8 @@ msgstr "添加第一条评论以开始讨论。"
 msgid "Stay tuned though!"
 msgstr "敬请期待!"
 
-#: src/features/objects/components/object-detail-panel.tsx:416
-#: src/features/objects/components/object-detail-panel.tsx:425
+#: src/features/objects/components/object-detail-panel.tsx:447
+#: src/features/objects/components/object-detail-panel.tsx:456
 msgid "Stop watching"
 msgstr "停止关注"
 
@@ -2244,13 +2244,13 @@ msgstr "停止关注"
 msgid "Subject"
 msgstr "主题"
 
-#: src/features/objects/components/comment-list.tsx:265
-#: src/features/objects/components/comment-list.tsx:270
+#: src/features/objects/components/comment-list.tsx:275
+#: src/features/objects/components/comment-list.tsx:280
 msgid "Submit comment"
 msgstr "提交评论"
 
-#: src/features/objects/components/comment-thread.tsx:352
-#: src/features/objects/components/comment-thread.tsx:357
+#: src/features/objects/components/comment-thread.tsx:361
+#: src/features/objects/components/comment-thread.tsx:366
 msgid "Submit reply"
 msgstr "提交回复"
 
@@ -2353,7 +2353,7 @@ msgid "This will permanently delete \"{projectName}\" and all its objects, comme
 msgstr "这将永久删除“{projectName}”及其所有对象、评论和附件。此操作无法撤销。"
 
 #. placeholder {0}: project.project.name
-#: src/routes/_authenticated/$projectId/index.tsx:1055
+#: src/routes/_authenticated/$projectId/index.tsx:1073
 msgid "This will remove \"{0}\" from your sidebar and stop updates for this project."
 msgstr "这将从您的侧边栏中移除“{0}”并停止此项目的更新。"
 
@@ -2459,7 +2459,7 @@ msgstr "输入以搜索用户"
 msgid "Type to search..."
 msgstr "输入以搜索..."
 
-#: ../../../lib/web/src/lib/api-client.ts:280
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:267
 msgid "Unable to connect to remote server"
 msgstr "无法连接到远程服务器"
 
@@ -2487,22 +2487,22 @@ msgstr "美国"
 #: src/features/projects/pages/projects-list-page.tsx:147
 #: src/features/projects/pages/projects-list-page.tsx:166
 #: src/features/projects/pages/projects-list-page.tsx:168
-#: src/routes/_authenticated/$projectId/index.tsx:904
-#: src/routes/_authenticated/$projectId/index.tsx:1056
+#: src/routes/_authenticated/$projectId/index.tsx:918
+#: src/routes/_authenticated/$projectId/index.tsx:1074
 msgid "Unsubscribe"
 msgstr "取消订阅"
 
-#: src/routes/_authenticated/$projectId/index.tsx:1054
+#: src/routes/_authenticated/$projectId/index.tsx:1072
 msgid "Unsubscribe from project?"
 msgstr "取消订阅项目?"
 
 #: src/features/projects/pages/projects-list-page.tsx:176
-#: src/routes/_authenticated/$projectId/index.tsx:567
+#: src/routes/_authenticated/$projectId/index.tsx:568
 msgid "Unsubscribed"
 msgstr "已取消订阅"
 
 #: src/features/projects/pages/projects-list-page.tsx:175
-#: src/routes/_authenticated/$projectId/index.tsx:566
+#: src/routes/_authenticated/$projectId/index.tsx:567
 msgid "Unsubscribing..."
 msgstr "正在取消订阅..."
 
@@ -2582,7 +2582,7 @@ msgstr "查看全部"
 msgid "View all notifications"
 msgstr "查看所有通知"
 
-#: src/features/objects/components/object-detail-panel.tsx:394
+#: src/features/objects/components/object-detail-panel.tsx:425
 msgid "View and edit item details"
 msgstr "查看并编辑条目详情"
 
@@ -2594,7 +2594,7 @@ msgstr "视图控制"
 msgid "View only"
 msgstr "仅查看"
 
-#: src/routes/_authenticated/$projectId/index.tsx:862
+#: src/routes/_authenticated/$projectId/index.tsx:876
 msgid "View options"
 msgstr "查看选项"
 
@@ -2602,8 +2602,8 @@ msgstr "查看选项"
 msgid "Views"
 msgstr "查看"
 
-#: src/features/objects/components/object-detail-panel.tsx:416
-#: src/features/objects/components/object-detail-panel.tsx:425
+#: src/features/objects/components/object-detail-panel.tsx:447
+#: src/features/objects/components/object-detail-panel.tsx:456
 msgid "Watch"
 msgstr "关注"
 
@@ -2627,7 +2627,7 @@ msgstr "网站正在维护中!"
 msgid "Wednesday"
 msgstr "星期三"
 
-#: src/routes/_authenticated/$projectId/index.tsx:101
+#: src/routes/_authenticated/$projectId/index.tsx:102
 msgid "You don't have access to this project."
 msgstr "您无权访问此项目。"
 

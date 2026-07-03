@@ -581,6 +581,14 @@ def database_upgrade(version):
 		# collaborative EAV converges across a project's host set.
 		eav_register()
 
+	if version == 14:
+		# _REG_COLS has since grown to cover every table (projects, classes,
+		# links, watchers, ...), but DBs that ran migration 13 under the old
+		# three-table set never got the new registers, so every reg_* write to
+		# them failed with "no such table". Re-run the conversion; it is
+		# idempotent per table.
+		eav_register()
+
 # --- EAV LWW-Registers ------------------------------------------------------
 # objects / values / comments live on <t>_all register tables (per-key Lamport
 # version + writer + removed tombstone); the <t> views expose removed=0 and are
@@ -1164,6 +1172,253 @@ def action_design_import(a):
 	reg_set("projects", ["id"], "id=?", [project_id], {"template": template_id, "template_version": template_version})
 
 	return {"data": {"success": True}}
+
+# Export the project's data - objects with field values and comments, plus
+# links - as JSON. The design is exported separately via design/export; the
+# two snapshots together fully reproduce a project. Watchers, activity,
+# requests, and attachments are not included. Objects are ordered by rank so
+# an import preserves their order. Object numbers are informational: an
+# import assigns fresh ones.
+def action_data_export(a):
+
+	project_id = resolve_project(a)
+	if not project_id:
+		a.error.label(400, "errors.project_id_required")
+		return
+
+	project = get_project(project_id)
+	if not project:
+		a.error.label(404, "errors.project_not_found")
+		return
+
+	if project["owner"] != 1:
+		a.error.label(400, "errors.cannot_export_remote_project_data")
+		return
+
+	if not check_project_access(a.user.identity.id, project_id, "view"):
+		a.error.label(403, "errors.access_denied")
+		return
+
+	objects = []
+	for row in mochi.db.rows("select id, class, number, parent, created, updated from objects where project=? order by rank, id", project_id) or []:
+		object = {
+			"id": row["id"],
+			"class": row["class"],
+			"number": row["number"],
+			"created": row["created"],
+			"updated": row["updated"],
+		}
+		if row["parent"]:
+			object["parent"] = row["parent"]
+		values = {}
+		for v in mochi.db.rows("select field, value from \"values\" where object=?", row["id"]) or []:
+			if v["value"] != "":
+				values[v["field"]] = v["value"]
+		if values:
+			object["values"] = values
+		comments = []
+		for c in mochi.db.rows("select id, parent, author, name, content, created, edited from comments where object=? order by created, id", row["id"]) or []:
+			comment = {
+				"id": c["id"],
+				"author": c["author"],
+				"name": c["name"],
+				"content": c["content"],
+				"created": c["created"],
+			}
+			if c["parent"]:
+				comment["parent"] = c["parent"]
+			if c["edited"]:
+				comment["edited"] = c["edited"]
+			comments.append(comment)
+		if comments:
+			object["comments"] = comments
+		objects.append(object)
+
+	links = []
+	for l in mochi.db.rows("select source, target, linktype, created from links where project=? order by created, source, target", project_id) or []:
+		links.append({
+			"source": l["source"],
+			"target": l["target"],
+			"linktype": l["linktype"],
+			"created": l["created"],
+		})
+
+	result = {"objects": objects}
+	if links:
+		result["links"] = links
+	return {"data": result}
+
+# Import data - objects with field values and comments, plus links - from a
+# data/export snapshot. Objects and comments get fresh ids and numbers;
+# in-file references (parents, links, comment threads) are remapped to the
+# new ids, so importing the same snapshot twice creates two copies. Objects
+# are appended below existing objects in file order. The project's design
+# must already contain every class and field id the snapshot references -
+# import the design first via design/import. Everything is validated before
+# anything is written.
+def action_data_import(a):
+
+	project_id = resolve_project(a)
+	if not project_id:
+		a.error.label(400, "errors.project_id_required")
+		return
+
+	project = get_project(project_id)
+	if not project:
+		a.error.label(404, "errors.project_not_found")
+		return
+
+	if project["owner"] != 1:
+		a.error.label(400, "errors.cannot_import_data_to_remote_project")
+		return
+
+	if not check_project_access(a.user.identity.id, project_id, "design"):
+		a.error.label(403, "errors.access_denied")
+		return
+
+	data_string = a.input("data")
+	if not data_string:
+		a.error.label(400, "errors.data_is_required")
+		return
+	if len(data_string) > 10000000:
+		a.error.label(400, "errors.data_too_large")
+		return
+	data = json.decode(data_string, None)
+	if type(data) != "dict":
+		a.error.label(400, "errors.invalid_data")
+		return
+
+	objects = data.get("objects") or []
+	links = data.get("links") or []
+	if type(objects) != "list" or type(links) != "list":
+		a.error.label(400, "errors.invalid_data")
+		return
+	if not objects and not links:
+		a.error.label(400, "errors.nothing_to_import")
+		return
+
+	# Current design, for validation
+	classes = {}
+	for c in mochi.db.rows("select id from classes where project=?", project_id) or []:
+		classes[c["id"]] = True
+	fields = {}
+	for f in mochi.db.rows("select class, id from fields where project=?", project_id) or []:
+		fields[f["class"] + "/" + f["id"]] = True
+	hierarchy = {}
+	for h in mochi.db.rows("select class, parent from hierarchy where project=?", project_id) or []:
+		hierarchy[h["class"] + "/" + h["parent"]] = True
+
+	# File-local object ids, for remapping and parent class lookups
+	imported = {}
+	for o in objects:
+		if type(o) != "dict" or not o.get("id") or not o.get("class"):
+			a.error.label(400, "errors.invalid_data")
+			return
+		imported[o["id"]] = o["class"]
+
+	# Validate everything before writing anything
+	for o in objects:
+		if o["class"] not in classes:
+			a.error.label(400, "errors.unknown_class", name=o["class"])
+			return
+		parent = o.get("parent") or ""
+		parent_class = ""
+		if parent:
+			if parent in imported:
+				parent_class = imported[parent]
+			else:
+				row = mochi.db.row("select class from objects where id=? and project=?", parent, project_id)
+				if not row:
+					a.error.label(404, "errors.parent_object_not_found")
+					return
+				parent_class = row["class"]
+		if (o["class"] + "/" + parent_class) not in hierarchy:
+			a.error.label(400, "errors.hierarchy_disallowed")
+			return
+		values = o.get("values") or {}
+		if type(values) != "dict":
+			a.error.label(400, "errors.invalid_data")
+			return
+		for field in values:
+			if (o["class"] + "/" + field) not in fields:
+				a.error.label(400, "errors.unknown_field", name=field)
+				return
+		comments = o.get("comments") or []
+		if type(comments) != "list":
+			a.error.label(400, "errors.invalid_data")
+			return
+		for c in comments:
+			if type(c) != "dict" or not c.get("content"):
+				a.error.label(400, "errors.invalid_data")
+				return
+	for l in links:
+		if type(l) != "dict" or not l.get("source") or not l.get("target") or not l.get("linktype"):
+			a.error.label(400, "errors.invalid_data")
+			return
+		for end in [l["source"], l["target"]]:
+			if end not in imported and not mochi.db.exists("select 1 from objects where id=? and project=?", end, project_id):
+				a.error.label(400, "errors.invalid_link")
+				return
+
+	now = mochi.time.now()
+	user = a.user.identity.id
+
+	# Fresh ids for every imported object, assigned up front so forward
+	# references (a parent later in the file) remap correctly
+	remap = {}
+	for o in objects:
+		remap[o["id"]] = mochi.uid()
+
+	# Append below the project-wide maximum rank, in file order (see
+	# rank_after_all), and number on from the objects log's per-project maximum
+	# (replication-safe; no mutated shared counter)
+	row = mochi.db.row("select max(rank) as r from objects where project=?", project_id)
+	previous = row["r"] if (row and row["r"]) else None
+	number = mochi.db.row("select coalesce(max(number), 0) as n from objects where project=?", project_id)["n"]
+
+	comment_count = 0
+	for o in objects:
+		object_id = remap[o["id"]]
+		parent = o.get("parent") or ""
+		parent = remap.get(parent, parent)
+		previous = rank_between(previous, None)
+		number += 1
+		created = safe_int(o.get("created")) or now
+		updated = safe_int(o.get("updated")) or now
+		reg_merge("objects", ["id"], {"id": object_id, "project": project_id, "class": o["class"], "number": number, "parent": parent, "rank": previous, "created": created, "updated": updated})
+		for field, value in (o.get("values") or {}).items():
+			if value != "":
+				reg_merge("values", ["object", "field"], {"object": object_id, "field": field, "value": str(value)})
+		file_comments = o.get("comments") or []
+		comment_ids = []
+		comment_remap = {}
+		for c in file_comments:
+			comment_id = mochi.uid()
+			comment_ids.append(comment_id)
+			if c.get("id"):
+				comment_remap[c["id"]] = comment_id
+		for i, c in enumerate(file_comments):
+			comment_parent = comment_remap.get(c.get("parent") or "", "")
+			reg_merge("comments", ["id"], {"id": comment_ids[i], "object": object_id, "parent": comment_parent, "author": c.get("author") or user, "name": c.get("name") or a.user.identity.name, "content": str(c["content"]), "created": safe_int(c.get("created")) or now, "edited": safe_int(c.get("edited"))})
+			comment_count += 1
+		mochi.db.execute(
+			"insert into activity (id, object, user, action, field, oldvalue, newvalue, created) values (?, ?, ?, 'created', '', '', '', ?)",
+			mochi.uid(), object_id, user, now
+		)
+
+	for l in links:
+		source = remap.get(l["source"], l["source"])
+		target = remap.get(l["target"], l["target"])
+		reg_merge("links", ["source", "target", "linktype"], {"project": project_id, "source": source, "target": target, "linktype": str(l["linktype"]), "created": safe_int(l.get("created")) or now})
+
+	reg_set("projects", ["id"], "id=?", [project_id], {"updated": now})
+
+	# Push a full snapshot to every subscriber - event_sync_batch applies it
+	# idempotently, so this replaces per-record broadcasts for bulk changes
+	for s in mochi.db.rows("select id from subscribers where project=?", project_id) or []:
+		send_project_data(project_id, s["id"])
+
+	return {"data": {"objects": len(objects), "comments": comment_count, "links": len(links)}}
 
 
 # ============================================================================

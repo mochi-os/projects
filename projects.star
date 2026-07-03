@@ -645,7 +645,7 @@ def reg_set(table, keys, where, args, updates):
 
 def reg_remove(table, keys, where, args):
 	for row in mochi.db.rows("select " + _REG_COLS[table] + " from " + table + "_all where (" + where + ") and removed=0", *args):
-		mochi.db.tombstone(table + "_all", keys, row)
+		mochi.db.remove(table + "_all", keys, row)
 
 def reg_rekey(table, keys, where, args, newkeys):
 	# Change key column(s) on matching rows: merge each under the new key, tombstone the old.
@@ -655,6 +655,30 @@ def reg_rekey(table, keys, where, args, newkeys):
 			row[k] = newkeys[k]
 		mochi.db.merge(table + "_all", keys, row)
 		reg_remove(table, keys, " and ".join([k + "=?" for k in keys]), oldvals)
+
+# Physically reclaim register tombstones past the replication forget horizon so
+# deleted objects/comments/etc. don't accumulate `removed=1` rows forever. Safe
+# because the delete already propagated via the op stream; the tombstone row is
+# only a snapshot backstop, and a replica lagging past the horizon gets a full
+# reseed (not op-replay) on rejoin, so it can't resurrect a purged row. The
+# cutoff is a bound parameter (deterministic) and every delete is guarded on
+# removed=1, so a concurrent re-merge (resurrection) is never wiped.
+forget_horizon_seconds = 30 * 86400
+
+def projects_gc_tombstones():
+	cutoff = mochi.time.now() - forget_horizon_seconds
+	# Reclaim only the LEAF child registers that nothing FK-references: `values`
+	# (the dominant EAV accumulator - one row per object field) and `comments`.
+	# The parent `objects` tombstone is deliberately left: the append-only activity
+	# log plus links/watchers/requests all FK-reference objects_all, so a hard
+	# delete would violate them, and object tombstones are only one-per-deleted-
+	# object (low volume) against values' many-per-object. `values` has no timestamp
+	# so it ages by its parent object's `updated`. Existence-guarded for schema
+	# variance across hosts.
+	if mochi.db.table("values_all"):
+		mochi.db.execute("delete from values_all where removed=1 and object in (select id from objects_all where updated < ?)", cutoff)
+	if mochi.db.table("comments_all"):
+		mochi.db.execute("delete from comments_all where removed=1 and created < ?", cutoff)
 
 def object_merge(row):
 	mochi.db.merge("objects_all", ["id"], row)
@@ -671,13 +695,13 @@ def object_remove(object_id):
 	row = mochi.db.row("select id, project, class, number, parent, rank, created, updated from objects_all where id=? and removed=0", object_id)
 	if not row:
 		return
-	mochi.db.tombstone("objects_all", ["id"], row)
+	mochi.db.remove("objects_all", ["id"], row)
 
 def value_merge(object_id, field, value):
 	mochi.db.merge("values_all", ["object", "field"], {"object": object_id, "field": field, "value": value})
 
 def value_remove(object_id, field):
-	mochi.db.tombstone("values_all", ["object", "field"], {"object": object_id, "field": field})
+	mochi.db.remove("values_all", ["object", "field"], {"object": object_id, "field": field})
 
 def comment_merge(row):
 	mochi.db.merge("comments_all", ["id"], row)
@@ -694,16 +718,16 @@ def comment_remove(comment_id):
 	row = mochi.db.row("select id, object, parent, author, name, content, created, edited from comments_all where id=? and removed=0", comment_id)
 	if not row:
 		return
-	mochi.db.tombstone("comments_all", ["id"], row)
+	mochi.db.remove("comments_all", ["id"], row)
 
 # Cascade tombstones (delete-where-parent becomes tombstone-each so removals converge).
 def values_remove_object(object_id):
 	for row in mochi.db.rows("select field from values_all where object=? and removed=0", object_id):
-		mochi.db.tombstone("values_all", ["object", "field"], {"object": object_id, "field": row["field"]})
+		mochi.db.remove("values_all", ["object", "field"], {"object": object_id, "field": row["field"]})
 
 def comments_remove_object(object_id):
 	for row in mochi.db.rows("select id, object, parent, author, name, content, created, edited from comments_all where object=? and removed=0", object_id):
-		mochi.db.tombstone("comments_all", ["id"], row)
+		mochi.db.remove("comments_all", ["id"], row)
 
 # Remove every local row of a project — physical deletes, NOT tombstones. Used
 # only by the whole-project cleanup paths (unsubscribe, owner delete, the
@@ -1242,6 +1266,9 @@ def action_project_get(a):
 	if not project_id:
 		a.error.label(400, "errors.project_id_required")
 		return
+
+	# Reclaim old register tombstones on project open (a low-frequency path).
+	projects_gc_tombstones()
 
 	row = mochi.db.row("select id, name, description, prefix, owner, server, template, template_version, created, updated, populated from projects where id=?", project_id)
 	if not row:

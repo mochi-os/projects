@@ -39,7 +39,6 @@ def error_message_timeout(e):
 def error_broadcast_gap(e):
 	request_resync(e.entity)
 
-
 # request_resync pulls a fresh schema dump from the project owner when an
 # incoming event references data we don't have yet. Out-of-order delivery,
 # lost messages, and the strict FK enforcement on ncruces all surface as
@@ -521,140 +520,6 @@ def database_create():
 	)""")
 	mochi.db.execute("create index if not exists requests_object on requests(object)")
 
-# Upgrade database schema (called once per version step with target version)
-def database_upgrade(version):
-	if version == 8:
-		# Add projects.synced for throttled resync requests when an
-		# incoming event references an object/class we haven't seen yet.
-		cols = [r["name"] for r in mochi.db.table("projects") or []]
-		if "synced" not in cols:
-			mochi.db.execute("alter table projects add column synced integer not null default 0")
-
-	if version == 9:
-		# objects.number is now derived from max(number) per project instead of a
-		# mutated projects.counter cell (replication-safe). The composite index
-		# turns the per-project max() into an index seek; the counter column is
-		# no longer used by any code path.
-		mochi.db.execute("create index if not exists objects_number on objects(project, number)")
-		cols = [r["name"] for r in mochi.db.table("projects") or []]
-		if "counter" in cols:
-			mochi.db.execute("alter table projects drop column counter")
-
-	if version == 10:
-		# objects.rank becomes a fractional-index text key so a reorder writes ONE
-		# row and converges under multi-master (#53). Backfill per project, ordered
-		# by the existing integer rank (id tiebreak) so every replica's run agrees;
-		# within-column order is preserved by any global order respecting per-column
-		# rank order. Migrations run replication-suppressed, so these deterministic
-		# keys converge with no emitted ops. (Non-numeric text in the INTEGER-
-		# affinity column is stored as text, so no table rebuild is needed.)
-		project_ids = mochi.db.rows("select distinct project from objects") or []
-		for p in project_ids:
-			rank_resequence(p["project"])
-
-	if version == 11:
-		# Repair #53 duplicate keys: the original append path minted end keys by
-		# incrementing a per-column/per-parent max, so two scopes whose local max
-		# was equal produced the same global key (harmless only while the halves
-		# stay in different columns — a collision the moment one moves into the
-		# other's scope). Re-sequence every project to fresh globally-unique keys,
-		# preserving the current (rank, id) order. Appends now anchor on the
-		# project-wide max (rank_after_all), so duplicates can't reappear.
-		project_ids = mochi.db.rows("select distinct project from objects") or []
-		for p in project_ids:
-			rank_resequence(p["project"])
-
-	if version == 12:
-		# Add projects.populated: 0 while a freshly-subscribed project's bulk
-		# content is still arriving over P2P (set 1 by event_sync_batch), so the
-		# board shows a loading state instead of partial/empty data rather than a
-		# half-synced board. Existing rows already hold their data, hence default 1.
-		cols = [r["name"] for r in mochi.db.table("projects") or []]
-		if "populated" not in cols:
-			mochi.db.execute("alter table projects add column populated integer not null default 1")
-
-	if version == 13:
-		# objects / values / comments become versioned LWW-Registers so the
-		# collaborative EAV converges across a project's host set.
-		eav_register()
-
-	if version == 14:
-		# _REG_COLS has since grown to cover every table (projects, classes,
-		# links, watchers, ...), but DBs that ran migration 13 under the old
-		# three-table set never got the new registers, so every reg_* write to
-		# them failed with "no such table". Re-run the conversion; it is
-		# idempotent per table.
-		eav_register()
-	if version == 15:
-		# Replication is removed: fold every register table back to its plain
-		# shape (purge tombstones, drop the register columns, rename back).
-		# Idempotent per table.
-		for name in _REG_COLS:
-			if not mochi.db.table(name + "_all"):
-				continue
-			mochi.db.execute("drop view if exists \"" + name + "\"")
-			mochi.db.execute("delete from \"" + name + "_all\" where removed=1")
-			for c in ["writer", "version", "removed"]:
-				mochi.db.execute("alter table \"" + name + "_all\" drop column " + c)
-			mochi.db.execute("alter table \"" + name + "_all\" rename to \"" + name + "\"")
-
-# --- EAV LWW-Registers ------------------------------------------------------
-# objects / values / comments live on <t>_all register tables (per-key Lamport
-# version + writer + removed tombstone); the <t> views expose removed=0 and are
-# what every read sees, so reads stay unchanged. Writes go through the helpers
-# below: a partial update reads the live row and merges the WHOLE row so the
-# FK / NOT NULL columns stay valid, and a removal tombstones the full row.
-	if version == 16:
-		# Repair databases whose v15 register fold failed midway on FOREIGN KEY
-		# constraints (the version was bumped despite the error, so v15 never
-		# re-ran): tombstoned objects still referenced by live child rows abort
-		# a bare tombstone delete. Re-run the fold for the remaining register
-		# tables with child-first ordering, purging children of tombstoned
-		# objects (their parent was already hidden by the removed=0 view).
-		# Idempotent; a no-op on databases where v15 completed.
-		if mochi.db.table("objects_all"):
-			for name in ["objects", "values", "comments", "watchers", "requests"]:
-				mochi.db.execute("drop view if exists \"" + name + "\"")
-			for child in ["values_all", "comments_all", "watchers_all", "requests_all"]:
-				if mochi.db.table(child):
-					mochi.db.execute("delete from " + child + " where object in (select id from objects_all where removed=1)")
-			for t in ["values_all", "comments_all", "watchers_all", "requests_all", "objects_all"]:
-				if mochi.db.table(t):
-					mochi.db.execute("delete from " + t + " where removed=1")
-			for name in ["objects", "values", "comments", "watchers", "requests"]:
-				if not mochi.db.table(name + "_all"):
-					continue
-				for c in ["writer", "version", "removed"]:
-					mochi.db.execute("alter table \"" + name + "_all\" drop column " + c)
-				mochi.db.execute("alter table \"" + name + "_all\" rename to \"" + name + "\"")
-		# Alignment: leftovers from before the pull_requests -> requests rename.
-		if [x for x in mochi.db.table("classes") or [] if x["name"] == "pull_requests"]:
-			mochi.db.execute("alter table classes drop column pull_requests")
-		mochi.db.execute("drop table if exists pull_requests")
-		mochi.db.execute("drop table if exists attachments")
-		database_create()
-def _register_table(name, cols):
-	# Rename to <name>_all (SQLite auto-updates incoming FKs; ALTER-add avoids the
-	# FK-on-drop a rebuild would trigger), add the register columns, expose a removed=0
-	# view under the old name. Per-table idempotent; identifiers quoted so the reserved
-	# word "values" works.
-	if mochi.db.table(name + "_all"):
-		return
-	mochi.db.execute("alter table \"" + name + "\" rename to \"" + name + "_all\"")
-	mochi.db.execute("alter table \"" + name + "_all\" add column writer text not null default ''")
-	mochi.db.execute("alter table \"" + name + "_all\" add column version integer not null default 0")
-	mochi.db.execute("alter table \"" + name + "_all\" add column removed integer not null default 0")
-	mochi.db.execute("create view \"" + name + "\" as select " + cols + " from \"" + name + "_all\" where removed=0")
-
-def eav_register():
-	# Every projects table except the append-only activity log becomes a versioned
-	# LWW-Register so it converges across a project's host set. The views expose
-	# removed=0 so reads stay unchanged; writes go through the reg_* / object_* /
-	# value_* / comment_* helpers (partial update = read-modify-merge the whole row so
-	# FK / NOT NULL columns stay valid; removal = full-row tombstone).
-	for name in _REG_COLS:
-		_register_table(name, _REG_COLS[name])
-
 _REG_COLS = {
 	"projects": "id, name, description, prefix, owner, server, fingerprint, template, template_version, created, updated, synced, populated",
 	"subscribers": "project, id, name, subscribed",
@@ -930,7 +795,6 @@ def apply_template(project_id, template_id, data=None, lang="en"):
 		for j, field in enumerate(fields):
 			if field.strip():
 				reg_merge("view_fields", ["project", "view", "field"], {"project": project_id, "view": v["id"], "field": field.strip(), "rank": j})
-
 
 # Export the current project design as template JSON. The exported JSON
 # contains literal strings (whatever the project DB currently holds) rather
@@ -1407,7 +1271,6 @@ def action_data_import(a):
 
 	return {"data": {"objects": len(objects), "comments": comment_count, "links": len(links)}}
 
-
 # ============================================================================
 # Project Actions
 # ============================================================================
@@ -1733,7 +1596,6 @@ def action_project_delete(a):
 
 	return {"data": {"success": True}}
 
-
 # List project members (subscribers + unique owners + current user)
 def action_people_list(a):
 
@@ -1766,7 +1628,6 @@ def action_people_list(a):
 			people[owner_id] = {"id": owner_id, "name": name}
 
 	return {"data": {"people": list(people.values())}}
-
 
 # ============================================================================
 # Access Control
@@ -1960,12 +1821,9 @@ def action_access_revoke(a):
 
 	return {"data": {"success": True}}
 
-
 # ============================================================================
 # Object Templates
 # ============================================================================
-
-
 
 # ============================================================================
 # Helper Functions
@@ -2131,7 +1989,6 @@ def delete_object_cascade(project_id, object_id, user=""):
 
 	# Broadcast delete event for each object
 	broadcast_event(project_id, "object/delete", {"project": project_id, "id": object_id, "user": user})
-
 
 # ============================================================================
 # Object Actions
@@ -2701,7 +2558,6 @@ def action_object_move(a):
 
 	return {"data": {"success": True}}
 
-
 # ============================================================================
 # Value Actions
 # ============================================================================
@@ -2876,7 +2732,6 @@ def action_value_set(a):
 
 	return {"data": {"success": True}}
 
-
 # ============================================================================
 # Link Actions
 # ============================================================================
@@ -3031,7 +2886,6 @@ def action_link_delete(a):
 
 	return {"data": {"success": True}}
 
-
 # Build a recursive comment tree for an object
 def object_comments(project_id, object_id, parent_id, depth):
 	if depth > 100:
@@ -3070,7 +2924,6 @@ def delete_project_comment_attachments(project_id):
 	for c in comments:
 		for att in (mochi.attachment.list(c["id"], project_id) or []):
 			mochi.attachment.delete(att["id"])
-
 
 # ============================================================================
 # Person asset proxy (avatar, banner, favicon, style, information)
@@ -3122,7 +2975,6 @@ def action_user_asset(a):
 		a.error.label(404, "errors.unknown_asset")
 		return
 	return stream_asset(a, a.input("user") or "", "people", asset)
-
 
 # ============================================================================
 # Comment Actions
@@ -3379,7 +3231,6 @@ def action_comment_delete(a):
 
 	return {"data": {"success": True}}
 
-
 # ============================================================================
 # Attachment Actions
 # ============================================================================
@@ -3516,7 +3367,6 @@ def action_attachment_delete(a):
 
 	return {"data": {"success": True}}
 
-
 # ============================================================================
 # Activity Actions
 # ============================================================================
@@ -3564,7 +3414,6 @@ def action_activity_list(a):
 		})
 
 	return {"data": {"activities": activities}}
-
 
 # ============================================================================
 # Watcher Actions
@@ -3634,7 +3483,6 @@ def action_watcher_remove(a):
 	# Remove current user as watcher
 	reg_remove("watchers", ["object", "user"], "object=? and user=?", [object_id, a.user.identity.id])
 	return {"data": {"success": True, "watching": False}}
-
 
 # ============================================================================
 # View Actions
@@ -3931,7 +3779,6 @@ def action_view_reorder(a):
 
 	return {"data": {"success": True}}
 
-
 # ============================================================================
 # Type Actions
 # ============================================================================
@@ -4108,7 +3955,6 @@ def action_class_delete(a):
 
 	return {"data": {"success": True}}
 
-
 # ============================================================================
 # Hierarchy Actions
 # ============================================================================
@@ -4189,7 +4035,6 @@ def action_hierarchy_set(a):
 	})
 
 	return {"data": {"success": True}}
-
 
 # ============================================================================
 # Field Actions
@@ -4481,7 +4326,6 @@ def action_field_reorder(a):
 
 	return {"data": {"success": True}}
 
-
 # ============================================================================
 # Option Actions
 # ============================================================================
@@ -4725,7 +4569,6 @@ def action_option_reorder(a):
 	broadcast_event(project_id, "option/reorder", {"project": project_id, "class": class_id, "field": field_id, "order": order})
 
 	return {"data": {"success": True}}
-
 
 # ============================================================================
 # Repositories Service Actions (for Pull Request integration)
@@ -4983,7 +4826,6 @@ def action_search(a):
 
 	return {"data": results}
 
-
 # ============================================================================
 # User/Group Proxy Actions (proxy to people app)
 # ============================================================================
@@ -4997,11 +4839,9 @@ def action_groups(a):
 	groups = mochi.service.call("people", "groups/list")
 	return {"data": {"groups": groups}}
 
-
 # ============================================================================
 # Notification Actions
 # ============================================================================
-
 
 # ============================================================================
 # Remote Projects (Subscribe)
@@ -5224,7 +5064,6 @@ def action_unsubscribe(a):
 	mochi.message.send(p2p_headers(user_id, project_id, "unsubscribe"), {})
 
 	return {"data": {"success": True}}
-
 
 # ============================================================================
 # P2P Events
@@ -6751,7 +6590,6 @@ def action_request_delete(a):
 
 	return {"data": {"success": True}}
 
-
 # ============================================================================
 # Diff View Preference
 # ============================================================================
@@ -6770,7 +6608,6 @@ def action_diff_preference_set(a):
 		return
 	a.user.preference.set("diff_view", style)
 	return {"data": {"style": style}}
-
 
 # ============================================================================
 # Request P2P Events
@@ -6817,7 +6654,6 @@ def event_request_delete(e):
 	fp = mochi.entity.fingerprint(project_id)
 	if fp:
 		mochi.websocket.write(fp, {"type": "request/delete", "project": project_id, "id": request_id, "object": e.content("object")})
-
 
 # ============================================================================
 # Remote Request Handling (P2P request-response for subscriber actions)
@@ -6956,7 +6792,6 @@ def event_access_check(e):
 	for op in ["design", "write", "comment", "view"]:
 		result[op] = check_project_access(user_id, project_id, op)
 	e.stream.write(result)
-
 
 # ============================================================================
 # Remote Request Do Helpers (shared by action handlers and event_request)
@@ -8067,7 +7902,6 @@ def do_view_reorder(project_id, project, params):
 	broadcast_event(project_id, "view/reorder", {"project": project_id, "order": order})
 	return {"success": True}
 
-
 # Internal: subscribe `user` to project `project_id`. Idempotent.
 # Returns {"fingerprint": fp, "already_subscribed": bool} or {"error": key, "code": N}.
 def _subscribe_to_project(user, project_id, server):
@@ -8129,7 +7963,6 @@ def _subscribe_to_project(user, project_id, server):
 
 	return {"fingerprint": fp, "already_subscribed": False}
 
-
 # Internal: forward an action to the project owner via P2P. Used by the
 # subscriber-side helpers below; mirrors `forward_to_owner` but takes raw
 # args so it can be called from event handlers too.
@@ -8149,7 +7982,6 @@ def _forward_to_owner(user, project_id, action_name, params):
 	if result.get("error"):
 		return {"error": result["error"], "code": result.get("code", 500)}
 	return {"data": result}
-
 
 # Internal: create an object in `project_id`, subscriber-side. Optional `values`
 # dict sets additional field values via per-field "value/set" forwards after
@@ -8230,7 +8062,6 @@ def _create_project_object(user, project_id, obj_class, title, parent="", values
 		"fingerprint": mochi.entity.fingerprint(project_id) or "",
 	}
 
-
 # Internal: post a comment on an object on behalf of `user`, subscriber-side.
 # Returns {"id"} or {"error", "code"}.
 def _create_project_comment(user, project_id, object_id, content):
@@ -8256,7 +8087,6 @@ def _create_project_comment(user, project_id, object_id, content):
 
 	return {"id": comment_id}
 
-
 # Service event: another local app asks us to subscribe the user to a project.
 def event_app_subscribe(e):
 	project_id = e.content("project") or ""
@@ -8268,7 +8098,6 @@ def event_app_subscribe(e):
 		"fingerprint": result.get("fingerprint", ""),
 		"already_subscribed": result.get("already_subscribed", False),
 	})
-
 
 # Service event: another local app asks us to create an object on behalf of
 # the user. Subscribes first as a safety net (idempotent), creates the object

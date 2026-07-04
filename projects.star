@@ -604,6 +604,35 @@ def database_upgrade(version):
 # what every read sees, so reads stay unchanged. Writes go through the helpers
 # below: a partial update reads the live row and merges the WHOLE row so the
 # FK / NOT NULL columns stay valid, and a removal tombstones the full row.
+	if version == 16:
+		# Repair databases whose v15 register fold failed midway on FOREIGN KEY
+		# constraints (the version was bumped despite the error, so v15 never
+		# re-ran): tombstoned objects still referenced by live child rows abort
+		# a bare tombstone delete. Re-run the fold for the remaining register
+		# tables with child-first ordering, purging children of tombstoned
+		# objects (their parent was already hidden by the removed=0 view).
+		# Idempotent; a no-op on databases where v15 completed.
+		if mochi.db.table("objects_all"):
+			for name in ["objects", "values", "comments", "watchers", "requests"]:
+				mochi.db.execute("drop view if exists \"" + name + "\"")
+			for child in ["values_all", "comments_all", "watchers_all", "requests_all"]:
+				if mochi.db.table(child):
+					mochi.db.execute("delete from " + child + " where object in (select id from objects_all where removed=1)")
+			for t in ["values_all", "comments_all", "watchers_all", "requests_all", "objects_all"]:
+				if mochi.db.table(t):
+					mochi.db.execute("delete from " + t + " where removed=1")
+			for name in ["objects", "values", "comments", "watchers", "requests"]:
+				if not mochi.db.table(name + "_all"):
+					continue
+				for c in ["writer", "version", "removed"]:
+					mochi.db.execute("alter table \"" + name + "_all\" drop column " + c)
+				mochi.db.execute("alter table \"" + name + "_all\" rename to \"" + name + "\"")
+		# Alignment: leftovers from before the pull_requests -> requests rename.
+		if [x for x in mochi.db.table("classes") or [] if x["name"] == "pull_requests"]:
+			mochi.db.execute("alter table classes drop column pull_requests")
+		mochi.db.execute("drop table if exists pull_requests")
+		mochi.db.execute("drop table if exists attachments")
+		database_create()
 def _register_table(name, cols):
 	# Rename to <name>_all (SQLite auto-updates incoming FKs; ALTER-add avoids the
 	# FK-on-drop a rebuild would trigger), add the register columns, expose a removed=0

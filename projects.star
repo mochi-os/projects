@@ -521,9 +521,6 @@ def database_create():
 	)""")
 	mochi.db.execute("create index if not exists requests_object on requests(object)")
 
-	# objects / values / comments become versioned LWW-Registers on fresh installs too.
-	eav_register()
-
 # Upgrade database schema (called once per version step with target version)
 def database_upgrade(version):
 	if version == 8:
@@ -588,6 +585,18 @@ def database_upgrade(version):
 		# them failed with "no such table". Re-run the conversion; it is
 		# idempotent per table.
 		eav_register()
+	if version == 15:
+		# Replication is removed: fold every register table back to its plain
+		# shape (purge tombstones, drop the register columns, rename back).
+		# Idempotent per table.
+		for name in _REG_COLS:
+			if not mochi.db.table(name + "_all"):
+				continue
+			mochi.db.execute("drop view if exists \"" + name + "\"")
+			mochi.db.execute("delete from \"" + name + "_all\" where removed=1")
+			for c in ["writer", "version", "removed"]:
+				mochi.db.execute("alter table \"" + name + "_all\" drop column " + c)
+			mochi.db.execute("alter table \"" + name + "_all\" rename to \"" + name + "\"")
 
 # --- EAV LWW-Registers ------------------------------------------------------
 # objects / values / comments live on <t>_all register tables (per-key Lamport
@@ -635,107 +644,56 @@ _REG_COLS = {
 	"requests": "id, object, type, repository, source, target, status, title, description, draft, created, updated",
 }
 
-# Generic register write helpers (used by the config / set tables). merge = upsert the
-# whole row; set = read-modify-merge a partial update; remove = full-row tombstone.
+# Generic row write helpers (used by the config / set tables). merge = upsert the
+# whole row; set = a partial update; remove = delete. set / remove / rekey take a
+# raw WHERE clause (without the "where" keyword) + args, so a single-key,
+# partial-key (multi-row), or subquery-cascade update/delete all work.
 def reg_merge(table, keys, row):
-	mochi.db.merge(table + "_all", keys, row)
+	cols = list(row)
+	fields = [c for c in cols if c not in keys]
+	conflict = "do update set " + ", ".join(["\"" + c + "\"=excluded.\"" + c + "\"" for c in fields]) if fields else "do nothing"
+	mochi.db.execute("insert into \"" + table + "\" (" + ", ".join(["\"" + c + "\"" for c in cols]) + ") values (" + ", ".join(["?" for c in cols]) + ") on conflict (" + ", ".join(["\"" + k + "\"" for k in keys]) + ") " + conflict, *[row[c] for c in cols])
 
-# reg_set / reg_remove take a raw WHERE clause (without the "where" keyword) + args,
-# so a single-key, partial-key (multi-row), or subquery-cascade delete/update all work.
-# Both read the FULL matching rows (tombstone/merge need every column so FK / NOT NULL
-# stay valid) and apply to each. reg_set is for NON-key column changes only; a write
-# that changes a key column must tombstone the old row and merge the new one.
 def reg_set(table, keys, where, args, updates):
-	for row in mochi.db.rows("select " + _REG_COLS[table] + " from " + table + "_all where (" + where + ") and removed=0", *args):
-		for k in updates:
-			row[k] = updates[k]
-		mochi.db.merge(table + "_all", keys, row)
+	fields = list(updates)
+	mochi.db.execute("update \"" + table + "\" set " + ", ".join(["\"" + c + "\"=?" for c in fields]) + " where (" + where + ")", *([updates[c] for c in fields] + list(args)))
 
 def reg_remove(table, keys, where, args):
-	for row in mochi.db.rows("select " + _REG_COLS[table] + " from " + table + "_all where (" + where + ") and removed=0", *args):
-		mochi.db.remove(table + "_all", keys, row)
+	mochi.db.execute("delete from \"" + table + "\" where (" + where + ")", *args)
 
 def reg_rekey(table, keys, where, args, newkeys):
-	# Change key column(s) on matching rows: merge each under the new key, tombstone the old.
-	for row in mochi.db.rows("select " + _REG_COLS[table] + " from " + table + "_all where (" + where + ") and removed=0", *args):
-		oldvals = [row[k] for k in keys]
-		for k in newkeys:
-			row[k] = newkeys[k]
-		mochi.db.merge(table + "_all", keys, row)
-		reg_remove(table, keys, " and ".join([k + "=?" for k in keys]), oldvals)
-
-# Physically reclaim register tombstones past the replication forget horizon so
-# deleted objects/comments/etc. don't accumulate `removed=1` rows forever. Safe
-# because the delete already propagated via the op stream; the tombstone row is
-# only a snapshot backstop, and a replica lagging past the horizon gets a full
-# reseed (not op-replay) on rejoin, so it can't resurrect a purged row. The
-# cutoff is a bound parameter (deterministic) and every delete is guarded on
-# removed=1, so a concurrent re-merge (resurrection) is never wiped.
-forget_horizon_seconds = 30 * 86400
-
-def projects_gc_tombstones():
-	cutoff = mochi.time.now() - forget_horizon_seconds
-	# Reclaim only the LEAF child registers that nothing FK-references: `values`
-	# (the dominant EAV accumulator - one row per object field) and `comments`.
-	# The parent `objects` tombstone is deliberately left: the append-only activity
-	# log plus links/watchers/requests all FK-reference objects_all, so a hard
-	# delete would violate them, and object tombstones are only one-per-deleted-
-	# object (low volume) against values' many-per-object. `values` has no timestamp
-	# so it ages by its parent object's `updated`. Existence-guarded for schema
-	# variance across hosts.
-	if mochi.db.table("values_all"):
-		mochi.db.execute("delete from values_all where removed=1 and object in (select id from objects_all where updated < ?)", cutoff)
-	if mochi.db.table("comments_all"):
-		mochi.db.execute("delete from comments_all where removed=1 and created < ?", cutoff)
+	fields = list(newkeys)
+	mochi.db.execute("update \"" + table + "\" set " + ", ".join(["\"" + c + "\"=?" for c in fields]) + " where (" + where + ")", *([newkeys[c] for c in fields] + list(args)))
 
 def object_merge(row):
-	mochi.db.merge("objects_all", ["id"], row)
+	reg_merge("objects", ["id"], row)
 
 def object_set(object_id, updates):
-	row = mochi.db.row("select id, project, class, number, parent, rank, created, updated from objects_all where id=? and removed=0", object_id)
-	if not row:
-		return
-	for k in updates:
-		row[k] = updates[k]
-	mochi.db.merge("objects_all", ["id"], row)
+	reg_set("objects", ["id"], "id=?", [object_id], updates)
 
 def object_remove(object_id):
-	row = mochi.db.row("select id, project, class, number, parent, rank, created, updated from objects_all where id=? and removed=0", object_id)
-	if not row:
-		return
-	mochi.db.remove("objects_all", ["id"], row)
+	mochi.db.execute("delete from objects where id=?", object_id)
 
 def value_merge(object_id, field, value):
-	mochi.db.merge("values_all", ["object", "field"], {"object": object_id, "field": field, "value": value})
+	mochi.db.execute("insert into \"values\" ( object, field, value ) values ( ?, ?, ? ) on conflict ( object, field ) do update set value=excluded.value", object_id, field, value)
 
 def value_remove(object_id, field):
-	mochi.db.remove("values_all", ["object", "field"], {"object": object_id, "field": field})
+	mochi.db.execute("delete from \"values\" where object=? and field=?", object_id, field)
 
 def comment_merge(row):
-	mochi.db.merge("comments_all", ["id"], row)
+	reg_merge("comments", ["id"], row)
 
 def comment_set(comment_id, updates):
-	row = mochi.db.row("select id, object, parent, author, name, content, created, edited from comments_all where id=? and removed=0", comment_id)
-	if not row:
-		return
-	for k in updates:
-		row[k] = updates[k]
-	mochi.db.merge("comments_all", ["id"], row)
+	reg_set("comments", ["id"], "id=?", [comment_id], updates)
 
 def comment_remove(comment_id):
-	row = mochi.db.row("select id, object, parent, author, name, content, created, edited from comments_all where id=? and removed=0", comment_id)
-	if not row:
-		return
-	mochi.db.remove("comments_all", ["id"], row)
+	mochi.db.execute("delete from comments where id=?", comment_id)
 
-# Cascade tombstones (delete-where-parent becomes tombstone-each so removals converge).
 def values_remove_object(object_id):
-	for row in mochi.db.rows("select field from values_all where object=? and removed=0", object_id):
-		mochi.db.remove("values_all", ["object", "field"], {"object": object_id, "field": row["field"]})
+	mochi.db.execute("delete from \"values\" where object=?", object_id)
 
 def comments_remove_object(object_id):
-	for row in mochi.db.rows("select id, object, parent, author, name, content, created, edited from comments_all where object=? and removed=0", object_id):
-		mochi.db.remove("comments_all", ["id"], row)
+	mochi.db.execute("delete from comments where object=?", object_id)
 
 # Remove every local row of a project — physical deletes, NOT tombstones. Used
 # only by the whole-project cleanup paths (unsubscribe, owner delete, the
@@ -747,22 +705,22 @@ def comments_remove_object(object_id):
 # Each execute pair-replicates as one statement, so the user's own hosts purge
 # identically. Children before parents so the foreign keys stay satisfied.
 def purge_project(project_id):
-	mochi.db.execute("delete from requests_all where object in (select id from objects_all where project=?)", project_id)
-	mochi.db.execute("delete from watchers_all where object in (select id from objects_all where project=?)", project_id)
-	mochi.db.execute("delete from activity where object in (select id from objects_all where project=?)", project_id)
-	mochi.db.execute("delete from comments_all where object in (select id from objects_all where project=?)", project_id)
-	mochi.db.execute("delete from values_all where object in (select id from objects_all where project=?)", project_id)
-	mochi.db.execute("delete from links_all where project=?", project_id)
-	mochi.db.execute("delete from objects_all where project=?", project_id)
-	mochi.db.execute("delete from view_fields_all where project=?", project_id)
-	mochi.db.execute("delete from view_classes_all where project=?", project_id)
-	mochi.db.execute("delete from views_all where project=?", project_id)
-	mochi.db.execute("delete from options_all where project=?", project_id)
-	mochi.db.execute("delete from fields_all where project=?", project_id)
-	mochi.db.execute("delete from hierarchy_all where project=?", project_id)
-	mochi.db.execute("delete from classes_all where project=?", project_id)
-	mochi.db.execute("delete from subscribers_all where project=?", project_id)
-	mochi.db.execute("delete from projects_all where id=?", project_id)
+	mochi.db.execute("delete from requests where object in (select id from objects where project=?)", project_id)
+	mochi.db.execute("delete from watchers where object in (select id from objects where project=?)", project_id)
+	mochi.db.execute("delete from activity where object in (select id from objects where project=?)", project_id)
+	mochi.db.execute("delete from comments where object in (select id from objects where project=?)", project_id)
+	mochi.db.execute("delete from \"values\" where object in (select id from objects where project=?)", project_id)
+	mochi.db.execute("delete from links where project=?", project_id)
+	mochi.db.execute("delete from objects where project=?", project_id)
+	mochi.db.execute("delete from view_fields where project=?", project_id)
+	mochi.db.execute("delete from view_classes where project=?", project_id)
+	mochi.db.execute("delete from views where project=?", project_id)
+	mochi.db.execute("delete from options where project=?", project_id)
+	mochi.db.execute("delete from fields where project=?", project_id)
+	mochi.db.execute("delete from hierarchy where project=?", project_id)
+	mochi.db.execute("delete from classes where project=?", project_id)
+	mochi.db.execute("delete from subscribers where project=?", project_id)
+	mochi.db.execute("delete from projects where id=?", project_id)
 
 # ============================================================================
 # Templates
@@ -1522,9 +1480,6 @@ def action_project_get(a):
 		a.error.label(400, "errors.project_id_required")
 		return
 
-	# Reclaim old register tombstones on project open (a low-frequency path).
-	projects_gc_tombstones()
-
 	row = mochi.db.row("select id, name, description, prefix, owner, server, template, template_version, created, updated, populated from projects where id=?", project_id)
 	if not row:
 		a.error.label(404, "errors.project_not_found")
@@ -2250,7 +2205,7 @@ def action_object_create(a):
 				rank = d.get("rank", 0)
 				created = d.get("created") or now
 				updated = d.get("updated") or now
-				if not mochi.db.exists("select 1 from objects_all where id=?", d["id"]):
+				if not mochi.db.exists("select 1 from objects where id=?", d["id"]):
 					object_merge({"id": d["id"], "project": project_id, "class": obj_class, "number": d.get("number", 0), "parent": parent, "rank": rank, "created": created, "updated": updated})
 				if title and title_field:
 					value_merge(d["id"], title_field, title)
@@ -5699,7 +5654,7 @@ def event_sync_batch(e):
 					reg_merge("view_classes", ["project", "view", "class"], {"project": project_id, "view": v["id"], "class": class_id})
 	# Process objects
 	for obj in (e.content("objects") or []):
-		if not mochi.db.exists("select 1 from objects_all where id=?", obj["id"]):
+		if not mochi.db.exists("select 1 from objects where id=?", obj["id"]):
 			object_merge({"id": obj["id"], "project": project_id, "class": obj.get("class", ""), "number": obj.get("number", 0), "parent": obj.get("parent", ""), "rank": obj.get("rank", 0), "created": obj.get("created", now), "updated": obj.get("updated", now)})
 		# Values
 		values = obj.get("values")
@@ -5792,7 +5747,7 @@ def event_object_create(e):
 	if class_id and not mochi.db.exists("select 1 from classes where project=? and id=?", project_id, class_id):
 		request_resync(project_id)
 		return
-	if not mochi.db.exists("select 1 from objects_all where id=?", object_id):
+	if not mochi.db.exists("select 1 from objects where id=?", object_id):
 		object_merge({"id": object_id, "project": project_id, "class": class_id, "number": e.content("number") or 0, "parent": e.content("parent") or "", "rank": e.content("rank") or 0, "created": e.content("created") or mochi.time.now(), "updated": e.content("updated") or mochi.time.now()})
 	# Store field values included in the broadcast
 	values = e.content("values") or {}
@@ -7739,7 +7694,7 @@ def rename_field_id(project_id, class_id, old_id, new_id):
 	reg_rekey("options", ["project", "class", "field", "id"], "project=? and class=? and field=?", [project_id, class_id, old_id], {"field": new_id})
 	# Re-key field old_id -> new_id across this class's objects: re-merge each value under
 	# the new field id and tombstone the old (the merge upsert handles any new_id conflict).
-	for _v in mochi.db.rows("select object, value from values_all where field=? and object in (select id from objects_all where project=? and class=?) and removed=0", old_id, project_id, class_id):
+	for _v in mochi.db.rows("select object, value from \"values\" where field=? and object in (select id from objects where project=? and class=?)", old_id, project_id, class_id):
 		value_merge(_v["object"], new_id, _v["value"])
 		value_remove(_v["object"], old_id)
 	reg_rekey("view_fields", ["project", "view", "field"], "project=? and field=?", [project_id, old_id], {"field": new_id})
@@ -8198,7 +8153,7 @@ def _create_project_object(user, project_id, obj_class, title, parent="", values
 	rank = d.get("rank", 0)
 	created = d.get("created") or now
 	updated = d.get("updated") or now
-	if not mochi.db.exists("select 1 from objects_all where id=?", d["id"]):
+	if not mochi.db.exists("select 1 from objects where id=?", d["id"]):
 		object_merge({"id": d["id"], "project": project_id, "class": obj_class, "number": d.get("number", 0), "parent": parent, "rank": rank, "created": created, "updated": updated})
 	if title and title_field:
 		value_merge(d["id"], title_field, title)

@@ -320,7 +320,7 @@ export function CreateObjectDialog({
 
   return (
     <Sheet open={open} onOpenChange={handleClose} modal={false}>
-      <SheetContent className="w-full sm:max-w-2xl p-0 gap-0 [&>button:last-child]:hidden">
+      <SheetContent className="w-full sm:max-w-2xl p-0 gap-0 [&>button:last-child]:hidden" onOpenAutoFocus={(event) => event.preventDefault()}>
         <SheetHeader className="sr-only">
           <SheetTitle><Trans>Create new item</Trans></SheetTitle>
           <SheetDescription><Trans>Create a new item in this project</Trans></SheetDescription>

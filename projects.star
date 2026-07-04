@@ -32,7 +32,7 @@ def broadcast_event(project_id, event, data, exclude=None):
 def error_message_timeout(e):
 	if e.detail.get("locations", 1) != 0:
 		return
-	reg_remove("subscribers", ["project", "id"], "id=?", [e.entity])
+	row_remove("subscribers", ["project", "id"], "id=?", [e.entity])
 # error_broadcast_gap: core calls this when an unfillable broadcast gap was
 # skipped and events were permanently lost. broadcast/resync can't replay a
 # pruned gap, so pull a fresh full snapshot.
@@ -66,7 +66,7 @@ def request_resync(project_id):
 	# Stamp the throttle window even before the request completes — a
 	# slow owner shouldn't let concurrent events queue up duplicate
 	# resync calls.
-	reg_set("projects", ["id"], "id=?", [project_id], {"synced": now})
+	row_set("projects", ["id"], "id=?", [project_id], {"synced": now})
 	server = row["server"] or ""
 	peer = ""
 	if server:
@@ -520,50 +520,32 @@ def database_create():
 	)""")
 	mochi.db.execute("create index if not exists requests_object on requests(object)")
 
-_REG_COLS = {
-	"projects": "id, name, description, prefix, owner, server, fingerprint, template, template_version, created, updated, synced, populated",
-	"subscribers": "project, id, name, subscribed",
-	"classes": "project, id, name, rank, requests, title",
-	"hierarchy": "project, class, parent",
-	"fields": "project, class, id, name, fieldtype, flags, multi, rank, min, max, pattern, minlength, maxlength, prefix, suffix, format, card, position, rows",
-	"options": "project, class, field, id, name, colour, icon, rank",
-	"views": "project, id, name, viewtype, filter, columns, rows, sort, direction, rank, border",
-	"view_classes": "project, view, class",
-	"view_fields": "project, view, field, rank",
-	"links": "project, source, target, linktype, created",
-	"objects": "id, project, class, number, parent, rank, created, updated",
-	"values": "object, field, value",
-	"comments": "id, object, parent, author, name, content, created, edited",
-	"watchers": "object, user, created",
-	"requests": "id, object, type, repository, source, target, status, title, description, draft, created, updated",
-}
-
 # Generic row write helpers (used by the config / set tables). merge = upsert the
 # whole row; set = a partial update; remove = delete. set / remove / rekey take a
 # raw WHERE clause (without the "where" keyword) + args, so a single-key,
 # partial-key (multi-row), or subquery-cascade update/delete all work.
-def reg_merge(table, keys, row):
+def row_merge(table, keys, row):
 	cols = list(row)
 	fields = [c for c in cols if c not in keys]
 	conflict = "do update set " + ", ".join(["\"" + c + "\"=excluded.\"" + c + "\"" for c in fields]) if fields else "do nothing"
 	mochi.db.execute("insert into \"" + table + "\" (" + ", ".join(["\"" + c + "\"" for c in cols]) + ") values (" + ", ".join(["?" for c in cols]) + ") on conflict (" + ", ".join(["\"" + k + "\"" for k in keys]) + ") " + conflict, *[row[c] for c in cols])
 
-def reg_set(table, keys, where, args, updates):
+def row_set(table, keys, where, args, updates):
 	fields = list(updates)
 	mochi.db.execute("update \"" + table + "\" set " + ", ".join(["\"" + c + "\"=?" for c in fields]) + " where (" + where + ")", *([updates[c] for c in fields] + list(args)))
 
-def reg_remove(table, keys, where, args):
+def row_remove(table, keys, where, args):
 	mochi.db.execute("delete from \"" + table + "\" where (" + where + ")", *args)
 
-def reg_rekey(table, keys, where, args, newkeys):
+def row_rekey(table, keys, where, args, newkeys):
 	fields = list(newkeys)
 	mochi.db.execute("update \"" + table + "\" set " + ", ".join(["\"" + c + "\"=?" for c in fields]) + " where (" + where + ")", *([newkeys[c] for c in fields] + list(args)))
 
 def object_merge(row):
-	reg_merge("objects", ["id"], row)
+	row_merge("objects", ["id"], row)
 
 def object_set(object_id, updates):
-	reg_set("objects", ["id"], "id=?", [object_id], updates)
+	row_set("objects", ["id"], "id=?", [object_id], updates)
 
 def object_remove(object_id):
 	mochi.db.execute("delete from objects where id=?", object_id)
@@ -575,10 +557,10 @@ def value_remove(object_id, field):
 	mochi.db.execute("delete from \"values\" where object=? and field=?", object_id, field)
 
 def comment_merge(row):
-	reg_merge("comments", ["id"], row)
+	row_merge("comments", ["id"], row)
 
 def comment_set(comment_id, updates):
-	reg_set("comments", ["id"], "id=?", [comment_id], updates)
+	row_set("comments", ["id"], "id=?", [comment_id], updates)
 
 def comment_remove(comment_id):
 	mochi.db.execute("delete from comments where id=?", comment_id)
@@ -766,35 +748,35 @@ def apply_template(project_id, template_id, data=None, lang="en"):
 
 	# Create classes
 	for t in data.get("classes", []):
-		reg_merge("classes", ["project", "id"], {"project": project_id, "id": t["id"], "name": substitute_labels(t["name"], labels), "rank": t.get("rank", 0), "requests": t.get("requests", ""), "title": t.get("title", "title")})
+		row_merge("classes", ["project", "id"], {"project": project_id, "id": t["id"], "name": substitute_labels(t["name"], labels), "rank": t.get("rank", 0), "requests": t.get("requests", ""), "title": t.get("title", "title")})
 
 	# Set hierarchy for each class
 	for cls_id, parents in data.get("hierarchy", {}).items():
 		for parent in parents:
-			reg_merge("hierarchy", ["project", "class", "parent"], {"project": project_id, "class": cls_id, "parent": parent})
+			row_merge("hierarchy", ["project", "class", "parent"], {"project": project_id, "class": cls_id, "parent": parent})
 
 	# Create fields for each class
 	for cls_id, fields in data.get("fields", {}).items():
 		for f in fields:
-			reg_merge("fields", ["project", "class", "id"], {"project": project_id, "class": cls_id, "id": f["id"], "name": substitute_labels(f["name"], labels), "fieldtype": f.get("fieldtype", "text"), "flags": f.get("flags", ""), "multi": f.get("multi", 0), "rank": f.get("rank", 0), "min": f.get("min", ""), "max": f.get("max", ""), "pattern": f.get("pattern", ""), "minlength": f.get("minlength", 0), "maxlength": f.get("maxlength", 0), "prefix": f.get("prefix", ""), "suffix": f.get("suffix", ""), "format": f.get("format", ""), "card": f.get("card", 0), "position": f.get("position", ""), "rows": f.get("rows", 1)})
+			row_merge("fields", ["project", "class", "id"], {"project": project_id, "class": cls_id, "id": f["id"], "name": substitute_labels(f["name"], labels), "fieldtype": f.get("fieldtype", "text"), "flags": f.get("flags", ""), "multi": f.get("multi", 0), "rank": f.get("rank", 0), "min": f.get("min", ""), "max": f.get("max", ""), "pattern": f.get("pattern", ""), "minlength": f.get("minlength", 0), "maxlength": f.get("maxlength", 0), "prefix": f.get("prefix", ""), "suffix": f.get("suffix", ""), "format": f.get("format", ""), "card": f.get("card", 0), "position": f.get("position", ""), "rows": f.get("rows", 1)})
 
 	# Create options for each class's enumerated fields
 	for cls_id, class_options in data.get("options", {}).items():
 		for field_id, field_options in class_options.items():
 			for opt in field_options:
-				reg_merge("options", ["project", "class", "field", "id"], {"project": project_id, "class": cls_id, "field": field_id, "id": opt["id"], "name": substitute_labels(opt["name"], labels), "colour": opt.get("colour", "#94a3b8"), "icon": opt.get("icon", ""), "rank": opt.get("rank", 0)})
+				row_merge("options", ["project", "class", "field", "id"], {"project": project_id, "class": cls_id, "field": field_id, "id": opt["id"], "name": substitute_labels(opt["name"], labels), "colour": opt.get("colour", "#94a3b8"), "icon": opt.get("icon", ""), "rank": opt.get("rank", 0)})
 
 	# Create views
 	for i, v in enumerate(data.get("views", [])):
-		reg_merge("views", ["project", "id"], {"project": project_id, "id": v["id"], "name": substitute_labels(v["name"], labels), "viewtype": v.get("viewtype", "board"), "filter": v.get("filter", ""), "columns": v.get("columns", ""), "rows": v.get("rows", ""), "sort": v.get("sort", ""), "direction": v.get("direction", "asc"), "rank": i, "border": v.get("border", "")})
+		row_merge("views", ["project", "id"], {"project": project_id, "id": v["id"], "name": substitute_labels(v["name"], labels), "viewtype": v.get("viewtype", "board"), "filter": v.get("filter", ""), "columns": v.get("columns", ""), "rows": v.get("rows", ""), "sort": v.get("sort", ""), "direction": v.get("direction", "asc"), "rank": i, "border": v.get("border", "")})
 		# Add view classes if specified
 		for vclass in v.get("classes", []):
-			reg_merge("view_classes", ["project", "view", "class"], {"project": project_id, "view": v["id"], "class": vclass})
+			row_merge("view_classes", ["project", "view", "class"], {"project": project_id, "view": v["id"], "class": vclass})
 		# Add fields
 		fields = v.get("fields", "").split(",")
 		for j, field in enumerate(fields):
 			if field.strip():
-				reg_merge("view_fields", ["project", "view", "field"], {"project": project_id, "view": v["id"], "field": field.strip(), "rank": j})
+				row_merge("view_fields", ["project", "view", "field"], {"project": project_id, "view": v["id"], "field": field.strip(), "rank": j})
 
 # Export the current project design as template JSON. The exported JSON
 # contains literal strings (whatever the project DB currently holds) rather
@@ -1006,13 +988,13 @@ def action_design_import(a):
 		return
 
 	# Delete existing design in correct order (foreign key dependencies)
-	reg_remove("view_fields", ["project", "view", "field"], "project=?", [project_id])
-	reg_remove("view_classes", ["project", "view", "class"], "project=?", [project_id])
-	reg_remove("views", ["project", "id"], "project=?", [project_id])
-	reg_remove("options", ["project", "class", "field", "id"], "project=?", [project_id])
-	reg_remove("fields", ["project", "class", "id"], "project=?", [project_id])
-	reg_remove("hierarchy", ["project", "class", "parent"], "project=?", [project_id])
-	reg_remove("classes", ["project", "id"], "project=?", [project_id])
+	row_remove("view_fields", ["project", "view", "field"], "project=?", [project_id])
+	row_remove("view_classes", ["project", "view", "class"], "project=?", [project_id])
+	row_remove("views", ["project", "id"], "project=?", [project_id])
+	row_remove("options", ["project", "class", "field", "id"], "project=?", [project_id])
+	row_remove("fields", ["project", "class", "id"], "project=?", [project_id])
+	row_remove("hierarchy", ["project", "class", "parent"], "project=?", [project_id])
+	row_remove("classes", ["project", "id"], "project=?", [project_id])
 	# Apply the new design. template_id is passed so {labels.X} placeholders in
 	# Mochi-shipped templates resolve; user-exported templates with literal
 	# names pass through unchanged because substitute_labels short-circuits
@@ -1020,7 +1002,7 @@ def action_design_import(a):
 	apply_template(project_id, template_id, data, lang)
 
 	# Update template tracking
-	reg_set("projects", ["id"], "id=?", [project_id], {"template": template_id, "template_version": template_version})
+	row_set("projects", ["id"], "id=?", [project_id], {"template": template_id, "template_version": template_version})
 
 	return {"data": {"success": True}}
 
@@ -1236,10 +1218,10 @@ def action_data_import(a):
 		number += 1
 		created = safe_int(o.get("created")) or now
 		updated = safe_int(o.get("updated")) or now
-		reg_merge("objects", ["id"], {"id": object_id, "project": project_id, "class": o["class"], "number": number, "parent": parent, "rank": previous, "created": created, "updated": updated})
+		row_merge("objects", ["id"], {"id": object_id, "project": project_id, "class": o["class"], "number": number, "parent": parent, "rank": previous, "created": created, "updated": updated})
 		for field, value in (o.get("values") or {}).items():
 			if value != "":
-				reg_merge("values", ["object", "field"], {"object": object_id, "field": field, "value": str(value)})
+				row_merge("values", ["object", "field"], {"object": object_id, "field": field, "value": str(value)})
 		file_comments = o.get("comments") or []
 		comment_ids = []
 		comment_remap = {}
@@ -1250,7 +1232,7 @@ def action_data_import(a):
 				comment_remap[c["id"]] = comment_id
 		for i, c in enumerate(file_comments):
 			comment_parent = comment_remap.get(c.get("parent") or "", "")
-			reg_merge("comments", ["id"], {"id": comment_ids[i], "object": object_id, "parent": comment_parent, "author": c.get("author") or user, "name": c.get("name") or a.user.identity.name, "content": str(c["content"]), "created": safe_int(c.get("created")) or now, "edited": safe_int(c.get("edited"))})
+			row_merge("comments", ["id"], {"id": comment_ids[i], "object": object_id, "parent": comment_parent, "author": c.get("author") or user, "name": c.get("name") or a.user.identity.name, "content": str(c["content"]), "created": safe_int(c.get("created")) or now, "edited": safe_int(c.get("edited"))})
 			comment_count += 1
 		mochi.db.execute(
 			"insert into activity (id, object, user, action, field, oldvalue, newvalue, created) values (?, ?, ?, 'created', '', '', '', ?)",
@@ -1260,9 +1242,9 @@ def action_data_import(a):
 	for l in links:
 		source = remap.get(l["source"], l["source"])
 		target = remap.get(l["target"], l["target"])
-		reg_merge("links", ["source", "target", "linktype"], {"project": project_id, "source": source, "target": target, "linktype": str(l["linktype"]), "created": safe_int(l.get("created")) or now})
+		row_merge("links", ["source", "target", "linktype"], {"project": project_id, "source": source, "target": target, "linktype": str(l["linktype"]), "created": safe_int(l.get("created")) or now})
 
-	reg_set("projects", ["id"], "id=?", [project_id], {"updated": now})
+	row_set("projects", ["id"], "id=?", [project_id], {"updated": now})
 
 	# Push a full snapshot to every subscriber - event_sync_batch applies it
 	# idempotently, so this replaces per-record broadcasts for bulk changes
@@ -1343,10 +1325,10 @@ def action_project_create(a):
 
 	# Insert project record
 	fp = mochi.entity.fingerprint(entity) or ""
-	reg_merge("projects", ["id"], {"id": entity, "name": name, "description": description, "prefix": prefix, "owner": 1, "server": "", "fingerprint": fp, "template": template, "template_version": tmpl_version, "created": now, "updated": now})
+	row_merge("projects", ["id"], {"id": entity, "name": name, "description": description, "prefix": prefix, "owner": 1, "server": "", "fingerprint": fp, "template": template, "template_version": tmpl_version, "created": now, "updated": now})
 
 	# Add creator as subscriber
-	reg_merge("subscribers", ["project", "id"], {"project": entity, "id": creator, "name": a.user.identity.name, "subscribed": now})
+	row_merge("subscribers", ["project", "id"], {"project": entity, "id": creator, "name": a.user.identity.name, "subscribed": now})
 
 	# Apply template (blank template creates nothing)
 	if template != "blank":
@@ -1509,19 +1491,19 @@ def action_project_update(a):
 		if not mochi.text.valid(name, "name"):
 			a.error.label(400, "errors.invalid_name")
 			return
-		reg_set("projects", ["id"], "id=?", [project_id], {"name": name, "updated": now})
+		row_set("projects", ["id"], "id=?", [project_id], {"name": name, "updated": now})
 		mochi.entity.update(project_id, name=name)
 
 	if a.input("description") != None:
 		if len(description) > 10000:
 			a.error.label(400, "errors.description_too_long")
 			return
-		reg_set("projects", ["id"], "id=?", [project_id], {"description": description, "updated": now})
+		row_set("projects", ["id"], "id=?", [project_id], {"description": description, "updated": now})
 	if prefix:
 		if len(prefix) > 20:
 			a.error.label(400, "errors.prefix_too_long")
 			return
-		reg_set("projects", ["id"], "id=?", [project_id], {"prefix": prefix, "updated": now})
+		row_set("projects", ["id"], "id=?", [project_id], {"prefix": prefix, "updated": now})
 	update = {"project": project_id}
 	if name:
 		update["name"] = name
@@ -1555,7 +1537,7 @@ def action_project_resync(a):
 		# Owners are the canonical source; nothing to resync from.
 		return {"data": {"synced": False}}
 	# Reset the throttle so an explicit user request always runs.
-	reg_set("projects", ["id"], "id=?", [project_id], {"synced": 0})
+	row_set("projects", ["id"], "id=?", [project_id], {"synced": 0})
 	synced = request_resync(project_id)
 	return {"data": {"synced": synced}}
 
@@ -1978,13 +1960,13 @@ def delete_object_cascade(project_id, object_id, user=""):
 		delete_object_cascade(project_id, child["id"], user)
 
 	# Then delete this object's related data
-	reg_remove("requests", ["id"], "object=?", [object_id])
+	row_remove("requests", ["id"], "object=?", [object_id])
 	mochi.attachment.clear(object_id)
-	reg_remove("watchers", ["object", "user"], "object=?", [object_id])
+	row_remove("watchers", ["object", "user"], "object=?", [object_id])
 	mochi.db.execute("delete from activity where object=?", object_id)
 	delete_object_comments(object_id, project_id)
 	values_remove_object(object_id)
-	reg_remove("links", ["source", "target", "linktype"], "source=? or target=?", [object_id, object_id])
+	row_remove("links", ["source", "target", "linktype"], "source=? or target=?", [object_id, object_id])
 	object_remove(object_id)
 
 	# Broadcast delete event for each object
@@ -2095,9 +2077,9 @@ def action_object_create(a):
 					object_merge({"id": d["id"], "project": project_id, "class": obj_class, "number": d.get("number", 0), "parent": parent, "rank": rank, "created": created, "updated": updated})
 				if title and title_field:
 					value_merge(d["id"], title_field, title)
-				reg_set("projects", ["id"], "id=?", [project_id], {"updated": now})
+				row_set("projects", ["id"], "id=?", [project_id], {"updated": now})
 				# Auto-watch creator locally so subscriber gets notifications
-				reg_merge("watchers", ["object", "user"], {"object": d["id"], "user": a.user.identity.id, "created": now})
+				row_merge("watchers", ["object", "user"], {"object": d["id"], "user": a.user.identity.id, "created": now})
 		return result
 
 	if not check_project_access(a.user.identity.id, project_id, "write"):
@@ -2131,7 +2113,7 @@ def action_object_create(a):
 	# no mutated shared counter). The objects(project, number) index makes the
 	# max() an index seek.
 	new_counter = mochi.db.row("select coalesce(max(number), 0) + 1 as next from objects where project=?", project_id)["next"]
-	reg_set("projects", ["id"], "id=?", [project_id], {"updated": mochi.time.now()})
+	row_set("projects", ["id"], "id=?", [project_id], {"updated": mochi.time.now()})
 	# Calculate initial rank (add to end of parent or project)
 	initial_rank = rank_after_all(project_id, None)
 
@@ -2151,7 +2133,7 @@ def action_object_create(a):
 	log_activity(object_id, a.user.identity.id, "created")
 
 	# Auto-watch creator
-	reg_merge("watchers", ["object", "user"], {"object": object_id, "user": a.user.identity.id, "created": now})
+	row_merge("watchers", ["object", "user"], {"object": object_id, "user": a.user.identity.id, "created": now})
 	# Broadcast to subscribers
 	broadcast_event(project_id, "object/create", {
 		"project": project_id, "id": object_id, "class": obj_class,
@@ -2353,12 +2335,12 @@ def action_object_delete(a):
 			"project": project_id, "object": object_id,
 		})
 		if result and object_id:
-			reg_remove("requests", ["id"], "object=?", [object_id])
-			reg_remove("watchers", ["object", "user"], "object=?", [object_id])
+			row_remove("requests", ["id"], "object=?", [object_id])
+			row_remove("watchers", ["object", "user"], "object=?", [object_id])
 			mochi.db.execute("delete from activity where object=?", object_id)
 			delete_object_comments(object_id, project_id)
 			values_remove_object(object_id)
-			reg_remove("links", ["source", "target", "linktype"], "source=? or target=?", [object_id, object_id])
+			row_remove("links", ["source", "target", "linktype"], "source=? or target=?", [object_id, object_id])
 			object_remove(object_id)
 		return result
 
@@ -2651,7 +2633,7 @@ def action_values_set(a):
 			if field_types.get(fid) == "user":
 				assigned = mochi.db.row("select value from \"values\" where object=? and field=?", object_id, fid)
 				if assigned and assigned["value"]:
-					reg_merge("watchers", ["object", "user"], {"object": object_id, "user": assigned["value"], "created": now})
+					row_merge("watchers", ["object", "user"], {"object": object_id, "user": assigned["value"], "created": now})
 
 	return {"data": {"success": True, "changed": changes}}
 
@@ -2728,7 +2710,7 @@ def action_value_set(a):
 		})
 		# Auto-watch assigned user
 		if field_row["fieldtype"] == "user" and str(new_value):
-			reg_merge("watchers", ["object", "user"], {"object": object_id, "user": str(new_value), "created": now})
+			row_merge("watchers", ["object", "user"], {"object": object_id, "user": str(new_value), "created": now})
 
 	return {"data": {"success": True}}
 
@@ -2832,7 +2814,7 @@ def action_link_create(a):
 		return
 
 	now = mochi.time.now()
-	reg_merge("links", ["source", "target", "linktype"], {"project": project_id, "source": object_id, "target": target_id, "linktype": linktype, "created": now})
+	row_merge("links", ["source", "target", "linktype"], {"project": project_id, "source": object_id, "target": target_id, "linktype": linktype, "created": now})
 
 	log_activity(object_id, a.user.identity.id, "linked", linktype, "", target_id)
 
@@ -2878,7 +2860,7 @@ def action_link_delete(a):
 		a.error.label(400, "errors.invalid_link_type")
 		return
 
-	reg_remove("links", ["source", "target", "linktype"], "project=? and source=? and target=? and linktype=?", [project_id, object_id, target_id, linktype])
+	row_remove("links", ["source", "target", "linktype"], "project=? and source=? and target=? and linktype=?", [project_id, object_id, target_id, linktype])
 	broadcast_event(project_id, "link/delete", {
 		"project": project_id, "source": object_id,
 		"target": target_id, "linktype": linktype, "user": a.user.identity.id
@@ -3048,7 +3030,7 @@ def action_comment_create(a):
 			submit_data
 		)
 		# Auto-watch commenter locally so subscriber gets notifications
-		reg_merge("watchers", ["object", "user"], {"object": object_id, "user": a.user.identity.id, "created": now})
+		row_merge("watchers", ["object", "user"], {"object": object_id, "user": a.user.identity.id, "created": now})
 		return {"data": {
 			"id": comment_id, "parent": parent,
 			"author": a.user.identity.id, "name": a.user.identity.name,
@@ -3089,7 +3071,7 @@ def action_comment_create(a):
 	log_activity(object_id, a.user.identity.id, "commented")
 
 	# Auto-watch on comment
-	reg_merge("watchers", ["object", "user"], {"object": object_id, "user": a.user.identity.id, "created": now})
+	row_merge("watchers", ["object", "user"], {"object": object_id, "user": a.user.identity.id, "created": now})
 
 	# Broadcast with attachment metadata
 	comment_event = {
@@ -3460,7 +3442,7 @@ def action_watcher_add(a):
 
 	# Add current user as watcher
 	now = mochi.time.now()
-	reg_merge("watchers", ["object", "user"], {"object": object_id, "user": a.user.identity.id, "created": now})
+	row_merge("watchers", ["object", "user"], {"object": object_id, "user": a.user.identity.id, "created": now})
 
 	return {"data": {"success": True, "watching": True}}
 
@@ -3481,7 +3463,7 @@ def action_watcher_remove(a):
 		return
 
 	# Remove current user as watcher
-	reg_remove("watchers", ["object", "user"], "object=? and user=?", [object_id, a.user.identity.id])
+	row_remove("watchers", ["object", "user"], "object=? and user=?", [object_id, a.user.identity.id])
 	return {"data": {"success": True, "watching": False}}
 
 # ============================================================================
@@ -3581,18 +3563,18 @@ def action_view_create(a):
 	next_rank = mochi.db.row("select coalesce(max(rank), -1) + 1 as r from views where project=?", project_id)
 	rank = next_rank["r"] if next_rank else 0
 
-	reg_merge("views", ["project", "id"], {"project": project_id, "id": view_id, "name": name.strip(), "viewtype": viewtype, "filter": filter_str, "columns": columns, "rows": rows, "sort": sort, "direction": direction, "rank": rank, "border": border})
+	row_merge("views", ["project", "id"], {"project": project_id, "id": view_id, "name": name.strip(), "viewtype": viewtype, "filter": filter_str, "columns": columns, "rows": rows, "sort": sort, "direction": direction, "rank": rank, "border": border})
 
 	# Add fields to junction table
 	for i, field in enumerate(fields.split(",")):
 		if field.strip():
-			reg_merge("view_fields", ["project", "view", "field"], {"project": project_id, "view": view_id, "field": field.strip(), "rank": i})
+			row_merge("view_fields", ["project", "view", "field"], {"project": project_id, "view": view_id, "field": field.strip(), "rank": i})
 
 	# Add classes to junction table
 	view_classes = a.input("classes") or ""
 	if view_classes:
 		for cls_id in [c.strip() for c in view_classes.split(",") if c.strip()]:
-			reg_merge("view_classes", ["project", "view", "class"], {"project": project_id, "view": view_id, "class": cls_id})
+			row_merge("view_classes", ["project", "view", "class"], {"project": project_id, "view": view_id, "class": cls_id})
 
 	broadcast_event(project_id, "view/create", {
 		"project": project_id, "id": view_id, "name": name.strip(),
@@ -3651,44 +3633,44 @@ def action_view_update(a):
 	direction = a.input("direction")
 
 	if a.input("name") != None and name.strip() != "":
-		reg_set("views", ["project", "id"], "project=? and id=?", [project_id, view_id], {"name": name.strip()})
+		row_set("views", ["project", "id"], "project=? and id=?", [project_id, view_id], {"name": name.strip()})
 	if a.input("viewtype") != None and viewtype != "":
 		if viewtype not in ["board", "list"]:
 			a.error.label(400, "errors.invalid_view_type")
 			return
-		reg_set("views", ["project", "id"], "project=? and id=?", [project_id, view_id], {"viewtype": viewtype})
+		row_set("views", ["project", "id"], "project=? and id=?", [project_id, view_id], {"viewtype": viewtype})
 	if a.input("filter") != None:
-		reg_set("views", ["project", "id"], "project=? and id=?", [project_id, view_id], {"filter": filter_str})
+		row_set("views", ["project", "id"], "project=? and id=?", [project_id, view_id], {"filter": filter_str})
 	if a.input("columns") != None:
-		reg_set("views", ["project", "id"], "project=? and id=?", [project_id, view_id], {"columns": columns})
+		row_set("views", ["project", "id"], "project=? and id=?", [project_id, view_id], {"columns": columns})
 	if a.input("rows") != None:
-		reg_set("views", ["project", "id"], "project=? and id=?", [project_id, view_id], {"rows": rows})
+		row_set("views", ["project", "id"], "project=? and id=?", [project_id, view_id], {"rows": rows})
 	if a.input("fields") != None:
 		# Delete existing fields and insert new ones
-		reg_remove("view_fields", ["project", "view", "field"], "project=? and view=?", [project_id, view_id])
+		row_remove("view_fields", ["project", "view", "field"], "project=? and view=?", [project_id, view_id])
 		for i, field in enumerate(fields.split(",")):
 			if field.strip():
-				reg_merge("view_fields", ["project", "view", "field"], {"project": project_id, "view": view_id, "field": field.strip(), "rank": i})
+				row_merge("view_fields", ["project", "view", "field"], {"project": project_id, "view": view_id, "field": field.strip(), "rank": i})
 	if a.input("sort") != None:
-		reg_set("views", ["project", "id"], "project=? and id=?", [project_id, view_id], {"sort": sort})
+		row_set("views", ["project", "id"], "project=? and id=?", [project_id, view_id], {"sort": sort})
 	if a.input("direction") != None and direction != "":
 		if direction not in ["asc", "desc"]:
 			a.error.label(400, "errors.invalid_direction")
 			return
-		reg_set("views", ["project", "id"], "project=? and id=?", [project_id, view_id], {"direction": direction})
+		row_set("views", ["project", "id"], "project=? and id=?", [project_id, view_id], {"direction": direction})
 	border = a.input("border")
 	if a.input("border") != None:
-		reg_set("views", ["project", "id"], "project=? and id=?", [project_id, view_id], {"border": border})
+		row_set("views", ["project", "id"], "project=? and id=?", [project_id, view_id], {"border": border})
 	# Update view classes if provided (comma-separated list of class IDs, empty string = all classes)
 	view_classes_input = a.input("classes")
 	if a.input("classes") != None:
 		# Delete existing view classes
-		reg_remove("view_classes", ["project", "view", "class"], "project=? and view=?", [project_id, view_id])
+		row_remove("view_classes", ["project", "view", "class"], "project=? and view=?", [project_id, view_id])
 		# Insert new view classes
 		if view_classes_input:
 			cls_ids = [c.strip() for c in view_classes_input.split(",") if c.strip()]
 			for cls_id in cls_ids:
-				reg_merge("view_classes", ["project", "view", "class"], {"project": project_id, "view": view_id, "class": cls_id})
+				row_merge("view_classes", ["project", "view", "class"], {"project": project_id, "view": view_id, "class": cls_id})
 
 	# Read back updated view for broadcast
 	updated = mochi.db.row("select * from views where project=? and id=?", project_id, view_id)
@@ -3739,9 +3721,9 @@ def action_view_delete(a):
 		a.error.label(400, "errors.cannot_delete_the_last_view")
 		return
 
-	reg_remove("view_fields", ["project", "view", "field"], "project=? and view=?", [project_id, view_id])
-	reg_remove("view_classes", ["project", "view", "class"], "project=? and view=?", [project_id, view_id])
-	reg_remove("views", ["project", "id"], "project=? and id=?", [project_id, view_id])
+	row_remove("view_fields", ["project", "view", "field"], "project=? and view=?", [project_id, view_id])
+	row_remove("view_classes", ["project", "view", "class"], "project=? and view=?", [project_id, view_id])
+	row_remove("views", ["project", "id"], "project=? and id=?", [project_id, view_id])
 	broadcast_event(project_id, "view/delete", {"project": project_id, "id": view_id})
 
 	return {"data": {"success": True}}
@@ -3773,7 +3755,7 @@ def action_view_reorder(a):
 
 	# Update rank for each view
 	for i, view_id in enumerate(order):
-		reg_set("views", ["project", "id"], "project=? and id=?", [project_id, view_id], {"rank": i})
+		row_set("views", ["project", "id"], "project=? and id=?", [project_id, view_id], {"rank": i})
 
 	broadcast_event(project_id, "view/reorder", {"project": project_id, "order": order})
 
@@ -3838,13 +3820,13 @@ def action_class_create(a):
 
 	requests = a.input("requests") or ""
 
-	reg_merge("classes", ["project", "id"], {"project": project_id, "id": class_id, "name": name.strip(), "rank": rank, "requests": requests, "title": "title"})
+	row_merge("classes", ["project", "id"], {"project": project_id, "id": class_id, "name": name.strip(), "rank": rank, "requests": requests, "title": "title"})
 
 	# Add default title field
-	reg_merge("fields", ["project", "class", "id"], {"project": project_id, "class": class_id, "id": "title", "name": "Title", "fieldtype": "text", "flags": "required,sort", "rank": 0})
+	row_merge("fields", ["project", "class", "id"], {"project": project_id, "class": class_id, "id": "title", "name": "Title", "fieldtype": "text", "flags": "required,sort", "rank": 0})
 
 	# Set hierarchy to allow root by default
-	reg_merge("hierarchy", ["project", "class", "parent"], {"project": project_id, "class": class_id, "parent": ""})
+	row_merge("hierarchy", ["project", "class", "parent"], {"project": project_id, "class": class_id, "parent": ""})
 
 	broadcast_event(project_id, "class/create", {
 		"project": project_id, "id": class_id, "name": name.strip(), "rank": rank, "requests": requests, "title": "title"
@@ -3893,14 +3875,14 @@ def action_class_update(a):
 
 	name = a.input("name")
 	if name:
-		reg_set("classes", ["project", "id"], "project=? and id=?", [project_id, class_id], {"name": name.strip()})
+		row_set("classes", ["project", "id"], "project=? and id=?", [project_id, class_id], {"name": name.strip()})
 	requests_input = a.input("requests")
 	if requests_input:
 		requests_value = "" if requests_input == "none" else requests_input
-		reg_set("classes", ["project", "id"], "project=? and id=?", [project_id, class_id], {"requests": requests_value})
+		row_set("classes", ["project", "id"], "project=? and id=?", [project_id, class_id], {"requests": requests_value})
 	title_input = a.input("title")
 	if title_input:
-		reg_set("classes", ["project", "id"], "project=? and id=?", [project_id, class_id], {"title": title_input})
+		row_set("classes", ["project", "id"], "project=? and id=?", [project_id, class_id], {"title": title_input})
 	broadcast_event(project_id, "class/update", {
 		"project": project_id, "id": class_id, "name": name or class_row["name"],
 		"requests": ("" if requests_input == "none" else requests_input) if requests_input else class_row["requests"],
@@ -3945,12 +3927,12 @@ def action_class_delete(a):
 	# classes(project, id), so its rows MUST go before the class row or the
 	# delete fails with "FOREIGN KEY constraint failed". hierarchy rows where
 	# this class is a parent have no FK but would be left dangling, so clear them.
-	reg_remove("options", ["project", "class", "field", "id"], "project=? and class=?", [project_id, class_id])
-	reg_remove("fields", ["project", "class", "id"], "project=? and class=?", [project_id, class_id])
-	reg_remove("view_classes", ["project", "view", "class"], "project=? and class=?", [project_id, class_id])
-	reg_remove("hierarchy", ["project", "class", "parent"], "project=? and class=?", [project_id, class_id])
-	reg_remove("hierarchy", ["project", "class", "parent"], "project=? and parent=?", [project_id, class_id])
-	reg_remove("classes", ["project", "id"], "project=? and id=?", [project_id, class_id])
+	row_remove("options", ["project", "class", "field", "id"], "project=? and class=?", [project_id, class_id])
+	row_remove("fields", ["project", "class", "id"], "project=? and class=?", [project_id, class_id])
+	row_remove("view_classes", ["project", "view", "class"], "project=? and class=?", [project_id, class_id])
+	row_remove("hierarchy", ["project", "class", "parent"], "project=? and class=?", [project_id, class_id])
+	row_remove("hierarchy", ["project", "class", "parent"], "project=? and parent=?", [project_id, class_id])
+	row_remove("classes", ["project", "id"], "project=? and id=?", [project_id, class_id])
 	broadcast_event(project_id, "class/delete", {"project": project_id, "id": class_id})
 
 	return {"data": {"success": True}}
@@ -4020,7 +4002,7 @@ def action_hierarchy_set(a):
 		parents = [p.strip() for p in parents_str.split(",")]
 
 	# Delete existing hierarchy
-	reg_remove("hierarchy", ["project", "class", "parent"], "project=? and class=?", [project_id, class_id])
+	row_remove("hierarchy", ["project", "class", "parent"], "project=? and class=?", [project_id, class_id])
 	# Insert new hierarchy entries
 	for parent in parents:
 		# Verify parent class exists (unless it's empty string for root)
@@ -4028,7 +4010,7 @@ def action_hierarchy_set(a):
 			parent_exists = mochi.db.exists("select 1 from classes where project=? and id=?", project_id, parent)
 			if not parent_exists:
 				continue  # Skip invalid parents
-		reg_merge("hierarchy", ["project", "class", "parent"], {"project": project_id, "class": class_id, "parent": parent})
+		row_merge("hierarchy", ["project", "class", "parent"], {"project": project_id, "class": class_id, "parent": parent})
 
 	broadcast_event(project_id, "hierarchy/set", {
 		"project": project_id, "class": class_id, "parents": parents
@@ -4123,7 +4105,7 @@ def action_field_create(a):
 	card = 1 if a.input("card") != "0" and a.input("card") != "false" else 0
 	rows = safe_int(a.input("rows"), 1)
 
-	reg_merge("fields", ["project", "class", "id"], {"project": project_id, "class": class_id, "id": field_id, "name": name.strip(), "fieldtype": fieldtype, "flags": flags, "multi": multi, "rank": rank, "card": card, "rows": rows})
+	row_merge("fields", ["project", "class", "id"], {"project": project_id, "class": class_id, "id": field_id, "name": name.strip(), "fieldtype": fieldtype, "flags": flags, "multi": multi, "rank": rank, "card": card, "rows": rows})
 
 	broadcast_event(project_id, "field/create", {
 		"project": project_id, "class": class_id, "id": field_id,
@@ -4172,59 +4154,59 @@ def action_field_update(a):
 
 	if a.input("name") != None:
 		name = a.input("name").strip()
-		reg_set("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, field_id], {"name": name})
+		row_set("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, field_id], {"name": name})
 		update_data["name"] = name
 	if a.input("flags") != None:
 		flags = a.input("flags")
-		reg_set("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, field_id], {"flags": flags})
+		row_set("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, field_id], {"flags": flags})
 		update_data["flags"] = flags
 	if a.input("multi") != None:
 		multi_val = 1 if a.input("multi") in ("1", "true") else 0
-		reg_set("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, field_id], {"multi": multi_val})
+		row_set("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, field_id], {"multi": multi_val})
 		update_data["multi"] = multi_val
 	if a.input("card") != None:
 		card_val = 1 if a.input("card") in ("1", "true") else 0
-		reg_set("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, field_id], {"card": card_val})
+		row_set("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, field_id], {"card": card_val})
 		update_data["card"] = card_val
 	if a.input("min") != None:
 		min_val = a.input("min")
-		reg_set("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, field_id], {"min": min_val})
+		row_set("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, field_id], {"min": min_val})
 		update_data["min"] = min_val
 	if a.input("max") != None:
 		max_val = a.input("max")
-		reg_set("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, field_id], {"max": max_val})
+		row_set("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, field_id], {"max": max_val})
 		update_data["max"] = max_val
 	if a.input("pattern") != None:
 		pattern = a.input("pattern")
-		reg_set("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, field_id], {"pattern": pattern})
+		row_set("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, field_id], {"pattern": pattern})
 		update_data["pattern"] = pattern
 	if a.input("minlength") != None:
 		minlength = safe_int(a.input("minlength"))
-		reg_set("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, field_id], {"minlength": minlength})
+		row_set("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, field_id], {"minlength": minlength})
 		update_data["minlength"] = minlength
 	if a.input("maxlength") != None:
 		maxlength = safe_int(a.input("maxlength"))
-		reg_set("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, field_id], {"maxlength": maxlength})
+		row_set("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, field_id], {"maxlength": maxlength})
 		update_data["maxlength"] = maxlength
 	if a.input("prefix") != None:
 		prefix = a.input("prefix")
-		reg_set("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, field_id], {"prefix": prefix})
+		row_set("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, field_id], {"prefix": prefix})
 		update_data["prefix"] = prefix
 	if a.input("suffix") != None:
 		suffix = a.input("suffix")
-		reg_set("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, field_id], {"suffix": suffix})
+		row_set("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, field_id], {"suffix": suffix})
 		update_data["suffix"] = suffix
 	if a.input("format") != None:
 		format_str = a.input("format")
-		reg_set("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, field_id], {"format": format_str})
+		row_set("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, field_id], {"format": format_str})
 		update_data["format"] = format_str
 	if a.input("position") != None:
 		position = a.input("position")
-		reg_set("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, field_id], {"position": position})
+		row_set("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, field_id], {"position": position})
 		update_data["position"] = position
 	if a.input("rows") != None:
 		rows_val = safe_int(a.input("rows"), 1)
-		reg_set("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, field_id], {"rows": rows_val})
+		row_set("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, field_id], {"rows": rows_val})
 		update_data["rows"] = rows_val
 
 	# Rename field ID if requested
@@ -4280,9 +4262,9 @@ def action_field_delete(a):
 		return
 
 	# Delete options for this field
-	reg_remove("options", ["project", "class", "field", "id"], "project=? and class=? and field=?", [project_id, class_id, field_id])
+	row_remove("options", ["project", "class", "field", "id"], "project=? and class=? and field=?", [project_id, class_id, field_id])
 	# Delete field
-	reg_remove("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, field_id])
+	row_remove("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, field_id])
 	broadcast_event(project_id, "field/delete", {"project": project_id, "class": class_id, "id": field_id})
 
 	return {"data": {"success": True}}
@@ -4320,7 +4302,7 @@ def action_field_reorder(a):
 
 	# Update rank for each field
 	for i, field_id in enumerate(order):
-		reg_set("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, field_id], {"rank": i})
+		row_set("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, field_id], {"rank": i})
 
 	broadcast_event(project_id, "field/reorder", {"project": project_id, "class": class_id, "order": order})
 
@@ -4418,7 +4400,7 @@ def action_option_create(a):
 		a.error.label(400, "errors.icon_too_long")
 		return
 
-	reg_merge("options", ["project", "class", "field", "id"], {"project": project_id, "class": class_id, "field": field_id, "id": option_id, "name": name.strip(), "colour": colour, "icon": icon, "rank": rank})
+	row_merge("options", ["project", "class", "field", "id"], {"project": project_id, "class": class_id, "field": field_id, "id": option_id, "name": name.strip(), "colour": colour, "icon": icon, "rank": rank})
 
 	broadcast_event(project_id, "option/create", {
 		"project": project_id, "class": class_id, "field": field_id,
@@ -4474,17 +4456,17 @@ def action_option_update(a):
 		if len(name) > 100:
 			a.error.label(400, "errors.name_too_long")
 			return
-		reg_set("options", ["project", "class", "field", "id"], "project=? and class=? and field=? and id=?", [project_id, class_id, field_id, option_id], {"name": name.strip()})
+		row_set("options", ["project", "class", "field", "id"], "project=? and class=? and field=? and id=?", [project_id, class_id, field_id, option_id], {"name": name.strip()})
 	if a.input("colour") != None:
 		if len(colour) > 20:
 			a.error.label(400, "errors.colour_too_long")
 			return
-		reg_set("options", ["project", "class", "field", "id"], "project=? and class=? and field=? and id=?", [project_id, class_id, field_id, option_id], {"colour": colour})
+		row_set("options", ["project", "class", "field", "id"], "project=? and class=? and field=? and id=?", [project_id, class_id, field_id, option_id], {"colour": colour})
 	if a.input("icon") != None:
 		if len(icon) > 100:
 			a.error.label(400, "errors.icon_too_long")
 			return
-		reg_set("options", ["project", "class", "field", "id"], "project=? and class=? and field=? and id=?", [project_id, class_id, field_id, option_id], {"icon": icon})
+		row_set("options", ["project", "class", "field", "id"], "project=? and class=? and field=? and id=?", [project_id, class_id, field_id, option_id], {"icon": icon})
 	update_data = {"project": project_id, "class": class_id, "field": field_id, "id": option_id}
 	if a.input("name") != None:
 		update_data["name"] = name.strip()
@@ -4525,7 +4507,7 @@ def action_option_delete(a):
 		a.error.label(400, "errors.option_id_required")
 		return
 
-	reg_remove("options", ["project", "class", "field", "id"], "project=? and class=? and field=? and id=?", [project_id, class_id, field_id, option_id])
+	row_remove("options", ["project", "class", "field", "id"], "project=? and class=? and field=? and id=?", [project_id, class_id, field_id, option_id])
 	broadcast_event(project_id, "option/delete", {"project": project_id, "class": class_id, "field": field_id, "id": option_id})
 
 	return {"data": {"success": True}}
@@ -4564,7 +4546,7 @@ def action_option_reorder(a):
 
 	# Update sort order for each option
 	for i, option_id in enumerate(order):
-		reg_set("options", ["project", "class", "field", "id"], "project=? and class=? and field=? and id=?", [project_id, class_id, field_id, option_id], {"rank": i})
+		row_set("options", ["project", "class", "field", "id"], "project=? and class=? and field=? and id=?", [project_id, class_id, field_id, option_id], {"rank": i})
 
 	broadcast_event(project_id, "option/reorder", {"project": project_id, "class": class_id, "field": field_id, "order": order})
 
@@ -5020,7 +5002,7 @@ def action_subscribe(a):
 	# populated=0: the schema is fetched synchronously below, but the bulk
 	# object data arrives asynchronously via the owner's sync/batch. The board
 	# shows a loading state until event_sync_batch flips this to 1.
-	reg_merge("projects", ["id"], {"id": project_id, "name": project_name, "description": project_desc, "prefix": project_prefix, "owner": 0, "server": server or "", "fingerprint": fp, "created": now, "updated": now, "populated": 0})
+	row_merge("projects", ["id"], {"id": project_id, "name": project_name, "description": project_desc, "prefix": project_prefix, "owner": 0, "server": server or "", "fingerprint": fp, "created": now, "updated": now, "populated": 0})
 
 	# Insert schema so the project page has content immediately
 	if schema and not schema.get("error"):
@@ -5234,35 +5216,35 @@ def insert_schema(project_id, schema):
 	# when the subscriber's row already matches.
 	project_data = schema.get("project")
 	if project_data:
-		reg_set("projects", ["id"], "id=? and owner=0", [project_id], {"name": project_data.get("name", ""), "description": project_data.get("description", ""), "prefix": project_data.get("prefix", "PROJ")})
+		row_set("projects", ["id"], "id=? and owner=0", [project_id], {"name": project_data.get("name", ""), "description": project_data.get("description", ""), "prefix": project_data.get("prefix", "PROJ")})
 	for c in (schema.get("classes") or []):
-		reg_merge("classes", ["project", "id"], {"id": c.get("id", ""), "project": project_id, "name": c.get("name", ""), "rank": c.get("rank", 0), "requests": c.get("requests", ""), "title": c.get("title", "")})
+		row_merge("classes", ["project", "id"], {"id": c.get("id", ""), "project": project_id, "name": c.get("name", ""), "rank": c.get("rank", 0), "requests": c.get("requests", ""), "title": c.get("title", "")})
 	for f in (schema.get("fields") or []):
-		reg_merge("fields", ["project", "class", "id"], {"project": project_id, "class": f.get("class", ""), "id": f.get("id", ""), "name": f.get("name", ""), "fieldtype": f.get("fieldtype", "text"), "flags": f.get("flags", ""), "multi": f.get("multi", 0), "rank": f.get("rank", 0), "card": f.get("card", 1), "position": f.get("position", ""), "rows": f.get("rows", 1)})
+		row_merge("fields", ["project", "class", "id"], {"project": project_id, "class": f.get("class", ""), "id": f.get("id", ""), "name": f.get("name", ""), "fieldtype": f.get("fieldtype", "text"), "flags": f.get("flags", ""), "multi": f.get("multi", 0), "rank": f.get("rank", 0), "card": f.get("card", 1), "position": f.get("position", ""), "rows": f.get("rows", 1)})
 	for o in (schema.get("options") or []):
-		reg_merge("options", ["project", "class", "field", "id"], {"project": project_id, "class": o.get("class", ""), "field": o.get("field", ""), "id": o.get("id", ""), "name": o.get("name", ""), "colour": o.get("colour", "#94a3b8"), "icon": o.get("icon", ""), "rank": o.get("rank", 0)})
+		row_merge("options", ["project", "class", "field", "id"], {"project": project_id, "class": o.get("class", ""), "field": o.get("field", ""), "id": o.get("id", ""), "name": o.get("name", ""), "colour": o.get("colour", "#94a3b8"), "icon": o.get("icon", ""), "rank": o.get("rank", 0)})
 	for h in (schema.get("hierarchy") or []):
 		for parent in (h.get("parents") or []):
 			# (project, class, parent) is the full primary key; there
 			# is no editable payload to reconcile, so ignore is right.
-			reg_merge("hierarchy", ["project", "class", "parent"], {"project": project_id, "class": h.get("class", ""), "parent": parent})
+			row_merge("hierarchy", ["project", "class", "parent"], {"project": project_id, "class": h.get("class", ""), "parent": parent})
 	for v in (schema.get("views") or []):
 		view_id = v.get("id", "")
-		reg_merge("views", ["project", "id"], {"id": view_id, "project": project_id, "name": v.get("name", ""), "viewtype": v.get("viewtype", "board"), "filter": v.get("filter", ""), "columns": v.get("columns", ""), "rows": v.get("rows", ""), "sort": v.get("sort", ""), "direction": v.get("direction", "asc"), "rank": v.get("rank", 0), "border": v.get("border", "")})
+		row_merge("views", ["project", "id"], {"id": view_id, "project": project_id, "name": v.get("name", ""), "viewtype": v.get("viewtype", "board"), "filter": v.get("filter", ""), "columns": v.get("columns", ""), "rows": v.get("rows", ""), "sort": v.get("sort", ""), "direction": v.get("direction", "asc"), "rank": v.get("rank", 0), "border": v.get("border", "")})
 		fields_csv = v.get("fields", "")
 		if fields_csv:
 			rank = 0
 			for field_id in fields_csv.split(","):
 				if field_id:
 					# view_fields has an editable rank; reconcile it.
-					reg_merge("view_fields", ["project", "view", "field"], {"project": project_id, "view": view_id, "field": field_id, "rank": rank})
+					row_merge("view_fields", ["project", "view", "field"], {"project": project_id, "view": view_id, "field": field_id, "rank": rank})
 					rank += 1
 		classes_csv = v.get("classes", "")
 		if classes_csv:
 			for class_id in classes_csv.split(","):
 				if class_id:
 					# (project, view, class) has no payload columns.
-					reg_merge("view_classes", ["project", "view", "class"], {"project": project_id, "view": view_id, "class": class_id})
+					row_merge("view_classes", ["project", "view", "class"], {"project": project_id, "view": view_id, "class": class_id})
 	for obj in (schema.get("objects") or []):
 		object_merge({"id": obj.get("id", ""), "project": project_id, "class": obj.get("class", ""), "number": obj.get("number", 0), "parent": obj.get("parent", ""), "rank": obj.get("rank", 0), "created": obj.get("created", 0), "updated": obj.get("updated", 0)})
 		obj_atts = obj.get("attachments") or []
@@ -5289,7 +5271,7 @@ def insert_schema(project_id, schema):
 	for l in (schema.get("links") or []):
 		# (project, source, target, linktype) is the full key; links
 		# are created/deleted, never edited in place.
-		reg_merge("links", ["source", "target", "linktype"], {"project": project_id, "source": l.get("source", ""), "target": l.get("target", ""), "linktype": l.get("linktype", ""), "created": 0})
+		row_merge("links", ["source", "target", "linktype"], {"project": project_id, "source": l.get("source", ""), "target": l.get("target", ""), "linktype": l.get("linktype", ""), "created": 0})
 
 # Send all existing project data to a new subscriber
 def send_project_data(project_id, subscriber_id):
@@ -5416,10 +5398,10 @@ def event_subscribe(e):
 		return
 
 	now = mochi.time.now()
-	reg_merge("subscribers", ["project", "id"], {"project": project_id, "id": subscriber_id, "name": name, "subscribed": now})
+	row_merge("subscribers", ["project", "id"], {"project": project_id, "id": subscriber_id, "name": name, "subscribed": now})
 
 	# Update project timestamp
-	reg_set("projects", ["id"], "id=?", [project_id], {"updated": now})
+	row_set("projects", ["id"], "id=?", [project_id], {"updated": now})
 	# Send websocket notification for real-time UI updates
 	fingerprint = mochi.entity.fingerprint(project_id)
 	if fingerprint:
@@ -5439,14 +5421,14 @@ def event_unsubscribe(e):
 	subscriber_id = e.header("from")
 
 	# Clean up watchers created by this subscriber
-	reg_remove("watchers", ["object", "user"], "user=? and object in (select id from objects where project=?)", [subscriber_id, project_id])
+	row_remove("watchers", ["object", "user"], "user=? and object in (select id from objects where project=?)", [subscriber_id, project_id])
 	# Clean up activity records by this subscriber
 	mochi.db.execute("delete from activity where user=? and object in (select id from objects where project=?)", subscriber_id, project_id)
 
 	# Remove subscriber
-	reg_remove("subscribers", ["project", "id"], "project=? and id=?", [project_id, subscriber_id])
+	row_remove("subscribers", ["project", "id"], "project=? and id=?", [project_id, subscriber_id])
 	# Update project timestamp
-	reg_set("projects", ["id"], "id=?", [project_id], {"updated": mochi.time.now()})
+	row_set("projects", ["id"], "id=?", [project_id], {"updated": mochi.time.now()})
 	# Send websocket notification
 	fingerprint = mochi.entity.fingerprint(project_id)
 	if fingerprint:
@@ -5489,37 +5471,37 @@ def event_sync_batch(e):
 	# Process classes
 	classes = e.content("classes") or []
 	for t in classes:
-		reg_merge("classes", ["project", "id"], {"project": project_id, "id": t["id"], "name": t["name"], "rank": t.get("rank", 0), "requests": t.get("requests", ""), "title": t.get("title", "title")})
+		row_merge("classes", ["project", "id"], {"project": project_id, "id": t["id"], "name": t["name"], "rank": t.get("rank", 0), "requests": t.get("requests", ""), "title": t.get("title", "title")})
 		# Hierarchy
 		parents = t.get("parents")
 		if parents:
-			reg_remove("hierarchy", ["project", "class", "parent"], "project=? and class=?", [project_id, t["id"]])
+			row_remove("hierarchy", ["project", "class", "parent"], "project=? and class=?", [project_id, t["id"]])
 			for p in parents:
-				reg_merge("hierarchy", ["project", "class", "parent"], {"project": project_id, "class": t["id"], "parent": p})
+				row_merge("hierarchy", ["project", "class", "parent"], {"project": project_id, "class": t["id"], "parent": p})
 		# Fields
 		for f in (t.get("fields") or []):
-			reg_merge("fields", ["project", "class", "id"], {"project": project_id, "class": t["id"], "id": f["id"], "name": f["name"], "fieldtype": f["fieldtype"], "flags": f.get("flags", ""), "multi": f.get("multi", 0), "rank": f.get("rank", 0), "card": f.get("card", ""), "position": f.get("position", ""), "rows": f.get("rows", 0)})
+			row_merge("fields", ["project", "class", "id"], {"project": project_id, "class": t["id"], "id": f["id"], "name": f["name"], "fieldtype": f["fieldtype"], "flags": f.get("flags", ""), "multi": f.get("multi", 0), "rank": f.get("rank", 0), "card": f.get("card", ""), "position": f.get("position", ""), "rows": f.get("rows", 0)})
 			# Options
 			for o in (f.get("options") or []):
-				reg_merge("options", ["project", "class", "field", "id"], {"project": project_id, "class": t["id"], "field": f["id"], "id": o["id"], "name": o["name"], "colour": o.get("colour", "#94a3b8"), "icon": o.get("icon", ""), "rank": o.get("rank", 0)})
+				row_merge("options", ["project", "class", "field", "id"], {"project": project_id, "class": t["id"], "field": f["id"], "id": o["id"], "name": o["name"], "colour": o.get("colour", "#94a3b8"), "icon": o.get("icon", ""), "rank": o.get("rank", 0)})
 
 	# Process views
 	for v in (e.content("views") or []):
-		reg_merge("views", ["project", "id"], {"project": project_id, "id": v["id"], "name": v["name"], "viewtype": v["viewtype"], "filter": v.get("filter", ""), "columns": v.get("columns", ""), "rows": v.get("rows", ""), "sort": v.get("sort", ""), "direction": v.get("direction", ""), "rank": v.get("rank", 0), "border": v.get("border", "")})
+		row_merge("views", ["project", "id"], {"project": project_id, "id": v["id"], "name": v["name"], "viewtype": v["viewtype"], "filter": v.get("filter", ""), "columns": v.get("columns", ""), "rows": v.get("rows", ""), "sort": v.get("sort", ""), "direction": v.get("direction", ""), "rank": v.get("rank", 0), "border": v.get("border", "")})
 		# View fields
-		reg_remove("view_fields", ["project", "view", "field"], "project=? and view=?", [project_id, v["id"]])
+		row_remove("view_fields", ["project", "view", "field"], "project=? and view=?", [project_id, v["id"]])
 		fields_csv = v.get("fields", "")
 		if fields_csv:
 			for i, field_id in enumerate(fields_csv.split(",")):
 				if field_id:
-					reg_merge("view_fields", ["project", "view", "field"], {"project": project_id, "view": v["id"], "field": field_id, "rank": i})
+					row_merge("view_fields", ["project", "view", "field"], {"project": project_id, "view": v["id"], "field": field_id, "rank": i})
 		# View classes
-		reg_remove("view_classes", ["project", "view", "class"], "project=? and view=?", [project_id, v["id"]])
+		row_remove("view_classes", ["project", "view", "class"], "project=? and view=?", [project_id, v["id"]])
 		classes_csv = v.get("classes", "")
 		if classes_csv:
 			for class_id in classes_csv.split(","):
 				if class_id:
-					reg_merge("view_classes", ["project", "view", "class"], {"project": project_id, "view": v["id"], "class": class_id})
+					row_merge("view_classes", ["project", "view", "class"], {"project": project_id, "view": v["id"], "class": class_id})
 	# Process objects
 	for obj in (e.content("objects") or []):
 		if not mochi.db.exists("select 1 from objects where id=?", obj["id"]):
@@ -5544,11 +5526,11 @@ def event_sync_batch(e):
 
 	# Process links
 	for l in (e.content("links") or []):
-		reg_merge("links", ["source", "target", "linktype"], {"project": project_id, "source": l["source"], "target": l["target"], "linktype": l.get("linktype", "relates"), "created": now})
+		row_merge("links", ["source", "target", "linktype"], {"project": project_id, "source": l["source"], "target": l["target"], "linktype": l.get("linktype", "relates"), "created": now})
 
 	# Mark the subscription's initial bulk content as arrived so the board stops
 	# showing its loading state and renders the now-complete data.
-	reg_set("projects", ["id"], "id=? and owner=0", [project_id], {"populated": 1})
+	row_set("projects", ["id"], "id=? and owner=0", [project_id], {"populated": 1})
 	# Notify UI
 	fp = mochi.entity.fingerprint(project_id)
 	if fp:
@@ -5591,12 +5573,12 @@ def event_project_update(e):
 	description = e.content("description")
 	prefix = e.content("prefix")
 	if name != None:
-		reg_set("projects", ["id"], "id=?", [project_id], {"name": name})
+		row_set("projects", ["id"], "id=?", [project_id], {"name": name})
 	if description != None:
-		reg_set("projects", ["id"], "id=?", [project_id], {"description": description})
+		row_set("projects", ["id"], "id=?", [project_id], {"description": description})
 	if prefix != None:
-		reg_set("projects", ["id"], "id=?", [project_id], {"prefix": prefix})
-	reg_set("projects", ["id"], "id=?", [project_id], {"updated": mochi.time.now()})
+		row_set("projects", ["id"], "id=?", [project_id], {"prefix": prefix})
+	row_set("projects", ["id"], "id=?", [project_id], {"updated": mochi.time.now()})
 	fp = mochi.entity.fingerprint(project_id)
 	if fp:
 		mochi.websocket.write(fp, {"type": "project/update", "project": project_id})
@@ -5633,7 +5615,7 @@ def event_object_create(e):
 	mochi.log.debug("event_object_create: object=" + str(object_id) + " user=" + str(user) + " local_id=" + str(local_id) + " match=" + str(user == local_id))
 	if user and user == local_id:
 		mochi.log.debug("event_object_create: inserting watcher object=" + str(object_id) + " user=" + str(local_id))
-		reg_merge("watchers", ["object", "user"], {"object": object_id, "user": local_id, "created": e.content("created") or mochi.time.now()})
+		row_merge("watchers", ["object", "user"], {"object": object_id, "user": local_id, "created": e.content("created") or mochi.time.now()})
 		exists = mochi.db.exists("select 1 from watchers where object=? and user=?", object_id, local_id)
 		mochi.log.debug("event_object_create: watcher exists after insert=" + str(exists))
 	else:
@@ -5741,12 +5723,12 @@ def event_object_delete(e):
 	local_id = e.header("to")
 	if local_id:
 		notify_watchers(object_id, project_id, local_id, user, mochi.app.label("notifications.body.deleted"))
-	reg_remove("requests", ["id"], "object=?", [object_id])
-	reg_remove("watchers", ["object", "user"], "object=?", [object_id])
+	row_remove("requests", ["id"], "object=?", [object_id])
+	row_remove("watchers", ["object", "user"], "object=?", [object_id])
 	mochi.db.execute("delete from activity where object=?", object_id)
 	delete_object_comments(object_id, project_id)
 	values_remove_object(object_id)
-	reg_remove("links", ["source", "target", "linktype"], "source=? or target=?", [object_id, object_id])
+	row_remove("links", ["source", "target", "linktype"], "source=? or target=?", [object_id, object_id])
 	if mochi.db.exists("select 1 from objects where id=? and project=?", object_id, project_id):
 		object_remove(object_id)
 	fp = mochi.entity.fingerprint(project_id)
@@ -5803,7 +5785,7 @@ def event_values_update(e):
 									url = "/projects/" + fp2 + "/" + object_id if fp2 else "/projects"
 									notify("assignment", project_id, title, mochi.app.label("notifications.body.assigned_to_you"), url, event_id="assignment:" + object_id + ":" + local_id)
 							# Auto-watch on assignment
-							reg_merge("watchers", ["object", "user"], {"object": object_id, "user": local_id, "created": mochi.time.now()})
+							row_merge("watchers", ["object", "user"], {"object": object_id, "user": local_id, "created": mochi.time.now()})
 			if not assigned:
 				notify_watchers(object_id, project_id, local_id, user, mochi.app.label("notifications.body.updated"))
 
@@ -5867,7 +5849,7 @@ def event_comment_submit(e):
 		mochi.attachment.store(attachments, sender, comment_id)
 	object_set(object_id, {"updated": now})
 	log_activity(object_id, sender, "commented")
-	reg_merge("watchers", ["object", "user"], {"object": object_id, "user": sender, "created": now})
+	row_merge("watchers", ["object", "user"], {"object": object_id, "user": sender, "created": now})
 	# Send WebSocket notification to owner for real-time UI updates
 	fp = mochi.entity.fingerprint(project_id)
 	if fp:
@@ -5974,7 +5956,7 @@ def event_comment_create(e):
 		if object_id and local_id:
 			# Auto-watch commenter locally (safety net for when forward_to_owner response is lost)
 			if user and user == local_id:
-				reg_merge("watchers", ["object", "user"], {"object": object_id, "user": local_id, "created": e.content("created") or mochi.time.now()})
+				row_merge("watchers", ["object", "user"], {"object": object_id, "user": local_id, "created": e.content("created") or mochi.time.now()})
 			name = e.content("name") or "Someone"
 			excerpt = (e.content("content") or "")[:80]
 			notify_watchers(object_id, project_id, local_id, user, name + ": " + excerpt)
@@ -6027,7 +6009,7 @@ def event_link_create(e):
 		not mochi.db.exists("select 1 from objects where id=? and project=?", target, project_id):
 		request_resync(project_id)
 		return
-	reg_merge("links", ["source", "target", "linktype"], {"project": project_id, "source": source, "target": target, "linktype": e.content("linktype") or "related", "created": e.content("created") or mochi.time.now()})
+	row_merge("links", ["source", "target", "linktype"], {"project": project_id, "source": source, "target": target, "linktype": e.content("linktype") or "related", "created": e.content("created") or mochi.time.now()})
 	fp = mochi.entity.fingerprint(project_id)
 	if fp:
 		mochi.websocket.write(fp, {"type": "link/create", "project": project_id})
@@ -6044,7 +6026,7 @@ def event_link_delete(e):
 	project_id = verify_subscription(e)
 	if not project_id:
 		return
-	reg_remove("links", ["source", "target", "linktype"], "source=? and target=? and linktype=?", [e.content("source") or "", e.content("target") or "", e.content("linktype") or "related"])
+	row_remove("links", ["source", "target", "linktype"], "source=? and target=? and linktype=?", [e.content("source") or "", e.content("target") or "", e.content("linktype") or "related"])
 	fp = mochi.entity.fingerprint(project_id)
 	if fp:
 		mochi.websocket.write(fp, {"type": "link/delete", "project": project_id})
@@ -6057,21 +6039,21 @@ def event_view_create(e):
 	view_id = e.content("id")
 	if not view_id:
 		return
-	reg_merge("views", ["project", "id"], {"id": view_id, "project": project_id, "name": e.content("name") or "", "viewtype": e.content("viewtype") or "board", "filter": e.content("filter") or "", "columns": e.content("columns") or "", "rows": e.content("rows") or "", "sort": e.content("sort") or "", "direction": e.content("direction") or "asc", "rank": e.content("rank") or 0, "border": e.content("border") or ""})
+	row_merge("views", ["project", "id"], {"id": view_id, "project": project_id, "name": e.content("name") or "", "viewtype": e.content("viewtype") or "board", "filter": e.content("filter") or "", "columns": e.content("columns") or "", "rows": e.content("rows") or "", "sort": e.content("sort") or "", "direction": e.content("direction") or "asc", "rank": e.content("rank") or 0, "border": e.content("border") or ""})
 	# Sync view fields
 	fields_csv = e.content("fields") or ""
 	if fields_csv:
 		rank = 0
 		for field_id in fields_csv.split(","):
 			if field_id:
-				reg_merge("view_fields", ["project", "view", "field"], {"project": project_id, "view": view_id, "field": field_id, "rank": rank})
+				row_merge("view_fields", ["project", "view", "field"], {"project": project_id, "view": view_id, "field": field_id, "rank": rank})
 				rank += 1
 	# Sync view classes
 	classes_csv = e.content("classes") or ""
 	if classes_csv:
 		for class_id in classes_csv.split(","):
 			if class_id:
-				reg_merge("view_classes", ["project", "view", "class"], {"project": project_id, "view": view_id, "class": class_id})
+				row_merge("view_classes", ["project", "view", "class"], {"project": project_id, "view": view_id, "class": class_id})
 	fp = mochi.entity.fingerprint(project_id)
 	if fp:
 		mochi.websocket.write(fp, {"type": "view/create", "project": project_id, "id": view_id})
@@ -6092,38 +6074,38 @@ def event_view_update(e):
 	sort = e.content("sort")
 	direction = e.content("direction")
 	if name:
-		reg_set("views", ["project", "id"], "id=? and project=?", [view_id, project_id], {"name": name})
+		row_set("views", ["project", "id"], "id=? and project=?", [view_id, project_id], {"name": name})
 	if viewtype:
-		reg_set("views", ["project", "id"], "id=? and project=?", [view_id, project_id], {"viewtype": viewtype})
+		row_set("views", ["project", "id"], "id=? and project=?", [view_id, project_id], {"viewtype": viewtype})
 	if filter_val != None:
-		reg_set("views", ["project", "id"], "id=? and project=?", [view_id, project_id], {"filter": filter_val})
+		row_set("views", ["project", "id"], "id=? and project=?", [view_id, project_id], {"filter": filter_val})
 	if columns != None:
-		reg_set("views", ["project", "id"], "id=? and project=?", [view_id, project_id], {"columns": columns})
+		row_set("views", ["project", "id"], "id=? and project=?", [view_id, project_id], {"columns": columns})
 	if rows != None:
-		reg_set("views", ["project", "id"], "id=? and project=?", [view_id, project_id], {"rows": rows})
+		row_set("views", ["project", "id"], "id=? and project=?", [view_id, project_id], {"rows": rows})
 	if sort != None:
-		reg_set("views", ["project", "id"], "id=? and project=?", [view_id, project_id], {"sort": sort})
+		row_set("views", ["project", "id"], "id=? and project=?", [view_id, project_id], {"sort": sort})
 	if direction != None:
-		reg_set("views", ["project", "id"], "id=? and project=?", [view_id, project_id], {"direction": direction})
+		row_set("views", ["project", "id"], "id=? and project=?", [view_id, project_id], {"direction": direction})
 	border = e.content("border")
 	if border != None:
-		reg_set("views", ["project", "id"], "id=? and project=?", [view_id, project_id], {"border": border})
+		row_set("views", ["project", "id"], "id=? and project=?", [view_id, project_id], {"border": border})
 	# Sync view fields if provided
 	fields_csv = e.content("fields")
 	if fields_csv != None:
-		reg_remove("view_fields", ["project", "view", "field"], "project=? and view=?", [project_id, view_id])
+		row_remove("view_fields", ["project", "view", "field"], "project=? and view=?", [project_id, view_id])
 		rank = 0
 		for field_id in fields_csv.split(","):
 			if field_id:
-				reg_merge("view_fields", ["project", "view", "field"], {"project": project_id, "view": view_id, "field": field_id, "rank": rank})
+				row_merge("view_fields", ["project", "view", "field"], {"project": project_id, "view": view_id, "field": field_id, "rank": rank})
 				rank += 1
 	# Sync view classes if provided
 	classes_csv = e.content("classes")
 	if classes_csv != None:
-		reg_remove("view_classes", ["project", "view", "class"], "project=? and view=?", [project_id, view_id])
+		row_remove("view_classes", ["project", "view", "class"], "project=? and view=?", [project_id, view_id])
 		for class_id in classes_csv.split(","):
 			if class_id:
-				reg_merge("view_classes", ["project", "view", "class"], {"project": project_id, "view": view_id, "class": class_id})
+				row_merge("view_classes", ["project", "view", "class"], {"project": project_id, "view": view_id, "class": class_id})
 	fp = mochi.entity.fingerprint(project_id)
 	if fp:
 		mochi.websocket.write(fp, {"type": "view/update", "project": project_id, "id": view_id})
@@ -6136,9 +6118,9 @@ def event_view_delete(e):
 	view_id = e.content("id")
 	if not view_id:
 		return
-	reg_remove("views", ["project", "id"], "id=? and project=?", [view_id, project_id])
-	reg_remove("view_fields", ["project", "view", "field"], "view=? and project=?", [view_id, project_id])
-	reg_remove("view_classes", ["project", "view", "class"], "view=? and project=?", [view_id, project_id])
+	row_remove("views", ["project", "id"], "id=? and project=?", [view_id, project_id])
+	row_remove("view_fields", ["project", "view", "field"], "view=? and project=?", [view_id, project_id])
+	row_remove("view_classes", ["project", "view", "class"], "view=? and project=?", [view_id, project_id])
 	fp = mochi.entity.fingerprint(project_id)
 	if fp:
 		mochi.websocket.write(fp, {"type": "view/delete", "project": project_id, "id": view_id})
@@ -6148,7 +6130,7 @@ def event_class_create(e):
 	project_id = verify_subscription(e)
 	if not project_id:
 		return
-	reg_merge("classes", ["project", "id"], {"id": e.content("id"), "project": project_id, "name": e.content("name") or "", "rank": e.content("rank") or 0, "requests": e.content("requests") or "", "title": e.content("title") or ""})
+	row_merge("classes", ["project", "id"], {"id": e.content("id"), "project": project_id, "name": e.content("name") or "", "rank": e.content("rank") or 0, "requests": e.content("requests") or "", "title": e.content("title") or ""})
 	fp = mochi.entity.fingerprint(project_id)
 	if fp:
 		mochi.websocket.write(fp, {"type": "class/create", "project": project_id, "id": e.content("id")})
@@ -6163,13 +6145,13 @@ def event_class_update(e):
 		return
 	name = e.content("name")
 	if name != None:
-		reg_set("classes", ["project", "id"], "id=? and project=?", [class_id, project_id], {"name": name})
+		row_set("classes", ["project", "id"], "id=? and project=?", [class_id, project_id], {"name": name})
 	requests = e.content("requests")
 	if requests != None:
-		reg_set("classes", ["project", "id"], "id=? and project=?", [class_id, project_id], {"requests": requests})
+		row_set("classes", ["project", "id"], "id=? and project=?", [class_id, project_id], {"requests": requests})
 	title = e.content("title")
 	if title != None:
-		reg_set("classes", ["project", "id"], "id=? and project=?", [class_id, project_id], {"title": title})
+		row_set("classes", ["project", "id"], "id=? and project=?", [class_id, project_id], {"title": title})
 	fp = mochi.entity.fingerprint(project_id)
 	if fp:
 		mochi.websocket.write(fp, {"type": "class/update", "project": project_id, "id": class_id})
@@ -6182,12 +6164,12 @@ def event_class_delete(e):
 	class_id = e.content("id")
 	if not class_id:
 		return
-	reg_remove("options", ["project", "class", "field", "id"], "project=? and class=?", [project_id, class_id])
-	reg_remove("fields", ["project", "class", "id"], "project=? and class=?", [project_id, class_id])
-	reg_remove("view_classes", ["project", "view", "class"], "project=? and class=?", [project_id, class_id])
-	reg_remove("hierarchy", ["project", "class", "parent"], "project=? and class=?", [project_id, class_id])
-	reg_remove("hierarchy", ["project", "class", "parent"], "project=? and parent=?", [project_id, class_id])
-	reg_remove("classes", ["project", "id"], "id=? and project=?", [class_id, project_id])
+	row_remove("options", ["project", "class", "field", "id"], "project=? and class=?", [project_id, class_id])
+	row_remove("fields", ["project", "class", "id"], "project=? and class=?", [project_id, class_id])
+	row_remove("view_classes", ["project", "view", "class"], "project=? and class=?", [project_id, class_id])
+	row_remove("hierarchy", ["project", "class", "parent"], "project=? and class=?", [project_id, class_id])
+	row_remove("hierarchy", ["project", "class", "parent"], "project=? and parent=?", [project_id, class_id])
+	row_remove("classes", ["project", "id"], "id=? and project=?", [class_id, project_id])
 	fp = mochi.entity.fingerprint(project_id)
 	if fp:
 		mochi.websocket.write(fp, {"type": "class/delete", "project": project_id, "id": class_id})
@@ -6202,11 +6184,11 @@ def event_hierarchy_set(e):
 	if not class_id:
 		return
 	# Clear existing hierarchy for this class
-	reg_remove("hierarchy", ["project", "class", "parent"], "project=? and class=?", [project_id, class_id])
+	row_remove("hierarchy", ["project", "class", "parent"], "project=? and class=?", [project_id, class_id])
 	# Insert new parents
 	if parents:
 		for parent in parents:
-			reg_merge("hierarchy", ["project", "class", "parent"], {"project": project_id, "class": class_id, "parent": parent})
+			row_merge("hierarchy", ["project", "class", "parent"], {"project": project_id, "class": class_id, "parent": parent})
 	fp = mochi.entity.fingerprint(project_id)
 	if fp:
 		mochi.websocket.write(fp, {"type": "hierarchy/set", "project": project_id, "class": class_id})
@@ -6216,7 +6198,7 @@ def event_field_create(e):
 	project_id = verify_subscription(e)
 	if not project_id:
 		return
-	reg_merge("fields", ["project", "class", "id"], {"project": project_id, "class": e.content("class") or "", "id": e.content("id") or "", "name": e.content("name") or "", "fieldtype": e.content("fieldtype") or "text", "flags": e.content("flags") or "", "multi": e.content("multi") or 0, "rank": e.content("rank") or 0, "card": e.content("card") or 1, "position": e.content("position") or "", "rows": e.content("rows") or 1})
+	row_merge("fields", ["project", "class", "id"], {"project": project_id, "class": e.content("class") or "", "id": e.content("id") or "", "name": e.content("name") or "", "fieldtype": e.content("fieldtype") or "text", "flags": e.content("flags") or "", "multi": e.content("multi") or 0, "rank": e.content("rank") or 0, "card": e.content("card") or 1, "position": e.content("position") or "", "rows": e.content("rows") or 1})
 	fp = mochi.entity.fingerprint(project_id)
 	if fp:
 		mochi.websocket.write(fp, {"type": "field/create", "project": project_id, "class_id": e.content("class"), "id": e.content("id")})
@@ -6251,33 +6233,33 @@ def event_field_update(e):
 	position = e.content("position")
 	rows_val = e.content("rows")
 	if name != None:
-		reg_set("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, current_id], {"name": name})
+		row_set("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, current_id], {"name": name})
 	if flags != None:
-		reg_set("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, current_id], {"flags": flags})
+		row_set("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, current_id], {"flags": flags})
 	if multi != None:
-		reg_set("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, current_id], {"multi": multi})
+		row_set("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, current_id], {"multi": multi})
 	if card != None:
-		reg_set("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, current_id], {"card": card})
+		row_set("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, current_id], {"card": card})
 	if min_val != None:
-		reg_set("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, current_id], {"min": min_val})
+		row_set("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, current_id], {"min": min_val})
 	if max_val != None:
-		reg_set("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, current_id], {"max": max_val})
+		row_set("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, current_id], {"max": max_val})
 	if pattern != None:
-		reg_set("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, current_id], {"pattern": pattern})
+		row_set("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, current_id], {"pattern": pattern})
 	if minlength != None:
-		reg_set("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, current_id], {"minlength": minlength})
+		row_set("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, current_id], {"minlength": minlength})
 	if maxlength != None:
-		reg_set("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, current_id], {"maxlength": maxlength})
+		row_set("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, current_id], {"maxlength": maxlength})
 	if prefix != None:
-		reg_set("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, current_id], {"prefix": prefix})
+		row_set("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, current_id], {"prefix": prefix})
 	if suffix != None:
-		reg_set("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, current_id], {"suffix": suffix})
+		row_set("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, current_id], {"suffix": suffix})
 	if format_str != None:
-		reg_set("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, current_id], {"format": format_str})
+		row_set("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, current_id], {"format": format_str})
 	if position != None:
-		reg_set("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, current_id], {"position": position})
+		row_set("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, current_id], {"position": position})
 	if rows_val != None:
-		reg_set("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, current_id], {"rows": rows_val})
+		row_set("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, current_id], {"rows": rows_val})
 	fp = mochi.entity.fingerprint(project_id)
 	if fp:
 		mochi.websocket.write(fp, {"type": "field/update", "project": project_id, "class_id": class_id, "id": field_id})
@@ -6291,8 +6273,8 @@ def event_field_delete(e):
 	field_id = e.content("id")
 	if not class_id or not field_id:
 		return
-	reg_remove("options", ["project", "class", "field", "id"], "project=? and class=? and field=?", [project_id, class_id, field_id])
-	reg_remove("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, field_id])
+	row_remove("options", ["project", "class", "field", "id"], "project=? and class=? and field=?", [project_id, class_id, field_id])
+	row_remove("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, field_id])
 	fp = mochi.entity.fingerprint(project_id)
 	if fp:
 		mochi.websocket.write(fp, {"type": "field/delete", "project": project_id, "class_id": class_id, "id": field_id})
@@ -6307,7 +6289,7 @@ def event_field_reorder(e):
 	if not class_id or not order:
 		return
 	for i, field_id in enumerate(order):
-		reg_set("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, field_id], {"rank": i})
+		row_set("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, field_id], {"rank": i})
 	fp = mochi.entity.fingerprint(project_id)
 	if fp:
 		mochi.websocket.write(fp, {"type": "field/reorder", "project": project_id, "class_id": class_id})
@@ -6317,7 +6299,7 @@ def event_option_create(e):
 	project_id = verify_subscription(e)
 	if not project_id:
 		return
-	reg_merge("options", ["project", "class", "field", "id"], {"project": project_id, "class": e.content("class") or "", "field": e.content("field") or "", "id": e.content("id") or "", "name": e.content("name") or "", "colour": e.content("colour") or "#94a3b8", "icon": e.content("icon") or "", "rank": e.content("rank") or 0})
+	row_merge("options", ["project", "class", "field", "id"], {"project": project_id, "class": e.content("class") or "", "field": e.content("field") or "", "id": e.content("id") or "", "name": e.content("name") or "", "colour": e.content("colour") or "#94a3b8", "icon": e.content("icon") or "", "rank": e.content("rank") or 0})
 	fp = mochi.entity.fingerprint(project_id)
 	if fp:
 		mochi.websocket.write(fp, {"type": "option/create", "project": project_id})
@@ -6336,11 +6318,11 @@ def event_option_update(e):
 	colour = e.content("colour")
 	icon = e.content("icon")
 	if name != None:
-		reg_set("options", ["project", "class", "field", "id"], "project=? and class=? and field=? and id=?", [project_id, class_id, field_id, option_id], {"name": name})
+		row_set("options", ["project", "class", "field", "id"], "project=? and class=? and field=? and id=?", [project_id, class_id, field_id, option_id], {"name": name})
 	if colour != None:
-		reg_set("options", ["project", "class", "field", "id"], "project=? and class=? and field=? and id=?", [project_id, class_id, field_id, option_id], {"colour": colour})
+		row_set("options", ["project", "class", "field", "id"], "project=? and class=? and field=? and id=?", [project_id, class_id, field_id, option_id], {"colour": colour})
 	if icon != None:
-		reg_set("options", ["project", "class", "field", "id"], "project=? and class=? and field=? and id=?", [project_id, class_id, field_id, option_id], {"icon": icon})
+		row_set("options", ["project", "class", "field", "id"], "project=? and class=? and field=? and id=?", [project_id, class_id, field_id, option_id], {"icon": icon})
 	fp = mochi.entity.fingerprint(project_id)
 	if fp:
 		mochi.websocket.write(fp, {"type": "option/update", "project": project_id})
@@ -6355,7 +6337,7 @@ def event_option_delete(e):
 	option_id = e.content("id")
 	if not class_id or not field_id or not option_id:
 		return
-	reg_remove("options", ["project", "class", "field", "id"], "project=? and class=? and field=? and id=?", [project_id, class_id, field_id, option_id])
+	row_remove("options", ["project", "class", "field", "id"], "project=? and class=? and field=? and id=?", [project_id, class_id, field_id, option_id])
 	fp = mochi.entity.fingerprint(project_id)
 	if fp:
 		mochi.websocket.write(fp, {"type": "option/delete", "project": project_id})
@@ -6371,7 +6353,7 @@ def event_option_reorder(e):
 	if not class_id or not field_id or not order:
 		return
 	for i, option_id in enumerate(order):
-		reg_set("options", ["project", "class", "field", "id"], "project=? and class=? and field=? and id=?", [project_id, class_id, field_id, option_id], {"rank": i})
+		row_set("options", ["project", "class", "field", "id"], "project=? and class=? and field=? and id=?", [project_id, class_id, field_id, option_id], {"rank": i})
 	fp = mochi.entity.fingerprint(project_id)
 	if fp:
 		mochi.websocket.write(fp, {"type": "option/reorder", "project": project_id})
@@ -6463,7 +6445,7 @@ def action_request_create(a):
 	now = mochi.time.now()
 	request_id = mochi.uid()
 
-	reg_merge("requests", ["id"], {"id": request_id, "object": object_id, "type": request_type, "repository": repository or "", "source": source or "", "target": target or "", "status": "open", "title": title or "", "description": description or "", "draft": draft, "created": now, "updated": now})
+	row_merge("requests", ["id"], {"id": request_id, "object": object_id, "type": request_type, "repository": repository or "", "source": source or "", "target": target or "", "status": "open", "title": title or "", "description": description or "", "draft": draft, "created": now, "updated": now})
 
 	request_data = {
 		"id": request_id, "object": object_id, "type": request_type,
@@ -6527,20 +6509,20 @@ def action_request_update(a):
 		return
 
 	if repository:
-		reg_set("requests", ["id"], "id=?", [request_id], {"repository": repository, "updated": now})
+		row_set("requests", ["id"], "id=?", [request_id], {"repository": repository, "updated": now})
 	if source:
-		reg_set("requests", ["id"], "id=?", [request_id], {"source": source, "updated": now})
+		row_set("requests", ["id"], "id=?", [request_id], {"source": source, "updated": now})
 	if target:
-		reg_set("requests", ["id"], "id=?", [request_id], {"target": target, "updated": now})
+		row_set("requests", ["id"], "id=?", [request_id], {"target": target, "updated": now})
 	if status:
-		reg_set("requests", ["id"], "id=?", [request_id], {"status": status, "updated": now})
+		row_set("requests", ["id"], "id=?", [request_id], {"status": status, "updated": now})
 	if a.input("title") != None and title:
-		reg_set("requests", ["id"], "id=?", [request_id], {"title": title, "updated": now})
+		row_set("requests", ["id"], "id=?", [request_id], {"title": title, "updated": now})
 	if a.input("description") != None:
-		reg_set("requests", ["id"], "id=?", [request_id], {"description": description, "updated": now})
+		row_set("requests", ["id"], "id=?", [request_id], {"description": description, "updated": now})
 	if draft_input:
 		draft = 1 if draft_input == "1" else 0
-		reg_set("requests", ["id"], "id=?", [request_id], {"draft": draft, "updated": now})
+		row_set("requests", ["id"], "id=?", [request_id], {"draft": draft, "updated": now})
 	# Re-read the updated row
 	req = mochi.db.row("select id, object, type, repository, source, target, status, title, description, draft, created, updated from requests where id=?", request_id)
 
@@ -6583,7 +6565,7 @@ def action_request_delete(a):
 		a.error.label(404, "errors.request_not_found")
 		return
 
-	reg_remove("requests", ["id"], "id=?", [request_id])
+	row_remove("requests", ["id"], "id=?", [request_id])
 	broadcast_event(project_id, "request/delete", {
 		"project": project_id, "id": request_id, "object": req["object"]
 	})
@@ -6621,7 +6603,7 @@ def event_request_create(e):
 	req = e.content("request")
 	if not req:
 		return
-	reg_merge("requests", ["id"], {"id": req.get("id", ""), "object": req.get("object", ""), "type": req.get("type", "merge"), "repository": req.get("repository", ""), "source": req.get("source", ""), "target": req.get("target", ""), "status": req.get("status", "open"), "title": req.get("title", ""), "description": req.get("description", ""), "draft": req.get("draft", 0), "created": req.get("created", mochi.time.now()), "updated": req.get("updated", mochi.time.now())})
+	row_merge("requests", ["id"], {"id": req.get("id", ""), "object": req.get("object", ""), "type": req.get("type", "merge"), "repository": req.get("repository", ""), "source": req.get("source", ""), "target": req.get("target", ""), "status": req.get("status", "open"), "title": req.get("title", ""), "description": req.get("description", ""), "draft": req.get("draft", 0), "created": req.get("created", mochi.time.now()), "updated": req.get("updated", mochi.time.now())})
 	fp = mochi.entity.fingerprint(project_id)
 	if fp:
 		mochi.websocket.write(fp, {"type": "request/create", "project": project_id, "request": req})
@@ -6637,7 +6619,7 @@ def event_request_update(e):
 	request_id = req.get("id", "")
 	if not request_id:
 		return
-	reg_set("requests", ["id"], "id=?", [request_id], {"repository": req.get("repository", ""), "source": req.get("source", ""), "target": req.get("target", ""), "status": req.get("status", ""), "title": req.get("title", ""), "description": req.get("description", ""), "draft": req.get("draft", 0), "updated": req.get("updated", mochi.time.now())})
+	row_set("requests", ["id"], "id=?", [request_id], {"repository": req.get("repository", ""), "source": req.get("source", ""), "target": req.get("target", ""), "status": req.get("status", ""), "title": req.get("title", ""), "description": req.get("description", ""), "draft": req.get("draft", 0), "updated": req.get("updated", mochi.time.now())})
 	fp = mochi.entity.fingerprint(project_id)
 	if fp:
 		mochi.websocket.write(fp, {"type": "request/update", "project": project_id, "request": req})
@@ -6650,7 +6632,7 @@ def event_request_delete(e):
 	request_id = e.content("id")
 	if not request_id:
 		return
-	reg_remove("requests", ["id"], "id=?", [request_id])
+	row_remove("requests", ["id"], "id=?", [request_id])
 	fp = mochi.entity.fingerprint(project_id)
 	if fp:
 		mochi.websocket.write(fp, {"type": "request/delete", "project": project_id, "id": request_id, "object": e.content("object")})
@@ -6816,7 +6798,7 @@ def do_comment_create(project_id, project, params, user_id, user_name):
 	object_set(object_id, {"updated": now})
 	log_activity(object_id, user_id, "commented")
 	# Auto-watch commenter on owner's server
-	reg_merge("watchers", ["object", "user"], {"object": object_id, "user": user_id, "created": now})
+	row_merge("watchers", ["object", "user"], {"object": object_id, "user": user_id, "created": now})
 	# Include attachments in broadcast
 	comment_attachments = mochi.attachment.list(comment_id, project_id) or []
 	comment_event = {
@@ -6882,7 +6864,7 @@ def do_watcher_add(project_id, params, user_id):
 	if not row:
 		return {"error": "errors.object_not_found", "code": 404}
 	now = mochi.time.now()
-	reg_merge("watchers", ["object", "user"], {"object": object_id, "user": user_id, "created": now})
+	row_merge("watchers", ["object", "user"], {"object": object_id, "user": user_id, "created": now})
 	return {"success": True, "watching": True}
 
 def do_watcher_remove(project_id, params, user_id):
@@ -6892,7 +6874,7 @@ def do_watcher_remove(project_id, params, user_id):
 	row = mochi.db.row("select id from objects where id=? and project=?", object_id, project_id)
 	if not row:
 		return {"error": "errors.object_not_found", "code": 404}
-	reg_remove("watchers", ["object", "user"], "object=? and user=?", [object_id, user_id])
+	row_remove("watchers", ["object", "user"], "object=? and user=?", [object_id, user_id])
 	return {"success": True, "watching": False}
 
 # Object helpers
@@ -6925,7 +6907,7 @@ def do_object_create(project_id, project, params, user_id):
 	# no mutated shared counter). The objects(project, number) index makes the
 	# max() an index seek.
 	new_counter = mochi.db.row("select coalesce(max(number), 0) + 1 as next from objects where project=?", project_id)["next"]
-	reg_set("projects", ["id"], "id=?", [project_id], {"updated": mochi.time.now()})
+	row_set("projects", ["id"], "id=?", [project_id], {"updated": mochi.time.now()})
 	initial_rank = rank_after_all(project_id, None)
 	object_id = mochi.uid()
 	now = mochi.time.now()
@@ -6935,7 +6917,7 @@ def do_object_create(project_id, project, params, user_id):
 		value_merge(object_id, title_field, title)
 		values[title_field] = title
 	log_activity(object_id, user_id, "created")
-	reg_merge("watchers", ["object", "user"], {"object": object_id, "user": user_id, "created": now})
+	row_merge("watchers", ["object", "user"], {"object": object_id, "user": user_id, "created": now})
 	broadcast_event(project_id, "object/create", {
 		"project": project_id, "id": object_id, "class": obj_class,
 		"number": new_counter, "parent": parent, "rank": initial_rank, "values": values,
@@ -7244,7 +7226,7 @@ def do_values_set(project_id, project, params, user_id):
 			if field_types.get(fid) == "user":
 				assigned = mochi.db.row("select value from \"values\" where object=? and field=?", object_id, fid)
 				if assigned and assigned["value"]:
-					reg_merge("watchers", ["object", "user"], {"object": object_id, "user": assigned["value"], "created": now})
+					row_merge("watchers", ["object", "user"], {"object": object_id, "user": assigned["value"], "created": now})
 	return {"success": True, "changed": changes}
 
 def do_value_set(project_id, project, params, user_id):
@@ -7282,7 +7264,7 @@ def do_value_set(project_id, project, params, user_id):
 		notify_watchers(object_id, project_id, owner_id, user_id, mochi.app.label("notifications.body.updated"))
 		# Auto-watch assigned user
 		if field_row["fieldtype"] == "user" and str(new_value):
-			reg_merge("watchers", ["object", "user"], {"object": object_id, "user": str(new_value), "created": now})
+			row_merge("watchers", ["object", "user"], {"object": object_id, "user": str(new_value), "created": now})
 	return {"success": True}
 
 # Link helpers
@@ -7304,7 +7286,7 @@ def do_link_create(project_id, project, params, user_id):
 	if existing:
 		return {"error": "errors.link_already_exists", "code": 400}
 	now = mochi.time.now()
-	reg_merge("links", ["source", "target", "linktype"], {"project": project_id, "source": object_id, "target": target_id, "linktype": linktype, "created": now})
+	row_merge("links", ["source", "target", "linktype"], {"project": project_id, "source": object_id, "target": target_id, "linktype": linktype, "created": now})
 	log_activity(object_id, user_id, "linked", linktype, "", target_id)
 	broadcast_event(project_id, "link/create", {
 		"project": project_id, "source": object_id,
@@ -7321,7 +7303,7 @@ def do_link_delete(project_id, project, params, user_id):
 	linktype = params.get("linktype")
 	if not object_id or not target_id or not linktype:
 		return {"error": "errors.object_target_and_linktype_are_required", "code": 400}
-	reg_remove("links", ["source", "target", "linktype"], "project=? and source=? and target=? and linktype=?", [project_id, object_id, target_id, linktype])
+	row_remove("links", ["source", "target", "linktype"], "project=? and source=? and target=? and linktype=?", [project_id, object_id, target_id, linktype])
 	broadcast_event(project_id, "link/delete", {
 		"project": project_id, "source": object_id,
 		"target": target_id, "linktype": linktype, "user": user_id
@@ -7378,7 +7360,7 @@ def do_request_create(project_id, project, params, user_id):
 	draft = 1 if params.get("draft") == "1" else 0
 	now = mochi.time.now()
 	request_id = mochi.uid()
-	reg_merge("requests", ["id"], {"id": request_id, "object": object_id, "type": request_type, "repository": repository, "source": source, "target": target, "status": "open", "title": title, "description": description, "draft": draft, "created": now, "updated": now})
+	row_merge("requests", ["id"], {"id": request_id, "object": object_id, "type": request_type, "repository": repository, "source": source, "target": target, "status": "open", "title": title, "description": description, "draft": draft, "created": now, "updated": now})
 	request_data = {
 		"id": request_id, "object": object_id, "type": request_type,
 		"repository": repository, "source": source, "target": target,
@@ -7416,20 +7398,20 @@ def do_request_update(project_id, project, params, user_id):
 	if status and status not in REQUEST_STATUSES:
 		return {"error": "errors.invalid_status", "code": 400}
 	if repository:
-		reg_set("requests", ["id"], "id=?", [request_id], {"repository": repository, "updated": now})
+		row_set("requests", ["id"], "id=?", [request_id], {"repository": repository, "updated": now})
 	if source:
-		reg_set("requests", ["id"], "id=?", [request_id], {"source": source, "updated": now})
+		row_set("requests", ["id"], "id=?", [request_id], {"source": source, "updated": now})
 	if target:
-		reg_set("requests", ["id"], "id=?", [request_id], {"target": target, "updated": now})
+		row_set("requests", ["id"], "id=?", [request_id], {"target": target, "updated": now})
 	if status:
-		reg_set("requests", ["id"], "id=?", [request_id], {"status": status, "updated": now})
+		row_set("requests", ["id"], "id=?", [request_id], {"status": status, "updated": now})
 	if title:
-		reg_set("requests", ["id"], "id=?", [request_id], {"title": title, "updated": now})
+		row_set("requests", ["id"], "id=?", [request_id], {"title": title, "updated": now})
 	if description != None:
-		reg_set("requests", ["id"], "id=?", [request_id], {"description": description, "updated": now})
+		row_set("requests", ["id"], "id=?", [request_id], {"description": description, "updated": now})
 	if draft_input:
 		draft = 1 if draft_input == "1" else 0
-		reg_set("requests", ["id"], "id=?", [request_id], {"draft": draft, "updated": now})
+		row_set("requests", ["id"], "id=?", [request_id], {"draft": draft, "updated": now})
 	req = mochi.db.row("select r.id, r.object, r.type, r.repository, r.source, r.target, r.status, r.title, r.description, r.draft, r.created, r.updated from requests r join objects o on r.object=o.id where r.id=? and o.project=?", request_id, project_id)
 	broadcast_event(project_id, "request/update", {"project": project_id, "request": req})
 	return req
@@ -7441,7 +7423,7 @@ def do_request_delete(project_id, project, params, user_id):
 	req = mochi.db.row("select r.* from requests r join objects o on r.object=o.id where r.id=? and o.project=?", request_id, project_id)
 	if not req:
 		return {"error": "errors.request_not_found", "code": 404}
-	reg_remove("requests", ["id"], "id=?", [request_id])
+	row_remove("requests", ["id"], "id=?", [request_id])
 	broadcast_event(project_id, "request/delete", {
 		"project": project_id, "id": request_id, "object": req["object"]
 	})
@@ -7461,9 +7443,9 @@ def do_class_create(project_id, project, params):
 	max_rank = mochi.db.row("select max(rank) as m from classes where project=?", project_id)
 	rank = (max_rank["m"] or 0) + 1 if max_rank else 0
 	requests = params.get("requests", "")
-	reg_merge("classes", ["project", "id"], {"project": project_id, "id": class_id, "name": name.strip(), "rank": rank, "requests": requests, "title": "title"})
-	reg_merge("fields", ["project", "class", "id"], {"project": project_id, "class": class_id, "id": "title", "name": "Title", "fieldtype": "text", "flags": "required,sort", "rank": 0})
-	reg_merge("hierarchy", ["project", "class", "parent"], {"project": project_id, "class": class_id, "parent": ""})
+	row_merge("classes", ["project", "id"], {"project": project_id, "id": class_id, "name": name.strip(), "rank": rank, "requests": requests, "title": "title"})
+	row_merge("fields", ["project", "class", "id"], {"project": project_id, "class": class_id, "id": "title", "name": "Title", "fieldtype": "text", "flags": "required,sort", "rank": 0})
+	row_merge("hierarchy", ["project", "class", "parent"], {"project": project_id, "class": class_id, "parent": ""})
 	broadcast_event(project_id, "class/create", {
 		"project": project_id, "id": class_id, "name": name.strip(), "rank": rank, "requests": requests, "title": "title"
 	})
@@ -7482,14 +7464,14 @@ def do_class_update(project_id, project, params):
 	if check_length(params.get("title"), 100):
 		return {"error": "errors.title_too_long", "code": 400}
 	if name:
-		reg_set("classes", ["project", "id"], "project=? and id=?", [project_id, class_id], {"name": name.strip()})
+		row_set("classes", ["project", "id"], "project=? and id=?", [project_id, class_id], {"name": name.strip()})
 	requests_input = params.get("requests")
 	if requests_input:
 		requests_value = "" if requests_input == "none" else requests_input
-		reg_set("classes", ["project", "id"], "project=? and id=?", [project_id, class_id], {"requests": requests_value})
+		row_set("classes", ["project", "id"], "project=? and id=?", [project_id, class_id], {"requests": requests_value})
 	title_input = params.get("title")
 	if title_input:
-		reg_set("classes", ["project", "id"], "project=? and id=?", [project_id, class_id], {"title": title_input})
+		row_set("classes", ["project", "id"], "project=? and id=?", [project_id, class_id], {"title": title_input})
 	broadcast_event(project_id, "class/update", {
 		"project": project_id, "id": class_id, "name": name or class_row["name"],
 		"requests": ("" if requests_input == "none" else requests_input) if requests_input else class_row["requests"],
@@ -7507,12 +7489,12 @@ def do_class_delete(project_id, project, params):
 	# view_classes has a foreign key to classes(project, id); delete its rows
 	# before the class row or the delete fails with "FOREIGN KEY constraint
 	# failed". Also clear hierarchy rows where this class is a parent.
-	reg_remove("options", ["project", "class", "field", "id"], "project=? and class=?", [project_id, class_id])
-	reg_remove("fields", ["project", "class", "id"], "project=? and class=?", [project_id, class_id])
-	reg_remove("view_classes", ["project", "view", "class"], "project=? and class=?", [project_id, class_id])
-	reg_remove("hierarchy", ["project", "class", "parent"], "project=? and class=?", [project_id, class_id])
-	reg_remove("hierarchy", ["project", "class", "parent"], "project=? and parent=?", [project_id, class_id])
-	reg_remove("classes", ["project", "id"], "project=? and id=?", [project_id, class_id])
+	row_remove("options", ["project", "class", "field", "id"], "project=? and class=?", [project_id, class_id])
+	row_remove("fields", ["project", "class", "id"], "project=? and class=?", [project_id, class_id])
+	row_remove("view_classes", ["project", "view", "class"], "project=? and class=?", [project_id, class_id])
+	row_remove("hierarchy", ["project", "class", "parent"], "project=? and class=?", [project_id, class_id])
+	row_remove("hierarchy", ["project", "class", "parent"], "project=? and parent=?", [project_id, class_id])
+	row_remove("classes", ["project", "id"], "project=? and id=?", [project_id, class_id])
 	broadcast_event(project_id, "class/delete", {"project": project_id, "id": class_id})
 	return {"success": True}
 
@@ -7544,7 +7526,7 @@ def do_field_create(project_id, project, params):
 	multi = 1 if params.get("multi") == "1" or params.get("multi") == "true" else 0
 	card = 1 if params.get("card") != "0" and params.get("card") != "false" else 0
 	rows = safe_int(params.get("rows"), 1)
-	reg_merge("fields", ["project", "class", "id"], {"project": project_id, "class": class_id, "id": field_id, "name": name.strip(), "fieldtype": fieldtype, "flags": flags, "multi": multi, "rank": rank, "card": card, "rows": rows})
+	row_merge("fields", ["project", "class", "id"], {"project": project_id, "class": class_id, "id": field_id, "name": name.strip(), "fieldtype": fieldtype, "flags": flags, "multi": multi, "rank": rank, "card": card, "rows": rows})
 	broadcast_event(project_id, "field/create", {
 		"project": project_id, "class": class_id, "id": field_id,
 		"name": name.strip(), "fieldtype": fieldtype, "flags": flags,
@@ -7554,20 +7536,20 @@ def do_field_create(project_id, project, params):
 
 # Rename a field ID across all tables that reference it
 def rename_field_id(project_id, class_id, old_id, new_id):
-	reg_rekey("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, old_id], {"id": new_id})
-	reg_rekey("options", ["project", "class", "field", "id"], "project=? and class=? and field=?", [project_id, class_id, old_id], {"field": new_id})
+	row_rekey("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, old_id], {"id": new_id})
+	row_rekey("options", ["project", "class", "field", "id"], "project=? and class=? and field=?", [project_id, class_id, old_id], {"field": new_id})
 	# Re-key field old_id -> new_id across this class's objects: re-merge each value under
 	# the new field id and tombstone the old (the merge upsert handles any new_id conflict).
 	for _v in mochi.db.rows("select object, value from \"values\" where field=? and object in (select id from objects where project=? and class=?)", old_id, project_id, class_id):
 		value_merge(_v["object"], new_id, _v["value"])
 		value_remove(_v["object"], old_id)
-	reg_rekey("view_fields", ["project", "view", "field"], "project=? and field=?", [project_id, old_id], {"field": new_id})
+	row_rekey("view_fields", ["project", "view", "field"], "project=? and field=?", [project_id, old_id], {"field": new_id})
 	mochi.db.execute("update activity set field=? where field=? and object in (select id from objects where project=? and class=?)", new_id, old_id, project_id, class_id)
-	reg_set("views", ["project", "id"], "project=? and columns=?", [project_id, old_id], {"columns": new_id})
-	reg_set("views", ["project", "id"], "project=? and rows=?", [project_id, old_id], {"rows": new_id})
-	reg_set("views", ["project", "id"], "project=? and sort=?", [project_id, old_id], {"sort": new_id})
-	reg_set("views", ["project", "id"], "project=? and border=?", [project_id, old_id], {"border": new_id})
-	reg_set("classes", ["project", "id"], "project=? and id=? and title=?", [project_id, class_id, old_id], {"title": new_id})
+	row_set("views", ["project", "id"], "project=? and columns=?", [project_id, old_id], {"columns": new_id})
+	row_set("views", ["project", "id"], "project=? and rows=?", [project_id, old_id], {"rows": new_id})
+	row_set("views", ["project", "id"], "project=? and sort=?", [project_id, old_id], {"sort": new_id})
+	row_set("views", ["project", "id"], "project=? and border=?", [project_id, old_id], {"border": new_id})
+	row_set("classes", ["project", "id"], "project=? and id=? and title=?", [project_id, class_id, old_id], {"title": new_id})
 def do_field_update(project_id, project, params):
 	class_id = params.get("class")
 	field_id = params.get("field")
@@ -7589,19 +7571,19 @@ def do_field_update(project_id, project, params):
 	position = params.get("position")
 	rows_val = params.get("rows")
 	if name != None:
-		reg_set("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, field_id], {"name": name.strip()})
+		row_set("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, field_id], {"name": name.strip()})
 	if flags != None:
-		reg_set("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, field_id], {"flags": flags})
+		row_set("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, field_id], {"flags": flags})
 	if multi != None:
 		multi_val = 1 if multi == "1" or multi == "true" else 0
-		reg_set("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, field_id], {"multi": multi_val})
+		row_set("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, field_id], {"multi": multi_val})
 	if card != None:
 		card_val = 1 if card == "1" or card == "true" else 0
-		reg_set("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, field_id], {"card": card_val})
+		row_set("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, field_id], {"card": card_val})
 	if position != None:
-		reg_set("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, field_id], {"position": position})
+		row_set("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, field_id], {"position": position})
 	if rows_val != None:
-		reg_set("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, field_id], {"rows": int(rows_val)})
+		row_set("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, field_id], {"rows": int(rows_val)})
 	# Rename field ID if requested
 	new_id = params.get("id")
 	if new_id != None:
@@ -7636,8 +7618,8 @@ def do_field_delete(project_id, project, params):
 	field_id = params.get("field")
 	if not class_id or not field_id:
 		return {"error": "errors.type_and_field_id_required", "code": 400}
-	reg_remove("options", ["project", "class", "field", "id"], "project=? and class=? and field=?", [project_id, class_id, field_id])
-	reg_remove("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, field_id])
+	row_remove("options", ["project", "class", "field", "id"], "project=? and class=? and field=?", [project_id, class_id, field_id])
+	row_remove("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, field_id])
 	broadcast_event(project_id, "field/delete", {"project": project_id, "class": class_id, "id": field_id})
 	return {"success": True}
 
@@ -7648,7 +7630,7 @@ def do_field_reorder(project_id, project, params):
 	order_str = params.get("order", "")
 	order = [f.strip() for f in order_str.split(",") if f.strip()]
 	for i, field_id in enumerate(order):
-		reg_set("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, field_id], {"rank": i})
+		row_set("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, field_id], {"rank": i})
 	broadcast_event(project_id, "field/reorder", {"project": project_id, "class": class_id, "order": order})
 	return {"success": True}
 
@@ -7680,7 +7662,7 @@ def do_option_create(project_id, project, params):
 	rank = (max_rank["m"] or 0) + 1 if max_rank else 0
 	colour = params.get("colour", "#94a3b8")
 	icon = params.get("icon", "")
-	reg_merge("options", ["project", "class", "field", "id"], {"project": project_id, "class": class_id, "field": field_id, "id": option_id, "name": name.strip(), "colour": colour, "icon": icon, "rank": rank})
+	row_merge("options", ["project", "class", "field", "id"], {"project": project_id, "class": class_id, "field": field_id, "id": option_id, "name": name.strip(), "colour": colour, "icon": icon, "rank": rank})
 	broadcast_event(project_id, "option/create", {
 		"project": project_id, "class": class_id, "field": field_id,
 		"id": option_id, "name": name.strip(), "colour": colour, "icon": icon, "rank": rank
@@ -7706,11 +7688,11 @@ def do_option_update(project_id, project, params):
 	colour = params.get("colour")
 	icon = params.get("icon")
 	if name != None:
-		reg_set("options", ["project", "class", "field", "id"], "project=? and class=? and field=? and id=?", [project_id, class_id, field_id, option_id], {"name": name.strip()})
+		row_set("options", ["project", "class", "field", "id"], "project=? and class=? and field=? and id=?", [project_id, class_id, field_id, option_id], {"name": name.strip()})
 	if colour != None:
-		reg_set("options", ["project", "class", "field", "id"], "project=? and class=? and field=? and id=?", [project_id, class_id, field_id, option_id], {"colour": colour})
+		row_set("options", ["project", "class", "field", "id"], "project=? and class=? and field=? and id=?", [project_id, class_id, field_id, option_id], {"colour": colour})
 	if icon != None:
-		reg_set("options", ["project", "class", "field", "id"], "project=? and class=? and field=? and id=?", [project_id, class_id, field_id, option_id], {"icon": icon})
+		row_set("options", ["project", "class", "field", "id"], "project=? and class=? and field=? and id=?", [project_id, class_id, field_id, option_id], {"icon": icon})
 	update_data = {"project": project_id, "class": class_id, "field": field_id, "id": option_id}
 	if name != None:
 		update_data["name"] = name.strip()
@@ -7727,7 +7709,7 @@ def do_option_delete(project_id, project, params):
 	option_id = params.get("option")
 	if not class_id or not field_id or not option_id:
 		return {"error": "errors.option_id_required", "code": 400}
-	reg_remove("options", ["project", "class", "field", "id"], "project=? and class=? and field=? and id=?", [project_id, class_id, field_id, option_id])
+	row_remove("options", ["project", "class", "field", "id"], "project=? and class=? and field=? and id=?", [project_id, class_id, field_id, option_id])
 	broadcast_event(project_id, "option/delete", {"project": project_id, "class": class_id, "field": field_id, "id": option_id})
 	return {"success": True}
 
@@ -7739,7 +7721,7 @@ def do_option_reorder(project_id, project, params):
 	order_str = params.get("order", "")
 	order = [o.strip() for o in order_str.split(",") if o.strip()]
 	for i, option_id in enumerate(order):
-		reg_set("options", ["project", "class", "field", "id"], "project=? and class=? and field=? and id=?", [project_id, class_id, field_id, option_id], {"rank": i})
+		row_set("options", ["project", "class", "field", "id"], "project=? and class=? and field=? and id=?", [project_id, class_id, field_id, option_id], {"rank": i})
 	broadcast_event(project_id, "option/reorder", {"project": project_id, "class": class_id, "field": field_id, "order": order})
 	return {"success": True}
 
@@ -7758,13 +7740,13 @@ def do_hierarchy_set(project_id, project, params):
 		parents = [""]
 	else:
 		parents = [p.strip() for p in parents_str.split(",")]
-	reg_remove("hierarchy", ["project", "class", "parent"], "project=? and class=?", [project_id, class_id])
+	row_remove("hierarchy", ["project", "class", "parent"], "project=? and class=?", [project_id, class_id])
 	for parent in parents:
 		if parent and parent != "":
 			parent_exists = mochi.db.exists("select 1 from classes where project=? and id=?", project_id, parent)
 			if not parent_exists:
 				continue
-		reg_merge("hierarchy", ["project", "class", "parent"], {"project": project_id, "class": class_id, "parent": parent})
+		row_merge("hierarchy", ["project", "class", "parent"], {"project": project_id, "class": class_id, "parent": parent})
 	broadcast_event(project_id, "hierarchy/set", {
 		"project": project_id, "class": class_id, "parents": parents
 	})
@@ -7798,14 +7780,14 @@ def do_view_create(project_id, project, params):
 	border = params.get("border", "")
 	next_rank = mochi.db.row("select coalesce(max(rank), -1) + 1 as r from views where project=?", project_id)
 	rank = next_rank["r"] if next_rank else 0
-	reg_merge("views", ["project", "id"], {"project": project_id, "id": view_id, "name": name.strip(), "viewtype": viewtype, "filter": filter_str, "columns": columns, "rows": rows, "sort": sort, "direction": direction, "rank": rank, "border": border})
+	row_merge("views", ["project", "id"], {"project": project_id, "id": view_id, "name": name.strip(), "viewtype": viewtype, "filter": filter_str, "columns": columns, "rows": rows, "sort": sort, "direction": direction, "rank": rank, "border": border})
 	for i, field in enumerate(fields.split(",")):
 		if field.strip():
-			reg_merge("view_fields", ["project", "view", "field"], {"project": project_id, "view": view_id, "field": field.strip(), "rank": i})
+			row_merge("view_fields", ["project", "view", "field"], {"project": project_id, "view": view_id, "field": field.strip(), "rank": i})
 	view_classes = params.get("classes", "")
 	if view_classes:
 		for cls_id in [c.strip() for c in view_classes.split(",") if c.strip()]:
-			reg_merge("view_classes", ["project", "view", "class"], {"project": project_id, "view": view_id, "class": cls_id})
+			row_merge("view_classes", ["project", "view", "class"], {"project": project_id, "view": view_id, "class": cls_id})
 	broadcast_event(project_id, "view/create", {
 		"project": project_id, "id": view_id, "name": name.strip(),
 		"viewtype": viewtype, "filter": filter_str, "columns": columns,
@@ -7835,38 +7817,38 @@ def do_view_update(project_id, project, params):
 	sort = params.get("sort")
 	direction = params.get("direction")
 	if name != None and name.strip() != "":
-		reg_set("views", ["project", "id"], "project=? and id=?", [project_id, view_id], {"name": name.strip()})
+		row_set("views", ["project", "id"], "project=? and id=?", [project_id, view_id], {"name": name.strip()})
 	if viewtype != None and viewtype != "":
 		if viewtype not in ["board", "list"]:
 			return {"error": "errors.invalid_view_type", "code": 400}
-		reg_set("views", ["project", "id"], "project=? and id=?", [project_id, view_id], {"viewtype": viewtype})
+		row_set("views", ["project", "id"], "project=? and id=?", [project_id, view_id], {"viewtype": viewtype})
 	if filter_str != None:
-		reg_set("views", ["project", "id"], "project=? and id=?", [project_id, view_id], {"filter": filter_str})
+		row_set("views", ["project", "id"], "project=? and id=?", [project_id, view_id], {"filter": filter_str})
 	if columns != None:
-		reg_set("views", ["project", "id"], "project=? and id=?", [project_id, view_id], {"columns": columns})
+		row_set("views", ["project", "id"], "project=? and id=?", [project_id, view_id], {"columns": columns})
 	if rows != None:
-		reg_set("views", ["project", "id"], "project=? and id=?", [project_id, view_id], {"rows": rows})
+		row_set("views", ["project", "id"], "project=? and id=?", [project_id, view_id], {"rows": rows})
 	if fields != None:
-		reg_remove("view_fields", ["project", "view", "field"], "project=? and view=?", [project_id, view_id])
+		row_remove("view_fields", ["project", "view", "field"], "project=? and view=?", [project_id, view_id])
 		for i, field in enumerate(fields.split(",")):
 			if field.strip():
-				reg_merge("view_fields", ["project", "view", "field"], {"project": project_id, "view": view_id, "field": field.strip(), "rank": i})
+				row_merge("view_fields", ["project", "view", "field"], {"project": project_id, "view": view_id, "field": field.strip(), "rank": i})
 	if sort != None:
-		reg_set("views", ["project", "id"], "project=? and id=?", [project_id, view_id], {"sort": sort})
+		row_set("views", ["project", "id"], "project=? and id=?", [project_id, view_id], {"sort": sort})
 	if direction != None and direction != "":
 		if direction not in ["asc", "desc"]:
 			return {"error": "errors.invalid_direction", "code": 400}
-		reg_set("views", ["project", "id"], "project=? and id=?", [project_id, view_id], {"direction": direction})
+		row_set("views", ["project", "id"], "project=? and id=?", [project_id, view_id], {"direction": direction})
 	border = params.get("border")
 	if border != None:
-		reg_set("views", ["project", "id"], "project=? and id=?", [project_id, view_id], {"border": border})
+		row_set("views", ["project", "id"], "project=? and id=?", [project_id, view_id], {"border": border})
 	view_classes_input = params.get("classes")
 	if view_classes_input != None:
-		reg_remove("view_classes", ["project", "view", "class"], "project=? and view=?", [project_id, view_id])
+		row_remove("view_classes", ["project", "view", "class"], "project=? and view=?", [project_id, view_id])
 		if view_classes_input:
 			cls_ids = [c.strip() for c in view_classes_input.split(",") if c.strip()]
 			for cls_id in cls_ids:
-				reg_merge("view_classes", ["project", "view", "class"], {"project": project_id, "view": view_id, "class": cls_id})
+				row_merge("view_classes", ["project", "view", "class"], {"project": project_id, "view": view_id, "class": cls_id})
 	updated = mochi.db.row("select * from views where project=? and id=?", project_id, view_id)
 	if updated:
 		view_fields = mochi.db.rows("select field from view_fields where project=? and view=? order by rank", project_id, view_id) or []
@@ -7888,9 +7870,9 @@ def do_view_delete(project_id, project, params):
 	count = mochi.db.row("select count(*) as cnt from views where project=?", project_id)
 	if count and count["cnt"] <= 1:
 		return {"error": "errors.cannot_delete_the_last_view", "code": 400}
-	reg_remove("view_fields", ["project", "view", "field"], "project=? and view=?", [project_id, view_id])
-	reg_remove("view_classes", ["project", "view", "class"], "project=? and view=?", [project_id, view_id])
-	reg_remove("views", ["project", "id"], "project=? and id=?", [project_id, view_id])
+	row_remove("view_fields", ["project", "view", "field"], "project=? and view=?", [project_id, view_id])
+	row_remove("view_classes", ["project", "view", "class"], "project=? and view=?", [project_id, view_id])
+	row_remove("views", ["project", "id"], "project=? and id=?", [project_id, view_id])
 	broadcast_event(project_id, "view/delete", {"project": project_id, "id": view_id})
 	return {"success": True}
 
@@ -7898,7 +7880,7 @@ def do_view_reorder(project_id, project, params):
 	order_str = params.get("order", "")
 	order = [v.strip() for v in order_str.split(",") if v.strip()]
 	for i, view_id in enumerate(order):
-		reg_set("views", ["project", "id"], "project=? and id=?", [project_id, view_id], {"rank": i})
+		row_set("views", ["project", "id"], "project=? and id=?", [project_id, view_id], {"rank": i})
 	broadcast_event(project_id, "view/reorder", {"project": project_id, "order": order})
 	return {"success": True}
 
@@ -7953,7 +7935,7 @@ def _subscribe_to_project(user, project_id, server):
 
 	# populated=0: schema fetched synchronously above, objects arrive async via
 	# the owner's sync/batch (set 1 by event_sync_batch).
-	reg_merge("projects", ["id"], {"id": project_id, "name": project_name, "description": project_desc, "prefix": project_prefix, "owner": 0, "server": server or "", "fingerprint": fp, "created": now, "updated": now, "populated": 0})
+	row_merge("projects", ["id"], {"id": project_id, "name": project_name, "description": project_desc, "prefix": project_prefix, "owner": 0, "server": server or "", "fingerprint": fp, "created": now, "updated": now, "populated": 0})
 
 	if schema and not schema.get("error"):
 		insert_schema(project_id, schema)
@@ -8018,8 +8000,8 @@ def _create_project_object(user, project_id, obj_class, title, parent="", values
 		object_merge({"id": d["id"], "project": project_id, "class": obj_class, "number": d.get("number", 0), "parent": parent, "rank": rank, "created": created, "updated": updated})
 	if title and title_field:
 		value_merge(d["id"], title_field, title)
-	reg_set("projects", ["id"], "id=?", [project_id], {"updated": now})
-	reg_merge("watchers", ["object", "user"], {"object": d["id"], "user": user.identity.id, "created": now})
+	row_set("projects", ["id"], "id=?", [project_id], {"updated": now})
+	row_merge("watchers", ["object", "user"], {"object": d["id"], "user": user.identity.id, "created": now})
 	# Auto-fill every required enumerated field the caller didn't supply,
 	# picking each field's lowest-rank option. Mirrors the SPA create dialog
 	# (apps/projects/web/.../create-object-dialog.tsx) — without this, a help
@@ -8083,7 +8065,7 @@ def _create_project_comment(user, project_id, object_id, content):
 		{"from": user_id, "to": project_id, "service": "projects", "event": "comment/submit"},
 		{"id": comment_id, "object": object_id, "parent": "", "content": content.strip(), "name": user_name}
 	)
-	reg_merge("watchers", ["object", "user"], {"object": object_id, "user": user_id, "created": now})
+	row_merge("watchers", ["object", "user"], {"object": object_id, "user": user_id, "created": now})
 
 	return {"id": comment_id}
 

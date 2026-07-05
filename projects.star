@@ -5513,7 +5513,7 @@ def event_sync_batch(e):
 				value_merge(obj["id"], field, value)
 		# Comments
 		for c in (obj.get("comments") or []):
-			if not mochi.db.exists("select 1 from comments_all where id=?", c["id"]):
+			if not mochi.db.exists("select 1 from comments where id=?", c["id"]):
 				comment_merge({"id": c["id"], "object": obj["id"], "parent": c.get("parent", ""), "author": c.get("author", ""), "name": c.get("name", ""), "content": c.get("content", ""), "created": c.get("created", now), "edited": c.get("edited", 0)})
 		# Activity history
 		for act in (obj.get("activity") or []):
@@ -5841,7 +5841,7 @@ def event_comment_submit(e):
 	if not content.strip():
 		return
 	now = mochi.time.now()
-	if not mochi.db.exists("select 1 from comments_all where id=?", comment_id):
+	if not mochi.db.exists("select 1 from comments where id=?", comment_id):
 		comment_merge({"id": comment_id, "object": object_id, "parent": parent, "author": sender, "name": name, "content": content.strip(), "created": now, "edited": 0})
 	# Store attachment metadata from the subscriber's event
 	attachments = e.content("attachments") or []
@@ -5939,7 +5939,7 @@ def event_comment_create(e):
 	if not object_id or not mochi.db.exists("select 1 from objects where id=? and project=?", object_id, project_id):
 		request_resync(project_id)
 		return
-	if not mochi.db.exists("select 1 from comments_all where id=?", comment_id):
+	if not mochi.db.exists("select 1 from comments where id=?", comment_id):
 		comment_merge({"id": comment_id, "object": object_id, "parent": e.content("parent") or "", "author": e.content("author") or "", "name": e.content("name") or "", "content": e.content("content") or "", "created": e.content("created") or mochi.time.now(), "edited": 0})
 	# Store attachment metadata from the event
 	attachments = e.content("attachments") or []
@@ -6793,7 +6793,7 @@ def do_comment_create(project_id, project, params, user_id, user_name):
 		return {"error": "errors.content_too_long", "code": 400}
 	comment_id = params.get("id") or mochi.uid()
 	now = mochi.time.now()
-	if not mochi.db.exists("select 1 from comments_all where id=?", comment_id):
+	if not mochi.db.exists("select 1 from comments where id=?", comment_id):
 		comment_merge({"id": comment_id, "object": object_id, "parent": parent, "author": user_id, "name": user_name, "content": content.strip(), "created": now, "edited": 0})
 	object_set(object_id, {"updated": now})
 	log_activity(object_id, user_id, "commented")

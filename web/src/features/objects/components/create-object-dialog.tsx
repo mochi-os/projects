@@ -89,6 +89,19 @@ export function CreateObjectDialog({
     });
   }, [availableClasses, project.hierarchy, objectsData]);
 
+  // A value is usable for a class's field when the field exists there and,
+  // for enumerated fields, the value is one of that class's options. Board
+  // defaults come from whichever class the board renders, so on a
+  // multi-class view (e.g. the tickets template: ticket + task with
+  // different status sets) a default can be invalid for the class actually
+  // selected here — the server rejects it with "Invalid option" (#467).
+  const usableValue = (classId: string, fieldId: string, value: string) => {
+    const field = (project.fields[classId] || []).find((f) => f.id === fieldId);
+    if (!field) return false;
+    if (field.fieldtype !== "enumerated") return true;
+    return (project.options[classId]?.[fieldId] || []).some((o) => o.id === value);
+  };
+
   // Reset state when dialog opens/closes or type changes
   useEffect(() => {
     if (open) {
@@ -97,11 +110,13 @@ export function CreateObjectDialog({
       setParent(defaultParent || "");
       setPendingFiles([]);
       setError(null);
-      // Initialize field values with defaults
+      // Initialize field values with defaults valid for the initial class
       const initialValues: Record<string, string> = {};
       if (defaultFields) {
         for (const df of defaultFields) {
-          initialValues[df.field] = df.value;
+          if (usableValue(initialType, df.field, df.value)) {
+            initialValues[df.field] = df.value;
+          }
         }
       }
       // Auto-select first option for required enumerated fields
@@ -119,21 +134,39 @@ export function CreateObjectDialog({
     }
   }, [open, project.classes, defaultFields, defaultParent]);
 
-  // Update default field values when type changes (if fields exist in new type)
+  // When the class changes: drop values that aren't usable for the new class
+  // (an enumerated value carried over from another class would be rejected by
+  // the server), re-apply the usable defaults, and auto-select the first
+  // option for any required enumerated field left empty.
   useEffect(() => {
-    if (defaultFields && selectedClass) {
-      const classFields = project.fields[selectedClass] || [];
-      const updates: Record<string, string> = {};
-      for (const df of defaultFields) {
-        if (classFields.some((f) => f.id === df.field)) {
-          updates[df.field] = df.value;
+    if (!selectedClass) return;
+    setFieldValues((prev) => {
+      const next: Record<string, string> = {};
+      for (const [fieldId, value] of Object.entries(prev)) {
+        if (usableValue(selectedClass, fieldId, value)) {
+          next[fieldId] = value;
         }
       }
-      if (Object.keys(updates).length > 0) {
-        setFieldValues((prev) => ({ ...prev, ...updates }));
+      if (defaultFields) {
+        for (const df of defaultFields) {
+          if (usableValue(selectedClass, df.field, df.value)) {
+            next[df.field] = df.value;
+          }
+        }
       }
-    }
-  }, [selectedClass, defaultFields, project.fields]);
+      const fields = project.fields[selectedClass] || [];
+      const opts = project.options[selectedClass] || {};
+      for (const f of fields) {
+        if (f.fieldtype === "enumerated" && f.flags?.split(",").includes("required") && !next[f.id]) {
+          const fieldOpts = opts[f.id] || [];
+          if (fieldOpts.length > 0) {
+            next[f.id] = fieldOpts[0].id;
+          }
+        }
+      }
+      return next;
+    });
+  }, [selectedClass, defaultFields, project.fields, project.options]);
 
   // Fetch project members for the owner picker
   const { data: peopleData } = useQuery({

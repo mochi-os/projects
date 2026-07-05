@@ -893,7 +893,7 @@ def action_design_export(a):
 	views = []
 	view_rows = mochi.db.rows("select id, name, viewtype, filter, columns, rows, sort, direction, rank, border from views where project=? order by rank", project_id) or []
 	# Batch-fetch view classes and fields
-	all_view_classes = mochi.db.rows("select view, class from view_classes where project=?", project_id) or []
+	all_view_classes = mochi.db.rows("select vc.view as view, vc.class as class from view_classes vc join classes c on c.project=vc.project and c.id=vc.class where vc.project=? order by c.rank", project_id) or []
 	vc_map = {}
 	for vc in all_view_classes:
 		vc_map.setdefault(vc["view"], []).append(vc["class"])
@@ -1381,7 +1381,7 @@ def action_project_get(a):
 	views = mochi.db.rows("select id, name, viewtype, filter, columns, rows, sort, direction, rank, border from views where project=? order by rank, name", project_id) or []
 
 	# Batch-fetch view classes and fields
-	all_view_classes = mochi.db.rows("select view, class from view_classes where project=?", project_id) or []
+	all_view_classes = mochi.db.rows("select vc.view as view, vc.class as class from view_classes vc join classes c on c.project=vc.project and c.id=vc.class where vc.project=? order by c.rank", project_id) or []
 	vc_map = {}
 	for vc in all_view_classes:
 		vc_map.setdefault(vc["view"], []).append(vc["class"])
@@ -3482,7 +3482,7 @@ def action_view_list(a):
 	) or []
 
 	# Batch-fetch view classes and fields
-	all_view_classes = mochi.db.rows("select view, class from view_classes where project=?", project_id) or []
+	all_view_classes = mochi.db.rows("select vc.view as view, vc.class as class from view_classes vc join classes c on c.project=vc.project and c.id=vc.class where vc.project=? order by c.rank", project_id) or []
 	vc_map = {}
 	for vc in all_view_classes:
 		vc_map.setdefault(vc["view"], []).append(vc["class"])
@@ -5121,7 +5121,7 @@ def event_schema(e):
 	vf_map = {}
 	for vf in all_view_fields:
 		vf_map.setdefault(vf["view"], []).append(vf["field"])
-	all_view_classes = mochi.db.rows("select view, class from view_classes where project=?", project_id) or []
+	all_view_classes = mochi.db.rows("select vc.view as view, vc.class as class from view_classes vc join classes c on c.project=vc.project and c.id=vc.class where vc.project=? order by c.rank", project_id) or []
 	vc_map = {}
 	for vc in all_view_classes:
 		vc_map.setdefault(vc["view"], []).append(vc["class"])
@@ -5308,7 +5308,7 @@ def send_project_data(project_id, subscriber_id):
 
 	# Collect views
 	views = mochi.db.rows("select * from views where project=?", project_id)
-	all_view_classes = mochi.db.rows("select view, class from view_classes where project=?", project_id) or []
+	all_view_classes = mochi.db.rows("select vc.view as view, vc.class as class from view_classes vc join classes c on c.project=vc.project and c.id=vc.class where vc.project=? order by c.rank", project_id) or []
 	vc_map = {}
 	for vc in all_view_classes:
 		vc_map.setdefault(vc["view"], []).append(vc["class"])

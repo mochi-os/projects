@@ -73,6 +73,10 @@ msgstr "ਨਿਰਪੇਖ (ਮਿਤੀ ਅਤੇ ਸਮਾਂ)"
 msgid "Access"
 msgstr "ਪਹੁੰਚ"
 
+#: ../../../lib/web/src/features/errors/general-error.tsx:60
+msgid "Access denied"
+msgstr "ਪਹੁੰਚ ਤੋਂ ਇਨਕਾਰ"
+
 #: ../../../lib/web/src/features/errors/forbidden.tsx:16
 msgid "Access Forbidden"
 msgstr "ਪਹੁੰਚ ਪਾਬੰਦੀਸ਼ੁਦਾ"
@@ -244,7 +248,7 @@ msgstr "ਇਸ ਅਨੁਸਾਰ ਛਾਂਟਣ ਦੀ ਆਗਿਆ ਦਿਓ"
 msgid "An error occurred"
 msgstr "ਇੱਕ ਗੜਬੜ ਹੋਈ"
 
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:241
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:256
 msgid "An unexpected error occurred"
 msgstr "ਇੱਕ ਅਣਕਿਆਸੀ ਗੜਬੜ ਹੋਈ"
 
@@ -388,12 +392,12 @@ msgstr "ਜਵਾਬ ਰੱਦ ਕਰੋ"
 msgid "Cannot merge automatically"
 msgstr "ਆਪਣੇ ਆਪ ਮਰਜ ਨਹੀਂ ਹੋ ਸਕਦਾ"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:144
+#: ../../../lib/web/src/components/notification-category-button.tsx:143
 msgid "Category for this notification"
 msgstr "ਇਸ ਨੋਟੀਫਿਕੇਸ਼ਨ ਲਈ ਸ਼੍ਰੇਣੀ"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:125
-#: ../../../lib/web/src/components/notification-category-button.tsx:136
+#: ../../../lib/web/src/components/notification-category-button.tsx:124
+#: ../../../lib/web/src/components/notification-category-button.tsx:135
 msgid "Change notification category"
 msgstr "ਨੋਟੀਫਿਕੇਸ਼ਨ ਸ਼੍ਰੇਣੀ ਬਦਲੋ"
 
@@ -665,6 +669,10 @@ msgstr "ਡਾਰਕ"
 #: ../../../lib/web/src/components/profile-dropdown.tsx:123
 msgid "Dark mode"
 msgstr "ਡਾਰਕ ਮੋਡ"
+
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:240
+msgid "Data conflict"
+msgstr "ਡਾਟਾ ਟਕਰਾਅ"
 
 #: src/features/editor/components/add-dialogs.tsx:137
 msgid "Date"
@@ -1080,7 +1088,7 @@ msgstr "ਗਾਹਕੀ ਰੱਦ ਕਰਨ ਵਿੱਚ ਅਸਫਲ"
 msgid "Failed to update access level"
 msgstr "ਪਹੁੰਚ ਪੱਧਰ ਅੱਪਡੇਟ ਕਰਨ ਵਿੱਚ ਅਸਫਲ"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:112
+#: ../../../lib/web/src/components/notification-category-button.tsx:111
 msgid "Failed to update category"
 msgstr "ਸ਼੍ਰੇਣੀ ਅੱਪਡੇਟ ਕਰਨ ਵਿੱਚ ਅਸਫਲ"
 
@@ -1430,7 +1438,8 @@ msgstr "ਨਾਮ"
 msgid "Name is required"
 msgstr "ਨਾਮ ਜ਼ਰੂਰੀ ਹੈ"
 
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:288
+#: ../../../lib/web/src/features/errors/general-error.tsx:53
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:303
 msgid "Network error"
 msgstr "ਨੈੱਟਵਰਕ ਗੜਬੜ"
 
@@ -1550,7 +1559,7 @@ msgstr "ਕੋਈ ਸਥਿਤੀ ਨਹੀਂ"
 msgid "No time zone found."
 msgstr "ਕੋਈ ਟਾਈਮ ਜ਼ੋਨ ਨਹੀਂ ਮਿਲਿਆ।"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:148
+#: ../../../lib/web/src/components/notification-category-button.tsx:147
 msgid "No topic record yet — try again after the next notification."
 msgstr "ਅਜੇ ਕੋਈ ਟੌਪਿਕ ਰਿਕਾਰਡ ਨਹੀਂ — ਅਗਲੇ ਨੋਟੀਫਿਕੇਸ਼ਨ ਤੋਂ ਬਾਅਦ ਫਿਰ ਕੋਸ਼ਿਸ਼ ਕਰੋ।"
 
@@ -1589,6 +1598,10 @@ msgstr "ਸਧਾਰਨ"
 #: src/features/requests/components/request-panel.tsx:231
 msgid "Not configured"
 msgstr "ਕੌਨਫ਼ਿਗਰ ਨਹੀਂ ਕੀਤਾ"
+
+#: ../../../lib/web/src/features/errors/general-error.tsx:67
+msgid "Not found"
+msgstr "ਨਹੀਂ ਮਿਲਿਆ"
 
 #: ../../../lib/web/src/components/ui/editable-field-row.tsx:146
 msgid "Not set"
@@ -1736,13 +1749,23 @@ msgstr "ਇਸ ਪ੍ਰੋਜੈਕਟ ਅਤੇ ਇਸਦੀ ਸਾਰੀ ਸ�
 msgid "Please add one or more classes to the project design."
 msgstr "ਕਿਰਪਾ ਕਰਕੇ ਪ੍ਰੋਜੈਕਟ ਡਿਜ਼ਾਈਨ ਵਿੱਚ ਇੱਕ ਜਾਂ ਵੱਧ ਕਲਾਸਾਂ ਸ਼ਾਮਲ ਕਰੋ।"
 
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:289
+#: ../../../lib/web/src/features/errors/general-error.tsx:54
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:304
+#: ../../../lib/web/src/lib/error-normalizer.ts:201
 msgid "Please check your internet connection and try again."
 msgstr "ਕਿਰਪਾ ਕਰਕੇ ਆਪਣਾ ਇੰਟਰਨੈੱਟ ਕਨੈਕਸ਼ਨ ਜਾਂਚੋ ਅਤੇ ਮੁੜ ਕੋਸ਼ਿਸ਼ ਕਰੋ।"
 
 #: src/features/projects/components/create-project-dialog.tsx:89
 msgid "Please select a template"
 msgstr "ਕਿਰਪਾ ਕਰਕੇ ਟੈਮਪਲੇਟ ਚੁਣੋ"
+
+#: ../../../lib/web/src/features/errors/general-error.tsx:83
+msgid "Please try again."
+msgstr "ਕਿਰਪਾ ਕਰਕੇ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ।"
+
+#: ../../../lib/web/src/features/errors/general-error.tsx:75
+msgid "Please wait a moment and try again."
+msgstr "ਕਿਰਪਾ ਕਰਕੇ ਥੋੜ੍ਹੀ ਦੇਰ ਉਡੀਕ ਕਰੋ ਅਤੇ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ।"
 
 #: src/features/projects/components/create-project-dialog.tsx:181
 #: src/routes/_authenticated/$projectId_.settings.tsx:321
@@ -1837,8 +1860,8 @@ msgstr "ਮਰਜ ਲਈ ਤਿਆਰ"
 msgid "Rebase and merge"
 msgstr "ਰੀਬੇਸ ਅਤੇ ਮਰਜ"
 
-#: ../../../lib/web/src/components/search-entity-dialog.tsx:219
-#: ../../../lib/web/src/components/search-entity-page.tsx:243
+#: ../../../lib/web/src/components/search-entity-dialog.tsx:216
+#: ../../../lib/web/src/components/search-entity-page.tsx:240
 msgid "Recommended"
 msgstr "ਸਿਫ਼ਾਰਸ਼ ਕੀਤੇ"
 
@@ -2055,8 +2078,8 @@ msgstr "ਇਸ ਦ੍ਰਿਸ਼ ਨੂੰ ਖੋਜੋ, ਦੇਖੋ, ਅਤ�
 msgid "Search..."
 msgstr "ਖੋਜੋ..."
 
-#: ../../../lib/web/src/components/search-entity-dialog.tsx:177
-#: ../../../lib/web/src/components/search-entity-page.tsx:201
+#: ../../../lib/web/src/components/search-entity-dialog.tsx:174
+#: ../../../lib/web/src/components/search-entity-page.tsx:198
 #: ../../../lib/web/src/features/access/access-dialog.tsx:202
 msgid "Searching..."
 msgstr "ਖੋਜ ਰਿਹਾ ਹੈ..."
@@ -2138,8 +2161,8 @@ msgstr "ਸੈਰੀਫ"
 msgid "Server"
 msgstr "ਸਰਵਰ"
 
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:245
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:271
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:260
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:286
 msgid "Server error"
 msgstr "ਸਰਵਰ ਗੜਬੜ"
 
@@ -2148,9 +2171,9 @@ msgstr "ਸਰਵਰ ਗੜਬੜ"
 msgid "Server rules"
 msgstr "ਸਰਵਰ ਨਿਯਮ"
 
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:209
-msgid "Session expired"
-msgstr "ਸੈਸ਼ਨ ਦੀ ਮਿਆਦ ਖਤਮ ਹੋਈ"
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:210
+msgid "Session expired. Please log in again."
+msgstr "ਸੈਸ਼ਨ ਦੀ ਮਿਆਦ ਖਤਮ ਹੋ ਗਈ ਹੈ। ਕਿਰਪਾ ਕਰਕੇ ਦੁਬਾਰਾ ਲੌਗਇਨ ਕਰੋ।"
 
 #: ../../../lib/web/src/components/travelling-picker.tsx:147
 msgid "Set origin and destination"
@@ -2333,6 +2356,10 @@ msgstr "ਟੈਕਸਟ"
 msgid "That code is incorrect or has expired."
 msgstr "ਉਹ ਕੋਡ ਗਲਤ ਹੈ ਜਾਂ ਇਸ ਦੀ ਮਿਆਦ ਖਤਮ ਹੋ ਗਈ ਹੈ।"
 
+#: ../../../lib/web/src/features/errors/general-error.tsx:68
+msgid "The requested content could not be found."
+msgstr "ਬੇਨਤੀ ਕੀਤੀ ਸਮੱਗਰੀ ਨਹੀਂ ਮਿਲੀ।"
+
 #: ../../../lib/web/src/components/config-drawer.tsx:194
 msgid "Theme"
 msgstr "theme"
@@ -2429,6 +2456,10 @@ msgstr "ਦ੍ਰਿਸ਼ ਵਿਕਲਪ ਟੌਗਲ ਕਰੋ"
 msgid "Toggle watched filter"
 msgstr "watched ਫਿਲਟਰ ਟੌਗਲ ਕਰੋ"
 
+#: ../../../lib/web/src/features/errors/general-error.tsx:74
+msgid "Too many requests"
+msgstr "ਬਹੁਤ ਜ਼ਿਆਦਾ ਬੇਨਤੀਆਂ"
+
 #: ../../../lib/web/src/components/ui/sort-selector.tsx:45
 msgid "Top"
 msgstr "ਉੱਪਰ"
@@ -2441,13 +2472,13 @@ msgstr "ਉੱਚ ਪੱਧਰ"
 msgid "Travelling"
 msgstr "ਯਾਤਰਾ ਕਰ ਰਿਹਾ ਹੈ"
 
-#: ../../../lib/web/src/components/search-entity-dialog.tsx:193
-#: ../../../lib/web/src/components/search-entity-page.tsx:217
+#: ../../../lib/web/src/components/search-entity-dialog.tsx:190
+#: ../../../lib/web/src/components/search-entity-page.tsx:214
 msgid "Try adjusting your search terms"
 msgstr "ਆਪਣੇ ਖੋਜ ਸ਼ਬਦ ਠੀਕ ਕਰਨ ਦੀ ਕੋਸ਼ਿਸ਼ ਕਰੋ"
 
-#: ../../../lib/web/src/features/errors/general-error.tsx:128
-#: ../../../lib/web/src/features/errors/general-error.tsx:168
+#: ../../../lib/web/src/features/errors/general-error.tsx:140
+#: ../../../lib/web/src/features/errors/general-error.tsx:180
 #: ../../../lib/web/src/features/errors/maintenance-error.tsx:19
 msgid "Try again"
 msgstr "ਮੁੜ ਕੋਸ਼ਿਸ਼ ਕਰੋ"
@@ -2473,7 +2504,7 @@ msgstr "ਉਪਭੋਗਤਾ ਖੋਜਣ ਲਈ ਟਾਈਪ ਕਰੋ"
 msgid "Type to search..."
 msgstr "ਖੋਜਣ ਲਈ ਟਾਈਪ ਕਰੋ..."
 
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:267
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:282
 msgid "Unable to connect to remote server"
 msgstr "ਰਿਮੋਟ ਸਰਵਰ ਨਾਲ ਕਨੈਕਟ ਨਹੀਂ ਹੋ ਸਕਿਆ"
 
@@ -2482,7 +2513,7 @@ msgstr "ਰਿਮੋਟ ਸਰਵਰ ਨਾਲ ਕਨੈਕਟ ਨਹੀਂ ਹ�
 msgid "Unable to redirect to login. Please try again."
 msgstr "ਲੌਗਇਨ 'ਤੇ ਰੀਡਾਇਰੈਕਟ ਕਰਨ ਵਿੱਚ ਅਸਮਰੱਥ। ਕਿਰਪਾ ਕਰਕੇ ਮੁੜ ਕੋਸ਼ਿਸ਼ ਕਰੋ।"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:156
+#: ../../../lib/web/src/components/notification-category-button.tsx:155
 msgid "Unassigned"
 msgstr "ਨਾ ਨਿਰਧਾਰਤ"
 
@@ -2640,6 +2671,10 @@ msgstr "ਵੈੱਬਸਾਈਟ ਮੁਰੰਮਤ ਅਧੀਨ ਹੈ!"
 #: ../../../lib/web/src/lib/preference-utils.ts:61
 msgid "Wednesday"
 msgstr "ਬੁੱਧਵਾਰ"
+
+#: ../../../lib/web/src/features/errors/general-error.tsx:61
+msgid "You do not have access to this section."
+msgstr "ਤੁਹਾਡੇ ਕੋਲ ਇਸ ਭਾਗ ਤੱਕ ਪਹੁੰਚ ਨਹੀਂ ਹੈ।"
 
 #: src/routes/_authenticated/$projectId/index.tsx:109
 msgid "You don't have access to this project."

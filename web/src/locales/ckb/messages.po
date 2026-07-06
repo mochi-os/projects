@@ -73,6 +73,10 @@ msgstr "ڕاستەوخۆ (بەروار و کات)"
 msgid "Access"
 msgstr "دەستڕاگەیشتن"
 
+#: ../../../lib/web/src/features/errors/general-error.tsx:60
+msgid "Access denied"
+msgstr "دەستڕاگەیشتن ڕەتکرایەوە"
+
 #: ../../../lib/web/src/features/errors/forbidden.tsx:16
 msgid "Access Forbidden"
 msgstr "دەستڕاگەیشتن قەدەغەیە"
@@ -244,7 +248,7 @@ msgstr "ڕێگە بدە بە ڕیزکردن بەپێی"
 msgid "An error occurred"
 msgstr "هەڵەیەک ڕوویدا"
 
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:241
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:256
 msgid "An unexpected error occurred"
 msgstr "هەڵەیەکی چاوەڕواننەکراو ڕوویدا"
 
@@ -388,12 +392,12 @@ msgstr "هەڵوەشاندنەوەی وەڵام"
 msgid "Cannot merge automatically"
 msgstr "ناتوانرێت بە خۆکارانە ئاوێتە بکرێت"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:144
+#: ../../../lib/web/src/components/notification-category-button.tsx:143
 msgid "Category for this notification"
 msgstr "هاوپۆلی ئەم ئاگادارکردنەوەیە"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:125
-#: ../../../lib/web/src/components/notification-category-button.tsx:136
+#: ../../../lib/web/src/components/notification-category-button.tsx:124
+#: ../../../lib/web/src/components/notification-category-button.tsx:135
 msgid "Change notification category"
 msgstr "گۆڕینی هاوپۆلی ئاگادارکردنەوە"
 
@@ -665,6 +669,10 @@ msgstr "تاریک"
 #: ../../../lib/web/src/components/profile-dropdown.tsx:123
 msgid "Dark mode"
 msgstr "دۆخی تاریک"
+
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:240
+msgid "Data conflict"
+msgstr "ناکۆکی داتا"
 
 #: src/features/editor/components/add-dialogs.tsx:137
 msgid "Date"
@@ -1080,7 +1088,7 @@ msgstr "وازهێنان لە بەشداریبوون سەرکەوتوو نەبو
 msgid "Failed to update access level"
 msgstr "نوێکردنەوەی ئاستی گەیشتن سەرکەوتوو نەبوو"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:112
+#: ../../../lib/web/src/components/notification-category-button.tsx:111
 msgid "Failed to update category"
 msgstr "نوێکردنەوەی بەش سەرکەوتوو نەبوو"
 
@@ -1430,7 +1438,8 @@ msgstr "ناو"
 msgid "Name is required"
 msgstr "ناو پێویستە"
 
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:288
+#: ../../../lib/web/src/features/errors/general-error.tsx:53
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:303
 msgid "Network error"
 msgstr "هەڵەی تۆڕ"
 
@@ -1550,7 +1559,7 @@ msgstr "هیچ دۆخێک نییە"
 msgid "No time zone found."
 msgstr "هیچ کاتزۆنێک نەدۆزرایەوە."
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:148
+#: ../../../lib/web/src/components/notification-category-button.tsx:147
 msgid "No topic record yet — try again after the next notification."
 msgstr "هێشتا هیچ تۆمارێکی بابەت نییە — دوای ئاگادارکردنەوەی داهاتوو دووبارە هەوڵ بدەرەوە."
 
@@ -1589,6 +1598,10 @@ msgstr "ئاسایی"
 #: src/features/requests/components/request-panel.tsx:231
 msgid "Not configured"
 msgstr "ڕێکنەخراوە"
+
+#: ../../../lib/web/src/features/errors/general-error.tsx:67
+msgid "Not found"
+msgstr "نەدۆزرایەوە"
 
 #: ../../../lib/web/src/components/ui/editable-field-row.tsx:146
 msgid "Not set"
@@ -1736,13 +1749,23 @@ msgstr "ئەم پڕۆژەیە و هەموو ناوەڕۆکەکانی بە یەک
 msgid "Please add one or more classes to the project design."
 msgstr "تکایە یەک یان زیاتر پۆل زیاد بکە بۆ دیزاینی پڕۆژە."
 
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:289
+#: ../../../lib/web/src/features/errors/general-error.tsx:54
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:304
+#: ../../../lib/web/src/lib/error-normalizer.ts:201
 msgid "Please check your internet connection and try again."
 msgstr "تکایە پەیوەندی ئینتەرنێتەکەت بپشکنە و دووبارە هەوڵ بدەرەوە."
 
 #: src/features/projects/components/create-project-dialog.tsx:89
 msgid "Please select a template"
 msgstr "تکایە قاڵبێک هەڵبژێرە"
+
+#: ../../../lib/web/src/features/errors/general-error.tsx:83
+msgid "Please try again."
+msgstr "تکایە دووبارە هەوڵ بدەرەوە."
+
+#: ../../../lib/web/src/features/errors/general-error.tsx:75
+msgid "Please wait a moment and try again."
+msgstr "تکایە کەمێک چاوەڕوان بە و دووبارە هەوڵ بدەوە."
 
 #: src/features/projects/components/create-project-dialog.tsx:181
 #: src/routes/_authenticated/$projectId_.settings.tsx:321
@@ -1837,8 +1860,8 @@ msgstr "ئامادە بۆ تێکەڵکردن"
 msgid "Rebase and merge"
 msgstr "Rebase و تێکەڵکردن"
 
-#: ../../../lib/web/src/components/search-entity-dialog.tsx:219
-#: ../../../lib/web/src/components/search-entity-page.tsx:243
+#: ../../../lib/web/src/components/search-entity-dialog.tsx:216
+#: ../../../lib/web/src/components/search-entity-page.tsx:240
 msgid "Recommended"
 msgstr "پێشنیازکراو"
 
@@ -2055,8 +2078,8 @@ msgstr "گەڕان، چاودێری و ڕیزکردنی ئەم بینینە."
 msgid "Search..."
 msgstr "گەڕان..."
 
-#: ../../../lib/web/src/components/search-entity-dialog.tsx:177
-#: ../../../lib/web/src/components/search-entity-page.tsx:201
+#: ../../../lib/web/src/components/search-entity-dialog.tsx:174
+#: ../../../lib/web/src/components/search-entity-page.tsx:198
 #: ../../../lib/web/src/features/access/access-dialog.tsx:202
 msgid "Searching..."
 msgstr "گەڕان..."
@@ -2138,8 +2161,8 @@ msgstr "سێریف"
 msgid "Server"
 msgstr "ڕاژەکار"
 
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:245
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:271
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:260
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:286
 msgid "Server error"
 msgstr "هەڵەی ڕاژەکار"
 
@@ -2148,9 +2171,9 @@ msgstr "هەڵەی ڕاژەکار"
 msgid "Server rules"
 msgstr "ڕێساکانی ڕاژەکار"
 
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:209
-msgid "Session expired"
-msgstr "دانیشتن بەسەرچوو"
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:210
+msgid "Session expired. Please log in again."
+msgstr "دانیشتنەکە بەسەرچوو. تکایە دووبارە بچۆرەوە ژوورەوە."
 
 #: ../../../lib/web/src/components/travelling-picker.tsx:147
 msgid "Set origin and destination"
@@ -2333,6 +2356,10 @@ msgstr "دەق"
 msgid "That code is incorrect or has expired."
 msgstr "ئەو کۆدە هەڵەیە یان بەسەرچووە."
 
+#: ../../../lib/web/src/features/errors/general-error.tsx:68
+msgid "The requested content could not be found."
+msgstr "ناوەڕۆکی داواکراو نەدۆزرایەوە."
+
 #: ../../../lib/web/src/components/config-drawer.tsx:194
 msgid "Theme"
 msgstr "ڕووکار"
@@ -2429,6 +2456,10 @@ msgstr "گۆڕینی بژاردەکانی پیشاندان"
 msgid "Toggle watched filter"
 msgstr "گۆڕینی پاڵێوی چاودێریکراو"
 
+#: ../../../lib/web/src/features/errors/general-error.tsx:74
+msgid "Too many requests"
+msgstr "داواکاری زۆر زیاد"
+
 #: ../../../lib/web/src/components/ui/sort-selector.tsx:45
 msgid "Top"
 msgstr "سەرەوە"
@@ -2441,13 +2472,13 @@ msgstr "ئاستی سەرەوە"
 msgid "Travelling"
 msgstr "گەشتکردن"
 
-#: ../../../lib/web/src/components/search-entity-dialog.tsx:193
-#: ../../../lib/web/src/components/search-entity-page.tsx:217
+#: ../../../lib/web/src/components/search-entity-dialog.tsx:190
+#: ../../../lib/web/src/components/search-entity-page.tsx:214
 msgid "Try adjusting your search terms"
 msgstr "هەوڵبدە وشەکانی گەڕانت ڕێکبخەیت"
 
-#: ../../../lib/web/src/features/errors/general-error.tsx:128
-#: ../../../lib/web/src/features/errors/general-error.tsx:168
+#: ../../../lib/web/src/features/errors/general-error.tsx:140
+#: ../../../lib/web/src/features/errors/general-error.tsx:180
 #: ../../../lib/web/src/features/errors/maintenance-error.tsx:19
 msgid "Try again"
 msgstr "دیسان هەوڵبدە"
@@ -2473,7 +2504,7 @@ msgstr "بنووسە بۆ گەڕان لە بەکارهێنەران"
 msgid "Type to search..."
 msgstr "بنووسە بۆ گەڕان..."
 
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:267
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:282
 msgid "Unable to connect to remote server"
 msgstr "نەتوانرا پەیوەندی بە ڕاژەکاری دوور بکرێت"
 
@@ -2482,7 +2513,7 @@ msgstr "نەتوانرا پەیوەندی بە ڕاژەکاری دوور بکر�
 msgid "Unable to redirect to login. Please try again."
 msgstr "ناتوانرێت ڕووبکات بۆ چوونەژوورەوە. تکایە دیسان هەوڵبدەرەوە."
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:156
+#: ../../../lib/web/src/components/notification-category-button.tsx:155
 msgid "Unassigned"
 msgstr "دیارینەکراو"
 
@@ -2640,6 +2671,10 @@ msgstr "ماڵپەڕ لە ژێر چاکسازییە!"
 #: ../../../lib/web/src/lib/preference-utils.ts:61
 msgid "Wednesday"
 msgstr "چوارشەممە"
+
+#: ../../../lib/web/src/features/errors/general-error.tsx:61
+msgid "You do not have access to this section."
+msgstr "دەستپێگەیشتنت بەم بەشە نییە."
 
 #: src/routes/_authenticated/$projectId/index.tsx:109
 msgid "You don't have access to this project."

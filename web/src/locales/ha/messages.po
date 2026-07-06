@@ -23,7 +23,7 @@ msgstr "[ba a saita ba]"
 
 #. placeholder {0}: project.project.name
 #: src/routes/_authenticated/$projectId/design.tsx:63
-#: src/routes/_authenticated/$projectId/design.tsx:156
+#: src/routes/_authenticated/$projectId/design.tsx:157
 msgid "{0} - Design"
 msgstr "{0} - Ƙira"
 
@@ -39,8 +39,8 @@ msgid "{0} files changed"
 msgstr "An canza fayiloli {0}"
 
 #. placeholder {0}: project.project.name
-#: src/routes/_authenticated/$projectId_.settings.tsx:122
-#: src/routes/_authenticated/$projectId_.settings.tsx:226
+#: src/routes/_authenticated/$projectId_.settings.tsx:134
+#: src/routes/_authenticated/$projectId_.settings.tsx:238
 msgid "{0} settings"
 msgstr "Saitunan {0}"
 
@@ -69,9 +69,13 @@ msgstr "Awa 24"
 msgid "Absolute (date and time)"
 msgstr "Cikakke (kwanan wata da lokaci)"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:77
+#: src/routes/_authenticated/$projectId_.settings.tsx:89
 msgid "Access"
 msgstr "Damar shiga"
+
+#: ../../../lib/web/src/features/errors/general-error.tsx:60
+msgid "Access denied"
+msgstr ""
 
 #: ../../../lib/web/src/features/errors/forbidden.tsx:16
 msgid "Access Forbidden"
@@ -81,19 +85,19 @@ msgstr "An hana shiga"
 msgid "Access level"
 msgstr "Matakin shiga"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:502
+#: src/routes/_authenticated/$projectId_.settings.tsx:702
 msgid "Access level updated"
 msgstr "An sabunta matakin shiga"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:513
+#: src/routes/_authenticated/$projectId_.settings.tsx:713
 msgid "Access Management"
 msgstr "Sarrafa damar shiga"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:488
+#: src/routes/_authenticated/$projectId_.settings.tsx:688
 msgid "Access removed"
 msgstr "An cire damar shiga"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:477
+#: src/routes/_authenticated/$projectId_.settings.tsx:677
 msgid "Access set for {subjectName}"
 msgstr "An saita damar shiga don {subjectName}"
 
@@ -113,7 +117,7 @@ msgstr "Nau'in asusu"
 msgid "Account verified"
 msgstr "An tabbatar da asusu"
 
-#: src/features/objects/components/object-detail-panel.tsx:406
+#: src/features/objects/components/object-detail-panel.tsx:378
 msgid "Activity"
 msgstr "Aiki"
 
@@ -188,7 +192,7 @@ msgstr "Ƙara sabon asusu"
 msgid "Add option"
 msgstr "Ƙara zaɓi"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:520
+#: src/routes/_authenticated/$projectId_.settings.tsx:720
 msgid "Add rule"
 msgstr "Ƙara doka"
 
@@ -244,16 +248,20 @@ msgstr "Ba da damar tsara ta"
 msgid "An error occurred"
 msgstr "An samu kuskure"
 
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:241
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:247
 msgid "An unexpected error occurred"
 msgstr "An samu kuskuren da ba a zata ba"
+
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:233
+msgid "Another change was made at the same time. Please refresh to see the latest version."
+msgstr ""
 
 #. placeholder {0}: deleteTarget?.name
 #: src/features/objects/components/object-attachments.tsx:228
 msgid "Are you sure you want to delete \"{0}\"?"
 msgstr "Ka tabbata kana son goge \"{0}\"?"
 
-#: src/features/objects/components/object-detail-panel.tsx:656
+#: src/features/objects/components/object-detail-panel.tsx:618
 msgid "Are you sure you want to delete \"{title}\"? This action cannot be undone."
 msgstr "Ka tabbata kana son goge \"{title}\"? Ba za a iya juya wannan aiki ba."
 
@@ -314,11 +322,11 @@ msgstr "Komawa"
 msgid "Back to home"
 msgstr "Komawa gida"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:173
-#: src/routes/_authenticated/$projectId_.settings.tsx:196
-#: src/routes/_authenticated/$projectId_.settings.tsx:228
-#: src/routes/_authenticated/$projectId/design.tsx:133
-#: src/routes/_authenticated/$projectId/design.tsx:158
+#: src/routes/_authenticated/$projectId_.settings.tsx:185
+#: src/routes/_authenticated/$projectId_.settings.tsx:208
+#: src/routes/_authenticated/$projectId_.settings.tsx:240
+#: src/routes/_authenticated/$projectId/design.tsx:134
+#: src/routes/_authenticated/$projectId/design.tsx:159
 msgid "Back to project"
 msgstr "Komawa ga project"
 
@@ -349,7 +357,7 @@ msgstr "Ƙara sha'awa"
 msgid "Border colour"
 msgstr "Launin kan iyaka"
 
-#: src/routes/_authenticated/$projectId/design.tsx:299
+#: src/routes/_authenticated/$projectId/design.tsx:300
 msgid "Built-in templates"
 msgstr "Templates na cikin gida"
 
@@ -370,7 +378,8 @@ msgstr "Zai iya zama ɗan na"
 #: src/features/editor/components/option-dialog.tsx:146
 #: src/features/objects/components/comment-thread.tsx:175
 #: src/features/projects/components/create-project-dialog.tsx:219
-#: src/routes/_authenticated/$projectId/design.tsx:343
+#: src/routes/_authenticated/$projectId_.settings.tsx:573
+#: src/routes/_authenticated/$projectId/design.tsx:344
 #: src/routes/_authenticated/$projectId/index.tsx:945
 msgid "Cancel"
 msgstr "Soke"
@@ -384,12 +393,12 @@ msgstr "Soke amsa"
 msgid "Cannot merge automatically"
 msgstr "Ba za a iya haɗawa kai tsaye ba"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:144
+#: ../../../lib/web/src/components/notification-category-button.tsx:143
 msgid "Category for this notification"
 msgstr "Rukuni don wannan sanarwa"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:125
-#: ../../../lib/web/src/components/notification-category-button.tsx:136
+#: ../../../lib/web/src/components/notification-category-button.tsx:124
+#: ../../../lib/web/src/components/notification-category-button.tsx:135
 msgid "Change notification category"
 msgstr "Sauya rukunin sanarwa"
 
@@ -523,12 +532,12 @@ msgstr "Mai dadi"
 msgid "Coming Soon!"
 msgstr "Yana zuwa nan ba da daɗewa ba!"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:409
+#: src/routes/_authenticated/$projectId_.settings.tsx:609
 msgid "Comment and view"
 msgstr "Yi sharhi da kallo"
 
 #. placeholder {0}: data.comment_count || 0
-#: src/features/objects/components/object-detail-panel.tsx:392
+#: src/features/objects/components/object-detail-panel.tsx:364
 msgid "Comments ({0})"
 msgstr "Sharhi ({0})"
 
@@ -570,7 +579,7 @@ msgstr "Ci gaba"
 msgid "Continue with {label}"
 msgstr "Ci gaba da {label}"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:514
+#: src/routes/_authenticated/$projectId_.settings.tsx:714
 msgid "Control who can view and interact with this project"
 msgstr "Sarrafa wanda zai iya kallo da yin amfani da wannan project"
 
@@ -578,7 +587,7 @@ msgstr "Sarrafa wanda zai iya kallo da yin amfani da wannan project"
 msgid "Copy"
 msgstr "Kwafi"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:300
+#: src/routes/_authenticated/$projectId_.settings.tsx:364
 msgid "Core information about this project"
 msgstr "Tsakiyar bayani game da wannan project"
 
@@ -627,7 +636,7 @@ msgstr "Ƙirƙira sabon abu"
 msgid "Create project"
 msgstr "Ƙirƙira project"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:408
+#: src/routes/_authenticated/$projectId_.settings.tsx:608
 msgid "Create, edit, comment, and view"
 msgstr "Ƙirƙira, gyara, sharhi, da kallo"
 
@@ -662,6 +671,21 @@ msgstr "Duhu"
 msgid "Dark mode"
 msgstr "Dark mode"
 
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:232
+msgid "Data conflict"
+msgstr ""
+
+#. placeholder {0}: response.data?.objects ?? 0
+#. placeholder {1}: response.data?.comments ?? 0
+#. placeholder {2}: response.data?.links ?? 0
+#: src/routes/_authenticated/$projectId_.settings.tsx:349
+msgid "Data imported ({0} objects, {1} comments, {2} links)"
+msgstr ""
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:432
+msgid "Data management"
+msgstr ""
+
 #: src/features/editor/components/add-dialogs.tsx:137
 msgid "Date"
 msgstr "Kwanan wata"
@@ -687,9 +711,9 @@ msgstr "Default sort"
 #: src/features/objects/components/object-attachments.tsx:182
 #: src/features/objects/components/object-attachments.tsx:187
 #: src/features/objects/components/object-attachments.tsx:229
-#: src/features/objects/components/object-detail-panel.tsx:657
+#: src/features/objects/components/object-detail-panel.tsx:619
 #: src/features/requests/components/request-panel.tsx:132
-#: src/routes/_authenticated/$projectId_.settings.tsx:361
+#: src/routes/_authenticated/$projectId_.settings.tsx:425
 msgid "Delete"
 msgstr "Goge"
 
@@ -713,9 +737,9 @@ msgstr "Goge sharhi"
 msgid "Delete field"
 msgstr "Goge fili"
 
-#: src/features/objects/components/object-detail-panel.tsx:466
-#: src/features/objects/components/object-detail-panel.tsx:471
-#: src/features/objects/components/object-detail-panel.tsx:655
+#: src/features/objects/components/object-detail-panel.tsx:437
+#: src/features/objects/components/object-detail-panel.tsx:442
+#: src/features/objects/components/object-detail-panel.tsx:617
 msgid "Delete item"
 msgstr "Goge abu"
 
@@ -739,12 +763,12 @@ msgstr "Goge zaɓi"
 msgid "Delete option {0}"
 msgstr "Goge zaɓi {0}"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:351
-#: src/routes/_authenticated/$projectId_.settings.tsx:372
+#: src/routes/_authenticated/$projectId_.settings.tsx:415
+#: src/routes/_authenticated/$projectId_.settings.tsx:455
 msgid "Delete project"
 msgstr "Goge project"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:370
+#: src/routes/_authenticated/$projectId_.settings.tsx:453
 msgid "Delete project?"
 msgstr "Goge project?"
 
@@ -756,7 +780,7 @@ msgstr "Goge view"
 msgid "Delete your account on the old server"
 msgstr "Goge asusu ka akan tsohon uwar garken"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:131
+#: src/routes/_authenticated/$projectId_.settings.tsx:143
 msgid "Deleting project..."
 msgstr "Ana share aiki..."
 
@@ -769,21 +793,21 @@ msgid "Descending"
 msgstr "Sauka ƙasa"
 
 #: src/features/requests/components/request-panel.tsx:287
-#: src/routes/_authenticated/$projectId_.settings.tsx:313
+#: src/routes/_authenticated/$projectId_.settings.tsx:377
 msgid "Description"
 msgstr "Bayani"
 
 #: src/routes/_authenticated/$projectId/design.tsx:63
-#: src/routes/_authenticated/$projectId/design.tsx:131
+#: src/routes/_authenticated/$projectId/design.tsx:132
 #: src/routes/_authenticated/$projectId/index.tsx:902
 msgid "Design"
 msgstr "Zane"
 
-#: src/routes/_authenticated/$projectId/design.tsx:108
+#: src/routes/_authenticated/$projectId/design.tsx:109
 msgid "Design imported"
 msgstr "An shigo da zane"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:407
+#: src/routes/_authenticated/$projectId_.settings.tsx:607
 msgid "Design, create, edit, comment, and view"
 msgstr "Tsara, ƙirƙira, gyara, sharhi, da kallo"
 
@@ -831,7 +855,7 @@ msgstr "Yana nuna sidebar na wayar hannu."
 #: src/features/editor/components/edit-dialogs.tsx:532
 #: src/features/editor/components/edit-dialogs.tsx:922
 #: src/features/editor/components/edit-dialogs.tsx:1228
-#: src/features/objects/components/object-detail-panel.tsx:480
+#: src/features/objects/components/object-detail-panel.tsx:451
 msgid "Done"
 msgstr "An gama"
 
@@ -844,7 +868,8 @@ msgstr "Danna sau biyu kan column don ƙara abun ciki"
 msgid "Download"
 msgstr "Sauke"
 
-#: src/routes/_authenticated/$projectId/design.tsx:225
+#: src/routes/_authenticated/$projectId_.settings.tsx:497
+#: src/routes/_authenticated/$projectId/design.tsx:226
 msgid "Download backup first"
 msgstr "Sauke backup tukuna"
 
@@ -919,11 +944,11 @@ msgstr "Shigar da lambar daga imel ɗinka"
 msgid "Enter your authenticator code"
 msgstr "Shigar da lambar mai tantancewarka"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:328
+#: src/routes/_authenticated/$projectId_.settings.tsx:392
 msgid "Entity ID"
 msgstr "Entity ID"
 
-#: src/features/objects/components/object-detail-panel.tsx:343
+#: src/features/objects/components/object-detail-panel.tsx:315
 msgid "Error"
 msgstr "Kuskure"
 
@@ -938,9 +963,17 @@ msgstr "Faɗaɗa"
 msgid "Expand sidebar"
 msgstr "Faɗaɗa sidebar"
 
-#: src/routes/_authenticated/$projectId/design.tsx:173
+#: src/routes/_authenticated/$projectId_.settings.tsx:438
+msgid "Export data"
+msgstr ""
+
+#: src/routes/_authenticated/$projectId/design.tsx:174
 msgid "Export design"
 msgstr "Fitar da design"
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:433
+msgid "Export or import the raw data content in this project."
+msgstr ""
 
 #: ../../../lib/web/src/lib/preference-utils.ts:136
 msgid "Extra large"
@@ -990,7 +1023,7 @@ msgstr "An gaza share comment"
 msgid "Failed to delete link"
 msgstr "An gaza share link"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:133
+#: src/routes/_authenticated/$projectId_.settings.tsx:145
 msgid "Failed to delete project"
 msgstr "An gaza share project"
 
@@ -998,15 +1031,23 @@ msgstr "An gaza share project"
 msgid "Failed to delete view"
 msgstr "An gaza share view"
 
-#: src/routes/_authenticated/$projectId/design.tsx:92
+#: src/routes/_authenticated/$projectId_.settings.tsx:335
+msgid "Failed to export data"
+msgstr ""
+
+#: src/routes/_authenticated/$projectId/design.tsx:93
 msgid "Failed to export design"
 msgstr "An gaza fitar da design"
 
-#: src/routes/_authenticated/$projectId/design.tsx:113
+#: src/routes/_authenticated/$projectId_.settings.tsx:354
+msgid "Failed to import data"
+msgstr ""
+
+#: src/routes/_authenticated/$projectId/design.tsx:114
 msgid "Failed to import design"
 msgstr "An gaza shigar da design"
 
-#: src/features/objects/components/object-detail-panel.tsx:344
+#: src/features/objects/components/object-detail-panel.tsx:316
 msgid "Failed to load item"
 msgstr "An gaza loading abu"
 
@@ -1015,7 +1056,7 @@ msgstr "An gaza loading abu"
 msgid "Failed to load project"
 msgstr "An gaza loading project"
 
-#: src/routes/_authenticated/$projectId/design.tsx:137
+#: src/routes/_authenticated/$projectId/design.tsx:138
 msgid "Failed to load project design"
 msgstr "An gaza loading project design"
 
@@ -1031,11 +1072,12 @@ msgstr "An gaza merge"
 msgid "Failed to post comment"
 msgstr "An gaza post comment"
 
-#: src/routes/_authenticated/$projectId/design.tsx:281
+#: src/routes/_authenticated/$projectId_.settings.tsx:535
+#: src/routes/_authenticated/$projectId/design.tsx:282
 msgid "Failed to read file"
 msgstr "An gaza karanta fayil"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:489
+#: src/routes/_authenticated/$projectId_.settings.tsx:689
 msgid "Failed to remove access"
 msgstr "An gaza cire izini"
 
@@ -1055,7 +1097,7 @@ msgstr "An gaza sake tsara views"
 msgid "Failed to send verification code"
 msgstr "An gaza aika verification code"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:478
+#: src/routes/_authenticated/$projectId_.settings.tsx:678
 msgid "Failed to set access level"
 msgstr "An gaza saita matakin shiga"
 
@@ -1070,11 +1112,11 @@ msgstr "An gaza subscribe"
 msgid "Failed to unsubscribe"
 msgstr "An gaza unsubscribe"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:503
+#: src/routes/_authenticated/$projectId_.settings.tsx:703
 msgid "Failed to update access level"
 msgstr "An gaza sabunta matakin shiga"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:112
+#: ../../../lib/web/src/components/notification-category-button.tsx:111
 msgid "Failed to update category"
 msgstr "An gaza sabunta category"
 
@@ -1086,7 +1128,7 @@ msgstr "An gaza sabunta comment"
 msgid "Failed to update field"
 msgstr "An gaza sabunta field"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:156
+#: src/routes/_authenticated/$projectId_.settings.tsx:168
 msgid "Failed to update project"
 msgstr "An gaza sabunta project"
 
@@ -1109,7 +1151,7 @@ msgstr "Fayiloli"
 msgid "Find projects"
 msgstr "Nemo projects"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:333
+#: src/routes/_authenticated/$projectId_.settings.tsx:397
 msgid "Fingerprint"
 msgstr "Sawun yatsa"
 
@@ -1137,7 +1179,7 @@ msgstr "Jumma'a"
 msgid "From"
 msgstr "Daga"
 
-#: src/routes/_authenticated/$projectId/design.tsx:322
+#: src/routes/_authenticated/$projectId/design.tsx:323
 msgid "From file"
 msgstr "Daga fayil"
 
@@ -1207,7 +1249,7 @@ msgstr "Gida"
 msgid "Hot"
 msgstr "Mai zafi"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:299
+#: src/routes/_authenticated/$projectId_.settings.tsx:363
 msgid "Identity"
 msgstr "Asali"
 
@@ -1215,10 +1257,28 @@ msgstr "Asali"
 msgid "Imperial"
 msgstr "Imperial"
 
-#: src/routes/_authenticated/$projectId/design.tsx:177
-#: src/routes/_authenticated/$projectId/design.tsx:293
+#: src/routes/_authenticated/$projectId_.settings.tsx:548
+msgid "Import a data configuration"
+msgstr ""
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:443
+#: src/routes/_authenticated/$projectId_.settings.tsx:489
+#: src/routes/_authenticated/$projectId_.settings.tsx:547
+msgid "Import data"
+msgstr ""
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:475
+msgid "Import data?"
+msgstr ""
+
+#: src/routes/_authenticated/$projectId/design.tsx:178
+#: src/routes/_authenticated/$projectId/design.tsx:294
 msgid "Import design"
 msgstr "Shigar da design"
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:486
+msgid "Importing..."
+msgstr ""
 
 #: ../../../lib/web/src/components/config-drawer.tsx:252
 msgid "Inset"
@@ -1232,7 +1292,8 @@ msgstr "Interests"
 msgid "Invalid date"
 msgstr "Kwanan wata mara inganci"
 
-#: src/routes/_authenticated/$projectId/design.tsx:277
+#: src/routes/_authenticated/$projectId_.settings.tsx:531
+#: src/routes/_authenticated/$projectId/design.tsx:278
 msgid "Invalid JSON file"
 msgstr "Fayil ɗin JSON mara inganci"
 
@@ -1240,7 +1301,7 @@ msgstr "Fayil ɗin JSON mara inganci"
 msgid "Invalid verification code"
 msgstr "Verification code mara inganci"
 
-#: src/features/objects/components/object-detail-panel.tsx:424
+#: src/features/objects/components/object-detail-panel.tsx:395
 msgid "Item details"
 msgstr "Bayanan abu"
 
@@ -1292,11 +1353,11 @@ msgstr "Ana loda abun ciki…"
 msgid "Loading diff..."
 msgstr "Ana saukar da diff..."
 
-#: src/features/objects/components/object-detail-panel.tsx:324
+#: src/features/objects/components/object-detail-panel.tsx:296
 msgid "Loading item"
 msgstr "Ana saukar da abu"
 
-#: src/features/objects/components/object-detail-panel.tsx:325
+#: src/features/objects/components/object-detail-panel.tsx:297
 msgid "Loading item details"
 msgstr "Ana saukar da bayanan abu"
 
@@ -1369,7 +1430,7 @@ msgstr "Haɗin commit"
 msgid "Merge requests"
 msgstr "Buƙatun merge"
 
-#: src/features/objects/components/object-detail-panel.tsx:399
+#: src/features/objects/components/object-detail-panel.tsx:371
 msgid "Merge requests ({requestCount})"
 msgstr "Bukatun haɗawa ({requestCount})"
 
@@ -1412,7 +1473,7 @@ msgstr "Aikina"
 #: src/features/editor/components/edit-dialogs.tsx:1065
 #: src/features/editor/components/option-dialog.tsx:112
 #: src/features/projects/components/create-project-dialog.tsx:159
-#: src/routes/_authenticated/$projectId_.settings.tsx:304
+#: src/routes/_authenticated/$projectId_.settings.tsx:368
 msgid "Name"
 msgstr "Suna"
 
@@ -1420,7 +1481,8 @@ msgstr "Suna"
 msgid "Name is required"
 msgstr "Ana buƙatar suna"
 
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:288
+#: ../../../lib/web/src/features/errors/general-error.tsx:53
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:294
 msgid "Network error"
 msgstr "Kuskuren hanyar sadarwa"
 
@@ -1448,7 +1510,7 @@ msgstr "Hoton na gaba"
 msgid "No {parentClassNames} to add to"
 msgstr "Babu {parentClassNames} don ƙarawa"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:411
+#: src/routes/_authenticated/$projectId_.settings.tsx:611
 msgid "No access"
 msgstr "Babu damar shiga"
 
@@ -1540,7 +1602,7 @@ msgstr "Babu hali"
 msgid "No time zone found."
 msgstr "Ba a sami time zone ba."
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:148
+#: ../../../lib/web/src/components/notification-category-button.tsx:147
 msgid "No topic record yet — try again after the next notification."
 msgstr "Babu rikodin topic tukuna — sake gwadawa bayan sanarwa ta gaba."
 
@@ -1566,9 +1628,9 @@ msgstr "Babu views"
 #: src/features/editor/components/edit-dialogs.tsx:782
 #: src/features/objects/components/create-object-dialog.tsx:389
 #: src/features/objects/components/create-object-dialog.tsx:396
-#: src/features/objects/components/object-detail-panel.tsx:548
-#: src/features/objects/components/object-detail-panel.tsx:561
-#: src/features/objects/components/object-detail-panel.tsx:566
+#: src/features/objects/components/object-detail-panel.tsx:512
+#: src/features/objects/components/object-detail-panel.tsx:525
+#: src/features/objects/components/object-detail-panel.tsx:530
 msgid "None"
 msgstr "Babu"
 
@@ -1579,6 +1641,10 @@ msgstr "Na al'ada"
 #: src/features/requests/components/request-panel.tsx:231
 msgid "Not configured"
 msgstr "Ba a saita ba"
+
+#: ../../../lib/web/src/features/errors/general-error.tsx:67
+msgid "Not found"
+msgstr ""
 
 #: ../../../lib/web/src/components/ui/editable-field-row.tsx:146
 msgid "Not set"
@@ -1636,7 +1702,7 @@ msgstr "Buɗe ayyukan class"
 msgid "Open column actions"
 msgstr "Buɗe ayyukan ginshiƙi"
 
-#: src/routes/_authenticated/$projectId/design.tsx:165
+#: src/routes/_authenticated/$projectId/design.tsx:166
 msgid "Open design actions"
 msgstr "Buɗe ayyukan design"
 
@@ -1697,7 +1763,7 @@ msgid "Owner"
 msgstr "Mai shi"
 
 #: src/features/objects/components/create-object-dialog.tsx:381
-#: src/features/objects/components/object-detail-panel.tsx:544
+#: src/features/objects/components/object-detail-panel.tsx:508
 msgid "Parent"
 msgstr "Iyaye"
 
@@ -1717,7 +1783,7 @@ msgstr "Makullan shiga"
 msgid "Pattern (regex)"
 msgstr "Tsari (regex)"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:352
+#: src/routes/_authenticated/$projectId_.settings.tsx:416
 msgid "Permanently delete this project and all its content."
 msgstr "Share wannan project da duk abin da ke cikinsa har abada."
 
@@ -1726,7 +1792,8 @@ msgstr "Share wannan project da duk abin da ke cikinsa har abada."
 msgid "Please add one or more classes to the project design."
 msgstr "Da fatan za ka ƙara class ɗaya ko fiye zuwa design ɗin project."
 
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:289
+#: ../../../lib/web/src/features/errors/general-error.tsx:54
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:295
 msgid "Please check your internet connection and try again."
 msgstr "Da fatan a duba haɗin intanet ɗinka sannan a sake gwadawa."
 
@@ -1734,8 +1801,16 @@ msgstr "Da fatan a duba haɗin intanet ɗinka sannan a sake gwadawa."
 msgid "Please select a template"
 msgstr "Da fatan zaɓi template"
 
+#: ../../../lib/web/src/features/errors/general-error.tsx:83
+msgid "Please try again."
+msgstr ""
+
+#: ../../../lib/web/src/features/errors/general-error.tsx:75
+msgid "Please wait a moment and try again."
+msgstr ""
+
 #: src/features/projects/components/create-project-dialog.tsx:181
-#: src/routes/_authenticated/$projectId_.settings.tsx:321
+#: src/routes/_authenticated/$projectId_.settings.tsx:385
 msgid "Prefix"
 msgstr "Prefix"
 
@@ -1768,23 +1843,23 @@ msgstr "Ayyukan aiki"
 msgid "Project created"
 msgstr "An ƙirƙiri project"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:132
+#: src/routes/_authenticated/$projectId_.settings.tsx:144
 msgid "Project deleted"
 msgstr "An share project"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:211
+#: src/routes/_authenticated/$projectId_.settings.tsx:223
 msgid "Project not found"
 msgstr "Ba a sami project ba"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:122
+#: src/routes/_authenticated/$projectId_.settings.tsx:134
 msgid "Project settings"
 msgstr "Saitunan aikin"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:211
+#: src/routes/_authenticated/$projectId_.settings.tsx:223
 msgid "Project unavailable"
 msgstr "Project ba ya samuwa"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:155
+#: src/routes/_authenticated/$projectId_.settings.tsx:167
 msgid "Project updated"
 msgstr "An sabunta project"
 
@@ -1795,7 +1870,7 @@ msgstr "An sabunta project"
 msgid "Projects"
 msgstr "Projects"
 
-#: src/features/objects/components/object-detail-panel.tsx:387
+#: src/features/objects/components/object-detail-panel.tsx:359
 msgid "Properties"
 msgstr "Halaye"
 
@@ -1823,8 +1898,8 @@ msgstr "A shirye don haɗawa"
 msgid "Rebase and merge"
 msgstr "Rebase da haɗawa"
 
-#: ../../../lib/web/src/components/search-entity-dialog.tsx:219
-#: ../../../lib/web/src/components/search-entity-page.tsx:194
+#: ../../../lib/web/src/components/search-entity-dialog.tsx:216
+#: ../../../lib/web/src/components/search-entity-page.tsx:191
 msgid "Recommended"
 msgstr "An ba da shawara"
 
@@ -1895,7 +1970,7 @@ msgstr "Cire abu"
 msgid "Remove link"
 msgstr "Cire mahaɗi"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:487
+#: src/routes/_authenticated/$projectId_.settings.tsx:687
 msgid "Removing access..."
 msgstr "Ana cire damar shiga..."
 
@@ -1912,15 +1987,15 @@ msgstr "Sake suna column"
 msgid "Rename this board column"
 msgstr "Sake suna wannan column na board"
 
-#: src/routes/_authenticated/$projectId/design.tsx:217
+#: src/routes/_authenticated/$projectId/design.tsx:218
 msgid "Replace design"
 msgstr "Maye gurbin ƙira"
 
-#: src/routes/_authenticated/$projectId/design.tsx:201
+#: src/routes/_authenticated/$projectId/design.tsx:202
 msgid "Replace design?"
 msgstr "A maye gurbin design?"
 
-#: src/routes/_authenticated/$projectId/design.tsx:214
+#: src/routes/_authenticated/$projectId/design.tsx:215
 msgid "Replacing..."
 msgstr "Ana maye gurbin..."
 
@@ -1991,7 +2066,7 @@ msgstr "Asabar"
 msgid "Save"
 msgstr "Adana"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:154
+#: src/routes/_authenticated/$projectId_.settings.tsx:166
 msgid "Saving..."
 msgstr "Ana adanawa..."
 
@@ -2041,8 +2116,8 @@ msgstr "Bincika, kalla, kuma jera wannan view."
 msgid "Search..."
 msgstr "Bincika..."
 
-#: ../../../lib/web/src/components/search-entity-dialog.tsx:177
-#: ../../../lib/web/src/components/search-entity-page.tsx:152
+#: ../../../lib/web/src/components/search-entity-dialog.tsx:174
+#: ../../../lib/web/src/components/search-entity-page.tsx:149
 #: ../../../lib/web/src/features/access/access-dialog.tsx:202
 msgid "Searching..."
 msgstr "Ana bincike..."
@@ -2120,12 +2195,12 @@ msgstr "Aika email"
 msgid "Serif"
 msgstr "Serif"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:342
+#: src/routes/_authenticated/$projectId_.settings.tsx:406
 msgid "Server"
 msgstr "Server"
 
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:245
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:271
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:251
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:277
 msgid "Server error"
 msgstr "Kuskuren saba"
 
@@ -2135,14 +2210,18 @@ msgid "Server rules"
 msgstr "Ƙa'idojin sabar"
 
 #: ../../../lib/web/src/lib/api-response-interceptors.ts:209
-msgid "Session expired"
-msgstr "Session ya ƙare"
+#~ msgid "Session expired"
+#~ msgstr "Session ya ƙare"
+
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:209
+msgid "Session expired. Please log in again."
+msgstr ""
 
 #: ../../../lib/web/src/components/travelling-picker.tsx:147
 msgid "Set origin and destination"
 msgstr "Saita tushe da makoma"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:476
+#: src/routes/_authenticated/$projectId_.settings.tsx:676
 msgid "Setting access..."
 msgstr "Ana saita damar shiga..."
 
@@ -2151,9 +2230,9 @@ msgstr "Ana saita damar shiga..."
 #: ../../../lib/web/src/components/layout/nav-user.tsx:84
 #: ../../../lib/web/src/components/layout/nav-user.tsx:148
 #: ../../../lib/web/src/components/layout/nav-user.tsx:198
-#: src/routes/_authenticated/$projectId_.settings.tsx:76
-#: src/routes/_authenticated/$projectId_.settings.tsx:171
-#: src/routes/_authenticated/$projectId_.settings.tsx:194
+#: src/routes/_authenticated/$projectId_.settings.tsx:88
+#: src/routes/_authenticated/$projectId_.settings.tsx:183
+#: src/routes/_authenticated/$projectId_.settings.tsx:206
 #: src/routes/_authenticated/$projectId/index.tsx:912
 msgid "Settings"
 msgstr "Saitunan"
@@ -2235,8 +2314,8 @@ msgstr "Fara tattaunawa ta hanyar ƙara sharhi na farko."
 msgid "Stay tuned though!"
 msgstr "Ku kasance da mu!"
 
-#: src/features/objects/components/object-detail-panel.tsx:447
-#: src/features/objects/components/object-detail-panel.tsx:456
+#: src/features/objects/components/object-detail-panel.tsx:418
+#: src/features/objects/components/object-detail-panel.tsx:427
 msgid "Stop watching"
 msgstr "Daina kallo"
 
@@ -2319,6 +2398,10 @@ msgstr "Rubutu"
 msgid "That code is incorrect or has expired."
 msgstr "Wannan lambar ba daidai ba ce ko kuma ta kare."
 
+#: ../../../lib/web/src/features/errors/general-error.tsx:68
+msgid "The requested content could not be found."
+msgstr ""
+
 #: ../../../lib/web/src/components/config-drawer.tsx:194
 msgid "Theme"
 msgstr "Theme"
@@ -2336,19 +2419,24 @@ msgstr "An haɗa wannan buƙatar haɗawa cikin {0}."
 msgid "This merge request is a draft and cannot be merged."
 msgstr "Wannan merge request draft ne kuma ba a iya haɗa shi."
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:214
+#: src/routes/_authenticated/$projectId_.settings.tsx:226
 msgid "This project could not be loaded right now."
 msgstr "Ba a iya loda wannan project yanzu ba."
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:214
+#: src/routes/_authenticated/$projectId_.settings.tsx:226
 msgid "This project may have been deleted or you don't have access to it."
 msgstr "Wataƙila an share wannan project ko ba ka da damar shiga."
+
+#. placeholder {0}: pendingDataImport?.label
+#: src/routes/_authenticated/$projectId_.settings.tsx:477
+msgid "This will import the data from <0>{0}</0>. Objects will be appended to the existing records. Ensure the current design matches the classes and fields referenced in the file."
+msgstr ""
 
 #: src/features/requests/components/merge-button.tsx:105
 msgid "This will merge \"{source}\" into \"{target}\". This action cannot be undone."
 msgstr "Wannan zai haɗa \"{source}\" cikin \"{target}\". Ba za a iya soke wannan aikin ba."
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:371
+#: src/routes/_authenticated/$projectId_.settings.tsx:454
 msgid "This will permanently delete \"{projectName}\" and all its objects, comments, and attachments. This action cannot be undone."
 msgstr "Wannan zai share \"{projectName}\" har abada da duk abubuwansa, sharhi, da abubuwan haɗe. Ba a iya soke wannan aiki."
 
@@ -2358,7 +2446,7 @@ msgid "This will remove \"{0}\" from your sidebar and stop updates for this proj
 msgstr "Wannan zai cire \"{0}\" daga sidebar ɗinka kuma ya dakatar da sabuntawa don wannan project."
 
 #. placeholder {0}: pendingImport?.label
-#: src/routes/_authenticated/$projectId/design.tsx:203
+#: src/routes/_authenticated/$projectId/design.tsx:204
 msgid "This will replace the current design with <0>{0}</0>. All existing classes, fields, options, and views will be deleted. Existing objects will not be deleted but may no longer appear in views."
 msgstr "Wannan zai maye gurbin ƙirar yanzu da <0>{0}</0>. Za a goge dukkan azuzuwan, filaye, zaɓuɓɓuka, da ra'ayoyi da ke akwai. Ba za a goge abubuwan da suke akwai ba amma wataƙila ba za su ƙara bayyana a cikin ra'ayoyi ba."
 
@@ -2415,6 +2503,10 @@ msgstr "Canza zaɓuɓɓukan ra'ayi"
 msgid "Toggle watched filter"
 msgstr "Toggle filter na watched"
 
+#: ../../../lib/web/src/features/errors/general-error.tsx:74
+msgid "Too many requests"
+msgstr ""
+
 #: ../../../lib/web/src/components/ui/sort-selector.tsx:45
 msgid "Top"
 msgstr "Sama"
@@ -2427,13 +2519,13 @@ msgstr "Matakin sama"
 msgid "Travelling"
 msgstr "Tafiya"
 
-#: ../../../lib/web/src/components/search-entity-dialog.tsx:193
-#: ../../../lib/web/src/components/search-entity-page.tsx:168
+#: ../../../lib/web/src/components/search-entity-dialog.tsx:190
+#: ../../../lib/web/src/components/search-entity-page.tsx:165
 msgid "Try adjusting your search terms"
 msgstr "Gwada gyara kalmomin bincike"
 
-#: ../../../lib/web/src/features/errors/general-error.tsx:128
-#: ../../../lib/web/src/features/errors/general-error.tsx:168
+#: ../../../lib/web/src/features/errors/general-error.tsx:140
+#: ../../../lib/web/src/features/errors/general-error.tsx:180
 #: ../../../lib/web/src/features/errors/maintenance-error.tsx:19
 msgid "Try again"
 msgstr "Sake gwadawa"
@@ -2459,7 +2551,7 @@ msgstr "Buga don bincika masu amfani"
 msgid "Type to search..."
 msgstr "Buga don bincika..."
 
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:267
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:273
 msgid "Unable to connect to remote server"
 msgstr "An kasa haɗawa da saba mai nesa"
 
@@ -2468,7 +2560,7 @@ msgstr "An kasa haɗawa da saba mai nesa"
 msgid "Unable to redirect to login. Please try again."
 msgstr "Ba a iya tura zuwa login. Da fatan sake gwadawa."
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:156
+#: ../../../lib/web/src/components/notification-category-button.tsx:155
 msgid "Unassigned"
 msgstr "Ba a sanya wa kowa"
 
@@ -2515,7 +2607,7 @@ msgstr "Ba a tabbatar ba"
 msgid "Updated"
 msgstr "An sabunta"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:501
+#: src/routes/_authenticated/$projectId_.settings.tsx:701
 msgid "Updating access..."
 msgstr "Ana sabunta damar shiga..."
 
@@ -2524,7 +2616,8 @@ msgstr "Ana sabunta damar shiga..."
 msgid "Upload"
 msgstr "Loda"
 
-#: src/routes/_authenticated/$projectId/design.tsx:336
+#: src/routes/_authenticated/$projectId_.settings.tsx:566
+#: src/routes/_authenticated/$projectId/design.tsx:337
 msgid "Upload .json file"
 msgstr "Loda fayil ɗin .json"
 
@@ -2582,7 +2675,7 @@ msgstr "Kalli duka"
 msgid "View all notifications"
 msgstr "Kalli duk sanarwa"
 
-#: src/features/objects/components/object-detail-panel.tsx:425
+#: src/features/objects/components/object-detail-panel.tsx:396
 msgid "View and edit item details"
 msgstr "Kalla kuma gyara cikakkun bayanan abu"
 
@@ -2590,7 +2683,7 @@ msgstr "Kalla kuma gyara cikakkun bayanan abu"
 msgid "View controls"
 msgstr "View controls"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:410
+#: src/routes/_authenticated/$projectId_.settings.tsx:610
 msgid "View only"
 msgstr "Kalla kawai"
 
@@ -2602,8 +2695,8 @@ msgstr "Zaɓin view"
 msgid "Views"
 msgstr "Views"
 
-#: src/features/objects/components/object-detail-panel.tsx:447
-#: src/features/objects/components/object-detail-panel.tsx:456
+#: src/features/objects/components/object-detail-panel.tsx:418
+#: src/features/objects/components/object-detail-panel.tsx:427
 msgid "Watch"
 msgstr "Kalle"
 
@@ -2626,6 +2719,10 @@ msgstr "Shafin yana cikin kulawa!"
 #: ../../../lib/web/src/lib/preference-utils.ts:61
 msgid "Wednesday"
 msgstr "Laraba"
+
+#: ../../../lib/web/src/features/errors/general-error.tsx:61
+msgid "You do not have access to this section."
+msgstr ""
 
 #: src/routes/_authenticated/$projectId/index.tsx:102
 msgid "You don't have access to this project."

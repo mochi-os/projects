@@ -23,7 +23,7 @@ msgstr "[未设置]"
 
 #. placeholder {0}: project.project.name
 #: src/routes/_authenticated/$projectId/design.tsx:63
-#: src/routes/_authenticated/$projectId/design.tsx:156
+#: src/routes/_authenticated/$projectId/design.tsx:157
 msgid "{0} - Design"
 msgstr "{0} - 设计"
 
@@ -39,8 +39,8 @@ msgid "{0} files changed"
 msgstr "{0} 个文件已更改"
 
 #. placeholder {0}: project.project.name
-#: src/routes/_authenticated/$projectId_.settings.tsx:122
-#: src/routes/_authenticated/$projectId_.settings.tsx:226
+#: src/routes/_authenticated/$projectId_.settings.tsx:134
+#: src/routes/_authenticated/$projectId_.settings.tsx:238
 msgid "{0} settings"
 msgstr "{0} 设置"
 
@@ -69,9 +69,13 @@ msgstr "24 小时"
 msgid "Absolute (date and time)"
 msgstr "绝对(日期和时间)"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:77
+#: src/routes/_authenticated/$projectId_.settings.tsx:89
 msgid "Access"
 msgstr "访问"
+
+#: ../../../lib/web/src/features/errors/general-error.tsx:60
+msgid "Access denied"
+msgstr ""
 
 #: ../../../lib/web/src/features/errors/forbidden.tsx:16
 msgid "Access Forbidden"
@@ -81,19 +85,19 @@ msgstr "禁止访问"
 msgid "Access level"
 msgstr "访问级别"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:502
+#: src/routes/_authenticated/$projectId_.settings.tsx:702
 msgid "Access level updated"
 msgstr "访问级别已更新"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:513
+#: src/routes/_authenticated/$projectId_.settings.tsx:713
 msgid "Access Management"
 msgstr "访问管理"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:488
+#: src/routes/_authenticated/$projectId_.settings.tsx:688
 msgid "Access removed"
 msgstr "访问权限已移除"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:477
+#: src/routes/_authenticated/$projectId_.settings.tsx:677
 msgid "Access set for {subjectName}"
 msgstr "已为 {subjectName} 设置访问权限"
 
@@ -113,7 +117,7 @@ msgstr "账户类型"
 msgid "Account verified"
 msgstr "账户已验证"
 
-#: src/features/objects/components/object-detail-panel.tsx:406
+#: src/features/objects/components/object-detail-panel.tsx:378
 msgid "Activity"
 msgstr "动态"
 
@@ -188,7 +192,7 @@ msgstr "添加新账户"
 msgid "Add option"
 msgstr "添加选项"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:520
+#: src/routes/_authenticated/$projectId_.settings.tsx:720
 msgid "Add rule"
 msgstr "添加规则"
 
@@ -244,16 +248,20 @@ msgstr "允许排序方式"
 msgid "An error occurred"
 msgstr "发生错误"
 
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:241
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:247
 msgid "An unexpected error occurred"
 msgstr "发生意外错误"
+
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:233
+msgid "Another change was made at the same time. Please refresh to see the latest version."
+msgstr ""
 
 #. placeholder {0}: deleteTarget?.name
 #: src/features/objects/components/object-attachments.tsx:228
 msgid "Are you sure you want to delete \"{0}\"?"
 msgstr "确定要删除 \"{0}\" 吗?"
 
-#: src/features/objects/components/object-detail-panel.tsx:656
+#: src/features/objects/components/object-detail-panel.tsx:618
 msgid "Are you sure you want to delete \"{title}\"? This action cannot be undone."
 msgstr "确定要删除 \"{title}\" 吗?此操作无法撤销。"
 
@@ -314,11 +322,11 @@ msgstr "返回"
 msgid "Back to home"
 msgstr "返回首页"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:173
-#: src/routes/_authenticated/$projectId_.settings.tsx:196
-#: src/routes/_authenticated/$projectId_.settings.tsx:228
-#: src/routes/_authenticated/$projectId/design.tsx:133
-#: src/routes/_authenticated/$projectId/design.tsx:158
+#: src/routes/_authenticated/$projectId_.settings.tsx:185
+#: src/routes/_authenticated/$projectId_.settings.tsx:208
+#: src/routes/_authenticated/$projectId_.settings.tsx:240
+#: src/routes/_authenticated/$projectId/design.tsx:134
+#: src/routes/_authenticated/$projectId/design.tsx:159
 msgid "Back to project"
 msgstr "返回项目"
 
@@ -349,7 +357,7 @@ msgstr "提升兴趣"
 msgid "Border colour"
 msgstr "边框颜色"
 
-#: src/routes/_authenticated/$projectId/design.tsx:299
+#: src/routes/_authenticated/$projectId/design.tsx:300
 msgid "Built-in templates"
 msgstr "内置模板"
 
@@ -370,7 +378,8 @@ msgstr "可作为子项的父级"
 #: src/features/editor/components/option-dialog.tsx:146
 #: src/features/objects/components/comment-thread.tsx:175
 #: src/features/projects/components/create-project-dialog.tsx:219
-#: src/routes/_authenticated/$projectId/design.tsx:343
+#: src/routes/_authenticated/$projectId_.settings.tsx:573
+#: src/routes/_authenticated/$projectId/design.tsx:344
 #: src/routes/_authenticated/$projectId/index.tsx:945
 msgid "Cancel"
 msgstr "取消"
@@ -384,12 +393,12 @@ msgstr "取消回复"
 msgid "Cannot merge automatically"
 msgstr "无法自动合并"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:144
+#: ../../../lib/web/src/components/notification-category-button.tsx:143
 msgid "Category for this notification"
 msgstr "该通知的分类"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:125
-#: ../../../lib/web/src/components/notification-category-button.tsx:136
+#: ../../../lib/web/src/components/notification-category-button.tsx:124
+#: ../../../lib/web/src/components/notification-category-button.tsx:135
 msgid "Change notification category"
 msgstr "更改通知分类"
 
@@ -523,12 +532,12 @@ msgstr "舒适"
 msgid "Coming Soon!"
 msgstr "即将推出!"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:409
+#: src/routes/_authenticated/$projectId_.settings.tsx:609
 msgid "Comment and view"
 msgstr "评论和查看"
 
 #. placeholder {0}: data.comment_count || 0
-#: src/features/objects/components/object-detail-panel.tsx:392
+#: src/features/objects/components/object-detail-panel.tsx:364
 msgid "Comments ({0})"
 msgstr "评论 ({0})"
 
@@ -570,7 +579,7 @@ msgstr "继续"
 msgid "Continue with {label}"
 msgstr "使用 {label} 继续"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:514
+#: src/routes/_authenticated/$projectId_.settings.tsx:714
 msgid "Control who can view and interact with this project"
 msgstr "控制谁可以查看此项目并与之互动"
 
@@ -578,7 +587,7 @@ msgstr "控制谁可以查看此项目并与之互动"
 msgid "Copy"
 msgstr "复制"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:300
+#: src/routes/_authenticated/$projectId_.settings.tsx:364
 msgid "Core information about this project"
 msgstr "关于此项目的核心信息"
 
@@ -627,7 +636,7 @@ msgstr "创建新条目"
 msgid "Create project"
 msgstr "创建项目"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:408
+#: src/routes/_authenticated/$projectId_.settings.tsx:608
 msgid "Create, edit, comment, and view"
 msgstr "创建、编辑、评论和查看"
 
@@ -662,6 +671,21 @@ msgstr "深色"
 msgid "Dark mode"
 msgstr "深色模式"
 
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:232
+msgid "Data conflict"
+msgstr ""
+
+#. placeholder {0}: response.data?.objects ?? 0
+#. placeholder {1}: response.data?.comments ?? 0
+#. placeholder {2}: response.data?.links ?? 0
+#: src/routes/_authenticated/$projectId_.settings.tsx:349
+msgid "Data imported ({0} objects, {1} comments, {2} links)"
+msgstr ""
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:432
+msgid "Data management"
+msgstr ""
+
 #: src/features/editor/components/add-dialogs.tsx:137
 msgid "Date"
 msgstr "日期"
@@ -687,9 +711,9 @@ msgstr "默认排序"
 #: src/features/objects/components/object-attachments.tsx:182
 #: src/features/objects/components/object-attachments.tsx:187
 #: src/features/objects/components/object-attachments.tsx:229
-#: src/features/objects/components/object-detail-panel.tsx:657
+#: src/features/objects/components/object-detail-panel.tsx:619
 #: src/features/requests/components/request-panel.tsx:132
-#: src/routes/_authenticated/$projectId_.settings.tsx:361
+#: src/routes/_authenticated/$projectId_.settings.tsx:425
 msgid "Delete"
 msgstr "删除"
 
@@ -713,9 +737,9 @@ msgstr "删除评论"
 msgid "Delete field"
 msgstr "删除字段"
 
-#: src/features/objects/components/object-detail-panel.tsx:466
-#: src/features/objects/components/object-detail-panel.tsx:471
-#: src/features/objects/components/object-detail-panel.tsx:655
+#: src/features/objects/components/object-detail-panel.tsx:437
+#: src/features/objects/components/object-detail-panel.tsx:442
+#: src/features/objects/components/object-detail-panel.tsx:617
 msgid "Delete item"
 msgstr "删除条目"
 
@@ -739,12 +763,12 @@ msgstr "删除选项"
 msgid "Delete option {0}"
 msgstr "删除选项 {0}"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:351
-#: src/routes/_authenticated/$projectId_.settings.tsx:372
+#: src/routes/_authenticated/$projectId_.settings.tsx:415
+#: src/routes/_authenticated/$projectId_.settings.tsx:455
 msgid "Delete project"
 msgstr "删除项目"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:370
+#: src/routes/_authenticated/$projectId_.settings.tsx:453
 msgid "Delete project?"
 msgstr "删除项目吗?"
 
@@ -756,7 +780,7 @@ msgstr "删除视图"
 msgid "Delete your account on the old server"
 msgstr "删除旧服务器上的账户"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:131
+#: src/routes/_authenticated/$projectId_.settings.tsx:143
 msgid "Deleting project..."
 msgstr "正在删除项目..."
 
@@ -769,21 +793,21 @@ msgid "Descending"
 msgstr "降序"
 
 #: src/features/requests/components/request-panel.tsx:287
-#: src/routes/_authenticated/$projectId_.settings.tsx:313
+#: src/routes/_authenticated/$projectId_.settings.tsx:377
 msgid "Description"
 msgstr "描述"
 
 #: src/routes/_authenticated/$projectId/design.tsx:63
-#: src/routes/_authenticated/$projectId/design.tsx:131
+#: src/routes/_authenticated/$projectId/design.tsx:132
 #: src/routes/_authenticated/$projectId/index.tsx:902
 msgid "Design"
 msgstr "设计"
 
-#: src/routes/_authenticated/$projectId/design.tsx:108
+#: src/routes/_authenticated/$projectId/design.tsx:109
 msgid "Design imported"
 msgstr "设计已导入"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:407
+#: src/routes/_authenticated/$projectId_.settings.tsx:607
 msgid "Design, create, edit, comment, and view"
 msgstr "设计、创建、编辑、评论和查看"
 
@@ -831,7 +855,7 @@ msgstr "显示移动端侧边栏。"
 #: src/features/editor/components/edit-dialogs.tsx:532
 #: src/features/editor/components/edit-dialogs.tsx:922
 #: src/features/editor/components/edit-dialogs.tsx:1228
-#: src/features/objects/components/object-detail-panel.tsx:480
+#: src/features/objects/components/object-detail-panel.tsx:451
 msgid "Done"
 msgstr "完成"
 
@@ -844,7 +868,8 @@ msgstr "双击列以添加内容"
 msgid "Download"
 msgstr "下载"
 
-#: src/routes/_authenticated/$projectId/design.tsx:225
+#: src/routes/_authenticated/$projectId_.settings.tsx:497
+#: src/routes/_authenticated/$projectId/design.tsx:226
 msgid "Download backup first"
 msgstr "请先下载备份"
 
@@ -919,11 +944,11 @@ msgstr "输入电子邮件中的验证码"
 msgid "Enter your authenticator code"
 msgstr "请输入您的身份验证器代码"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:328
+#: src/routes/_authenticated/$projectId_.settings.tsx:392
 msgid "Entity ID"
 msgstr "实体 ID"
 
-#: src/features/objects/components/object-detail-panel.tsx:343
+#: src/features/objects/components/object-detail-panel.tsx:315
 msgid "Error"
 msgstr "错误"
 
@@ -938,9 +963,17 @@ msgstr "展开"
 msgid "Expand sidebar"
 msgstr "展开侧边栏"
 
-#: src/routes/_authenticated/$projectId/design.tsx:173
+#: src/routes/_authenticated/$projectId_.settings.tsx:438
+msgid "Export data"
+msgstr ""
+
+#: src/routes/_authenticated/$projectId/design.tsx:174
 msgid "Export design"
 msgstr "导出设计"
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:433
+msgid "Export or import the raw data content in this project."
+msgstr ""
 
 #: ../../../lib/web/src/lib/preference-utils.ts:136
 msgid "Extra large"
@@ -990,7 +1023,7 @@ msgstr "删除评论失败"
 msgid "Failed to delete link"
 msgstr "删除链接失败"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:133
+#: src/routes/_authenticated/$projectId_.settings.tsx:145
 msgid "Failed to delete project"
 msgstr "删除项目失败"
 
@@ -998,15 +1031,23 @@ msgstr "删除项目失败"
 msgid "Failed to delete view"
 msgstr "删除视图失败"
 
-#: src/routes/_authenticated/$projectId/design.tsx:92
+#: src/routes/_authenticated/$projectId_.settings.tsx:335
+msgid "Failed to export data"
+msgstr ""
+
+#: src/routes/_authenticated/$projectId/design.tsx:93
 msgid "Failed to export design"
 msgstr "导出设计失败"
 
-#: src/routes/_authenticated/$projectId/design.tsx:113
+#: src/routes/_authenticated/$projectId_.settings.tsx:354
+msgid "Failed to import data"
+msgstr ""
+
+#: src/routes/_authenticated/$projectId/design.tsx:114
 msgid "Failed to import design"
 msgstr "导入设计失败"
 
-#: src/features/objects/components/object-detail-panel.tsx:344
+#: src/features/objects/components/object-detail-panel.tsx:316
 msgid "Failed to load item"
 msgstr "加载条目失败"
 
@@ -1015,7 +1056,7 @@ msgstr "加载条目失败"
 msgid "Failed to load project"
 msgstr "加载项目失败"
 
-#: src/routes/_authenticated/$projectId/design.tsx:137
+#: src/routes/_authenticated/$projectId/design.tsx:138
 msgid "Failed to load project design"
 msgstr "加载项目设计失败"
 
@@ -1031,11 +1072,12 @@ msgstr "合并失败"
 msgid "Failed to post comment"
 msgstr "发布评论失败"
 
-#: src/routes/_authenticated/$projectId/design.tsx:281
+#: src/routes/_authenticated/$projectId_.settings.tsx:535
+#: src/routes/_authenticated/$projectId/design.tsx:282
 msgid "Failed to read file"
 msgstr "读取文件失败"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:489
+#: src/routes/_authenticated/$projectId_.settings.tsx:689
 msgid "Failed to remove access"
 msgstr "移除访问权限失败"
 
@@ -1055,7 +1097,7 @@ msgstr "重新排序视图失败"
 msgid "Failed to send verification code"
 msgstr "发送验证码失败"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:478
+#: src/routes/_authenticated/$projectId_.settings.tsx:678
 msgid "Failed to set access level"
 msgstr "设置访问级别失败"
 
@@ -1070,11 +1112,11 @@ msgstr "订阅失败"
 msgid "Failed to unsubscribe"
 msgstr "取消订阅失败"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:503
+#: src/routes/_authenticated/$projectId_.settings.tsx:703
 msgid "Failed to update access level"
 msgstr "更新访问级别失败"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:112
+#: ../../../lib/web/src/components/notification-category-button.tsx:111
 msgid "Failed to update category"
 msgstr "更新分类失败"
 
@@ -1086,7 +1128,7 @@ msgstr "更新评论失败"
 msgid "Failed to update field"
 msgstr "更新字段失败"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:156
+#: src/routes/_authenticated/$projectId_.settings.tsx:168
 msgid "Failed to update project"
 msgstr "更新项目失败"
 
@@ -1109,7 +1151,7 @@ msgstr "文件"
 msgid "Find projects"
 msgstr "查找项目"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:333
+#: src/routes/_authenticated/$projectId_.settings.tsx:397
 msgid "Fingerprint"
 msgstr "指纹"
 
@@ -1137,7 +1179,7 @@ msgstr "星期五"
 msgid "From"
 msgstr "来自"
 
-#: src/routes/_authenticated/$projectId/design.tsx:322
+#: src/routes/_authenticated/$projectId/design.tsx:323
 msgid "From file"
 msgstr "从文件"
 
@@ -1207,7 +1249,7 @@ msgstr "首页"
 msgid "Hot"
 msgstr "热门"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:299
+#: src/routes/_authenticated/$projectId_.settings.tsx:363
 msgid "Identity"
 msgstr "身份"
 
@@ -1215,10 +1257,28 @@ msgstr "身份"
 msgid "Imperial"
 msgstr "英制"
 
-#: src/routes/_authenticated/$projectId/design.tsx:177
-#: src/routes/_authenticated/$projectId/design.tsx:293
+#: src/routes/_authenticated/$projectId_.settings.tsx:548
+msgid "Import a data configuration"
+msgstr ""
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:443
+#: src/routes/_authenticated/$projectId_.settings.tsx:489
+#: src/routes/_authenticated/$projectId_.settings.tsx:547
+msgid "Import data"
+msgstr ""
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:475
+msgid "Import data?"
+msgstr ""
+
+#: src/routes/_authenticated/$projectId/design.tsx:178
+#: src/routes/_authenticated/$projectId/design.tsx:294
 msgid "Import design"
 msgstr "导入设计"
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:486
+msgid "Importing..."
+msgstr ""
 
 #: ../../../lib/web/src/components/config-drawer.tsx:252
 msgid "Inset"
@@ -1232,7 +1292,8 @@ msgstr "兴趣"
 msgid "Invalid date"
 msgstr "日期无效"
 
-#: src/routes/_authenticated/$projectId/design.tsx:277
+#: src/routes/_authenticated/$projectId_.settings.tsx:531
+#: src/routes/_authenticated/$projectId/design.tsx:278
 msgid "Invalid JSON file"
 msgstr "无效的 JSON 文件"
 
@@ -1240,7 +1301,7 @@ msgstr "无效的 JSON 文件"
 msgid "Invalid verification code"
 msgstr "验证码无效"
 
-#: src/features/objects/components/object-detail-panel.tsx:424
+#: src/features/objects/components/object-detail-panel.tsx:395
 msgid "Item details"
 msgstr "条目详情"
 
@@ -1292,11 +1353,11 @@ msgstr "正在加载内容…"
 msgid "Loading diff..."
 msgstr "正在加载差异..."
 
-#: src/features/objects/components/object-detail-panel.tsx:324
+#: src/features/objects/components/object-detail-panel.tsx:296
 msgid "Loading item"
 msgstr "正在加载条目"
 
-#: src/features/objects/components/object-detail-panel.tsx:325
+#: src/features/objects/components/object-detail-panel.tsx:297
 msgid "Loading item details"
 msgstr "正在加载条目详情"
 
@@ -1369,7 +1430,7 @@ msgstr "合并提交"
 msgid "Merge requests"
 msgstr "合并请求"
 
-#: src/features/objects/components/object-detail-panel.tsx:399
+#: src/features/objects/components/object-detail-panel.tsx:371
 msgid "Merge requests ({requestCount})"
 msgstr "合并请求 ({requestCount})"
 
@@ -1412,7 +1473,7 @@ msgstr "我的项目"
 #: src/features/editor/components/edit-dialogs.tsx:1065
 #: src/features/editor/components/option-dialog.tsx:112
 #: src/features/projects/components/create-project-dialog.tsx:159
-#: src/routes/_authenticated/$projectId_.settings.tsx:304
+#: src/routes/_authenticated/$projectId_.settings.tsx:368
 msgid "Name"
 msgstr "名称"
 
@@ -1420,7 +1481,8 @@ msgstr "名称"
 msgid "Name is required"
 msgstr "名称为必填项"
 
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:288
+#: ../../../lib/web/src/features/errors/general-error.tsx:53
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:294
 msgid "Network error"
 msgstr "网络错误"
 
@@ -1448,7 +1510,7 @@ msgstr "下一张图片"
 msgid "No {parentClassNames} to add to"
 msgstr "没有可添加到的 {parentClassNames}"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:411
+#: src/routes/_authenticated/$projectId_.settings.tsx:611
 msgid "No access"
 msgstr "无访问权限"
 
@@ -1540,7 +1602,7 @@ msgstr "无状态"
 msgid "No time zone found."
 msgstr "未找到时区。"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:148
+#: ../../../lib/web/src/components/notification-category-button.tsx:147
 msgid "No topic record yet — try again after the next notification."
 msgstr "暂无主题记录,请在下次通知后重试。"
 
@@ -1566,9 +1628,9 @@ msgstr "无浏览量"
 #: src/features/editor/components/edit-dialogs.tsx:782
 #: src/features/objects/components/create-object-dialog.tsx:389
 #: src/features/objects/components/create-object-dialog.tsx:396
-#: src/features/objects/components/object-detail-panel.tsx:548
-#: src/features/objects/components/object-detail-panel.tsx:561
-#: src/features/objects/components/object-detail-panel.tsx:566
+#: src/features/objects/components/object-detail-panel.tsx:512
+#: src/features/objects/components/object-detail-panel.tsx:525
+#: src/features/objects/components/object-detail-panel.tsx:530
 msgid "None"
 msgstr "无"
 
@@ -1579,6 +1641,10 @@ msgstr "标准"
 #: src/features/requests/components/request-panel.tsx:231
 msgid "Not configured"
 msgstr "未配置"
+
+#: ../../../lib/web/src/features/errors/general-error.tsx:67
+msgid "Not found"
+msgstr ""
 
 #: ../../../lib/web/src/components/ui/editable-field-row.tsx:146
 msgid "Not set"
@@ -1636,7 +1702,7 @@ msgstr "打开类操作"
 msgid "Open column actions"
 msgstr "打开列操作"
 
-#: src/routes/_authenticated/$projectId/design.tsx:165
+#: src/routes/_authenticated/$projectId/design.tsx:166
 msgid "Open design actions"
 msgstr "打开设计操作"
 
@@ -1697,7 +1763,7 @@ msgid "Owner"
 msgstr "所有者"
 
 #: src/features/objects/components/create-object-dialog.tsx:381
-#: src/features/objects/components/object-detail-panel.tsx:544
+#: src/features/objects/components/object-detail-panel.tsx:508
 msgid "Parent"
 msgstr "父级"
 
@@ -1717,7 +1783,7 @@ msgstr "通行密钥"
 msgid "Pattern (regex)"
 msgstr "模式(正则表达式)"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:352
+#: src/routes/_authenticated/$projectId_.settings.tsx:416
 msgid "Permanently delete this project and all its content."
 msgstr "永久删除此项目及其所有内容。"
 
@@ -1726,7 +1792,8 @@ msgstr "永久删除此项目及其所有内容。"
 msgid "Please add one or more classes to the project design."
 msgstr "请在项目设计中添加一个或多个类。"
 
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:289
+#: ../../../lib/web/src/features/errors/general-error.tsx:54
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:295
 msgid "Please check your internet connection and try again."
 msgstr "请检查您的网络连接后重试。"
 
@@ -1734,8 +1801,16 @@ msgstr "请检查您的网络连接后重试。"
 msgid "Please select a template"
 msgstr "请选择一个模板"
 
+#: ../../../lib/web/src/features/errors/general-error.tsx:83
+msgid "Please try again."
+msgstr ""
+
+#: ../../../lib/web/src/features/errors/general-error.tsx:75
+msgid "Please wait a moment and try again."
+msgstr ""
+
 #: src/features/projects/components/create-project-dialog.tsx:181
-#: src/routes/_authenticated/$projectId_.settings.tsx:321
+#: src/routes/_authenticated/$projectId_.settings.tsx:385
 msgid "Prefix"
 msgstr "前缀"
 
@@ -1768,23 +1843,23 @@ msgstr "项目操作"
 msgid "Project created"
 msgstr "项目已创建"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:132
+#: src/routes/_authenticated/$projectId_.settings.tsx:144
 msgid "Project deleted"
 msgstr "项目已删除"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:211
+#: src/routes/_authenticated/$projectId_.settings.tsx:223
 msgid "Project not found"
 msgstr "项目未找到"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:122
+#: src/routes/_authenticated/$projectId_.settings.tsx:134
 msgid "Project settings"
 msgstr "项目设置"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:211
+#: src/routes/_authenticated/$projectId_.settings.tsx:223
 msgid "Project unavailable"
 msgstr "项目不可用"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:155
+#: src/routes/_authenticated/$projectId_.settings.tsx:167
 msgid "Project updated"
 msgstr "项目已更新"
 
@@ -1795,7 +1870,7 @@ msgstr "项目已更新"
 msgid "Projects"
 msgstr "项目"
 
-#: src/features/objects/components/object-detail-panel.tsx:387
+#: src/features/objects/components/object-detail-panel.tsx:359
 msgid "Properties"
 msgstr "属性"
 
@@ -1823,8 +1898,8 @@ msgstr "准备合并"
 msgid "Rebase and merge"
 msgstr "变基并合并"
 
-#: ../../../lib/web/src/components/search-entity-dialog.tsx:219
-#: ../../../lib/web/src/components/search-entity-page.tsx:194
+#: ../../../lib/web/src/components/search-entity-dialog.tsx:216
+#: ../../../lib/web/src/components/search-entity-page.tsx:191
 msgid "Recommended"
 msgstr "推荐"
 
@@ -1895,7 +1970,7 @@ msgstr "移除条目"
 msgid "Remove link"
 msgstr "移除链接"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:487
+#: src/routes/_authenticated/$projectId_.settings.tsx:687
 msgid "Removing access..."
 msgstr "正在移除访问权限..."
 
@@ -1912,15 +1987,15 @@ msgstr "重命名列"
 msgid "Rename this board column"
 msgstr "重命名此看板列"
 
-#: src/routes/_authenticated/$projectId/design.tsx:217
+#: src/routes/_authenticated/$projectId/design.tsx:218
 msgid "Replace design"
 msgstr "替换设计"
 
-#: src/routes/_authenticated/$projectId/design.tsx:201
+#: src/routes/_authenticated/$projectId/design.tsx:202
 msgid "Replace design?"
 msgstr "替换设计?"
 
-#: src/routes/_authenticated/$projectId/design.tsx:214
+#: src/routes/_authenticated/$projectId/design.tsx:215
 msgid "Replacing..."
 msgstr "正在替换..."
 
@@ -1991,7 +2066,7 @@ msgstr "星期六"
 msgid "Save"
 msgstr "保存"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:154
+#: src/routes/_authenticated/$projectId_.settings.tsx:166
 msgid "Saving..."
 msgstr "正在保存..."
 
@@ -2041,8 +2116,8 @@ msgstr "搜索、关注并排序此视图。"
 msgid "Search..."
 msgstr "搜索..."
 
-#: ../../../lib/web/src/components/search-entity-dialog.tsx:177
-#: ../../../lib/web/src/components/search-entity-page.tsx:152
+#: ../../../lib/web/src/components/search-entity-dialog.tsx:174
+#: ../../../lib/web/src/components/search-entity-page.tsx:149
 #: ../../../lib/web/src/features/access/access-dialog.tsx:202
 msgid "Searching..."
 msgstr "正在搜索..."
@@ -2120,12 +2195,12 @@ msgstr "发送邮件"
 msgid "Serif"
 msgstr "衬线体"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:342
+#: src/routes/_authenticated/$projectId_.settings.tsx:406
 msgid "Server"
 msgstr "服务器"
 
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:245
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:271
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:251
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:277
 msgid "Server error"
 msgstr "服务器错误"
 
@@ -2135,14 +2210,18 @@ msgid "Server rules"
 msgstr "服务器规则"
 
 #: ../../../lib/web/src/lib/api-response-interceptors.ts:209
-msgid "Session expired"
-msgstr "会话已过期"
+#~ msgid "Session expired"
+#~ msgstr "会话已过期"
+
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:209
+msgid "Session expired. Please log in again."
+msgstr ""
 
 #: ../../../lib/web/src/components/travelling-picker.tsx:147
 msgid "Set origin and destination"
 msgstr "设置起点和终点"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:476
+#: src/routes/_authenticated/$projectId_.settings.tsx:676
 msgid "Setting access..."
 msgstr "正在设置访问权限..."
 
@@ -2151,9 +2230,9 @@ msgstr "正在设置访问权限..."
 #: ../../../lib/web/src/components/layout/nav-user.tsx:84
 #: ../../../lib/web/src/components/layout/nav-user.tsx:148
 #: ../../../lib/web/src/components/layout/nav-user.tsx:198
-#: src/routes/_authenticated/$projectId_.settings.tsx:76
-#: src/routes/_authenticated/$projectId_.settings.tsx:171
-#: src/routes/_authenticated/$projectId_.settings.tsx:194
+#: src/routes/_authenticated/$projectId_.settings.tsx:88
+#: src/routes/_authenticated/$projectId_.settings.tsx:183
+#: src/routes/_authenticated/$projectId_.settings.tsx:206
 #: src/routes/_authenticated/$projectId/index.tsx:912
 msgid "Settings"
 msgstr "设置"
@@ -2235,8 +2314,8 @@ msgstr "添加第一条评论以开始讨论。"
 msgid "Stay tuned though!"
 msgstr "敬请期待!"
 
-#: src/features/objects/components/object-detail-panel.tsx:447
-#: src/features/objects/components/object-detail-panel.tsx:456
+#: src/features/objects/components/object-detail-panel.tsx:418
+#: src/features/objects/components/object-detail-panel.tsx:427
 msgid "Stop watching"
 msgstr "停止关注"
 
@@ -2319,6 +2398,10 @@ msgstr "文本"
 msgid "That code is incorrect or has expired."
 msgstr "该代码不正确或已过期。"
 
+#: ../../../lib/web/src/features/errors/general-error.tsx:68
+msgid "The requested content could not be found."
+msgstr ""
+
 #: ../../../lib/web/src/components/config-drawer.tsx:194
 msgid "Theme"
 msgstr "主题"
@@ -2336,19 +2419,24 @@ msgstr "此合并请求已合并到 {0}。"
 msgid "This merge request is a draft and cannot be merged."
 msgstr "此合并请求为草稿,无法合并。"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:214
+#: src/routes/_authenticated/$projectId_.settings.tsx:226
 msgid "This project could not be loaded right now."
 msgstr "目前无法加载此项目。"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:214
+#: src/routes/_authenticated/$projectId_.settings.tsx:226
 msgid "This project may have been deleted or you don't have access to it."
 msgstr "此项目可能已被删除,或您没有访问权限。"
+
+#. placeholder {0}: pendingDataImport?.label
+#: src/routes/_authenticated/$projectId_.settings.tsx:477
+msgid "This will import the data from <0>{0}</0>. Objects will be appended to the existing records. Ensure the current design matches the classes and fields referenced in the file."
+msgstr ""
 
 #: src/features/requests/components/merge-button.tsx:105
 msgid "This will merge \"{source}\" into \"{target}\". This action cannot be undone."
 msgstr "这将把 \"{source}\" 合并到 \"{target}\"。此操作无法撤销。"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:371
+#: src/routes/_authenticated/$projectId_.settings.tsx:454
 msgid "This will permanently delete \"{projectName}\" and all its objects, comments, and attachments. This action cannot be undone."
 msgstr "这将永久删除“{projectName}”及其所有对象、评论和附件。此操作无法撤销。"
 
@@ -2358,7 +2446,7 @@ msgid "This will remove \"{0}\" from your sidebar and stop updates for this proj
 msgstr "这将从您的侧边栏中移除“{0}”并停止此项目的更新。"
 
 #. placeholder {0}: pendingImport?.label
-#: src/routes/_authenticated/$projectId/design.tsx:203
+#: src/routes/_authenticated/$projectId/design.tsx:204
 msgid "This will replace the current design with <0>{0}</0>. All existing classes, fields, options, and views will be deleted. Existing objects will not be deleted but may no longer appear in views."
 msgstr "此操作会将当前设计替换为 <0>{0}</0>。所有现有的类、字段、选项和视图都将被删除。现有对象不会被删除，但可能不再出现在视图中。"
 
@@ -2415,6 +2503,10 @@ msgstr "切换视图选项"
 msgid "Toggle watched filter"
 msgstr "切换已关注筛选"
 
+#: ../../../lib/web/src/features/errors/general-error.tsx:74
+msgid "Too many requests"
+msgstr ""
+
 #: ../../../lib/web/src/components/ui/sort-selector.tsx:45
 msgid "Top"
 msgstr "顶部"
@@ -2427,13 +2519,13 @@ msgstr "顶层"
 msgid "Travelling"
 msgstr "行进中"
 
-#: ../../../lib/web/src/components/search-entity-dialog.tsx:193
-#: ../../../lib/web/src/components/search-entity-page.tsx:168
+#: ../../../lib/web/src/components/search-entity-dialog.tsx:190
+#: ../../../lib/web/src/components/search-entity-page.tsx:165
 msgid "Try adjusting your search terms"
 msgstr "尝试调整您的搜索词"
 
-#: ../../../lib/web/src/features/errors/general-error.tsx:128
-#: ../../../lib/web/src/features/errors/general-error.tsx:168
+#: ../../../lib/web/src/features/errors/general-error.tsx:140
+#: ../../../lib/web/src/features/errors/general-error.tsx:180
 #: ../../../lib/web/src/features/errors/maintenance-error.tsx:19
 msgid "Try again"
 msgstr "重试"
@@ -2459,7 +2551,7 @@ msgstr "输入以搜索用户"
 msgid "Type to search..."
 msgstr "输入以搜索..."
 
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:267
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:273
 msgid "Unable to connect to remote server"
 msgstr "无法连接到远程服务器"
 
@@ -2468,7 +2560,7 @@ msgstr "无法连接到远程服务器"
 msgid "Unable to redirect to login. Please try again."
 msgstr "无法重定向到登录页面。请重试。"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:156
+#: ../../../lib/web/src/components/notification-category-button.tsx:155
 msgid "Unassigned"
 msgstr "未分配"
 
@@ -2515,7 +2607,7 @@ msgstr "未验证"
 msgid "Updated"
 msgstr "已更新"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:501
+#: src/routes/_authenticated/$projectId_.settings.tsx:701
 msgid "Updating access..."
 msgstr "正在更新访问权限..."
 
@@ -2524,7 +2616,8 @@ msgstr "正在更新访问权限..."
 msgid "Upload"
 msgstr "上传"
 
-#: src/routes/_authenticated/$projectId/design.tsx:336
+#: src/routes/_authenticated/$projectId_.settings.tsx:566
+#: src/routes/_authenticated/$projectId/design.tsx:337
 msgid "Upload .json file"
 msgstr "上传 .json 文件"
 
@@ -2582,7 +2675,7 @@ msgstr "查看全部"
 msgid "View all notifications"
 msgstr "查看所有通知"
 
-#: src/features/objects/components/object-detail-panel.tsx:425
+#: src/features/objects/components/object-detail-panel.tsx:396
 msgid "View and edit item details"
 msgstr "查看并编辑条目详情"
 
@@ -2590,7 +2683,7 @@ msgstr "查看并编辑条目详情"
 msgid "View controls"
 msgstr "视图控制"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:410
+#: src/routes/_authenticated/$projectId_.settings.tsx:610
 msgid "View only"
 msgstr "仅查看"
 
@@ -2602,8 +2695,8 @@ msgstr "查看选项"
 msgid "Views"
 msgstr "查看"
 
-#: src/features/objects/components/object-detail-panel.tsx:447
-#: src/features/objects/components/object-detail-panel.tsx:456
+#: src/features/objects/components/object-detail-panel.tsx:418
+#: src/features/objects/components/object-detail-panel.tsx:427
 msgid "Watch"
 msgstr "关注"
 
@@ -2626,6 +2719,10 @@ msgstr "网站正在维护中!"
 #: ../../../lib/web/src/lib/preference-utils.ts:61
 msgid "Wednesday"
 msgstr "星期三"
+
+#: ../../../lib/web/src/features/errors/general-error.tsx:61
+msgid "You do not have access to this section."
+msgstr ""
 
 #: src/routes/_authenticated/$projectId/index.tsx:102
 msgid "You don't have access to this project."

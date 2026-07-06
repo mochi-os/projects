@@ -620,6 +620,26 @@ const projectsApi = {
     );
   },
 
+  // ============= Data Import/Export Methods =============
+
+  // Export data as JSON
+  exportData: async (
+    projectId: string,
+  ): Promise<{ data: Record<string, unknown> }> => {
+    return projectsRequest.get(endpoints.projects.dataExport(projectId));
+  },
+
+  // Import data from JSON
+  importData: async (
+    projectId: string,
+    data: Record<string, unknown>,
+  ): Promise<{ data: { objects: number; comments: number; links: number } }> => {
+    return projectsRequest.post(
+      endpoints.projects.dataImport(projectId),
+      { data: JSON.stringify(data) },
+    );
+  },
+
   // ============= View Methods =============
 
   // List views

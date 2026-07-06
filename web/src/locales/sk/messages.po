@@ -23,7 +23,7 @@ msgstr "[nenastavené]"
 
 #. placeholder {0}: project.project.name
 #: src/routes/_authenticated/$projectId/design.tsx:63
-#: src/routes/_authenticated/$projectId/design.tsx:156
+#: src/routes/_authenticated/$projectId/design.tsx:157
 msgid "{0} - Design"
 msgstr "{0} – Dizajn"
 
@@ -39,8 +39,8 @@ msgid "{0} files changed"
 msgstr "{0} zmenených súborov"
 
 #. placeholder {0}: project.project.name
-#: src/routes/_authenticated/$projectId_.settings.tsx:122
-#: src/routes/_authenticated/$projectId_.settings.tsx:226
+#: src/routes/_authenticated/$projectId_.settings.tsx:134
+#: src/routes/_authenticated/$projectId_.settings.tsx:238
 msgid "{0} settings"
 msgstr "{0} nastavenia"
 
@@ -69,9 +69,13 @@ msgstr "24 hodín"
 msgid "Absolute (date and time)"
 msgstr "Absolútny (dátum a čas)"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:77
+#: src/routes/_authenticated/$projectId_.settings.tsx:89
 msgid "Access"
 msgstr "Prístup"
+
+#: ../../../lib/web/src/features/errors/general-error.tsx:60
+msgid "Access denied"
+msgstr ""
 
 #: ../../../lib/web/src/features/errors/forbidden.tsx:16
 msgid "Access Forbidden"
@@ -81,19 +85,19 @@ msgstr "Prístup zakázaný"
 msgid "Access level"
 msgstr "Úroveň prístupu"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:502
+#: src/routes/_authenticated/$projectId_.settings.tsx:702
 msgid "Access level updated"
 msgstr "Úroveň prístupu aktualizovaná"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:513
+#: src/routes/_authenticated/$projectId_.settings.tsx:713
 msgid "Access Management"
 msgstr "Správa prístupu"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:488
+#: src/routes/_authenticated/$projectId_.settings.tsx:688
 msgid "Access removed"
 msgstr "Prístup odstránený"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:477
+#: src/routes/_authenticated/$projectId_.settings.tsx:677
 msgid "Access set for {subjectName}"
 msgstr "Prístup nastavený pre {subjectName}"
 
@@ -113,7 +117,7 @@ msgstr "Typ účtu"
 msgid "Account verified"
 msgstr "Účet overený"
 
-#: src/features/objects/components/object-detail-panel.tsx:406
+#: src/features/objects/components/object-detail-panel.tsx:378
 msgid "Activity"
 msgstr "Aktivita"
 
@@ -188,7 +192,7 @@ msgstr "Pridať nový účet"
 msgid "Add option"
 msgstr "Pridať možnosť"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:520
+#: src/routes/_authenticated/$projectId_.settings.tsx:720
 msgid "Add rule"
 msgstr "Pridať pravidlo"
 
@@ -244,16 +248,20 @@ msgstr "Povoliť triedenie podľa"
 msgid "An error occurred"
 msgstr "Vyskytla sa chyba"
 
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:241
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:247
 msgid "An unexpected error occurred"
 msgstr "Vyskytla sa neočakávaná chyba"
+
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:233
+msgid "Another change was made at the same time. Please refresh to see the latest version."
+msgstr ""
 
 #. placeholder {0}: deleteTarget?.name
 #: src/features/objects/components/object-attachments.tsx:228
 msgid "Are you sure you want to delete \"{0}\"?"
 msgstr "Naozaj chcete odstrániť „{0}“?"
 
-#: src/features/objects/components/object-detail-panel.tsx:656
+#: src/features/objects/components/object-detail-panel.tsx:618
 msgid "Are you sure you want to delete \"{title}\"? This action cannot be undone."
 msgstr "Naozaj chcete odstrániť „{title}“? Túto akciu nemožno vrátiť späť."
 
@@ -314,11 +322,11 @@ msgstr "Späť"
 msgid "Back to home"
 msgstr "Späť na úvod"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:173
-#: src/routes/_authenticated/$projectId_.settings.tsx:196
-#: src/routes/_authenticated/$projectId_.settings.tsx:228
-#: src/routes/_authenticated/$projectId/design.tsx:133
-#: src/routes/_authenticated/$projectId/design.tsx:158
+#: src/routes/_authenticated/$projectId_.settings.tsx:185
+#: src/routes/_authenticated/$projectId_.settings.tsx:208
+#: src/routes/_authenticated/$projectId_.settings.tsx:240
+#: src/routes/_authenticated/$projectId/design.tsx:134
+#: src/routes/_authenticated/$projectId/design.tsx:159
 msgid "Back to project"
 msgstr "Späť na projekt"
 
@@ -349,7 +357,7 @@ msgstr "Zvýšiť záujem"
 msgid "Border colour"
 msgstr "Farba okraja"
 
-#: src/routes/_authenticated/$projectId/design.tsx:299
+#: src/routes/_authenticated/$projectId/design.tsx:300
 msgid "Built-in templates"
 msgstr "Zabudované šablóny"
 
@@ -370,7 +378,8 @@ msgstr "Môže byť potomkom"
 #: src/features/editor/components/option-dialog.tsx:146
 #: src/features/objects/components/comment-thread.tsx:175
 #: src/features/projects/components/create-project-dialog.tsx:219
-#: src/routes/_authenticated/$projectId/design.tsx:343
+#: src/routes/_authenticated/$projectId_.settings.tsx:573
+#: src/routes/_authenticated/$projectId/design.tsx:344
 #: src/routes/_authenticated/$projectId/index.tsx:945
 msgid "Cancel"
 msgstr "Zrušiť"
@@ -384,12 +393,12 @@ msgstr "Zrušiť odpoveď"
 msgid "Cannot merge automatically"
 msgstr "Nedá sa zlúčiť automaticky"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:144
+#: ../../../lib/web/src/components/notification-category-button.tsx:143
 msgid "Category for this notification"
 msgstr "Kategória pre túto notifikáciu"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:125
-#: ../../../lib/web/src/components/notification-category-button.tsx:136
+#: ../../../lib/web/src/components/notification-category-button.tsx:124
+#: ../../../lib/web/src/components/notification-category-button.tsx:135
 msgid "Change notification category"
 msgstr "Zmeniť kategóriu notifikácie"
 
@@ -523,12 +532,12 @@ msgstr "Pohodlné"
 msgid "Coming Soon!"
 msgstr "Už čoskoro!"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:409
+#: src/routes/_authenticated/$projectId_.settings.tsx:609
 msgid "Comment and view"
 msgstr "Komentovať a prezerať"
 
 #. placeholder {0}: data.comment_count || 0
-#: src/features/objects/components/object-detail-panel.tsx:392
+#: src/features/objects/components/object-detail-panel.tsx:364
 msgid "Comments ({0})"
 msgstr "Komentáre ({0})"
 
@@ -570,7 +579,7 @@ msgstr "Pokračovať"
 msgid "Continue with {label}"
 msgstr "Pokračovať s {label}"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:514
+#: src/routes/_authenticated/$projectId_.settings.tsx:714
 msgid "Control who can view and interact with this project"
 msgstr "Určte, kto môže prezerať a interagovať s týmto projektom"
 
@@ -578,7 +587,7 @@ msgstr "Určte, kto môže prezerať a interagovať s týmto projektom"
 msgid "Copy"
 msgstr "Kopírovať"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:300
+#: src/routes/_authenticated/$projectId_.settings.tsx:364
 msgid "Core information about this project"
 msgstr "Hlavné informácie o tomto projekte"
 
@@ -627,7 +636,7 @@ msgstr "Vytvoriť novú položku"
 msgid "Create project"
 msgstr "Vytvoriť projekt"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:408
+#: src/routes/_authenticated/$projectId_.settings.tsx:608
 msgid "Create, edit, comment, and view"
 msgstr "Vytvárať, upravovať, komentovať a zobrazovať"
 
@@ -662,6 +671,21 @@ msgstr "Tmavé"
 msgid "Dark mode"
 msgstr "Tmavý režim"
 
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:232
+msgid "Data conflict"
+msgstr ""
+
+#. placeholder {0}: response.data?.objects ?? 0
+#. placeholder {1}: response.data?.comments ?? 0
+#. placeholder {2}: response.data?.links ?? 0
+#: src/routes/_authenticated/$projectId_.settings.tsx:349
+msgid "Data imported ({0} objects, {1} comments, {2} links)"
+msgstr ""
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:432
+msgid "Data management"
+msgstr ""
+
 #: src/features/editor/components/add-dialogs.tsx:137
 msgid "Date"
 msgstr "Dátum"
@@ -687,9 +711,9 @@ msgstr "Predvolené triedenie"
 #: src/features/objects/components/object-attachments.tsx:182
 #: src/features/objects/components/object-attachments.tsx:187
 #: src/features/objects/components/object-attachments.tsx:229
-#: src/features/objects/components/object-detail-panel.tsx:657
+#: src/features/objects/components/object-detail-panel.tsx:619
 #: src/features/requests/components/request-panel.tsx:132
-#: src/routes/_authenticated/$projectId_.settings.tsx:361
+#: src/routes/_authenticated/$projectId_.settings.tsx:425
 msgid "Delete"
 msgstr "Odstrániť"
 
@@ -713,9 +737,9 @@ msgstr "Odstrániť komentár"
 msgid "Delete field"
 msgstr "Odstrániť pole"
 
-#: src/features/objects/components/object-detail-panel.tsx:466
-#: src/features/objects/components/object-detail-panel.tsx:471
-#: src/features/objects/components/object-detail-panel.tsx:655
+#: src/features/objects/components/object-detail-panel.tsx:437
+#: src/features/objects/components/object-detail-panel.tsx:442
+#: src/features/objects/components/object-detail-panel.tsx:617
 msgid "Delete item"
 msgstr "Odstrániť položku"
 
@@ -739,12 +763,12 @@ msgstr "Odstrániť možnosť"
 msgid "Delete option {0}"
 msgstr "Odstrániť možnosť {0}"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:351
-#: src/routes/_authenticated/$projectId_.settings.tsx:372
+#: src/routes/_authenticated/$projectId_.settings.tsx:415
+#: src/routes/_authenticated/$projectId_.settings.tsx:455
 msgid "Delete project"
 msgstr "Odstrániť projekt"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:370
+#: src/routes/_authenticated/$projectId_.settings.tsx:453
 msgid "Delete project?"
 msgstr "Odstrániť projekt?"
 
@@ -756,7 +780,7 @@ msgstr "Odstrániť zobrazenie"
 msgid "Delete your account on the old server"
 msgstr "Odstráňte svoj účet na starom serveri"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:131
+#: src/routes/_authenticated/$projectId_.settings.tsx:143
 msgid "Deleting project..."
 msgstr "Odstraňuje sa projekt..."
 
@@ -769,21 +793,21 @@ msgid "Descending"
 msgstr "Zostupne"
 
 #: src/features/requests/components/request-panel.tsx:287
-#: src/routes/_authenticated/$projectId_.settings.tsx:313
+#: src/routes/_authenticated/$projectId_.settings.tsx:377
 msgid "Description"
 msgstr "Popis"
 
 #: src/routes/_authenticated/$projectId/design.tsx:63
-#: src/routes/_authenticated/$projectId/design.tsx:131
+#: src/routes/_authenticated/$projectId/design.tsx:132
 #: src/routes/_authenticated/$projectId/index.tsx:902
 msgid "Design"
 msgstr "Dizajn"
 
-#: src/routes/_authenticated/$projectId/design.tsx:108
+#: src/routes/_authenticated/$projectId/design.tsx:109
 msgid "Design imported"
 msgstr "Dizajn importovaný"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:407
+#: src/routes/_authenticated/$projectId_.settings.tsx:607
 msgid "Design, create, edit, comment, and view"
 msgstr "Navrhovať, vytvárať, upravovať, komentovať a zobrazovať"
 
@@ -831,7 +855,7 @@ msgstr "Zobrazí mobilný bočný panel."
 #: src/features/editor/components/edit-dialogs.tsx:532
 #: src/features/editor/components/edit-dialogs.tsx:922
 #: src/features/editor/components/edit-dialogs.tsx:1228
-#: src/features/objects/components/object-detail-panel.tsx:480
+#: src/features/objects/components/object-detail-panel.tsx:451
 msgid "Done"
 msgstr "Hotovo"
 
@@ -844,7 +868,8 @@ msgstr "Dvojklikom na stĺpec pridáte obsah"
 msgid "Download"
 msgstr "Stiahnuť"
 
-#: src/routes/_authenticated/$projectId/design.tsx:225
+#: src/routes/_authenticated/$projectId_.settings.tsx:497
+#: src/routes/_authenticated/$projectId/design.tsx:226
 msgid "Download backup first"
 msgstr "Najskôr stiahnite zálohu"
 
@@ -919,11 +944,11 @@ msgstr "Zadajte kód z e-mailu"
 msgid "Enter your authenticator code"
 msgstr "Zadajte kód z autentifikačnej aplikácie"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:328
+#: src/routes/_authenticated/$projectId_.settings.tsx:392
 msgid "Entity ID"
 msgstr "ID entity"
 
-#: src/features/objects/components/object-detail-panel.tsx:343
+#: src/features/objects/components/object-detail-panel.tsx:315
 msgid "Error"
 msgstr "Chyba"
 
@@ -938,9 +963,17 @@ msgstr "Rozbaliť"
 msgid "Expand sidebar"
 msgstr "Rozbaliť bočný panel"
 
-#: src/routes/_authenticated/$projectId/design.tsx:173
+#: src/routes/_authenticated/$projectId_.settings.tsx:438
+msgid "Export data"
+msgstr ""
+
+#: src/routes/_authenticated/$projectId/design.tsx:174
 msgid "Export design"
 msgstr "Exportovať návrh"
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:433
+msgid "Export or import the raw data content in this project."
+msgstr ""
 
 #: ../../../lib/web/src/lib/preference-utils.ts:136
 msgid "Extra large"
@@ -990,7 +1023,7 @@ msgstr "Nepodarilo sa zmazať komentár"
 msgid "Failed to delete link"
 msgstr "Nepodarilo sa zmazať odkaz"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:133
+#: src/routes/_authenticated/$projectId_.settings.tsx:145
 msgid "Failed to delete project"
 msgstr "Nepodarilo sa zmazať projekt"
 
@@ -998,15 +1031,23 @@ msgstr "Nepodarilo sa zmazať projekt"
 msgid "Failed to delete view"
 msgstr "Nepodarilo sa zmazať pohľad"
 
-#: src/routes/_authenticated/$projectId/design.tsx:92
+#: src/routes/_authenticated/$projectId_.settings.tsx:335
+msgid "Failed to export data"
+msgstr ""
+
+#: src/routes/_authenticated/$projectId/design.tsx:93
 msgid "Failed to export design"
 msgstr "Nepodarilo sa exportovať návrh"
 
-#: src/routes/_authenticated/$projectId/design.tsx:113
+#: src/routes/_authenticated/$projectId_.settings.tsx:354
+msgid "Failed to import data"
+msgstr ""
+
+#: src/routes/_authenticated/$projectId/design.tsx:114
 msgid "Failed to import design"
 msgstr "Nepodarilo sa importovať návrh"
 
-#: src/features/objects/components/object-detail-panel.tsx:344
+#: src/features/objects/components/object-detail-panel.tsx:316
 msgid "Failed to load item"
 msgstr "Nepodarilo sa načítať položku"
 
@@ -1015,7 +1056,7 @@ msgstr "Nepodarilo sa načítať položku"
 msgid "Failed to load project"
 msgstr "Nepodarilo sa načítať projekt"
 
-#: src/routes/_authenticated/$projectId/design.tsx:137
+#: src/routes/_authenticated/$projectId/design.tsx:138
 msgid "Failed to load project design"
 msgstr "Nepodarilo sa načítať návrh projektu"
 
@@ -1031,11 +1072,12 @@ msgstr "Nepodarilo sa zlúčiť"
 msgid "Failed to post comment"
 msgstr "Nepodarilo sa odoslať komentár"
 
-#: src/routes/_authenticated/$projectId/design.tsx:281
+#: src/routes/_authenticated/$projectId_.settings.tsx:535
+#: src/routes/_authenticated/$projectId/design.tsx:282
 msgid "Failed to read file"
 msgstr "Nepodarilo sa prečítať súbor"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:489
+#: src/routes/_authenticated/$projectId_.settings.tsx:689
 msgid "Failed to remove access"
 msgstr "Nepodarilo sa odstrániť prístup"
 
@@ -1055,7 +1097,7 @@ msgstr "Nepodarilo sa zmeniť poradie pohľadov"
 msgid "Failed to send verification code"
 msgstr "Nepodarilo sa odoslať overovací kód"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:478
+#: src/routes/_authenticated/$projectId_.settings.tsx:678
 msgid "Failed to set access level"
 msgstr "Nepodarilo sa nastaviť úroveň prístupu"
 
@@ -1070,11 +1112,11 @@ msgstr "Nepodarilo sa prihlásiť na odber"
 msgid "Failed to unsubscribe"
 msgstr "Nepodarilo sa zrušiť odber"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:503
+#: src/routes/_authenticated/$projectId_.settings.tsx:703
 msgid "Failed to update access level"
 msgstr "Nepodarilo sa aktualizovať úroveň prístupu"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:112
+#: ../../../lib/web/src/components/notification-category-button.tsx:111
 msgid "Failed to update category"
 msgstr "Nepodarilo sa aktualizovať kategóriu"
 
@@ -1086,7 +1128,7 @@ msgstr "Nepodarilo sa aktualizovať komentár"
 msgid "Failed to update field"
 msgstr "Nepodarilo sa aktualizovať pole"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:156
+#: src/routes/_authenticated/$projectId_.settings.tsx:168
 msgid "Failed to update project"
 msgstr "Nepodarilo sa aktualizovať projekt"
 
@@ -1109,7 +1151,7 @@ msgstr "Súbory"
 msgid "Find projects"
 msgstr "Nájsť projekty"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:333
+#: src/routes/_authenticated/$projectId_.settings.tsx:397
 msgid "Fingerprint"
 msgstr "Odtlačok"
 
@@ -1137,7 +1179,7 @@ msgstr "Piatok"
 msgid "From"
 msgstr "Od"
 
-#: src/routes/_authenticated/$projectId/design.tsx:322
+#: src/routes/_authenticated/$projectId/design.tsx:323
 msgid "From file"
 msgstr "Zo súboru"
 
@@ -1207,7 +1249,7 @@ msgstr "Domov"
 msgid "Hot"
 msgstr "Populárne"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:299
+#: src/routes/_authenticated/$projectId_.settings.tsx:363
 msgid "Identity"
 msgstr "Identita"
 
@@ -1215,10 +1257,28 @@ msgstr "Identita"
 msgid "Imperial"
 msgstr "Imperiálne"
 
-#: src/routes/_authenticated/$projectId/design.tsx:177
-#: src/routes/_authenticated/$projectId/design.tsx:293
+#: src/routes/_authenticated/$projectId_.settings.tsx:548
+msgid "Import a data configuration"
+msgstr ""
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:443
+#: src/routes/_authenticated/$projectId_.settings.tsx:489
+#: src/routes/_authenticated/$projectId_.settings.tsx:547
+msgid "Import data"
+msgstr ""
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:475
+msgid "Import data?"
+msgstr ""
+
+#: src/routes/_authenticated/$projectId/design.tsx:178
+#: src/routes/_authenticated/$projectId/design.tsx:294
 msgid "Import design"
 msgstr "Importovať návrh"
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:486
+msgid "Importing..."
+msgstr ""
 
 #: ../../../lib/web/src/components/config-drawer.tsx:252
 msgid "Inset"
@@ -1232,7 +1292,8 @@ msgstr "Záujmy"
 msgid "Invalid date"
 msgstr "Neplatný dátum"
 
-#: src/routes/_authenticated/$projectId/design.tsx:277
+#: src/routes/_authenticated/$projectId_.settings.tsx:531
+#: src/routes/_authenticated/$projectId/design.tsx:278
 msgid "Invalid JSON file"
 msgstr "Neplatný JSON súbor"
 
@@ -1240,7 +1301,7 @@ msgstr "Neplatný JSON súbor"
 msgid "Invalid verification code"
 msgstr "Neplatný overovací kód"
 
-#: src/features/objects/components/object-detail-panel.tsx:424
+#: src/features/objects/components/object-detail-panel.tsx:395
 msgid "Item details"
 msgstr "Podrobnosti položky"
 
@@ -1292,11 +1353,11 @@ msgstr "Načítava sa obsah…"
 msgid "Loading diff..."
 msgstr "Načítavajú sa rozdiely…"
 
-#: src/features/objects/components/object-detail-panel.tsx:324
+#: src/features/objects/components/object-detail-panel.tsx:296
 msgid "Loading item"
 msgstr "Načítava sa položka"
 
-#: src/features/objects/components/object-detail-panel.tsx:325
+#: src/features/objects/components/object-detail-panel.tsx:297
 msgid "Loading item details"
 msgstr "Načítavajú sa detaily položky"
 
@@ -1369,7 +1430,7 @@ msgstr "Zlučovací commit"
 msgid "Merge requests"
 msgstr "Žiadosti o zlúčenie"
 
-#: src/features/objects/components/object-detail-panel.tsx:399
+#: src/features/objects/components/object-detail-panel.tsx:371
 msgid "Merge requests ({requestCount})"
 msgstr "Žiadosti o zlúčenie ({requestCount})"
 
@@ -1412,7 +1473,7 @@ msgstr "Môj projekt"
 #: src/features/editor/components/edit-dialogs.tsx:1065
 #: src/features/editor/components/option-dialog.tsx:112
 #: src/features/projects/components/create-project-dialog.tsx:159
-#: src/routes/_authenticated/$projectId_.settings.tsx:304
+#: src/routes/_authenticated/$projectId_.settings.tsx:368
 msgid "Name"
 msgstr "Názov"
 
@@ -1420,7 +1481,8 @@ msgstr "Názov"
 msgid "Name is required"
 msgstr "Názov je povinný"
 
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:288
+#: ../../../lib/web/src/features/errors/general-error.tsx:53
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:294
 msgid "Network error"
 msgstr "Chyba siete"
 
@@ -1448,7 +1510,7 @@ msgstr "Ďalší obrázok"
 msgid "No {parentClassNames} to add to"
 msgstr "Žiadne {parentClassNames} na pridanie"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:411
+#: src/routes/_authenticated/$projectId_.settings.tsx:611
 msgid "No access"
 msgstr "Žiadny prístup"
 
@@ -1540,7 +1602,7 @@ msgstr "Bez stavu"
 msgid "No time zone found."
 msgstr "Nenašlo sa žiadne časové pásmo."
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:148
+#: ../../../lib/web/src/components/notification-category-button.tsx:147
 msgid "No topic record yet — try again after the next notification."
 msgstr "Zatiaľ žiadny záznam témy — skúste to znova po ďalšej notifikácii."
 
@@ -1566,9 +1628,9 @@ msgstr "Žiadne zobrazenia"
 #: src/features/editor/components/edit-dialogs.tsx:782
 #: src/features/objects/components/create-object-dialog.tsx:389
 #: src/features/objects/components/create-object-dialog.tsx:396
-#: src/features/objects/components/object-detail-panel.tsx:548
-#: src/features/objects/components/object-detail-panel.tsx:561
-#: src/features/objects/components/object-detail-panel.tsx:566
+#: src/features/objects/components/object-detail-panel.tsx:512
+#: src/features/objects/components/object-detail-panel.tsx:525
+#: src/features/objects/components/object-detail-panel.tsx:530
 msgid "None"
 msgstr "Žiadne"
 
@@ -1579,6 +1641,10 @@ msgstr "Normálne"
 #: src/features/requests/components/request-panel.tsx:231
 msgid "Not configured"
 msgstr "Nie je nakonfigurované"
+
+#: ../../../lib/web/src/features/errors/general-error.tsx:67
+msgid "Not found"
+msgstr ""
 
 #: ../../../lib/web/src/components/ui/editable-field-row.tsx:146
 msgid "Not set"
@@ -1636,7 +1702,7 @@ msgstr "Otvoriť akcie triedy"
 msgid "Open column actions"
 msgstr "Otvoriť akcie stĺpca"
 
-#: src/routes/_authenticated/$projectId/design.tsx:165
+#: src/routes/_authenticated/$projectId/design.tsx:166
 msgid "Open design actions"
 msgstr "Otvoriť akcie návrhu"
 
@@ -1697,7 +1763,7 @@ msgid "Owner"
 msgstr "Vlastník"
 
 #: src/features/objects/components/create-object-dialog.tsx:381
-#: src/features/objects/components/object-detail-panel.tsx:544
+#: src/features/objects/components/object-detail-panel.tsx:508
 msgid "Parent"
 msgstr "Rodič"
 
@@ -1717,7 +1783,7 @@ msgstr "Prístupové kľúče"
 msgid "Pattern (regex)"
 msgstr "Vzor (regex)"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:352
+#: src/routes/_authenticated/$projectId_.settings.tsx:416
 msgid "Permanently delete this project and all its content."
 msgstr "Natrvalo odstrániť tento projekt a všetok jeho obsah."
 
@@ -1726,7 +1792,8 @@ msgstr "Natrvalo odstrániť tento projekt a všetok jeho obsah."
 msgid "Please add one or more classes to the project design."
 msgstr "Pridajte jednu alebo viac tried do návrhu projektu."
 
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:289
+#: ../../../lib/web/src/features/errors/general-error.tsx:54
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:295
 msgid "Please check your internet connection and try again."
 msgstr "Skontrolujte pripojenie na internet a skúste to znova."
 
@@ -1734,8 +1801,16 @@ msgstr "Skontrolujte pripojenie na internet a skúste to znova."
 msgid "Please select a template"
 msgstr "Vyberte šablónu"
 
+#: ../../../lib/web/src/features/errors/general-error.tsx:83
+msgid "Please try again."
+msgstr ""
+
+#: ../../../lib/web/src/features/errors/general-error.tsx:75
+msgid "Please wait a moment and try again."
+msgstr ""
+
 #: src/features/projects/components/create-project-dialog.tsx:181
-#: src/routes/_authenticated/$projectId_.settings.tsx:321
+#: src/routes/_authenticated/$projectId_.settings.tsx:385
 msgid "Prefix"
 msgstr "Predpona"
 
@@ -1768,23 +1843,23 @@ msgstr "Akcie projektu"
 msgid "Project created"
 msgstr "Projekt vytvorený"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:132
+#: src/routes/_authenticated/$projectId_.settings.tsx:144
 msgid "Project deleted"
 msgstr "Projekt odstránený"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:211
+#: src/routes/_authenticated/$projectId_.settings.tsx:223
 msgid "Project not found"
 msgstr "Projekt sa nenašiel"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:122
+#: src/routes/_authenticated/$projectId_.settings.tsx:134
 msgid "Project settings"
 msgstr "Nastavenia projektu"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:211
+#: src/routes/_authenticated/$projectId_.settings.tsx:223
 msgid "Project unavailable"
 msgstr "Projekt nie je k dispozícii"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:155
+#: src/routes/_authenticated/$projectId_.settings.tsx:167
 msgid "Project updated"
 msgstr "Projekt aktualizovaný"
 
@@ -1795,7 +1870,7 @@ msgstr "Projekt aktualizovaný"
 msgid "Projects"
 msgstr "Projekty"
 
-#: src/features/objects/components/object-detail-panel.tsx:387
+#: src/features/objects/components/object-detail-panel.tsx:359
 msgid "Properties"
 msgstr "Vlastnosti"
 
@@ -1823,8 +1898,8 @@ msgstr "Pripravené na zlúčenie"
 msgid "Rebase and merge"
 msgstr "Rebase a zlúčiť"
 
-#: ../../../lib/web/src/components/search-entity-dialog.tsx:219
-#: ../../../lib/web/src/components/search-entity-page.tsx:194
+#: ../../../lib/web/src/components/search-entity-dialog.tsx:216
+#: ../../../lib/web/src/components/search-entity-page.tsx:191
 msgid "Recommended"
 msgstr "Odporúčané"
 
@@ -1895,7 +1970,7 @@ msgstr "Odstrániť položku"
 msgid "Remove link"
 msgstr "Odstrániť odkaz"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:487
+#: src/routes/_authenticated/$projectId_.settings.tsx:687
 msgid "Removing access..."
 msgstr "Odstraňuje sa prístup..."
 
@@ -1912,15 +1987,15 @@ msgstr "Premenovať stĺpec"
 msgid "Rename this board column"
 msgstr "Premenovať tento stĺpec tabule"
 
-#: src/routes/_authenticated/$projectId/design.tsx:217
+#: src/routes/_authenticated/$projectId/design.tsx:218
 msgid "Replace design"
 msgstr "Nahradiť návrh"
 
-#: src/routes/_authenticated/$projectId/design.tsx:201
+#: src/routes/_authenticated/$projectId/design.tsx:202
 msgid "Replace design?"
 msgstr "Nahradiť návrh?"
 
-#: src/routes/_authenticated/$projectId/design.tsx:214
+#: src/routes/_authenticated/$projectId/design.tsx:215
 msgid "Replacing..."
 msgstr "Nahrádzam..."
 
@@ -1991,7 +2066,7 @@ msgstr "Sobota"
 msgid "Save"
 msgstr "Uložiť"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:154
+#: src/routes/_authenticated/$projectId_.settings.tsx:166
 msgid "Saving..."
 msgstr "Ukladám..."
 
@@ -2041,8 +2116,8 @@ msgstr "Hľadajte, sledujte a triediť toto zobrazenie."
 msgid "Search..."
 msgstr "Hľadať..."
 
-#: ../../../lib/web/src/components/search-entity-dialog.tsx:177
-#: ../../../lib/web/src/components/search-entity-page.tsx:152
+#: ../../../lib/web/src/components/search-entity-dialog.tsx:174
+#: ../../../lib/web/src/components/search-entity-page.tsx:149
 #: ../../../lib/web/src/features/access/access-dialog.tsx:202
 msgid "Searching..."
 msgstr "Hľadám..."
@@ -2120,12 +2195,12 @@ msgstr "Odoslať e-mail"
 msgid "Serif"
 msgstr "Pätkové"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:342
+#: src/routes/_authenticated/$projectId_.settings.tsx:406
 msgid "Server"
 msgstr "Server"
 
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:245
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:271
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:251
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:277
 msgid "Server error"
 msgstr "Chyba servera"
 
@@ -2135,14 +2210,18 @@ msgid "Server rules"
 msgstr "Pravidlá servera"
 
 #: ../../../lib/web/src/lib/api-response-interceptors.ts:209
-msgid "Session expired"
-msgstr "Platnosť relácie vypršala"
+#~ msgid "Session expired"
+#~ msgstr "Platnosť relácie vypršala"
+
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:209
+msgid "Session expired. Please log in again."
+msgstr ""
 
 #: ../../../lib/web/src/components/travelling-picker.tsx:147
 msgid "Set origin and destination"
 msgstr "Nastaviť pôvod a cieľ"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:476
+#: src/routes/_authenticated/$projectId_.settings.tsx:676
 msgid "Setting access..."
 msgstr "Nastavuje sa prístup..."
 
@@ -2151,9 +2230,9 @@ msgstr "Nastavuje sa prístup..."
 #: ../../../lib/web/src/components/layout/nav-user.tsx:84
 #: ../../../lib/web/src/components/layout/nav-user.tsx:148
 #: ../../../lib/web/src/components/layout/nav-user.tsx:198
-#: src/routes/_authenticated/$projectId_.settings.tsx:76
-#: src/routes/_authenticated/$projectId_.settings.tsx:171
-#: src/routes/_authenticated/$projectId_.settings.tsx:194
+#: src/routes/_authenticated/$projectId_.settings.tsx:88
+#: src/routes/_authenticated/$projectId_.settings.tsx:183
+#: src/routes/_authenticated/$projectId_.settings.tsx:206
 #: src/routes/_authenticated/$projectId/index.tsx:912
 msgid "Settings"
 msgstr "Nastavenia"
@@ -2235,8 +2314,8 @@ msgstr "Začnite diskusiu pridaním prvého komentára."
 msgid "Stay tuned though!"
 msgstr "Ale zostaňte naladený!"
 
-#: src/features/objects/components/object-detail-panel.tsx:447
-#: src/features/objects/components/object-detail-panel.tsx:456
+#: src/features/objects/components/object-detail-panel.tsx:418
+#: src/features/objects/components/object-detail-panel.tsx:427
 msgid "Stop watching"
 msgstr "Prestať sledovať"
 
@@ -2319,6 +2398,10 @@ msgstr "Text"
 msgid "That code is incorrect or has expired."
 msgstr "Tento kód je nesprávny alebo vypršal."
 
+#: ../../../lib/web/src/features/errors/general-error.tsx:68
+msgid "The requested content could not be found."
+msgstr ""
+
 #: ../../../lib/web/src/components/config-drawer.tsx:194
 msgid "Theme"
 msgstr "Motív"
@@ -2336,19 +2419,24 @@ msgstr "Táto požiadavka na zlúčenie bola zlúčená do {0}."
 msgid "This merge request is a draft and cannot be merged."
 msgstr "Táto požiadavka na zlúčenie je koncept a nemožno ju zlúčiť."
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:214
+#: src/routes/_authenticated/$projectId_.settings.tsx:226
 msgid "This project could not be loaded right now."
 msgstr "Tento projekt nemožno teraz načítať."
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:214
+#: src/routes/_authenticated/$projectId_.settings.tsx:226
 msgid "This project may have been deleted or you don't have access to it."
 msgstr "Tento projekt mohol byť odstránený alebo k nemu nemáte prístup."
+
+#. placeholder {0}: pendingDataImport?.label
+#: src/routes/_authenticated/$projectId_.settings.tsx:477
+msgid "This will import the data from <0>{0}</0>. Objects will be appended to the existing records. Ensure the current design matches the classes and fields referenced in the file."
+msgstr ""
 
 #: src/features/requests/components/merge-button.tsx:105
 msgid "This will merge \"{source}\" into \"{target}\". This action cannot be undone."
 msgstr "Týmto sa zlúči „{source}“ do „{target}“. Túto akciu nemožno vrátiť."
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:371
+#: src/routes/_authenticated/$projectId_.settings.tsx:454
 msgid "This will permanently delete \"{projectName}\" and all its objects, comments, and attachments. This action cannot be undone."
 msgstr "Týmto sa natrvalo odstráni „{projectName}“ a všetky jeho objekty, komentáre a prílohy. Túto akciu nemožno vrátiť."
 
@@ -2358,7 +2446,7 @@ msgid "This will remove \"{0}\" from your sidebar and stop updates for this proj
 msgstr "Týmto sa odstráni „{0}“ z bočného panela a zastavia sa aktualizácie pre tento projekt."
 
 #. placeholder {0}: pendingImport?.label
-#: src/routes/_authenticated/$projectId/design.tsx:203
+#: src/routes/_authenticated/$projectId/design.tsx:204
 msgid "This will replace the current design with <0>{0}</0>. All existing classes, fields, options, and views will be deleted. Existing objects will not be deleted but may no longer appear in views."
 msgstr "Týmto sa nahradí aktuálny dizajn s <0>{0}</0>. Všetky existujúce triedy, polia, možnosti a zobrazenia budú odstránené. Existujúce objekty nebudú odstránené, ale už sa nemusia zobrazovať v zobrazeniach."
 
@@ -2415,6 +2503,10 @@ msgstr "Prepnúť možnosti zobrazenia"
 msgid "Toggle watched filter"
 msgstr "Prepnúť filter sledovaných"
 
+#: ../../../lib/web/src/features/errors/general-error.tsx:74
+msgid "Too many requests"
+msgstr ""
+
 #: ../../../lib/web/src/components/ui/sort-selector.tsx:45
 msgid "Top"
 msgstr "Hore"
@@ -2427,13 +2519,13 @@ msgstr "Najvyššia úroveň"
 msgid "Travelling"
 msgstr "Cestujem"
 
-#: ../../../lib/web/src/components/search-entity-dialog.tsx:193
-#: ../../../lib/web/src/components/search-entity-page.tsx:168
+#: ../../../lib/web/src/components/search-entity-dialog.tsx:190
+#: ../../../lib/web/src/components/search-entity-page.tsx:165
 msgid "Try adjusting your search terms"
 msgstr "Skúste upraviť hľadané výrazy"
 
-#: ../../../lib/web/src/features/errors/general-error.tsx:128
-#: ../../../lib/web/src/features/errors/general-error.tsx:168
+#: ../../../lib/web/src/features/errors/general-error.tsx:140
+#: ../../../lib/web/src/features/errors/general-error.tsx:180
 #: ../../../lib/web/src/features/errors/maintenance-error.tsx:19
 msgid "Try again"
 msgstr "Skúsiť znova"
@@ -2459,7 +2551,7 @@ msgstr "Píšte pre vyhľadanie používateľov"
 msgid "Type to search..."
 msgstr "Píšte pre vyhľadanie..."
 
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:267
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:273
 msgid "Unable to connect to remote server"
 msgstr "Nepodarilo sa pripojiť k vzdialenému serveru"
 
@@ -2468,7 +2560,7 @@ msgstr "Nepodarilo sa pripojiť k vzdialenému serveru"
 msgid "Unable to redirect to login. Please try again."
 msgstr "Nemožno presmerovať na prihlásenie. Skúste to znova."
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:156
+#: ../../../lib/web/src/components/notification-category-button.tsx:155
 msgid "Unassigned"
 msgstr "Nepriradené"
 
@@ -2515,7 +2607,7 @@ msgstr "Neoverené"
 msgid "Updated"
 msgstr "Aktualizované"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:501
+#: src/routes/_authenticated/$projectId_.settings.tsx:701
 msgid "Updating access..."
 msgstr "Aktualizuje sa prístup..."
 
@@ -2524,7 +2616,8 @@ msgstr "Aktualizuje sa prístup..."
 msgid "Upload"
 msgstr "Nahrať"
 
-#: src/routes/_authenticated/$projectId/design.tsx:336
+#: src/routes/_authenticated/$projectId_.settings.tsx:566
+#: src/routes/_authenticated/$projectId/design.tsx:337
 msgid "Upload .json file"
 msgstr "Nahrať súbor .json"
 
@@ -2582,7 +2675,7 @@ msgstr "Zobraziť všetko"
 msgid "View all notifications"
 msgstr "Zobraziť všetky oznámenia"
 
-#: src/features/objects/components/object-detail-panel.tsx:425
+#: src/features/objects/components/object-detail-panel.tsx:396
 msgid "View and edit item details"
 msgstr "Zobraziť a upraviť podrobnosti položky"
 
@@ -2590,7 +2683,7 @@ msgstr "Zobraziť a upraviť podrobnosti položky"
 msgid "View controls"
 msgstr "Ovládacie prvky zobrazenia"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:410
+#: src/routes/_authenticated/$projectId_.settings.tsx:610
 msgid "View only"
 msgstr "Iba zobrazenie"
 
@@ -2602,8 +2695,8 @@ msgstr "Možnosti zobrazenia"
 msgid "Views"
 msgstr "Zobrazenia"
 
-#: src/features/objects/components/object-detail-panel.tsx:447
-#: src/features/objects/components/object-detail-panel.tsx:456
+#: src/features/objects/components/object-detail-panel.tsx:418
+#: src/features/objects/components/object-detail-panel.tsx:427
 msgid "Watch"
 msgstr "Sledovať"
 
@@ -2626,6 +2719,10 @@ msgstr "Webová stránka je v údržbe!"
 #: ../../../lib/web/src/lib/preference-utils.ts:61
 msgid "Wednesday"
 msgstr "Streda"
+
+#: ../../../lib/web/src/features/errors/general-error.tsx:61
+msgid "You do not have access to this section."
+msgstr ""
 
 #: src/routes/_authenticated/$projectId/index.tsx:102
 msgid "You don't have access to this project."

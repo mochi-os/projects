@@ -101,6 +101,10 @@ const endpoints = {
     designExport: (projectId: string) => `${projectId}/-/design/export`,
     designImport: (projectId: string) => `${projectId}/-/design/import`,
 
+    // Data import/export endpoints
+    dataExport: (projectId: string) => `${projectId}/-/data/export`,
+    dataImport: (projectId: string) => `${projectId}/-/data/import`,
+
     // View endpoints
     views: (projectId: string) => `${projectId}/-/views`,
     viewCreate: (projectId: string) => `${projectId}/-/views/create`,

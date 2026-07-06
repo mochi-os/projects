@@ -23,7 +23,7 @@ msgstr "[सेट नहीं]"
 
 #. placeholder {0}: project.project.name
 #: src/routes/_authenticated/$projectId/design.tsx:63
-#: src/routes/_authenticated/$projectId/design.tsx:156
+#: src/routes/_authenticated/$projectId/design.tsx:157
 msgid "{0} - Design"
 msgstr "{0} - डिज़ाइन"
 
@@ -39,8 +39,8 @@ msgid "{0} files changed"
 msgstr "{0} फ़ाइलें बदलीं"
 
 #. placeholder {0}: project.project.name
-#: src/routes/_authenticated/$projectId_.settings.tsx:122
-#: src/routes/_authenticated/$projectId_.settings.tsx:226
+#: src/routes/_authenticated/$projectId_.settings.tsx:134
+#: src/routes/_authenticated/$projectId_.settings.tsx:238
 msgid "{0} settings"
 msgstr "{0} सेटिंग्स"
 
@@ -69,9 +69,13 @@ msgstr "24 घंटे"
 msgid "Absolute (date and time)"
 msgstr "निरपेक्ष (दिनांक और समय)"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:77
+#: src/routes/_authenticated/$projectId_.settings.tsx:89
 msgid "Access"
 msgstr "एक्सेस"
+
+#: ../../../lib/web/src/features/errors/general-error.tsx:60
+msgid "Access denied"
+msgstr ""
 
 #: ../../../lib/web/src/features/errors/forbidden.tsx:16
 msgid "Access Forbidden"
@@ -81,19 +85,19 @@ msgstr "एक्सेस वर्जित"
 msgid "Access level"
 msgstr "एक्सेस स्तर"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:502
+#: src/routes/_authenticated/$projectId_.settings.tsx:702
 msgid "Access level updated"
 msgstr "एक्सेस स्तर अपडेट किया गया"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:513
+#: src/routes/_authenticated/$projectId_.settings.tsx:713
 msgid "Access Management"
 msgstr "एक्सेस प्रबंधन"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:488
+#: src/routes/_authenticated/$projectId_.settings.tsx:688
 msgid "Access removed"
 msgstr "एक्सेस हटाया गया"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:477
+#: src/routes/_authenticated/$projectId_.settings.tsx:677
 msgid "Access set for {subjectName}"
 msgstr "{subjectName} के लिए एक्सेस सेट किया गया"
 
@@ -113,7 +117,7 @@ msgstr "अकाउंट प्रकार"
 msgid "Account verified"
 msgstr "अकाउंट सत्यापित"
 
-#: src/features/objects/components/object-detail-panel.tsx:406
+#: src/features/objects/components/object-detail-panel.tsx:378
 msgid "Activity"
 msgstr "गतिविधि"
 
@@ -188,7 +192,7 @@ msgstr "नया अकाउंट जोड़ें"
 msgid "Add option"
 msgstr "विकल्प जोड़ें"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:520
+#: src/routes/_authenticated/$projectId_.settings.tsx:720
 msgid "Add rule"
 msgstr "नियम जोड़ें"
 
@@ -244,16 +248,20 @@ msgstr "इसके अनुसार सॉर्ट करने की अ�
 msgid "An error occurred"
 msgstr "एक त्रुटि हुई"
 
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:241
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:247
 msgid "An unexpected error occurred"
 msgstr "एक अप्रत्याशित त्रुटि हुई"
+
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:233
+msgid "Another change was made at the same time. Please refresh to see the latest version."
+msgstr ""
 
 #. placeholder {0}: deleteTarget?.name
 #: src/features/objects/components/object-attachments.tsx:228
 msgid "Are you sure you want to delete \"{0}\"?"
 msgstr "क्या आप \"{0}\" को हटाना चाहते हैं?"
 
-#: src/features/objects/components/object-detail-panel.tsx:656
+#: src/features/objects/components/object-detail-panel.tsx:618
 msgid "Are you sure you want to delete \"{title}\"? This action cannot be undone."
 msgstr "क्या आप \"{title}\" को हटाना चाहते हैं? यह क्रिया पूर्ववत नहीं की जा सकती।"
 
@@ -314,11 +322,11 @@ msgstr "वापस"
 msgid "Back to home"
 msgstr "होम पर वापस जाएँ"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:173
-#: src/routes/_authenticated/$projectId_.settings.tsx:196
-#: src/routes/_authenticated/$projectId_.settings.tsx:228
-#: src/routes/_authenticated/$projectId/design.tsx:133
-#: src/routes/_authenticated/$projectId/design.tsx:158
+#: src/routes/_authenticated/$projectId_.settings.tsx:185
+#: src/routes/_authenticated/$projectId_.settings.tsx:208
+#: src/routes/_authenticated/$projectId_.settings.tsx:240
+#: src/routes/_authenticated/$projectId/design.tsx:134
+#: src/routes/_authenticated/$projectId/design.tsx:159
 msgid "Back to project"
 msgstr "प्रोजेक्ट पर वापस"
 
@@ -349,7 +357,7 @@ msgstr "रुचि बढ़ाएँ"
 msgid "Border colour"
 msgstr "बॉर्डर रंग"
 
-#: src/routes/_authenticated/$projectId/design.tsx:299
+#: src/routes/_authenticated/$projectId/design.tsx:300
 msgid "Built-in templates"
 msgstr "बिल्ट-इन टेम्पलेट्स"
 
@@ -370,7 +378,8 @@ msgstr "इसका चाइल्ड हो सकता है"
 #: src/features/editor/components/option-dialog.tsx:146
 #: src/features/objects/components/comment-thread.tsx:175
 #: src/features/projects/components/create-project-dialog.tsx:219
-#: src/routes/_authenticated/$projectId/design.tsx:343
+#: src/routes/_authenticated/$projectId_.settings.tsx:573
+#: src/routes/_authenticated/$projectId/design.tsx:344
 #: src/routes/_authenticated/$projectId/index.tsx:945
 msgid "Cancel"
 msgstr "रद्द करें"
@@ -384,12 +393,12 @@ msgstr "उत्तर रद्द करें"
 msgid "Cannot merge automatically"
 msgstr "स्वचालित रूप से मर्ज नहीं किया जा सकता"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:144
+#: ../../../lib/web/src/components/notification-category-button.tsx:143
 msgid "Category for this notification"
 msgstr "इस नोटिफ़िकेशन की श्रेणी"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:125
-#: ../../../lib/web/src/components/notification-category-button.tsx:136
+#: ../../../lib/web/src/components/notification-category-button.tsx:124
+#: ../../../lib/web/src/components/notification-category-button.tsx:135
 msgid "Change notification category"
 msgstr "नोटिफ़िकेशन श्रेणी बदलें"
 
@@ -523,12 +532,12 @@ msgstr "आरामदायक"
 msgid "Coming Soon!"
 msgstr "जल्द आ रहा है!"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:409
+#: src/routes/_authenticated/$projectId_.settings.tsx:609
 msgid "Comment and view"
 msgstr "टिप्पणी और देखें"
 
 #. placeholder {0}: data.comment_count || 0
-#: src/features/objects/components/object-detail-panel.tsx:392
+#: src/features/objects/components/object-detail-panel.tsx:364
 msgid "Comments ({0})"
 msgstr "टिप्पणियाँ ({0})"
 
@@ -570,7 +579,7 @@ msgstr "जारी रखें"
 msgid "Continue with {label}"
 msgstr "{label} के साथ जारी रखें"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:514
+#: src/routes/_authenticated/$projectId_.settings.tsx:714
 msgid "Control who can view and interact with this project"
 msgstr "नियंत्रित करें कि कौन इस प्रोजेक्ट को देख और इसके साथ इंटरैक्ट कर सकता है"
 
@@ -578,7 +587,7 @@ msgstr "नियंत्रित करें कि कौन इस प्�
 msgid "Copy"
 msgstr "कॉपी करें"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:300
+#: src/routes/_authenticated/$projectId_.settings.tsx:364
 msgid "Core information about this project"
 msgstr "इस प्रोजेक्ट के बारे में मुख्य जानकारी"
 
@@ -627,7 +636,7 @@ msgstr "नया आइटम बनाएँ"
 msgid "Create project"
 msgstr "प्रोजेक्ट बनाएँ"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:408
+#: src/routes/_authenticated/$projectId_.settings.tsx:608
 msgid "Create, edit, comment, and view"
 msgstr "बनाएँ, संपादित करें, टिप्पणी करें और देखें"
 
@@ -662,6 +671,21 @@ msgstr "डार्क"
 msgid "Dark mode"
 msgstr "डार्क मोड"
 
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:232
+msgid "Data conflict"
+msgstr ""
+
+#. placeholder {0}: response.data?.objects ?? 0
+#. placeholder {1}: response.data?.comments ?? 0
+#. placeholder {2}: response.data?.links ?? 0
+#: src/routes/_authenticated/$projectId_.settings.tsx:349
+msgid "Data imported ({0} objects, {1} comments, {2} links)"
+msgstr ""
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:432
+msgid "Data management"
+msgstr ""
+
 #: src/features/editor/components/add-dialogs.tsx:137
 msgid "Date"
 msgstr "दिनांक"
@@ -687,9 +711,9 @@ msgstr "डिफ़ॉल्ट सॉर्ट"
 #: src/features/objects/components/object-attachments.tsx:182
 #: src/features/objects/components/object-attachments.tsx:187
 #: src/features/objects/components/object-attachments.tsx:229
-#: src/features/objects/components/object-detail-panel.tsx:657
+#: src/features/objects/components/object-detail-panel.tsx:619
 #: src/features/requests/components/request-panel.tsx:132
-#: src/routes/_authenticated/$projectId_.settings.tsx:361
+#: src/routes/_authenticated/$projectId_.settings.tsx:425
 msgid "Delete"
 msgstr "हटाएँ"
 
@@ -713,9 +737,9 @@ msgstr "टिप्पणी हटाएँ"
 msgid "Delete field"
 msgstr "फ़ील्ड हटाएँ"
 
-#: src/features/objects/components/object-detail-panel.tsx:466
-#: src/features/objects/components/object-detail-panel.tsx:471
-#: src/features/objects/components/object-detail-panel.tsx:655
+#: src/features/objects/components/object-detail-panel.tsx:437
+#: src/features/objects/components/object-detail-panel.tsx:442
+#: src/features/objects/components/object-detail-panel.tsx:617
 msgid "Delete item"
 msgstr "आइटम हटाएँ"
 
@@ -739,12 +763,12 @@ msgstr "विकल्प हटाएँ"
 msgid "Delete option {0}"
 msgstr "विकल्प {0} हटाएँ"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:351
-#: src/routes/_authenticated/$projectId_.settings.tsx:372
+#: src/routes/_authenticated/$projectId_.settings.tsx:415
+#: src/routes/_authenticated/$projectId_.settings.tsx:455
 msgid "Delete project"
 msgstr "प्रोजेक्ट हटाएँ"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:370
+#: src/routes/_authenticated/$projectId_.settings.tsx:453
 msgid "Delete project?"
 msgstr "प्रोजेक्ट हटाएँ?"
 
@@ -756,7 +780,7 @@ msgstr "व्यू हटाएँ"
 msgid "Delete your account on the old server"
 msgstr "पुराने सर्वर पर अपना खाता हटाएं"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:131
+#: src/routes/_authenticated/$projectId_.settings.tsx:143
 msgid "Deleting project..."
 msgstr "प्रोजेक्ट हटाया जा रहा है..."
 
@@ -769,21 +793,21 @@ msgid "Descending"
 msgstr "अवरोही"
 
 #: src/features/requests/components/request-panel.tsx:287
-#: src/routes/_authenticated/$projectId_.settings.tsx:313
+#: src/routes/_authenticated/$projectId_.settings.tsx:377
 msgid "Description"
 msgstr "विवरण"
 
 #: src/routes/_authenticated/$projectId/design.tsx:63
-#: src/routes/_authenticated/$projectId/design.tsx:131
+#: src/routes/_authenticated/$projectId/design.tsx:132
 #: src/routes/_authenticated/$projectId/index.tsx:902
 msgid "Design"
 msgstr "डिज़ाइन"
 
-#: src/routes/_authenticated/$projectId/design.tsx:108
+#: src/routes/_authenticated/$projectId/design.tsx:109
 msgid "Design imported"
 msgstr "डिज़ाइन आयात किया गया"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:407
+#: src/routes/_authenticated/$projectId_.settings.tsx:607
 msgid "Design, create, edit, comment, and view"
 msgstr "डिज़ाइन करें, बनाएँ, संपादित करें, टिप्पणी करें और देखें"
 
@@ -831,7 +855,7 @@ msgstr "मोबाइल साइडबार प्रदर्शित क
 #: src/features/editor/components/edit-dialogs.tsx:532
 #: src/features/editor/components/edit-dialogs.tsx:922
 #: src/features/editor/components/edit-dialogs.tsx:1228
-#: src/features/objects/components/object-detail-panel.tsx:480
+#: src/features/objects/components/object-detail-panel.tsx:451
 msgid "Done"
 msgstr "पूर्ण"
 
@@ -844,7 +868,8 @@ msgstr "सामग्री जोड़ने के लिए कॉलम �
 msgid "Download"
 msgstr "डाउनलोड"
 
-#: src/routes/_authenticated/$projectId/design.tsx:225
+#: src/routes/_authenticated/$projectId_.settings.tsx:497
+#: src/routes/_authenticated/$projectId/design.tsx:226
 msgid "Download backup first"
 msgstr "पहले बैकअप डाउनलोड करें"
 
@@ -919,11 +944,11 @@ msgstr "अपने ईमेल से कोड दर्ज करें"
 msgid "Enter your authenticator code"
 msgstr "अपना प्रमाणक कोड दर्ज करें"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:328
+#: src/routes/_authenticated/$projectId_.settings.tsx:392
 msgid "Entity ID"
 msgstr "एंटिटी ID"
 
-#: src/features/objects/components/object-detail-panel.tsx:343
+#: src/features/objects/components/object-detail-panel.tsx:315
 msgid "Error"
 msgstr "त्रुटि"
 
@@ -938,9 +963,17 @@ msgstr "विस्तृत करें"
 msgid "Expand sidebar"
 msgstr "साइडबार विस्तृत करें"
 
-#: src/routes/_authenticated/$projectId/design.tsx:173
+#: src/routes/_authenticated/$projectId_.settings.tsx:438
+msgid "Export data"
+msgstr ""
+
+#: src/routes/_authenticated/$projectId/design.tsx:174
 msgid "Export design"
 msgstr "डिज़ाइन एक्सपोर्ट करें"
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:433
+msgid "Export or import the raw data content in this project."
+msgstr ""
 
 #: ../../../lib/web/src/lib/preference-utils.ts:136
 msgid "Extra large"
@@ -990,7 +1023,7 @@ msgstr "टिप्पणी हटाने में विफल"
 msgid "Failed to delete link"
 msgstr "लिंक हटाने में विफल"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:133
+#: src/routes/_authenticated/$projectId_.settings.tsx:145
 msgid "Failed to delete project"
 msgstr "प्रोजेक्ट हटाने में विफल"
 
@@ -998,15 +1031,23 @@ msgstr "प्रोजेक्ट हटाने में विफल"
 msgid "Failed to delete view"
 msgstr "व्यू हटाने में विफल"
 
-#: src/routes/_authenticated/$projectId/design.tsx:92
+#: src/routes/_authenticated/$projectId_.settings.tsx:335
+msgid "Failed to export data"
+msgstr ""
+
+#: src/routes/_authenticated/$projectId/design.tsx:93
 msgid "Failed to export design"
 msgstr "डिज़ाइन एक्सपोर्ट करने में विफल"
 
-#: src/routes/_authenticated/$projectId/design.tsx:113
+#: src/routes/_authenticated/$projectId_.settings.tsx:354
+msgid "Failed to import data"
+msgstr ""
+
+#: src/routes/_authenticated/$projectId/design.tsx:114
 msgid "Failed to import design"
 msgstr "डिज़ाइन इम्पोर्ट करने में विफल"
 
-#: src/features/objects/components/object-detail-panel.tsx:344
+#: src/features/objects/components/object-detail-panel.tsx:316
 msgid "Failed to load item"
 msgstr "आइटम लोड करने में विफल"
 
@@ -1015,7 +1056,7 @@ msgstr "आइटम लोड करने में विफल"
 msgid "Failed to load project"
 msgstr "प्रोजेक्ट लोड करने में विफल"
 
-#: src/routes/_authenticated/$projectId/design.tsx:137
+#: src/routes/_authenticated/$projectId/design.tsx:138
 msgid "Failed to load project design"
 msgstr "प्रोजेक्ट डिज़ाइन लोड करने में विफल"
 
@@ -1031,11 +1072,12 @@ msgstr "मर्ज करने में विफल"
 msgid "Failed to post comment"
 msgstr "टिप्पणी पोस्ट करने में विफल"
 
-#: src/routes/_authenticated/$projectId/design.tsx:281
+#: src/routes/_authenticated/$projectId_.settings.tsx:535
+#: src/routes/_authenticated/$projectId/design.tsx:282
 msgid "Failed to read file"
 msgstr "फ़ाइल पढ़ने में विफल"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:489
+#: src/routes/_authenticated/$projectId_.settings.tsx:689
 msgid "Failed to remove access"
 msgstr "एक्सेस हटाने में विफल"
 
@@ -1055,7 +1097,7 @@ msgstr "व्यू पुनः क्रमित करने में व�
 msgid "Failed to send verification code"
 msgstr "सत्यापन कोड भेजने में विफल"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:478
+#: src/routes/_authenticated/$projectId_.settings.tsx:678
 msgid "Failed to set access level"
 msgstr "एक्सेस स्तर सेट करने में विफल"
 
@@ -1070,11 +1112,11 @@ msgstr "सब्सक्राइब करने में विफल"
 msgid "Failed to unsubscribe"
 msgstr "अनसब्सक्राइब करने में विफल"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:503
+#: src/routes/_authenticated/$projectId_.settings.tsx:703
 msgid "Failed to update access level"
 msgstr "एक्सेस स्तर अपडेट करने में विफल"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:112
+#: ../../../lib/web/src/components/notification-category-button.tsx:111
 msgid "Failed to update category"
 msgstr "श्रेणी अपडेट करने में विफल"
 
@@ -1086,7 +1128,7 @@ msgstr "टिप्पणी अपडेट करने में विफ�
 msgid "Failed to update field"
 msgstr "फ़ील्ड अपडेट करने में विफल"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:156
+#: src/routes/_authenticated/$projectId_.settings.tsx:168
 msgid "Failed to update project"
 msgstr "प्रोजेक्ट अपडेट करने में विफल"
 
@@ -1109,7 +1151,7 @@ msgstr "फ़ाइलें"
 msgid "Find projects"
 msgstr "प्रोजेक्ट खोजें"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:333
+#: src/routes/_authenticated/$projectId_.settings.tsx:397
 msgid "Fingerprint"
 msgstr "फिंगरप्रिंट"
 
@@ -1137,7 +1179,7 @@ msgstr "शुक्रवार"
 msgid "From"
 msgstr "से"
 
-#: src/routes/_authenticated/$projectId/design.tsx:322
+#: src/routes/_authenticated/$projectId/design.tsx:323
 msgid "From file"
 msgstr "फ़ाइल से"
 
@@ -1207,7 +1249,7 @@ msgstr "होम"
 msgid "Hot"
 msgstr "हॉट"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:299
+#: src/routes/_authenticated/$projectId_.settings.tsx:363
 msgid "Identity"
 msgstr "पहचान"
 
@@ -1215,10 +1257,28 @@ msgstr "पहचान"
 msgid "Imperial"
 msgstr "इम्पीरियल"
 
-#: src/routes/_authenticated/$projectId/design.tsx:177
-#: src/routes/_authenticated/$projectId/design.tsx:293
+#: src/routes/_authenticated/$projectId_.settings.tsx:548
+msgid "Import a data configuration"
+msgstr ""
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:443
+#: src/routes/_authenticated/$projectId_.settings.tsx:489
+#: src/routes/_authenticated/$projectId_.settings.tsx:547
+msgid "Import data"
+msgstr ""
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:475
+msgid "Import data?"
+msgstr ""
+
+#: src/routes/_authenticated/$projectId/design.tsx:178
+#: src/routes/_authenticated/$projectId/design.tsx:294
 msgid "Import design"
 msgstr "डिज़ाइन इम्पोर्ट करें"
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:486
+msgid "Importing..."
+msgstr ""
 
 #: ../../../lib/web/src/components/config-drawer.tsx:252
 msgid "Inset"
@@ -1232,7 +1292,8 @@ msgstr "रुचियाँ"
 msgid "Invalid date"
 msgstr "अमान्य तारीख"
 
-#: src/routes/_authenticated/$projectId/design.tsx:277
+#: src/routes/_authenticated/$projectId_.settings.tsx:531
+#: src/routes/_authenticated/$projectId/design.tsx:278
 msgid "Invalid JSON file"
 msgstr "अमान्य JSON फ़ाइल"
 
@@ -1240,7 +1301,7 @@ msgstr "अमान्य JSON फ़ाइल"
 msgid "Invalid verification code"
 msgstr "अमान्य सत्यापन कोड"
 
-#: src/features/objects/components/object-detail-panel.tsx:424
+#: src/features/objects/components/object-detail-panel.tsx:395
 msgid "Item details"
 msgstr "आइटम विवरण"
 
@@ -1292,11 +1353,11 @@ msgstr "सामग्री लोड हो रही है…"
 msgid "Loading diff..."
 msgstr "अंतर लोड हो रहा है..."
 
-#: src/features/objects/components/object-detail-panel.tsx:324
+#: src/features/objects/components/object-detail-panel.tsx:296
 msgid "Loading item"
 msgstr "आइटम लोड हो रहा है"
 
-#: src/features/objects/components/object-detail-panel.tsx:325
+#: src/features/objects/components/object-detail-panel.tsx:297
 msgid "Loading item details"
 msgstr "आइटम विवरण लोड हो रहे हैं"
 
@@ -1369,7 +1430,7 @@ msgstr "मर्ज कमिट"
 msgid "Merge requests"
 msgstr "मर्ज रिक्वेस्ट्स"
 
-#: src/features/objects/components/object-detail-panel.tsx:399
+#: src/features/objects/components/object-detail-panel.tsx:371
 msgid "Merge requests ({requestCount})"
 msgstr "मर्ज अनुरोध ({requestCount})"
 
@@ -1412,7 +1473,7 @@ msgstr "मेरा प्रोजेक्ट"
 #: src/features/editor/components/edit-dialogs.tsx:1065
 #: src/features/editor/components/option-dialog.tsx:112
 #: src/features/projects/components/create-project-dialog.tsx:159
-#: src/routes/_authenticated/$projectId_.settings.tsx:304
+#: src/routes/_authenticated/$projectId_.settings.tsx:368
 msgid "Name"
 msgstr "नाम"
 
@@ -1420,7 +1481,8 @@ msgstr "नाम"
 msgid "Name is required"
 msgstr "नाम आवश्यक है"
 
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:288
+#: ../../../lib/web/src/features/errors/general-error.tsx:53
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:294
 msgid "Network error"
 msgstr "नेटवर्क त्रुटि"
 
@@ -1448,7 +1510,7 @@ msgstr "अगली इमेज"
 msgid "No {parentClassNames} to add to"
 msgstr "जोड़ने के लिए कोई {parentClassNames} नहीं"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:411
+#: src/routes/_authenticated/$projectId_.settings.tsx:611
 msgid "No access"
 msgstr "कोई एक्सेस नहीं"
 
@@ -1540,7 +1602,7 @@ msgstr "कोई स्थिति नहीं"
 msgid "No time zone found."
 msgstr "कोई टाइम ज़ोन नहीं मिला।"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:148
+#: ../../../lib/web/src/components/notification-category-button.tsx:147
 msgid "No topic record yet — try again after the next notification."
 msgstr "अभी तक कोई टॉपिक रिकॉर्ड नहीं — अगले नोटिफ़िकेशन के बाद फिर से प्रयास करें।"
 
@@ -1566,9 +1628,9 @@ msgstr "कोई व्यू नहीं"
 #: src/features/editor/components/edit-dialogs.tsx:782
 #: src/features/objects/components/create-object-dialog.tsx:389
 #: src/features/objects/components/create-object-dialog.tsx:396
-#: src/features/objects/components/object-detail-panel.tsx:548
-#: src/features/objects/components/object-detail-panel.tsx:561
-#: src/features/objects/components/object-detail-panel.tsx:566
+#: src/features/objects/components/object-detail-panel.tsx:512
+#: src/features/objects/components/object-detail-panel.tsx:525
+#: src/features/objects/components/object-detail-panel.tsx:530
 msgid "None"
 msgstr "कोई नहीं"
 
@@ -1579,6 +1641,10 @@ msgstr "सामान्य"
 #: src/features/requests/components/request-panel.tsx:231
 msgid "Not configured"
 msgstr "कॉन्फ़िगर नहीं किया गया"
+
+#: ../../../lib/web/src/features/errors/general-error.tsx:67
+msgid "Not found"
+msgstr ""
 
 #: ../../../lib/web/src/components/ui/editable-field-row.tsx:146
 msgid "Not set"
@@ -1636,7 +1702,7 @@ msgstr "क्लास क्रियाएँ खोलें"
 msgid "Open column actions"
 msgstr "कॉलम क्रियाएँ खोलें"
 
-#: src/routes/_authenticated/$projectId/design.tsx:165
+#: src/routes/_authenticated/$projectId/design.tsx:166
 msgid "Open design actions"
 msgstr "डिज़ाइन क्रियाएँ खोलें"
 
@@ -1697,7 +1763,7 @@ msgid "Owner"
 msgstr "स्वामी"
 
 #: src/features/objects/components/create-object-dialog.tsx:381
-#: src/features/objects/components/object-detail-panel.tsx:544
+#: src/features/objects/components/object-detail-panel.tsx:508
 msgid "Parent"
 msgstr "पैरेंट"
 
@@ -1717,7 +1783,7 @@ msgstr "पासकीज़"
 msgid "Pattern (regex)"
 msgstr "पैटर्न (regex)"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:352
+#: src/routes/_authenticated/$projectId_.settings.tsx:416
 msgid "Permanently delete this project and all its content."
 msgstr "इस प्रोजेक्ट और इसकी सभी सामग्री को स्थायी रूप से हटाएँ।"
 
@@ -1726,7 +1792,8 @@ msgstr "इस प्रोजेक्ट और इसकी सभी सा�
 msgid "Please add one or more classes to the project design."
 msgstr "कृपया प्रोजेक्ट डिज़ाइन में एक या अधिक क्लासेज़ जोड़ें।"
 
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:289
+#: ../../../lib/web/src/features/errors/general-error.tsx:54
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:295
 msgid "Please check your internet connection and try again."
 msgstr "कृपया अपना इंटरनेट कनेक्शन जाँचें और फिर से प्रयास करें।"
 
@@ -1734,8 +1801,16 @@ msgstr "कृपया अपना इंटरनेट कनेक्शन
 msgid "Please select a template"
 msgstr "कृपया एक टेम्पलेट चुनें"
 
+#: ../../../lib/web/src/features/errors/general-error.tsx:83
+msgid "Please try again."
+msgstr ""
+
+#: ../../../lib/web/src/features/errors/general-error.tsx:75
+msgid "Please wait a moment and try again."
+msgstr ""
+
 #: src/features/projects/components/create-project-dialog.tsx:181
-#: src/routes/_authenticated/$projectId_.settings.tsx:321
+#: src/routes/_authenticated/$projectId_.settings.tsx:385
 msgid "Prefix"
 msgstr "उपसर्ग"
 
@@ -1768,23 +1843,23 @@ msgstr "प्रोजेक्ट क्रियाएँ"
 msgid "Project created"
 msgstr "प्रोजेक्ट बनाया गया"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:132
+#: src/routes/_authenticated/$projectId_.settings.tsx:144
 msgid "Project deleted"
 msgstr "प्रोजेक्ट हटाया गया"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:211
+#: src/routes/_authenticated/$projectId_.settings.tsx:223
 msgid "Project not found"
 msgstr "प्रोजेक्ट नहीं मिला"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:122
+#: src/routes/_authenticated/$projectId_.settings.tsx:134
 msgid "Project settings"
 msgstr "प्रोजेक्ट सेटिंग्स"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:211
+#: src/routes/_authenticated/$projectId_.settings.tsx:223
 msgid "Project unavailable"
 msgstr "प्रोजेक्ट अनुपलब्ध"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:155
+#: src/routes/_authenticated/$projectId_.settings.tsx:167
 msgid "Project updated"
 msgstr "प्रोजेक्ट अपडेट हो गया"
 
@@ -1795,7 +1870,7 @@ msgstr "प्रोजेक्ट अपडेट हो गया"
 msgid "Projects"
 msgstr "प्रोजेक्ट्स"
 
-#: src/features/objects/components/object-detail-panel.tsx:387
+#: src/features/objects/components/object-detail-panel.tsx:359
 msgid "Properties"
 msgstr "गुण"
 
@@ -1823,8 +1898,8 @@ msgstr "मर्ज के लिए तैयार"
 msgid "Rebase and merge"
 msgstr "रिबेस और मर्ज"
 
-#: ../../../lib/web/src/components/search-entity-dialog.tsx:219
-#: ../../../lib/web/src/components/search-entity-page.tsx:194
+#: ../../../lib/web/src/components/search-entity-dialog.tsx:216
+#: ../../../lib/web/src/components/search-entity-page.tsx:191
 msgid "Recommended"
 msgstr "सुझाया गया"
 
@@ -1895,7 +1970,7 @@ msgstr "आइटम हटाएँ"
 msgid "Remove link"
 msgstr "लिंक हटाएँ"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:487
+#: src/routes/_authenticated/$projectId_.settings.tsx:687
 msgid "Removing access..."
 msgstr "पहुँच हटाई जा रही है..."
 
@@ -1912,15 +1987,15 @@ msgstr "कॉलम का नाम बदलें"
 msgid "Rename this board column"
 msgstr "इस बोर्ड कॉलम का नाम बदलें"
 
-#: src/routes/_authenticated/$projectId/design.tsx:217
+#: src/routes/_authenticated/$projectId/design.tsx:218
 msgid "Replace design"
 msgstr "डिज़ाइन बदलें"
 
-#: src/routes/_authenticated/$projectId/design.tsx:201
+#: src/routes/_authenticated/$projectId/design.tsx:202
 msgid "Replace design?"
 msgstr "डिज़ाइन बदलें?"
 
-#: src/routes/_authenticated/$projectId/design.tsx:214
+#: src/routes/_authenticated/$projectId/design.tsx:215
 msgid "Replacing..."
 msgstr "बदला जा रहा है..."
 
@@ -1991,7 +2066,7 @@ msgstr "शनिवार"
 msgid "Save"
 msgstr "सेव करें"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:154
+#: src/routes/_authenticated/$projectId_.settings.tsx:166
 msgid "Saving..."
 msgstr "सेव हो रहा है..."
 
@@ -2041,8 +2116,8 @@ msgstr "इस व्यू को खोजें, देखें और स�
 msgid "Search..."
 msgstr "खोजें..."
 
-#: ../../../lib/web/src/components/search-entity-dialog.tsx:177
-#: ../../../lib/web/src/components/search-entity-page.tsx:152
+#: ../../../lib/web/src/components/search-entity-dialog.tsx:174
+#: ../../../lib/web/src/components/search-entity-page.tsx:149
 #: ../../../lib/web/src/features/access/access-dialog.tsx:202
 msgid "Searching..."
 msgstr "खोजा जा रहा है..."
@@ -2120,12 +2195,12 @@ msgstr "ईमेल भेजें"
 msgid "Serif"
 msgstr "सेरिफ़"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:342
+#: src/routes/_authenticated/$projectId_.settings.tsx:406
 msgid "Server"
 msgstr "सर्वर"
 
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:245
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:271
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:251
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:277
 msgid "Server error"
 msgstr "सर्वर त्रुटि"
 
@@ -2135,14 +2210,18 @@ msgid "Server rules"
 msgstr "सर्वर के नियम"
 
 #: ../../../lib/web/src/lib/api-response-interceptors.ts:209
-msgid "Session expired"
-msgstr "सेशन समाप्त हो गया"
+#~ msgid "Session expired"
+#~ msgstr "सेशन समाप्त हो गया"
+
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:209
+msgid "Session expired. Please log in again."
+msgstr ""
 
 #: ../../../lib/web/src/components/travelling-picker.tsx:147
 msgid "Set origin and destination"
 msgstr "स्रोत और गंतव्य सेट करें"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:476
+#: src/routes/_authenticated/$projectId_.settings.tsx:676
 msgid "Setting access..."
 msgstr "पहुँच सेट की जा रही है..."
 
@@ -2151,9 +2230,9 @@ msgstr "पहुँच सेट की जा रही है..."
 #: ../../../lib/web/src/components/layout/nav-user.tsx:84
 #: ../../../lib/web/src/components/layout/nav-user.tsx:148
 #: ../../../lib/web/src/components/layout/nav-user.tsx:198
-#: src/routes/_authenticated/$projectId_.settings.tsx:76
-#: src/routes/_authenticated/$projectId_.settings.tsx:171
-#: src/routes/_authenticated/$projectId_.settings.tsx:194
+#: src/routes/_authenticated/$projectId_.settings.tsx:88
+#: src/routes/_authenticated/$projectId_.settings.tsx:183
+#: src/routes/_authenticated/$projectId_.settings.tsx:206
 #: src/routes/_authenticated/$projectId/index.tsx:912
 msgid "Settings"
 msgstr "सेटिंग्स"
@@ -2235,8 +2314,8 @@ msgstr "पहला कमेंट जोड़कर चर्चा शु�
 msgid "Stay tuned though!"
 msgstr "जुड़े रहिए!"
 
-#: src/features/objects/components/object-detail-panel.tsx:447
-#: src/features/objects/components/object-detail-panel.tsx:456
+#: src/features/objects/components/object-detail-panel.tsx:418
+#: src/features/objects/components/object-detail-panel.tsx:427
 msgid "Stop watching"
 msgstr "देखना बंद करें"
 
@@ -2319,6 +2398,10 @@ msgstr "टेक्स्ट"
 msgid "That code is incorrect or has expired."
 msgstr "वह कोड गलत है या समाप्त हो चुका है।"
 
+#: ../../../lib/web/src/features/errors/general-error.tsx:68
+msgid "The requested content could not be found."
+msgstr ""
+
 #: ../../../lib/web/src/components/config-drawer.tsx:194
 msgid "Theme"
 msgstr "थीम"
@@ -2336,19 +2419,24 @@ msgstr "इस मर्ज अनुरोध को {0} में मर्ज
 msgid "This merge request is a draft and cannot be merged."
 msgstr "यह मर्ज रिक्वेस्ट एक ड्राफ़्ट है और इसे मर्ज नहीं किया जा सकता।"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:214
+#: src/routes/_authenticated/$projectId_.settings.tsx:226
 msgid "This project could not be loaded right now."
 msgstr "यह प्रोजेक्ट अभी लोड नहीं हो सका।"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:214
+#: src/routes/_authenticated/$projectId_.settings.tsx:226
 msgid "This project may have been deleted or you don't have access to it."
 msgstr "हो सकता है यह प्रोजेक्ट डिलीट हो गया हो या आपके पास इसका एक्सेस नहीं है।"
+
+#. placeholder {0}: pendingDataImport?.label
+#: src/routes/_authenticated/$projectId_.settings.tsx:477
+msgid "This will import the data from <0>{0}</0>. Objects will be appended to the existing records. Ensure the current design matches the classes and fields referenced in the file."
+msgstr ""
 
 #: src/features/requests/components/merge-button.tsx:105
 msgid "This will merge \"{source}\" into \"{target}\". This action cannot be undone."
 msgstr "यह \"{source}\" को \"{target}\" में मर्ज करेगा। इस क्रिया को पूर्ववत नहीं किया जा सकता।"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:371
+#: src/routes/_authenticated/$projectId_.settings.tsx:454
 msgid "This will permanently delete \"{projectName}\" and all its objects, comments, and attachments. This action cannot be undone."
 msgstr "यह \"{projectName}\" और इसके सभी ऑब्जेक्ट, कमेंट, और अटैचमेंट स्थायी रूप से डिलीट कर देगा। यह ऐक्शन वापस नहीं लिया जा सकता।"
 
@@ -2358,7 +2446,7 @@ msgid "This will remove \"{0}\" from your sidebar and stop updates for this proj
 msgstr "यह \"{0}\" को आपके साइडबार से हटा देगा और इस प्रोजेक्ट के अपडेट रोक देगा।"
 
 #. placeholder {0}: pendingImport?.label
-#: src/routes/_authenticated/$projectId/design.tsx:203
+#: src/routes/_authenticated/$projectId/design.tsx:204
 msgid "This will replace the current design with <0>{0}</0>. All existing classes, fields, options, and views will be deleted. Existing objects will not be deleted but may no longer appear in views."
 msgstr "यह वर्तमान डिज़ाइन को <0>{0}</0> से बदल देगा। सभी मौजूदा क्लासेज, फ़ील्ड्स, विकल्प और व्यू हटा दिए जाएँगे। मौजूदा ऑब्जेक्ट हटाए नहीं जाएँगे लेकिन व्यू में दिखाई नहीं दे सकते हैं।"
 
@@ -2415,6 +2503,10 @@ msgstr "व्यू विकल्प टॉगल करें"
 msgid "Toggle watched filter"
 msgstr "वॉच्ड फ़िल्टर टॉगल करें"
 
+#: ../../../lib/web/src/features/errors/general-error.tsx:74
+msgid "Too many requests"
+msgstr ""
+
 #: ../../../lib/web/src/components/ui/sort-selector.tsx:45
 msgid "Top"
 msgstr "टॉप"
@@ -2427,13 +2519,13 @@ msgstr "टॉप लेवल"
 msgid "Travelling"
 msgstr "यात्रा कर रहे हैं"
 
-#: ../../../lib/web/src/components/search-entity-dialog.tsx:193
-#: ../../../lib/web/src/components/search-entity-page.tsx:168
+#: ../../../lib/web/src/components/search-entity-dialog.tsx:190
+#: ../../../lib/web/src/components/search-entity-page.tsx:165
 msgid "Try adjusting your search terms"
 msgstr "अपने खोज शब्दों को एडजस्ट करके देखें"
 
-#: ../../../lib/web/src/features/errors/general-error.tsx:128
-#: ../../../lib/web/src/features/errors/general-error.tsx:168
+#: ../../../lib/web/src/features/errors/general-error.tsx:140
+#: ../../../lib/web/src/features/errors/general-error.tsx:180
 #: ../../../lib/web/src/features/errors/maintenance-error.tsx:19
 msgid "Try again"
 msgstr "फिर से कोशिश करें"
@@ -2459,7 +2551,7 @@ msgstr "यूज़र खोजने के लिए टाइप करे�
 msgid "Type to search..."
 msgstr "खोजने के लिए टाइप करें..."
 
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:267
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:273
 msgid "Unable to connect to remote server"
 msgstr "रिमोट सर्वर से कनेक्ट नहीं हो सका"
 
@@ -2468,7 +2560,7 @@ msgstr "रिमोट सर्वर से कनेक्ट नहीं �
 msgid "Unable to redirect to login. Please try again."
 msgstr "लॉगिन पर रीडायरेक्ट करने में असमर्थ। कृपया फिर से कोशिश करें।"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:156
+#: ../../../lib/web/src/components/notification-category-button.tsx:155
 msgid "Unassigned"
 msgstr "असाइन नहीं किया गया"
 
@@ -2515,7 +2607,7 @@ msgstr "अनवेरिफ़ाइड"
 msgid "Updated"
 msgstr "अपडेट किया गया"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:501
+#: src/routes/_authenticated/$projectId_.settings.tsx:701
 msgid "Updating access..."
 msgstr "पहुँच अपडेट की जा रही है..."
 
@@ -2524,7 +2616,8 @@ msgstr "पहुँच अपडेट की जा रही है..."
 msgid "Upload"
 msgstr "अपलोड करें"
 
-#: src/routes/_authenticated/$projectId/design.tsx:336
+#: src/routes/_authenticated/$projectId_.settings.tsx:566
+#: src/routes/_authenticated/$projectId/design.tsx:337
 msgid "Upload .json file"
 msgstr ".json फ़ाइल अपलोड करें"
 
@@ -2582,7 +2675,7 @@ msgstr "सभी देखें"
 msgid "View all notifications"
 msgstr "सभी नोटिफ़िकेशन देखें"
 
-#: src/features/objects/components/object-detail-panel.tsx:425
+#: src/features/objects/components/object-detail-panel.tsx:396
 msgid "View and edit item details"
 msgstr "आइटम विवरण देखें और एडिट करें"
 
@@ -2590,7 +2683,7 @@ msgstr "आइटम विवरण देखें और एडिट कर�
 msgid "View controls"
 msgstr "कंट्रोल देखें"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:410
+#: src/routes/_authenticated/$projectId_.settings.tsx:610
 msgid "View only"
 msgstr "केवल देखें"
 
@@ -2602,8 +2695,8 @@ msgstr "विकल्प देखें"
 msgid "Views"
 msgstr "व्यू"
 
-#: src/features/objects/components/object-detail-panel.tsx:447
-#: src/features/objects/components/object-detail-panel.tsx:456
+#: src/features/objects/components/object-detail-panel.tsx:418
+#: src/features/objects/components/object-detail-panel.tsx:427
 msgid "Watch"
 msgstr "देखें"
 
@@ -2626,6 +2719,10 @@ msgstr "वेबसाइट मेंटेनेंस के अंतर्
 #: ../../../lib/web/src/lib/preference-utils.ts:61
 msgid "Wednesday"
 msgstr "बुधवार"
+
+#: ../../../lib/web/src/features/errors/general-error.tsx:61
+msgid "You do not have access to this section."
+msgstr ""
 
 #: src/routes/_authenticated/$projectId/index.tsx:102
 msgid "You don't have access to this project."

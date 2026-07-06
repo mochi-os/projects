@@ -23,7 +23,7 @@ msgstr "[neyî sazkirin]"
 
 #. placeholder {0}: project.project.name
 #: src/routes/_authenticated/$projectId/design.tsx:63
-#: src/routes/_authenticated/$projectId/design.tsx:156
+#: src/routes/_authenticated/$projectId/design.tsx:157
 msgid "{0} - Design"
 msgstr "{0} - Dîzayn"
 
@@ -39,8 +39,8 @@ msgid "{0} files changed"
 msgstr "{0} pel hatin guhertin"
 
 #. placeholder {0}: project.project.name
-#: src/routes/_authenticated/$projectId_.settings.tsx:122
-#: src/routes/_authenticated/$projectId_.settings.tsx:226
+#: src/routes/_authenticated/$projectId_.settings.tsx:134
+#: src/routes/_authenticated/$projectId_.settings.tsx:238
 msgid "{0} settings"
 msgstr "Mîhengên {0}"
 
@@ -69,9 +69,13 @@ msgstr "24 saet"
 msgid "Absolute (date and time)"
 msgstr "Mutleq (dîrok û saet)"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:77
+#: src/routes/_authenticated/$projectId_.settings.tsx:89
 msgid "Access"
 msgstr "Gihîştin"
+
+#: ../../../lib/web/src/features/errors/general-error.tsx:60
+msgid "Access denied"
+msgstr ""
 
 #: ../../../lib/web/src/features/errors/forbidden.tsx:16
 msgid "Access Forbidden"
@@ -81,19 +85,19 @@ msgstr "Gihîştin qedexe ye"
 msgid "Access level"
 msgstr "Asta gihîştinê"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:502
+#: src/routes/_authenticated/$projectId_.settings.tsx:702
 msgid "Access level updated"
 msgstr "Asta gihîştinê hat nûkirin"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:513
+#: src/routes/_authenticated/$projectId_.settings.tsx:713
 msgid "Access Management"
 msgstr "Birêvebirina gihîştinê"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:488
+#: src/routes/_authenticated/$projectId_.settings.tsx:688
 msgid "Access removed"
 msgstr "Gihîştin hat rakirin"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:477
+#: src/routes/_authenticated/$projectId_.settings.tsx:677
 msgid "Access set for {subjectName}"
 msgstr "Gihîştin ji bo {subjectName} hat danîn"
 
@@ -113,7 +117,7 @@ msgstr "Cureyê hesabê"
 msgid "Account verified"
 msgstr "Hesab hat piştrastkirin"
 
-#: src/features/objects/components/object-detail-panel.tsx:406
+#: src/features/objects/components/object-detail-panel.tsx:378
 msgid "Activity"
 msgstr "Çalakî"
 
@@ -188,7 +192,7 @@ msgstr "Hesabê nû zêde bike"
 msgid "Add option"
 msgstr "Vebijêrk zêde bike"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:520
+#: src/routes/_authenticated/$projectId_.settings.tsx:720
 msgid "Add rule"
 msgstr "Yasa zêde bike"
 
@@ -244,16 +248,20 @@ msgstr "Destûrê bide rêzkirinê li gor"
 msgid "An error occurred"
 msgstr "Çewtiyek çêbû"
 
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:241
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:247
 msgid "An unexpected error occurred"
 msgstr "Çewtiyeke neçaverêkirî çêbû"
+
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:233
+msgid "Another change was made at the same time. Please refresh to see the latest version."
+msgstr ""
 
 #. placeholder {0}: deleteTarget?.name
 #: src/features/objects/components/object-attachments.tsx:228
 msgid "Are you sure you want to delete \"{0}\"?"
 msgstr "Tu bawer î ku dixwazî \"{0}\" jê bibî?"
 
-#: src/features/objects/components/object-detail-panel.tsx:656
+#: src/features/objects/components/object-detail-panel.tsx:618
 msgid "Are you sure you want to delete \"{title}\"? This action cannot be undone."
 msgstr "Tu bawer î ku dixwazî \"{title}\" jê bibî? Ev kar nikare were vegerandin."
 
@@ -314,11 +322,11 @@ msgstr "Vegere"
 msgid "Back to home"
 msgstr "Vegere ser malê"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:173
-#: src/routes/_authenticated/$projectId_.settings.tsx:196
-#: src/routes/_authenticated/$projectId_.settings.tsx:228
-#: src/routes/_authenticated/$projectId/design.tsx:133
-#: src/routes/_authenticated/$projectId/design.tsx:158
+#: src/routes/_authenticated/$projectId_.settings.tsx:185
+#: src/routes/_authenticated/$projectId_.settings.tsx:208
+#: src/routes/_authenticated/$projectId_.settings.tsx:240
+#: src/routes/_authenticated/$projectId/design.tsx:134
+#: src/routes/_authenticated/$projectId/design.tsx:159
 msgid "Back to project"
 msgstr "Vegere projeyê"
 
@@ -349,7 +357,7 @@ msgstr "Berjewendiyê zêde bike"
 msgid "Border colour"
 msgstr "Rengê sînor"
 
-#: src/routes/_authenticated/$projectId/design.tsx:299
+#: src/routes/_authenticated/$projectId/design.tsx:300
 msgid "Built-in templates"
 msgstr "Şablonên hundirîn"
 
@@ -370,7 +378,8 @@ msgstr "Dikare zarokê … be"
 #: src/features/editor/components/option-dialog.tsx:146
 #: src/features/objects/components/comment-thread.tsx:175
 #: src/features/projects/components/create-project-dialog.tsx:219
-#: src/routes/_authenticated/$projectId/design.tsx:343
+#: src/routes/_authenticated/$projectId_.settings.tsx:573
+#: src/routes/_authenticated/$projectId/design.tsx:344
 #: src/routes/_authenticated/$projectId/index.tsx:945
 msgid "Cancel"
 msgstr "Betal bike"
@@ -384,12 +393,12 @@ msgstr "Bersivê betal bike"
 msgid "Cannot merge automatically"
 msgstr "Nikare bixweber bê hevkirin"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:144
+#: ../../../lib/web/src/components/notification-category-button.tsx:143
 msgid "Category for this notification"
 msgstr "Kategoriya vê agahdariyê"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:125
-#: ../../../lib/web/src/components/notification-category-button.tsx:136
+#: ../../../lib/web/src/components/notification-category-button.tsx:124
+#: ../../../lib/web/src/components/notification-category-button.tsx:135
 msgid "Change notification category"
 msgstr "Kategoriya agahdariyê biguherîne"
 
@@ -523,12 +532,12 @@ msgstr "Rehet"
 msgid "Coming Soon!"
 msgstr "Zû tê!"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:409
+#: src/routes/_authenticated/$projectId_.settings.tsx:609
 msgid "Comment and view"
 msgstr "Şîrove û dîtin"
 
 #. placeholder {0}: data.comment_count || 0
-#: src/features/objects/components/object-detail-panel.tsx:392
+#: src/features/objects/components/object-detail-panel.tsx:364
 msgid "Comments ({0})"
 msgstr "Şîrove ({0})"
 
@@ -570,7 +579,7 @@ msgstr "Berdewam bike"
 msgid "Continue with {label}"
 msgstr "Bi {label} berdewam be"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:514
+#: src/routes/_authenticated/$projectId_.settings.tsx:714
 msgid "Control who can view and interact with this project"
 msgstr "Kontrol bike kê dikare vê projeyê bibîne û pê re têkilî daynî"
 
@@ -578,7 +587,7 @@ msgstr "Kontrol bike kê dikare vê projeyê bibîne û pê re têkilî daynî"
 msgid "Copy"
 msgstr "Kopî bike"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:300
+#: src/routes/_authenticated/$projectId_.settings.tsx:364
 msgid "Core information about this project"
 msgstr "Agahiyên bingehîn derbarê vê projeyê"
 
@@ -627,7 +636,7 @@ msgstr "Hêmana nû çêbike"
 msgid "Create project"
 msgstr "Proje çêbike"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:408
+#: src/routes/_authenticated/$projectId_.settings.tsx:608
 msgid "Create, edit, comment, and view"
 msgstr "Afirandin, sererastkirin, şîrovekirin û dîtin"
 
@@ -662,6 +671,21 @@ msgstr "Tarî"
 msgid "Dark mode"
 msgstr "Awayê tarî"
 
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:232
+msgid "Data conflict"
+msgstr ""
+
+#. placeholder {0}: response.data?.objects ?? 0
+#. placeholder {1}: response.data?.comments ?? 0
+#. placeholder {2}: response.data?.links ?? 0
+#: src/routes/_authenticated/$projectId_.settings.tsx:349
+msgid "Data imported ({0} objects, {1} comments, {2} links)"
+msgstr ""
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:432
+msgid "Data management"
+msgstr ""
+
 #: src/features/editor/components/add-dialogs.tsx:137
 msgid "Date"
 msgstr "Dîrok"
@@ -687,9 +711,9 @@ msgstr "Rêzkirina standard"
 #: src/features/objects/components/object-attachments.tsx:182
 #: src/features/objects/components/object-attachments.tsx:187
 #: src/features/objects/components/object-attachments.tsx:229
-#: src/features/objects/components/object-detail-panel.tsx:657
+#: src/features/objects/components/object-detail-panel.tsx:619
 #: src/features/requests/components/request-panel.tsx:132
-#: src/routes/_authenticated/$projectId_.settings.tsx:361
+#: src/routes/_authenticated/$projectId_.settings.tsx:425
 msgid "Delete"
 msgstr "Jê bibe"
 
@@ -713,9 +737,9 @@ msgstr "Şîroveyê jê bibe"
 msgid "Delete field"
 msgstr "Qadê jê bibe"
 
-#: src/features/objects/components/object-detail-panel.tsx:466
-#: src/features/objects/components/object-detail-panel.tsx:471
-#: src/features/objects/components/object-detail-panel.tsx:655
+#: src/features/objects/components/object-detail-panel.tsx:437
+#: src/features/objects/components/object-detail-panel.tsx:442
+#: src/features/objects/components/object-detail-panel.tsx:617
 msgid "Delete item"
 msgstr "Hêmanê jê bibe"
 
@@ -739,12 +763,12 @@ msgstr "Vebijêrkê jê bibe"
 msgid "Delete option {0}"
 msgstr "Vebijêrka {0} jê bibe"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:351
-#: src/routes/_authenticated/$projectId_.settings.tsx:372
+#: src/routes/_authenticated/$projectId_.settings.tsx:415
+#: src/routes/_authenticated/$projectId_.settings.tsx:455
 msgid "Delete project"
 msgstr "Projeyê jê bibe"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:370
+#: src/routes/_authenticated/$projectId_.settings.tsx:453
 msgid "Delete project?"
 msgstr "Projeyê jê bibe?"
 
@@ -756,7 +780,7 @@ msgstr "Dîtinê jê bibe"
 msgid "Delete your account on the old server"
 msgstr "Hesabê xwe li ser serverê kevn jêbirin"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:131
+#: src/routes/_authenticated/$projectId_.settings.tsx:143
 msgid "Deleting project..."
 msgstr "Proje tê jêbirin..."
 
@@ -769,21 +793,21 @@ msgid "Descending"
 msgstr "Daketî"
 
 #: src/features/requests/components/request-panel.tsx:287
-#: src/routes/_authenticated/$projectId_.settings.tsx:313
+#: src/routes/_authenticated/$projectId_.settings.tsx:377
 msgid "Description"
 msgstr "Şirove"
 
 #: src/routes/_authenticated/$projectId/design.tsx:63
-#: src/routes/_authenticated/$projectId/design.tsx:131
+#: src/routes/_authenticated/$projectId/design.tsx:132
 #: src/routes/_authenticated/$projectId/index.tsx:902
 msgid "Design"
 msgstr "Sêwiran"
 
-#: src/routes/_authenticated/$projectId/design.tsx:108
+#: src/routes/_authenticated/$projectId/design.tsx:109
 msgid "Design imported"
 msgstr "Sêwiran hat îthal kirin"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:407
+#: src/routes/_authenticated/$projectId_.settings.tsx:607
 msgid "Design, create, edit, comment, and view"
 msgstr "Sêwirandin, afirandin, sererastkirin, şîrovekirin û dîtin"
 
@@ -831,7 +855,7 @@ msgstr "Panela kêlekê ya mobîl nîşan dide."
 #: src/features/editor/components/edit-dialogs.tsx:532
 #: src/features/editor/components/edit-dialogs.tsx:922
 #: src/features/editor/components/edit-dialogs.tsx:1228
-#: src/features/objects/components/object-detail-panel.tsx:480
+#: src/features/objects/components/object-detail-panel.tsx:451
 msgid "Done"
 msgstr "Qediya"
 
@@ -844,7 +868,8 @@ msgstr "Ji bo zêdekirina naverokê du caran li stûnekê bitikîne"
 msgid "Download"
 msgstr "Daxe"
 
-#: src/routes/_authenticated/$projectId/design.tsx:225
+#: src/routes/_authenticated/$projectId_.settings.tsx:497
+#: src/routes/_authenticated/$projectId/design.tsx:226
 msgid "Download backup first"
 msgstr "Pêşî paşvekêşê daxe"
 
@@ -919,11 +944,11 @@ msgstr "Koda ji e-nameya xwe binivîse"
 msgid "Enter your authenticator code"
 msgstr "Koda authenticator-a xwe têkevê"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:328
+#: src/routes/_authenticated/$projectId_.settings.tsx:392
 msgid "Entity ID"
 msgstr "Nasnameya mîhengehê"
 
-#: src/features/objects/components/object-detail-panel.tsx:343
+#: src/features/objects/components/object-detail-panel.tsx:315
 msgid "Error"
 msgstr "Çewtî"
 
@@ -938,9 +963,17 @@ msgstr "Fireh bike"
 msgid "Expand sidebar"
 msgstr "Bargeyê fireh bike"
 
-#: src/routes/_authenticated/$projectId/design.tsx:173
+#: src/routes/_authenticated/$projectId_.settings.tsx:438
+msgid "Export data"
+msgstr ""
+
+#: src/routes/_authenticated/$projectId/design.tsx:174
 msgid "Export design"
 msgstr "Sêwiranê derxe"
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:433
+msgid "Export or import the raw data content in this project."
+msgstr ""
 
 #: ../../../lib/web/src/lib/preference-utils.ts:136
 msgid "Extra large"
@@ -990,7 +1023,7 @@ msgstr "Jêbirina şîroveyê neserkeftî bû"
 msgid "Failed to delete link"
 msgstr "Jêbirina lînkê neserkeftî bû"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:133
+#: src/routes/_authenticated/$projectId_.settings.tsx:145
 msgid "Failed to delete project"
 msgstr "Jêbirina projeyê neserkeftî bû"
 
@@ -998,15 +1031,23 @@ msgstr "Jêbirina projeyê neserkeftî bû"
 msgid "Failed to delete view"
 msgstr "Jêbirina dîmenê neserkeftî bû"
 
-#: src/routes/_authenticated/$projectId/design.tsx:92
+#: src/routes/_authenticated/$projectId_.settings.tsx:335
+msgid "Failed to export data"
+msgstr ""
+
+#: src/routes/_authenticated/$projectId/design.tsx:93
 msgid "Failed to export design"
 msgstr "Derxistina sêwiranê neserkeftî bû"
 
-#: src/routes/_authenticated/$projectId/design.tsx:113
+#: src/routes/_authenticated/$projectId_.settings.tsx:354
+msgid "Failed to import data"
+msgstr ""
+
+#: src/routes/_authenticated/$projectId/design.tsx:114
 msgid "Failed to import design"
 msgstr "Anîna sêwiranê neserkeftî bû"
 
-#: src/features/objects/components/object-detail-panel.tsx:344
+#: src/features/objects/components/object-detail-panel.tsx:316
 msgid "Failed to load item"
 msgstr "Barkirina xalê neserkeftî bû"
 
@@ -1015,7 +1056,7 @@ msgstr "Barkirina xalê neserkeftî bû"
 msgid "Failed to load project"
 msgstr "Barkirina projeyê neserkeftî bû"
 
-#: src/routes/_authenticated/$projectId/design.tsx:137
+#: src/routes/_authenticated/$projectId/design.tsx:138
 msgid "Failed to load project design"
 msgstr "Barkirina sêwirana projeyê neserkeftî bû"
 
@@ -1031,11 +1072,12 @@ msgstr "Tevlîkirin neserkeftî bû"
 msgid "Failed to post comment"
 msgstr "Şandina şîroveyê neserkeftî bû"
 
-#: src/routes/_authenticated/$projectId/design.tsx:281
+#: src/routes/_authenticated/$projectId_.settings.tsx:535
+#: src/routes/_authenticated/$projectId/design.tsx:282
 msgid "Failed to read file"
 msgstr "Xwendina pelê neserkeftî bû"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:489
+#: src/routes/_authenticated/$projectId_.settings.tsx:689
 msgid "Failed to remove access"
 msgstr "Rakirina destûrê neserkeftî bû"
 
@@ -1055,7 +1097,7 @@ msgstr "Ji nû ve rêzkirina dîmenan neserkeftî bû"
 msgid "Failed to send verification code"
 msgstr "Şandina koda rastandinê neserkeftî bû"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:478
+#: src/routes/_authenticated/$projectId_.settings.tsx:678
 msgid "Failed to set access level"
 msgstr "Danîna asta gihiştinê neserkeftî bû"
 
@@ -1070,11 +1112,11 @@ msgstr "Abonebûn neserkeftî bû"
 msgid "Failed to unsubscribe"
 msgstr "Vekişandina abonetiyê neserkeftî bû"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:503
+#: src/routes/_authenticated/$projectId_.settings.tsx:703
 msgid "Failed to update access level"
 msgstr "Rojanekirina asta gihiştinê neserkeftî bû"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:112
+#: ../../../lib/web/src/components/notification-category-button.tsx:111
 msgid "Failed to update category"
 msgstr "Rojanekirina kategoriyê neserkeftî bû"
 
@@ -1086,7 +1128,7 @@ msgstr "Rojanekirina şîroveyê neserkeftî bû"
 msgid "Failed to update field"
 msgstr "Rojanekirina qadê neserkeftî bû"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:156
+#: src/routes/_authenticated/$projectId_.settings.tsx:168
 msgid "Failed to update project"
 msgstr "Rojanekirina projeyê neserkeftî bû"
 
@@ -1109,7 +1151,7 @@ msgstr "Pelan"
 msgid "Find projects"
 msgstr "Projeyan bibîne"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:333
+#: src/routes/_authenticated/$projectId_.settings.tsx:397
 msgid "Fingerprint"
 msgstr "Tilîya destan"
 
@@ -1137,7 +1179,7 @@ msgstr "Înî"
 msgid "From"
 msgstr "Ji"
 
-#: src/routes/_authenticated/$projectId/design.tsx:322
+#: src/routes/_authenticated/$projectId/design.tsx:323
 msgid "From file"
 msgstr "Ji pelê"
 
@@ -1207,7 +1249,7 @@ msgstr "Mal"
 msgid "Hot"
 msgstr "Germ"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:299
+#: src/routes/_authenticated/$projectId_.settings.tsx:363
 msgid "Identity"
 msgstr "Nasname"
 
@@ -1215,10 +1257,28 @@ msgstr "Nasname"
 msgid "Imperial"
 msgstr "Imperial"
 
-#: src/routes/_authenticated/$projectId/design.tsx:177
-#: src/routes/_authenticated/$projectId/design.tsx:293
+#: src/routes/_authenticated/$projectId_.settings.tsx:548
+msgid "Import a data configuration"
+msgstr ""
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:443
+#: src/routes/_authenticated/$projectId_.settings.tsx:489
+#: src/routes/_authenticated/$projectId_.settings.tsx:547
+msgid "Import data"
+msgstr ""
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:475
+msgid "Import data?"
+msgstr ""
+
+#: src/routes/_authenticated/$projectId/design.tsx:178
+#: src/routes/_authenticated/$projectId/design.tsx:294
 msgid "Import design"
 msgstr "Sêwiranê bîne"
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:486
+msgid "Importing..."
+msgstr ""
 
 #: ../../../lib/web/src/components/config-drawer.tsx:252
 msgid "Inset"
@@ -1232,7 +1292,8 @@ msgstr "Balkêşî"
 msgid "Invalid date"
 msgstr "Tarîxa nederbasdar"
 
-#: src/routes/_authenticated/$projectId/design.tsx:277
+#: src/routes/_authenticated/$projectId_.settings.tsx:531
+#: src/routes/_authenticated/$projectId/design.tsx:278
 msgid "Invalid JSON file"
 msgstr "Pelê JSON nederbasdar"
 
@@ -1240,7 +1301,7 @@ msgstr "Pelê JSON nederbasdar"
 msgid "Invalid verification code"
 msgstr "Koda rastandinê nederbasdar"
 
-#: src/features/objects/components/object-detail-panel.tsx:424
+#: src/features/objects/components/object-detail-panel.tsx:395
 msgid "Item details"
 msgstr "Hûrgiliyên xalê"
 
@@ -1292,11 +1353,11 @@ msgstr "Naverok tê barkirin…"
 msgid "Loading diff..."
 msgstr "Cudahî tê barkirin..."
 
-#: src/features/objects/components/object-detail-panel.tsx:324
+#: src/features/objects/components/object-detail-panel.tsx:296
 msgid "Loading item"
 msgstr "Xal tê barkirin"
 
-#: src/features/objects/components/object-detail-panel.tsx:325
+#: src/features/objects/components/object-detail-panel.tsx:297
 msgid "Loading item details"
 msgstr "Hûrgiliyên xalê tên barkirin"
 
@@ -1369,7 +1430,7 @@ msgstr "Commit ya tevlîkirinê"
 msgid "Merge requests"
 msgstr "Daxwazên tevlîkirinê"
 
-#: src/features/objects/components/object-detail-panel.tsx:399
+#: src/features/objects/components/object-detail-panel.tsx:371
 msgid "Merge requests ({requestCount})"
 msgstr "Daxwazên tevlîkirinê ({requestCount})"
 
@@ -1412,7 +1473,7 @@ msgstr "Projeya min"
 #: src/features/editor/components/edit-dialogs.tsx:1065
 #: src/features/editor/components/option-dialog.tsx:112
 #: src/features/projects/components/create-project-dialog.tsx:159
-#: src/routes/_authenticated/$projectId_.settings.tsx:304
+#: src/routes/_authenticated/$projectId_.settings.tsx:368
 msgid "Name"
 msgstr "Nav"
 
@@ -1420,7 +1481,8 @@ msgstr "Nav"
 msgid "Name is required"
 msgstr "Nav pêwîst e"
 
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:288
+#: ../../../lib/web/src/features/errors/general-error.tsx:53
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:294
 msgid "Network error"
 msgstr "Çewtiya torê"
 
@@ -1448,7 +1510,7 @@ msgstr "Wêneya pêştir"
 msgid "No {parentClassNames} to add to"
 msgstr "Tu {parentClassNames} ji bo zêdekirinê tune"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:411
+#: src/routes/_authenticated/$projectId_.settings.tsx:611
 msgid "No access"
 msgstr "Bê destpêkirin"
 
@@ -1540,7 +1602,7 @@ msgstr "Tu rewş tune"
 msgid "No time zone found."
 msgstr "Tu herêma demê nehat dîtin."
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:148
+#: ../../../lib/web/src/components/notification-category-button.tsx:147
 msgid "No topic record yet — try again after the next notification."
 msgstr "Hêj tu tomarê mijarê tune — piştî agahdariya pêştir dîsa biceribîne."
 
@@ -1566,9 +1628,9 @@ msgstr "Tu dîtin tune"
 #: src/features/editor/components/edit-dialogs.tsx:782
 #: src/features/objects/components/create-object-dialog.tsx:389
 #: src/features/objects/components/create-object-dialog.tsx:396
-#: src/features/objects/components/object-detail-panel.tsx:548
-#: src/features/objects/components/object-detail-panel.tsx:561
-#: src/features/objects/components/object-detail-panel.tsx:566
+#: src/features/objects/components/object-detail-panel.tsx:512
+#: src/features/objects/components/object-detail-panel.tsx:525
+#: src/features/objects/components/object-detail-panel.tsx:530
 msgid "None"
 msgstr "Tu"
 
@@ -1579,6 +1641,10 @@ msgstr "Asayî"
 #: src/features/requests/components/request-panel.tsx:231
 msgid "Not configured"
 msgstr "Nehatiye mîhengkirin"
+
+#: ../../../lib/web/src/features/errors/general-error.tsx:67
+msgid "Not found"
+msgstr ""
 
 #: ../../../lib/web/src/components/ui/editable-field-row.tsx:146
 msgid "Not set"
@@ -1636,7 +1702,7 @@ msgstr "Çalakiyên çînê veke"
 msgid "Open column actions"
 msgstr "Kiryarên stûnê veke"
 
-#: src/routes/_authenticated/$projectId/design.tsx:165
+#: src/routes/_authenticated/$projectId/design.tsx:166
 msgid "Open design actions"
 msgstr "Çalakiyên dîzaynê veke"
 
@@ -1697,7 +1763,7 @@ msgid "Owner"
 msgstr "Xwedî"
 
 #: src/features/objects/components/create-object-dialog.tsx:381
-#: src/features/objects/components/object-detail-panel.tsx:544
+#: src/features/objects/components/object-detail-panel.tsx:508
 msgid "Parent"
 msgstr "Dêûbav"
 
@@ -1717,7 +1783,7 @@ msgstr "Passkey"
 msgid "Pattern (regex)"
 msgstr "Şablon (regex)"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:352
+#: src/routes/_authenticated/$projectId_.settings.tsx:416
 msgid "Permanently delete this project and all its content."
 msgstr "Vê projeyê û tevahiya naveroka wê her û her jêbibe."
 
@@ -1726,7 +1792,8 @@ msgstr "Vê projeyê û tevahiya naveroka wê her û her jêbibe."
 msgid "Please add one or more classes to the project design."
 msgstr "Ji kerema xwe yek an çend çînan li dîzayna projeyê ekle bike."
 
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:289
+#: ../../../lib/web/src/features/errors/general-error.tsx:54
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:295
 msgid "Please check your internet connection and try again."
 msgstr "Ji kerema xwe girêdana xwe ya înternetê kontrol bike û dîsa biceribîne."
 
@@ -1734,8 +1801,16 @@ msgstr "Ji kerema xwe girêdana xwe ya înternetê kontrol bike û dîsa bicerib
 msgid "Please select a template"
 msgstr "Ji kerema xwe şablonek hilbijêre"
 
+#: ../../../lib/web/src/features/errors/general-error.tsx:83
+msgid "Please try again."
+msgstr ""
+
+#: ../../../lib/web/src/features/errors/general-error.tsx:75
+msgid "Please wait a moment and try again."
+msgstr ""
+
 #: src/features/projects/components/create-project-dialog.tsx:181
-#: src/routes/_authenticated/$projectId_.settings.tsx:321
+#: src/routes/_authenticated/$projectId_.settings.tsx:385
 msgid "Prefix"
 msgstr "Pêşgir"
 
@@ -1768,23 +1843,23 @@ msgstr "Kiryarên projeyê"
 msgid "Project created"
 msgstr "Proje hate afirandin"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:132
+#: src/routes/_authenticated/$projectId_.settings.tsx:144
 msgid "Project deleted"
 msgstr "Proje hate jêbirin"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:211
+#: src/routes/_authenticated/$projectId_.settings.tsx:223
 msgid "Project not found"
 msgstr "Proje nehat dîtin"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:122
+#: src/routes/_authenticated/$projectId_.settings.tsx:134
 msgid "Project settings"
 msgstr "Mîhengên projeyê"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:211
+#: src/routes/_authenticated/$projectId_.settings.tsx:223
 msgid "Project unavailable"
 msgstr "Proje berdest nîn e"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:155
+#: src/routes/_authenticated/$projectId_.settings.tsx:167
 msgid "Project updated"
 msgstr "Proje hate nûkirin"
 
@@ -1795,7 +1870,7 @@ msgstr "Proje hate nûkirin"
 msgid "Projects"
 msgstr "Proje"
 
-#: src/features/objects/components/object-detail-panel.tsx:387
+#: src/features/objects/components/object-detail-panel.tsx:359
 msgid "Properties"
 msgstr "Taybetmendî"
 
@@ -1823,8 +1898,8 @@ msgstr "Ji bo merge amade ye"
 msgid "Rebase and merge"
 msgstr "Rebase û merge"
 
-#: ../../../lib/web/src/components/search-entity-dialog.tsx:219
-#: ../../../lib/web/src/components/search-entity-page.tsx:194
+#: ../../../lib/web/src/components/search-entity-dialog.tsx:216
+#: ../../../lib/web/src/components/search-entity-page.tsx:191
 msgid "Recommended"
 msgstr "Pêşniyarkirî"
 
@@ -1895,7 +1970,7 @@ msgstr "Babetê rake"
 msgid "Remove link"
 msgstr "Girêdanê rake"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:487
+#: src/routes/_authenticated/$projectId_.settings.tsx:687
 msgid "Removing access..."
 msgstr "Gihiştin tê rakirin..."
 
@@ -1912,15 +1987,15 @@ msgstr "Navê stûnê biguhere"
 msgid "Rename this board column"
 msgstr "Navê vê stûna paneyê biguhere"
 
-#: src/routes/_authenticated/$projectId/design.tsx:217
+#: src/routes/_authenticated/$projectId/design.tsx:218
 msgid "Replace design"
 msgstr "Dîzaynê biguhere"
 
-#: src/routes/_authenticated/$projectId/design.tsx:201
+#: src/routes/_authenticated/$projectId/design.tsx:202
 msgid "Replace design?"
 msgstr "Dîzaynê biguhere?"
 
-#: src/routes/_authenticated/$projectId/design.tsx:214
+#: src/routes/_authenticated/$projectId/design.tsx:215
 msgid "Replacing..."
 msgstr "Tê guhertin..."
 
@@ -1991,7 +2066,7 @@ msgstr "Şemî"
 msgid "Save"
 msgstr "Tomar bike"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:154
+#: src/routes/_authenticated/$projectId_.settings.tsx:166
 msgid "Saving..."
 msgstr "Tê tomarkirin..."
 
@@ -2041,8 +2116,8 @@ msgstr "Bigere, temaşe bike, û vê dîtinê rêz bike."
 msgid "Search..."
 msgstr "Bigere..."
 
-#: ../../../lib/web/src/components/search-entity-dialog.tsx:177
-#: ../../../lib/web/src/components/search-entity-page.tsx:152
+#: ../../../lib/web/src/components/search-entity-dialog.tsx:174
+#: ../../../lib/web/src/components/search-entity-page.tsx:149
 #: ../../../lib/web/src/features/access/access-dialog.tsx:202
 msgid "Searching..."
 msgstr "Tê gerîn..."
@@ -2120,12 +2195,12 @@ msgstr "E-nameyê bişîne"
 msgid "Serif"
 msgstr "Serîf"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:342
+#: src/routes/_authenticated/$projectId_.settings.tsx:406
 msgid "Server"
 msgstr "Server"
 
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:245
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:271
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:251
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:277
 msgid "Server error"
 msgstr "Çewtiya rajekarê"
 
@@ -2135,14 +2210,18 @@ msgid "Server rules"
 msgstr "Qaîdeyên server"
 
 #: ../../../lib/web/src/lib/api-response-interceptors.ts:209
-msgid "Session expired"
-msgstr "Danişîn dawî bû"
+#~ msgid "Session expired"
+#~ msgstr "Danişîn dawî bû"
+
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:209
+msgid "Session expired. Please log in again."
+msgstr ""
 
 #: ../../../lib/web/src/components/travelling-picker.tsx:147
 msgid "Set origin and destination"
 msgstr "Çavkanî û armanc diyar bike"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:476
+#: src/routes/_authenticated/$projectId_.settings.tsx:676
 msgid "Setting access..."
 msgstr "Gihiştin tê danîn..."
 
@@ -2151,9 +2230,9 @@ msgstr "Gihiştin tê danîn..."
 #: ../../../lib/web/src/components/layout/nav-user.tsx:84
 #: ../../../lib/web/src/components/layout/nav-user.tsx:148
 #: ../../../lib/web/src/components/layout/nav-user.tsx:198
-#: src/routes/_authenticated/$projectId_.settings.tsx:76
-#: src/routes/_authenticated/$projectId_.settings.tsx:171
-#: src/routes/_authenticated/$projectId_.settings.tsx:194
+#: src/routes/_authenticated/$projectId_.settings.tsx:88
+#: src/routes/_authenticated/$projectId_.settings.tsx:183
+#: src/routes/_authenticated/$projectId_.settings.tsx:206
 #: src/routes/_authenticated/$projectId/index.tsx:912
 msgid "Settings"
 msgstr "Mîheng"
@@ -2235,8 +2314,8 @@ msgstr "Bi zêdekirina şîroveya yekem nîqaşê dest pê bike."
 msgid "Stay tuned though!"
 msgstr "Lê li bendê bimîne!"
 
-#: src/features/objects/components/object-detail-panel.tsx:447
-#: src/features/objects/components/object-detail-panel.tsx:456
+#: src/features/objects/components/object-detail-panel.tsx:418
+#: src/features/objects/components/object-detail-panel.tsx:427
 msgid "Stop watching"
 msgstr "Temaşekirinê rawestîne"
 
@@ -2319,6 +2398,10 @@ msgstr "Nivîs"
 msgid "That code is incorrect or has expired."
 msgstr "Ew kod çewt e an dema wê qediyaye."
 
+#: ../../../lib/web/src/features/errors/general-error.tsx:68
+msgid "The requested content could not be found."
+msgstr ""
+
 #: ../../../lib/web/src/components/config-drawer.tsx:194
 msgid "Theme"
 msgstr "Tema"
@@ -2336,19 +2419,24 @@ msgstr "Ev daxwaza tevlihevkirinê di {0} de hat tevlihevkirin."
 msgid "This merge request is a draft and cannot be merged."
 msgstr "Ev daxwaza tevlihevkirinê pêşnîvîs e û nayê tevlihevkirin."
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:214
+#: src/routes/_authenticated/$projectId_.settings.tsx:226
 msgid "This project could not be loaded right now."
 msgstr "Vê projê niha nayê barkirin."
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:214
+#: src/routes/_authenticated/$projectId_.settings.tsx:226
 msgid "This project may have been deleted or you don't have access to it."
 msgstr "Dibe ku ev proje hatibe jêbirin an gihîştina te jê re tune be."
+
+#. placeholder {0}: pendingDataImport?.label
+#: src/routes/_authenticated/$projectId_.settings.tsx:477
+msgid "This will import the data from <0>{0}</0>. Objects will be appended to the existing records. Ensure the current design matches the classes and fields referenced in the file."
+msgstr ""
 
 #: src/features/requests/components/merge-button.tsx:105
 msgid "This will merge \"{source}\" into \"{target}\". This action cannot be undone."
 msgstr "Ev dê \"{source}\" tevlî \"{target}\" bike. Ev çalakî nayê vegerandin."
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:371
+#: src/routes/_authenticated/$projectId_.settings.tsx:454
 msgid "This will permanently delete \"{projectName}\" and all its objects, comments, and attachments. This action cannot be undone."
 msgstr "Ev dê \"{projectName}\" û hemû tiştên wê, şîrove û pêvekên wê herheyî jê bibe. Ev çalakî nayê vegerandin."
 
@@ -2358,7 +2446,7 @@ msgid "This will remove \"{0}\" from your sidebar and stop updates for this proj
 msgstr "Ev dê \"{0}\" ji milê alî yê te derxe û nûjenkirinên ji bo vê projê rawestîne."
 
 #. placeholder {0}: pendingImport?.label
-#: src/routes/_authenticated/$projectId/design.tsx:203
+#: src/routes/_authenticated/$projectId/design.tsx:204
 msgid "This will replace the current design with <0>{0}</0>. All existing classes, fields, options, and views will be deleted. Existing objects will not be deleted but may no longer appear in views."
 msgstr "Ev dê dîzayna niha bi <0>{0}</0> biguherîne. Hemû çîn, qad, vebijark û dîtinên heyî dê werin jêbirin. Tiştên heyî nayên jêbirin lê dibe ku êdî di dîtinan de xuya nebin."
 
@@ -2415,6 +2503,10 @@ msgstr "Vebijarkên dîtinê biguherîne"
 msgid "Toggle watched filter"
 msgstr "Parzûna temaşekirî biguherîne"
 
+#: ../../../lib/web/src/features/errors/general-error.tsx:74
+msgid "Too many requests"
+msgstr ""
+
 #: ../../../lib/web/src/components/ui/sort-selector.tsx:45
 msgid "Top"
 msgstr "Jor"
@@ -2427,13 +2519,13 @@ msgstr "Asta jor"
 msgid "Travelling"
 msgstr "Rêwîtî"
 
-#: ../../../lib/web/src/components/search-entity-dialog.tsx:193
-#: ../../../lib/web/src/components/search-entity-page.tsx:168
+#: ../../../lib/web/src/components/search-entity-dialog.tsx:190
+#: ../../../lib/web/src/components/search-entity-page.tsx:165
 msgid "Try adjusting your search terms"
 msgstr "Peyvên lêgerîna xwe eyar bike"
 
-#: ../../../lib/web/src/features/errors/general-error.tsx:128
-#: ../../../lib/web/src/features/errors/general-error.tsx:168
+#: ../../../lib/web/src/features/errors/general-error.tsx:140
+#: ../../../lib/web/src/features/errors/general-error.tsx:180
 #: ../../../lib/web/src/features/errors/maintenance-error.tsx:19
 msgid "Try again"
 msgstr "Dîsa biceribîne"
@@ -2459,7 +2551,7 @@ msgstr "Ji bo lêgerîna bikarhêneran binivîse"
 msgid "Type to search..."
 msgstr "Ji bo lêgerînê binivîse..."
 
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:267
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:273
 msgid "Unable to connect to remote server"
 msgstr "Nikare bi rajekarê dûr ve girê bide"
 
@@ -2468,7 +2560,7 @@ msgstr "Nikare bi rajekarê dûr ve girê bide"
 msgid "Unable to redirect to login. Please try again."
 msgstr "Beralîkirina bo têketinê ne mumkin e. Ji kerema xwe dîsa biceribîne."
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:156
+#: ../../../lib/web/src/components/notification-category-button.tsx:155
 msgid "Unassigned"
 msgstr "Nehatiye diyarkirin"
 
@@ -2515,7 +2607,7 @@ msgstr "Nehatiye verast kirin"
 msgid "Updated"
 msgstr "Nûjen kirin"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:501
+#: src/routes/_authenticated/$projectId_.settings.tsx:701
 msgid "Updating access..."
 msgstr "Gihiştin tê nûkirin..."
 
@@ -2524,7 +2616,8 @@ msgstr "Gihiştin tê nûkirin..."
 msgid "Upload"
 msgstr "Bar bike"
 
-#: src/routes/_authenticated/$projectId/design.tsx:336
+#: src/routes/_authenticated/$projectId_.settings.tsx:566
+#: src/routes/_authenticated/$projectId/design.tsx:337
 msgid "Upload .json file"
 msgstr "Pelê .json bar bike"
 
@@ -2582,7 +2675,7 @@ msgstr "Hemûyan bibîne"
 msgid "View all notifications"
 msgstr "Hemû agahdariyan bibîne"
 
-#: src/features/objects/components/object-detail-panel.tsx:425
+#: src/features/objects/components/object-detail-panel.tsx:396
 msgid "View and edit item details"
 msgstr "Hûragahên tiştî bibîne û sererast bike"
 
@@ -2590,7 +2683,7 @@ msgstr "Hûragahên tiştî bibîne û sererast bike"
 msgid "View controls"
 msgstr "Kontrolên dîtinê"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:410
+#: src/routes/_authenticated/$projectId_.settings.tsx:610
 msgid "View only"
 msgstr "Tenê dîtin"
 
@@ -2602,8 +2695,8 @@ msgstr "Vebijarkên dîtinê"
 msgid "Views"
 msgstr "Dîtin"
 
-#: src/features/objects/components/object-detail-panel.tsx:447
-#: src/features/objects/components/object-detail-panel.tsx:456
+#: src/features/objects/components/object-detail-panel.tsx:418
+#: src/features/objects/components/object-detail-panel.tsx:427
 msgid "Watch"
 msgstr "Temaşe bike"
 
@@ -2626,6 +2719,10 @@ msgstr "Malper di rewşa lêkirinê de ye!"
 #: ../../../lib/web/src/lib/preference-utils.ts:61
 msgid "Wednesday"
 msgstr "Çarşem"
+
+#: ../../../lib/web/src/features/errors/general-error.tsx:61
+msgid "You do not have access to this section."
+msgstr ""
 
 #: src/routes/_authenticated/$projectId/index.tsx:102
 msgid "You don't have access to this project."

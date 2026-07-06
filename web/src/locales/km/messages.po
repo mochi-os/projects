@@ -23,7 +23,7 @@ msgstr "[មិនបានកំណត់]"
 
 #. placeholder {0}: project.project.name
 #: src/routes/_authenticated/$projectId/design.tsx:63
-#: src/routes/_authenticated/$projectId/design.tsx:156
+#: src/routes/_authenticated/$projectId/design.tsx:157
 msgid "{0} - Design"
 msgstr "{0} - រចនា"
 
@@ -39,8 +39,8 @@ msgid "{0} files changed"
 msgstr "{0} ឯកសារបានផ្លាស់ប្តូរ"
 
 #. placeholder {0}: project.project.name
-#: src/routes/_authenticated/$projectId_.settings.tsx:122
-#: src/routes/_authenticated/$projectId_.settings.tsx:226
+#: src/routes/_authenticated/$projectId_.settings.tsx:134
+#: src/routes/_authenticated/$projectId_.settings.tsx:238
 msgid "{0} settings"
 msgstr "ការកំណត់ {0}"
 
@@ -69,9 +69,13 @@ msgstr "២៤ ម៉ោង"
 msgid "Absolute (date and time)"
 msgstr "ដាច់ខាត (កាលបរិច្ឆេទ និងពេលវេលា)"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:77
+#: src/routes/_authenticated/$projectId_.settings.tsx:89
 msgid "Access"
 msgstr "ការចូលប្រើ"
+
+#: ../../../lib/web/src/features/errors/general-error.tsx:60
+msgid "Access denied"
+msgstr ""
 
 #: ../../../lib/web/src/features/errors/forbidden.tsx:16
 msgid "Access Forbidden"
@@ -81,19 +85,19 @@ msgstr "ការចូលប្រើត្រូវបានហាមឃាត
 msgid "Access level"
 msgstr "កម្រិតការចូលប្រើ"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:502
+#: src/routes/_authenticated/$projectId_.settings.tsx:702
 msgid "Access level updated"
 msgstr "បានធ្វើបច្ចុប្បន្នភាពកម្រិតការចូលប្រើ"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:513
+#: src/routes/_authenticated/$projectId_.settings.tsx:713
 msgid "Access Management"
 msgstr "ការគ្រប់គ្រងការចូលប្រើ"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:488
+#: src/routes/_authenticated/$projectId_.settings.tsx:688
 msgid "Access removed"
 msgstr "បានដកការចូលប្រើ"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:477
+#: src/routes/_authenticated/$projectId_.settings.tsx:677
 msgid "Access set for {subjectName}"
 msgstr "បានកំណត់ការចូលប្រើសម្រាប់ {subjectName}"
 
@@ -113,7 +117,7 @@ msgstr "ប្រភេទគណនី"
 msgid "Account verified"
 msgstr "គណនីត្រូវបានផ្ទៀងផ្ទាត់"
 
-#: src/features/objects/components/object-detail-panel.tsx:406
+#: src/features/objects/components/object-detail-panel.tsx:378
 msgid "Activity"
 msgstr "សកម្មភាព"
 
@@ -188,7 +192,7 @@ msgstr "បន្ថែមគណនីថ្មី"
 msgid "Add option"
 msgstr "បន្ថែមជម្រើស"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:520
+#: src/routes/_authenticated/$projectId_.settings.tsx:720
 msgid "Add rule"
 msgstr "បន្ថែមច្បាប់"
 
@@ -244,16 +248,20 @@ msgstr "អនុញ្ញាតការតម្រៀបតាម"
 msgid "An error occurred"
 msgstr "មានកំហុសកើតឡើង"
 
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:241
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:247
 msgid "An unexpected error occurred"
 msgstr "មានកំហុសដែលមិនបានរំពឹងទុកកើតឡើង"
+
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:233
+msgid "Another change was made at the same time. Please refresh to see the latest version."
+msgstr ""
 
 #. placeholder {0}: deleteTarget?.name
 #: src/features/objects/components/object-attachments.tsx:228
 msgid "Are you sure you want to delete \"{0}\"?"
 msgstr "តើអ្នកប្រាកដថាចង់លុប \"{0}\" មែនទេ?"
 
-#: src/features/objects/components/object-detail-panel.tsx:656
+#: src/features/objects/components/object-detail-panel.tsx:618
 msgid "Are you sure you want to delete \"{title}\"? This action cannot be undone."
 msgstr "តើអ្នកប្រាកដថាចង់លុប \"{title}\" មែនទេ? សកម្មភាពនេះមិនអាចបញ្ច្រាសបានទេ។"
 
@@ -314,11 +322,11 @@ msgstr "ត្រឡប់"
 msgid "Back to home"
 msgstr "ត្រឡប់ទៅទំព័រដើម"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:173
-#: src/routes/_authenticated/$projectId_.settings.tsx:196
-#: src/routes/_authenticated/$projectId_.settings.tsx:228
-#: src/routes/_authenticated/$projectId/design.tsx:133
-#: src/routes/_authenticated/$projectId/design.tsx:158
+#: src/routes/_authenticated/$projectId_.settings.tsx:185
+#: src/routes/_authenticated/$projectId_.settings.tsx:208
+#: src/routes/_authenticated/$projectId_.settings.tsx:240
+#: src/routes/_authenticated/$projectId/design.tsx:134
+#: src/routes/_authenticated/$projectId/design.tsx:159
 msgid "Back to project"
 msgstr "ត្រឡប់ទៅគម្រោង"
 
@@ -349,7 +357,7 @@ msgstr "បង្កើនចំណាប់អារម្មណ៍"
 msgid "Border colour"
 msgstr "ពណ៌ស៊ុម"
 
-#: src/routes/_authenticated/$projectId/design.tsx:299
+#: src/routes/_authenticated/$projectId/design.tsx:300
 msgid "Built-in templates"
 msgstr "គំរូដែលមានស្រាប់"
 
@@ -370,7 +378,8 @@ msgstr "អាចជាកូននៃ"
 #: src/features/editor/components/option-dialog.tsx:146
 #: src/features/objects/components/comment-thread.tsx:175
 #: src/features/projects/components/create-project-dialog.tsx:219
-#: src/routes/_authenticated/$projectId/design.tsx:343
+#: src/routes/_authenticated/$projectId_.settings.tsx:573
+#: src/routes/_authenticated/$projectId/design.tsx:344
 #: src/routes/_authenticated/$projectId/index.tsx:945
 msgid "Cancel"
 msgstr "បោះបង់"
@@ -384,12 +393,12 @@ msgstr "បោះបង់ការឆ្លើយតប"
 msgid "Cannot merge automatically"
 msgstr "មិនអាចបញ្ចូលដោយស្វ័យប្រវត្តិបានទេ"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:144
+#: ../../../lib/web/src/components/notification-category-button.tsx:143
 msgid "Category for this notification"
 msgstr "ប្រភេទសម្រាប់ការជូនដំណឹងនេះ"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:125
-#: ../../../lib/web/src/components/notification-category-button.tsx:136
+#: ../../../lib/web/src/components/notification-category-button.tsx:124
+#: ../../../lib/web/src/components/notification-category-button.tsx:135
 msgid "Change notification category"
 msgstr "ប្ដូរប្រភេទការជូនដំណឹង"
 
@@ -523,12 +532,12 @@ msgstr "ផាសុកភាព"
 msgid "Coming Soon!"
 msgstr "នឹងមកដល់ឆាប់ៗ!"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:409
+#: src/routes/_authenticated/$projectId_.settings.tsx:609
 msgid "Comment and view"
 msgstr "មតិយោបល់ និងមើល"
 
 #. placeholder {0}: data.comment_count || 0
-#: src/features/objects/components/object-detail-panel.tsx:392
+#: src/features/objects/components/object-detail-panel.tsx:364
 msgid "Comments ({0})"
 msgstr "មតិយោបល់ ({0})"
 
@@ -570,7 +579,7 @@ msgstr "បន្ត"
 msgid "Continue with {label}"
 msgstr "បន្តជាមួយ {label}"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:514
+#: src/routes/_authenticated/$projectId_.settings.tsx:714
 msgid "Control who can view and interact with this project"
 msgstr "គ្រប់គ្រងអ្នកដែលអាចមើល និងធ្វើអន្តរកម្មជាមួយគម្រោងនេះ"
 
@@ -578,7 +587,7 @@ msgstr "គ្រប់គ្រងអ្នកដែលអាចមើល ន�
 msgid "Copy"
 msgstr "ចម្លង"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:300
+#: src/routes/_authenticated/$projectId_.settings.tsx:364
 msgid "Core information about this project"
 msgstr "ព័ត៌មានស្នូលអំពីគម្រោងនេះ"
 
@@ -627,7 +636,7 @@ msgstr "បង្កើតធាតុថ្មី"
 msgid "Create project"
 msgstr "បង្កើតគម្រោង"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:408
+#: src/routes/_authenticated/$projectId_.settings.tsx:608
 msgid "Create, edit, comment, and view"
 msgstr "បង្កើត កែសម្រួល បញ្ចេញមតិ និងមើល"
 
@@ -662,6 +671,21 @@ msgstr "ងងឹត"
 msgid "Dark mode"
 msgstr "របៀបងងឹត"
 
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:232
+msgid "Data conflict"
+msgstr ""
+
+#. placeholder {0}: response.data?.objects ?? 0
+#. placeholder {1}: response.data?.comments ?? 0
+#. placeholder {2}: response.data?.links ?? 0
+#: src/routes/_authenticated/$projectId_.settings.tsx:349
+msgid "Data imported ({0} objects, {1} comments, {2} links)"
+msgstr ""
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:432
+msgid "Data management"
+msgstr ""
+
 #: src/features/editor/components/add-dialogs.tsx:137
 msgid "Date"
 msgstr "កាលបរិច្ឆេទ"
@@ -687,9 +711,9 @@ msgstr "ការតម្រៀបលំនាំដើម"
 #: src/features/objects/components/object-attachments.tsx:182
 #: src/features/objects/components/object-attachments.tsx:187
 #: src/features/objects/components/object-attachments.tsx:229
-#: src/features/objects/components/object-detail-panel.tsx:657
+#: src/features/objects/components/object-detail-panel.tsx:619
 #: src/features/requests/components/request-panel.tsx:132
-#: src/routes/_authenticated/$projectId_.settings.tsx:361
+#: src/routes/_authenticated/$projectId_.settings.tsx:425
 msgid "Delete"
 msgstr "លុប"
 
@@ -713,9 +737,9 @@ msgstr "លុបមតិយោបល់"
 msgid "Delete field"
 msgstr "លុបប្រអប់"
 
-#: src/features/objects/components/object-detail-panel.tsx:466
-#: src/features/objects/components/object-detail-panel.tsx:471
-#: src/features/objects/components/object-detail-panel.tsx:655
+#: src/features/objects/components/object-detail-panel.tsx:437
+#: src/features/objects/components/object-detail-panel.tsx:442
+#: src/features/objects/components/object-detail-panel.tsx:617
 msgid "Delete item"
 msgstr "លុបធាតុ"
 
@@ -739,12 +763,12 @@ msgstr "លុបជម្រើស"
 msgid "Delete option {0}"
 msgstr "លុបជម្រើស {0}"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:351
-#: src/routes/_authenticated/$projectId_.settings.tsx:372
+#: src/routes/_authenticated/$projectId_.settings.tsx:415
+#: src/routes/_authenticated/$projectId_.settings.tsx:455
 msgid "Delete project"
 msgstr "លុបគម្រោង"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:370
+#: src/routes/_authenticated/$projectId_.settings.tsx:453
 msgid "Delete project?"
 msgstr "លុបគម្រោង?"
 
@@ -756,7 +780,7 @@ msgstr "លុបទិដ្ឋភាព"
 msgid "Delete your account on the old server"
 msgstr "លុបគណនីរបស់អ្នកនៅម៉ាស៊ីនមេចាស់"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:131
+#: src/routes/_authenticated/$projectId_.settings.tsx:143
 msgid "Deleting project..."
 msgstr "កំពុងលុបគម្រោង..."
 
@@ -769,21 +793,21 @@ msgid "Descending"
 msgstr "តាមលំដាប់ថយ"
 
 #: src/features/requests/components/request-panel.tsx:287
-#: src/routes/_authenticated/$projectId_.settings.tsx:313
+#: src/routes/_authenticated/$projectId_.settings.tsx:377
 msgid "Description"
 msgstr "ការពិពណ៌នា"
 
 #: src/routes/_authenticated/$projectId/design.tsx:63
-#: src/routes/_authenticated/$projectId/design.tsx:131
+#: src/routes/_authenticated/$projectId/design.tsx:132
 #: src/routes/_authenticated/$projectId/index.tsx:902
 msgid "Design"
 msgstr "រចនា"
 
-#: src/routes/_authenticated/$projectId/design.tsx:108
+#: src/routes/_authenticated/$projectId/design.tsx:109
 msgid "Design imported"
 msgstr "បាននាំចូលការរចនា"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:407
+#: src/routes/_authenticated/$projectId_.settings.tsx:607
 msgid "Design, create, edit, comment, and view"
 msgstr "រចនា បង្កើត កែសម្រួល បញ្ចេញមតិ និងមើល"
 
@@ -831,7 +855,7 @@ msgstr "បង្ហាញរបារចំហៀងទូរស័ព្ទ។
 #: src/features/editor/components/edit-dialogs.tsx:532
 #: src/features/editor/components/edit-dialogs.tsx:922
 #: src/features/editor/components/edit-dialogs.tsx:1228
-#: src/features/objects/components/object-detail-panel.tsx:480
+#: src/features/objects/components/object-detail-panel.tsx:451
 msgid "Done"
 msgstr "រួចរាល់"
 
@@ -844,7 +868,8 @@ msgstr "ចុចពីរដងលើជួរឈរដើម្បីបន្
 msgid "Download"
 msgstr "ទាញយក"
 
-#: src/routes/_authenticated/$projectId/design.tsx:225
+#: src/routes/_authenticated/$projectId_.settings.tsx:497
+#: src/routes/_authenticated/$projectId/design.tsx:226
 msgid "Download backup first"
 msgstr "ទាញយកការបម្រុងទុកជាមុនសិន"
 
@@ -919,11 +944,11 @@ msgstr "បញ្ចូលកូដពីអ៊ីមែលរបស់អ្ន
 msgid "Enter your authenticator code"
 msgstr "បញ្ចូលកូដ authenticator របស់អ្នក"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:328
+#: src/routes/_authenticated/$projectId_.settings.tsx:392
 msgid "Entity ID"
 msgstr "លេខសម្គាល់អង្គភាព"
 
-#: src/features/objects/components/object-detail-panel.tsx:343
+#: src/features/objects/components/object-detail-panel.tsx:315
 msgid "Error"
 msgstr "កំហុស"
 
@@ -938,9 +963,17 @@ msgstr "ពង្រីក"
 msgid "Expand sidebar"
 msgstr "ពង្រីករបារចំហៀង"
 
-#: src/routes/_authenticated/$projectId/design.tsx:173
+#: src/routes/_authenticated/$projectId_.settings.tsx:438
+msgid "Export data"
+msgstr ""
+
+#: src/routes/_authenticated/$projectId/design.tsx:174
 msgid "Export design"
 msgstr "នាំចេញការរចនា"
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:433
+msgid "Export or import the raw data content in this project."
+msgstr ""
 
 #: ../../../lib/web/src/lib/preference-utils.ts:136
 msgid "Extra large"
@@ -990,7 +1023,7 @@ msgstr "បរាជ័យក្នុងការលុបមតិយោបល
 msgid "Failed to delete link"
 msgstr "បរាជ័យក្នុងការលុបតំណ"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:133
+#: src/routes/_authenticated/$projectId_.settings.tsx:145
 msgid "Failed to delete project"
 msgstr "បរាជ័យក្នុងការលុបគម្រោង"
 
@@ -998,15 +1031,23 @@ msgstr "បរាជ័យក្នុងការលុបគម្រោង"
 msgid "Failed to delete view"
 msgstr "បរាជ័យក្នុងការលុបទិដ្ឋភាព"
 
-#: src/routes/_authenticated/$projectId/design.tsx:92
+#: src/routes/_authenticated/$projectId_.settings.tsx:335
+msgid "Failed to export data"
+msgstr ""
+
+#: src/routes/_authenticated/$projectId/design.tsx:93
 msgid "Failed to export design"
 msgstr "បរាជ័យក្នុងការនាំចេញការរចនា"
 
-#: src/routes/_authenticated/$projectId/design.tsx:113
+#: src/routes/_authenticated/$projectId_.settings.tsx:354
+msgid "Failed to import data"
+msgstr ""
+
+#: src/routes/_authenticated/$projectId/design.tsx:114
 msgid "Failed to import design"
 msgstr "បរាជ័យក្នុងការនាំចូលការរចនា"
 
-#: src/features/objects/components/object-detail-panel.tsx:344
+#: src/features/objects/components/object-detail-panel.tsx:316
 msgid "Failed to load item"
 msgstr "បរាជ័យក្នុងការផ្ទុកធាតុ"
 
@@ -1015,7 +1056,7 @@ msgstr "បរាជ័យក្នុងការផ្ទុកធាតុ"
 msgid "Failed to load project"
 msgstr "បរាជ័យក្នុងការផ្ទុកគម្រោង"
 
-#: src/routes/_authenticated/$projectId/design.tsx:137
+#: src/routes/_authenticated/$projectId/design.tsx:138
 msgid "Failed to load project design"
 msgstr "បរាជ័យក្នុងការផ្ទុកការរចនាគម្រោង"
 
@@ -1031,11 +1072,12 @@ msgstr "បរាជ័យក្នុងការបញ្ចូល"
 msgid "Failed to post comment"
 msgstr "បរាជ័យក្នុងការបង្ហោះមតិយោបល់"
 
-#: src/routes/_authenticated/$projectId/design.tsx:281
+#: src/routes/_authenticated/$projectId_.settings.tsx:535
+#: src/routes/_authenticated/$projectId/design.tsx:282
 msgid "Failed to read file"
 msgstr "បរាជ័យក្នុងការអានឯកសារ"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:489
+#: src/routes/_authenticated/$projectId_.settings.tsx:689
 msgid "Failed to remove access"
 msgstr "បរាជ័យក្នុងការដកការចូលដំណើរការ"
 
@@ -1055,7 +1097,7 @@ msgstr "បរាជ័យក្នុងការរៀបលំដាប់ទ
 msgid "Failed to send verification code"
 msgstr "បរាជ័យក្នុងការផ្ញើកូដផ្ទៀងផ្ទាត់"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:478
+#: src/routes/_authenticated/$projectId_.settings.tsx:678
 msgid "Failed to set access level"
 msgstr "បរាជ័យក្នុងការកំណត់កម្រិតចូលដំណើរការ"
 
@@ -1070,11 +1112,11 @@ msgstr "បរាជ័យក្នុងការជាវ"
 msgid "Failed to unsubscribe"
 msgstr "បរាជ័យក្នុងការបោះបង់ការជាវ"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:503
+#: src/routes/_authenticated/$projectId_.settings.tsx:703
 msgid "Failed to update access level"
 msgstr "បរាជ័យក្នុងការធ្វើបច្ចុប្បន្នភាពកម្រិតចូលដំណើរការ"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:112
+#: ../../../lib/web/src/components/notification-category-button.tsx:111
 msgid "Failed to update category"
 msgstr "បរាជ័យក្នុងការធ្វើបច្ចុប្បន្នភាពប្រភេទ"
 
@@ -1086,7 +1128,7 @@ msgstr "បរាជ័យក្នុងការធ្វើបច្ចុប
 msgid "Failed to update field"
 msgstr "បរាជ័យក្នុងការធ្វើបច្ចុប្បន្នភាពវាល"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:156
+#: src/routes/_authenticated/$projectId_.settings.tsx:168
 msgid "Failed to update project"
 msgstr "បរាជ័យក្នុងការធ្វើបច្ចុប្បន្នភាពគម្រោង"
 
@@ -1109,7 +1151,7 @@ msgstr "ឯកសារ"
 msgid "Find projects"
 msgstr "ស្វែងរកគម្រោង"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:333
+#: src/routes/_authenticated/$projectId_.settings.tsx:397
 msgid "Fingerprint"
 msgstr "ស្នាមម្រាមដៃ"
 
@@ -1137,7 +1179,7 @@ msgstr "ថ្ងៃសុក្រ"
 msgid "From"
 msgstr "ពី"
 
-#: src/routes/_authenticated/$projectId/design.tsx:322
+#: src/routes/_authenticated/$projectId/design.tsx:323
 msgid "From file"
 msgstr "ពីឯកសារ"
 
@@ -1207,7 +1249,7 @@ msgstr "ដើម"
 msgid "Hot"
 msgstr "ក្ដៅ"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:299
+#: src/routes/_authenticated/$projectId_.settings.tsx:363
 msgid "Identity"
 msgstr "អត្តសញ្ញាណ"
 
@@ -1215,10 +1257,28 @@ msgstr "អត្តសញ្ញាណ"
 msgid "Imperial"
 msgstr "Imperial"
 
-#: src/routes/_authenticated/$projectId/design.tsx:177
-#: src/routes/_authenticated/$projectId/design.tsx:293
+#: src/routes/_authenticated/$projectId_.settings.tsx:548
+msgid "Import a data configuration"
+msgstr ""
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:443
+#: src/routes/_authenticated/$projectId_.settings.tsx:489
+#: src/routes/_authenticated/$projectId_.settings.tsx:547
+msgid "Import data"
+msgstr ""
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:475
+msgid "Import data?"
+msgstr ""
+
+#: src/routes/_authenticated/$projectId/design.tsx:178
+#: src/routes/_authenticated/$projectId/design.tsx:294
 msgid "Import design"
 msgstr "នាំចូលការរចនា"
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:486
+msgid "Importing..."
+msgstr ""
 
 #: ../../../lib/web/src/components/config-drawer.tsx:252
 msgid "Inset"
@@ -1232,7 +1292,8 @@ msgstr "ចំណាប់អារម្មណ៍"
 msgid "Invalid date"
 msgstr "កាលបរិច្ឆេទមិនត្រឹមត្រូវ"
 
-#: src/routes/_authenticated/$projectId/design.tsx:277
+#: src/routes/_authenticated/$projectId_.settings.tsx:531
+#: src/routes/_authenticated/$projectId/design.tsx:278
 msgid "Invalid JSON file"
 msgstr "ឯកសារ JSON មិនត្រឹមត្រូវ"
 
@@ -1240,7 +1301,7 @@ msgstr "ឯកសារ JSON មិនត្រឹមត្រូវ"
 msgid "Invalid verification code"
 msgstr "កូដផ្ទៀងផ្ទាត់មិនត្រឹមត្រូវ"
 
-#: src/features/objects/components/object-detail-panel.tsx:424
+#: src/features/objects/components/object-detail-panel.tsx:395
 msgid "Item details"
 msgstr "ព័ត៌មានលម្អិតធាតុ"
 
@@ -1292,11 +1353,11 @@ msgstr "កំពុងផ្ទុកមាតិកា…"
 msgid "Loading diff..."
 msgstr "កំពុងផ្ទុក diff..."
 
-#: src/features/objects/components/object-detail-panel.tsx:324
+#: src/features/objects/components/object-detail-panel.tsx:296
 msgid "Loading item"
 msgstr "កំពុងផ្ទុកធាតុ"
 
-#: src/features/objects/components/object-detail-panel.tsx:325
+#: src/features/objects/components/object-detail-panel.tsx:297
 msgid "Loading item details"
 msgstr "កំពុងផ្ទុកព័ត៌មានលម្អិតធាតុ"
 
@@ -1369,7 +1430,7 @@ msgstr "បញ្ចូល commit"
 msgid "Merge requests"
 msgstr "សំណើបញ្ចូល"
 
-#: src/features/objects/components/object-detail-panel.tsx:399
+#: src/features/objects/components/object-detail-panel.tsx:371
 msgid "Merge requests ({requestCount})"
 msgstr "សំណើបញ្ចូល ({requestCount})"
 
@@ -1412,7 +1473,7 @@ msgstr "គម្រោងរបស់ខ្ញុំ"
 #: src/features/editor/components/edit-dialogs.tsx:1065
 #: src/features/editor/components/option-dialog.tsx:112
 #: src/features/projects/components/create-project-dialog.tsx:159
-#: src/routes/_authenticated/$projectId_.settings.tsx:304
+#: src/routes/_authenticated/$projectId_.settings.tsx:368
 msgid "Name"
 msgstr "ឈ្មោះ"
 
@@ -1420,7 +1481,8 @@ msgstr "ឈ្មោះ"
 msgid "Name is required"
 msgstr "តម្រូវឱ្យបញ្ចូលឈ្មោះ"
 
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:288
+#: ../../../lib/web/src/features/errors/general-error.tsx:53
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:294
 msgid "Network error"
 msgstr "កំហុសបណ្តាញ"
 
@@ -1448,7 +1510,7 @@ msgstr "រូបភាពបន្ទាប់"
 msgid "No {parentClassNames} to add to"
 msgstr "មិនមាន {parentClassNames} ដើម្បីបន្ថែមទៅ"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:411
+#: src/routes/_authenticated/$projectId_.settings.tsx:611
 msgid "No access"
 msgstr "គ្មានសិទ្ធិចូលប្រើ"
 
@@ -1540,7 +1602,7 @@ msgstr "គ្មានស្ថានភាព"
 msgid "No time zone found."
 msgstr "រកមិនឃើញតំបន់ពេលវេលា។"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:148
+#: ../../../lib/web/src/components/notification-category-button.tsx:147
 msgid "No topic record yet — try again after the next notification."
 msgstr "មិនទាន់មានកំណត់ត្រាប្រធានបទ — សាកល្បងម្តងទៀតបន្ទាប់ពីការជូនដំណឹងលើកក្រោយ។"
 
@@ -1566,9 +1628,9 @@ msgstr "មិនមានការមើល"
 #: src/features/editor/components/edit-dialogs.tsx:782
 #: src/features/objects/components/create-object-dialog.tsx:389
 #: src/features/objects/components/create-object-dialog.tsx:396
-#: src/features/objects/components/object-detail-panel.tsx:548
-#: src/features/objects/components/object-detail-panel.tsx:561
-#: src/features/objects/components/object-detail-panel.tsx:566
+#: src/features/objects/components/object-detail-panel.tsx:512
+#: src/features/objects/components/object-detail-panel.tsx:525
+#: src/features/objects/components/object-detail-panel.tsx:530
 msgid "None"
 msgstr "គ្មាន"
 
@@ -1579,6 +1641,10 @@ msgstr "ធម្មតា"
 #: src/features/requests/components/request-panel.tsx:231
 msgid "Not configured"
 msgstr "មិនបានកំណត់រចនាសម្ព័ន្ធ"
+
+#: ../../../lib/web/src/features/errors/general-error.tsx:67
+msgid "Not found"
+msgstr ""
 
 #: ../../../lib/web/src/components/ui/editable-field-row.tsx:146
 msgid "Not set"
@@ -1636,7 +1702,7 @@ msgstr "បើកសកម្មភាពថ្នាក់"
 msgid "Open column actions"
 msgstr "បើកសកម្មភាពជួរឈរ"
 
-#: src/routes/_authenticated/$projectId/design.tsx:165
+#: src/routes/_authenticated/$projectId/design.tsx:166
 msgid "Open design actions"
 msgstr "បើកសកម្មភាពរចនា"
 
@@ -1697,7 +1763,7 @@ msgid "Owner"
 msgstr "ម្ចាស់"
 
 #: src/features/objects/components/create-object-dialog.tsx:381
-#: src/features/objects/components/object-detail-panel.tsx:544
+#: src/features/objects/components/object-detail-panel.tsx:508
 msgid "Parent"
 msgstr "មេ"
 
@@ -1717,7 +1783,7 @@ msgstr "កូនសោចូល"
 msgid "Pattern (regex)"
 msgstr "លំនាំ (regex)"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:352
+#: src/routes/_authenticated/$projectId_.settings.tsx:416
 msgid "Permanently delete this project and all its content."
 msgstr "លុបគម្រោងនេះ និងមាតិការបស់វាជាអចិន្ត្រៃយ៍។"
 
@@ -1726,7 +1792,8 @@ msgstr "លុបគម្រោងនេះ និងមាតិការប�
 msgid "Please add one or more classes to the project design."
 msgstr "សូមបន្ថែមថ្នាក់មួយ ឬច្រើនទៅការរចនាគម្រោង។"
 
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:289
+#: ../../../lib/web/src/features/errors/general-error.tsx:54
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:295
 msgid "Please check your internet connection and try again."
 msgstr "សូមពិនិត្យការតភ្ជាប់អ៊ីនធឺណិតរបស់អ្នក រួចព្យាយាមម្តងទៀត។"
 
@@ -1734,8 +1801,16 @@ msgstr "សូមពិនិត្យការតភ្ជាប់អ៊ីន
 msgid "Please select a template"
 msgstr "សូមជ្រើសរើសគំរូ"
 
+#: ../../../lib/web/src/features/errors/general-error.tsx:83
+msgid "Please try again."
+msgstr ""
+
+#: ../../../lib/web/src/features/errors/general-error.tsx:75
+msgid "Please wait a moment and try again."
+msgstr ""
+
 #: src/features/projects/components/create-project-dialog.tsx:181
-#: src/routes/_authenticated/$projectId_.settings.tsx:321
+#: src/routes/_authenticated/$projectId_.settings.tsx:385
 msgid "Prefix"
 msgstr "បុព្វបទ"
 
@@ -1768,23 +1843,23 @@ msgstr "សកម្មភាពគម្រោង"
 msgid "Project created"
 msgstr "បានបង្កើតគម្រោង"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:132
+#: src/routes/_authenticated/$projectId_.settings.tsx:144
 msgid "Project deleted"
 msgstr "បានលុបគម្រោង"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:211
+#: src/routes/_authenticated/$projectId_.settings.tsx:223
 msgid "Project not found"
 msgstr "រកមិនឃើញគម្រោង"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:122
+#: src/routes/_authenticated/$projectId_.settings.tsx:134
 msgid "Project settings"
 msgstr "ការកំណត់គម្រោង"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:211
+#: src/routes/_authenticated/$projectId_.settings.tsx:223
 msgid "Project unavailable"
 msgstr "គម្រោងមិនមាន"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:155
+#: src/routes/_authenticated/$projectId_.settings.tsx:167
 msgid "Project updated"
 msgstr "បានធ្វើបច្ចុប្បន្នភាពគម្រោង"
 
@@ -1795,7 +1870,7 @@ msgstr "បានធ្វើបច្ចុប្បន្នភាពគម្
 msgid "Projects"
 msgstr "គម្រោង"
 
-#: src/features/objects/components/object-detail-panel.tsx:387
+#: src/features/objects/components/object-detail-panel.tsx:359
 msgid "Properties"
 msgstr "លក្ខណៈសម្បត្តិ"
 
@@ -1823,8 +1898,8 @@ msgstr "រួចរាល់ដើម្បី merge"
 msgid "Rebase and merge"
 msgstr "Rebase និង merge"
 
-#: ../../../lib/web/src/components/search-entity-dialog.tsx:219
-#: ../../../lib/web/src/components/search-entity-page.tsx:194
+#: ../../../lib/web/src/components/search-entity-dialog.tsx:216
+#: ../../../lib/web/src/components/search-entity-page.tsx:191
 msgid "Recommended"
 msgstr "បានណែនាំ"
 
@@ -1895,7 +1970,7 @@ msgstr "យកធាតុចេញ"
 msgid "Remove link"
 msgstr "លុបតំណ"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:487
+#: src/routes/_authenticated/$projectId_.settings.tsx:687
 msgid "Removing access..."
 msgstr "កំពុងដកការចូលប្រើ..."
 
@@ -1912,15 +1987,15 @@ msgstr "ប្តូរឈ្មោះជួរឈរ"
 msgid "Rename this board column"
 msgstr "ប្តូរឈ្មោះជួរឈរក្តារនេះ"
 
-#: src/routes/_authenticated/$projectId/design.tsx:217
+#: src/routes/_authenticated/$projectId/design.tsx:218
 msgid "Replace design"
 msgstr "ជំនួសការរចនា"
 
-#: src/routes/_authenticated/$projectId/design.tsx:201
+#: src/routes/_authenticated/$projectId/design.tsx:202
 msgid "Replace design?"
 msgstr "ជំនួសការរចនា?"
 
-#: src/routes/_authenticated/$projectId/design.tsx:214
+#: src/routes/_authenticated/$projectId/design.tsx:215
 msgid "Replacing..."
 msgstr "កំពុងជំនួស..."
 
@@ -1991,7 +2066,7 @@ msgstr "ថ្ងៃសៅរ៍"
 msgid "Save"
 msgstr "រក្សាទុក"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:154
+#: src/routes/_authenticated/$projectId_.settings.tsx:166
 msgid "Saving..."
 msgstr "កំពុងរក្សាទុក..."
 
@@ -2041,8 +2116,8 @@ msgstr "ស្វែងរក មើល និងតម្រៀបទិដ្�
 msgid "Search..."
 msgstr "ស្វែងរក..."
 
-#: ../../../lib/web/src/components/search-entity-dialog.tsx:177
-#: ../../../lib/web/src/components/search-entity-page.tsx:152
+#: ../../../lib/web/src/components/search-entity-dialog.tsx:174
+#: ../../../lib/web/src/components/search-entity-page.tsx:149
 #: ../../../lib/web/src/features/access/access-dialog.tsx:202
 msgid "Searching..."
 msgstr "កំពុងស្វែងរក..."
@@ -2120,12 +2195,12 @@ msgstr "ផ្ញើអ៊ីមែល"
 msgid "Serif"
 msgstr "សេរីហ្វ"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:342
+#: src/routes/_authenticated/$projectId_.settings.tsx:406
 msgid "Server"
 msgstr "ម៉ាស៊ីនមេ"
 
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:245
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:271
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:251
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:277
 msgid "Server error"
 msgstr "កំហុសម៉ាស៊ីនមេ"
 
@@ -2135,14 +2210,18 @@ msgid "Server rules"
 msgstr "ច្បាប់ម៉ាស៊ីនមេ"
 
 #: ../../../lib/web/src/lib/api-response-interceptors.ts:209
-msgid "Session expired"
-msgstr "វគ្គបានផុតកំណត់"
+#~ msgid "Session expired"
+#~ msgstr "វគ្គបានផុតកំណត់"
+
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:209
+msgid "Session expired. Please log in again."
+msgstr ""
 
 #: ../../../lib/web/src/components/travelling-picker.tsx:147
 msgid "Set origin and destination"
 msgstr "កំណត់ចំណុចចេញដំណើរ និងគោលដៅ"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:476
+#: src/routes/_authenticated/$projectId_.settings.tsx:676
 msgid "Setting access..."
 msgstr "កំពុងកំណត់ការចូលប្រើ..."
 
@@ -2151,9 +2230,9 @@ msgstr "កំពុងកំណត់ការចូលប្រើ..."
 #: ../../../lib/web/src/components/layout/nav-user.tsx:84
 #: ../../../lib/web/src/components/layout/nav-user.tsx:148
 #: ../../../lib/web/src/components/layout/nav-user.tsx:198
-#: src/routes/_authenticated/$projectId_.settings.tsx:76
-#: src/routes/_authenticated/$projectId_.settings.tsx:171
-#: src/routes/_authenticated/$projectId_.settings.tsx:194
+#: src/routes/_authenticated/$projectId_.settings.tsx:88
+#: src/routes/_authenticated/$projectId_.settings.tsx:183
+#: src/routes/_authenticated/$projectId_.settings.tsx:206
 #: src/routes/_authenticated/$projectId/index.tsx:912
 msgid "Settings"
 msgstr "ការកំណត់"
@@ -2235,8 +2314,8 @@ msgstr "ចាប់ផ្តើមការពិភាក្សាដោយប
 msgid "Stay tuned though!"
 msgstr "ប៉ុន្តែសូមតាមដាន!"
 
-#: src/features/objects/components/object-detail-panel.tsx:447
-#: src/features/objects/components/object-detail-panel.tsx:456
+#: src/features/objects/components/object-detail-panel.tsx:418
+#: src/features/objects/components/object-detail-panel.tsx:427
 msgid "Stop watching"
 msgstr "បញ្ឈប់ការតាមដាន"
 
@@ -2319,6 +2398,10 @@ msgstr "អត្ថបទ"
 msgid "That code is incorrect or has expired."
 msgstr "កូដនោះមិនត្រឹមត្រូវ ឬផុតកំណត់ហើយ។"
 
+#: ../../../lib/web/src/features/errors/general-error.tsx:68
+msgid "The requested content could not be found."
+msgstr ""
+
 #: ../../../lib/web/src/components/config-drawer.tsx:194
 msgid "Theme"
 msgstr "រូបរាង"
@@ -2336,19 +2419,24 @@ msgstr "សំណើបញ្ចូលគ្នានេះត្រូវបា
 msgid "This merge request is a draft and cannot be merged."
 msgstr "សំណើបញ្ចូលគ្នានេះជាសេចក្តីព្រាង ហើយមិនអាចបញ្ចូលគ្នាបានទេ។"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:214
+#: src/routes/_authenticated/$projectId_.settings.tsx:226
 msgid "This project could not be loaded right now."
 msgstr "គម្រោងនេះមិនអាចផ្ទុកបានពេលនេះទេ។"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:214
+#: src/routes/_authenticated/$projectId_.settings.tsx:226
 msgid "This project may have been deleted or you don't have access to it."
 msgstr "គម្រោងនេះប្រហែលជាត្រូវបានលុប ឬអ្នកមិនមានសិទ្ធិចូលប្រើ។"
+
+#. placeholder {0}: pendingDataImport?.label
+#: src/routes/_authenticated/$projectId_.settings.tsx:477
+msgid "This will import the data from <0>{0}</0>. Objects will be appended to the existing records. Ensure the current design matches the classes and fields referenced in the file."
+msgstr ""
 
 #: src/features/requests/components/merge-button.tsx:105
 msgid "This will merge \"{source}\" into \"{target}\". This action cannot be undone."
 msgstr "នេះនឹងបញ្ចូល \"{source}\" ទៅក្នុង \"{target}\"។ សកម្មភាពនេះមិនអាចមិនធ្វើវិញបានទេ។"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:371
+#: src/routes/_authenticated/$projectId_.settings.tsx:454
 msgid "This will permanently delete \"{projectName}\" and all its objects, comments, and attachments. This action cannot be undone."
 msgstr "នេះនឹងលុប \"{projectName}\" និងវត្ថុ មតិយោបល់ និងឯកសារភ្ជាប់ទាំងអស់របស់វាជាអចិន្ត្រៃយ៍។ សកម្មភាពនេះមិនអាចមិនធ្វើវិញបានទេ។"
 
@@ -2358,7 +2446,7 @@ msgid "This will remove \"{0}\" from your sidebar and stop updates for this proj
 msgstr "នេះនឹងដក \"{0}\" ចេញពីរបារចំហៀងរបស់អ្នក ហើយឈប់ការធ្វើបច្ចុប្បន្នភាពសម្រាប់គម្រោងនេះ។"
 
 #. placeholder {0}: pendingImport?.label
-#: src/routes/_authenticated/$projectId/design.tsx:203
+#: src/routes/_authenticated/$projectId/design.tsx:204
 msgid "This will replace the current design with <0>{0}</0>. All existing classes, fields, options, and views will be deleted. Existing objects will not be deleted but may no longer appear in views."
 msgstr "នេះនឹងជំនួសការរចនាបច្ចុប្បន្នដោយ <0>{0}</0>។ ថ្នាក់ វាល ជម្រើស និងទិដ្ឋភាពដែលមានស្រាប់ទាំងអស់នឹងត្រូវលុប។ វត្ថុដែលមានស្រាប់នឹងមិនត្រូវបានលុបទេ ប៉ុន្តែអាចលែងបង្ហាញនៅក្នុងទិដ្ឋភាពទៀតទេ។"
 
@@ -2415,6 +2503,10 @@ msgstr "បិទ/បើកជម្រើសទិដ្ឋភាព"
 msgid "Toggle watched filter"
 msgstr "បិទ/បើកតម្រងដែលបានមើល"
 
+#: ../../../lib/web/src/features/errors/general-error.tsx:74
+msgid "Too many requests"
+msgstr ""
+
 #: ../../../lib/web/src/components/ui/sort-selector.tsx:45
 msgid "Top"
 msgstr "កំពូល"
@@ -2427,13 +2519,13 @@ msgstr "កម្រិតកំពូល"
 msgid "Travelling"
 msgstr "កំពុងធ្វើដំណើរ"
 
-#: ../../../lib/web/src/components/search-entity-dialog.tsx:193
-#: ../../../lib/web/src/components/search-entity-page.tsx:168
+#: ../../../lib/web/src/components/search-entity-dialog.tsx:190
+#: ../../../lib/web/src/components/search-entity-page.tsx:165
 msgid "Try adjusting your search terms"
 msgstr "សាកល្បងកែតម្រូវពាក្យស្វែងរករបស់អ្នក"
 
-#: ../../../lib/web/src/features/errors/general-error.tsx:128
-#: ../../../lib/web/src/features/errors/general-error.tsx:168
+#: ../../../lib/web/src/features/errors/general-error.tsx:140
+#: ../../../lib/web/src/features/errors/general-error.tsx:180
 #: ../../../lib/web/src/features/errors/maintenance-error.tsx:19
 msgid "Try again"
 msgstr "សាកល្បងម្តងទៀត"
@@ -2459,7 +2551,7 @@ msgstr "វាយដើម្បីស្វែងរកអ្នកប្រើ
 msgid "Type to search..."
 msgstr "វាយដើម្បីស្វែងរក..."
 
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:267
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:273
 msgid "Unable to connect to remote server"
 msgstr "មិនអាចតភ្ជាប់ទៅម៉ាស៊ីនមេពីចម្ងាយបានទេ"
 
@@ -2468,7 +2560,7 @@ msgstr "មិនអាចតភ្ជាប់ទៅម៉ាស៊ីនមេ
 msgid "Unable to redirect to login. Please try again."
 msgstr "មិនអាចប្តូរទិសទៅការចូល។ សូមព្យាយាមម្តងទៀត។"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:156
+#: ../../../lib/web/src/components/notification-category-button.tsx:155
 msgid "Unassigned"
 msgstr "មិនបានកំណត់"
 
@@ -2515,7 +2607,7 @@ msgstr "មិនបានផ្ទៀងផ្ទាត់"
 msgid "Updated"
 msgstr "បានធ្វើបច្ចុប្បន្នភាព"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:501
+#: src/routes/_authenticated/$projectId_.settings.tsx:701
 msgid "Updating access..."
 msgstr "កំពុងធ្វើបច្ចុប្បន្នភាពការចូលប្រើ..."
 
@@ -2524,7 +2616,8 @@ msgstr "កំពុងធ្វើបច្ចុប្បន្នភាពក
 msgid "Upload"
 msgstr "បង្ហោះ"
 
-#: src/routes/_authenticated/$projectId/design.tsx:336
+#: src/routes/_authenticated/$projectId_.settings.tsx:566
+#: src/routes/_authenticated/$projectId/design.tsx:337
 msgid "Upload .json file"
 msgstr "បង្ហោះឯកសារ .json"
 
@@ -2582,7 +2675,7 @@ msgstr "មើលទាំងអស់"
 msgid "View all notifications"
 msgstr "មើលការជូនដំណឹងទាំងអស់"
 
-#: src/features/objects/components/object-detail-panel.tsx:425
+#: src/features/objects/components/object-detail-panel.tsx:396
 msgid "View and edit item details"
 msgstr "មើល និងកែសម្រួលព័ត៌មានលម្អិតធាតុ"
 
@@ -2590,7 +2683,7 @@ msgstr "មើល និងកែសម្រួលព័ត៌មានលម�
 msgid "View controls"
 msgstr "ការគ្រប់គ្រងទិដ្ឋភាព"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:410
+#: src/routes/_authenticated/$projectId_.settings.tsx:610
 msgid "View only"
 msgstr "មើលតែប៉ុណ្ណោះ"
 
@@ -2602,8 +2695,8 @@ msgstr "ជម្រើសទិដ្ឋភាព"
 msgid "Views"
 msgstr "ទិដ្ឋភាព"
 
-#: src/features/objects/components/object-detail-panel.tsx:447
-#: src/features/objects/components/object-detail-panel.tsx:456
+#: src/features/objects/components/object-detail-panel.tsx:418
+#: src/features/objects/components/object-detail-panel.tsx:427
 msgid "Watch"
 msgstr "មើល"
 
@@ -2626,6 +2719,10 @@ msgstr "គេហទំព័រកំពុងស្ថិតក្រោមក
 #: ../../../lib/web/src/lib/preference-utils.ts:61
 msgid "Wednesday"
 msgstr "ថ្ងៃពុធ"
+
+#: ../../../lib/web/src/features/errors/general-error.tsx:61
+msgid "You do not have access to this section."
+msgstr ""
 
 #: src/routes/_authenticated/$projectId/index.tsx:102
 msgid "You don't have access to this project."

@@ -158,8 +158,8 @@ msgstr "Тапсырмалар тізімінің тармағын қосу"
 msgid "Add class"
 msgstr "Сынып қосу"
 
-#: src/routes/_authenticated/$projectId/index.tsx:887
-#: src/routes/_authenticated/$projectId/index.tsx:1066
+#: src/routes/_authenticated/$projectId/index.tsx:919
+#: src/routes/_authenticated/$projectId/index.tsx:1104
 msgid "Add column"
 msgstr "Баған қосу"
 
@@ -248,6 +248,10 @@ msgstr "Қате орын алды"
 msgid "An unexpected error occurred"
 msgstr "Күтпеген қате орын алды"
 
+#: src/routes/_authenticated/$projectId/index.tsx:1111
+msgid "Anyone you give access to can subscribe with this link."
+msgstr "Рұқсат берген кез келген адам осы сілтеме арқылы жазыла алады."
+
 #. placeholder {0}: deleteTarget?.name
 #: src/features/objects/components/object-attachments.tsx:228
 msgid "Are you sure you want to delete \"{0}\"?"
@@ -323,7 +327,7 @@ msgid "Back to project"
 msgstr "Жобаға оралу"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:67
-#: src/routes/_authenticated/$projectId/index.tsx:116
+#: src/routes/_authenticated/$projectId/index.tsx:123
 msgid "Back to projects"
 msgstr "Жобаларға оралу"
 
@@ -371,7 +375,7 @@ msgstr "Бала бола алады:"
 #: src/features/objects/components/comment-thread.tsx:175
 #: src/features/projects/components/create-project-dialog.tsx:219
 #: src/routes/_authenticated/$projectId/design.tsx:343
-#: src/routes/_authenticated/$projectId/index.tsx:945
+#: src/routes/_authenticated/$projectId/index.tsx:983
 msgid "Cancel"
 msgstr "Болдырмау"
 
@@ -464,8 +468,8 @@ msgstr "Таңдауды тазалау (Escape)"
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:354
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:357
 #: ../../../lib/web/src/components/ui/sheet.tsx:79
-#: src/features/objects/components/create-object-dialog.tsx:358
-#: src/features/objects/components/create-object-dialog.tsx:363
+#: src/features/objects/components/create-object-dialog.tsx:391
+#: src/features/objects/components/create-object-dialog.tsx:396
 msgid "Close"
 msgstr "Жабу"
 
@@ -600,13 +604,13 @@ msgstr "Бұл тіркелгі арқылы тексеру мүмкін бол�
 
 #: src/features/board/components/board-column.tsx:542
 #: src/features/board/components/board-column.tsx:681
-#: src/features/objects/components/create-object-dialog.tsx:348
-#: src/features/objects/components/create-object-dialog.tsx:502
+#: src/features/objects/components/create-object-dialog.tsx:381
+#: src/features/objects/components/create-object-dialog.tsx:535
 #: src/features/tree/components/tree-view.tsx:697
 msgid "Create"
 msgstr "Құру"
 
-#: src/features/objects/components/create-object-dialog.tsx:326
+#: src/features/objects/components/create-object-dialog.tsx:359
 msgid "Create a new item in this project"
 msgstr "Бұл жобада жаңа тармақ құру"
 
@@ -616,7 +620,7 @@ msgid "Create a new project"
 msgstr "Жаңа жоба құру"
 
 #: src/components/keyboard-shortcuts-help.tsx:27
-#: src/features/objects/components/create-object-dialog.tsx:325
+#: src/features/objects/components/create-object-dialog.tsx:358
 msgid "Create new item"
 msgstr "Жаңа тармақ құру"
 
@@ -640,7 +644,7 @@ msgstr "Құрылды"
 msgid "Creating project..."
 msgstr "Жоба құрылуда..."
 
-#: src/features/objects/components/create-object-dialog.tsx:502
+#: src/features/objects/components/create-object-dialog.tsx:535
 #: src/features/projects/components/create-project-dialog.tsx:297
 msgid "Creating..."
 msgstr "Құрылуда..."
@@ -775,7 +779,7 @@ msgstr "Сипаттама"
 
 #: src/routes/_authenticated/$projectId/design.tsx:63
 #: src/routes/_authenticated/$projectId/design.tsx:131
-#: src/routes/_authenticated/$projectId/index.tsx:902
+#: src/routes/_authenticated/$projectId/index.tsx:934
 msgid "Design"
 msgstr "Дизайн"
 
@@ -819,8 +823,8 @@ msgstr "Бағыт"
 msgid "Dismiss"
 msgstr "Жабу"
 
-#: src/routes/_authenticated/$projectId/index.tsx:974
-#: src/routes/_authenticated/$projectId/index.tsx:979
+#: src/routes/_authenticated/$projectId/index.tsx:1012
+#: src/routes/_authenticated/$projectId/index.tsx:1017
 msgid "Dismiss board hint"
 msgstr "Тақта кеңесін жабу"
 
@@ -832,10 +836,11 @@ msgstr "Мобильді бүйір тақтаны көрсетеді."
 #: src/features/editor/components/edit-dialogs.tsx:922
 #: src/features/editor/components/edit-dialogs.tsx:1228
 #: src/features/objects/components/object-detail-panel.tsx:480
+#: src/routes/_authenticated/$projectId/index.tsx:1121
 msgid "Done"
 msgstr "Дайын"
 
-#: src/routes/_authenticated/$projectId/index.tsx:965
+#: src/routes/_authenticated/$projectId/index.tsx:1003
 msgid "Double click on a column to add content"
 msgstr "Мазмұн қосу үшін бағанға екі рет басыңыз"
 
@@ -857,7 +862,7 @@ msgstr "Жүктеп алу сәтсіз аяқталды"
 msgid "Draft"
 msgstr "Жоба"
 
-#: src/routes/_authenticated/$projectId/index.tsx:941
+#: src/routes/_authenticated/$projectId/index.tsx:979
 msgid "Drag columns to re-order them"
 msgstr "Бағандарды қайта реттеу үшін сүйреңіз"
 
@@ -963,6 +968,7 @@ msgid "Failed to create field"
 msgstr "Өріс жасау сәтсіз аяқталды"
 
 #: src/features/objects/components/object-links.tsx:105
+#: src/routes/_authenticated/$projectId/index.tsx:175
 msgid "Failed to create link"
 msgstr "Сілтеме жасау сәтсіз аяқталды"
 
@@ -1011,7 +1017,7 @@ msgid "Failed to load item"
 msgstr "Элементті жүктеу сәтсіз аяқталды"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:43
-#: src/routes/_authenticated/$projectId/index.tsx:80
+#: src/routes/_authenticated/$projectId/index.tsx:87
 msgid "Failed to load project"
 msgstr "Жобаны жүктеу сәтсіз аяқталды"
 
@@ -1061,12 +1067,12 @@ msgstr "Кіру деңгейін орнату сәтсіз аяқталды"
 
 #: src/features/projects/components/inline-project-search.tsx:102
 #: src/features/projects/components/recommended-projects.tsx:65
-#: src/routes/_authenticated/find.tsx:58
+#: src/routes/_authenticated/find.tsx:59
 msgid "Failed to subscribe"
 msgstr "Жазылу сәтсіз аяқталды"
 
 #: src/features/projects/pages/projects-list-page.tsx:177
-#: src/routes/_authenticated/$projectId/index.tsx:569
+#: src/routes/_authenticated/$projectId/index.tsx:601
 msgid "Failed to unsubscribe"
 msgstr "Жазылудан бас тарту сәтсіз аяқталды"
 
@@ -1098,14 +1104,14 @@ msgstr "Тіркемені жүктеп салу сәтсіз аяқталды"
 msgid "Fields"
 msgstr "Өрістер"
 
-#: src/features/objects/components/create-object-dialog.tsx:439
+#: src/features/objects/components/create-object-dialog.tsx:472
 #: src/features/objects/components/object-attachments.tsx:103
 #: src/features/objects/components/object-attachments.tsx:120
 msgid "Files"
 msgstr "Файлдар"
 
 #: src/components/layout/projects-layout.tsx:61
-#: src/routes/_authenticated/find.tsx:78
+#: src/routes/_authenticated/find.tsx:89
 msgid "Find projects"
 msgstr "Жобаларды табу"
 
@@ -1272,6 +1278,10 @@ msgstr "Солдан оңға"
 msgid "Light"
 msgstr "Ашық"
 
+#: src/routes/_authenticated/$projectId/index.tsx:950
+msgid "Link"
+msgstr "Сілтеме"
+
 #: src/features/objects/components/object-links.tsx:228
 msgid "Links"
 msgstr "Сілтемелер"
@@ -1425,13 +1435,13 @@ msgid "Network error"
 msgstr "Желі қатесі"
 
 #: ../../../lib/web/src/components/ui/sort-selector.tsx:43
-#: src/features/objects/components/create-object-dialog.tsx:333
-#: src/routes/_authenticated/$projectId/index.tsx:841
-#: src/routes/_authenticated/$projectId/index.tsx:859
+#: src/features/objects/components/create-object-dialog.tsx:366
+#: src/routes/_authenticated/$projectId/index.tsx:873
+#: src/routes/_authenticated/$projectId/index.tsx:891
 msgid "New"
 msgstr "Жаңа"
 
-#: src/routes/_authenticated/$projectId/index.tsx:838
+#: src/routes/_authenticated/$projectId/index.tsx:870
 msgid "New {className}"
 msgstr "Жаңа {className}"
 
@@ -1444,7 +1454,7 @@ msgstr "Келесі"
 msgid "Next image"
 msgstr "Келесі сурет"
 
-#: src/features/objects/components/create-object-dialog.tsx:406
+#: src/features/objects/components/create-object-dialog.tsx:439
 msgid "No {parentClassNames} to add to"
 msgstr "Қосуға болатын {parentClassNames} жоқ"
 
@@ -1492,7 +1502,7 @@ msgstr "Diff қолжетімсіз"
 msgid "No groups available"
 msgstr "Топтар қолжетімсіз"
 
-#: src/features/objects/components/create-object-dialog.tsx:373
+#: src/features/objects/components/create-object-dialog.tsx:406
 msgid "No item types can be created yet. Create the required parent items first."
 msgstr "Әлі бірде-бір элемент түрі жасалмайды. Алдымен қажетті ата-аналық элементтерді жасаңыз."
 
@@ -1517,7 +1527,7 @@ msgid "No profile"
 msgstr "Профиль жоқ"
 
 #: src/features/projects/components/inline-project-search.tsx:150
-#: src/routes/_authenticated/find.tsx:80
+#: src/routes/_authenticated/find.tsx:91
 msgid "No projects found"
 msgstr "Жобалар табылмады"
 
@@ -1564,8 +1574,8 @@ msgstr "Көріністер жоқ"
 #: src/features/editor/components/edit-dialogs.tsx:505
 #: src/features/editor/components/edit-dialogs.tsx:779
 #: src/features/editor/components/edit-dialogs.tsx:782
-#: src/features/objects/components/create-object-dialog.tsx:389
-#: src/features/objects/components/create-object-dialog.tsx:396
+#: src/features/objects/components/create-object-dialog.tsx:422
+#: src/features/objects/components/create-object-dialog.tsx:429
 #: src/features/objects/components/object-detail-panel.tsx:548
 #: src/features/objects/components/object-detail-panel.tsx:561
 #: src/features/objects/components/object-detail-panel.tsx:566
@@ -1655,7 +1665,7 @@ msgstr "Навигация мәзірін ашу"
 msgid "Open option actions"
 msgstr "Опция әрекеттерін ашу"
 
-#: src/routes/_authenticated/$projectId/index.tsx:867
+#: src/routes/_authenticated/$projectId/index.tsx:899
 msgid "Open page actions"
 msgstr "Бет әрекеттерін ашу"
 
@@ -1696,7 +1706,7 @@ msgstr "Басқа"
 msgid "Owner"
 msgstr "Иесі"
 
-#: src/features/objects/components/create-object-dialog.tsx:381
+#: src/features/objects/components/create-object-dialog.tsx:414
 #: src/features/objects/components/object-detail-panel.tsx:544
 msgid "Parent"
 msgstr "Ата-ана"
@@ -1721,8 +1731,8 @@ msgstr "Үлгі (regex)"
 msgid "Permanently delete this project and all its content."
 msgstr "Бұл жобаны және оның барлық мазмұнын біржола жою."
 
-#: src/routes/_authenticated/$projectId/index.tsx:677
-#: src/routes/_authenticated/$projectId/index.tsx:711
+#: src/routes/_authenticated/$projectId/index.tsx:709
+#: src/routes/_authenticated/$projectId/index.tsx:743
 msgid "Please add one or more classes to the project design."
 msgstr "Жоба дизайнына бір немесе бірнеше класс қосыңыз."
 
@@ -1755,7 +1765,7 @@ msgid "Profile"
 msgstr "Профиль"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:65
-#: src/routes/_authenticated/$projectId/index.tsx:114
+#: src/routes/_authenticated/$projectId/index.tsx:121
 msgid "Project"
 msgstr "Жоба"
 
@@ -1771,6 +1781,10 @@ msgstr "Жоба жасалды"
 #: src/routes/_authenticated/$projectId_.settings.tsx:132
 msgid "Project deleted"
 msgstr "Жоба жойылды"
+
+#: src/routes/_authenticated/$projectId/index.tsx:1109
+msgid "Project link"
+msgstr "Жоба сілтемесі"
 
 #: src/routes/_authenticated/$projectId_.settings.tsx:211
 msgid "Project not found"
@@ -1807,7 +1821,7 @@ msgstr "Көтерілген"
 msgid "Re-link your accounts on this server"
 msgstr "Осы серверде тіркелгілеріңізді қайта байланыстырыңыз"
 
-#: src/routes/_authenticated/$projectId/index.tsx:891
+#: src/routes/_authenticated/$projectId/index.tsx:923
 msgid "Re-order columns"
 msgstr "Бағандарды қайта реттеу"
 
@@ -1824,7 +1838,7 @@ msgid "Rebase and merge"
 msgstr "Rebase және біріктіру"
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:219
-#: ../../../lib/web/src/components/search-entity-page.tsx:194
+#: ../../../lib/web/src/components/search-entity-page.tsx:243
 msgid "Recommended"
 msgstr "Ұсынылған"
 
@@ -1861,8 +1875,8 @@ msgstr "24 сағат ішінде салыстырмалы, әйтпесе аб
 #: src/features/objects/components/comment-list.tsx:238
 #: src/features/objects/components/comment-thread.tsx:294
 #: src/features/objects/components/comment-thread.tsx:299
-#: src/features/objects/components/create-object-dialog.tsx:453
-#: src/features/objects/components/create-object-dialog.tsx:458
+#: src/features/objects/components/create-object-dialog.tsx:486
+#: src/features/objects/components/create-object-dialog.tsx:491
 msgid "Remove"
 msgstr "Жою"
 
@@ -1987,7 +2001,7 @@ msgstr "Сенбі"
 #: ../../../lib/web/src/components/ui/secret-field.tsx:77
 #: src/features/editor/components/option-dialog.tsx:150
 #: src/features/objects/components/comment-thread.tsx:195
-#: src/routes/_authenticated/$projectId/index.tsx:957
+#: src/routes/_authenticated/$projectId/index.tsx:995
 msgid "Save"
 msgstr "Сақтау"
 
@@ -1999,7 +2013,7 @@ msgstr "Сақталуда..."
 msgid "Search"
 msgstr "Іздеу"
 
-#: src/routes/_authenticated/find.tsx:79
+#: src/routes/_authenticated/find.tsx:90
 msgid "Search by name, ID, fingerprint, or URL..."
 msgstr "Аты, ID, fingerprint немесе URL бойынша іздеу..."
 
@@ -2042,7 +2056,7 @@ msgid "Search..."
 msgstr "Іздеу..."
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:177
-#: ../../../lib/web/src/components/search-entity-page.tsx:152
+#: ../../../lib/web/src/components/search-entity-page.tsx:201
 #: ../../../lib/web/src/features/access/access-dialog.tsx:202
 msgid "Searching..."
 msgstr "Іздеуде..."
@@ -2154,7 +2168,7 @@ msgstr "Қол жеткізу орнатылуда..."
 #: src/routes/_authenticated/$projectId_.settings.tsx:76
 #: src/routes/_authenticated/$projectId_.settings.tsx:171
 #: src/routes/_authenticated/$projectId_.settings.tsx:194
-#: src/routes/_authenticated/$projectId/index.tsx:912
+#: src/routes/_authenticated/$projectId/index.tsx:944
 msgid "Settings"
 msgstr "Параметрлер"
 
@@ -2260,7 +2274,7 @@ msgid "Subscribe"
 msgstr "Жазылу"
 
 #: src/features/projects/components/inline-project-search.tsx:101
-#: src/routes/_authenticated/find.tsx:57
+#: src/routes/_authenticated/find.tsx:58
 msgid "Subscribed"
 msgstr "Жазылған"
 
@@ -2271,7 +2285,7 @@ msgstr "{0}-ке жазылдыңыз"
 
 #: src/features/projects/components/inline-project-search.tsx:100
 #: src/features/projects/components/recommended-projects.tsx:63
-#: src/routes/_authenticated/find.tsx:56
+#: src/routes/_authenticated/find.tsx:57
 msgid "Subscribing..."
 msgstr "Жазылуда..."
 
@@ -2353,7 +2367,7 @@ msgid "This will permanently delete \"{projectName}\" and all its objects, comme
 msgstr "Бұл \"{projectName}\" және оның барлық нысандары, пікірлері мен тіркемелерін біржола жояды. Бұл әрекетті қайтаруға болмайды."
 
 #. placeholder {0}: project.project.name
-#: src/routes/_authenticated/$projectId/index.tsx:1073
+#: src/routes/_authenticated/$projectId/index.tsx:1131
 msgid "This will remove \"{0}\" from your sidebar and stop updates for this project."
 msgstr "Бұл \"{0}\"-ді бүйірлік панельден жояды және осы жобаға арналған жаңартуларды тоқтатады."
 
@@ -2428,7 +2442,7 @@ msgid "Travelling"
 msgstr "Сапар"
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:193
-#: ../../../lib/web/src/components/search-entity-page.tsx:168
+#: ../../../lib/web/src/components/search-entity-page.tsx:217
 msgid "Try adjusting your search terms"
 msgstr "Іздеу терминдерін реттеуді көріңіз"
 
@@ -2487,22 +2501,22 @@ msgstr "Америка Құрама Штаттары"
 #: src/features/projects/pages/projects-list-page.tsx:147
 #: src/features/projects/pages/projects-list-page.tsx:166
 #: src/features/projects/pages/projects-list-page.tsx:168
-#: src/routes/_authenticated/$projectId/index.tsx:918
-#: src/routes/_authenticated/$projectId/index.tsx:1074
+#: src/routes/_authenticated/$projectId/index.tsx:956
+#: src/routes/_authenticated/$projectId/index.tsx:1132
 msgid "Unsubscribe"
 msgstr "Жазылудан бас тарту"
 
-#: src/routes/_authenticated/$projectId/index.tsx:1072
+#: src/routes/_authenticated/$projectId/index.tsx:1130
 msgid "Unsubscribe from project?"
 msgstr "Жобадан жазылудан бас тарту керек пе?"
 
 #: src/features/projects/pages/projects-list-page.tsx:176
-#: src/routes/_authenticated/$projectId/index.tsx:568
+#: src/routes/_authenticated/$projectId/index.tsx:600
 msgid "Unsubscribed"
 msgstr "Жазылудан бас тартылды"
 
 #: src/features/projects/pages/projects-list-page.tsx:175
-#: src/routes/_authenticated/$projectId/index.tsx:567
+#: src/routes/_authenticated/$projectId/index.tsx:599
 msgid "Unsubscribing..."
 msgstr "Жазылудан бас тартылуда..."
 
@@ -2519,7 +2533,7 @@ msgstr "Жаңартылды"
 msgid "Updating access..."
 msgstr "Қол жеткізу жаңартылуда..."
 
-#: src/features/objects/components/create-object-dialog.tsx:486
+#: src/features/objects/components/create-object-dialog.tsx:519
 #: src/features/objects/components/object-attachments.tsx:216
 msgid "Upload"
 msgstr "Жүктеп салу"
@@ -2594,7 +2608,7 @@ msgstr "Көру басқару элементтері"
 msgid "View only"
 msgstr "Тек көру"
 
-#: src/routes/_authenticated/$projectId/index.tsx:876
+#: src/routes/_authenticated/$projectId/index.tsx:908
 msgid "View options"
 msgstr "Көру опциялары"
 
@@ -2627,7 +2641,7 @@ msgstr "Веб-сайтта техникалық қызмет көрсету ж�
 msgid "Wednesday"
 msgstr "Сәрсенбі"
 
-#: src/routes/_authenticated/$projectId/index.tsx:102
+#: src/routes/_authenticated/$projectId/index.tsx:109
 msgid "You don't have access to this project."
 msgstr "Сізде бұл жобаға қол жеткізу мүмкіндігі жоқ."
 

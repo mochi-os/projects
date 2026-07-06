@@ -158,8 +158,8 @@ msgstr "Добавить пункт чек-листа"
 msgid "Add class"
 msgstr "Добавить класс"
 
-#: src/routes/_authenticated/$projectId/index.tsx:887
-#: src/routes/_authenticated/$projectId/index.tsx:1066
+#: src/routes/_authenticated/$projectId/index.tsx:919
+#: src/routes/_authenticated/$projectId/index.tsx:1104
 msgid "Add column"
 msgstr "Добавить колонку"
 
@@ -248,6 +248,10 @@ msgstr "Произошла ошибка"
 msgid "An unexpected error occurred"
 msgstr "Произошла непредвиденная ошибка"
 
+#: src/routes/_authenticated/$projectId/index.tsx:1111
+msgid "Anyone you give access to can subscribe with this link."
+msgstr "Любой, кому вы предоставите доступ, может подписаться по этой ссылке."
+
 #. placeholder {0}: deleteTarget?.name
 #: src/features/objects/components/object-attachments.tsx:228
 msgid "Are you sure you want to delete \"{0}\"?"
@@ -323,7 +327,7 @@ msgid "Back to project"
 msgstr "Назад к проекту"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:67
-#: src/routes/_authenticated/$projectId/index.tsx:116
+#: src/routes/_authenticated/$projectId/index.tsx:123
 msgid "Back to projects"
 msgstr "Назад к проектам"
 
@@ -371,7 +375,7 @@ msgstr "Может быть дочерним для"
 #: src/features/objects/components/comment-thread.tsx:175
 #: src/features/projects/components/create-project-dialog.tsx:219
 #: src/routes/_authenticated/$projectId/design.tsx:343
-#: src/routes/_authenticated/$projectId/index.tsx:945
+#: src/routes/_authenticated/$projectId/index.tsx:983
 msgid "Cancel"
 msgstr "Отмена"
 
@@ -464,8 +468,8 @@ msgstr "Сбросить выбор (Escape)"
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:354
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:357
 #: ../../../lib/web/src/components/ui/sheet.tsx:79
-#: src/features/objects/components/create-object-dialog.tsx:358
-#: src/features/objects/components/create-object-dialog.tsx:363
+#: src/features/objects/components/create-object-dialog.tsx:391
+#: src/features/objects/components/create-object-dialog.tsx:396
 msgid "Close"
 msgstr "Закрыть"
 
@@ -600,13 +604,13 @@ msgstr "Не удалось выполнить проверку с этой уч
 
 #: src/features/board/components/board-column.tsx:542
 #: src/features/board/components/board-column.tsx:681
-#: src/features/objects/components/create-object-dialog.tsx:348
-#: src/features/objects/components/create-object-dialog.tsx:502
+#: src/features/objects/components/create-object-dialog.tsx:381
+#: src/features/objects/components/create-object-dialog.tsx:535
 #: src/features/tree/components/tree-view.tsx:697
 msgid "Create"
 msgstr "Создать"
 
-#: src/features/objects/components/create-object-dialog.tsx:326
+#: src/features/objects/components/create-object-dialog.tsx:359
 msgid "Create a new item in this project"
 msgstr "Создать новый элемент в этом проекте"
 
@@ -616,7 +620,7 @@ msgid "Create a new project"
 msgstr "Создать новый проект"
 
 #: src/components/keyboard-shortcuts-help.tsx:27
-#: src/features/objects/components/create-object-dialog.tsx:325
+#: src/features/objects/components/create-object-dialog.tsx:358
 msgid "Create new item"
 msgstr "Создать новый элемент"
 
@@ -640,7 +644,7 @@ msgstr "Создано"
 msgid "Creating project..."
 msgstr "Создание проекта..."
 
-#: src/features/objects/components/create-object-dialog.tsx:502
+#: src/features/objects/components/create-object-dialog.tsx:535
 #: src/features/projects/components/create-project-dialog.tsx:297
 msgid "Creating..."
 msgstr "Создание..."
@@ -775,7 +779,7 @@ msgstr "Описание"
 
 #: src/routes/_authenticated/$projectId/design.tsx:63
 #: src/routes/_authenticated/$projectId/design.tsx:131
-#: src/routes/_authenticated/$projectId/index.tsx:902
+#: src/routes/_authenticated/$projectId/index.tsx:934
 msgid "Design"
 msgstr "Дизайн"
 
@@ -819,8 +823,8 @@ msgstr "Направление"
 msgid "Dismiss"
 msgstr "Закрыть"
 
-#: src/routes/_authenticated/$projectId/index.tsx:974
-#: src/routes/_authenticated/$projectId/index.tsx:979
+#: src/routes/_authenticated/$projectId/index.tsx:1012
+#: src/routes/_authenticated/$projectId/index.tsx:1017
 msgid "Dismiss board hint"
 msgstr "Закрыть подсказку доски"
 
@@ -832,10 +836,11 @@ msgstr "Отображает мобильную боковую панель."
 #: src/features/editor/components/edit-dialogs.tsx:922
 #: src/features/editor/components/edit-dialogs.tsx:1228
 #: src/features/objects/components/object-detail-panel.tsx:480
+#: src/routes/_authenticated/$projectId/index.tsx:1121
 msgid "Done"
 msgstr "Готово"
 
-#: src/routes/_authenticated/$projectId/index.tsx:965
+#: src/routes/_authenticated/$projectId/index.tsx:1003
 msgid "Double click on a column to add content"
 msgstr "Дважды щёлкните по столбцу, чтобы добавить содержимое"
 
@@ -857,7 +862,7 @@ msgstr "Не удалось скачать"
 msgid "Draft"
 msgstr "Черновик"
 
-#: src/routes/_authenticated/$projectId/index.tsx:941
+#: src/routes/_authenticated/$projectId/index.tsx:979
 msgid "Drag columns to re-order them"
 msgstr "Перетащите столбцы, чтобы изменить их порядок"
 
@@ -963,6 +968,7 @@ msgid "Failed to create field"
 msgstr "Не удалось создать поле"
 
 #: src/features/objects/components/object-links.tsx:105
+#: src/routes/_authenticated/$projectId/index.tsx:175
 msgid "Failed to create link"
 msgstr "Не удалось создать ссылку"
 
@@ -1011,7 +1017,7 @@ msgid "Failed to load item"
 msgstr "Не удалось загрузить элемент"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:43
-#: src/routes/_authenticated/$projectId/index.tsx:80
+#: src/routes/_authenticated/$projectId/index.tsx:87
 msgid "Failed to load project"
 msgstr "Не удалось загрузить проект"
 
@@ -1061,12 +1067,12 @@ msgstr "Не удалось установить уровень доступа"
 
 #: src/features/projects/components/inline-project-search.tsx:102
 #: src/features/projects/components/recommended-projects.tsx:65
-#: src/routes/_authenticated/find.tsx:58
+#: src/routes/_authenticated/find.tsx:59
 msgid "Failed to subscribe"
 msgstr "Не удалось подписаться"
 
 #: src/features/projects/pages/projects-list-page.tsx:177
-#: src/routes/_authenticated/$projectId/index.tsx:569
+#: src/routes/_authenticated/$projectId/index.tsx:601
 msgid "Failed to unsubscribe"
 msgstr "Не удалось отписаться"
 
@@ -1098,14 +1104,14 @@ msgstr "Не удалось загрузить вложение"
 msgid "Fields"
 msgstr "Поля"
 
-#: src/features/objects/components/create-object-dialog.tsx:439
+#: src/features/objects/components/create-object-dialog.tsx:472
 #: src/features/objects/components/object-attachments.tsx:103
 #: src/features/objects/components/object-attachments.tsx:120
 msgid "Files"
 msgstr "Файлы"
 
 #: src/components/layout/projects-layout.tsx:61
-#: src/routes/_authenticated/find.tsx:78
+#: src/routes/_authenticated/find.tsx:89
 msgid "Find projects"
 msgstr "Найти проекты"
 
@@ -1272,6 +1278,10 @@ msgstr "Слева направо"
 msgid "Light"
 msgstr "Светлая"
 
+#: src/routes/_authenticated/$projectId/index.tsx:950
+msgid "Link"
+msgstr "Ссылка"
+
 #: src/features/objects/components/object-links.tsx:228
 msgid "Links"
 msgstr "Ссылки"
@@ -1425,13 +1435,13 @@ msgid "Network error"
 msgstr "Ошибка сети"
 
 #: ../../../lib/web/src/components/ui/sort-selector.tsx:43
-#: src/features/objects/components/create-object-dialog.tsx:333
-#: src/routes/_authenticated/$projectId/index.tsx:841
-#: src/routes/_authenticated/$projectId/index.tsx:859
+#: src/features/objects/components/create-object-dialog.tsx:366
+#: src/routes/_authenticated/$projectId/index.tsx:873
+#: src/routes/_authenticated/$projectId/index.tsx:891
 msgid "New"
 msgstr "Новый"
 
-#: src/routes/_authenticated/$projectId/index.tsx:838
+#: src/routes/_authenticated/$projectId/index.tsx:870
 msgid "New {className}"
 msgstr "Новый {className}"
 
@@ -1444,7 +1454,7 @@ msgstr "Далее"
 msgid "Next image"
 msgstr "Следующее изображение"
 
-#: src/features/objects/components/create-object-dialog.tsx:406
+#: src/features/objects/components/create-object-dialog.tsx:439
 msgid "No {parentClassNames} to add to"
 msgstr "Нет {parentClassNames} для добавления"
 
@@ -1492,7 +1502,7 @@ msgstr "Diff недоступен"
 msgid "No groups available"
 msgstr "Нет доступных групп"
 
-#: src/features/objects/components/create-object-dialog.tsx:373
+#: src/features/objects/components/create-object-dialog.tsx:406
 msgid "No item types can be created yet. Create the required parent items first."
 msgstr "Пока нельзя создать типы элементов. Сначала создайте необходимые родительские элементы."
 
@@ -1517,7 +1527,7 @@ msgid "No profile"
 msgstr "Нет профиля"
 
 #: src/features/projects/components/inline-project-search.tsx:150
-#: src/routes/_authenticated/find.tsx:80
+#: src/routes/_authenticated/find.tsx:91
 msgid "No projects found"
 msgstr "Проекты не найдены"
 
@@ -1564,8 +1574,8 @@ msgstr "Нет просмотров"
 #: src/features/editor/components/edit-dialogs.tsx:505
 #: src/features/editor/components/edit-dialogs.tsx:779
 #: src/features/editor/components/edit-dialogs.tsx:782
-#: src/features/objects/components/create-object-dialog.tsx:389
-#: src/features/objects/components/create-object-dialog.tsx:396
+#: src/features/objects/components/create-object-dialog.tsx:422
+#: src/features/objects/components/create-object-dialog.tsx:429
 #: src/features/objects/components/object-detail-panel.tsx:548
 #: src/features/objects/components/object-detail-panel.tsx:561
 #: src/features/objects/components/object-detail-panel.tsx:566
@@ -1655,7 +1665,7 @@ msgstr "Открыть меню навигации"
 msgid "Open option actions"
 msgstr "Открыть действия параметра"
 
-#: src/routes/_authenticated/$projectId/index.tsx:867
+#: src/routes/_authenticated/$projectId/index.tsx:899
 msgid "Open page actions"
 msgstr "Открыть действия страницы"
 
@@ -1696,7 +1706,7 @@ msgstr "Другое"
 msgid "Owner"
 msgstr "Владелец"
 
-#: src/features/objects/components/create-object-dialog.tsx:381
+#: src/features/objects/components/create-object-dialog.tsx:414
 #: src/features/objects/components/object-detail-panel.tsx:544
 msgid "Parent"
 msgstr "Родитель"
@@ -1721,8 +1731,8 @@ msgstr "Шаблон (регулярное выражение)"
 msgid "Permanently delete this project and all its content."
 msgstr "Безвозвратно удалить этот проект и всё его содержимое."
 
-#: src/routes/_authenticated/$projectId/index.tsx:677
-#: src/routes/_authenticated/$projectId/index.tsx:711
+#: src/routes/_authenticated/$projectId/index.tsx:709
+#: src/routes/_authenticated/$projectId/index.tsx:743
 msgid "Please add one or more classes to the project design."
 msgstr "Пожалуйста, добавьте один или несколько классов в дизайн проекта."
 
@@ -1755,7 +1765,7 @@ msgid "Profile"
 msgstr "Профиль"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:65
-#: src/routes/_authenticated/$projectId/index.tsx:114
+#: src/routes/_authenticated/$projectId/index.tsx:121
 msgid "Project"
 msgstr "Проект"
 
@@ -1771,6 +1781,10 @@ msgstr "Проект создан"
 #: src/routes/_authenticated/$projectId_.settings.tsx:132
 msgid "Project deleted"
 msgstr "Проект удалён"
+
+#: src/routes/_authenticated/$projectId/index.tsx:1109
+msgid "Project link"
+msgstr "Ссылка на проект"
 
 #: src/routes/_authenticated/$projectId_.settings.tsx:211
 msgid "Project not found"
@@ -1807,7 +1821,7 @@ msgstr "Приподнятый"
 msgid "Re-link your accounts on this server"
 msgstr "Повторно привяжите свои аккаунты на этом сервере"
 
-#: src/routes/_authenticated/$projectId/index.tsx:891
+#: src/routes/_authenticated/$projectId/index.tsx:923
 msgid "Re-order columns"
 msgstr "Изменить порядок столбцов"
 
@@ -1824,7 +1838,7 @@ msgid "Rebase and merge"
 msgstr "Rebase и слияние"
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:219
-#: ../../../lib/web/src/components/search-entity-page.tsx:194
+#: ../../../lib/web/src/components/search-entity-page.tsx:243
 msgid "Recommended"
 msgstr "Рекомендуется"
 
@@ -1861,8 +1875,8 @@ msgstr "Относительный в пределах 24 часов, иначе
 #: src/features/objects/components/comment-list.tsx:238
 #: src/features/objects/components/comment-thread.tsx:294
 #: src/features/objects/components/comment-thread.tsx:299
-#: src/features/objects/components/create-object-dialog.tsx:453
-#: src/features/objects/components/create-object-dialog.tsx:458
+#: src/features/objects/components/create-object-dialog.tsx:486
+#: src/features/objects/components/create-object-dialog.tsx:491
 msgid "Remove"
 msgstr "Удалить"
 
@@ -1987,7 +2001,7 @@ msgstr "Суббота"
 #: ../../../lib/web/src/components/ui/secret-field.tsx:77
 #: src/features/editor/components/option-dialog.tsx:150
 #: src/features/objects/components/comment-thread.tsx:195
-#: src/routes/_authenticated/$projectId/index.tsx:957
+#: src/routes/_authenticated/$projectId/index.tsx:995
 msgid "Save"
 msgstr "Сохранить"
 
@@ -1999,7 +2013,7 @@ msgstr "Сохранение..."
 msgid "Search"
 msgstr "Поиск"
 
-#: src/routes/_authenticated/find.tsx:79
+#: src/routes/_authenticated/find.tsx:90
 msgid "Search by name, ID, fingerprint, or URL..."
 msgstr "Поиск по имени, ID, отпечатку или URL..."
 
@@ -2042,7 +2056,7 @@ msgid "Search..."
 msgstr "Поиск..."
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:177
-#: ../../../lib/web/src/components/search-entity-page.tsx:152
+#: ../../../lib/web/src/components/search-entity-page.tsx:201
 #: ../../../lib/web/src/features/access/access-dialog.tsx:202
 msgid "Searching..."
 msgstr "Поиск..."
@@ -2154,7 +2168,7 @@ msgstr "Установка доступа..."
 #: src/routes/_authenticated/$projectId_.settings.tsx:76
 #: src/routes/_authenticated/$projectId_.settings.tsx:171
 #: src/routes/_authenticated/$projectId_.settings.tsx:194
-#: src/routes/_authenticated/$projectId/index.tsx:912
+#: src/routes/_authenticated/$projectId/index.tsx:944
 msgid "Settings"
 msgstr "Настройки"
 
@@ -2260,7 +2274,7 @@ msgid "Subscribe"
 msgstr "Подписаться"
 
 #: src/features/projects/components/inline-project-search.tsx:101
-#: src/routes/_authenticated/find.tsx:57
+#: src/routes/_authenticated/find.tsx:58
 msgid "Subscribed"
 msgstr "Подписан"
 
@@ -2271,7 +2285,7 @@ msgstr "Подписан на {0}"
 
 #: src/features/projects/components/inline-project-search.tsx:100
 #: src/features/projects/components/recommended-projects.tsx:63
-#: src/routes/_authenticated/find.tsx:56
+#: src/routes/_authenticated/find.tsx:57
 msgid "Subscribing..."
 msgstr "Подписка..."
 
@@ -2353,7 +2367,7 @@ msgid "This will permanently delete \"{projectName}\" and all its objects, comme
 msgstr "Это навсегда удалит «{projectName}» и все его объекты, комментарии и вложения. Это действие нельзя отменить."
 
 #. placeholder {0}: project.project.name
-#: src/routes/_authenticated/$projectId/index.tsx:1073
+#: src/routes/_authenticated/$projectId/index.tsx:1131
 msgid "This will remove \"{0}\" from your sidebar and stop updates for this project."
 msgstr "Это удалит «{0}» из вашей боковой панели и остановит обновления для этого проекта."
 
@@ -2428,7 +2442,7 @@ msgid "Travelling"
 msgstr "В пути"
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:193
-#: ../../../lib/web/src/components/search-entity-page.tsx:168
+#: ../../../lib/web/src/components/search-entity-page.tsx:217
 msgid "Try adjusting your search terms"
 msgstr "Попробуйте изменить условия поиска"
 
@@ -2487,22 +2501,22 @@ msgstr "США"
 #: src/features/projects/pages/projects-list-page.tsx:147
 #: src/features/projects/pages/projects-list-page.tsx:166
 #: src/features/projects/pages/projects-list-page.tsx:168
-#: src/routes/_authenticated/$projectId/index.tsx:918
-#: src/routes/_authenticated/$projectId/index.tsx:1074
+#: src/routes/_authenticated/$projectId/index.tsx:956
+#: src/routes/_authenticated/$projectId/index.tsx:1132
 msgid "Unsubscribe"
 msgstr "Отписаться"
 
-#: src/routes/_authenticated/$projectId/index.tsx:1072
+#: src/routes/_authenticated/$projectId/index.tsx:1130
 msgid "Unsubscribe from project?"
 msgstr "Отписаться от проекта?"
 
 #: src/features/projects/pages/projects-list-page.tsx:176
-#: src/routes/_authenticated/$projectId/index.tsx:568
+#: src/routes/_authenticated/$projectId/index.tsx:600
 msgid "Unsubscribed"
 msgstr "Отписан"
 
 #: src/features/projects/pages/projects-list-page.tsx:175
-#: src/routes/_authenticated/$projectId/index.tsx:567
+#: src/routes/_authenticated/$projectId/index.tsx:599
 msgid "Unsubscribing..."
 msgstr "Отписка..."
 
@@ -2519,7 +2533,7 @@ msgstr "Обновлено"
 msgid "Updating access..."
 msgstr "Обновление доступа..."
 
-#: src/features/objects/components/create-object-dialog.tsx:486
+#: src/features/objects/components/create-object-dialog.tsx:519
 #: src/features/objects/components/object-attachments.tsx:216
 msgid "Upload"
 msgstr "Загрузить"
@@ -2594,7 +2608,7 @@ msgstr "Элементы управления просмотром"
 msgid "View only"
 msgstr "Только просмотр"
 
-#: src/routes/_authenticated/$projectId/index.tsx:876
+#: src/routes/_authenticated/$projectId/index.tsx:908
 msgid "View options"
 msgstr "Параметры просмотра"
 
@@ -2627,7 +2641,7 @@ msgstr "Сайт на техническом обслуживании!"
 msgid "Wednesday"
 msgstr "Среда"
 
-#: src/routes/_authenticated/$projectId/index.tsx:102
+#: src/routes/_authenticated/$projectId/index.tsx:109
 msgid "You don't have access to this project."
 msgstr "У вас нет доступа к этому проекту."
 

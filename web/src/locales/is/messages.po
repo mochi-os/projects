@@ -158,8 +158,8 @@ msgstr "Bæta við gátlistaratriði"
 msgid "Add class"
 msgstr "Bæta við flokki"
 
-#: src/routes/_authenticated/$projectId/index.tsx:887
-#: src/routes/_authenticated/$projectId/index.tsx:1066
+#: src/routes/_authenticated/$projectId/index.tsx:919
+#: src/routes/_authenticated/$projectId/index.tsx:1104
 msgid "Add column"
 msgstr "Bæta við dálki"
 
@@ -248,6 +248,10 @@ msgstr "Villa kom upp"
 msgid "An unexpected error occurred"
 msgstr "Óvænt villa kom upp"
 
+#: src/routes/_authenticated/$projectId/index.tsx:1111
+msgid "Anyone you give access to can subscribe with this link."
+msgstr "Hver sem þú veitir aðgang getur gerst áskrifandi með þessum tengli."
+
 #. placeholder {0}: deleteTarget?.name
 #: src/features/objects/components/object-attachments.tsx:228
 msgid "Are you sure you want to delete \"{0}\"?"
@@ -323,7 +327,7 @@ msgid "Back to project"
 msgstr "Til baka í verkefni"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:67
-#: src/routes/_authenticated/$projectId/index.tsx:116
+#: src/routes/_authenticated/$projectId/index.tsx:123
 msgid "Back to projects"
 msgstr "Til baka í verkefni"
 
@@ -371,7 +375,7 @@ msgstr "Getur verið barn af"
 #: src/features/objects/components/comment-thread.tsx:175
 #: src/features/projects/components/create-project-dialog.tsx:219
 #: src/routes/_authenticated/$projectId/design.tsx:343
-#: src/routes/_authenticated/$projectId/index.tsx:945
+#: src/routes/_authenticated/$projectId/index.tsx:983
 msgid "Cancel"
 msgstr "Hætta við"
 
@@ -464,8 +468,8 @@ msgstr "Hreinsa val (Escape)"
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:354
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:357
 #: ../../../lib/web/src/components/ui/sheet.tsx:79
-#: src/features/objects/components/create-object-dialog.tsx:358
-#: src/features/objects/components/create-object-dialog.tsx:363
+#: src/features/objects/components/create-object-dialog.tsx:391
+#: src/features/objects/components/create-object-dialog.tsx:396
 msgid "Close"
 msgstr "Loka"
 
@@ -600,13 +604,13 @@ msgstr "Ekki tókst að staðfesta með þeim reikningi. Reyndu aftur."
 
 #: src/features/board/components/board-column.tsx:542
 #: src/features/board/components/board-column.tsx:681
-#: src/features/objects/components/create-object-dialog.tsx:348
-#: src/features/objects/components/create-object-dialog.tsx:502
+#: src/features/objects/components/create-object-dialog.tsx:381
+#: src/features/objects/components/create-object-dialog.tsx:535
 #: src/features/tree/components/tree-view.tsx:697
 msgid "Create"
 msgstr "Búa til"
 
-#: src/features/objects/components/create-object-dialog.tsx:326
+#: src/features/objects/components/create-object-dialog.tsx:359
 msgid "Create a new item in this project"
 msgstr "Búa til nýtt atriði í þessu verkefni"
 
@@ -616,7 +620,7 @@ msgid "Create a new project"
 msgstr "Búa til nýtt verkefni"
 
 #: src/components/keyboard-shortcuts-help.tsx:27
-#: src/features/objects/components/create-object-dialog.tsx:325
+#: src/features/objects/components/create-object-dialog.tsx:358
 msgid "Create new item"
 msgstr "Búa til nýtt atriði"
 
@@ -640,7 +644,7 @@ msgstr "Búið til"
 msgid "Creating project..."
 msgstr "Bý til verkefni..."
 
-#: src/features/objects/components/create-object-dialog.tsx:502
+#: src/features/objects/components/create-object-dialog.tsx:535
 #: src/features/projects/components/create-project-dialog.tsx:297
 msgid "Creating..."
 msgstr "Bý til..."
@@ -775,7 +779,7 @@ msgstr "Lýsing"
 
 #: src/routes/_authenticated/$projectId/design.tsx:63
 #: src/routes/_authenticated/$projectId/design.tsx:131
-#: src/routes/_authenticated/$projectId/index.tsx:902
+#: src/routes/_authenticated/$projectId/index.tsx:934
 msgid "Design"
 msgstr "Hönnun"
 
@@ -819,8 +823,8 @@ msgstr "Stefna"
 msgid "Dismiss"
 msgstr "Hafna"
 
-#: src/routes/_authenticated/$projectId/index.tsx:974
-#: src/routes/_authenticated/$projectId/index.tsx:979
+#: src/routes/_authenticated/$projectId/index.tsx:1012
+#: src/routes/_authenticated/$projectId/index.tsx:1017
 msgid "Dismiss board hint"
 msgstr "Loka töfluábendingu"
 
@@ -832,10 +836,11 @@ msgstr "Sýnir hliðarstiku farsíma."
 #: src/features/editor/components/edit-dialogs.tsx:922
 #: src/features/editor/components/edit-dialogs.tsx:1228
 #: src/features/objects/components/object-detail-panel.tsx:480
+#: src/routes/_authenticated/$projectId/index.tsx:1121
 msgid "Done"
 msgstr "Lokið"
 
-#: src/routes/_authenticated/$projectId/index.tsx:965
+#: src/routes/_authenticated/$projectId/index.tsx:1003
 msgid "Double click on a column to add content"
 msgstr "Tvísmelltu á dálk til að bæta við efni"
 
@@ -857,7 +862,7 @@ msgstr "Niðurhal mistókst"
 msgid "Draft"
 msgstr "Drög"
 
-#: src/routes/_authenticated/$projectId/index.tsx:941
+#: src/routes/_authenticated/$projectId/index.tsx:979
 msgid "Drag columns to re-order them"
 msgstr "Dragðu dálka til að endurraða þeim"
 
@@ -963,6 +968,7 @@ msgid "Failed to create field"
 msgstr "Tókst ekki að búa til reit"
 
 #: src/features/objects/components/object-links.tsx:105
+#: src/routes/_authenticated/$projectId/index.tsx:175
 msgid "Failed to create link"
 msgstr "Tókst ekki að búa til tengil"
 
@@ -1011,7 +1017,7 @@ msgid "Failed to load item"
 msgstr "Tókst ekki að hlaða atriði"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:43
-#: src/routes/_authenticated/$projectId/index.tsx:80
+#: src/routes/_authenticated/$projectId/index.tsx:87
 msgid "Failed to load project"
 msgstr "Tókst ekki að hlaða verkefni"
 
@@ -1061,12 +1067,12 @@ msgstr "Tókst ekki að stilla aðgangsstig"
 
 #: src/features/projects/components/inline-project-search.tsx:102
 #: src/features/projects/components/recommended-projects.tsx:65
-#: src/routes/_authenticated/find.tsx:58
+#: src/routes/_authenticated/find.tsx:59
 msgid "Failed to subscribe"
 msgstr "Tókst ekki að gerast áskrifandi"
 
 #: src/features/projects/pages/projects-list-page.tsx:177
-#: src/routes/_authenticated/$projectId/index.tsx:569
+#: src/routes/_authenticated/$projectId/index.tsx:601
 msgid "Failed to unsubscribe"
 msgstr "Tókst ekki að segja upp áskrift"
 
@@ -1098,14 +1104,14 @@ msgstr "Tókst ekki að hlaða upp viðhengi"
 msgid "Fields"
 msgstr "Reitir"
 
-#: src/features/objects/components/create-object-dialog.tsx:439
+#: src/features/objects/components/create-object-dialog.tsx:472
 #: src/features/objects/components/object-attachments.tsx:103
 #: src/features/objects/components/object-attachments.tsx:120
 msgid "Files"
 msgstr "Skrár"
 
 #: src/components/layout/projects-layout.tsx:61
-#: src/routes/_authenticated/find.tsx:78
+#: src/routes/_authenticated/find.tsx:89
 msgid "Find projects"
 msgstr "Finna verkefni"
 
@@ -1272,6 +1278,10 @@ msgstr "Vinstri til hægri"
 msgid "Light"
 msgstr "Ljóst"
 
+#: src/routes/_authenticated/$projectId/index.tsx:950
+msgid "Link"
+msgstr "Tengill"
+
 #: src/features/objects/components/object-links.tsx:228
 msgid "Links"
 msgstr "Tenglar"
@@ -1425,13 +1435,13 @@ msgid "Network error"
 msgstr "Netvilla"
 
 #: ../../../lib/web/src/components/ui/sort-selector.tsx:43
-#: src/features/objects/components/create-object-dialog.tsx:333
-#: src/routes/_authenticated/$projectId/index.tsx:841
-#: src/routes/_authenticated/$projectId/index.tsx:859
+#: src/features/objects/components/create-object-dialog.tsx:366
+#: src/routes/_authenticated/$projectId/index.tsx:873
+#: src/routes/_authenticated/$projectId/index.tsx:891
 msgid "New"
 msgstr "Nýtt"
 
-#: src/routes/_authenticated/$projectId/index.tsx:838
+#: src/routes/_authenticated/$projectId/index.tsx:870
 msgid "New {className}"
 msgstr "Nýtt {className}"
 
@@ -1444,7 +1454,7 @@ msgstr "Næst"
 msgid "Next image"
 msgstr "Næsta mynd"
 
-#: src/features/objects/components/create-object-dialog.tsx:406
+#: src/features/objects/components/create-object-dialog.tsx:439
 msgid "No {parentClassNames} to add to"
 msgstr "Engin {parentClassNames} til að bæta við"
 
@@ -1492,7 +1502,7 @@ msgstr "Enginn samanburður tiltækur"
 msgid "No groups available"
 msgstr "Engir hópar tiltækir"
 
-#: src/features/objects/components/create-object-dialog.tsx:373
+#: src/features/objects/components/create-object-dialog.tsx:406
 msgid "No item types can be created yet. Create the required parent items first."
 msgstr "Ekki er enn hægt að búa til neinar tegundir atriða. Búðu fyrst til nauðsynleg foreldraatriði."
 
@@ -1517,7 +1527,7 @@ msgid "No profile"
 msgstr "Engin síða"
 
 #: src/features/projects/components/inline-project-search.tsx:150
-#: src/routes/_authenticated/find.tsx:80
+#: src/routes/_authenticated/find.tsx:91
 msgid "No projects found"
 msgstr "Engin verkefni fundust"
 
@@ -1564,8 +1574,8 @@ msgstr "Engar skoðanir"
 #: src/features/editor/components/edit-dialogs.tsx:505
 #: src/features/editor/components/edit-dialogs.tsx:779
 #: src/features/editor/components/edit-dialogs.tsx:782
-#: src/features/objects/components/create-object-dialog.tsx:389
-#: src/features/objects/components/create-object-dialog.tsx:396
+#: src/features/objects/components/create-object-dialog.tsx:422
+#: src/features/objects/components/create-object-dialog.tsx:429
 #: src/features/objects/components/object-detail-panel.tsx:548
 #: src/features/objects/components/object-detail-panel.tsx:561
 #: src/features/objects/components/object-detail-panel.tsx:566
@@ -1655,7 +1665,7 @@ msgstr "Opna leiðsögnarvalmynd"
 msgid "Open option actions"
 msgstr "Opna valkostsaðgerðir"
 
-#: src/routes/_authenticated/$projectId/index.tsx:867
+#: src/routes/_authenticated/$projectId/index.tsx:899
 msgid "Open page actions"
 msgstr "Opna síðuaðgerðir"
 
@@ -1696,7 +1706,7 @@ msgstr "Annað"
 msgid "Owner"
 msgstr "Eigandi"
 
-#: src/features/objects/components/create-object-dialog.tsx:381
+#: src/features/objects/components/create-object-dialog.tsx:414
 #: src/features/objects/components/object-detail-panel.tsx:544
 msgid "Parent"
 msgstr "Foreldri"
@@ -1721,8 +1731,8 @@ msgstr "Mynstur (regex)"
 msgid "Permanently delete this project and all its content."
 msgstr "Eyða þessu verkefni og öllu innihaldi þess varanlega."
 
-#: src/routes/_authenticated/$projectId/index.tsx:677
-#: src/routes/_authenticated/$projectId/index.tsx:711
+#: src/routes/_authenticated/$projectId/index.tsx:709
+#: src/routes/_authenticated/$projectId/index.tsx:743
 msgid "Please add one or more classes to the project design."
 msgstr "Bættu við einum eða fleiri flokkum við verkefnishönnunina."
 
@@ -1755,7 +1765,7 @@ msgid "Profile"
 msgstr "Síða"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:65
-#: src/routes/_authenticated/$projectId/index.tsx:114
+#: src/routes/_authenticated/$projectId/index.tsx:121
 msgid "Project"
 msgstr "Verkefni"
 
@@ -1771,6 +1781,10 @@ msgstr "Verkefni búið til"
 #: src/routes/_authenticated/$projectId_.settings.tsx:132
 msgid "Project deleted"
 msgstr "Verkefni eytt"
+
+#: src/routes/_authenticated/$projectId/index.tsx:1109
+msgid "Project link"
+msgstr "Verkefnistengill"
 
 #: src/routes/_authenticated/$projectId_.settings.tsx:211
 msgid "Project not found"
@@ -1807,7 +1821,7 @@ msgstr "Upphækkað"
 msgid "Re-link your accounts on this server"
 msgstr "Tengdu reikninga þína aftur á þessum þjóni"
 
-#: src/routes/_authenticated/$projectId/index.tsx:891
+#: src/routes/_authenticated/$projectId/index.tsx:923
 msgid "Re-order columns"
 msgstr "Endurraða dálkum"
 
@@ -1824,7 +1838,7 @@ msgid "Rebase and merge"
 msgstr "Rebase og sameina"
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:219
-#: ../../../lib/web/src/components/search-entity-page.tsx:194
+#: ../../../lib/web/src/components/search-entity-page.tsx:243
 msgid "Recommended"
 msgstr "Mælt með"
 
@@ -1861,8 +1875,8 @@ msgstr "Afstætt innan 24 klst, annars algjört"
 #: src/features/objects/components/comment-list.tsx:238
 #: src/features/objects/components/comment-thread.tsx:294
 #: src/features/objects/components/comment-thread.tsx:299
-#: src/features/objects/components/create-object-dialog.tsx:453
-#: src/features/objects/components/create-object-dialog.tsx:458
+#: src/features/objects/components/create-object-dialog.tsx:486
+#: src/features/objects/components/create-object-dialog.tsx:491
 msgid "Remove"
 msgstr "Fjarlægja"
 
@@ -1987,7 +2001,7 @@ msgstr "Laugardagur"
 #: ../../../lib/web/src/components/ui/secret-field.tsx:77
 #: src/features/editor/components/option-dialog.tsx:150
 #: src/features/objects/components/comment-thread.tsx:195
-#: src/routes/_authenticated/$projectId/index.tsx:957
+#: src/routes/_authenticated/$projectId/index.tsx:995
 msgid "Save"
 msgstr "Vista"
 
@@ -1999,7 +2013,7 @@ msgstr "Vista..."
 msgid "Search"
 msgstr "Leita"
 
-#: src/routes/_authenticated/find.tsx:79
+#: src/routes/_authenticated/find.tsx:90
 msgid "Search by name, ID, fingerprint, or URL..."
 msgstr "Leita eftir nafni, auðkenni, fingrafari eða slóð..."
 
@@ -2042,7 +2056,7 @@ msgid "Search..."
 msgstr "Leita..."
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:177
-#: ../../../lib/web/src/components/search-entity-page.tsx:152
+#: ../../../lib/web/src/components/search-entity-page.tsx:201
 #: ../../../lib/web/src/features/access/access-dialog.tsx:202
 msgid "Searching..."
 msgstr "Leita..."
@@ -2154,7 +2168,7 @@ msgstr "Stilli aðgang..."
 #: src/routes/_authenticated/$projectId_.settings.tsx:76
 #: src/routes/_authenticated/$projectId_.settings.tsx:171
 #: src/routes/_authenticated/$projectId_.settings.tsx:194
-#: src/routes/_authenticated/$projectId/index.tsx:912
+#: src/routes/_authenticated/$projectId/index.tsx:944
 msgid "Settings"
 msgstr "Stillingar"
 
@@ -2260,7 +2274,7 @@ msgid "Subscribe"
 msgstr "Gerast áskrifandi"
 
 #: src/features/projects/components/inline-project-search.tsx:101
-#: src/routes/_authenticated/find.tsx:57
+#: src/routes/_authenticated/find.tsx:58
 msgid "Subscribed"
 msgstr "Áskrift virk"
 
@@ -2271,7 +2285,7 @@ msgstr "Áskrift að {0}"
 
 #: src/features/projects/components/inline-project-search.tsx:100
 #: src/features/projects/components/recommended-projects.tsx:63
-#: src/routes/_authenticated/find.tsx:56
+#: src/routes/_authenticated/find.tsx:57
 msgid "Subscribing..."
 msgstr "Skrái áskrift..."
 
@@ -2353,7 +2367,7 @@ msgid "This will permanently delete \"{projectName}\" and all its objects, comme
 msgstr "Þetta mun eyða „{projectName}“ og öllum hlutum, athugasemdum og viðhengjum til frambúðar. Ekki er hægt að afturkalla þessa aðgerð."
 
 #. placeholder {0}: project.project.name
-#: src/routes/_authenticated/$projectId/index.tsx:1073
+#: src/routes/_authenticated/$projectId/index.tsx:1131
 msgid "This will remove \"{0}\" from your sidebar and stop updates for this project."
 msgstr "Þetta mun fjarlægja „{0}“ úr hliðarstiku þinni og stöðva uppfærslur fyrir þetta verkefni."
 
@@ -2428,7 +2442,7 @@ msgid "Travelling"
 msgstr "Á ferðalagi"
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:193
-#: ../../../lib/web/src/components/search-entity-page.tsx:168
+#: ../../../lib/web/src/components/search-entity-page.tsx:217
 msgid "Try adjusting your search terms"
 msgstr "Reyndu að breyta leitarskilyrðum þínum"
 
@@ -2487,22 +2501,22 @@ msgstr "Bandaríkin"
 #: src/features/projects/pages/projects-list-page.tsx:147
 #: src/features/projects/pages/projects-list-page.tsx:166
 #: src/features/projects/pages/projects-list-page.tsx:168
-#: src/routes/_authenticated/$projectId/index.tsx:918
-#: src/routes/_authenticated/$projectId/index.tsx:1074
+#: src/routes/_authenticated/$projectId/index.tsx:956
+#: src/routes/_authenticated/$projectId/index.tsx:1132
 msgid "Unsubscribe"
 msgstr "Afskrá áskrift"
 
-#: src/routes/_authenticated/$projectId/index.tsx:1072
+#: src/routes/_authenticated/$projectId/index.tsx:1130
 msgid "Unsubscribe from project?"
 msgstr "Afskrá áskrift að verkefni?"
 
 #: src/features/projects/pages/projects-list-page.tsx:176
-#: src/routes/_authenticated/$projectId/index.tsx:568
+#: src/routes/_authenticated/$projectId/index.tsx:600
 msgid "Unsubscribed"
 msgstr "Áskrift afskráð"
 
 #: src/features/projects/pages/projects-list-page.tsx:175
-#: src/routes/_authenticated/$projectId/index.tsx:567
+#: src/routes/_authenticated/$projectId/index.tsx:599
 msgid "Unsubscribing..."
 msgstr "Afskrái áskrift..."
 
@@ -2519,7 +2533,7 @@ msgstr "Uppfært"
 msgid "Updating access..."
 msgstr "Uppfæri aðgang..."
 
-#: src/features/objects/components/create-object-dialog.tsx:486
+#: src/features/objects/components/create-object-dialog.tsx:519
 #: src/features/objects/components/object-attachments.tsx:216
 msgid "Upload"
 msgstr "Hlaða upp"
@@ -2594,7 +2608,7 @@ msgstr "Skoða stjórntæki"
 msgid "View only"
 msgstr "Aðeins skoða"
 
-#: src/routes/_authenticated/$projectId/index.tsx:876
+#: src/routes/_authenticated/$projectId/index.tsx:908
 msgid "View options"
 msgstr "Skoða valkosti"
 
@@ -2627,7 +2641,7 @@ msgstr "Vefsvæðið er í viðhaldi!"
 msgid "Wednesday"
 msgstr "Miðvikudagur"
 
-#: src/routes/_authenticated/$projectId/index.tsx:102
+#: src/routes/_authenticated/$projectId/index.tsx:109
 msgid "You don't have access to this project."
 msgstr "Þú hefur ekki aðgang að þessu verkefni."
 

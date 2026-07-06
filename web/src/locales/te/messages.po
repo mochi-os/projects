@@ -158,8 +158,8 @@ msgstr "చెక్‌లిస్ట్ ఐటెమ్‌ను జోడి�
 msgid "Add class"
 msgstr "క్లాస్‌ను జోడించండి"
 
-#: src/routes/_authenticated/$projectId/index.tsx:887
-#: src/routes/_authenticated/$projectId/index.tsx:1066
+#: src/routes/_authenticated/$projectId/index.tsx:919
+#: src/routes/_authenticated/$projectId/index.tsx:1104
 msgid "Add column"
 msgstr "కాలమ్‌ను జోడించండి"
 
@@ -248,6 +248,10 @@ msgstr "లోపం సంభవించింది"
 msgid "An unexpected error occurred"
 msgstr "ఊహించని లోపం సంభవించింది"
 
+#: src/routes/_authenticated/$projectId/index.tsx:1111
+msgid "Anyone you give access to can subscribe with this link."
+msgstr "మీరు యాక్సెస్ ఇచ్చిన ఎవరైనా ఈ లింక్‌తో సభ్యత్వం పొందవచ్చు."
+
 #. placeholder {0}: deleteTarget?.name
 #: src/features/objects/components/object-attachments.tsx:228
 msgid "Are you sure you want to delete \"{0}\"?"
@@ -323,7 +327,7 @@ msgid "Back to project"
 msgstr "ప్రాజెక్ట్‌కి తిరిగి"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:67
-#: src/routes/_authenticated/$projectId/index.tsx:116
+#: src/routes/_authenticated/$projectId/index.tsx:123
 msgid "Back to projects"
 msgstr "ప్రాజెక్ట్‌లకు తిరిగి"
 
@@ -371,7 +375,7 @@ msgstr "దీని చైల్డ్ కావచ్చు"
 #: src/features/objects/components/comment-thread.tsx:175
 #: src/features/projects/components/create-project-dialog.tsx:219
 #: src/routes/_authenticated/$projectId/design.tsx:343
-#: src/routes/_authenticated/$projectId/index.tsx:945
+#: src/routes/_authenticated/$projectId/index.tsx:983
 msgid "Cancel"
 msgstr "రద్దు చేయండి"
 
@@ -464,8 +468,8 @@ msgstr "ఎంపికను క్లియర్ చేయండి (Escape)"
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:354
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:357
 #: ../../../lib/web/src/components/ui/sheet.tsx:79
-#: src/features/objects/components/create-object-dialog.tsx:358
-#: src/features/objects/components/create-object-dialog.tsx:363
+#: src/features/objects/components/create-object-dialog.tsx:391
+#: src/features/objects/components/create-object-dialog.tsx:396
 msgid "Close"
 msgstr "మూసివేయండి"
 
@@ -600,13 +604,13 @@ msgstr "ఆ ఖాతాతో ధృవీకరించడం సాధ్య
 
 #: src/features/board/components/board-column.tsx:542
 #: src/features/board/components/board-column.tsx:681
-#: src/features/objects/components/create-object-dialog.tsx:348
-#: src/features/objects/components/create-object-dialog.tsx:502
+#: src/features/objects/components/create-object-dialog.tsx:381
+#: src/features/objects/components/create-object-dialog.tsx:535
 #: src/features/tree/components/tree-view.tsx:697
 msgid "Create"
 msgstr "సృష్టించండి"
 
-#: src/features/objects/components/create-object-dialog.tsx:326
+#: src/features/objects/components/create-object-dialog.tsx:359
 msgid "Create a new item in this project"
 msgstr "ఈ ప్రాజెక్ట్‌లో కొత్త ఐటెమ్‌ను సృష్టించండి"
 
@@ -616,7 +620,7 @@ msgid "Create a new project"
 msgstr "కొత్త ప్రాజెక్ట్‌ను సృష్టించండి"
 
 #: src/components/keyboard-shortcuts-help.tsx:27
-#: src/features/objects/components/create-object-dialog.tsx:325
+#: src/features/objects/components/create-object-dialog.tsx:358
 msgid "Create new item"
 msgstr "కొత్త ఐటెమ్‌ను సృష్టించండి"
 
@@ -640,7 +644,7 @@ msgstr "సృష్టించబడింది"
 msgid "Creating project..."
 msgstr "ప్రాజెక్ట్ సృష్టిస్తోంది..."
 
-#: src/features/objects/components/create-object-dialog.tsx:502
+#: src/features/objects/components/create-object-dialog.tsx:535
 #: src/features/projects/components/create-project-dialog.tsx:297
 msgid "Creating..."
 msgstr "సృష్టిస్తోంది..."
@@ -775,7 +779,7 @@ msgstr "వివరణ"
 
 #: src/routes/_authenticated/$projectId/design.tsx:63
 #: src/routes/_authenticated/$projectId/design.tsx:131
-#: src/routes/_authenticated/$projectId/index.tsx:902
+#: src/routes/_authenticated/$projectId/index.tsx:934
 msgid "Design"
 msgstr "డిజైన్"
 
@@ -819,8 +823,8 @@ msgstr "దిశ"
 msgid "Dismiss"
 msgstr "విస్మరించండి"
 
-#: src/routes/_authenticated/$projectId/index.tsx:974
-#: src/routes/_authenticated/$projectId/index.tsx:979
+#: src/routes/_authenticated/$projectId/index.tsx:1012
+#: src/routes/_authenticated/$projectId/index.tsx:1017
 msgid "Dismiss board hint"
 msgstr "బోర్డు సూచనను విస్మరించండి"
 
@@ -832,10 +836,11 @@ msgstr "మొబైల్ సైడ్‌బార్‌ను ప్రదర�
 #: src/features/editor/components/edit-dialogs.tsx:922
 #: src/features/editor/components/edit-dialogs.tsx:1228
 #: src/features/objects/components/object-detail-panel.tsx:480
+#: src/routes/_authenticated/$projectId/index.tsx:1121
 msgid "Done"
 msgstr "పూర్తయింది"
 
-#: src/routes/_authenticated/$projectId/index.tsx:965
+#: src/routes/_authenticated/$projectId/index.tsx:1003
 msgid "Double click on a column to add content"
 msgstr "కంటెంట్‌ను జోడించడానికి కాలమ్‌పై రెండుసార్లు క్లిక్ చేయండి"
 
@@ -857,7 +862,7 @@ msgstr "డౌన్‌లోడ్ విఫలమైంది"
 msgid "Draft"
 msgstr "డ్రాఫ్ట్"
 
-#: src/routes/_authenticated/$projectId/index.tsx:941
+#: src/routes/_authenticated/$projectId/index.tsx:979
 msgid "Drag columns to re-order them"
 msgstr "కాలమ్‌లను తిరిగి అమర్చడానికి వాటిని డ్రాగ్ చేయండి"
 
@@ -963,6 +968,7 @@ msgid "Failed to create field"
 msgstr "ఫీల్డ్‌ను సృష్టించడంలో విఫలమైంది"
 
 #: src/features/objects/components/object-links.tsx:105
+#: src/routes/_authenticated/$projectId/index.tsx:175
 msgid "Failed to create link"
 msgstr "లింక్‌ను సృష్టించడంలో విఫలమైంది"
 
@@ -1011,7 +1017,7 @@ msgid "Failed to load item"
 msgstr "అంశాన్ని లోడ్ చేయడంలో విఫలమైంది"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:43
-#: src/routes/_authenticated/$projectId/index.tsx:80
+#: src/routes/_authenticated/$projectId/index.tsx:87
 msgid "Failed to load project"
 msgstr "ప్రాజెక్ట్‌ను లోడ్ చేయడంలో విఫలమైంది"
 
@@ -1061,12 +1067,12 @@ msgstr "యాక్సెస్ స్థాయిని సెట్ చేయ
 
 #: src/features/projects/components/inline-project-search.tsx:102
 #: src/features/projects/components/recommended-projects.tsx:65
-#: src/routes/_authenticated/find.tsx:58
+#: src/routes/_authenticated/find.tsx:59
 msgid "Failed to subscribe"
 msgstr "చందా చేరడంలో విఫలమైంది"
 
 #: src/features/projects/pages/projects-list-page.tsx:177
-#: src/routes/_authenticated/$projectId/index.tsx:569
+#: src/routes/_authenticated/$projectId/index.tsx:601
 msgid "Failed to unsubscribe"
 msgstr "చందా రద్దు చేయడంలో విఫలమైంది"
 
@@ -1098,14 +1104,14 @@ msgstr "జోడింపును అప్‌లోడ్ చేయడంల�
 msgid "Fields"
 msgstr "ఫీల్డ్‌లు"
 
-#: src/features/objects/components/create-object-dialog.tsx:439
+#: src/features/objects/components/create-object-dialog.tsx:472
 #: src/features/objects/components/object-attachments.tsx:103
 #: src/features/objects/components/object-attachments.tsx:120
 msgid "Files"
 msgstr "ఫైళ్లు"
 
 #: src/components/layout/projects-layout.tsx:61
-#: src/routes/_authenticated/find.tsx:78
+#: src/routes/_authenticated/find.tsx:89
 msgid "Find projects"
 msgstr "ప్రాజెక్ట్‌లను కనుగొనండి"
 
@@ -1272,6 +1278,10 @@ msgstr "ఎడమ నుండి కుడికి"
 msgid "Light"
 msgstr "లైట్"
 
+#: src/routes/_authenticated/$projectId/index.tsx:950
+msgid "Link"
+msgstr "లింక్"
+
 #: src/features/objects/components/object-links.tsx:228
 msgid "Links"
 msgstr "లింక్‌లు"
@@ -1425,13 +1435,13 @@ msgid "Network error"
 msgstr "నెట్‌వర్క్ లోపం"
 
 #: ../../../lib/web/src/components/ui/sort-selector.tsx:43
-#: src/features/objects/components/create-object-dialog.tsx:333
-#: src/routes/_authenticated/$projectId/index.tsx:841
-#: src/routes/_authenticated/$projectId/index.tsx:859
+#: src/features/objects/components/create-object-dialog.tsx:366
+#: src/routes/_authenticated/$projectId/index.tsx:873
+#: src/routes/_authenticated/$projectId/index.tsx:891
 msgid "New"
 msgstr "కొత్తది"
 
-#: src/routes/_authenticated/$projectId/index.tsx:838
+#: src/routes/_authenticated/$projectId/index.tsx:870
 msgid "New {className}"
 msgstr "కొత్త {className}"
 
@@ -1444,7 +1454,7 @@ msgstr "తదుపరి"
 msgid "Next image"
 msgstr "తదుపరి చిత్రం"
 
-#: src/features/objects/components/create-object-dialog.tsx:406
+#: src/features/objects/components/create-object-dialog.tsx:439
 msgid "No {parentClassNames} to add to"
 msgstr "జోడించడానికి {parentClassNames} లేదు"
 
@@ -1492,7 +1502,7 @@ msgstr "diff అందుబాటులో లేదు"
 msgid "No groups available"
 msgstr "గ్రూపులు అందుబాటులో లేవు"
 
-#: src/features/objects/components/create-object-dialog.tsx:373
+#: src/features/objects/components/create-object-dialog.tsx:406
 msgid "No item types can be created yet. Create the required parent items first."
 msgstr "ఇంకా ఏ ఐటెం రకాలను సృష్టించలేము. మొదట అవసరమైన పేరెంట్ ఐటెంలను సృష్టించండి."
 
@@ -1517,7 +1527,7 @@ msgid "No profile"
 msgstr "ప్రొఫైల్ లేదు"
 
 #: src/features/projects/components/inline-project-search.tsx:150
-#: src/routes/_authenticated/find.tsx:80
+#: src/routes/_authenticated/find.tsx:91
 msgid "No projects found"
 msgstr "ప్రాజెక్ట్‌లు ఏవీ కనుగొనబడలేదు"
 
@@ -1564,8 +1574,8 @@ msgstr "వ్యూస్ లేవు"
 #: src/features/editor/components/edit-dialogs.tsx:505
 #: src/features/editor/components/edit-dialogs.tsx:779
 #: src/features/editor/components/edit-dialogs.tsx:782
-#: src/features/objects/components/create-object-dialog.tsx:389
-#: src/features/objects/components/create-object-dialog.tsx:396
+#: src/features/objects/components/create-object-dialog.tsx:422
+#: src/features/objects/components/create-object-dialog.tsx:429
 #: src/features/objects/components/object-detail-panel.tsx:548
 #: src/features/objects/components/object-detail-panel.tsx:561
 #: src/features/objects/components/object-detail-panel.tsx:566
@@ -1655,7 +1665,7 @@ msgstr "నావిగేషన్ మెనుని ఓపెన్ చేయ
 msgid "Open option actions"
 msgstr "ఆప్షన్ చర్యలను ఓపెన్ చేయండి"
 
-#: src/routes/_authenticated/$projectId/index.tsx:867
+#: src/routes/_authenticated/$projectId/index.tsx:899
 msgid "Open page actions"
 msgstr "పేజీ చర్యలను ఓపెన్ చేయండి"
 
@@ -1696,7 +1706,7 @@ msgstr "ఇతర"
 msgid "Owner"
 msgstr "ఓనర్"
 
-#: src/features/objects/components/create-object-dialog.tsx:381
+#: src/features/objects/components/create-object-dialog.tsx:414
 #: src/features/objects/components/object-detail-panel.tsx:544
 msgid "Parent"
 msgstr "పేరెంట్"
@@ -1721,8 +1731,8 @@ msgstr "నమూనా (regex)"
 msgid "Permanently delete this project and all its content."
 msgstr "ఈ ప్రాజెక్ట్ మరియు దాని మొత్తం కంటెంట్‌ను శాశ్వతంగా డిలీట్ చేయండి."
 
-#: src/routes/_authenticated/$projectId/index.tsx:677
-#: src/routes/_authenticated/$projectId/index.tsx:711
+#: src/routes/_authenticated/$projectId/index.tsx:709
+#: src/routes/_authenticated/$projectId/index.tsx:743
 msgid "Please add one or more classes to the project design."
 msgstr "ప్రాజెక్ట్ డిజైన్‌కు ఒకటి లేదా అంతకంటే ఎక్కువ క్లాస్‌లను జోడించండి."
 
@@ -1755,7 +1765,7 @@ msgid "Profile"
 msgstr "ప్రొఫైల్"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:65
-#: src/routes/_authenticated/$projectId/index.tsx:114
+#: src/routes/_authenticated/$projectId/index.tsx:121
 msgid "Project"
 msgstr "ప్రాజెక్ట్"
 
@@ -1771,6 +1781,10 @@ msgstr "ప్రాజెక్ట్ సృష్టించబడింద�
 #: src/routes/_authenticated/$projectId_.settings.tsx:132
 msgid "Project deleted"
 msgstr "ప్రాజెక్ట్ డిలీట్ చేయబడింది"
+
+#: src/routes/_authenticated/$projectId/index.tsx:1109
+msgid "Project link"
+msgstr "ప్రాజెక్ట్ లింక్"
 
 #: src/routes/_authenticated/$projectId_.settings.tsx:211
 msgid "Project not found"
@@ -1807,7 +1821,7 @@ msgstr "ఎత్తైనది"
 msgid "Re-link your accounts on this server"
 msgstr "ఈ సర్వర్‌లో మీ ఖాతాలను మళ్ళీ లింక్ చేయండి"
 
-#: src/routes/_authenticated/$projectId/index.tsx:891
+#: src/routes/_authenticated/$projectId/index.tsx:923
 msgid "Re-order columns"
 msgstr "కాలమ్‌లను రీ-ఆర్డర్ చేయండి"
 
@@ -1824,7 +1838,7 @@ msgid "Rebase and merge"
 msgstr "రీబేస్ మరియు విలీనం"
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:219
-#: ../../../lib/web/src/components/search-entity-page.tsx:194
+#: ../../../lib/web/src/components/search-entity-page.tsx:243
 msgid "Recommended"
 msgstr "రికమెండ్ చేయబడింది"
 
@@ -1861,8 +1875,8 @@ msgstr "24 గంటల్లో సాపేక్ష, లేకపోతే �
 #: src/features/objects/components/comment-list.tsx:238
 #: src/features/objects/components/comment-thread.tsx:294
 #: src/features/objects/components/comment-thread.tsx:299
-#: src/features/objects/components/create-object-dialog.tsx:453
-#: src/features/objects/components/create-object-dialog.tsx:458
+#: src/features/objects/components/create-object-dialog.tsx:486
+#: src/features/objects/components/create-object-dialog.tsx:491
 msgid "Remove"
 msgstr "తొలగించండి"
 
@@ -1987,7 +2001,7 @@ msgstr "శనివారం"
 #: ../../../lib/web/src/components/ui/secret-field.tsx:77
 #: src/features/editor/components/option-dialog.tsx:150
 #: src/features/objects/components/comment-thread.tsx:195
-#: src/routes/_authenticated/$projectId/index.tsx:957
+#: src/routes/_authenticated/$projectId/index.tsx:995
 msgid "Save"
 msgstr "సేవ్ చేయండి"
 
@@ -1999,7 +2013,7 @@ msgstr "సేవ్ చేస్తోంది..."
 msgid "Search"
 msgstr "శోధన"
 
-#: src/routes/_authenticated/find.tsx:79
+#: src/routes/_authenticated/find.tsx:90
 msgid "Search by name, ID, fingerprint, or URL..."
 msgstr "పేరు, ID, ఫింగర్‌ప్రింట్ లేదా URL ద్వారా శోధించండి..."
 
@@ -2042,7 +2056,7 @@ msgid "Search..."
 msgstr "శోధించండి..."
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:177
-#: ../../../lib/web/src/components/search-entity-page.tsx:152
+#: ../../../lib/web/src/components/search-entity-page.tsx:201
 #: ../../../lib/web/src/features/access/access-dialog.tsx:202
 msgid "Searching..."
 msgstr "శోధిస్తోంది..."
@@ -2154,7 +2168,7 @@ msgstr "యాక్సెస్‌ను సెట్ చేస్తోంద�
 #: src/routes/_authenticated/$projectId_.settings.tsx:76
 #: src/routes/_authenticated/$projectId_.settings.tsx:171
 #: src/routes/_authenticated/$projectId_.settings.tsx:194
-#: src/routes/_authenticated/$projectId/index.tsx:912
+#: src/routes/_authenticated/$projectId/index.tsx:944
 msgid "Settings"
 msgstr "సెట్టింగ్‌లు"
 
@@ -2260,7 +2274,7 @@ msgid "Subscribe"
 msgstr "చందా చేరండి"
 
 #: src/features/projects/components/inline-project-search.tsx:101
-#: src/routes/_authenticated/find.tsx:57
+#: src/routes/_authenticated/find.tsx:58
 msgid "Subscribed"
 msgstr "చందా చేరారు"
 
@@ -2271,7 +2285,7 @@ msgstr "{0}కు చందా చేరారు"
 
 #: src/features/projects/components/inline-project-search.tsx:100
 #: src/features/projects/components/recommended-projects.tsx:63
-#: src/routes/_authenticated/find.tsx:56
+#: src/routes/_authenticated/find.tsx:57
 msgid "Subscribing..."
 msgstr "చందా చేరుతోంది..."
 
@@ -2353,7 +2367,7 @@ msgid "This will permanently delete \"{projectName}\" and all its objects, comme
 msgstr "ఇది \"{projectName}\" మరియు దాని అన్ని ఆబ్జెక్ట్‌లు, వ్యాఖ్యలు మరియు అటాచ్‌మెంట్‌లను శాశ్వతంగా తొలగిస్తుంది. ఈ చర్యను రద్దు చేయలేరు."
 
 #. placeholder {0}: project.project.name
-#: src/routes/_authenticated/$projectId/index.tsx:1073
+#: src/routes/_authenticated/$projectId/index.tsx:1131
 msgid "This will remove \"{0}\" from your sidebar and stop updates for this project."
 msgstr "ఇది \"{0}\"ను మీ సైడ్‌బార్ నుండి తీసివేస్తుంది మరియు ఈ ప్రాజెక్ట్ కోసం అప్‌డేట్‌లను ఆపుతుంది."
 
@@ -2428,7 +2442,7 @@ msgid "Travelling"
 msgstr "ప్రయాణిస్తోంది"
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:193
-#: ../../../lib/web/src/components/search-entity-page.tsx:168
+#: ../../../lib/web/src/components/search-entity-page.tsx:217
 msgid "Try adjusting your search terms"
 msgstr "మీ శోధన పదాలను సర్దుబాటు చేయడం ప్రయత్నించండి"
 
@@ -2487,22 +2501,22 @@ msgstr "యునైటెడ్ స్టేట్స్"
 #: src/features/projects/pages/projects-list-page.tsx:147
 #: src/features/projects/pages/projects-list-page.tsx:166
 #: src/features/projects/pages/projects-list-page.tsx:168
-#: src/routes/_authenticated/$projectId/index.tsx:918
-#: src/routes/_authenticated/$projectId/index.tsx:1074
+#: src/routes/_authenticated/$projectId/index.tsx:956
+#: src/routes/_authenticated/$projectId/index.tsx:1132
 msgid "Unsubscribe"
 msgstr "చందా మానివేయండి"
 
-#: src/routes/_authenticated/$projectId/index.tsx:1072
+#: src/routes/_authenticated/$projectId/index.tsx:1130
 msgid "Unsubscribe from project?"
 msgstr "ప్రాజెక్ట్ నుండి చందా మానివేయాలా?"
 
 #: src/features/projects/pages/projects-list-page.tsx:176
-#: src/routes/_authenticated/$projectId/index.tsx:568
+#: src/routes/_authenticated/$projectId/index.tsx:600
 msgid "Unsubscribed"
 msgstr "చందా మానివేయబడింది"
 
 #: src/features/projects/pages/projects-list-page.tsx:175
-#: src/routes/_authenticated/$projectId/index.tsx:567
+#: src/routes/_authenticated/$projectId/index.tsx:599
 msgid "Unsubscribing..."
 msgstr "చందా మానివేస్తోంది..."
 
@@ -2519,7 +2533,7 @@ msgstr "నవీకరించబడింది"
 msgid "Updating access..."
 msgstr "యాక్సెస్‌ను నవీకరిస్తోంది..."
 
-#: src/features/objects/components/create-object-dialog.tsx:486
+#: src/features/objects/components/create-object-dialog.tsx:519
 #: src/features/objects/components/object-attachments.tsx:216
 msgid "Upload"
 msgstr "అప్‌లోడ్ చేయండి"
@@ -2594,7 +2608,7 @@ msgstr "కంట్రోల్‌లను వీక్షించండి"
 msgid "View only"
 msgstr "వీక్షణ మాత్రమే"
 
-#: src/routes/_authenticated/$projectId/index.tsx:876
+#: src/routes/_authenticated/$projectId/index.tsx:908
 msgid "View options"
 msgstr "ఆప్షన్‌లను వీక్షించండి"
 
@@ -2627,7 +2641,7 @@ msgstr "వెబ్‌సైట్ మెయింటెనెన్స్‌�
 msgid "Wednesday"
 msgstr "బుధవారం"
 
-#: src/routes/_authenticated/$projectId/index.tsx:102
+#: src/routes/_authenticated/$projectId/index.tsx:109
 msgid "You don't have access to this project."
 msgstr "ఈ ప్రాజెక్ట్‌కి మీకు ప్రాప్యత లేదు."
 

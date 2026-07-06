@@ -158,8 +158,8 @@ msgstr "Tambah item ceklis"
 msgid "Add class"
 msgstr "Tambah kelas"
 
-#: src/routes/_authenticated/$projectId/index.tsx:887
-#: src/routes/_authenticated/$projectId/index.tsx:1066
+#: src/routes/_authenticated/$projectId/index.tsx:919
+#: src/routes/_authenticated/$projectId/index.tsx:1104
 msgid "Add column"
 msgstr "Tambah kolom"
 
@@ -248,6 +248,10 @@ msgstr "Aya kasalahan"
 msgid "An unexpected error occurred"
 msgstr "Aya kasalahan anu teu disangka-sangka"
 
+#: src/routes/_authenticated/$projectId/index.tsx:1111
+msgid "Anyone you give access to can subscribe with this link."
+msgstr "Saha waé anu dibéré aksés ku anjeun tiasa ngalanggan ku tumbu ieu."
+
 #. placeholder {0}: deleteTarget?.name
 #: src/features/objects/components/object-attachments.tsx:228
 msgid "Are you sure you want to delete \"{0}\"?"
@@ -323,7 +327,7 @@ msgid "Back to project"
 msgstr "Balik ka proyék"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:67
-#: src/routes/_authenticated/$projectId/index.tsx:116
+#: src/routes/_authenticated/$projectId/index.tsx:123
 msgid "Back to projects"
 msgstr "Balik ka proyék"
 
@@ -371,7 +375,7 @@ msgstr "Bisa jadi anak ti"
 #: src/features/objects/components/comment-thread.tsx:175
 #: src/features/projects/components/create-project-dialog.tsx:219
 #: src/routes/_authenticated/$projectId/design.tsx:343
-#: src/routes/_authenticated/$projectId/index.tsx:945
+#: src/routes/_authenticated/$projectId/index.tsx:983
 msgid "Cancel"
 msgstr "Batalkeun"
 
@@ -464,8 +468,8 @@ msgstr "Bersihkeun pilihan (Escape)"
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:354
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:357
 #: ../../../lib/web/src/components/ui/sheet.tsx:79
-#: src/features/objects/components/create-object-dialog.tsx:358
-#: src/features/objects/components/create-object-dialog.tsx:363
+#: src/features/objects/components/create-object-dialog.tsx:391
+#: src/features/objects/components/create-object-dialog.tsx:396
 msgid "Close"
 msgstr "Tutup"
 
@@ -600,13 +604,13 @@ msgstr "Teu tiasa diverifikasi nganggo akun éta. Mangga cobian deui."
 
 #: src/features/board/components/board-column.tsx:542
 #: src/features/board/components/board-column.tsx:681
-#: src/features/objects/components/create-object-dialog.tsx:348
-#: src/features/objects/components/create-object-dialog.tsx:502
+#: src/features/objects/components/create-object-dialog.tsx:381
+#: src/features/objects/components/create-object-dialog.tsx:535
 #: src/features/tree/components/tree-view.tsx:697
 msgid "Create"
 msgstr "Jieun"
 
-#: src/features/objects/components/create-object-dialog.tsx:326
+#: src/features/objects/components/create-object-dialog.tsx:359
 msgid "Create a new item in this project"
 msgstr "Jieun item anyar dina proyék ieu"
 
@@ -616,7 +620,7 @@ msgid "Create a new project"
 msgstr "Jieun proyék anyar"
 
 #: src/components/keyboard-shortcuts-help.tsx:27
-#: src/features/objects/components/create-object-dialog.tsx:325
+#: src/features/objects/components/create-object-dialog.tsx:358
 msgid "Create new item"
 msgstr "Jieun item anyar"
 
@@ -640,7 +644,7 @@ msgstr "Dijieun"
 msgid "Creating project..."
 msgstr "Nyieun proyék..."
 
-#: src/features/objects/components/create-object-dialog.tsx:502
+#: src/features/objects/components/create-object-dialog.tsx:535
 #: src/features/projects/components/create-project-dialog.tsx:297
 msgid "Creating..."
 msgstr "Ngajieun..."
@@ -775,7 +779,7 @@ msgstr "Pedaran"
 
 #: src/routes/_authenticated/$projectId/design.tsx:63
 #: src/routes/_authenticated/$projectId/design.tsx:131
-#: src/routes/_authenticated/$projectId/index.tsx:902
+#: src/routes/_authenticated/$projectId/index.tsx:934
 msgid "Design"
 msgstr "Désain"
 
@@ -819,8 +823,8 @@ msgstr "Arah"
 msgid "Dismiss"
 msgstr "Pasini"
 
-#: src/routes/_authenticated/$projectId/index.tsx:974
-#: src/routes/_authenticated/$projectId/index.tsx:979
+#: src/routes/_authenticated/$projectId/index.tsx:1012
+#: src/routes/_authenticated/$projectId/index.tsx:1017
 msgid "Dismiss board hint"
 msgstr "Pasini hint papan"
 
@@ -832,10 +836,11 @@ msgstr "Mintonkeun sidebar mobile."
 #: src/features/editor/components/edit-dialogs.tsx:922
 #: src/features/editor/components/edit-dialogs.tsx:1228
 #: src/features/objects/components/object-detail-panel.tsx:480
+#: src/routes/_authenticated/$projectId/index.tsx:1121
 msgid "Done"
 msgstr "Beres"
 
-#: src/routes/_authenticated/$projectId/index.tsx:965
+#: src/routes/_authenticated/$projectId/index.tsx:1003
 msgid "Double click on a column to add content"
 msgstr "Klik dua kali kolom pikeun nambihan eusi"
 
@@ -857,7 +862,7 @@ msgstr "Gagal ngunduh"
 msgid "Draft"
 msgstr "Draf"
 
-#: src/routes/_authenticated/$projectId/index.tsx:941
+#: src/routes/_authenticated/$projectId/index.tsx:979
 msgid "Drag columns to re-order them"
 msgstr "Sered kolom pikeun nyusun deui"
 
@@ -963,6 +968,7 @@ msgid "Failed to create field"
 msgstr "Gagal nyieun widang"
 
 #: src/features/objects/components/object-links.tsx:105
+#: src/routes/_authenticated/$projectId/index.tsx:175
 msgid "Failed to create link"
 msgstr "Gagal nyieun tautan"
 
@@ -1011,7 +1017,7 @@ msgid "Failed to load item"
 msgstr "Gagal mungkahan item"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:43
-#: src/routes/_authenticated/$projectId/index.tsx:80
+#: src/routes/_authenticated/$projectId/index.tsx:87
 msgid "Failed to load project"
 msgstr "Gagal mungkahan proyék"
 
@@ -1061,12 +1067,12 @@ msgstr "Gagal nyetél level aksés"
 
 #: src/features/projects/components/inline-project-search.tsx:102
 #: src/features/projects/components/recommended-projects.tsx:65
-#: src/routes/_authenticated/find.tsx:58
+#: src/routes/_authenticated/find.tsx:59
 msgid "Failed to subscribe"
 msgstr "Gagal langganan"
 
 #: src/features/projects/pages/projects-list-page.tsx:177
-#: src/routes/_authenticated/$projectId/index.tsx:569
+#: src/routes/_authenticated/$projectId/index.tsx:601
 msgid "Failed to unsubscribe"
 msgstr "Gagal eureun langganan"
 
@@ -1098,14 +1104,14 @@ msgstr "Gagal ngunggah lampiran"
 msgid "Fields"
 msgstr "Widang"
 
-#: src/features/objects/components/create-object-dialog.tsx:439
+#: src/features/objects/components/create-object-dialog.tsx:472
 #: src/features/objects/components/object-attachments.tsx:103
 #: src/features/objects/components/object-attachments.tsx:120
 msgid "Files"
 msgstr "Berkas"
 
 #: src/components/layout/projects-layout.tsx:61
-#: src/routes/_authenticated/find.tsx:78
+#: src/routes/_authenticated/find.tsx:89
 msgid "Find projects"
 msgstr "Téangan proyék"
 
@@ -1272,6 +1278,10 @@ msgstr "Kénca ka Katuhu"
 msgid "Light"
 msgstr "Caang"
 
+#: src/routes/_authenticated/$projectId/index.tsx:950
+msgid "Link"
+msgstr "Tumbu"
+
 #: src/features/objects/components/object-links.tsx:228
 msgid "Links"
 msgstr "Tautan"
@@ -1425,13 +1435,13 @@ msgid "Network error"
 msgstr "Kasalahan jaringan"
 
 #: ../../../lib/web/src/components/ui/sort-selector.tsx:43
-#: src/features/objects/components/create-object-dialog.tsx:333
-#: src/routes/_authenticated/$projectId/index.tsx:841
-#: src/routes/_authenticated/$projectId/index.tsx:859
+#: src/features/objects/components/create-object-dialog.tsx:366
+#: src/routes/_authenticated/$projectId/index.tsx:873
+#: src/routes/_authenticated/$projectId/index.tsx:891
 msgid "New"
 msgstr "Anyar"
 
-#: src/routes/_authenticated/$projectId/index.tsx:838
+#: src/routes/_authenticated/$projectId/index.tsx:870
 msgid "New {className}"
 msgstr "{className} Anyar"
 
@@ -1444,7 +1454,7 @@ msgstr "Salajengna"
 msgid "Next image"
 msgstr "Gambar salajengna"
 
-#: src/features/objects/components/create-object-dialog.tsx:406
+#: src/features/objects/components/create-object-dialog.tsx:439
 msgid "No {parentClassNames} to add to"
 msgstr "Teu aya {parentClassNames} pikeun ditambahkeun"
 
@@ -1492,7 +1502,7 @@ msgstr "Teu aya diff"
 msgid "No groups available"
 msgstr "Teu aya grup"
 
-#: src/features/objects/components/create-object-dialog.tsx:373
+#: src/features/objects/components/create-object-dialog.tsx:406
 msgid "No item types can be created yet. Create the required parent items first."
 msgstr "Teu aya jenis item nu bisa dijieun. Jieun heula item kolot nu diperlukeun."
 
@@ -1517,7 +1527,7 @@ msgid "No profile"
 msgstr "Euweuh profil"
 
 #: src/features/projects/components/inline-project-search.tsx:150
-#: src/routes/_authenticated/find.tsx:80
+#: src/routes/_authenticated/find.tsx:91
 msgid "No projects found"
 msgstr "Teu manggih proyék"
 
@@ -1564,8 +1574,8 @@ msgstr "Teu aya tempoan"
 #: src/features/editor/components/edit-dialogs.tsx:505
 #: src/features/editor/components/edit-dialogs.tsx:779
 #: src/features/editor/components/edit-dialogs.tsx:782
-#: src/features/objects/components/create-object-dialog.tsx:389
-#: src/features/objects/components/create-object-dialog.tsx:396
+#: src/features/objects/components/create-object-dialog.tsx:422
+#: src/features/objects/components/create-object-dialog.tsx:429
 #: src/features/objects/components/object-detail-panel.tsx:548
 #: src/features/objects/components/object-detail-panel.tsx:561
 #: src/features/objects/components/object-detail-panel.tsx:566
@@ -1655,7 +1665,7 @@ msgstr "Buka menu navigasi"
 msgid "Open option actions"
 msgstr "Buka aksi pilihan"
 
-#: src/routes/_authenticated/$projectId/index.tsx:867
+#: src/routes/_authenticated/$projectId/index.tsx:899
 msgid "Open page actions"
 msgstr "Buka aksi kaca"
 
@@ -1696,7 +1706,7 @@ msgstr "Séjén"
 msgid "Owner"
 msgstr "Nu boga"
 
-#: src/features/objects/components/create-object-dialog.tsx:381
+#: src/features/objects/components/create-object-dialog.tsx:414
 #: src/features/objects/components/object-detail-panel.tsx:544
 msgid "Parent"
 msgstr "Kolot"
@@ -1721,8 +1731,8 @@ msgstr "Pola (regex)"
 msgid "Permanently delete this project and all its content."
 msgstr "Pupus permanén proyék ieu jeung sakabéh eusina."
 
-#: src/routes/_authenticated/$projectId/index.tsx:677
-#: src/routes/_authenticated/$projectId/index.tsx:711
+#: src/routes/_authenticated/$projectId/index.tsx:709
+#: src/routes/_authenticated/$projectId/index.tsx:743
 msgid "Please add one or more classes to the project design."
 msgstr "Mangga tambahkeun hiji atawa leuwih kelas kana desain proyék."
 
@@ -1755,7 +1765,7 @@ msgid "Profile"
 msgstr "Profil"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:65
-#: src/routes/_authenticated/$projectId/index.tsx:114
+#: src/routes/_authenticated/$projectId/index.tsx:121
 msgid "Project"
 msgstr "Proyék"
 
@@ -1771,6 +1781,10 @@ msgstr "Proyék dijieun"
 #: src/routes/_authenticated/$projectId_.settings.tsx:132
 msgid "Project deleted"
 msgstr "Proyék dipupus"
+
+#: src/routes/_authenticated/$projectId/index.tsx:1109
+msgid "Project link"
+msgstr "Tumbu proyék"
 
 #: src/routes/_authenticated/$projectId_.settings.tsx:211
 msgid "Project not found"
@@ -1807,7 +1821,7 @@ msgstr "Diangkat"
 msgid "Re-link your accounts on this server"
 msgstr "Sambungkeun deui akun anjeun dina server ieu"
 
-#: src/routes/_authenticated/$projectId/index.tsx:891
+#: src/routes/_authenticated/$projectId/index.tsx:923
 msgid "Re-order columns"
 msgstr "Susun ulang kolom"
 
@@ -1824,7 +1838,7 @@ msgid "Rebase and merge"
 msgstr "Rebase jeung gabungkeun"
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:219
-#: ../../../lib/web/src/components/search-entity-page.tsx:194
+#: ../../../lib/web/src/components/search-entity-page.tsx:243
 msgid "Recommended"
 msgstr "Direkomendasikeun"
 
@@ -1861,8 +1875,8 @@ msgstr "Rélatif dina 24 jam, salian éta absolut"
 #: src/features/objects/components/comment-list.tsx:238
 #: src/features/objects/components/comment-thread.tsx:294
 #: src/features/objects/components/comment-thread.tsx:299
-#: src/features/objects/components/create-object-dialog.tsx:453
-#: src/features/objects/components/create-object-dialog.tsx:458
+#: src/features/objects/components/create-object-dialog.tsx:486
+#: src/features/objects/components/create-object-dialog.tsx:491
 msgid "Remove"
 msgstr "Pupus"
 
@@ -1987,7 +2001,7 @@ msgstr "Saptu"
 #: ../../../lib/web/src/components/ui/secret-field.tsx:77
 #: src/features/editor/components/option-dialog.tsx:150
 #: src/features/objects/components/comment-thread.tsx:195
-#: src/routes/_authenticated/$projectId/index.tsx:957
+#: src/routes/_authenticated/$projectId/index.tsx:995
 msgid "Save"
 msgstr "Simpen"
 
@@ -1999,7 +2013,7 @@ msgstr "Nyimpen..."
 msgid "Search"
 msgstr "Paluruh"
 
-#: src/routes/_authenticated/find.tsx:79
+#: src/routes/_authenticated/find.tsx:90
 msgid "Search by name, ID, fingerprint, or URL..."
 msgstr "Paluruh ku ngaran, ID, fingerprint, atawa URL..."
 
@@ -2042,7 +2056,7 @@ msgid "Search..."
 msgstr "Paluruh..."
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:177
-#: ../../../lib/web/src/components/search-entity-page.tsx:152
+#: ../../../lib/web/src/components/search-entity-page.tsx:201
 #: ../../../lib/web/src/features/access/access-dialog.tsx:202
 msgid "Searching..."
 msgstr "Maluruh..."
@@ -2154,7 +2168,7 @@ msgstr "Ngatur aksés..."
 #: src/routes/_authenticated/$projectId_.settings.tsx:76
 #: src/routes/_authenticated/$projectId_.settings.tsx:171
 #: src/routes/_authenticated/$projectId_.settings.tsx:194
-#: src/routes/_authenticated/$projectId/index.tsx:912
+#: src/routes/_authenticated/$projectId/index.tsx:944
 msgid "Settings"
 msgstr "Setélan"
 
@@ -2260,7 +2274,7 @@ msgid "Subscribe"
 msgstr "Langgan"
 
 #: src/features/projects/components/inline-project-search.tsx:101
-#: src/routes/_authenticated/find.tsx:57
+#: src/routes/_authenticated/find.tsx:58
 msgid "Subscribed"
 msgstr "Dilanggan"
 
@@ -2271,7 +2285,7 @@ msgstr "Dilanggan kana {0}"
 
 #: src/features/projects/components/inline-project-search.tsx:100
 #: src/features/projects/components/recommended-projects.tsx:63
-#: src/routes/_authenticated/find.tsx:56
+#: src/routes/_authenticated/find.tsx:57
 msgid "Subscribing..."
 msgstr "Ngalanggan..."
 
@@ -2353,7 +2367,7 @@ msgid "This will permanently delete \"{projectName}\" and all its objects, comme
 msgstr "Ieu bakal ngahapus permanén \"{projectName}\" sarta sagala objék, koméntar, sarta lampiranna. Aksi ieu teu tiasa dibatalkeun."
 
 #. placeholder {0}: project.project.name
-#: src/routes/_authenticated/$projectId/index.tsx:1073
+#: src/routes/_authenticated/$projectId/index.tsx:1131
 msgid "This will remove \"{0}\" from your sidebar and stop updates for this project."
 msgstr "Ieu bakal nyabut \"{0}\" tina sidebar anjeun sarta ngeureunkeun apdet pikeun proyek ieu."
 
@@ -2428,7 +2442,7 @@ msgid "Travelling"
 msgstr "Lalampahan"
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:193
-#: ../../../lib/web/src/components/search-entity-page.tsx:168
+#: ../../../lib/web/src/components/search-entity-page.tsx:217
 msgid "Try adjusting your search terms"
 msgstr "Cobian luyukeun istilah pamilarian anjeun"
 
@@ -2487,22 +2501,22 @@ msgstr "Amérika Serikat"
 #: src/features/projects/pages/projects-list-page.tsx:147
 #: src/features/projects/pages/projects-list-page.tsx:166
 #: src/features/projects/pages/projects-list-page.tsx:168
-#: src/routes/_authenticated/$projectId/index.tsx:918
-#: src/routes/_authenticated/$projectId/index.tsx:1074
+#: src/routes/_authenticated/$projectId/index.tsx:956
+#: src/routes/_authenticated/$projectId/index.tsx:1132
 msgid "Unsubscribe"
 msgstr "Hentikeun langganan"
 
-#: src/routes/_authenticated/$projectId/index.tsx:1072
+#: src/routes/_authenticated/$projectId/index.tsx:1130
 msgid "Unsubscribe from project?"
 msgstr "Hentikeun langganan ti proyek?"
 
 #: src/features/projects/pages/projects-list-page.tsx:176
-#: src/routes/_authenticated/$projectId/index.tsx:568
+#: src/routes/_authenticated/$projectId/index.tsx:600
 msgid "Unsubscribed"
 msgstr "Henteu langganan"
 
 #: src/features/projects/pages/projects-list-page.tsx:175
-#: src/routes/_authenticated/$projectId/index.tsx:567
+#: src/routes/_authenticated/$projectId/index.tsx:599
 msgid "Unsubscribing..."
 msgstr "Hentikeun langganan..."
 
@@ -2519,7 +2533,7 @@ msgstr "Diapdet"
 msgid "Updating access..."
 msgstr "Ngaropéa aksés..."
 
-#: src/features/objects/components/create-object-dialog.tsx:486
+#: src/features/objects/components/create-object-dialog.tsx:519
 #: src/features/objects/components/object-attachments.tsx:216
 msgid "Upload"
 msgstr "Unggah"
@@ -2594,7 +2608,7 @@ msgstr "Kontrol tampilan"
 msgid "View only"
 msgstr "Tingali wungkul"
 
-#: src/routes/_authenticated/$projectId/index.tsx:876
+#: src/routes/_authenticated/$projectId/index.tsx:908
 msgid "View options"
 msgstr "Pilihan tampilan"
 
@@ -2627,7 +2641,7 @@ msgstr "Situs keur dipigawé!"
 msgid "Wednesday"
 msgstr "Rebo"
 
-#: src/routes/_authenticated/$projectId/index.tsx:102
+#: src/routes/_authenticated/$projectId/index.tsx:109
 msgid "You don't have access to this project."
 msgstr "Anjeun teu boga aksés ka proyék ieu."
 

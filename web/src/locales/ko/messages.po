@@ -158,8 +158,8 @@ msgstr "체크리스트 항목 추가"
 msgid "Add class"
 msgstr "클래스 추가"
 
-#: src/routes/_authenticated/$projectId/index.tsx:887
-#: src/routes/_authenticated/$projectId/index.tsx:1066
+#: src/routes/_authenticated/$projectId/index.tsx:919
+#: src/routes/_authenticated/$projectId/index.tsx:1104
 msgid "Add column"
 msgstr "컬럼 추가"
 
@@ -248,6 +248,10 @@ msgstr "오류가 발생했습니다"
 msgid "An unexpected error occurred"
 msgstr "예기치 않은 오류가 발생했습니다"
 
+#: src/routes/_authenticated/$projectId/index.tsx:1111
+msgid "Anyone you give access to can subscribe with this link."
+msgstr "액세스 권한을 부여한 사람은 누구나 이 링크로 구독할 수 있습니다."
+
 #. placeholder {0}: deleteTarget?.name
 #: src/features/objects/components/object-attachments.tsx:228
 msgid "Are you sure you want to delete \"{0}\"?"
@@ -323,7 +327,7 @@ msgid "Back to project"
 msgstr "프로젝트로 돌아가기"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:67
-#: src/routes/_authenticated/$projectId/index.tsx:116
+#: src/routes/_authenticated/$projectId/index.tsx:123
 msgid "Back to projects"
 msgstr "프로젝트 목록으로 돌아가기"
 
@@ -371,7 +375,7 @@ msgstr "다음의 하위가 될 수 있음"
 #: src/features/objects/components/comment-thread.tsx:175
 #: src/features/projects/components/create-project-dialog.tsx:219
 #: src/routes/_authenticated/$projectId/design.tsx:343
-#: src/routes/_authenticated/$projectId/index.tsx:945
+#: src/routes/_authenticated/$projectId/index.tsx:983
 msgid "Cancel"
 msgstr "취소"
 
@@ -464,8 +468,8 @@ msgstr "선택 해제 (Escape)"
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:354
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:357
 #: ../../../lib/web/src/components/ui/sheet.tsx:79
-#: src/features/objects/components/create-object-dialog.tsx:358
-#: src/features/objects/components/create-object-dialog.tsx:363
+#: src/features/objects/components/create-object-dialog.tsx:391
+#: src/features/objects/components/create-object-dialog.tsx:396
 msgid "Close"
 msgstr "닫기"
 
@@ -600,13 +604,13 @@ msgstr "해당 계정으로 인증하지 못했습니다. 다시 시도해 주�
 
 #: src/features/board/components/board-column.tsx:542
 #: src/features/board/components/board-column.tsx:681
-#: src/features/objects/components/create-object-dialog.tsx:348
-#: src/features/objects/components/create-object-dialog.tsx:502
+#: src/features/objects/components/create-object-dialog.tsx:381
+#: src/features/objects/components/create-object-dialog.tsx:535
 #: src/features/tree/components/tree-view.tsx:697
 msgid "Create"
 msgstr "생성"
 
-#: src/features/objects/components/create-object-dialog.tsx:326
+#: src/features/objects/components/create-object-dialog.tsx:359
 msgid "Create a new item in this project"
 msgstr "이 프로젝트에 새 항목 생성"
 
@@ -616,7 +620,7 @@ msgid "Create a new project"
 msgstr "새 프로젝트 생성"
 
 #: src/components/keyboard-shortcuts-help.tsx:27
-#: src/features/objects/components/create-object-dialog.tsx:325
+#: src/features/objects/components/create-object-dialog.tsx:358
 msgid "Create new item"
 msgstr "새 항목 생성"
 
@@ -640,7 +644,7 @@ msgstr "생성됨"
 msgid "Creating project..."
 msgstr "프로젝트 생성 중..."
 
-#: src/features/objects/components/create-object-dialog.tsx:502
+#: src/features/objects/components/create-object-dialog.tsx:535
 #: src/features/projects/components/create-project-dialog.tsx:297
 msgid "Creating..."
 msgstr "생성 중..."
@@ -775,7 +779,7 @@ msgstr "설명"
 
 #: src/routes/_authenticated/$projectId/design.tsx:63
 #: src/routes/_authenticated/$projectId/design.tsx:131
-#: src/routes/_authenticated/$projectId/index.tsx:902
+#: src/routes/_authenticated/$projectId/index.tsx:934
 msgid "Design"
 msgstr "디자인"
 
@@ -819,8 +823,8 @@ msgstr "방향"
 msgid "Dismiss"
 msgstr "닫기"
 
-#: src/routes/_authenticated/$projectId/index.tsx:974
-#: src/routes/_authenticated/$projectId/index.tsx:979
+#: src/routes/_authenticated/$projectId/index.tsx:1012
+#: src/routes/_authenticated/$projectId/index.tsx:1017
 msgid "Dismiss board hint"
 msgstr "보드 힌트 닫기"
 
@@ -832,10 +836,11 @@ msgstr "모바일 사이드바를 표시해요."
 #: src/features/editor/components/edit-dialogs.tsx:922
 #: src/features/editor/components/edit-dialogs.tsx:1228
 #: src/features/objects/components/object-detail-panel.tsx:480
+#: src/routes/_authenticated/$projectId/index.tsx:1121
 msgid "Done"
 msgstr "완료"
 
-#: src/routes/_authenticated/$projectId/index.tsx:965
+#: src/routes/_authenticated/$projectId/index.tsx:1003
 msgid "Double click on a column to add content"
 msgstr "열을 두 번 클릭하여 내용을 추가하세요"
 
@@ -857,7 +862,7 @@ msgstr "다운로드 실패"
 msgid "Draft"
 msgstr "초안"
 
-#: src/routes/_authenticated/$projectId/index.tsx:941
+#: src/routes/_authenticated/$projectId/index.tsx:979
 msgid "Drag columns to re-order them"
 msgstr "열을 드래그하여 순서를 변경하세요"
 
@@ -963,6 +968,7 @@ msgid "Failed to create field"
 msgstr "필드 생성에 실패했어요"
 
 #: src/features/objects/components/object-links.tsx:105
+#: src/routes/_authenticated/$projectId/index.tsx:175
 msgid "Failed to create link"
 msgstr "링크 생성에 실패했어요"
 
@@ -1011,7 +1017,7 @@ msgid "Failed to load item"
 msgstr "항목 불러오기에 실패했어요"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:43
-#: src/routes/_authenticated/$projectId/index.tsx:80
+#: src/routes/_authenticated/$projectId/index.tsx:87
 msgid "Failed to load project"
 msgstr "프로젝트 불러오기에 실패했어요"
 
@@ -1061,12 +1067,12 @@ msgstr "접근 레벨 설정에 실패했어요"
 
 #: src/features/projects/components/inline-project-search.tsx:102
 #: src/features/projects/components/recommended-projects.tsx:65
-#: src/routes/_authenticated/find.tsx:58
+#: src/routes/_authenticated/find.tsx:59
 msgid "Failed to subscribe"
 msgstr "구독에 실패했어요"
 
 #: src/features/projects/pages/projects-list-page.tsx:177
-#: src/routes/_authenticated/$projectId/index.tsx:569
+#: src/routes/_authenticated/$projectId/index.tsx:601
 msgid "Failed to unsubscribe"
 msgstr "구독 취소에 실패했어요"
 
@@ -1098,14 +1104,14 @@ msgstr "첨부 파일 업로드에 실패했어요"
 msgid "Fields"
 msgstr "필드"
 
-#: src/features/objects/components/create-object-dialog.tsx:439
+#: src/features/objects/components/create-object-dialog.tsx:472
 #: src/features/objects/components/object-attachments.tsx:103
 #: src/features/objects/components/object-attachments.tsx:120
 msgid "Files"
 msgstr "파일"
 
 #: src/components/layout/projects-layout.tsx:61
-#: src/routes/_authenticated/find.tsx:78
+#: src/routes/_authenticated/find.tsx:89
 msgid "Find projects"
 msgstr "프로젝트 찾기"
 
@@ -1272,6 +1278,10 @@ msgstr "왼쪽에서 오른쪽"
 msgid "Light"
 msgstr "라이트"
 
+#: src/routes/_authenticated/$projectId/index.tsx:950
+msgid "Link"
+msgstr "링크"
+
 #: src/features/objects/components/object-links.tsx:228
 msgid "Links"
 msgstr "링크"
@@ -1425,13 +1435,13 @@ msgid "Network error"
 msgstr "네트워크 오류"
 
 #: ../../../lib/web/src/components/ui/sort-selector.tsx:43
-#: src/features/objects/components/create-object-dialog.tsx:333
-#: src/routes/_authenticated/$projectId/index.tsx:841
-#: src/routes/_authenticated/$projectId/index.tsx:859
+#: src/features/objects/components/create-object-dialog.tsx:366
+#: src/routes/_authenticated/$projectId/index.tsx:873
+#: src/routes/_authenticated/$projectId/index.tsx:891
 msgid "New"
 msgstr "새로 만들기"
 
-#: src/routes/_authenticated/$projectId/index.tsx:838
+#: src/routes/_authenticated/$projectId/index.tsx:870
 msgid "New {className}"
 msgstr "새 {className}"
 
@@ -1444,7 +1454,7 @@ msgstr "다음"
 msgid "Next image"
 msgstr "다음 이미지"
 
-#: src/features/objects/components/create-object-dialog.tsx:406
+#: src/features/objects/components/create-object-dialog.tsx:439
 msgid "No {parentClassNames} to add to"
 msgstr "추가할 {parentClassNames}이(가) 없음"
 
@@ -1492,7 +1502,7 @@ msgstr "이용 가능한 diff가 없어요"
 msgid "No groups available"
 msgstr "이용 가능한 그룹이 없어요"
 
-#: src/features/objects/components/create-object-dialog.tsx:373
+#: src/features/objects/components/create-object-dialog.tsx:406
 msgid "No item types can be created yet. Create the required parent items first."
 msgstr "아직 항목 유형을 만들 수 없어요. 먼저 필요한 상위 항목을 만들어 주세요."
 
@@ -1517,7 +1527,7 @@ msgid "No profile"
 msgstr "프로필이 없어요"
 
 #: src/features/projects/components/inline-project-search.tsx:150
-#: src/routes/_authenticated/find.tsx:80
+#: src/routes/_authenticated/find.tsx:91
 msgid "No projects found"
 msgstr "프로젝트를 찾을 수 없어요"
 
@@ -1564,8 +1574,8 @@ msgstr "조회수가 없어요"
 #: src/features/editor/components/edit-dialogs.tsx:505
 #: src/features/editor/components/edit-dialogs.tsx:779
 #: src/features/editor/components/edit-dialogs.tsx:782
-#: src/features/objects/components/create-object-dialog.tsx:389
-#: src/features/objects/components/create-object-dialog.tsx:396
+#: src/features/objects/components/create-object-dialog.tsx:422
+#: src/features/objects/components/create-object-dialog.tsx:429
 #: src/features/objects/components/object-detail-panel.tsx:548
 #: src/features/objects/components/object-detail-panel.tsx:561
 #: src/features/objects/components/object-detail-panel.tsx:566
@@ -1655,7 +1665,7 @@ msgstr "내비게이션 메뉴 열기"
 msgid "Open option actions"
 msgstr "옵션 작업 열기"
 
-#: src/routes/_authenticated/$projectId/index.tsx:867
+#: src/routes/_authenticated/$projectId/index.tsx:899
 msgid "Open page actions"
 msgstr "페이지 작업 열기"
 
@@ -1696,7 +1706,7 @@ msgstr "기타"
 msgid "Owner"
 msgstr "소유자"
 
-#: src/features/objects/components/create-object-dialog.tsx:381
+#: src/features/objects/components/create-object-dialog.tsx:414
 #: src/features/objects/components/object-detail-panel.tsx:544
 msgid "Parent"
 msgstr "상위"
@@ -1721,8 +1731,8 @@ msgstr "패턴 (정규식)"
 msgid "Permanently delete this project and all its content."
 msgstr "이 프로젝트와 모든 콘텐츠를 영구적으로 삭제해요."
 
-#: src/routes/_authenticated/$projectId/index.tsx:677
-#: src/routes/_authenticated/$projectId/index.tsx:711
+#: src/routes/_authenticated/$projectId/index.tsx:709
+#: src/routes/_authenticated/$projectId/index.tsx:743
 msgid "Please add one or more classes to the project design."
 msgstr "프로젝트 디자인에 하나 이상의 클래스를 추가해 주세요."
 
@@ -1755,7 +1765,7 @@ msgid "Profile"
 msgstr "프로필"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:65
-#: src/routes/_authenticated/$projectId/index.tsx:114
+#: src/routes/_authenticated/$projectId/index.tsx:121
 msgid "Project"
 msgstr "프로젝트"
 
@@ -1771,6 +1781,10 @@ msgstr "프로젝트가 만들어졌어요"
 #: src/routes/_authenticated/$projectId_.settings.tsx:132
 msgid "Project deleted"
 msgstr "프로젝트가 삭제되었어요"
+
+#: src/routes/_authenticated/$projectId/index.tsx:1109
+msgid "Project link"
+msgstr "프로젝트 링크"
 
 #: src/routes/_authenticated/$projectId_.settings.tsx:211
 msgid "Project not found"
@@ -1807,7 +1821,7 @@ msgstr "돌출"
 msgid "Re-link your accounts on this server"
 msgstr "이 서버에서 계정 다시 연결"
 
-#: src/routes/_authenticated/$projectId/index.tsx:891
+#: src/routes/_authenticated/$projectId/index.tsx:923
 msgid "Re-order columns"
 msgstr "열 순서 변경"
 
@@ -1824,7 +1838,7 @@ msgid "Rebase and merge"
 msgstr "리베이스 후 병합"
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:219
-#: ../../../lib/web/src/components/search-entity-page.tsx:194
+#: ../../../lib/web/src/components/search-entity-page.tsx:243
 msgid "Recommended"
 msgstr "추천됨"
 
@@ -1861,8 +1875,8 @@ msgstr "24시간 이내는 상대적, 그 외는 절대적"
 #: src/features/objects/components/comment-list.tsx:238
 #: src/features/objects/components/comment-thread.tsx:294
 #: src/features/objects/components/comment-thread.tsx:299
-#: src/features/objects/components/create-object-dialog.tsx:453
-#: src/features/objects/components/create-object-dialog.tsx:458
+#: src/features/objects/components/create-object-dialog.tsx:486
+#: src/features/objects/components/create-object-dialog.tsx:491
 msgid "Remove"
 msgstr "제거"
 
@@ -1987,7 +2001,7 @@ msgstr "토요일"
 #: ../../../lib/web/src/components/ui/secret-field.tsx:77
 #: src/features/editor/components/option-dialog.tsx:150
 #: src/features/objects/components/comment-thread.tsx:195
-#: src/routes/_authenticated/$projectId/index.tsx:957
+#: src/routes/_authenticated/$projectId/index.tsx:995
 msgid "Save"
 msgstr "저장"
 
@@ -1999,7 +2013,7 @@ msgstr "저장 중..."
 msgid "Search"
 msgstr "검색"
 
-#: src/routes/_authenticated/find.tsx:79
+#: src/routes/_authenticated/find.tsx:90
 msgid "Search by name, ID, fingerprint, or URL..."
 msgstr "이름, ID, 지문 또는 URL로 검색..."
 
@@ -2042,7 +2056,7 @@ msgid "Search..."
 msgstr "검색..."
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:177
-#: ../../../lib/web/src/components/search-entity-page.tsx:152
+#: ../../../lib/web/src/components/search-entity-page.tsx:201
 #: ../../../lib/web/src/features/access/access-dialog.tsx:202
 msgid "Searching..."
 msgstr "검색 중..."
@@ -2154,7 +2168,7 @@ msgstr "접근 권한 설정 중..."
 #: src/routes/_authenticated/$projectId_.settings.tsx:76
 #: src/routes/_authenticated/$projectId_.settings.tsx:171
 #: src/routes/_authenticated/$projectId_.settings.tsx:194
-#: src/routes/_authenticated/$projectId/index.tsx:912
+#: src/routes/_authenticated/$projectId/index.tsx:944
 msgid "Settings"
 msgstr "설정"
 
@@ -2260,7 +2274,7 @@ msgid "Subscribe"
 msgstr "구독"
 
 #: src/features/projects/components/inline-project-search.tsx:101
-#: src/routes/_authenticated/find.tsx:57
+#: src/routes/_authenticated/find.tsx:58
 msgid "Subscribed"
 msgstr "구독됨"
 
@@ -2271,7 +2285,7 @@ msgstr "{0}을(를) 구독했어요"
 
 #: src/features/projects/components/inline-project-search.tsx:100
 #: src/features/projects/components/recommended-projects.tsx:63
-#: src/routes/_authenticated/find.tsx:56
+#: src/routes/_authenticated/find.tsx:57
 msgid "Subscribing..."
 msgstr "구독 중..."
 
@@ -2353,7 +2367,7 @@ msgid "This will permanently delete \"{projectName}\" and all its objects, comme
 msgstr "\"{projectName}\"과(와) 모든 개체, 댓글, 첨부 파일이 영구적으로 삭제돼요. 이 작업은 되돌릴 수 없어요."
 
 #. placeholder {0}: project.project.name
-#: src/routes/_authenticated/$projectId/index.tsx:1073
+#: src/routes/_authenticated/$projectId/index.tsx:1131
 msgid "This will remove \"{0}\" from your sidebar and stop updates for this project."
 msgstr "\"{0}\"이(가) 사이드바에서 제거되고 이 프로젝트의 업데이트가 중단돼요."
 
@@ -2428,7 +2442,7 @@ msgid "Travelling"
 msgstr "이동 중"
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:193
-#: ../../../lib/web/src/components/search-entity-page.tsx:168
+#: ../../../lib/web/src/components/search-entity-page.tsx:217
 msgid "Try adjusting your search terms"
 msgstr "검색어를 조정해 보세요"
 
@@ -2487,22 +2501,22 @@ msgstr "미국"
 #: src/features/projects/pages/projects-list-page.tsx:147
 #: src/features/projects/pages/projects-list-page.tsx:166
 #: src/features/projects/pages/projects-list-page.tsx:168
-#: src/routes/_authenticated/$projectId/index.tsx:918
-#: src/routes/_authenticated/$projectId/index.tsx:1074
+#: src/routes/_authenticated/$projectId/index.tsx:956
+#: src/routes/_authenticated/$projectId/index.tsx:1132
 msgid "Unsubscribe"
 msgstr "구독 취소"
 
-#: src/routes/_authenticated/$projectId/index.tsx:1072
+#: src/routes/_authenticated/$projectId/index.tsx:1130
 msgid "Unsubscribe from project?"
 msgstr "프로젝트 구독을 취소할까요?"
 
 #: src/features/projects/pages/projects-list-page.tsx:176
-#: src/routes/_authenticated/$projectId/index.tsx:568
+#: src/routes/_authenticated/$projectId/index.tsx:600
 msgid "Unsubscribed"
 msgstr "구독이 취소되었어요"
 
 #: src/features/projects/pages/projects-list-page.tsx:175
-#: src/routes/_authenticated/$projectId/index.tsx:567
+#: src/routes/_authenticated/$projectId/index.tsx:599
 msgid "Unsubscribing..."
 msgstr "구독 취소 중..."
 
@@ -2519,7 +2533,7 @@ msgstr "업데이트됨"
 msgid "Updating access..."
 msgstr "접근 권한 업데이트 중..."
 
-#: src/features/objects/components/create-object-dialog.tsx:486
+#: src/features/objects/components/create-object-dialog.tsx:519
 #: src/features/objects/components/object-attachments.tsx:216
 msgid "Upload"
 msgstr "업로드"
@@ -2594,7 +2608,7 @@ msgstr "보기 컨트롤"
 msgid "View only"
 msgstr "보기 전용"
 
-#: src/routes/_authenticated/$projectId/index.tsx:876
+#: src/routes/_authenticated/$projectId/index.tsx:908
 msgid "View options"
 msgstr "보기 옵션"
 
@@ -2627,7 +2641,7 @@ msgstr "웹사이트가 점검 중이에요!"
 msgid "Wednesday"
 msgstr "수요일"
 
-#: src/routes/_authenticated/$projectId/index.tsx:102
+#: src/routes/_authenticated/$projectId/index.tsx:109
 msgid "You don't have access to this project."
 msgstr "이 프로젝트에 대한 접근 권한이 없습니다."
 

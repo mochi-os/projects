@@ -158,8 +158,8 @@ msgstr "Shto element të listës"
 msgid "Add class"
 msgstr "Shto klasë"
 
-#: src/routes/_authenticated/$projectId/index.tsx:887
-#: src/routes/_authenticated/$projectId/index.tsx:1066
+#: src/routes/_authenticated/$projectId/index.tsx:919
+#: src/routes/_authenticated/$projectId/index.tsx:1104
 msgid "Add column"
 msgstr "Shto kolonë"
 
@@ -248,6 +248,10 @@ msgstr "Ndodhi një gabim"
 msgid "An unexpected error occurred"
 msgstr "Ndodhi një gabim i papritur"
 
+#: src/routes/_authenticated/$projectId/index.tsx:1111
+msgid "Anyone you give access to can subscribe with this link."
+msgstr "Kushdo që i jepni akses mund të abonohet me këtë lidhje."
+
 #. placeholder {0}: deleteTarget?.name
 #: src/features/objects/components/object-attachments.tsx:228
 msgid "Are you sure you want to delete \"{0}\"?"
@@ -323,7 +327,7 @@ msgid "Back to project"
 msgstr "Mbrapa te projekti"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:67
-#: src/routes/_authenticated/$projectId/index.tsx:116
+#: src/routes/_authenticated/$projectId/index.tsx:123
 msgid "Back to projects"
 msgstr "Mbrapa te projektet"
 
@@ -371,7 +375,7 @@ msgstr "Mund të jetë fëmijë i"
 #: src/features/objects/components/comment-thread.tsx:175
 #: src/features/projects/components/create-project-dialog.tsx:219
 #: src/routes/_authenticated/$projectId/design.tsx:343
-#: src/routes/_authenticated/$projectId/index.tsx:945
+#: src/routes/_authenticated/$projectId/index.tsx:983
 msgid "Cancel"
 msgstr "Anulo"
 
@@ -464,8 +468,8 @@ msgstr "Pastro përzgjedhjen (Escape)"
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:354
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:357
 #: ../../../lib/web/src/components/ui/sheet.tsx:79
-#: src/features/objects/components/create-object-dialog.tsx:358
-#: src/features/objects/components/create-object-dialog.tsx:363
+#: src/features/objects/components/create-object-dialog.tsx:391
+#: src/features/objects/components/create-object-dialog.tsx:396
 msgid "Close"
 msgstr "Mbyll"
 
@@ -600,13 +604,13 @@ msgstr "Nuk u verifikua dot me atë llogari. Ju lutemi provoni përsëri."
 
 #: src/features/board/components/board-column.tsx:542
 #: src/features/board/components/board-column.tsx:681
-#: src/features/objects/components/create-object-dialog.tsx:348
-#: src/features/objects/components/create-object-dialog.tsx:502
+#: src/features/objects/components/create-object-dialog.tsx:381
+#: src/features/objects/components/create-object-dialog.tsx:535
 #: src/features/tree/components/tree-view.tsx:697
 msgid "Create"
 msgstr "Krijo"
 
-#: src/features/objects/components/create-object-dialog.tsx:326
+#: src/features/objects/components/create-object-dialog.tsx:359
 msgid "Create a new item in this project"
 msgstr "Krijo një element të ri në këtë projekt"
 
@@ -616,7 +620,7 @@ msgid "Create a new project"
 msgstr "Krijo një projekt të ri"
 
 #: src/components/keyboard-shortcuts-help.tsx:27
-#: src/features/objects/components/create-object-dialog.tsx:325
+#: src/features/objects/components/create-object-dialog.tsx:358
 msgid "Create new item"
 msgstr "Krijo element të ri"
 
@@ -640,7 +644,7 @@ msgstr "U krijua"
 msgid "Creating project..."
 msgstr "Po krijohet projekti..."
 
-#: src/features/objects/components/create-object-dialog.tsx:502
+#: src/features/objects/components/create-object-dialog.tsx:535
 #: src/features/projects/components/create-project-dialog.tsx:297
 msgid "Creating..."
 msgstr "Po krijon..."
@@ -775,7 +779,7 @@ msgstr "Përshkrimi"
 
 #: src/routes/_authenticated/$projectId/design.tsx:63
 #: src/routes/_authenticated/$projectId/design.tsx:131
-#: src/routes/_authenticated/$projectId/index.tsx:902
+#: src/routes/_authenticated/$projectId/index.tsx:934
 msgid "Design"
 msgstr "Dizajni"
 
@@ -819,8 +823,8 @@ msgstr "Drejtimi"
 msgid "Dismiss"
 msgstr "Hidhe"
 
-#: src/routes/_authenticated/$projectId/index.tsx:974
-#: src/routes/_authenticated/$projectId/index.tsx:979
+#: src/routes/_authenticated/$projectId/index.tsx:1012
+#: src/routes/_authenticated/$projectId/index.tsx:1017
 msgid "Dismiss board hint"
 msgstr "Hidhe sugjerimin e tabelës"
 
@@ -832,10 +836,11 @@ msgstr "Shfaq anën mobile."
 #: src/features/editor/components/edit-dialogs.tsx:922
 #: src/features/editor/components/edit-dialogs.tsx:1228
 #: src/features/objects/components/object-detail-panel.tsx:480
+#: src/routes/_authenticated/$projectId/index.tsx:1121
 msgid "Done"
 msgstr "Përfunduar"
 
-#: src/routes/_authenticated/$projectId/index.tsx:965
+#: src/routes/_authenticated/$projectId/index.tsx:1003
 msgid "Double click on a column to add content"
 msgstr "Klikoni dy herë mbi një kolonë për të shtuar përmbajtje"
 
@@ -857,7 +862,7 @@ msgstr "Shkarkimi dështoi"
 msgid "Draft"
 msgstr "Skicë"
 
-#: src/routes/_authenticated/$projectId/index.tsx:941
+#: src/routes/_authenticated/$projectId/index.tsx:979
 msgid "Drag columns to re-order them"
 msgstr "Tërhiqni kolonat për t'i rirenditur"
 
@@ -963,6 +968,7 @@ msgid "Failed to create field"
 msgstr "Krijimi i fushës dështoi"
 
 #: src/features/objects/components/object-links.tsx:105
+#: src/routes/_authenticated/$projectId/index.tsx:175
 msgid "Failed to create link"
 msgstr "Krijimi i lidhjes dështoi"
 
@@ -1011,7 +1017,7 @@ msgid "Failed to load item"
 msgstr "Ngarkimi i artikullit dështoi"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:43
-#: src/routes/_authenticated/$projectId/index.tsx:80
+#: src/routes/_authenticated/$projectId/index.tsx:87
 msgid "Failed to load project"
 msgstr "Ngarkimi i projektit dështoi"
 
@@ -1061,12 +1067,12 @@ msgstr "Vendosja e nivelit të qasjes dështoi"
 
 #: src/features/projects/components/inline-project-search.tsx:102
 #: src/features/projects/components/recommended-projects.tsx:65
-#: src/routes/_authenticated/find.tsx:58
+#: src/routes/_authenticated/find.tsx:59
 msgid "Failed to subscribe"
 msgstr "Abonimi dështoi"
 
 #: src/features/projects/pages/projects-list-page.tsx:177
-#: src/routes/_authenticated/$projectId/index.tsx:569
+#: src/routes/_authenticated/$projectId/index.tsx:601
 msgid "Failed to unsubscribe"
 msgstr "Çabonimi dështoi"
 
@@ -1098,14 +1104,14 @@ msgstr "Ngarkimi i bashkëngjitjes dështoi"
 msgid "Fields"
 msgstr "Fushat"
 
-#: src/features/objects/components/create-object-dialog.tsx:439
+#: src/features/objects/components/create-object-dialog.tsx:472
 #: src/features/objects/components/object-attachments.tsx:103
 #: src/features/objects/components/object-attachments.tsx:120
 msgid "Files"
 msgstr "Skedarët"
 
 #: src/components/layout/projects-layout.tsx:61
-#: src/routes/_authenticated/find.tsx:78
+#: src/routes/_authenticated/find.tsx:89
 msgid "Find projects"
 msgstr "Gjej projekte"
 
@@ -1272,6 +1278,10 @@ msgstr "Nga e majta në të djathtë"
 msgid "Light"
 msgstr "E çelët"
 
+#: src/routes/_authenticated/$projectId/index.tsx:950
+msgid "Link"
+msgstr "Lidhje"
+
 #: src/features/objects/components/object-links.tsx:228
 msgid "Links"
 msgstr "Lidhjet"
@@ -1425,13 +1435,13 @@ msgid "Network error"
 msgstr "Gabim rrjeti"
 
 #: ../../../lib/web/src/components/ui/sort-selector.tsx:43
-#: src/features/objects/components/create-object-dialog.tsx:333
-#: src/routes/_authenticated/$projectId/index.tsx:841
-#: src/routes/_authenticated/$projectId/index.tsx:859
+#: src/features/objects/components/create-object-dialog.tsx:366
+#: src/routes/_authenticated/$projectId/index.tsx:873
+#: src/routes/_authenticated/$projectId/index.tsx:891
 msgid "New"
 msgstr "I ri"
 
-#: src/routes/_authenticated/$projectId/index.tsx:838
+#: src/routes/_authenticated/$projectId/index.tsx:870
 msgid "New {className}"
 msgstr "{className} i ri"
 
@@ -1444,7 +1454,7 @@ msgstr "Tjetri"
 msgid "Next image"
 msgstr "Imazhi tjetër"
 
-#: src/features/objects/components/create-object-dialog.tsx:406
+#: src/features/objects/components/create-object-dialog.tsx:439
 msgid "No {parentClassNames} to add to"
 msgstr "Asnjë {parentClassNames} për të shtuar"
 
@@ -1492,7 +1502,7 @@ msgstr "Asnjë diff i disponueshëm"
 msgid "No groups available"
 msgstr "Asnjë grup i disponueshëm"
 
-#: src/features/objects/components/create-object-dialog.tsx:373
+#: src/features/objects/components/create-object-dialog.tsx:406
 msgid "No item types can be created yet. Create the required parent items first."
 msgstr "Asnjë lloj artikulli nuk mund të krijohet ende. Krijoni fillimisht artikujt prind të kërkuar."
 
@@ -1517,7 +1527,7 @@ msgid "No profile"
 msgstr "Pa profil"
 
 #: src/features/projects/components/inline-project-search.tsx:150
-#: src/routes/_authenticated/find.tsx:80
+#: src/routes/_authenticated/find.tsx:91
 msgid "No projects found"
 msgstr "S'u gjet asnjë projekt"
 
@@ -1564,8 +1574,8 @@ msgstr "Asnjë shikim"
 #: src/features/editor/components/edit-dialogs.tsx:505
 #: src/features/editor/components/edit-dialogs.tsx:779
 #: src/features/editor/components/edit-dialogs.tsx:782
-#: src/features/objects/components/create-object-dialog.tsx:389
-#: src/features/objects/components/create-object-dialog.tsx:396
+#: src/features/objects/components/create-object-dialog.tsx:422
+#: src/features/objects/components/create-object-dialog.tsx:429
 #: src/features/objects/components/object-detail-panel.tsx:548
 #: src/features/objects/components/object-detail-panel.tsx:561
 #: src/features/objects/components/object-detail-panel.tsx:566
@@ -1655,7 +1665,7 @@ msgstr "Hap menynë e navigimit"
 msgid "Open option actions"
 msgstr "Hap veprimet e opsionit"
 
-#: src/routes/_authenticated/$projectId/index.tsx:867
+#: src/routes/_authenticated/$projectId/index.tsx:899
 msgid "Open page actions"
 msgstr "Hap veprimet e faqes"
 
@@ -1696,7 +1706,7 @@ msgstr "Tjetër"
 msgid "Owner"
 msgstr "Pronari"
 
-#: src/features/objects/components/create-object-dialog.tsx:381
+#: src/features/objects/components/create-object-dialog.tsx:414
 #: src/features/objects/components/object-detail-panel.tsx:544
 msgid "Parent"
 msgstr "Prindi"
@@ -1721,8 +1731,8 @@ msgstr "Modeli (regex)"
 msgid "Permanently delete this project and all its content."
 msgstr "Fshi përfundimisht këtë projekt dhe gjithë përmbajtjen e tij."
 
-#: src/routes/_authenticated/$projectId/index.tsx:677
-#: src/routes/_authenticated/$projectId/index.tsx:711
+#: src/routes/_authenticated/$projectId/index.tsx:709
+#: src/routes/_authenticated/$projectId/index.tsx:743
 msgid "Please add one or more classes to the project design."
 msgstr "Ju lutemi shtoni një ose më shumë klasa në dizajnin e projektit."
 
@@ -1755,7 +1765,7 @@ msgid "Profile"
 msgstr "Profili"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:65
-#: src/routes/_authenticated/$projectId/index.tsx:114
+#: src/routes/_authenticated/$projectId/index.tsx:121
 msgid "Project"
 msgstr "Projekti"
 
@@ -1771,6 +1781,10 @@ msgstr "Projekti u krijua"
 #: src/routes/_authenticated/$projectId_.settings.tsx:132
 msgid "Project deleted"
 msgstr "Projekti u fshi"
+
+#: src/routes/_authenticated/$projectId/index.tsx:1109
+msgid "Project link"
+msgstr "Lidhja e projektit"
 
 #: src/routes/_authenticated/$projectId_.settings.tsx:211
 msgid "Project not found"
@@ -1807,7 +1821,7 @@ msgstr "Ngritur"
 msgid "Re-link your accounts on this server"
 msgstr "Rilinkoni llogaritë tuaja në këtë server"
 
-#: src/routes/_authenticated/$projectId/index.tsx:891
+#: src/routes/_authenticated/$projectId/index.tsx:923
 msgid "Re-order columns"
 msgstr "Rirendit kolonat"
 
@@ -1824,7 +1838,7 @@ msgid "Rebase and merge"
 msgstr "Rebase dhe merge"
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:219
-#: ../../../lib/web/src/components/search-entity-page.tsx:194
+#: ../../../lib/web/src/components/search-entity-page.tsx:243
 msgid "Recommended"
 msgstr "I rekomanduar"
 
@@ -1861,8 +1875,8 @@ msgstr "Relative brenda 24 orëve, përndryshe absolute"
 #: src/features/objects/components/comment-list.tsx:238
 #: src/features/objects/components/comment-thread.tsx:294
 #: src/features/objects/components/comment-thread.tsx:299
-#: src/features/objects/components/create-object-dialog.tsx:453
-#: src/features/objects/components/create-object-dialog.tsx:458
+#: src/features/objects/components/create-object-dialog.tsx:486
+#: src/features/objects/components/create-object-dialog.tsx:491
 msgid "Remove"
 msgstr "Hiq"
 
@@ -1987,7 +2001,7 @@ msgstr "E shtunë"
 #: ../../../lib/web/src/components/ui/secret-field.tsx:77
 #: src/features/editor/components/option-dialog.tsx:150
 #: src/features/objects/components/comment-thread.tsx:195
-#: src/routes/_authenticated/$projectId/index.tsx:957
+#: src/routes/_authenticated/$projectId/index.tsx:995
 msgid "Save"
 msgstr "Ruaj"
 
@@ -1999,7 +2013,7 @@ msgstr "Duke ruajtur..."
 msgid "Search"
 msgstr "Kërko"
 
-#: src/routes/_authenticated/find.tsx:79
+#: src/routes/_authenticated/find.tsx:90
 msgid "Search by name, ID, fingerprint, or URL..."
 msgstr "Kërko sipas emrit, ID-së, gjurmës ose URL-së..."
 
@@ -2042,7 +2056,7 @@ msgid "Search..."
 msgstr "Kërko..."
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:177
-#: ../../../lib/web/src/components/search-entity-page.tsx:152
+#: ../../../lib/web/src/components/search-entity-page.tsx:201
 #: ../../../lib/web/src/features/access/access-dialog.tsx:202
 msgid "Searching..."
 msgstr "Duke kërkuar..."
@@ -2154,7 +2168,7 @@ msgstr "Po caktohet qasja..."
 #: src/routes/_authenticated/$projectId_.settings.tsx:76
 #: src/routes/_authenticated/$projectId_.settings.tsx:171
 #: src/routes/_authenticated/$projectId_.settings.tsx:194
-#: src/routes/_authenticated/$projectId/index.tsx:912
+#: src/routes/_authenticated/$projectId/index.tsx:944
 msgid "Settings"
 msgstr "Cilësimet"
 
@@ -2260,7 +2274,7 @@ msgid "Subscribe"
 msgstr "Abonohu"
 
 #: src/features/projects/components/inline-project-search.tsx:101
-#: src/routes/_authenticated/find.tsx:57
+#: src/routes/_authenticated/find.tsx:58
 msgid "Subscribed"
 msgstr "I abonuar"
 
@@ -2271,7 +2285,7 @@ msgstr "I abonuar te {0}"
 
 #: src/features/projects/components/inline-project-search.tsx:100
 #: src/features/projects/components/recommended-projects.tsx:63
-#: src/routes/_authenticated/find.tsx:56
+#: src/routes/_authenticated/find.tsx:57
 msgid "Subscribing..."
 msgstr "Duke u abonuar..."
 
@@ -2353,7 +2367,7 @@ msgid "This will permanently delete \"{projectName}\" and all its objects, comme
 msgstr "Kjo do të fshijë përgjithmonë \"{projectName}\" dhe gjithë objektet, komentet dhe bashkëngjitjet e tij. Ky veprim nuk mund të zhbëhet."
 
 #. placeholder {0}: project.project.name
-#: src/routes/_authenticated/$projectId/index.tsx:1073
+#: src/routes/_authenticated/$projectId/index.tsx:1131
 msgid "This will remove \"{0}\" from your sidebar and stop updates for this project."
 msgstr "Kjo do të heqë \"{0}\" nga shiriti yt anësor dhe do të ndalojë përditësimet për këtë projekt."
 
@@ -2428,7 +2442,7 @@ msgid "Travelling"
 msgstr "Duke udhëtuar"
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:193
-#: ../../../lib/web/src/components/search-entity-page.tsx:168
+#: ../../../lib/web/src/components/search-entity-page.tsx:217
 msgid "Try adjusting your search terms"
 msgstr "Provo të rregullosh termat e kërkimit"
 
@@ -2487,22 +2501,22 @@ msgstr "Shtetet e Bashkuara"
 #: src/features/projects/pages/projects-list-page.tsx:147
 #: src/features/projects/pages/projects-list-page.tsx:166
 #: src/features/projects/pages/projects-list-page.tsx:168
-#: src/routes/_authenticated/$projectId/index.tsx:918
-#: src/routes/_authenticated/$projectId/index.tsx:1074
+#: src/routes/_authenticated/$projectId/index.tsx:956
+#: src/routes/_authenticated/$projectId/index.tsx:1132
 msgid "Unsubscribe"
 msgstr "Çabonohu"
 
-#: src/routes/_authenticated/$projectId/index.tsx:1072
+#: src/routes/_authenticated/$projectId/index.tsx:1130
 msgid "Unsubscribe from project?"
 msgstr "Të çabonohesh nga projekti?"
 
 #: src/features/projects/pages/projects-list-page.tsx:176
-#: src/routes/_authenticated/$projectId/index.tsx:568
+#: src/routes/_authenticated/$projectId/index.tsx:600
 msgid "Unsubscribed"
 msgstr "Çabonuar"
 
 #: src/features/projects/pages/projects-list-page.tsx:175
-#: src/routes/_authenticated/$projectId/index.tsx:567
+#: src/routes/_authenticated/$projectId/index.tsx:599
 msgid "Unsubscribing..."
 msgstr "Duke u çabonuar..."
 
@@ -2519,7 +2533,7 @@ msgstr "U përditësua"
 msgid "Updating access..."
 msgstr "Po përditësohet qasja..."
 
-#: src/features/objects/components/create-object-dialog.tsx:486
+#: src/features/objects/components/create-object-dialog.tsx:519
 #: src/features/objects/components/object-attachments.tsx:216
 msgid "Upload"
 msgstr "Ngarko"
@@ -2594,7 +2608,7 @@ msgstr "Kontrollet e pamjes"
 msgid "View only"
 msgstr "Vetëm shikim"
 
-#: src/routes/_authenticated/$projectId/index.tsx:876
+#: src/routes/_authenticated/$projectId/index.tsx:908
 msgid "View options"
 msgstr "Opsionet e pamjes"
 
@@ -2627,7 +2641,7 @@ msgstr "Faqja është nën mirëmbajtje!"
 msgid "Wednesday"
 msgstr "E mërkurë"
 
-#: src/routes/_authenticated/$projectId/index.tsx:102
+#: src/routes/_authenticated/$projectId/index.tsx:109
 msgid "You don't have access to this project."
 msgstr "Nuk ke akses në këtë projekt."
 

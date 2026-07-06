@@ -28,6 +28,13 @@ import {
   useShellStorage,
   toast,
   toastAction,
+  shellClipboardWrite,
+  ResponsiveDialog,
+  ResponsiveDialogContent,
+  ResponsiveDialogDescription,
+  ResponsiveDialogFooter,
+  ResponsiveDialogHeader,
+  ResponsiveDialogTitle,
   getAppPath,
   Tooltip,
   TooltipTrigger,
@@ -35,7 +42,7 @@ import {
   LoadingContent,
   arraysEqual,
 } from "@mochi/web";
-import { Check, Columns3, Ellipsis, FolderKanban, GripVertical, LogOut, Plus, Settings, Settings2, SlidersHorizontal, X } from "lucide-react";
+import { Check, Columns3, Copy, Ellipsis, FolderKanban, GripVertical, Link as LinkIcon, LogOut, Plus, Settings, Settings2, SlidersHorizontal, X } from "lucide-react";
 import projectsApi from "@/api/projects";
 import type { ProjectDetails, ProjectField, ProjectObject, SortState } from "@/types";
 import { canDesign, canCreate, canWrite } from "@/lib/access";
@@ -152,6 +159,31 @@ export function ProjectPageContent({ project, projectId, search, initialObjectId
   const isOwner = project.project.owner === 1;
   const refreshSidebar = useProjectsStore((state) => state.refresh);
   const [unsubscribeOpen, setUnsubscribeOpen] = useState(false);
+  const [linkOpen, setLinkOpen] = useState(false);
+  const [shareLink, setShareLink] = useState("");
+  const [linkCopied, setLinkCopied] = useState(false);
+
+  const openLinkDialog = useCallback(async () => {
+    setShareLink("");
+    setLinkCopied(false);
+    setLinkOpen(true);
+    try {
+      const response = await projectsApi.share(project.project.id);
+      setShareLink(response.data.link);
+    } catch (error) {
+      setLinkOpen(false);
+      toast.error(getErrorMessage(error, t`Failed to create link`));
+    }
+  }, [project.project.id]);
+
+  const copyShareLink = useCallback(async () => {
+    if (!shareLink) return;
+    const ok = await shellClipboardWrite(shareLink);
+    if (ok) {
+      setLinkCopied(true);
+      setTimeout(() => setLinkCopied(false), 2000);
+    }
+  }, [shareLink]);
 
   usePageTitle(project.project.name);
   // onSync re-runs the route loader (where the project, schema, and `populated`
@@ -912,6 +944,12 @@ export function ProjectPageContent({ project, projectId, search, initialObjectId
                   <Trans>Settings</Trans>
                 </Link>
               </DropdownMenuItem>
+              {isOwner && (
+                <DropdownMenuItem onClick={() => void openLinkDialog()}>
+                  <LinkIcon className="size-4 me-2" />
+                  <Trans>Link</Trans>
+                </DropdownMenuItem>
+              )}
               {!isOwner && (
                 <DropdownMenuItem onClick={() => setUnsubscribeOpen(true)}>
                   <LogOut className="size-4 me-2" />
@@ -1065,6 +1103,26 @@ export function ProjectPageContent({ project, projectId, search, initialObjectId
         onAdd={handleAddColumn}
         title={t`Add column`}
       />
+      <ResponsiveDialog open={linkOpen} onOpenChange={setLinkOpen}>
+        <ResponsiveDialogContent>
+          <ResponsiveDialogHeader>
+            <ResponsiveDialogTitle><Trans>Project link</Trans></ResponsiveDialogTitle>
+            <ResponsiveDialogDescription>
+              <Trans>Anyone you give access to can subscribe with this link.</Trans>
+            </ResponsiveDialogDescription>
+          </ResponsiveDialogHeader>
+          <div className="bg-muted flex items-center gap-2 rounded-md p-3 font-mono text-sm">
+            <code className="flex-1 break-all">{shareLink || '…'}</code>
+            <Button variant="ghost" size="sm" onClick={() => void copyShareLink()} disabled={!shareLink} className="shrink-0">
+              {linkCopied ? <Check className="size-4" /> : <Copy className="size-4" />}
+            </Button>
+          </div>
+          <ResponsiveDialogFooter>
+            <Button variant="outline" onClick={() => setLinkOpen(false)}><Trans>Done</Trans></Button>
+          </ResponsiveDialogFooter>
+        </ResponsiveDialogContent>
+      </ResponsiveDialog>
+
 
       <ConfirmDialog
         open={unsubscribeOpen}

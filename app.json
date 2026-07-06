@@ -5,7 +5,7 @@
 // Mochi Application Interface Exception - see license.txt and license-exception.md.
 
 {
-	"version": "2.75",
+	"version": "2.76",
 	"label": "app.name",
 	"classes": ["project"],
 	"paths": ["projects"],
@@ -47,6 +47,7 @@
 		":project/settings": {"file": "web/dist/index.html"},
 		":project/diff": {"file": "web/dist/index.html"},
 		":project/:object": {"file": "web/dist/index.html"},
+		":project/-/share": {"function": "action_share"},
 		":project/-/info": {"function": "action_project_get"},
 		":project/-/update": {"function": "action_project_update"},
 		":project/-/delete": {"function": "action_project_delete"},

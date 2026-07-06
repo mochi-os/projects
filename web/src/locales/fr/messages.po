@@ -13,6 +13,11 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
+#. js-lingui-explicit-id
+#: ../../../lib/web/src/lib/error-normalizer.ts:204
+msgid "Please check your internet connection and try again."
+msgstr ""
+
 #: src/features/editor/components/edit-dialogs.tsx:813
 msgid "(itself)"
 msgstr "(elle-même)"
@@ -117,7 +122,7 @@ msgstr "Type de compte"
 msgid "Account verified"
 msgstr "Compte vérifié"
 
-#: src/features/objects/components/object-detail-panel.tsx:378
+#: src/features/objects/components/object-detail-panel.tsx:406
 msgid "Activity"
 msgstr "Activité"
 
@@ -162,8 +167,8 @@ msgstr "Ajouter un élément"
 msgid "Add class"
 msgstr "Ajouter une classe"
 
-#: src/routes/_authenticated/$projectId/index.tsx:887
-#: src/routes/_authenticated/$projectId/index.tsx:1066
+#: src/routes/_authenticated/$projectId/index.tsx:919
+#: src/routes/_authenticated/$projectId/index.tsx:1104
 msgid "Add column"
 msgstr "Ajouter une colonne"
 
@@ -248,12 +253,16 @@ msgstr "Autoriser le tri"
 msgid "An error occurred"
 msgstr "Une erreur s'est produite"
 
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:247
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:256
 msgid "An unexpected error occurred"
 msgstr "Une erreur inattendue s'est produite"
 
 #: ../../../lib/web/src/lib/api-response-interceptors.ts:233
-msgid "Another change was made at the same time. Please refresh to see the latest version."
+#~ msgid "Another change was made at the same time. Please refresh to see the latest version."
+#~ msgstr ""
+
+#: src/routes/_authenticated/$projectId/index.tsx:1111
+msgid "Anyone you give access to can subscribe with this link."
 msgstr ""
 
 #. placeholder {0}: deleteTarget?.name
@@ -261,7 +270,7 @@ msgstr ""
 msgid "Are you sure you want to delete \"{0}\"?"
 msgstr "Voulez-vous vraiment supprimer « {0} » ?"
 
-#: src/features/objects/components/object-detail-panel.tsx:618
+#: src/features/objects/components/object-detail-panel.tsx:656
 msgid "Are you sure you want to delete \"{title}\"? This action cannot be undone."
 msgstr "Voulez-vous vraiment supprimer « {title} » ? Cette action est irréversible."
 
@@ -331,7 +340,7 @@ msgid "Back to project"
 msgstr "Retour au projet"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:67
-#: src/routes/_authenticated/$projectId/index.tsx:116
+#: src/routes/_authenticated/$projectId/index.tsx:123
 msgid "Back to projects"
 msgstr "Retour aux projets"
 
@@ -380,7 +389,7 @@ msgstr "Peut être enfant de"
 #: src/features/projects/components/create-project-dialog.tsx:219
 #: src/routes/_authenticated/$projectId_.settings.tsx:573
 #: src/routes/_authenticated/$projectId/design.tsx:344
-#: src/routes/_authenticated/$projectId/index.tsx:945
+#: src/routes/_authenticated/$projectId/index.tsx:983
 msgid "Cancel"
 msgstr "Annuler"
 
@@ -473,8 +482,8 @@ msgstr "Effacer la sélection (Échap)"
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:354
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:357
 #: ../../../lib/web/src/components/ui/sheet.tsx:79
-#: src/features/objects/components/create-object-dialog.tsx:358
-#: src/features/objects/components/create-object-dialog.tsx:363
+#: src/features/objects/components/create-object-dialog.tsx:391
+#: src/features/objects/components/create-object-dialog.tsx:396
 msgid "Close"
 msgstr "Fermer"
 
@@ -537,7 +546,7 @@ msgid "Comment and view"
 msgstr "Commenter et voir"
 
 #. placeholder {0}: data.comment_count || 0
-#: src/features/objects/components/object-detail-panel.tsx:364
+#: src/features/objects/components/object-detail-panel.tsx:392
 msgid "Comments ({0})"
 msgstr "Commentaires ({0})"
 
@@ -609,13 +618,13 @@ msgstr "Impossible de vérifier avec ce compte. Veuillez réessayer."
 
 #: src/features/board/components/board-column.tsx:542
 #: src/features/board/components/board-column.tsx:681
-#: src/features/objects/components/create-object-dialog.tsx:348
-#: src/features/objects/components/create-object-dialog.tsx:502
+#: src/features/objects/components/create-object-dialog.tsx:381
+#: src/features/objects/components/create-object-dialog.tsx:535
 #: src/features/tree/components/tree-view.tsx:697
 msgid "Create"
 msgstr "Créer"
 
-#: src/features/objects/components/create-object-dialog.tsx:326
+#: src/features/objects/components/create-object-dialog.tsx:359
 msgid "Create a new item in this project"
 msgstr "Créer un nouvel élément dans ce projet"
 
@@ -625,7 +634,7 @@ msgid "Create a new project"
 msgstr "Créer un nouveau projet"
 
 #: src/components/keyboard-shortcuts-help.tsx:27
-#: src/features/objects/components/create-object-dialog.tsx:325
+#: src/features/objects/components/create-object-dialog.tsx:358
 msgid "Create new item"
 msgstr "Créer un nouvel élément"
 
@@ -649,7 +658,7 @@ msgstr "Créé"
 msgid "Creating project..."
 msgstr "Création du projet..."
 
-#: src/features/objects/components/create-object-dialog.tsx:502
+#: src/features/objects/components/create-object-dialog.tsx:535
 #: src/features/projects/components/create-project-dialog.tsx:297
 msgid "Creating..."
 msgstr "Création..."
@@ -671,7 +680,7 @@ msgstr "Sombre"
 msgid "Dark mode"
 msgstr "Mode sombre"
 
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:232
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:240
 msgid "Data conflict"
 msgstr ""
 
@@ -711,7 +720,7 @@ msgstr "Tri par défaut"
 #: src/features/objects/components/object-attachments.tsx:182
 #: src/features/objects/components/object-attachments.tsx:187
 #: src/features/objects/components/object-attachments.tsx:229
-#: src/features/objects/components/object-detail-panel.tsx:619
+#: src/features/objects/components/object-detail-panel.tsx:657
 #: src/features/requests/components/request-panel.tsx:132
 #: src/routes/_authenticated/$projectId_.settings.tsx:425
 msgid "Delete"
@@ -737,9 +746,9 @@ msgstr "Supprimer le commentaire"
 msgid "Delete field"
 msgstr "Supprimer le champ"
 
-#: src/features/objects/components/object-detail-panel.tsx:437
-#: src/features/objects/components/object-detail-panel.tsx:442
-#: src/features/objects/components/object-detail-panel.tsx:617
+#: src/features/objects/components/object-detail-panel.tsx:466
+#: src/features/objects/components/object-detail-panel.tsx:471
+#: src/features/objects/components/object-detail-panel.tsx:655
 msgid "Delete item"
 msgstr "Supprimer l'élément"
 
@@ -799,7 +808,7 @@ msgstr "Description"
 
 #: src/routes/_authenticated/$projectId/design.tsx:63
 #: src/routes/_authenticated/$projectId/design.tsx:132
-#: src/routes/_authenticated/$projectId/index.tsx:902
+#: src/routes/_authenticated/$projectId/index.tsx:934
 msgid "Design"
 msgstr "Conception"
 
@@ -843,8 +852,8 @@ msgstr "Direction"
 msgid "Dismiss"
 msgstr "Ignorer"
 
-#: src/routes/_authenticated/$projectId/index.tsx:974
-#: src/routes/_authenticated/$projectId/index.tsx:979
+#: src/routes/_authenticated/$projectId/index.tsx:1012
+#: src/routes/_authenticated/$projectId/index.tsx:1017
 msgid "Dismiss board hint"
 msgstr "Ignorer l'astuce du tableau"
 
@@ -855,11 +864,12 @@ msgstr "Affiche la barre latérale mobile."
 #: src/features/editor/components/edit-dialogs.tsx:532
 #: src/features/editor/components/edit-dialogs.tsx:922
 #: src/features/editor/components/edit-dialogs.tsx:1228
-#: src/features/objects/components/object-detail-panel.tsx:451
+#: src/features/objects/components/object-detail-panel.tsx:480
+#: src/routes/_authenticated/$projectId/index.tsx:1121
 msgid "Done"
 msgstr "Terminé"
 
-#: src/routes/_authenticated/$projectId/index.tsx:965
+#: src/routes/_authenticated/$projectId/index.tsx:1003
 msgid "Double click on a column to add content"
 msgstr "Double-cliquez sur une colonne pour ajouter du contenu"
 
@@ -882,7 +892,7 @@ msgstr "Échec du téléchargement"
 msgid "Draft"
 msgstr "Brouillon"
 
-#: src/routes/_authenticated/$projectId/index.tsx:941
+#: src/routes/_authenticated/$projectId/index.tsx:979
 msgid "Drag columns to re-order them"
 msgstr "Faites glisser les colonnes pour les réorganiser"
 
@@ -948,7 +958,7 @@ msgstr "Saisissez le code de votre application d'authentification"
 msgid "Entity ID"
 msgstr "ID d'entité"
 
-#: src/features/objects/components/object-detail-panel.tsx:315
+#: src/features/objects/components/object-detail-panel.tsx:343
 msgid "Error"
 msgstr "Erreur"
 
@@ -996,6 +1006,7 @@ msgid "Failed to create field"
 msgstr "Échec de la création du champ"
 
 #: src/features/objects/components/object-links.tsx:105
+#: src/routes/_authenticated/$projectId/index.tsx:175
 msgid "Failed to create link"
 msgstr "Échec de la création du lien"
 
@@ -1047,12 +1058,12 @@ msgstr ""
 msgid "Failed to import design"
 msgstr "Échec de l'importation de la conception"
 
-#: src/features/objects/components/object-detail-panel.tsx:316
+#: src/features/objects/components/object-detail-panel.tsx:344
 msgid "Failed to load item"
 msgstr "Échec du chargement de l'élément"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:43
-#: src/routes/_authenticated/$projectId/index.tsx:80
+#: src/routes/_authenticated/$projectId/index.tsx:87
 msgid "Failed to load project"
 msgstr "Échec du chargement du projet"
 
@@ -1103,12 +1114,12 @@ msgstr "Échec de la définition du niveau d'accès"
 
 #: src/features/projects/components/inline-project-search.tsx:102
 #: src/features/projects/components/recommended-projects.tsx:65
-#: src/routes/_authenticated/find.tsx:58
+#: src/routes/_authenticated/find.tsx:59
 msgid "Failed to subscribe"
 msgstr "Échec de l'abonnement"
 
 #: src/features/projects/pages/projects-list-page.tsx:177
-#: src/routes/_authenticated/$projectId/index.tsx:569
+#: src/routes/_authenticated/$projectId/index.tsx:601
 msgid "Failed to unsubscribe"
 msgstr "Échec du désabonnement"
 
@@ -1140,14 +1151,14 @@ msgstr "Échec du téléversement de la pièce jointe"
 msgid "Fields"
 msgstr "Champs"
 
-#: src/features/objects/components/create-object-dialog.tsx:439
+#: src/features/objects/components/create-object-dialog.tsx:472
 #: src/features/objects/components/object-attachments.tsx:103
 #: src/features/objects/components/object-attachments.tsx:120
 msgid "Files"
 msgstr "Fichiers"
 
 #: src/components/layout/projects-layout.tsx:61
-#: src/routes/_authenticated/find.tsx:78
+#: src/routes/_authenticated/find.tsx:89
 msgid "Find projects"
 msgstr "Trouver des projets"
 
@@ -1301,7 +1312,7 @@ msgstr "Fichier JSON invalide"
 msgid "Invalid verification code"
 msgstr "Code de vérification invalide"
 
-#: src/features/objects/components/object-detail-panel.tsx:395
+#: src/features/objects/components/object-detail-panel.tsx:424
 msgid "Item details"
 msgstr "Détails de l'élément"
 
@@ -1333,6 +1344,10 @@ msgstr "Gauche à droite"
 msgid "Light"
 msgstr "Clair"
 
+#: src/routes/_authenticated/$projectId/index.tsx:950
+msgid "Link"
+msgstr ""
+
 #: src/features/objects/components/object-links.tsx:228
 msgid "Links"
 msgstr "Liens"
@@ -1353,11 +1368,11 @@ msgstr "Chargement du contenu…"
 msgid "Loading diff..."
 msgstr "Chargement du diff..."
 
-#: src/features/objects/components/object-detail-panel.tsx:296
+#: src/features/objects/components/object-detail-panel.tsx:324
 msgid "Loading item"
 msgstr "Chargement de l'élément"
 
-#: src/features/objects/components/object-detail-panel.tsx:297
+#: src/features/objects/components/object-detail-panel.tsx:325
 msgid "Loading item details"
 msgstr "Chargement des détails de l'élément"
 
@@ -1430,7 +1445,7 @@ msgstr "Merge commit"
 msgid "Merge requests"
 msgstr "Demandes de fusion"
 
-#: src/features/objects/components/object-detail-panel.tsx:371
+#: src/features/objects/components/object-detail-panel.tsx:399
 msgid "Merge requests ({requestCount})"
 msgstr "Merge requests ({requestCount})"
 
@@ -1482,18 +1497,18 @@ msgid "Name is required"
 msgstr "Le nom est obligatoire"
 
 #: ../../../lib/web/src/features/errors/general-error.tsx:53
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:294
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:303
 msgid "Network error"
 msgstr "Erreur réseau"
 
 #: ../../../lib/web/src/components/ui/sort-selector.tsx:43
-#: src/features/objects/components/create-object-dialog.tsx:333
-#: src/routes/_authenticated/$projectId/index.tsx:841
-#: src/routes/_authenticated/$projectId/index.tsx:859
+#: src/features/objects/components/create-object-dialog.tsx:366
+#: src/routes/_authenticated/$projectId/index.tsx:873
+#: src/routes/_authenticated/$projectId/index.tsx:891
 msgid "New"
 msgstr "Nouveau"
 
-#: src/routes/_authenticated/$projectId/index.tsx:838
+#: src/routes/_authenticated/$projectId/index.tsx:870
 msgid "New {className}"
 msgstr "Nouveau {className}"
 
@@ -1506,7 +1521,7 @@ msgstr "Suivant"
 msgid "Next image"
 msgstr "Image suivante"
 
-#: src/features/objects/components/create-object-dialog.tsx:406
+#: src/features/objects/components/create-object-dialog.tsx:439
 msgid "No {parentClassNames} to add to"
 msgstr "Aucun {parentClassNames} auquel ajouter"
 
@@ -1554,7 +1569,7 @@ msgstr "Aucun diff disponible"
 msgid "No groups available"
 msgstr "Aucun groupe disponible"
 
-#: src/features/objects/components/create-object-dialog.tsx:373
+#: src/features/objects/components/create-object-dialog.tsx:406
 msgid "No item types can be created yet. Create the required parent items first."
 msgstr "Aucun type d'élément ne peut encore être créé. Créez d'abord les éléments parents requis."
 
@@ -1579,7 +1594,7 @@ msgid "No profile"
 msgstr "Aucun profil"
 
 #: src/features/projects/components/inline-project-search.tsx:150
-#: src/routes/_authenticated/find.tsx:80
+#: src/routes/_authenticated/find.tsx:91
 msgid "No projects found"
 msgstr "Aucun projet trouvé"
 
@@ -1626,11 +1641,11 @@ msgstr "Aucune vue"
 #: src/features/editor/components/edit-dialogs.tsx:505
 #: src/features/editor/components/edit-dialogs.tsx:779
 #: src/features/editor/components/edit-dialogs.tsx:782
-#: src/features/objects/components/create-object-dialog.tsx:389
-#: src/features/objects/components/create-object-dialog.tsx:396
-#: src/features/objects/components/object-detail-panel.tsx:512
-#: src/features/objects/components/object-detail-panel.tsx:525
-#: src/features/objects/components/object-detail-panel.tsx:530
+#: src/features/objects/components/create-object-dialog.tsx:422
+#: src/features/objects/components/create-object-dialog.tsx:429
+#: src/features/objects/components/object-detail-panel.tsx:548
+#: src/features/objects/components/object-detail-panel.tsx:561
+#: src/features/objects/components/object-detail-panel.tsx:566
 msgid "None"
 msgstr "Aucun"
 
@@ -1721,7 +1736,7 @@ msgstr "Ouvrir le menu de navigation"
 msgid "Open option actions"
 msgstr "Ouvrir les actions de l'option"
 
-#: src/routes/_authenticated/$projectId/index.tsx:867
+#: src/routes/_authenticated/$projectId/index.tsx:899
 msgid "Open page actions"
 msgstr "Ouvrir les actions de la page"
 
@@ -1762,8 +1777,8 @@ msgstr "Autre"
 msgid "Owner"
 msgstr "Propriétaire"
 
-#: src/features/objects/components/create-object-dialog.tsx:381
-#: src/features/objects/components/object-detail-panel.tsx:508
+#: src/features/objects/components/create-object-dialog.tsx:414
+#: src/features/objects/components/object-detail-panel.tsx:544
 msgid "Parent"
 msgstr "Parent"
 
@@ -1787,13 +1802,13 @@ msgstr "Motif (regex)"
 msgid "Permanently delete this project and all its content."
 msgstr "Supprimer définitivement ce projet et tout son contenu."
 
-#: src/routes/_authenticated/$projectId/index.tsx:677
-#: src/routes/_authenticated/$projectId/index.tsx:711
+#: src/routes/_authenticated/$projectId/index.tsx:709
+#: src/routes/_authenticated/$projectId/index.tsx:743
 msgid "Please add one or more classes to the project design."
 msgstr "Ajoutez d'abord une ou plusieurs classes au design du projet."
 
 #: ../../../lib/web/src/features/errors/general-error.tsx:54
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:295
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:304
 msgid "Please check your internet connection and try again."
 msgstr "Veuillez vérifier votre connexion Internet et réessayer."
 
@@ -1830,7 +1845,7 @@ msgid "Profile"
 msgstr "Profil"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:65
-#: src/routes/_authenticated/$projectId/index.tsx:114
+#: src/routes/_authenticated/$projectId/index.tsx:121
 msgid "Project"
 msgstr "Projet"
 
@@ -1846,6 +1861,10 @@ msgstr "Projet créé"
 #: src/routes/_authenticated/$projectId_.settings.tsx:144
 msgid "Project deleted"
 msgstr "Projet supprimé"
+
+#: src/routes/_authenticated/$projectId/index.tsx:1109
+msgid "Project link"
+msgstr ""
 
 #: src/routes/_authenticated/$projectId_.settings.tsx:223
 msgid "Project not found"
@@ -1870,7 +1889,7 @@ msgstr "Projet mis à jour"
 msgid "Projects"
 msgstr "Projets"
 
-#: src/features/objects/components/object-detail-panel.tsx:359
+#: src/features/objects/components/object-detail-panel.tsx:387
 msgid "Properties"
 msgstr "Propriétés"
 
@@ -1882,7 +1901,7 @@ msgstr "Surélevé"
 msgid "Re-link your accounts on this server"
 msgstr "Relinkez vos comptes sur ce serveur"
 
-#: src/routes/_authenticated/$projectId/index.tsx:891
+#: src/routes/_authenticated/$projectId/index.tsx:923
 msgid "Re-order columns"
 msgstr "Réorganiser les colonnes"
 
@@ -1899,7 +1918,7 @@ msgid "Rebase and merge"
 msgstr "Rebase et fusionner"
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:216
-#: ../../../lib/web/src/components/search-entity-page.tsx:191
+#: ../../../lib/web/src/components/search-entity-page.tsx:240
 msgid "Recommended"
 msgstr "Recommandé"
 
@@ -1936,8 +1955,8 @@ msgstr "Relatif dans les 24 heures, sinon absolu"
 #: src/features/objects/components/comment-list.tsx:238
 #: src/features/objects/components/comment-thread.tsx:294
 #: src/features/objects/components/comment-thread.tsx:299
-#: src/features/objects/components/create-object-dialog.tsx:453
-#: src/features/objects/components/create-object-dialog.tsx:458
+#: src/features/objects/components/create-object-dialog.tsx:486
+#: src/features/objects/components/create-object-dialog.tsx:491
 msgid "Remove"
 msgstr "Retirer"
 
@@ -2062,7 +2081,7 @@ msgstr "Samedi"
 #: ../../../lib/web/src/components/ui/secret-field.tsx:77
 #: src/features/editor/components/option-dialog.tsx:150
 #: src/features/objects/components/comment-thread.tsx:195
-#: src/routes/_authenticated/$projectId/index.tsx:957
+#: src/routes/_authenticated/$projectId/index.tsx:995
 msgid "Save"
 msgstr "Enregistrer"
 
@@ -2074,7 +2093,7 @@ msgstr "Enregistrement…"
 msgid "Search"
 msgstr "Rechercher"
 
-#: src/routes/_authenticated/find.tsx:79
+#: src/routes/_authenticated/find.tsx:90
 msgid "Search by name, ID, fingerprint, or URL..."
 msgstr "Rechercher par nom, ID, empreinte ou URL..."
 
@@ -2117,7 +2136,7 @@ msgid "Search..."
 msgstr "Rechercher…"
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:174
-#: ../../../lib/web/src/components/search-entity-page.tsx:149
+#: ../../../lib/web/src/components/search-entity-page.tsx:198
 #: ../../../lib/web/src/features/access/access-dialog.tsx:202
 msgid "Searching..."
 msgstr "Recherche..."
@@ -2199,8 +2218,8 @@ msgstr "Serif"
 msgid "Server"
 msgstr "Serveur"
 
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:251
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:277
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:260
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:286
 msgid "Server error"
 msgstr "Erreur du serveur"
 
@@ -2213,7 +2232,7 @@ msgstr "Règles du serveur"
 #~ msgid "Session expired"
 #~ msgstr "Session expirée"
 
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:209
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:210
 msgid "Session expired. Please log in again."
 msgstr ""
 
@@ -2233,7 +2252,7 @@ msgstr "Définition de l'accès..."
 #: src/routes/_authenticated/$projectId_.settings.tsx:88
 #: src/routes/_authenticated/$projectId_.settings.tsx:183
 #: src/routes/_authenticated/$projectId_.settings.tsx:206
-#: src/routes/_authenticated/$projectId/index.tsx:912
+#: src/routes/_authenticated/$projectId/index.tsx:944
 msgid "Settings"
 msgstr "Paramètres"
 
@@ -2314,8 +2333,8 @@ msgstr "Lancez la discussion en ajoutant le premier commentaire."
 msgid "Stay tuned though!"
 msgstr "Restez à l'écoute !"
 
-#: src/features/objects/components/object-detail-panel.tsx:418
-#: src/features/objects/components/object-detail-panel.tsx:427
+#: src/features/objects/components/object-detail-panel.tsx:447
+#: src/features/objects/components/object-detail-panel.tsx:456
 msgid "Stop watching"
 msgstr "Arrêter de suivre"
 
@@ -2339,7 +2358,7 @@ msgid "Subscribe"
 msgstr "S'abonner"
 
 #: src/features/projects/components/inline-project-search.tsx:101
-#: src/routes/_authenticated/find.tsx:57
+#: src/routes/_authenticated/find.tsx:58
 msgid "Subscribed"
 msgstr "Abonné"
 
@@ -2350,7 +2369,7 @@ msgstr "Abonné à {0}"
 
 #: src/features/projects/components/inline-project-search.tsx:100
 #: src/features/projects/components/recommended-projects.tsx:63
-#: src/routes/_authenticated/find.tsx:56
+#: src/routes/_authenticated/find.tsx:57
 msgid "Subscribing..."
 msgstr "Abonnement..."
 
@@ -2441,7 +2460,7 @@ msgid "This will permanently delete \"{projectName}\" and all its objects, comme
 msgstr "Ceci supprimera définitivement « {projectName} » et tous ses objets, commentaires et pièces jointes. Cette action est irréversible."
 
 #. placeholder {0}: project.project.name
-#: src/routes/_authenticated/$projectId/index.tsx:1073
+#: src/routes/_authenticated/$projectId/index.tsx:1131
 msgid "This will remove \"{0}\" from your sidebar and stop updates for this project."
 msgstr "Ceci retirera « {0} » de votre barre latérale et arrêtera les mises à jour pour ce projet."
 
@@ -2520,7 +2539,7 @@ msgid "Travelling"
 msgstr "En déplacement"
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:190
-#: ../../../lib/web/src/components/search-entity-page.tsx:165
+#: ../../../lib/web/src/components/search-entity-page.tsx:214
 msgid "Try adjusting your search terms"
 msgstr "Essayez d'ajuster vos termes de recherche"
 
@@ -2551,7 +2570,7 @@ msgstr "Tapez pour rechercher des utilisateurs"
 msgid "Type to search..."
 msgstr "Tapez pour rechercher…"
 
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:273
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:282
 msgid "Unable to connect to remote server"
 msgstr "Impossible de se connecter au serveur distant"
 
@@ -2579,22 +2598,22 @@ msgstr "États-Unis"
 #: src/features/projects/pages/projects-list-page.tsx:147
 #: src/features/projects/pages/projects-list-page.tsx:166
 #: src/features/projects/pages/projects-list-page.tsx:168
-#: src/routes/_authenticated/$projectId/index.tsx:918
-#: src/routes/_authenticated/$projectId/index.tsx:1074
+#: src/routes/_authenticated/$projectId/index.tsx:956
+#: src/routes/_authenticated/$projectId/index.tsx:1132
 msgid "Unsubscribe"
 msgstr "Se désabonner"
 
-#: src/routes/_authenticated/$projectId/index.tsx:1072
+#: src/routes/_authenticated/$projectId/index.tsx:1130
 msgid "Unsubscribe from project?"
 msgstr "Se désabonner du projet ?"
 
 #: src/features/projects/pages/projects-list-page.tsx:176
-#: src/routes/_authenticated/$projectId/index.tsx:568
+#: src/routes/_authenticated/$projectId/index.tsx:600
 msgid "Unsubscribed"
 msgstr "Désabonné"
 
 #: src/features/projects/pages/projects-list-page.tsx:175
-#: src/routes/_authenticated/$projectId/index.tsx:567
+#: src/routes/_authenticated/$projectId/index.tsx:599
 msgid "Unsubscribing..."
 msgstr "Désabonnement..."
 
@@ -2611,7 +2630,7 @@ msgstr "Mis à jour"
 msgid "Updating access..."
 msgstr "Mise à jour de l'accès..."
 
-#: src/features/objects/components/create-object-dialog.tsx:486
+#: src/features/objects/components/create-object-dialog.tsx:519
 #: src/features/objects/components/object-attachments.tsx:216
 msgid "Upload"
 msgstr "Téléverser"
@@ -2675,7 +2694,7 @@ msgstr "Tout voir"
 msgid "View all notifications"
 msgstr "Voir toutes les notifications"
 
-#: src/features/objects/components/object-detail-panel.tsx:396
+#: src/features/objects/components/object-detail-panel.tsx:425
 msgid "View and edit item details"
 msgstr "Voir et modifier les détails de l'élément"
 
@@ -2687,7 +2706,7 @@ msgstr "Contrôles de la vue"
 msgid "View only"
 msgstr "Lecture seule"
 
-#: src/routes/_authenticated/$projectId/index.tsx:876
+#: src/routes/_authenticated/$projectId/index.tsx:908
 msgid "View options"
 msgstr "Options d'affichage"
 
@@ -2695,8 +2714,8 @@ msgstr "Options d'affichage"
 msgid "Views"
 msgstr "Vues"
 
-#: src/features/objects/components/object-detail-panel.tsx:418
-#: src/features/objects/components/object-detail-panel.tsx:427
+#: src/features/objects/components/object-detail-panel.tsx:447
+#: src/features/objects/components/object-detail-panel.tsx:456
 msgid "Watch"
 msgstr "Suivre"
 
@@ -2724,7 +2743,7 @@ msgstr "Mercredi"
 msgid "You do not have access to this section."
 msgstr ""
 
-#: src/routes/_authenticated/$projectId/index.tsx:102
+#: src/routes/_authenticated/$projectId/index.tsx:109
 msgid "You don't have access to this project."
 msgstr "Vous n'avez pas accès à ce projet."
 

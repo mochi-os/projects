@@ -13,6 +13,11 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
+#. js-lingui-explicit-id
+#: ../../../lib/web/src/lib/error-normalizer.ts:204
+msgid "Please check your internet connection and try again."
+msgstr ""
+
 #: src/features/editor/components/edit-dialogs.tsx:813
 msgid "(itself)"
 msgstr "(خود)"
@@ -117,7 +122,7 @@ msgstr "اکاؤنٹ کی قسم"
 msgid "Account verified"
 msgstr "اکاؤنٹ تصدیق شدہ"
 
-#: src/features/objects/components/object-detail-panel.tsx:378
+#: src/features/objects/components/object-detail-panel.tsx:406
 msgid "Activity"
 msgstr "سرگرمی"
 
@@ -162,8 +167,8 @@ msgstr "چیک لسٹ آئٹم شامل کریں"
 msgid "Add class"
 msgstr "کلاس شامل کریں"
 
-#: src/routes/_authenticated/$projectId/index.tsx:887
-#: src/routes/_authenticated/$projectId/index.tsx:1066
+#: src/routes/_authenticated/$projectId/index.tsx:919
+#: src/routes/_authenticated/$projectId/index.tsx:1104
 msgid "Add column"
 msgstr "کالم شامل کریں"
 
@@ -248,12 +253,16 @@ msgstr "ترتیب کی اجازت دیں"
 msgid "An error occurred"
 msgstr "ایک خرابی پیش آئی"
 
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:247
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:256
 msgid "An unexpected error occurred"
 msgstr "ایک غیر متوقع خرابی پیش آئی"
 
 #: ../../../lib/web/src/lib/api-response-interceptors.ts:233
-msgid "Another change was made at the same time. Please refresh to see the latest version."
+#~ msgid "Another change was made at the same time. Please refresh to see the latest version."
+#~ msgstr ""
+
+#: src/routes/_authenticated/$projectId/index.tsx:1111
+msgid "Anyone you give access to can subscribe with this link."
 msgstr ""
 
 #. placeholder {0}: deleteTarget?.name
@@ -261,7 +270,7 @@ msgstr ""
 msgid "Are you sure you want to delete \"{0}\"?"
 msgstr "کیا آپ واقعی \"{0}\" کو حذف کرنا چاہتے ہیں؟"
 
-#: src/features/objects/components/object-detail-panel.tsx:618
+#: src/features/objects/components/object-detail-panel.tsx:656
 msgid "Are you sure you want to delete \"{title}\"? This action cannot be undone."
 msgstr "کیا آپ واقعی \"{title}\" کو حذف کرنا چاہتے ہیں؟ یہ عمل واپس نہیں لیا جا سکتا۔"
 
@@ -331,7 +340,7 @@ msgid "Back to project"
 msgstr "پروجیکٹ پر واپس"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:67
-#: src/routes/_authenticated/$projectId/index.tsx:116
+#: src/routes/_authenticated/$projectId/index.tsx:123
 msgid "Back to projects"
 msgstr "پروجیکٹس پر واپس"
 
@@ -380,7 +389,7 @@ msgstr "کا بچہ ہو سکتا ہے"
 #: src/features/projects/components/create-project-dialog.tsx:219
 #: src/routes/_authenticated/$projectId_.settings.tsx:573
 #: src/routes/_authenticated/$projectId/design.tsx:344
-#: src/routes/_authenticated/$projectId/index.tsx:945
+#: src/routes/_authenticated/$projectId/index.tsx:983
 msgid "Cancel"
 msgstr "منسوخ کریں"
 
@@ -473,8 +482,8 @@ msgstr "انتخاب صاف کریں (Escape)"
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:354
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:357
 #: ../../../lib/web/src/components/ui/sheet.tsx:79
-#: src/features/objects/components/create-object-dialog.tsx:358
-#: src/features/objects/components/create-object-dialog.tsx:363
+#: src/features/objects/components/create-object-dialog.tsx:391
+#: src/features/objects/components/create-object-dialog.tsx:396
 msgid "Close"
 msgstr "بند کریں"
 
@@ -537,7 +546,7 @@ msgid "Comment and view"
 msgstr "تبصرہ اور دیکھیں"
 
 #. placeholder {0}: data.comment_count || 0
-#: src/features/objects/components/object-detail-panel.tsx:364
+#: src/features/objects/components/object-detail-panel.tsx:392
 msgid "Comments ({0})"
 msgstr "تبصرے ({0})"
 
@@ -609,13 +618,13 @@ msgstr "اس اکاؤنٹ سے تصدیق نہیں ہو سکی۔ براہ کرم
 
 #: src/features/board/components/board-column.tsx:542
 #: src/features/board/components/board-column.tsx:681
-#: src/features/objects/components/create-object-dialog.tsx:348
-#: src/features/objects/components/create-object-dialog.tsx:502
+#: src/features/objects/components/create-object-dialog.tsx:381
+#: src/features/objects/components/create-object-dialog.tsx:535
 #: src/features/tree/components/tree-view.tsx:697
 msgid "Create"
 msgstr "بنائیں"
 
-#: src/features/objects/components/create-object-dialog.tsx:326
+#: src/features/objects/components/create-object-dialog.tsx:359
 msgid "Create a new item in this project"
 msgstr "اس پروجیکٹ میں نیا آئٹم بنائیں"
 
@@ -625,7 +634,7 @@ msgid "Create a new project"
 msgstr "نیا پروجیکٹ بنائیں"
 
 #: src/components/keyboard-shortcuts-help.tsx:27
-#: src/features/objects/components/create-object-dialog.tsx:325
+#: src/features/objects/components/create-object-dialog.tsx:358
 msgid "Create new item"
 msgstr "نیا آئٹم بنائیں"
 
@@ -649,7 +658,7 @@ msgstr "بنایا گیا"
 msgid "Creating project..."
 msgstr "پروجیکٹ بنایا جا رہا ہے..."
 
-#: src/features/objects/components/create-object-dialog.tsx:502
+#: src/features/objects/components/create-object-dialog.tsx:535
 #: src/features/projects/components/create-project-dialog.tsx:297
 msgid "Creating..."
 msgstr "بن رہا ہے..."
@@ -671,7 +680,7 @@ msgstr "Dark"
 msgid "Dark mode"
 msgstr "Dark موڈ"
 
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:232
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:240
 msgid "Data conflict"
 msgstr ""
 
@@ -711,7 +720,7 @@ msgstr "ڈیفالٹ ترتیب"
 #: src/features/objects/components/object-attachments.tsx:182
 #: src/features/objects/components/object-attachments.tsx:187
 #: src/features/objects/components/object-attachments.tsx:229
-#: src/features/objects/components/object-detail-panel.tsx:619
+#: src/features/objects/components/object-detail-panel.tsx:657
 #: src/features/requests/components/request-panel.tsx:132
 #: src/routes/_authenticated/$projectId_.settings.tsx:425
 msgid "Delete"
@@ -737,9 +746,9 @@ msgstr "تبصرہ حذف کریں"
 msgid "Delete field"
 msgstr "فیلڈ حذف کریں"
 
-#: src/features/objects/components/object-detail-panel.tsx:437
-#: src/features/objects/components/object-detail-panel.tsx:442
-#: src/features/objects/components/object-detail-panel.tsx:617
+#: src/features/objects/components/object-detail-panel.tsx:466
+#: src/features/objects/components/object-detail-panel.tsx:471
+#: src/features/objects/components/object-detail-panel.tsx:655
 msgid "Delete item"
 msgstr "آئٹم حذف کریں"
 
@@ -799,7 +808,7 @@ msgstr "تفصیل"
 
 #: src/routes/_authenticated/$projectId/design.tsx:63
 #: src/routes/_authenticated/$projectId/design.tsx:132
-#: src/routes/_authenticated/$projectId/index.tsx:902
+#: src/routes/_authenticated/$projectId/index.tsx:934
 msgid "Design"
 msgstr "ڈیزائن"
 
@@ -843,8 +852,8 @@ msgstr "سمت"
 msgid "Dismiss"
 msgstr "برخاست کریں"
 
-#: src/routes/_authenticated/$projectId/index.tsx:974
-#: src/routes/_authenticated/$projectId/index.tsx:979
+#: src/routes/_authenticated/$projectId/index.tsx:1012
+#: src/routes/_authenticated/$projectId/index.tsx:1017
 msgid "Dismiss board hint"
 msgstr "بورڈ کا اشارہ برخاست کریں"
 
@@ -855,11 +864,12 @@ msgstr "موبائل سائڈبار دکھاتا ہے۔"
 #: src/features/editor/components/edit-dialogs.tsx:532
 #: src/features/editor/components/edit-dialogs.tsx:922
 #: src/features/editor/components/edit-dialogs.tsx:1228
-#: src/features/objects/components/object-detail-panel.tsx:451
+#: src/features/objects/components/object-detail-panel.tsx:480
+#: src/routes/_authenticated/$projectId/index.tsx:1121
 msgid "Done"
 msgstr "مکمل"
 
-#: src/routes/_authenticated/$projectId/index.tsx:965
+#: src/routes/_authenticated/$projectId/index.tsx:1003
 msgid "Double click on a column to add content"
 msgstr "مواد شامل کرنے کے لیے کالم پر ڈبل کلک کریں"
 
@@ -882,7 +892,7 @@ msgstr "ڈاؤن لوڈ ناکام"
 msgid "Draft"
 msgstr "ڈرافٹ"
 
-#: src/routes/_authenticated/$projectId/index.tsx:941
+#: src/routes/_authenticated/$projectId/index.tsx:979
 msgid "Drag columns to re-order them"
 msgstr "ترتیب تبدیل کرنے کے لیے کالم گھسیٹیں"
 
@@ -948,7 +958,7 @@ msgstr "اپنا اتھینٹیکیٹر کوڈ درج کریں"
 msgid "Entity ID"
 msgstr "اینٹٹی ID"
 
-#: src/features/objects/components/object-detail-panel.tsx:315
+#: src/features/objects/components/object-detail-panel.tsx:343
 msgid "Error"
 msgstr "خرابی"
 
@@ -996,6 +1006,7 @@ msgid "Failed to create field"
 msgstr "فیلڈ بنانے میں ناکامی"
 
 #: src/features/objects/components/object-links.tsx:105
+#: src/routes/_authenticated/$projectId/index.tsx:175
 msgid "Failed to create link"
 msgstr "لنک بنانے میں ناکامی"
 
@@ -1047,12 +1058,12 @@ msgstr ""
 msgid "Failed to import design"
 msgstr "ڈیزائن امپورٹ کرنے میں ناکامی"
 
-#: src/features/objects/components/object-detail-panel.tsx:316
+#: src/features/objects/components/object-detail-panel.tsx:344
 msgid "Failed to load item"
 msgstr "آئٹم لوڈ کرنے میں ناکامی"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:43
-#: src/routes/_authenticated/$projectId/index.tsx:80
+#: src/routes/_authenticated/$projectId/index.tsx:87
 msgid "Failed to load project"
 msgstr "پروجیکٹ لوڈ کرنے میں ناکامی"
 
@@ -1103,12 +1114,12 @@ msgstr "رسائی کی سطح مقرر کرنے میں ناکامی"
 
 #: src/features/projects/components/inline-project-search.tsx:102
 #: src/features/projects/components/recommended-projects.tsx:65
-#: src/routes/_authenticated/find.tsx:58
+#: src/routes/_authenticated/find.tsx:59
 msgid "Failed to subscribe"
 msgstr "سبسکرائب کرنے میں ناکامی"
 
 #: src/features/projects/pages/projects-list-page.tsx:177
-#: src/routes/_authenticated/$projectId/index.tsx:569
+#: src/routes/_authenticated/$projectId/index.tsx:601
 msgid "Failed to unsubscribe"
 msgstr "ان سبسکرائب کرنے میں ناکامی"
 
@@ -1140,14 +1151,14 @@ msgstr "اٹیچمنٹ اپ لوڈ کرنے میں ناکامی"
 msgid "Fields"
 msgstr "فیلڈز"
 
-#: src/features/objects/components/create-object-dialog.tsx:439
+#: src/features/objects/components/create-object-dialog.tsx:472
 #: src/features/objects/components/object-attachments.tsx:103
 #: src/features/objects/components/object-attachments.tsx:120
 msgid "Files"
 msgstr "فائلیں"
 
 #: src/components/layout/projects-layout.tsx:61
-#: src/routes/_authenticated/find.tsx:78
+#: src/routes/_authenticated/find.tsx:89
 msgid "Find projects"
 msgstr "پروجیکٹس تلاش کریں"
 
@@ -1301,7 +1312,7 @@ msgstr "غلط JSON فائل"
 msgid "Invalid verification code"
 msgstr "غلط تصدیقی کوڈ"
 
-#: src/features/objects/components/object-detail-panel.tsx:395
+#: src/features/objects/components/object-detail-panel.tsx:424
 msgid "Item details"
 msgstr "آئٹم کی تفصیلات"
 
@@ -1333,6 +1344,10 @@ msgstr "بائیں سے دائیں"
 msgid "Light"
 msgstr "لائٹ"
 
+#: src/routes/_authenticated/$projectId/index.tsx:950
+msgid "Link"
+msgstr ""
+
 #: src/features/objects/components/object-links.tsx:228
 msgid "Links"
 msgstr "لنکس"
@@ -1353,11 +1368,11 @@ msgstr "مواد لوڈ ہو رہا ہے…"
 msgid "Loading diff..."
 msgstr "فرق لوڈ ہو رہا ہے..."
 
-#: src/features/objects/components/object-detail-panel.tsx:296
+#: src/features/objects/components/object-detail-panel.tsx:324
 msgid "Loading item"
 msgstr "آئٹم لوڈ ہو رہا ہے"
 
-#: src/features/objects/components/object-detail-panel.tsx:297
+#: src/features/objects/components/object-detail-panel.tsx:325
 msgid "Loading item details"
 msgstr "آئٹم کی تفصیلات لوڈ ہو رہی ہیں"
 
@@ -1430,7 +1445,7 @@ msgstr "ضم کرنے کا کمٹ"
 msgid "Merge requests"
 msgstr "merge requests"
 
-#: src/features/objects/components/object-detail-panel.tsx:371
+#: src/features/objects/components/object-detail-panel.tsx:399
 msgid "Merge requests ({requestCount})"
 msgstr "ضم کرنے کی درخواستیں ({requestCount})"
 
@@ -1482,18 +1497,18 @@ msgid "Name is required"
 msgstr "نام درکار ہے"
 
 #: ../../../lib/web/src/features/errors/general-error.tsx:53
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:294
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:303
 msgid "Network error"
 msgstr "نیٹ ورک کی خرابی"
 
 #: ../../../lib/web/src/components/ui/sort-selector.tsx:43
-#: src/features/objects/components/create-object-dialog.tsx:333
-#: src/routes/_authenticated/$projectId/index.tsx:841
-#: src/routes/_authenticated/$projectId/index.tsx:859
+#: src/features/objects/components/create-object-dialog.tsx:366
+#: src/routes/_authenticated/$projectId/index.tsx:873
+#: src/routes/_authenticated/$projectId/index.tsx:891
 msgid "New"
 msgstr "نیا"
 
-#: src/routes/_authenticated/$projectId/index.tsx:838
+#: src/routes/_authenticated/$projectId/index.tsx:870
 msgid "New {className}"
 msgstr "نیا {className}"
 
@@ -1506,7 +1521,7 @@ msgstr "اگلا"
 msgid "Next image"
 msgstr "اگلی تصویر"
 
-#: src/features/objects/components/create-object-dialog.tsx:406
+#: src/features/objects/components/create-object-dialog.tsx:439
 msgid "No {parentClassNames} to add to"
 msgstr "شامل کرنے کے لیے کوئی {parentClassNames} نہیں"
 
@@ -1554,7 +1569,7 @@ msgstr "کوئی diff دستیاب نہیں"
 msgid "No groups available"
 msgstr "کوئی گروپ دستیاب نہیں"
 
-#: src/features/objects/components/create-object-dialog.tsx:373
+#: src/features/objects/components/create-object-dialog.tsx:406
 msgid "No item types can be created yet. Create the required parent items first."
 msgstr "ابھی کوئی item types نہیں بنائے جا سکتے۔ پہلے درکار parent items بنائیں۔"
 
@@ -1579,7 +1594,7 @@ msgid "No profile"
 msgstr "کوئی پروفائل نہیں"
 
 #: src/features/projects/components/inline-project-search.tsx:150
-#: src/routes/_authenticated/find.tsx:80
+#: src/routes/_authenticated/find.tsx:91
 msgid "No projects found"
 msgstr "کوئی projects نہیں ملے"
 
@@ -1626,11 +1641,11 @@ msgstr "کوئی views نہیں"
 #: src/features/editor/components/edit-dialogs.tsx:505
 #: src/features/editor/components/edit-dialogs.tsx:779
 #: src/features/editor/components/edit-dialogs.tsx:782
-#: src/features/objects/components/create-object-dialog.tsx:389
-#: src/features/objects/components/create-object-dialog.tsx:396
-#: src/features/objects/components/object-detail-panel.tsx:512
-#: src/features/objects/components/object-detail-panel.tsx:525
-#: src/features/objects/components/object-detail-panel.tsx:530
+#: src/features/objects/components/create-object-dialog.tsx:422
+#: src/features/objects/components/create-object-dialog.tsx:429
+#: src/features/objects/components/object-detail-panel.tsx:548
+#: src/features/objects/components/object-detail-panel.tsx:561
+#: src/features/objects/components/object-detail-panel.tsx:566
 msgid "None"
 msgstr "کوئی نہیں"
 
@@ -1721,7 +1736,7 @@ msgstr "navigation مینو کھولیں"
 msgid "Open option actions"
 msgstr "option actions کھولیں"
 
-#: src/routes/_authenticated/$projectId/index.tsx:867
+#: src/routes/_authenticated/$projectId/index.tsx:899
 msgid "Open page actions"
 msgstr "صفحہ actions کھولیں"
 
@@ -1762,8 +1777,8 @@ msgstr "دیگر"
 msgid "Owner"
 msgstr "مالک"
 
-#: src/features/objects/components/create-object-dialog.tsx:381
-#: src/features/objects/components/object-detail-panel.tsx:508
+#: src/features/objects/components/create-object-dialog.tsx:414
+#: src/features/objects/components/object-detail-panel.tsx:544
 msgid "Parent"
 msgstr "parent"
 
@@ -1787,13 +1802,13 @@ msgstr "پیٹرن (regex)"
 msgid "Permanently delete this project and all its content."
 msgstr "اس project اور اس کے تمام مواد کو مستقل طور پر حذف کریں۔"
 
-#: src/routes/_authenticated/$projectId/index.tsx:677
-#: src/routes/_authenticated/$projectId/index.tsx:711
+#: src/routes/_authenticated/$projectId/index.tsx:709
+#: src/routes/_authenticated/$projectId/index.tsx:743
 msgid "Please add one or more classes to the project design."
 msgstr "براہ کرم project design میں ایک یا زیادہ classes شامل کریں۔"
 
 #: ../../../lib/web/src/features/errors/general-error.tsx:54
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:295
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:304
 msgid "Please check your internet connection and try again."
 msgstr "براہ کرم اپنا انٹرنیٹ کنکشن چیک کریں اور دوبارہ کوشش کریں۔"
 
@@ -1830,7 +1845,7 @@ msgid "Profile"
 msgstr "پروفائل"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:65
-#: src/routes/_authenticated/$projectId/index.tsx:114
+#: src/routes/_authenticated/$projectId/index.tsx:121
 msgid "Project"
 msgstr "project"
 
@@ -1846,6 +1861,10 @@ msgstr "project بن گیا"
 #: src/routes/_authenticated/$projectId_.settings.tsx:144
 msgid "Project deleted"
 msgstr "project حذف ہو گیا"
+
+#: src/routes/_authenticated/$projectId/index.tsx:1109
+msgid "Project link"
+msgstr ""
 
 #: src/routes/_authenticated/$projectId_.settings.tsx:223
 msgid "Project not found"
@@ -1870,7 +1889,7 @@ msgstr "project اپ ڈیٹ ہو گیا"
 msgid "Projects"
 msgstr "projects"
 
-#: src/features/objects/components/object-detail-panel.tsx:359
+#: src/features/objects/components/object-detail-panel.tsx:387
 msgid "Properties"
 msgstr "خصوصیات"
 
@@ -1882,7 +1901,7 @@ msgstr "ابھرا ہوا"
 msgid "Re-link your accounts on this server"
 msgstr "اس سرور پر اپنے اکاؤنٹس دوبارہ لنک کریں"
 
-#: src/routes/_authenticated/$projectId/index.tsx:891
+#: src/routes/_authenticated/$projectId/index.tsx:923
 msgid "Re-order columns"
 msgstr "کالمز کی ترتیب تبدیل کریں"
 
@@ -1899,7 +1918,7 @@ msgid "Rebase and merge"
 msgstr "ری بیس اور ضم کریں"
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:216
-#: ../../../lib/web/src/components/search-entity-page.tsx:191
+#: ../../../lib/web/src/components/search-entity-page.tsx:240
 msgid "Recommended"
 msgstr "تجویز کردہ"
 
@@ -1936,8 +1955,8 @@ msgstr "24 گھنٹوں کے اندر نسبتی، ورنہ مطلق"
 #: src/features/objects/components/comment-list.tsx:238
 #: src/features/objects/components/comment-thread.tsx:294
 #: src/features/objects/components/comment-thread.tsx:299
-#: src/features/objects/components/create-object-dialog.tsx:453
-#: src/features/objects/components/create-object-dialog.tsx:458
+#: src/features/objects/components/create-object-dialog.tsx:486
+#: src/features/objects/components/create-object-dialog.tsx:491
 msgid "Remove"
 msgstr "ہٹائیں"
 
@@ -2062,7 +2081,7 @@ msgstr "ہفتہ"
 #: ../../../lib/web/src/components/ui/secret-field.tsx:77
 #: src/features/editor/components/option-dialog.tsx:150
 #: src/features/objects/components/comment-thread.tsx:195
-#: src/routes/_authenticated/$projectId/index.tsx:957
+#: src/routes/_authenticated/$projectId/index.tsx:995
 msgid "Save"
 msgstr "محفوظ کریں"
 
@@ -2074,7 +2093,7 @@ msgstr "محفوظ کیا جا رہا ہے..."
 msgid "Search"
 msgstr "تلاش کریں"
 
-#: src/routes/_authenticated/find.tsx:79
+#: src/routes/_authenticated/find.tsx:90
 msgid "Search by name, ID, fingerprint, or URL..."
 msgstr "نام، ID، فنگر پرنٹ، یا URL سے تلاش کریں..."
 
@@ -2117,7 +2136,7 @@ msgid "Search..."
 msgstr "تلاش کریں..."
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:174
-#: ../../../lib/web/src/components/search-entity-page.tsx:149
+#: ../../../lib/web/src/components/search-entity-page.tsx:198
 #: ../../../lib/web/src/features/access/access-dialog.tsx:202
 msgid "Searching..."
 msgstr "تلاش کیا جا رہا ہے..."
@@ -2199,8 +2218,8 @@ msgstr "سیرف"
 msgid "Server"
 msgstr "سرور"
 
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:251
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:277
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:260
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:286
 msgid "Server error"
 msgstr "سرور کی خرابی"
 
@@ -2213,7 +2232,7 @@ msgstr "سرور قواعد"
 #~ msgid "Session expired"
 #~ msgstr "سیشن کی میعاد ختم ہو گئی"
 
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:209
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:210
 msgid "Session expired. Please log in again."
 msgstr ""
 
@@ -2233,7 +2252,7 @@ msgstr "رسائی مقرر کی جا رہی ہے..."
 #: src/routes/_authenticated/$projectId_.settings.tsx:88
 #: src/routes/_authenticated/$projectId_.settings.tsx:183
 #: src/routes/_authenticated/$projectId_.settings.tsx:206
-#: src/routes/_authenticated/$projectId/index.tsx:912
+#: src/routes/_authenticated/$projectId/index.tsx:944
 msgid "Settings"
 msgstr "سیٹنگز"
 
@@ -2314,8 +2333,8 @@ msgstr "پہلا تبصرہ شامل کر کے بحث شروع کریں۔"
 msgid "Stay tuned though!"
 msgstr "البتہ منتظر رہیں!"
 
-#: src/features/objects/components/object-detail-panel.tsx:418
-#: src/features/objects/components/object-detail-panel.tsx:427
+#: src/features/objects/components/object-detail-panel.tsx:447
+#: src/features/objects/components/object-detail-panel.tsx:456
 msgid "Stop watching"
 msgstr "دیکھنا بند کریں"
 
@@ -2339,7 +2358,7 @@ msgid "Subscribe"
 msgstr "سبسکرائب کریں"
 
 #: src/features/projects/components/inline-project-search.tsx:101
-#: src/routes/_authenticated/find.tsx:57
+#: src/routes/_authenticated/find.tsx:58
 msgid "Subscribed"
 msgstr "سبسکرائب ہو گیا"
 
@@ -2350,7 +2369,7 @@ msgstr "{0} سبسکرائب کر لیا"
 
 #: src/features/projects/components/inline-project-search.tsx:100
 #: src/features/projects/components/recommended-projects.tsx:63
-#: src/routes/_authenticated/find.tsx:56
+#: src/routes/_authenticated/find.tsx:57
 msgid "Subscribing..."
 msgstr "سبسکرائب کیا جا رہا ہے..."
 
@@ -2441,7 +2460,7 @@ msgid "This will permanently delete \"{projectName}\" and all its objects, comme
 msgstr "یہ \"{projectName}\" اور اس کے تمام آبجیکٹس، تبصرے، اور اٹیچمنٹس کو مستقل طور پر حذف کر دے گا۔ یہ ایکشن واپس نہیں لیا جا سکتا۔"
 
 #. placeholder {0}: project.project.name
-#: src/routes/_authenticated/$projectId/index.tsx:1073
+#: src/routes/_authenticated/$projectId/index.tsx:1131
 msgid "This will remove \"{0}\" from your sidebar and stop updates for this project."
 msgstr "یہ \"{0}\" کو آپ کی سائڈبار سے ہٹا دے گا اور اس پروجیکٹ کے لیے اپ ڈیٹس روک دے گا۔"
 
@@ -2520,7 +2539,7 @@ msgid "Travelling"
 msgstr "سفر کر رہے ہیں"
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:190
-#: ../../../lib/web/src/components/search-entity-page.tsx:165
+#: ../../../lib/web/src/components/search-entity-page.tsx:214
 msgid "Try adjusting your search terms"
 msgstr "اپنی تلاش کی اصطلاحات کو ایڈجسٹ کرنے کی کوشش کریں"
 
@@ -2551,7 +2570,7 @@ msgstr "صارفین تلاش کرنے کے لیے ٹائپ کریں"
 msgid "Type to search..."
 msgstr "تلاش کرنے کے لیے ٹائپ کریں..."
 
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:273
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:282
 msgid "Unable to connect to remote server"
 msgstr "دور دراز سرور سے منسلک ہونے سے قاصر"
 
@@ -2579,22 +2598,22 @@ msgstr "ریاستہائے متحدہ"
 #: src/features/projects/pages/projects-list-page.tsx:147
 #: src/features/projects/pages/projects-list-page.tsx:166
 #: src/features/projects/pages/projects-list-page.tsx:168
-#: src/routes/_authenticated/$projectId/index.tsx:918
-#: src/routes/_authenticated/$projectId/index.tsx:1074
+#: src/routes/_authenticated/$projectId/index.tsx:956
+#: src/routes/_authenticated/$projectId/index.tsx:1132
 msgid "Unsubscribe"
 msgstr "ان سبسکرائب کریں"
 
-#: src/routes/_authenticated/$projectId/index.tsx:1072
+#: src/routes/_authenticated/$projectId/index.tsx:1130
 msgid "Unsubscribe from project?"
 msgstr "پروجیکٹ سے ان سبسکرائب کریں؟"
 
 #: src/features/projects/pages/projects-list-page.tsx:176
-#: src/routes/_authenticated/$projectId/index.tsx:568
+#: src/routes/_authenticated/$projectId/index.tsx:600
 msgid "Unsubscribed"
 msgstr "ان سبسکرائب ہو گیا"
 
 #: src/features/projects/pages/projects-list-page.tsx:175
-#: src/routes/_authenticated/$projectId/index.tsx:567
+#: src/routes/_authenticated/$projectId/index.tsx:599
 msgid "Unsubscribing..."
 msgstr "ان سبسکرائب کیا جا رہا ہے..."
 
@@ -2611,7 +2630,7 @@ msgstr "اپ ڈیٹ ہو گیا"
 msgid "Updating access..."
 msgstr "رسائی اپ ڈیٹ کی جا رہی ہے..."
 
-#: src/features/objects/components/create-object-dialog.tsx:486
+#: src/features/objects/components/create-object-dialog.tsx:519
 #: src/features/objects/components/object-attachments.tsx:216
 msgid "Upload"
 msgstr "اپ لوڈ کریں"
@@ -2675,7 +2694,7 @@ msgstr "سب دیکھیں"
 msgid "View all notifications"
 msgstr "تمام نوٹیفکیشنز دیکھیں"
 
-#: src/features/objects/components/object-detail-panel.tsx:396
+#: src/features/objects/components/object-detail-panel.tsx:425
 msgid "View and edit item details"
 msgstr "آئٹم کی تفصیلات دیکھیں اور ایڈٹ کریں"
 
@@ -2687,7 +2706,7 @@ msgstr "کنٹرولز دیکھیں"
 msgid "View only"
 msgstr "صرف دیکھنا"
 
-#: src/routes/_authenticated/$projectId/index.tsx:876
+#: src/routes/_authenticated/$projectId/index.tsx:908
 msgid "View options"
 msgstr "آپشنز دیکھیں"
 
@@ -2695,8 +2714,8 @@ msgstr "آپشنز دیکھیں"
 msgid "Views"
 msgstr "ویوز"
 
-#: src/features/objects/components/object-detail-panel.tsx:418
-#: src/features/objects/components/object-detail-panel.tsx:427
+#: src/features/objects/components/object-detail-panel.tsx:447
+#: src/features/objects/components/object-detail-panel.tsx:456
 msgid "Watch"
 msgstr "دیکھیں"
 
@@ -2724,7 +2743,7 @@ msgstr "بدھ"
 msgid "You do not have access to this section."
 msgstr ""
 
-#: src/routes/_authenticated/$projectId/index.tsx:102
+#: src/routes/_authenticated/$projectId/index.tsx:109
 msgid "You don't have access to this project."
 msgstr "آپ کو اس پراجیکٹ تک رسائی نہیں ہے۔"
 

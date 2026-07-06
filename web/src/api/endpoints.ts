@@ -13,6 +13,7 @@ const endpoints = {
     search: "-/directory/search",
     probe: "-/probe",
     recommendations: "-/recommendations",
+    share: (projectId: string) => `${projectId}/-/share`,
     subscribe: "-/subscribe",
     unsubscribe: "-/unsubscribe",
 

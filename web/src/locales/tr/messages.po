@@ -13,6 +13,11 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
+#. js-lingui-explicit-id
+#: ../../../lib/web/src/lib/error-normalizer.ts:204
+msgid "Please check your internet connection and try again."
+msgstr ""
+
 #: src/features/editor/components/edit-dialogs.tsx:813
 msgid "(itself)"
 msgstr "(kendisi)"
@@ -117,7 +122,7 @@ msgstr "Hesap türü"
 msgid "Account verified"
 msgstr "Hesap doğrulandı"
 
-#: src/features/objects/components/object-detail-panel.tsx:378
+#: src/features/objects/components/object-detail-panel.tsx:406
 msgid "Activity"
 msgstr "Etkinlik"
 
@@ -162,8 +167,8 @@ msgstr "Kontrol listesi öğesi ekle"
 msgid "Add class"
 msgstr "Sınıf ekle"
 
-#: src/routes/_authenticated/$projectId/index.tsx:887
-#: src/routes/_authenticated/$projectId/index.tsx:1066
+#: src/routes/_authenticated/$projectId/index.tsx:919
+#: src/routes/_authenticated/$projectId/index.tsx:1104
 msgid "Add column"
 msgstr "Sütun ekle"
 
@@ -248,12 +253,16 @@ msgstr "Şuna göre sıralamaya izin ver"
 msgid "An error occurred"
 msgstr "Bir hata oluştu"
 
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:247
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:256
 msgid "An unexpected error occurred"
 msgstr "Beklenmeyen bir hata oluştu"
 
 #: ../../../lib/web/src/lib/api-response-interceptors.ts:233
-msgid "Another change was made at the same time. Please refresh to see the latest version."
+#~ msgid "Another change was made at the same time. Please refresh to see the latest version."
+#~ msgstr ""
+
+#: src/routes/_authenticated/$projectId/index.tsx:1111
+msgid "Anyone you give access to can subscribe with this link."
 msgstr ""
 
 #. placeholder {0}: deleteTarget?.name
@@ -261,7 +270,7 @@ msgstr ""
 msgid "Are you sure you want to delete \"{0}\"?"
 msgstr "\"{0}\" öğesini silmek istediğinizden emin misiniz?"
 
-#: src/features/objects/components/object-detail-panel.tsx:618
+#: src/features/objects/components/object-detail-panel.tsx:656
 msgid "Are you sure you want to delete \"{title}\"? This action cannot be undone."
 msgstr "\"{title}\" öğesini silmek istediğinizden emin misiniz? Bu işlem geri alınamaz."
 
@@ -331,7 +340,7 @@ msgid "Back to project"
 msgstr "Projeye dön"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:67
-#: src/routes/_authenticated/$projectId/index.tsx:116
+#: src/routes/_authenticated/$projectId/index.tsx:123
 msgid "Back to projects"
 msgstr "Projelere dön"
 
@@ -380,7 +389,7 @@ msgstr "Şunun alt öğesi olabilir"
 #: src/features/projects/components/create-project-dialog.tsx:219
 #: src/routes/_authenticated/$projectId_.settings.tsx:573
 #: src/routes/_authenticated/$projectId/design.tsx:344
-#: src/routes/_authenticated/$projectId/index.tsx:945
+#: src/routes/_authenticated/$projectId/index.tsx:983
 msgid "Cancel"
 msgstr "İptal"
 
@@ -473,8 +482,8 @@ msgstr "Seçimi temizle (Escape)"
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:354
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:357
 #: ../../../lib/web/src/components/ui/sheet.tsx:79
-#: src/features/objects/components/create-object-dialog.tsx:358
-#: src/features/objects/components/create-object-dialog.tsx:363
+#: src/features/objects/components/create-object-dialog.tsx:391
+#: src/features/objects/components/create-object-dialog.tsx:396
 msgid "Close"
 msgstr "Kapat"
 
@@ -537,7 +546,7 @@ msgid "Comment and view"
 msgstr "Yorum yap ve görüntüle"
 
 #. placeholder {0}: data.comment_count || 0
-#: src/features/objects/components/object-detail-panel.tsx:364
+#: src/features/objects/components/object-detail-panel.tsx:392
 msgid "Comments ({0})"
 msgstr "Yorumlar ({0})"
 
@@ -609,13 +618,13 @@ msgstr "Bu hesapla doğrulama yapılamadı. Lütfen tekrar deneyin."
 
 #: src/features/board/components/board-column.tsx:542
 #: src/features/board/components/board-column.tsx:681
-#: src/features/objects/components/create-object-dialog.tsx:348
-#: src/features/objects/components/create-object-dialog.tsx:502
+#: src/features/objects/components/create-object-dialog.tsx:381
+#: src/features/objects/components/create-object-dialog.tsx:535
 #: src/features/tree/components/tree-view.tsx:697
 msgid "Create"
 msgstr "Oluştur"
 
-#: src/features/objects/components/create-object-dialog.tsx:326
+#: src/features/objects/components/create-object-dialog.tsx:359
 msgid "Create a new item in this project"
 msgstr "Bu projede yeni bir öğe oluştur"
 
@@ -625,7 +634,7 @@ msgid "Create a new project"
 msgstr "Yeni bir proje oluştur"
 
 #: src/components/keyboard-shortcuts-help.tsx:27
-#: src/features/objects/components/create-object-dialog.tsx:325
+#: src/features/objects/components/create-object-dialog.tsx:358
 msgid "Create new item"
 msgstr "Yeni öğe oluştur"
 
@@ -649,7 +658,7 @@ msgstr "Oluşturuldu"
 msgid "Creating project..."
 msgstr "Proje oluşturuluyor..."
 
-#: src/features/objects/components/create-object-dialog.tsx:502
+#: src/features/objects/components/create-object-dialog.tsx:535
 #: src/features/projects/components/create-project-dialog.tsx:297
 msgid "Creating..."
 msgstr "Oluşturuluyor..."
@@ -671,7 +680,7 @@ msgstr "Koyu"
 msgid "Dark mode"
 msgstr "Koyu mod"
 
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:232
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:240
 msgid "Data conflict"
 msgstr ""
 
@@ -711,7 +720,7 @@ msgstr "Varsayılan sıralama"
 #: src/features/objects/components/object-attachments.tsx:182
 #: src/features/objects/components/object-attachments.tsx:187
 #: src/features/objects/components/object-attachments.tsx:229
-#: src/features/objects/components/object-detail-panel.tsx:619
+#: src/features/objects/components/object-detail-panel.tsx:657
 #: src/features/requests/components/request-panel.tsx:132
 #: src/routes/_authenticated/$projectId_.settings.tsx:425
 msgid "Delete"
@@ -737,9 +746,9 @@ msgstr "Yorumu sil"
 msgid "Delete field"
 msgstr "Alanı sil"
 
-#: src/features/objects/components/object-detail-panel.tsx:437
-#: src/features/objects/components/object-detail-panel.tsx:442
-#: src/features/objects/components/object-detail-panel.tsx:617
+#: src/features/objects/components/object-detail-panel.tsx:466
+#: src/features/objects/components/object-detail-panel.tsx:471
+#: src/features/objects/components/object-detail-panel.tsx:655
 msgid "Delete item"
 msgstr "Öğeyi sil"
 
@@ -799,7 +808,7 @@ msgstr "Açıklama"
 
 #: src/routes/_authenticated/$projectId/design.tsx:63
 #: src/routes/_authenticated/$projectId/design.tsx:132
-#: src/routes/_authenticated/$projectId/index.tsx:902
+#: src/routes/_authenticated/$projectId/index.tsx:934
 msgid "Design"
 msgstr "Tasarım"
 
@@ -843,8 +852,8 @@ msgstr "Yön"
 msgid "Dismiss"
 msgstr "Kapat"
 
-#: src/routes/_authenticated/$projectId/index.tsx:974
-#: src/routes/_authenticated/$projectId/index.tsx:979
+#: src/routes/_authenticated/$projectId/index.tsx:1012
+#: src/routes/_authenticated/$projectId/index.tsx:1017
 msgid "Dismiss board hint"
 msgstr "Tahta ipucunu kapat"
 
@@ -855,11 +864,12 @@ msgstr "Mobil kenar çubuğunu görüntüler."
 #: src/features/editor/components/edit-dialogs.tsx:532
 #: src/features/editor/components/edit-dialogs.tsx:922
 #: src/features/editor/components/edit-dialogs.tsx:1228
-#: src/features/objects/components/object-detail-panel.tsx:451
+#: src/features/objects/components/object-detail-panel.tsx:480
+#: src/routes/_authenticated/$projectId/index.tsx:1121
 msgid "Done"
 msgstr "Tamamlandı"
 
-#: src/routes/_authenticated/$projectId/index.tsx:965
+#: src/routes/_authenticated/$projectId/index.tsx:1003
 msgid "Double click on a column to add content"
 msgstr "İçerik eklemek için sütuna çift tıklayın"
 
@@ -882,7 +892,7 @@ msgstr "İndirme başarısız oldu"
 msgid "Draft"
 msgstr "Taslak"
 
-#: src/routes/_authenticated/$projectId/index.tsx:941
+#: src/routes/_authenticated/$projectId/index.tsx:979
 msgid "Drag columns to re-order them"
 msgstr "Yeniden sıralamak için sütunları sürükleyin"
 
@@ -948,7 +958,7 @@ msgstr "Kimlik doğrulayıcı kodunuzu girin"
 msgid "Entity ID"
 msgstr "Varlık kimliği"
 
-#: src/features/objects/components/object-detail-panel.tsx:315
+#: src/features/objects/components/object-detail-panel.tsx:343
 msgid "Error"
 msgstr "Hata"
 
@@ -996,6 +1006,7 @@ msgid "Failed to create field"
 msgstr "Alan oluşturulamadı"
 
 #: src/features/objects/components/object-links.tsx:105
+#: src/routes/_authenticated/$projectId/index.tsx:175
 msgid "Failed to create link"
 msgstr "Bağlantı oluşturulamadı"
 
@@ -1047,12 +1058,12 @@ msgstr ""
 msgid "Failed to import design"
 msgstr "Tasarım içe aktarılamadı"
 
-#: src/features/objects/components/object-detail-panel.tsx:316
+#: src/features/objects/components/object-detail-panel.tsx:344
 msgid "Failed to load item"
 msgstr "Öğe yüklenemedi"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:43
-#: src/routes/_authenticated/$projectId/index.tsx:80
+#: src/routes/_authenticated/$projectId/index.tsx:87
 msgid "Failed to load project"
 msgstr "Proje yüklenemedi"
 
@@ -1103,12 +1114,12 @@ msgstr "Erişim düzeyi ayarlanamadı"
 
 #: src/features/projects/components/inline-project-search.tsx:102
 #: src/features/projects/components/recommended-projects.tsx:65
-#: src/routes/_authenticated/find.tsx:58
+#: src/routes/_authenticated/find.tsx:59
 msgid "Failed to subscribe"
 msgstr "Abone olunamadı"
 
 #: src/features/projects/pages/projects-list-page.tsx:177
-#: src/routes/_authenticated/$projectId/index.tsx:569
+#: src/routes/_authenticated/$projectId/index.tsx:601
 msgid "Failed to unsubscribe"
 msgstr "Abonelikten çıkılamadı"
 
@@ -1140,14 +1151,14 @@ msgstr "Ek yüklenemedi"
 msgid "Fields"
 msgstr "Alanlar"
 
-#: src/features/objects/components/create-object-dialog.tsx:439
+#: src/features/objects/components/create-object-dialog.tsx:472
 #: src/features/objects/components/object-attachments.tsx:103
 #: src/features/objects/components/object-attachments.tsx:120
 msgid "Files"
 msgstr "Dosyalar"
 
 #: src/components/layout/projects-layout.tsx:61
-#: src/routes/_authenticated/find.tsx:78
+#: src/routes/_authenticated/find.tsx:89
 msgid "Find projects"
 msgstr "Proje bul"
 
@@ -1301,7 +1312,7 @@ msgstr "Geçersiz JSON dosyası"
 msgid "Invalid verification code"
 msgstr "Geçersiz doğrulama kodu"
 
-#: src/features/objects/components/object-detail-panel.tsx:395
+#: src/features/objects/components/object-detail-panel.tsx:424
 msgid "Item details"
 msgstr "Öğe ayrıntıları"
 
@@ -1333,6 +1344,10 @@ msgstr "Soldan sağa"
 msgid "Light"
 msgstr "Açık"
 
+#: src/routes/_authenticated/$projectId/index.tsx:950
+msgid "Link"
+msgstr ""
+
 #: src/features/objects/components/object-links.tsx:228
 msgid "Links"
 msgstr "Bağlantılar"
@@ -1353,11 +1368,11 @@ msgstr "İçerik yükleniyor…"
 msgid "Loading diff..."
 msgstr "Fark yükleniyor..."
 
-#: src/features/objects/components/object-detail-panel.tsx:296
+#: src/features/objects/components/object-detail-panel.tsx:324
 msgid "Loading item"
 msgstr "Öğe yükleniyor"
 
-#: src/features/objects/components/object-detail-panel.tsx:297
+#: src/features/objects/components/object-detail-panel.tsx:325
 msgid "Loading item details"
 msgstr "Öğe ayrıntıları yükleniyor"
 
@@ -1430,7 +1445,7 @@ msgstr "Birleştirme commit'i"
 msgid "Merge requests"
 msgstr "Birleştirme istekleri"
 
-#: src/features/objects/components/object-detail-panel.tsx:371
+#: src/features/objects/components/object-detail-panel.tsx:399
 msgid "Merge requests ({requestCount})"
 msgstr "Birleştirme istekleri ({requestCount})"
 
@@ -1482,18 +1497,18 @@ msgid "Name is required"
 msgstr "Ad gerekli"
 
 #: ../../../lib/web/src/features/errors/general-error.tsx:53
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:294
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:303
 msgid "Network error"
 msgstr "Ağ hatası"
 
 #: ../../../lib/web/src/components/ui/sort-selector.tsx:43
-#: src/features/objects/components/create-object-dialog.tsx:333
-#: src/routes/_authenticated/$projectId/index.tsx:841
-#: src/routes/_authenticated/$projectId/index.tsx:859
+#: src/features/objects/components/create-object-dialog.tsx:366
+#: src/routes/_authenticated/$projectId/index.tsx:873
+#: src/routes/_authenticated/$projectId/index.tsx:891
 msgid "New"
 msgstr "Yeni"
 
-#: src/routes/_authenticated/$projectId/index.tsx:838
+#: src/routes/_authenticated/$projectId/index.tsx:870
 msgid "New {className}"
 msgstr "Yeni {className}"
 
@@ -1506,7 +1521,7 @@ msgstr "İleri"
 msgid "Next image"
 msgstr "Sonraki görsel"
 
-#: src/features/objects/components/create-object-dialog.tsx:406
+#: src/features/objects/components/create-object-dialog.tsx:439
 msgid "No {parentClassNames} to add to"
 msgstr "Eklenecek {parentClassNames} yok"
 
@@ -1554,7 +1569,7 @@ msgstr "Diff mevcut değil"
 msgid "No groups available"
 msgstr "Grup yok"
 
-#: src/features/objects/components/create-object-dialog.tsx:373
+#: src/features/objects/components/create-object-dialog.tsx:406
 msgid "No item types can be created yet. Create the required parent items first."
 msgstr "Henüz oluşturulabilecek öge türü yok. Önce gerekli üst ögeleri oluşturun."
 
@@ -1579,7 +1594,7 @@ msgid "No profile"
 msgstr "Profil yok"
 
 #: src/features/projects/components/inline-project-search.tsx:150
-#: src/routes/_authenticated/find.tsx:80
+#: src/routes/_authenticated/find.tsx:91
 msgid "No projects found"
 msgstr "Proje bulunamadı"
 
@@ -1626,11 +1641,11 @@ msgstr "Görüntüleme yok"
 #: src/features/editor/components/edit-dialogs.tsx:505
 #: src/features/editor/components/edit-dialogs.tsx:779
 #: src/features/editor/components/edit-dialogs.tsx:782
-#: src/features/objects/components/create-object-dialog.tsx:389
-#: src/features/objects/components/create-object-dialog.tsx:396
-#: src/features/objects/components/object-detail-panel.tsx:512
-#: src/features/objects/components/object-detail-panel.tsx:525
-#: src/features/objects/components/object-detail-panel.tsx:530
+#: src/features/objects/components/create-object-dialog.tsx:422
+#: src/features/objects/components/create-object-dialog.tsx:429
+#: src/features/objects/components/object-detail-panel.tsx:548
+#: src/features/objects/components/object-detail-panel.tsx:561
+#: src/features/objects/components/object-detail-panel.tsx:566
 msgid "None"
 msgstr "Yok"
 
@@ -1721,7 +1736,7 @@ msgstr "Gezinme menüsünü aç"
 msgid "Open option actions"
 msgstr "Seçenek eylemlerini aç"
 
-#: src/routes/_authenticated/$projectId/index.tsx:867
+#: src/routes/_authenticated/$projectId/index.tsx:899
 msgid "Open page actions"
 msgstr "Sayfa eylemlerini aç"
 
@@ -1762,8 +1777,8 @@ msgstr "Diğer"
 msgid "Owner"
 msgstr "Sahip"
 
-#: src/features/objects/components/create-object-dialog.tsx:381
-#: src/features/objects/components/object-detail-panel.tsx:508
+#: src/features/objects/components/create-object-dialog.tsx:414
+#: src/features/objects/components/object-detail-panel.tsx:544
 msgid "Parent"
 msgstr "Üst"
 
@@ -1787,13 +1802,13 @@ msgstr "Desen (regex)"
 msgid "Permanently delete this project and all its content."
 msgstr "Bu projeyi ve tüm içeriğini kalıcı olarak silin."
 
-#: src/routes/_authenticated/$projectId/index.tsx:677
-#: src/routes/_authenticated/$projectId/index.tsx:711
+#: src/routes/_authenticated/$projectId/index.tsx:709
+#: src/routes/_authenticated/$projectId/index.tsx:743
 msgid "Please add one or more classes to the project design."
 msgstr "Lütfen proje tasarımına bir veya daha fazla sınıf ekleyin."
 
 #: ../../../lib/web/src/features/errors/general-error.tsx:54
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:295
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:304
 msgid "Please check your internet connection and try again."
 msgstr "Lütfen internet bağlantınızı kontrol edip tekrar deneyin."
 
@@ -1830,7 +1845,7 @@ msgid "Profile"
 msgstr "Profil"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:65
-#: src/routes/_authenticated/$projectId/index.tsx:114
+#: src/routes/_authenticated/$projectId/index.tsx:121
 msgid "Project"
 msgstr "Proje"
 
@@ -1846,6 +1861,10 @@ msgstr "Proje oluşturuldu"
 #: src/routes/_authenticated/$projectId_.settings.tsx:144
 msgid "Project deleted"
 msgstr "Proje silindi"
+
+#: src/routes/_authenticated/$projectId/index.tsx:1109
+msgid "Project link"
+msgstr ""
 
 #: src/routes/_authenticated/$projectId_.settings.tsx:223
 msgid "Project not found"
@@ -1870,7 +1889,7 @@ msgstr "Proje güncellendi"
 msgid "Projects"
 msgstr "Projeler"
 
-#: src/features/objects/components/object-detail-panel.tsx:359
+#: src/features/objects/components/object-detail-panel.tsx:387
 msgid "Properties"
 msgstr "Özellikler"
 
@@ -1882,7 +1901,7 @@ msgstr "Yükseltilmiş"
 msgid "Re-link your accounts on this server"
 msgstr "Hesaplarınızı bu sunucuda yeniden bağlayın"
 
-#: src/routes/_authenticated/$projectId/index.tsx:891
+#: src/routes/_authenticated/$projectId/index.tsx:923
 msgid "Re-order columns"
 msgstr "Sütunları yeniden sırala"
 
@@ -1899,7 +1918,7 @@ msgid "Rebase and merge"
 msgstr "Rebase ve merge"
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:216
-#: ../../../lib/web/src/components/search-entity-page.tsx:191
+#: ../../../lib/web/src/components/search-entity-page.tsx:240
 msgid "Recommended"
 msgstr "Önerilen"
 
@@ -1936,8 +1955,8 @@ msgstr "24 saat içinde göreceli, aksi halde mutlak"
 #: src/features/objects/components/comment-list.tsx:238
 #: src/features/objects/components/comment-thread.tsx:294
 #: src/features/objects/components/comment-thread.tsx:299
-#: src/features/objects/components/create-object-dialog.tsx:453
-#: src/features/objects/components/create-object-dialog.tsx:458
+#: src/features/objects/components/create-object-dialog.tsx:486
+#: src/features/objects/components/create-object-dialog.tsx:491
 msgid "Remove"
 msgstr "Kaldır"
 
@@ -2062,7 +2081,7 @@ msgstr "Cumartesi"
 #: ../../../lib/web/src/components/ui/secret-field.tsx:77
 #: src/features/editor/components/option-dialog.tsx:150
 #: src/features/objects/components/comment-thread.tsx:195
-#: src/routes/_authenticated/$projectId/index.tsx:957
+#: src/routes/_authenticated/$projectId/index.tsx:995
 msgid "Save"
 msgstr "Kaydet"
 
@@ -2074,7 +2093,7 @@ msgstr "Kaydediliyor..."
 msgid "Search"
 msgstr "Ara"
 
-#: src/routes/_authenticated/find.tsx:79
+#: src/routes/_authenticated/find.tsx:90
 msgid "Search by name, ID, fingerprint, or URL..."
 msgstr "Ad, kimlik, parmak izi veya URL ile ara..."
 
@@ -2117,7 +2136,7 @@ msgid "Search..."
 msgstr "Ara..."
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:174
-#: ../../../lib/web/src/components/search-entity-page.tsx:149
+#: ../../../lib/web/src/components/search-entity-page.tsx:198
 #: ../../../lib/web/src/features/access/access-dialog.tsx:202
 msgid "Searching..."
 msgstr "Aranıyor..."
@@ -2199,8 +2218,8 @@ msgstr "Tırnaklı"
 msgid "Server"
 msgstr "Sunucu"
 
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:251
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:277
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:260
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:286
 msgid "Server error"
 msgstr "Sunucu hatası"
 
@@ -2213,7 +2232,7 @@ msgstr "Sunucu kuralları"
 #~ msgid "Session expired"
 #~ msgstr "Oturum süresi doldu"
 
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:209
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:210
 msgid "Session expired. Please log in again."
 msgstr ""
 
@@ -2233,7 +2252,7 @@ msgstr "Erişim ayarlanıyor..."
 #: src/routes/_authenticated/$projectId_.settings.tsx:88
 #: src/routes/_authenticated/$projectId_.settings.tsx:183
 #: src/routes/_authenticated/$projectId_.settings.tsx:206
-#: src/routes/_authenticated/$projectId/index.tsx:912
+#: src/routes/_authenticated/$projectId/index.tsx:944
 msgid "Settings"
 msgstr "Ayarlar"
 
@@ -2314,8 +2333,8 @@ msgstr "İlk yorumu ekleyerek tartışmayı başlat."
 msgid "Stay tuned though!"
 msgstr "Yine de takipte kal!"
 
-#: src/features/objects/components/object-detail-panel.tsx:418
-#: src/features/objects/components/object-detail-panel.tsx:427
+#: src/features/objects/components/object-detail-panel.tsx:447
+#: src/features/objects/components/object-detail-panel.tsx:456
 msgid "Stop watching"
 msgstr "İzlemeyi bırak"
 
@@ -2339,7 +2358,7 @@ msgid "Subscribe"
 msgstr "Abone ol"
 
 #: src/features/projects/components/inline-project-search.tsx:101
-#: src/routes/_authenticated/find.tsx:57
+#: src/routes/_authenticated/find.tsx:58
 msgid "Subscribed"
 msgstr "Abone olundu"
 
@@ -2350,7 +2369,7 @@ msgstr "{0} aboneliği oluşturuldu"
 
 #: src/features/projects/components/inline-project-search.tsx:100
 #: src/features/projects/components/recommended-projects.tsx:63
-#: src/routes/_authenticated/find.tsx:56
+#: src/routes/_authenticated/find.tsx:57
 msgid "Subscribing..."
 msgstr "Abone olunuyor..."
 
@@ -2441,7 +2460,7 @@ msgid "This will permanently delete \"{projectName}\" and all its objects, comme
 msgstr "Bu işlem \"{projectName}\" ve tüm nesnelerini, yorumlarını ve eklerini kalıcı olarak silecek. Bu işlem geri alınamaz."
 
 #. placeholder {0}: project.project.name
-#: src/routes/_authenticated/$projectId/index.tsx:1073
+#: src/routes/_authenticated/$projectId/index.tsx:1131
 msgid "This will remove \"{0}\" from your sidebar and stop updates for this project."
 msgstr "Bu işlem \"{0}\" öğesini kenar çubuğundan kaldıracak ve bu proje için güncellemeleri durduracak."
 
@@ -2520,7 +2539,7 @@ msgid "Travelling"
 msgstr "Yolda"
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:190
-#: ../../../lib/web/src/components/search-entity-page.tsx:165
+#: ../../../lib/web/src/components/search-entity-page.tsx:214
 msgid "Try adjusting your search terms"
 msgstr "Arama terimlerini ayarlamayı dene"
 
@@ -2551,7 +2570,7 @@ msgstr "Kullanıcı aramak için yaz"
 msgid "Type to search..."
 msgstr "Aramak için yaz..."
 
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:273
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:282
 msgid "Unable to connect to remote server"
 msgstr "Uzak sunucuya bağlanılamadı"
 
@@ -2579,22 +2598,22 @@ msgstr "Amerika Birleşik Devletleri"
 #: src/features/projects/pages/projects-list-page.tsx:147
 #: src/features/projects/pages/projects-list-page.tsx:166
 #: src/features/projects/pages/projects-list-page.tsx:168
-#: src/routes/_authenticated/$projectId/index.tsx:918
-#: src/routes/_authenticated/$projectId/index.tsx:1074
+#: src/routes/_authenticated/$projectId/index.tsx:956
+#: src/routes/_authenticated/$projectId/index.tsx:1132
 msgid "Unsubscribe"
 msgstr "Aboneliği iptal et"
 
-#: src/routes/_authenticated/$projectId/index.tsx:1072
+#: src/routes/_authenticated/$projectId/index.tsx:1130
 msgid "Unsubscribe from project?"
 msgstr "Proje aboneliği iptal edilsin mi?"
 
 #: src/features/projects/pages/projects-list-page.tsx:176
-#: src/routes/_authenticated/$projectId/index.tsx:568
+#: src/routes/_authenticated/$projectId/index.tsx:600
 msgid "Unsubscribed"
 msgstr "Abonelik iptal edildi"
 
 #: src/features/projects/pages/projects-list-page.tsx:175
-#: src/routes/_authenticated/$projectId/index.tsx:567
+#: src/routes/_authenticated/$projectId/index.tsx:599
 msgid "Unsubscribing..."
 msgstr "Abonelik iptal ediliyor..."
 
@@ -2611,7 +2630,7 @@ msgstr "Güncellendi"
 msgid "Updating access..."
 msgstr "Erişim güncelleniyor..."
 
-#: src/features/objects/components/create-object-dialog.tsx:486
+#: src/features/objects/components/create-object-dialog.tsx:519
 #: src/features/objects/components/object-attachments.tsx:216
 msgid "Upload"
 msgstr "Yükle"
@@ -2675,7 +2694,7 @@ msgstr "Tümünü görüntüle"
 msgid "View all notifications"
 msgstr "Tüm bildirimleri görüntüle"
 
-#: src/features/objects/components/object-detail-panel.tsx:396
+#: src/features/objects/components/object-detail-panel.tsx:425
 msgid "View and edit item details"
 msgstr "Öğe detaylarını görüntüle ve düzenle"
 
@@ -2687,7 +2706,7 @@ msgstr "Kontrolleri görüntüle"
 msgid "View only"
 msgstr "Yalnızca görüntüleme"
 
-#: src/routes/_authenticated/$projectId/index.tsx:876
+#: src/routes/_authenticated/$projectId/index.tsx:908
 msgid "View options"
 msgstr "Görünüm seçenekleri"
 
@@ -2695,8 +2714,8 @@ msgstr "Görünüm seçenekleri"
 msgid "Views"
 msgstr "Görünümler"
 
-#: src/features/objects/components/object-detail-panel.tsx:418
-#: src/features/objects/components/object-detail-panel.tsx:427
+#: src/features/objects/components/object-detail-panel.tsx:447
+#: src/features/objects/components/object-detail-panel.tsx:456
 msgid "Watch"
 msgstr "İzle"
 
@@ -2724,7 +2743,7 @@ msgstr "Çarşamba"
 msgid "You do not have access to this section."
 msgstr ""
 
-#: src/routes/_authenticated/$projectId/index.tsx:102
+#: src/routes/_authenticated/$projectId/index.tsx:109
 msgid "You don't have access to this project."
 msgstr "Bu projeye erişiminiz yok."
 

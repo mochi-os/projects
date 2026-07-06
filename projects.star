@@ -4839,6 +4839,32 @@ def action_probe(a):
 		a.error.label(400, "errors.no_url_provided")
 		return
 
+	# mochi://<peer>/<entity> - a share link pins the owner's peer directly,
+	# so a private project (never directory-listed) resolves without a hostname.
+	if url.startswith("mochi://"):
+		rest = url[len("mochi://"):]
+		if "/" not in rest:
+			a.error.label(400, "errors.invalid_data")
+			return
+		link_peer, path = rest.split("/", 1)
+		link_project = path.split("/")[0]
+		if not link_peer or not mochi.text.valid(link_project, "entity"):
+			a.error.label(400, "errors.invalid_data")
+			return
+		response = mochi.remote.request(link_project, "projects", "info", {"project": link_project}, link_peer)
+		if response.get("error"):
+			a.error(response.get("code", 404), response["error"])
+			return
+		return {"data": {
+			"id": link_project,
+			"name": response.get("name", ""),
+			"description": response.get("description", ""),
+			"fingerprint": response.get("fingerprint", ""),
+			"class": "project",
+			"peer": link_peer,  # subscribe pins the same peer for its initial sync
+			"remote": True
+		}}
+
 	# Parse URL to extract server and project ID
 	# Expected formats:
 	#   https://example.com/projects/ENTITY_ID
@@ -4940,11 +4966,29 @@ def action_recommendations(a):
 	return {"data": {"projects": recommendations}}
 
 # Subscribe to a remote project
+# Produce a mochi://<server-peer>/<project> share link for a project the
+# caller owns. The link conveys location only - the subscriber still needs an
+# explicit view grant (event_subscribe checks check_project_access) (#209).
+def action_share(a): # projects_share
+	if not a.user:
+		a.error.label(401, "errors.not_logged_in")
+		return
+	project_id = a.input("project")
+	if not mochi.text.valid(project_id, "entity"):
+		a.error.label(400, "errors.invalid_data")
+		return
+	if not mochi.db.exists("select id from projects where id=? and owner=1", project_id):
+		a.error.label(403, "errors.access_denied")
+		return
+	peer = mochi.server.id()
+	return {"data": {"link": "mochi://" + peer + "/" + project_id, "peer": peer, "project": project_id}}
+
 def action_subscribe(a):
 	user_id = a.user.identity.id
 
 	project_id = a.input("project")
 	server = a.input("server")
+	peer = a.input("peer")  # from a mochi://<peer>/<project> share link
 	if not mochi.text.valid(project_id, "entity"):
 		a.error.label(400, "errors.invalid_project_id")
 		return
@@ -4960,8 +5004,9 @@ def action_subscribe(a):
 
 	# Get project info from remote or directory
 	schema = None
-	if server:
-		peer = mochi.remote.peer(server)
+	if peer or server:
+		if not peer:
+			peer = mochi.remote.peer(server)
 		if not peer:
 			a.error.label(502, "errors.unable_to_connect_to_server")
 			return
@@ -5008,8 +5053,12 @@ def action_subscribe(a):
 	if schema and not schema.get("error"):
 		insert_schema(project_id, schema)
 
-	# Send P2P subscribe message to project owner
-	mochi.message.send(p2p_headers(user_id, project_id, "subscribe"), {"name": a.user.identity.name})
+	# Send P2P subscribe message to project owner. A private project is not in
+	# the directory, so when the subscription came via a share link, pin that peer.
+	if peer:
+		mochi.message.send.peer(peer, p2p_headers(user_id, project_id, "subscribe"), {"name": a.user.identity.name})
+	else:
+		mochi.message.send(p2p_headers(user_id, project_id, "subscribe"), {"name": a.user.identity.name})
 	mochi.broadcast.touch(project_id)
 
 	return {"data": {"fingerprint": fp}}

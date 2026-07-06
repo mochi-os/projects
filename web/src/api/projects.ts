@@ -1027,7 +1027,9 @@ const projectsApi = {
       prefix: string;
       fingerprint: string;
       class: string;
-      server: string;
+      server?: string;
+      /** owner's peer from a mochi:// share-link probe; subscribe pins the same peer. */
+      peer?: string;
       remote: boolean;
     };
   }> => {
@@ -1053,11 +1055,20 @@ const projectsApi = {
   subscribe: async (
     projectId: string,
     server?: string,
+    peer?: string,
   ): Promise<{ data: { fingerprint: string } }> => {
     return projectsRequest.post(endpoints.projects.subscribe, {
       project: projectId,
       server,
+      peer,
     });
+  },
+
+  // Produce a mochi://<peer>/<project> share link for a project the caller owns.
+  share: async (
+    projectId: string,
+  ): Promise<{ data: { link: string; peer: string; project: string } }> => {
+    return projectsRequest.post(endpoints.projects.share(projectId), {});
   },
 
   // Unsubscribe from a remote project

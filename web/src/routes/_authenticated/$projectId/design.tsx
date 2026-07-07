@@ -73,7 +73,6 @@ function DesignPage() {
     label: string;
   } | null>(null);
 
-
   // Export handler
   const handleExport = useCallback(async () => {
     if (!project) return;
@@ -348,5 +347,3 @@ function ImportDialog({
     </ResponsiveDialog>
   );
 }
-
-

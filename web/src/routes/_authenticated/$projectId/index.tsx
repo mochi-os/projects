@@ -32,8 +32,6 @@ import {
   shellClipboardWrite,
   ResponsiveDialog,
   ResponsiveDialogContent,
-  ResponsiveDialogDescription,
-  ResponsiveDialogFooter,
   ResponsiveDialogHeader,
   ResponsiveDialogTitle,
   getAppPath,
@@ -946,6 +944,17 @@ export function ProjectPageContent({ project, projectId, search, initialObjectId
                 </>
               )}
               <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={handleDataExport}>
+                <FileDown className="size-4 me-2" />
+                <Trans>Export data</Trans>
+              </DropdownMenuItem>
+              {/* Canonical menu tail: Link, Design, Settings, Unsubscribe. */}
+              {isOwner && (
+                <DropdownMenuItem onClick={() => void openLinkDialog()}>
+                  <LinkIcon className="size-4 me-2" />
+                  <Trans>Link</Trans>
+                </DropdownMenuItem>
+              )}
               {canDesign(access) && (
                 <DropdownMenuItem asChild>
                   <Link
@@ -965,17 +974,6 @@ export function ProjectPageContent({ project, projectId, search, initialObjectId
                   <Settings className="size-4 me-2" />
                   <Trans>Settings</Trans>
                 </Link>
-              </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              {isOwner && (
-                <DropdownMenuItem onClick={() => void openLinkDialog()}>
-                  <LinkIcon className="size-4 me-2" />
-                  <Trans>Link</Trans>
-                </DropdownMenuItem>
-              )}
-              <DropdownMenuItem onClick={handleDataExport}>
-                <FileDown className="size-4 me-2" />
-                <Trans>Export data</Trans>
               </DropdownMenuItem>
               {!isOwner && (
                 <>
@@ -1137,9 +1135,6 @@ export function ProjectPageContent({ project, projectId, search, initialObjectId
         <ResponsiveDialogContent>
           <ResponsiveDialogHeader>
             <ResponsiveDialogTitle><Trans>Project link</Trans></ResponsiveDialogTitle>
-            <ResponsiveDialogDescription>
-              <Trans>Anyone you give access to can subscribe with this link.</Trans>
-            </ResponsiveDialogDescription>
           </ResponsiveDialogHeader>
           <div className="bg-muted flex items-center gap-2 rounded-md p-3 font-mono text-sm">
             <code className="flex-1 break-all">{shareLink || '…'}</code>
@@ -1147,9 +1142,6 @@ export function ProjectPageContent({ project, projectId, search, initialObjectId
               {linkCopied ? <Check className="size-4" /> : <Copy className="size-4" />}
             </Button>
           </div>
-          <ResponsiveDialogFooter>
-            <Button variant="outline" onClick={() => setLinkOpen(false)}><Trans>Done</Trans></Button>
-          </ResponsiveDialogFooter>
         </ResponsiveDialogContent>
       </ResponsiveDialog>
 

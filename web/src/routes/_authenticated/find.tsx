@@ -8,8 +8,7 @@ import { useLingui } from '@lingui/react/macro'
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { useQuery } from '@tanstack/react-query'
 import { FolderKanban } from 'lucide-react'
-import { FindEntityPage, toastAction, getErrorMessage } from '@mochi/web'
-import type { MochiEntityUri } from '@mochi/web'
+import { FindEntityPage, toastAction, getErrorMessage, mochiEntityUri, type MochiEntityUri } from '@mochi/web'
 import { useProjectsStore } from '@/stores/projects-store'
 import { APP_ROUTES } from '@/config/routes'
 import endpoints from '@/api/endpoints'
@@ -71,10 +70,14 @@ function FindProjectsPage() {
   // Resolve a pasted mochi:// share link to the project's name via probe, so
   // the card shows the real project rather than a raw entity id.
   const resolveUri = useCallback(async (uri: MochiEntityUri) => {
-    if (!uri.peer) return null
-    const response = await projectsApi.probe(`mochi://${uri.peer}/${uri.entity}`)
+    const subPath = uri.sub.length > 0 ? `/${uri.sub.join('/')}` : ''
+    const url = uri.peer
+      ? `${mochiEntityUri(uri.peer, uri.entity)}${subPath}`
+      : `mochi:/${uri.entity}${subPath}`
+    const response = await projectsApi.probe(url)
     const data = response.data ?? response
-    return { ...data, peer: data.peer || uri.peer }
+    if (!data?.id) return null
+    return { ...data, location: data.server ?? '', peer: data.peer ?? uri.peer }
   }, [])
 
   return (

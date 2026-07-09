@@ -30,6 +30,8 @@ import {
   AttachmentDescription,
   AttachmentActions,
   AttachmentAction,
+  pendingFileKey,
+  removePendingFile,
 } from "@mochi/web";
 import type { Comment } from "@/types";
 import { CommentAttachments } from "./comment-attachments";
@@ -280,7 +282,7 @@ export function CommentThread({
               {replyFiles.map((file, i) => {
                 const isImage = file.type.startsWith("image/");
                 return (
-                  <Attachment key={i} state="uploading" size="sm">
+                  <Attachment key={pendingFileKey(file)} state="uploading" size="sm">
                     <AttachmentMedia variant={isImage ? "image" : "icon"}>
                       {isImage && replyImageUrls[i] ? (
                         <img
@@ -301,7 +303,7 @@ export function CommentThread({
                     <AttachmentActions>
                       <AttachmentAction
                         onClick={() =>
-                          setReplyFiles((prev) => prev.filter((_, idx) => idx !== i))
+                          setReplyFiles((prev) => removePendingFile(prev, file))
                         }
                         aria-label={t`Remove`}
                       >

@@ -3,11 +3,11 @@
 // This file is part of Mochi, licensed under the GNU AGPL v3 with the
 // Mochi Application Interface Exception - see license.txt and license-exception.md.
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useMemo } from "react";
 import { Trans, useLingui } from '@lingui/react/macro'
 import { useNavigate } from "@tanstack/react-router";
-import { Button, cn, getErrorMessage, Input, Label, naturalCompare, ResponsiveDialog, ResponsiveDialogContent, ResponsiveDialogDescription, ResponsiveDialogFooter, ResponsiveDialogHeader, ResponsiveDialogTitle, ResponsiveDialogTrigger, Switch, toast, toastAction } from "@mochi/web"
-import { ArrowLeft, ArrowRight, Check, File, FolderKanban, LayoutGrid, Plus, Ticket, Zap } from "lucide-react";
+import { Button, cn, getErrorMessage, Input, Label, naturalCompare, ResponsiveDialog, ResponsiveDialogContent, ResponsiveDialogDescription, ResponsiveDialogFooter, ResponsiveDialogHeader, ResponsiveDialogTitle, ResponsiveDialogTrigger, Switch, toast, toastAction, Attachment, AttachmentMedia, AttachmentContent, AttachmentTitle, AttachmentAction, Tooltip, TooltipContent, TooltipTrigger } from "@mochi/web"
+import { ArrowLeft, ArrowRight, Check, File, FolderKanban, LayoutGrid, Plus, Ticket, Upload, Zap, X } from "lucide-react";
 import projectsApi from "@/api/projects";
 import { useProjectsStore } from "@/stores/projects-store";
 import type { ProjectTemplate } from "@/types";
@@ -40,6 +40,9 @@ export function CreateProjectDialog({
   const [templates, setTemplates] = useState<ProjectTemplate[]>([]);
   const [isLoadingTemplates, setIsLoadingTemplates] = useState(false);
   const [allowSearch, setAllowSearch] = useState(true);
+  const [importData, setImportData] = useState<Record<string, unknown> | null>(null);
+  const [importFileName, setImportFileName] = useState("");
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const prefixDirty = useRef(false);
   const navigate = useNavigate();
   const refreshProjects = useProjectsStore((state) => state.refresh);
@@ -70,6 +73,8 @@ export function CreateProjectDialog({
       setPrefix("");
       setSelectedTemplate("");
       setAllowSearch(true);
+      setImportData(null);
+      setImportFileName("");
       prefixDirty.current = false;
     }
   }, [open]);
@@ -82,8 +87,8 @@ export function CreateProjectDialog({
     setStep(2);
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = async (e?: React.FormEvent) => {
+    e?.preventDefault();
 
     if (!selectedTemplate) {
       toast.error(t`Please select a template`);
@@ -107,6 +112,24 @@ export function CreateProjectDialog({
       );
 
       const fingerprint = response.data?.fingerprint;
+
+      if (fingerprint && importData) {
+        try {
+          await toastAction(projectsApi.importData(fingerprint, importData), {
+            loading: t`Importing data...`,
+            success: () => {
+              const count = Array.isArray((importData as any).objects) ? (importData as any).objects.length : 0;
+              return t`Imported ${count} objects`;
+            },
+            error: (e) => getErrorMessage(e, t`Failed to import data`),
+          });
+        } catch (e) {
+          // If import fails, rollback project creation
+          await projectsApi.delete(fingerprint).catch(() => {});
+          throw e; // Stop execution, avoid navigation
+        }
+      }
+
       await refreshProjects();
 
       onOpenChange?.(false);
@@ -131,6 +154,57 @@ export function CreateProjectDialog({
     if (b.id === "blank") return 1;
     return naturalCompare(a.name, b.name);
   });
+
+
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      try {
+        const data = JSON.parse(reader.result as string);
+        setImportData(data);
+        setImportFileName(file.name);
+      } catch {
+        toast.error(t`Invalid JSON file`);
+        setImportData(null);
+        setImportFileName("");
+      }
+    };
+    reader.onerror = () => {
+      toast.error(t`Failed to read file`);
+      setImportData(null);
+      setImportFileName("");
+    };
+    reader.readAsText(file);
+    e.target.value = "";
+  };
+
+  const importClasses = useMemo(() => {
+    if (!importData || !Array.isArray((importData as any).objects)) return [];
+    const classes = new Set<string>();
+    (importData as any).objects.forEach((obj: any) => {
+      if (obj.class) classes.add(obj.class);
+    });
+    return Array.from(classes);
+  }, [importData]);
+
+  // Auto-select template based on detected classes
+  useEffect(() => {
+    if (importClasses.length === 0) return;
+    
+    if (importClasses.includes("card") || importClasses.includes("checklist")) {
+      setSelectedTemplate("kanban");
+    } else if (importClasses.includes("ticket")) {
+      setSelectedTemplate("tickets");
+    } else if (importClasses.includes("story") || importClasses.includes("epic") || importClasses.includes("bug")) {
+      setSelectedTemplate("agile");
+    } else {
+      setSelectedTemplate("blank");
+    }
+  }, [importClasses]);
 
   return (
     <ResponsiveDialog open={open} onOpenChange={onOpenChange}>
@@ -210,6 +284,57 @@ export function CreateProjectDialog({
               />
             </div>
 
+            <div className="space-y-2">
+              <Label><Trans>Import from backup (optional)</Trans></Label>
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept=".json"
+                onChange={handleFileChange}
+                className="hidden"
+              />
+              <div className="flex gap-2">
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="flex-1"
+                  onClick={() => fileInputRef.current?.click()}
+                >
+                  <Upload className="size-4 me-1.5" />
+                  <Trans>Upload .json file</Trans>
+                </Button>
+              </div>
+              {importFileName && (
+                <div className="mt-2">
+                  <Attachment orientation="horizontal">
+                    <AttachmentMedia>
+                      <Upload className="size-4" />
+                    </AttachmentMedia>
+                    <AttachmentContent>
+                      <AttachmentTitle>{importFileName}</AttachmentTitle>
+                    </AttachmentContent>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <AttachmentAction
+                          variant="ghost"
+                          onClick={() => {
+                            setImportData(null);
+                            setImportFileName("");
+                            if (fileInputRef.current) {
+                              fileInputRef.current.value = "";
+                            }
+                          }}
+                        >
+                          <X className="size-4" />
+                        </AttachmentAction>
+                      </TooltipTrigger>
+                      <TooltipContent><Trans>Remove</Trans></TooltipContent>
+                    </Tooltip>
+                  </Attachment>
+                </div>
+              )}
+            </div>
+
             <ResponsiveDialogFooter className="mt-6">
               <Button
                 type="button"
@@ -218,15 +343,23 @@ export function CreateProjectDialog({
               >
                 <Trans>Cancel</Trans>
               </Button>
-              <Button type="button" onClick={handleNext}>
-                <Trans>Next</Trans>
-                <ArrowRight className="ms-2 size-4 rtl:rotate-180" />
+              <Button type="button" onClick={handleNext} disabled={isPending}>
+                <Trans>Next</Trans><ArrowRight className="ms-2 size-4 rtl:rotate-180" />
               </Button>
             </ResponsiveDialogFooter>
           </div>
         ) : (
           <form onSubmit={handleSubmit}>
             <div className="mt-4 space-y-3">
+              {importData && importClasses.length > 0 && (
+                <div className="bg-primary/10 text-foreground border-primary/20 mb-4 rounded-lg border p-3 text-sm">
+                  <Trans>Your backup contains objects of type:</Trans>{" "}
+                  <span className="text-primary font-semibold">
+                    {importClasses.map(c => c.charAt(0).toUpperCase() + c.slice(1)).join(", ")}
+                  </span>.{" "}
+                  <Trans>We have auto-selected the best matching template.</Trans>
+                </div>
+              )}
               {isLoadingTemplates ? (
                 <div className="text-muted-foreground py-8 text-center text-sm">
                   <Trans>Loading templates...</Trans>
@@ -283,6 +416,7 @@ export function CreateProjectDialog({
                 </div>
               )}
             </div>
+
 
             <ResponsiveDialogFooter className="mt-6">
               <Button

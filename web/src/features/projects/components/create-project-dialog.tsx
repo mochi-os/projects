@@ -117,7 +117,10 @@ export function CreateProjectDialog({
         try {
           await toastAction(projectsApi.importData(fingerprint, importData), {
             loading: t`Importing data...`,
-            success: t`Data imported`,
+            success: () => {
+              const count = Array.isArray((importData as any).objects) ? (importData as any).objects.length : 0;
+              return t`Imported ${count} objects`;
+            },
             error: (e) => getErrorMessage(e, t`Failed to import data`),
           });
         } catch (e) {
@@ -152,9 +155,7 @@ export function CreateProjectDialog({
     return naturalCompare(a.name, b.name);
   });
 
-  const augmentedTemplates = [
-    ...sortedTemplates,
-  ];
+
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -343,11 +344,7 @@ export function CreateProjectDialog({
                 <Trans>Cancel</Trans>
               </Button>
               <Button type="button" onClick={handleNext} disabled={isPending}>
-                {importData ? (
-                  isPending ? <Trans>Creating...</Trans> : <><Plus className="me-2 size-4" /><Trans>Create project</Trans></>
-                ) : (
-                  <><Trans>Next</Trans><ArrowRight className="ms-2 size-4 rtl:rotate-180" /></>
-                )}
+                <Trans>Next</Trans><ArrowRight className="ms-2 size-4 rtl:rotate-180" />
               </Button>
             </ResponsiveDialogFooter>
           </div>
@@ -357,7 +354,9 @@ export function CreateProjectDialog({
               {importData && importClasses.length > 0 && (
                 <div className="bg-primary/10 text-foreground border-primary/20 mb-4 rounded-lg border p-3 text-sm">
                   <Trans>Your backup contains objects of type:</Trans>{" "}
-                  <span className="text-primary font-semibold">{importClasses.join(", ")}</span>.{" "}
+                  <span className="text-primary font-semibold">
+                    {importClasses.map(c => c.charAt(0).toUpperCase() + c.slice(1)).join(", ")}
+                  </span>.{" "}
                   <Trans>We have auto-selected the best matching template.</Trans>
                 </div>
               )}
@@ -367,7 +366,7 @@ export function CreateProjectDialog({
                 </div>
               ) : (
                 <div className="grid grid-cols-1 gap-3">
-                  {augmentedTemplates.map((template) => {
+                  {sortedTemplates.map((template) => {
                     const isSelected = selectedTemplate === template.id;
                     const IconComponent = {
                       "file": File,
@@ -417,8 +416,6 @@ export function CreateProjectDialog({
                 </div>
               )}
             </div>
-
-
 
 
             <ResponsiveDialogFooter className="mt-6">

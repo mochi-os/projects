@@ -9,6 +9,15 @@ import { Trans, useLingui } from '@lingui/react/macro'
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Download, Loader2, Paperclip, Trash2, Upload } from "lucide-react";
 import {
+  Attachment,
+  AttachmentAction,
+  AttachmentActions,
+  AttachmentContent,
+  AttachmentDescription,
+  AttachmentGroup,
+  AttachmentMedia,
+  AttachmentTitle,
+  AttachmentTrigger,
   AttachmentGallery,
   Button,
   ConfirmDialog,
@@ -25,7 +34,7 @@ import {
   TooltipContent,
 } from "@mochi/web";
 import projectsApi from "@/api/projects";
-import type { Attachment } from "@/types";
+import type { Attachment as AttachmentData } from "@/types";
 
 interface ObjectAttachmentsProps {
   projectId: string;
@@ -39,7 +48,7 @@ export function ObjectAttachments({
   readOnly,
 }: ObjectAttachmentsProps) {
   const { t } = useLingui()
-  const [deleteTarget, setDeleteTarget] = useState<Attachment | null>(null);
+  const [deleteTarget, setDeleteTarget] = useState<AttachmentData | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const queryClient = useQueryClient();
   const { formatFileSize } = useFormat();
@@ -91,7 +100,7 @@ export function ObjectAttachments({
 
   const basePath = `${getAppPath()}/${projectId}/-/attachments/`;
   const attUrl = (id: string, suffix = "") => authenticatedUrl(`${basePath}${id}${suffix}`);
-  const attachments: Attachment[] = data || [];
+  const attachments: AttachmentData[] = data || [];
   const images = attachments.filter((a) => isImage(a.type) || isVideo(a.type));
   const files = attachments.filter((a) => !isImage(a.type) && !isVideo(a.type));
 
@@ -138,7 +147,7 @@ export function ObjectAttachments({
                           className="absolute -top-1.5 -right-1.5 hidden group-hover/item:flex size-5 items-center justify-center rounded-full bg-destructive text-destructive-foreground shadow-sm"
                           onClick={(e) => {
                             e.stopPropagation()
-                            setDeleteTarget(att as Attachment)
+                            setDeleteTarget(att as AttachmentData)
                           }}
                           aria-label={t`Delete`}
                         >
@@ -152,45 +161,57 @@ export function ObjectAttachments({
           />
         )}
         {files.length > 0 && (
-          <div className="space-y-1">
+          <AttachmentGroup>
             {files.map((file) => {
               const FileIcon = getFileIcon(file.type);
               return (
-                <div
-                  key={file.id}
-                  className="group flex items-center gap-1.5 text-xs"
-                >
-                  <a
-                    href={attUrl(file.id)}
-                    download={file.name}
-                    className="text-muted-foreground hover:text-foreground flex items-center gap-1.5"
-                  >
-                    <FileIcon className="size-3" />
-                    <span>{file.name}</span>
-                    <span className="text-muted-foreground">
-                      ({formatFileSize(file.size)})
-                    </span>
-                    <Download className="size-3" />
-                  </a>
-                  {!readOnly && (
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <button
-                          type="button"
-                          className="hidden group-hover:inline-flex text-muted-foreground hover:text-destructive"
-                          onClick={() => setDeleteTarget(file)}
-                          aria-label={t`Delete`}
-                        >
-                          <Trash2 className="size-3" />
-                        </button>
-                      </TooltipTrigger>
-                      <TooltipContent>{t`Delete`}</TooltipContent>
-                    </Tooltip>
-                  )}
-                </div>
+                <Attachment key={file.id} size="sm">
+                  <AttachmentTrigger asChild>
+                    <a href={attUrl(file.id)} download={file.name}>
+                      <span className="sr-only">{file.name}</span>
+                    </a>
+                  </AttachmentTrigger>
+                  <AttachmentMedia>
+                    <FileIcon />
+                  </AttachmentMedia>
+                  <AttachmentContent>
+                    <AttachmentTitle>{file.name}</AttachmentTitle>
+                    <AttachmentDescription>
+                      {formatFileSize(file.size)}
+                    </AttachmentDescription>
+                  </AttachmentContent>
+                  <AttachmentActions>
+                    <AttachmentAction
+                      asChild
+                      variant="ghost"
+                      size="icon"
+                      className="opacity-0 group-hover/attachment:opacity-100 focus-within:opacity-100 text-muted-foreground hover:text-foreground"
+                    >
+                      <a href={attUrl(file.id)} download={file.name}>
+                        <Download className="size-3" />
+                        <span className="sr-only">
+                          <Trans>Download</Trans>
+                        </span>
+                      </a>
+                    </AttachmentAction>
+                    {!readOnly && (
+                      <AttachmentAction
+                        variant="ghost"
+                        size="icon"
+                        className="opacity-0 group-hover/attachment:opacity-100 focus-within:opacity-100 text-muted-foreground hover:text-destructive"
+                        onClick={() => setDeleteTarget(file)}
+                      >
+                        <Trash2 className="size-3" />
+                        <span className="sr-only">
+                          <Trans>Delete</Trans>
+                        </span>
+                      </AttachmentAction>
+                    )}
+                  </AttachmentActions>
+                </Attachment>
               );
             })}
-          </div>
+          </AttachmentGroup>
         )}
         {!readOnly && (
           <>

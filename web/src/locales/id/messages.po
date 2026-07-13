@@ -54,11 +54,11 @@ msgstr "Pengaturan {0}"
 msgid "+{0} ahead"
 msgstr "+{0} di depan"
 
-#: src/features/objects/components/comment-thread.tsx:136
+#: src/features/objects/components/comment-thread.tsx:146
 msgid "+{totalDescendants} more replies"
 msgstr "+{totalDescendants} balasan lainnya"
 
-#: src/features/objects/components/comment-thread.tsx:135
+#: src/features/objects/components/comment-thread.tsx:145
 msgid "1 reply"
 msgstr "1 balasan"
 
@@ -132,7 +132,7 @@ msgstr "Aktivitas"
 msgid "Add"
 msgstr "Tambah"
 
-#: src/features/objects/components/comment-list.tsx:205
+#: src/features/objects/components/comment-list.tsx:217
 msgid "Add a comment..."
 msgstr "Tambahkan komentar..."
 
@@ -258,7 +258,7 @@ msgid "An unexpected error occurred"
 msgstr "Terjadi kesalahan tak terduga"
 
 #. placeholder {0}: deleteTarget?.name
-#: src/features/objects/components/object-attachments.tsx:228
+#: src/features/objects/components/object-attachments.tsx:249
 msgid "Are you sure you want to delete \"{0}\"?"
 msgstr "Apakah Anda yakin ingin menghapus \"{0}\"?"
 
@@ -270,7 +270,7 @@ msgstr "Apakah Anda yakin ingin menghapus \"{title}\"? Tindakan ini tidak dapat 
 msgid "Are you sure you want to delete the \"{name}\" column? This cannot be undone."
 msgstr "Apakah Anda yakin ingin menghapus kolom \"{name}\"? Ini tidak dapat dibatalkan."
 
-#: src/features/objects/components/comment-thread.tsx:376
+#: src/features/objects/components/comment-thread.tsx:389
 msgid "Are you sure you want to delete this comment? This will also delete all replies."
 msgstr "Apakah Anda yakin ingin menghapus komentar ini? Ini juga akan menghapus semua balasan."
 
@@ -294,13 +294,13 @@ msgstr "Naik"
 msgid "Ascending"
 msgstr "Naik"
 
-#: src/features/objects/components/comment-list.tsx:260
-#: src/features/objects/components/comment-list.tsx:265
+#: src/features/objects/components/comment-list.tsx:275
+#: src/features/objects/components/comment-list.tsx:280
 msgid "Attach comment files"
 msgstr "Lampirkan file komentar"
 
-#: src/features/objects/components/comment-thread.tsx:330
-#: src/features/objects/components/comment-thread.tsx:335
+#: src/features/objects/components/comment-thread.tsx:343
+#: src/features/objects/components/comment-thread.tsx:348
 msgid "Attach reply files"
 msgstr "Lampirkan file balasan"
 
@@ -377,15 +377,15 @@ msgstr "Bisa menjadi anak dari"
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:89
 #: src/features/board/components/board-column.tsx:606
 #: src/features/editor/components/option-dialog.tsx:146
-#: src/features/objects/components/comment-thread.tsx:175
+#: src/features/objects/components/comment-thread.tsx:185
 #: src/features/projects/components/create-project-dialog.tsx:354
 #: src/routes/_authenticated/$projectId/design.tsx:343
 #: src/routes/_authenticated/$projectId/index.tsx:1011
 msgid "Cancel"
 msgstr "Batal"
 
-#: src/features/objects/components/comment-thread.tsx:346
-#: src/features/objects/components/comment-thread.tsx:351
+#: src/features/objects/components/comment-thread.tsx:359
+#: src/features/objects/components/comment-thread.tsx:364
 msgid "Cancel reply"
 msgstr "Batalkan balasan"
 
@@ -473,8 +473,8 @@ msgstr "Bersihkan pilihan (Escape)"
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:354
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:357
 #: ../../../lib/web/src/components/ui/sheet.tsx:79
-#: src/features/objects/components/create-object-dialog.tsx:391
-#: src/features/objects/components/create-object-dialog.tsx:396
+#: src/features/objects/components/create-object-dialog.tsx:405
+#: src/features/objects/components/create-object-dialog.tsx:410
 msgid "Close"
 msgstr "Tutup"
 
@@ -609,13 +609,13 @@ msgstr "Tidak dapat memverifikasi dengan akun tersebut. Silakan coba lagi."
 
 #: src/features/board/components/board-column.tsx:542
 #: src/features/board/components/board-column.tsx:681
-#: src/features/objects/components/create-object-dialog.tsx:381
-#: src/features/objects/components/create-object-dialog.tsx:535
+#: src/features/objects/components/create-object-dialog.tsx:395
+#: src/features/objects/components/create-object-dialog.tsx:565
 #: src/features/tree/components/tree-view.tsx:697
 msgid "Create"
 msgstr "Buat"
 
-#: src/features/objects/components/create-object-dialog.tsx:359
+#: src/features/objects/components/create-object-dialog.tsx:373
 msgid "Create a new item in this project"
 msgstr "Buat item baru di proyek ini"
 
@@ -625,7 +625,7 @@ msgid "Create a new project"
 msgstr "Buat proyek baru"
 
 #: src/components/keyboard-shortcuts-help.tsx:27
-#: src/features/objects/components/create-object-dialog.tsx:358
+#: src/features/objects/components/create-object-dialog.tsx:372
 msgid "Create new item"
 msgstr "Buat item baru"
 
@@ -649,7 +649,7 @@ msgstr "Dibuat"
 msgid "Creating project..."
 msgstr "Membuat proyek..."
 
-#: src/features/objects/components/create-object-dialog.tsx:535
+#: src/features/objects/components/create-object-dialog.tsx:565
 #: src/features/projects/components/create-project-dialog.tsx:441
 msgid "Creating..."
 msgstr "Membuat..."
@@ -700,20 +700,19 @@ msgstr "Pengurutan default"
 
 #: src/features/board/components/board-column.tsx:561
 #: src/features/board/components/board-column.tsx:622
-#: src/features/objects/components/comment-thread.tsx:244
-#: src/features/objects/components/comment-thread.tsx:377
-#: src/features/objects/components/object-attachments.tsx:143
-#: src/features/objects/components/object-attachments.tsx:148
-#: src/features/objects/components/object-attachments.tsx:182
-#: src/features/objects/components/object-attachments.tsx:187
-#: src/features/objects/components/object-attachments.tsx:229
+#: src/features/objects/components/comment-thread.tsx:254
+#: src/features/objects/components/comment-thread.tsx:390
+#: src/features/objects/components/object-attachments.tsx:152
+#: src/features/objects/components/object-attachments.tsx:157
+#: src/features/objects/components/object-attachments.tsx:206
+#: src/features/objects/components/object-attachments.tsx:250
 #: src/features/objects/components/object-detail-panel.tsx:657
 #: src/features/requests/components/request-panel.tsx:132
 #: src/routes/_authenticated/$projectId_.settings.tsx:363
 msgid "Delete"
 msgstr "Hapus"
 
-#: src/features/objects/components/object-attachments.tsx:227
+#: src/features/objects/components/object-attachments.tsx:248
 msgid "Delete attachment"
 msgstr "Hapus lampiran"
 
@@ -725,7 +724,7 @@ msgstr "Hapus kelas"
 msgid "Delete column"
 msgstr "Hapus kolom"
 
-#: src/features/objects/components/comment-thread.tsx:375
+#: src/features/objects/components/comment-thread.tsx:388
 msgid "Delete comment"
 msgstr "Hapus komentar"
 
@@ -861,6 +860,7 @@ msgstr "Klik dua kali pada kolom untuk menambahkan konten"
 
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:338
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:348
+#: src/features/objects/components/object-attachments.tsx:193
 msgid "Download"
 msgstr "Unduh"
 
@@ -889,7 +889,7 @@ msgstr "Duplikat"
 msgid "Dyslexia-friendly"
 msgstr "Ramah disleksia"
 
-#: src/features/objects/components/comment-thread.tsx:233
+#: src/features/objects/components/comment-thread.tsx:243
 msgid "Edit"
 msgstr "Edit"
 
@@ -1003,11 +1003,11 @@ msgstr "Gagal membuat proyek"
 msgid "Failed to create view"
 msgstr "Gagal membuat tampilan"
 
-#: src/features/objects/components/object-attachments.tsx:80
+#: src/features/objects/components/object-attachments.tsx:89
 msgid "Failed to delete attachment"
 msgstr "Gagal menghapus lampiran"
 
-#: src/features/objects/components/comment-list.tsx:132
+#: src/features/objects/components/comment-list.tsx:144
 msgid "Failed to delete comment"
 msgstr "Gagal menghapus komentar"
 
@@ -1060,7 +1060,7 @@ msgstr "Gagal memuat proyek"
 msgid "Failed to merge"
 msgstr "Gagal melakukan merge"
 
-#: src/features/objects/components/comment-list.tsx:95
+#: src/features/objects/components/comment-list.tsx:107
 msgid "Failed to post comment"
 msgstr "Gagal mengirim komentar"
 
@@ -1112,7 +1112,7 @@ msgstr "Gagal memperbarui tingkat akses"
 msgid "Failed to update category"
 msgstr "Gagal memperbarui kategori"
 
-#: src/features/objects/components/comment-list.tsx:115
+#: src/features/objects/components/comment-list.tsx:127
 msgid "Failed to update comment"
 msgstr "Gagal memperbarui komentar"
 
@@ -1124,7 +1124,7 @@ msgstr "Gagal memperbarui bidang"
 msgid "Failed to update project"
 msgstr "Gagal memperbarui proyek"
 
-#: src/features/objects/components/object-attachments.tsx:65
+#: src/features/objects/components/object-attachments.tsx:74
 msgid "Failed to upload attachment"
 msgstr "Gagal mengunggah lampiran"
 
@@ -1132,14 +1132,14 @@ msgstr "Gagal mengunggah lampiran"
 msgid "Fields"
 msgstr "Bidang"
 
-#: src/features/objects/components/create-object-dialog.tsx:472
-#: src/features/objects/components/object-attachments.tsx:103
-#: src/features/objects/components/object-attachments.tsx:120
+#: src/features/objects/components/create-object-dialog.tsx:486
+#: src/features/objects/components/object-attachments.tsx:112
+#: src/features/objects/components/object-attachments.tsx:129
 msgid "Files"
 msgstr "Berkas"
 
 #: src/components/layout/projects-layout.tsx:61
-#: src/routes/_authenticated/find.tsx:92
+#: src/routes/_authenticated/find.tsx:88
 msgid "Find projects"
 msgstr "Cari proyek"
 
@@ -1473,7 +1473,7 @@ msgid "Network error"
 msgstr "Kesalahan jaringan"
 
 #: ../../../lib/web/src/components/ui/sort-selector.tsx:43
-#: src/features/objects/components/create-object-dialog.tsx:366
+#: src/features/objects/components/create-object-dialog.tsx:380
 #: src/routes/_authenticated/$projectId/index.tsx:892
 #: src/routes/_authenticated/$projectId/index.tsx:910
 msgid "New"
@@ -1492,7 +1492,7 @@ msgstr "Berikutnya"
 msgid "Next image"
 msgstr "Gambar berikutnya"
 
-#: src/features/objects/components/create-object-dialog.tsx:439
+#: src/features/objects/components/create-object-dialog.tsx:453
 msgid "No {parentClassNames} to add to"
 msgstr "Tidak ada {parentClassNames} untuk ditambahkan"
 
@@ -1524,7 +1524,7 @@ msgstr "Tidak ada perubahan untuk ditampilkan"
 msgid "No changes were found for the selected comparison."
 msgstr "Tidak ada perubahan yang ditemukan untuk perbandingan yang dipilih."
 
-#: src/features/objects/components/comment-list.tsx:289
+#: src/features/objects/components/comment-list.tsx:304
 msgid "No comments yet"
 msgstr "Belum ada komentar"
 
@@ -1540,7 +1540,7 @@ msgstr "Tidak ada diff yang tersedia"
 msgid "No groups available"
 msgstr "Tidak ada grup yang tersedia"
 
-#: src/features/objects/components/create-object-dialog.tsx:406
+#: src/features/objects/components/create-object-dialog.tsx:420
 msgid "No item types can be created yet. Create the required parent items first."
 msgstr "Belum ada jenis item yang dapat dibuat. Buat item induk yang diperlukan terlebih dahulu."
 
@@ -1565,7 +1565,7 @@ msgid "No profile"
 msgstr "Tidak ada profil"
 
 #: src/features/projects/components/inline-project-search.tsx:164
-#: src/routes/_authenticated/find.tsx:94
+#: src/routes/_authenticated/find.tsx:90
 msgid "No projects found"
 msgstr "Tidak ada proyek yang ditemukan"
 
@@ -1612,8 +1612,8 @@ msgstr "Tidak ada tampilan"
 #: src/features/editor/components/edit-dialogs.tsx:505
 #: src/features/editor/components/edit-dialogs.tsx:779
 #: src/features/editor/components/edit-dialogs.tsx:782
-#: src/features/objects/components/create-object-dialog.tsx:422
-#: src/features/objects/components/create-object-dialog.tsx:429
+#: src/features/objects/components/create-object-dialog.tsx:436
+#: src/features/objects/components/create-object-dialog.tsx:443
 #: src/features/objects/components/object-detail-panel.tsx:548
 #: src/features/objects/components/object-detail-panel.tsx:561
 #: src/features/objects/components/object-detail-panel.tsx:566
@@ -1748,7 +1748,7 @@ msgstr "Lainnya"
 msgid "Owner"
 msgstr "Pemilik"
 
-#: src/features/objects/components/create-object-dialog.tsx:414
+#: src/features/objects/components/create-object-dialog.tsx:428
 #: src/features/objects/components/object-detail-panel.tsx:544
 msgid "Parent"
 msgstr "Induk"
@@ -1922,12 +1922,9 @@ msgstr "Relatif dalam 24 jam, selainnya absolut"
 #: ../../../lib/web/src/features/access/access-list.tsx:265
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:180
 #: src/features/editor/components/add-dialogs.tsx:188
-#: src/features/objects/components/comment-list.tsx:233
-#: src/features/objects/components/comment-list.tsx:238
-#: src/features/objects/components/comment-thread.tsx:294
-#: src/features/objects/components/comment-thread.tsx:299
-#: src/features/objects/components/create-object-dialog.tsx:486
-#: src/features/objects/components/create-object-dialog.tsx:491
+#: src/features/objects/components/comment-list.tsx:249
+#: src/features/objects/components/comment-thread.tsx:308
+#: src/features/objects/components/create-object-dialog.tsx:517
 #: src/features/projects/components/create-project-dialog.tsx:341
 msgid "Remove"
 msgstr "Hapus"
@@ -1990,12 +1987,12 @@ msgstr "Ganti desain?"
 msgid "Replacing..."
 msgstr "Mengganti..."
 
-#: src/features/objects/components/comment-thread.tsx:220
+#: src/features/objects/components/comment-thread.tsx:230
 msgid "Reply"
 msgstr "Balas"
 
 #. placeholder {0}: comment.name || comment.author
-#: src/features/objects/components/comment-thread.tsx:255
+#: src/features/objects/components/comment-thread.tsx:265
 msgid "Reply to {0}..."
 msgstr "Balas {0}..."
 
@@ -2052,7 +2049,7 @@ msgstr "Sabtu"
 #: ../../../lib/web/src/components/ui/editable-field-row.tsx:122
 #: ../../../lib/web/src/components/ui/secret-field.tsx:77
 #: src/features/editor/components/option-dialog.tsx:150
-#: src/features/objects/components/comment-thread.tsx:195
+#: src/features/objects/components/comment-thread.tsx:205
 #: src/routes/_authenticated/$projectId/index.tsx:1023
 msgid "Save"
 msgstr "Simpan"
@@ -2065,7 +2062,7 @@ msgstr "Menyimpan..."
 msgid "Search"
 msgstr "Cari"
 
-#: src/routes/_authenticated/find.tsx:93
+#: src/routes/_authenticated/find.tsx:89
 msgid "Search by name, ID, fingerprint, or URL..."
 msgstr "Cari berdasarkan nama, ID, sidik jari, atau URL..."
 
@@ -2293,7 +2290,7 @@ msgstr "Bagi"
 msgid "Squash and merge"
 msgstr "Squash dan gabung"
 
-#: src/features/objects/components/comment-list.tsx:290
+#: src/features/objects/components/comment-list.tsx:305
 msgid "Start the discussion by adding the first comment."
 msgstr "Mulai diskusi dengan menambahkan komentar pertama."
 
@@ -2310,13 +2307,13 @@ msgstr "Berhenti memantau"
 msgid "Subject"
 msgstr "Subjek"
 
-#: src/features/objects/components/comment-list.tsx:275
-#: src/features/objects/components/comment-list.tsx:280
+#: src/features/objects/components/comment-list.tsx:290
+#: src/features/objects/components/comment-list.tsx:295
 msgid "Submit comment"
 msgstr "Kirim komentar"
 
-#: src/features/objects/components/comment-thread.tsx:361
-#: src/features/objects/components/comment-thread.tsx:366
+#: src/features/objects/components/comment-thread.tsx:374
+#: src/features/objects/components/comment-thread.tsx:379
 msgid "Submit reply"
 msgstr "Kirim balasan"
 
@@ -2593,8 +2590,8 @@ msgstr "Diperbarui"
 msgid "Updating access..."
 msgstr "Memperbarui akses..."
 
-#: src/features/objects/components/create-object-dialog.tsx:519
-#: src/features/objects/components/object-attachments.tsx:216
+#: src/features/objects/components/create-object-dialog.tsx:549
+#: src/features/objects/components/object-attachments.tsx:237
 msgid "Upload"
 msgstr "Unggah"
 

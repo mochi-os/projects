@@ -54,11 +54,11 @@ msgstr "{0}-asetukset"
 msgid "+{0} ahead"
 msgstr "+{0} edellä"
 
-#: src/features/objects/components/comment-thread.tsx:136
+#: src/features/objects/components/comment-thread.tsx:146
 msgid "+{totalDescendants} more replies"
 msgstr "+{totalDescendants} lisää vastauksia"
 
-#: src/features/objects/components/comment-thread.tsx:135
+#: src/features/objects/components/comment-thread.tsx:145
 msgid "1 reply"
 msgstr "1 vastaus"
 
@@ -132,7 +132,7 @@ msgstr "Toiminta"
 msgid "Add"
 msgstr "Lisää"
 
-#: src/features/objects/components/comment-list.tsx:205
+#: src/features/objects/components/comment-list.tsx:217
 msgid "Add a comment..."
 msgstr "Lisää kommentti..."
 
@@ -258,7 +258,7 @@ msgid "An unexpected error occurred"
 msgstr "Tapahtui odottamaton virhe"
 
 #. placeholder {0}: deleteTarget?.name
-#: src/features/objects/components/object-attachments.tsx:228
+#: src/features/objects/components/object-attachments.tsx:249
 msgid "Are you sure you want to delete \"{0}\"?"
 msgstr "Haluatko varmasti poistaa kohteen \"{0}\"?"
 
@@ -270,7 +270,7 @@ msgstr "Haluatko varmasti poistaa kohteen \"{title}\"? Tätä toimintoa ei voi k
 msgid "Are you sure you want to delete the \"{name}\" column? This cannot be undone."
 msgstr "Haluatko varmasti poistaa sarakkeen \"{name}\"? Tätä ei voi kumota."
 
-#: src/features/objects/components/comment-thread.tsx:376
+#: src/features/objects/components/comment-thread.tsx:389
 msgid "Are you sure you want to delete this comment? This will also delete all replies."
 msgstr "Haluatko varmasti poistaa tämän kommentin? Tämä poistaa myös kaikki vastaukset."
 
@@ -294,13 +294,13 @@ msgstr "Nouseva"
 msgid "Ascending"
 msgstr "Nouseva"
 
-#: src/features/objects/components/comment-list.tsx:260
-#: src/features/objects/components/comment-list.tsx:265
+#: src/features/objects/components/comment-list.tsx:275
+#: src/features/objects/components/comment-list.tsx:280
 msgid "Attach comment files"
 msgstr "Liitä kommenttitiedostoja"
 
-#: src/features/objects/components/comment-thread.tsx:330
-#: src/features/objects/components/comment-thread.tsx:335
+#: src/features/objects/components/comment-thread.tsx:343
+#: src/features/objects/components/comment-thread.tsx:348
 msgid "Attach reply files"
 msgstr "Liitä vastaustiedostoja"
 
@@ -377,15 +377,15 @@ msgstr "Voi olla alikohde kohteelle"
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:89
 #: src/features/board/components/board-column.tsx:606
 #: src/features/editor/components/option-dialog.tsx:146
-#: src/features/objects/components/comment-thread.tsx:175
+#: src/features/objects/components/comment-thread.tsx:185
 #: src/features/projects/components/create-project-dialog.tsx:354
 #: src/routes/_authenticated/$projectId/design.tsx:343
 #: src/routes/_authenticated/$projectId/index.tsx:1011
 msgid "Cancel"
 msgstr "Peruuta"
 
-#: src/features/objects/components/comment-thread.tsx:346
-#: src/features/objects/components/comment-thread.tsx:351
+#: src/features/objects/components/comment-thread.tsx:359
+#: src/features/objects/components/comment-thread.tsx:364
 msgid "Cancel reply"
 msgstr "Peruuta vastaus"
 
@@ -473,8 +473,8 @@ msgstr "Tyhjennä valinta (Escape)"
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:354
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:357
 #: ../../../lib/web/src/components/ui/sheet.tsx:79
-#: src/features/objects/components/create-object-dialog.tsx:391
-#: src/features/objects/components/create-object-dialog.tsx:396
+#: src/features/objects/components/create-object-dialog.tsx:405
+#: src/features/objects/components/create-object-dialog.tsx:410
 msgid "Close"
 msgstr "Sulje"
 
@@ -609,13 +609,13 @@ msgstr "Vahvistaminen tällä tilillä ei onnistunut. Yritä uudelleen."
 
 #: src/features/board/components/board-column.tsx:542
 #: src/features/board/components/board-column.tsx:681
-#: src/features/objects/components/create-object-dialog.tsx:381
-#: src/features/objects/components/create-object-dialog.tsx:535
+#: src/features/objects/components/create-object-dialog.tsx:395
+#: src/features/objects/components/create-object-dialog.tsx:565
 #: src/features/tree/components/tree-view.tsx:697
 msgid "Create"
 msgstr "Luo"
 
-#: src/features/objects/components/create-object-dialog.tsx:359
+#: src/features/objects/components/create-object-dialog.tsx:373
 msgid "Create a new item in this project"
 msgstr "Luo uusi kohde tähän projektiin"
 
@@ -625,7 +625,7 @@ msgid "Create a new project"
 msgstr "Luo uusi projekti"
 
 #: src/components/keyboard-shortcuts-help.tsx:27
-#: src/features/objects/components/create-object-dialog.tsx:358
+#: src/features/objects/components/create-object-dialog.tsx:372
 msgid "Create new item"
 msgstr "Luo uusi kohde"
 
@@ -649,7 +649,7 @@ msgstr "Luotu"
 msgid "Creating project..."
 msgstr "Luodaan projektia..."
 
-#: src/features/objects/components/create-object-dialog.tsx:535
+#: src/features/objects/components/create-object-dialog.tsx:565
 #: src/features/projects/components/create-project-dialog.tsx:441
 msgid "Creating..."
 msgstr "Luodaan..."
@@ -700,20 +700,19 @@ msgstr "Oletuslajittelu"
 
 #: src/features/board/components/board-column.tsx:561
 #: src/features/board/components/board-column.tsx:622
-#: src/features/objects/components/comment-thread.tsx:244
-#: src/features/objects/components/comment-thread.tsx:377
-#: src/features/objects/components/object-attachments.tsx:143
-#: src/features/objects/components/object-attachments.tsx:148
-#: src/features/objects/components/object-attachments.tsx:182
-#: src/features/objects/components/object-attachments.tsx:187
-#: src/features/objects/components/object-attachments.tsx:229
+#: src/features/objects/components/comment-thread.tsx:254
+#: src/features/objects/components/comment-thread.tsx:390
+#: src/features/objects/components/object-attachments.tsx:152
+#: src/features/objects/components/object-attachments.tsx:157
+#: src/features/objects/components/object-attachments.tsx:206
+#: src/features/objects/components/object-attachments.tsx:250
 #: src/features/objects/components/object-detail-panel.tsx:657
 #: src/features/requests/components/request-panel.tsx:132
 #: src/routes/_authenticated/$projectId_.settings.tsx:363
 msgid "Delete"
 msgstr "Poista"
 
-#: src/features/objects/components/object-attachments.tsx:227
+#: src/features/objects/components/object-attachments.tsx:248
 msgid "Delete attachment"
 msgstr "Poista liite"
 
@@ -725,7 +724,7 @@ msgstr "Poista luokka"
 msgid "Delete column"
 msgstr "Poista sarake"
 
-#: src/features/objects/components/comment-thread.tsx:375
+#: src/features/objects/components/comment-thread.tsx:388
 msgid "Delete comment"
 msgstr "Poista kommentti"
 
@@ -861,6 +860,7 @@ msgstr "Lisää sisältöä kaksoisnapsauttamalla saraketta"
 
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:338
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:348
+#: src/features/objects/components/object-attachments.tsx:193
 msgid "Download"
 msgstr "Lataa"
 
@@ -889,7 +889,7 @@ msgstr "Duplikoi"
 msgid "Dyslexia-friendly"
 msgstr "Lukihäiriöystävällinen"
 
-#: src/features/objects/components/comment-thread.tsx:233
+#: src/features/objects/components/comment-thread.tsx:243
 msgid "Edit"
 msgstr "Muokkaa"
 
@@ -1003,11 +1003,11 @@ msgstr "Projektin luominen epäonnistui"
 msgid "Failed to create view"
 msgstr "Näkymän luominen epäonnistui"
 
-#: src/features/objects/components/object-attachments.tsx:80
+#: src/features/objects/components/object-attachments.tsx:89
 msgid "Failed to delete attachment"
 msgstr "Liitteen poistaminen epäonnistui"
 
-#: src/features/objects/components/comment-list.tsx:132
+#: src/features/objects/components/comment-list.tsx:144
 msgid "Failed to delete comment"
 msgstr "Kommentin poistaminen epäonnistui"
 
@@ -1060,7 +1060,7 @@ msgstr "Projektien lataus epäonnistui"
 msgid "Failed to merge"
 msgstr "Yhdistäminen epäonnistui"
 
-#: src/features/objects/components/comment-list.tsx:95
+#: src/features/objects/components/comment-list.tsx:107
 msgid "Failed to post comment"
 msgstr "Kommentin lähettäminen epäonnistui"
 
@@ -1112,7 +1112,7 @@ msgstr "Käyttöoikeustason päivitys epäonnistui"
 msgid "Failed to update category"
 msgstr "Kategorian päivitys epäonnistui"
 
-#: src/features/objects/components/comment-list.tsx:115
+#: src/features/objects/components/comment-list.tsx:127
 msgid "Failed to update comment"
 msgstr "Kommentin päivitys epäonnistui"
 
@@ -1124,7 +1124,7 @@ msgstr "Kentän päivitys epäonnistui"
 msgid "Failed to update project"
 msgstr "Projektin päivitys epäonnistui"
 
-#: src/features/objects/components/object-attachments.tsx:65
+#: src/features/objects/components/object-attachments.tsx:74
 msgid "Failed to upload attachment"
 msgstr "Liitteen lähetys epäonnistui"
 
@@ -1132,14 +1132,14 @@ msgstr "Liitteen lähetys epäonnistui"
 msgid "Fields"
 msgstr "Kentät"
 
-#: src/features/objects/components/create-object-dialog.tsx:472
-#: src/features/objects/components/object-attachments.tsx:103
-#: src/features/objects/components/object-attachments.tsx:120
+#: src/features/objects/components/create-object-dialog.tsx:486
+#: src/features/objects/components/object-attachments.tsx:112
+#: src/features/objects/components/object-attachments.tsx:129
 msgid "Files"
 msgstr "Tiedostot"
 
 #: src/components/layout/projects-layout.tsx:61
-#: src/routes/_authenticated/find.tsx:92
+#: src/routes/_authenticated/find.tsx:88
 msgid "Find projects"
 msgstr "Etsi projekteja"
 
@@ -1473,7 +1473,7 @@ msgid "Network error"
 msgstr "Verkkovirhe"
 
 #: ../../../lib/web/src/components/ui/sort-selector.tsx:43
-#: src/features/objects/components/create-object-dialog.tsx:366
+#: src/features/objects/components/create-object-dialog.tsx:380
 #: src/routes/_authenticated/$projectId/index.tsx:892
 #: src/routes/_authenticated/$projectId/index.tsx:910
 msgid "New"
@@ -1492,7 +1492,7 @@ msgstr "Seuraava"
 msgid "Next image"
 msgstr "Seuraava kuva"
 
-#: src/features/objects/components/create-object-dialog.tsx:439
+#: src/features/objects/components/create-object-dialog.tsx:453
 msgid "No {parentClassNames} to add to"
 msgstr "Ei {parentClassNames}, johon lisätä"
 
@@ -1524,7 +1524,7 @@ msgstr "Ei näytettäviä muutoksia"
 msgid "No changes were found for the selected comparison."
 msgstr "Valitulle vertailulle ei löytynyt muutoksia."
 
-#: src/features/objects/components/comment-list.tsx:289
+#: src/features/objects/components/comment-list.tsx:304
 msgid "No comments yet"
 msgstr "Ei vielä kommentteja"
 
@@ -1540,7 +1540,7 @@ msgstr "Ei saatavilla olevaa diffiä"
 msgid "No groups available"
 msgstr "Ei saatavilla olevia ryhmiä"
 
-#: src/features/objects/components/create-object-dialog.tsx:406
+#: src/features/objects/components/create-object-dialog.tsx:420
 msgid "No item types can be created yet. Create the required parent items first."
 msgstr "Mitään kohdetyyppiä ei voi vielä luoda. Luo ensin vaaditut yläkohteet."
 
@@ -1565,7 +1565,7 @@ msgid "No profile"
 msgstr "Ei profiilia"
 
 #: src/features/projects/components/inline-project-search.tsx:164
-#: src/routes/_authenticated/find.tsx:94
+#: src/routes/_authenticated/find.tsx:90
 msgid "No projects found"
 msgstr "Projekteja ei löytynyt"
 
@@ -1612,8 +1612,8 @@ msgstr "Ei näkymiä"
 #: src/features/editor/components/edit-dialogs.tsx:505
 #: src/features/editor/components/edit-dialogs.tsx:779
 #: src/features/editor/components/edit-dialogs.tsx:782
-#: src/features/objects/components/create-object-dialog.tsx:422
-#: src/features/objects/components/create-object-dialog.tsx:429
+#: src/features/objects/components/create-object-dialog.tsx:436
+#: src/features/objects/components/create-object-dialog.tsx:443
 #: src/features/objects/components/object-detail-panel.tsx:548
 #: src/features/objects/components/object-detail-panel.tsx:561
 #: src/features/objects/components/object-detail-panel.tsx:566
@@ -1748,7 +1748,7 @@ msgstr "Muu"
 msgid "Owner"
 msgstr "Omistaja"
 
-#: src/features/objects/components/create-object-dialog.tsx:414
+#: src/features/objects/components/create-object-dialog.tsx:428
 #: src/features/objects/components/object-detail-panel.tsx:544
 msgid "Parent"
 msgstr "Yläkohde"
@@ -1922,12 +1922,9 @@ msgstr "Suhteellinen 24 tunnin sisällä, muuten absoluuttinen"
 #: ../../../lib/web/src/features/access/access-list.tsx:265
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:180
 #: src/features/editor/components/add-dialogs.tsx:188
-#: src/features/objects/components/comment-list.tsx:233
-#: src/features/objects/components/comment-list.tsx:238
-#: src/features/objects/components/comment-thread.tsx:294
-#: src/features/objects/components/comment-thread.tsx:299
-#: src/features/objects/components/create-object-dialog.tsx:486
-#: src/features/objects/components/create-object-dialog.tsx:491
+#: src/features/objects/components/comment-list.tsx:249
+#: src/features/objects/components/comment-thread.tsx:308
+#: src/features/objects/components/create-object-dialog.tsx:517
 #: src/features/projects/components/create-project-dialog.tsx:341
 msgid "Remove"
 msgstr "Poista"
@@ -1990,12 +1987,12 @@ msgstr "Korvataanko suunnittelu?"
 msgid "Replacing..."
 msgstr "Korvataan..."
 
-#: src/features/objects/components/comment-thread.tsx:220
+#: src/features/objects/components/comment-thread.tsx:230
 msgid "Reply"
 msgstr "Vastaa"
 
 #. placeholder {0}: comment.name || comment.author
-#: src/features/objects/components/comment-thread.tsx:255
+#: src/features/objects/components/comment-thread.tsx:265
 msgid "Reply to {0}..."
 msgstr "Vastaa käyttäjälle {0}..."
 
@@ -2052,7 +2049,7 @@ msgstr "Lauantai"
 #: ../../../lib/web/src/components/ui/editable-field-row.tsx:122
 #: ../../../lib/web/src/components/ui/secret-field.tsx:77
 #: src/features/editor/components/option-dialog.tsx:150
-#: src/features/objects/components/comment-thread.tsx:195
+#: src/features/objects/components/comment-thread.tsx:205
 #: src/routes/_authenticated/$projectId/index.tsx:1023
 msgid "Save"
 msgstr "Tallenna"
@@ -2065,7 +2062,7 @@ msgstr "Tallennetaan..."
 msgid "Search"
 msgstr "Haku"
 
-#: src/routes/_authenticated/find.tsx:93
+#: src/routes/_authenticated/find.tsx:89
 msgid "Search by name, ID, fingerprint, or URL..."
 msgstr "Hae nimellä, tunnuksella, sormenjäljellä tai URL-osoitteella..."
 
@@ -2293,7 +2290,7 @@ msgstr "Jaa"
 msgid "Squash and merge"
 msgstr "Squash ja yhdistä"
 
-#: src/features/objects/components/comment-list.tsx:290
+#: src/features/objects/components/comment-list.tsx:305
 msgid "Start the discussion by adding the first comment."
 msgstr "Aloita keskustelu lisäämällä ensimmäinen kommentti."
 
@@ -2310,13 +2307,13 @@ msgstr "Lopeta seuranta"
 msgid "Subject"
 msgstr "Aihe"
 
-#: src/features/objects/components/comment-list.tsx:275
-#: src/features/objects/components/comment-list.tsx:280
+#: src/features/objects/components/comment-list.tsx:290
+#: src/features/objects/components/comment-list.tsx:295
 msgid "Submit comment"
 msgstr "Lähetä kommentti"
 
-#: src/features/objects/components/comment-thread.tsx:361
-#: src/features/objects/components/comment-thread.tsx:366
+#: src/features/objects/components/comment-thread.tsx:374
+#: src/features/objects/components/comment-thread.tsx:379
 msgid "Submit reply"
 msgstr "Lähetä vastaus"
 
@@ -2593,8 +2590,8 @@ msgstr "Päivitetty"
 msgid "Updating access..."
 msgstr "Päivitetään käyttöoikeutta..."
 
-#: src/features/objects/components/create-object-dialog.tsx:519
-#: src/features/objects/components/object-attachments.tsx:216
+#: src/features/objects/components/create-object-dialog.tsx:549
+#: src/features/objects/components/object-attachments.tsx:237
 msgid "Upload"
 msgstr "Lähetä"
 

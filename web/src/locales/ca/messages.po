@@ -54,11 +54,11 @@ msgstr "Configuració de {0}"
 msgid "+{0} ahead"
 msgstr "+{0} per davant"
 
-#: src/features/objects/components/comment-thread.tsx:136
+#: src/features/objects/components/comment-thread.tsx:146
 msgid "+{totalDescendants} more replies"
 msgstr "+{totalDescendants} respostes més"
 
-#: src/features/objects/components/comment-thread.tsx:135
+#: src/features/objects/components/comment-thread.tsx:145
 msgid "1 reply"
 msgstr "1 resposta"
 
@@ -132,7 +132,7 @@ msgstr "Activitat"
 msgid "Add"
 msgstr "Afegeix"
 
-#: src/features/objects/components/comment-list.tsx:205
+#: src/features/objects/components/comment-list.tsx:217
 msgid "Add a comment..."
 msgstr "Afegeix un comentari..."
 
@@ -258,7 +258,7 @@ msgid "An unexpected error occurred"
 msgstr "S'ha produït un error inesperat"
 
 #. placeholder {0}: deleteTarget?.name
-#: src/features/objects/components/object-attachments.tsx:228
+#: src/features/objects/components/object-attachments.tsx:249
 msgid "Are you sure you want to delete \"{0}\"?"
 msgstr "Segur que vols suprimir «{0}»?"
 
@@ -270,7 +270,7 @@ msgstr "Segur que vols suprimir «{title}»? Aquesta acció no es pot desfer."
 msgid "Are you sure you want to delete the \"{name}\" column? This cannot be undone."
 msgstr "Segur que vols suprimir la columna «{name}»? Això no es pot desfer."
 
-#: src/features/objects/components/comment-thread.tsx:376
+#: src/features/objects/components/comment-thread.tsx:389
 msgid "Are you sure you want to delete this comment? This will also delete all replies."
 msgstr "Segur que vols suprimir aquest comentari? També se suprimiran totes les respostes."
 
@@ -294,13 +294,13 @@ msgstr "Asc."
 msgid "Ascending"
 msgstr "Ascendent"
 
-#: src/features/objects/components/comment-list.tsx:260
-#: src/features/objects/components/comment-list.tsx:265
+#: src/features/objects/components/comment-list.tsx:275
+#: src/features/objects/components/comment-list.tsx:280
 msgid "Attach comment files"
 msgstr "Adjunta fitxers de comentari"
 
-#: src/features/objects/components/comment-thread.tsx:330
-#: src/features/objects/components/comment-thread.tsx:335
+#: src/features/objects/components/comment-thread.tsx:343
+#: src/features/objects/components/comment-thread.tsx:348
 msgid "Attach reply files"
 msgstr "Adjunta fitxers de resposta"
 
@@ -377,15 +377,15 @@ msgstr "Pot ser fill de"
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:89
 #: src/features/board/components/board-column.tsx:606
 #: src/features/editor/components/option-dialog.tsx:146
-#: src/features/objects/components/comment-thread.tsx:175
+#: src/features/objects/components/comment-thread.tsx:185
 #: src/features/projects/components/create-project-dialog.tsx:354
 #: src/routes/_authenticated/$projectId/design.tsx:343
 #: src/routes/_authenticated/$projectId/index.tsx:1011
 msgid "Cancel"
 msgstr "Cancel·la"
 
-#: src/features/objects/components/comment-thread.tsx:346
-#: src/features/objects/components/comment-thread.tsx:351
+#: src/features/objects/components/comment-thread.tsx:359
+#: src/features/objects/components/comment-thread.tsx:364
 msgid "Cancel reply"
 msgstr "Cancel·la la resposta"
 
@@ -473,8 +473,8 @@ msgstr "Esborra la selecció (Escapada)"
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:354
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:357
 #: ../../../lib/web/src/components/ui/sheet.tsx:79
-#: src/features/objects/components/create-object-dialog.tsx:391
-#: src/features/objects/components/create-object-dialog.tsx:396
+#: src/features/objects/components/create-object-dialog.tsx:405
+#: src/features/objects/components/create-object-dialog.tsx:410
 msgid "Close"
 msgstr "Tanca"
 
@@ -609,13 +609,13 @@ msgstr "No s'ha pogut verificar amb aquest compte. Torneu-ho a provar."
 
 #: src/features/board/components/board-column.tsx:542
 #: src/features/board/components/board-column.tsx:681
-#: src/features/objects/components/create-object-dialog.tsx:381
-#: src/features/objects/components/create-object-dialog.tsx:535
+#: src/features/objects/components/create-object-dialog.tsx:395
+#: src/features/objects/components/create-object-dialog.tsx:565
 #: src/features/tree/components/tree-view.tsx:697
 msgid "Create"
 msgstr "Crea"
 
-#: src/features/objects/components/create-object-dialog.tsx:359
+#: src/features/objects/components/create-object-dialog.tsx:373
 msgid "Create a new item in this project"
 msgstr "Crea un nou element en aquest projecte"
 
@@ -625,7 +625,7 @@ msgid "Create a new project"
 msgstr "Crea un nou projecte"
 
 #: src/components/keyboard-shortcuts-help.tsx:27
-#: src/features/objects/components/create-object-dialog.tsx:358
+#: src/features/objects/components/create-object-dialog.tsx:372
 msgid "Create new item"
 msgstr "Crea un element nou"
 
@@ -649,7 +649,7 @@ msgstr "Creat"
 msgid "Creating project..."
 msgstr "Creant el projecte..."
 
-#: src/features/objects/components/create-object-dialog.tsx:535
+#: src/features/objects/components/create-object-dialog.tsx:565
 #: src/features/projects/components/create-project-dialog.tsx:441
 msgid "Creating..."
 msgstr "S'està creant..."
@@ -700,20 +700,19 @@ msgstr "Ordre per defecte"
 
 #: src/features/board/components/board-column.tsx:561
 #: src/features/board/components/board-column.tsx:622
-#: src/features/objects/components/comment-thread.tsx:244
-#: src/features/objects/components/comment-thread.tsx:377
-#: src/features/objects/components/object-attachments.tsx:143
-#: src/features/objects/components/object-attachments.tsx:148
-#: src/features/objects/components/object-attachments.tsx:182
-#: src/features/objects/components/object-attachments.tsx:187
-#: src/features/objects/components/object-attachments.tsx:229
+#: src/features/objects/components/comment-thread.tsx:254
+#: src/features/objects/components/comment-thread.tsx:390
+#: src/features/objects/components/object-attachments.tsx:152
+#: src/features/objects/components/object-attachments.tsx:157
+#: src/features/objects/components/object-attachments.tsx:206
+#: src/features/objects/components/object-attachments.tsx:250
 #: src/features/objects/components/object-detail-panel.tsx:657
 #: src/features/requests/components/request-panel.tsx:132
 #: src/routes/_authenticated/$projectId_.settings.tsx:363
 msgid "Delete"
 msgstr "Suprimeix"
 
-#: src/features/objects/components/object-attachments.tsx:227
+#: src/features/objects/components/object-attachments.tsx:248
 msgid "Delete attachment"
 msgstr "Suprimeix el fitxer adjunt"
 
@@ -725,7 +724,7 @@ msgstr "Suprimeix la classe"
 msgid "Delete column"
 msgstr "Suprimeix la columna"
 
-#: src/features/objects/components/comment-thread.tsx:375
+#: src/features/objects/components/comment-thread.tsx:388
 msgid "Delete comment"
 msgstr "Suprimeix el comentari"
 
@@ -861,6 +860,7 @@ msgstr "Fes doble clic en una columna per afegir contingut"
 
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:338
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:348
+#: src/features/objects/components/object-attachments.tsx:193
 msgid "Download"
 msgstr "Descarrega"
 
@@ -889,7 +889,7 @@ msgstr "Duplicats"
 msgid "Dyslexia-friendly"
 msgstr "Apte per a la dislèxia"
 
-#: src/features/objects/components/comment-thread.tsx:233
+#: src/features/objects/components/comment-thread.tsx:243
 msgid "Edit"
 msgstr "Edita"
 
@@ -1003,11 +1003,11 @@ msgstr "No s'ha pogut crear el projecte"
 msgid "Failed to create view"
 msgstr "No s'ha pogut crear la vista"
 
-#: src/features/objects/components/object-attachments.tsx:80
+#: src/features/objects/components/object-attachments.tsx:89
 msgid "Failed to delete attachment"
 msgstr "No s'ha pogut suprimir l'adjunt"
 
-#: src/features/objects/components/comment-list.tsx:132
+#: src/features/objects/components/comment-list.tsx:144
 msgid "Failed to delete comment"
 msgstr "No s'ha pogut suprimir el comentari"
 
@@ -1060,7 +1060,7 @@ msgstr "No s'han pogut carregar els projectes"
 msgid "Failed to merge"
 msgstr "No s'ha pogut fusionar"
 
-#: src/features/objects/components/comment-list.tsx:95
+#: src/features/objects/components/comment-list.tsx:107
 msgid "Failed to post comment"
 msgstr "No s'ha pogut publicar el comentari"
 
@@ -1112,7 +1112,7 @@ msgstr "No s'ha pogut actualitzar el nivell d'accés"
 msgid "Failed to update category"
 msgstr "No s'ha pogut actualitzar la categoria"
 
-#: src/features/objects/components/comment-list.tsx:115
+#: src/features/objects/components/comment-list.tsx:127
 msgid "Failed to update comment"
 msgstr "No s'ha pogut actualitzar el comentari"
 
@@ -1124,7 +1124,7 @@ msgstr "No s'ha pogut actualitzar el camp"
 msgid "Failed to update project"
 msgstr "No s'ha pogut actualitzar el projecte"
 
-#: src/features/objects/components/object-attachments.tsx:65
+#: src/features/objects/components/object-attachments.tsx:74
 msgid "Failed to upload attachment"
 msgstr "No s'ha pogut pujar l'adjunt"
 
@@ -1132,14 +1132,14 @@ msgstr "No s'ha pogut pujar l'adjunt"
 msgid "Fields"
 msgstr "Camps"
 
-#: src/features/objects/components/create-object-dialog.tsx:472
-#: src/features/objects/components/object-attachments.tsx:103
-#: src/features/objects/components/object-attachments.tsx:120
+#: src/features/objects/components/create-object-dialog.tsx:486
+#: src/features/objects/components/object-attachments.tsx:112
+#: src/features/objects/components/object-attachments.tsx:129
 msgid "Files"
 msgstr "Fitxers"
 
 #: src/components/layout/projects-layout.tsx:61
-#: src/routes/_authenticated/find.tsx:92
+#: src/routes/_authenticated/find.tsx:88
 msgid "Find projects"
 msgstr "Cerca projectes"
 
@@ -1473,7 +1473,7 @@ msgid "Network error"
 msgstr "Error de xarxa"
 
 #: ../../../lib/web/src/components/ui/sort-selector.tsx:43
-#: src/features/objects/components/create-object-dialog.tsx:366
+#: src/features/objects/components/create-object-dialog.tsx:380
 #: src/routes/_authenticated/$projectId/index.tsx:892
 #: src/routes/_authenticated/$projectId/index.tsx:910
 msgid "New"
@@ -1492,7 +1492,7 @@ msgstr "Següent"
 msgid "Next image"
 msgstr "Imatge següent"
 
-#: src/features/objects/components/create-object-dialog.tsx:439
+#: src/features/objects/components/create-object-dialog.tsx:453
 msgid "No {parentClassNames} to add to"
 msgstr "No hi ha cap {parentClassNames} on afegir-ho"
 
@@ -1524,7 +1524,7 @@ msgstr "Cap canvi per mostrar"
 msgid "No changes were found for the selected comparison."
 msgstr "No s'han trobat canvis per a la comparació seleccionada."
 
-#: src/features/objects/components/comment-list.tsx:289
+#: src/features/objects/components/comment-list.tsx:304
 msgid "No comments yet"
 msgstr "Encara no hi ha comentaris"
 
@@ -1540,7 +1540,7 @@ msgstr "No hi ha cap diff disponible"
 msgid "No groups available"
 msgstr "No hi ha cap grup disponible"
 
-#: src/features/objects/components/create-object-dialog.tsx:406
+#: src/features/objects/components/create-object-dialog.tsx:420
 msgid "No item types can be created yet. Create the required parent items first."
 msgstr "Encara no es pot crear cap tipus d'element. Crea primer els elements pare necessaris."
 
@@ -1565,7 +1565,7 @@ msgid "No profile"
 msgstr "Sense perfil"
 
 #: src/features/projects/components/inline-project-search.tsx:164
-#: src/routes/_authenticated/find.tsx:94
+#: src/routes/_authenticated/find.tsx:90
 msgid "No projects found"
 msgstr "No s'ha trobat cap projecte"
 
@@ -1612,8 +1612,8 @@ msgstr "Sense visualitzacions"
 #: src/features/editor/components/edit-dialogs.tsx:505
 #: src/features/editor/components/edit-dialogs.tsx:779
 #: src/features/editor/components/edit-dialogs.tsx:782
-#: src/features/objects/components/create-object-dialog.tsx:422
-#: src/features/objects/components/create-object-dialog.tsx:429
+#: src/features/objects/components/create-object-dialog.tsx:436
+#: src/features/objects/components/create-object-dialog.tsx:443
 #: src/features/objects/components/object-detail-panel.tsx:548
 #: src/features/objects/components/object-detail-panel.tsx:561
 #: src/features/objects/components/object-detail-panel.tsx:566
@@ -1748,7 +1748,7 @@ msgstr "Altres"
 msgid "Owner"
 msgstr "Propietari"
 
-#: src/features/objects/components/create-object-dialog.tsx:414
+#: src/features/objects/components/create-object-dialog.tsx:428
 #: src/features/objects/components/object-detail-panel.tsx:544
 msgid "Parent"
 msgstr "Pare"
@@ -1922,12 +1922,9 @@ msgstr "Relativa en 24 hores, si no absoluta"
 #: ../../../lib/web/src/features/access/access-list.tsx:265
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:180
 #: src/features/editor/components/add-dialogs.tsx:188
-#: src/features/objects/components/comment-list.tsx:233
-#: src/features/objects/components/comment-list.tsx:238
-#: src/features/objects/components/comment-thread.tsx:294
-#: src/features/objects/components/comment-thread.tsx:299
-#: src/features/objects/components/create-object-dialog.tsx:486
-#: src/features/objects/components/create-object-dialog.tsx:491
+#: src/features/objects/components/comment-list.tsx:249
+#: src/features/objects/components/comment-thread.tsx:308
+#: src/features/objects/components/create-object-dialog.tsx:517
 #: src/features/projects/components/create-project-dialog.tsx:341
 msgid "Remove"
 msgstr "Elimina"
@@ -1990,12 +1987,12 @@ msgstr "Vols substituir el disseny?"
 msgid "Replacing..."
 msgstr "Substituint..."
 
-#: src/features/objects/components/comment-thread.tsx:220
+#: src/features/objects/components/comment-thread.tsx:230
 msgid "Reply"
 msgstr "Respon"
 
 #. placeholder {0}: comment.name || comment.author
-#: src/features/objects/components/comment-thread.tsx:255
+#: src/features/objects/components/comment-thread.tsx:265
 msgid "Reply to {0}..."
 msgstr "Respon a {0}..."
 
@@ -2052,7 +2049,7 @@ msgstr "Dissabte"
 #: ../../../lib/web/src/components/ui/editable-field-row.tsx:122
 #: ../../../lib/web/src/components/ui/secret-field.tsx:77
 #: src/features/editor/components/option-dialog.tsx:150
-#: src/features/objects/components/comment-thread.tsx:195
+#: src/features/objects/components/comment-thread.tsx:205
 #: src/routes/_authenticated/$projectId/index.tsx:1023
 msgid "Save"
 msgstr "Desa"
@@ -2065,7 +2062,7 @@ msgstr "Desant..."
 msgid "Search"
 msgstr "Cerca"
 
-#: src/routes/_authenticated/find.tsx:93
+#: src/routes/_authenticated/find.tsx:89
 msgid "Search by name, ID, fingerprint, or URL..."
 msgstr "Cerca per nom, ID, empremta o URL..."
 
@@ -2293,7 +2290,7 @@ msgstr "Divideix"
 msgid "Squash and merge"
 msgstr "Aplana i combina"
 
-#: src/features/objects/components/comment-list.tsx:290
+#: src/features/objects/components/comment-list.tsx:305
 msgid "Start the discussion by adding the first comment."
 msgstr "Inicia la discussió afegint el primer comentari."
 
@@ -2310,13 +2307,13 @@ msgstr "Deixa de seguir"
 msgid "Subject"
 msgstr "Assumpte"
 
-#: src/features/objects/components/comment-list.tsx:275
-#: src/features/objects/components/comment-list.tsx:280
+#: src/features/objects/components/comment-list.tsx:290
+#: src/features/objects/components/comment-list.tsx:295
 msgid "Submit comment"
 msgstr "Envia comentari"
 
-#: src/features/objects/components/comment-thread.tsx:361
-#: src/features/objects/components/comment-thread.tsx:366
+#: src/features/objects/components/comment-thread.tsx:374
+#: src/features/objects/components/comment-thread.tsx:379
 msgid "Submit reply"
 msgstr "Envia resposta"
 
@@ -2593,8 +2590,8 @@ msgstr "Actualitzat"
 msgid "Updating access..."
 msgstr "Actualitzant l'accés..."
 
-#: src/features/objects/components/create-object-dialog.tsx:519
-#: src/features/objects/components/object-attachments.tsx:216
+#: src/features/objects/components/create-object-dialog.tsx:549
+#: src/features/objects/components/object-attachments.tsx:237
 msgid "Upload"
 msgstr "Puja"
 

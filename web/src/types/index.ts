@@ -75,6 +75,7 @@ export interface ProjectTemplate {
   description: string;
   icon: string;
   version: number;
+  classes?: { id: string; name: string }[];
 }
 
 export interface ProjectDetails {

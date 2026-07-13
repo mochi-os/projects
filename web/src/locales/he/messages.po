@@ -237,7 +237,7 @@ msgstr "הכול"
 msgid "All projects"
 msgstr "כל הפרויקטים"
 
-#: src/features/projects/components/create-project-dialog.tsx:278
+#: src/features/projects/components/create-project-dialog.tsx:288
 msgid "Allow anyone to search for project"
 msgstr "אפשר לכולם לחפש את הפרויקט"
 
@@ -313,7 +313,7 @@ msgid "Available keyboard shortcuts"
 msgstr "קיצורי מקלדת זמינים"
 
 #: ../../../lib/web/src/components/place-picker.tsx:155
-#: src/features/projects/components/create-project-dialog.tsx:428
+#: src/features/projects/components/create-project-dialog.tsx:438
 msgid "Back"
 msgstr "חזור"
 
@@ -378,7 +378,7 @@ msgstr "יכול להיות צאצא של"
 #: src/features/board/components/board-column.tsx:606
 #: src/features/editor/components/option-dialog.tsx:146
 #: src/features/objects/components/comment-thread.tsx:175
-#: src/features/projects/components/create-project-dialog.tsx:344
+#: src/features/projects/components/create-project-dialog.tsx:354
 #: src/routes/_authenticated/$projectId/design.tsx:343
 #: src/routes/_authenticated/$projectId/index.tsx:1011
 msgid "Cancel"
@@ -414,7 +414,7 @@ msgstr "בודק סטטוס Merge..."
 msgid "Checklist"
 msgstr "רשימת משימות"
 
-#: src/features/projects/components/create-project-dialog.tsx:225
+#: src/features/projects/components/create-project-dialog.tsx:235
 msgid "Choose a template"
 msgstr "בחר תבנית"
 
@@ -619,7 +619,7 @@ msgstr "צור"
 msgid "Create a new item in this project"
 msgstr "צור פריט חדש בפרויקט זה"
 
-#: src/features/projects/components/create-project-dialog.tsx:227
+#: src/features/projects/components/create-project-dialog.tsx:237
 #: src/features/projects/pages/projects-list-page.tsx:103
 msgid "Create a new project"
 msgstr "צור פרויקט חדש"
@@ -630,9 +630,9 @@ msgid "Create new item"
 msgstr "צור פריט חדש"
 
 #: src/components/layout/projects-layout.tsx:62
-#: src/features/projects/components/create-project-dialog.tsx:215
 #: src/features/projects/components/create-project-dialog.tsx:225
-#: src/features/projects/components/create-project-dialog.tsx:431
+#: src/features/projects/components/create-project-dialog.tsx:235
+#: src/features/projects/components/create-project-dialog.tsx:441
 msgid "Create project"
 msgstr "צור פרויקט"
 
@@ -645,12 +645,12 @@ msgstr "יצירה, עריכה, הוספת תגובות וצפייה"
 msgid "Created"
 msgstr "נוצר"
 
-#: src/features/projects/components/create-project-dialog.tsx:108
+#: src/features/projects/components/create-project-dialog.tsx:109
 msgid "Creating project..."
 msgstr "יוצר פרויקט..."
 
 #: src/features/objects/components/create-object-dialog.tsx:535
-#: src/features/projects/components/create-project-dialog.tsx:431
+#: src/features/projects/components/create-project-dialog.tsx:441
 msgid "Creating..."
 msgstr "יוצר..."
 
@@ -675,13 +675,12 @@ msgstr "מצב כהה"
 msgid "Data conflict"
 msgstr "התנגשות נתונים"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:350
-#~ msgid "Data imported ({0, plural, one {# object} other {# objects}}, {1, plural, one {# comment} other {# comments}}, {2, plural, one {# link} other {# links}})"
-#~ msgstr "הנתונים יובאו ({0, plural, one {# אובייקט} two {# אובייקטים} many {# אובייקטים} other {# אובייקטים}}, {1, plural, one {# תגובה} two {# תגובות} many {# תגובות} other {# תגובות}}, {2, plural, one {# קישור} two {# קישורים} many {# קישורים} other {# קישורים}})"
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:433
-#~ msgid "Data management"
-#~ msgstr "ניהול נתונים"
+#. placeholder {0}: imported.data?.objects ?? 0
+#. placeholder {1}: imported.data?.comments ?? 0
+#. placeholder {2}: imported.data?.links ?? 0
+#: src/features/projects/components/create-project-dialog.tsx:121
+msgid "Data imported ({0, plural, one {# object} other {# objects}}, {1, plural, one {# comment} other {# comments}}, {2, plural, one {# link} other {# links}})"
+msgstr "הנתונים יובאו ({0, plural, one {# אובייקט} two {# אובייקטים} many {# אובייקטים} other {# אובייקטים}}, {1, plural, one {# תגובה} two {# תגובות} many {# תגובות} other {# תגובות}}, {2, plural, one {# קישור} two {# קישורים} many {# קישורים} other {# קישורים}})"
 
 #: src/features/editor/components/add-dialogs.tsx:137
 msgid "Date"
@@ -967,10 +966,6 @@ msgstr "ייצוא נתונים"
 msgid "Export design"
 msgstr "ייצוא עיצוב"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:434
-#~ msgid "Export or import the raw data content in this project."
-#~ msgstr "ייצוא או ייבוא של תוכן הנתונים הגולמי בפרויקט זה."
-
 #: ../../../lib/web/src/lib/preference-utils.ts:136
 msgid "Extra large"
 msgstr "גדול במיוחד"
@@ -1000,7 +995,7 @@ msgstr "יצירת הקישור נכשלה"
 msgid "Failed to create option"
 msgstr "יצירת האפשרות נכשלה"
 
-#: src/features/projects/components/create-project-dialog.tsx:110
+#: src/features/projects/components/create-project-dialog.tsx:111
 msgid "Failed to create project"
 msgstr "יצירת הפרויקט נכשלה"
 
@@ -1036,7 +1031,7 @@ msgstr "ייצוא הנתונים נכשל"
 msgid "Failed to export design"
 msgstr "ייצוא העיצוב נכשל"
 
-#: src/features/projects/components/create-project-dialog.tsx:124
+#: src/features/projects/components/create-project-dialog.tsx:122
 msgid "Failed to import data"
 msgstr "ייבוא הנתונים נכשל"
 
@@ -1069,7 +1064,7 @@ msgstr "המיזוג נכשל"
 msgid "Failed to post comment"
 msgstr "פרסום התגובה נכשל"
 
-#: src/features/projects/components/create-project-dialog.tsx:177
+#: src/features/projects/components/create-project-dialog.tsx:175
 #: src/routes/_authenticated/$projectId/design.tsx:281
 msgid "Failed to read file"
 msgstr "קריאת הקובץ נכשלה"
@@ -1144,7 +1139,7 @@ msgid "Files"
 msgstr "קבצים"
 
 #: src/components/layout/projects-layout.tsx:61
-#: src/routes/_authenticated/find.tsx:88
+#: src/routes/_authenticated/find.tsx:92
 msgid "Find projects"
 msgstr "חפש פרויקטים"
 
@@ -1254,40 +1249,18 @@ msgstr "זהות"
 msgid "Imperial"
 msgstr "אימפריאלי"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:549
-#~ msgid "Import a data configuration"
-#~ msgstr "ייבוא תצורת נתונים"
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:444
-#: src/routes/_authenticated/$projectId_.settings.tsx:490
-#: src/routes/_authenticated/$projectId_.settings.tsx:548
-#~ msgid "Import data"
-#~ msgstr "ייבוא נתונים"
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:476
-#~ msgid "Import data?"
-#~ msgstr "לייבא את הנתונים?"
-
 #: src/routes/_authenticated/$projectId/design.tsx:177
 #: src/routes/_authenticated/$projectId/design.tsx:293
 msgid "Import design"
 msgstr "ייבוא עיצוב"
 
-#: src/features/projects/components/create-project-dialog.tsx:288
+#: src/features/projects/components/create-project-dialog.tsx:298
 msgid "Import from backup (optional)"
-msgstr ""
+msgstr "ייבוא מגיבוי (אופציונלי)"
 
-#: src/features/projects/components/create-project-dialog.tsx:122
-msgid "Imported {count} objects"
-msgstr ""
-
-#: src/features/projects/components/create-project-dialog.tsx:119
+#: src/features/projects/components/create-project-dialog.tsx:120
 msgid "Importing data..."
-msgstr ""
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:487
-#~ msgid "Importing..."
-#~ msgstr "מתבצע ייבוא..."
+msgstr "מייבא נתונים..."
 
 #: ../../../lib/web/src/components/config-drawer.tsx:252
 msgid "Inset"
@@ -1301,7 +1274,7 @@ msgstr "תחומי עניין"
 msgid "Invalid date"
 msgstr "תאריך לא תקין"
 
-#: src/features/projects/components/create-project-dialog.tsx:171
+#: src/features/projects/components/create-project-dialog.tsx:169
 #: src/routes/_authenticated/$projectId/design.tsx:277
 msgid "Invalid JSON file"
 msgstr "קובץ JSON לא תקין"
@@ -1374,7 +1347,7 @@ msgstr "טוען פריט"
 msgid "Loading item details"
 msgstr "טוען פרטי פריט"
 
-#: src/features/projects/components/create-project-dialog.tsx:365
+#: src/features/projects/components/create-project-dialog.tsx:375
 msgid "Loading templates..."
 msgstr "טוען תבניות..."
 
@@ -1475,7 +1448,7 @@ msgstr "חסרים פרמטרים של מאגר, מקור או יעד"
 msgid "Monday"
 msgstr "יום שני"
 
-#: src/features/projects/components/create-project-dialog.tsx:243
+#: src/features/projects/components/create-project-dialog.tsx:253
 msgid "My project"
 msgstr "הפרויקט שלי"
 
@@ -1485,12 +1458,12 @@ msgstr "הפרויקט שלי"
 #: src/features/editor/components/edit-dialogs.tsx:741
 #: src/features/editor/components/edit-dialogs.tsx:1065
 #: src/features/editor/components/option-dialog.tsx:112
-#: src/features/projects/components/create-project-dialog.tsx:233
+#: src/features/projects/components/create-project-dialog.tsx:243
 #: src/routes/_authenticated/$projectId_.settings.tsx:306
 msgid "Name"
 msgstr "שם"
 
-#: src/features/projects/components/create-project-dialog.tsx:84
+#: src/features/projects/components/create-project-dialog.tsx:85
 msgid "Name is required"
 msgstr "שם נדרש"
 
@@ -1510,7 +1483,7 @@ msgstr "חדש"
 msgid "New {className}"
 msgstr "{className} חדש"
 
-#: src/features/projects/components/create-project-dialog.tsx:347
+#: src/features/projects/components/create-project-dialog.tsx:357
 msgid "Next"
 msgstr "הבא"
 
@@ -1592,7 +1565,7 @@ msgid "No profile"
 msgstr "אין פרופיל"
 
 #: src/features/projects/components/inline-project-search.tsx:164
-#: src/routes/_authenticated/find.tsx:90
+#: src/routes/_authenticated/find.tsx:94
 msgid "No projects found"
 msgstr "לא נמצאו פרויקטים"
 
@@ -1810,7 +1783,7 @@ msgstr "הוסף מחלקה אחת או יותר לעיצוב הפרויקט."
 msgid "Please check your internet connection and try again."
 msgstr "בדקו את חיבור האינטרנט ונסו שוב."
 
-#: src/features/projects/components/create-project-dialog.tsx:94
+#: src/features/projects/components/create-project-dialog.tsx:95
 msgid "Please select a template"
 msgstr "בחר תבנית"
 
@@ -1822,7 +1795,7 @@ msgstr "אנא נסה שוב."
 msgid "Please wait a moment and try again."
 msgstr "יש להמתין מעט ולנסות שוב."
 
-#: src/features/projects/components/create-project-dialog.tsx:255
+#: src/features/projects/components/create-project-dialog.tsx:265
 #: src/routes/_authenticated/$projectId_.settings.tsx:323
 msgid "Prefix"
 msgstr "קידומת"
@@ -1852,7 +1825,7 @@ msgstr "פרויקט"
 msgid "Project actions"
 msgstr "פעולות פרויקט"
 
-#: src/features/projects/components/create-project-dialog.tsx:109
+#: src/features/projects/components/create-project-dialog.tsx:110
 msgid "Project created"
 msgstr "הפרויקט נוצר"
 
@@ -1916,7 +1889,7 @@ msgid "Rebase and merge"
 msgstr "Rebase ומיזוג"
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:216
-#: ../../../lib/web/src/components/search-entity-page.tsx:240
+#: ../../../lib/web/src/components/search-entity-page.tsx:242
 msgid "Recommended"
 msgstr "מומלץ"
 
@@ -1955,7 +1928,7 @@ msgstr "יחסי בתוך 24 שעות, אחרת מוחלט"
 #: src/features/objects/components/comment-thread.tsx:299
 #: src/features/objects/components/create-object-dialog.tsx:486
 #: src/features/objects/components/create-object-dialog.tsx:491
-#: src/features/projects/components/create-project-dialog.tsx:331
+#: src/features/projects/components/create-project-dialog.tsx:341
 msgid "Remove"
 msgstr "הסר"
 
@@ -2092,7 +2065,7 @@ msgstr "שומר..."
 msgid "Search"
 msgstr "חיפוש"
 
-#: src/routes/_authenticated/find.tsx:89
+#: src/routes/_authenticated/find.tsx:93
 msgid "Search by name, ID, fingerprint, or URL..."
 msgstr "חפש לפי שם, מזהה, טביעת אצבע או כתובת URL..."
 
@@ -2135,7 +2108,7 @@ msgid "Search..."
 msgstr "חיפוש..."
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:174
-#: ../../../lib/web/src/components/search-entity-page.tsx:198
+#: ../../../lib/web/src/components/search-entity-page.tsx:200
 #: ../../../lib/web/src/features/access/access-dialog.tsx:202
 msgid "Searching..."
 msgstr "מחפש..."
@@ -2441,10 +2414,6 @@ msgstr "לא ניתן לטעון את הפרויקט הזה כרגע."
 msgid "This project may have been deleted or you don't have access to it."
 msgstr "ייתכן שהפרויקט הזה נמחק או שאין לך גישה אליו."
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:478
-#~ msgid "This will import the data from <0>{0}</0>. Objects will be appended to the existing records. Ensure the current design matches the classes and fields referenced in the file."
-#~ msgstr "פעולה זו תייבא את הנתונים מ-<0>{0}</0>. האובייקטים יתווספו לרשומות הקיימות. יש לוודא שהעיצוב הנוכחי תואם למחלקות ולשדות שאליהם מפנה הקובץ."
-
 #: src/features/requests/components/merge-button.tsx:105
 msgid "This will merge \"{source}\" into \"{target}\". This action cannot be undone."
 msgstr "פעולה זו תמזג את \"{source}\" לתוך \"{target}\". לא ניתן לבטל פעולה זו."
@@ -2533,7 +2502,7 @@ msgid "Travelling"
 msgstr "בנסיעה"
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:190
-#: ../../../lib/web/src/components/search-entity-page.tsx:214
+#: ../../../lib/web/src/components/search-entity-page.tsx:216
 msgid "Try adjusting your search terms"
 msgstr "נסה להתאים את מונחי החיפוש שלך"
 
@@ -2629,7 +2598,7 @@ msgstr "מעדכן גישה..."
 msgid "Upload"
 msgstr "העלה"
 
-#: src/features/projects/components/create-project-dialog.tsx:304
+#: src/features/projects/components/create-project-dialog.tsx:314
 #: src/routes/_authenticated/$projectId/design.tsx:336
 msgid "Upload .json file"
 msgstr "העלה קובץ .json"
@@ -2640,7 +2609,7 @@ msgstr "השתמש במפתח הגישה שלך"
 
 #. placeholder {0}: prefix || "project"
 #. placeholder {1}: prefix || "project"
-#: src/features/projects/components/create-project-dialog.tsx:272
+#: src/features/projects/components/create-project-dialog.tsx:282
 msgid "Used for readable IDs like {0}-1, {1}-2"
 msgstr "משמש למזהים קריאים כגון {0}-1, {1}-2"
 
@@ -2671,7 +2640,7 @@ msgstr "אמת"
 msgid "Verify email address"
 msgstr "אמת כתובת אימייל"
 
-#: ../../../lib/web/src/components/attachment-gallery.tsx:75
+#: ../../../lib/web/src/components/attachment-gallery.tsx:74
 msgid "Video thumbnail"
 msgstr "תמונה ממוזערת של הסרטון"
 
@@ -2721,9 +2690,9 @@ msgstr "במעקב"
 msgid "Watched only"
 msgstr "במעקב בלבד"
 
-#: src/features/projects/components/create-project-dialog.tsx:360
+#: src/features/projects/components/create-project-dialog.tsx:370
 msgid "We have auto-selected the best matching template."
-msgstr ""
+msgstr "בחרנו אוטומטית את התבנית המתאימה ביותר."
 
 #: ../../../lib/web/src/features/errors/maintenance-error.tsx:16
 msgid "We'll be back online shortly."
@@ -2753,6 +2722,6 @@ msgstr "עדיין אין לך פרויקטים."
 msgid "Your account was moved here from {source}. Until you delete it there, messages and notifications may reach both servers, some of your content keeps being served from the old server, and followers may take a few minutes to find you here."
 msgstr "חשבונך הועבר לכאן מ-{source}. עד שתמחק אותו שם, הודעות והתראות עשויות להגיע לשני השרתים, חלק מהתוכן שלך ממשיך להיות מוגש מהשרת הישן, ועוקבים עשויים לקחת מספר דקות למצוא אותך כאן."
 
-#: src/features/projects/components/create-project-dialog.tsx:356
+#: src/features/projects/components/create-project-dialog.tsx:366
 msgid "Your backup contains objects of type:"
-msgstr ""
+msgstr "הגיבוי שלך מכיל אובייקטים מסוג:"

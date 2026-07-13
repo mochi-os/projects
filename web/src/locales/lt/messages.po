@@ -237,7 +237,7 @@ msgstr "Visi"
 msgid "All projects"
 msgstr "Visi projektai"
 
-#: src/features/projects/components/create-project-dialog.tsx:278
+#: src/features/projects/components/create-project-dialog.tsx:288
 msgid "Allow anyone to search for project"
 msgstr "Leisti bet kam ieškoti projekto"
 
@@ -313,7 +313,7 @@ msgid "Available keyboard shortcuts"
 msgstr "Prieinami klaviatūros sparčiosios klavišai"
 
 #: ../../../lib/web/src/components/place-picker.tsx:155
-#: src/features/projects/components/create-project-dialog.tsx:428
+#: src/features/projects/components/create-project-dialog.tsx:438
 msgid "Back"
 msgstr "Atgal"
 
@@ -378,7 +378,7 @@ msgstr "Gali būti vaikas"
 #: src/features/board/components/board-column.tsx:606
 #: src/features/editor/components/option-dialog.tsx:146
 #: src/features/objects/components/comment-thread.tsx:175
-#: src/features/projects/components/create-project-dialog.tsx:344
+#: src/features/projects/components/create-project-dialog.tsx:354
 #: src/routes/_authenticated/$projectId/design.tsx:343
 #: src/routes/_authenticated/$projectId/index.tsx:1011
 msgid "Cancel"
@@ -414,7 +414,7 @@ msgstr "Tikrinama sujungimo būsena..."
 msgid "Checklist"
 msgstr "Užduočių sąrašas"
 
-#: src/features/projects/components/create-project-dialog.tsx:225
+#: src/features/projects/components/create-project-dialog.tsx:235
 msgid "Choose a template"
 msgstr "Pasirinkite šabloną"
 
@@ -619,7 +619,7 @@ msgstr "Sukurti"
 msgid "Create a new item in this project"
 msgstr "Sukurti naują elementą šiame projekte"
 
-#: src/features/projects/components/create-project-dialog.tsx:227
+#: src/features/projects/components/create-project-dialog.tsx:237
 #: src/features/projects/pages/projects-list-page.tsx:103
 msgid "Create a new project"
 msgstr "Sukurti naują projektą"
@@ -630,9 +630,9 @@ msgid "Create new item"
 msgstr "Sukurti naują elementą"
 
 #: src/components/layout/projects-layout.tsx:62
-#: src/features/projects/components/create-project-dialog.tsx:215
 #: src/features/projects/components/create-project-dialog.tsx:225
-#: src/features/projects/components/create-project-dialog.tsx:431
+#: src/features/projects/components/create-project-dialog.tsx:235
+#: src/features/projects/components/create-project-dialog.tsx:441
 msgid "Create project"
 msgstr "Sukurti projektą"
 
@@ -645,12 +645,12 @@ msgstr "Kurkite, redaguokite, komentuokite ir peržiūrėkite"
 msgid "Created"
 msgstr "Sukurta"
 
-#: src/features/projects/components/create-project-dialog.tsx:108
+#: src/features/projects/components/create-project-dialog.tsx:109
 msgid "Creating project..."
 msgstr "Kuriamas projektas..."
 
 #: src/features/objects/components/create-object-dialog.tsx:535
-#: src/features/projects/components/create-project-dialog.tsx:431
+#: src/features/projects/components/create-project-dialog.tsx:441
 msgid "Creating..."
 msgstr "Kuriama..."
 
@@ -675,13 +675,12 @@ msgstr "Tamsus režimas"
 msgid "Data conflict"
 msgstr "Duomenų konfliktas"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:350
-#~ msgid "Data imported ({0, plural, one {# object} other {# objects}}, {1, plural, one {# comment} other {# comments}}, {2, plural, one {# link} other {# links}})"
-#~ msgstr "Duomenys importuoti ({0, plural, one {# objektas} few {# objektai} many {# objekto} other {# objektų}}, {1, plural, one {# komentaras} few {# komentarai} many {# komentaro} other {# komentarų}}, {2, plural, one {# nuoroda} few {# nuorodos} many {# nuorodos} other {# nuorodų}})"
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:433
-#~ msgid "Data management"
-#~ msgstr "Duomenų valdymas"
+#. placeholder {0}: imported.data?.objects ?? 0
+#. placeholder {1}: imported.data?.comments ?? 0
+#. placeholder {2}: imported.data?.links ?? 0
+#: src/features/projects/components/create-project-dialog.tsx:121
+msgid "Data imported ({0, plural, one {# object} other {# objects}}, {1, plural, one {# comment} other {# comments}}, {2, plural, one {# link} other {# links}})"
+msgstr "Duomenys importuoti ({0, plural, one {# objektas} few {# objektai} many {# objekto} other {# objektų}}, {1, plural, one {# komentaras} few {# komentarai} many {# komentaro} other {# komentarų}}, {2, plural, one {# nuoroda} few {# nuorodos} many {# nuorodos} other {# nuorodų}})"
 
 #: src/features/editor/components/add-dialogs.tsx:137
 msgid "Date"
@@ -967,10 +966,6 @@ msgstr "Eksportuoti duomenis"
 msgid "Export design"
 msgstr "Eksportuoti dizainą"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:434
-#~ msgid "Export or import the raw data content in this project."
-#~ msgstr "Eksportuokite arba importuokite neapdorotą šio projekto duomenų turinį."
-
 #: ../../../lib/web/src/lib/preference-utils.ts:136
 msgid "Extra large"
 msgstr "Labai didelis"
@@ -1000,7 +995,7 @@ msgstr "Nepavyko sukurti nuorodos"
 msgid "Failed to create option"
 msgstr "Nepavyko sukurti parinkties"
 
-#: src/features/projects/components/create-project-dialog.tsx:110
+#: src/features/projects/components/create-project-dialog.tsx:111
 msgid "Failed to create project"
 msgstr "Nepavyko sukurti projekto"
 
@@ -1036,7 +1031,7 @@ msgstr "Nepavyko eksportuoti duomenų"
 msgid "Failed to export design"
 msgstr "Nepavyko eksportuoti dizaino"
 
-#: src/features/projects/components/create-project-dialog.tsx:124
+#: src/features/projects/components/create-project-dialog.tsx:122
 msgid "Failed to import data"
 msgstr "Nepavyko importuoti duomenų"
 
@@ -1069,7 +1064,7 @@ msgstr "Nepavyko sujungti"
 msgid "Failed to post comment"
 msgstr "Nepavyko paskelbti komentaro"
 
-#: src/features/projects/components/create-project-dialog.tsx:177
+#: src/features/projects/components/create-project-dialog.tsx:175
 #: src/routes/_authenticated/$projectId/design.tsx:281
 msgid "Failed to read file"
 msgstr "Nepavyko nuskaityti failo"
@@ -1144,7 +1139,7 @@ msgid "Files"
 msgstr "Failai"
 
 #: src/components/layout/projects-layout.tsx:61
-#: src/routes/_authenticated/find.tsx:88
+#: src/routes/_authenticated/find.tsx:92
 msgid "Find projects"
 msgstr "Rasti projektus"
 
@@ -1254,40 +1249,18 @@ msgstr "Tapatybė"
 msgid "Imperial"
 msgstr "Imperinė"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:549
-#~ msgid "Import a data configuration"
-#~ msgstr "Importuoti duomenų konfigūraciją"
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:444
-#: src/routes/_authenticated/$projectId_.settings.tsx:490
-#: src/routes/_authenticated/$projectId_.settings.tsx:548
-#~ msgid "Import data"
-#~ msgstr "Importuoti duomenis"
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:476
-#~ msgid "Import data?"
-#~ msgstr "Importuoti duomenis?"
-
 #: src/routes/_authenticated/$projectId/design.tsx:177
 #: src/routes/_authenticated/$projectId/design.tsx:293
 msgid "Import design"
 msgstr "Importuoti dizainą"
 
-#: src/features/projects/components/create-project-dialog.tsx:288
+#: src/features/projects/components/create-project-dialog.tsx:298
 msgid "Import from backup (optional)"
-msgstr ""
+msgstr "Importuoti iš atsarginės kopijos (neprivaloma)"
 
-#: src/features/projects/components/create-project-dialog.tsx:122
-msgid "Imported {count} objects"
-msgstr ""
-
-#: src/features/projects/components/create-project-dialog.tsx:119
+#: src/features/projects/components/create-project-dialog.tsx:120
 msgid "Importing data..."
-msgstr ""
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:487
-#~ msgid "Importing..."
-#~ msgstr "Importuojama..."
+msgstr "Importuojami duomenys..."
 
 #: ../../../lib/web/src/components/config-drawer.tsx:252
 msgid "Inset"
@@ -1301,7 +1274,7 @@ msgstr "Pomėgiai"
 msgid "Invalid date"
 msgstr "Netinkama data"
 
-#: src/features/projects/components/create-project-dialog.tsx:171
+#: src/features/projects/components/create-project-dialog.tsx:169
 #: src/routes/_authenticated/$projectId/design.tsx:277
 msgid "Invalid JSON file"
 msgstr "Netinkamas JSON failas"
@@ -1374,7 +1347,7 @@ msgstr "Įkeliamas elementas"
 msgid "Loading item details"
 msgstr "Įkeliama elemento informacija"
 
-#: src/features/projects/components/create-project-dialog.tsx:365
+#: src/features/projects/components/create-project-dialog.tsx:375
 msgid "Loading templates..."
 msgstr "Įkeliami šablonai…"
 
@@ -1475,7 +1448,7 @@ msgstr "Trūksta repo, šaltinio arba paskirties parametrų"
 msgid "Monday"
 msgstr "Pirmadienis"
 
-#: src/features/projects/components/create-project-dialog.tsx:243
+#: src/features/projects/components/create-project-dialog.tsx:253
 msgid "My project"
 msgstr "Mano projektas"
 
@@ -1485,12 +1458,12 @@ msgstr "Mano projektas"
 #: src/features/editor/components/edit-dialogs.tsx:741
 #: src/features/editor/components/edit-dialogs.tsx:1065
 #: src/features/editor/components/option-dialog.tsx:112
-#: src/features/projects/components/create-project-dialog.tsx:233
+#: src/features/projects/components/create-project-dialog.tsx:243
 #: src/routes/_authenticated/$projectId_.settings.tsx:306
 msgid "Name"
 msgstr "Pavadinimas"
 
-#: src/features/projects/components/create-project-dialog.tsx:84
+#: src/features/projects/components/create-project-dialog.tsx:85
 msgid "Name is required"
 msgstr "Pavadinimas yra privalomas"
 
@@ -1510,7 +1483,7 @@ msgstr "Naujas"
 msgid "New {className}"
 msgstr "Naujas {className}"
 
-#: src/features/projects/components/create-project-dialog.tsx:347
+#: src/features/projects/components/create-project-dialog.tsx:357
 msgid "Next"
 msgstr "Toliau"
 
@@ -1592,7 +1565,7 @@ msgid "No profile"
 msgstr "Profilio nėra"
 
 #: src/features/projects/components/inline-project-search.tsx:164
-#: src/routes/_authenticated/find.tsx:90
+#: src/routes/_authenticated/find.tsx:94
 msgid "No projects found"
 msgstr "Projektų nerasta"
 
@@ -1810,7 +1783,7 @@ msgstr "Pridėkite vieną ar daugiau klasių prie projekto dizaino."
 msgid "Please check your internet connection and try again."
 msgstr "Patikrinkite interneto ryšį ir bandykite dar kartą."
 
-#: src/features/projects/components/create-project-dialog.tsx:94
+#: src/features/projects/components/create-project-dialog.tsx:95
 msgid "Please select a template"
 msgstr "Pasirinkite šabloną"
 
@@ -1822,7 +1795,7 @@ msgstr "Bandykite dar kartą."
 msgid "Please wait a moment and try again."
 msgstr "Palaukite šiek tiek ir bandykite dar kartą."
 
-#: src/features/projects/components/create-project-dialog.tsx:255
+#: src/features/projects/components/create-project-dialog.tsx:265
 #: src/routes/_authenticated/$projectId_.settings.tsx:323
 msgid "Prefix"
 msgstr "Priešdėlis"
@@ -1852,7 +1825,7 @@ msgstr "Projektas"
 msgid "Project actions"
 msgstr "Projekto veiksmai"
 
-#: src/features/projects/components/create-project-dialog.tsx:109
+#: src/features/projects/components/create-project-dialog.tsx:110
 msgid "Project created"
 msgstr "Projektas sukurtas"
 
@@ -1916,7 +1889,7 @@ msgid "Rebase and merge"
 msgstr "Rebase ir merge"
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:216
-#: ../../../lib/web/src/components/search-entity-page.tsx:240
+#: ../../../lib/web/src/components/search-entity-page.tsx:242
 msgid "Recommended"
 msgstr "Rekomenduojama"
 
@@ -1955,7 +1928,7 @@ msgstr "Santykinis per 24 val., kitaip absoliutus"
 #: src/features/objects/components/comment-thread.tsx:299
 #: src/features/objects/components/create-object-dialog.tsx:486
 #: src/features/objects/components/create-object-dialog.tsx:491
-#: src/features/projects/components/create-project-dialog.tsx:331
+#: src/features/projects/components/create-project-dialog.tsx:341
 msgid "Remove"
 msgstr "Šalinti"
 
@@ -2092,7 +2065,7 @@ msgstr "Išsaugoma..."
 msgid "Search"
 msgstr "Ieškoti"
 
-#: src/routes/_authenticated/find.tsx:89
+#: src/routes/_authenticated/find.tsx:93
 msgid "Search by name, ID, fingerprint, or URL..."
 msgstr "Ieškoti pagal pavadinimą, ID, atspaudą ar URL..."
 
@@ -2135,7 +2108,7 @@ msgid "Search..."
 msgstr "Ieškoti..."
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:174
-#: ../../../lib/web/src/components/search-entity-page.tsx:198
+#: ../../../lib/web/src/components/search-entity-page.tsx:200
 #: ../../../lib/web/src/features/access/access-dialog.tsx:202
 msgid "Searching..."
 msgstr "Ieškoma..."
@@ -2441,10 +2414,6 @@ msgstr "Šio projekto šiuo metu nepavyko įkelti."
 msgid "This project may have been deleted or you don't have access to it."
 msgstr "Šis projektas galėjo būti ištrintas arba neturite prie jo prieigos."
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:478
-#~ msgid "This will import the data from <0>{0}</0>. Objects will be appended to the existing records. Ensure the current design matches the classes and fields referenced in the file."
-#~ msgstr "Bus importuoti duomenys iš <0>{0}</0>. Objektai bus pridėti prie esamų įrašų. Įsitikinkite, kad dabartinė struktūra atitinka faile nurodytas klases ir laukus."
-
 #: src/features/requests/components/merge-button.tsx:105
 msgid "This will merge \"{source}\" into \"{target}\". This action cannot be undone."
 msgstr "Tai sujungs „{source}“ į „{target}“. Šio veiksmo negalima atšaukti."
@@ -2533,7 +2502,7 @@ msgid "Travelling"
 msgstr "Keliauja"
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:190
-#: ../../../lib/web/src/components/search-entity-page.tsx:214
+#: ../../../lib/web/src/components/search-entity-page.tsx:216
 msgid "Try adjusting your search terms"
 msgstr "Pabandykite koreguoti paieškos terminus"
 
@@ -2629,7 +2598,7 @@ msgstr "Atnaujinama prieiga..."
 msgid "Upload"
 msgstr "Įkelti"
 
-#: src/features/projects/components/create-project-dialog.tsx:304
+#: src/features/projects/components/create-project-dialog.tsx:314
 #: src/routes/_authenticated/$projectId/design.tsx:336
 msgid "Upload .json file"
 msgstr "Įkelti .json failą"
@@ -2640,7 +2609,7 @@ msgstr "Naudokite savo slaptaraktį"
 
 #. placeholder {0}: prefix || "project"
 #. placeholder {1}: prefix || "project"
-#: src/features/projects/components/create-project-dialog.tsx:272
+#: src/features/projects/components/create-project-dialog.tsx:282
 msgid "Used for readable IDs like {0}-1, {1}-2"
 msgstr "Naudojama skaitomiems ID, kaip {0}-1, {1}-2"
 
@@ -2671,7 +2640,7 @@ msgstr "Patvirtinti"
 msgid "Verify email address"
 msgstr "Patvirtinti el. pašto adresą"
 
-#: ../../../lib/web/src/components/attachment-gallery.tsx:75
+#: ../../../lib/web/src/components/attachment-gallery.tsx:74
 msgid "Video thumbnail"
 msgstr "Vaizdo įrašo miniatiūra"
 
@@ -2721,9 +2690,9 @@ msgstr "Stebima"
 msgid "Watched only"
 msgstr "Tik stebima"
 
-#: src/features/projects/components/create-project-dialog.tsx:360
+#: src/features/projects/components/create-project-dialog.tsx:370
 msgid "We have auto-selected the best matching template."
-msgstr ""
+msgstr "Automatiškai parinkome geriausiai atitinkantį šabloną."
 
 #: ../../../lib/web/src/features/errors/maintenance-error.tsx:16
 msgid "We'll be back online shortly."
@@ -2753,6 +2722,6 @@ msgstr "Dar neturite jokių projektų."
 msgid "Your account was moved here from {source}. Until you delete it there, messages and notifications may reach both servers, some of your content keeps being served from the old server, and followers may take a few minutes to find you here."
 msgstr "Jūsų paskyra buvo perkelta čia iš {source}. Kol jos ten neištrinate, žinutės ir pranešimai gali pasiekti abu serverius, dalis jūsų turinio toliau pateikiama iš senojo serverio, o pasekėjams gali prireikti kelių minučių jus rasti čia."
 
-#: src/features/projects/components/create-project-dialog.tsx:356
+#: src/features/projects/components/create-project-dialog.tsx:366
 msgid "Your backup contains objects of type:"
-msgstr ""
+msgstr "Jūsų atsarginėje kopijoje yra šio tipo objektų:"

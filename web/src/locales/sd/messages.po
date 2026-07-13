@@ -237,7 +237,7 @@ msgstr "سڀ"
 msgid "All projects"
 msgstr "سڀ پروجيڪٽ"
 
-#: src/features/projects/components/create-project-dialog.tsx:278
+#: src/features/projects/components/create-project-dialog.tsx:288
 msgid "Allow anyone to search for project"
 msgstr "ڪنهن کي به پروجيڪٽ ڳولڻ جي اجازت ڏيو"
 
@@ -313,7 +313,7 @@ msgid "Available keyboard shortcuts"
 msgstr "موجود ڪيبورڊ شارٽ ڪٽ"
 
 #: ../../../lib/web/src/components/place-picker.tsx:155
-#: src/features/projects/components/create-project-dialog.tsx:428
+#: src/features/projects/components/create-project-dialog.tsx:438
 msgid "Back"
 msgstr "واپس"
 
@@ -378,7 +378,7 @@ msgstr "جي اولاد ٿي سگهي ٿو"
 #: src/features/board/components/board-column.tsx:606
 #: src/features/editor/components/option-dialog.tsx:146
 #: src/features/objects/components/comment-thread.tsx:175
-#: src/features/projects/components/create-project-dialog.tsx:344
+#: src/features/projects/components/create-project-dialog.tsx:354
 #: src/routes/_authenticated/$projectId/design.tsx:343
 #: src/routes/_authenticated/$projectId/index.tsx:1011
 msgid "Cancel"
@@ -414,7 +414,7 @@ msgstr "merge جي حالت چيڪ ڪري رهيو آهي..."
 msgid "Checklist"
 msgstr "چيڪ لسٽ"
 
-#: src/features/projects/components/create-project-dialog.tsx:225
+#: src/features/projects/components/create-project-dialog.tsx:235
 msgid "Choose a template"
 msgstr "ٽيمپليٽ چونڊيو"
 
@@ -619,7 +619,7 @@ msgstr "ٺاهيو"
 msgid "Create a new item in this project"
 msgstr "هن پروجيڪٽ ۾ نئين شيءِ ٺاهيو"
 
-#: src/features/projects/components/create-project-dialog.tsx:227
+#: src/features/projects/components/create-project-dialog.tsx:237
 #: src/features/projects/pages/projects-list-page.tsx:103
 msgid "Create a new project"
 msgstr "نئون پروجيڪٽ ٺاهيو"
@@ -630,9 +630,9 @@ msgid "Create new item"
 msgstr "نئين شيءِ ٺاهيو"
 
 #: src/components/layout/projects-layout.tsx:62
-#: src/features/projects/components/create-project-dialog.tsx:215
 #: src/features/projects/components/create-project-dialog.tsx:225
-#: src/features/projects/components/create-project-dialog.tsx:431
+#: src/features/projects/components/create-project-dialog.tsx:235
+#: src/features/projects/components/create-project-dialog.tsx:441
 msgid "Create project"
 msgstr "پروجيڪٽ ٺاهيو"
 
@@ -645,12 +645,12 @@ msgstr "تخليق، ترميم، تبصرو ۽ ڏسڻ"
 msgid "Created"
 msgstr "ٺاهيو ويو"
 
-#: src/features/projects/components/create-project-dialog.tsx:108
+#: src/features/projects/components/create-project-dialog.tsx:109
 msgid "Creating project..."
 msgstr "پروجيڪٽ ٺهي رهيو آهي..."
 
 #: src/features/objects/components/create-object-dialog.tsx:535
-#: src/features/projects/components/create-project-dialog.tsx:431
+#: src/features/projects/components/create-project-dialog.tsx:441
 msgid "Creating..."
 msgstr "ٺاهي رهيو آهي..."
 
@@ -675,13 +675,12 @@ msgstr "اونداهو موڊ"
 msgid "Data conflict"
 msgstr "ڊيٽا جو ٽڪراءُ"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:350
-#~ msgid "Data imported ({0, plural, one {# object} other {# objects}}, {1, plural, one {# comment} other {# comments}}, {2, plural, one {# link} other {# links}})"
-#~ msgstr "ڊيٽا درآمد ٿي وئي ({0, plural, one {# شئي} other {# شيون}}، {1, plural, one {# تبصرو} other {# تبصرا}}، {2, plural, one {# لنڪ} other {# لنڪون}})"
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:433
-#~ msgid "Data management"
-#~ msgstr "ڊيٽا جو انتظام"
+#. placeholder {0}: imported.data?.objects ?? 0
+#. placeholder {1}: imported.data?.comments ?? 0
+#. placeholder {2}: imported.data?.links ?? 0
+#: src/features/projects/components/create-project-dialog.tsx:121
+msgid "Data imported ({0, plural, one {# object} other {# objects}}, {1, plural, one {# comment} other {# comments}}, {2, plural, one {# link} other {# links}})"
+msgstr "ڊيٽا درآمد ٿي وئي ({0, plural, one {# شئي} other {# شيون}}، {1, plural, one {# تبصرو} other {# تبصرا}}، {2, plural, one {# لنڪ} other {# لنڪون}})"
 
 #: src/features/editor/components/add-dialogs.tsx:137
 msgid "Date"
@@ -967,10 +966,6 @@ msgstr "ڊيٽا برآمد ڪريو"
 msgid "Export design"
 msgstr "ڊيزائن ايڪسپورٽ ڪريو"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:434
-#~ msgid "Export or import the raw data content in this project."
-#~ msgstr "هن پروجيڪٽ ۾ خام ڊيٽا برآمد يا درآمد ڪريو."
-
 #: ../../../lib/web/src/lib/preference-utils.ts:136
 msgid "Extra large"
 msgstr "تمام وڏو"
@@ -1000,7 +995,7 @@ msgstr "لنڪ ٺاهڻ ۾ ناڪام"
 msgid "Failed to create option"
 msgstr "آپشن ٺاهڻ ۾ ناڪام"
 
-#: src/features/projects/components/create-project-dialog.tsx:110
+#: src/features/projects/components/create-project-dialog.tsx:111
 msgid "Failed to create project"
 msgstr "پروجيڪٽ ٺاهڻ ۾ ناڪام"
 
@@ -1036,7 +1031,7 @@ msgstr "ڊيٽا برآمد نه ٿي سگهي"
 msgid "Failed to export design"
 msgstr "ڊيزائن ايڪسپورٽ ڪرڻ ۾ ناڪام"
 
-#: src/features/projects/components/create-project-dialog.tsx:124
+#: src/features/projects/components/create-project-dialog.tsx:122
 msgid "Failed to import data"
 msgstr "ڊيٽا درآمد نه ٿي سگهي"
 
@@ -1069,7 +1064,7 @@ msgstr "merge ڪرڻ ۾ ناڪام"
 msgid "Failed to post comment"
 msgstr "تبصرو پوسٽ ڪرڻ ۾ ناڪام"
 
-#: src/features/projects/components/create-project-dialog.tsx:177
+#: src/features/projects/components/create-project-dialog.tsx:175
 #: src/routes/_authenticated/$projectId/design.tsx:281
 msgid "Failed to read file"
 msgstr "فائل پڙهڻ ۾ ناڪام"
@@ -1144,7 +1139,7 @@ msgid "Files"
 msgstr "فائلون"
 
 #: src/components/layout/projects-layout.tsx:61
-#: src/routes/_authenticated/find.tsx:88
+#: src/routes/_authenticated/find.tsx:92
 msgid "Find projects"
 msgstr "پروجيڪٽَ ڳوليو"
 
@@ -1254,40 +1249,18 @@ msgstr "سڃاڻپ"
 msgid "Imperial"
 msgstr "امپيريل"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:549
-#~ msgid "Import a data configuration"
-#~ msgstr "ڊيٽا جي ترتيب درآمد ڪريو"
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:444
-#: src/routes/_authenticated/$projectId_.settings.tsx:490
-#: src/routes/_authenticated/$projectId_.settings.tsx:548
-#~ msgid "Import data"
-#~ msgstr "ڊيٽا درآمد ڪريو"
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:476
-#~ msgid "Import data?"
-#~ msgstr "ڊيٽا درآمد ڪجي؟"
-
 #: src/routes/_authenticated/$projectId/design.tsx:177
 #: src/routes/_authenticated/$projectId/design.tsx:293
 msgid "Import design"
 msgstr "ڊيزائن درآمد ڪريو"
 
-#: src/features/projects/components/create-project-dialog.tsx:288
+#: src/features/projects/components/create-project-dialog.tsx:298
 msgid "Import from backup (optional)"
-msgstr ""
+msgstr "بيڪ اپ مان درآمد ڪريو (اختياري)"
 
-#: src/features/projects/components/create-project-dialog.tsx:122
-msgid "Imported {count} objects"
-msgstr ""
-
-#: src/features/projects/components/create-project-dialog.tsx:119
+#: src/features/projects/components/create-project-dialog.tsx:120
 msgid "Importing data..."
-msgstr ""
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:487
-#~ msgid "Importing..."
-#~ msgstr "درآمد ٿي رهي آهي..."
+msgstr "ڊيٽا درآمد ٿي رهي آهي..."
 
 #: ../../../lib/web/src/components/config-drawer.tsx:252
 msgid "Inset"
@@ -1301,7 +1274,7 @@ msgstr "دلچسپيون"
 msgid "Invalid date"
 msgstr "غلط تاريخ"
 
-#: src/features/projects/components/create-project-dialog.tsx:171
+#: src/features/projects/components/create-project-dialog.tsx:169
 #: src/routes/_authenticated/$projectId/design.tsx:277
 msgid "Invalid JSON file"
 msgstr "غلط JSON فائل"
@@ -1374,7 +1347,7 @@ msgstr "شيءِ لوڊ ٿي رهي آهي"
 msgid "Loading item details"
 msgstr "شيءِ جا تفصيل لوڊ ٿي رهيا آهن"
 
-#: src/features/projects/components/create-project-dialog.tsx:365
+#: src/features/projects/components/create-project-dialog.tsx:375
 msgid "Loading templates..."
 msgstr "ٽيمپليٽ لوڊ ٿي رهيا آهن..."
 
@@ -1475,7 +1448,7 @@ msgstr "گم ٿيل ريپو، ذريعو، يا ٽارگيٽ پيراميٽر"
 msgid "Monday"
 msgstr "سومر"
 
-#: src/features/projects/components/create-project-dialog.tsx:243
+#: src/features/projects/components/create-project-dialog.tsx:253
 msgid "My project"
 msgstr "منهنجو پروجيڪٽ"
 
@@ -1485,12 +1458,12 @@ msgstr "منهنجو پروجيڪٽ"
 #: src/features/editor/components/edit-dialogs.tsx:741
 #: src/features/editor/components/edit-dialogs.tsx:1065
 #: src/features/editor/components/option-dialog.tsx:112
-#: src/features/projects/components/create-project-dialog.tsx:233
+#: src/features/projects/components/create-project-dialog.tsx:243
 #: src/routes/_authenticated/$projectId_.settings.tsx:306
 msgid "Name"
 msgstr "نالو"
 
-#: src/features/projects/components/create-project-dialog.tsx:84
+#: src/features/projects/components/create-project-dialog.tsx:85
 msgid "Name is required"
 msgstr "نالو گهربل آهي"
 
@@ -1510,7 +1483,7 @@ msgstr "نئون"
 msgid "New {className}"
 msgstr "نئون {className}"
 
-#: src/features/projects/components/create-project-dialog.tsx:347
+#: src/features/projects/components/create-project-dialog.tsx:357
 msgid "Next"
 msgstr "اڳيون"
 
@@ -1592,7 +1565,7 @@ msgid "No profile"
 msgstr "ڪو پروفائيل نه آهي"
 
 #: src/features/projects/components/inline-project-search.tsx:164
-#: src/routes/_authenticated/find.tsx:90
+#: src/routes/_authenticated/find.tsx:94
 msgid "No projects found"
 msgstr "ڪو پروجيڪٽ نه مليو"
 
@@ -1810,7 +1783,7 @@ msgstr "مهرباني ڪري پروجيڪٽ ڊيزائن ۾ هڪ يا وڌيڪ 
 msgid "Please check your internet connection and try again."
 msgstr "مهرباني ڪري پنهنجو انٽرنيٽ ڪنيڪشن چيڪ ڪريو ۽ ٻيهر ڪوشش ڪريو."
 
-#: src/features/projects/components/create-project-dialog.tsx:94
+#: src/features/projects/components/create-project-dialog.tsx:95
 msgid "Please select a template"
 msgstr "مهرباني ڪري هڪ ٽيمپليٽ چونڊيو"
 
@@ -1822,7 +1795,7 @@ msgstr "مهرباني ڪري ٻيهر ڪوشش ڪريو."
 msgid "Please wait a moment and try again."
 msgstr "مهرباني ڪري ٿورو انتظار ڪريو ۽ ٻيهر ڪوشش ڪريو."
 
-#: src/features/projects/components/create-project-dialog.tsx:255
+#: src/features/projects/components/create-project-dialog.tsx:265
 #: src/routes/_authenticated/$projectId_.settings.tsx:323
 msgid "Prefix"
 msgstr "اڳياڙي"
@@ -1852,7 +1825,7 @@ msgstr "پروجيڪٽ"
 msgid "Project actions"
 msgstr "پروجيڪٽ عمل"
 
-#: src/features/projects/components/create-project-dialog.tsx:109
+#: src/features/projects/components/create-project-dialog.tsx:110
 msgid "Project created"
 msgstr "پروجيڪٽ ٺاهيو ويو"
 
@@ -1916,7 +1889,7 @@ msgid "Rebase and merge"
 msgstr "Rebase ۽ merge ڪريو"
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:216
-#: ../../../lib/web/src/components/search-entity-page.tsx:240
+#: ../../../lib/web/src/components/search-entity-page.tsx:242
 msgid "Recommended"
 msgstr "تجويز ڪيل"
 
@@ -1955,7 +1928,7 @@ msgstr "24 ڪلاڪن اندر نسبتي، ٻي صورت ۾ مطلق"
 #: src/features/objects/components/comment-thread.tsx:299
 #: src/features/objects/components/create-object-dialog.tsx:486
 #: src/features/objects/components/create-object-dialog.tsx:491
-#: src/features/projects/components/create-project-dialog.tsx:331
+#: src/features/projects/components/create-project-dialog.tsx:341
 msgid "Remove"
 msgstr "هٽايو"
 
@@ -2092,7 +2065,7 @@ msgstr "محفوظ ٿي رهيو آهي..."
 msgid "Search"
 msgstr "ڳوليو"
 
-#: src/routes/_authenticated/find.tsx:89
+#: src/routes/_authenticated/find.tsx:93
 msgid "Search by name, ID, fingerprint, or URL..."
 msgstr "نالو، ID، fingerprint، يا URL سان ڳوليو..."
 
@@ -2135,7 +2108,7 @@ msgid "Search..."
 msgstr "ڳوليو..."
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:174
-#: ../../../lib/web/src/components/search-entity-page.tsx:198
+#: ../../../lib/web/src/components/search-entity-page.tsx:200
 #: ../../../lib/web/src/features/access/access-dialog.tsx:202
 msgid "Searching..."
 msgstr "ڳولي رهيو آهي..."
@@ -2441,10 +2414,6 @@ msgstr "ھي پروجيڪٽ ھاڻي لوڊ نه ٿي سگھيو."
 msgid "This project may have been deleted or you don't have access to it."
 msgstr "ھي پروجيڪٽ ھٽايو ويو ھوندو يا توھان وٽ ان جي رسائي نه آھي."
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:478
-#~ msgid "This will import the data from <0>{0}</0>. Objects will be appended to the existing records. Ensure the current design matches the classes and fields referenced in the file."
-#~ msgstr "هي <0>{0}</0> مان ڊيٽا درآمد ڪندو. شيون موجوده رڪارڊن ۾ شامل ڪيون وينديون. پڪ ڪريو ته موجوده ڊيزائن فائل ۾ ڄاڻايل ڪلاسن ۽ فيلڊن سان ٺهڪي ٿي."
-
 #: src/features/requests/components/merge-button.tsx:105
 msgid "This will merge \"{source}\" into \"{target}\". This action cannot be undone."
 msgstr "ھي \"{source}\" کي \"{target}\" ۾ ضم ڪندو. ھي عمل واپس نه ٿو ٿي سگھي."
@@ -2533,7 +2502,7 @@ msgid "Travelling"
 msgstr "سفر ڪرڻ"
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:190
-#: ../../../lib/web/src/components/search-entity-page.tsx:214
+#: ../../../lib/web/src/components/search-entity-page.tsx:216
 msgid "Try adjusting your search terms"
 msgstr "پنھنجي ڳولا جي اصطلاحن کي ترتيب ڏيڻ جي ڪوشش ڪريو"
 
@@ -2629,7 +2598,7 @@ msgstr "رسائي اپڊيٽ ٿي رهي آهي..."
 msgid "Upload"
 msgstr "اپ لوڊ ڪريو"
 
-#: src/features/projects/components/create-project-dialog.tsx:304
+#: src/features/projects/components/create-project-dialog.tsx:314
 #: src/routes/_authenticated/$projectId/design.tsx:336
 msgid "Upload .json file"
 msgstr ".json فائل اپ لوڊ ڪريو"
@@ -2640,7 +2609,7 @@ msgstr "پنهنجي پاس ڪي استعمال ڪريو"
 
 #. placeholder {0}: prefix || "project"
 #. placeholder {1}: prefix || "project"
-#: src/features/projects/components/create-project-dialog.tsx:272
+#: src/features/projects/components/create-project-dialog.tsx:282
 msgid "Used for readable IDs like {0}-1, {1}-2"
 msgstr "{0}-1، {1}-2 جھڙا پڙھڻ جوڳا ID ڏيکارڻ لاءِ استعمال ٿيل"
 
@@ -2671,7 +2640,7 @@ msgstr "تصديق ڪريو"
 msgid "Verify email address"
 msgstr "اي ميل ايڊريس جي تصديق ڪريو"
 
-#: ../../../lib/web/src/components/attachment-gallery.tsx:75
+#: ../../../lib/web/src/components/attachment-gallery.tsx:74
 msgid "Video thumbnail"
 msgstr "وڊيو ٿمب نيل"
 
@@ -2721,9 +2690,9 @@ msgstr "ڏٺو"
 msgid "Watched only"
 msgstr "صرف ڏٺو"
 
-#: src/features/projects/components/create-project-dialog.tsx:360
+#: src/features/projects/components/create-project-dialog.tsx:370
 msgid "We have auto-selected the best matching template."
-msgstr ""
+msgstr "اسان خودڪار طور بهترين ملندڙ ٽيمپليٽ چونڊيو آهي."
 
 #: ../../../lib/web/src/features/errors/maintenance-error.tsx:16
 msgid "We'll be back online shortly."
@@ -2753,6 +2722,6 @@ msgstr "توھان وٽ اڃا ڪا پروجيڪٽ نه آھن."
 msgid "Your account was moved here from {source}. Until you delete it there, messages and notifications may reach both servers, some of your content keeps being served from the old server, and followers may take a few minutes to find you here."
 msgstr "توهان جو اڪائونٽ {source} کان هتي منتقل ڪيو ويو. جيستائين توهان اتي ان کي نه ختم ڪيو، پيغام ۽ اطلاع ٻنهي سرورن تي پهچي سگهن ٿا، توهان جو ڪجهه مواد اڃا به پراڻي سرور کان فراهم ٿئي ٿو، ۽ پيروڪارن کي هتي توهان کي ڳولڻ ۾ ڪجهه منٽ لڳي سگهن ٿا."
 
-#: src/features/projects/components/create-project-dialog.tsx:356
+#: src/features/projects/components/create-project-dialog.tsx:366
 msgid "Your backup contains objects of type:"
-msgstr ""
+msgstr "توهان جي بيڪ اپ ۾ هن قسم جون شيون آهن:"

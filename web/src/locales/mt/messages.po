@@ -237,7 +237,7 @@ msgstr "Kollha"
 msgid "All projects"
 msgstr "Il-proġetti kollha"
 
-#: src/features/projects/components/create-project-dialog.tsx:278
+#: src/features/projects/components/create-project-dialog.tsx:288
 msgid "Allow anyone to search for project"
 msgstr "Ippermetti lil kulħadd ifittex proġett"
 
@@ -313,7 +313,7 @@ msgid "Available keyboard shortcuts"
 msgstr "Shortcuts tat-tastiera disponibbli"
 
 #: ../../../lib/web/src/components/place-picker.tsx:155
-#: src/features/projects/components/create-project-dialog.tsx:428
+#: src/features/projects/components/create-project-dialog.tsx:438
 msgid "Back"
 msgstr "Lura"
 
@@ -378,7 +378,7 @@ msgstr "Jista' jkun tifel ta'"
 #: src/features/board/components/board-column.tsx:606
 #: src/features/editor/components/option-dialog.tsx:146
 #: src/features/objects/components/comment-thread.tsx:175
-#: src/features/projects/components/create-project-dialog.tsx:344
+#: src/features/projects/components/create-project-dialog.tsx:354
 #: src/routes/_authenticated/$projectId/design.tsx:343
 #: src/routes/_authenticated/$projectId/index.tsx:1011
 msgid "Cancel"
@@ -414,7 +414,7 @@ msgstr "Qed jiċċekkja l-istatus tal-merge..."
 msgid "Checklist"
 msgstr "Checklist"
 
-#: src/features/projects/components/create-project-dialog.tsx:225
+#: src/features/projects/components/create-project-dialog.tsx:235
 msgid "Choose a template"
 msgstr "Agħżel mudell"
 
@@ -619,7 +619,7 @@ msgstr "Oħloq"
 msgid "Create a new item in this project"
 msgstr "Oħloq item ġdid f'dan il-proġett"
 
-#: src/features/projects/components/create-project-dialog.tsx:227
+#: src/features/projects/components/create-project-dialog.tsx:237
 #: src/features/projects/pages/projects-list-page.tsx:103
 msgid "Create a new project"
 msgstr "Oħloq proġett ġdid"
@@ -630,9 +630,9 @@ msgid "Create new item"
 msgstr "Oħloq item ġdid"
 
 #: src/components/layout/projects-layout.tsx:62
-#: src/features/projects/components/create-project-dialog.tsx:215
 #: src/features/projects/components/create-project-dialog.tsx:225
-#: src/features/projects/components/create-project-dialog.tsx:431
+#: src/features/projects/components/create-project-dialog.tsx:235
+#: src/features/projects/components/create-project-dialog.tsx:441
 msgid "Create project"
 msgstr "Oħloq proġett"
 
@@ -645,12 +645,12 @@ msgstr "Oħloq, editja, ikkummenta u ara"
 msgid "Created"
 msgstr "Maħluq"
 
-#: src/features/projects/components/create-project-dialog.tsx:108
+#: src/features/projects/components/create-project-dialog.tsx:109
 msgid "Creating project..."
 msgstr "Qed jinħoloq proġett..."
 
 #: src/features/objects/components/create-object-dialog.tsx:535
-#: src/features/projects/components/create-project-dialog.tsx:431
+#: src/features/projects/components/create-project-dialog.tsx:441
 msgid "Creating..."
 msgstr "Qed joħloq..."
 
@@ -675,13 +675,12 @@ msgstr "Modalità skura"
 msgid "Data conflict"
 msgstr "Kunflitt fid-dejta"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:350
-#~ msgid "Data imported ({0, plural, one {# object} other {# objects}}, {1, plural, one {# comment} other {# comments}}, {2, plural, one {# link} other {# links}})"
-#~ msgstr "Id-data ġiet importata ({0, plural, one {# oġġett} few {# oġġetti} many {# oġġett} other {# oġġett}}, {1, plural, one {# kumment} few {# kummenti} many {# kumment} other {# kumment}}, {2, plural, one {# link} few {# links} many {# link} other {# link}})"
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:433
-#~ msgid "Data management"
-#~ msgstr "Ġestjoni tad-data"
+#. placeholder {0}: imported.data?.objects ?? 0
+#. placeholder {1}: imported.data?.comments ?? 0
+#. placeholder {2}: imported.data?.links ?? 0
+#: src/features/projects/components/create-project-dialog.tsx:121
+msgid "Data imported ({0, plural, one {# object} other {# objects}}, {1, plural, one {# comment} other {# comments}}, {2, plural, one {# link} other {# links}})"
+msgstr "Id-data ġiet importata ({0, plural, one {# oġġett} few {# oġġetti} many {# oġġett} other {# oġġett}}, {1, plural, one {# kumment} few {# kummenti} many {# kumment} other {# kumment}}, {2, plural, one {# link} few {# links} many {# link} other {# link}})"
 
 #: src/features/editor/components/add-dialogs.tsx:137
 msgid "Date"
@@ -967,10 +966,6 @@ msgstr "Esporta d-data"
 msgid "Export design"
 msgstr "Esporta d-disinn"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:434
-#~ msgid "Export or import the raw data content in this project."
-#~ msgstr "Esporta jew importa l-kontenut tad-data mhux ipproċessata f'dan il-proġett."
-
 #: ../../../lib/web/src/lib/preference-utils.ts:136
 msgid "Extra large"
 msgstr "Kbir ħafna"
@@ -1000,7 +995,7 @@ msgstr "Ma rnexxiex jinħoloq il-link"
 msgid "Failed to create option"
 msgstr "Ma rnexxiex tinħoloq l-għażla"
 
-#: src/features/projects/components/create-project-dialog.tsx:110
+#: src/features/projects/components/create-project-dialog.tsx:111
 msgid "Failed to create project"
 msgstr "Ma rnexxiex jinħoloq il-proġett"
 
@@ -1036,7 +1031,7 @@ msgstr "L-esportazzjoni tad-data falliet"
 msgid "Failed to export design"
 msgstr "Ma rnexxiex jiġi esportat id-disinn"
 
-#: src/features/projects/components/create-project-dialog.tsx:124
+#: src/features/projects/components/create-project-dialog.tsx:122
 msgid "Failed to import data"
 msgstr "L-importazzjoni tad-data falliet"
 
@@ -1069,7 +1064,7 @@ msgstr "Ma rnexxiex isir il-merge"
 msgid "Failed to post comment"
 msgstr "Ma rnexxiex jiġi postjat il-kumment"
 
-#: src/features/projects/components/create-project-dialog.tsx:177
+#: src/features/projects/components/create-project-dialog.tsx:175
 #: src/routes/_authenticated/$projectId/design.tsx:281
 msgid "Failed to read file"
 msgstr "Ma rnexxiex jinqara l-fajl"
@@ -1144,7 +1139,7 @@ msgid "Files"
 msgstr "Fajls"
 
 #: src/components/layout/projects-layout.tsx:61
-#: src/routes/_authenticated/find.tsx:88
+#: src/routes/_authenticated/find.tsx:92
 msgid "Find projects"
 msgstr "Sib proġetti"
 
@@ -1254,40 +1249,18 @@ msgstr "Identità"
 msgid "Imperial"
 msgstr "Imperjali"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:549
-#~ msgid "Import a data configuration"
-#~ msgstr "Importa konfigurazzjoni tad-data"
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:444
-#: src/routes/_authenticated/$projectId_.settings.tsx:490
-#: src/routes/_authenticated/$projectId_.settings.tsx:548
-#~ msgid "Import data"
-#~ msgstr "Importa d-data"
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:476
-#~ msgid "Import data?"
-#~ msgstr "Timporta d-data?"
-
 #: src/routes/_authenticated/$projectId/design.tsx:177
 #: src/routes/_authenticated/$projectId/design.tsx:293
 msgid "Import design"
 msgstr "Importa d-disinn"
 
-#: src/features/projects/components/create-project-dialog.tsx:288
+#: src/features/projects/components/create-project-dialog.tsx:298
 msgid "Import from backup (optional)"
-msgstr ""
+msgstr "Importa mill-backup (mhux obbligatorju)"
 
-#: src/features/projects/components/create-project-dialog.tsx:122
-msgid "Imported {count} objects"
-msgstr ""
-
-#: src/features/projects/components/create-project-dialog.tsx:119
+#: src/features/projects/components/create-project-dialog.tsx:120
 msgid "Importing data..."
-msgstr ""
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:487
-#~ msgid "Importing..."
-#~ msgstr "Qed jimporta..."
+msgstr "Qed tiġi importata d-data..."
 
 #: ../../../lib/web/src/components/config-drawer.tsx:252
 msgid "Inset"
@@ -1301,7 +1274,7 @@ msgstr "Interessi"
 msgid "Invalid date"
 msgstr "Data invalida"
 
-#: src/features/projects/components/create-project-dialog.tsx:171
+#: src/features/projects/components/create-project-dialog.tsx:169
 #: src/routes/_authenticated/$projectId/design.tsx:277
 msgid "Invalid JSON file"
 msgstr "Fajl JSON invalidu"
@@ -1374,7 +1347,7 @@ msgstr "Qed jitgħabba l-oġġett"
 msgid "Loading item details"
 msgstr "Qed jitgħabbew id-dettalji tal-oġġett"
 
-#: src/features/projects/components/create-project-dialog.tsx:365
+#: src/features/projects/components/create-project-dialog.tsx:375
 msgid "Loading templates..."
 msgstr "Qed jitgħabbew il-mudelli..."
 
@@ -1475,7 +1448,7 @@ msgstr "Repo, sors, jew parametri tal-mira nieqsa"
 msgid "Monday"
 msgstr "It-Tnejn"
 
-#: src/features/projects/components/create-project-dialog.tsx:243
+#: src/features/projects/components/create-project-dialog.tsx:253
 msgid "My project"
 msgstr "Il-proġett tiegħi"
 
@@ -1485,12 +1458,12 @@ msgstr "Il-proġett tiegħi"
 #: src/features/editor/components/edit-dialogs.tsx:741
 #: src/features/editor/components/edit-dialogs.tsx:1065
 #: src/features/editor/components/option-dialog.tsx:112
-#: src/features/projects/components/create-project-dialog.tsx:233
+#: src/features/projects/components/create-project-dialog.tsx:243
 #: src/routes/_authenticated/$projectId_.settings.tsx:306
 msgid "Name"
 msgstr "Isem"
 
-#: src/features/projects/components/create-project-dialog.tsx:84
+#: src/features/projects/components/create-project-dialog.tsx:85
 msgid "Name is required"
 msgstr "L-isem huwa meħtieġ"
 
@@ -1510,7 +1483,7 @@ msgstr "Ġdid"
 msgid "New {className}"
 msgstr "{className} ġdid"
 
-#: src/features/projects/components/create-project-dialog.tsx:347
+#: src/features/projects/components/create-project-dialog.tsx:357
 msgid "Next"
 msgstr "Li jmiss"
 
@@ -1592,7 +1565,7 @@ msgid "No profile"
 msgstr "L-ebda profil"
 
 #: src/features/projects/components/inline-project-search.tsx:164
-#: src/routes/_authenticated/find.tsx:90
+#: src/routes/_authenticated/find.tsx:94
 msgid "No projects found"
 msgstr "Ma nstabu l-ebda proġetti"
 
@@ -1810,7 +1783,7 @@ msgstr "Jekk jogħġbok żid klassi waħda jew aktar mad-disinn tal-proġett."
 msgid "Please check your internet connection and try again."
 msgstr "Jekk jogħġbok iċċekkja l-konnessjoni tal-internet tiegħek u erġa' pprova."
 
-#: src/features/projects/components/create-project-dialog.tsx:94
+#: src/features/projects/components/create-project-dialog.tsx:95
 msgid "Please select a template"
 msgstr "Jekk jogħġbok agħżel template"
 
@@ -1822,7 +1795,7 @@ msgstr "Erġa' pprova."
 msgid "Please wait a moment and try again."
 msgstr "Jekk jogħġbok stenna ftit u erġa' pprova."
 
-#: src/features/projects/components/create-project-dialog.tsx:255
+#: src/features/projects/components/create-project-dialog.tsx:265
 #: src/routes/_authenticated/$projectId_.settings.tsx:323
 msgid "Prefix"
 msgstr "Prefiss"
@@ -1852,7 +1825,7 @@ msgstr "Proġett"
 msgid "Project actions"
 msgstr "Azzjonijiet tal-proġett"
 
-#: src/features/projects/components/create-project-dialog.tsx:109
+#: src/features/projects/components/create-project-dialog.tsx:110
 msgid "Project created"
 msgstr "Proġett inħoloq"
 
@@ -1916,7 +1889,7 @@ msgid "Rebase and merge"
 msgstr "Rebase u merge"
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:216
-#: ../../../lib/web/src/components/search-entity-page.tsx:240
+#: ../../../lib/web/src/components/search-entity-page.tsx:242
 msgid "Recommended"
 msgstr "Rakkomandat"
 
@@ -1955,7 +1928,7 @@ msgstr "Relattiv fi 24 siegħa, inkella assolut"
 #: src/features/objects/components/comment-thread.tsx:299
 #: src/features/objects/components/create-object-dialog.tsx:486
 #: src/features/objects/components/create-object-dialog.tsx:491
-#: src/features/projects/components/create-project-dialog.tsx:331
+#: src/features/projects/components/create-project-dialog.tsx:341
 msgid "Remove"
 msgstr "Neħħi"
 
@@ -2092,7 +2065,7 @@ msgstr "Qed jiġi ssejvjat..."
 msgid "Search"
 msgstr "Fittex"
 
-#: src/routes/_authenticated/find.tsx:89
+#: src/routes/_authenticated/find.tsx:93
 msgid "Search by name, ID, fingerprint, or URL..."
 msgstr "Fittex skond isem, ID, fingerprint, jew URL..."
 
@@ -2135,7 +2108,7 @@ msgid "Search..."
 msgstr "Fittex..."
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:174
-#: ../../../lib/web/src/components/search-entity-page.tsx:198
+#: ../../../lib/web/src/components/search-entity-page.tsx:200
 #: ../../../lib/web/src/features/access/access-dialog.tsx:202
 msgid "Searching..."
 msgstr "Qed ifittex..."
@@ -2441,10 +2414,6 @@ msgstr "Dan il-proġett ma setax jiġi mtella' bħalissa."
 msgid "This project may have been deleted or you don't have access to it."
 msgstr "Dan il-proġett jista' jkun ġie mħassar jew m'għandekx aċċess għalih."
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:478
-#~ msgid "This will import the data from <0>{0}</0>. Objects will be appended to the existing records. Ensure the current design matches the classes and fields referenced in the file."
-#~ msgstr "Dan se jimporta d-data minn <0>{0}</0>. L-oġġetti se jiżdiedu mar-rekords eżistenti. Kun żgur li d-disinn attwali jaqbel mal-klassijiet u l-oqsma msemmija fil-fajl."
-
 #: src/features/requests/components/merge-button.tsx:105
 msgid "This will merge \"{source}\" into \"{target}\". This action cannot be undone."
 msgstr "Dan se jimmerġja \"{source}\" f' \"{target}\". Din l-azzjoni ma tistax titreġġa' lura."
@@ -2533,7 +2502,7 @@ msgid "Travelling"
 msgstr "Qed jivvjaġġa"
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:190
-#: ../../../lib/web/src/components/search-entity-page.tsx:214
+#: ../../../lib/web/src/components/search-entity-page.tsx:216
 msgid "Try adjusting your search terms"
 msgstr "Ipprova taġġusta t-termini tat-tfittxija tiegħek"
 
@@ -2629,7 +2598,7 @@ msgstr "Qed jiġi aġġornat l-aċċess..."
 msgid "Upload"
 msgstr "Tella'"
 
-#: src/features/projects/components/create-project-dialog.tsx:304
+#: src/features/projects/components/create-project-dialog.tsx:314
 #: src/routes/_authenticated/$projectId/design.tsx:336
 msgid "Upload .json file"
 msgstr "Tella' fajl .json"
@@ -2640,7 +2609,7 @@ msgstr "Uża l-passkey tiegħek"
 
 #. placeholder {0}: prefix || "project"
 #. placeholder {1}: prefix || "project"
-#: src/features/projects/components/create-project-dialog.tsx:272
+#: src/features/projects/components/create-project-dialog.tsx:282
 msgid "Used for readable IDs like {0}-1, {1}-2"
 msgstr "Użat għal IDs li jistgħu jinqraw bħal {0}-1, {1}-2"
 
@@ -2671,7 +2640,7 @@ msgstr "Ivverifika"
 msgid "Verify email address"
 msgstr "Ivverifika l-indirizz tal-email"
 
-#: ../../../lib/web/src/components/attachment-gallery.tsx:75
+#: ../../../lib/web/src/components/attachment-gallery.tsx:74
 msgid "Video thumbnail"
 msgstr "Thumbnail tal-vidjo"
 
@@ -2721,9 +2690,9 @@ msgstr "Segwit"
 msgid "Watched only"
 msgstr "Segwit biss"
 
-#: src/features/projects/components/create-project-dialog.tsx:360
+#: src/features/projects/components/create-project-dialog.tsx:370
 msgid "We have auto-selected the best matching template."
-msgstr ""
+msgstr "Għażilna awtomatikament il-mudell li jaqbel l-aħjar."
 
 #: ../../../lib/web/src/features/errors/maintenance-error.tsx:16
 msgid "We'll be back online shortly."
@@ -2753,6 +2722,6 @@ msgstr "Għad m'għandekx proġetti."
 msgid "Your account was moved here from {source}. Until you delete it there, messages and notifications may reach both servers, some of your content keeps being served from the old server, and followers may take a few minutes to find you here."
 msgstr "Il-kont tiegħek ġie miċċaqqlaq hawn minn {source}. Sakemm tħassru hemm, il-messaġġi u n-notifiki jistgħu jaslu fuq iż-żewġ servers, xi kontenut tiegħek jibqa' jingħata mis-server il-qadim, u s-segwaċi jistgħu jieħdu ftit minuti biex isibuk hawn."
 
-#: src/features/projects/components/create-project-dialog.tsx:356
+#: src/features/projects/components/create-project-dialog.tsx:366
 msgid "Your backup contains objects of type:"
-msgstr ""
+msgstr "Il-backup tiegħek fih oġġetti tat-tip:"

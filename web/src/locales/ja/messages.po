@@ -237,7 +237,7 @@ msgstr "すべて"
 msgid "All projects"
 msgstr "すべてのプロジェクト"
 
-#: src/features/projects/components/create-project-dialog.tsx:278
+#: src/features/projects/components/create-project-dialog.tsx:288
 msgid "Allow anyone to search for project"
 msgstr "誰でもプロジェクトを検索できるようにする"
 
@@ -313,7 +313,7 @@ msgid "Available keyboard shortcuts"
 msgstr "利用可能なキーボードショートカット"
 
 #: ../../../lib/web/src/components/place-picker.tsx:155
-#: src/features/projects/components/create-project-dialog.tsx:428
+#: src/features/projects/components/create-project-dialog.tsx:438
 msgid "Back"
 msgstr "戻る"
 
@@ -378,7 +378,7 @@ msgstr "親にできるもの"
 #: src/features/board/components/board-column.tsx:606
 #: src/features/editor/components/option-dialog.tsx:146
 #: src/features/objects/components/comment-thread.tsx:175
-#: src/features/projects/components/create-project-dialog.tsx:344
+#: src/features/projects/components/create-project-dialog.tsx:354
 #: src/routes/_authenticated/$projectId/design.tsx:343
 #: src/routes/_authenticated/$projectId/index.tsx:1011
 msgid "Cancel"
@@ -414,7 +414,7 @@ msgstr "マージ状態を確認中..."
 msgid "Checklist"
 msgstr "チェックリスト"
 
-#: src/features/projects/components/create-project-dialog.tsx:225
+#: src/features/projects/components/create-project-dialog.tsx:235
 msgid "Choose a template"
 msgstr "テンプレートを選択"
 
@@ -619,7 +619,7 @@ msgstr "作成"
 msgid "Create a new item in this project"
 msgstr "このプロジェクトに新しい項目を作成"
 
-#: src/features/projects/components/create-project-dialog.tsx:227
+#: src/features/projects/components/create-project-dialog.tsx:237
 #: src/features/projects/pages/projects-list-page.tsx:103
 msgid "Create a new project"
 msgstr "新しいプロジェクトを作成"
@@ -630,9 +630,9 @@ msgid "Create new item"
 msgstr "新しい項目を作成"
 
 #: src/components/layout/projects-layout.tsx:62
-#: src/features/projects/components/create-project-dialog.tsx:215
 #: src/features/projects/components/create-project-dialog.tsx:225
-#: src/features/projects/components/create-project-dialog.tsx:431
+#: src/features/projects/components/create-project-dialog.tsx:235
+#: src/features/projects/components/create-project-dialog.tsx:441
 msgid "Create project"
 msgstr "プロジェクトを作成"
 
@@ -645,12 +645,12 @@ msgstr "作成、編集、コメント、閲覧"
 msgid "Created"
 msgstr "作成日"
 
-#: src/features/projects/components/create-project-dialog.tsx:108
+#: src/features/projects/components/create-project-dialog.tsx:109
 msgid "Creating project..."
 msgstr "プロジェクトを作成しています..."
 
 #: src/features/objects/components/create-object-dialog.tsx:535
-#: src/features/projects/components/create-project-dialog.tsx:431
+#: src/features/projects/components/create-project-dialog.tsx:441
 msgid "Creating..."
 msgstr "作成中..."
 
@@ -675,13 +675,12 @@ msgstr "ダークモード"
 msgid "Data conflict"
 msgstr "データの競合"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:350
-#~ msgid "Data imported ({0, plural, one {# object} other {# objects}}, {1, plural, one {# comment} other {# comments}}, {2, plural, one {# link} other {# links}})"
-#~ msgstr "データをインポートしました（{0, plural, other {# 件のオブジェクト}}、{1, plural, other {# 件のコメント}}、{2, plural, other {# 件のリンク}}）"
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:433
-#~ msgid "Data management"
-#~ msgstr "データ管理"
+#. placeholder {0}: imported.data?.objects ?? 0
+#. placeholder {1}: imported.data?.comments ?? 0
+#. placeholder {2}: imported.data?.links ?? 0
+#: src/features/projects/components/create-project-dialog.tsx:121
+msgid "Data imported ({0, plural, one {# object} other {# objects}}, {1, plural, one {# comment} other {# comments}}, {2, plural, one {# link} other {# links}})"
+msgstr "データをインポートしました（{0, plural, other {# 件のオブジェクト}}、{1, plural, other {# 件のコメント}}、{2, plural, other {# 件のリンク}}）"
 
 #: src/features/editor/components/add-dialogs.tsx:137
 msgid "Date"
@@ -967,10 +966,6 @@ msgstr "データをエクスポート"
 msgid "Export design"
 msgstr "デザインをエクスポート"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:434
-#~ msgid "Export or import the raw data content in this project."
-#~ msgstr "このプロジェクトの生データの内容をエクスポートまたはインポートします。"
-
 #: ../../../lib/web/src/lib/preference-utils.ts:136
 msgid "Extra large"
 msgstr "特大"
@@ -1000,7 +995,7 @@ msgstr "リンクの作成に失敗しました"
 msgid "Failed to create option"
 msgstr "オプションの作成に失敗しました"
 
-#: src/features/projects/components/create-project-dialog.tsx:110
+#: src/features/projects/components/create-project-dialog.tsx:111
 msgid "Failed to create project"
 msgstr "プロジェクトの作成に失敗しました"
 
@@ -1036,7 +1031,7 @@ msgstr "データのエクスポートに失敗しました"
 msgid "Failed to export design"
 msgstr "デザインのエクスポートに失敗しました"
 
-#: src/features/projects/components/create-project-dialog.tsx:124
+#: src/features/projects/components/create-project-dialog.tsx:122
 msgid "Failed to import data"
 msgstr "データのインポートに失敗しました"
 
@@ -1069,7 +1064,7 @@ msgstr "マージに失敗しました"
 msgid "Failed to post comment"
 msgstr "コメントの投稿に失敗しました"
 
-#: src/features/projects/components/create-project-dialog.tsx:177
+#: src/features/projects/components/create-project-dialog.tsx:175
 #: src/routes/_authenticated/$projectId/design.tsx:281
 msgid "Failed to read file"
 msgstr "ファイルの読み取りに失敗しました"
@@ -1144,7 +1139,7 @@ msgid "Files"
 msgstr "ファイル"
 
 #: src/components/layout/projects-layout.tsx:61
-#: src/routes/_authenticated/find.tsx:88
+#: src/routes/_authenticated/find.tsx:92
 msgid "Find projects"
 msgstr "プロジェクトを検索"
 
@@ -1254,40 +1249,18 @@ msgstr "アイデンティティ"
 msgid "Imperial"
 msgstr "ヤード・ポンド法"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:549
-#~ msgid "Import a data configuration"
-#~ msgstr "データ構成をインポートします"
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:444
-#: src/routes/_authenticated/$projectId_.settings.tsx:490
-#: src/routes/_authenticated/$projectId_.settings.tsx:548
-#~ msgid "Import data"
-#~ msgstr "データをインポート"
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:476
-#~ msgid "Import data?"
-#~ msgstr "データをインポートしますか？"
-
 #: src/routes/_authenticated/$projectId/design.tsx:177
 #: src/routes/_authenticated/$projectId/design.tsx:293
 msgid "Import design"
 msgstr "デザインをインポート"
 
-#: src/features/projects/components/create-project-dialog.tsx:288
+#: src/features/projects/components/create-project-dialog.tsx:298
 msgid "Import from backup (optional)"
-msgstr ""
+msgstr "バックアップからインポート（任意）"
 
-#: src/features/projects/components/create-project-dialog.tsx:122
-msgid "Imported {count} objects"
-msgstr ""
-
-#: src/features/projects/components/create-project-dialog.tsx:119
+#: src/features/projects/components/create-project-dialog.tsx:120
 msgid "Importing data..."
-msgstr ""
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:487
-#~ msgid "Importing..."
-#~ msgstr "インポート中…"
+msgstr "データをインポート中..."
 
 #: ../../../lib/web/src/components/config-drawer.tsx:252
 msgid "Inset"
@@ -1301,7 +1274,7 @@ msgstr "興味"
 msgid "Invalid date"
 msgstr "無効な日付"
 
-#: src/features/projects/components/create-project-dialog.tsx:171
+#: src/features/projects/components/create-project-dialog.tsx:169
 #: src/routes/_authenticated/$projectId/design.tsx:277
 msgid "Invalid JSON file"
 msgstr "無効な JSON ファイル"
@@ -1374,7 +1347,7 @@ msgstr "項目を読み込み中"
 msgid "Loading item details"
 msgstr "項目の詳細を読み込み中"
 
-#: src/features/projects/components/create-project-dialog.tsx:365
+#: src/features/projects/components/create-project-dialog.tsx:375
 msgid "Loading templates..."
 msgstr "テンプレートを読み込み中..."
 
@@ -1475,7 +1448,7 @@ msgstr "リポジトリ、ソース、またはターゲットのパラメータ
 msgid "Monday"
 msgstr "月曜日"
 
-#: src/features/projects/components/create-project-dialog.tsx:243
+#: src/features/projects/components/create-project-dialog.tsx:253
 msgid "My project"
 msgstr "マイプロジェクト"
 
@@ -1485,12 +1458,12 @@ msgstr "マイプロジェクト"
 #: src/features/editor/components/edit-dialogs.tsx:741
 #: src/features/editor/components/edit-dialogs.tsx:1065
 #: src/features/editor/components/option-dialog.tsx:112
-#: src/features/projects/components/create-project-dialog.tsx:233
+#: src/features/projects/components/create-project-dialog.tsx:243
 #: src/routes/_authenticated/$projectId_.settings.tsx:306
 msgid "Name"
 msgstr "名前"
 
-#: src/features/projects/components/create-project-dialog.tsx:84
+#: src/features/projects/components/create-project-dialog.tsx:85
 msgid "Name is required"
 msgstr "名前が必要です"
 
@@ -1510,7 +1483,7 @@ msgstr "新規"
 msgid "New {className}"
 msgstr "新しい{className}"
 
-#: src/features/projects/components/create-project-dialog.tsx:347
+#: src/features/projects/components/create-project-dialog.tsx:357
 msgid "Next"
 msgstr "次へ"
 
@@ -1592,7 +1565,7 @@ msgid "No profile"
 msgstr "プロフィールがありません"
 
 #: src/features/projects/components/inline-project-search.tsx:164
-#: src/routes/_authenticated/find.tsx:90
+#: src/routes/_authenticated/find.tsx:94
 msgid "No projects found"
 msgstr "プロジェクトが見つかりません"
 
@@ -1810,7 +1783,7 @@ msgstr "まずプロジェクトの設計に1つ以上のクラスを追加し�
 msgid "Please check your internet connection and try again."
 msgstr "インターネット接続を確認して、もう一度お試しください。"
 
-#: src/features/projects/components/create-project-dialog.tsx:94
+#: src/features/projects/components/create-project-dialog.tsx:95
 msgid "Please select a template"
 msgstr "テンプレートを選択してください"
 
@@ -1822,7 +1795,7 @@ msgstr "もう一度お試しください。"
 msgid "Please wait a moment and try again."
 msgstr "しばらくしてからもう一度お試しください。"
 
-#: src/features/projects/components/create-project-dialog.tsx:255
+#: src/features/projects/components/create-project-dialog.tsx:265
 #: src/routes/_authenticated/$projectId_.settings.tsx:323
 msgid "Prefix"
 msgstr "プレフィックス"
@@ -1852,7 +1825,7 @@ msgstr "プロジェクト"
 msgid "Project actions"
 msgstr "プロジェクトの操作"
 
-#: src/features/projects/components/create-project-dialog.tsx:109
+#: src/features/projects/components/create-project-dialog.tsx:110
 msgid "Project created"
 msgstr "プロジェクトを作成しました"
 
@@ -1916,7 +1889,7 @@ msgid "Rebase and merge"
 msgstr "リベースしてマージ"
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:216
-#: ../../../lib/web/src/components/search-entity-page.tsx:240
+#: ../../../lib/web/src/components/search-entity-page.tsx:242
 msgid "Recommended"
 msgstr "おすすめ"
 
@@ -1955,7 +1928,7 @@ msgstr "24時間以内は相対、それ以外は絶対"
 #: src/features/objects/components/comment-thread.tsx:299
 #: src/features/objects/components/create-object-dialog.tsx:486
 #: src/features/objects/components/create-object-dialog.tsx:491
-#: src/features/projects/components/create-project-dialog.tsx:331
+#: src/features/projects/components/create-project-dialog.tsx:341
 msgid "Remove"
 msgstr "削除"
 
@@ -2092,7 +2065,7 @@ msgstr "保存中..."
 msgid "Search"
 msgstr "検索"
 
-#: src/routes/_authenticated/find.tsx:89
+#: src/routes/_authenticated/find.tsx:93
 msgid "Search by name, ID, fingerprint, or URL..."
 msgstr "名前、ID、フィンガープリント、または URL で検索..."
 
@@ -2135,7 +2108,7 @@ msgid "Search..."
 msgstr "検索…"
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:174
-#: ../../../lib/web/src/components/search-entity-page.tsx:198
+#: ../../../lib/web/src/components/search-entity-page.tsx:200
 #: ../../../lib/web/src/features/access/access-dialog.tsx:202
 msgid "Searching..."
 msgstr "検索中..."
@@ -2441,10 +2414,6 @@ msgstr "現在このプロジェクトを読み込めません。"
 msgid "This project may have been deleted or you don't have access to it."
 msgstr "このプロジェクトは削除されたか、アクセス権がない可能性があります。"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:478
-#~ msgid "This will import the data from <0>{0}</0>. Objects will be appended to the existing records. Ensure the current design matches the classes and fields referenced in the file."
-#~ msgstr "<0>{0}</0> からデータをインポートします。オブジェクトは既存のレコードに追加されます。現在の設計がファイル内で参照されているクラスとフィールドに一致していることを確認してください。"
-
 #: src/features/requests/components/merge-button.tsx:105
 msgid "This will merge \"{source}\" into \"{target}\". This action cannot be undone."
 msgstr "「{source}」を「{target}」にマージします。この操作は取り消せません。"
@@ -2533,7 +2502,7 @@ msgid "Travelling"
 msgstr "移動中"
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:190
-#: ../../../lib/web/src/components/search-entity-page.tsx:214
+#: ../../../lib/web/src/components/search-entity-page.tsx:216
 msgid "Try adjusting your search terms"
 msgstr "検索語を変えてみてください"
 
@@ -2629,7 +2598,7 @@ msgstr "アクセスを更新しています..."
 msgid "Upload"
 msgstr "アップロード"
 
-#: src/features/projects/components/create-project-dialog.tsx:304
+#: src/features/projects/components/create-project-dialog.tsx:314
 #: src/routes/_authenticated/$projectId/design.tsx:336
 msgid "Upload .json file"
 msgstr ".json ファイルをアップロード"
@@ -2640,7 +2609,7 @@ msgstr "パスキーを使用"
 
 #. placeholder {0}: prefix || "project"
 #. placeholder {1}: prefix || "project"
-#: src/features/projects/components/create-project-dialog.tsx:272
+#: src/features/projects/components/create-project-dialog.tsx:282
 msgid "Used for readable IDs like {0}-1, {1}-2"
 msgstr "{0}-1、{1}-2 のような読みやすいIDに使用"
 
@@ -2671,7 +2640,7 @@ msgstr "認証"
 msgid "Verify email address"
 msgstr "メールアドレスを認証"
 
-#: ../../../lib/web/src/components/attachment-gallery.tsx:75
+#: ../../../lib/web/src/components/attachment-gallery.tsx:74
 msgid "Video thumbnail"
 msgstr "動画のサムネイル"
 
@@ -2721,9 +2690,9 @@ msgstr "ウォッチ中"
 msgid "Watched only"
 msgstr "ウォッチ中のみ"
 
-#: src/features/projects/components/create-project-dialog.tsx:360
+#: src/features/projects/components/create-project-dialog.tsx:370
 msgid "We have auto-selected the best matching template."
-msgstr ""
+msgstr "最適なテンプレートを自動的に選択しました。"
 
 #: ../../../lib/web/src/features/errors/maintenance-error.tsx:16
 msgid "We'll be back online shortly."
@@ -2753,6 +2722,6 @@ msgstr "まだプロジェクトがありません。"
 msgid "Your account was moved here from {source}. Until you delete it there, messages and notifications may reach both servers, some of your content keeps being served from the old server, and followers may take a few minutes to find you here."
 msgstr "アカウントが{source}からここに移行されました。そちらで削除するまで、メッセージや通知が両方のサーバーに届く場合があり、一部のコンテンツは旧サーバーから引き続き提供され、フォロワーがここであなたを見つけるまで数分かかる場合があります。"
 
-#: src/features/projects/components/create-project-dialog.tsx:356
+#: src/features/projects/components/create-project-dialog.tsx:366
 msgid "Your backup contains objects of type:"
-msgstr ""
+msgstr "バックアップには次のタイプのオブジェクトが含まれています:"

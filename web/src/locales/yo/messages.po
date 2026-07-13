@@ -237,7 +237,7 @@ msgstr "Gbogbo"
 msgid "All projects"
 msgstr "Gbogbo àwọn iṣẹ́ àkànṣe"
 
-#: src/features/projects/components/create-project-dialog.tsx:278
+#: src/features/projects/components/create-project-dialog.tsx:288
 msgid "Allow anyone to search for project"
 msgstr "Jẹ́ kí ẹnikẹ́ni wá iṣẹ́ àkànṣe"
 
@@ -313,7 +313,7 @@ msgid "Available keyboard shortcuts"
 msgstr "Àwọn ọ̀nà kúkúrú keyboard tó wà"
 
 #: ../../../lib/web/src/components/place-picker.tsx:155
-#: src/features/projects/components/create-project-dialog.tsx:428
+#: src/features/projects/components/create-project-dialog.tsx:438
 msgid "Back"
 msgstr "Padà"
 
@@ -378,7 +378,7 @@ msgstr "Ó lè jẹ́ ọmọ ti"
 #: src/features/board/components/board-column.tsx:606
 #: src/features/editor/components/option-dialog.tsx:146
 #: src/features/objects/components/comment-thread.tsx:175
-#: src/features/projects/components/create-project-dialog.tsx:344
+#: src/features/projects/components/create-project-dialog.tsx:354
 #: src/routes/_authenticated/$projectId/design.tsx:343
 #: src/routes/_authenticated/$projectId/index.tsx:1011
 msgid "Cancel"
@@ -414,7 +414,7 @@ msgstr "Ó ń ṣàyẹ̀wò ipò merge..."
 msgid "Checklist"
 msgstr "Àkọsílẹ̀ àyẹ̀wò"
 
-#: src/features/projects/components/create-project-dialog.tsx:225
+#: src/features/projects/components/create-project-dialog.tsx:235
 msgid "Choose a template"
 msgstr "Yan àwòṣe"
 
@@ -619,7 +619,7 @@ msgstr "Dá"
 msgid "Create a new item in this project"
 msgstr "Dá ohun tuntun nínú iṣẹ́ àkànṣe yìí"
 
-#: src/features/projects/components/create-project-dialog.tsx:227
+#: src/features/projects/components/create-project-dialog.tsx:237
 #: src/features/projects/pages/projects-list-page.tsx:103
 msgid "Create a new project"
 msgstr "Dá iṣẹ́ àkànṣe tuntun"
@@ -630,9 +630,9 @@ msgid "Create new item"
 msgstr "Dá ohun tuntun"
 
 #: src/components/layout/projects-layout.tsx:62
-#: src/features/projects/components/create-project-dialog.tsx:215
 #: src/features/projects/components/create-project-dialog.tsx:225
-#: src/features/projects/components/create-project-dialog.tsx:431
+#: src/features/projects/components/create-project-dialog.tsx:235
+#: src/features/projects/components/create-project-dialog.tsx:441
 msgid "Create project"
 msgstr "Dá iṣẹ́ àkànṣe"
 
@@ -645,12 +645,12 @@ msgstr "Ṣẹ̀dá, ṣàtúnṣe, sọ̀rọ̀, kí o sì wò"
 msgid "Created"
 msgstr "Tí a dá"
 
-#: src/features/projects/components/create-project-dialog.tsx:108
+#: src/features/projects/components/create-project-dialog.tsx:109
 msgid "Creating project..."
 msgstr "Ń dá iṣẹ́ àkànṣe..."
 
 #: src/features/objects/components/create-object-dialog.tsx:535
-#: src/features/projects/components/create-project-dialog.tsx:431
+#: src/features/projects/components/create-project-dialog.tsx:441
 msgid "Creating..."
 msgstr "Ó ń dá..."
 
@@ -675,13 +675,12 @@ msgstr "Ọ̀nà òkùnkùn"
 msgid "Data conflict"
 msgstr "Ìtakora dátà"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:350
-#~ msgid "Data imported ({0, plural, one {# object} other {# objects}}, {1, plural, one {# comment} other {# comments}}, {2, plural, one {# link} other {# links}})"
-#~ msgstr "Ti gbé dátà wọlé ({0, plural, other {# nǹkan}}, {1, plural, other {# ọ̀rọ̀ ìdásí}}, {2, plural, other {# ìjápọ̀}})"
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:433
-#~ msgid "Data management"
-#~ msgstr "Ìṣàkóso dátà"
+#. placeholder {0}: imported.data?.objects ?? 0
+#. placeholder {1}: imported.data?.comments ?? 0
+#. placeholder {2}: imported.data?.links ?? 0
+#: src/features/projects/components/create-project-dialog.tsx:121
+msgid "Data imported ({0, plural, one {# object} other {# objects}}, {1, plural, one {# comment} other {# comments}}, {2, plural, one {# link} other {# links}})"
+msgstr "Ti gbé dátà wọlé ({0, plural, other {# nǹkan}}, {1, plural, other {# ọ̀rọ̀ ìdásí}}, {2, plural, other {# ìjápọ̀}})"
 
 #: src/features/editor/components/add-dialogs.tsx:137
 msgid "Date"
@@ -967,10 +966,6 @@ msgstr "Gbé dátà jáde"
 msgid "Export design"
 msgstr "Mú àpẹrẹ jáde"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:434
-#~ msgid "Export or import the raw data content in this project."
-#~ msgstr "Gbé àkóónú dátà àìṣàtúnṣe inú iṣẹ́ àkànṣe yìí jáde tàbí gbé e wọlé."
-
 #: ../../../lib/web/src/lib/preference-utils.ts:136
 msgid "Extra large"
 msgstr "Tóbi gan"
@@ -1000,7 +995,7 @@ msgstr "Kò lè dá ìjápọ̀"
 msgid "Failed to create option"
 msgstr "Kò lè dá àṣàyàn"
 
-#: src/features/projects/components/create-project-dialog.tsx:110
+#: src/features/projects/components/create-project-dialog.tsx:111
 msgid "Failed to create project"
 msgstr "Kò lè dá iṣẹ́"
 
@@ -1036,7 +1031,7 @@ msgstr "Kò ṣeé ṣe láti gbé dátà jáde"
 msgid "Failed to export design"
 msgstr "Kò lè mú àpẹrẹ jáde"
 
-#: src/features/projects/components/create-project-dialog.tsx:124
+#: src/features/projects/components/create-project-dialog.tsx:122
 msgid "Failed to import data"
 msgstr "Kò ṣeé ṣe láti gbé dátà wọlé"
 
@@ -1069,7 +1064,7 @@ msgstr "Kò lè dàpọ̀"
 msgid "Failed to post comment"
 msgstr "Kò lè fi ọ̀rọ̀-ìṣàlàyé ránṣẹ́"
 
-#: src/features/projects/components/create-project-dialog.tsx:177
+#: src/features/projects/components/create-project-dialog.tsx:175
 #: src/routes/_authenticated/$projectId/design.tsx:281
 msgid "Failed to read file"
 msgstr "Kò lè ka fáìlì"
@@ -1144,7 +1139,7 @@ msgid "Files"
 msgstr "Àwọn fáìlì"
 
 #: src/components/layout/projects-layout.tsx:61
-#: src/routes/_authenticated/find.tsx:88
+#: src/routes/_authenticated/find.tsx:92
 msgid "Find projects"
 msgstr "Wa àwọn iṣẹ́"
 
@@ -1254,40 +1249,18 @@ msgstr "Ìdánimọ̀"
 msgid "Imperial"
 msgstr "Imperial"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:549
-#~ msgid "Import a data configuration"
-#~ msgstr "Gbé àtòpọ̀ dátà kan wọlé"
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:444
-#: src/routes/_authenticated/$projectId_.settings.tsx:490
-#: src/routes/_authenticated/$projectId_.settings.tsx:548
-#~ msgid "Import data"
-#~ msgstr "Gbé dátà wọlé"
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:476
-#~ msgid "Import data?"
-#~ msgstr "Ṣé kí a gbé dátà wọlé?"
-
 #: src/routes/_authenticated/$projectId/design.tsx:177
 #: src/routes/_authenticated/$projectId/design.tsx:293
 msgid "Import design"
 msgstr "Mú àpẹrẹ wọlé"
 
-#: src/features/projects/components/create-project-dialog.tsx:288
+#: src/features/projects/components/create-project-dialog.tsx:298
 msgid "Import from backup (optional)"
-msgstr ""
+msgstr "Gbé wọlé láti backup (àṣàyàn)"
 
-#: src/features/projects/components/create-project-dialog.tsx:122
-msgid "Imported {count} objects"
-msgstr ""
-
-#: src/features/projects/components/create-project-dialog.tsx:119
+#: src/features/projects/components/create-project-dialog.tsx:120
 msgid "Importing data..."
-msgstr ""
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:487
-#~ msgid "Importing..."
-#~ msgstr "Ń gbé wọlé..."
+msgstr "Ń gbé dátà wọlé..."
 
 #: ../../../lib/web/src/components/config-drawer.tsx:252
 msgid "Inset"
@@ -1301,7 +1274,7 @@ msgstr "Àwọn ìfẹ́"
 msgid "Invalid date"
 msgstr "Ọjọ́ aláìdára"
 
-#: src/features/projects/components/create-project-dialog.tsx:171
+#: src/features/projects/components/create-project-dialog.tsx:169
 #: src/routes/_authenticated/$projectId/design.tsx:277
 msgid "Invalid JSON file"
 msgstr "Fáìlì JSON aláìdára"
@@ -1374,7 +1347,7 @@ msgstr "Ń ṣí ohun"
 msgid "Loading item details"
 msgstr "Ń ṣí àwọn àlàyé ohun"
 
-#: src/features/projects/components/create-project-dialog.tsx:365
+#: src/features/projects/components/create-project-dialog.tsx:375
 msgid "Loading templates..."
 msgstr "Ń ṣí àwọn àwòṣe..."
 
@@ -1475,7 +1448,7 @@ msgstr "Ó pàdánù àwọn ìpèsè repo, orísun, tàbí àfojúsùn"
 msgid "Monday"
 msgstr "Ọjọ́ Ajé"
 
-#: src/features/projects/components/create-project-dialog.tsx:243
+#: src/features/projects/components/create-project-dialog.tsx:253
 msgid "My project"
 msgstr "Project mi"
 
@@ -1485,12 +1458,12 @@ msgstr "Project mi"
 #: src/features/editor/components/edit-dialogs.tsx:741
 #: src/features/editor/components/edit-dialogs.tsx:1065
 #: src/features/editor/components/option-dialog.tsx:112
-#: src/features/projects/components/create-project-dialog.tsx:233
+#: src/features/projects/components/create-project-dialog.tsx:243
 #: src/routes/_authenticated/$projectId_.settings.tsx:306
 msgid "Name"
 msgstr "Orúkọ"
 
-#: src/features/projects/components/create-project-dialog.tsx:84
+#: src/features/projects/components/create-project-dialog.tsx:85
 msgid "Name is required"
 msgstr "A nílò orúkọ"
 
@@ -1510,7 +1483,7 @@ msgstr "Tuntun"
 msgid "New {className}"
 msgstr "{className} tuntun"
 
-#: src/features/projects/components/create-project-dialog.tsx:347
+#: src/features/projects/components/create-project-dialog.tsx:357
 msgid "Next"
 msgstr "Tó kàn"
 
@@ -1592,7 +1565,7 @@ msgid "No profile"
 msgstr "Kò sí profile"
 
 #: src/features/projects/components/inline-project-search.tsx:164
-#: src/routes/_authenticated/find.tsx:90
+#: src/routes/_authenticated/find.tsx:94
 msgid "No projects found"
 msgstr "A kò rí project kankan"
 
@@ -1810,7 +1783,7 @@ msgstr "Jọ̀wọ́ fi kíláàsì kan tàbí jù bẹ́ẹ̀ lọ kún àpẹr
 msgid "Please check your internet connection and try again."
 msgstr "Jọ̀wọ́ ṣàyẹ̀wò ìsopọ̀ íntánẹ́ẹ̀tì rẹ kí o sì gbìyànjú lẹ́ẹ̀kan sí i."
 
-#: src/features/projects/components/create-project-dialog.tsx:94
+#: src/features/projects/components/create-project-dialog.tsx:95
 msgid "Please select a template"
 msgstr "Jọ̀wọ́ yan template kan"
 
@@ -1822,7 +1795,7 @@ msgstr "Jọ̀wọ́ gbìyànjú lẹ́ẹ̀kan sí i."
 msgid "Please wait a moment and try again."
 msgstr "Jọ̀wọ́ dúró díẹ̀ kí o sì gbìyànjú lẹ́ẹ̀kansí."
 
-#: src/features/projects/components/create-project-dialog.tsx:255
+#: src/features/projects/components/create-project-dialog.tsx:265
 #: src/routes/_authenticated/$projectId_.settings.tsx:323
 msgid "Prefix"
 msgstr "Ọ̀rọ̀ ìbẹ̀rẹ̀"
@@ -1852,7 +1825,7 @@ msgstr "Iṣẹ́"
 msgid "Project actions"
 msgstr "Àwọn ìṣe iṣẹ́ àkànṣe"
 
-#: src/features/projects/components/create-project-dialog.tsx:109
+#: src/features/projects/components/create-project-dialog.tsx:110
 msgid "Project created"
 msgstr "A ti dá project"
 
@@ -1916,7 +1889,7 @@ msgid "Rebase and merge"
 msgstr "Rebase àti dàpọ̀"
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:216
-#: ../../../lib/web/src/components/search-entity-page.tsx:240
+#: ../../../lib/web/src/components/search-entity-page.tsx:242
 msgid "Recommended"
 msgstr "Tí a dábàá"
 
@@ -1955,7 +1928,7 @@ msgstr "Pẹ̀lú ìbáṣepọ̀ nínú wákàtí 24, bí ó ṣíkù absolute"
 #: src/features/objects/components/comment-thread.tsx:299
 #: src/features/objects/components/create-object-dialog.tsx:486
 #: src/features/objects/components/create-object-dialog.tsx:491
-#: src/features/projects/components/create-project-dialog.tsx:331
+#: src/features/projects/components/create-project-dialog.tsx:341
 msgid "Remove"
 msgstr "Yọ kúrò"
 
@@ -2092,7 +2065,7 @@ msgstr "Ń fi pamọ́..."
 msgid "Search"
 msgstr "Wá"
 
-#: src/routes/_authenticated/find.tsx:89
+#: src/routes/_authenticated/find.tsx:93
 msgid "Search by name, ID, fingerprint, or URL..."
 msgstr "Wá nípa orúkọ, ID, fingerprint, tàbí URL..."
 
@@ -2135,7 +2108,7 @@ msgid "Search..."
 msgstr "Wá..."
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:174
-#: ../../../lib/web/src/components/search-entity-page.tsx:198
+#: ../../../lib/web/src/components/search-entity-page.tsx:200
 #: ../../../lib/web/src/features/access/access-dialog.tsx:202
 msgid "Searching..."
 msgstr "Ń wá..."
@@ -2441,10 +2414,6 @@ msgstr "A kò lè ṣílọ̀ project yìí ní báyìí."
 msgid "This project may have been deleted or you don't have access to it."
 msgstr "A lè ti pa project yìí rẹ́ tàbí ìwọ kò ní ààyè sí i."
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:478
-#~ msgid "This will import the data from <0>{0}</0>. Objects will be appended to the existing records. Ensure the current design matches the classes and fields referenced in the file."
-#~ msgstr "Èyí yóò gbé dátà wọlé láti inú <0>{0}</0>. A ó ṣàfikún àwọn nǹkan sí àwọn àkọsílẹ̀ tó wà tẹ́lẹ̀. Rí i dájú pé àgbékalẹ̀ tó wà lọ́wọ́lọ́wọ́ bá àwọn kíláàsì àti àwọn àyè tí a tọ́ka sí nínú fáìlì náà mu."
-
 #: src/features/requests/components/merge-button.tsx:105
 msgid "This will merge \"{source}\" into \"{target}\". This action cannot be undone."
 msgstr "Èyí yóò dàpọ̀ \"{source}\" mọ́ \"{target}\". Iṣẹ́ yìí kò lè padà sẹ́yìn."
@@ -2533,7 +2502,7 @@ msgid "Travelling"
 msgstr "Ń rìn"
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:190
-#: ../../../lib/web/src/components/search-entity-page.tsx:214
+#: ../../../lib/web/src/components/search-entity-page.tsx:216
 msgid "Try adjusting your search terms"
 msgstr "Gbìyànjú láti ṣàtúnṣe àwọn ọ̀rọ̀ ìwákiri rẹ"
 
@@ -2629,7 +2598,7 @@ msgstr "Ń ṣe àfikún ààyè..."
 msgid "Upload"
 msgstr "Gbé jáde"
 
-#: src/features/projects/components/create-project-dialog.tsx:304
+#: src/features/projects/components/create-project-dialog.tsx:314
 #: src/routes/_authenticated/$projectId/design.tsx:336
 msgid "Upload .json file"
 msgstr "Gbé fáìlì .json jáde"
@@ -2640,7 +2609,7 @@ msgstr "Lo passkey rẹ"
 
 #. placeholder {0}: prefix || "project"
 #. placeholder {1}: prefix || "project"
-#: src/features/projects/components/create-project-dialog.tsx:272
+#: src/features/projects/components/create-project-dialog.tsx:282
 msgid "Used for readable IDs like {0}-1, {1}-2"
 msgstr "Wúlò fún IDs tí a lè ka bíi {0}-1, {1}-2"
 
@@ -2671,7 +2640,7 @@ msgstr "Jẹ́rìí sí"
 msgid "Verify email address"
 msgstr "Jẹ́rìí sí àdírẹ́sì email"
 
-#: ../../../lib/web/src/components/attachment-gallery.tsx:75
+#: ../../../lib/web/src/components/attachment-gallery.tsx:74
 msgid "Video thumbnail"
 msgstr "Àwòrán kékeré fídíò"
 
@@ -2721,9 +2690,9 @@ msgstr "Ti ṣọ́"
 msgid "Watched only"
 msgstr "Ti ṣọ́ nìkan"
 
-#: src/features/projects/components/create-project-dialog.tsx:360
+#: src/features/projects/components/create-project-dialog.tsx:370
 msgid "We have auto-selected the best matching template."
-msgstr ""
+msgstr "A ti yan template tó bá a mu jùlọ láìfọwọ́yí."
 
 #: ../../../lib/web/src/features/errors/maintenance-error.tsx:16
 msgid "We'll be back online shortly."
@@ -2753,6 +2722,6 @@ msgstr "O kò ní projects kankan síbẹ̀."
 msgid "Your account was moved here from {source}. Until you delete it there, messages and notifications may reach both servers, some of your content keeps being served from the old server, and followers may take a few minutes to find you here."
 msgstr "A gbe akonti rẹ wá ibi lati {source}. Titi iwọ o fi pa rẹ nibẹ, awọn ifiranṣẹ ati awọn iwifunni le de olupin mejeeji, diẹ ninu akoonu rẹ tẹsiwaju lati sin lati olupin atijọ, ati awọn olutẹle le gba iṣẹju diẹ lati wa ọ nibi."
 
-#: src/features/projects/components/create-project-dialog.tsx:356
+#: src/features/projects/components/create-project-dialog.tsx:366
 msgid "Your backup contains objects of type:"
-msgstr ""
+msgstr "Backup rẹ ní àwọn nǹkan tí irú wọn jẹ́:"

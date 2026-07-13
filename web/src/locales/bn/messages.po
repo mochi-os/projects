@@ -237,7 +237,7 @@ msgstr "সব"
 msgid "All projects"
 msgstr "সব প্রজেক্ট"
 
-#: src/features/projects/components/create-project-dialog.tsx:278
+#: src/features/projects/components/create-project-dialog.tsx:288
 msgid "Allow anyone to search for project"
 msgstr "যেকেউ প্রজেক্ট খুঁজতে অনুমতি দিন"
 
@@ -313,7 +313,7 @@ msgid "Available keyboard shortcuts"
 msgstr "উপলব্ধ কীবোর্ড শর্টকাট"
 
 #: ../../../lib/web/src/components/place-picker.tsx:155
-#: src/features/projects/components/create-project-dialog.tsx:428
+#: src/features/projects/components/create-project-dialog.tsx:438
 msgid "Back"
 msgstr "ফিরে যান"
 
@@ -378,7 +378,7 @@ msgstr "এর চাইল্ড হতে পারে"
 #: src/features/board/components/board-column.tsx:606
 #: src/features/editor/components/option-dialog.tsx:146
 #: src/features/objects/components/comment-thread.tsx:175
-#: src/features/projects/components/create-project-dialog.tsx:344
+#: src/features/projects/components/create-project-dialog.tsx:354
 #: src/routes/_authenticated/$projectId/design.tsx:343
 #: src/routes/_authenticated/$projectId/index.tsx:1011
 msgid "Cancel"
@@ -414,7 +414,7 @@ msgstr "মার্জ স্ট্যাটাস চেক করা হচ�
 msgid "Checklist"
 msgstr "চেকলিস্ট"
 
-#: src/features/projects/components/create-project-dialog.tsx:225
+#: src/features/projects/components/create-project-dialog.tsx:235
 msgid "Choose a template"
 msgstr "একটি টেমপ্লেট বেছে নিন"
 
@@ -619,7 +619,7 @@ msgstr "তৈরি করুন"
 msgid "Create a new item in this project"
 msgstr "এই প্রজেক্টে একটি নতুন আইটেম তৈরি করুন"
 
-#: src/features/projects/components/create-project-dialog.tsx:227
+#: src/features/projects/components/create-project-dialog.tsx:237
 #: src/features/projects/pages/projects-list-page.tsx:103
 msgid "Create a new project"
 msgstr "একটি নতুন প্রজেক্ট তৈরি করুন"
@@ -630,9 +630,9 @@ msgid "Create new item"
 msgstr "নতুন আইটেম তৈরি করুন"
 
 #: src/components/layout/projects-layout.tsx:62
-#: src/features/projects/components/create-project-dialog.tsx:215
 #: src/features/projects/components/create-project-dialog.tsx:225
-#: src/features/projects/components/create-project-dialog.tsx:431
+#: src/features/projects/components/create-project-dialog.tsx:235
+#: src/features/projects/components/create-project-dialog.tsx:441
 msgid "Create project"
 msgstr "প্রজেক্ট তৈরি করুন"
 
@@ -645,12 +645,12 @@ msgstr "তৈরি, সম্পাদনা, মন্তব্য এবং 
 msgid "Created"
 msgstr "তৈরি হয়েছে"
 
-#: src/features/projects/components/create-project-dialog.tsx:108
+#: src/features/projects/components/create-project-dialog.tsx:109
 msgid "Creating project..."
 msgstr "প্রকল্প তৈরি করা হচ্ছে..."
 
 #: src/features/objects/components/create-object-dialog.tsx:535
-#: src/features/projects/components/create-project-dialog.tsx:431
+#: src/features/projects/components/create-project-dialog.tsx:441
 msgid "Creating..."
 msgstr "তৈরি করা হচ্ছে..."
 
@@ -675,13 +675,12 @@ msgstr "ডার্ক মোড"
 msgid "Data conflict"
 msgstr "ডেটা দ্বন্দ্ব"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:350
-#~ msgid "Data imported ({0, plural, one {# object} other {# objects}}, {1, plural, one {# comment} other {# comments}}, {2, plural, one {# link} other {# links}})"
-#~ msgstr "ডেটা ইম্পোর্ট করা হয়েছে ({0, plural, one {#টি অবজেক্ট} other {#টি অবজেক্ট}}, {1, plural, one {#টি মন্তব্য} other {#টি মন্তব্য}}, {2, plural, one {#টি লিঙ্ক} other {#টি লিঙ্ক}})"
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:433
-#~ msgid "Data management"
-#~ msgstr "ডেটা ব্যবস্থাপনা"
+#. placeholder {0}: imported.data?.objects ?? 0
+#. placeholder {1}: imported.data?.comments ?? 0
+#. placeholder {2}: imported.data?.links ?? 0
+#: src/features/projects/components/create-project-dialog.tsx:121
+msgid "Data imported ({0, plural, one {# object} other {# objects}}, {1, plural, one {# comment} other {# comments}}, {2, plural, one {# link} other {# links}})"
+msgstr "ডেটা ইম্পোর্ট করা হয়েছে ({0, plural, one {#টি অবজেক্ট} other {#টি অবজেক্ট}}, {1, plural, one {#টি মন্তব্য} other {#টি মন্তব্য}}, {2, plural, one {#টি লিঙ্ক} other {#টি লিঙ্ক}})"
 
 #: src/features/editor/components/add-dialogs.tsx:137
 msgid "Date"
@@ -967,10 +966,6 @@ msgstr "ডেটা এক্সপোর্ট করুন"
 msgid "Export design"
 msgstr "ডিজাইন এক্সপোর্ট করুন"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:434
-#~ msgid "Export or import the raw data content in this project."
-#~ msgstr "এই প্রজেক্টের কাঁচা ডেটা কনটেন্ট এক্সপোর্ট বা ইম্পোর্ট করুন।"
-
 #: ../../../lib/web/src/lib/preference-utils.ts:136
 msgid "Extra large"
 msgstr "অতিরিক্ত বড়"
@@ -1000,7 +995,7 @@ msgstr "লিঙ্ক তৈরি করতে ব্যর্থ"
 msgid "Failed to create option"
 msgstr "অপশন তৈরি করতে ব্যর্থ"
 
-#: src/features/projects/components/create-project-dialog.tsx:110
+#: src/features/projects/components/create-project-dialog.tsx:111
 msgid "Failed to create project"
 msgstr "প্রকল্প তৈরি করতে ব্যর্থ"
 
@@ -1036,7 +1031,7 @@ msgstr "ডেটা এক্সপোর্ট করা যায়নি"
 msgid "Failed to export design"
 msgstr "ডিজাইন এক্সপোর্ট করতে ব্যর্থ"
 
-#: src/features/projects/components/create-project-dialog.tsx:124
+#: src/features/projects/components/create-project-dialog.tsx:122
 msgid "Failed to import data"
 msgstr "ডেটা ইম্পোর্ট করা যায়নি"
 
@@ -1069,7 +1064,7 @@ msgstr "মার্জ করতে ব্যর্থ"
 msgid "Failed to post comment"
 msgstr "মন্তব্য পোস্ট করতে ব্যর্থ"
 
-#: src/features/projects/components/create-project-dialog.tsx:177
+#: src/features/projects/components/create-project-dialog.tsx:175
 #: src/routes/_authenticated/$projectId/design.tsx:281
 msgid "Failed to read file"
 msgstr "ফাইল পড়তে ব্যর্থ"
@@ -1144,7 +1139,7 @@ msgid "Files"
 msgstr "ফাইলসমূহ"
 
 #: src/components/layout/projects-layout.tsx:61
-#: src/routes/_authenticated/find.tsx:88
+#: src/routes/_authenticated/find.tsx:92
 msgid "Find projects"
 msgstr "প্রকল্প খুঁজুন"
 
@@ -1254,40 +1249,18 @@ msgstr "পরিচয়"
 msgid "Imperial"
 msgstr "ইম্পেরিয়াল"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:549
-#~ msgid "Import a data configuration"
-#~ msgstr "একটি ডেটা কনফিগারেশন ইম্পোর্ট করুন"
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:444
-#: src/routes/_authenticated/$projectId_.settings.tsx:490
-#: src/routes/_authenticated/$projectId_.settings.tsx:548
-#~ msgid "Import data"
-#~ msgstr "ডেটা ইম্পোর্ট করুন"
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:476
-#~ msgid "Import data?"
-#~ msgstr "ডেটা ইম্পোর্ট করবেন?"
-
 #: src/routes/_authenticated/$projectId/design.tsx:177
 #: src/routes/_authenticated/$projectId/design.tsx:293
 msgid "Import design"
 msgstr "ডিজাইন ইম্পোর্ট করুন"
 
-#: src/features/projects/components/create-project-dialog.tsx:288
+#: src/features/projects/components/create-project-dialog.tsx:298
 msgid "Import from backup (optional)"
-msgstr ""
+msgstr "ব্যাকআপ থেকে ইম্পোর্ট করুন (ঐচ্ছিক)"
 
-#: src/features/projects/components/create-project-dialog.tsx:122
-msgid "Imported {count} objects"
-msgstr ""
-
-#: src/features/projects/components/create-project-dialog.tsx:119
+#: src/features/projects/components/create-project-dialog.tsx:120
 msgid "Importing data..."
-msgstr ""
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:487
-#~ msgid "Importing..."
-#~ msgstr "ইম্পোর্ট করা হচ্ছে..."
+msgstr "ডেটা ইম্পোর্ট হচ্ছে..."
 
 #: ../../../lib/web/src/components/config-drawer.tsx:252
 msgid "Inset"
@@ -1301,7 +1274,7 @@ msgstr "আগ্রহসমূহ"
 msgid "Invalid date"
 msgstr "অবৈধ তারিখ"
 
-#: src/features/projects/components/create-project-dialog.tsx:171
+#: src/features/projects/components/create-project-dialog.tsx:169
 #: src/routes/_authenticated/$projectId/design.tsx:277
 msgid "Invalid JSON file"
 msgstr "অবৈধ JSON ফাইল"
@@ -1374,7 +1347,7 @@ msgstr "আইটেম লোড হচ্ছে"
 msgid "Loading item details"
 msgstr "আইটেমের বিবরণ লোড হচ্ছে"
 
-#: src/features/projects/components/create-project-dialog.tsx:365
+#: src/features/projects/components/create-project-dialog.tsx:375
 msgid "Loading templates..."
 msgstr "টেমপ্লেট লোড হচ্ছে..."
 
@@ -1475,7 +1448,7 @@ msgstr "রিপো, সোর্স বা টার্গেট প্যা�
 msgid "Monday"
 msgstr "সোমবার"
 
-#: src/features/projects/components/create-project-dialog.tsx:243
+#: src/features/projects/components/create-project-dialog.tsx:253
 msgid "My project"
 msgstr "আমার প্রকল্প"
 
@@ -1485,12 +1458,12 @@ msgstr "আমার প্রকল্প"
 #: src/features/editor/components/edit-dialogs.tsx:741
 #: src/features/editor/components/edit-dialogs.tsx:1065
 #: src/features/editor/components/option-dialog.tsx:112
-#: src/features/projects/components/create-project-dialog.tsx:233
+#: src/features/projects/components/create-project-dialog.tsx:243
 #: src/routes/_authenticated/$projectId_.settings.tsx:306
 msgid "Name"
 msgstr "নাম"
 
-#: src/features/projects/components/create-project-dialog.tsx:84
+#: src/features/projects/components/create-project-dialog.tsx:85
 msgid "Name is required"
 msgstr "নাম প্রয়োজন"
 
@@ -1510,7 +1483,7 @@ msgstr "নতুন"
 msgid "New {className}"
 msgstr "নতুন {className}"
 
-#: src/features/projects/components/create-project-dialog.tsx:347
+#: src/features/projects/components/create-project-dialog.tsx:357
 msgid "Next"
 msgstr "পরবর্তী"
 
@@ -1592,7 +1565,7 @@ msgid "No profile"
 msgstr "কোনো প্রোফাইল নেই"
 
 #: src/features/projects/components/inline-project-search.tsx:164
-#: src/routes/_authenticated/find.tsx:90
+#: src/routes/_authenticated/find.tsx:94
 msgid "No projects found"
 msgstr "কোনো প্রকল্প পাওয়া যায়নি"
 
@@ -1810,7 +1783,7 @@ msgstr "অনুগ্রহ করে প্রকল্প ডিজাইন
 msgid "Please check your internet connection and try again."
 msgstr "অনুগ্রহ করে আপনার ইন্টারনেট সংযোগ পরীক্ষা করে আবার চেষ্টা করুন।"
 
-#: src/features/projects/components/create-project-dialog.tsx:94
+#: src/features/projects/components/create-project-dialog.tsx:95
 msgid "Please select a template"
 msgstr "অনুগ্রহ করে একটি টেমপ্লেট নির্বাচন করুন"
 
@@ -1822,7 +1795,7 @@ msgstr "অনুগ্রহ করে আবার চেষ্টা কর�
 msgid "Please wait a moment and try again."
 msgstr "অনুগ্রহ করে কিছুক্ষণ অপেক্ষা করে আবার চেষ্টা করুন।"
 
-#: src/features/projects/components/create-project-dialog.tsx:255
+#: src/features/projects/components/create-project-dialog.tsx:265
 #: src/routes/_authenticated/$projectId_.settings.tsx:323
 msgid "Prefix"
 msgstr "প্রিফিক্স"
@@ -1852,7 +1825,7 @@ msgstr "প্রকল্প"
 msgid "Project actions"
 msgstr "প্রকল্পের ক্রিয়াকলাপ"
 
-#: src/features/projects/components/create-project-dialog.tsx:109
+#: src/features/projects/components/create-project-dialog.tsx:110
 msgid "Project created"
 msgstr "প্রকল্প তৈরি করা হয়েছে"
 
@@ -1916,7 +1889,7 @@ msgid "Rebase and merge"
 msgstr "রিবেস ও মার্জ"
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:216
-#: ../../../lib/web/src/components/search-entity-page.tsx:240
+#: ../../../lib/web/src/components/search-entity-page.tsx:242
 msgid "Recommended"
 msgstr "সুপারিশকৃত"
 
@@ -1955,7 +1928,7 @@ msgstr "২৪ ঘণ্টার মধ্যে আপেক্ষিক, অ�
 #: src/features/objects/components/comment-thread.tsx:299
 #: src/features/objects/components/create-object-dialog.tsx:486
 #: src/features/objects/components/create-object-dialog.tsx:491
-#: src/features/projects/components/create-project-dialog.tsx:331
+#: src/features/projects/components/create-project-dialog.tsx:341
 msgid "Remove"
 msgstr "সরান"
 
@@ -2092,7 +2065,7 @@ msgstr "সংরক্ষণ করা হচ্ছে..."
 msgid "Search"
 msgstr "অনুসন্ধান"
 
-#: src/routes/_authenticated/find.tsx:89
+#: src/routes/_authenticated/find.tsx:93
 msgid "Search by name, ID, fingerprint, or URL..."
 msgstr "নাম, ID, ফিঙ্গারপ্রিন্ট, বা URL দিয়ে অনুসন্ধান করুন..."
 
@@ -2135,7 +2108,7 @@ msgid "Search..."
 msgstr "অনুসন্ধান করুন..."
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:174
-#: ../../../lib/web/src/components/search-entity-page.tsx:198
+#: ../../../lib/web/src/components/search-entity-page.tsx:200
 #: ../../../lib/web/src/features/access/access-dialog.tsx:202
 msgid "Searching..."
 msgstr "অনুসন্ধান করা হচ্ছে..."
@@ -2441,10 +2414,6 @@ msgstr "এই প্রকল্প এই মুহূর্তে লোড �
 msgid "This project may have been deleted or you don't have access to it."
 msgstr "এই প্রকল্প মুছে ফেলা হতে পারে অথবা আপনার এতে অ্যাক্সেস নেই।"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:478
-#~ msgid "This will import the data from <0>{0}</0>. Objects will be appended to the existing records. Ensure the current design matches the classes and fields referenced in the file."
-#~ msgstr "এটি <0>{0}</0> থেকে ডেটা ইম্পোর্ট করবে। অবজেক্টগুলি বিদ্যমান রেকর্ডে যুক্ত করা হবে। নিশ্চিত করুন যে বর্তমান ডিজাইন ফাইলে উল্লেখিত ক্লাস ও ফিল্ডের সাথে মেলে।"
-
 #: src/features/requests/components/merge-button.tsx:105
 msgid "This will merge \"{source}\" into \"{target}\". This action cannot be undone."
 msgstr "এটি \"{source}\"-কে \"{target}\"-এ মার্জ করবে। এই কাজ পূর্বাবস্থায় ফেরানো যাবে না।"
@@ -2533,7 +2502,7 @@ msgid "Travelling"
 msgstr "ভ্রমণরত"
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:190
-#: ../../../lib/web/src/components/search-entity-page.tsx:214
+#: ../../../lib/web/src/components/search-entity-page.tsx:216
 msgid "Try adjusting your search terms"
 msgstr "আপনার অনুসন্ধান শর্তাবলী সমন্বয় করার চেষ্টা করুন"
 
@@ -2629,7 +2598,7 @@ msgstr "অ্যাক্সেস আপডেট করা হচ্ছে...
 msgid "Upload"
 msgstr "আপলোড"
 
-#: src/features/projects/components/create-project-dialog.tsx:304
+#: src/features/projects/components/create-project-dialog.tsx:314
 #: src/routes/_authenticated/$projectId/design.tsx:336
 msgid "Upload .json file"
 msgstr ".json ফাইল আপলোড করুন"
@@ -2640,7 +2609,7 @@ msgstr "আপনার পাসকি ব্যবহার করুন"
 
 #. placeholder {0}: prefix || "project"
 #. placeholder {1}: prefix || "project"
-#: src/features/projects/components/create-project-dialog.tsx:272
+#: src/features/projects/components/create-project-dialog.tsx:282
 msgid "Used for readable IDs like {0}-1, {1}-2"
 msgstr "{0}-1, {1}-2-এর মতো পাঠযোগ্য আইডির জন্য ব্যবহৃত"
 
@@ -2671,7 +2640,7 @@ msgstr "যাচাই করুন"
 msgid "Verify email address"
 msgstr "ইমেল ঠিকানা যাচাই করুন"
 
-#: ../../../lib/web/src/components/attachment-gallery.tsx:75
+#: ../../../lib/web/src/components/attachment-gallery.tsx:74
 msgid "Video thumbnail"
 msgstr "ভিডিও থাম্বনেইল"
 
@@ -2721,9 +2690,9 @@ msgstr "দেখা হচ্ছে"
 msgid "Watched only"
 msgstr "শুধুমাত্র দেখা"
 
-#: src/features/projects/components/create-project-dialog.tsx:360
+#: src/features/projects/components/create-project-dialog.tsx:370
 msgid "We have auto-selected the best matching template."
-msgstr ""
+msgstr "আমরা স্বয়ংক্রিয়ভাবে সবচেয়ে মানানসই টেমপ্লেটটি নির্বাচন করেছি।"
 
 #: ../../../lib/web/src/features/errors/maintenance-error.tsx:16
 msgid "We'll be back online shortly."
@@ -2753,6 +2722,6 @@ msgstr "আপনার এখনও কোন প্রকল্প নেই�
 msgid "Your account was moved here from {source}. Until you delete it there, messages and notifications may reach both servers, some of your content keeps being served from the old server, and followers may take a few minutes to find you here."
 msgstr "আপনার অ্যাকাউন্ট {source} থেকে এখানে স্থানান্তরিত হয়েছে। আপনি সেখানে এটি মুছে না দেওয়া পর্যন্ত, বার্তা ও বিজ্ঞপ্তি উভয় সার্ভারে পৌঁছাতে পারে, আপনার কিছু বিষয়বস্তু পুরানো সার্ভার থেকে পরিবেশিত হতে পারে, এবং অনুসরণকারীদের আপনাকে এখানে খুঁজে পেতে কয়েক মিনিট লাগতে পারে।"
 
-#: src/features/projects/components/create-project-dialog.tsx:356
+#: src/features/projects/components/create-project-dialog.tsx:366
 msgid "Your backup contains objects of type:"
-msgstr ""
+msgstr "আপনার ব্যাকআপে এই ধরনের অবজেক্ট রয়েছে:"

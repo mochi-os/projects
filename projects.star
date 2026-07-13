@@ -726,6 +726,9 @@ def get_templates(lang="en"):
 					"description": substitute_labels(data.get("description", ""), labels),
 					"icon": data.get("icon", ""),
 					"version": data.get("version", 1),
+					# Class ids with their display names, so clients can name a
+					# backup's object classes instead of showing raw ids.
+					"classes": [{"id": c["id"], "name": substitute_labels(c.get("name", c["id"]), labels)} for c in data.get("classes", [])],
 				}
 	return templates
 

@@ -237,7 +237,7 @@ msgstr "Tất cả"
 msgid "All projects"
 msgstr "Tất cả dự án"
 
-#: src/features/projects/components/create-project-dialog.tsx:278
+#: src/features/projects/components/create-project-dialog.tsx:288
 msgid "Allow anyone to search for project"
 msgstr "Cho phép mọi người tìm kiếm dự án"
 
@@ -313,7 +313,7 @@ msgid "Available keyboard shortcuts"
 msgstr "Phím tắt khả dụng"
 
 #: ../../../lib/web/src/components/place-picker.tsx:155
-#: src/features/projects/components/create-project-dialog.tsx:428
+#: src/features/projects/components/create-project-dialog.tsx:438
 msgid "Back"
 msgstr "Quay lại"
 
@@ -378,7 +378,7 @@ msgstr "Có thể là con của"
 #: src/features/board/components/board-column.tsx:606
 #: src/features/editor/components/option-dialog.tsx:146
 #: src/features/objects/components/comment-thread.tsx:175
-#: src/features/projects/components/create-project-dialog.tsx:344
+#: src/features/projects/components/create-project-dialog.tsx:354
 #: src/routes/_authenticated/$projectId/design.tsx:343
 #: src/routes/_authenticated/$projectId/index.tsx:1011
 msgid "Cancel"
@@ -414,7 +414,7 @@ msgstr "Đang kiểm tra trạng thái hợp nhất..."
 msgid "Checklist"
 msgstr "Danh sách kiểm tra"
 
-#: src/features/projects/components/create-project-dialog.tsx:225
+#: src/features/projects/components/create-project-dialog.tsx:235
 msgid "Choose a template"
 msgstr "Chọn một mẫu"
 
@@ -619,7 +619,7 @@ msgstr "Tạo"
 msgid "Create a new item in this project"
 msgstr "Tạo mục mới trong dự án này"
 
-#: src/features/projects/components/create-project-dialog.tsx:227
+#: src/features/projects/components/create-project-dialog.tsx:237
 #: src/features/projects/pages/projects-list-page.tsx:103
 msgid "Create a new project"
 msgstr "Tạo dự án mới"
@@ -630,9 +630,9 @@ msgid "Create new item"
 msgstr "Tạo mục mới"
 
 #: src/components/layout/projects-layout.tsx:62
-#: src/features/projects/components/create-project-dialog.tsx:215
 #: src/features/projects/components/create-project-dialog.tsx:225
-#: src/features/projects/components/create-project-dialog.tsx:431
+#: src/features/projects/components/create-project-dialog.tsx:235
+#: src/features/projects/components/create-project-dialog.tsx:441
 msgid "Create project"
 msgstr "Tạo dự án"
 
@@ -645,12 +645,12 @@ msgstr "Tạo, chỉnh sửa, bình luận và xem"
 msgid "Created"
 msgstr "Đã tạo"
 
-#: src/features/projects/components/create-project-dialog.tsx:108
+#: src/features/projects/components/create-project-dialog.tsx:109
 msgid "Creating project..."
 msgstr "Đang tạo dự án..."
 
 #: src/features/objects/components/create-object-dialog.tsx:535
-#: src/features/projects/components/create-project-dialog.tsx:431
+#: src/features/projects/components/create-project-dialog.tsx:441
 msgid "Creating..."
 msgstr "Đang tạo..."
 
@@ -675,13 +675,12 @@ msgstr "Chế độ tối"
 msgid "Data conflict"
 msgstr "Xung đột dữ liệu"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:350
-#~ msgid "Data imported ({0, plural, one {# object} other {# objects}}, {1, plural, one {# comment} other {# comments}}, {2, plural, one {# link} other {# links}})"
-#~ msgstr "Đã nhập dữ liệu ({0, plural, other {# đối tượng}}, {1, plural, other {# bình luận}}, {2, plural, other {# liên kết}})"
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:433
-#~ msgid "Data management"
-#~ msgstr "Quản lý dữ liệu"
+#. placeholder {0}: imported.data?.objects ?? 0
+#. placeholder {1}: imported.data?.comments ?? 0
+#. placeholder {2}: imported.data?.links ?? 0
+#: src/features/projects/components/create-project-dialog.tsx:121
+msgid "Data imported ({0, plural, one {# object} other {# objects}}, {1, plural, one {# comment} other {# comments}}, {2, plural, one {# link} other {# links}})"
+msgstr "Đã nhập dữ liệu ({0, plural, other {# đối tượng}}, {1, plural, other {# bình luận}}, {2, plural, other {# liên kết}})"
 
 #: src/features/editor/components/add-dialogs.tsx:137
 msgid "Date"
@@ -967,10 +966,6 @@ msgstr "Xuất dữ liệu"
 msgid "Export design"
 msgstr "Xuất thiết kế"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:434
-#~ msgid "Export or import the raw data content in this project."
-#~ msgstr "Xuất hoặc nhập nội dung dữ liệu thô trong dự án này."
-
 #: ../../../lib/web/src/lib/preference-utils.ts:136
 msgid "Extra large"
 msgstr "Rất lớn"
@@ -1000,7 +995,7 @@ msgstr "Không tạo liên kết được"
 msgid "Failed to create option"
 msgstr "Không tạo tuỳ chọn được"
 
-#: src/features/projects/components/create-project-dialog.tsx:110
+#: src/features/projects/components/create-project-dialog.tsx:111
 msgid "Failed to create project"
 msgstr "Không tạo dự án được"
 
@@ -1036,7 +1031,7 @@ msgstr "Không thể xuất dữ liệu"
 msgid "Failed to export design"
 msgstr "Không xuất thiết kế được"
 
-#: src/features/projects/components/create-project-dialog.tsx:124
+#: src/features/projects/components/create-project-dialog.tsx:122
 msgid "Failed to import data"
 msgstr "Không thể nhập dữ liệu"
 
@@ -1069,7 +1064,7 @@ msgstr "Không hợp nhất được"
 msgid "Failed to post comment"
 msgstr "Không đăng bình luận được"
 
-#: src/features/projects/components/create-project-dialog.tsx:177
+#: src/features/projects/components/create-project-dialog.tsx:175
 #: src/routes/_authenticated/$projectId/design.tsx:281
 msgid "Failed to read file"
 msgstr "Không đọc tệp được"
@@ -1144,7 +1139,7 @@ msgid "Files"
 msgstr "Tệp"
 
 #: src/components/layout/projects-layout.tsx:61
-#: src/routes/_authenticated/find.tsx:88
+#: src/routes/_authenticated/find.tsx:92
 msgid "Find projects"
 msgstr "Tìm dự án"
 
@@ -1254,40 +1249,18 @@ msgstr "Danh tính"
 msgid "Imperial"
 msgstr "Hệ Anh"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:549
-#~ msgid "Import a data configuration"
-#~ msgstr "Nhập cấu hình dữ liệu"
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:444
-#: src/routes/_authenticated/$projectId_.settings.tsx:490
-#: src/routes/_authenticated/$projectId_.settings.tsx:548
-#~ msgid "Import data"
-#~ msgstr "Nhập dữ liệu"
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:476
-#~ msgid "Import data?"
-#~ msgstr "Nhập dữ liệu?"
-
 #: src/routes/_authenticated/$projectId/design.tsx:177
 #: src/routes/_authenticated/$projectId/design.tsx:293
 msgid "Import design"
 msgstr "Nhập thiết kế"
 
-#: src/features/projects/components/create-project-dialog.tsx:288
+#: src/features/projects/components/create-project-dialog.tsx:298
 msgid "Import from backup (optional)"
-msgstr ""
+msgstr "Nhập từ bản sao lưu (tùy chọn)"
 
-#: src/features/projects/components/create-project-dialog.tsx:122
-msgid "Imported {count} objects"
-msgstr ""
-
-#: src/features/projects/components/create-project-dialog.tsx:119
+#: src/features/projects/components/create-project-dialog.tsx:120
 msgid "Importing data..."
-msgstr ""
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:487
-#~ msgid "Importing..."
-#~ msgstr "Đang nhập..."
+msgstr "Đang nhập dữ liệu..."
 
 #: ../../../lib/web/src/components/config-drawer.tsx:252
 msgid "Inset"
@@ -1301,7 +1274,7 @@ msgstr "Sở thích"
 msgid "Invalid date"
 msgstr "Ngày không hợp lệ"
 
-#: src/features/projects/components/create-project-dialog.tsx:171
+#: src/features/projects/components/create-project-dialog.tsx:169
 #: src/routes/_authenticated/$projectId/design.tsx:277
 msgid "Invalid JSON file"
 msgstr "Tệp JSON không hợp lệ"
@@ -1374,7 +1347,7 @@ msgstr "Đang tải mục"
 msgid "Loading item details"
 msgstr "Đang tải chi tiết mục"
 
-#: src/features/projects/components/create-project-dialog.tsx:365
+#: src/features/projects/components/create-project-dialog.tsx:375
 msgid "Loading templates..."
 msgstr "Đang tải mẫu..."
 
@@ -1475,7 +1448,7 @@ msgstr "Thiếu tham số repo, nguồn hoặc đích"
 msgid "Monday"
 msgstr "Thứ Hai"
 
-#: src/features/projects/components/create-project-dialog.tsx:243
+#: src/features/projects/components/create-project-dialog.tsx:253
 msgid "My project"
 msgstr "Dự án của tôi"
 
@@ -1485,12 +1458,12 @@ msgstr "Dự án của tôi"
 #: src/features/editor/components/edit-dialogs.tsx:741
 #: src/features/editor/components/edit-dialogs.tsx:1065
 #: src/features/editor/components/option-dialog.tsx:112
-#: src/features/projects/components/create-project-dialog.tsx:233
+#: src/features/projects/components/create-project-dialog.tsx:243
 #: src/routes/_authenticated/$projectId_.settings.tsx:306
 msgid "Name"
 msgstr "Tên"
 
-#: src/features/projects/components/create-project-dialog.tsx:84
+#: src/features/projects/components/create-project-dialog.tsx:85
 msgid "Name is required"
 msgstr "Tên là bắt buộc"
 
@@ -1510,7 +1483,7 @@ msgstr "Mới"
 msgid "New {className}"
 msgstr "{className} mới"
 
-#: src/features/projects/components/create-project-dialog.tsx:347
+#: src/features/projects/components/create-project-dialog.tsx:357
 msgid "Next"
 msgstr "Tiếp"
 
@@ -1592,7 +1565,7 @@ msgid "No profile"
 msgstr "Không có hồ sơ"
 
 #: src/features/projects/components/inline-project-search.tsx:164
-#: src/routes/_authenticated/find.tsx:90
+#: src/routes/_authenticated/find.tsx:94
 msgid "No projects found"
 msgstr "Không tìm thấy dự án nào"
 
@@ -1810,7 +1783,7 @@ msgstr "Vui lòng thêm một hoặc nhiều lớp vào thiết kế dự án."
 msgid "Please check your internet connection and try again."
 msgstr "Vui lòng kiểm tra kết nối internet và thử lại."
 
-#: src/features/projects/components/create-project-dialog.tsx:94
+#: src/features/projects/components/create-project-dialog.tsx:95
 msgid "Please select a template"
 msgstr "Vui lòng chọn mẫu"
 
@@ -1822,7 +1795,7 @@ msgstr "Vui lòng thử lại."
 msgid "Please wait a moment and try again."
 msgstr "Vui lòng đợi một lát rồi thử lại."
 
-#: src/features/projects/components/create-project-dialog.tsx:255
+#: src/features/projects/components/create-project-dialog.tsx:265
 #: src/routes/_authenticated/$projectId_.settings.tsx:323
 msgid "Prefix"
 msgstr "Tiền tố"
@@ -1852,7 +1825,7 @@ msgstr "Dự án"
 msgid "Project actions"
 msgstr "Thao tác dự án"
 
-#: src/features/projects/components/create-project-dialog.tsx:109
+#: src/features/projects/components/create-project-dialog.tsx:110
 msgid "Project created"
 msgstr "Đã tạo dự án"
 
@@ -1916,7 +1889,7 @@ msgid "Rebase and merge"
 msgstr "Rebase và hợp nhất"
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:216
-#: ../../../lib/web/src/components/search-entity-page.tsx:240
+#: ../../../lib/web/src/components/search-entity-page.tsx:242
 msgid "Recommended"
 msgstr "Được đề xuất"
 
@@ -1955,7 +1928,7 @@ msgstr "Tương đối trong vòng 24 giờ, ngoài ra dùng tuyệt đối"
 #: src/features/objects/components/comment-thread.tsx:299
 #: src/features/objects/components/create-object-dialog.tsx:486
 #: src/features/objects/components/create-object-dialog.tsx:491
-#: src/features/projects/components/create-project-dialog.tsx:331
+#: src/features/projects/components/create-project-dialog.tsx:341
 msgid "Remove"
 msgstr "Xoá"
 
@@ -2092,7 +2065,7 @@ msgstr "Đang lưu..."
 msgid "Search"
 msgstr "Tìm kiếm"
 
-#: src/routes/_authenticated/find.tsx:89
+#: src/routes/_authenticated/find.tsx:93
 msgid "Search by name, ID, fingerprint, or URL..."
 msgstr "Tìm kiếm theo tên, ID, dấu vân tay hoặc URL..."
 
@@ -2135,7 +2108,7 @@ msgid "Search..."
 msgstr "Tìm kiếm..."
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:174
-#: ../../../lib/web/src/components/search-entity-page.tsx:198
+#: ../../../lib/web/src/components/search-entity-page.tsx:200
 #: ../../../lib/web/src/features/access/access-dialog.tsx:202
 msgid "Searching..."
 msgstr "Đang tìm kiếm..."
@@ -2441,10 +2414,6 @@ msgstr "Không thể tải dự án này lúc này."
 msgid "This project may have been deleted or you don't have access to it."
 msgstr "Dự án này có thể đã bị xóa hoặc bạn không có quyền truy cập."
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:478
-#~ msgid "This will import the data from <0>{0}</0>. Objects will be appended to the existing records. Ensure the current design matches the classes and fields referenced in the file."
-#~ msgstr "Thao tác này sẽ nhập dữ liệu từ <0>{0}</0>. Các đối tượng sẽ được thêm vào các bản ghi hiện có. Hãy đảm bảo thiết kế hiện tại khớp với các lớp và trường được tham chiếu trong tệp."
-
 #: src/features/requests/components/merge-button.tsx:105
 msgid "This will merge \"{source}\" into \"{target}\". This action cannot be undone."
 msgstr "Thao tác này sẽ hợp nhất \"{source}\" vào \"{target}\". Không thể hoàn tác."
@@ -2533,7 +2502,7 @@ msgid "Travelling"
 msgstr "Đang di chuyển"
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:190
-#: ../../../lib/web/src/components/search-entity-page.tsx:214
+#: ../../../lib/web/src/components/search-entity-page.tsx:216
 msgid "Try adjusting your search terms"
 msgstr "Hãy thử điều chỉnh từ khóa tìm kiếm"
 
@@ -2629,7 +2598,7 @@ msgstr "Đang cập nhật quyền truy cập..."
 msgid "Upload"
 msgstr "Tải lên"
 
-#: src/features/projects/components/create-project-dialog.tsx:304
+#: src/features/projects/components/create-project-dialog.tsx:314
 #: src/routes/_authenticated/$projectId/design.tsx:336
 msgid "Upload .json file"
 msgstr "Tải lên tệp .json"
@@ -2640,7 +2609,7 @@ msgstr "Dùng mã khóa của bạn"
 
 #. placeholder {0}: prefix || "project"
 #. placeholder {1}: prefix || "project"
-#: src/features/projects/components/create-project-dialog.tsx:272
+#: src/features/projects/components/create-project-dialog.tsx:282
 msgid "Used for readable IDs like {0}-1, {1}-2"
 msgstr "Dùng cho IDs có thể đọc được như {0}-1, {1}-2"
 
@@ -2671,7 +2640,7 @@ msgstr "Xác minh"
 msgid "Verify email address"
 msgstr "Xác minh địa chỉ email"
 
-#: ../../../lib/web/src/components/attachment-gallery.tsx:75
+#: ../../../lib/web/src/components/attachment-gallery.tsx:74
 msgid "Video thumbnail"
 msgstr "Hình thu nhỏ video"
 
@@ -2721,9 +2690,9 @@ msgstr "Đã theo dõi"
 msgid "Watched only"
 msgstr "Chỉ đã theo dõi"
 
-#: src/features/projects/components/create-project-dialog.tsx:360
+#: src/features/projects/components/create-project-dialog.tsx:370
 msgid "We have auto-selected the best matching template."
-msgstr ""
+msgstr "Chúng tôi đã tự động chọn mẫu phù hợp nhất."
 
 #: ../../../lib/web/src/features/errors/maintenance-error.tsx:16
 msgid "We'll be back online shortly."
@@ -2753,6 +2722,6 @@ msgstr "Bạn chưa có dự án nào."
 msgid "Your account was moved here from {source}. Until you delete it there, messages and notifications may reach both servers, some of your content keeps being served from the old server, and followers may take a few minutes to find you here."
 msgstr "Tài khoản của bạn đã được chuyển đến đây từ {source}. Cho đến khi bạn xóa nó ở đó, tin nhắn và thông báo có thể đến cả hai máy chủ, một số nội dung của bạn vẫn được phục vụ từ máy chủ cũ và người theo dõi có thể mất vài phút để tìm thấy bạn ở đây."
 
-#: src/features/projects/components/create-project-dialog.tsx:356
+#: src/features/projects/components/create-project-dialog.tsx:366
 msgid "Your backup contains objects of type:"
-msgstr ""
+msgstr "Bản sao lưu của bạn chứa các đối tượng thuộc loại:"

@@ -237,7 +237,7 @@ msgstr "Taqpach"
 msgid "All projects"
 msgstr "Taqpach proyecto"
 
-#: src/features/projects/components/create-project-dialog.tsx:278
+#: src/features/projects/components/create-project-dialog.tsx:288
 msgid "Allow anyone to search for project"
 msgstr "Khitirus proyecto thaqaña iyawsaña"
 
@@ -313,7 +313,7 @@ msgid "Available keyboard shortcuts"
 msgstr "Utjir teclado shortcuts"
 
 #: ../../../lib/web/src/components/place-picker.tsx:155
-#: src/features/projects/components/create-project-dialog.tsx:428
+#: src/features/projects/components/create-project-dialog.tsx:438
 msgid "Back"
 msgstr "Kutta"
 
@@ -378,7 +378,7 @@ msgstr "Wawanjaspawa"
 #: src/features/board/components/board-column.tsx:606
 #: src/features/editor/components/option-dialog.tsx:146
 #: src/features/objects/components/comment-thread.tsx:175
-#: src/features/projects/components/create-project-dialog.tsx:344
+#: src/features/projects/components/create-project-dialog.tsx:354
 #: src/routes/_authenticated/$projectId/design.tsx:343
 #: src/routes/_authenticated/$projectId/index.tsx:1011
 msgid "Cancel"
@@ -414,7 +414,7 @@ msgstr "Merge estado uñakipasa..."
 msgid "Checklist"
 msgstr "Checklist"
 
-#: src/features/projects/components/create-project-dialog.tsx:225
+#: src/features/projects/components/create-project-dialog.tsx:235
 msgid "Choose a template"
 msgstr "Mä template ajllxaña"
 
@@ -619,7 +619,7 @@ msgstr "Luraña"
 msgid "Create a new item in this project"
 msgstr "Mä machaq itim aka proyectonkar luraña"
 
-#: src/features/projects/components/create-project-dialog.tsx:227
+#: src/features/projects/components/create-project-dialog.tsx:237
 #: src/features/projects/pages/projects-list-page.tsx:103
 msgid "Create a new project"
 msgstr "Mä machaq proyecto luraña"
@@ -630,9 +630,9 @@ msgid "Create new item"
 msgstr "Machaq itim luraña"
 
 #: src/components/layout/projects-layout.tsx:62
-#: src/features/projects/components/create-project-dialog.tsx:215
 #: src/features/projects/components/create-project-dialog.tsx:225
-#: src/features/projects/components/create-project-dialog.tsx:431
+#: src/features/projects/components/create-project-dialog.tsx:235
+#: src/features/projects/components/create-project-dialog.tsx:441
 msgid "Create project"
 msgstr "Proyecto luraña"
 
@@ -645,12 +645,12 @@ msgstr "Luraña, askichaña, arsuña, ukat uñjaña"
 msgid "Created"
 msgstr "Lurata"
 
-#: src/features/projects/components/create-project-dialog.tsx:108
+#: src/features/projects/components/create-project-dialog.tsx:109
 msgid "Creating project..."
 msgstr "Lurawi luraskani..."
 
 #: src/features/objects/components/create-object-dialog.tsx:535
-#: src/features/projects/components/create-project-dialog.tsx:431
+#: src/features/projects/components/create-project-dialog.tsx:441
 msgid "Creating..."
 msgstr "Lurkasa..."
 
@@ -675,13 +675,12 @@ msgstr "Ch'amaka modo"
 msgid "Data conflict"
 msgstr "Datanakan ch'axwawipa"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:350
-#~ msgid "Data imported ({0, plural, one {# object} other {# objects}}, {1, plural, one {# comment} other {# comments}}, {2, plural, one {# link} other {# links}})"
-#~ msgstr "Datonakax apantatawa ({0, plural, one {# objeto} other {# objetonaka}}, {1, plural, one {# comentario} other {# comentarionaka}}, {2, plural, one {# chinu} other {# chinunaka}})"
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:433
-#~ msgid "Data management"
-#~ msgstr "Datonaka apnaqaña"
+#. placeholder {0}: imported.data?.objects ?? 0
+#. placeholder {1}: imported.data?.comments ?? 0
+#. placeholder {2}: imported.data?.links ?? 0
+#: src/features/projects/components/create-project-dialog.tsx:121
+msgid "Data imported ({0, plural, one {# object} other {# objects}}, {1, plural, one {# comment} other {# comments}}, {2, plural, one {# link} other {# links}})"
+msgstr "Datonakax apantatawa ({0, plural, one {# objeto} other {# objetonaka}}, {1, plural, one {# comentario} other {# comentarionaka}}, {2, plural, one {# chinu} other {# chinunaka}})"
 
 #: src/features/editor/components/add-dialogs.tsx:137
 msgid "Date"
@@ -967,10 +966,6 @@ msgstr "Datonaka apsuña"
 msgid "Export design"
 msgstr "Diseño mistuyaña"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:434
-#~ msgid "Export or import the raw data content in this project."
-#~ msgstr "Aka proyecto ukan chiqpacha datonakapa apsuña jan ukax apantaña."
-
 #: ../../../lib/web/src/lib/preference-utils.ts:136
 msgid "Extra large"
 msgstr "Sinti jach'a"
@@ -1000,7 +995,7 @@ msgstr "Janiw enlace lurña atinkti"
 msgid "Failed to create option"
 msgstr "Janiw opción lurña atinkti"
 
-#: src/features/projects/components/create-project-dialog.tsx:110
+#: src/features/projects/components/create-project-dialog.tsx:111
 msgid "Failed to create project"
 msgstr "Janiw proyecto lurña atinkti"
 
@@ -1036,7 +1031,7 @@ msgstr "Janiw datonakax apsusiwayiti"
 msgid "Failed to export design"
 msgstr "Janiw diseño mistuyaña atinkti"
 
-#: src/features/projects/components/create-project-dialog.tsx:124
+#: src/features/projects/components/create-project-dialog.tsx:122
 msgid "Failed to import data"
 msgstr "Janiw datonakax apantasiwayiti"
 
@@ -1069,7 +1064,7 @@ msgstr "Janiw merge atinkti"
 msgid "Failed to post comment"
 msgstr "Janiw comentario apaña atinkti"
 
-#: src/features/projects/components/create-project-dialog.tsx:177
+#: src/features/projects/components/create-project-dialog.tsx:175
 #: src/routes/_authenticated/$projectId/design.tsx:281
 msgid "Failed to read file"
 msgstr "Janiw archivo ullaña atinkti"
@@ -1144,7 +1139,7 @@ msgid "Files"
 msgstr "Archivonaka"
 
 #: src/components/layout/projects-layout.tsx:61
-#: src/routes/_authenticated/find.tsx:88
+#: src/routes/_authenticated/find.tsx:92
 msgid "Find projects"
 msgstr "Proyectonak jikxataña"
 
@@ -1254,40 +1249,18 @@ msgstr "Identidad"
 msgid "Imperial"
 msgstr "Imperial"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:549
-#~ msgid "Import a data configuration"
-#~ msgstr "Mä dato wakichäwi apantaña"
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:444
-#: src/routes/_authenticated/$projectId_.settings.tsx:490
-#: src/routes/_authenticated/$projectId_.settings.tsx:548
-#~ msgid "Import data"
-#~ msgstr "Datonaka apantaña"
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:476
-#~ msgid "Import data?"
-#~ msgstr "Datonaka apantañati?"
-
 #: src/routes/_authenticated/$projectId/design.tsx:177
 #: src/routes/_authenticated/$projectId/design.tsx:293
 msgid "Import design"
 msgstr "Diseño mantayaña"
 
-#: src/features/projects/components/create-project-dialog.tsx:288
+#: src/features/projects/components/create-project-dialog.tsx:298
 msgid "Import from backup (optional)"
-msgstr ""
+msgstr "Backupata mantayaña (jan wakisiri)"
 
-#: src/features/projects/components/create-project-dialog.tsx:122
-msgid "Imported {count} objects"
-msgstr ""
-
-#: src/features/projects/components/create-project-dialog.tsx:119
+#: src/features/projects/components/create-project-dialog.tsx:120
 msgid "Importing data..."
-msgstr ""
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:487
-#~ msgid "Importing..."
-#~ msgstr "Apantasiski..."
+msgstr "Datonaka mantayaskiwa..."
 
 #: ../../../lib/web/src/components/config-drawer.tsx:252
 msgid "Inset"
@@ -1301,7 +1274,7 @@ msgstr "Interesanaka"
 msgid "Invalid date"
 msgstr "Jan wakisir fecha"
 
-#: src/features/projects/components/create-project-dialog.tsx:171
+#: src/features/projects/components/create-project-dialog.tsx:169
 #: src/routes/_authenticated/$projectId/design.tsx:277
 msgid "Invalid JSON file"
 msgstr "Jan wakisir JSON archivo"
@@ -1374,7 +1347,7 @@ msgstr "Item apaqaskiwa"
 msgid "Loading item details"
 msgstr "Item detallenak apaqaskiwa"
 
-#: src/features/projects/components/create-project-dialog.tsx:365
+#: src/features/projects/components/create-project-dialog.tsx:375
 msgid "Loading templates..."
 msgstr "Templatenak apaqaskiwa..."
 
@@ -1475,7 +1448,7 @@ msgstr "Janiw repo, fuente jan ukax target parámetros utjkiti"
 msgid "Monday"
 msgstr "Lunes"
 
-#: src/features/projects/components/create-project-dialog.tsx:243
+#: src/features/projects/components/create-project-dialog.tsx:253
 msgid "My project"
 msgstr "Lurawi jiwasana"
 
@@ -1485,12 +1458,12 @@ msgstr "Lurawi jiwasana"
 #: src/features/editor/components/edit-dialogs.tsx:741
 #: src/features/editor/components/edit-dialogs.tsx:1065
 #: src/features/editor/components/option-dialog.tsx:112
-#: src/features/projects/components/create-project-dialog.tsx:233
+#: src/features/projects/components/create-project-dialog.tsx:243
 #: src/routes/_authenticated/$projectId_.settings.tsx:306
 msgid "Name"
 msgstr "Suti"
 
-#: src/features/projects/components/create-project-dialog.tsx:84
+#: src/features/projects/components/create-project-dialog.tsx:85
 msgid "Name is required"
 msgstr "Suti munaski"
 
@@ -1510,7 +1483,7 @@ msgstr "Machaqa"
 msgid "New {className}"
 msgstr "Machaqa {className}"
 
-#: src/features/projects/components/create-project-dialog.tsx:347
+#: src/features/projects/components/create-project-dialog.tsx:357
 msgid "Next"
 msgstr "Arkiri"
 
@@ -1592,7 +1565,7 @@ msgid "No profile"
 msgstr "Jan perfil"
 
 #: src/features/projects/components/inline-project-search.tsx:164
-#: src/routes/_authenticated/find.tsx:90
+#: src/routes/_authenticated/find.tsx:94
 msgid "No projects found"
 msgstr "Lurawinak jan jikxatasiti"
 
@@ -1810,7 +1783,7 @@ msgstr "Mayni jan ukax juk'amp clase lurawi diseño taypi yapxatma."
 msgid "Please check your internet connection and try again."
 msgstr "Mira internet conexion ukat wasitat yant'asim."
 
-#: src/features/projects/components/create-project-dialog.tsx:94
+#: src/features/projects/components/create-project-dialog.tsx:95
 msgid "Please select a template"
 msgstr "Mä template ajllima"
 
@@ -1822,7 +1795,7 @@ msgstr "Mira, mayampi yant'aram."
 msgid "Please wait a moment and try again."
 msgstr "Mä juk'a suyt'am, ukat wasitat yant'am."
 
-#: src/features/projects/components/create-project-dialog.tsx:255
+#: src/features/projects/components/create-project-dialog.tsx:265
 #: src/routes/_authenticated/$projectId_.settings.tsx:323
 msgid "Prefix"
 msgstr "Prefijo"
@@ -1852,7 +1825,7 @@ msgstr "Lurawi"
 msgid "Project actions"
 msgstr "Proyecto lurawinaka"
 
-#: src/features/projects/components/create-project-dialog.tsx:109
+#: src/features/projects/components/create-project-dialog.tsx:110
 msgid "Project created"
 msgstr "Lurawi luratäwi"
 
@@ -1916,7 +1889,7 @@ msgid "Rebase and merge"
 msgstr "Rebase mergeampi"
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:216
-#: ../../../lib/web/src/components/search-entity-page.tsx:240
+#: ../../../lib/web/src/components/search-entity-page.tsx:242
 msgid "Recommended"
 msgstr "Recomendata"
 
@@ -1955,7 +1928,7 @@ msgstr "Relativo 24 hora taypi, jan ukax absoluto"
 #: src/features/objects/components/comment-thread.tsx:299
 #: src/features/objects/components/create-object-dialog.tsx:486
 #: src/features/objects/components/create-object-dialog.tsx:491
-#: src/features/projects/components/create-project-dialog.tsx:331
+#: src/features/projects/components/create-project-dialog.tsx:341
 msgid "Remove"
 msgstr "Aparma"
 
@@ -2092,7 +2065,7 @@ msgstr "Imaski..."
 msgid "Search"
 msgstr "Thaqhama"
 
-#: src/routes/_authenticated/find.tsx:89
+#: src/routes/_authenticated/find.tsx:93
 msgid "Search by name, ID, fingerprint, or URL..."
 msgstr "Suti, ID, fingerprint, jan ukax URL ukamp thaqhama..."
 
@@ -2135,7 +2108,7 @@ msgid "Search..."
 msgstr "Thaqhama..."
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:174
-#: ../../../lib/web/src/components/search-entity-page.tsx:198
+#: ../../../lib/web/src/components/search-entity-page.tsx:200
 #: ../../../lib/web/src/features/access/access-dialog.tsx:202
 msgid "Searching..."
 msgstr "Thaqhaski..."
@@ -2441,10 +2414,6 @@ msgstr "Aka proyectox apaqatat sasinx mayniru sapt'asiwayi, jan ukax janiw manta
 msgid "This project may have been deleted or you don't have access to it."
 msgstr "Aka aljirix jichhax janiw machaq bidnaka katuqkiti."
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:478
-#~ msgid "This will import the data from <0>{0}</0>. Objects will be appended to the existing records. Ensure the current design matches the classes and fields referenced in the file."
-#~ msgstr "Akax <0>{0}</0> ukat datonaka apantani. Objetonakax utjir registronakaruw yapxatasini. Jichha diseñux archivun sutinchat clasenakampi camponakampi kikipäñap uñakipam."
-
 #: src/features/requests/components/merge-button.tsx:105
 msgid "This will merge \"{source}\" into \"{target}\". This action cannot be undone."
 msgstr "Akax wiñayatak \"{0}\" taqpach objetonakapampi, comentarionakapampi ukat archivonakapampi apaqatani. Aka acción janiw kut'ayatakiti."
@@ -2533,7 +2502,7 @@ msgid "Travelling"
 msgstr "Yaqha thaqhañ término yant'am"
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:190
-#: ../../../lib/web/src/components/search-entity-page.tsx:214
+#: ../../../lib/web/src/components/search-entity-page.tsx:216
 msgid "Try adjusting your search terms"
 msgstr "Mayamp yant'am"
 
@@ -2629,7 +2598,7 @@ msgstr "Mantaña machaqachaskani..."
 msgid "Upload"
 msgstr ".json archivo apayaña"
 
-#: src/features/projects/components/create-project-dialog.tsx:304
+#: src/features/projects/components/create-project-dialog.tsx:314
 #: src/routes/_authenticated/$projectId/design.tsx:336
 msgid "Upload .json file"
 msgstr "Machaq Versión Apayaña"
@@ -2640,7 +2609,7 @@ msgstr "Passkey ukma apnaqama"
 
 #. placeholder {0}: prefix || "project"
 #. placeholder {1}: prefix || "project"
-#: src/features/projects/components/create-project-dialog.tsx:272
+#: src/features/projects/components/create-project-dialog.tsx:282
 msgid "Used for readable IDs like {0}-1, {1}-2"
 msgstr "Apnaqiri"
 
@@ -2671,7 +2640,7 @@ msgstr "Verificaña ukat habilitaña"
 msgid "Verify email address"
 msgstr "Passkey ukamp verificaña"
 
-#: ../../../lib/web/src/components/attachment-gallery.tsx:75
+#: ../../../lib/web/src/components/attachment-gallery.tsx:74
 msgid "Video thumbnail"
 msgstr "Uñjaña"
 
@@ -2721,9 +2690,9 @@ msgstr "Uñch'ukita sapa"
 msgid "Watched only"
 msgstr "Janiw kuna apps jumatakix jikxatkiti. Akax jan suyt'atawa."
 
-#: src/features/projects/components/create-project-dialog.tsx:360
+#: src/features/projects/components/create-project-dialog.tsx:370
 msgid "We have auto-selected the best matching template."
-msgstr ""
+msgstr "Juk'amp aski template pachpat ajllitawa."
 
 #: ../../../lib/web/src/features/errors/maintenance-error.tsx:16
 msgid "We'll be back online shortly."
@@ -2753,6 +2722,6 @@ msgstr "Janïraw repositorionaka utjkiti."
 msgid "Your account was moved here from {source}. Until you delete it there, messages and notifications may reach both servers, some of your content keeps being served from the old server, and followers may take a few minutes to find you here."
 msgstr "Juman cuenta {source} ukamanta achakata. Ukankiwa juchut'ayapkchama, ikirinakampi willt'awinakampi pä servdorankama chikañ atikaniwa, walja lurawinakasataki jach'a servdorpa ukatpachani uñakiparakiwa, ukhamaraki suyirinakaxa aka jichhxa jupast'aña pätpachani saräniwa."
 
-#: src/features/projects/components/create-project-dialog.tsx:356
+#: src/features/projects/components/create-project-dialog.tsx:366
 msgid "Your backup contains objects of type:"
-msgstr ""
+msgstr "Backupamax aka kasta objetonakaniwa:"

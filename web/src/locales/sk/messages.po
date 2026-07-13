@@ -237,7 +237,7 @@ msgstr "Všetko"
 msgid "All projects"
 msgstr "Všetky projekty"
 
-#: src/features/projects/components/create-project-dialog.tsx:278
+#: src/features/projects/components/create-project-dialog.tsx:288
 msgid "Allow anyone to search for project"
 msgstr "Povoliť komukoľvek vyhľadávať projekt"
 
@@ -313,7 +313,7 @@ msgid "Available keyboard shortcuts"
 msgstr "Dostupné klávesové skratky"
 
 #: ../../../lib/web/src/components/place-picker.tsx:155
-#: src/features/projects/components/create-project-dialog.tsx:428
+#: src/features/projects/components/create-project-dialog.tsx:438
 msgid "Back"
 msgstr "Späť"
 
@@ -378,7 +378,7 @@ msgstr "Môže byť potomkom"
 #: src/features/board/components/board-column.tsx:606
 #: src/features/editor/components/option-dialog.tsx:146
 #: src/features/objects/components/comment-thread.tsx:175
-#: src/features/projects/components/create-project-dialog.tsx:344
+#: src/features/projects/components/create-project-dialog.tsx:354
 #: src/routes/_authenticated/$projectId/design.tsx:343
 #: src/routes/_authenticated/$projectId/index.tsx:1011
 msgid "Cancel"
@@ -414,7 +414,7 @@ msgstr "Kontroluje sa stav zlúčenia..."
 msgid "Checklist"
 msgstr "Zoznam úloh"
 
-#: src/features/projects/components/create-project-dialog.tsx:225
+#: src/features/projects/components/create-project-dialog.tsx:235
 msgid "Choose a template"
 msgstr "Vyberte šablónu"
 
@@ -619,7 +619,7 @@ msgstr "Vytvoriť"
 msgid "Create a new item in this project"
 msgstr "Vytvoriť novú položku v tomto projekte"
 
-#: src/features/projects/components/create-project-dialog.tsx:227
+#: src/features/projects/components/create-project-dialog.tsx:237
 #: src/features/projects/pages/projects-list-page.tsx:103
 msgid "Create a new project"
 msgstr "Vytvoriť nový projekt"
@@ -630,9 +630,9 @@ msgid "Create new item"
 msgstr "Vytvoriť novú položku"
 
 #: src/components/layout/projects-layout.tsx:62
-#: src/features/projects/components/create-project-dialog.tsx:215
 #: src/features/projects/components/create-project-dialog.tsx:225
-#: src/features/projects/components/create-project-dialog.tsx:431
+#: src/features/projects/components/create-project-dialog.tsx:235
+#: src/features/projects/components/create-project-dialog.tsx:441
 msgid "Create project"
 msgstr "Vytvoriť projekt"
 
@@ -645,12 +645,12 @@ msgstr "Vytvárať, upravovať, komentovať a zobrazovať"
 msgid "Created"
 msgstr "Vytvorené"
 
-#: src/features/projects/components/create-project-dialog.tsx:108
+#: src/features/projects/components/create-project-dialog.tsx:109
 msgid "Creating project..."
 msgstr "Vytvára sa projekt..."
 
 #: src/features/objects/components/create-object-dialog.tsx:535
-#: src/features/projects/components/create-project-dialog.tsx:431
+#: src/features/projects/components/create-project-dialog.tsx:441
 msgid "Creating..."
 msgstr "Vytvára sa..."
 
@@ -675,13 +675,12 @@ msgstr "Tmavý režim"
 msgid "Data conflict"
 msgstr "Konflikt údajov"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:350
-#~ msgid "Data imported ({0, plural, one {# object} other {# objects}}, {1, plural, one {# comment} other {# comments}}, {2, plural, one {# link} other {# links}})"
-#~ msgstr "Údaje boli importované ({0, plural, one {# objekt} few {# objekty} many {# objektu} other {# objektov}}, {1, plural, one {# komentár} few {# komentáre} many {# komentára} other {# komentárov}}, {2, plural, one {# odkaz} few {# odkazy} many {# odkazu} other {# odkazov}})"
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:433
-#~ msgid "Data management"
-#~ msgstr "Správa údajov"
+#. placeholder {0}: imported.data?.objects ?? 0
+#. placeholder {1}: imported.data?.comments ?? 0
+#. placeholder {2}: imported.data?.links ?? 0
+#: src/features/projects/components/create-project-dialog.tsx:121
+msgid "Data imported ({0, plural, one {# object} other {# objects}}, {1, plural, one {# comment} other {# comments}}, {2, plural, one {# link} other {# links}})"
+msgstr "Údaje boli importované ({0, plural, one {# objekt} few {# objekty} many {# objektu} other {# objektov}}, {1, plural, one {# komentár} few {# komentáre} many {# komentára} other {# komentárov}}, {2, plural, one {# odkaz} few {# odkazy} many {# odkazu} other {# odkazov}})"
 
 #: src/features/editor/components/add-dialogs.tsx:137
 msgid "Date"
@@ -967,10 +966,6 @@ msgstr "Exportovať údaje"
 msgid "Export design"
 msgstr "Exportovať návrh"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:434
-#~ msgid "Export or import the raw data content in this project."
-#~ msgstr "Exportujte alebo importujte nespracované údaje v tomto projekte."
-
 #: ../../../lib/web/src/lib/preference-utils.ts:136
 msgid "Extra large"
 msgstr "Veľmi veľké"
@@ -1000,7 +995,7 @@ msgstr "Nepodarilo sa vytvoriť odkaz"
 msgid "Failed to create option"
 msgstr "Nepodarilo sa vytvoriť možnosť"
 
-#: src/features/projects/components/create-project-dialog.tsx:110
+#: src/features/projects/components/create-project-dialog.tsx:111
 msgid "Failed to create project"
 msgstr "Nepodarilo sa vytvoriť projekt"
 
@@ -1036,7 +1031,7 @@ msgstr "Údaje sa nepodarilo exportovať"
 msgid "Failed to export design"
 msgstr "Nepodarilo sa exportovať návrh"
 
-#: src/features/projects/components/create-project-dialog.tsx:124
+#: src/features/projects/components/create-project-dialog.tsx:122
 msgid "Failed to import data"
 msgstr "Údaje sa nepodarilo importovať"
 
@@ -1069,7 +1064,7 @@ msgstr "Nepodarilo sa zlúčiť"
 msgid "Failed to post comment"
 msgstr "Nepodarilo sa odoslať komentár"
 
-#: src/features/projects/components/create-project-dialog.tsx:177
+#: src/features/projects/components/create-project-dialog.tsx:175
 #: src/routes/_authenticated/$projectId/design.tsx:281
 msgid "Failed to read file"
 msgstr "Nepodarilo sa prečítať súbor"
@@ -1144,7 +1139,7 @@ msgid "Files"
 msgstr "Súbory"
 
 #: src/components/layout/projects-layout.tsx:61
-#: src/routes/_authenticated/find.tsx:88
+#: src/routes/_authenticated/find.tsx:92
 msgid "Find projects"
 msgstr "Nájsť projekty"
 
@@ -1254,40 +1249,18 @@ msgstr "Identita"
 msgid "Imperial"
 msgstr "Imperiálne"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:549
-#~ msgid "Import a data configuration"
-#~ msgstr "Importovať konfiguráciu údajov"
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:444
-#: src/routes/_authenticated/$projectId_.settings.tsx:490
-#: src/routes/_authenticated/$projectId_.settings.tsx:548
-#~ msgid "Import data"
-#~ msgstr "Importovať údaje"
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:476
-#~ msgid "Import data?"
-#~ msgstr "Importovať údaje?"
-
 #: src/routes/_authenticated/$projectId/design.tsx:177
 #: src/routes/_authenticated/$projectId/design.tsx:293
 msgid "Import design"
 msgstr "Importovať návrh"
 
-#: src/features/projects/components/create-project-dialog.tsx:288
+#: src/features/projects/components/create-project-dialog.tsx:298
 msgid "Import from backup (optional)"
-msgstr ""
+msgstr "Importovať zo zálohy (voliteľné)"
 
-#: src/features/projects/components/create-project-dialog.tsx:122
-msgid "Imported {count} objects"
-msgstr ""
-
-#: src/features/projects/components/create-project-dialog.tsx:119
+#: src/features/projects/components/create-project-dialog.tsx:120
 msgid "Importing data..."
-msgstr ""
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:487
-#~ msgid "Importing..."
-#~ msgstr "Importuje sa..."
+msgstr "Importujú sa údaje…"
 
 #: ../../../lib/web/src/components/config-drawer.tsx:252
 msgid "Inset"
@@ -1301,7 +1274,7 @@ msgstr "Záujmy"
 msgid "Invalid date"
 msgstr "Neplatný dátum"
 
-#: src/features/projects/components/create-project-dialog.tsx:171
+#: src/features/projects/components/create-project-dialog.tsx:169
 #: src/routes/_authenticated/$projectId/design.tsx:277
 msgid "Invalid JSON file"
 msgstr "Neplatný JSON súbor"
@@ -1374,7 +1347,7 @@ msgstr "Načítava sa položka"
 msgid "Loading item details"
 msgstr "Načítavajú sa detaily položky"
 
-#: src/features/projects/components/create-project-dialog.tsx:365
+#: src/features/projects/components/create-project-dialog.tsx:375
 msgid "Loading templates..."
 msgstr "Načítavajú sa šablóny…"
 
@@ -1475,7 +1448,7 @@ msgstr "Chýbajúce parametre repozitára, zdroja alebo cieľa"
 msgid "Monday"
 msgstr "Pondelok"
 
-#: src/features/projects/components/create-project-dialog.tsx:243
+#: src/features/projects/components/create-project-dialog.tsx:253
 msgid "My project"
 msgstr "Môj projekt"
 
@@ -1485,12 +1458,12 @@ msgstr "Môj projekt"
 #: src/features/editor/components/edit-dialogs.tsx:741
 #: src/features/editor/components/edit-dialogs.tsx:1065
 #: src/features/editor/components/option-dialog.tsx:112
-#: src/features/projects/components/create-project-dialog.tsx:233
+#: src/features/projects/components/create-project-dialog.tsx:243
 #: src/routes/_authenticated/$projectId_.settings.tsx:306
 msgid "Name"
 msgstr "Názov"
 
-#: src/features/projects/components/create-project-dialog.tsx:84
+#: src/features/projects/components/create-project-dialog.tsx:85
 msgid "Name is required"
 msgstr "Názov je povinný"
 
@@ -1510,7 +1483,7 @@ msgstr "Nový"
 msgid "New {className}"
 msgstr "Nový {className}"
 
-#: src/features/projects/components/create-project-dialog.tsx:347
+#: src/features/projects/components/create-project-dialog.tsx:357
 msgid "Next"
 msgstr "Ďalej"
 
@@ -1592,7 +1565,7 @@ msgid "No profile"
 msgstr "Bez profilu"
 
 #: src/features/projects/components/inline-project-search.tsx:164
-#: src/routes/_authenticated/find.tsx:90
+#: src/routes/_authenticated/find.tsx:94
 msgid "No projects found"
 msgstr "Nenašli sa žiadne projekty"
 
@@ -1810,7 +1783,7 @@ msgstr "Pridajte jednu alebo viac tried do návrhu projektu."
 msgid "Please check your internet connection and try again."
 msgstr "Skontrolujte pripojenie na internet a skúste to znova."
 
-#: src/features/projects/components/create-project-dialog.tsx:94
+#: src/features/projects/components/create-project-dialog.tsx:95
 msgid "Please select a template"
 msgstr "Vyberte šablónu"
 
@@ -1822,7 +1795,7 @@ msgstr "Skúste to znova."
 msgid "Please wait a moment and try again."
 msgstr "Chvíľu počkajte a skúste to znova."
 
-#: src/features/projects/components/create-project-dialog.tsx:255
+#: src/features/projects/components/create-project-dialog.tsx:265
 #: src/routes/_authenticated/$projectId_.settings.tsx:323
 msgid "Prefix"
 msgstr "Predpona"
@@ -1852,7 +1825,7 @@ msgstr "Projekt"
 msgid "Project actions"
 msgstr "Akcie projektu"
 
-#: src/features/projects/components/create-project-dialog.tsx:109
+#: src/features/projects/components/create-project-dialog.tsx:110
 msgid "Project created"
 msgstr "Projekt vytvorený"
 
@@ -1916,7 +1889,7 @@ msgid "Rebase and merge"
 msgstr "Rebase a zlúčiť"
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:216
-#: ../../../lib/web/src/components/search-entity-page.tsx:240
+#: ../../../lib/web/src/components/search-entity-page.tsx:242
 msgid "Recommended"
 msgstr "Odporúčané"
 
@@ -1955,7 +1928,7 @@ msgstr "Relatívne do 24 hodín, inak absolútne"
 #: src/features/objects/components/comment-thread.tsx:299
 #: src/features/objects/components/create-object-dialog.tsx:486
 #: src/features/objects/components/create-object-dialog.tsx:491
-#: src/features/projects/components/create-project-dialog.tsx:331
+#: src/features/projects/components/create-project-dialog.tsx:341
 msgid "Remove"
 msgstr "Odstrániť"
 
@@ -2092,7 +2065,7 @@ msgstr "Ukladám..."
 msgid "Search"
 msgstr "Hľadať"
 
-#: src/routes/_authenticated/find.tsx:89
+#: src/routes/_authenticated/find.tsx:93
 msgid "Search by name, ID, fingerprint, or URL..."
 msgstr "Hľadať podľa názvu, ID, odtlačku alebo URL..."
 
@@ -2135,7 +2108,7 @@ msgid "Search..."
 msgstr "Hľadať..."
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:174
-#: ../../../lib/web/src/components/search-entity-page.tsx:198
+#: ../../../lib/web/src/components/search-entity-page.tsx:200
 #: ../../../lib/web/src/features/access/access-dialog.tsx:202
 msgid "Searching..."
 msgstr "Hľadám..."
@@ -2441,10 +2414,6 @@ msgstr "Tento projekt nemožno teraz načítať."
 msgid "This project may have been deleted or you don't have access to it."
 msgstr "Tento projekt mohol byť odstránený alebo k nemu nemáte prístup."
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:478
-#~ msgid "This will import the data from <0>{0}</0>. Objects will be appended to the existing records. Ensure the current design matches the classes and fields referenced in the file."
-#~ msgstr "Týmto sa importujú údaje z <0>{0}</0>. Objekty budú pridané k existujúcim záznamom. Uistite sa, že aktuálny návrh zodpovedá triedam a poliam uvedeným v súbore."
-
 #: src/features/requests/components/merge-button.tsx:105
 msgid "This will merge \"{source}\" into \"{target}\". This action cannot be undone."
 msgstr "Týmto sa zlúči „{source}“ do „{target}“. Túto akciu nemožno vrátiť."
@@ -2533,7 +2502,7 @@ msgid "Travelling"
 msgstr "Cestujem"
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:190
-#: ../../../lib/web/src/components/search-entity-page.tsx:214
+#: ../../../lib/web/src/components/search-entity-page.tsx:216
 msgid "Try adjusting your search terms"
 msgstr "Skúste upraviť hľadané výrazy"
 
@@ -2629,7 +2598,7 @@ msgstr "Aktualizuje sa prístup..."
 msgid "Upload"
 msgstr "Nahrať"
 
-#: src/features/projects/components/create-project-dialog.tsx:304
+#: src/features/projects/components/create-project-dialog.tsx:314
 #: src/routes/_authenticated/$projectId/design.tsx:336
 msgid "Upload .json file"
 msgstr "Nahrať súbor .json"
@@ -2640,7 +2609,7 @@ msgstr "Použite svoj prístupový kľúč"
 
 #. placeholder {0}: prefix || "project"
 #. placeholder {1}: prefix || "project"
-#: src/features/projects/components/create-project-dialog.tsx:272
+#: src/features/projects/components/create-project-dialog.tsx:282
 msgid "Used for readable IDs like {0}-1, {1}-2"
 msgstr "Používa sa pre čitateľné ID ako {0}-1, {1}-2"
 
@@ -2671,7 +2640,7 @@ msgstr "Overiť"
 msgid "Verify email address"
 msgstr "Overiť e-mailovú adresu"
 
-#: ../../../lib/web/src/components/attachment-gallery.tsx:75
+#: ../../../lib/web/src/components/attachment-gallery.tsx:74
 msgid "Video thumbnail"
 msgstr "Miniatúra videa"
 
@@ -2721,9 +2690,9 @@ msgstr "Sledované"
 msgid "Watched only"
 msgstr "Iba sledované"
 
-#: src/features/projects/components/create-project-dialog.tsx:360
+#: src/features/projects/components/create-project-dialog.tsx:370
 msgid "We have auto-selected the best matching template."
-msgstr ""
+msgstr "Automaticky sme vybrali najvhodnejšiu šablónu."
 
 #: ../../../lib/web/src/features/errors/maintenance-error.tsx:16
 msgid "We'll be back online shortly."
@@ -2753,6 +2722,6 @@ msgstr "Zatiaľ nemáte žiadne projekty."
 msgid "Your account was moved here from {source}. Until you delete it there, messages and notifications may reach both servers, some of your content keeps being served from the old server, and followers may take a few minutes to find you here."
 msgstr "Váš účet bol presunutý sem z {source}. Kým ho tam neodstránite, správy a upozornenia môžu dosiahnuť oba servery, časť vášho obsahu naďalej pochádza zo starého servera a sledovateľom môže chvíľu trvať, kým vás tu nájdu."
 
-#: src/features/projects/components/create-project-dialog.tsx:356
+#: src/features/projects/components/create-project-dialog.tsx:366
 msgid "Your backup contains objects of type:"
-msgstr ""
+msgstr "Vaša záloha obsahuje objekty typu:"

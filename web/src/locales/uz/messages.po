@@ -237,7 +237,7 @@ msgstr "Hammasi"
 msgid "All projects"
 msgstr "Barcha loyihalar"
 
-#: src/features/projects/components/create-project-dialog.tsx:278
+#: src/features/projects/components/create-project-dialog.tsx:288
 msgid "Allow anyone to search for project"
 msgstr "Hammaga loyihani qidirishga ruxsat berish"
 
@@ -313,7 +313,7 @@ msgid "Available keyboard shortcuts"
 msgstr "Mavjud klaviatura yorliqlari"
 
 #: ../../../lib/web/src/components/place-picker.tsx:155
-#: src/features/projects/components/create-project-dialog.tsx:428
+#: src/features/projects/components/create-project-dialog.tsx:438
 msgid "Back"
 msgstr "Orqaga"
 
@@ -378,7 +378,7 @@ msgstr "Quyidagi elementining bolasi boʻlishi mumkin"
 #: src/features/board/components/board-column.tsx:606
 #: src/features/editor/components/option-dialog.tsx:146
 #: src/features/objects/components/comment-thread.tsx:175
-#: src/features/projects/components/create-project-dialog.tsx:344
+#: src/features/projects/components/create-project-dialog.tsx:354
 #: src/routes/_authenticated/$projectId/design.tsx:343
 #: src/routes/_authenticated/$projectId/index.tsx:1011
 msgid "Cancel"
@@ -414,7 +414,7 @@ msgstr "Birlashtirish holati tekshirilmoqda..."
 msgid "Checklist"
 msgstr "Roʻyxat"
 
-#: src/features/projects/components/create-project-dialog.tsx:225
+#: src/features/projects/components/create-project-dialog.tsx:235
 msgid "Choose a template"
 msgstr "Shablon tanlang"
 
@@ -619,7 +619,7 @@ msgstr "Yaratish"
 msgid "Create a new item in this project"
 msgstr "Bu loyihada yangi element yaratish"
 
-#: src/features/projects/components/create-project-dialog.tsx:227
+#: src/features/projects/components/create-project-dialog.tsx:237
 #: src/features/projects/pages/projects-list-page.tsx:103
 msgid "Create a new project"
 msgstr "Yangi loyiha yaratish"
@@ -630,9 +630,9 @@ msgid "Create new item"
 msgstr "Yangi element yaratish"
 
 #: src/components/layout/projects-layout.tsx:62
-#: src/features/projects/components/create-project-dialog.tsx:215
 #: src/features/projects/components/create-project-dialog.tsx:225
-#: src/features/projects/components/create-project-dialog.tsx:431
+#: src/features/projects/components/create-project-dialog.tsx:235
+#: src/features/projects/components/create-project-dialog.tsx:441
 msgid "Create project"
 msgstr "Loyiha yaratish"
 
@@ -645,12 +645,12 @@ msgstr "Yaratish, tahrirlash, izoh qoldirish va ko'rish"
 msgid "Created"
 msgstr "Yaratildi"
 
-#: src/features/projects/components/create-project-dialog.tsx:108
+#: src/features/projects/components/create-project-dialog.tsx:109
 msgid "Creating project..."
 msgstr "Loyiha yaratilmoqda..."
 
 #: src/features/objects/components/create-object-dialog.tsx:535
-#: src/features/projects/components/create-project-dialog.tsx:431
+#: src/features/projects/components/create-project-dialog.tsx:441
 msgid "Creating..."
 msgstr "Yaratilmoqda..."
 
@@ -675,13 +675,12 @@ msgstr "Qorongʻi rejim"
 msgid "Data conflict"
 msgstr "Maʼlumotlar ziddiyati"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:350
-#~ msgid "Data imported ({0, plural, one {# object} other {# objects}}, {1, plural, one {# comment} other {# comments}}, {2, plural, one {# link} other {# links}})"
-#~ msgstr "Maʼlumotlar import qilindi ({0, plural, one {# obyekt} other {# obyekt}}, {1, plural, one {# izoh} other {# izoh}}, {2, plural, one {# havola} other {# havola}})"
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:433
-#~ msgid "Data management"
-#~ msgstr "Maʼlumotlarni boshqarish"
+#. placeholder {0}: imported.data?.objects ?? 0
+#. placeholder {1}: imported.data?.comments ?? 0
+#. placeholder {2}: imported.data?.links ?? 0
+#: src/features/projects/components/create-project-dialog.tsx:121
+msgid "Data imported ({0, plural, one {# object} other {# objects}}, {1, plural, one {# comment} other {# comments}}, {2, plural, one {# link} other {# links}})"
+msgstr "Maʼlumotlar import qilindi ({0, plural, one {# obyekt} other {# obyekt}}, {1, plural, one {# izoh} other {# izoh}}, {2, plural, one {# havola} other {# havola}})"
 
 #: src/features/editor/components/add-dialogs.tsx:137
 msgid "Date"
@@ -967,10 +966,6 @@ msgstr "Maʼlumotlarni eksport qilish"
 msgid "Export design"
 msgstr "Dizaynni eksport qilish"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:434
-#~ msgid "Export or import the raw data content in this project."
-#~ msgstr "Ushbu loyihadagi xom maʼlumotlar mazmunini eksport yoki import qiling."
-
 #: ../../../lib/web/src/lib/preference-utils.ts:136
 msgid "Extra large"
 msgstr "Juda katta"
@@ -1000,7 +995,7 @@ msgstr "Havola yaratib boʻlmadi"
 msgid "Failed to create option"
 msgstr "Variant yaratib boʻlmadi"
 
-#: src/features/projects/components/create-project-dialog.tsx:110
+#: src/features/projects/components/create-project-dialog.tsx:111
 msgid "Failed to create project"
 msgstr "Loyiha yaratib boʻlmadi"
 
@@ -1036,7 +1031,7 @@ msgstr "Maʼlumotlarni eksport qilib boʻlmadi"
 msgid "Failed to export design"
 msgstr "Dizaynni eksport qilib boʻlmadi"
 
-#: src/features/projects/components/create-project-dialog.tsx:124
+#: src/features/projects/components/create-project-dialog.tsx:122
 msgid "Failed to import data"
 msgstr "Maʼlumotlarni import qilib boʻlmadi"
 
@@ -1069,7 +1064,7 @@ msgstr "Birlashtirib boʻlmadi"
 msgid "Failed to post comment"
 msgstr "Izoh joylashtirib boʻlmadi"
 
-#: src/features/projects/components/create-project-dialog.tsx:177
+#: src/features/projects/components/create-project-dialog.tsx:175
 #: src/routes/_authenticated/$projectId/design.tsx:281
 msgid "Failed to read file"
 msgstr "Faylni oʻqib boʻlmadi"
@@ -1144,7 +1139,7 @@ msgid "Files"
 msgstr "Fayllar"
 
 #: src/components/layout/projects-layout.tsx:61
-#: src/routes/_authenticated/find.tsx:88
+#: src/routes/_authenticated/find.tsx:92
 msgid "Find projects"
 msgstr "Loyihalarni topish"
 
@@ -1254,40 +1249,18 @@ msgstr "Identifikatsiya"
 msgid "Imperial"
 msgstr "Imperial"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:549
-#~ msgid "Import a data configuration"
-#~ msgstr "Maʼlumotlar konfiguratsiyasini import qilish"
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:444
-#: src/routes/_authenticated/$projectId_.settings.tsx:490
-#: src/routes/_authenticated/$projectId_.settings.tsx:548
-#~ msgid "Import data"
-#~ msgstr "Maʼlumotlarni import qilish"
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:476
-#~ msgid "Import data?"
-#~ msgstr "Maʼlumotlar import qilinsinmi?"
-
 #: src/routes/_authenticated/$projectId/design.tsx:177
 #: src/routes/_authenticated/$projectId/design.tsx:293
 msgid "Import design"
 msgstr "Dizaynni import qilish"
 
-#: src/features/projects/components/create-project-dialog.tsx:288
+#: src/features/projects/components/create-project-dialog.tsx:298
 msgid "Import from backup (optional)"
-msgstr ""
+msgstr "Zaxira nusxasidan import (ixtiyoriy)"
 
-#: src/features/projects/components/create-project-dialog.tsx:122
-msgid "Imported {count} objects"
-msgstr ""
-
-#: src/features/projects/components/create-project-dialog.tsx:119
+#: src/features/projects/components/create-project-dialog.tsx:120
 msgid "Importing data..."
-msgstr ""
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:487
-#~ msgid "Importing..."
-#~ msgstr "Import qilinmoqda..."
+msgstr "Maʼlumotlar import qilinmoqda..."
 
 #: ../../../lib/web/src/components/config-drawer.tsx:252
 msgid "Inset"
@@ -1301,7 +1274,7 @@ msgstr "Qiziqishlar"
 msgid "Invalid date"
 msgstr "Notoʻgʻri sana"
 
-#: src/features/projects/components/create-project-dialog.tsx:171
+#: src/features/projects/components/create-project-dialog.tsx:169
 #: src/routes/_authenticated/$projectId/design.tsx:277
 msgid "Invalid JSON file"
 msgstr "Notoʻgʻri JSON fayli"
@@ -1374,7 +1347,7 @@ msgstr "Element yuklanmoqda"
 msgid "Loading item details"
 msgstr "Element tafsilotlari yuklanmoqda"
 
-#: src/features/projects/components/create-project-dialog.tsx:365
+#: src/features/projects/components/create-project-dialog.tsx:375
 msgid "Loading templates..."
 msgstr "Shablonlar yuklanmoqda..."
 
@@ -1475,7 +1448,7 @@ msgstr "Repo, manba yoki maqsad parametrlari yetishmayapti"
 msgid "Monday"
 msgstr "Dushanba"
 
-#: src/features/projects/components/create-project-dialog.tsx:243
+#: src/features/projects/components/create-project-dialog.tsx:253
 msgid "My project"
 msgstr "Mening loyiham"
 
@@ -1485,12 +1458,12 @@ msgstr "Mening loyiham"
 #: src/features/editor/components/edit-dialogs.tsx:741
 #: src/features/editor/components/edit-dialogs.tsx:1065
 #: src/features/editor/components/option-dialog.tsx:112
-#: src/features/projects/components/create-project-dialog.tsx:233
+#: src/features/projects/components/create-project-dialog.tsx:243
 #: src/routes/_authenticated/$projectId_.settings.tsx:306
 msgid "Name"
 msgstr "Nomi"
 
-#: src/features/projects/components/create-project-dialog.tsx:84
+#: src/features/projects/components/create-project-dialog.tsx:85
 msgid "Name is required"
 msgstr "Nom kerak"
 
@@ -1510,7 +1483,7 @@ msgstr "Yangi"
 msgid "New {className}"
 msgstr "Yangi {className}"
 
-#: src/features/projects/components/create-project-dialog.tsx:347
+#: src/features/projects/components/create-project-dialog.tsx:357
 msgid "Next"
 msgstr "Keyingisi"
 
@@ -1592,7 +1565,7 @@ msgid "No profile"
 msgstr "Profil yoʻq"
 
 #: src/features/projects/components/inline-project-search.tsx:164
-#: src/routes/_authenticated/find.tsx:90
+#: src/routes/_authenticated/find.tsx:94
 msgid "No projects found"
 msgstr "Loyihalar topilmadi"
 
@@ -1810,7 +1783,7 @@ msgstr "Loyiha dizayniga bir yoki bir nechta sinf qoʻshing."
 msgid "Please check your internet connection and try again."
 msgstr "Internet aloqangizni tekshiring va qayta urinib ko‘ring."
 
-#: src/features/projects/components/create-project-dialog.tsx:94
+#: src/features/projects/components/create-project-dialog.tsx:95
 msgid "Please select a template"
 msgstr "Iltimos, shablon tanlang"
 
@@ -1822,7 +1795,7 @@ msgstr "Iltimos, qayta urinib ko'ring."
 msgid "Please wait a moment and try again."
 msgstr "Biroz kuting va qayta urinib koʻring."
 
-#: src/features/projects/components/create-project-dialog.tsx:255
+#: src/features/projects/components/create-project-dialog.tsx:265
 #: src/routes/_authenticated/$projectId_.settings.tsx:323
 msgid "Prefix"
 msgstr "Prefiks"
@@ -1852,7 +1825,7 @@ msgstr "Loyiha"
 msgid "Project actions"
 msgstr "Loyiha amallari"
 
-#: src/features/projects/components/create-project-dialog.tsx:109
+#: src/features/projects/components/create-project-dialog.tsx:110
 msgid "Project created"
 msgstr "Loyiha yaratildi"
 
@@ -1916,7 +1889,7 @@ msgid "Rebase and merge"
 msgstr "Rebase va birlashtirish"
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:216
-#: ../../../lib/web/src/components/search-entity-page.tsx:240
+#: ../../../lib/web/src/components/search-entity-page.tsx:242
 msgid "Recommended"
 msgstr "Tavsiya etiladi"
 
@@ -1955,7 +1928,7 @@ msgstr "24 soat ichida nisbiy, aks holda mutlaq"
 #: src/features/objects/components/comment-thread.tsx:299
 #: src/features/objects/components/create-object-dialog.tsx:486
 #: src/features/objects/components/create-object-dialog.tsx:491
-#: src/features/projects/components/create-project-dialog.tsx:331
+#: src/features/projects/components/create-project-dialog.tsx:341
 msgid "Remove"
 msgstr "Olib tashlash"
 
@@ -2092,7 +2065,7 @@ msgstr "Saqlanmoqda..."
 msgid "Search"
 msgstr "Qidirish"
 
-#: src/routes/_authenticated/find.tsx:89
+#: src/routes/_authenticated/find.tsx:93
 msgid "Search by name, ID, fingerprint, or URL..."
 msgstr "Nomi, IDsi, fingerprinti yoki URL boʻyicha qidirish..."
 
@@ -2135,7 +2108,7 @@ msgid "Search..."
 msgstr "Qidirish..."
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:174
-#: ../../../lib/web/src/components/search-entity-page.tsx:198
+#: ../../../lib/web/src/components/search-entity-page.tsx:200
 #: ../../../lib/web/src/features/access/access-dialog.tsx:202
 msgid "Searching..."
 msgstr "Qidirilmoqda..."
@@ -2441,10 +2414,6 @@ msgstr "Ushbu loyihani hozir yuklab boʻlmaydi."
 msgid "This project may have been deleted or you don't have access to it."
 msgstr "Ushbu loyiha oʻchirilgan boʻlishi mumkin yoki sizda unga kirish ruxsati yoʻq."
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:478
-#~ msgid "This will import the data from <0>{0}</0>. Objects will be appended to the existing records. Ensure the current design matches the classes and fields referenced in the file."
-#~ msgstr "Bu <0>{0}</0> faylidan maʼlumotlarni import qiladi. Obyektlar mavjud yozuvlarga qoʻshiladi. Joriy dizayn faylda koʻrsatilgan sinflar va maydonlarga mos kelishiga ishonch hosil qiling."
-
 #: src/features/requests/components/merge-button.tsx:105
 msgid "This will merge \"{source}\" into \"{target}\". This action cannot be undone."
 msgstr "Bu \"{source}\" ni \"{target}\" ga birlashtiradi. Bu amalni bekor qilib boʻlmaydi."
@@ -2533,7 +2502,7 @@ msgid "Travelling"
 msgstr "Sayohatda"
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:190
-#: ../../../lib/web/src/components/search-entity-page.tsx:214
+#: ../../../lib/web/src/components/search-entity-page.tsx:216
 msgid "Try adjusting your search terms"
 msgstr "Qidiruv soʻzlaringizni sozlashga harakat qiling"
 
@@ -2629,7 +2598,7 @@ msgstr "Ruxsat yangilanmoqda..."
 msgid "Upload"
 msgstr "Yuklash"
 
-#: src/features/projects/components/create-project-dialog.tsx:304
+#: src/features/projects/components/create-project-dialog.tsx:314
 #: src/routes/_authenticated/$projectId/design.tsx:336
 msgid "Upload .json file"
 msgstr "JSON faylni yuklash"
@@ -2640,7 +2609,7 @@ msgstr "Kirish kalitingizdan foydalaning"
 
 #. placeholder {0}: prefix || "project"
 #. placeholder {1}: prefix || "project"
-#: src/features/projects/components/create-project-dialog.tsx:272
+#: src/features/projects/components/create-project-dialog.tsx:282
 msgid "Used for readable IDs like {0}-1, {1}-2"
 msgstr "{0}-1, {1}-2 kabi oʻqilishi mumkin boʻlgan ID lar uchun ishlatiladi"
 
@@ -2671,7 +2640,7 @@ msgstr "Tasdiqlash"
 msgid "Verify email address"
 msgstr "Email manzilini tasdiqlash"
 
-#: ../../../lib/web/src/components/attachment-gallery.tsx:75
+#: ../../../lib/web/src/components/attachment-gallery.tsx:74
 msgid "Video thumbnail"
 msgstr "Video eskizi"
 
@@ -2721,9 +2690,9 @@ msgstr "Kuzatilgan"
 msgid "Watched only"
 msgstr "Faqat kuzatilgan"
 
-#: src/features/projects/components/create-project-dialog.tsx:360
+#: src/features/projects/components/create-project-dialog.tsx:370
 msgid "We have auto-selected the best matching template."
-msgstr ""
+msgstr "Eng mos shablonni avtomatik tanladik."
 
 #: ../../../lib/web/src/features/errors/maintenance-error.tsx:16
 msgid "We'll be back online shortly."
@@ -2753,6 +2722,6 @@ msgstr "Sizda hali loyihalar yoʻq."
 msgid "Your account was moved here from {source}. Until you delete it there, messages and notifications may reach both servers, some of your content keeps being served from the old server, and followers may take a few minutes to find you here."
 msgstr "Hisobingiz {source} dan bu yerga ko'chirildi. U yerdan o'chirmaguncha, xabarlar va bildirishnomalar ikkala serverga ham yetishi mumkin, ba'zi kontentingiz eski serverdan erilib berilishda davom etadi va kuzatuvchilar sizni bu yerda topish uchun bir necha daqiqa vaqt ketishi mumkin."
 
-#: src/features/projects/components/create-project-dialog.tsx:356
+#: src/features/projects/components/create-project-dialog.tsx:366
 msgid "Your backup contains objects of type:"
-msgstr ""
+msgstr "Zaxira nusxangizda quyidagi turdagi obyektlar bor:"

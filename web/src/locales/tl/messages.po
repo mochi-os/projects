@@ -237,7 +237,7 @@ msgstr "Lahat"
 msgid "All projects"
 msgstr "Lahat ng project"
 
-#: src/features/projects/components/create-project-dialog.tsx:278
+#: src/features/projects/components/create-project-dialog.tsx:288
 msgid "Allow anyone to search for project"
 msgstr "Payagan ang sinuman na maghanap ng project"
 
@@ -313,7 +313,7 @@ msgid "Available keyboard shortcuts"
 msgstr "Mga available na keyboard shortcut"
 
 #: ../../../lib/web/src/components/place-picker.tsx:155
-#: src/features/projects/components/create-project-dialog.tsx:428
+#: src/features/projects/components/create-project-dialog.tsx:438
 msgid "Back"
 msgstr "Bumalik"
 
@@ -378,7 +378,7 @@ msgstr "Maaaring maging child ng"
 #: src/features/board/components/board-column.tsx:606
 #: src/features/editor/components/option-dialog.tsx:146
 #: src/features/objects/components/comment-thread.tsx:175
-#: src/features/projects/components/create-project-dialog.tsx:344
+#: src/features/projects/components/create-project-dialog.tsx:354
 #: src/routes/_authenticated/$projectId/design.tsx:343
 #: src/routes/_authenticated/$projectId/index.tsx:1011
 msgid "Cancel"
@@ -414,7 +414,7 @@ msgstr "Sinusuri ang status ng merge..."
 msgid "Checklist"
 msgstr "Checklist"
 
-#: src/features/projects/components/create-project-dialog.tsx:225
+#: src/features/projects/components/create-project-dialog.tsx:235
 msgid "Choose a template"
 msgstr "Pumili ng template"
 
@@ -619,7 +619,7 @@ msgstr "Gumawa"
 msgid "Create a new item in this project"
 msgstr "Gumawa ng bagong item sa project na ito"
 
-#: src/features/projects/components/create-project-dialog.tsx:227
+#: src/features/projects/components/create-project-dialog.tsx:237
 #: src/features/projects/pages/projects-list-page.tsx:103
 msgid "Create a new project"
 msgstr "Gumawa ng bagong project"
@@ -630,9 +630,9 @@ msgid "Create new item"
 msgstr "Gumawa ng bagong item"
 
 #: src/components/layout/projects-layout.tsx:62
-#: src/features/projects/components/create-project-dialog.tsx:215
 #: src/features/projects/components/create-project-dialog.tsx:225
-#: src/features/projects/components/create-project-dialog.tsx:431
+#: src/features/projects/components/create-project-dialog.tsx:235
+#: src/features/projects/components/create-project-dialog.tsx:441
 msgid "Create project"
 msgstr "Gumawa ng project"
 
@@ -645,12 +645,12 @@ msgstr "Gumawa, mag-edit, magkomento, at tumingin"
 msgid "Created"
 msgstr "Nagawa"
 
-#: src/features/projects/components/create-project-dialog.tsx:108
+#: src/features/projects/components/create-project-dialog.tsx:109
 msgid "Creating project..."
 msgstr "Gumagawa ng proyekto..."
 
 #: src/features/objects/components/create-object-dialog.tsx:535
-#: src/features/projects/components/create-project-dialog.tsx:431
+#: src/features/projects/components/create-project-dialog.tsx:441
 msgid "Creating..."
 msgstr "Ginagawa..."
 
@@ -675,13 +675,12 @@ msgstr "Dark mode"
 msgid "Data conflict"
 msgstr "Salungatan sa data"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:350
-#~ msgid "Data imported ({0, plural, one {# object} other {# objects}}, {1, plural, one {# comment} other {# comments}}, {2, plural, one {# link} other {# links}})"
-#~ msgstr "Na-import ang data ({0, plural, one {# object} other {# na object}}, {1, plural, one {# komento} other {# na komento}}, {2, plural, one {# link} other {# na link}})"
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:433
-#~ msgid "Data management"
-#~ msgstr "Pamamahala ng data"
+#. placeholder {0}: imported.data?.objects ?? 0
+#. placeholder {1}: imported.data?.comments ?? 0
+#. placeholder {2}: imported.data?.links ?? 0
+#: src/features/projects/components/create-project-dialog.tsx:121
+msgid "Data imported ({0, plural, one {# object} other {# objects}}, {1, plural, one {# comment} other {# comments}}, {2, plural, one {# link} other {# links}})"
+msgstr "Na-import ang data ({0, plural, one {# object} other {# na object}}, {1, plural, one {# komento} other {# na komento}}, {2, plural, one {# link} other {# na link}})"
 
 #: src/features/editor/components/add-dialogs.tsx:137
 msgid "Date"
@@ -967,10 +966,6 @@ msgstr "I-export ang data"
 msgid "Export design"
 msgstr "I-export ang design"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:434
-#~ msgid "Export or import the raw data content in this project."
-#~ msgstr "I-export o i-import ang raw na content ng data sa proyektong ito."
-
 #: ../../../lib/web/src/lib/preference-utils.ts:136
 msgid "Extra large"
 msgstr "Sobrang laki"
@@ -1000,7 +995,7 @@ msgstr "Nabigong gumawa ng link"
 msgid "Failed to create option"
 msgstr "Nabigong gumawa ng option"
 
-#: src/features/projects/components/create-project-dialog.tsx:110
+#: src/features/projects/components/create-project-dialog.tsx:111
 msgid "Failed to create project"
 msgstr "Nabigong gumawa ng project"
 
@@ -1036,7 +1031,7 @@ msgstr "Hindi na-export ang data"
 msgid "Failed to export design"
 msgstr "Nabigong i-export ang design"
 
-#: src/features/projects/components/create-project-dialog.tsx:124
+#: src/features/projects/components/create-project-dialog.tsx:122
 msgid "Failed to import data"
 msgstr "Hindi na-import ang data"
 
@@ -1069,7 +1064,7 @@ msgstr "Nabigong i-merge"
 msgid "Failed to post comment"
 msgstr "Nabigong mag-post ng comment"
 
-#: src/features/projects/components/create-project-dialog.tsx:177
+#: src/features/projects/components/create-project-dialog.tsx:175
 #: src/routes/_authenticated/$projectId/design.tsx:281
 msgid "Failed to read file"
 msgstr "Nabigong basahin ang file"
@@ -1144,7 +1139,7 @@ msgid "Files"
 msgstr "Mga file"
 
 #: src/components/layout/projects-layout.tsx:61
-#: src/routes/_authenticated/find.tsx:88
+#: src/routes/_authenticated/find.tsx:92
 msgid "Find projects"
 msgstr "Maghanap ng mga project"
 
@@ -1254,40 +1249,18 @@ msgstr "Identity"
 msgid "Imperial"
 msgstr "Imperial"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:549
-#~ msgid "Import a data configuration"
-#~ msgstr "Mag-import ng configuration ng data"
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:444
-#: src/routes/_authenticated/$projectId_.settings.tsx:490
-#: src/routes/_authenticated/$projectId_.settings.tsx:548
-#~ msgid "Import data"
-#~ msgstr "I-import ang data"
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:476
-#~ msgid "Import data?"
-#~ msgstr "I-import ang data?"
-
 #: src/routes/_authenticated/$projectId/design.tsx:177
 #: src/routes/_authenticated/$projectId/design.tsx:293
 msgid "Import design"
 msgstr "I-import ang design"
 
-#: src/features/projects/components/create-project-dialog.tsx:288
+#: src/features/projects/components/create-project-dialog.tsx:298
 msgid "Import from backup (optional)"
-msgstr ""
+msgstr "I-import mula sa backup (opsyonal)"
 
-#: src/features/projects/components/create-project-dialog.tsx:122
-msgid "Imported {count} objects"
-msgstr ""
-
-#: src/features/projects/components/create-project-dialog.tsx:119
+#: src/features/projects/components/create-project-dialog.tsx:120
 msgid "Importing data..."
-msgstr ""
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:487
-#~ msgid "Importing..."
-#~ msgstr "Ini-import..."
+msgstr "Ini-import ang data..."
 
 #: ../../../lib/web/src/components/config-drawer.tsx:252
 msgid "Inset"
@@ -1301,7 +1274,7 @@ msgstr "Mga interest"
 msgid "Invalid date"
 msgstr "Invalid na petsa"
 
-#: src/features/projects/components/create-project-dialog.tsx:171
+#: src/features/projects/components/create-project-dialog.tsx:169
 #: src/routes/_authenticated/$projectId/design.tsx:277
 msgid "Invalid JSON file"
 msgstr "Invalid na JSON file"
@@ -1374,7 +1347,7 @@ msgstr "Nilo-load ang item"
 msgid "Loading item details"
 msgstr "Nilo-load ang detalye ng item"
 
-#: src/features/projects/components/create-project-dialog.tsx:365
+#: src/features/projects/components/create-project-dialog.tsx:375
 msgid "Loading templates..."
 msgstr "Nilo-load ang mga template..."
 
@@ -1475,7 +1448,7 @@ msgstr "Kulang ang mga repo, source, o target parameter"
 msgid "Monday"
 msgstr "Lunes"
 
-#: src/features/projects/components/create-project-dialog.tsx:243
+#: src/features/projects/components/create-project-dialog.tsx:253
 msgid "My project"
 msgstr "Aking proyekto"
 
@@ -1485,12 +1458,12 @@ msgstr "Aking proyekto"
 #: src/features/editor/components/edit-dialogs.tsx:741
 #: src/features/editor/components/edit-dialogs.tsx:1065
 #: src/features/editor/components/option-dialog.tsx:112
-#: src/features/projects/components/create-project-dialog.tsx:233
+#: src/features/projects/components/create-project-dialog.tsx:243
 #: src/routes/_authenticated/$projectId_.settings.tsx:306
 msgid "Name"
 msgstr "Pangalan"
 
-#: src/features/projects/components/create-project-dialog.tsx:84
+#: src/features/projects/components/create-project-dialog.tsx:85
 msgid "Name is required"
 msgstr "Kailangan ang pangalan"
 
@@ -1510,7 +1483,7 @@ msgstr "Bago"
 msgid "New {className}"
 msgstr "Bagong {className}"
 
-#: src/features/projects/components/create-project-dialog.tsx:347
+#: src/features/projects/components/create-project-dialog.tsx:357
 msgid "Next"
 msgstr "Susunod"
 
@@ -1592,7 +1565,7 @@ msgid "No profile"
 msgstr "Walang profile"
 
 #: src/features/projects/components/inline-project-search.tsx:164
-#: src/routes/_authenticated/find.tsx:90
+#: src/routes/_authenticated/find.tsx:94
 msgid "No projects found"
 msgstr "Walang nakitang proyekto"
 
@@ -1810,7 +1783,7 @@ msgstr "Mangyaring magdagdag ng isa o higit pang class sa project design."
 msgid "Please check your internet connection and try again."
 msgstr "Pakitingnan ang iyong koneksyon sa internet at subukang muli."
 
-#: src/features/projects/components/create-project-dialog.tsx:94
+#: src/features/projects/components/create-project-dialog.tsx:95
 msgid "Please select a template"
 msgstr "Mangyaring pumili ng template"
 
@@ -1822,7 +1795,7 @@ msgstr "Pakisubukan muli."
 msgid "Please wait a moment and try again."
 msgstr "Mangyaring maghintay sandali at subukang muli."
 
-#: src/features/projects/components/create-project-dialog.tsx:255
+#: src/features/projects/components/create-project-dialog.tsx:265
 #: src/routes/_authenticated/$projectId_.settings.tsx:323
 msgid "Prefix"
 msgstr "Prefix"
@@ -1852,7 +1825,7 @@ msgstr "Proyekto"
 msgid "Project actions"
 msgstr "Mga aksyon sa proyekto"
 
-#: src/features/projects/components/create-project-dialog.tsx:109
+#: src/features/projects/components/create-project-dialog.tsx:110
 msgid "Project created"
 msgstr "Nagawa ang proyekto"
 
@@ -1916,7 +1889,7 @@ msgid "Rebase and merge"
 msgstr "Rebase at pagsamahin"
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:216
-#: ../../../lib/web/src/components/search-entity-page.tsx:240
+#: ../../../lib/web/src/components/search-entity-page.tsx:242
 msgid "Recommended"
 msgstr "Inirerekomenda"
 
@@ -1955,7 +1928,7 @@ msgstr "Relatibo sa loob ng 24 na oras, kung hindi ay absolute"
 #: src/features/objects/components/comment-thread.tsx:299
 #: src/features/objects/components/create-object-dialog.tsx:486
 #: src/features/objects/components/create-object-dialog.tsx:491
-#: src/features/projects/components/create-project-dialog.tsx:331
+#: src/features/projects/components/create-project-dialog.tsx:341
 msgid "Remove"
 msgstr "Alisin"
 
@@ -2092,7 +2065,7 @@ msgstr "Sini-save..."
 msgid "Search"
 msgstr "Maghanap"
 
-#: src/routes/_authenticated/find.tsx:89
+#: src/routes/_authenticated/find.tsx:93
 msgid "Search by name, ID, fingerprint, or URL..."
 msgstr "Maghanap ayon sa pangalan, ID, fingerprint, o URL..."
 
@@ -2135,7 +2108,7 @@ msgid "Search..."
 msgstr "Maghanap..."
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:174
-#: ../../../lib/web/src/components/search-entity-page.tsx:198
+#: ../../../lib/web/src/components/search-entity-page.tsx:200
 #: ../../../lib/web/src/features/access/access-dialog.tsx:202
 msgid "Searching..."
 msgstr "Naghahanap..."
@@ -2441,10 +2414,6 @@ msgstr "Hindi ma-load ang project na ito sa ngayon."
 msgid "This project may have been deleted or you don't have access to it."
 msgstr "Maaaring natanggal ang project na ito o wala kang access dito."
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:478
-#~ msgid "This will import the data from <0>{0}</0>. Objects will be appended to the existing records. Ensure the current design matches the classes and fields referenced in the file."
-#~ msgstr "Ii-import nito ang data mula sa <0>{0}</0>. Idaragdag ang mga object sa mga kasalukuyang record. Tiyaking tumutugma ang kasalukuyang disenyo sa mga class at field na tinutukoy sa file."
-
 #: src/features/requests/components/merge-button.tsx:105
 msgid "This will merge \"{source}\" into \"{target}\". This action cannot be undone."
 msgstr "Pagsasamahin nito ang \"{source}\" sa \"{target}\". Hindi na maaaring bawiin ang aksyong ito."
@@ -2533,7 +2502,7 @@ msgid "Travelling"
 msgstr "Naglalakbay"
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:190
-#: ../../../lib/web/src/components/search-entity-page.tsx:214
+#: ../../../lib/web/src/components/search-entity-page.tsx:216
 msgid "Try adjusting your search terms"
 msgstr "Subukang ayusin ang iyong mga search term"
 
@@ -2629,7 +2598,7 @@ msgstr "Ina-update ang access..."
 msgid "Upload"
 msgstr "Mag-upload"
 
-#: src/features/projects/components/create-project-dialog.tsx:304
+#: src/features/projects/components/create-project-dialog.tsx:314
 #: src/routes/_authenticated/$projectId/design.tsx:336
 msgid "Upload .json file"
 msgstr "Mag-upload ng .json file"
@@ -2640,7 +2609,7 @@ msgstr "Gamitin ang iyong passkey"
 
 #. placeholder {0}: prefix || "project"
 #. placeholder {1}: prefix || "project"
-#: src/features/projects/components/create-project-dialog.tsx:272
+#: src/features/projects/components/create-project-dialog.tsx:282
 msgid "Used for readable IDs like {0}-1, {1}-2"
 msgstr "Ginagamit para sa nababasang IDs gaya ng {0}-1, {1}-2"
 
@@ -2671,7 +2640,7 @@ msgstr "Beripikahin"
 msgid "Verify email address"
 msgstr "Beripikahin ang email address"
 
-#: ../../../lib/web/src/components/attachment-gallery.tsx:75
+#: ../../../lib/web/src/components/attachment-gallery.tsx:74
 msgid "Video thumbnail"
 msgstr "Thumbnail ng video"
 
@@ -2721,9 +2690,9 @@ msgstr "Binabantayan"
 msgid "Watched only"
 msgstr "Binabantayan lamang"
 
-#: src/features/projects/components/create-project-dialog.tsx:360
+#: src/features/projects/components/create-project-dialog.tsx:370
 msgid "We have auto-selected the best matching template."
-msgstr ""
+msgstr "Awtomatikong pinili namin ang pinakaangkop na template."
 
 #: ../../../lib/web/src/features/errors/maintenance-error.tsx:16
 msgid "We'll be back online shortly."
@@ -2753,6 +2722,6 @@ msgstr "Wala ka pang project."
 msgid "Your account was moved here from {source}. Until you delete it there, messages and notifications may reach both servers, some of your content keeps being served from the old server, and followers may take a few minutes to find you here."
 msgstr "Ang iyong account ay inilipat dito mula sa {source}. Hanggang hindi mo ito binubura doon, ang mga mensahe at abiso ay maaaring maabot ang parehong mga server, ang ilan sa iyong nilalaman ay patuloy na pinaglilingkuran mula sa lumang server, at ang mga tagasunod ay maaaring maglaan ng ilang minuto upang mahanap ka dito."
 
-#: src/features/projects/components/create-project-dialog.tsx:356
+#: src/features/projects/components/create-project-dialog.tsx:366
 msgid "Your backup contains objects of type:"
-msgstr ""
+msgstr "Naglalaman ang iyong backup ng mga object na may uri:"

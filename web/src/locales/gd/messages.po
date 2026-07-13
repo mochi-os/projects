@@ -237,7 +237,7 @@ msgstr "Na h-uile"
 msgid "All projects"
 msgstr "Na pròiseactan uile"
 
-#: src/features/projects/components/create-project-dialog.tsx:278
+#: src/features/projects/components/create-project-dialog.tsx:288
 msgid "Allow anyone to search for project"
 msgstr "Ceadaich do dhuine sam bith pròiseact a lorg"
 
@@ -313,7 +313,7 @@ msgid "Available keyboard shortcuts"
 msgstr "Ath-ghoiridean meur-chlàir ri làimh"
 
 #: ../../../lib/web/src/components/place-picker.tsx:155
-#: src/features/projects/components/create-project-dialog.tsx:428
+#: src/features/projects/components/create-project-dialog.tsx:438
 msgid "Back"
 msgstr "Air ais"
 
@@ -378,7 +378,7 @@ msgstr "Faodaidh e a bhith na phàiste de"
 #: src/features/board/components/board-column.tsx:606
 #: src/features/editor/components/option-dialog.tsx:146
 #: src/features/objects/components/comment-thread.tsx:175
-#: src/features/projects/components/create-project-dialog.tsx:344
+#: src/features/projects/components/create-project-dialog.tsx:354
 #: src/routes/_authenticated/$projectId/design.tsx:343
 #: src/routes/_authenticated/$projectId/index.tsx:1011
 msgid "Cancel"
@@ -414,7 +414,7 @@ msgstr "A' sgrùdadh cor co-aonaidh..."
 msgid "Checklist"
 msgstr "Liosta-dearbhaidh"
 
-#: src/features/projects/components/create-project-dialog.tsx:225
+#: src/features/projects/components/create-project-dialog.tsx:235
 msgid "Choose a template"
 msgstr "Tagh teamplaid"
 
@@ -619,7 +619,7 @@ msgstr "Cruthaich"
 msgid "Create a new item in this project"
 msgstr "Cruthaich nì ùr sa phròiseact seo"
 
-#: src/features/projects/components/create-project-dialog.tsx:227
+#: src/features/projects/components/create-project-dialog.tsx:237
 #: src/features/projects/pages/projects-list-page.tsx:103
 msgid "Create a new project"
 msgstr "Cruthaich pròiseact ùr"
@@ -630,9 +630,9 @@ msgid "Create new item"
 msgstr "Cruthaich nì ùr"
 
 #: src/components/layout/projects-layout.tsx:62
-#: src/features/projects/components/create-project-dialog.tsx:215
 #: src/features/projects/components/create-project-dialog.tsx:225
-#: src/features/projects/components/create-project-dialog.tsx:431
+#: src/features/projects/components/create-project-dialog.tsx:235
+#: src/features/projects/components/create-project-dialog.tsx:441
 msgid "Create project"
 msgstr "Cruthaich pròiseact"
 
@@ -645,12 +645,12 @@ msgstr "Cruthaich, deasaich, thoir beachd agus seall"
 msgid "Created"
 msgstr "Cruthaichte"
 
-#: src/features/projects/components/create-project-dialog.tsx:108
+#: src/features/projects/components/create-project-dialog.tsx:109
 msgid "Creating project..."
 msgstr "A' cruthachadh pròiseact..."
 
 #: src/features/objects/components/create-object-dialog.tsx:535
-#: src/features/projects/components/create-project-dialog.tsx:431
+#: src/features/projects/components/create-project-dialog.tsx:441
 msgid "Creating..."
 msgstr "A' cruthachadh..."
 
@@ -675,13 +675,12 @@ msgstr "Modh dorcha"
 msgid "Data conflict"
 msgstr "Còmhstri dàta"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:350
-#~ msgid "Data imported ({0, plural, one {# object} other {# objects}}, {1, plural, one {# comment} other {# comments}}, {2, plural, one {# link} other {# links}})"
-#~ msgstr "Chaidh an dàta ion-phortadh ({0, plural, one {# nì} two {# nì} few {# nithean} other {# nì}}, {1, plural, one {# bheachd} two {# bheachd} few {# beachdan} other {# beachd}}, {2, plural, one {# cheangal} two {# cheangal} few {# ceanglaichean} other {# ceangal}})"
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:433
-#~ msgid "Data management"
-#~ msgstr "Stiùireadh an dàta"
+#. placeholder {0}: imported.data?.objects ?? 0
+#. placeholder {1}: imported.data?.comments ?? 0
+#. placeholder {2}: imported.data?.links ?? 0
+#: src/features/projects/components/create-project-dialog.tsx:121
+msgid "Data imported ({0, plural, one {# object} other {# objects}}, {1, plural, one {# comment} other {# comments}}, {2, plural, one {# link} other {# links}})"
+msgstr "Chaidh an dàta ion-phortadh ({0, plural, one {# nì} two {# nì} few {# nithean} other {# nì}}, {1, plural, one {# bheachd} two {# bheachd} few {# beachdan} other {# beachd}}, {2, plural, one {# cheangal} two {# cheangal} few {# ceanglaichean} other {# ceangal}})"
 
 #: src/features/editor/components/add-dialogs.tsx:137
 msgid "Date"
@@ -967,10 +966,6 @@ msgstr "Às-phortaich an dàta"
 msgid "Export design"
 msgstr "Às-phortaich an dealbhadh"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:434
-#~ msgid "Export or import the raw data content in this project."
-#~ msgstr "Às-phortaich no ion-phortaich susbaint amh an dàta sa phròiseact seo."
-
 #: ../../../lib/web/src/lib/preference-utils.ts:136
 msgid "Extra large"
 msgstr "A bharrachd mòr"
@@ -1000,7 +995,7 @@ msgstr "Cha b' urrainn ceangal a chruthachadh"
 msgid "Failed to create option"
 msgstr "Cha b' urrainn roghainn a chruthachadh"
 
-#: src/features/projects/components/create-project-dialog.tsx:110
+#: src/features/projects/components/create-project-dialog.tsx:111
 msgid "Failed to create project"
 msgstr "Cha b' urrainn pròiseact a chruthachadh"
 
@@ -1036,7 +1031,7 @@ msgstr "Cha b' urrainn an dàta às-phortadh"
 msgid "Failed to export design"
 msgstr "Cha b' urrainn an dealbhadh às-phortadh"
 
-#: src/features/projects/components/create-project-dialog.tsx:124
+#: src/features/projects/components/create-project-dialog.tsx:122
 msgid "Failed to import data"
 msgstr "Cha b' urrainn an dàta ion-phortadh"
 
@@ -1069,7 +1064,7 @@ msgstr "Cha b' urrainn aonachadh"
 msgid "Failed to post comment"
 msgstr "Cha b' urrainn beachd a phostadh"
 
-#: src/features/projects/components/create-project-dialog.tsx:177
+#: src/features/projects/components/create-project-dialog.tsx:175
 #: src/routes/_authenticated/$projectId/design.tsx:281
 msgid "Failed to read file"
 msgstr "Cha b' urrainn am faidhle a leughadh"
@@ -1144,7 +1139,7 @@ msgid "Files"
 msgstr "Faidhlichean"
 
 #: src/components/layout/projects-layout.tsx:61
-#: src/routes/_authenticated/find.tsx:88
+#: src/routes/_authenticated/find.tsx:92
 msgid "Find projects"
 msgstr "Lorg pròiseactan"
 
@@ -1254,40 +1249,18 @@ msgstr "Dearbh-aithne"
 msgid "Imperial"
 msgstr "Ìmpireach"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:549
-#~ msgid "Import a data configuration"
-#~ msgstr "Ion-phortaich rèiteachadh dàta"
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:444
-#: src/routes/_authenticated/$projectId_.settings.tsx:490
-#: src/routes/_authenticated/$projectId_.settings.tsx:548
-#~ msgid "Import data"
-#~ msgstr "Ion-phortaich an dàta"
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:476
-#~ msgid "Import data?"
-#~ msgstr "A bheil thu airson an dàta ion-phortadh?"
-
 #: src/routes/_authenticated/$projectId/design.tsx:177
 #: src/routes/_authenticated/$projectId/design.tsx:293
 msgid "Import design"
 msgstr "Ion-phortaich an dealbhadh"
 
-#: src/features/projects/components/create-project-dialog.tsx:288
+#: src/features/projects/components/create-project-dialog.tsx:298
 msgid "Import from backup (optional)"
-msgstr ""
+msgstr "Ion-phortaich o lethbhreac-glèidhidh (roghainneil)"
 
-#: src/features/projects/components/create-project-dialog.tsx:122
-msgid "Imported {count} objects"
-msgstr ""
-
-#: src/features/projects/components/create-project-dialog.tsx:119
+#: src/features/projects/components/create-project-dialog.tsx:120
 msgid "Importing data..."
-msgstr ""
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:487
-#~ msgid "Importing..."
-#~ msgstr "Ga ion-phortadh..."
+msgstr "Ag ion-phortadh an dàta..."
 
 #: ../../../lib/web/src/components/config-drawer.tsx:252
 msgid "Inset"
@@ -1301,7 +1274,7 @@ msgstr "Ùidhean"
 msgid "Invalid date"
 msgstr "Ceann-latha mì-dhligheach"
 
-#: src/features/projects/components/create-project-dialog.tsx:171
+#: src/features/projects/components/create-project-dialog.tsx:169
 #: src/routes/_authenticated/$projectId/design.tsx:277
 msgid "Invalid JSON file"
 msgstr "Faidhle JSON mì-dhligheach"
@@ -1374,7 +1347,7 @@ msgstr "A' luchdadh an nì"
 msgid "Loading item details"
 msgstr "A' luchdadh mion-fhiosrachadh an nì"
 
-#: src/features/projects/components/create-project-dialog.tsx:365
+#: src/features/projects/components/create-project-dialog.tsx:375
 msgid "Loading templates..."
 msgstr "A' luchdadh nan teamplaidean..."
 
@@ -1475,7 +1448,7 @@ msgstr "Stòr-tasgaidh, tùs no paramadairean targaid a dhìth"
 msgid "Monday"
 msgstr "DiLuain"
 
-#: src/features/projects/components/create-project-dialog.tsx:243
+#: src/features/projects/components/create-project-dialog.tsx:253
 msgid "My project"
 msgstr "Mo phròiseact"
 
@@ -1485,12 +1458,12 @@ msgstr "Mo phròiseact"
 #: src/features/editor/components/edit-dialogs.tsx:741
 #: src/features/editor/components/edit-dialogs.tsx:1065
 #: src/features/editor/components/option-dialog.tsx:112
-#: src/features/projects/components/create-project-dialog.tsx:233
+#: src/features/projects/components/create-project-dialog.tsx:243
 #: src/routes/_authenticated/$projectId_.settings.tsx:306
 msgid "Name"
 msgstr "Ainm"
 
-#: src/features/projects/components/create-project-dialog.tsx:84
+#: src/features/projects/components/create-project-dialog.tsx:85
 msgid "Name is required"
 msgstr "Tha ainm a dhìth"
 
@@ -1510,7 +1483,7 @@ msgstr "Ùr"
 msgid "New {className}"
 msgstr "{className} ùr"
 
-#: src/features/projects/components/create-project-dialog.tsx:347
+#: src/features/projects/components/create-project-dialog.tsx:357
 msgid "Next"
 msgstr "Air adhart"
 
@@ -1592,7 +1565,7 @@ msgid "No profile"
 msgstr "Gun phròifil"
 
 #: src/features/projects/components/inline-project-search.tsx:164
-#: src/routes/_authenticated/find.tsx:90
+#: src/routes/_authenticated/find.tsx:94
 msgid "No projects found"
 msgstr "Cha deach pròiseact a lorg"
 
@@ -1810,7 +1783,7 @@ msgstr "Cuir a-steach aon clas no barrachd ri dealbhadh a' phròiseict."
 msgid "Please check your internet connection and try again."
 msgstr "Thoir sùil air a' cheangal eadar-lìn agad agus feuch ris a-rithist."
 
-#: src/features/projects/components/create-project-dialog.tsx:94
+#: src/features/projects/components/create-project-dialog.tsx:95
 msgid "Please select a template"
 msgstr "Tagh teamplaid"
 
@@ -1822,7 +1795,7 @@ msgstr "Feuch ris a-rithist."
 msgid "Please wait a moment and try again."
 msgstr "Fuirich greiseag is feuch ris a-rithist."
 
-#: src/features/projects/components/create-project-dialog.tsx:255
+#: src/features/projects/components/create-project-dialog.tsx:265
 #: src/routes/_authenticated/$projectId_.settings.tsx:323
 msgid "Prefix"
 msgstr "Ro-leasachan"
@@ -1852,7 +1825,7 @@ msgstr "Pròiseact"
 msgid "Project actions"
 msgstr "Gnìomhan pròiseict"
 
-#: src/features/projects/components/create-project-dialog.tsx:109
+#: src/features/projects/components/create-project-dialog.tsx:110
 msgid "Project created"
 msgstr "Chaidh am pròiseact a chruthachadh"
 
@@ -1916,7 +1889,7 @@ msgid "Rebase and merge"
 msgstr "Rebase agus aonaich"
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:216
-#: ../../../lib/web/src/components/search-entity-page.tsx:240
+#: ../../../lib/web/src/components/search-entity-page.tsx:242
 msgid "Recommended"
 msgstr "Air a mholadh"
 
@@ -1955,7 +1928,7 @@ msgstr "Coimeasach taobh a-staigh 24 uair, no fuirich absoluteach"
 #: src/features/objects/components/comment-thread.tsx:299
 #: src/features/objects/components/create-object-dialog.tsx:486
 #: src/features/objects/components/create-object-dialog.tsx:491
-#: src/features/projects/components/create-project-dialog.tsx:331
+#: src/features/projects/components/create-project-dialog.tsx:341
 msgid "Remove"
 msgstr "Thoir air falbh"
 
@@ -2092,7 +2065,7 @@ msgstr "A' sàbhaladh..."
 msgid "Search"
 msgstr "Lorg"
 
-#: src/routes/_authenticated/find.tsx:89
+#: src/routes/_authenticated/find.tsx:93
 msgid "Search by name, ID, fingerprint, or URL..."
 msgstr "Lorg le ainm, ID, lorg-meòir, no URL..."
 
@@ -2135,7 +2108,7 @@ msgid "Search..."
 msgstr "Lorg..."
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:174
-#: ../../../lib/web/src/components/search-entity-page.tsx:198
+#: ../../../lib/web/src/components/search-entity-page.tsx:200
 #: ../../../lib/web/src/features/access/access-dialog.tsx:202
 msgid "Searching..."
 msgstr "A' lorg..."
@@ -2441,10 +2414,6 @@ msgstr "Cha b' urrainnear am pròiseact seo a luchdadh an-dràsta."
 msgid "This project may have been deleted or you don't have access to it."
 msgstr "Dh'fhaodadh gun deach am pròiseact seo a sguabadh às no nach eil cead-inntrigidh agad."
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:478
-#~ msgid "This will import the data from <0>{0}</0>. Objects will be appended to the existing records. Ensure the current design matches the classes and fields referenced in the file."
-#~ msgstr "Ion-phortaichidh seo an dàta o <0>{0}</0>. Thèid na nithean a chur ris na clàran a tha ann mu thràth. Dèan cinnteach gu bheil an dealbhadh làithreach a' freagairt ris na clasaichean 's na raointean air a bheil iomradh san fhaidhle."
-
 #: src/features/requests/components/merge-button.tsx:105
 msgid "This will merge \"{source}\" into \"{target}\". This action cannot be undone."
 msgstr "Co-aonaichidh seo \"{source}\" ri \"{target}\". Chan urrainnear an gnìomh seo a thoirt air ais."
@@ -2533,7 +2502,7 @@ msgid "Travelling"
 msgstr "A' siubhal"
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:190
-#: ../../../lib/web/src/components/search-entity-page.tsx:214
+#: ../../../lib/web/src/components/search-entity-page.tsx:216
 msgid "Try adjusting your search terms"
 msgstr "Feuch ri na teirmean luirg agad atharrachadh"
 
@@ -2629,7 +2598,7 @@ msgstr "Ag ùrachadh inntrigidh..."
 msgid "Upload"
 msgstr "Luchdaich suas"
 
-#: src/features/projects/components/create-project-dialog.tsx:304
+#: src/features/projects/components/create-project-dialog.tsx:314
 #: src/routes/_authenticated/$projectId/design.tsx:336
 msgid "Upload .json file"
 msgstr "Luchdaich suas faidhle .json"
@@ -2640,7 +2609,7 @@ msgstr "Cleachd an iuchair-inntrigidh agad"
 
 #. placeholder {0}: prefix || "project"
 #. placeholder {1}: prefix || "project"
-#: src/features/projects/components/create-project-dialog.tsx:272
+#: src/features/projects/components/create-project-dialog.tsx:282
 msgid "Used for readable IDs like {0}-1, {1}-2"
 msgstr "Air a chleachdadh airson IDs leughtach mar {0}-1, {1}-2"
 
@@ -2671,7 +2640,7 @@ msgstr "Dearbh"
 msgid "Verify email address"
 msgstr "Dearbh seòladh puist-d"
 
-#: ../../../lib/web/src/components/attachment-gallery.tsx:75
+#: ../../../lib/web/src/components/attachment-gallery.tsx:74
 msgid "Video thumbnail"
 msgstr "Dealbhag video"
 
@@ -2721,9 +2690,9 @@ msgstr "Air a chumail sùil air"
 msgid "Watched only"
 msgstr "Air am bheilear a' coimhead a-mhàin"
 
-#: src/features/projects/components/create-project-dialog.tsx:360
+#: src/features/projects/components/create-project-dialog.tsx:370
 msgid "We have auto-selected the best matching template."
-msgstr ""
+msgstr "Thagh sinn an teamplaid as freagarraiche gu fèin-obrachail."
 
 #: ../../../lib/web/src/features/errors/maintenance-error.tsx:16
 msgid "We'll be back online shortly."
@@ -2753,6 +2722,6 @@ msgstr "Chan eil pròiseactan agad fhathast."
 msgid "Your account was moved here from {source}. Until you delete it there, messages and notifications may reach both servers, some of your content keeps being served from the old server, and followers may take a few minutes to find you here."
 msgstr "Chaidh do chunntas a ghluasad an seo à {source}. Gus an sguab thu às e an sin, faodaidh teachdaireachdan agus brathan ruighinn air an dà fhrithealaiche, bidh cuid den susbaint agad ga frithealadh bhon t-seann fhrithealaiche, agus faodaidh luchd-leantainn beagan mhionaidean a ghabhail gus do lorg an seo."
 
-#: src/features/projects/components/create-project-dialog.tsx:356
+#: src/features/projects/components/create-project-dialog.tsx:366
 msgid "Your backup contains objects of type:"
-msgstr ""
+msgstr "Tha nithean dhe na seòrsaichean seo san lethbhreac-glèidhidh agad:"

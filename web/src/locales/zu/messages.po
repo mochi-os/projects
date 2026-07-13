@@ -237,7 +237,7 @@ msgstr "Konke"
 msgid "All projects"
 msgstr "Wonke amaprojekthi"
 
-#: src/features/projects/components/create-project-dialog.tsx:278
+#: src/features/projects/components/create-project-dialog.tsx:288
 msgid "Allow anyone to search for project"
 msgstr "Vumela noma ngubani ukuthi asesheshe iprojekthi"
 
@@ -313,7 +313,7 @@ msgid "Available keyboard shortcuts"
 msgstr "Izindlela ezimfishane zekhibhodi ezitholakalayo"
 
 #: ../../../lib/web/src/components/place-picker.tsx:155
-#: src/features/projects/components/create-project-dialog.tsx:428
+#: src/features/projects/components/create-project-dialog.tsx:438
 msgid "Back"
 msgstr "Emuva"
 
@@ -378,7 +378,7 @@ msgstr "Ingaba ingane ka"
 #: src/features/board/components/board-column.tsx:606
 #: src/features/editor/components/option-dialog.tsx:146
 #: src/features/objects/components/comment-thread.tsx:175
-#: src/features/projects/components/create-project-dialog.tsx:344
+#: src/features/projects/components/create-project-dialog.tsx:354
 #: src/routes/_authenticated/$projectId/design.tsx:343
 #: src/routes/_authenticated/$projectId/index.tsx:1011
 msgid "Cancel"
@@ -414,7 +414,7 @@ msgstr "Kuhlolwa isimo sokuhlanganisa..."
 msgid "Checklist"
 msgstr "Uhlu lokuhlola"
 
-#: src/features/projects/components/create-project-dialog.tsx:225
+#: src/features/projects/components/create-project-dialog.tsx:235
 msgid "Choose a template"
 msgstr "Khetha isifanekiso"
 
@@ -619,7 +619,7 @@ msgstr "Dala"
 msgid "Create a new item in this project"
 msgstr "Dala into entsha kule projekthi"
 
-#: src/features/projects/components/create-project-dialog.tsx:227
+#: src/features/projects/components/create-project-dialog.tsx:237
 #: src/features/projects/pages/projects-list-page.tsx:103
 msgid "Create a new project"
 msgstr "Dala iprojekthi entsha"
@@ -630,9 +630,9 @@ msgid "Create new item"
 msgstr "Dala into entsha"
 
 #: src/components/layout/projects-layout.tsx:62
-#: src/features/projects/components/create-project-dialog.tsx:215
 #: src/features/projects/components/create-project-dialog.tsx:225
-#: src/features/projects/components/create-project-dialog.tsx:431
+#: src/features/projects/components/create-project-dialog.tsx:235
+#: src/features/projects/components/create-project-dialog.tsx:441
 msgid "Create project"
 msgstr "Dala iprojekthi"
 
@@ -645,12 +645,12 @@ msgstr "Dala, hlela, phawula, futhi ubuke"
 msgid "Created"
 msgstr "Kudaliwe"
 
-#: src/features/projects/components/create-project-dialog.tsx:108
+#: src/features/projects/components/create-project-dialog.tsx:109
 msgid "Creating project..."
 msgstr "Kudalwa iphrojekthi..."
 
 #: src/features/objects/components/create-object-dialog.tsx:535
-#: src/features/projects/components/create-project-dialog.tsx:431
+#: src/features/projects/components/create-project-dialog.tsx:441
 msgid "Creating..."
 msgstr "Kuyadalwa..."
 
@@ -675,13 +675,12 @@ msgstr "Imodi emnyama"
 msgid "Data conflict"
 msgstr "Ukungqubuzana kwedatha"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:350
-#~ msgid "Data imported ({0, plural, one {# object} other {# objects}}, {1, plural, one {# comment} other {# comments}}, {2, plural, one {# link} other {# links}})"
-#~ msgstr "Idatha ingenisiwe ({0, plural, one {# into} other {# izinto}}, {1, plural, one {# izwana} other {# amazwana}}, {2, plural, one {# isixhumanisi} other {# izixhumanisi}})"
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:433
-#~ msgid "Data management"
-#~ msgstr "Ukuphathwa kwedatha"
+#. placeholder {0}: imported.data?.objects ?? 0
+#. placeholder {1}: imported.data?.comments ?? 0
+#. placeholder {2}: imported.data?.links ?? 0
+#: src/features/projects/components/create-project-dialog.tsx:121
+msgid "Data imported ({0, plural, one {# object} other {# objects}}, {1, plural, one {# comment} other {# comments}}, {2, plural, one {# link} other {# links}})"
+msgstr "Idatha ingenisiwe ({0, plural, one {# into} other {# izinto}}, {1, plural, one {# izwana} other {# amazwana}}, {2, plural, one {# isixhumanisi} other {# izixhumanisi}})"
 
 #: src/features/editor/components/add-dialogs.tsx:137
 msgid "Date"
@@ -967,10 +966,6 @@ msgstr "Khipha idatha"
 msgid "Export design"
 msgstr "Thumela ngaphandle umklamo"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:434
-#~ msgid "Export or import the raw data content in this project."
-#~ msgstr "Khipha noma ungenise okuqukethwe kwedatha engahluziwe kule phrojekthi."
-
 #: ../../../lib/web/src/lib/preference-utils.ts:136
 msgid "Extra large"
 msgstr "Okukhulu kakhulu"
@@ -1000,7 +995,7 @@ msgstr "Kuhlulekile ukudala isixhumanisi"
 msgid "Failed to create option"
 msgstr "Kuhlulekile ukudala inketho"
 
-#: src/features/projects/components/create-project-dialog.tsx:110
+#: src/features/projects/components/create-project-dialog.tsx:111
 msgid "Failed to create project"
 msgstr "Kuhlulekile ukudala iphrojekthi"
 
@@ -1036,7 +1031,7 @@ msgstr "Yehlulekile ukukhipha idatha"
 msgid "Failed to export design"
 msgstr "Kuhlulekile ukuthumela ngaphandle umklamo"
 
-#: src/features/projects/components/create-project-dialog.tsx:124
+#: src/features/projects/components/create-project-dialog.tsx:122
 msgid "Failed to import data"
 msgstr "Yehlulekile ukungenisa idatha"
 
@@ -1069,7 +1064,7 @@ msgstr "Kuhlulekile ukuhlanganisa"
 msgid "Failed to post comment"
 msgstr "Kuhlulekile ukuthumela ukuphawula"
 
-#: src/features/projects/components/create-project-dialog.tsx:177
+#: src/features/projects/components/create-project-dialog.tsx:175
 #: src/routes/_authenticated/$projectId/design.tsx:281
 msgid "Failed to read file"
 msgstr "Kuhlulekile ukufunda ifayela"
@@ -1144,7 +1139,7 @@ msgid "Files"
 msgstr "Amafayela"
 
 #: src/components/layout/projects-layout.tsx:61
-#: src/routes/_authenticated/find.tsx:88
+#: src/routes/_authenticated/find.tsx:92
 msgid "Find projects"
 msgstr "Thola amaphrojekthi"
 
@@ -1254,40 +1249,18 @@ msgstr "Ubunikazi"
 msgid "Imperial"
 msgstr "Yobukhosi"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:549
-#~ msgid "Import a data configuration"
-#~ msgstr "Ngenisa isilungiselelo sedatha"
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:444
-#: src/routes/_authenticated/$projectId_.settings.tsx:490
-#: src/routes/_authenticated/$projectId_.settings.tsx:548
-#~ msgid "Import data"
-#~ msgstr "Ngenisa idatha"
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:476
-#~ msgid "Import data?"
-#~ msgstr "Ingeniswe idatha?"
-
 #: src/routes/_authenticated/$projectId/design.tsx:177
 #: src/routes/_authenticated/$projectId/design.tsx:293
 msgid "Import design"
 msgstr "Ngenisa umklamo"
 
-#: src/features/projects/components/create-project-dialog.tsx:288
+#: src/features/projects/components/create-project-dialog.tsx:298
 msgid "Import from backup (optional)"
-msgstr ""
+msgstr "Ngenisa kusukela kwisipele (okuzikhethelayo)"
 
-#: src/features/projects/components/create-project-dialog.tsx:122
-msgid "Imported {count} objects"
-msgstr ""
-
-#: src/features/projects/components/create-project-dialog.tsx:119
+#: src/features/projects/components/create-project-dialog.tsx:120
 msgid "Importing data..."
-msgstr ""
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:487
-#~ msgid "Importing..."
-#~ msgstr "Kuyangeniswa..."
+msgstr "Kungeniswa idatha..."
 
 #: ../../../lib/web/src/components/config-drawer.tsx:252
 msgid "Inset"
@@ -1301,7 +1274,7 @@ msgstr "Izintshisekelo"
 msgid "Invalid date"
 msgstr "Idethi engalungile"
 
-#: src/features/projects/components/create-project-dialog.tsx:171
+#: src/features/projects/components/create-project-dialog.tsx:169
 #: src/routes/_authenticated/$projectId/design.tsx:277
 msgid "Invalid JSON file"
 msgstr "Ifayela le-JSON elingalungile"
@@ -1374,7 +1347,7 @@ msgstr "Kulayishwa into"
 msgid "Loading item details"
 msgstr "Kulayishwa imininingwane yento"
 
-#: src/features/projects/components/create-project-dialog.tsx:365
+#: src/features/projects/components/create-project-dialog.tsx:375
 msgid "Loading templates..."
 msgstr "Kulayishwa amathempulethi..."
 
@@ -1475,7 +1448,7 @@ msgstr "Kushoda izilinganiso ze-repo, umthombo, noma okuhlosiwe"
 msgid "Monday"
 msgstr "UMsombuluko"
 
-#: src/features/projects/components/create-project-dialog.tsx:243
+#: src/features/projects/components/create-project-dialog.tsx:253
 msgid "My project"
 msgstr "Iphrojekthi yami"
 
@@ -1485,12 +1458,12 @@ msgstr "Iphrojekthi yami"
 #: src/features/editor/components/edit-dialogs.tsx:741
 #: src/features/editor/components/edit-dialogs.tsx:1065
 #: src/features/editor/components/option-dialog.tsx:112
-#: src/features/projects/components/create-project-dialog.tsx:233
+#: src/features/projects/components/create-project-dialog.tsx:243
 #: src/routes/_authenticated/$projectId_.settings.tsx:306
 msgid "Name"
 msgstr "Igama"
 
-#: src/features/projects/components/create-project-dialog.tsx:84
+#: src/features/projects/components/create-project-dialog.tsx:85
 msgid "Name is required"
 msgstr "Kudingeka igama"
 
@@ -1510,7 +1483,7 @@ msgstr "Okusha"
 msgid "New {className}"
 msgstr "{className} entsha"
 
-#: src/features/projects/components/create-project-dialog.tsx:347
+#: src/features/projects/components/create-project-dialog.tsx:357
 msgid "Next"
 msgstr "Okulandelayo"
 
@@ -1592,7 +1565,7 @@ msgid "No profile"
 msgstr "Awukho umbiko womsebenzisi"
 
 #: src/features/projects/components/inline-project-search.tsx:164
-#: src/routes/_authenticated/find.tsx:90
+#: src/routes/_authenticated/find.tsx:94
 msgid "No projects found"
 msgstr "Aziyikho izinhlelo ezitholakele"
 
@@ -1810,7 +1783,7 @@ msgstr "Sicela wengeze amakilasi amaningi noma elilodwa kudizayini yephrojekthi.
 msgid "Please check your internet connection and try again."
 msgstr "Sicela uhlole uxhumano lwakho lwe-inthanethi bese uzama futhi."
 
-#: src/features/projects/components/create-project-dialog.tsx:94
+#: src/features/projects/components/create-project-dialog.tsx:95
 msgid "Please select a template"
 msgstr "Sicela ukhethe ithempulethi"
 
@@ -1822,7 +1795,7 @@ msgstr "Sicela uzame futhi."
 msgid "Please wait a moment and try again."
 msgstr "Sicela ulinde isikhashana bese uzama futhi."
 
-#: src/features/projects/components/create-project-dialog.tsx:255
+#: src/features/projects/components/create-project-dialog.tsx:265
 #: src/routes/_authenticated/$projectId_.settings.tsx:323
 msgid "Prefix"
 msgstr "Isiqalo"
@@ -1852,7 +1825,7 @@ msgstr "Iphrojekthi"
 msgid "Project actions"
 msgstr "Izenzo zephrojekthi"
 
-#: src/features/projects/components/create-project-dialog.tsx:109
+#: src/features/projects/components/create-project-dialog.tsx:110
 msgid "Project created"
 msgstr "Iphrojekthi idaliwe"
 
@@ -1916,7 +1889,7 @@ msgid "Rebase and merge"
 msgstr "Rebase futhi uhlanganise"
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:216
-#: ../../../lib/web/src/components/search-entity-page.tsx:240
+#: ../../../lib/web/src/components/search-entity-page.tsx:242
 msgid "Recommended"
 msgstr "Kunconywayo"
 
@@ -1955,7 +1928,7 @@ msgstr "Okuhlobene phakathi kwamahora angu-24, ngale kwalokho okuphelele"
 #: src/features/objects/components/comment-thread.tsx:299
 #: src/features/objects/components/create-object-dialog.tsx:486
 #: src/features/objects/components/create-object-dialog.tsx:491
-#: src/features/projects/components/create-project-dialog.tsx:331
+#: src/features/projects/components/create-project-dialog.tsx:341
 msgid "Remove"
 msgstr "Khipha"
 
@@ -2092,7 +2065,7 @@ msgstr "Kuyalondolozwa..."
 msgid "Search"
 msgstr "Sesha"
 
-#: src/routes/_authenticated/find.tsx:89
+#: src/routes/_authenticated/find.tsx:93
 msgid "Search by name, ID, fingerprint, or URL..."
 msgstr "Sesha ngegama, i-ID, isigxivizo somunwe, noma i-URL..."
 
@@ -2135,7 +2108,7 @@ msgid "Search..."
 msgstr "Sesha..."
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:174
-#: ../../../lib/web/src/components/search-entity-page.tsx:198
+#: ../../../lib/web/src/components/search-entity-page.tsx:200
 #: ../../../lib/web/src/features/access/access-dialog.tsx:202
 msgid "Searching..."
 msgstr "Kuyaseshwa..."
@@ -2441,10 +2414,6 @@ msgstr "Leli phrojekthi alikwazi ukulayishwa njengamanje."
 msgid "This project may have been deleted or you don't have access to it."
 msgstr "Leli phrojekthi lingase lisusiwe noma awunakho ukufinyelela kulo."
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:478
-#~ msgid "This will import the data from <0>{0}</0>. Objects will be appended to the existing records. Ensure the current design matches the classes and fields referenced in the file."
-#~ msgstr "Lokhu kuzongenisa idatha evela ku-<0>{0}</0>. Izinto zizokwengezwa emarekhodini akhona. Qinisekisa ukuthi umklamo wamanje uhambisana namakilasi kanye nezinkambu ezishiwo efayeleni."
-
 #: src/features/requests/components/merge-button.tsx:105
 msgid "This will merge \"{source}\" into \"{target}\". This action cannot be undone."
 msgstr "Lokhu kuzohlanganisa i-\"{source}\" ku-\"{target}\". Lesi senzo asikwazi ukubuyiselwa."
@@ -2533,7 +2502,7 @@ msgid "Travelling"
 msgstr "Kuyahanjwa"
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:190
-#: ../../../lib/web/src/components/search-entity-page.tsx:214
+#: ../../../lib/web/src/components/search-entity-page.tsx:216
 msgid "Try adjusting your search terms"
 msgstr "Zama ukulungisa amatemu okusesha kwakho"
 
@@ -2629,7 +2598,7 @@ msgstr "Kubuyekezwa ukufinyelela..."
 msgid "Upload"
 msgstr "Layisha"
 
-#: src/features/projects/components/create-project-dialog.tsx:304
+#: src/features/projects/components/create-project-dialog.tsx:314
 #: src/routes/_authenticated/$projectId/design.tsx:336
 msgid "Upload .json file"
 msgstr "Layisha ifayela le-.json"
@@ -2640,7 +2609,7 @@ msgstr "Sebenzisa i-passkey yakho"
 
 #. placeholder {0}: prefix || "project"
 #. placeholder {1}: prefix || "project"
-#: src/features/projects/components/create-project-dialog.tsx:272
+#: src/features/projects/components/create-project-dialog.tsx:282
 msgid "Used for readable IDs like {0}-1, {1}-2"
 msgstr "Kusetshenziselwa IDs okukwazi ukufundwa njenge {0}-1, {1}-2"
 
@@ -2671,7 +2640,7 @@ msgstr "Qinisekisa"
 msgid "Verify email address"
 msgstr "Qinisekisa ikheli le-imeyili"
 
-#: ../../../lib/web/src/components/attachment-gallery.tsx:75
+#: ../../../lib/web/src/components/attachment-gallery.tsx:74
 msgid "Video thumbnail"
 msgstr "Isithombe esincane sevidiyo"
 
@@ -2721,9 +2690,9 @@ msgstr "Kubhekiwe"
 msgid "Watched only"
 msgstr "Okubhekiwe kuphela"
 
-#: src/features/projects/components/create-project-dialog.tsx:360
+#: src/features/projects/components/create-project-dialog.tsx:370
 msgid "We have auto-selected the best matching template."
-msgstr ""
+msgstr "Sikhethe ngokuzenzakalela ithempulethi efaneleka kakhulu."
 
 #: ../../../lib/web/src/features/errors/maintenance-error.tsx:16
 msgid "We'll be back online shortly."
@@ -2753,6 +2722,6 @@ msgstr "Awukabi namaphrojekthi okwamanje."
 msgid "Your account was moved here from {source}. Until you delete it there, messages and notifications may reach both servers, some of your content keeps being served from the old server, and followers may take a few minutes to find you here."
 msgstr "I-akhawunti yakho isuswe lapha ivela ku-{source}. Uze uyisuse lapho, imilayezo nezaziso zingafika eziservereni zombili, ingxenye yomqukathi wakho iqhubeka inikezwa eservereni endala, futhi abalandeli bangathatha imizuzu embalwa ukukuthola lapha."
 
-#: src/features/projects/components/create-project-dialog.tsx:356
+#: src/features/projects/components/create-project-dialog.tsx:366
 msgid "Your backup contains objects of type:"
-msgstr ""
+msgstr "Isipele sakho siqukethe izinto zohlobo:"

@@ -5,6 +5,7 @@
 
 import { useEffect, useRef, useState, useMemo } from "react";
 import { Trans, useLingui } from '@lingui/react/macro'
+import { plural } from '@lingui/core/macro'
 import { useNavigate } from "@tanstack/react-router";
 import { Button, cn, getErrorMessage, Input, Label, naturalCompare, ResponsiveDialog, ResponsiveDialogContent, ResponsiveDialogDescription, ResponsiveDialogFooter, ResponsiveDialogHeader, ResponsiveDialogTitle, ResponsiveDialogTrigger, Switch, toast, toastAction, Attachment, AttachmentMedia, AttachmentContent, AttachmentTitle, AttachmentAction, Tooltip, TooltipContent, TooltipTrigger } from "@mochi/web"
 import { ArrowLeft, ArrowRight, Check, File, FolderKanban, LayoutGrid, Plus, Ticket, Upload, Zap, X } from "lucide-react";
@@ -117,10 +118,7 @@ export function CreateProjectDialog({
         try {
           await toastAction(projectsApi.importData(fingerprint, importData), {
             loading: t`Importing data...`,
-            success: () => {
-              const count = Array.isArray((importData as any).objects) ? (importData as any).objects.length : 0;
-              return t`Imported ${count} objects`;
-            },
+            success: (imported) => t`Data imported (${plural(imported.data?.objects ?? 0, { one: '# object', other: '# objects' })}, ${plural(imported.data?.comments ?? 0, { one: '# comment', other: '# comments' })}, ${plural(imported.data?.links ?? 0, { one: '# link', other: '# links' })})`,
             error: (e) => getErrorMessage(e, t`Failed to import data`),
           });
         } catch (e) {
@@ -190,6 +188,18 @@ export function CreateProjectDialog({
     });
     return Array.from(classes);
   }, [importData]);
+
+  // Display names for the backup's class ids, resolved from the templates'
+  // translated class labels; unknown ids fall back to the raw id.
+  const importClassNames = useMemo(() => {
+    const names = new Map<string, string>();
+    for (const template of templates) {
+      for (const c of template.classes ?? []) {
+        if (!names.has(c.id)) names.set(c.id, c.name);
+      }
+    }
+    return importClasses.map((id) => names.get(id) ?? id);
+  }, [templates, importClasses]);
 
   // Auto-select template based on detected classes
   useEffect(() => {
@@ -355,7 +365,7 @@ export function CreateProjectDialog({
                 <div className="bg-primary/10 text-foreground border-primary/20 mb-4 rounded-lg border p-3 text-sm">
                   <Trans>Your backup contains objects of type:</Trans>{" "}
                   <span className="text-primary font-semibold">
-                    {importClasses.map(c => c.charAt(0).toUpperCase() + c.slice(1)).join(", ")}
+                    {importClassNames.join(", ")}
                   </span>.{" "}
                   <Trans>We have auto-selected the best matching template.</Trans>
                 </div>

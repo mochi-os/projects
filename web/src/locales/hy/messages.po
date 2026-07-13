@@ -237,7 +237,7 @@ msgstr "Բոլոր CRM-երը"
 msgid "All projects"
 msgstr "Բոլոր պահեստները"
 
-#: src/features/projects/components/create-project-dialog.tsx:278
+#: src/features/projects/components/create-project-dialog.tsx:288
 msgid "Allow anyone to search for project"
 msgstr "Թույլատրել բոլորին որոնել պահեստ"
 
@@ -313,7 +313,7 @@ msgid "Available keyboard shortcuts"
 msgstr "Հասանելի տարբերակ՝"
 
 #: ../../../lib/web/src/components/place-picker.tsx:155
-#: src/features/projects/components/create-project-dialog.tsx:428
+#: src/features/projects/components/create-project-dialog.tsx:438
 msgid "Back"
 msgstr "Հետ դեպի CRM"
 
@@ -378,7 +378,7 @@ msgstr "Չեղարկել"
 #: src/features/board/components/board-column.tsx:606
 #: src/features/editor/components/option-dialog.tsx:146
 #: src/features/objects/components/comment-thread.tsx:175
-#: src/features/projects/components/create-project-dialog.tsx:344
+#: src/features/projects/components/create-project-dialog.tsx:354
 #: src/routes/_authenticated/$projectId/design.tsx:343
 #: src/routes/_authenticated/$projectId/index.tsx:1011
 msgid "Cancel"
@@ -414,7 +414,7 @@ msgstr "Ստուգվում է..."
 msgid "Checklist"
 msgstr "Մատ — դուք հաղթեցիք։"
 
-#: src/features/projects/components/create-project-dialog.tsx:225
+#: src/features/projects/components/create-project-dialog.tsx:235
 msgid "Choose a template"
 msgstr "Ընտրեք լռելյայն ընդարձակվածի, կոմպակտ միայն-պատկերակի կամ լրիվ դասավորության ռեժիմների միջև"
 
@@ -619,7 +619,7 @@ msgstr "Ստեղծել CRM"
 msgid "Create a new item in this project"
 msgstr "Ստեղծել նոր գրառում"
 
-#: src/features/projects/components/create-project-dialog.tsx:227
+#: src/features/projects/components/create-project-dialog.tsx:237
 #: src/features/projects/pages/projects-list-page.tsx:103
 msgid "Create a new project"
 msgstr "Ստեղծել նոր պահեստ"
@@ -630,9 +630,9 @@ msgid "Create new item"
 msgstr "Ստեղծել նոր էջ"
 
 #: src/components/layout/projects-layout.tsx:62
-#: src/features/projects/components/create-project-dialog.tsx:215
 #: src/features/projects/components/create-project-dialog.tsx:225
-#: src/features/projects/components/create-project-dialog.tsx:431
+#: src/features/projects/components/create-project-dialog.tsx:235
+#: src/features/projects/components/create-project-dialog.tsx:441
 msgid "Create project"
 msgstr "Ստեղծել վերահղում"
 
@@ -645,12 +645,12 @@ msgstr "Ստեղծել, խմբագրել, մեկնաբանել և դիտել"
 msgid "Created"
 msgstr "Ստեղծված է {0}"
 
-#: src/features/projects/components/create-project-dialog.tsx:108
+#: src/features/projects/components/create-project-dialog.tsx:109
 msgid "Creating project..."
 msgstr "Նախագիծը ստեղծվում է..."
 
 #: src/features/objects/components/create-object-dialog.tsx:535
-#: src/features/projects/components/create-project-dialog.tsx:431
+#: src/features/projects/components/create-project-dialog.tsx:441
 msgid "Creating..."
 msgstr "Ստեղծվում է…"
 
@@ -675,13 +675,12 @@ msgstr "Վահանակ"
 msgid "Data conflict"
 msgstr "Տվյալների կոնֆլիկտ"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:350
-#~ msgid "Data imported ({0, plural, one {# object} other {# objects}}, {1, plural, one {# comment} other {# comments}}, {2, plural, one {# link} other {# links}})"
-#~ msgstr "Տվյալները ներմուծվեցին ({0, plural, one {# օբյեկտ} other {# օբյեկտ}}, {1, plural, one {# մեկնաբանություն} other {# մեկնաբանություն}}, {2, plural, one {# կապ} other {# կապ}})"
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:433
-#~ msgid "Data management"
-#~ msgstr "Տվյալների կառավարում"
+#. placeholder {0}: imported.data?.objects ?? 0
+#. placeholder {1}: imported.data?.comments ?? 0
+#. placeholder {2}: imported.data?.links ?? 0
+#: src/features/projects/components/create-project-dialog.tsx:121
+msgid "Data imported ({0, plural, one {# object} other {# objects}}, {1, plural, one {# comment} other {# comments}}, {2, plural, one {# link} other {# links}})"
+msgstr "Տվյալները ներմուծվեցին ({0, plural, one {# օբյեկտ} other {# օբյեկտ}}, {1, plural, one {# մեկնաբանություն} other {# մեկնաբանություն}}, {2, plural, one {# կապ} other {# կապ}})"
 
 #: src/features/editor/components/add-dialogs.tsx:137
 msgid "Date"
@@ -967,10 +966,6 @@ msgstr "Արտահանել տվյալները"
 msgid "Export design"
 msgstr "Արտահանել ձևավորումը"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:434
-#~ msgid "Export or import the raw data content in this project."
-#~ msgstr "Արտահանեք կամ ներմուծեք այս նախագծի չմշակված տվյալները։"
-
 #: ../../../lib/web/src/lib/preference-utils.ts:136
 msgid "Extra large"
 msgstr "Շատ մեծ"
@@ -1000,7 +995,7 @@ msgstr "Չհաջողվեց ստեղծել հղումը"
 msgid "Failed to create option"
 msgstr "Չհաջողվեց ստեղծել տարբերակը"
 
-#: src/features/projects/components/create-project-dialog.tsx:110
+#: src/features/projects/components/create-project-dialog.tsx:111
 msgid "Failed to create project"
 msgstr "Չհաջողվեց ստեղծել նախագիծը"
 
@@ -1036,7 +1031,7 @@ msgstr "Չհաջողվեց արտահանել տվյալները"
 msgid "Failed to export design"
 msgstr "Չհաջողվեց արտահանել ձևավորումը"
 
-#: src/features/projects/components/create-project-dialog.tsx:124
+#: src/features/projects/components/create-project-dialog.tsx:122
 msgid "Failed to import data"
 msgstr "Չհաջողվեց ներմուծել տվյալները"
 
@@ -1069,7 +1064,7 @@ msgstr "Չհաջողվեց միաձուլել"
 msgid "Failed to post comment"
 msgstr "Չհաջողվեց հրապարակել մեկնաբանությունը"
 
-#: src/features/projects/components/create-project-dialog.tsx:177
+#: src/features/projects/components/create-project-dialog.tsx:175
 #: src/routes/_authenticated/$projectId/design.tsx:281
 msgid "Failed to read file"
 msgstr "Չհաջողվեց կարդալ ֆայլը"
@@ -1144,7 +1139,7 @@ msgid "Files"
 msgstr "Ֆայլեր"
 
 #: src/components/layout/projects-layout.tsx:61
-#: src/routes/_authenticated/find.tsx:88
+#: src/routes/_authenticated/find.tsx:92
 msgid "Find projects"
 msgstr "Գտնել նախագծեր"
 
@@ -1254,40 +1249,18 @@ msgstr "Ինքնություն"
 msgid "Imperial"
 msgstr "Իմպերիալ"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:549
-#~ msgid "Import a data configuration"
-#~ msgstr "Ներմուծել տվյալների կազմաձևում"
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:444
-#: src/routes/_authenticated/$projectId_.settings.tsx:490
-#: src/routes/_authenticated/$projectId_.settings.tsx:548
-#~ msgid "Import data"
-#~ msgstr "Ներմուծել տվյալները"
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:476
-#~ msgid "Import data?"
-#~ msgstr "Ներմուծե՞լ տվյալները"
-
 #: src/routes/_authenticated/$projectId/design.tsx:177
 #: src/routes/_authenticated/$projectId/design.tsx:293
 msgid "Import design"
 msgstr "Ներմուծել ձևավորումը"
 
-#: src/features/projects/components/create-project-dialog.tsx:288
+#: src/features/projects/components/create-project-dialog.tsx:298
 msgid "Import from backup (optional)"
-msgstr ""
+msgstr "Ներմուծում պահուստավորումից (ընտրովի)"
 
-#: src/features/projects/components/create-project-dialog.tsx:122
-msgid "Imported {count} objects"
-msgstr ""
-
-#: src/features/projects/components/create-project-dialog.tsx:119
+#: src/features/projects/components/create-project-dialog.tsx:120
 msgid "Importing data..."
-msgstr ""
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:487
-#~ msgid "Importing..."
-#~ msgstr "Ներմուծում..."
+msgstr "Տվյալները ներմուծվում են…"
 
 #: ../../../lib/web/src/components/config-drawer.tsx:252
 msgid "Inset"
@@ -1301,7 +1274,7 @@ msgstr "Անվավեր նույնականացման կոդ"
 msgid "Invalid date"
 msgstr "Անվավեր հաստատման կոդ"
 
-#: src/features/projects/components/create-project-dialog.tsx:171
+#: src/features/projects/components/create-project-dialog.tsx:169
 #: src/routes/_authenticated/$projectId/design.tsx:277
 msgid "Invalid JSON file"
 msgstr "Անվավեր ամսաթիվ"
@@ -1374,7 +1347,7 @@ msgstr "Բեռնվում է տարբերակի տեղեկատվությունը.
 msgid "Loading item details"
 msgstr "Բեռնվում է..."
 
-#: src/features/projects/components/create-project-dialog.tsx:365
+#: src/features/projects/components/create-project-dialog.tsx:375
 msgid "Loading templates..."
 msgstr "Բեռնվում է…"
 
@@ -1475,7 +1448,7 @@ msgstr "Mochi-ն արդեն ուղեկցվում է ավելի քան 20 հավ�
 msgid "Monday"
 msgstr "Ամենավերջին"
 
-#: src/features/projects/components/create-project-dialog.tsx:243
+#: src/features/projects/components/create-project-dialog.tsx:253
 msgid "My project"
 msgstr "Իմ նախագիծը"
 
@@ -1485,12 +1458,12 @@ msgstr "Իմ նախագիծը"
 #: src/features/editor/components/edit-dialogs.tsx:741
 #: src/features/editor/components/edit-dialogs.tsx:1065
 #: src/features/editor/components/option-dialog.tsx:112
-#: src/features/projects/components/create-project-dialog.tsx:233
+#: src/features/projects/components/create-project-dialog.tsx:243
 #: src/routes/_authenticated/$projectId_.settings.tsx:306
 msgid "Name"
 msgstr "Անուն"
 
-#: src/features/projects/components/create-project-dialog.tsx:84
+#: src/features/projects/components/create-project-dialog.tsx:85
 msgid "Name is required"
 msgstr "Անունը պարտադիր է"
 
@@ -1510,7 +1483,7 @@ msgstr "Նոր"
 msgid "New {className}"
 msgstr "Նոր {className}"
 
-#: src/features/projects/components/create-project-dialog.tsx:347
+#: src/features/projects/components/create-project-dialog.tsx:357
 msgid "Next"
 msgstr "Հաջորդ"
 
@@ -1592,7 +1565,7 @@ msgid "No profile"
 msgstr "Պրոֆիլ չկա"
 
 #: src/features/projects/components/inline-project-search.tsx:164
-#: src/routes/_authenticated/find.tsx:90
+#: src/routes/_authenticated/find.tsx:94
 msgid "No projects found"
 msgstr "Նախագծեր չեն գտնվել"
 
@@ -1810,7 +1783,7 @@ msgstr "Խնդրում ենք ավելացնել մեկ կամ ավելի դաս
 msgid "Please check your internet connection and try again."
 msgstr "Ստուգեք ձեր ինտերնետ կապը և կրկին փորձեք։"
 
-#: src/features/projects/components/create-project-dialog.tsx:94
+#: src/features/projects/components/create-project-dialog.tsx:95
 msgid "Please select a template"
 msgstr "Խնդրում ենք ընտրել կաղապար"
 
@@ -1822,7 +1795,7 @@ msgstr "Խնդրում ենք կրկին փորձել։"
 msgid "Please wait a moment and try again."
 msgstr "Խնդրում ենք մի փոքր սպասել և նորից փորձել։"
 
-#: src/features/projects/components/create-project-dialog.tsx:255
+#: src/features/projects/components/create-project-dialog.tsx:265
 #: src/routes/_authenticated/$projectId_.settings.tsx:323
 msgid "Prefix"
 msgstr "Նախածանց"
@@ -1852,7 +1825,7 @@ msgstr "Նախագիծ"
 msgid "Project actions"
 msgstr "Նախագծի գործողություններ"
 
-#: src/features/projects/components/create-project-dialog.tsx:109
+#: src/features/projects/components/create-project-dialog.tsx:110
 msgid "Project created"
 msgstr "Նախագիծը ստեղծվեց"
 
@@ -1916,7 +1889,7 @@ msgid "Rebase and merge"
 msgstr "Rebase և միաձուլել"
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:216
-#: ../../../lib/web/src/components/search-entity-page.tsx:240
+#: ../../../lib/web/src/components/search-entity-page.tsx:242
 msgid "Recommended"
 msgstr "Առաջարկվող"
 
@@ -1955,7 +1928,7 @@ msgstr "Հարաբերական 24 ժամվա ընթացքում, այլապես�
 #: src/features/objects/components/comment-thread.tsx:299
 #: src/features/objects/components/create-object-dialog.tsx:486
 #: src/features/objects/components/create-object-dialog.tsx:491
-#: src/features/projects/components/create-project-dialog.tsx:331
+#: src/features/projects/components/create-project-dialog.tsx:341
 msgid "Remove"
 msgstr "Հեռացնել"
 
@@ -2092,7 +2065,7 @@ msgstr "Պահպանում..."
 msgid "Search"
 msgstr "Որոնել"
 
-#: src/routes/_authenticated/find.tsx:89
+#: src/routes/_authenticated/find.tsx:93
 msgid "Search by name, ID, fingerprint, or URL..."
 msgstr "Որոնել ըստ անվան, ID-ի, մատնահետքի կամ URL-ի..."
 
@@ -2135,7 +2108,7 @@ msgid "Search..."
 msgstr "Որոնում..."
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:174
-#: ../../../lib/web/src/components/search-entity-page.tsx:198
+#: ../../../lib/web/src/components/search-entity-page.tsx:200
 #: ../../../lib/web/src/features/access/access-dialog.tsx:202
 msgid "Searching..."
 msgstr "Որոնում..."
@@ -2441,10 +2414,6 @@ msgstr "Այս նախագիծը հնարավոր չէ բեռնել հենց հի
 msgid "This project may have been deleted or you don't have access to it."
 msgstr "Այս նախագիծը կարող է ջնջվել, կամ դուք մուտք չունեք դրան:"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:478
-#~ msgid "This will import the data from <0>{0}</0>. Objects will be appended to the existing records. Ensure the current design matches the classes and fields referenced in the file."
-#~ msgstr "Սա կներմուծի տվյալները <0>{0}</0> ֆայլից։ Օբյեկտները կավելացվեն առկա գրառումներին։ Համոզվեք, որ ընթացիկ կառուցվածքը համապատասխանում է ֆայլում նշված դասերին և դաշտերին։"
-
 #: src/features/requests/components/merge-button.tsx:105
 msgid "This will merge \"{source}\" into \"{target}\". This action cannot be undone."
 msgstr "Սա կմիաձուլի \"{source}\"-ը \"{target}\"-ի մեջ: Այս գործողությունը հնարավոր չէ չեղարկել:"
@@ -2533,7 +2502,7 @@ msgid "Travelling"
 msgstr "Ճանապարհորդություն"
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:190
-#: ../../../lib/web/src/components/search-entity-page.tsx:214
+#: ../../../lib/web/src/components/search-entity-page.tsx:216
 msgid "Try adjusting your search terms"
 msgstr "Փորձեք ճշգրտել ձեր որոնման տերմինները"
 
@@ -2629,7 +2598,7 @@ msgstr "Մուտքը թարմացվում է..."
 msgid "Upload"
 msgstr "Վերբեռնել"
 
-#: src/features/projects/components/create-project-dialog.tsx:304
+#: src/features/projects/components/create-project-dialog.tsx:314
 #: src/routes/_authenticated/$projectId/design.tsx:336
 msgid "Upload .json file"
 msgstr "Վերբեռնել .json ֆայլ"
@@ -2640,7 +2609,7 @@ msgstr "Օգտագործեք ձեր անցաբանալին"
 
 #. placeholder {0}: prefix || "project"
 #. placeholder {1}: prefix || "project"
-#: src/features/projects/components/create-project-dialog.tsx:272
+#: src/features/projects/components/create-project-dialog.tsx:282
 msgid "Used for readable IDs like {0}-1, {1}-2"
 msgstr "Օգտագործվում է ընթեռնելի ID-ների համար, ինչպես {0}-1, {1}-2"
 
@@ -2671,7 +2640,7 @@ msgstr "Ստուգել"
 msgid "Verify email address"
 msgstr "Ստուգել էլ. փոստի հասցեն"
 
-#: ../../../lib/web/src/components/attachment-gallery.tsx:75
+#: ../../../lib/web/src/components/attachment-gallery.tsx:74
 msgid "Video thumbnail"
 msgstr "Տեսանյութի մանրապատկեր"
 
@@ -2721,9 +2690,9 @@ msgstr "Հետևված"
 msgid "Watched only"
 msgstr "Միայն հետևված"
 
-#: src/features/projects/components/create-project-dialog.tsx:360
+#: src/features/projects/components/create-project-dialog.tsx:370
 msgid "We have auto-selected the best matching template."
-msgstr ""
+msgstr "Մենք ավտոմատ կերպով ընտրել ենք ամենահամապատասխան կաղապարը։"
 
 #: ../../../lib/web/src/features/errors/maintenance-error.tsx:16
 msgid "We'll be back online shortly."
@@ -2753,6 +2722,6 @@ msgstr "Դուք դեռ չունեք նախագծեր:"
 msgid "Your account was moved here from {source}. Until you delete it there, messages and notifications may reach both servers, some of your content keeps being served from the old server, and followers may take a few minutes to find you here."
 msgstr "Ձեր հաշիվը տեղափոխվել է այստեղ {source}-ից: Մինչ այն ջնջեք այնտեղ, հաղորդագրություններն ու ծանուցումները կարող են հասնել երկու սերվերներին, ձեր որոշ բովանդակություն դեռ մատուցվում է հին սերվերից, և հետևորդները կարող են մի քանի րոպե պահանջել ձեզ գտնելու համար:"
 
-#: src/features/projects/components/create-project-dialog.tsx:356
+#: src/features/projects/components/create-project-dialog.tsx:366
 msgid "Your backup contains objects of type:"
-msgstr ""
+msgstr "Ձեր պահուստավորումը պարունակում է հետևյալ տիպի օբյեկտներ՝"

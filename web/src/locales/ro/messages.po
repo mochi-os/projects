@@ -237,7 +237,7 @@ msgstr "Toate"
 msgid "All projects"
 msgstr "Toate proiectele"
 
-#: src/features/projects/components/create-project-dialog.tsx:278
+#: src/features/projects/components/create-project-dialog.tsx:288
 msgid "Allow anyone to search for project"
 msgstr "Permite oricui să caute proiectul"
 
@@ -313,7 +313,7 @@ msgid "Available keyboard shortcuts"
 msgstr "Scurtături de tastatură disponibile"
 
 #: ../../../lib/web/src/components/place-picker.tsx:155
-#: src/features/projects/components/create-project-dialog.tsx:428
+#: src/features/projects/components/create-project-dialog.tsx:438
 msgid "Back"
 msgstr "Înapoi"
 
@@ -378,7 +378,7 @@ msgstr "Poate fi copilul lui"
 #: src/features/board/components/board-column.tsx:606
 #: src/features/editor/components/option-dialog.tsx:146
 #: src/features/objects/components/comment-thread.tsx:175
-#: src/features/projects/components/create-project-dialog.tsx:344
+#: src/features/projects/components/create-project-dialog.tsx:354
 #: src/routes/_authenticated/$projectId/design.tsx:343
 #: src/routes/_authenticated/$projectId/index.tsx:1011
 msgid "Cancel"
@@ -414,7 +414,7 @@ msgstr "Se verifică starea de merge..."
 msgid "Checklist"
 msgstr "Listă de verificare"
 
-#: src/features/projects/components/create-project-dialog.tsx:225
+#: src/features/projects/components/create-project-dialog.tsx:235
 msgid "Choose a template"
 msgstr "Alege un șablon"
 
@@ -619,7 +619,7 @@ msgstr "Creează"
 msgid "Create a new item in this project"
 msgstr "Creează un element nou în acest proiect"
 
-#: src/features/projects/components/create-project-dialog.tsx:227
+#: src/features/projects/components/create-project-dialog.tsx:237
 #: src/features/projects/pages/projects-list-page.tsx:103
 msgid "Create a new project"
 msgstr "Creează un proiect nou"
@@ -630,9 +630,9 @@ msgid "Create new item"
 msgstr "Creează un element nou"
 
 #: src/components/layout/projects-layout.tsx:62
-#: src/features/projects/components/create-project-dialog.tsx:215
 #: src/features/projects/components/create-project-dialog.tsx:225
-#: src/features/projects/components/create-project-dialog.tsx:431
+#: src/features/projects/components/create-project-dialog.tsx:235
+#: src/features/projects/components/create-project-dialog.tsx:441
 msgid "Create project"
 msgstr "Creează proiect"
 
@@ -645,12 +645,12 @@ msgstr "Creare, editare, comentare și vizualizare"
 msgid "Created"
 msgstr "Creat"
 
-#: src/features/projects/components/create-project-dialog.tsx:108
+#: src/features/projects/components/create-project-dialog.tsx:109
 msgid "Creating project..."
 msgstr "Se creează proiectul..."
 
 #: src/features/objects/components/create-object-dialog.tsx:535
-#: src/features/projects/components/create-project-dialog.tsx:431
+#: src/features/projects/components/create-project-dialog.tsx:441
 msgid "Creating..."
 msgstr "Se creează..."
 
@@ -675,13 +675,12 @@ msgstr "Mod întunecat"
 msgid "Data conflict"
 msgstr "Conflict de date"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:350
-#~ msgid "Data imported ({0, plural, one {# object} other {# objects}}, {1, plural, one {# comment} other {# comments}}, {2, plural, one {# link} other {# links}})"
-#~ msgstr "Date importate ({0, plural, one {# obiect} few {# obiecte} other {# de obiecte}}, {1, plural, one {# comentariu} few {# comentarii} other {# de comentarii}}, {2, plural, one {# link} few {# linkuri} other {# de linkuri}})"
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:433
-#~ msgid "Data management"
-#~ msgstr "Gestionarea datelor"
+#. placeholder {0}: imported.data?.objects ?? 0
+#. placeholder {1}: imported.data?.comments ?? 0
+#. placeholder {2}: imported.data?.links ?? 0
+#: src/features/projects/components/create-project-dialog.tsx:121
+msgid "Data imported ({0, plural, one {# object} other {# objects}}, {1, plural, one {# comment} other {# comments}}, {2, plural, one {# link} other {# links}})"
+msgstr "Date importate ({0, plural, one {# obiect} few {# obiecte} other {# de obiecte}}, {1, plural, one {# comentariu} few {# comentarii} other {# de comentarii}}, {2, plural, one {# link} few {# linkuri} other {# de linkuri}})"
 
 #: src/features/editor/components/add-dialogs.tsx:137
 msgid "Date"
@@ -967,10 +966,6 @@ msgstr "Exportă datele"
 msgid "Export design"
 msgstr "Exportă designul"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:434
-#~ msgid "Export or import the raw data content in this project."
-#~ msgstr "Exportă sau importă datele brute din acest proiect."
-
 #: ../../../lib/web/src/lib/preference-utils.ts:136
 msgid "Extra large"
 msgstr "Extra mare"
@@ -1000,7 +995,7 @@ msgstr "Crearea linkului a eșuat"
 msgid "Failed to create option"
 msgstr "Crearea opțiunii a eșuat"
 
-#: src/features/projects/components/create-project-dialog.tsx:110
+#: src/features/projects/components/create-project-dialog.tsx:111
 msgid "Failed to create project"
 msgstr "Crearea proiectului a eșuat"
 
@@ -1036,7 +1031,7 @@ msgstr "Exportul datelor a eșuat"
 msgid "Failed to export design"
 msgstr "Exportul designului a eșuat"
 
-#: src/features/projects/components/create-project-dialog.tsx:124
+#: src/features/projects/components/create-project-dialog.tsx:122
 msgid "Failed to import data"
 msgstr "Importul datelor a eșuat"
 
@@ -1069,7 +1064,7 @@ msgstr "Îmbinarea a eșuat"
 msgid "Failed to post comment"
 msgstr "Postarea comentariului a eșuat"
 
-#: src/features/projects/components/create-project-dialog.tsx:177
+#: src/features/projects/components/create-project-dialog.tsx:175
 #: src/routes/_authenticated/$projectId/design.tsx:281
 msgid "Failed to read file"
 msgstr "Citirea fișierului a eșuat"
@@ -1144,7 +1139,7 @@ msgid "Files"
 msgstr "Fișiere"
 
 #: src/components/layout/projects-layout.tsx:61
-#: src/routes/_authenticated/find.tsx:88
+#: src/routes/_authenticated/find.tsx:92
 msgid "Find projects"
 msgstr "Găsește proiecte"
 
@@ -1254,40 +1249,18 @@ msgstr "Identitate"
 msgid "Imperial"
 msgstr "Imperial"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:549
-#~ msgid "Import a data configuration"
-#~ msgstr "Importă o configurație de date"
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:444
-#: src/routes/_authenticated/$projectId_.settings.tsx:490
-#: src/routes/_authenticated/$projectId_.settings.tsx:548
-#~ msgid "Import data"
-#~ msgstr "Importă datele"
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:476
-#~ msgid "Import data?"
-#~ msgstr "Imporți datele?"
-
 #: src/routes/_authenticated/$projectId/design.tsx:177
 #: src/routes/_authenticated/$projectId/design.tsx:293
 msgid "Import design"
 msgstr "Importă designul"
 
-#: src/features/projects/components/create-project-dialog.tsx:288
+#: src/features/projects/components/create-project-dialog.tsx:298
 msgid "Import from backup (optional)"
-msgstr ""
+msgstr "Importă din backup (opțional)"
 
-#: src/features/projects/components/create-project-dialog.tsx:122
-msgid "Imported {count} objects"
-msgstr ""
-
-#: src/features/projects/components/create-project-dialog.tsx:119
+#: src/features/projects/components/create-project-dialog.tsx:120
 msgid "Importing data..."
-msgstr ""
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:487
-#~ msgid "Importing..."
-#~ msgstr "Se importă..."
+msgstr "Se importă datele..."
 
 #: ../../../lib/web/src/components/config-drawer.tsx:252
 msgid "Inset"
@@ -1301,7 +1274,7 @@ msgstr "Interese"
 msgid "Invalid date"
 msgstr "Dată invalidă"
 
-#: src/features/projects/components/create-project-dialog.tsx:171
+#: src/features/projects/components/create-project-dialog.tsx:169
 #: src/routes/_authenticated/$projectId/design.tsx:277
 msgid "Invalid JSON file"
 msgstr "Fișier JSON invalid"
@@ -1374,7 +1347,7 @@ msgstr "Se încarcă elementul"
 msgid "Loading item details"
 msgstr "Se încarcă detaliile elementului"
 
-#: src/features/projects/components/create-project-dialog.tsx:365
+#: src/features/projects/components/create-project-dialog.tsx:375
 msgid "Loading templates..."
 msgstr "Se încarcă șabloanele..."
 
@@ -1475,7 +1448,7 @@ msgstr "Lipsesc parametrii de depozit, sursă sau destinație"
 msgid "Monday"
 msgstr "Luni"
 
-#: src/features/projects/components/create-project-dialog.tsx:243
+#: src/features/projects/components/create-project-dialog.tsx:253
 msgid "My project"
 msgstr "Proiectul meu"
 
@@ -1485,12 +1458,12 @@ msgstr "Proiectul meu"
 #: src/features/editor/components/edit-dialogs.tsx:741
 #: src/features/editor/components/edit-dialogs.tsx:1065
 #: src/features/editor/components/option-dialog.tsx:112
-#: src/features/projects/components/create-project-dialog.tsx:233
+#: src/features/projects/components/create-project-dialog.tsx:243
 #: src/routes/_authenticated/$projectId_.settings.tsx:306
 msgid "Name"
 msgstr "Nume"
 
-#: src/features/projects/components/create-project-dialog.tsx:84
+#: src/features/projects/components/create-project-dialog.tsx:85
 msgid "Name is required"
 msgstr "Numele este obligatoriu"
 
@@ -1510,7 +1483,7 @@ msgstr "Nou"
 msgid "New {className}"
 msgstr "{className} nou"
 
-#: src/features/projects/components/create-project-dialog.tsx:347
+#: src/features/projects/components/create-project-dialog.tsx:357
 msgid "Next"
 msgstr "Următor"
 
@@ -1592,7 +1565,7 @@ msgid "No profile"
 msgstr "Niciun profil"
 
 #: src/features/projects/components/inline-project-search.tsx:164
-#: src/routes/_authenticated/find.tsx:90
+#: src/routes/_authenticated/find.tsx:94
 msgid "No projects found"
 msgstr "Nu s-au găsit proiecte"
 
@@ -1810,7 +1783,7 @@ msgstr "Adaugă una sau mai multe clase la designul proiectului."
 msgid "Please check your internet connection and try again."
 msgstr "Verifică conexiunea la internet și încearcă din nou."
 
-#: src/features/projects/components/create-project-dialog.tsx:94
+#: src/features/projects/components/create-project-dialog.tsx:95
 msgid "Please select a template"
 msgstr "Selectează un șablon"
 
@@ -1822,7 +1795,7 @@ msgstr "Încearcă din nou."
 msgid "Please wait a moment and try again."
 msgstr "Așteptați un moment și încercați din nou."
 
-#: src/features/projects/components/create-project-dialog.tsx:255
+#: src/features/projects/components/create-project-dialog.tsx:265
 #: src/routes/_authenticated/$projectId_.settings.tsx:323
 msgid "Prefix"
 msgstr "Prefix"
@@ -1852,7 +1825,7 @@ msgstr "Proiect"
 msgid "Project actions"
 msgstr "Acțiuni proiect"
 
-#: src/features/projects/components/create-project-dialog.tsx:109
+#: src/features/projects/components/create-project-dialog.tsx:110
 msgid "Project created"
 msgstr "Proiect creat"
 
@@ -1916,7 +1889,7 @@ msgid "Rebase and merge"
 msgstr "Rebase și merge"
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:216
-#: ../../../lib/web/src/components/search-entity-page.tsx:240
+#: ../../../lib/web/src/components/search-entity-page.tsx:242
 msgid "Recommended"
 msgstr "Recomandat"
 
@@ -1955,7 +1928,7 @@ msgstr "Relativ în 24 de ore, altfel absolut"
 #: src/features/objects/components/comment-thread.tsx:299
 #: src/features/objects/components/create-object-dialog.tsx:486
 #: src/features/objects/components/create-object-dialog.tsx:491
-#: src/features/projects/components/create-project-dialog.tsx:331
+#: src/features/projects/components/create-project-dialog.tsx:341
 msgid "Remove"
 msgstr "Elimină"
 
@@ -2092,7 +2065,7 @@ msgstr "Se salvează..."
 msgid "Search"
 msgstr "Caută"
 
-#: src/routes/_authenticated/find.tsx:89
+#: src/routes/_authenticated/find.tsx:93
 msgid "Search by name, ID, fingerprint, or URL..."
 msgstr "Caută după nume, ID, amprentă sau URL..."
 
@@ -2135,7 +2108,7 @@ msgid "Search..."
 msgstr "Caută..."
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:174
-#: ../../../lib/web/src/components/search-entity-page.tsx:198
+#: ../../../lib/web/src/components/search-entity-page.tsx:200
 #: ../../../lib/web/src/features/access/access-dialog.tsx:202
 msgid "Searching..."
 msgstr "Se caută..."
@@ -2441,10 +2414,6 @@ msgstr "Acest proiect nu a putut fi încărcat acum."
 msgid "This project may have been deleted or you don't have access to it."
 msgstr "Acest proiect poate să fi fost șters sau nu ai acces la el."
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:478
-#~ msgid "This will import the data from <0>{0}</0>. Objects will be appended to the existing records. Ensure the current design matches the classes and fields referenced in the file."
-#~ msgstr "Aceasta va importa datele din <0>{0}</0>. Obiectele vor fi adăugate la înregistrările existente. Asigură-te că designul actual corespunde claselor și câmpurilor menționate în fișier."
-
 #: src/features/requests/components/merge-button.tsx:105
 msgid "This will merge \"{source}\" into \"{target}\". This action cannot be undone."
 msgstr "Aceasta va integra „{source}” în „{target}”. Această acțiune nu poate fi anulată."
@@ -2533,7 +2502,7 @@ msgid "Travelling"
 msgstr "În călătorie"
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:190
-#: ../../../lib/web/src/components/search-entity-page.tsx:214
+#: ../../../lib/web/src/components/search-entity-page.tsx:216
 msgid "Try adjusting your search terms"
 msgstr "Încearcă să ajustezi termenii de căutare"
 
@@ -2629,7 +2598,7 @@ msgstr "Se actualizează accesul..."
 msgid "Upload"
 msgstr "Încarcă"
 
-#: src/features/projects/components/create-project-dialog.tsx:304
+#: src/features/projects/components/create-project-dialog.tsx:314
 #: src/routes/_authenticated/$projectId/design.tsx:336
 msgid "Upload .json file"
 msgstr "Încarcă fișier .json"
@@ -2640,7 +2609,7 @@ msgstr "Folosește cheia de acces"
 
 #. placeholder {0}: prefix || "project"
 #. placeholder {1}: prefix || "project"
-#: src/features/projects/components/create-project-dialog.tsx:272
+#: src/features/projects/components/create-project-dialog.tsx:282
 msgid "Used for readable IDs like {0}-1, {1}-2"
 msgstr "Folosit pentru ID-uri lizibile precum {0}-1, {1}-2"
 
@@ -2671,7 +2640,7 @@ msgstr "Verifică"
 msgid "Verify email address"
 msgstr "Verifică adresa de email"
 
-#: ../../../lib/web/src/components/attachment-gallery.tsx:75
+#: ../../../lib/web/src/components/attachment-gallery.tsx:74
 msgid "Video thumbnail"
 msgstr "Miniatură video"
 
@@ -2721,9 +2690,9 @@ msgstr "Urmărit"
 msgid "Watched only"
 msgstr "Doar urmărite"
 
-#: src/features/projects/components/create-project-dialog.tsx:360
+#: src/features/projects/components/create-project-dialog.tsx:370
 msgid "We have auto-selected the best matching template."
-msgstr ""
+msgstr "Am selectat automat șablonul care se potrivește cel mai bine."
 
 #: ../../../lib/web/src/features/errors/maintenance-error.tsx:16
 msgid "We'll be back online shortly."
@@ -2753,6 +2722,6 @@ msgstr "Nu ai încă niciun proiect."
 msgid "Your account was moved here from {source}. Until you delete it there, messages and notifications may reach both servers, some of your content keeps being served from the old server, and followers may take a few minutes to find you here."
 msgstr "Contul dvs. a fost mutat aici de la {source}. Până când îl ștergeți de acolo, mesajele și notificările pot ajunge pe ambele servere, o parte din conținutul dvs. continuă să fie servit de pe serverul vechi, iar urmăritorii pot avea nevoie de câteva minute pentru a vă găsi aici."
 
-#: src/features/projects/components/create-project-dialog.tsx:356
+#: src/features/projects/components/create-project-dialog.tsx:366
 msgid "Your backup contains objects of type:"
-msgstr ""
+msgstr "Backup-ul tău conține obiecte de tipul:"

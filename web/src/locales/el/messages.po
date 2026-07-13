@@ -237,7 +237,7 @@ msgstr "Όλα"
 msgid "All projects"
 msgstr "Όλα τα έργα"
 
-#: src/features/projects/components/create-project-dialog.tsx:278
+#: src/features/projects/components/create-project-dialog.tsx:288
 msgid "Allow anyone to search for project"
 msgstr "Να επιτρέπεται σε όλους η αναζήτηση έργου"
 
@@ -313,7 +313,7 @@ msgid "Available keyboard shortcuts"
 msgstr "Διαθέσιμες συντομεύσεις πληκτρολογίου"
 
 #: ../../../lib/web/src/components/place-picker.tsx:155
-#: src/features/projects/components/create-project-dialog.tsx:428
+#: src/features/projects/components/create-project-dialog.tsx:438
 msgid "Back"
 msgstr "Πίσω"
 
@@ -378,7 +378,7 @@ msgstr "Μπορεί να είναι θυγατρικό του"
 #: src/features/board/components/board-column.tsx:606
 #: src/features/editor/components/option-dialog.tsx:146
 #: src/features/objects/components/comment-thread.tsx:175
-#: src/features/projects/components/create-project-dialog.tsx:344
+#: src/features/projects/components/create-project-dialog.tsx:354
 #: src/routes/_authenticated/$projectId/design.tsx:343
 #: src/routes/_authenticated/$projectId/index.tsx:1011
 msgid "Cancel"
@@ -414,7 +414,7 @@ msgstr "Έλεγχος κατάστασης συγχώνευσης..."
 msgid "Checklist"
 msgstr "Λίστα ελέγχου"
 
-#: src/features/projects/components/create-project-dialog.tsx:225
+#: src/features/projects/components/create-project-dialog.tsx:235
 msgid "Choose a template"
 msgstr "Επιλέξτε ένα πρότυπο"
 
@@ -619,7 +619,7 @@ msgstr "Δημιουργία"
 msgid "Create a new item in this project"
 msgstr "Δημιουργία νέου στοιχείου σε αυτό το έργο"
 
-#: src/features/projects/components/create-project-dialog.tsx:227
+#: src/features/projects/components/create-project-dialog.tsx:237
 #: src/features/projects/pages/projects-list-page.tsx:103
 msgid "Create a new project"
 msgstr "Δημιουργία νέου έργου"
@@ -630,9 +630,9 @@ msgid "Create new item"
 msgstr "Δημιουργία νέου στοιχείου"
 
 #: src/components/layout/projects-layout.tsx:62
-#: src/features/projects/components/create-project-dialog.tsx:215
 #: src/features/projects/components/create-project-dialog.tsx:225
-#: src/features/projects/components/create-project-dialog.tsx:431
+#: src/features/projects/components/create-project-dialog.tsx:235
+#: src/features/projects/components/create-project-dialog.tsx:441
 msgid "Create project"
 msgstr "Δημιουργία έργου"
 
@@ -645,12 +645,12 @@ msgstr "Δημιουργία, επεξεργασία, σχολιασμός κα�
 msgid "Created"
 msgstr "Δημιουργήθηκε"
 
-#: src/features/projects/components/create-project-dialog.tsx:108
+#: src/features/projects/components/create-project-dialog.tsx:109
 msgid "Creating project..."
 msgstr "Δημιουργία έργου..."
 
 #: src/features/objects/components/create-object-dialog.tsx:535
-#: src/features/projects/components/create-project-dialog.tsx:431
+#: src/features/projects/components/create-project-dialog.tsx:441
 msgid "Creating..."
 msgstr "Δημιουργία..."
 
@@ -675,13 +675,12 @@ msgstr "Σκοτεινή λειτουργία"
 msgid "Data conflict"
 msgstr "Διένεξη δεδομένων"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:350
-#~ msgid "Data imported ({0, plural, one {# object} other {# objects}}, {1, plural, one {# comment} other {# comments}}, {2, plural, one {# link} other {# links}})"
-#~ msgstr "Τα δεδομένα εισήχθησαν ({0, plural, one {# αντικείμενο} other {# αντικείμενα}}, {1, plural, one {# σχόλιο} other {# σχόλια}}, {2, plural, one {# σύνδεσμος} other {# σύνδεσμοι}})"
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:433
-#~ msgid "Data management"
-#~ msgstr "Διαχείριση δεδομένων"
+#. placeholder {0}: imported.data?.objects ?? 0
+#. placeholder {1}: imported.data?.comments ?? 0
+#. placeholder {2}: imported.data?.links ?? 0
+#: src/features/projects/components/create-project-dialog.tsx:121
+msgid "Data imported ({0, plural, one {# object} other {# objects}}, {1, plural, one {# comment} other {# comments}}, {2, plural, one {# link} other {# links}})"
+msgstr "Τα δεδομένα εισήχθησαν ({0, plural, one {# αντικείμενο} other {# αντικείμενα}}, {1, plural, one {# σχόλιο} other {# σχόλια}}, {2, plural, one {# σύνδεσμος} other {# σύνδεσμοι}})"
 
 #: src/features/editor/components/add-dialogs.tsx:137
 msgid "Date"
@@ -967,10 +966,6 @@ msgstr "Εξαγωγή δεδομένων"
 msgid "Export design"
 msgstr "Εξαγωγή σχεδίασης"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:434
-#~ msgid "Export or import the raw data content in this project."
-#~ msgstr "Εξαγωγή ή εισαγωγή του ακατέργαστου περιεχομένου δεδομένων σε αυτό το έργο."
-
 #: ../../../lib/web/src/lib/preference-utils.ts:136
 msgid "Extra large"
 msgstr "Πολύ μεγάλο"
@@ -1000,7 +995,7 @@ msgstr "Αποτυχία δημιουργίας συνδέσμου"
 msgid "Failed to create option"
 msgstr "Αποτυχία δημιουργίας επιλογής"
 
-#: src/features/projects/components/create-project-dialog.tsx:110
+#: src/features/projects/components/create-project-dialog.tsx:111
 msgid "Failed to create project"
 msgstr "Αποτυχία δημιουργίας έργου"
 
@@ -1036,7 +1031,7 @@ msgstr "Αποτυχία εξαγωγής δεδομένων"
 msgid "Failed to export design"
 msgstr "Αποτυχία εξαγωγής σχεδίασης"
 
-#: src/features/projects/components/create-project-dialog.tsx:124
+#: src/features/projects/components/create-project-dialog.tsx:122
 msgid "Failed to import data"
 msgstr "Αποτυχία εισαγωγής δεδομένων"
 
@@ -1069,7 +1064,7 @@ msgstr "Αποτυχία συγχώνευσης"
 msgid "Failed to post comment"
 msgstr "Αποτυχία ανάρτησης σχολίου"
 
-#: src/features/projects/components/create-project-dialog.tsx:177
+#: src/features/projects/components/create-project-dialog.tsx:175
 #: src/routes/_authenticated/$projectId/design.tsx:281
 msgid "Failed to read file"
 msgstr "Αποτυχία ανάγνωσης αρχείου"
@@ -1144,7 +1139,7 @@ msgid "Files"
 msgstr "Αρχεία"
 
 #: src/components/layout/projects-layout.tsx:61
-#: src/routes/_authenticated/find.tsx:88
+#: src/routes/_authenticated/find.tsx:92
 msgid "Find projects"
 msgstr "Εύρεση έργων"
 
@@ -1254,40 +1249,18 @@ msgstr "Ταυτότητα"
 msgid "Imperial"
 msgstr "Αυτοκρατορικό"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:549
-#~ msgid "Import a data configuration"
-#~ msgstr "Εισαγωγή διαμόρφωσης δεδομένων"
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:444
-#: src/routes/_authenticated/$projectId_.settings.tsx:490
-#: src/routes/_authenticated/$projectId_.settings.tsx:548
-#~ msgid "Import data"
-#~ msgstr "Εισαγωγή δεδομένων"
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:476
-#~ msgid "Import data?"
-#~ msgstr "Εισαγωγή δεδομένων;"
-
 #: src/routes/_authenticated/$projectId/design.tsx:177
 #: src/routes/_authenticated/$projectId/design.tsx:293
 msgid "Import design"
 msgstr "Εισαγωγή σχεδίασης"
 
-#: src/features/projects/components/create-project-dialog.tsx:288
+#: src/features/projects/components/create-project-dialog.tsx:298
 msgid "Import from backup (optional)"
-msgstr ""
+msgstr "Εισαγωγή από αντίγραφο ασφαλείας (προαιρετικό)"
 
-#: src/features/projects/components/create-project-dialog.tsx:122
-msgid "Imported {count} objects"
-msgstr ""
-
-#: src/features/projects/components/create-project-dialog.tsx:119
+#: src/features/projects/components/create-project-dialog.tsx:120
 msgid "Importing data..."
-msgstr ""
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:487
-#~ msgid "Importing..."
-#~ msgstr "Γίνεται εισαγωγή..."
+msgstr "Εισαγωγή δεδομένων..."
 
 #: ../../../lib/web/src/components/config-drawer.tsx:252
 msgid "Inset"
@@ -1301,7 +1274,7 @@ msgstr "Ενδιαφέροντα"
 msgid "Invalid date"
 msgstr "Μη έγκυρη ημερομηνία"
 
-#: src/features/projects/components/create-project-dialog.tsx:171
+#: src/features/projects/components/create-project-dialog.tsx:169
 #: src/routes/_authenticated/$projectId/design.tsx:277
 msgid "Invalid JSON file"
 msgstr "Μη έγκυρο αρχείο JSON"
@@ -1374,7 +1347,7 @@ msgstr "Φόρτωση στοιχείου"
 msgid "Loading item details"
 msgstr "Φόρτωση λεπτομερειών στοιχείου"
 
-#: src/features/projects/components/create-project-dialog.tsx:365
+#: src/features/projects/components/create-project-dialog.tsx:375
 msgid "Loading templates..."
 msgstr "Φόρτωση προτύπων..."
 
@@ -1475,7 +1448,7 @@ msgstr "Λείπουν παράμετροι repo, source ή target"
 msgid "Monday"
 msgstr "Δευτέρα"
 
-#: src/features/projects/components/create-project-dialog.tsx:243
+#: src/features/projects/components/create-project-dialog.tsx:253
 msgid "My project"
 msgstr "Το έργο μου"
 
@@ -1485,12 +1458,12 @@ msgstr "Το έργο μου"
 #: src/features/editor/components/edit-dialogs.tsx:741
 #: src/features/editor/components/edit-dialogs.tsx:1065
 #: src/features/editor/components/option-dialog.tsx:112
-#: src/features/projects/components/create-project-dialog.tsx:233
+#: src/features/projects/components/create-project-dialog.tsx:243
 #: src/routes/_authenticated/$projectId_.settings.tsx:306
 msgid "Name"
 msgstr "Όνομα"
 
-#: src/features/projects/components/create-project-dialog.tsx:84
+#: src/features/projects/components/create-project-dialog.tsx:85
 msgid "Name is required"
 msgstr "Το όνομα είναι υποχρεωτικό"
 
@@ -1510,7 +1483,7 @@ msgstr "Νέο"
 msgid "New {className}"
 msgstr "Νέο {className}"
 
-#: src/features/projects/components/create-project-dialog.tsx:347
+#: src/features/projects/components/create-project-dialog.tsx:357
 msgid "Next"
 msgstr "Επόμενο"
 
@@ -1592,7 +1565,7 @@ msgid "No profile"
 msgstr "Χωρίς προφίλ"
 
 #: src/features/projects/components/inline-project-search.tsx:164
-#: src/routes/_authenticated/find.tsx:90
+#: src/routes/_authenticated/find.tsx:94
 msgid "No projects found"
 msgstr "Δεν βρέθηκαν έργα"
 
@@ -1810,7 +1783,7 @@ msgstr "Προσθέστε μία ή περισσότερες κλάσεις σ�
 msgid "Please check your internet connection and try again."
 msgstr "Ελέγξτε τη σύνδεσή σας στο διαδίκτυο και δοκιμάστε ξανά."
 
-#: src/features/projects/components/create-project-dialog.tsx:94
+#: src/features/projects/components/create-project-dialog.tsx:95
 msgid "Please select a template"
 msgstr "Επιλέξτε ένα πρότυπο"
 
@@ -1822,7 +1795,7 @@ msgstr "Δοκιμάστε ξανά."
 msgid "Please wait a moment and try again."
 msgstr "Περιμένετε λίγο και δοκιμάστε ξανά."
 
-#: src/features/projects/components/create-project-dialog.tsx:255
+#: src/features/projects/components/create-project-dialog.tsx:265
 #: src/routes/_authenticated/$projectId_.settings.tsx:323
 msgid "Prefix"
 msgstr "Πρόθεμα"
@@ -1852,7 +1825,7 @@ msgstr "Έργο"
 msgid "Project actions"
 msgstr "Ενέργειες έργου"
 
-#: src/features/projects/components/create-project-dialog.tsx:109
+#: src/features/projects/components/create-project-dialog.tsx:110
 msgid "Project created"
 msgstr "Το έργο δημιουργήθηκε"
 
@@ -1916,7 +1889,7 @@ msgid "Rebase and merge"
 msgstr "Rebase και συγχώνευση"
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:216
-#: ../../../lib/web/src/components/search-entity-page.tsx:240
+#: ../../../lib/web/src/components/search-entity-page.tsx:242
 msgid "Recommended"
 msgstr "Συνιστώμενο"
 
@@ -1955,7 +1928,7 @@ msgstr "Σχετικό εντός 24 ωρών, αλλιώς απόλυτο"
 #: src/features/objects/components/comment-thread.tsx:299
 #: src/features/objects/components/create-object-dialog.tsx:486
 #: src/features/objects/components/create-object-dialog.tsx:491
-#: src/features/projects/components/create-project-dialog.tsx:331
+#: src/features/projects/components/create-project-dialog.tsx:341
 msgid "Remove"
 msgstr "Αφαίρεση"
 
@@ -2092,7 +2065,7 @@ msgstr "Αποθήκευση..."
 msgid "Search"
 msgstr "Αναζήτηση"
 
-#: src/routes/_authenticated/find.tsx:89
+#: src/routes/_authenticated/find.tsx:93
 msgid "Search by name, ID, fingerprint, or URL..."
 msgstr "Αναζήτηση κατά όνομα, ID, αποτύπωμα ή URL..."
 
@@ -2135,7 +2108,7 @@ msgid "Search..."
 msgstr "Αναζήτηση..."
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:174
-#: ../../../lib/web/src/components/search-entity-page.tsx:198
+#: ../../../lib/web/src/components/search-entity-page.tsx:200
 #: ../../../lib/web/src/features/access/access-dialog.tsx:202
 msgid "Searching..."
 msgstr "Αναζήτηση..."
@@ -2441,10 +2414,6 @@ msgstr "Δεν ήταν δυνατή η φόρτωση αυτού του έργ�
 msgid "This project may have been deleted or you don't have access to it."
 msgstr "Αυτό το έργο μπορεί να έχει διαγραφεί ή να μην έχετε πρόσβαση σε αυτό."
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:478
-#~ msgid "This will import the data from <0>{0}</0>. Objects will be appended to the existing records. Ensure the current design matches the classes and fields referenced in the file."
-#~ msgstr "Αυτό θα εισαγάγει τα δεδομένα από το <0>{0}</0>. Τα αντικείμενα θα προστεθούν στις υπάρχουσες εγγραφές. Βεβαιωθείτε ότι ο τρέχων σχεδιασμός αντιστοιχεί στις κλάσεις και τα πεδία που αναφέρονται στο αρχείο."
-
 #: src/features/requests/components/merge-button.tsx:105
 msgid "This will merge \"{source}\" into \"{target}\". This action cannot be undone."
 msgstr "Αυτό θα συγχωνεύσει το \"{source}\" στο \"{target}\". Αυτή η ενέργεια δεν μπορεί να αναιρεθεί."
@@ -2533,7 +2502,7 @@ msgid "Travelling"
 msgstr "Σε ταξίδι"
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:190
-#: ../../../lib/web/src/components/search-entity-page.tsx:214
+#: ../../../lib/web/src/components/search-entity-page.tsx:216
 msgid "Try adjusting your search terms"
 msgstr "Δοκιμάστε να προσαρμόσετε τους όρους αναζήτησής σας"
 
@@ -2629,7 +2598,7 @@ msgstr "Ενημέρωση πρόσβασης..."
 msgid "Upload"
 msgstr "Μεταφόρτωση"
 
-#: src/features/projects/components/create-project-dialog.tsx:304
+#: src/features/projects/components/create-project-dialog.tsx:314
 #: src/routes/_authenticated/$projectId/design.tsx:336
 msgid "Upload .json file"
 msgstr "Μεταφόρτωση αρχείου .json"
@@ -2640,7 +2609,7 @@ msgstr "Χρησιμοποιήστε το κλειδί πρόσβασής σας
 
 #. placeholder {0}: prefix || "project"
 #. placeholder {1}: prefix || "project"
-#: src/features/projects/components/create-project-dialog.tsx:272
+#: src/features/projects/components/create-project-dialog.tsx:282
 msgid "Used for readable IDs like {0}-1, {1}-2"
 msgstr "Χρησιμοποιείται για αναγνώσιμα ID όπως {0}-1, {1}-2"
 
@@ -2671,7 +2640,7 @@ msgstr "Επαλήθευση"
 msgid "Verify email address"
 msgstr "Επαλήθευση διεύθυνσης email"
 
-#: ../../../lib/web/src/components/attachment-gallery.tsx:75
+#: ../../../lib/web/src/components/attachment-gallery.tsx:74
 msgid "Video thumbnail"
 msgstr "Μικρογραφία βίντεο"
 
@@ -2721,9 +2690,9 @@ msgstr "Σε παρακολούθηση"
 msgid "Watched only"
 msgstr "Μόνο σε παρακολούθηση"
 
-#: src/features/projects/components/create-project-dialog.tsx:360
+#: src/features/projects/components/create-project-dialog.tsx:370
 msgid "We have auto-selected the best matching template."
-msgstr ""
+msgstr "Επιλέξαμε αυτόματα το πρότυπο που ταιριάζει καλύτερα."
 
 #: ../../../lib/web/src/features/errors/maintenance-error.tsx:16
 msgid "We'll be back online shortly."
@@ -2753,6 +2722,6 @@ msgstr "Δεν έχετε ακόμα έργα."
 msgid "Your account was moved here from {source}. Until you delete it there, messages and notifications may reach both servers, some of your content keeps being served from the old server, and followers may take a few minutes to find you here."
 msgstr "Ο λογαριασμός σας μεταφέρθηκε εδώ από {source}. Μέχρι να τον διαγράψετε εκεί, τα μηνύματα και οι ειδοποιήσεις μπορεί να φτάνουν και στους δύο διακομιστές, μέρος του περιεχομένου σας συνεχίζει να εξυπηρετείται από τον παλιό διακομιστή και οι ακόλουθοί σας ενδέχεται να χρειαστούν λίγα λεπτά για να σας βρουν εδώ."
 
-#: src/features/projects/components/create-project-dialog.tsx:356
+#: src/features/projects/components/create-project-dialog.tsx:366
 msgid "Your backup contains objects of type:"
-msgstr ""
+msgstr "Το αντίγραφο ασφαλείας σας περιέχει αντικείμενα τύπου:"

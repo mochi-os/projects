@@ -237,7 +237,7 @@ msgstr "Hemmesi"
 msgid "All projects"
 msgstr "Ähli proýektler"
 
-#: src/features/projects/components/create-project-dialog.tsx:278
+#: src/features/projects/components/create-project-dialog.tsx:288
 msgid "Allow anyone to search for project"
 msgstr "Islendik adamyň proýekt gözlemegine rugsat bermek"
 
@@ -313,7 +313,7 @@ msgid "Available keyboard shortcuts"
 msgstr "Elýeterli klawiatura gysga ýollary"
 
 #: ../../../lib/web/src/components/place-picker.tsx:155
-#: src/features/projects/components/create-project-dialog.tsx:428
+#: src/features/projects/components/create-project-dialog.tsx:438
 msgid "Back"
 msgstr "Yza"
 
@@ -378,7 +378,7 @@ msgstr "Çaga bolup biler"
 #: src/features/board/components/board-column.tsx:606
 #: src/features/editor/components/option-dialog.tsx:146
 #: src/features/objects/components/comment-thread.tsx:175
-#: src/features/projects/components/create-project-dialog.tsx:344
+#: src/features/projects/components/create-project-dialog.tsx:354
 #: src/routes/_authenticated/$projectId/design.tsx:343
 #: src/routes/_authenticated/$projectId/index.tsx:1011
 msgid "Cancel"
@@ -414,7 +414,7 @@ msgstr "Birleşdirme ýagdaýy barlanýar..."
 msgid "Checklist"
 msgstr "Kontrol sanawy"
 
-#: src/features/projects/components/create-project-dialog.tsx:225
+#: src/features/projects/components/create-project-dialog.tsx:235
 msgid "Choose a template"
 msgstr "Şablon saýlaň"
 
@@ -619,7 +619,7 @@ msgstr "Döretmek"
 msgid "Create a new item in this project"
 msgstr "Bu proýektde täze element döretmek"
 
-#: src/features/projects/components/create-project-dialog.tsx:227
+#: src/features/projects/components/create-project-dialog.tsx:237
 #: src/features/projects/pages/projects-list-page.tsx:103
 msgid "Create a new project"
 msgstr "Täze proýekt döretmek"
@@ -630,9 +630,9 @@ msgid "Create new item"
 msgstr "Täze element döretmek"
 
 #: src/components/layout/projects-layout.tsx:62
-#: src/features/projects/components/create-project-dialog.tsx:215
 #: src/features/projects/components/create-project-dialog.tsx:225
-#: src/features/projects/components/create-project-dialog.tsx:431
+#: src/features/projects/components/create-project-dialog.tsx:235
+#: src/features/projects/components/create-project-dialog.tsx:441
 msgid "Create project"
 msgstr "Proýekt döretmek"
 
@@ -645,12 +645,12 @@ msgstr "Döretmek, redaktirlemek, teswir ýazmak we görmek"
 msgid "Created"
 msgstr "Döredildi"
 
-#: src/features/projects/components/create-project-dialog.tsx:108
+#: src/features/projects/components/create-project-dialog.tsx:109
 msgid "Creating project..."
 msgstr "Taslama döredilýär..."
 
 #: src/features/objects/components/create-object-dialog.tsx:535
-#: src/features/projects/components/create-project-dialog.tsx:431
+#: src/features/projects/components/create-project-dialog.tsx:441
 msgid "Creating..."
 msgstr "Döredilýär..."
 
@@ -675,13 +675,12 @@ msgstr "Goýy görnüş"
 msgid "Data conflict"
 msgstr "Maglumat gapma-garşylygy"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:350
-#~ msgid "Data imported ({0, plural, one {# object} other {# objects}}, {1, plural, one {# comment} other {# comments}}, {2, plural, one {# link} other {# links}})"
-#~ msgstr "Maglumatlar import edildi ({0, plural, one {# obýekt} other {# obýekt}}, {1, plural, one {# teswir} other {# teswir}}, {2, plural, one {# baglanyşyk} other {# baglanyşyk}})"
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:433
-#~ msgid "Data management"
-#~ msgstr "Maglumat dolandyryşy"
+#. placeholder {0}: imported.data?.objects ?? 0
+#. placeholder {1}: imported.data?.comments ?? 0
+#. placeholder {2}: imported.data?.links ?? 0
+#: src/features/projects/components/create-project-dialog.tsx:121
+msgid "Data imported ({0, plural, one {# object} other {# objects}}, {1, plural, one {# comment} other {# comments}}, {2, plural, one {# link} other {# links}})"
+msgstr "Maglumatlar import edildi ({0, plural, one {# obýekt} other {# obýekt}}, {1, plural, one {# teswir} other {# teswir}}, {2, plural, one {# baglanyşyk} other {# baglanyşyk}})"
 
 #: src/features/editor/components/add-dialogs.tsx:137
 msgid "Date"
@@ -967,10 +966,6 @@ msgstr "Maglumatlary eksport et"
 msgid "Export design"
 msgstr "Dizaýny eksport et"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:434
-#~ msgid "Export or import the raw data content in this project."
-#~ msgstr "Bu taslamadaky çig maglumat mazmunyny eksport ýa-da import ediň."
-
 #: ../../../lib/web/src/lib/preference-utils.ts:136
 msgid "Extra large"
 msgstr "Goşmaça uly"
@@ -1000,7 +995,7 @@ msgstr "Baglanyşyk döredilmedi"
 msgid "Failed to create option"
 msgstr "Saýlaw döredilmedi"
 
-#: src/features/projects/components/create-project-dialog.tsx:110
+#: src/features/projects/components/create-project-dialog.tsx:111
 msgid "Failed to create project"
 msgstr "Taslama döredilmedi"
 
@@ -1036,7 +1031,7 @@ msgstr "Maglumatlary eksport edip bolmady"
 msgid "Failed to export design"
 msgstr "Dizaýn eksport edilmedi"
 
-#: src/features/projects/components/create-project-dialog.tsx:124
+#: src/features/projects/components/create-project-dialog.tsx:122
 msgid "Failed to import data"
 msgstr "Maglumatlary import edip bolmady"
 
@@ -1069,7 +1064,7 @@ msgstr "Birleşdirilmedi"
 msgid "Failed to post comment"
 msgstr "Teswir ýerleşdirilmedi"
 
-#: src/features/projects/components/create-project-dialog.tsx:177
+#: src/features/projects/components/create-project-dialog.tsx:175
 #: src/routes/_authenticated/$projectId/design.tsx:281
 msgid "Failed to read file"
 msgstr "Faýl okalmady"
@@ -1144,7 +1139,7 @@ msgid "Files"
 msgstr "Faýllar"
 
 #: src/components/layout/projects-layout.tsx:61
-#: src/routes/_authenticated/find.tsx:88
+#: src/routes/_authenticated/find.tsx:92
 msgid "Find projects"
 msgstr "Taslamalary tap"
 
@@ -1254,40 +1249,18 @@ msgstr "Şahsyýet"
 msgid "Imperial"
 msgstr "Imperial"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:549
-#~ msgid "Import a data configuration"
-#~ msgstr "Maglumat konfigurasiýasyny import etmek"
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:444
-#: src/routes/_authenticated/$projectId_.settings.tsx:490
-#: src/routes/_authenticated/$projectId_.settings.tsx:548
-#~ msgid "Import data"
-#~ msgstr "Maglumatlary import et"
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:476
-#~ msgid "Import data?"
-#~ msgstr "Maglumatlar import edilsinmi?"
-
 #: src/routes/_authenticated/$projectId/design.tsx:177
 #: src/routes/_authenticated/$projectId/design.tsx:293
 msgid "Import design"
 msgstr "Dizaýny import et"
 
-#: src/features/projects/components/create-project-dialog.tsx:288
+#: src/features/projects/components/create-project-dialog.tsx:298
 msgid "Import from backup (optional)"
-msgstr ""
+msgstr "Ätiýaçlyk nusgasyndan import (hökmany däl)"
 
-#: src/features/projects/components/create-project-dialog.tsx:122
-msgid "Imported {count} objects"
-msgstr ""
-
-#: src/features/projects/components/create-project-dialog.tsx:119
+#: src/features/projects/components/create-project-dialog.tsx:120
 msgid "Importing data..."
-msgstr ""
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:487
-#~ msgid "Importing..."
-#~ msgstr "Import edilýär..."
+msgstr "Maglumatlar import edilýär..."
 
 #: ../../../lib/web/src/components/config-drawer.tsx:252
 msgid "Inset"
@@ -1301,7 +1274,7 @@ msgstr "Gyzyklanmalar"
 msgid "Invalid date"
 msgstr "Nädogry sene"
 
-#: src/features/projects/components/create-project-dialog.tsx:171
+#: src/features/projects/components/create-project-dialog.tsx:169
 #: src/routes/_authenticated/$projectId/design.tsx:277
 msgid "Invalid JSON file"
 msgstr "Nädogry JSON faýly"
@@ -1374,7 +1347,7 @@ msgstr "Element ýüklenýär"
 msgid "Loading item details"
 msgstr "Element jikme-jiklikleri ýüklenýär"
 
-#: src/features/projects/components/create-project-dialog.tsx:365
+#: src/features/projects/components/create-project-dialog.tsx:375
 msgid "Loading templates..."
 msgstr "Şablonlar ýüklenýär..."
 
@@ -1475,7 +1448,7 @@ msgstr "Ýetmeýän ammar, çeşme ýa-da maksat parametrleri"
 msgid "Monday"
 msgstr "Duşenbe"
 
-#: src/features/projects/components/create-project-dialog.tsx:243
+#: src/features/projects/components/create-project-dialog.tsx:253
 msgid "My project"
 msgstr "Meniň taslamam"
 
@@ -1485,12 +1458,12 @@ msgstr "Meniň taslamam"
 #: src/features/editor/components/edit-dialogs.tsx:741
 #: src/features/editor/components/edit-dialogs.tsx:1065
 #: src/features/editor/components/option-dialog.tsx:112
-#: src/features/projects/components/create-project-dialog.tsx:233
+#: src/features/projects/components/create-project-dialog.tsx:243
 #: src/routes/_authenticated/$projectId_.settings.tsx:306
 msgid "Name"
 msgstr "At"
 
-#: src/features/projects/components/create-project-dialog.tsx:84
+#: src/features/projects/components/create-project-dialog.tsx:85
 msgid "Name is required"
 msgstr "At hökmandyr"
 
@@ -1510,7 +1483,7 @@ msgstr "Täze"
 msgid "New {className}"
 msgstr "Täze {className}"
 
-#: src/features/projects/components/create-project-dialog.tsx:347
+#: src/features/projects/components/create-project-dialog.tsx:357
 msgid "Next"
 msgstr "Indiki"
 
@@ -1592,7 +1565,7 @@ msgid "No profile"
 msgstr "Profil ýok"
 
 #: src/features/projects/components/inline-project-search.tsx:164
-#: src/routes/_authenticated/find.tsx:90
+#: src/routes/_authenticated/find.tsx:94
 msgid "No projects found"
 msgstr "Taslamalar tapylmady"
 
@@ -1810,7 +1783,7 @@ msgstr "Taslama dizaýnyna bir ýa-da has köp klas goşuň."
 msgid "Please check your internet connection and try again."
 msgstr "Internet birikmäňizi barlaň we täzeden synanyşyň."
 
-#: src/features/projects/components/create-project-dialog.tsx:94
+#: src/features/projects/components/create-project-dialog.tsx:95
 msgid "Please select a template"
 msgstr "Şablon saýlaň"
 
@@ -1822,7 +1795,7 @@ msgstr "Haýyş, gaýtadan synanyşyň."
 msgid "Please wait a moment and try again."
 msgstr "Biraz garaşyň we täzeden synanyşyň."
 
-#: src/features/projects/components/create-project-dialog.tsx:255
+#: src/features/projects/components/create-project-dialog.tsx:265
 #: src/routes/_authenticated/$projectId_.settings.tsx:323
 msgid "Prefix"
 msgstr "Prefiks"
@@ -1852,7 +1825,7 @@ msgstr "Taslama"
 msgid "Project actions"
 msgstr "Taslama hereketleri"
 
-#: src/features/projects/components/create-project-dialog.tsx:109
+#: src/features/projects/components/create-project-dialog.tsx:110
 msgid "Project created"
 msgstr "Taslama döredildi"
 
@@ -1916,7 +1889,7 @@ msgid "Rebase and merge"
 msgstr "Rebase ediň we birleşdiriň"
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:216
-#: ../../../lib/web/src/components/search-entity-page.tsx:240
+#: ../../../lib/web/src/components/search-entity-page.tsx:242
 msgid "Recommended"
 msgstr "Maslahat berilýän"
 
@@ -1955,7 +1928,7 @@ msgstr "24 sagat içinde otnositel, başga absolýut"
 #: src/features/objects/components/comment-thread.tsx:299
 #: src/features/objects/components/create-object-dialog.tsx:486
 #: src/features/objects/components/create-object-dialog.tsx:491
-#: src/features/projects/components/create-project-dialog.tsx:331
+#: src/features/projects/components/create-project-dialog.tsx:341
 msgid "Remove"
 msgstr "Aýyr"
 
@@ -2092,7 +2065,7 @@ msgstr "Saklanýar..."
 msgid "Search"
 msgstr "Gözle"
 
-#: src/routes/_authenticated/find.tsx:89
+#: src/routes/_authenticated/find.tsx:93
 msgid "Search by name, ID, fingerprint, or URL..."
 msgstr "At, ID, fingerprint ýa-da URL boýunça gözle..."
 
@@ -2135,7 +2108,7 @@ msgid "Search..."
 msgstr "Gözle..."
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:174
-#: ../../../lib/web/src/components/search-entity-page.tsx:198
+#: ../../../lib/web/src/components/search-entity-page.tsx:200
 #: ../../../lib/web/src/features/access/access-dialog.tsx:202
 msgid "Searching..."
 msgstr "Gözlenýär..."
@@ -2441,10 +2414,6 @@ msgstr "Bu taslama häzir ýüklenip bilinmedi."
 msgid "This project may have been deleted or you don't have access to it."
 msgstr "Bu taslama pozulan bolup biler ýa-da rugsadyň ýok."
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:478
-#~ msgid "This will import the data from <0>{0}</0>. Objects will be appended to the existing records. Ensure the current design matches the classes and fields referenced in the file."
-#~ msgstr "Bu <0>{0}</0> faýlyndan maglumatlary import eder. Obýektler bar bolan ýazgylara goşular. Häzirki dizaýnyň faýlda salgylanýan klaslara we meýdanlara gabat gelýändigine göz ýetiriň."
-
 #: src/features/requests/components/merge-button.tsx:105
 msgid "This will merge \"{source}\" into \"{target}\". This action cannot be undone."
 msgstr "Bu \"{source}\" ny \"{target}\" -a birleşdirer. Bu hereketi yza gaýtaryp bolmaz."
@@ -2533,7 +2502,7 @@ msgid "Travelling"
 msgstr "Sapar"
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:190
-#: ../../../lib/web/src/components/search-entity-page.tsx:214
+#: ../../../lib/web/src/components/search-entity-page.tsx:216
 msgid "Try adjusting your search terms"
 msgstr "Gözleg sözleriňi düzelt"
 
@@ -2629,7 +2598,7 @@ msgstr "Elýeterlilik täzelenýär..."
 msgid "Upload"
 msgstr "Ýükle"
 
-#: src/features/projects/components/create-project-dialog.tsx:304
+#: src/features/projects/components/create-project-dialog.tsx:314
 #: src/routes/_authenticated/$projectId/design.tsx:336
 msgid "Upload .json file"
 msgstr "Ýükle .json faýl"
@@ -2640,7 +2609,7 @@ msgstr "Giriş açaryňyzy ulanyň"
 
 #. placeholder {0}: prefix || "project"
 #. placeholder {1}: prefix || "project"
-#: src/features/projects/components/create-project-dialog.tsx:272
+#: src/features/projects/components/create-project-dialog.tsx:282
 msgid "Used for readable IDs like {0}-1, {1}-2"
 msgstr "{0}-1, {1}-2 ýaly okalýan şahsyýetler üçin ulanylýar"
 
@@ -2671,7 +2640,7 @@ msgstr "Tassykla"
 msgid "Verify email address"
 msgstr "E-poçta salgysyny tassykla"
 
-#: ../../../lib/web/src/components/attachment-gallery.tsx:75
+#: ../../../lib/web/src/components/attachment-gallery.tsx:74
 msgid "Video thumbnail"
 msgstr "Wideo eskizi"
 
@@ -2721,9 +2690,9 @@ msgstr "Synlandy"
 msgid "Watched only"
 msgstr "Diňe synlandy"
 
-#: src/features/projects/components/create-project-dialog.tsx:360
+#: src/features/projects/components/create-project-dialog.tsx:370
 msgid "We have auto-selected the best matching template."
-msgstr ""
+msgstr "Iň laýyk gelýän şablony awtomatik saýladyk."
 
 #: ../../../lib/web/src/features/errors/maintenance-error.tsx:16
 msgid "We'll be back online shortly."
@@ -2753,6 +2722,6 @@ msgstr "Entek taslamalaryň ýok."
 msgid "Your account was moved here from {source}. Until you delete it there, messages and notifications may reach both servers, some of your content keeps being served from the old server, and followers may take a few minutes to find you here."
 msgstr "Hasabyňyz {source} serwерinden bu ýere geçirildi. Şol ýerden pozýançaňyz, habarlar we duýduryşlar iki serwere hem ýetip biler, käbir mazmunyňyz köne serweriň üsti bilen berler, yzarlaýanlar sizi bu ýerde tapmak üçin birnäçe minut gerek bolup biler."
 
-#: src/features/projects/components/create-project-dialog.tsx:356
+#: src/features/projects/components/create-project-dialog.tsx:366
 msgid "Your backup contains objects of type:"
-msgstr ""
+msgstr "Ätiýaçlyk nusgaňyzda şu görnüşli obýektler bar:"

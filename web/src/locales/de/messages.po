@@ -237,7 +237,7 @@ msgstr "Alle"
 msgid "All projects"
 msgstr "Alle Projekte"
 
-#: src/features/projects/components/create-project-dialog.tsx:278
+#: src/features/projects/components/create-project-dialog.tsx:288
 msgid "Allow anyone to search for project"
 msgstr "Allen erlauben, nach Projekt zu suchen"
 
@@ -313,7 +313,7 @@ msgid "Available keyboard shortcuts"
 msgstr "Verfügbare Tastenkombinationen"
 
 #: ../../../lib/web/src/components/place-picker.tsx:155
-#: src/features/projects/components/create-project-dialog.tsx:428
+#: src/features/projects/components/create-project-dialog.tsx:438
 msgid "Back"
 msgstr "Zurück"
 
@@ -378,7 +378,7 @@ msgstr "Kann untergeordnet sein zu"
 #: src/features/board/components/board-column.tsx:606
 #: src/features/editor/components/option-dialog.tsx:146
 #: src/features/objects/components/comment-thread.tsx:175
-#: src/features/projects/components/create-project-dialog.tsx:344
+#: src/features/projects/components/create-project-dialog.tsx:354
 #: src/routes/_authenticated/$projectId/design.tsx:343
 #: src/routes/_authenticated/$projectId/index.tsx:1011
 msgid "Cancel"
@@ -414,7 +414,7 @@ msgstr "Merge-Status wird geprüft ..."
 msgid "Checklist"
 msgstr "Checkliste"
 
-#: src/features/projects/components/create-project-dialog.tsx:225
+#: src/features/projects/components/create-project-dialog.tsx:235
 msgid "Choose a template"
 msgstr "Vorlage auswählen"
 
@@ -619,7 +619,7 @@ msgstr "Erstellen"
 msgid "Create a new item in this project"
 msgstr "Neuen Eintrag in diesem Projekt erstellen"
 
-#: src/features/projects/components/create-project-dialog.tsx:227
+#: src/features/projects/components/create-project-dialog.tsx:237
 #: src/features/projects/pages/projects-list-page.tsx:103
 msgid "Create a new project"
 msgstr "Neues Projekt erstellen"
@@ -630,9 +630,9 @@ msgid "Create new item"
 msgstr "Neuen Eintrag erstellen"
 
 #: src/components/layout/projects-layout.tsx:62
-#: src/features/projects/components/create-project-dialog.tsx:215
 #: src/features/projects/components/create-project-dialog.tsx:225
-#: src/features/projects/components/create-project-dialog.tsx:431
+#: src/features/projects/components/create-project-dialog.tsx:235
+#: src/features/projects/components/create-project-dialog.tsx:441
 msgid "Create project"
 msgstr "Projekt erstellen"
 
@@ -645,12 +645,12 @@ msgstr "Erstellen, bearbeiten, kommentieren und ansehen"
 msgid "Created"
 msgstr "Erstellt"
 
-#: src/features/projects/components/create-project-dialog.tsx:108
+#: src/features/projects/components/create-project-dialog.tsx:109
 msgid "Creating project..."
 msgstr "Projekt wird erstellt..."
 
 #: src/features/objects/components/create-object-dialog.tsx:535
-#: src/features/projects/components/create-project-dialog.tsx:431
+#: src/features/projects/components/create-project-dialog.tsx:441
 msgid "Creating..."
 msgstr "Wird erstellt ..."
 
@@ -675,13 +675,12 @@ msgstr "Dunkler Modus"
 msgid "Data conflict"
 msgstr "Datenkonflikt"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:350
-#~ msgid "Data imported ({0, plural, one {# object} other {# objects}}, {1, plural, one {# comment} other {# comments}}, {2, plural, one {# link} other {# links}})"
-#~ msgstr "Daten importiert ({0, plural, one {# Objekt} other {# Objekte}}, {1, plural, one {# Kommentar} other {# Kommentare}}, {2, plural, one {# Link} other {# Links}})"
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:433
-#~ msgid "Data management"
-#~ msgstr "Datenverwaltung"
+#. placeholder {0}: imported.data?.objects ?? 0
+#. placeholder {1}: imported.data?.comments ?? 0
+#. placeholder {2}: imported.data?.links ?? 0
+#: src/features/projects/components/create-project-dialog.tsx:121
+msgid "Data imported ({0, plural, one {# object} other {# objects}}, {1, plural, one {# comment} other {# comments}}, {2, plural, one {# link} other {# links}})"
+msgstr "Daten importiert ({0, plural, one {# Objekt} other {# Objekte}}, {1, plural, one {# Kommentar} other {# Kommentare}}, {2, plural, one {# Link} other {# Links}})"
 
 #: src/features/editor/components/add-dialogs.tsx:137
 msgid "Date"
@@ -967,10 +966,6 @@ msgstr "Daten exportieren"
 msgid "Export design"
 msgstr "Design exportieren"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:434
-#~ msgid "Export or import the raw data content in this project."
-#~ msgstr "Rohdaten in diesem Projekt exportieren oder importieren."
-
 #: ../../../lib/web/src/lib/preference-utils.ts:136
 msgid "Extra large"
 msgstr "Extra groß"
@@ -1000,7 +995,7 @@ msgstr "Link konnte nicht erstellt werden"
 msgid "Failed to create option"
 msgstr "Option konnte nicht erstellt werden"
 
-#: src/features/projects/components/create-project-dialog.tsx:110
+#: src/features/projects/components/create-project-dialog.tsx:111
 msgid "Failed to create project"
 msgstr "Projekt konnte nicht erstellt werden"
 
@@ -1036,7 +1031,7 @@ msgstr "Daten konnten nicht exportiert werden"
 msgid "Failed to export design"
 msgstr "Design konnte nicht exportiert werden"
 
-#: src/features/projects/components/create-project-dialog.tsx:124
+#: src/features/projects/components/create-project-dialog.tsx:122
 msgid "Failed to import data"
 msgstr "Daten konnten nicht importiert werden"
 
@@ -1069,7 +1064,7 @@ msgstr "Merge fehlgeschlagen"
 msgid "Failed to post comment"
 msgstr "Kommentar konnte nicht gepostet werden"
 
-#: src/features/projects/components/create-project-dialog.tsx:177
+#: src/features/projects/components/create-project-dialog.tsx:175
 #: src/routes/_authenticated/$projectId/design.tsx:281
 msgid "Failed to read file"
 msgstr "Datei konnte nicht gelesen werden"
@@ -1144,7 +1139,7 @@ msgid "Files"
 msgstr "Dateien"
 
 #: src/components/layout/projects-layout.tsx:61
-#: src/routes/_authenticated/find.tsx:88
+#: src/routes/_authenticated/find.tsx:92
 msgid "Find projects"
 msgstr "Projekte finden"
 
@@ -1254,40 +1249,18 @@ msgstr "Identität"
 msgid "Imperial"
 msgstr "Imperial"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:549
-#~ msgid "Import a data configuration"
-#~ msgstr "Eine Datenkonfiguration importieren"
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:444
-#: src/routes/_authenticated/$projectId_.settings.tsx:490
-#: src/routes/_authenticated/$projectId_.settings.tsx:548
-#~ msgid "Import data"
-#~ msgstr "Daten importieren"
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:476
-#~ msgid "Import data?"
-#~ msgstr "Daten importieren?"
-
 #: src/routes/_authenticated/$projectId/design.tsx:177
 #: src/routes/_authenticated/$projectId/design.tsx:293
 msgid "Import design"
 msgstr "Design importieren"
 
-#: src/features/projects/components/create-project-dialog.tsx:288
+#: src/features/projects/components/create-project-dialog.tsx:298
 msgid "Import from backup (optional)"
-msgstr ""
+msgstr "Aus Sicherung importieren (optional)"
 
-#: src/features/projects/components/create-project-dialog.tsx:122
-msgid "Imported {count} objects"
-msgstr ""
-
-#: src/features/projects/components/create-project-dialog.tsx:119
+#: src/features/projects/components/create-project-dialog.tsx:120
 msgid "Importing data..."
-msgstr ""
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:487
-#~ msgid "Importing..."
-#~ msgstr "Wird importiert..."
+msgstr "Daten werden importiert..."
 
 #: ../../../lib/web/src/components/config-drawer.tsx:252
 msgid "Inset"
@@ -1301,7 +1274,7 @@ msgstr "Interessen"
 msgid "Invalid date"
 msgstr "Ungültiges Datum"
 
-#: src/features/projects/components/create-project-dialog.tsx:171
+#: src/features/projects/components/create-project-dialog.tsx:169
 #: src/routes/_authenticated/$projectId/design.tsx:277
 msgid "Invalid JSON file"
 msgstr "Ungültige JSON-Datei"
@@ -1374,7 +1347,7 @@ msgstr "Element wird geladen"
 msgid "Loading item details"
 msgstr "Elementdetails werden geladen"
 
-#: src/features/projects/components/create-project-dialog.tsx:365
+#: src/features/projects/components/create-project-dialog.tsx:375
 msgid "Loading templates..."
 msgstr "Vorlagen werden geladen..."
 
@@ -1475,7 +1448,7 @@ msgstr "Fehlende Parameter für Repository, Quelle oder Ziel"
 msgid "Monday"
 msgstr "Montag"
 
-#: src/features/projects/components/create-project-dialog.tsx:243
+#: src/features/projects/components/create-project-dialog.tsx:253
 msgid "My project"
 msgstr "Mein Projekt"
 
@@ -1485,12 +1458,12 @@ msgstr "Mein Projekt"
 #: src/features/editor/components/edit-dialogs.tsx:741
 #: src/features/editor/components/edit-dialogs.tsx:1065
 #: src/features/editor/components/option-dialog.tsx:112
-#: src/features/projects/components/create-project-dialog.tsx:233
+#: src/features/projects/components/create-project-dialog.tsx:243
 #: src/routes/_authenticated/$projectId_.settings.tsx:306
 msgid "Name"
 msgstr "Name"
 
-#: src/features/projects/components/create-project-dialog.tsx:84
+#: src/features/projects/components/create-project-dialog.tsx:85
 msgid "Name is required"
 msgstr "Name ist erforderlich"
 
@@ -1510,7 +1483,7 @@ msgstr "Neu"
 msgid "New {className}"
 msgstr "Neue {className}"
 
-#: src/features/projects/components/create-project-dialog.tsx:347
+#: src/features/projects/components/create-project-dialog.tsx:357
 msgid "Next"
 msgstr "Weiter"
 
@@ -1592,7 +1565,7 @@ msgid "No profile"
 msgstr "Kein Profil"
 
 #: src/features/projects/components/inline-project-search.tsx:164
-#: src/routes/_authenticated/find.tsx:90
+#: src/routes/_authenticated/find.tsx:94
 msgid "No projects found"
 msgstr "Keine Projekte gefunden"
 
@@ -1810,7 +1783,7 @@ msgstr "Bitte fügen Sie dem Projektdesign eine oder mehrere Klassen hinzu."
 msgid "Please check your internet connection and try again."
 msgstr "Bitte überprüfe deine Internetverbindung und versuche es erneut."
 
-#: src/features/projects/components/create-project-dialog.tsx:94
+#: src/features/projects/components/create-project-dialog.tsx:95
 msgid "Please select a template"
 msgstr "Bitte wählen Sie eine Vorlage aus"
 
@@ -1822,7 +1795,7 @@ msgstr "Bitte versuche es erneut."
 msgid "Please wait a moment and try again."
 msgstr "Bitte warten Sie einen Moment und versuchen Sie es erneut."
 
-#: src/features/projects/components/create-project-dialog.tsx:255
+#: src/features/projects/components/create-project-dialog.tsx:265
 #: src/routes/_authenticated/$projectId_.settings.tsx:323
 msgid "Prefix"
 msgstr "Präfix"
@@ -1852,7 +1825,7 @@ msgstr "Projekt"
 msgid "Project actions"
 msgstr "Projektaktionen"
 
-#: src/features/projects/components/create-project-dialog.tsx:109
+#: src/features/projects/components/create-project-dialog.tsx:110
 msgid "Project created"
 msgstr "Projekt erstellt"
 
@@ -1916,7 +1889,7 @@ msgid "Rebase and merge"
 msgstr "Rebase und Merge"
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:216
-#: ../../../lib/web/src/components/search-entity-page.tsx:240
+#: ../../../lib/web/src/components/search-entity-page.tsx:242
 msgid "Recommended"
 msgstr "Empfohlen"
 
@@ -1955,7 +1928,7 @@ msgstr "Relativ innerhalb von 24 Stunden, sonst absolut"
 #: src/features/objects/components/comment-thread.tsx:299
 #: src/features/objects/components/create-object-dialog.tsx:486
 #: src/features/objects/components/create-object-dialog.tsx:491
-#: src/features/projects/components/create-project-dialog.tsx:331
+#: src/features/projects/components/create-project-dialog.tsx:341
 msgid "Remove"
 msgstr "Entfernen"
 
@@ -2092,7 +2065,7 @@ msgstr "Wird gespeichert..."
 msgid "Search"
 msgstr "Suchen"
 
-#: src/routes/_authenticated/find.tsx:89
+#: src/routes/_authenticated/find.tsx:93
 msgid "Search by name, ID, fingerprint, or URL..."
 msgstr "Nach Name, ID, Fingerabdruck oder URL suchen..."
 
@@ -2135,7 +2108,7 @@ msgid "Search..."
 msgstr "Suchen..."
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:174
-#: ../../../lib/web/src/components/search-entity-page.tsx:198
+#: ../../../lib/web/src/components/search-entity-page.tsx:200
 #: ../../../lib/web/src/features/access/access-dialog.tsx:202
 msgid "Searching..."
 msgstr "Wird gesucht..."
@@ -2441,10 +2414,6 @@ msgstr "Dieses Projekt konnte derzeit nicht geladen werden."
 msgid "This project may have been deleted or you don't have access to it."
 msgstr "Dieses Projekt wurde möglicherweise gelöscht oder Sie haben keinen Zugriff darauf."
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:478
-#~ msgid "This will import the data from <0>{0}</0>. Objects will be appended to the existing records. Ensure the current design matches the classes and fields referenced in the file."
-#~ msgstr "Dadurch werden die Daten aus <0>{0}</0> importiert. Objekte werden an die vorhandenen Datensätze angehängt. Stellen Sie sicher, dass das aktuelle Design mit den in der Datei referenzierten Klassen und Feldern übereinstimmt."
-
 #: src/features/requests/components/merge-button.tsx:105
 msgid "This will merge \"{source}\" into \"{target}\". This action cannot be undone."
 msgstr "Dies führt \"{source}\" in \"{target}\" zusammen. Diese Aktion kann nicht rückgängig gemacht werden."
@@ -2533,7 +2502,7 @@ msgid "Travelling"
 msgstr "Unterwegs"
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:190
-#: ../../../lib/web/src/components/search-entity-page.tsx:214
+#: ../../../lib/web/src/components/search-entity-page.tsx:216
 msgid "Try adjusting your search terms"
 msgstr "Passen Sie Ihre Suchbegriffe an"
 
@@ -2629,7 +2598,7 @@ msgstr "Zugriff wird aktualisiert..."
 msgid "Upload"
 msgstr "Hochladen"
 
-#: src/features/projects/components/create-project-dialog.tsx:304
+#: src/features/projects/components/create-project-dialog.tsx:314
 #: src/routes/_authenticated/$projectId/design.tsx:336
 msgid "Upload .json file"
 msgstr ".json-Datei hochladen"
@@ -2640,7 +2609,7 @@ msgstr "Passkey verwenden"
 
 #. placeholder {0}: prefix || "project"
 #. placeholder {1}: prefix || "project"
-#: src/features/projects/components/create-project-dialog.tsx:272
+#: src/features/projects/components/create-project-dialog.tsx:282
 msgid "Used for readable IDs like {0}-1, {1}-2"
 msgstr "Wird für lesbare IDs wie {0}-1, {1}-2 verwendet"
 
@@ -2671,7 +2640,7 @@ msgstr "Verifizieren"
 msgid "Verify email address"
 msgstr "E-Mail-Adresse verifizieren"
 
-#: ../../../lib/web/src/components/attachment-gallery.tsx:75
+#: ../../../lib/web/src/components/attachment-gallery.tsx:74
 msgid "Video thumbnail"
 msgstr "Video-Vorschaubild"
 
@@ -2721,9 +2690,9 @@ msgstr "Beobachtet"
 msgid "Watched only"
 msgstr "Nur beobachtet"
 
-#: src/features/projects/components/create-project-dialog.tsx:360
+#: src/features/projects/components/create-project-dialog.tsx:370
 msgid "We have auto-selected the best matching template."
-msgstr ""
+msgstr "Wir haben automatisch die am besten passende Vorlage ausgewählt."
 
 #: ../../../lib/web/src/features/errors/maintenance-error.tsx:16
 msgid "We'll be back online shortly."
@@ -2753,6 +2722,6 @@ msgstr "Sie haben noch keine Projekte."
 msgid "Your account was moved here from {source}. Until you delete it there, messages and notifications may reach both servers, some of your content keeps being served from the old server, and followers may take a few minutes to find you here."
 msgstr "Ihr Konto wurde von {source} hierher verschoben. Bis Sie es dort löschen, können Nachrichten und Benachrichtigungen beide Server erreichen, ein Teil Ihrer Inhalte wird weiterhin vom alten Server bereitgestellt, und Follower benötigen möglicherweise ein paar Minuten, um Sie hier zu finden."
 
-#: src/features/projects/components/create-project-dialog.tsx:356
+#: src/features/projects/components/create-project-dialog.tsx:366
 msgid "Your backup contains objects of type:"
-msgstr ""
+msgstr "Ihre Sicherung enthält Objekte vom Typ:"

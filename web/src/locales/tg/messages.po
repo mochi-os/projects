@@ -237,7 +237,7 @@ msgstr "Ҳама"
 msgid "All projects"
 msgstr "Ҳама лоиҳаҳо"
 
-#: src/features/projects/components/create-project-dialog.tsx:278
+#: src/features/projects/components/create-project-dialog.tsx:288
 msgid "Allow anyone to search for project"
 msgstr "Иҷозат додан, ки ҳар кас лоиҳаро ҷустуҷӯ кунад"
 
@@ -313,7 +313,7 @@ msgid "Available keyboard shortcuts"
 msgstr "Миёнбурҳои клавиатураи дастрас"
 
 #: ../../../lib/web/src/components/place-picker.tsx:155
-#: src/features/projects/components/create-project-dialog.tsx:428
+#: src/features/projects/components/create-project-dialog.tsx:438
 msgid "Back"
 msgstr "Бозгашт"
 
@@ -378,7 +378,7 @@ msgstr "Метавонад фарзанди ин бошад"
 #: src/features/board/components/board-column.tsx:606
 #: src/features/editor/components/option-dialog.tsx:146
 #: src/features/objects/components/comment-thread.tsx:175
-#: src/features/projects/components/create-project-dialog.tsx:344
+#: src/features/projects/components/create-project-dialog.tsx:354
 #: src/routes/_authenticated/$projectId/design.tsx:343
 #: src/routes/_authenticated/$projectId/index.tsx:1011
 msgid "Cancel"
@@ -414,7 +414,7 @@ msgstr "Санҷиши ҳолати merge..."
 msgid "Checklist"
 msgstr "Рӯйхат"
 
-#: src/features/projects/components/create-project-dialog.tsx:225
+#: src/features/projects/components/create-project-dialog.tsx:235
 msgid "Choose a template"
 msgstr "Шаблон интихоб кунед"
 
@@ -619,7 +619,7 @@ msgstr "Эҷод кардан"
 msgid "Create a new item in this project"
 msgstr "Эҷоди нуктаи нав дар ин лоиҳа"
 
-#: src/features/projects/components/create-project-dialog.tsx:227
+#: src/features/projects/components/create-project-dialog.tsx:237
 #: src/features/projects/pages/projects-list-page.tsx:103
 msgid "Create a new project"
 msgstr "Эҷоди лоиҳаи нав"
@@ -630,9 +630,9 @@ msgid "Create new item"
 msgstr "Эҷоди нуктаи нав"
 
 #: src/components/layout/projects-layout.tsx:62
-#: src/features/projects/components/create-project-dialog.tsx:215
 #: src/features/projects/components/create-project-dialog.tsx:225
-#: src/features/projects/components/create-project-dialog.tsx:431
+#: src/features/projects/components/create-project-dialog.tsx:235
+#: src/features/projects/components/create-project-dialog.tsx:441
 msgid "Create project"
 msgstr "Эҷоди лоиҳа"
 
@@ -645,12 +645,12 @@ msgstr "Эҷод, таҳрир, шарҳ ва дидан"
 msgid "Created"
 msgstr "Эҷодшуда"
 
-#: src/features/projects/components/create-project-dialog.tsx:108
+#: src/features/projects/components/create-project-dialog.tsx:109
 msgid "Creating project..."
 msgstr "Эҷоди лоиҳа..."
 
 #: src/features/objects/components/create-object-dialog.tsx:535
-#: src/features/projects/components/create-project-dialog.tsx:431
+#: src/features/projects/components/create-project-dialog.tsx:441
 msgid "Creating..."
 msgstr "Эҷод карда истодааст..."
 
@@ -675,13 +675,12 @@ msgstr "Ҳолати торик"
 msgid "Data conflict"
 msgstr "Ихтилофи маълумот"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:350
-#~ msgid "Data imported ({0, plural, one {# object} other {# objects}}, {1, plural, one {# comment} other {# comments}}, {2, plural, one {# link} other {# links}})"
-#~ msgstr "Маълумот ворид карда шуд ({0, plural, one {# объект} other {# объект}}, {1, plural, one {# шарҳ} other {# шарҳ}}, {2, plural, one {# пайванд} other {# пайванд}})"
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:433
-#~ msgid "Data management"
-#~ msgstr "Идоракунии маълумот"
+#. placeholder {0}: imported.data?.objects ?? 0
+#. placeholder {1}: imported.data?.comments ?? 0
+#. placeholder {2}: imported.data?.links ?? 0
+#: src/features/projects/components/create-project-dialog.tsx:121
+msgid "Data imported ({0, plural, one {# object} other {# objects}}, {1, plural, one {# comment} other {# comments}}, {2, plural, one {# link} other {# links}})"
+msgstr "Маълумот ворид карда шуд ({0, plural, one {# объект} other {# объект}}, {1, plural, one {# шарҳ} other {# шарҳ}}, {2, plural, one {# пайванд} other {# пайванд}})"
 
 #: src/features/editor/components/add-dialogs.tsx:137
 msgid "Date"
@@ -967,10 +966,6 @@ msgstr "Содироти маълумот"
 msgid "Export design"
 msgstr "Содироти тарроҳӣ"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:434
-#~ msgid "Export or import the raw data content in this project."
-#~ msgstr "Мазмуни маълумоти хомро дар ин лоиҳа содир ё ворид кунед."
-
 #: ../../../lib/web/src/lib/preference-utils.ts:136
 msgid "Extra large"
 msgstr "Хеле калон"
@@ -1000,7 +995,7 @@ msgstr "Эҷоди пайванд ба анҷом нарасид"
 msgid "Failed to create option"
 msgstr "Эҷоди интихоб ба анҷом нарасид"
 
-#: src/features/projects/components/create-project-dialog.tsx:110
+#: src/features/projects/components/create-project-dialog.tsx:111
 msgid "Failed to create project"
 msgstr "Эҷоди лоиҳа ба анҷом нарасид"
 
@@ -1036,7 +1031,7 @@ msgstr "Маълумот содир карда нашуд"
 msgid "Failed to export design"
 msgstr "Содироти тарроҳӣ ба анҷом нарасид"
 
-#: src/features/projects/components/create-project-dialog.tsx:124
+#: src/features/projects/components/create-project-dialog.tsx:122
 msgid "Failed to import data"
 msgstr "Маълумот ворид карда нашуд"
 
@@ -1069,7 +1064,7 @@ msgstr "Муттаҳидсозӣ ба анҷом нарасид"
 msgid "Failed to post comment"
 msgstr "Гузоштани шарҳ ба анҷом нарасид"
 
-#: src/features/projects/components/create-project-dialog.tsx:177
+#: src/features/projects/components/create-project-dialog.tsx:175
 #: src/routes/_authenticated/$projectId/design.tsx:281
 msgid "Failed to read file"
 msgstr "Хондани файл ба анҷом нарасид"
@@ -1144,7 +1139,7 @@ msgid "Files"
 msgstr "Файлҳо"
 
 #: src/components/layout/projects-layout.tsx:61
-#: src/routes/_authenticated/find.tsx:88
+#: src/routes/_authenticated/find.tsx:92
 msgid "Find projects"
 msgstr "Лоиҳаҳоро ёбед"
 
@@ -1254,40 +1249,18 @@ msgstr "Шахсият"
 msgid "Imperial"
 msgstr "Империалӣ"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:549
-#~ msgid "Import a data configuration"
-#~ msgstr "Воридоти конфигуратсияи маълумот"
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:444
-#: src/routes/_authenticated/$projectId_.settings.tsx:490
-#: src/routes/_authenticated/$projectId_.settings.tsx:548
-#~ msgid "Import data"
-#~ msgstr "Воридоти маълумот"
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:476
-#~ msgid "Import data?"
-#~ msgstr "Маълумот ворид карда шавад?"
-
 #: src/routes/_authenticated/$projectId/design.tsx:177
 #: src/routes/_authenticated/$projectId/design.tsx:293
 msgid "Import design"
 msgstr "Воридкунии тарроҳӣ"
 
-#: src/features/projects/components/create-project-dialog.tsx:288
+#: src/features/projects/components/create-project-dialog.tsx:298
 msgid "Import from backup (optional)"
-msgstr ""
+msgstr "Ворид кардан аз нусхаи захиравӣ (ихтиёрӣ)"
 
-#: src/features/projects/components/create-project-dialog.tsx:122
-msgid "Imported {count} objects"
-msgstr ""
-
-#: src/features/projects/components/create-project-dialog.tsx:119
+#: src/features/projects/components/create-project-dialog.tsx:120
 msgid "Importing data..."
-msgstr ""
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:487
-#~ msgid "Importing..."
-#~ msgstr "Ворид карда мешавад..."
+msgstr "Маълумот ворид карда мешавад..."
 
 #: ../../../lib/web/src/components/config-drawer.tsx:252
 msgid "Inset"
@@ -1301,7 +1274,7 @@ msgstr "Шавқҳо"
 msgid "Invalid date"
 msgstr "Сана нодуруст"
 
-#: src/features/projects/components/create-project-dialog.tsx:171
+#: src/features/projects/components/create-project-dialog.tsx:169
 #: src/routes/_authenticated/$projectId/design.tsx:277
 msgid "Invalid JSON file"
 msgstr "Файли JSON нодуруст"
@@ -1374,7 +1347,7 @@ msgstr "Ашё бор карда мешавад"
 msgid "Loading item details"
 msgstr "Тафсилоти ашё бор карда мешаванд"
 
-#: src/features/projects/components/create-project-dialog.tsx:365
+#: src/features/projects/components/create-project-dialog.tsx:375
 msgid "Loading templates..."
 msgstr "Шаблонҳо бор карда мешаванд..."
 
@@ -1475,7 +1448,7 @@ msgstr "Параметрҳои repo, манбаъ ё мақсад намерас
 msgid "Monday"
 msgstr "Душанбе"
 
-#: src/features/projects/components/create-project-dialog.tsx:243
+#: src/features/projects/components/create-project-dialog.tsx:253
 msgid "My project"
 msgstr "Лоиҳаи ман"
 
@@ -1485,12 +1458,12 @@ msgstr "Лоиҳаи ман"
 #: src/features/editor/components/edit-dialogs.tsx:741
 #: src/features/editor/components/edit-dialogs.tsx:1065
 #: src/features/editor/components/option-dialog.tsx:112
-#: src/features/projects/components/create-project-dialog.tsx:233
+#: src/features/projects/components/create-project-dialog.tsx:243
 #: src/routes/_authenticated/$projectId_.settings.tsx:306
 msgid "Name"
 msgstr "Ном"
 
-#: src/features/projects/components/create-project-dialog.tsx:84
+#: src/features/projects/components/create-project-dialog.tsx:85
 msgid "Name is required"
 msgstr "Ном талаб карда мешавад"
 
@@ -1510,7 +1483,7 @@ msgstr "Нав"
 msgid "New {className}"
 msgstr "Нав {className}"
 
-#: src/features/projects/components/create-project-dialog.tsx:347
+#: src/features/projects/components/create-project-dialog.tsx:357
 msgid "Next"
 msgstr "Минбаъд"
 
@@ -1592,7 +1565,7 @@ msgid "No profile"
 msgstr "Профил нест"
 
 #: src/features/projects/components/inline-project-search.tsx:164
-#: src/routes/_authenticated/find.tsx:90
+#: src/routes/_authenticated/find.tsx:94
 msgid "No projects found"
 msgstr "Ягон лоиҳа ёфт нашуд"
 
@@ -1810,7 +1783,7 @@ msgstr "Лутфан як ё якчанд синфҳоро ба тарҳи ло�
 msgid "Please check your internet connection and try again."
 msgstr "Лутфан пайвасти интернети худро санҷед ва аз нав кӯшиш кунед."
 
-#: src/features/projects/components/create-project-dialog.tsx:94
+#: src/features/projects/components/create-project-dialog.tsx:95
 msgid "Please select a template"
 msgstr "Лутфан як қолабро интихоб кунед"
 
@@ -1822,7 +1795,7 @@ msgstr "Лутфан, бори дигар кӯшиш кунед."
 msgid "Please wait a moment and try again."
 msgstr "Лутфан каме интизор шавед ва аз нав кӯшиш кунед."
 
-#: src/features/projects/components/create-project-dialog.tsx:255
+#: src/features/projects/components/create-project-dialog.tsx:265
 #: src/routes/_authenticated/$projectId_.settings.tsx:323
 msgid "Prefix"
 msgstr "Префикс"
@@ -1852,7 +1825,7 @@ msgstr "Лоиҳа"
 msgid "Project actions"
 msgstr "Амалҳои лоиҳа"
 
-#: src/features/projects/components/create-project-dialog.tsx:109
+#: src/features/projects/components/create-project-dialog.tsx:110
 msgid "Project created"
 msgstr "Лоиҳа эҷод шуд"
 
@@ -1916,7 +1889,7 @@ msgid "Rebase and merge"
 msgstr "Rebase ва merge"
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:216
-#: ../../../lib/web/src/components/search-entity-page.tsx:240
+#: ../../../lib/web/src/components/search-entity-page.tsx:242
 msgid "Recommended"
 msgstr "Тавсияшуда"
 
@@ -1955,7 +1928,7 @@ msgstr "Нисбӣ дар 24 соат, дар акси ҳол мутлақ"
 #: src/features/objects/components/comment-thread.tsx:299
 #: src/features/objects/components/create-object-dialog.tsx:486
 #: src/features/objects/components/create-object-dialog.tsx:491
-#: src/features/projects/components/create-project-dialog.tsx:331
+#: src/features/projects/components/create-project-dialog.tsx:341
 msgid "Remove"
 msgstr "Хориҷ кардан"
 
@@ -2092,7 +2065,7 @@ msgstr "Захира кардан..."
 msgid "Search"
 msgstr "Ҷустуҷӯ"
 
-#: src/routes/_authenticated/find.tsx:89
+#: src/routes/_authenticated/find.tsx:93
 msgid "Search by name, ID, fingerprint, or URL..."
 msgstr "Ҷустуҷӯ аз рӯи ном, ID, изи ангушт ё URL..."
 
@@ -2135,7 +2108,7 @@ msgid "Search..."
 msgstr "Ҷустуҷӯ..."
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:174
-#: ../../../lib/web/src/components/search-entity-page.tsx:198
+#: ../../../lib/web/src/components/search-entity-page.tsx:200
 #: ../../../lib/web/src/features/access/access-dialog.tsx:202
 msgid "Searching..."
 msgstr "Ҷустуҷӯ карда мешавад..."
@@ -2441,10 +2414,6 @@ msgstr "Ин лоиҳаро ҳозир бор кардан мумкин нест
 msgid "This project may have been deleted or you don't have access to it."
 msgstr "Ин лоиҳа шояд нест карда шуда бошад ё шумо ба он дастрасӣ надошта бошед."
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:478
-#~ msgid "This will import the data from <0>{0}</0>. Objects will be appended to the existing records. Ensure the current design matches the classes and fields referenced in the file."
-#~ msgstr "Ин маълумотро аз <0>{0}</0> ворид мекунад. Объектҳо ба сабтҳои мавҷуда илова карда мешаванд. Боварӣ ҳосил кунед, ки тарҳи ҷорӣ ба синфҳо ва майдонҳои дар файл зикршуда мувофиқат мекунад."
-
 #: src/features/requests/components/merge-button.tsx:105
 msgid "This will merge \"{source}\" into \"{target}\". This action cannot be undone."
 msgstr "Ин \"{source}\"-ро ба \"{target}\" муттаҳид мекунад. Ин амалро ботил кардан мумкин нест."
@@ -2533,7 +2502,7 @@ msgid "Travelling"
 msgstr "Сафар"
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:190
-#: ../../../lib/web/src/components/search-entity-page.tsx:214
+#: ../../../lib/web/src/components/search-entity-page.tsx:216
 msgid "Try adjusting your search terms"
 msgstr "Истилоҳҳои ҷустуҷӯи худро танзим кунед"
 
@@ -2629,7 +2598,7 @@ msgstr "Навсозии дастрасӣ..."
 msgid "Upload"
 msgstr "Бор кардан"
 
-#: src/features/projects/components/create-project-dialog.tsx:304
+#: src/features/projects/components/create-project-dialog.tsx:314
 #: src/routes/_authenticated/$projectId/design.tsx:336
 msgid "Upload .json file"
 msgstr "Бор кардани файли .json"
@@ -2640,7 +2609,7 @@ msgstr "Калиди дастрасии худро истифода баред"
 
 #. placeholder {0}: prefix || "project"
 #. placeholder {1}: prefix || "project"
-#: src/features/projects/components/create-project-dialog.tsx:272
+#: src/features/projects/components/create-project-dialog.tsx:282
 msgid "Used for readable IDs like {0}-1, {1}-2"
 msgstr "Барои ID-ҳои хонданишаванда ба монанди {0}-1, {1}-2 истифода мешавад"
 
@@ -2671,7 +2640,7 @@ msgstr "Тасдиқ кардан"
 msgid "Verify email address"
 msgstr "Тасдиқи суроғаи почтаи электронӣ"
 
-#: ../../../lib/web/src/components/attachment-gallery.tsx:75
+#: ../../../lib/web/src/components/attachment-gallery.tsx:74
 msgid "Video thumbnail"
 msgstr "Эскизи видео"
 
@@ -2721,9 +2690,9 @@ msgstr "Назорат шуда"
 msgid "Watched only"
 msgstr "Танҳо назоратшуда"
 
-#: src/features/projects/components/create-project-dialog.tsx:360
+#: src/features/projects/components/create-project-dialog.tsx:370
 msgid "We have auto-selected the best matching template."
-msgstr ""
+msgstr "Мо қолаби мувофиқтаринро ба таври худкор интихоб кардем."
 
 #: ../../../lib/web/src/features/errors/maintenance-error.tsx:16
 msgid "We'll be back online shortly."
@@ -2753,6 +2722,6 @@ msgstr "Шумо ҳанӯз лоиҳа надоред."
 msgid "Your account was moved here from {source}. Until you delete it there, messages and notifications may reach both servers, some of your content keeps being served from the old server, and followers may take a few minutes to find you here."
 msgstr "Ҳисоби шумо аз {source} ба ин ҷо интиқол дода шуд. То он гоҳ, ки онро дар он ҷо нест накунед, паёмҳо ва огоҳиҳо метавонанд ба ҳарду сервер расанд, қисмати муайяни мазмуни шумо аз сервери кӯҳна хизмат медиҳад ва пайравон метавонанд чанд дақиқа вақт барои ёфтани шумо дар ин ҷо сарф кунанд."
 
-#: src/features/projects/components/create-project-dialog.tsx:356
+#: src/features/projects/components/create-project-dialog.tsx:366
 msgid "Your backup contains objects of type:"
-msgstr ""
+msgstr "Нусхаи захиравии шумо объектҳои намудҳои зеринро дар бар мегирад:"

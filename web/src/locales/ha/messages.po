@@ -237,7 +237,7 @@ msgstr "Duk"
 msgid "All projects"
 msgstr "Duk projects"
 
-#: src/features/projects/components/create-project-dialog.tsx:278
+#: src/features/projects/components/create-project-dialog.tsx:288
 msgid "Allow anyone to search for project"
 msgstr "Ba kowa damar nemo project"
 
@@ -313,7 +313,7 @@ msgid "Available keyboard shortcuts"
 msgstr "Gajerun hanyoyi na keyboard da ake samu"
 
 #: ../../../lib/web/src/components/place-picker.tsx:155
-#: src/features/projects/components/create-project-dialog.tsx:428
+#: src/features/projects/components/create-project-dialog.tsx:438
 msgid "Back"
 msgstr "Komawa"
 
@@ -378,7 +378,7 @@ msgstr "Zai iya zama ɗan na"
 #: src/features/board/components/board-column.tsx:606
 #: src/features/editor/components/option-dialog.tsx:146
 #: src/features/objects/components/comment-thread.tsx:175
-#: src/features/projects/components/create-project-dialog.tsx:344
+#: src/features/projects/components/create-project-dialog.tsx:354
 #: src/routes/_authenticated/$projectId/design.tsx:343
 #: src/routes/_authenticated/$projectId/index.tsx:1011
 msgid "Cancel"
@@ -414,7 +414,7 @@ msgstr "Ana duba matsayin merge..."
 msgid "Checklist"
 msgstr "Checklist"
 
-#: src/features/projects/components/create-project-dialog.tsx:225
+#: src/features/projects/components/create-project-dialog.tsx:235
 msgid "Choose a template"
 msgstr "Zaɓi samfuri"
 
@@ -619,7 +619,7 @@ msgstr "Ƙirƙira"
 msgid "Create a new item in this project"
 msgstr "Ƙirƙira sabon abu a wannan project"
 
-#: src/features/projects/components/create-project-dialog.tsx:227
+#: src/features/projects/components/create-project-dialog.tsx:237
 #: src/features/projects/pages/projects-list-page.tsx:103
 msgid "Create a new project"
 msgstr "Ƙirƙira sabon project"
@@ -630,9 +630,9 @@ msgid "Create new item"
 msgstr "Ƙirƙira sabon abu"
 
 #: src/components/layout/projects-layout.tsx:62
-#: src/features/projects/components/create-project-dialog.tsx:215
 #: src/features/projects/components/create-project-dialog.tsx:225
-#: src/features/projects/components/create-project-dialog.tsx:431
+#: src/features/projects/components/create-project-dialog.tsx:235
+#: src/features/projects/components/create-project-dialog.tsx:441
 msgid "Create project"
 msgstr "Ƙirƙira project"
 
@@ -645,12 +645,12 @@ msgstr "Ƙirƙira, gyara, sharhi, da kallo"
 msgid "Created"
 msgstr "An ƙirƙira"
 
-#: src/features/projects/components/create-project-dialog.tsx:108
+#: src/features/projects/components/create-project-dialog.tsx:109
 msgid "Creating project..."
 msgstr "Ana ƙirƙirar aiki..."
 
 #: src/features/objects/components/create-object-dialog.tsx:535
-#: src/features/projects/components/create-project-dialog.tsx:431
+#: src/features/projects/components/create-project-dialog.tsx:441
 msgid "Creating..."
 msgstr "Ana ƙirƙira..."
 
@@ -675,13 +675,12 @@ msgstr "Dark mode"
 msgid "Data conflict"
 msgstr "Rikicin bayanai"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:350
-#~ msgid "Data imported ({0, plural, one {# object} other {# objects}}, {1, plural, one {# comment} other {# comments}}, {2, plural, one {# link} other {# links}})"
-#~ msgstr "An shigo da bayanai ({0, plural, one {abu #} other {abubuwa #}}, {1, plural, one {sharhi #} other {sharhi #}}, {2, plural, one {hanya #} other {hanyoyi #}})"
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:433
-#~ msgid "Data management"
-#~ msgstr "Sarrafa bayanai"
+#. placeholder {0}: imported.data?.objects ?? 0
+#. placeholder {1}: imported.data?.comments ?? 0
+#. placeholder {2}: imported.data?.links ?? 0
+#: src/features/projects/components/create-project-dialog.tsx:121
+msgid "Data imported ({0, plural, one {# object} other {# objects}}, {1, plural, one {# comment} other {# comments}}, {2, plural, one {# link} other {# links}})"
+msgstr "An shigo da bayanai ({0, plural, one {abu #} other {abubuwa #}}, {1, plural, one {sharhi #} other {sharhi #}}, {2, plural, one {hanya #} other {hanyoyi #}})"
 
 #: src/features/editor/components/add-dialogs.tsx:137
 msgid "Date"
@@ -967,10 +966,6 @@ msgstr "Fitar da bayanai"
 msgid "Export design"
 msgstr "Fitar da design"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:434
-#~ msgid "Export or import the raw data content in this project."
-#~ msgstr "Fitar da ko shigar da danyen bayanan wannan aikin."
-
 #: ../../../lib/web/src/lib/preference-utils.ts:136
 msgid "Extra large"
 msgstr "Babba sosai"
@@ -1000,7 +995,7 @@ msgstr "An gaza ƙirƙirar link"
 msgid "Failed to create option"
 msgstr "An gaza ƙirƙirar option"
 
-#: src/features/projects/components/create-project-dialog.tsx:110
+#: src/features/projects/components/create-project-dialog.tsx:111
 msgid "Failed to create project"
 msgstr "An gaza ƙirƙirar project"
 
@@ -1036,7 +1031,7 @@ msgstr "An gaza fitar da bayanai"
 msgid "Failed to export design"
 msgstr "An gaza fitar da design"
 
-#: src/features/projects/components/create-project-dialog.tsx:124
+#: src/features/projects/components/create-project-dialog.tsx:122
 msgid "Failed to import data"
 msgstr "An gaza shigar da bayanai"
 
@@ -1069,7 +1064,7 @@ msgstr "An gaza merge"
 msgid "Failed to post comment"
 msgstr "An gaza post comment"
 
-#: src/features/projects/components/create-project-dialog.tsx:177
+#: src/features/projects/components/create-project-dialog.tsx:175
 #: src/routes/_authenticated/$projectId/design.tsx:281
 msgid "Failed to read file"
 msgstr "An gaza karanta fayil"
@@ -1144,7 +1139,7 @@ msgid "Files"
 msgstr "Fayiloli"
 
 #: src/components/layout/projects-layout.tsx:61
-#: src/routes/_authenticated/find.tsx:88
+#: src/routes/_authenticated/find.tsx:92
 msgid "Find projects"
 msgstr "Nemo projects"
 
@@ -1254,40 +1249,18 @@ msgstr "Asali"
 msgid "Imperial"
 msgstr "Imperial"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:549
-#~ msgid "Import a data configuration"
-#~ msgstr "Shigar da configuration na bayanai"
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:444
-#: src/routes/_authenticated/$projectId_.settings.tsx:490
-#: src/routes/_authenticated/$projectId_.settings.tsx:548
-#~ msgid "Import data"
-#~ msgstr "Shigar da bayanai"
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:476
-#~ msgid "Import data?"
-#~ msgstr "A shigar da bayanai?"
-
 #: src/routes/_authenticated/$projectId/design.tsx:177
 #: src/routes/_authenticated/$projectId/design.tsx:293
 msgid "Import design"
 msgstr "Shigar da design"
 
-#: src/features/projects/components/create-project-dialog.tsx:288
+#: src/features/projects/components/create-project-dialog.tsx:298
 msgid "Import from backup (optional)"
-msgstr ""
+msgstr "Shigo da daga backup (na zaɓi)"
 
-#: src/features/projects/components/create-project-dialog.tsx:122
-msgid "Imported {count} objects"
-msgstr ""
-
-#: src/features/projects/components/create-project-dialog.tsx:119
+#: src/features/projects/components/create-project-dialog.tsx:120
 msgid "Importing data..."
-msgstr ""
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:487
-#~ msgid "Importing..."
-#~ msgstr "Ana shigo da bayanai..."
+msgstr "Ana shigo da bayanai..."
 
 #: ../../../lib/web/src/components/config-drawer.tsx:252
 msgid "Inset"
@@ -1301,7 +1274,7 @@ msgstr "Interests"
 msgid "Invalid date"
 msgstr "Kwanan wata mara inganci"
 
-#: src/features/projects/components/create-project-dialog.tsx:171
+#: src/features/projects/components/create-project-dialog.tsx:169
 #: src/routes/_authenticated/$projectId/design.tsx:277
 msgid "Invalid JSON file"
 msgstr "Fayil ɗin JSON mara inganci"
@@ -1374,7 +1347,7 @@ msgstr "Ana saukar da abu"
 msgid "Loading item details"
 msgstr "Ana saukar da bayanan abu"
 
-#: src/features/projects/components/create-project-dialog.tsx:365
+#: src/features/projects/components/create-project-dialog.tsx:375
 msgid "Loading templates..."
 msgstr "Ana saukar da templates..."
 
@@ -1475,7 +1448,7 @@ msgstr "An rasa repo, source, ko target parameters"
 msgid "Monday"
 msgstr "Litinin"
 
-#: src/features/projects/components/create-project-dialog.tsx:243
+#: src/features/projects/components/create-project-dialog.tsx:253
 msgid "My project"
 msgstr "Aikina"
 
@@ -1485,12 +1458,12 @@ msgstr "Aikina"
 #: src/features/editor/components/edit-dialogs.tsx:741
 #: src/features/editor/components/edit-dialogs.tsx:1065
 #: src/features/editor/components/option-dialog.tsx:112
-#: src/features/projects/components/create-project-dialog.tsx:233
+#: src/features/projects/components/create-project-dialog.tsx:243
 #: src/routes/_authenticated/$projectId_.settings.tsx:306
 msgid "Name"
 msgstr "Suna"
 
-#: src/features/projects/components/create-project-dialog.tsx:84
+#: src/features/projects/components/create-project-dialog.tsx:85
 msgid "Name is required"
 msgstr "Ana buƙatar suna"
 
@@ -1510,7 +1483,7 @@ msgstr "Sabon"
 msgid "New {className}"
 msgstr "Sabon {className}"
 
-#: src/features/projects/components/create-project-dialog.tsx:347
+#: src/features/projects/components/create-project-dialog.tsx:357
 msgid "Next"
 msgstr "Na gaba"
 
@@ -1592,7 +1565,7 @@ msgid "No profile"
 msgstr "Babu profile"
 
 #: src/features/projects/components/inline-project-search.tsx:164
-#: src/routes/_authenticated/find.tsx:90
+#: src/routes/_authenticated/find.tsx:94
 msgid "No projects found"
 msgstr "Babu projects da aka samu"
 
@@ -1810,7 +1783,7 @@ msgstr "Da fatan za ka ƙara class ɗaya ko fiye zuwa design ɗin project."
 msgid "Please check your internet connection and try again."
 msgstr "Da fatan a duba haɗin intanet ɗinka sannan a sake gwadawa."
 
-#: src/features/projects/components/create-project-dialog.tsx:94
+#: src/features/projects/components/create-project-dialog.tsx:95
 msgid "Please select a template"
 msgstr "Da fatan zaɓi template"
 
@@ -1822,7 +1795,7 @@ msgstr "Da fatan za a sake gwadawa."
 msgid "Please wait a moment and try again."
 msgstr "Da fatan za a jira ɗan lokaci sannan a sake gwadawa."
 
-#: src/features/projects/components/create-project-dialog.tsx:255
+#: src/features/projects/components/create-project-dialog.tsx:265
 #: src/routes/_authenticated/$projectId_.settings.tsx:323
 msgid "Prefix"
 msgstr "Prefix"
@@ -1852,7 +1825,7 @@ msgstr "Aiki"
 msgid "Project actions"
 msgstr "Ayyukan aiki"
 
-#: src/features/projects/components/create-project-dialog.tsx:109
+#: src/features/projects/components/create-project-dialog.tsx:110
 msgid "Project created"
 msgstr "An ƙirƙiri project"
 
@@ -1916,7 +1889,7 @@ msgid "Rebase and merge"
 msgstr "Rebase da haɗawa"
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:216
-#: ../../../lib/web/src/components/search-entity-page.tsx:240
+#: ../../../lib/web/src/components/search-entity-page.tsx:242
 msgid "Recommended"
 msgstr "An ba da shawara"
 
@@ -1955,7 +1928,7 @@ msgstr "Relative cikin sa'o'i 24, in ba haka ba absolute"
 #: src/features/objects/components/comment-thread.tsx:299
 #: src/features/objects/components/create-object-dialog.tsx:486
 #: src/features/objects/components/create-object-dialog.tsx:491
-#: src/features/projects/components/create-project-dialog.tsx:331
+#: src/features/projects/components/create-project-dialog.tsx:341
 msgid "Remove"
 msgstr "Cire"
 
@@ -2092,7 +2065,7 @@ msgstr "Ana adanawa..."
 msgid "Search"
 msgstr "Bincika"
 
-#: src/routes/_authenticated/find.tsx:89
+#: src/routes/_authenticated/find.tsx:93
 msgid "Search by name, ID, fingerprint, or URL..."
 msgstr "Bincika ta suna, ID, fingerprint, ko URL..."
 
@@ -2135,7 +2108,7 @@ msgid "Search..."
 msgstr "Bincika..."
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:174
-#: ../../../lib/web/src/components/search-entity-page.tsx:198
+#: ../../../lib/web/src/components/search-entity-page.tsx:200
 #: ../../../lib/web/src/features/access/access-dialog.tsx:202
 msgid "Searching..."
 msgstr "Ana bincike..."
@@ -2441,10 +2414,6 @@ msgstr "Ba a iya loda wannan project yanzu ba."
 msgid "This project may have been deleted or you don't have access to it."
 msgstr "Wataƙila an share wannan project ko ba ka da damar shiga."
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:478
-#~ msgid "This will import the data from <0>{0}</0>. Objects will be appended to the existing records. Ensure the current design matches the classes and fields referenced in the file."
-#~ msgstr "Wannan zai shigo da bayanai daga <0>{0}</0>. Za a ƙara abubuwa a kan rikodin da ake da su. Tabbatar cewa zanen yanzu ya yi daidai da azuzuwa da filayen da aka ambata a cikin fayil ɗin."
-
 #: src/features/requests/components/merge-button.tsx:105
 msgid "This will merge \"{source}\" into \"{target}\". This action cannot be undone."
 msgstr "Wannan zai haɗa \"{source}\" cikin \"{target}\". Ba za a iya soke wannan aikin ba."
@@ -2533,7 +2502,7 @@ msgid "Travelling"
 msgstr "Tafiya"
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:190
-#: ../../../lib/web/src/components/search-entity-page.tsx:214
+#: ../../../lib/web/src/components/search-entity-page.tsx:216
 msgid "Try adjusting your search terms"
 msgstr "Gwada gyara kalmomin bincike"
 
@@ -2629,7 +2598,7 @@ msgstr "Ana sabunta damar shiga..."
 msgid "Upload"
 msgstr "Loda"
 
-#: src/features/projects/components/create-project-dialog.tsx:304
+#: src/features/projects/components/create-project-dialog.tsx:314
 #: src/routes/_authenticated/$projectId/design.tsx:336
 msgid "Upload .json file"
 msgstr "Loda fayil ɗin .json"
@@ -2640,7 +2609,7 @@ msgstr "Yi amfani da maɓallin shiganka"
 
 #. placeholder {0}: prefix || "project"
 #. placeholder {1}: prefix || "project"
-#: src/features/projects/components/create-project-dialog.tsx:272
+#: src/features/projects/components/create-project-dialog.tsx:282
 msgid "Used for readable IDs like {0}-1, {1}-2"
 msgstr "Ana amfani da shi don IDs masu karantawa kamar {0}-1, {1}-2"
 
@@ -2671,7 +2640,7 @@ msgstr "Tabbatar"
 msgid "Verify email address"
 msgstr "Tabbatar da adireshin imel"
 
-#: ../../../lib/web/src/components/attachment-gallery.tsx:75
+#: ../../../lib/web/src/components/attachment-gallery.tsx:74
 msgid "Video thumbnail"
 msgstr "Ƙaramin hoton bidiyo"
 
@@ -2721,9 +2690,9 @@ msgstr "Ana kallo"
 msgid "Watched only"
 msgstr "Wadanda ake kallo kawai"
 
-#: src/features/projects/components/create-project-dialog.tsx:360
+#: src/features/projects/components/create-project-dialog.tsx:370
 msgid "We have auto-selected the best matching template."
-msgstr ""
+msgstr "Mun zaɓi template mafi dacewa ta atomatik."
 
 #: ../../../lib/web/src/features/errors/maintenance-error.tsx:16
 msgid "We'll be back online shortly."
@@ -2753,6 +2722,6 @@ msgstr "Ba ku da projects tukuna."
 msgid "Your account was moved here from {source}. Until you delete it there, messages and notifications may reach both servers, some of your content keeps being served from the old server, and followers may take a few minutes to find you here."
 msgstr "An ƙauri asusunka zuwa nan daga {source}. Sai ka goge shi a can, saƙonni da sanarwa na iya kai ga uwar garken biyu, wasu abubuwan ka suna ci gaba da samarwa daga tsohon uwar garken, kuma mabiyanka na iya ɗaukar 'yan mintoci don su same ka nan."
 
-#: src/features/projects/components/create-project-dialog.tsx:356
+#: src/features/projects/components/create-project-dialog.tsx:366
 msgid "Your backup contains objects of type:"
-msgstr ""
+msgstr "Backup ɗinka yana ɗauke da abubuwa na nau'in:"

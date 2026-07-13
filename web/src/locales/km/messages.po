@@ -237,7 +237,7 @@ msgstr "ទាំងអស់"
 msgid "All projects"
 msgstr "គម្រោងទាំងអស់"
 
-#: src/features/projects/components/create-project-dialog.tsx:278
+#: src/features/projects/components/create-project-dialog.tsx:288
 msgid "Allow anyone to search for project"
 msgstr "អនុញ្ញាតឱ្យអ្នកណាក៏អាចស្វែងរកគម្រោង"
 
@@ -313,7 +313,7 @@ msgid "Available keyboard shortcuts"
 msgstr "ផ្លូវកាត់គ្រាប់ចុចដែលមាន"
 
 #: ../../../lib/web/src/components/place-picker.tsx:155
-#: src/features/projects/components/create-project-dialog.tsx:428
+#: src/features/projects/components/create-project-dialog.tsx:438
 msgid "Back"
 msgstr "ត្រឡប់"
 
@@ -378,7 +378,7 @@ msgstr "អាចជាកូននៃ"
 #: src/features/board/components/board-column.tsx:606
 #: src/features/editor/components/option-dialog.tsx:146
 #: src/features/objects/components/comment-thread.tsx:175
-#: src/features/projects/components/create-project-dialog.tsx:344
+#: src/features/projects/components/create-project-dialog.tsx:354
 #: src/routes/_authenticated/$projectId/design.tsx:343
 #: src/routes/_authenticated/$projectId/index.tsx:1011
 msgid "Cancel"
@@ -414,7 +414,7 @@ msgstr "កំពុងពិនិត្យស្ថានភាពបញ្ច
 msgid "Checklist"
 msgstr "បញ្ជីពិនិត្យ"
 
-#: src/features/projects/components/create-project-dialog.tsx:225
+#: src/features/projects/components/create-project-dialog.tsx:235
 msgid "Choose a template"
 msgstr "ជ្រើសរើសគំរូ"
 
@@ -619,7 +619,7 @@ msgstr "បង្កើត"
 msgid "Create a new item in this project"
 msgstr "បង្កើតធាតុថ្មីនៅក្នុងគម្រោងនេះ"
 
-#: src/features/projects/components/create-project-dialog.tsx:227
+#: src/features/projects/components/create-project-dialog.tsx:237
 #: src/features/projects/pages/projects-list-page.tsx:103
 msgid "Create a new project"
 msgstr "បង្កើតគម្រោងថ្មី"
@@ -630,9 +630,9 @@ msgid "Create new item"
 msgstr "បង្កើតធាតុថ្មី"
 
 #: src/components/layout/projects-layout.tsx:62
-#: src/features/projects/components/create-project-dialog.tsx:215
 #: src/features/projects/components/create-project-dialog.tsx:225
-#: src/features/projects/components/create-project-dialog.tsx:431
+#: src/features/projects/components/create-project-dialog.tsx:235
+#: src/features/projects/components/create-project-dialog.tsx:441
 msgid "Create project"
 msgstr "បង្កើតគម្រោង"
 
@@ -645,12 +645,12 @@ msgstr "បង្កើត កែសម្រួល បញ្ចេញមតិ 
 msgid "Created"
 msgstr "បានបង្កើត"
 
-#: src/features/projects/components/create-project-dialog.tsx:108
+#: src/features/projects/components/create-project-dialog.tsx:109
 msgid "Creating project..."
 msgstr "កំពុងបង្កើតគម្រោង..."
 
 #: src/features/objects/components/create-object-dialog.tsx:535
-#: src/features/projects/components/create-project-dialog.tsx:431
+#: src/features/projects/components/create-project-dialog.tsx:441
 msgid "Creating..."
 msgstr "កំពុងបង្កើត..."
 
@@ -675,13 +675,12 @@ msgstr "របៀបងងឹត"
 msgid "Data conflict"
 msgstr "ទំនាស់ទិន្នន័យ"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:350
-#~ msgid "Data imported ({0, plural, one {# object} other {# objects}}, {1, plural, one {# comment} other {# comments}}, {2, plural, one {# link} other {# links}})"
-#~ msgstr "បាននាំចូលទិន្នន័យ ({0, plural, other {# វត្ថុ}}, {1, plural, other {# មតិយោបល់}}, {2, plural, other {# តំណ}})"
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:433
-#~ msgid "Data management"
-#~ msgstr "ការគ្រប់គ្រងទិន្នន័យ"
+#. placeholder {0}: imported.data?.objects ?? 0
+#. placeholder {1}: imported.data?.comments ?? 0
+#. placeholder {2}: imported.data?.links ?? 0
+#: src/features/projects/components/create-project-dialog.tsx:121
+msgid "Data imported ({0, plural, one {# object} other {# objects}}, {1, plural, one {# comment} other {# comments}}, {2, plural, one {# link} other {# links}})"
+msgstr "បាននាំចូលទិន្នន័យ ({0, plural, other {# វត្ថុ}}, {1, plural, other {# មតិយោបល់}}, {2, plural, other {# តំណ}})"
 
 #: src/features/editor/components/add-dialogs.tsx:137
 msgid "Date"
@@ -967,10 +966,6 @@ msgstr "នាំចេញទិន្នន័យ"
 msgid "Export design"
 msgstr "នាំចេញការរចនា"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:434
-#~ msgid "Export or import the raw data content in this project."
-#~ msgstr "នាំចេញ ឬនាំចូលមាតិកាទិន្នន័យឆៅនៅក្នុងគម្រោងនេះ។"
-
 #: ../../../lib/web/src/lib/preference-utils.ts:136
 msgid "Extra large"
 msgstr "ធំពិសេស"
@@ -1000,7 +995,7 @@ msgstr "បរាជ័យក្នុងការបង្កើតតំណ"
 msgid "Failed to create option"
 msgstr "បរាជ័យក្នុងការបង្កើតជម្រើស"
 
-#: src/features/projects/components/create-project-dialog.tsx:110
+#: src/features/projects/components/create-project-dialog.tsx:111
 msgid "Failed to create project"
 msgstr "បរាជ័យក្នុងការបង្កើតគម្រោង"
 
@@ -1036,7 +1031,7 @@ msgstr "បរាជ័យក្នុងការនាំចេញទិន្
 msgid "Failed to export design"
 msgstr "បរាជ័យក្នុងការនាំចេញការរចនា"
 
-#: src/features/projects/components/create-project-dialog.tsx:124
+#: src/features/projects/components/create-project-dialog.tsx:122
 msgid "Failed to import data"
 msgstr "បរាជ័យក្នុងការនាំចូលទិន្នន័យ"
 
@@ -1069,7 +1064,7 @@ msgstr "បរាជ័យក្នុងការបញ្ចូល"
 msgid "Failed to post comment"
 msgstr "បរាជ័យក្នុងការបង្ហោះមតិយោបល់"
 
-#: src/features/projects/components/create-project-dialog.tsx:177
+#: src/features/projects/components/create-project-dialog.tsx:175
 #: src/routes/_authenticated/$projectId/design.tsx:281
 msgid "Failed to read file"
 msgstr "បរាជ័យក្នុងការអានឯកសារ"
@@ -1144,7 +1139,7 @@ msgid "Files"
 msgstr "ឯកសារ"
 
 #: src/components/layout/projects-layout.tsx:61
-#: src/routes/_authenticated/find.tsx:88
+#: src/routes/_authenticated/find.tsx:92
 msgid "Find projects"
 msgstr "ស្វែងរកគម្រោង"
 
@@ -1254,40 +1249,18 @@ msgstr "អត្តសញ្ញាណ"
 msgid "Imperial"
 msgstr "Imperial"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:549
-#~ msgid "Import a data configuration"
-#~ msgstr "នាំចូលការកំណត់រចនាសម្ព័ន្ធទិន្នន័យ"
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:444
-#: src/routes/_authenticated/$projectId_.settings.tsx:490
-#: src/routes/_authenticated/$projectId_.settings.tsx:548
-#~ msgid "Import data"
-#~ msgstr "នាំចូលទិន្នន័យ"
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:476
-#~ msgid "Import data?"
-#~ msgstr "នាំចូលទិន្នន័យ?"
-
 #: src/routes/_authenticated/$projectId/design.tsx:177
 #: src/routes/_authenticated/$projectId/design.tsx:293
 msgid "Import design"
 msgstr "នាំចូលការរចនា"
 
-#: src/features/projects/components/create-project-dialog.tsx:288
+#: src/features/projects/components/create-project-dialog.tsx:298
 msgid "Import from backup (optional)"
-msgstr ""
+msgstr "នាំចូលពីការបម្រុងទុក (ស្រេចចិត្ត)"
 
-#: src/features/projects/components/create-project-dialog.tsx:122
-msgid "Imported {count} objects"
-msgstr ""
-
-#: src/features/projects/components/create-project-dialog.tsx:119
+#: src/features/projects/components/create-project-dialog.tsx:120
 msgid "Importing data..."
-msgstr ""
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:487
-#~ msgid "Importing..."
-#~ msgstr "កំពុងនាំចូល..."
+msgstr "កំពុងនាំចូលទិន្នន័យ..."
 
 #: ../../../lib/web/src/components/config-drawer.tsx:252
 msgid "Inset"
@@ -1301,7 +1274,7 @@ msgstr "ចំណាប់អារម្មណ៍"
 msgid "Invalid date"
 msgstr "កាលបរិច្ឆេទមិនត្រឹមត្រូវ"
 
-#: src/features/projects/components/create-project-dialog.tsx:171
+#: src/features/projects/components/create-project-dialog.tsx:169
 #: src/routes/_authenticated/$projectId/design.tsx:277
 msgid "Invalid JSON file"
 msgstr "ឯកសារ JSON មិនត្រឹមត្រូវ"
@@ -1374,7 +1347,7 @@ msgstr "កំពុងផ្ទុកធាតុ"
 msgid "Loading item details"
 msgstr "កំពុងផ្ទុកព័ត៌មានលម្អិតធាតុ"
 
-#: src/features/projects/components/create-project-dialog.tsx:365
+#: src/features/projects/components/create-project-dialog.tsx:375
 msgid "Loading templates..."
 msgstr "កំពុងផ្ទុកគំរូ..."
 
@@ -1475,7 +1448,7 @@ msgstr "បាត់ប៉ារ៉ាម៉ែត្រ repo ប្រភព �
 msgid "Monday"
 msgstr "ថ្ងៃច័ន្ទ"
 
-#: src/features/projects/components/create-project-dialog.tsx:243
+#: src/features/projects/components/create-project-dialog.tsx:253
 msgid "My project"
 msgstr "គម្រោងរបស់ខ្ញុំ"
 
@@ -1485,12 +1458,12 @@ msgstr "គម្រោងរបស់ខ្ញុំ"
 #: src/features/editor/components/edit-dialogs.tsx:741
 #: src/features/editor/components/edit-dialogs.tsx:1065
 #: src/features/editor/components/option-dialog.tsx:112
-#: src/features/projects/components/create-project-dialog.tsx:233
+#: src/features/projects/components/create-project-dialog.tsx:243
 #: src/routes/_authenticated/$projectId_.settings.tsx:306
 msgid "Name"
 msgstr "ឈ្មោះ"
 
-#: src/features/projects/components/create-project-dialog.tsx:84
+#: src/features/projects/components/create-project-dialog.tsx:85
 msgid "Name is required"
 msgstr "តម្រូវឱ្យបញ្ចូលឈ្មោះ"
 
@@ -1510,7 +1483,7 @@ msgstr "ថ្មី"
 msgid "New {className}"
 msgstr "{className} ថ្មី"
 
-#: src/features/projects/components/create-project-dialog.tsx:347
+#: src/features/projects/components/create-project-dialog.tsx:357
 msgid "Next"
 msgstr "បន្ទាប់"
 
@@ -1592,7 +1565,7 @@ msgid "No profile"
 msgstr "មិនមានប្រវត្តិរូប"
 
 #: src/features/projects/components/inline-project-search.tsx:164
-#: src/routes/_authenticated/find.tsx:90
+#: src/routes/_authenticated/find.tsx:94
 msgid "No projects found"
 msgstr "រកមិនឃើញគម្រោង"
 
@@ -1810,7 +1783,7 @@ msgstr "សូមបន្ថែមថ្នាក់មួយ ឬច្រើ�
 msgid "Please check your internet connection and try again."
 msgstr "សូមពិនិត្យការតភ្ជាប់អ៊ីនធឺណិតរបស់អ្នក រួចព្យាយាមម្តងទៀត។"
 
-#: src/features/projects/components/create-project-dialog.tsx:94
+#: src/features/projects/components/create-project-dialog.tsx:95
 msgid "Please select a template"
 msgstr "សូមជ្រើសរើសគំរូ"
 
@@ -1822,7 +1795,7 @@ msgstr "សូមព្យាយាមម្តងទៀត។"
 msgid "Please wait a moment and try again."
 msgstr "សូមរង់ចាំបន្តិច ហើយព្យាយាមម្តងទៀត។"
 
-#: src/features/projects/components/create-project-dialog.tsx:255
+#: src/features/projects/components/create-project-dialog.tsx:265
 #: src/routes/_authenticated/$projectId_.settings.tsx:323
 msgid "Prefix"
 msgstr "បុព្វបទ"
@@ -1852,7 +1825,7 @@ msgstr "គម្រោង"
 msgid "Project actions"
 msgstr "សកម្មភាពគម្រោង"
 
-#: src/features/projects/components/create-project-dialog.tsx:109
+#: src/features/projects/components/create-project-dialog.tsx:110
 msgid "Project created"
 msgstr "បានបង្កើតគម្រោង"
 
@@ -1916,7 +1889,7 @@ msgid "Rebase and merge"
 msgstr "Rebase និង merge"
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:216
-#: ../../../lib/web/src/components/search-entity-page.tsx:240
+#: ../../../lib/web/src/components/search-entity-page.tsx:242
 msgid "Recommended"
 msgstr "បានណែនាំ"
 
@@ -1955,7 +1928,7 @@ msgstr "ទាក់ទងក្នុង 24 ម៉ោង បើមិនដូ�
 #: src/features/objects/components/comment-thread.tsx:299
 #: src/features/objects/components/create-object-dialog.tsx:486
 #: src/features/objects/components/create-object-dialog.tsx:491
-#: src/features/projects/components/create-project-dialog.tsx:331
+#: src/features/projects/components/create-project-dialog.tsx:341
 msgid "Remove"
 msgstr "យកចេញ"
 
@@ -2092,7 +2065,7 @@ msgstr "កំពុងរក្សាទុក..."
 msgid "Search"
 msgstr "ស្វែងរក"
 
-#: src/routes/_authenticated/find.tsx:89
+#: src/routes/_authenticated/find.tsx:93
 msgid "Search by name, ID, fingerprint, or URL..."
 msgstr "ស្វែងរកតាមឈ្មោះ ID ស្នាមម្រាមដៃ ឬ URL..."
 
@@ -2135,7 +2108,7 @@ msgid "Search..."
 msgstr "ស្វែងរក..."
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:174
-#: ../../../lib/web/src/components/search-entity-page.tsx:198
+#: ../../../lib/web/src/components/search-entity-page.tsx:200
 #: ../../../lib/web/src/features/access/access-dialog.tsx:202
 msgid "Searching..."
 msgstr "កំពុងស្វែងរក..."
@@ -2441,10 +2414,6 @@ msgstr "គម្រោងនេះមិនអាចផ្ទុកបានព
 msgid "This project may have been deleted or you don't have access to it."
 msgstr "គម្រោងនេះប្រហែលជាត្រូវបានលុប ឬអ្នកមិនមានសិទ្ធិចូលប្រើ។"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:478
-#~ msgid "This will import the data from <0>{0}</0>. Objects will be appended to the existing records. Ensure the current design matches the classes and fields referenced in the file."
-#~ msgstr "វានឹងនាំចូលទិន្នន័យពី <0>{0}</0>។ វត្ថុនឹងត្រូវបានបន្ថែមទៅកំណត់ត្រាដែលមានស្រាប់។ សូមប្រាកដថាការរចនាបច្ចុប្បន្នត្រូវគ្នានឹងថ្នាក់ និងវាលដែលបានយោងនៅក្នុងឯកសារនោះ។"
-
 #: src/features/requests/components/merge-button.tsx:105
 msgid "This will merge \"{source}\" into \"{target}\". This action cannot be undone."
 msgstr "នេះនឹងបញ្ចូល \"{source}\" ទៅក្នុង \"{target}\"។ សកម្មភាពនេះមិនអាចមិនធ្វើវិញបានទេ។"
@@ -2533,7 +2502,7 @@ msgid "Travelling"
 msgstr "កំពុងធ្វើដំណើរ"
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:190
-#: ../../../lib/web/src/components/search-entity-page.tsx:214
+#: ../../../lib/web/src/components/search-entity-page.tsx:216
 msgid "Try adjusting your search terms"
 msgstr "សាកល្បងកែតម្រូវពាក្យស្វែងរករបស់អ្នក"
 
@@ -2629,7 +2598,7 @@ msgstr "កំពុងធ្វើបច្ចុប្បន្នភាពក
 msgid "Upload"
 msgstr "បង្ហោះ"
 
-#: src/features/projects/components/create-project-dialog.tsx:304
+#: src/features/projects/components/create-project-dialog.tsx:314
 #: src/routes/_authenticated/$projectId/design.tsx:336
 msgid "Upload .json file"
 msgstr "បង្ហោះឯកសារ .json"
@@ -2640,7 +2609,7 @@ msgstr "ប្រើ passkey របស់អ្នក"
 
 #. placeholder {0}: prefix || "project"
 #. placeholder {1}: prefix || "project"
-#: src/features/projects/components/create-project-dialog.tsx:272
+#: src/features/projects/components/create-project-dialog.tsx:282
 msgid "Used for readable IDs like {0}-1, {1}-2"
 msgstr "ប្រើសម្រាប់លេខសម្គាល់ដែលអាចអានបាន ដូចជា {0}-1, {1}-2"
 
@@ -2671,7 +2640,7 @@ msgstr "ផ្ទៀងផ្ទាត់"
 msgid "Verify email address"
 msgstr "ផ្ទៀងផ្ទាត់អាសយដ្ឋានអ៊ីមែល"
 
-#: ../../../lib/web/src/components/attachment-gallery.tsx:75
+#: ../../../lib/web/src/components/attachment-gallery.tsx:74
 msgid "Video thumbnail"
 msgstr "រូបភាពតូចវីដេអូ"
 
@@ -2721,9 +2690,9 @@ msgstr "បានមើល"
 msgid "Watched only"
 msgstr "បានមើលតែប៉ុណ្ណោះ"
 
-#: src/features/projects/components/create-project-dialog.tsx:360
+#: src/features/projects/components/create-project-dialog.tsx:370
 msgid "We have auto-selected the best matching template."
-msgstr ""
+msgstr "យើងបានជ្រើសរើសគំរូដែលសមស្របបំផុតដោយស្វ័យប្រវត្តិ។"
 
 #: ../../../lib/web/src/features/errors/maintenance-error.tsx:16
 msgid "We'll be back online shortly."
@@ -2753,6 +2722,6 @@ msgstr "អ្នកមិនទាន់មានគម្រោងទេ។"
 msgid "Your account was moved here from {source}. Until you delete it there, messages and notifications may reach both servers, some of your content keeps being served from the old server, and followers may take a few minutes to find you here."
 msgstr "គណនីរបស់អ្នកត្រូវបានផ្លាស់ប្តូរមកទីនេះពី {source}។ រហូតដល់អ្នកលុបវានៅទីនោះ សារ និងការជូនដំណឹងអាចទៅដល់ម៉ាស៊ីនមេទាំងពីរ មាតិកាមួយចំនួនរបស់អ្នកនៅតែត្រូវបានបម្រើពីម៉ាស៊ីនមេចាស់ ហើយអ្នកតាមដានអាចចំណាយពេលប៉ុន្មាននាទីដើម្បីរកអ្នកនៅទីនេះ។"
 
-#: src/features/projects/components/create-project-dialog.tsx:356
+#: src/features/projects/components/create-project-dialog.tsx:366
 msgid "Your backup contains objects of type:"
-msgstr ""
+msgstr "ការបម្រុងទុករបស់អ្នកមានវត្ថុប្រភេទ៖"

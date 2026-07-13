@@ -237,7 +237,7 @@ msgstr "Semua"
 msgid "All projects"
 msgstr "Semua projek"
 
-#: src/features/projects/components/create-project-dialog.tsx:278
+#: src/features/projects/components/create-project-dialog.tsx:288
 msgid "Allow anyone to search for project"
 msgstr "Benarkan sesiapa sahaja mencari projek"
 
@@ -313,7 +313,7 @@ msgid "Available keyboard shortcuts"
 msgstr "Pintasan papan kekunci yang tersedia"
 
 #: ../../../lib/web/src/components/place-picker.tsx:155
-#: src/features/projects/components/create-project-dialog.tsx:428
+#: src/features/projects/components/create-project-dialog.tsx:438
 msgid "Back"
 msgstr "Kembali"
 
@@ -378,7 +378,7 @@ msgstr "Boleh menjadi anak kepada"
 #: src/features/board/components/board-column.tsx:606
 #: src/features/editor/components/option-dialog.tsx:146
 #: src/features/objects/components/comment-thread.tsx:175
-#: src/features/projects/components/create-project-dialog.tsx:344
+#: src/features/projects/components/create-project-dialog.tsx:354
 #: src/routes/_authenticated/$projectId/design.tsx:343
 #: src/routes/_authenticated/$projectId/index.tsx:1011
 msgid "Cancel"
@@ -414,7 +414,7 @@ msgstr "Memeriksa status gabungan..."
 msgid "Checklist"
 msgstr "Senarai semak"
 
-#: src/features/projects/components/create-project-dialog.tsx:225
+#: src/features/projects/components/create-project-dialog.tsx:235
 msgid "Choose a template"
 msgstr "Pilih templat"
 
@@ -619,7 +619,7 @@ msgstr "Cipta"
 msgid "Create a new item in this project"
 msgstr "Cipta item baharu dalam projek ini"
 
-#: src/features/projects/components/create-project-dialog.tsx:227
+#: src/features/projects/components/create-project-dialog.tsx:237
 #: src/features/projects/pages/projects-list-page.tsx:103
 msgid "Create a new project"
 msgstr "Cipta projek baharu"
@@ -630,9 +630,9 @@ msgid "Create new item"
 msgstr "Cipta item baharu"
 
 #: src/components/layout/projects-layout.tsx:62
-#: src/features/projects/components/create-project-dialog.tsx:215
 #: src/features/projects/components/create-project-dialog.tsx:225
-#: src/features/projects/components/create-project-dialog.tsx:431
+#: src/features/projects/components/create-project-dialog.tsx:235
+#: src/features/projects/components/create-project-dialog.tsx:441
 msgid "Create project"
 msgstr "Cipta projek"
 
@@ -645,12 +645,12 @@ msgstr "Cipta, edit, komen dan lihat"
 msgid "Created"
 msgstr "Dicipta"
 
-#: src/features/projects/components/create-project-dialog.tsx:108
+#: src/features/projects/components/create-project-dialog.tsx:109
 msgid "Creating project..."
 msgstr "Mencipta projek..."
 
 #: src/features/objects/components/create-object-dialog.tsx:535
-#: src/features/projects/components/create-project-dialog.tsx:431
+#: src/features/projects/components/create-project-dialog.tsx:441
 msgid "Creating..."
 msgstr "Mencipta..."
 
@@ -675,13 +675,12 @@ msgstr "Mod gelap"
 msgid "Data conflict"
 msgstr "Konflik data"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:350
-#~ msgid "Data imported ({0, plural, one {# object} other {# objects}}, {1, plural, one {# comment} other {# comments}}, {2, plural, one {# link} other {# links}})"
-#~ msgstr "Data diimport ({0, plural, other {# objek}}, {1, plural, other {# komen}}, {2, plural, other {# pautan}})"
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:433
-#~ msgid "Data management"
-#~ msgstr "Pengurusan data"
+#. placeholder {0}: imported.data?.objects ?? 0
+#. placeholder {1}: imported.data?.comments ?? 0
+#. placeholder {2}: imported.data?.links ?? 0
+#: src/features/projects/components/create-project-dialog.tsx:121
+msgid "Data imported ({0, plural, one {# object} other {# objects}}, {1, plural, one {# comment} other {# comments}}, {2, plural, one {# link} other {# links}})"
+msgstr "Data diimport ({0, plural, other {# objek}}, {1, plural, other {# komen}}, {2, plural, other {# pautan}})"
 
 #: src/features/editor/components/add-dialogs.tsx:137
 msgid "Date"
@@ -967,10 +966,6 @@ msgstr "Eksport data"
 msgid "Export design"
 msgstr "Eksport reka bentuk"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:434
-#~ msgid "Export or import the raw data content in this project."
-#~ msgstr "Eksport atau import kandungan data mentah dalam projek ini."
-
 #: ../../../lib/web/src/lib/preference-utils.ts:136
 msgid "Extra large"
 msgstr "Sangat besar"
@@ -1000,7 +995,7 @@ msgstr "Gagal mencipta pautan"
 msgid "Failed to create option"
 msgstr "Gagal mencipta pilihan"
 
-#: src/features/projects/components/create-project-dialog.tsx:110
+#: src/features/projects/components/create-project-dialog.tsx:111
 msgid "Failed to create project"
 msgstr "Gagal mencipta projek"
 
@@ -1036,7 +1031,7 @@ msgstr "Gagal mengeksport data"
 msgid "Failed to export design"
 msgstr "Gagal mengeksport reka bentuk"
 
-#: src/features/projects/components/create-project-dialog.tsx:124
+#: src/features/projects/components/create-project-dialog.tsx:122
 msgid "Failed to import data"
 msgstr "Gagal mengimport data"
 
@@ -1069,7 +1064,7 @@ msgstr "Gagal menggabungkan"
 msgid "Failed to post comment"
 msgstr "Gagal mencatat komen"
 
-#: src/features/projects/components/create-project-dialog.tsx:177
+#: src/features/projects/components/create-project-dialog.tsx:175
 #: src/routes/_authenticated/$projectId/design.tsx:281
 msgid "Failed to read file"
 msgstr "Gagal membaca fail"
@@ -1144,7 +1139,7 @@ msgid "Files"
 msgstr "Fail"
 
 #: src/components/layout/projects-layout.tsx:61
-#: src/routes/_authenticated/find.tsx:88
+#: src/routes/_authenticated/find.tsx:92
 msgid "Find projects"
 msgstr "Cari projek"
 
@@ -1254,40 +1249,18 @@ msgstr "Identiti"
 msgid "Imperial"
 msgstr "Imperial"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:549
-#~ msgid "Import a data configuration"
-#~ msgstr "Import konfigurasi data"
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:444
-#: src/routes/_authenticated/$projectId_.settings.tsx:490
-#: src/routes/_authenticated/$projectId_.settings.tsx:548
-#~ msgid "Import data"
-#~ msgstr "Import data"
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:476
-#~ msgid "Import data?"
-#~ msgstr "Import data?"
-
 #: src/routes/_authenticated/$projectId/design.tsx:177
 #: src/routes/_authenticated/$projectId/design.tsx:293
 msgid "Import design"
 msgstr "Import reka bentuk"
 
-#: src/features/projects/components/create-project-dialog.tsx:288
+#: src/features/projects/components/create-project-dialog.tsx:298
 msgid "Import from backup (optional)"
-msgstr ""
+msgstr "Import daripada sandaran (pilihan)"
 
-#: src/features/projects/components/create-project-dialog.tsx:122
-msgid "Imported {count} objects"
-msgstr ""
-
-#: src/features/projects/components/create-project-dialog.tsx:119
+#: src/features/projects/components/create-project-dialog.tsx:120
 msgid "Importing data..."
-msgstr ""
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:487
-#~ msgid "Importing..."
-#~ msgstr "Mengimport..."
+msgstr "Mengimport data..."
 
 #: ../../../lib/web/src/components/config-drawer.tsx:252
 msgid "Inset"
@@ -1301,7 +1274,7 @@ msgstr "Minat"
 msgid "Invalid date"
 msgstr "Tarikh tidak sah"
 
-#: src/features/projects/components/create-project-dialog.tsx:171
+#: src/features/projects/components/create-project-dialog.tsx:169
 #: src/routes/_authenticated/$projectId/design.tsx:277
 msgid "Invalid JSON file"
 msgstr "Fail JSON tidak sah"
@@ -1374,7 +1347,7 @@ msgstr "Memuatkan item"
 msgid "Loading item details"
 msgstr "Memuatkan butiran item"
 
-#: src/features/projects/components/create-project-dialog.tsx:365
+#: src/features/projects/components/create-project-dialog.tsx:375
 msgid "Loading templates..."
 msgstr "Memuatkan templat..."
 
@@ -1475,7 +1448,7 @@ msgstr "Parameter repo, sumber, atau sasaran tiada"
 msgid "Monday"
 msgstr "Isnin"
 
-#: src/features/projects/components/create-project-dialog.tsx:243
+#: src/features/projects/components/create-project-dialog.tsx:253
 msgid "My project"
 msgstr "Projek saya"
 
@@ -1485,12 +1458,12 @@ msgstr "Projek saya"
 #: src/features/editor/components/edit-dialogs.tsx:741
 #: src/features/editor/components/edit-dialogs.tsx:1065
 #: src/features/editor/components/option-dialog.tsx:112
-#: src/features/projects/components/create-project-dialog.tsx:233
+#: src/features/projects/components/create-project-dialog.tsx:243
 #: src/routes/_authenticated/$projectId_.settings.tsx:306
 msgid "Name"
 msgstr "Nama"
 
-#: src/features/projects/components/create-project-dialog.tsx:84
+#: src/features/projects/components/create-project-dialog.tsx:85
 msgid "Name is required"
 msgstr "Nama diperlukan"
 
@@ -1510,7 +1483,7 @@ msgstr "Baharu"
 msgid "New {className}"
 msgstr "{className} baharu"
 
-#: src/features/projects/components/create-project-dialog.tsx:347
+#: src/features/projects/components/create-project-dialog.tsx:357
 msgid "Next"
 msgstr "Seterusnya"
 
@@ -1592,7 +1565,7 @@ msgid "No profile"
 msgstr "Tiada profil"
 
 #: src/features/projects/components/inline-project-search.tsx:164
-#: src/routes/_authenticated/find.tsx:90
+#: src/routes/_authenticated/find.tsx:94
 msgid "No projects found"
 msgstr "Tiada projek dijumpai"
 
@@ -1810,7 +1783,7 @@ msgstr "Sila tambah satu atau lebih kelas ke reka bentuk projek."
 msgid "Please check your internet connection and try again."
 msgstr "Sila semak sambungan internet anda dan cuba lagi."
 
-#: src/features/projects/components/create-project-dialog.tsx:94
+#: src/features/projects/components/create-project-dialog.tsx:95
 msgid "Please select a template"
 msgstr "Sila pilih templat"
 
@@ -1822,7 +1795,7 @@ msgstr "Sila cuba lagi."
 msgid "Please wait a moment and try again."
 msgstr "Sila tunggu sebentar dan cuba lagi."
 
-#: src/features/projects/components/create-project-dialog.tsx:255
+#: src/features/projects/components/create-project-dialog.tsx:265
 #: src/routes/_authenticated/$projectId_.settings.tsx:323
 msgid "Prefix"
 msgstr "Prefiks"
@@ -1852,7 +1825,7 @@ msgstr "Projek"
 msgid "Project actions"
 msgstr "Tindakan projek"
 
-#: src/features/projects/components/create-project-dialog.tsx:109
+#: src/features/projects/components/create-project-dialog.tsx:110
 msgid "Project created"
 msgstr "Projek dicipta"
 
@@ -1916,7 +1889,7 @@ msgid "Rebase and merge"
 msgstr "Rebase dan gabung"
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:216
-#: ../../../lib/web/src/components/search-entity-page.tsx:240
+#: ../../../lib/web/src/components/search-entity-page.tsx:242
 msgid "Recommended"
 msgstr "Disyorkan"
 
@@ -1955,7 +1928,7 @@ msgstr "Relatif dalam 24 jam, jika tidak mutlak"
 #: src/features/objects/components/comment-thread.tsx:299
 #: src/features/objects/components/create-object-dialog.tsx:486
 #: src/features/objects/components/create-object-dialog.tsx:491
-#: src/features/projects/components/create-project-dialog.tsx:331
+#: src/features/projects/components/create-project-dialog.tsx:341
 msgid "Remove"
 msgstr "Alih keluar"
 
@@ -2092,7 +2065,7 @@ msgstr "Sedang menyimpan..."
 msgid "Search"
 msgstr "Cari"
 
-#: src/routes/_authenticated/find.tsx:89
+#: src/routes/_authenticated/find.tsx:93
 msgid "Search by name, ID, fingerprint, or URL..."
 msgstr "Cari mengikut nama, ID, cap jari atau URL..."
 
@@ -2135,7 +2108,7 @@ msgid "Search..."
 msgstr "Cari..."
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:174
-#: ../../../lib/web/src/components/search-entity-page.tsx:198
+#: ../../../lib/web/src/components/search-entity-page.tsx:200
 #: ../../../lib/web/src/features/access/access-dialog.tsx:202
 msgid "Searching..."
 msgstr "Sedang mencari..."
@@ -2441,10 +2414,6 @@ msgstr "Projek ini tidak dapat dimuatkan sekarang."
 msgid "This project may have been deleted or you don't have access to it."
 msgstr "Projek ini mungkin telah dipadam atau anda tidak mempunyai akses kepadanya."
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:478
-#~ msgid "This will import the data from <0>{0}</0>. Objects will be appended to the existing records. Ensure the current design matches the classes and fields referenced in the file."
-#~ msgstr "Ini akan mengimport data daripada <0>{0}</0>. Objek akan ditambahkan pada rekod sedia ada. Pastikan reka bentuk semasa sepadan dengan kelas dan medan yang dirujuk dalam fail."
-
 #: src/features/requests/components/merge-button.tsx:105
 msgid "This will merge \"{source}\" into \"{target}\". This action cannot be undone."
 msgstr "Ini akan menggabungkan \"{source}\" ke \"{target}\". Tindakan ini tidak boleh dibatalkan."
@@ -2533,7 +2502,7 @@ msgid "Travelling"
 msgstr "Sedang dalam perjalanan"
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:190
-#: ../../../lib/web/src/components/search-entity-page.tsx:214
+#: ../../../lib/web/src/components/search-entity-page.tsx:216
 msgid "Try adjusting your search terms"
 msgstr "Cuba laraskan istilah carian anda"
 
@@ -2629,7 +2598,7 @@ msgstr "Mengemas kini akses..."
 msgid "Upload"
 msgstr "Muat naik"
 
-#: src/features/projects/components/create-project-dialog.tsx:304
+#: src/features/projects/components/create-project-dialog.tsx:314
 #: src/routes/_authenticated/$projectId/design.tsx:336
 msgid "Upload .json file"
 msgstr "Muat naik fail .json"
@@ -2640,7 +2609,7 @@ msgstr "Gunakan kunci laluan anda"
 
 #. placeholder {0}: prefix || "project"
 #. placeholder {1}: prefix || "project"
-#: src/features/projects/components/create-project-dialog.tsx:272
+#: src/features/projects/components/create-project-dialog.tsx:282
 msgid "Used for readable IDs like {0}-1, {1}-2"
 msgstr "Digunakan untuk ID yang boleh dibaca seperti {0}-1, {1}-2"
 
@@ -2671,7 +2640,7 @@ msgstr "Sahkan"
 msgid "Verify email address"
 msgstr "Sahkan alamat e-mel"
 
-#: ../../../lib/web/src/components/attachment-gallery.tsx:75
+#: ../../../lib/web/src/components/attachment-gallery.tsx:74
 msgid "Video thumbnail"
 msgstr "Imej kecil video"
 
@@ -2721,9 +2690,9 @@ msgstr "Dipantau"
 msgid "Watched only"
 msgstr "Dipantau sahaja"
 
-#: src/features/projects/components/create-project-dialog.tsx:360
+#: src/features/projects/components/create-project-dialog.tsx:370
 msgid "We have auto-selected the best matching template."
-msgstr ""
+msgstr "Kami telah memilih templat yang paling sepadan secara automatik."
 
 #: ../../../lib/web/src/features/errors/maintenance-error.tsx:16
 msgid "We'll be back online shortly."
@@ -2753,6 +2722,6 @@ msgstr "Anda belum mempunyai projek lagi."
 msgid "Your account was moved here from {source}. Until you delete it there, messages and notifications may reach both servers, some of your content keeps being served from the old server, and followers may take a few minutes to find you here."
 msgstr "Akaun anda telah dipindahkan ke sini dari {source}. Sehingga anda memadamnya di sana, mesej dan pemberitahuan mungkin sampai ke kedua-dua pelayan, sebahagian kandungan anda terus dihidangkan dari pelayan lama, dan pengikut mungkin mengambil masa beberapa minit untuk mencari anda di sini."
 
-#: src/features/projects/components/create-project-dialog.tsx:356
+#: src/features/projects/components/create-project-dialog.tsx:366
 msgid "Your backup contains objects of type:"
-msgstr ""
+msgstr "Sandaran anda mengandungi objek jenis:"

@@ -237,7 +237,7 @@ msgstr "ಎಲ್ಲಾ"
 msgid "All projects"
 msgstr "ಎಲ್ಲಾ ಪ್ರಾಜೆಕ್ಟ್‌ಗಳು"
 
-#: src/features/projects/components/create-project-dialog.tsx:278
+#: src/features/projects/components/create-project-dialog.tsx:288
 msgid "Allow anyone to search for project"
 msgstr "ಯಾರಾದರೂ ಪ್ರಾಜೆಕ್ಟ್ ಹುಡುಕಲು ಅನುಮತಿಸಿ"
 
@@ -313,7 +313,7 @@ msgid "Available keyboard shortcuts"
 msgstr "ಲಭ್ಯವಿರುವ ಕೀಬೋರ್ಡ್ ಶಾರ್ಟ್‌ಕಟ್‌ಗಳು"
 
 #: ../../../lib/web/src/components/place-picker.tsx:155
-#: src/features/projects/components/create-project-dialog.tsx:428
+#: src/features/projects/components/create-project-dialog.tsx:438
 msgid "Back"
 msgstr "ಹಿಂದೆ"
 
@@ -378,7 +378,7 @@ msgstr "ಇದರ ಮಗುವಾಗಿರಬಹುದು"
 #: src/features/board/components/board-column.tsx:606
 #: src/features/editor/components/option-dialog.tsx:146
 #: src/features/objects/components/comment-thread.tsx:175
-#: src/features/projects/components/create-project-dialog.tsx:344
+#: src/features/projects/components/create-project-dialog.tsx:354
 #: src/routes/_authenticated/$projectId/design.tsx:343
 #: src/routes/_authenticated/$projectId/index.tsx:1011
 msgid "Cancel"
@@ -414,7 +414,7 @@ msgstr "Merge ಸ್ಥಿತಿ ಪರಿಶೀಲಿಸಲಾಗುತ್ತ�
 msgid "Checklist"
 msgstr "ಚೆಕ್‌ಲಿಸ್ಟ್"
 
-#: src/features/projects/components/create-project-dialog.tsx:225
+#: src/features/projects/components/create-project-dialog.tsx:235
 msgid "Choose a template"
 msgstr "ಟೆಂಪ್ಲೇಟ್ ಆಯ್ಕೆಮಾಡಿ"
 
@@ -619,7 +619,7 @@ msgstr "ರಚಿಸಿ"
 msgid "Create a new item in this project"
 msgstr "ಈ ಪ್ರಾಜೆಕ್ಟ್‌ನಲ್ಲಿ ಹೊಸ ಐಟಂ ರಚಿಸಿ"
 
-#: src/features/projects/components/create-project-dialog.tsx:227
+#: src/features/projects/components/create-project-dialog.tsx:237
 #: src/features/projects/pages/projects-list-page.tsx:103
 msgid "Create a new project"
 msgstr "ಹೊಸ ಪ್ರಾಜೆಕ್ಟ್ ರಚಿಸಿ"
@@ -630,9 +630,9 @@ msgid "Create new item"
 msgstr "ಹೊಸ ಐಟಂ ರಚಿಸಿ"
 
 #: src/components/layout/projects-layout.tsx:62
-#: src/features/projects/components/create-project-dialog.tsx:215
 #: src/features/projects/components/create-project-dialog.tsx:225
-#: src/features/projects/components/create-project-dialog.tsx:431
+#: src/features/projects/components/create-project-dialog.tsx:235
+#: src/features/projects/components/create-project-dialog.tsx:441
 msgid "Create project"
 msgstr "ಪ್ರಾಜೆಕ್ಟ್ ರಚಿಸಿ"
 
@@ -645,12 +645,12 @@ msgstr "ರಚನೆ, ಸಂಪಾದನೆ, ಕಾಮೆಂಟ್ ಮತ್ತ�
 msgid "Created"
 msgstr "ರಚಿಸಲಾಗಿದೆ"
 
-#: src/features/projects/components/create-project-dialog.tsx:108
+#: src/features/projects/components/create-project-dialog.tsx:109
 msgid "Creating project..."
 msgstr "ಯೋಜನೆ ರಚಿಸಲಾಗುತ್ತಿದೆ..."
 
 #: src/features/objects/components/create-object-dialog.tsx:535
-#: src/features/projects/components/create-project-dialog.tsx:431
+#: src/features/projects/components/create-project-dialog.tsx:441
 msgid "Creating..."
 msgstr "ರಚಿಸಲಾಗುತ್ತಿದೆ..."
 
@@ -675,13 +675,12 @@ msgstr "ಡಾರ್ಕ್ ಮೋಡ್"
 msgid "Data conflict"
 msgstr "ಡೇಟಾ ಸಂಘರ್ಷ"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:350
-#~ msgid "Data imported ({0, plural, one {# object} other {# objects}}, {1, plural, one {# comment} other {# comments}}, {2, plural, one {# link} other {# links}})"
-#~ msgstr "ಡೇಟಾ ಆಮದು ಮಾಡಲಾಗಿದೆ ({0, plural, one {# ವಸ್ತು} other {# ವಸ್ತುಗಳು}}, {1, plural, one {# ಕಾಮೆಂಟ್} other {# ಕಾಮೆಂಟ್‌ಗಳು}}, {2, plural, one {# ಲಿಂಕ್} other {# ಲಿಂಕ್‌ಗಳು}})"
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:433
-#~ msgid "Data management"
-#~ msgstr "ಡೇಟಾ ನಿರ್ವಹಣೆ"
+#. placeholder {0}: imported.data?.objects ?? 0
+#. placeholder {1}: imported.data?.comments ?? 0
+#. placeholder {2}: imported.data?.links ?? 0
+#: src/features/projects/components/create-project-dialog.tsx:121
+msgid "Data imported ({0, plural, one {# object} other {# objects}}, {1, plural, one {# comment} other {# comments}}, {2, plural, one {# link} other {# links}})"
+msgstr "ಡೇಟಾ ಆಮದು ಮಾಡಲಾಗಿದೆ ({0, plural, one {# ವಸ್ತು} other {# ವಸ್ತುಗಳು}}, {1, plural, one {# ಕಾಮೆಂಟ್} other {# ಕಾಮೆಂಟ್‌ಗಳು}}, {2, plural, one {# ಲಿಂಕ್} other {# ಲಿಂಕ್‌ಗಳು}})"
 
 #: src/features/editor/components/add-dialogs.tsx:137
 msgid "Date"
@@ -967,10 +966,6 @@ msgstr "ಡೇಟಾ ರಫ್ತು ಮಾಡಿ"
 msgid "Export design"
 msgstr "ಡಿಸೈನ್ ಎಕ್ಸ್‌ಪೋರ್ಟ್"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:434
-#~ msgid "Export or import the raw data content in this project."
-#~ msgstr "ಈ ಪ್ರಾಜೆಕ್ಟ್‌ನಲ್ಲಿರುವ ಕಚ್ಚಾ ಡೇಟಾ ವಿಷಯವನ್ನು ರಫ್ತು ಮಾಡಿ ಅಥವಾ ಆಮದು ಮಾಡಿ."
-
 #: ../../../lib/web/src/lib/preference-utils.ts:136
 msgid "Extra large"
 msgstr "ಹೆಚ್ಚುವರಿ ದೊಡ್ಡದು"
@@ -1000,7 +995,7 @@ msgstr "ಲಿಂಕ್ ರಚಿಸಲು ವಿಫಲವಾಗಿದೆ"
 msgid "Failed to create option"
 msgstr "ಆಯ್ಕೆ ರಚಿಸಲು ವಿಫಲವಾಗಿದೆ"
 
-#: src/features/projects/components/create-project-dialog.tsx:110
+#: src/features/projects/components/create-project-dialog.tsx:111
 msgid "Failed to create project"
 msgstr "ಪ್ರಾಜೆಕ್ಟ್ ರಚಿಸಲು ವಿಫಲವಾಗಿದೆ"
 
@@ -1036,7 +1031,7 @@ msgstr "ಡೇಟಾ ರಫ್ತು ಮಾಡಲು ವಿಫಲವಾಗಿದ
 msgid "Failed to export design"
 msgstr "ಡಿಸೈನ್ ಎಕ್ಸ್‌ಪೋರ್ಟ್ ಮಾಡಲು ವಿಫಲವಾಗಿದೆ"
 
-#: src/features/projects/components/create-project-dialog.tsx:124
+#: src/features/projects/components/create-project-dialog.tsx:122
 msgid "Failed to import data"
 msgstr "ಡೇಟಾ ಆಮದು ಮಾಡಲು ವಿಫಲವಾಗಿದೆ"
 
@@ -1069,7 +1064,7 @@ msgstr "ಮರ್ಜ್ ಮಾಡಲು ವಿಫಲವಾಗಿದೆ"
 msgid "Failed to post comment"
 msgstr "ಕಾಮೆಂಟ್ ಪೋಸ್ಟ್ ಮಾಡಲು ವಿಫಲವಾಗಿದೆ"
 
-#: src/features/projects/components/create-project-dialog.tsx:177
+#: src/features/projects/components/create-project-dialog.tsx:175
 #: src/routes/_authenticated/$projectId/design.tsx:281
 msgid "Failed to read file"
 msgstr "ಫೈಲ್ ಓದಲು ವಿಫಲವಾಗಿದೆ"
@@ -1144,7 +1139,7 @@ msgid "Files"
 msgstr "ಫೈಲ್‌ಗಳು"
 
 #: src/components/layout/projects-layout.tsx:61
-#: src/routes/_authenticated/find.tsx:88
+#: src/routes/_authenticated/find.tsx:92
 msgid "Find projects"
 msgstr "ಪ್ರಾಜೆಕ್ಟ್‌ಗಳನ್ನು ಹುಡುಕಿ"
 
@@ -1254,40 +1249,18 @@ msgstr "ಗುರುತು"
 msgid "Imperial"
 msgstr "ಇಂಪೀರಿಯಲ್"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:549
-#~ msgid "Import a data configuration"
-#~ msgstr "ಡೇಟಾ ಕಾನ್ಫಿಗರೇಶನ್ ಅನ್ನು ಆಮದು ಮಾಡಿ"
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:444
-#: src/routes/_authenticated/$projectId_.settings.tsx:490
-#: src/routes/_authenticated/$projectId_.settings.tsx:548
-#~ msgid "Import data"
-#~ msgstr "ಡೇಟಾ ಆಮದು ಮಾಡಿ"
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:476
-#~ msgid "Import data?"
-#~ msgstr "ಡೇಟಾ ಆಮದು ಮಾಡಬೇಕೇ?"
-
 #: src/routes/_authenticated/$projectId/design.tsx:177
 #: src/routes/_authenticated/$projectId/design.tsx:293
 msgid "Import design"
 msgstr "ಡಿಸೈನ್ ಇಂಪೋರ್ಟ್"
 
-#: src/features/projects/components/create-project-dialog.tsx:288
+#: src/features/projects/components/create-project-dialog.tsx:298
 msgid "Import from backup (optional)"
-msgstr ""
+msgstr "ಬ್ಯಾಕಪ್‌ನಿಂದ ಆಮದು ಮಾಡಿ (ಐಚ್ಛಿಕ)"
 
-#: src/features/projects/components/create-project-dialog.tsx:122
-msgid "Imported {count} objects"
-msgstr ""
-
-#: src/features/projects/components/create-project-dialog.tsx:119
+#: src/features/projects/components/create-project-dialog.tsx:120
 msgid "Importing data..."
-msgstr ""
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:487
-#~ msgid "Importing..."
-#~ msgstr "ಆಮದು ಮಾಡಲಾಗುತ್ತಿದೆ..."
+msgstr "ಡೇಟಾ ಆಮದು ಮಾಡಲಾಗುತ್ತಿದೆ..."
 
 #: ../../../lib/web/src/components/config-drawer.tsx:252
 msgid "Inset"
@@ -1301,7 +1274,7 @@ msgstr "ಆಸಕ್ತಿಗಳು"
 msgid "Invalid date"
 msgstr "ಅಮಾನ್ಯ ದಿನಾಂಕ"
 
-#: src/features/projects/components/create-project-dialog.tsx:171
+#: src/features/projects/components/create-project-dialog.tsx:169
 #: src/routes/_authenticated/$projectId/design.tsx:277
 msgid "Invalid JSON file"
 msgstr "ಅಮಾನ್ಯ JSON ಫೈಲ್"
@@ -1374,7 +1347,7 @@ msgstr "ಐಟಂ ಲೋಡ್ ಆಗುತ್ತಿದೆ"
 msgid "Loading item details"
 msgstr "ಐಟಂ ವಿವರಗಳು ಲೋಡ್ ಆಗುತ್ತಿವೆ"
 
-#: src/features/projects/components/create-project-dialog.tsx:365
+#: src/features/projects/components/create-project-dialog.tsx:375
 msgid "Loading templates..."
 msgstr "ಟೆಂಪ್ಲೆಟ್‌ಗಳು ಲೋಡ್ ಆಗುತ್ತಿವೆ..."
 
@@ -1475,7 +1448,7 @@ msgstr "ರೆಪೋ, ಮೂಲ, ಅಥವಾ ಟಾರ್ಗೆಟ್ ಪ್ಯ
 msgid "Monday"
 msgstr "ಸೋಮವಾರ"
 
-#: src/features/projects/components/create-project-dialog.tsx:243
+#: src/features/projects/components/create-project-dialog.tsx:253
 msgid "My project"
 msgstr "ನನ್ನ ಪ್ರಾಜೆಕ್ಟ್"
 
@@ -1485,12 +1458,12 @@ msgstr "ನನ್ನ ಪ್ರಾಜೆಕ್ಟ್"
 #: src/features/editor/components/edit-dialogs.tsx:741
 #: src/features/editor/components/edit-dialogs.tsx:1065
 #: src/features/editor/components/option-dialog.tsx:112
-#: src/features/projects/components/create-project-dialog.tsx:233
+#: src/features/projects/components/create-project-dialog.tsx:243
 #: src/routes/_authenticated/$projectId_.settings.tsx:306
 msgid "Name"
 msgstr "ಹೆಸರು"
 
-#: src/features/projects/components/create-project-dialog.tsx:84
+#: src/features/projects/components/create-project-dialog.tsx:85
 msgid "Name is required"
 msgstr "ಹೆಸರು ಅಗತ್ಯವಿದೆ"
 
@@ -1510,7 +1483,7 @@ msgstr "ಹೊಸ"
 msgid "New {className}"
 msgstr "ಹೊಸ {className}"
 
-#: src/features/projects/components/create-project-dialog.tsx:347
+#: src/features/projects/components/create-project-dialog.tsx:357
 msgid "Next"
 msgstr "ಮುಂದೆ"
 
@@ -1592,7 +1565,7 @@ msgid "No profile"
 msgstr "ಯಾವುದೇ ಪ್ರೊಫೈಲ್ ಇಲ್ಲ"
 
 #: src/features/projects/components/inline-project-search.tsx:164
-#: src/routes/_authenticated/find.tsx:90
+#: src/routes/_authenticated/find.tsx:94
 msgid "No projects found"
 msgstr "ಯಾವುದೇ ಪ್ರಾಜೆಕ್ಟ್‌ಗಳು ಸಿಗಲಿಲ್ಲ"
 
@@ -1810,7 +1783,7 @@ msgstr "ಪ್ರಾಜೆಕ್ಟ್ ಡಿಸೈನ್‌ಗೆ ದಯವಿ�
 msgid "Please check your internet connection and try again."
 msgstr "ನಿಮ್ಮ ಇಂಟರ್ನೆಟ್ ಸಂಪರ್ಕವನ್ನು ಪರಿಶೀಲಿಸಿ ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ."
 
-#: src/features/projects/components/create-project-dialog.tsx:94
+#: src/features/projects/components/create-project-dialog.tsx:95
 msgid "Please select a template"
 msgstr "ದಯವಿಟ್ಟು ಟೆಂಪ್ಲೇಟ್ ಆಯ್ಕೆಮಾಡಿ"
 
@@ -1822,7 +1795,7 @@ msgstr "ದಯವಿಟ್ಟು ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.
 msgid "Please wait a moment and try again."
 msgstr "ದಯವಿಟ್ಟು ಸ್ವಲ್ಪ ಸಮಯ ನಿರೀಕ್ಷಿಸಿ ಮತ್ತು ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ."
 
-#: src/features/projects/components/create-project-dialog.tsx:255
+#: src/features/projects/components/create-project-dialog.tsx:265
 #: src/routes/_authenticated/$projectId_.settings.tsx:323
 msgid "Prefix"
 msgstr "ಪ್ರಿಫಿಕ್ಸ್"
@@ -1852,7 +1825,7 @@ msgstr "ಪ್ರಾಜೆಕ್ಟ್"
 msgid "Project actions"
 msgstr "ಪ್ರಾಜೆಕ್ಟ್ ಕ್ರಿಯೆಗಳು"
 
-#: src/features/projects/components/create-project-dialog.tsx:109
+#: src/features/projects/components/create-project-dialog.tsx:110
 msgid "Project created"
 msgstr "ಪ್ರಾಜೆಕ್ಟ್ ರಚಿಸಲಾಗಿದೆ"
 
@@ -1916,7 +1889,7 @@ msgid "Rebase and merge"
 msgstr "ರೀಬೇಸ್ ಮತ್ತು ವಿಲೀನ"
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:216
-#: ../../../lib/web/src/components/search-entity-page.tsx:240
+#: ../../../lib/web/src/components/search-entity-page.tsx:242
 msgid "Recommended"
 msgstr "ಶಿಫಾರಸು ಮಾಡಲಾಗಿದೆ"
 
@@ -1955,7 +1928,7 @@ msgstr "24 ಗಂಟೆಗಳ ಒಳಗೆ ಸಾಪೇಕ್ಷ, ಇಲ್ಲ�
 #: src/features/objects/components/comment-thread.tsx:299
 #: src/features/objects/components/create-object-dialog.tsx:486
 #: src/features/objects/components/create-object-dialog.tsx:491
-#: src/features/projects/components/create-project-dialog.tsx:331
+#: src/features/projects/components/create-project-dialog.tsx:341
 msgid "Remove"
 msgstr "ತೆಗೆದುಹಾಕಿ"
 
@@ -2092,7 +2065,7 @@ msgstr "ಉಳಿಸಲಾಗುತ್ತಿದೆ..."
 msgid "Search"
 msgstr "ಹುಡುಕಿ"
 
-#: src/routes/_authenticated/find.tsx:89
+#: src/routes/_authenticated/find.tsx:93
 msgid "Search by name, ID, fingerprint, or URL..."
 msgstr "ಹೆಸರು, ID, ಫಿಂಗರ್‌ಪ್ರಿಂಟ್ ಅಥವಾ URL ನಿಂದ ಹುಡುಕಿ..."
 
@@ -2135,7 +2108,7 @@ msgid "Search..."
 msgstr "ಹುಡುಕಿ..."
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:174
-#: ../../../lib/web/src/components/search-entity-page.tsx:198
+#: ../../../lib/web/src/components/search-entity-page.tsx:200
 #: ../../../lib/web/src/features/access/access-dialog.tsx:202
 msgid "Searching..."
 msgstr "ಹುಡುಕಲಾಗುತ್ತಿದೆ..."
@@ -2441,10 +2414,6 @@ msgstr "ಈ ಪ್ರಾಜೆಕ್ಟ್ ಅನ್ನು ಇದೀಗ ಲೋ�
 msgid "This project may have been deleted or you don't have access to it."
 msgstr "ಈ ಪ್ರಾಜೆಕ್ಟ್ ಅನ್ನು ಅಳಿಸಿರಬಹುದು ಅಥವಾ ನಿಮಗೆ ಅದಕ್ಕೆ ಪ್ರವೇಶವಿಲ್ಲ."
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:478
-#~ msgid "This will import the data from <0>{0}</0>. Objects will be appended to the existing records. Ensure the current design matches the classes and fields referenced in the file."
-#~ msgstr "ಇದು <0>{0}</0> ನಿಂದ ಡೇಟಾವನ್ನು ಆಮದು ಮಾಡುತ್ತದೆ. ವಸ್ತುಗಳನ್ನು ಈಗಿರುವ ದಾಖಲೆಗಳಿಗೆ ಸೇರಿಸಲಾಗುತ್ತದೆ. ಪ್ರಸ್ತುತ ವಿನ್ಯಾಸವು ಫೈಲ್‌ನಲ್ಲಿ ಉಲ್ಲೇಖಿಸಲಾದ ವರ್ಗಗಳು ಮತ್ತು ಫೀಲ್ಡ್‌ಗಳಿಗೆ ಹೊಂದಿಕೆಯಾಗುತ್ತದೆ ಎಂಬುದನ್ನು ಖಚಿತಪಡಿಸಿಕೊಳ್ಳಿ."
-
 #: src/features/requests/components/merge-button.tsx:105
 msgid "This will merge \"{source}\" into \"{target}\". This action cannot be undone."
 msgstr "ಇದು \"{source}\" ಅನ್ನು \"{target}\" ಗೆ ವಿಲೀನಗೊಳಿಸುತ್ತದೆ. ಈ ಕ್ರಿಯೆಯನ್ನು ರದ್ದುಗೊಳಿಸಲಾಗುವುದಿಲ್ಲ."
@@ -2533,7 +2502,7 @@ msgid "Travelling"
 msgstr "ಪ್ರಯಾಣ ಮಾಡಲಾಗುತ್ತಿದೆ"
 
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:190
-#: ../../../lib/web/src/components/search-entity-page.tsx:214
+#: ../../../lib/web/src/components/search-entity-page.tsx:216
 msgid "Try adjusting your search terms"
 msgstr "ನಿಮ್ಮ ಹುಡುಕಾಟ ಪದಗಳನ್ನು ಸರಿಹೊಂದಿಸಲು ಪ್ರಯತ್ನಿಸಿ"
 
@@ -2629,7 +2598,7 @@ msgstr "ಪ್ರವೇಶ ನವೀಕರಿಸಲಾಗುತ್ತಿದೆ..
 msgid "Upload"
 msgstr "ಅಪ್‌ಲೋಡ್ ಮಾಡಿ"
 
-#: src/features/projects/components/create-project-dialog.tsx:304
+#: src/features/projects/components/create-project-dialog.tsx:314
 #: src/routes/_authenticated/$projectId/design.tsx:336
 msgid "Upload .json file"
 msgstr ".json ಫೈಲ್ ಅಪ್‌ಲೋಡ್ ಮಾಡಿ"
@@ -2640,7 +2609,7 @@ msgstr "ನಿಮ್ಮ ಪಾಸ್‌ಕೀ ಬಳಸಿ"
 
 #. placeholder {0}: prefix || "project"
 #. placeholder {1}: prefix || "project"
-#: src/features/projects/components/create-project-dialog.tsx:272
+#: src/features/projects/components/create-project-dialog.tsx:282
 msgid "Used for readable IDs like {0}-1, {1}-2"
 msgstr "{0}-1, {1}-2 ನಂತಹ ಓದಬಹುದಾದ IDs ಗಾಗಿ ಬಳಸಲಾಗುತ್ತದೆ"
 
@@ -2671,7 +2640,7 @@ msgstr "ಪರಿಶೀಲಿಸಿ"
 msgid "Verify email address"
 msgstr "ಇಮೇಲ್ ವಿಳಾಸವನ್ನು ಪರಿಶೀಲಿಸಿ"
 
-#: ../../../lib/web/src/components/attachment-gallery.tsx:75
+#: ../../../lib/web/src/components/attachment-gallery.tsx:74
 msgid "Video thumbnail"
 msgstr "ವಿಡಿಯೋ ಥಂಬ್‌ನೇಲ್"
 
@@ -2721,9 +2690,9 @@ msgstr "ವೀಕ್ಷಿಸಲಾಗಿದೆ"
 msgid "Watched only"
 msgstr "ವೀಕ್ಷಿಸಿದ ಮಾತ್ರ"
 
-#: src/features/projects/components/create-project-dialog.tsx:360
+#: src/features/projects/components/create-project-dialog.tsx:370
 msgid "We have auto-selected the best matching template."
-msgstr ""
+msgstr "ಅತ್ಯುತ್ತಮವಾಗಿ ಹೊಂದುವ ಟೆಂಪ್ಲೇಟ್ ಅನ್ನು ನಾವು ಸ್ವಯಂಚಾಲಿತವಾಗಿ ಆಯ್ಕೆಮಾಡಿದ್ದೇವೆ."
 
 #: ../../../lib/web/src/features/errors/maintenance-error.tsx:16
 msgid "We'll be back online shortly."
@@ -2753,6 +2722,6 @@ msgstr "ನಿಮಗೆ ಇನ್ನೂ ಯಾವುದೇ ಪ್ರಾಜೆಕ
 msgid "Your account was moved here from {source}. Until you delete it there, messages and notifications may reach both servers, some of your content keeps being served from the old server, and followers may take a few minutes to find you here."
 msgstr "ನಿಮ್ಮ ಖಾತೆಯನ್ನು {source} ನಿಂದ ಇಲ್ಲಿಗೆ ವರ್ಗಾಯಿಸಲಾಗಿದೆ. ಅಲ್ಲಿ ಅದನ್ನು ಅಳಿಸುವವರೆಗೆ, ಸಂದೇಶಗಳು ಮತ್ತು ಅಧಿಸೂಚನೆಗಳು ಎರಡೂ ಸರ್ವರ್‌ಗಳಿಗೆ ತಲುಪಬಹುದು, ನಿಮ್ಮ ಕೆಲವು ವಿಷಯಗಳು ಹಳೆಯ ಸರ್ವರ್‌ನಿಂದ ಮಾತ್ರ ಒದಗಿಸಲ್ಪಡುತ್ತಿರಬಹುದು, ಮತ್ತು ಅನುಯಾಯಿಗಳು ನಿಮ್ಮನ್ನು ಇಲ್ಲಿ ಹುಡುಕಲು ಕೆಲವು ನಿಮಿಷಗಳು ಬೇಕಾಗಬಹುದು."
 
-#: src/features/projects/components/create-project-dialog.tsx:356
+#: src/features/projects/components/create-project-dialog.tsx:366
 msgid "Your backup contains objects of type:"
-msgstr ""
+msgstr "ನಿಮ್ಮ ಬ್ಯಾಕಪ್ ಈ ಪ್ರಕಾರದ ವಸ್ತುಗಳನ್ನು ಒಳಗೊಂಡಿದೆ:"

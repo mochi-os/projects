@@ -292,6 +292,14 @@ def rank_resequence(project_id):
 		previous = rank_between(previous, None)
 		object_set(row["id"], {"rank": previous})
 
+def database_upgrade(version):
+	if version == 2:
+		# Drop the pre-2026-07 broadcast tables left in the app data DB when
+		# broadcast state moved to the per-app system DB - inert, but stale
+		# sequence/log copies mislead diagnosis.
+		for table in ["sequence", "log", "acknowledged", "received"]:
+			mochi.db.execute("drop table if exists " + table)
+
 # Create database with all 16 tables
 def database_create():
 	# 1. projects - the container, a Mochi entity

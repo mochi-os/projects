@@ -85,13 +85,19 @@ export function CreateProjectDialog({
       toast.error(t`Name is required`);
       return;
     }
+    // A backup with an embedded design needs no template choice — create
+    // straight from the file.
+    if (importDesign) {
+      void handleSubmit();
+      return;
+    }
     setStep(2);
   };
 
   const handleSubmit = async (e?: React.FormEvent) => {
     e?.preventDefault();
 
-    if (!selectedTemplate) {
+    if (!importDesign && !selectedTemplate) {
       toast.error(t`Please select a template`);
       return;
     }
@@ -102,7 +108,7 @@ export function CreateProjectDialog({
         projectsApi.create({
           name: name.trim(),
           prefix: prefix.trim().toLowerCase() || "project",
-          template: selectedTemplate,
+          template: importDesign ? "blank" : selectedTemplate,
           privacy: allowSearch ? "public" : "private",
         }),
         {
@@ -115,16 +121,37 @@ export function CreateProjectDialog({
       const fingerprint = response.data?.fingerprint;
 
       if (fingerprint && importData) {
-        try {
-          await toastAction(projectsApi.importData(fingerprint, importData), {
-            loading: t`Importing data...`,
-            success: (imported) => t`Data imported (${plural(imported.data?.objects ?? 0, { one: '# object', other: '# objects' })}, ${plural(imported.data?.comments ?? 0, { one: '# comment', other: '# comments' })}, ${plural(imported.data?.links ?? 0, { one: '# link', other: '# links' })})`,
-            error: (e) => getErrorMessage(e, t`Failed to import data`),
-          });
-        } catch (e) {
-          // If import fails, rollback project creation
-          await projectsApi.delete(fingerprint).catch(() => {});
-          throw e; // Stop execution, avoid navigation
+        const importObjects: Record<string, unknown> = { ...importData };
+        delete importObjects.design;
+        // A design-only backup (an empty project) has nothing for
+        // data/import, which rejects an empty payload — skip the call
+        // rather than fail and roll the new project back.
+        const importHasData =
+          (Array.isArray(importObjects.objects) && importObjects.objects.length > 0) ||
+          (Array.isArray(importObjects.links) && importObjects.links.length > 0);
+        if (importDesign || importHasData) {
+          try {
+            await toastAction(
+              (async () => {
+                if (importDesign) {
+                  await projectsApi.importDesign(fingerprint, importDesign);
+                }
+                return importHasData ? projectsApi.importData(fingerprint, importObjects) : null;
+              })(),
+              {
+                loading: t`Importing data...`,
+                success: (imported) =>
+                  imported
+                    ? t`Data imported (${plural(imported.data?.objects ?? 0, { one: '# object', other: '# objects' })}, ${plural(imported.data?.comments ?? 0, { one: '# comment', other: '# comments' })}, ${plural(imported.data?.links ?? 0, { one: '# link', other: '# links' })})`
+                    : t`Design imported`,
+                error: (e) => getErrorMessage(e, t`Failed to import data`),
+              }
+            );
+          } catch (e) {
+            // If import fails, rollback project creation
+            await projectsApi.delete(fingerprint).catch(() => {});
+            throw e; // Stop execution, avoid navigation
+          }
         }
       }
 
@@ -179,6 +206,18 @@ export function CreateProjectDialog({
     reader.readAsText(file);
     e.target.value = "";
   };
+
+  // Design snapshot embedded in the backup (newer exports). When present, the
+  // project is recreated from it directly and the template step is skipped —
+  // recreating from a built-in template breaks on any customized or drifted
+  // design (added classes, extra hierarchy rules, custom fields).
+  const importDesign = useMemo(() => {
+    if (!importData) return null;
+    const design = importData.design;
+    return design && typeof design === "object" && !Array.isArray(design)
+      ? (design as Record<string, unknown>)
+      : null;
+  }, [importData]);
 
   const importClasses = useMemo(() => {
     if (!importData || !Array.isArray((importData as any).objects)) return [];
@@ -354,7 +393,11 @@ export function CreateProjectDialog({
                 <Trans>Cancel</Trans>
               </Button>
               <Button type="button" onClick={handleNext} disabled={isPending}>
-                <Trans>Next</Trans><ArrowRight className="ms-2 size-4 rtl:rotate-180" />
+                {importDesign ? (
+                  isPending ? <Trans>Creating...</Trans> : <><Plus className="me-2 size-4" /><Trans>Create project</Trans></>
+                ) : (
+                  <><Trans>Next</Trans><ArrowRight className="ms-2 size-4 rtl:rotate-180" /></>
+                )}
               </Button>
             </ResponsiveDialogFooter>
           </div>

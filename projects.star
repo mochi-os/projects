@@ -789,30 +789,13 @@ def apply_template(project_id, template_id, data=None, lang="en"):
 			if field.strip():
 				row_merge("view_fields", ["project", "view", "field"], {"project": project_id, "view": v["id"], "field": field.strip(), "rank": j})
 
-# Export the current project design as template JSON. The exported JSON
-# contains literal strings (whatever the project DB currently holds) rather
-# than {labels.X} placeholders — the export is a snapshot of the user's live
-# project, not a Mochi-shipped multi-language template. Re-importing this
-# JSON will apply those literal names verbatim.
-def action_design_export(a):
-
-	project_id = resolve_project(a)
-	if not project_id:
-		a.error.label(400, "errors.project_id_required")
-		return
-
-	project = get_project(project_id)
-	if not project:
-		a.error.label(404, "errors.project_not_found")
-		return
-
-	if project["owner"] != 1:
-		a.error.label(400, "errors.cannot_export_remote_project_design")
-		return
-
-	if not check_project_access(a.user.identity.id, project_id, "design"):
-		a.error.label(403, "errors.access_denied")
-		return
+# Snapshot the project design - classes, fields, options, hierarchy, and
+# views - as template JSON. The snapshot contains literal strings (whatever
+# the project DB currently holds) rather than {labels.X} placeholders — it is
+# a copy of the user's live project, not a Mochi-shipped multi-language
+# template. Applying it via design/import writes those literal names
+# verbatim. Shared by design/export and data/export.
+def design_export(project_id):
 
 	# Read classes
 	classes = []
@@ -938,7 +921,7 @@ def action_design_export(a):
 			view["classes"] = vc
 		views.append(view)
 
-	result = {
+	return {
 		"classes": classes,
 		"fields": fields,
 		"options": options,
@@ -946,7 +929,28 @@ def action_design_export(a):
 		"views": views,
 	}
 
-	return {"data": result}
+# Export the current project design as template JSON
+def action_design_export(a):
+
+	project_id = resolve_project(a)
+	if not project_id:
+		a.error.label(400, "errors.project_id_required")
+		return
+
+	project = get_project(project_id)
+	if not project:
+		a.error.label(404, "errors.project_not_found")
+		return
+
+	if project["owner"] != 1:
+		a.error.label(400, "errors.cannot_export_remote_project_design")
+		return
+
+	if not check_project_access(a.user.identity.id, project_id, "design"):
+		a.error.label(403, "errors.access_denied")
+		return
+
+	return {"data": design_export(project_id)}
 
 # Import a design from template JSON, replacing the current design
 def action_design_import(a):
@@ -1018,11 +1022,12 @@ def action_design_import(a):
 	return {"data": {"success": True}}
 
 # Export the project's data - objects with field values and comments, plus
-# links - as JSON. The design is exported separately via design/export; the
-# two snapshots together fully reproduce a project. Watchers, activity,
-# requests, and attachments are not included. Objects are ordered by rank so
-# an import preserves their order. Object numbers are informational: an
-# import assigns fresh ones.
+# links - as JSON, together with a design snapshot so the file alone fully
+# reproduces the project on any instance (the source design may be customized
+# or from a different template version than the destination's built-in
+# templates). Watchers, activity, requests, and attachments are not included.
+# Objects are ordered by rank so an import preserves their order. Object
+# numbers are informational: an import assigns fresh ones.
 def action_data_export(a):
 
 	project_id = resolve_project(a)
@@ -1087,7 +1092,7 @@ def action_data_export(a):
 			"created": l["created"],
 		})
 
-	result = {"objects": objects}
+	result = {"design": design_export(project_id), "objects": objects}
 	if links:
 		result["links"] = links
 	return {"data": result}
@@ -1098,8 +1103,9 @@ def action_data_export(a):
 # new ids, so importing the same snapshot twice creates two copies. Objects
 # are appended below existing objects in file order. The project's design
 # must already contain every class and field id the snapshot references -
-# import the design first via design/import. Everything is validated before
-# anything is written.
+# apply the snapshot's embedded design (or the matching design/export) first
+# via design/import; any "design" key in the snapshot itself is ignored here.
+# Everything is validated before anything is written.
 def action_data_import(a):
 
 	project_id = resolve_project(a)

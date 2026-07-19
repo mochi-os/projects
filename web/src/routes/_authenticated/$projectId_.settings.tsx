@@ -149,17 +149,13 @@ function ProjectSettingsPage() {
     }) => {
       if (!project || !isOwner) return;
 
-      try {
-        await toastAction(projectsApi.update(project.project.id, updates), {
-          loading: t`Saving...`,
-          success: t`Project updated`,
-          error: (e) => getErrorMessage(e, t`Failed to update project`),
-        });
-        void refreshSidebar();
-        queryClient.invalidateQueries({ queryKey: ["project", projectId] });
-      } catch (err) {
-        throw err;
-      }
+      await toastAction(projectsApi.update(project.project.id, updates), {
+        loading: t`Saving...`,
+        success: t`Project updated`,
+        error: (e) => getErrorMessage(e, t`Failed to update project`),
+      });
+      void refreshSidebar();
+      queryClient.invalidateQueries({ queryKey: ["project", projectId] });
     },
     [project, isOwner, refreshSidebar, queryClient, projectId, t]
   );
@@ -299,7 +295,6 @@ function GeneralTab({
     <div className="space-y-6">
       <Section
         title={t`Identity`}
-        description={t`Core information about this project`}
       >
         <div className="divide-y-0">
           <EditableFieldRow
@@ -351,7 +346,6 @@ function GeneralTab({
       {isOwner && (
         <Section
           title={t`Delete project`}
-          description={t`Permanently delete this project and all its content.`}
           action={
             <Button
               variant="outline"
@@ -512,8 +506,7 @@ function AccessTab({ projectId }: AccessTabProps) {
 
   return (
     <Section
-      title={t`Access Management`}
-      description={t`Control who can view and interact with this project`}
+      title={t`Access management`}
     >
       <div className="space-y-4">
         <div className="flex justify-end">

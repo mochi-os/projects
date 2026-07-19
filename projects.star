@@ -4,6 +4,17 @@
 # This file is part of Mochi, licensed under the GNU AGPL v3 with the
 # Mochi Application Interface Exception - see license.txt and license-exception.md.
 
+# remote_error surfaces a failed mochi.remote.request: core-authored
+# transport failures (marked "transport") become a translated generic
+# error with the detail kept in the server log; far-end app answers
+# pass through unchanged.
+def remote_error(a, response, code=502):
+	if response.get("transport"):
+		mochi.log.info("Remote transport error: %s", response.get("error", ""))
+		a.error.label(response.get("code", code), "errors.remote")
+	else:
+		a.error(response.get("code", code), response.get("error", "Error"))
+
 def notify(topic, object="", title="", body="", url="", event_id=""):
 	mochi.service.call("notifications", "send", topic, object, title, body, url, mochi.app.label("notifications.topic." + topic.replace("/", ".")), "", "", None, event_id)
 
@@ -4913,7 +4924,7 @@ def action_probe(a):
 			return
 		response = mochi.remote.request(link_project, "projects", "info", {"project": link_project}, link_peer)
 		if response.get("error"):
-			a.error(response.get("code", 404), response["error"])
+			remote_error(a, response, 404)
 			return
 		return {"data": {
 			"id": link_project,
@@ -4970,7 +4981,7 @@ def action_probe(a):
 		return
 	response = mochi.remote.request(project_id, "projects", "info", {"project": project_id}, peer)
 	if response.get("error"):
-		a.error.label(response.get("code", 404), response["error"])
+		remote_error(a, response, 404)
 		return
 
 	return {"data": {
@@ -5072,7 +5083,7 @@ def action_subscribe(a):
 			return
 		response = mochi.remote.request(project_id, "projects", "info", {"project": project_id}, peer)
 		if response.get("error"):
-			a.error.label(response.get("code", 404), response["error"])
+			remote_error(a, response, 404)
 			return
 		project_name = response.get("name", "")
 		project_desc = response.get("description", "")
@@ -8018,6 +8029,8 @@ def _subscribe_to_project(user, project_id, server):
 			return {"error": "errors.unable_to_connect_to_server", "code": 502}
 		response = mochi.remote.request(project_id, "projects", "info", {"project": project_id}, peer)
 		if response.get("error"):
+			if response.get("transport"):
+				return {"error": "errors.remote", "code": response.get("code", 502)}
 			return {"error": response["error"], "code": response.get("code", 404)}
 		project_name = response.get("name", "")
 		project_desc = response.get("description", "")

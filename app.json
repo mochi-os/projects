@@ -83,8 +83,8 @@
 		":project/-/objects/:object/attachments/create": {"function": "action_attachment_create"},
 		":project/-/objects/:object/attachments/:attachment/delete": {"function": "action_attachment_delete"},
 
-		":project/-/attachments/:id": {"feature": "attachment"},
-		":project/-/attachments/:id/thumbnail": {"feature": "attachment/thumbnail"},
+		":project/-/attachments/:id": {"function": "action_attachment"},
+		":project/-/attachments/:id/thumbnail": {"function": "action_attachment_thumbnail"},
 
 		":project/-/objects/:object/requests": {"function": "action_request_list"},
 		":project/-/objects/:object/requests/create": {"function": "action_request_create"},

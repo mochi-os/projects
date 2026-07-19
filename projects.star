@@ -3241,6 +3241,42 @@ def action_comment_delete(a):
 # Attachment Actions
 # ============================================================================
 
+# HTTP handlers serving a project's attachments (and thumbnails). Auth-only
+# routes. Core's a.write.attachment serves the bytes with no access check of
+# its own, so this handler is the gate: require_project enforces project view
+# access (for projects we own), and the attachment must belong to an object or
+# comment in THIS project, so one project's attachment can't be fetched via
+# another project's route.
+def action_attachment(a):
+	serve_attachment(a, False)
+
+def action_attachment_thumbnail(a):
+	serve_attachment(a, True)
+
+def serve_attachment(a, thumbnail):
+	project_id, project = require_project(a, "view")
+	if not project_id:
+		return
+	attachment = a.input("id")
+	if project["owner"] == 1:
+		# We own this project: require_project enforced view access. Bind the
+		# attachment to an object or a comment (comment -> object -> project).
+		att = mochi.attachment.get(attachment)
+		if not att:
+			a.error.label(404, "errors.attachment_not_found")
+			return
+		obj = att.get("object")
+		in_project = mochi.db.exists("select 1 from objects where id=? and project=?", obj, project_id)
+		if not in_project:
+			in_project = mochi.db.exists("select 1 from comments c join objects o on o.id=c.object where c.id=? and o.project=?", obj, project_id)
+		if not in_project:
+			a.error.label(404, "errors.attachment_not_found")
+			return
+	# Remote project (owner != 1): the owning server enforces access and the
+	# binding when a.write.attachment fetches over P2P; per-user databases
+	# isolate one subscriber from another.
+	a.write.attachment(attachment, thumbnail=thumbnail)
+
 def action_attachment_list(a):
 
 	project_id, project = require_project(a)

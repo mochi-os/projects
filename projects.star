@@ -950,22 +950,12 @@ def design_export(project_id):
 # Export the current project design as template JSON
 def action_design_export(a):
 
-	project_id = resolve_project(a)
+	# Remote projects are exportable too: the subscriber's replica holds the
+	# full design, and require_project applies the standard remote semantics
+	# (owner enforces access at sync time; per-user databases isolate
+	# subscribers).
+	project_id, project = require_project(a, "design")
 	if not project_id:
-		a.error.label(400, "errors.project_id_required")
-		return
-
-	project = get_project(project_id)
-	if not project:
-		a.error.label(404, "errors.project_not_found")
-		return
-
-	if project["owner"] != 1:
-		a.error.label(400, "errors.cannot_export_remote_project_design")
-		return
-
-	if not check_project_access(a.user.identity.id, project_id, "design"):
-		a.error.label(403, "errors.access_denied")
 		return
 
 	return {"data": design_export(project_id)}
@@ -1048,22 +1038,10 @@ def action_design_import(a):
 # numbers are informational: an import assigns fresh ones.
 def action_data_export(a):
 
-	project_id = resolve_project(a)
+	# Remote projects export from the subscriber's replica - the same tables
+	# the board reads - so the file matches what the user sees.
+	project_id, project = require_project(a, "view")
 	if not project_id:
-		a.error.label(400, "errors.project_id_required")
-		return
-
-	project = get_project(project_id)
-	if not project:
-		a.error.label(404, "errors.project_not_found")
-		return
-
-	if project["owner"] != 1:
-		a.error.label(400, "errors.cannot_export_remote_project_data")
-		return
-
-	if not check_project_access(a.user.identity.id, project_id, "view"):
-		a.error.label(403, "errors.access_denied")
 		return
 
 	objects = []

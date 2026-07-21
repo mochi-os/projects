@@ -3421,12 +3421,15 @@ def action_comment_delete(a):
 # comment in THIS project, so one project's attachment can't be fetched via
 # another project's route.
 def action_attachment(a):
-	serve_attachment(a, False)
+	serve_attachment(a, "")
 
 def action_attachment_thumbnail(a):
-	serve_attachment(a, True)
+	serve_attachment(a, "thumbnail")
 
-def serve_attachment(a, thumbnail):
+def action_attachment_preview(a):
+	serve_attachment(a, "preview")
+
+def serve_attachment(a, variant):
 	project_id, project = require_project(a, "view")
 	if not project_id:
 		return
@@ -3448,7 +3451,7 @@ def serve_attachment(a, thumbnail):
 	# Remote project (owner != 1): the owning server enforces access and the
 	# binding when a.write.attachment fetches over P2P; per-user databases
 	# isolate one subscriber from another.
-	a.write.attachment(attachment, thumbnail=thumbnail)
+	a.write.attachment(attachment, variant=variant)
 
 def action_attachment_list(a):
 

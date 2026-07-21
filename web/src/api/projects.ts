@@ -629,15 +629,25 @@ const projectsApi = {
     return projectsRequest.get(endpoints.projects.dataExport(projectId));
   },
 
-  // Import data from JSON
+  // Pre-fetch attachment bytes on the server before an export. Remote
+  // projects fetch bytes over P2P in bounded rounds; loop until remaining
+  // is zero, then call exportData.
+  warmExport: async (
+    projectId: string,
+  ): Promise<{ data: { attachments: number; remaining: number } }> => {
+    return projectsRequest.post(endpoints.projects.dataExportWarm(projectId), {});
+  },
+
+  // Import data from an export file. Uploaded as a multipart file part:
+  // form fields cap out at a few megabytes at the HTTP layer, while file
+  // parts spool to disk.
   importData: async (
     projectId: string,
-    data: Record<string, unknown>,
-  ): Promise<{ data: { objects: number; comments: number; links: number } }> => {
-    return projectsRequest.post(
-      endpoints.projects.dataImport(projectId),
-      { data: JSON.stringify(data) },
-    );
+    file: Blob,
+  ): Promise<{ data: { objects: number; comments: number; attachments: number; links: number } }> => {
+    const form = new FormData();
+    form.append("file", file, "import.json");
+    return projectsRequest.post(endpoints.projects.dataImport(projectId), form);
   },
 
   // ============= View Methods =============

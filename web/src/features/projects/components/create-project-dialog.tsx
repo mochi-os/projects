@@ -42,6 +42,7 @@ export function CreateProjectDialog({
   const [isLoadingTemplates, setIsLoadingTemplates] = useState(false);
   const [allowSearch, setAllowSearch] = useState(true);
   const [importData, setImportData] = useState<Record<string, unknown> | null>(null);
+  const [importFile, setImportFile] = useState<File | null>(null);
   const [importFileName, setImportFileName] = useState("");
   const fileInputRef = useRef<HTMLInputElement>(null);
   const prefixDirty = useRef(false);
@@ -75,6 +76,7 @@ export function CreateProjectDialog({
       setSelectedTemplate("");
       setAllowSearch(true);
       setImportData(null);
+      setImportFile(null);
       setImportFileName("");
       prefixDirty.current = false;
     }
@@ -120,15 +122,13 @@ export function CreateProjectDialog({
 
       const fingerprint = response.data?.fingerprint;
 
-      if (fingerprint && importData) {
-        const importObjects: Record<string, unknown> = { ...importData };
-        delete importObjects.design;
+      if (fingerprint && importData && importFile) {
         // A design-only backup (an empty project) has nothing for
         // data/import, which rejects an empty payload — skip the call
         // rather than fail and roll the new project back.
         const importHasData =
-          (Array.isArray(importObjects.objects) && importObjects.objects.length > 0) ||
-          (Array.isArray(importObjects.links) && importObjects.links.length > 0);
+          (Array.isArray(importData.objects) && importData.objects.length > 0) ||
+          (Array.isArray(importData.links) && importData.links.length > 0);
         if (importDesign || importHasData) {
           try {
             await toastAction(
@@ -136,7 +136,7 @@ export function CreateProjectDialog({
                 if (importDesign) {
                   await projectsApi.importDesign(fingerprint, importDesign);
                 }
-                return importHasData ? projectsApi.importData(fingerprint, importObjects) : null;
+                return importHasData ? projectsApi.importData(fingerprint, importFile) : null;
               })(),
               {
                 loading: t`Importing data...`,
@@ -191,16 +191,30 @@ export function CreateProjectDialog({
       try {
         const data = JSON.parse(reader.result as string);
         setImportData(data);
+        setImportFile(file);
         setImportFileName(file.name);
+        // Format 2 backups carry the source project's metadata — prefill
+        // untouched fields so recreating keeps the original name and prefix.
+        const metadata = data && typeof data === "object" && !Array.isArray(data) ? (data as Record<string, unknown>).project : null;
+        if (metadata && typeof metadata === "object" && !Array.isArray(metadata)) {
+          const m = metadata as Record<string, unknown>;
+          if (typeof m.name === "string" && m.name && !name.trim()) setName(m.name);
+          if (typeof m.prefix === "string" && m.prefix && !prefixDirty.current) {
+            setPrefix(m.prefix);
+            prefixDirty.current = true;
+          }
+        }
       } catch {
         toast.error(t`Invalid JSON file`);
         setImportData(null);
+        setImportFile(null);
         setImportFileName("");
       }
     };
     reader.onerror = () => {
       toast.error(t`Failed to read file`);
       setImportData(null);
+      setImportFile(null);
       setImportFileName("");
     };
     reader.readAsText(file);

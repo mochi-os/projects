@@ -27,6 +27,7 @@ import {
   PageHeader,
   toast,
   getErrorMessage,
+  shellSaveBlob,
   usePageTitle,
 } from "@mochi/web";
 import { Download, Loader2, MoreHorizontal, Settings2, Upload } from "lucide-react";
@@ -80,14 +81,14 @@ function DesignPage() {
       const response = await projectsApi.exportDesign(projectId);
       const json = JSON.stringify(response.data, null, 2);
       const blob = new Blob([json], { type: "application/json" });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = `${project.project.name.toLowerCase().replace(/\s+/g, "-")}-design.json`;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
+      // A bare anchor-click save silently no-ops in the shell's sandboxed
+      // iframe; shellSaveBlob hands the blob to the parent shell to save.
+      const filename = `${project.project.name.toLowerCase().replace(/\s+/g, "-")}-design.json`;
+      if (await shellSaveBlob(blob, filename)) {
+        toast.success(t`Downloaded ${filename}`);
+      } else {
+        toast.error(t`Failed to export design`);
+      }
     } catch (err) {
       toast.error(getErrorMessage(err, t`Failed to export design`));
     }

@@ -30,6 +30,7 @@ import {
   toast,
   toastAction,
   shellClipboardWrite,
+  shellSaveBlob,
   ResponsiveDialog,
   ResponsiveDialogContent,
   ResponsiveDialogHeader,
@@ -185,22 +186,32 @@ export function ProjectPageContent({ project, projectId, search, initialObjectId
   }, [shareLink]);
 
   const handleDataExport = useCallback(async () => {
+    // Remote projects fetch attachment bytes over P2P in bounded server-side
+    // rounds; warm until nothing remains so a large project's export doesn't
+    // time out. Each round covers up to a minute of fetching.
+    const warming = toast.loading(t`Loading…`);
     try {
+      for (let round = 0; round < 120; round++) {
+        const warm = await projectsApi.warmExport(project.project.id);
+        if (!warm.data || warm.data.remaining === 0) break;
+      }
       const response = await projectsApi.exportData(project.project.id);
       const json = JSON.stringify(response.data, null, 2);
       const blob = new Blob([json], { type: "application/json" });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
       const today = new Date().toISOString().split("T")[0];
       const slug = project.project.name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
-      a.download = `${slug}-projects-backup-${today}.json`;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
+      const filename = `${slug}-projects-backup-${today}.json`;
+      // A bare anchor-click save silently no-ops in the shell's sandboxed
+      // iframe; shellSaveBlob hands the blob to the parent shell to save.
+      if (await shellSaveBlob(blob, filename)) {
+        toast.success(t`Downloaded ${filename}`);
+      } else {
+        toast.error(t`Failed to export data`);
+      }
     } catch (err) {
       toast.error(getErrorMessage(err, t`Failed to export data`));
+    } finally {
+      toast.dismiss(warming);
     }
   }, [project.project.id, project.project.name, t]);
 

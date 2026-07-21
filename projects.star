@@ -1029,13 +1029,62 @@ def action_design_import(a):
 
 	return {"data": {"success": True}}
 
-# Export the project's data - objects with field values and comments, plus
-# links - as JSON, together with a design snapshot so the file alone fully
-# reproduces the project on any instance (the source design may be customized
-# or from a different template version than the destination's built-in
-# templates). Watchers, activity, requests, and attachments are not included.
-# Objects are ordered by rank so an import preserves their order. Object
-# numbers are informational: an import assigns fresh ones.
+# Collect an object's (or comment's) attachments with base64-encoded file
+# bytes for a data export. mochi.attachment.data fetches remote bytes over
+# P2P for subscribed projects. An attachment whose bytes cannot be read
+# (deleted file, unreachable owner) is skipped rather than failing the
+# whole export.
+def export_attachments(object_id, project_id):
+	result = []
+	for att in mochi.attachment.list(object_id, project_id) or []:
+		data = mochi.attachment.data(att["id"])
+		if data == None:
+			continue
+		result.append({
+			"name": att["name"],
+			"content_type": att.get("content_type", ""),
+			"caption": att.get("caption", ""),
+			"description": att.get("description", ""),
+			"data": mochi.encode.base64(data),
+		})
+	return result
+
+# Pre-fetch attachment bytes for a data export. A remote project fetches
+# each attachment's bytes over P2P on first use, and a large project cannot
+# fetch them all inside one action's time budget - so this action warms the
+# local cache for up to a minute and reports how many attachments remain.
+# Callers loop until remaining is zero, then run data/export.
+def action_data_export_warm(a):
+
+	project_id, project = require_project(a, "view")
+	if not project_id:
+		return
+
+	identifiers = []
+	for row in mochi.db.rows("select id from objects where project=? order by rank, id", project_id) or []:
+		for att in mochi.attachment.list(row["id"], project_id) or []:
+			identifiers.append(att["id"])
+		for c in mochi.db.rows("select id from comments where object=?", row["id"]) or []:
+			for att in mochi.attachment.list(c["id"], project_id) or []:
+				identifiers.append(att["id"])
+
+	start = mochi.time.now()
+	for i, identifier in enumerate(identifiers):
+		if mochi.time.now() - start > 60:
+			return {"data": {"attachments": len(identifiers), "remaining": len(identifiers) - i}}
+		mochi.attachment.data(identifier)
+
+	return {"data": {"attachments": len(identifiers), "remaining": 0}}
+
+# Export the project's data as JSON (format 2), together with a design
+# snapshot so the file alone fully reproduces the project on any instance
+# (the source design may be customized or from a different template version
+# than the destination's built-in templates). Includes the project metadata,
+# objects with field values, comments, attachments (base64 file bytes),
+# activity history, and merge requests, plus links. Watchers are per-user
+# notification state and are not included. Objects are ordered by rank so an
+# import preserves their order. Object numbers are preserved when importing
+# into an empty project; otherwise an import assigns fresh ones.
 def action_data_export(a):
 
 	# Remote projects export from the subscriber's replica - the same tables
@@ -1043,6 +1092,15 @@ def action_data_export(a):
 	project_id, project = require_project(a, "view")
 	if not project_id:
 		return
+
+	# Values are filtered against the design snapshot: a field removed from
+	# the design can leave orphan value rows, which the app never renders -
+	# exporting them would make the file fail its own import.
+	design = design_export(project_id)
+	declared = {}
+	for class_id, class_fields in design["fields"].items():
+		for f in class_fields:
+			declared[class_id + "/" + f["id"]] = True
 
 	objects = []
 	for row in mochi.db.rows("select id, class, number, parent, created, updated from objects where project=? order by rank, id", project_id) or []:
@@ -1057,7 +1115,7 @@ def action_data_export(a):
 			object["parent"] = row["parent"]
 		values = {}
 		for v in mochi.db.rows("select field, value from \"values\" where object=?", row["id"]) or []:
-			if v["value"] != "":
+			if v["value"] != "" and (row["class"] + "/" + v["field"]) in declared:
 				values[v["field"]] = v["value"]
 		if values:
 			object["values"] = values
@@ -1074,9 +1132,43 @@ def action_data_export(a):
 				comment["parent"] = c["parent"]
 			if c["edited"]:
 				comment["edited"] = c["edited"]
+			attachments = export_attachments(c["id"], project_id)
+			if attachments:
+				comment["attachments"] = attachments
 			comments.append(comment)
 		if comments:
 			object["comments"] = comments
+		attachments = export_attachments(row["id"], project_id)
+		if attachments:
+			object["attachments"] = attachments
+		activity = []
+		for act in mochi.db.rows("select user, action, field, oldvalue, newvalue, created from activity where object=? order by created, id", row["id"]) or []:
+			activity.append({
+				"user": act["user"],
+				"action": act["action"],
+				"field": act["field"],
+				"oldvalue": act["oldvalue"],
+				"newvalue": act["newvalue"],
+				"created": act["created"],
+			})
+		if activity:
+			object["activity"] = activity
+		requests = []
+		for r in mochi.db.rows("select type, repository, source, target, status, title, description, draft, created, updated from requests where object=? order by created, id", row["id"]) or []:
+			requests.append({
+				"type": r["type"],
+				"repository": r["repository"],
+				"source": r["source"],
+				"target": r["target"],
+				"status": r["status"],
+				"title": r["title"],
+				"description": r["description"],
+				"draft": r["draft"],
+				"created": r["created"],
+				"updated": r["updated"],
+			})
+		if requests:
+			object["requests"] = requests
 		objects.append(object)
 
 	links = []
@@ -1088,20 +1180,47 @@ def action_data_export(a):
 			"created": l["created"],
 		})
 
-	result = {"design": design_export(project_id), "objects": objects}
+	result = {
+		"format": 2,
+		"project": {"name": project["name"], "description": project["description"], "prefix": project["prefix"]},
+		"design": design,
+		"objects": objects,
+	}
 	if links:
 		result["links"] = links
 	return {"data": result}
 
-# Import data - objects with field values and comments, plus links - from a
-# data/export snapshot. Objects and comments get fresh ids and numbers;
+# Validate and decode a container's attachment list in place for an import:
+# each entry must be a dict with a name and base64 data, and "data" is
+# replaced with the decoded bytes so the write phase never re-decodes.
+# Returns False on any invalid entry.
+def import_attachments_decode(container):
+	attachments = container.get("attachments") or []
+	if type(attachments) != "list":
+		return False
+	for att in attachments:
+		if type(att) != "dict" or not att.get("name") or type(att.get("data")) != "string":
+			return False
+		data = mochi.decode.base64(att["data"])
+		if data == None:
+			return False
+		att["data"] = data
+	return True
+
+# Import data from a data/export snapshot: objects with field values,
+# comments, attachments (format 2, base64 file bytes), activity history,
+# and merge requests, plus links. Objects and comments get fresh ids;
 # in-file references (parents, links, comment threads) are remapped to the
 # new ids, so importing the same snapshot twice creates two copies. Objects
-# are appended below existing objects in file order. The project's design
-# must already contain every class and field id the snapshot references -
-# apply the snapshot's embedded design (or the matching design/export) first
-# via design/import; any "design" key in the snapshot itself is ignored here.
-# Everything is validated before anything is written.
+# are appended below existing objects in file order. Object numbers from the
+# file are preserved when the project is empty (keeping "#42" references in
+# comment text valid); otherwise fresh numbers are assigned. The project's
+# design must already contain every class and field id the snapshot
+# references - apply the snapshot's embedded design (or the matching
+# design/export) first via design/import; any "design" key in the snapshot
+# itself is ignored here. Format 1 files (no attachments, activity, or
+# requests) import unchanged. Everything is validated before anything is
+# written.
 def action_data_import(a):
 
 	project_id = resolve_project(a)
@@ -1124,9 +1243,18 @@ def action_data_import(a):
 
 	data_string = a.input("data")
 	if not data_string:
+		# Large imports upload the export as a multipart file part: form
+		# fields cap out at a few megabytes at the HTTP layer, while file
+		# parts spool to disk.
+		upload = a.file("file")
+		if upload:
+			data_string = str(upload["data"])
+	if not data_string:
 		a.error.label(400, "errors.data_is_required")
 		return
-	if len(data_string) > 10000000:
+	# 1GB, matching the per-attachment cap: attachment file bytes travel
+	# base64-encoded inside the JSON
+	if len(data_string) > 1000000000:
 		a.error.label(400, "errors.data_too_large")
 		return
 	data = json.decode(data_string, None)
@@ -1185,16 +1313,34 @@ def action_data_import(a):
 		if type(values) != "dict":
 			a.error.label(400, "errors.invalid_data")
 			return
-		for field in values:
-			if (o["class"] + "/" + field) not in fields:
-				a.error.label(400, "errors.unknown_field", name=field)
-				return
 		comments = o.get("comments") or []
 		if type(comments) != "list":
 			a.error.label(400, "errors.invalid_data")
 			return
 		for c in comments:
 			if type(c) != "dict" or not c.get("content"):
+				a.error.label(400, "errors.invalid_data")
+				return
+			if not import_attachments_decode(c):
+				a.error.label(400, "errors.invalid_data")
+				return
+		if not import_attachments_decode(o):
+			a.error.label(400, "errors.invalid_data")
+			return
+		activity = o.get("activity") or []
+		if type(activity) != "list":
+			a.error.label(400, "errors.invalid_data")
+			return
+		for act in activity:
+			if type(act) != "dict" or not act.get("action"):
+				a.error.label(400, "errors.invalid_data")
+				return
+		requests = o.get("requests") or []
+		if type(requests) != "list":
+			a.error.label(400, "errors.invalid_data")
+			return
+		for r in requests:
+			if type(r) != "dict":
 				a.error.label(400, "errors.invalid_data")
 				return
 	for l in links:
@@ -1222,18 +1368,40 @@ def action_data_import(a):
 	previous = row["r"] if (row and row["r"]) else None
 	number = mochi.db.row("select coalesce(max(number), 0) as n from objects where project=?", project_id)["n"]
 
+	# Preserve the file's object numbers when importing into an empty project,
+	# keeping cross-references like "#42" in comment text valid. A project
+	# that already has objects assigns fresh numbers to avoid collisions, as
+	# does a file whose numbers are missing or not unique.
+	preserve = number == 0
+	if preserve:
+		seen = {}
+		for o in objects:
+			n = safe_int(o.get("number"))
+			if n < 1 or n in seen:
+				preserve = False
+				break
+			seen[n] = True
+
 	comment_count = 0
+	attachment_count = 0
 	for o in objects:
 		object_id = remap[o["id"]]
 		parent = o.get("parent") or ""
 		parent = remap.get(parent, parent)
 		previous = rank_between(previous, None)
-		number += 1
+		if preserve:
+			object_number = safe_int(o.get("number"))
+		else:
+			number += 1
+			object_number = number
 		created = safe_int(o.get("created")) or now
 		updated = safe_int(o.get("updated")) or now
-		row_merge("objects", ["id"], {"id": object_id, "project": project_id, "class": o["class"], "number": number, "parent": parent, "rank": previous, "created": created, "updated": updated})
+		row_merge("objects", ["id"], {"id": object_id, "project": project_id, "class": o["class"], "number": object_number, "parent": parent, "rank": previous, "created": created, "updated": updated})
+		# Values for fields the design doesn't declare are skipped, not
+		# rejected: older exports can carry orphan values from fields that
+		# were later removed from the design, and the app never renders them.
 		for field, value in (o.get("values") or {}).items():
-			if value != "":
+			if value != "" and (o["class"] + "/" + field) in fields:
 				row_merge("values", ["object", "field"], {"object": object_id, "field": field, "value": str(value)})
 		file_comments = o.get("comments") or []
 		comment_ids = []
@@ -1247,10 +1415,26 @@ def action_data_import(a):
 			comment_parent = comment_remap.get(c.get("parent") or "", "")
 			row_merge("comments", ["id"], {"id": comment_ids[i], "object": object_id, "parent": comment_parent, "author": c.get("author") or user, "name": c.get("name") or a.user.identity.name, "content": str(c["content"]), "created": safe_int(c.get("created")) or now, "edited": safe_int(c.get("edited"))})
 			comment_count += 1
-		mochi.db.execute(
-			"insert into activity (id, object, user, action, field, oldvalue, newvalue, created) values (?, ?, ?, 'created', '', '', '', ?)",
-			mochi.uid(), object_id, user, now
-		)
+			for att in (c.get("attachments") or []):
+				mochi.attachment.create(comment_ids[i], att["name"], att["data"], att.get("content_type") or "", att.get("caption") or "", att.get("description") or "")
+				attachment_count += 1
+		for att in (o.get("attachments") or []):
+			mochi.attachment.create(object_id, att["name"], att["data"], att.get("content_type") or "", att.get("caption") or "", att.get("description") or "")
+			attachment_count += 1
+		file_activity = o.get("activity") or []
+		if file_activity:
+			for act in file_activity:
+				mochi.db.execute(
+					"insert into activity (id, object, user, action, field, oldvalue, newvalue, created) values (?, ?, ?, ?, ?, ?, ?, ?)",
+					mochi.uid(), object_id, act.get("user") or user, str(act["action"]), str(act.get("field") or ""), str(act.get("oldvalue") or ""), str(act.get("newvalue") or ""), safe_int(act.get("created")) or now
+				)
+		else:
+			mochi.db.execute(
+				"insert into activity (id, object, user, action, field, oldvalue, newvalue, created) values (?, ?, ?, 'created', '', '', '', ?)",
+				mochi.uid(), object_id, user, now
+			)
+		for r in (o.get("requests") or []):
+			row_merge("requests", ["id"], {"id": mochi.uid(), "object": object_id, "type": str(r.get("type") or ""), "repository": str(r.get("repository") or ""), "source": str(r.get("source") or ""), "target": str(r.get("target") or ""), "status": str(r.get("status") or "open"), "title": str(r.get("title") or ""), "description": str(r.get("description") or ""), "draft": safe_int(r.get("draft")), "created": safe_int(r.get("created")) or now, "updated": safe_int(r.get("updated")) or now})
 
 	for l in links:
 		source = remap.get(l["source"], l["source"])
@@ -1264,7 +1448,7 @@ def action_data_import(a):
 	for s in mochi.db.rows("select id from subscribers where project=?", project_id) or []:
 		send_project_data(project_id, s["id"])
 
-	return {"data": {"objects": len(objects), "comments": comment_count, "links": len(links)}}
+	return {"data": {"objects": len(objects), "comments": comment_count, "attachments": attachment_count, "links": len(links)}}
 
 # ============================================================================
 # Project Actions

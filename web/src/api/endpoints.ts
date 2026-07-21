@@ -104,6 +104,7 @@ const endpoints = {
 
     // Data import/export endpoints
     dataExport: (projectId: string) => `${projectId}/-/data/export`,
+    dataExportWarm: (projectId: string) => `${projectId}/-/data/export/warm`,
     dataImport: (projectId: string) => `${projectId}/-/data/import`,
 
     // View endpoints

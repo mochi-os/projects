@@ -41,7 +41,8 @@ import {
   removePendingFile,
 } from "@mochi/web";
 import projectsApi from "@/api/projects";
-import type { ProjectDetails } from "@/types";
+import type { ProjectDetails, ProjectObject } from "@/types";
+import { rankBetween, rankCompare } from "@/lib/rank";
 import { FieldEditor } from "./field-editor";
 
 interface CreateObjectDialogProps {
@@ -116,9 +117,11 @@ export function CreateObjectDialog({
     return (project.options[classId]?.[fieldId] || []).some((o) => o.id === value);
   };
 
-  // Reset state when dialog opens/closes or type changes
+  const resetRef = useRef({ creatableClasses, defaultFields, defaultParent, project, usableValue });
+  resetRef.current = { creatableClasses, defaultFields, defaultParent, project, usableValue };
   useEffect(() => {
     if (open) {
+      const { creatableClasses, defaultFields, defaultParent, project, usableValue } = resetRef.current;
       const initialType = creatableClasses[0]?.id || "";
       setSelectedType(initialType);
       setParent(defaultParent || "");
@@ -146,7 +149,14 @@ export function CreateObjectDialog({
       }
       setFieldValues(initialValues);
     }
-  }, [open, project.classes, defaultFields, defaultParent]);
+  }, [open]);
+
+  useEffect(() => {
+    if (!open || creatableClasses.length === 0) return;
+    if (!creatableClasses.some((c) => c.id === selectedClass)) {
+      setSelectedType(creatableClasses[0].id);
+    }
+  }, [open, creatableClasses, selectedClass]);
 
   // When the class changes: drop values that aren't usable for the new class
   // (an enumerated value carried over from another class would be rejected by
@@ -279,20 +289,24 @@ export function CreateObjectDialog({
     },
     onSuccess: (data) => {
       // Add new object to cache immediately for instant UI update
-      const newObject = {
-        id: data.id,
-        project: project.project.id,
-        class: selectedClass,
-        number: data.number,
-        parent: data.parent || "",
-        rank: 999999,
-        created: Math.floor(Date.now() / 1000),
-        updated: Math.floor(Date.now() / 1000),
-        values: { ...fieldValues },
-      };
       queryClient.setQueryData(
         ["objects", projectId],
-        (old: { objects: Array<{ id: string; values: Record<string, string> }>; watched?: string[] } | undefined) => {
+        (old: { objects: ProjectObject[]; watched?: string[] } | undefined) => {
+          const maxRank = old?.objects.reduce(
+            (max, o) => (max === null || rankCompare(o.rank, max) > 0 ? o.rank : max),
+            null as string | null,
+          ) ?? null;
+          const newObject: ProjectObject = {
+            id: data.id,
+            project: project.project.id,
+            class: selectedClass,
+            number: data.number,
+            parent: data.parent || "",
+            rank: rankBetween(maxRank, null),
+            created: Math.floor(Date.now() / 1000),
+            updated: Math.floor(Date.now() / 1000),
+            values: { ...fieldValues },
+          };
           if (!old) return { objects: [newObject], watched: [] };
           return { ...old, objects: [...old.objects, newObject] };
         },

@@ -389,8 +389,8 @@ export function ProjectPageContent({ project, projectId, search, initialObjectId
         promote: promote ? "true" : undefined,
       });
     },
-    onMutate: async ({ objectId, field, value, rank, rowField: rf, rowValue, scopeParent, promote }) => {
-      await queryClient.cancelQueries({
+    onMutate: ({ objectId, field, value, rank, rowField: rf, rowValue, scopeParent, promote }) => {
+      queryClient.cancelQueries({
         queryKey: ["objects", params.projectId],
       });
 

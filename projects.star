@@ -1082,9 +1082,12 @@ def action_data_export_warm(a):
 # than the destination's built-in templates). Includes the project metadata,
 # objects with field values, comments, attachments (base64 file bytes),
 # activity history, and merge requests, plus links. Watchers are per-user
-# notification state and are not included. Objects are ordered by rank so an
-# import preserves their order. Object numbers are preserved when importing
-# into an empty project; otherwise an import assigns fresh ones.
+# notification state and are not included. Objects whose parent is missing
+# locally - a subscriber replica can drift when events are missed - are
+# pruned along with links that reference them, so the file always passes its
+# own import. Objects are ordered by rank so an import preserves their
+# order. Object numbers are preserved when importing into an empty project;
+# otherwise an import assigns fresh ones.
 def action_data_export(a):
 
 	# Remote projects export from the subscriber's replica - the same tables
@@ -1102,8 +1105,27 @@ def action_data_export(a):
 		for f in class_fields:
 			declared[class_id + "/" + f["id"]] = True
 
+	rows = mochi.db.rows("select id, class, number, parent, created, updated from objects where project=? order by rank, id", project_id) or []
+
+	# Prune orphans: an object whose parent has no local row is unreachable in
+	# the app and would fail the file's own import validation. Repeat so a
+	# chain of orphans prunes fully; each pass removes at least one or stops.
+	present = {}
+	for row in rows:
+		present[row["id"]] = True
+	for _ in rows:
+		changed = False
+		for row in rows:
+			if row["id"] in present and row["parent"] and row["parent"] not in present:
+				present.pop(row["id"])
+				changed = True
+		if not changed:
+			break
+
 	objects = []
-	for row in mochi.db.rows("select id, class, number, parent, created, updated from objects where project=? order by rank, id", project_id) or []:
+	for row in rows:
+		if row["id"] not in present:
+			continue
 		object = {
 			"id": row["id"],
 			"class": row["class"],
@@ -1173,6 +1195,8 @@ def action_data_export(a):
 
 	links = []
 	for l in mochi.db.rows("select source, target, linktype, created from links where project=? order by created, source, target", project_id) or []:
+		if l["source"] not in present or l["target"] not in present:
+			continue
 		links.append({
 			"source": l["source"],
 			"target": l["target"],

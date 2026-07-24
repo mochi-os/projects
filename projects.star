@@ -591,6 +591,28 @@ def comment_set(comment_id, updates):
 def comment_remove(comment_id):
 	mochi.db.execute("delete from comments where id=?", comment_id)
 
+# True if this object/comment id already exists under a DIFFERENT project. Used
+# to reject subscriber-path writes (schema apply, cascade deletes) that a
+# malicious project owner could aim at the local user's OTHER projects by naming
+# a colliding global id.
+def foreign_object(object_id, project_id):
+	if not object_id:
+		return False
+	row = mochi.db.row("select project from objects where id=?", object_id)
+	return row != None and row["project"] != project_id
+
+def foreign_comment(comment_id, project_id):
+	if not comment_id:
+		return False
+	row = mochi.db.row("select o.project from comments c join objects o on c.object=o.id where c.id=?", comment_id)
+	return row != None and row["project"] != project_id
+
+def foreign_request(request_id, project_id):
+	if not request_id:
+		return False
+	row = mochi.db.row("select o.project from requests r join objects o on r.object=o.id where r.id=?", request_id)
+	return row != None and row["project"] != project_id
+
 def values_remove_object(object_id):
 	mochi.db.execute("delete from \"values\" where object=?", object_id)
 
@@ -3104,6 +3126,11 @@ def object_comments(project_id, object_id, parent_id, depth):
 
 # Recursively delete a comment and all its children and attachments
 def delete_comment_tree(comment_id, project_id):
+	# Only ever touch a comment whose object is in this project - guards every
+	# caller (event_comment_delete, do_comment_delete) against a cross-project
+	# comment id or a cross-project parent pointer dragging in foreign comments.
+	if not mochi.db.exists("select 1 from comments c join objects o on c.object=o.id where c.id=? and o.project=?", comment_id, project_id):
+		return
 	children = mochi.db.rows("select id from comments where parent=?", comment_id) or []
 	for child in children:
 		delete_comment_tree(child["id"], project_id)
@@ -3161,7 +3188,9 @@ def action_comment_asset(a):
 	if asset not in _PERSON_ASSETS:
 		a.error.label(404, "errors.unknown_asset")
 		return
-	row = mochi.db.row("select author from comments where id=?", a.input("comment"))
+	# Bind the comment to the route project (via its object) so this can't resolve
+	# a comment author in a project the URL doesn't name.
+	row = mochi.db.row("select c.author from comments c join objects o on c.object=o.id where c.id=? and o.project=?", a.input("comment"), a.input("project"))
 	return stream_asset(a, row["author"] if row else "", "people", asset)
 
 def action_activity_asset(a):
@@ -3169,7 +3198,8 @@ def action_activity_asset(a):
 	if asset not in _PERSON_ASSETS:
 		a.error.label(404, "errors.unknown_asset")
 		return
-	row = mochi.db.row("select user from activity where id=?", a.input("activity"))
+	# Bind the activity to the route project (via its object).
+	row = mochi.db.row("select a2.user from activity a2 join objects o on a2.object=o.id where a2.id=? and o.project=?", a.input("activity"), a.input("project"))
 	return stream_asset(a, row["user"] if row else "", "people", asset)
 
 def action_user_asset(a):
@@ -5555,6 +5585,10 @@ def insert_schema(project_id, schema):
 					# (project, view, class) has no payload columns.
 					row_merge("view_classes", ["project", "view", "class"], {"project": project_id, "view": view_id, "class": class_id})
 	for obj in (schema.get("objects") or []):
+		# Never adopt/reassign an object that already belongs to another project -
+		# a malicious owner's dump could otherwise hijack our other projects' rows.
+		if foreign_object(obj.get("id", ""), project_id):
+			continue
 		object_merge({"id": obj.get("id", ""), "project": project_id, "class": obj.get("class", ""), "number": obj.get("number", 0), "parent": obj.get("parent", ""), "rank": obj.get("rank", 0), "created": obj.get("created", 0), "updated": obj.get("updated", 0)})
 		obj_atts = obj.get("attachments") or []
 		if obj_atts:
@@ -5564,6 +5598,9 @@ def insert_schema(project_id, schema):
 			for field in values:
 				value_merge(obj.get("id", ""), field, values[field])
 		for c in (obj.get("comments") or []):
+			# Skip a comment id that already belongs to another project's object.
+			if foreign_comment(c.get("id", ""), project_id):
+				continue
 			comment_merge({"id": c.get("id", ""), "object": obj.get("id", ""), "parent": c.get("parent", ""), "author": c.get("author", ""), "name": c.get("name", ""), "content": c.get("content", ""), "created": c.get("created", ""), "edited": c.get("edited", 0)})
 			c_atts = c.get("attachments") or []
 			if c_atts:
@@ -5908,10 +5945,13 @@ def event_object_create(e):
 		return
 	if not mochi.db.exists("select 1 from objects where id=?", object_id):
 		object_merge({"id": object_id, "project": project_id, "class": class_id, "number": e.content("number") or 0, "parent": e.content("parent") or "", "rank": e.content("rank") or 0, "created": e.content("created") or mochi.time.now(), "updated": e.content("updated") or mochi.time.now()})
-	# Store field values included in the broadcast
+	# Store field values included in the broadcast - only for an object that
+	# belongs to this project (the create above no-ops on a pre-existing id,
+	# which could be a foreign object).
 	values = e.content("values") or {}
-	for field, value in values.items():
-		value_merge(object_id, field, value)
+	if values and mochi.db.exists("select 1 from objects where id=? and project=?", object_id, project_id):
+		for field, value in values.items():
+			value_merge(object_id, field, value)
 	user = e.content("user") or ""
 	# Activity history arrives separately via the activity/log broadcast,
 	# so we don't insert a local row here (it would have a different UID
@@ -6026,6 +6066,12 @@ def event_object_delete(e):
 		return
 	object_id = e.content("id")
 	if not object_id:
+		return
+	# The object must belong to this project before we cascade-delete its
+	# children; otherwise a subscribed project's owner could wipe another
+	# project's requests/watchers/activity/comments/values/links by naming a
+	# foreign object id.
+	if not mochi.db.exists("select 1 from objects where id=? and project=?", object_id, project_id):
 		return
 	# Notify local user before deleting watchers
 	user = e.content("user") or ""
@@ -6218,7 +6264,8 @@ def event_attachment_add(e):
 		return
 	object_id = e.content("object")
 	attachments = e.content("attachments") or []
-	if attachments and object_id:
+	# Only attach to an object that belongs to this project.
+	if attachments and object_id and mochi.db.exists("select 1 from objects where id=? and project=?", object_id, project_id):
 		mochi.attachment.store(attachments, e.header("from"), object_id)
 	fp = mochi.entity.fingerprint(project_id)
 	if fp:
@@ -6231,7 +6278,16 @@ def event_attachment_remove(e):
 		return
 	attachment_id = e.content("attachment")
 	if attachment_id:
-		mochi.attachment.delete(attachment_id)
+		# Bind the attachment to an object/comment in this project before deleting
+		# so a colliding id can't reach another project's attachment.
+		att = mochi.attachment.get(attachment_id)
+		if att:
+			obj = att.get("object")
+			in_project = mochi.db.exists("select 1 from objects where id=? and project=?", obj, project_id)
+			if not in_project:
+				in_project = mochi.db.exists("select 1 from comments c join objects o on o.id=c.object where c.id=? and o.project=?", obj, project_id)
+			if in_project:
+				mochi.attachment.delete(attachment_id)
 	fp = mochi.entity.fingerprint(project_id)
 	if fp:
 		mochi.websocket.write(fp, {"type": "attachment/delete", "project": project_id, "attachment": attachment_id})
@@ -6278,10 +6334,10 @@ def event_comment_update(e):
 	comment_id = e.content("id")
 	if not comment_id:
 		return
-	# Skip when the comment isn't local yet — the UPDATE would silently
-	# no-op, leaving us with an out-of-date row until something else
-	# triggers a sync.
-	if not mochi.db.exists("select 1 from comments where id=?", comment_id):
+	# Skip unless the comment's object belongs to THIS project - without the
+	# object join a subscribed project's owner could overwrite any comment in any
+	# project by id. (Also skips when not local yet; request_resync fills it in.)
+	if not mochi.db.exists("select 1 from comments c join objects o on c.object=o.id where c.id=? and o.project=?", comment_id, project_id):
 		request_resync(project_id)
 		return
 	content = e.content("content")
@@ -6335,7 +6391,7 @@ def event_link_delete(e):
 	project_id = verify_subscription(e)
 	if not project_id:
 		return
-	row_remove("links", ["source", "target", "linktype"], "source=? and target=? and linktype=?", [e.content("source") or "", e.content("target") or "", e.content("linktype") or "related"])
+	row_remove("links", ["source", "target", "linktype"], "project=? and source=? and target=? and linktype=?", [project_id, e.content("source") or "", e.content("target") or "", e.content("linktype") or "related"])
 	fp = mochi.entity.fingerprint(project_id)
 	if fp:
 		mochi.websocket.write(fp, {"type": "link/delete", "project": project_id})
@@ -6912,6 +6968,13 @@ def event_request_create(e):
 	req = e.content("request")
 	if not req:
 		return
+	# The request's object must be in this project, and its id must not already
+	# belong to another project's request (a colliding id would reassign it).
+	robj = req.get("object", "")
+	if robj and not mochi.db.exists("select 1 from objects where id=? and project=?", robj, project_id):
+		return
+	if foreign_request(req.get("id", ""), project_id):
+		return
 	row_merge("requests", ["id"], {"id": req.get("id", ""), "object": req.get("object", ""), "type": req.get("type", "merge"), "repository": req.get("repository", ""), "source": req.get("source", ""), "target": req.get("target", ""), "status": req.get("status", "open"), "title": req.get("title", ""), "description": req.get("description", ""), "draft": req.get("draft", 0), "created": req.get("created", mochi.time.now()), "updated": req.get("updated", mochi.time.now())})
 	fp = mochi.entity.fingerprint(project_id)
 	if fp:
@@ -6928,6 +6991,9 @@ def event_request_update(e):
 	request_id = req.get("id", "")
 	if not request_id:
 		return
+	# Only update a request whose object belongs to this project.
+	if not mochi.db.exists("select 1 from requests r join objects o on r.object=o.id where r.id=? and o.project=?", request_id, project_id):
+		return
 	row_set("requests", ["id"], "id=?", [request_id], {"repository": req.get("repository", ""), "source": req.get("source", ""), "target": req.get("target", ""), "status": req.get("status", ""), "title": req.get("title", ""), "description": req.get("description", ""), "draft": req.get("draft", 0), "updated": req.get("updated", mochi.time.now())})
 	fp = mochi.entity.fingerprint(project_id)
 	if fp:
@@ -6940,6 +7006,9 @@ def event_request_delete(e):
 		return
 	request_id = e.content("id")
 	if not request_id:
+		return
+	# Only delete a request whose object belongs to this project.
+	if not mochi.db.exists("select 1 from requests r join objects o on r.object=o.id where r.id=? and o.project=?", request_id, project_id):
 		return
 	row_remove("requests", ["id"], "id=?", [request_id])
 	fp = mochi.entity.fingerprint(project_id)
@@ -7631,6 +7700,16 @@ def do_attachment_delete(project_id, project, params, user_id):
 	if object_id:
 		if not mochi.db.exists("select 1 from objects where id=? and project=?", object_id, project_id):
 			return {"error": "errors.object_not_found", "code": 404}
+	else:
+		# No object given: bind the attachment to an object/comment in this
+		# project so a member can't delete another project's attachment by id.
+		att = mochi.attachment.get(attachment_id)
+		obj = att.get("object") if att else ""
+		in_project = mochi.db.exists("select 1 from objects where id=? and project=?", obj, project_id)
+		if not in_project:
+			in_project = mochi.db.exists("select 1 from comments c join objects o on o.id=c.object where c.id=? and o.project=?", obj, project_id)
+		if not in_project:
+			return {"error": "errors.attachment_not_found", "code": 404}
 	if not mochi.attachment.exists(attachment_id):
 		return {"error": "errors.attachment_not_found", "code": 404}
 	mochi.attachment.delete(attachment_id, [])

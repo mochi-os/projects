@@ -34,7 +34,7 @@ export function InlineProjectSearch({
   const [debouncedQuery, setDebouncedQuery] = useState("");
   const [results, setResults] = useState<DirectoryEntry[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [searchError, setSearchError] = useState<Error | null>(null);
+  const [searchError, setSearchError] = useState<unknown>(null);
   const [pendingProjectId, setPendingProjectId] = useState<string | null>(null);
   const requestSeqRef = useRef(0);
   const navigate = useNavigate();
@@ -75,9 +75,7 @@ export function InlineProjectSearch({
         return;
       }
       setResults([]);
-      setSearchError(
-        error instanceof Error ? error : new Error("Failed to search projects"),
-      );
+      setSearchError(error);
     } finally {
       if (requestSeq === requestSeqRef.current) {
         setIsLoading(false);
@@ -150,7 +148,7 @@ export function InlineProjectSearch({
         </div>
       )}
 
-      {!isLoading && showResults && searchError && (
+      {!isLoading && showResults && !!searchError && (
         <GeneralError
           error={searchError}
           minimal

@@ -344,7 +344,7 @@ export function ObjectDetailPanel({
             <SheetDescription><Trans>Failed to load item</Trans></SheetDescription>
           </SheetHeader>
           <GeneralError
-            error={error ?? new Error("Failed to load object")}
+            error={error ?? new Error(t`Failed to load item`)}
             minimal
             mode="inline"
             reset={() => {

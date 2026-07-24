@@ -31,7 +31,7 @@ export function RecommendedProjects({
     RecommendedProject[]
   >([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<Error | null>(null);
+  const [error, setError] = useState<unknown>(null);
   const [pendingId, setPendingId] = useState<string | null>(null);
 
   const fetchRecommendations = useCallback(async () => {
@@ -42,11 +42,7 @@ export function RecommendedProjects({
       setRecommendations(response.data?.projects ?? []);
     } catch (loadError) {
       setRecommendations([]);
-      setError(
-        loadError instanceof Error
-          ? loadError
-          : new Error("Failed to load recommended projects"),
-      );
+      setError(loadError);
     } finally {
       setIsLoading(false);
     }

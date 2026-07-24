@@ -4,4 +4,4 @@
 // Mochi Application Interface Exception - see license.txt and license-exception.md.
 
 export { TreeRow } from "./tree-row";
-export { TreeView, type TreeNode } from "./tree-view";
+export { TreeView } from "./tree-view";

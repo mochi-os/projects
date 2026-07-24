@@ -335,17 +335,6 @@ def rank_after_all(project_id, exclude_id):
 		row = mochi.db.row("select max(rank) as r from objects where project=?", project_id)
 	return rank_between(row["r"] if (row and row["r"]) else None, None)
 
-def rank_resequence(project_id):
-	# Assign fresh, globally-unique sequential keys to every object in the project,
-	# preserving the current (rank, id) order (id breaks ties between duplicate
-	# keys). Deterministic and convergent across replicas; used by the #53
-	# backfill/repair migrations.
-	ids = mochi.db.rows("select id from objects where project=? order by rank, id", project_id) or []
-	previous = None
-	for row in ids:
-		previous = rank_between(previous, None)
-		object_set(row["id"], {"rank": previous})
-
 def database_upgrade(version):
 	if version == 2:
 		# Drop the pre-2026-07 broadcast tables left in the app data DB when
@@ -1303,6 +1292,12 @@ def import_attachments_decode(container):
 # itself is ignored here. Format 1 files (no attachments, activity, or
 # requests) import unchanged. Everything is validated before anything is
 # written.
+#
+# Comment/activity attribution (author, user, name) is taken from the file so
+# a genuine export round-trips its history intact. This is not an access
+# grant: import requires design access on a project the caller owns, the
+# fields are display-only, and the writes are confined to that one project -
+# so a hand-forged attribution only mislabels rows in the forger's own data.
 def action_data_import(a):
 
 	project_id = resolve_project(a)
@@ -2170,26 +2165,19 @@ def get_object_display(project, obj, object_id):
 
 def notify_watchers(object_id, project_id, local_identity, user_id, body):
 	"""Notify local user if they watch this object and didn't make the change."""
-	mochi.log.debug("notify_watchers: object=" + str(object_id) + " local=" + str(local_identity) + " user=" + str(user_id))
 	if local_identity == user_id:
-		mochi.log.debug("notify_watchers: skipped, local==user")
 		return
-	watching = mochi.db.exists("select 1 from watchers where object=? and user=?", object_id, local_identity)
-	mochi.log.debug("notify_watchers: watching=" + str(watching))
-	if not watching:
+	if not mochi.db.exists("select 1 from watchers where object=? and user=?", object_id, local_identity):
 		return
 	project = get_project(project_id)
 	if not project:
-		mochi.log.debug("notify_watchers: project not found")
 		return
 	obj = mochi.db.row("select number, class from objects where id=?", object_id)
 	if not obj:
-		mochi.log.debug("notify_watchers: object not found")
 		return
 	title = get_object_display(project, obj, object_id)
 	fp = mochi.entity.fingerprint(project_id)
 	url = "/projects/" + fp + "/" + object_id if fp else "/projects"
-	mochi.log.debug("notify_watchers: sending notification title=" + title)
 	notify("update/modified", project_id, title, body, url, event_id="update/modified:" + object_id)
 
 def notify_mentions(object_id, project_id, content, author_id, author_name):
@@ -2223,12 +2211,17 @@ def would_create_cycle(object_id, new_parent_id):
 	if not new_parent_id:
 		return False
 	current = new_parent_id
-	while current:
+	# Cap the walk like get_all_descendants: write-time guards keep the tree
+	# acyclic, but a pre-existing cycle among unrelated ancestors would
+	# otherwise spin to the 90s Starlark timeout. Treat exhaustion as a cycle.
+	for _ in range(100):
 		if current == object_id:
 			return True
+		if not current:
+			return False
 		parent_row = mochi.db.row("select parent from objects where id=?", current)
 		current = parent_row["parent"] if parent_row else ""
-	return False
+	return True
 
 def get_all_descendants(object_id, depth=0):
 	"""Get all descendant object IDs recursively."""
@@ -2676,6 +2669,12 @@ def action_object_move(a):
 	project = get_project(project_id)
 	if not project:
 		a.error.label(404, "errors.project_not_found")
+		return
+
+	# int() on a non-integer aborts the handler with a 500, so validate the
+	# rank up front for both the owner and forwarding branches below.
+	if a.input("rank") != None and not mochi.text.valid(str(a.input("rank")), "integer"):
+		a.error.label(400, "errors.invalid_value")
 		return
 
 	object_id = a.input("object")
@@ -3884,6 +3883,13 @@ def action_view_create(a):
 		a.error.label(400, "errors.name_too_long")
 		return
 
+	# Cap the view-config strings, matching do_view_create's P2P path so the
+	# owner-side entry point can't store unbounded values either.
+	for vf in ["filter", "columns", "rows", "fields", "sort", "border"]:
+		if check_length(a.input(vf), 10000):
+			a.error.label(400, "errors.value_too_long")
+			return
+
 	viewtype = a.input("viewtype") or "board"
 	if viewtype not in ["board", "list"]:
 		a.error.label(400, "errors.invalid_view_type")
@@ -3971,6 +3977,13 @@ def action_view_update(a):
 	if not view:
 		a.error.label(404, "errors.view_not_found")
 		return
+
+	# Cap the view-config strings, matching do_view_update's P2P path so the
+	# owner-side entry point can't store unbounded values either.
+	for vf in ["filter", "columns", "rows", "fields", "sort", "border"]:
+		if check_length(a.input(vf), 10000):
+			a.error.label(400, "errors.value_too_long")
+			return
 
 	# Update fields if provided
 	name = a.input("name")
@@ -4173,7 +4186,7 @@ def action_class_create(a):
 	row_merge("classes", ["project", "id"], {"project": project_id, "id": class_id, "name": name.strip(), "rank": rank, "requests": requests, "title": "title"})
 
 	# Add default title field
-	row_merge("fields", ["project", "class", "id"], {"project": project_id, "class": class_id, "id": "title", "name": "Title", "fieldtype": "text", "flags": "required,sort", "rank": 0})
+	row_merge("fields", ["project", "class", "id"], {"project": project_id, "class": class_id, "id": "title", "name": mochi.app.label("field.title"), "fieldtype": "text", "flags": "required,sort", "rank": 0})
 
 	# Set hierarchy to allow root by default
 	row_merge("hierarchy", ["project", "class", "parent"], {"project": project_id, "class": class_id, "parent": ""})
@@ -5283,7 +5296,7 @@ def action_recommendations(a):
 		existing_ids.add(row["id"])
 
 	# Connect to recommendations service
-	s = mochi.remote.stream("1JYmMpQU7fxvTrwHpNpiwKCgUg3odWqX7s9t1cLswSMAro5M2P", "recommendations", "list", {"type": "project", "language": "en"})
+	s = mochi.remote.stream("1JYmMpQU7fxvTrwHpNpiwKCgUg3odWqX7s9t1cLswSMAro5M2P", "recommendations", "list", {"type": "project", "language": user_language(a)})
 	if not s:
 		return {"data": {"projects": []}}
 
@@ -6030,6 +6043,12 @@ def event_sync_batch(e):
 					row_merge("view_classes", ["project", "view", "class"], {"project": project_id, "view": v["id"], "class": class_id})
 	# Process objects
 	for obj in (e.content("objects") or []):
+		# Never adopt/reassign an object that already belongs to another
+		# project - a hijacking owner's batch could otherwise write values,
+		# comments and activity onto our other projects' rows via a colliding
+		# id (mirrors insert_schema's foreign_object guard).
+		if foreign_object(obj["id"], project_id):
+			continue
 		if not mochi.db.exists("select 1 from objects where id=?", obj["id"]):
 			object_merge({"id": obj["id"], "project": project_id, "class": obj.get("class", ""), "number": obj.get("number", 0), "parent": obj.get("parent", ""), "rank": obj.get("rank", 0), "created": obj.get("created", now), "updated": obj.get("updated", now)})
 		# Values
@@ -6039,6 +6058,9 @@ def event_sync_batch(e):
 				value_merge(obj["id"], field, value)
 		# Comments
 		for c in (obj.get("comments") or []):
+			# Skip a comment id already owned by another project's object.
+			if foreign_comment(c["id"], project_id):
+				continue
 			if not mochi.db.exists("select 1 from comments where id=?", c["id"]):
 				comment_merge({"id": c["id"], "object": obj["id"], "parent": c.get("parent", ""), "author": c.get("author", ""), "name": c.get("name", ""), "content": c.get("content", ""), "created": c.get("created", now), "edited": c.get("edited", 0)})
 		# Activity history
@@ -6115,6 +6137,12 @@ def event_object_create(e):
 	if not project_id:
 		return
 	object_id = e.content("id")
+	# A colliding global id that already belongs to another project is a
+	# hijack attempt by the sending owner - never let its payload (values,
+	# watcher, notification) touch our other projects' rows. Mirrors
+	# insert_schema's foreign_object guard.
+	if foreign_object(object_id, project_id):
+		return
 	class_id = e.content("class") or ""
 	# Skip when the class isn't local yet — objects(project,class) FK would
 	# otherwise abort the handler. Happens when the owner adds a new class
@@ -6141,14 +6169,8 @@ def event_object_create(e):
 		mochi.websocket.write(fp, {"type": "object/create", "project": project_id, "id": object_id})
 	# Auto-watch creator locally (safety net for when forward_to_owner response is lost)
 	local_id = e.header("to")
-	mochi.log.debug("event_object_create: object=" + str(object_id) + " user=" + str(user) + " local_id=" + str(local_id) + " match=" + str(user == local_id))
 	if user and user == local_id:
-		mochi.log.debug("event_object_create: inserting watcher object=" + str(object_id) + " user=" + str(local_id))
 		row_merge("watchers", ["object", "user"], {"object": object_id, "user": local_id, "created": e.content("created") or mochi.time.now()})
-		exists = mochi.db.exists("select 1 from watchers where object=? and user=?", object_id, local_id)
-		mochi.log.debug("event_object_create: watcher exists after insert=" + str(exists))
-	else:
-		mochi.log.debug("event_object_create: skipped auto-watch, user=" + repr(user) + " local_id=" + repr(local_id))
 	# Notify local user about new object
 	if local_id and local_id != user:
 		project = get_project(project_id)
@@ -7582,6 +7604,10 @@ def do_object_move(project_id, project, params, user_id):
 		return {"error": "errors.field_not_found", "code": 400}
 	value = params.get("value")
 	new_rank = params.get("rank")
+	# Reachable over P2P from any subscriber with write access: int() on a
+	# non-integer would abort the owner-side handler, so answer a clean 400.
+	if new_rank != None and not mochi.text.valid(str(new_rank), "integer"):
+		return {"error": "errors.invalid_value", "code": 400}
 	old_value_row = mochi.db.row("select value from \"values\" where object=? and field=?", object_id, field)
 	old_value = old_value_row["value"] if old_value_row else ""
 	target_value = value if value else old_value
@@ -8007,7 +8033,7 @@ def do_class_create(project_id, project, params):
 	rank = (max_rank["m"] or 0) + 1 if max_rank else 0
 	requests = params.get("requests", "")
 	row_merge("classes", ["project", "id"], {"project": project_id, "id": class_id, "name": name.strip(), "rank": rank, "requests": requests, "title": "title"})
-	row_merge("fields", ["project", "class", "id"], {"project": project_id, "class": class_id, "id": "title", "name": "Title", "fieldtype": "text", "flags": "required,sort", "rank": 0})
+	row_merge("fields", ["project", "class", "id"], {"project": project_id, "class": class_id, "id": "title", "name": mochi.app.label("field.title"), "fieldtype": "text", "flags": "required,sort", "rank": 0})
 	row_merge("hierarchy", ["project", "class", "parent"], {"project": project_id, "class": class_id, "parent": ""})
 	broadcast_event(project_id, "class/create", {
 		"project": project_id, "id": class_id, "name": name.strip(), "rank": rank, "requests": requests, "title": "title"
@@ -8324,7 +8350,7 @@ def do_view_create(project_id, project, params):
 		return {"error": "errors.name_too_long", "code": 400}
 	for vf in ["filter", "columns", "rows", "fields", "sort", "border"]:
 		if check_length(params.get(vf), 10000):
-			return {"error": vf.capitalize() + " too long", "code": 400}
+			return {"error": "errors.value_too_long", "code": 400}
 	viewtype = params.get("viewtype", "board")
 	if viewtype not in ["board", "list"]:
 		return {"error": "errors.invalid_view_type", "code": 400}
@@ -8370,7 +8396,7 @@ def do_view_update(project_id, project, params):
 		return {"error": "errors.name_too_long", "code": 400}
 	for vf in ["filter", "columns", "rows", "fields", "sort", "border"]:
 		if check_length(params.get(vf), 10000):
-			return {"error": vf.capitalize() + " too long", "code": 400}
+			return {"error": "errors.value_too_long", "code": 400}
 	name = params.get("name")
 	viewtype = params.get("viewtype")
 	filter_str = params.get("filter")

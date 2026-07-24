@@ -390,7 +390,6 @@ export function ProjectPageContent({ project, projectId, search, initialObjectId
       });
     },
     onMutate: ({ objectId, field, value, rank, rowField: rf, rowValue, scopeParent, promote }) => {
-      // Optimistically update the UI
       queryClient.cancelQueries({
         queryKey: ["objects", params.projectId],
       });

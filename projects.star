@@ -3547,23 +3547,28 @@ def serve_attachment(a, variant):
 	if not project_id:
 		return
 	attachment = a.input("id")
-	if project["owner"] == 1:
-		# We own this project: require_project enforced view access. Bind the
-		# attachment to an object or a comment (comment -> object -> project).
-		att = mochi.attachment.get(attachment)
-		if not att:
-			a.error.label(404, "errors.attachment_not_found")
-			return
-		obj = att.get("object")
-		in_project = mochi.db.exists("select 1 from objects where id=? and project=?", obj, project_id)
-		if not in_project:
-			in_project = mochi.db.exists("select 1 from comments c join objects o on o.id=c.object where c.id=? and o.project=?", obj, project_id)
-		if not in_project:
-			a.error.label(404, "errors.attachment_not_found")
-			return
-	# Remote project (owner != 1): the owning server enforces access and the
-	# binding when a.write.attachment fetches over P2P; per-user databases
-	# isolate one subscriber from another.
+
+	# require_project enforced view access on the ROUTE project. Bind the
+	# attachment to an object or a comment (comment -> object -> project) in
+	# that same project, for projects we own AND for subscribed ones. Never
+	# defer to "the owning server enforces the binding when a.write.attachment
+	# fetches over P2P": that holds only until the bytes are cached locally,
+	# after which core serves them from disk and the owner is never consulted
+	# again - so without this an attachment belonging to a subscribed project
+	# whose access was later revoked stays reachable through a project the
+	# caller can still see.
+	att = mochi.attachment.get(attachment)
+	if not att:
+		a.error.label(404, "errors.attachment_not_found")
+		return
+	obj = att.get("object")
+	in_project = mochi.db.exists("select 1 from objects where id=? and project=?", obj, project_id)
+	if not in_project:
+		in_project = mochi.db.exists("select 1 from comments c join objects o on o.id=c.object where c.id=? and o.project=?", obj, project_id)
+	if not in_project:
+		a.error.label(404, "errors.attachment_not_found")
+		return
+
 	a.write.attachment(attachment, variant=variant)
 
 def action_attachment_list(a):

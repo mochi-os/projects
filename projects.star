@@ -3247,9 +3247,18 @@ def action_comment_asset(a):
 	if asset not in _PERSON_ASSETS:
 		a.error.label(404, "errors.unknown_asset")
 		return
-	# Bind the comment to the route project (via its object) so this can't resolve
-	# a comment author in a project the URL doesn't name.
-	row = mochi.db.row("select c.author from comments c join objects o on c.object=o.id where c.id=? and o.project=?", a.input("comment"), a.input("project"))
+	# Public route - gate on project view access before resolving anyone.
+	# The helper takes a user id directly, so an anonymous caller passes None
+	# and is tested against the "*" grant alone. NOT require_project(), which
+	# dereferences a.user.identity.id and would 500 on an anonymous request.
+	user_id = a.user.identity.id if a.user and a.user.identity else None
+	project_id = a.input("project")
+	if not check_project_access(user_id, project_id, "view"):
+		a.error.label(403, "errors.access_denied")
+		return
+	# Bind the comment to the route project (via its object) so this can't
+	# resolve a comment author in a project the URL doesn't name.
+	row = mochi.db.row("select c.author from comments c join objects o on c.object=o.id where c.id=? and o.project=?", a.input("comment"), project_id)
 	return stream_asset(a, row["author"] if row else "", "people", asset)
 
 def action_activity_asset(a):
@@ -3257,14 +3266,32 @@ def action_activity_asset(a):
 	if asset not in _PERSON_ASSETS:
 		a.error.label(404, "errors.unknown_asset")
 		return
+	# Public route - gate on project view access before resolving anyone.
+	# The helper takes a user id directly, so an anonymous caller passes None
+	# and is tested against the "*" grant alone. NOT require_project(), which
+	# dereferences a.user.identity.id and would 500 on an anonymous request.
+	user_id = a.user.identity.id if a.user and a.user.identity else None
+	project_id = a.input("project")
+	if not check_project_access(user_id, project_id, "view"):
+		a.error.label(403, "errors.access_denied")
+		return
 	# Bind the activity to the route project (via its object).
-	row = mochi.db.row("select a2.user from activity a2 join objects o on a2.object=o.id where a2.id=? and o.project=?", a.input("activity"), a.input("project"))
+	row = mochi.db.row("select a2.user from activity a2 join objects o on a2.object=o.id where a2.id=? and o.project=?", a.input("activity"), project_id)
 	return stream_asset(a, row["user"] if row else "", "people", asset)
 
 def action_user_asset(a):
 	asset = a.input("asset")
 	if asset not in _PERSON_ASSETS:
 		a.error.label(404, "errors.unknown_asset")
+		return
+	# Public route - gate on project view access before resolving anyone.
+	# The helper takes a user id directly, so an anonymous caller passes None
+	# and is tested against the "*" grant alone. NOT require_project(), which
+	# dereferences a.user.identity.id and would 500 on an anonymous request.
+	user_id = a.user.identity.id if a.user and a.user.identity else None
+	project_id = a.input("project")
+	if not check_project_access(user_id, project_id, "view"):
+		a.error.label(403, "errors.access_denied")
 		return
 	return stream_asset(a, a.input("user") or "", "people", asset)
 

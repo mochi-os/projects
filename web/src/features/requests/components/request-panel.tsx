@@ -174,6 +174,23 @@ function RequestItem({
   const [title, setTitle] = useState(request.title);
   const [description, setDescription] = useState(request.description);
 
+  // These start as copies of the request, so without this they never caught up:
+  // a rename by someone else stayed invisible, and leaving the field — without
+  // typing a thing — pushed the stale copy straight back over their change.
+  // Skip the sync while the field has focus so an update landing mid-edit
+  // doesn't yank the text out from under whoever is typing (same rule the
+  // object field editor uses).
+  const titleFocusedRef = useRef(false);
+  const descriptionFocusedRef = useRef(false);
+
+  useEffect(() => {
+    if (!titleFocusedRef.current) setTitle(request.title);
+  }, [request.title]);
+
+  useEffect(() => {
+    if (!descriptionFocusedRef.current) setDescription(request.description);
+  }, [request.description]);
+
   // Fetch merge check when expanded and has all fields
   const { data: mergeCheck } = useQuery({
     queryKey: ["merge-check", request.repository, request.source, request.target],
@@ -204,6 +221,7 @@ function RequestItem({
   };
 
   const handleTitleBlur = () => {
+    titleFocusedRef.current = false;
     if (!title.trim()) {
       setTitle(request.title);
       return;
@@ -214,6 +232,7 @@ function RequestItem({
   };
 
   const handleDescriptionBlur = () => {
+    descriptionFocusedRef.current = false;
     if (description !== request.description) {
       onUpdate({ description });
     }
@@ -270,6 +289,7 @@ function RequestItem({
               <Input
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
+                onFocus={() => { titleFocusedRef.current = true; }}
                 onBlur={handleTitleBlur}
                 placeholder={t`Title`}
                 autoFocus={!title}
@@ -283,6 +303,7 @@ function RequestItem({
               <Textarea
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
+                onFocus={() => { descriptionFocusedRef.current = true; }}
                 onBlur={handleDescriptionBlur}
                 placeholder={t`Description`}
                 rows={2}

@@ -399,6 +399,11 @@ function DateEditor({ value, onChange, disabled, immediate, onErrorChange }: Dat
     if (!el) return;
     const handleNativeChange = () => {
       clearPending();
+      if (el.validity.badInput) {
+        setShowError(true);
+        onErrorChange(true);
+        return;
+      }
       setLocalValue(el.value);
       localValueRef.current = el.value;
       commit(el.value);

@@ -137,6 +137,21 @@ export function ObjectLinks({
     return map;
   }, [objectListData]);
 
+  // Link rows carry only target/source/linktype/created — the server sends no
+  // number and no title — so anything not yet in the objects cache (the list is
+  // still loading, or the object is gone) has no readable id available.
+  // Formatting one anyway printed "PREFIX-undefined" on screen.
+  const linkDisplayName = useCallback(
+    (id: string | undefined, link: ObjectLink) => {
+      const linkedObj = id ? objectsMap.get(id) : undefined;
+      if (linkedObj) return objectTitle(linkedObj);
+      if (link.title) return link.title;
+      if (typeof link.number === "number") return `${prefix}-${link.number}`;
+      return t`Untitled`;
+    },
+    [objectsMap, objectTitle, prefix, t],
+  );
+
   const displayLinks = useMemo(() => {
     const items: {
       id: string;
@@ -148,11 +163,10 @@ export function ObjectLinks({
     }[] = [];
 
     for (const link of outgoing) {
-      const linkedObj = objectsMap.get(link.target!);
       items.push({
         id: `out-${link.target}-${link.linktype}`,
         label: linkTypeLabels[link.linktype] || link.linktype,
-        displayName: linkedObj ? objectTitle(linkedObj) : (link.title || `${prefix}-${link.number}`),
+        displayName: linkDisplayName(link.target, link),
         source: objectId,
         target: link.target!,
         linktype: link.linktype,
@@ -160,11 +174,10 @@ export function ObjectLinks({
     }
 
     for (const link of incoming) {
-      const linkedObj = objectsMap.get(link.source!);
       items.push({
         id: `in-${link.source}-${link.linktype}`,
         label: link.linktype === "blocks" ? t`Blocked by` : (linkTypeLabels[link.linktype] || link.linktype),
-        displayName: linkedObj ? objectTitle(linkedObj) : (link.title || `${prefix}-${link.number}`),
+        displayName: linkDisplayName(link.source, link),
         source: link.source!,
         target: objectId,
         linktype: link.linktype,
@@ -172,7 +185,7 @@ export function ObjectLinks({
     }
 
     return items;
-  }, [outgoing, incoming, objectId, prefix, objectsMap, objectTitle, linkTypeLabels, t]);
+  }, [outgoing, incoming, objectId, linkDisplayName, linkTypeLabels, t]);
 
   // Filter objects for the add-link search
   const linkedObjectIds = useMemo(() => {

@@ -65,6 +65,21 @@ interface SearchParams {
   view?: string;
 }
 
+// Sort keys the board and list understand directly; anything else a view stores
+// is a field id, which the sort state namespaces as "field:<id>".
+const BUILT_IN_SORT_FIELDS = ["rank", "created", "updated", "number"];
+
+// The default sort a view was designed with (design → view → Default sort).
+// Empty means the designer left it unset, which is manual rank order.
+function viewSortState(view?: { sort?: string; direction?: string } | null): SortState {
+  const sort = view?.sort || "";
+  if (!sort) return { field: "rank", direction: "asc" };
+  return {
+    field: BUILT_IN_SORT_FIELDS.includes(sort) ? sort : `field:${sort}`,
+    direction: view?.direction === "desc" ? "desc" : "asc",
+  };
+}
+
 export const Route = createFileRoute("/_authenticated/$projectId/")({
   validateSearch: (search: Record<string, unknown>): SearchParams => ({
     view: typeof search.view === "string" ? search.view : undefined,
@@ -313,8 +328,8 @@ export function ProjectPageContent({ project, projectId, search, initialObjectId
     watched: false,
   });
 
-  // Sort state for list view (default to rank/manual order)
-  const [sort, setSort] = useState<SortState | null>({ field: "rank", direction: "asc" });
+  // Sort state, seeded from the view's designed default sort
+  const [sort, setSort] = useState<SortState | null>(() => viewSortState(activeView));
 
   const queryClient = useQueryClient();
 
@@ -389,8 +404,11 @@ export function ProjectPageContent({ project, projectId, search, initialObjectId
         promote: promote ? "true" : undefined,
       });
     },
-    onMutate: ({ objectId, field, value, rank, rowField: rf, rowValue, scopeParent, promote }) => {
-      queryClient.cancelQueries({
+    onMutate: async ({ objectId, field, value, rank, rowField: rf, rowValue, scopeParent, promote }) => {
+      // Await, as the reparent mutation below does: an in-flight objects fetch
+      // that resolves after the optimistic write would overwrite it and snap the
+      // dragged card back to where it started.
+      await queryClient.cancelQueries({
         queryKey: ["objects", params.projectId],
       });
 
@@ -700,7 +718,7 @@ export function ProjectPageContent({ project, projectId, search, initialObjectId
     (index: number) => {
       if (index < project.views.length) {
         setActiveViewId(project.views[index].id);
-        setSort({ field: "rank", direction: "asc" });
+        setSort(viewSortState(project.views[index]));
       }
     },
     [project.views],
@@ -753,11 +771,11 @@ export function ProjectPageContent({ project, projectId, search, initialObjectId
     onOpenSelected: handleOpenSelected,
     onEditSelected: handleOpenSelected,
     onClose: () => {
-      if (selectedObjectId) {
-        setSelectedObjectId(null);
-      } else {
-        setSelectedCardIndex(-1);
-      }
+      // The detail panel owns its own Escape (the sheet's dismiss handling →
+      // onOpenChange → onClose). Also clearing the selection from here made two
+      // handlers race on one keypress and unmounted the panel mid-dismiss.
+      if (selectedObjectId) return;
+      setSelectedCardIndex(-1);
     },
     onShowHelp: () => setShowShortcutsHelp(true),
     enabled: !createDialogOpen,
@@ -854,8 +872,8 @@ export function ProjectPageContent({ project, projectId, search, initialObjectId
 
   const handleViewChange = (viewId: string) => {
     setActiveViewId(viewId);
-    // Reset sort when switching views
-    setSort({ field: "rank", direction: "asc" });
+    // Each view carries its own default sort
+    setSort(viewSortState(project.views.find((v) => v.id === viewId)));
   };
 
   const handleAddColumn = (name: string, colour: string) => {

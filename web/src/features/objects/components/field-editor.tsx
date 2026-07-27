@@ -346,6 +346,7 @@ function DateEditor({ value, onChange, disabled, immediate, onErrorChange }: Dat
   const [showError, setShowError] = useState(false);
   const focusedRef = useRef(false);
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
   const localValueRef = useRef(value);
   // Read through refs so the debounced commit sees the current props, and so
   // the resync effect below doesn't re-run on the parent's inline callbacks.
@@ -371,6 +372,17 @@ function DateEditor({ value, onChange, disabled, immediate, onErrorChange }: Dat
     onErrorChangeRef.current(false);
   }, [value]);
 
+  const commit = (next: string) => {
+    if (next !== valueRef.current) onChangeRef.current(next);
+  };
+
+  const clearPending = () => {
+    if (debounceRef.current) {
+      clearTimeout(debounceRef.current);
+      debounceRef.current = null;
+    }
+  };
+
   useEffect(() => {
     return () => {
       if (debounceRef.current) {
@@ -382,16 +394,18 @@ function DateEditor({ value, onChange, disabled, immediate, onErrorChange }: Dat
     };
   }, []);
 
-  const commit = (next: string) => {
-    if (next !== valueRef.current) onChangeRef.current(next);
-  };
-
-  const clearPending = () => {
-    if (debounceRef.current) {
-      clearTimeout(debounceRef.current);
-      debounceRef.current = null;
-    }
-  };
+  useEffect(() => {
+    const el = inputRef.current;
+    if (!el) return;
+    const handleNativeChange = () => {
+      clearPending();
+      setLocalValue(el.value);
+      localValueRef.current = el.value;
+      commit(el.value);
+    };
+    el.addEventListener("change", handleNativeChange);
+    return () => el.removeEventListener("change", handleNativeChange);
+  }, []);
 
   const handleFocus = () => {
     focusedRef.current = true;
@@ -436,12 +450,7 @@ function DateEditor({ value, onChange, disabled, immediate, onErrorChange }: Dat
       commit(next);
       return;
     }
-    // Typing a date fires a change per segment, so an intermediate combination
-    // — the old month with the new day — is briefly a valid date and used to be
-    // saved as one. Wait for the entry to settle. Blur commits straight away;
-    // this timer only covers the native picker, which sets a value without ever
-    // firing blur.
-    clearPending();
+  clearPending();
     debounceRef.current = setTimeout(() => {
       debounceRef.current = null;
       commit(localValueRef.current);
@@ -451,6 +460,7 @@ function DateEditor({ value, onChange, disabled, immediate, onErrorChange }: Dat
   return (
     <div className="space-y-1">
       <Input
+        ref={inputRef}
         type="date"
         value={localValue}
         onFocus={handleFocus}

@@ -13,7 +13,8 @@ def remote_error(a, response, code=502):
 		mochi.log.info("Remote transport error: %s", response.get("error", ""))
 		a.error.label(response.get("code", code), "errors.remote")
 	else:
-		a.error(response.get("code", code), response.get("error", "Error"))
+		# The remote sends a stable label key; localise it in the caller's language.
+		a.error.label(response.get("code", code), response.get("error", "errors.remote"))
 
 def notify(topic, object="", title="", body="", url="", event_id=""):
 	mochi.service.call("notifications", "send", topic, object, title, body, url, mochi.app.label("notifications.topic." + topic.replace("/", ".")), "", "", None, event_id)
@@ -29,12 +30,48 @@ def p2p_headers(from_id, to_id, event):
 
 # Helper: Broadcast event to all subscribers of a project via the
 # durable broadcast log. Sequence + log + gap-detection live in core.
+# Recheck view access per recipient on every send: revocation must cut the
+# flow even when the subscriber row is stale (access narrowed via a group
+# change the app never sees), so a failing recipient is withheld here and
+# the full revalidation runs to remove the row and purge the replica.
 def broadcast_event(project_id, event, data, exclude=None):
 	if not project_id:
 		return
 	subscribers = mochi.db.rows("select id from subscribers where project=?", project_id)
-	subscriber_ids = [s["id"] for s in subscribers]
-	mochi.broadcast.send(project_id, project_id, subscriber_ids, "projects", event, data, exclude or "")
+	allowed = []
+	stale = False
+	for s in subscribers:
+		if check_project_access(s["id"], project_id, "view"):
+			allowed.append(s["id"])
+		else:
+			stale = True
+	if stale:
+		subscribers_revalidate(project_id)
+	mochi.broadcast.send(project_id, project_id, allowed, "projects", event, data, exclude or "")
+
+# Re-derive the subscriber list from the access rules. Access can be granted
+# via groups and wildcards, so a revoked subject never maps one-to-one to
+# subscriber rows; instead drop every subscriber that no longer passes the
+# view check. Each removed subscriber is sent an access/revoke event telling
+# its server to purge the replica - best-effort by nature (the server may be
+# offline or hostile), but the fan-out is cut here regardless. The owner's
+# own identity is always kept: it anchors get_owner_identity.
+def subscribers_revalidate(project_id):
+	owner = get_owner_identity(project_id)
+	removed = False
+	for s in mochi.db.rows("select id from subscribers where project=?", project_id):
+		if s["id"] == owner or check_project_access(s["id"], project_id, "view"):
+			continue
+		mochi.message.send(p2p_headers(project_id, s["id"], "access/revoke"), {})
+		row_remove("watchers", ["object", "user"], "user=? and object in (select id from objects where project=?)", [s["id"], project_id])
+		mochi.db.execute("delete from activity where user=? and object in (select id from objects where project=?)", s["id"], project_id)
+		row_remove("subscribers", ["project", "id"], "project=? and id=?", [project_id, s["id"]])
+		removed = True
+	if removed:
+		row_set("projects", ["id"], "id=?", [project_id], {"updated": mochi.time.now()})
+		fingerprint = mochi.entity.fingerprint(project_id)
+		if fingerprint:
+			mochi.websocket.write(fingerprint, {"type": "project/update", "project": project_id})
 
 # error_message_timeout: core calls this when a fan-out to a subscriber aged
 # out undelivered. Remove them only when the directory shows no host left
@@ -298,17 +335,6 @@ def rank_after_all(project_id, exclude_id):
 	else:
 		row = mochi.db.row("select max(rank) as r from objects where project=?", project_id)
 	return rank_between(row["r"] if (row and row["r"]) else None, None)
-
-def rank_resequence(project_id):
-	# Assign fresh, globally-unique sequential keys to every object in the project,
-	# preserving the current (rank, id) order (id breaks ties between duplicate
-	# keys). Deterministic and convergent across replicas; used by the #53
-	# backfill/repair migrations.
-	ids = mochi.db.rows("select id from objects where project=? order by rank, id", project_id) or []
-	previous = None
-	for row in ids:
-		previous = rank_between(previous, None)
-		object_set(row["id"], {"rank": previous})
 
 def database_upgrade(version):
 	if version == 2:
@@ -1267,6 +1293,12 @@ def import_attachments_decode(container):
 # itself is ignored here. Format 1 files (no attachments, activity, or
 # requests) import unchanged. Everything is validated before anything is
 # written.
+#
+# Comment/activity attribution (author, user, name) is taken from the file so
+# a genuine export round-trips its history intact. This is not an access
+# grant: import requires design access on a project the caller owns, the
+# fields are display-only, and the writes are confined to that one project -
+# so a hand-forged attribution only mislabels rows in the forger's own data.
 def action_data_import(a):
 
 	project_id = resolve_project(a)
@@ -1661,9 +1693,9 @@ def action_project_get(a):
 	else:
 		server = row["server"] or ""
 		peer = mochi.remote.peer(server) if server else None
-		response = mochi.remote.request(project_id, "projects", "access/check", {
-			"user": a.user.identity.id,
-		}, peer)
+		# The owner checks the authenticated sender, which remote.request
+		# stamps with this user's identity - no payload needed.
+		response = mochi.remote.request(project_id, "projects", "access/check", {}, peer)
 		if response:
 			if response.get("design"):
 				access = "design"
@@ -2006,6 +2038,10 @@ def action_access_set(a):
 		# Store a single allow rule for the level
 		mochi.access.allow(subject, resource, level, granter)
 
+	# A level of "none", or replacing a broader rule, narrows access - drop
+	# any subscriber the change cut off and purge their replica.
+	subscribers_revalidate(project_id)
+
 	return {"data": {"success": True}}
 
 # Revoke access for a subject
@@ -2043,6 +2079,10 @@ def action_access_revoke(a):
 	# Revoke all rules for this subject
 	for op in ACCESS_LEVELS + ["*"]:
 		mochi.access.revoke(subject, resource, op)
+
+	# Removing rules can only narrow access - drop any subscriber the change
+	# cut off, stop their fan-out, and tell their server to purge its replica.
+	subscribers_revalidate(project_id)
 
 	return {"data": {"success": True}}
 
@@ -2110,8 +2150,10 @@ def log_activity(object_id, user, action, field="", oldvalue="", newvalue=""):
 		})
 
 def get_owner_identity(project_id):
-	"""Get the project owner's identity from the first subscriber."""
-	row = mochi.db.row("select id from subscribers where project=? order by subscribed limit 1", project_id)
+	"""Get the project owner's identity from the first subscriber. The owner
+	row is inserted at creation, before any real subscriber, so rowid breaks
+	a same-second subscribed tie."""
+	row = mochi.db.row("select id from subscribers where project=? order by subscribed, rowid limit 1", project_id)
 	return row["id"] if row else ""
 
 def get_object_display(project, obj, object_id):
@@ -2124,26 +2166,19 @@ def get_object_display(project, obj, object_id):
 
 def notify_watchers(object_id, project_id, local_identity, user_id, body):
 	"""Notify local user if they watch this object and didn't make the change."""
-	mochi.log.debug("notify_watchers: object=" + str(object_id) + " local=" + str(local_identity) + " user=" + str(user_id))
 	if local_identity == user_id:
-		mochi.log.debug("notify_watchers: skipped, local==user")
 		return
-	watching = mochi.db.exists("select 1 from watchers where object=? and user=?", object_id, local_identity)
-	mochi.log.debug("notify_watchers: watching=" + str(watching))
-	if not watching:
+	if not mochi.db.exists("select 1 from watchers where object=? and user=?", object_id, local_identity):
 		return
 	project = get_project(project_id)
 	if not project:
-		mochi.log.debug("notify_watchers: project not found")
 		return
 	obj = mochi.db.row("select number, class from objects where id=?", object_id)
 	if not obj:
-		mochi.log.debug("notify_watchers: object not found")
 		return
 	title = get_object_display(project, obj, object_id)
 	fp = mochi.entity.fingerprint(project_id)
 	url = "/projects/" + fp + "/" + object_id if fp else "/projects"
-	mochi.log.debug("notify_watchers: sending notification title=" + title)
 	notify("update/modified", project_id, title, body, url, event_id="update/modified:" + object_id)
 
 def notify_mentions(object_id, project_id, content, author_id, author_name):
@@ -2177,12 +2212,17 @@ def would_create_cycle(object_id, new_parent_id):
 	if not new_parent_id:
 		return False
 	current = new_parent_id
-	while current:
+	# Cap the walk like get_all_descendants: write-time guards keep the tree
+	# acyclic, but a pre-existing cycle among unrelated ancestors would
+	# otherwise spin to the 90s Starlark timeout. Treat exhaustion as a cycle.
+	for _ in range(100):
 		if current == object_id:
 			return True
+		if not current:
+			return False
 		parent_row = mochi.db.row("select parent from objects where id=?", current)
 		current = parent_row["parent"] if parent_row else ""
-	return False
+	return True
 
 def get_all_descendants(object_id, depth=0):
 	"""Get all descendant object IDs recursively."""
@@ -2214,6 +2254,35 @@ def delete_object_cascade(project_id, object_id, user=""):
 
 	# Broadcast delete event for each object
 	broadcast_event(project_id, "object/delete", {"project": project_id, "id": object_id, "user": user})
+
+# Delete an object and its children rows from the local database only - no
+# broadcast, no notifications, no recursion (callers name each object).
+# Shared by the subscriber-path delete event and the resync deletion
+# reconciliation in insert_schema.
+# Delete an object's attachments. `preserve` keeps rows whose bytes live here
+# (entity == ""): resync drift repair may drop references to files hosted
+# elsewhere, but must never destroy this replica's own uploads - the owner may
+# already have dropped its copy, leaving ours the only one. Explicit deletes
+# pass preserve=False and clear everything, as before.
+def prune_attachments(object_id, project_id, preserve):
+	kept = 0
+	for att in (mochi.attachment.list(object_id, project_id) or []):
+		if preserve and not att["entity"]:
+			kept += 1
+			continue
+		mochi.attachment.delete(att["id"])
+	if kept:
+		mochi.log.debug("prune_attachments: kept " + str(kept) + " locally-stored attachment(s) for " + str(object_id))
+
+def delete_object_local(project_id, object_id, preserve=False):
+	row_remove("requests", ["id"], "object=?", [object_id])
+	prune_attachments(object_id, project_id, preserve)
+	row_remove("watchers", ["object", "user"], "object=?", [object_id])
+	mochi.db.execute("delete from activity where object=?", object_id)
+	delete_object_comments(object_id, project_id, preserve)
+	values_remove_object(object_id)
+	row_remove("links", ["source", "target", "linktype"], "source=? or target=?", [object_id, object_id])
+	row_remove("objects", ["id"], "id=? and project=?", [object_id, project_id])
 
 # ============================================================================
 # Object Actions
@@ -2616,6 +2685,12 @@ def action_object_move(a):
 	project = get_project(project_id)
 	if not project:
 		a.error.label(404, "errors.project_not_found")
+		return
+
+	# int() on a non-integer aborts the handler with a 500, so validate the
+	# rank up front for both the owner and forwarding branches below.
+	if a.input("rank") != None and not mochi.text.valid(str(a.input("rank")), "integer"):
+		a.error.label(400, "errors.invalid_value")
 		return
 
 	object_id = a.input("object")
@@ -3139,11 +3214,10 @@ def delete_comment_tree(comment_id, project_id):
 	comment_remove(comment_id)
 
 # Delete all comments and their attachments for an object
-def delete_object_comments(object_id, project_id):
+def delete_object_comments(object_id, project_id, preserve=False):
 	comments = mochi.db.rows("select id from comments where object=?", object_id) or []
 	for c in comments:
-		for att in (mochi.attachment.list(c["id"], project_id) or []):
-			mochi.attachment.delete(att["id"])
+		prune_attachments(c["id"], project_id, preserve)
 	comments_remove_object(object_id)
 
 # Delete all comment attachments for all objects in a project
@@ -3164,6 +3238,12 @@ def delete_project_comment_attachments(project_id):
 # entity lives on this server, or goes over P2P otherwise.
 def stream_asset(a, entity_id, service, asset):
 	if not entity_id:
+		a.error.label(404, "errors.asset_unavailable", asset=asset)
+		return None
+	# Reject a malformed id before opening a stream: mochi.remote.stream errors
+	# out on an invalid entity, which aborts the whole action as a 500. The
+	# user-asset routes pass a caller-supplied id here. Mirrors market/staff.
+	if not mochi.text.valid(entity_id, "entity") and not mochi.text.valid(entity_id, "fingerprint"):
 		a.error.label(404, "errors.asset_unavailable", asset=asset)
 		return None
 	s = mochi.remote.stream(entity_id, service, asset, {})
@@ -3188,9 +3268,18 @@ def action_comment_asset(a):
 	if asset not in _PERSON_ASSETS:
 		a.error.label(404, "errors.unknown_asset")
 		return
-	# Bind the comment to the route project (via its object) so this can't resolve
-	# a comment author in a project the URL doesn't name.
-	row = mochi.db.row("select c.author from comments c join objects o on c.object=o.id where c.id=? and o.project=?", a.input("comment"), a.input("project"))
+	# Public route - gate on project view access before resolving anyone.
+	# The helper takes a user id directly, so an anonymous caller passes None
+	# and is tested against the "*" grant alone. NOT require_project(), which
+	# dereferences a.user.identity.id and would 500 on an anonymous request.
+	user_id = a.user.identity.id if a.user and a.user.identity else None
+	project_id = a.input("project")
+	if not check_project_access(user_id, project_id, "view"):
+		a.error.label(403, "errors.access_denied")
+		return
+	# Bind the comment to the route project (via its object) so this can't
+	# resolve a comment author in a project the URL doesn't name.
+	row = mochi.db.row("select c.author from comments c join objects o on c.object=o.id where c.id=? and o.project=?", a.input("comment"), project_id)
 	return stream_asset(a, row["author"] if row else "", "people", asset)
 
 def action_activity_asset(a):
@@ -3198,14 +3287,32 @@ def action_activity_asset(a):
 	if asset not in _PERSON_ASSETS:
 		a.error.label(404, "errors.unknown_asset")
 		return
+	# Public route - gate on project view access before resolving anyone.
+	# The helper takes a user id directly, so an anonymous caller passes None
+	# and is tested against the "*" grant alone. NOT require_project(), which
+	# dereferences a.user.identity.id and would 500 on an anonymous request.
+	user_id = a.user.identity.id if a.user and a.user.identity else None
+	project_id = a.input("project")
+	if not check_project_access(user_id, project_id, "view"):
+		a.error.label(403, "errors.access_denied")
+		return
 	# Bind the activity to the route project (via its object).
-	row = mochi.db.row("select a2.user from activity a2 join objects o on a2.object=o.id where a2.id=? and o.project=?", a.input("activity"), a.input("project"))
+	row = mochi.db.row("select a2.user from activity a2 join objects o on a2.object=o.id where a2.id=? and o.project=?", a.input("activity"), project_id)
 	return stream_asset(a, row["user"] if row else "", "people", asset)
 
 def action_user_asset(a):
 	asset = a.input("asset")
 	if asset not in _PERSON_ASSETS:
 		a.error.label(404, "errors.unknown_asset")
+		return
+	# Public route - gate on project view access before resolving anyone.
+	# The helper takes a user id directly, so an anonymous caller passes None
+	# and is tested against the "*" grant alone. NOT require_project(), which
+	# dereferences a.user.identity.id and would 500 on an anonymous request.
+	user_id = a.user.identity.id if a.user and a.user.identity else None
+	project_id = a.input("project")
+	if not check_project_access(user_id, project_id, "view"):
+		a.error.label(403, "errors.access_denied")
 		return
 	return stream_asset(a, a.input("user") or "", "people", asset)
 
@@ -3488,23 +3595,28 @@ def serve_attachment(a, variant):
 	if not project_id:
 		return
 	attachment = a.input("id")
-	if project["owner"] == 1:
-		# We own this project: require_project enforced view access. Bind the
-		# attachment to an object or a comment (comment -> object -> project).
-		att = mochi.attachment.get(attachment)
-		if not att:
-			a.error.label(404, "errors.attachment_not_found")
-			return
-		obj = att.get("object")
-		in_project = mochi.db.exists("select 1 from objects where id=? and project=?", obj, project_id)
-		if not in_project:
-			in_project = mochi.db.exists("select 1 from comments c join objects o on o.id=c.object where c.id=? and o.project=?", obj, project_id)
-		if not in_project:
-			a.error.label(404, "errors.attachment_not_found")
-			return
-	# Remote project (owner != 1): the owning server enforces access and the
-	# binding when a.write.attachment fetches over P2P; per-user databases
-	# isolate one subscriber from another.
+
+	# require_project enforced view access on the ROUTE project. Bind the
+	# attachment to an object or a comment (comment -> object -> project) in
+	# that same project, for projects we own AND for subscribed ones. Never
+	# defer to "the owning server enforces the binding when a.write.attachment
+	# fetches over P2P": that holds only until the bytes are cached locally,
+	# after which core serves them from disk and the owner is never consulted
+	# again - so without this an attachment belonging to a subscribed project
+	# whose access was later revoked stays reachable through a project the
+	# caller can still see.
+	att = mochi.attachment.get(attachment)
+	if not att:
+		a.error.label(404, "errors.attachment_not_found")
+		return
+	obj = att.get("object")
+	in_project = mochi.db.exists("select 1 from objects where id=? and project=?", obj, project_id)
+	if not in_project:
+		in_project = mochi.db.exists("select 1 from comments c join objects o on o.id=c.object where c.id=? and o.project=?", obj, project_id)
+	if not in_project:
+		a.error.label(404, "errors.attachment_not_found")
+		return
+
 	a.write.attachment(attachment, variant=variant)
 
 def action_attachment_list(a):
@@ -3824,6 +3936,13 @@ def action_view_create(a):
 		a.error.label(400, "errors.name_too_long")
 		return
 
+	# Cap the view-config strings, matching do_view_create's P2P path so the
+	# owner-side entry point can't store unbounded values either.
+	for vf in ["filter", "columns", "rows", "fields", "sort", "border"]:
+		if check_length(a.input(vf), 10000):
+			a.error.label(400, "errors.value_too_long")
+			return
+
 	viewtype = a.input("viewtype") or "board"
 	if viewtype not in ["board", "list"]:
 		a.error.label(400, "errors.invalid_view_type")
@@ -3911,6 +4030,13 @@ def action_view_update(a):
 	if not view:
 		a.error.label(404, "errors.view_not_found")
 		return
+
+	# Cap the view-config strings, matching do_view_update's P2P path so the
+	# owner-side entry point can't store unbounded values either.
+	for vf in ["filter", "columns", "rows", "fields", "sort", "border"]:
+		if check_length(a.input(vf), 10000):
+			a.error.label(400, "errors.value_too_long")
+			return
 
 	# Update fields if provided
 	name = a.input("name")
@@ -4113,7 +4239,7 @@ def action_class_create(a):
 	row_merge("classes", ["project", "id"], {"project": project_id, "id": class_id, "name": name.strip(), "rank": rank, "requests": requests, "title": "title"})
 
 	# Add default title field
-	row_merge("fields", ["project", "class", "id"], {"project": project_id, "class": class_id, "id": "title", "name": "Title", "fieldtype": "text", "flags": "required,sort", "rank": 0})
+	row_merge("fields", ["project", "class", "id"], {"project": project_id, "class": class_id, "id": "title", "name": mochi.app.label("field.title"), "fieldtype": "text", "flags": "required,sort", "rank": 0})
 
 	# Set hierarchy to allow root by default
 	row_merge("hierarchy", ["project", "class", "parent"], {"project": project_id, "class": class_id, "parent": ""})
@@ -5223,7 +5349,7 @@ def action_recommendations(a):
 		existing_ids.add(row["id"])
 
 	# Connect to recommendations service
-	s = mochi.remote.stream("1JYmMpQU7fxvTrwHpNpiwKCgUg3odWqX7s9t1cLswSMAro5M2P", "recommendations", "list", {"type": "project", "language": "en"})
+	s = mochi.remote.stream("1JYmMpQU7fxvTrwHpNpiwKCgUg3odWqX7s9t1cLswSMAro5M2P", "recommendations", "list", {"type": "project", "language": user_language(a)})
 	if not s:
 		return {"data": {"projects": []}}
 
@@ -5619,6 +5745,111 @@ def insert_schema(project_id, schema):
 		# are created/deleted, never edited in place.
 		row_merge("links", ["source", "target", "linktype"], {"project": project_id, "source": l.get("source", ""), "target": l.get("target", ""), "linktype": l.get("linktype", ""), "created": 0})
 
+	# Reconcile deletions: the dump is the owner's canonical full state, so
+	# any scoped local row it doesn't name was deleted owner-side - typically
+	# a delete event lost in a pruned broadcast gap, which is the case resync
+	# exists for. Upserts above run first and strays go children before
+	# parents, so a mid-apply failure leaves only surplus rows for the next
+	# resync to remove. Watchers and requests aren't carried by the dump, and
+	# activity is append-only and may hold rows local to this replica, so
+	# those tables are only cleaned via the stray-object cascade. A row the
+	# owner created while the dump was in flight can be removed here when its
+	# broadcast overtakes the response; the next broadcast-gap or idle resync
+	# restores it.
+	object_survivors = {}
+	comment_survivors = {}
+	for obj in (schema.get("objects") or []):
+		object_survivors[obj.get("id", "")] = True
+		for c in (obj.get("comments") or []):
+			comment_survivors[c.get("id", "")] = True
+	for row in (mochi.db.rows("select id from objects where project=?", project_id) or []):
+		if row["id"] not in object_survivors:
+			delete_object_local(project_id, row["id"], True)
+	for row in (mochi.db.rows("select c.id from comments c join objects o on c.object=o.id where o.project=?", project_id) or []):
+		if row["id"] not in comment_survivors:
+			prune_attachments(row["id"], project_id, True)
+			comment_remove(row["id"])
+	for obj in (schema.get("objects") or []):
+		identifier = obj.get("id", "")
+		if not identifier or foreign_object(identifier, project_id):
+			continue
+		# Values the owner cleared, and attachments the owner deleted, on
+		# surviving objects and comments.
+		values = obj.get("values") or {}
+		for row in (mochi.db.rows("select field from \"values\" where object=?", identifier) or []):
+			if row["field"] not in values:
+				value_remove(identifier, row["field"])
+		remaining = {}
+		for att in (obj.get("attachments") or []):
+			remaining[att.get("id", "")] = True
+		for att in (mochi.attachment.list(identifier, project_id) or []):
+			# Only drop references to files hosted elsewhere; never this
+			# replica's own uploads (see prune_attachments).
+			if att["id"] not in remaining and att["entity"]:
+				mochi.attachment.delete(att["id"])
+		for c in (obj.get("comments") or []):
+			comment_id = c.get("id", "")
+			if not comment_id or foreign_comment(comment_id, project_id):
+				continue
+			remaining = {}
+			for att in (c.get("attachments") or []):
+				remaining[att.get("id", "")] = True
+			for att in (mochi.attachment.list(comment_id, project_id) or []):
+				if att["id"] not in remaining and att["entity"]:
+					mochi.attachment.delete(att["id"])
+	class_survivors = {}
+	for c in (schema.get("classes") or []):
+		class_survivors[c.get("id", "")] = True
+	field_survivors = {}
+	for f in (schema.get("fields") or []):
+		field_survivors[(f.get("class", ""), f.get("id", ""))] = True
+	option_survivors = {}
+	for o in (schema.get("options") or []):
+		option_survivors[(o.get("class", ""), o.get("field", ""), o.get("id", ""))] = True
+	hierarchy_survivors = {}
+	for h in (schema.get("hierarchy") or []):
+		for parent in (h.get("parents") or []):
+			hierarchy_survivors[(h.get("class", ""), parent)] = True
+	view_survivors = {}
+	view_field_survivors = {}
+	view_class_survivors = {}
+	for v in (schema.get("views") or []):
+		view_id = v.get("id", "")
+		view_survivors[view_id] = True
+		for field_id in (v.get("fields", "") or "").split(","):
+			if field_id:
+				view_field_survivors[(view_id, field_id)] = True
+		for class_id in (v.get("classes", "") or "").split(","):
+			if class_id:
+				view_class_survivors[(view_id, class_id)] = True
+	link_survivors = {}
+	for l in (schema.get("links") or []):
+		link_survivors[(l.get("source", ""), l.get("target", ""), l.get("linktype", ""))] = True
+	for row in (mochi.db.rows("select view, field from view_fields where project=?", project_id) or []):
+		if (row["view"], row["field"]) not in view_field_survivors:
+			row_remove("view_fields", ["project", "view", "field"], "project=? and view=? and field=?", [project_id, row["view"], row["field"]])
+	for row in (mochi.db.rows("select view, class from view_classes where project=?", project_id) or []):
+		if (row["view"], row["class"]) not in view_class_survivors:
+			row_remove("view_classes", ["project", "view", "class"], "project=? and view=? and class=?", [project_id, row["view"], row["class"]])
+	for row in (mochi.db.rows("select id from views where project=?", project_id) or []):
+		if row["id"] not in view_survivors:
+			row_remove("views", ["project", "id"], "project=? and id=?", [project_id, row["id"]])
+	for row in (mochi.db.rows("select class, field, id from options where project=?", project_id) or []):
+		if (row["class"], row["field"], row["id"]) not in option_survivors:
+			row_remove("options", ["project", "class", "field", "id"], "project=? and class=? and field=? and id=?", [project_id, row["class"], row["field"], row["id"]])
+	for row in (mochi.db.rows("select class, id from fields where project=?", project_id) or []):
+		if (row["class"], row["id"]) not in field_survivors:
+			row_remove("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, row["class"], row["id"]])
+	for row in (mochi.db.rows("select class, parent from hierarchy where project=?", project_id) or []):
+		if (row["class"], row["parent"]) not in hierarchy_survivors:
+			row_remove("hierarchy", ["project", "class", "parent"], "project=? and class=? and parent=?", [project_id, row["class"], row["parent"]])
+	for row in (mochi.db.rows("select id from classes where project=?", project_id) or []):
+		if row["id"] not in class_survivors:
+			row_remove("classes", ["project", "id"], "project=? and id=?", [project_id, row["id"]])
+	for row in (mochi.db.rows("select source, target, linktype from links where project=?", project_id) or []):
+		if (row["source"], row["target"], row["linktype"]) not in link_survivors:
+			row_remove("links", ["source", "target", "linktype"], "project=? and source=? and target=? and linktype=?", [project_id, row["source"], row["target"], row["linktype"]])
+
 # Send all existing project data to a new subscriber
 def send_project_data(project_id, subscriber_id):
 	h = p2p_headers(project_id, subscriber_id, "sync/batch")
@@ -5796,6 +6027,22 @@ def event_deleted(e):
 	# later re-share imports cleanly (see purge_project).
 	delete_project_comment_attachments(project_id)
 	purge_project(project_id)
+
+# Handle notification that the project owner has revoked our access. Sent
+# directly from the project entity by subscribers_revalidate, so the
+# authenticated sender IS the project - the same anti-spoof rule as
+# event_deleted. The owner has already cut the fan-out; purge the replica so
+# revoked data doesn't linger here.
+def event_access_revoke(e):
+	project_id = e.header("from")
+
+	# Only purge replicas, never a project we own
+	project = mochi.db.row("select * from projects where id=? and owner=0", project_id)
+	if not project:
+		return
+
+	delete_project_comment_attachments(project_id)
+	purge_project(project_id)
 # ============================================================================
 # Content Sync Event Handlers (received by subscribers)
 # ============================================================================
@@ -5850,6 +6097,12 @@ def event_sync_batch(e):
 					row_merge("view_classes", ["project", "view", "class"], {"project": project_id, "view": v["id"], "class": class_id})
 	# Process objects
 	for obj in (e.content("objects") or []):
+		# Never adopt/reassign an object that already belongs to another
+		# project - a hijacking owner's batch could otherwise write values,
+		# comments and activity onto our other projects' rows via a colliding
+		# id (mirrors insert_schema's foreign_object guard).
+		if foreign_object(obj["id"], project_id):
+			continue
 		if not mochi.db.exists("select 1 from objects where id=?", obj["id"]):
 			object_merge({"id": obj["id"], "project": project_id, "class": obj.get("class", ""), "number": obj.get("number", 0), "parent": obj.get("parent", ""), "rank": obj.get("rank", 0), "created": obj.get("created", now), "updated": obj.get("updated", now)})
 		# Values
@@ -5859,6 +6112,9 @@ def event_sync_batch(e):
 				value_merge(obj["id"], field, value)
 		# Comments
 		for c in (obj.get("comments") or []):
+			# Skip a comment id already owned by another project's object.
+			if foreign_comment(c["id"], project_id):
+				continue
 			if not mochi.db.exists("select 1 from comments where id=?", c["id"]):
 				comment_merge({"id": c["id"], "object": obj["id"], "parent": c.get("parent", ""), "author": c.get("author", ""), "name": c.get("name", ""), "content": c.get("content", ""), "created": c.get("created", now), "edited": c.get("edited", 0)})
 		# Activity history
@@ -5935,6 +6191,12 @@ def event_object_create(e):
 	if not project_id:
 		return
 	object_id = e.content("id")
+	# A colliding global id that already belongs to another project is a
+	# hijack attempt by the sending owner - never let its payload (values,
+	# watcher, notification) touch our other projects' rows. Mirrors
+	# insert_schema's foreign_object guard.
+	if foreign_object(object_id, project_id):
+		return
 	class_id = e.content("class") or ""
 	# Skip when the class isn't local yet — objects(project,class) FK would
 	# otherwise abort the handler. Happens when the owner adds a new class
@@ -5961,14 +6223,8 @@ def event_object_create(e):
 		mochi.websocket.write(fp, {"type": "object/create", "project": project_id, "id": object_id})
 	# Auto-watch creator locally (safety net for when forward_to_owner response is lost)
 	local_id = e.header("to")
-	mochi.log.debug("event_object_create: object=" + str(object_id) + " user=" + str(user) + " local_id=" + str(local_id) + " match=" + str(user == local_id))
 	if user and user == local_id:
-		mochi.log.debug("event_object_create: inserting watcher object=" + str(object_id) + " user=" + str(local_id))
 		row_merge("watchers", ["object", "user"], {"object": object_id, "user": local_id, "created": e.content("created") or mochi.time.now()})
-		exists = mochi.db.exists("select 1 from watchers where object=? and user=?", object_id, local_id)
-		mochi.log.debug("event_object_create: watcher exists after insert=" + str(exists))
-	else:
-		mochi.log.debug("event_object_create: skipped auto-watch, user=" + repr(user) + " local_id=" + repr(local_id))
 	# Notify local user about new object
 	if local_id and local_id != user:
 		project = get_project(project_id)
@@ -6078,14 +6334,7 @@ def event_object_delete(e):
 	local_id = e.header("to")
 	if local_id:
 		notify_watchers(object_id, project_id, local_id, user, mochi.app.label("notifications.body.deleted"))
-	row_remove("requests", ["id"], "object=?", [object_id])
-	row_remove("watchers", ["object", "user"], "object=?", [object_id])
-	mochi.db.execute("delete from activity where object=?", object_id)
-	delete_object_comments(object_id, project_id)
-	values_remove_object(object_id)
-	row_remove("links", ["source", "target", "linktype"], "source=? or target=?", [object_id, object_id])
-	if mochi.db.exists("select 1 from objects where id=? and project=?", object_id, project_id):
-		object_remove(object_id)
+	delete_object_local(project_id, object_id)
 	fp = mochi.entity.fingerprint(project_id)
 	if fp:
 		mochi.websocket.write(fp, {"type": "object/delete", "project": project_id, "id": object_id})
@@ -7144,10 +7393,12 @@ def event_request(e):
 
 	e.stream.write(result)
 
-# Check a user's access level for a project
+# Check a user's access level for a project. The checked identity is the
+# authenticated P2P sender only - honouring a content-supplied user would let
+# any peer probe another identity's access levels.
 def event_access_check(e):
 	project_id = e.header("to")
-	user_id = e.content("user") or e.header("from")
+	user_id = e.header("from")
 	result = {}
 	for op in ["design", "write", "comment", "view"]:
 		result[op] = check_project_access(user_id, project_id, op)
@@ -7407,6 +7658,10 @@ def do_object_move(project_id, project, params, user_id):
 		return {"error": "errors.field_not_found", "code": 400}
 	value = params.get("value")
 	new_rank = params.get("rank")
+	# Reachable over P2P from any subscriber with write access: int() on a
+	# non-integer would abort the owner-side handler, so answer a clean 400.
+	if new_rank != None and not mochi.text.valid(str(new_rank), "integer"):
+		return {"error": "errors.invalid_value", "code": 400}
 	old_value_row = mochi.db.row("select value from \"values\" where object=? and field=?", object_id, field)
 	old_value = old_value_row["value"] if old_value_row else ""
 	target_value = value if value else old_value
@@ -7832,7 +8087,7 @@ def do_class_create(project_id, project, params):
 	rank = (max_rank["m"] or 0) + 1 if max_rank else 0
 	requests = params.get("requests", "")
 	row_merge("classes", ["project", "id"], {"project": project_id, "id": class_id, "name": name.strip(), "rank": rank, "requests": requests, "title": "title"})
-	row_merge("fields", ["project", "class", "id"], {"project": project_id, "class": class_id, "id": "title", "name": "Title", "fieldtype": "text", "flags": "required,sort", "rank": 0})
+	row_merge("fields", ["project", "class", "id"], {"project": project_id, "class": class_id, "id": "title", "name": mochi.app.label("field.title"), "fieldtype": "text", "flags": "required,sort", "rank": 0})
 	row_merge("hierarchy", ["project", "class", "parent"], {"project": project_id, "class": class_id, "parent": ""})
 	broadcast_event(project_id, "class/create", {
 		"project": project_id, "id": class_id, "name": name.strip(), "rank": rank, "requests": requests, "title": "title"
@@ -8149,7 +8404,7 @@ def do_view_create(project_id, project, params):
 		return {"error": "errors.name_too_long", "code": 400}
 	for vf in ["filter", "columns", "rows", "fields", "sort", "border"]:
 		if check_length(params.get(vf), 10000):
-			return {"error": vf.capitalize() + " too long", "code": 400}
+			return {"error": "errors.value_too_long", "code": 400}
 	viewtype = params.get("viewtype", "board")
 	if viewtype not in ["board", "list"]:
 		return {"error": "errors.invalid_view_type", "code": 400}
@@ -8195,7 +8450,7 @@ def do_view_update(project_id, project, params):
 		return {"error": "errors.name_too_long", "code": 400}
 	for vf in ["filter", "columns", "rows", "fields", "sort", "border"]:
 		if check_length(params.get(vf), 10000):
-			return {"error": vf.capitalize() + " too long", "code": 400}
+			return {"error": "errors.value_too_long", "code": 400}
 	name = params.get("name")
 	viewtype = params.get("viewtype")
 	filter_str = params.get("filter")

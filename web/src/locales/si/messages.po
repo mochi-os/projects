@@ -18,6 +18,19 @@ msgstr ""
 msgid "Please check your internet connection and try again."
 msgstr "කරුණාකර ඔබගේ අන්තර්ජාල සම්බන්ධතාවය පරීක්ෂා කර නැවත උත්සාහ කරන්න."
 
+#: src/features/objects/components/comment-thread.tsx:165
+msgid "(edited)"
+msgstr "(සංස්කරණය කළා)"
+
+#: src/features/objects/components/comment-thread.tsx:149
+msgid "(expand)"
+msgstr "(පුළුල් කරන්න)"
+
+#. placeholder {0}: file.oldPath
+#: src/features/requests/components/diff-viewer.tsx:137
+msgid "(from {0})"
+msgstr "({0} වෙතින්)"
+
 #: src/features/editor/components/edit-dialogs.tsx:813
 msgid "(itself)"
 msgstr "(එයම)"
@@ -25,6 +38,16 @@ msgstr "(එයම)"
 #: src/features/board/components/board-container.tsx:794
 msgid "[not set]"
 msgstr "[සකසා නැත]"
+
+#. placeholder {0}: conflicts.length
+#: src/features/requests/components/conflict-list.tsx:23
+msgid "{0, plural, one {# conflicting file} other {# conflicting files}}"
+msgstr "{0, plural, one {ගැටුම් ගොනු #} other {ගැටුම් ගොනු #}}"
+
+#. placeholder {0}: selectedValues.size
+#: ../../../lib/web/src/components/data-table/faceted-filter.tsx:66
+msgid "{0, plural, one {# selected} other {# selected}}"
+msgstr "{0, plural, one {# තෝරාගත්} other {# තෝරාගත්}}"
 
 #. placeholder {0}: project.project.name
 #: src/routes/_authenticated/$projectId/design.tsx:64
@@ -49,14 +72,39 @@ msgstr "ගොනු {0}ක් වෙනස් වුණා"
 msgid "{0} settings"
 msgstr "{0} සැකසුම්"
 
+#: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:173
+msgid "{entityLabel} name"
+msgstr "{entityLabel} නම"
+
+#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:210
+msgid "{selectedCount, plural, one {{entityName} selected} other {{manyName} selected}}"
+msgstr "{selectedCount, plural, one {{entityName} තෝරාගත්තා} other {{manyName} තෝරාගත්තා}}"
+
+#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:52
+msgid "{selectedCount, plural, one {# {entityName} selected. Bulk actions toolbar is available.} other {# {manyName} selected. Bulk actions toolbar is available.}}"
+msgstr "{selectedCount, plural, one {# {entityName} තෝරාගත්තා. තොග ක්‍රියා මෙවලම් තීරුව ලබා ගත හැක.} other {# {manyName} තෝරාගත්තා. තොග ක්‍රියා මෙවලම් තීරුව ලබා ගත හැක.}}"
+
+#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:202
+msgid "{selectedCount, plural, one {# selected} other {# selected}}"
+msgstr "{selectedCount, plural, one {# තෝරාගත්} other {# තෝරාගත්}}"
+
+#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:149
+msgid "{selectedCount, plural, one {Bulk actions for # selected {entityName}} other {Bulk actions for # selected {manyName}}}"
+msgstr "{selectedCount, plural, one {තෝරාගත් {entityName} # ක් සඳහා තොග ක්‍රියා} other {තෝරාගත් {manyName} # ක් සඳහා තොග ක්‍රියා}}"
+
 #: src/features/board/components/board-column.tsx:522
 msgid "{totalCount, plural, one {# item} other {# items}}"
-msgstr ""
+msgstr "{totalCount, plural, one {අයිතම #} other {අයිතම #}}"
 
 #. placeholder {0}: data.ahead
 #: src/features/requests/components/merge-status.tsx:76
 msgid "+{0} ahead"
 msgstr "+{0} ඉදිරියේ"
+
+#. placeholder {0}: countDeepChildren(object.id)
+#: src/features/board/components/board-card.tsx:355
+msgid "+{0} nested"
+msgstr "+{0} කැදලි"
 
 #: src/features/objects/components/comment-thread.tsx:146
 msgid "+{totalDescendants} more replies"
@@ -321,9 +369,9 @@ msgstr "පවතින keyboard shortcuts"
 msgid "Back"
 msgstr "ආපසු"
 
-#: ../../../lib/web/src/features/errors/forbidden.tsx:26
-#: ../../../lib/web/src/features/errors/not-found-error.tsx:26
-#: ../../../lib/web/src/features/errors/unauthorized-error.tsx:26
+#: ../../../lib/web/src/features/errors/forbidden.tsx:28
+#: ../../../lib/web/src/features/errors/not-found-error.tsx:28
+#: ../../../lib/web/src/features/errors/unauthorized-error.tsx:28
 msgid "Back to home"
 msgstr "මුල් පිටුවට ආපසු"
 
@@ -378,7 +426,7 @@ msgstr "මෙහි දරුවෙකු විය හැක"
 #: ../../../lib/web/src/features/access/access-dialog.tsx:328
 #: ../../../lib/web/src/features/access/access-list.tsx:263
 #: ../../../lib/web/src/features/accounts/account-add.tsx:188
-#: ../../../lib/web/src/features/accounts/account-verify.tsx:89
+#: ../../../lib/web/src/features/accounts/account-verify.tsx:91
 #: src/features/board/components/board-column.tsx:606
 #: src/features/editor/components/option-dialog.tsx:146
 #: src/features/objects/components/comment-thread.tsx:185
@@ -460,22 +508,23 @@ msgstr "හිස් කරන්න"
 msgid "Clear all"
 msgstr "සියල්ල හිස් කරන්න"
 
-#: ../../../lib/web/src/components/data-table/faceted-filter.tsx:140
+#: ../../../lib/web/src/components/data-table/faceted-filter.tsx:144
 msgid "Clear filters"
 msgstr "පෙරහන් හිස් කරන්න"
 
-#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:167
-#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:171
+#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:177
+#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:181
 msgid "Clear selection"
 msgstr "තේරීම හිස් කරන්න"
 
-#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:168
+#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:178
+#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:185
 msgid "Clear selection (Escape)"
 msgstr "තේරීම හිස් කරන්න (Escape)"
 
 #: ../../../lib/web/src/components/ui/dialog.tsx:78
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:354
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:357
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:358
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:361
 #: ../../../lib/web/src/components/ui/sheet.tsx:79
 #: src/features/objects/components/create-object-dialog.tsx:419
 #: src/features/objects/components/create-object-dialog.tsx:424
@@ -491,8 +540,8 @@ msgstr "වසන්න"
 msgid "Close dialog"
 msgstr "සංවාදය වසන්න"
 
-#: ../../../lib/web/src/components/layout/app-sidebar.tsx:107
-#: ../../../lib/web/src/components/layout/app-sidebar.tsx:112
+#: ../../../lib/web/src/components/layout/app-sidebar.tsx:108
+#: ../../../lib/web/src/components/layout/app-sidebar.tsx:113
 msgid "Close navigation"
 msgstr "සංචාලනය වසන්න"
 
@@ -657,6 +706,7 @@ msgid "Custom"
 msgstr "අභිරුචි"
 
 #: ../../../lib/web/src/components/config-drawer.tsx:218
+#: ../../../lib/web/src/components/theme-switch.tsx:52
 #: ../../../lib/web/src/lib/preference-utils.ts:20
 msgid "Dark"
 msgstr "අඳුරු"
@@ -857,8 +907,8 @@ msgstr "නිමයි"
 msgid "Double click on a column to add content"
 msgstr "අන්තර්ගතය එක් කිරීමට තීරුවක් මත දෙවරක් ක්ලික් කරන්න"
 
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:338
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:348
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:342
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:352
 #: src/features/objects/components/object-attachments.tsx:193
 msgid "Download"
 msgstr "බාගත කරන්න"
@@ -1045,6 +1095,10 @@ msgstr "දත්ත ආයාත කිරීමට අසමත් විය"
 msgid "Failed to import design"
 msgstr "සැලසුම ආයාත කිරීමට අසමත් විය"
 
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:263
+msgid "Failed to load image"
+msgstr "රූපය පූරණය කිරීමට අසමත් විය"
+
 #: src/features/objects/components/object-detail-panel.tsx:344
 #: src/features/objects/components/object-detail-panel.tsx:347
 msgid "Failed to load item"
@@ -1062,6 +1116,10 @@ msgstr "ව්‍යාපෘති සැලසුම පූරණය කිර
 #: src/stores/projects-store.ts:31
 msgid "Failed to load projects"
 msgstr "ව්‍යාපෘති පූරණය කිරීමට අසමත් විය"
+
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:263
+msgid "Failed to load video"
+msgstr "වීඩියෝව පූරණය කිරීමට අසමත් විය"
 
 #: src/features/requests/components/merge-button.tsx:97
 msgid "Failed to merge"
@@ -1195,29 +1253,29 @@ msgstr "තේමාවෙන්"
 msgid "Full layout"
 msgstr "සම්පූර්ණ පිරිසැලසුම"
 
-#: ../../../lib/web/src/features/errors/forbidden.tsx:24
-#: ../../../lib/web/src/features/errors/not-found-error.tsx:24
-#: ../../../lib/web/src/features/errors/unauthorized-error.tsx:24
+#: ../../../lib/web/src/features/errors/forbidden.tsx:26
+#: ../../../lib/web/src/features/errors/not-found-error.tsx:26
+#: ../../../lib/web/src/features/errors/unauthorized-error.tsx:26
 msgid "Go back"
 msgstr "ආපසු යන්න"
 
-#: ../../../lib/web/src/components/data-table/pagination.tsx:78
+#: ../../../lib/web/src/components/data-table/pagination.tsx:82
 msgid "Go to first page"
 msgstr "පළමු පිටුවට යන්න"
 
-#: ../../../lib/web/src/components/data-table/pagination.tsx:124
+#: ../../../lib/web/src/components/data-table/pagination.tsx:128
 msgid "Go to last page"
 msgstr "අවසන් පිටුවට යන්න"
 
-#: ../../../lib/web/src/components/data-table/pagination.tsx:115
+#: ../../../lib/web/src/components/data-table/pagination.tsx:119
 msgid "Go to next page"
 msgstr "ඊළඟ පිටුවට යන්න"
 
-#: ../../../lib/web/src/components/data-table/pagination.tsx:102
+#: ../../../lib/web/src/components/data-table/pagination.tsx:106
 msgid "Go to page {pageNumber}"
 msgstr "{pageNumber} පිටුවට යන්න"
 
-#: ../../../lib/web/src/components/data-table/pagination.tsx:87
+#: ../../../lib/web/src/components/data-table/pagination.tsx:91
 msgid "Go to previous page"
 msgstr "පෙර පිටුවට යන්න"
 
@@ -1248,9 +1306,19 @@ msgstr "මුල් පිටුව"
 msgid "Hot"
 msgstr "උණුසුම්"
 
+#: src/features/editor/components/edit-dialogs.tsx:755
+#: src/features/editor/components/edit-dialogs.tsx:1075
+msgid "ID"
+msgstr "හැඳුනුම්පත"
+
 #: src/routes/_authenticated/$projectId_.settings.tsx:297
 msgid "Identity"
 msgstr "අනන්‍යතාවය"
+
+#. placeholder {0}: currentMedia.name
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:247
+msgid "Image viewer: {0}"
+msgstr "රූප දර්ශකය: {0}"
 
 #: ../../../lib/web/src/lib/preference-utils.ts:86
 msgid "Imperial"
@@ -1290,6 +1358,10 @@ msgstr "අවලංගු JSON ගොනුව"
 msgid "Invalid verification code"
 msgstr "අවලංගු සත්‍යාපන කේතය"
 
+#: ../../../lib/web/src/features/errors/not-found-error.tsx:18
+msgid "It seems like the page you're looking for <0/>does not exist or might have been removed."
+msgstr "ඔබ සොයන පිටුව <0/>නොපවතින බවක් හෝ ඉවත් කර ඇති බවක් පෙනේ."
+
 #: src/features/objects/components/object-detail-panel.tsx:424
 msgid "Item details"
 msgstr "අයිතම විස්තර"
@@ -1318,6 +1390,7 @@ msgid "Left to Right"
 msgstr "වමේ සිට දකුණට"
 
 #: ../../../lib/web/src/components/config-drawer.tsx:213
+#: ../../../lib/web/src/components/theme-switch.tsx:45
 #: ../../../lib/web/src/lib/preference-utils.ts:19
 msgid "Light"
 msgstr "ලා"
@@ -1390,8 +1463,8 @@ msgstr "ඉවත් වෙමින්…"
 msgid "Manual"
 msgstr "අතින්"
 
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:92
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:99
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:93
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:100
 #: ../../../lib/web/src/components/notifications-dropdown.tsx:224
 msgid "Mark all as read"
 msgstr "සියල්ල කියවූ ලෙස සලකුණු කරන්න"
@@ -1495,8 +1568,8 @@ msgstr "නව {className}"
 msgid "Next"
 msgstr "ඊළඟ"
 
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:388
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:393
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:392
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:397
 msgid "Next image"
 msgstr "ඊළඟ පින්තූරය"
 
@@ -1582,7 +1655,7 @@ msgid "No repositories available"
 msgstr "repositories ලබා ගත නොහැක"
 
 #: ../../../lib/web/src/components/command-menu.tsx:55
-#: ../../../lib/web/src/components/data-table/faceted-filter.tsx:90
+#: ../../../lib/web/src/components/data-table/faceted-filter.tsx:94
 msgid "No results found."
 msgstr "ප්‍රතිඵල හමු නොවීය."
 
@@ -1655,6 +1728,11 @@ msgstr "කිසිවක් හමු නොවීය"
 #: ../../../lib/web/src/components/notifications-dropdown.tsx:261
 msgid "Notifications"
 msgstr "දැනුම්දීම්"
+
+#. placeholder {0}: unread.length
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:86
+msgid "Notifications: {0}"
+msgstr "දැනුම්දීම්: {0}"
 
 #: src/components/view-options-bar.tsx:42
 #: src/features/editor/components/add-dialogs.tsx:138
@@ -1756,6 +1834,11 @@ msgstr "වෙනත්"
 msgid "Owner"
 msgstr "හිමිකරු"
 
+#: ../../../lib/web/src/components/data-table/pagination.tsx:43
+#: ../../../lib/web/src/components/data-table/pagination.tsx:71
+msgid "Page {currentPage} of {totalPages}"
+msgstr "පිටුව {currentPage} / {totalPages}"
+
 #: src/features/objects/components/create-object-dialog.tsx:442
 #: src/features/objects/components/object-detail-panel.tsx:544
 msgid "Parent"
@@ -1787,6 +1870,10 @@ msgstr "කරුණාකර ව්‍යාපෘති design එකට එ�
 msgid "Please check your internet connection and try again."
 msgstr "කරුණාකර ඔබගේ අන්තර්ජාල සම්බන්ධතාවය පරීක්ෂා කර නැවත උත්සාහ කරන්න."
 
+#: ../../../lib/web/src/features/errors/unauthorized-error.tsx:18
+msgid "Please log in with the appropriate credentials <0/> to access this resource."
+msgstr "මෙම සම්පතට ප්‍රවේශ වීමට <0/> කරුණාකර සුදුසු අක්තපත්‍ර සමඟ පිවිසෙන්න."
+
 #: src/features/projects/components/create-project-dialog.tsx:103
 msgid "Please select a template"
 msgstr "කරුණාකර template එකක් තෝරන්න"
@@ -1804,8 +1891,8 @@ msgstr "කරුණාකර මොහොතක් රැඳී සිට න�
 msgid "Prefix"
 msgstr "උපසර්ගය"
 
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:373
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:378
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:377
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:382
 msgid "Previous image"
 msgstr "පෙර පින්තූරය"
 
@@ -1938,6 +2025,11 @@ msgstr "ඉවත් කරන්න"
 msgid "Remove access rule"
 msgstr "ප්‍රවේශ නියමය ඉවත් කරන්න"
 
+#. placeholder {0}: formatSubject(subject, data.name)
+#: ../../../lib/web/src/features/access/access-list.tsx:259
+msgid "Remove access rule for \"{0}\"?"
+msgstr "\"{0}\" සඳහා ප්‍රවේශ නීතිය ඉවත් කරන්නද?"
+
 #: ../../../lib/web/src/features/access/access-list.tsx:257
 msgid "Remove access?"
 msgstr "ප්‍රවේශය ඉවත් කරන්නද?"
@@ -2021,7 +2113,7 @@ msgstr "reset"
 msgid "Reset all settings to default values"
 msgstr "සියලු සැකසුම් පෙරනිමි අගයන් වෙත reset කරන්න"
 
-#: src/features/requests/components/conflict-list.tsx:37
+#: src/features/requests/components/conflict-list.tsx:40
 msgid "Resolve these conflicts manually before merging."
 msgstr "ඒකාබද්ධ කිරීමට පෙර මෙම ගැටුම් අතින් විසඳන්න."
 
@@ -2042,7 +2134,7 @@ msgstr "පේළි"
 msgid "Rows group by"
 msgstr "පේළි කාණ්ඩගත කරන්නේ"
 
-#: ../../../lib/web/src/components/data-table/pagination.tsx:63
+#: ../../../lib/web/src/components/data-table/pagination.tsx:65
 msgid "Rows per page"
 msgstr "පිටුවකට පේළි"
 
@@ -2175,7 +2267,16 @@ msgstr "theme මනාපය තෝරන්න"
 msgid "Select..."
 msgstr "තෝරන්න..."
 
-#: ../../../lib/web/src/features/accounts/account-verify.tsx:98
+#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:216
+msgid "selected"
+msgstr "තෝරාගත්"
+
+#. placeholder {0}: getSelectedName()
+#: ../../../lib/web/src/features/access/access-dialog.tsx:309
+msgid "Selected: <0>{0}</0>"
+msgstr "තෝරාගත්: <0>{0}</0>"
+
+#: ../../../lib/web/src/features/accounts/account-verify.tsx:100
 msgid "Send again"
 msgstr "නැවත යවන්න"
 
@@ -2351,6 +2452,7 @@ msgid "Switch to view 1-9"
 msgstr "දර්ශනය 1-9 වෙත මාරු වන්න"
 
 #: ../../../lib/web/src/components/config-drawer.tsx:208
+#: ../../../lib/web/src/components/theme-switch.tsx:59
 #: ../../../lib/web/src/lib/preference-utils.ts:21
 #: ../../../lib/web/src/lib/preference-utils.ts:144
 msgid "System"
@@ -2390,6 +2492,10 @@ msgstr "එම කේතය වැරදියි හෝ කල් ඉකුත�
 msgid "The requested content could not be found."
 msgstr "ඉල්ලූ අන්තර්ගතය සොයාගත නොහැකි විය."
 
+#: ../../../lib/web/src/features/errors/maintenance-error.tsx:15
+msgid "The site is not available at the moment."
+msgstr "අඩවිය මේ මොහොතේ ලබා ගත නොහැක."
+
 #: ../../../lib/web/src/components/config-drawer.tsx:194
 msgid "Theme"
 msgstr "theme"
@@ -2406,6 +2512,10 @@ msgstr "මෙම ඒකාබද්ධ කිරීමේ ඉල්ලීම {0
 #: src/features/requests/components/request-panel.tsx:351
 msgid "This merge request is a draft and cannot be merged."
 msgstr "මෙම merge ඉල්ලීම කෙටුම්පතක් වන අතර merge කළ නොහැක."
+
+#: ../../../lib/web/src/components/coming-soon.tsx:14
+msgid "This page has not been created yet."
+msgstr "මෙම පිටුව තවම සාදා නැත."
 
 #: src/routes/_authenticated/$projectId_.settings.tsx:210
 msgid "This project could not be loaded right now."
@@ -2445,6 +2555,10 @@ msgstr "මාතෘකාව"
 #: src/features/editor/components/edit-dialogs.tsx:764
 msgid "Title field"
 msgstr "මාතෘකා ක්ෂේත්‍රය"
+
+#: ../../../lib/web/src/components/travelling-picker.tsx:220
+msgid "To"
+msgstr "වෙත"
 
 #: ../../../lib/web/src/components/data-table/view-options.tsx:37
 msgid "Toggle columns"
@@ -2619,7 +2733,7 @@ msgstr "{0}-1, {1}-2 වැනි කියවිය හැකි IDs සඳහ�
 msgid "User"
 msgstr "පරිශීලකයා"
 
-#: ../../../lib/web/src/features/accounts/account-verify.tsx:71
+#: ../../../lib/web/src/features/accounts/account-verify.tsx:73
 msgid "Verification code"
 msgstr "සත්‍යාපන කේතය"
 
@@ -2633,7 +2747,7 @@ msgstr "සත්‍යාපනය අසාර්ථක විය"
 
 #: ../../../lib/web/src/components/step-up-dialog.tsx:388
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:172
-#: ../../../lib/web/src/features/accounts/account-verify.tsx:109
+#: ../../../lib/web/src/features/accounts/account-verify.tsx:111
 msgid "Verify"
 msgstr "සත්‍යාපනය කරන්න"
 
@@ -2645,6 +2759,11 @@ msgstr "ඊමේල් ලිපිනය සත්‍යාපනය කරන
 msgid "Video thumbnail"
 msgstr "වීඩියෝ සංක්ෂිප්ත රූපය"
 
+#. placeholder {0}: currentMedia.name
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:246
+msgid "Video viewer: {0}"
+msgstr "වීඩියෝ දර්ශකය: {0}"
+
 #: ../../../lib/web/src/components/data-table/view-options.tsx:33
 msgid "View"
 msgstr "බලන්න"
@@ -2653,8 +2772,8 @@ msgstr "බලන්න"
 msgid "View all"
 msgstr "සියල්ල බලන්න"
 
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:105
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:113
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:106
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:114
 msgid "View all notifications"
 msgstr "සියලුම දැනුම්දීම් බලන්න"
 
@@ -2695,6 +2814,11 @@ msgstr "නැරඹූ පමණි"
 msgid "We have auto-selected the best matching template."
 msgstr "වඩාත්ම ගැලපෙන සැකිල්ල ස්වයංක්‍රීයව තෝරා ඇත."
 
+#. placeholder {0}: account.identifier
+#: ../../../lib/web/src/features/accounts/account-verify.tsx:63
+msgid "We sent a verification code to <0>{0}</0>. Enter the code below to verify your email address."
+msgstr "අපි <0>{0}</0> වෙත සත්‍යාපන කේතයක් යැව්වා. ඔබේ ඊමේල් ලිපිනය සත්‍යාපනය කිරීමට පහත කේතය ඇතුළත් කරන්න."
+
 #: ../../../lib/web/src/features/errors/maintenance-error.tsx:16
 msgid "We'll be back online shortly."
 msgstr "අපි ඉක්මනින් online වන්නෙමු."
@@ -2714,6 +2838,10 @@ msgstr "ඔබට මෙම කොටසට ප්‍රවේශය නොම�
 #: src/routes/_authenticated/$projectId/index.tsx:109
 msgid "You don't have access to this project."
 msgstr "ඔබට මෙම ව්‍යාපෘතිය වෙත ප්‍රවේශය නැත."
+
+#: ../../../lib/web/src/features/errors/forbidden.tsx:18
+msgid "You don't have necessary permission <0/>to view this resource."
+msgstr "මෙම සම්පත බැලීමට <0/>ඔබට අවශ්‍ය අවසරය නොමැත."
 
 #: src/features/projects/pages/projects-list-page.tsx:98
 msgid "You have no projects yet."

@@ -6,7 +6,7 @@
 
 import { AlertTriangle, FileWarning } from "lucide-react";
 
-import { Trans } from '@lingui/react/macro'
+import { Trans, Plural } from '@lingui/react/macro'
 interface ConflictListProps {
   conflicts: string[];
 }
@@ -20,8 +20,11 @@ export function ConflictList({ conflicts }: ConflictListProps) {
     <div className="space-y-2">
       <div className="flex items-center gap-2 text-sm font-medium text-destructive">
         <AlertTriangle className="size-4" />
-        {conflicts.length} conflicting{" "}
-        {conflicts.length === 1 ? "file" : "files"}
+        <Plural
+          value={conflicts.length}
+          one="# conflicting file"
+          other="# conflicting files"
+        />
       </div>
       <div className="bg-destructive/10 border border-destructive/20 rounded-md p-3">
         <ul className="space-y-1.5">

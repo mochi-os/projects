@@ -18,6 +18,19 @@ msgstr ""
 msgid "Please check your internet connection and try again."
 msgstr "Zkontrolujte připojení k internetu a zkuste to znovu."
 
+#: src/features/objects/components/comment-thread.tsx:165
+msgid "(edited)"
+msgstr "(upraveno)"
+
+#: src/features/objects/components/comment-thread.tsx:149
+msgid "(expand)"
+msgstr "(rozbalit)"
+
+#. placeholder {0}: file.oldPath
+#: src/features/requests/components/diff-viewer.tsx:137
+msgid "(from {0})"
+msgstr "(z {0})"
+
 #: src/features/editor/components/edit-dialogs.tsx:813
 msgid "(itself)"
 msgstr "(sám sebe)"
@@ -25,6 +38,16 @@ msgstr "(sám sebe)"
 #: src/features/board/components/board-container.tsx:794
 msgid "[not set]"
 msgstr "[neuvedeno]"
+
+#. placeholder {0}: conflicts.length
+#: src/features/requests/components/conflict-list.tsx:23
+msgid "{0, plural, one {# conflicting file} other {# conflicting files}}"
+msgstr "{0, plural, one {# konfliktní soubor} few {# konfliktní soubory} other {# konfliktních souborů}}"
+
+#. placeholder {0}: selectedValues.size
+#: ../../../lib/web/src/components/data-table/faceted-filter.tsx:66
+msgid "{0, plural, one {# selected} other {# selected}}"
+msgstr "{0, plural, one {# vybráno} few {# vybráno} other {# vybráno}}"
 
 #. placeholder {0}: project.project.name
 #: src/routes/_authenticated/$projectId/design.tsx:64
@@ -49,14 +72,39 @@ msgstr "Změněno souborů: {0}"
 msgid "{0} settings"
 msgstr "Nastavení {0}"
 
+#: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:173
+msgid "{entityLabel} name"
+msgstr "Název {entityLabel}"
+
+#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:210
+msgid "{selectedCount, plural, one {{entityName} selected} other {{manyName} selected}}"
+msgstr "{selectedCount, plural, one {Vybráno {entityName}} few {Vybrány {manyName}} other {Vybráno {manyName}}}"
+
+#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:52
+msgid "{selectedCount, plural, one {# {entityName} selected. Bulk actions toolbar is available.} other {# {manyName} selected. Bulk actions toolbar is available.}}"
+msgstr "{selectedCount, plural, one {Vybrán # {entityName}. Panel hromadných akcí je k dispozici.} few {Vybrány # {manyName}. Panel hromadných akcí je k dispozici.} other {Vybráno # {manyName}. Panel hromadných akcí je k dispozici.}}"
+
+#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:202
+msgid "{selectedCount, plural, one {# selected} other {# selected}}"
+msgstr "{selectedCount, plural, one {# vybráno} few {# vybráno} other {# vybráno}}"
+
+#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:149
+msgid "{selectedCount, plural, one {Bulk actions for # selected {entityName}} other {Bulk actions for # selected {manyName}}}"
+msgstr "{selectedCount, plural, one {Hromadné akce pro # vybraný {entityName}} few {Hromadné akce pro # vybrané {manyName}} other {Hromadné akce pro # vybraných {manyName}}}"
+
 #: src/features/board/components/board-column.tsx:522
 msgid "{totalCount, plural, one {# item} other {# items}}"
-msgstr ""
+msgstr "{totalCount, plural, one {# položka} few {# položky} other {# položek}}"
 
 #. placeholder {0}: data.ahead
 #: src/features/requests/components/merge-status.tsx:76
 msgid "+{0} ahead"
 msgstr "+{0} napřed"
+
+#. placeholder {0}: countDeepChildren(object.id)
+#: src/features/board/components/board-card.tsx:355
+msgid "+{0} nested"
+msgstr "+{0} vnořených"
 
 #: src/features/objects/components/comment-thread.tsx:146
 msgid "+{totalDescendants} more replies"
@@ -321,9 +369,9 @@ msgstr "Dostupné klávesové zkratky"
 msgid "Back"
 msgstr "Zpět"
 
-#: ../../../lib/web/src/features/errors/forbidden.tsx:26
-#: ../../../lib/web/src/features/errors/not-found-error.tsx:26
-#: ../../../lib/web/src/features/errors/unauthorized-error.tsx:26
+#: ../../../lib/web/src/features/errors/forbidden.tsx:28
+#: ../../../lib/web/src/features/errors/not-found-error.tsx:28
+#: ../../../lib/web/src/features/errors/unauthorized-error.tsx:28
 msgid "Back to home"
 msgstr "Zpět na úvod"
 
@@ -378,7 +426,7 @@ msgstr "Může být potomkem"
 #: ../../../lib/web/src/features/access/access-dialog.tsx:328
 #: ../../../lib/web/src/features/access/access-list.tsx:263
 #: ../../../lib/web/src/features/accounts/account-add.tsx:188
-#: ../../../lib/web/src/features/accounts/account-verify.tsx:89
+#: ../../../lib/web/src/features/accounts/account-verify.tsx:91
 #: src/features/board/components/board-column.tsx:606
 #: src/features/editor/components/option-dialog.tsx:146
 #: src/features/objects/components/comment-thread.tsx:185
@@ -460,22 +508,23 @@ msgstr "Vymazat"
 msgid "Clear all"
 msgstr "Vymazat vše"
 
-#: ../../../lib/web/src/components/data-table/faceted-filter.tsx:140
+#: ../../../lib/web/src/components/data-table/faceted-filter.tsx:144
 msgid "Clear filters"
 msgstr "Vymazat filtry"
 
-#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:167
-#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:171
+#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:177
+#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:181
 msgid "Clear selection"
 msgstr "Zrušit výběr"
 
-#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:168
+#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:178
+#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:185
 msgid "Clear selection (Escape)"
 msgstr "Zrušit výběr (Escape)"
 
 #: ../../../lib/web/src/components/ui/dialog.tsx:78
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:354
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:357
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:358
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:361
 #: ../../../lib/web/src/components/ui/sheet.tsx:79
 #: src/features/objects/components/create-object-dialog.tsx:419
 #: src/features/objects/components/create-object-dialog.tsx:424
@@ -491,8 +540,8 @@ msgstr "Zavřít"
 msgid "Close dialog"
 msgstr "Zavřít dialog"
 
-#: ../../../lib/web/src/components/layout/app-sidebar.tsx:107
-#: ../../../lib/web/src/components/layout/app-sidebar.tsx:112
+#: ../../../lib/web/src/components/layout/app-sidebar.tsx:108
+#: ../../../lib/web/src/components/layout/app-sidebar.tsx:113
 msgid "Close navigation"
 msgstr "Zavřít navigaci"
 
@@ -657,6 +706,7 @@ msgid "Custom"
 msgstr "Vlastní"
 
 #: ../../../lib/web/src/components/config-drawer.tsx:218
+#: ../../../lib/web/src/components/theme-switch.tsx:52
 #: ../../../lib/web/src/lib/preference-utils.ts:20
 msgid "Dark"
 msgstr "Tmavá"
@@ -857,8 +907,8 @@ msgstr "Hotovo"
 msgid "Double click on a column to add content"
 msgstr "Dvakrát klikněte na sloupec pro přidání obsahu"
 
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:338
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:348
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:342
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:352
 #: src/features/objects/components/object-attachments.tsx:193
 msgid "Download"
 msgstr "Stáhnout"
@@ -1045,6 +1095,10 @@ msgstr "Import dat se nezdařil"
 msgid "Failed to import design"
 msgstr "Nepodařilo se importovat návrh"
 
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:263
+msgid "Failed to load image"
+msgstr "Obrázek se nepodařilo načíst"
+
 #: src/features/objects/components/object-detail-panel.tsx:344
 #: src/features/objects/components/object-detail-panel.tsx:347
 msgid "Failed to load item"
@@ -1062,6 +1116,10 @@ msgstr "Nepodařilo se načíst návrh projektu"
 #: src/stores/projects-store.ts:31
 msgid "Failed to load projects"
 msgstr "Nepodařilo se načíst projekty"
+
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:263
+msgid "Failed to load video"
+msgstr "Video se nepodařilo načíst"
 
 #: src/features/requests/components/merge-button.tsx:97
 msgid "Failed to merge"
@@ -1195,29 +1253,29 @@ msgstr "Z motivu"
 msgid "Full layout"
 msgstr "Plné rozvržení"
 
-#: ../../../lib/web/src/features/errors/forbidden.tsx:24
-#: ../../../lib/web/src/features/errors/not-found-error.tsx:24
-#: ../../../lib/web/src/features/errors/unauthorized-error.tsx:24
+#: ../../../lib/web/src/features/errors/forbidden.tsx:26
+#: ../../../lib/web/src/features/errors/not-found-error.tsx:26
+#: ../../../lib/web/src/features/errors/unauthorized-error.tsx:26
 msgid "Go back"
 msgstr "Zpět"
 
-#: ../../../lib/web/src/components/data-table/pagination.tsx:78
+#: ../../../lib/web/src/components/data-table/pagination.tsx:82
 msgid "Go to first page"
 msgstr "Přejít na první stránku"
 
-#: ../../../lib/web/src/components/data-table/pagination.tsx:124
+#: ../../../lib/web/src/components/data-table/pagination.tsx:128
 msgid "Go to last page"
 msgstr "Přejít na poslední stránku"
 
-#: ../../../lib/web/src/components/data-table/pagination.tsx:115
+#: ../../../lib/web/src/components/data-table/pagination.tsx:119
 msgid "Go to next page"
 msgstr "Přejít na další stránku"
 
-#: ../../../lib/web/src/components/data-table/pagination.tsx:102
+#: ../../../lib/web/src/components/data-table/pagination.tsx:106
 msgid "Go to page {pageNumber}"
 msgstr "Přejít na stránku {pageNumber}"
 
-#: ../../../lib/web/src/components/data-table/pagination.tsx:87
+#: ../../../lib/web/src/components/data-table/pagination.tsx:91
 msgid "Go to previous page"
 msgstr "Přejít na předchozí stránku"
 
@@ -1248,9 +1306,19 @@ msgstr "Domů"
 msgid "Hot"
 msgstr "Žhavé"
 
+#: src/features/editor/components/edit-dialogs.tsx:755
+#: src/features/editor/components/edit-dialogs.tsx:1075
+msgid "ID"
+msgstr "ID"
+
 #: src/routes/_authenticated/$projectId_.settings.tsx:297
 msgid "Identity"
 msgstr "Identita"
+
+#. placeholder {0}: currentMedia.name
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:247
+msgid "Image viewer: {0}"
+msgstr "Prohlížeč obrázků: {0}"
 
 #: ../../../lib/web/src/lib/preference-utils.ts:86
 msgid "Imperial"
@@ -1290,6 +1358,10 @@ msgstr "Neplatný JSON soubor"
 msgid "Invalid verification code"
 msgstr "Neplatný ověřovací kód"
 
+#: ../../../lib/web/src/features/errors/not-found-error.tsx:18
+msgid "It seems like the page you're looking for <0/>does not exist or might have been removed."
+msgstr "Zdá se, že stránka, kterou hledáte, <0/>neexistuje nebo byla odebrána."
+
 #: src/features/objects/components/object-detail-panel.tsx:424
 msgid "Item details"
 msgstr "Podrobnosti položky"
@@ -1318,6 +1390,7 @@ msgid "Left to Right"
 msgstr "Zleva doprava"
 
 #: ../../../lib/web/src/components/config-drawer.tsx:213
+#: ../../../lib/web/src/components/theme-switch.tsx:45
 #: ../../../lib/web/src/lib/preference-utils.ts:19
 msgid "Light"
 msgstr "Světlý"
@@ -1390,8 +1463,8 @@ msgstr "Odhlašování…"
 msgid "Manual"
 msgstr "Ručně"
 
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:92
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:99
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:93
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:100
 #: ../../../lib/web/src/components/notifications-dropdown.tsx:224
 msgid "Mark all as read"
 msgstr "Označit vše jako přečtené"
@@ -1495,8 +1568,8 @@ msgstr "Nový {className}"
 msgid "Next"
 msgstr "Další"
 
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:388
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:393
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:392
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:397
 msgid "Next image"
 msgstr "Další obrázek"
 
@@ -1582,7 +1655,7 @@ msgid "No repositories available"
 msgstr "Žádná repozitáře k dispozici"
 
 #: ../../../lib/web/src/components/command-menu.tsx:55
-#: ../../../lib/web/src/components/data-table/faceted-filter.tsx:90
+#: ../../../lib/web/src/components/data-table/faceted-filter.tsx:94
 msgid "No results found."
 msgstr "Žádné výsledky nenalezeny."
 
@@ -1655,6 +1728,11 @@ msgstr "Nic nenalezeno"
 #: ../../../lib/web/src/components/notifications-dropdown.tsx:261
 msgid "Notifications"
 msgstr "Oznámení"
+
+#. placeholder {0}: unread.length
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:86
+msgid "Notifications: {0}"
+msgstr "Oznámení: {0}"
 
 #: src/components/view-options-bar.tsx:42
 #: src/features/editor/components/add-dialogs.tsx:138
@@ -1756,6 +1834,11 @@ msgstr "Ostatní"
 msgid "Owner"
 msgstr "Vlastník"
 
+#: ../../../lib/web/src/components/data-table/pagination.tsx:43
+#: ../../../lib/web/src/components/data-table/pagination.tsx:71
+msgid "Page {currentPage} of {totalPages}"
+msgstr "Stránka {currentPage} z {totalPages}"
+
 #: src/features/objects/components/create-object-dialog.tsx:442
 #: src/features/objects/components/object-detail-panel.tsx:544
 msgid "Parent"
@@ -1787,6 +1870,10 @@ msgstr "Přidejte do designu projektu jednu nebo více tříd."
 msgid "Please check your internet connection and try again."
 msgstr "Zkontrolujte připojení k internetu a zkuste to znovu."
 
+#: ../../../lib/web/src/features/errors/unauthorized-error.tsx:18
+msgid "Please log in with the appropriate credentials <0/> to access this resource."
+msgstr "Přihlaste se prosím s příslušnými přihlašovacími údaji, <0/> abyste získali přístup k tomuto zdroji."
+
 #: src/features/projects/components/create-project-dialog.tsx:103
 msgid "Please select a template"
 msgstr "Vyberte šablonu"
@@ -1804,8 +1891,8 @@ msgstr "Chvíli počkejte a zkuste to znovu."
 msgid "Prefix"
 msgstr "Předpona"
 
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:373
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:378
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:377
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:382
 msgid "Previous image"
 msgstr "Předchozí obrázek"
 
@@ -1938,6 +2025,11 @@ msgstr "Odebrat"
 msgid "Remove access rule"
 msgstr "Odebrat pravidlo přístupu"
 
+#. placeholder {0}: formatSubject(subject, data.name)
+#: ../../../lib/web/src/features/access/access-list.tsx:259
+msgid "Remove access rule for \"{0}\"?"
+msgstr "Odebrat pravidlo přístupu pro „{0}“?"
+
 #: ../../../lib/web/src/features/access/access-list.tsx:257
 msgid "Remove access?"
 msgstr "Odebrat přístup?"
@@ -2021,7 +2113,7 @@ msgstr "Resetovat"
 msgid "Reset all settings to default values"
 msgstr "Obnovit všechna nastavení na výchozí hodnoty"
 
-#: src/features/requests/components/conflict-list.tsx:37
+#: src/features/requests/components/conflict-list.tsx:40
 msgid "Resolve these conflicts manually before merging."
 msgstr "Před sloučením vyřešte tyto konflikty ručně."
 
@@ -2042,7 +2134,7 @@ msgstr "Řádky"
 msgid "Rows group by"
 msgstr "Seskupit řádky podle"
 
-#: ../../../lib/web/src/components/data-table/pagination.tsx:63
+#: ../../../lib/web/src/components/data-table/pagination.tsx:65
 msgid "Rows per page"
 msgstr "Řádků na stránku"
 
@@ -2175,7 +2267,16 @@ msgstr "Vyberte preferenci motivu"
 msgid "Select..."
 msgstr "Vyberte..."
 
-#: ../../../lib/web/src/features/accounts/account-verify.tsx:98
+#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:216
+msgid "selected"
+msgstr "vybráno"
+
+#. placeholder {0}: getSelectedName()
+#: ../../../lib/web/src/features/access/access-dialog.tsx:309
+msgid "Selected: <0>{0}</0>"
+msgstr "Vybráno: <0>{0}</0>"
+
+#: ../../../lib/web/src/features/accounts/account-verify.tsx:100
 msgid "Send again"
 msgstr "Odeslat znovu"
 
@@ -2351,6 +2452,7 @@ msgid "Switch to view 1-9"
 msgstr "Přepnout na zobrazení 1-9"
 
 #: ../../../lib/web/src/components/config-drawer.tsx:208
+#: ../../../lib/web/src/components/theme-switch.tsx:59
 #: ../../../lib/web/src/lib/preference-utils.ts:21
 #: ../../../lib/web/src/lib/preference-utils.ts:144
 msgid "System"
@@ -2390,6 +2492,10 @@ msgstr "Tento kód je nesprávný nebo vypršela jeho platnost."
 msgid "The requested content could not be found."
 msgstr "Požadovaný obsah se nepodařilo najít."
 
+#: ../../../lib/web/src/features/errors/maintenance-error.tsx:15
+msgid "The site is not available at the moment."
+msgstr "Web momentálně není dostupný."
+
 #: ../../../lib/web/src/components/config-drawer.tsx:194
 msgid "Theme"
 msgstr "Motiv"
@@ -2406,6 +2512,10 @@ msgstr "Tato žádost o sloučení byla sloučena do {0}."
 #: src/features/requests/components/request-panel.tsx:351
 msgid "This merge request is a draft and cannot be merged."
 msgstr "Tato žádost o sloučení je konceptem a nelze ji sloučit."
+
+#: ../../../lib/web/src/components/coming-soon.tsx:14
+msgid "This page has not been created yet."
+msgstr "Tato stránka zatím nebyla vytvořena."
 
 #: src/routes/_authenticated/$projectId_.settings.tsx:210
 msgid "This project could not be loaded right now."
@@ -2445,6 +2555,10 @@ msgstr "Název"
 #: src/features/editor/components/edit-dialogs.tsx:764
 msgid "Title field"
 msgstr "Pole názvu"
+
+#: ../../../lib/web/src/components/travelling-picker.tsx:220
+msgid "To"
+msgstr "Kam"
 
 #: ../../../lib/web/src/components/data-table/view-options.tsx:37
 msgid "Toggle columns"
@@ -2619,7 +2733,7 @@ msgstr "Používá se pro čitelná ID jako {0}-1, {1}-2"
 msgid "User"
 msgstr "Uživatel"
 
-#: ../../../lib/web/src/features/accounts/account-verify.tsx:71
+#: ../../../lib/web/src/features/accounts/account-verify.tsx:73
 msgid "Verification code"
 msgstr "Ověřovací kód"
 
@@ -2633,7 +2747,7 @@ msgstr "Ověření selhalo"
 
 #: ../../../lib/web/src/components/step-up-dialog.tsx:388
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:172
-#: ../../../lib/web/src/features/accounts/account-verify.tsx:109
+#: ../../../lib/web/src/features/accounts/account-verify.tsx:111
 msgid "Verify"
 msgstr "Ověřit"
 
@@ -2645,6 +2759,11 @@ msgstr "Ověřit e-mailovou adresu"
 msgid "Video thumbnail"
 msgstr "Náhled videa"
 
+#. placeholder {0}: currentMedia.name
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:246
+msgid "Video viewer: {0}"
+msgstr "Přehrávač videa: {0}"
+
 #: ../../../lib/web/src/components/data-table/view-options.tsx:33
 msgid "View"
 msgstr "Zobrazit"
@@ -2653,8 +2772,8 @@ msgstr "Zobrazit"
 msgid "View all"
 msgstr "Zobrazit vše"
 
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:105
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:113
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:106
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:114
 msgid "View all notifications"
 msgstr "Zobrazit všechna oznámení"
 
@@ -2695,6 +2814,11 @@ msgstr "Pouze sledované"
 msgid "We have auto-selected the best matching template."
 msgstr "Automaticky jsme vybrali nejvhodnější šablonu."
 
+#. placeholder {0}: account.identifier
+#: ../../../lib/web/src/features/accounts/account-verify.tsx:63
+msgid "We sent a verification code to <0>{0}</0>. Enter the code below to verify your email address."
+msgstr "Ověřovací kód jsme odeslali na <0>{0}</0>. Zadejte kód níže pro ověření vaší e-mailové adresy."
+
 #: ../../../lib/web/src/features/errors/maintenance-error.tsx:16
 msgid "We'll be back online shortly."
 msgstr "Brzy budeme zpět online."
@@ -2714,6 +2838,10 @@ msgstr "K této sekci nemáte přístup."
 #: src/routes/_authenticated/$projectId/index.tsx:109
 msgid "You don't have access to this project."
 msgstr "K tomuto projektu nemáte přístup."
+
+#: ../../../lib/web/src/features/errors/forbidden.tsx:18
+msgid "You don't have necessary permission <0/>to view this resource."
+msgstr "Nemáte potřebné oprávnění <0/>k zobrazení tohoto zdroje."
 
 #: src/features/projects/pages/projects-list-page.tsx:98
 msgid "You have no projects yet."

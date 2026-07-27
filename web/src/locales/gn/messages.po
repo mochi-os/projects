@@ -18,6 +18,19 @@ msgstr ""
 msgid "Please check your internet connection and try again."
 msgstr "Ehechami nde internet conexión ha eha'ã jey."
 
+#: src/features/objects/components/comment-thread.tsx:165
+msgid "(edited)"
+msgstr "(oñembojeguáva)"
+
+#: src/features/objects/components/comment-thread.tsx:149
+msgid "(expand)"
+msgstr "(emyenyhẽ)"
+
+#. placeholder {0}: file.oldPath
+#: src/features/requests/components/diff-viewer.tsx:137
+msgid "(from {0})"
+msgstr "({0} guive)"
+
 #: src/features/editor/components/edit-dialogs.tsx:813
 msgid "(itself)"
 msgstr "(ha'e voi)"
@@ -25,6 +38,16 @@ msgstr "(ha'e voi)"
 #: src/features/board/components/board-container.tsx:794
 msgid "[not set]"
 msgstr "[noñemoĩva]"
+
+#. placeholder {0}: conflicts.length
+#: src/features/requests/components/conflict-list.tsx:23
+msgid "{0, plural, one {# conflicting file} other {# conflicting files}}"
+msgstr "{0, plural, one {# marandu joavy} other {# marandu joavy}}"
+
+#. placeholder {0}: selectedValues.size
+#: ../../../lib/web/src/components/data-table/faceted-filter.tsx:66
+msgid "{0, plural, one {# selected} other {# selected}}"
+msgstr "{0, plural, one {# poravopyre} other {# poravopyre}}"
 
 #. placeholder {0}: project.project.name
 #: src/routes/_authenticated/$projectId/design.tsx:64
@@ -49,14 +72,39 @@ msgstr "{0} archivos oñemoambue"
 msgid "{0} settings"
 msgstr "{0} ñemboheko"
 
+#: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:173
+msgid "{entityLabel} name"
+msgstr "{entityLabel} réra"
+
+#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:210
+msgid "{selectedCount, plural, one {{entityName} selected} other {{manyName} selected}}"
+msgstr "{selectedCount, plural, one {{entityName} poravopyre} other {{manyName} poravopyre}}"
+
+#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:52
+msgid "{selectedCount, plural, one {# {entityName} selected. Bulk actions toolbar is available.} other {# {manyName} selected. Bulk actions toolbar is available.}}"
+msgstr "{selectedCount, plural, one {# {entityName} poravopyre. Tembiapo hetáva rendápe oĩ.} other {# {manyName} poravopyre. Tembiapo hetáva rendápe oĩ.}}"
+
+#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:202
+msgid "{selectedCount, plural, one {# selected} other {# selected}}"
+msgstr "{selectedCount, plural, one {# poravopyre} other {# poravopyre}}"
+
+#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:149
+msgid "{selectedCount, plural, one {Bulk actions for # selected {entityName}} other {Bulk actions for # selected {manyName}}}"
+msgstr "{selectedCount, plural, one {Tembiapo hetáva # {entityName} poravopyre} other {Tembiapo hetáva # {manyName} poravopyre}}"
+
 #: src/features/board/components/board-column.tsx:522
 msgid "{totalCount, plural, one {# item} other {# items}}"
-msgstr ""
+msgstr "{totalCount, plural, one {# mba'e} other {# mba'e}}"
 
 #. placeholder {0}: data.ahead
 #: src/features/requests/components/merge-status.tsx:76
 msgid "+{0} ahead"
 msgstr "+{0} tenonde"
+
+#. placeholder {0}: countDeepChildren(object.id)
+#: src/features/board/components/board-card.tsx:355
+msgid "+{0} nested"
+msgstr "+{0} oñemboheáva"
 
 #: src/features/objects/components/comment-thread.tsx:146
 msgid "+{totalDescendants} more replies"
@@ -321,9 +369,9 @@ msgstr "Teclado atajo oĩva"
 msgid "Back"
 msgstr "Tapykuépe"
 
-#: ../../../lib/web/src/features/errors/forbidden.tsx:26
-#: ../../../lib/web/src/features/errors/not-found-error.tsx:26
-#: ../../../lib/web/src/features/errors/unauthorized-error.tsx:26
+#: ../../../lib/web/src/features/errors/forbidden.tsx:28
+#: ../../../lib/web/src/features/errors/not-found-error.tsx:28
+#: ../../../lib/web/src/features/errors/unauthorized-error.tsx:28
 msgid "Back to home"
 msgstr "Eju jey ógape"
 
@@ -378,7 +426,7 @@ msgstr "Ikatu ta'ýra"
 #: ../../../lib/web/src/features/access/access-dialog.tsx:328
 #: ../../../lib/web/src/features/access/access-list.tsx:263
 #: ../../../lib/web/src/features/accounts/account-add.tsx:188
-#: ../../../lib/web/src/features/accounts/account-verify.tsx:89
+#: ../../../lib/web/src/features/accounts/account-verify.tsx:91
 #: src/features/board/components/board-column.tsx:606
 #: src/features/editor/components/option-dialog.tsx:146
 #: src/features/objects/components/comment-thread.tsx:185
@@ -460,22 +508,23 @@ msgstr "Embopotĩ"
 msgid "Clear all"
 msgstr "Embopotĩ opaite"
 
-#: ../../../lib/web/src/components/data-table/faceted-filter.tsx:140
+#: ../../../lib/web/src/components/data-table/faceted-filter.tsx:144
 msgid "Clear filters"
 msgstr "Embopotĩ filtro"
 
-#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:167
-#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:171
+#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:177
+#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:181
 msgid "Clear selection"
 msgstr "Embopotĩ ñemboheka"
 
-#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:168
+#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:178
+#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:185
 msgid "Clear selection (Escape)"
 msgstr "Embopotĩ ñemboheka (Escape)"
 
 #: ../../../lib/web/src/components/ui/dialog.tsx:78
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:354
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:357
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:358
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:361
 #: ../../../lib/web/src/components/ui/sheet.tsx:79
 #: src/features/objects/components/create-object-dialog.tsx:419
 #: src/features/objects/components/create-object-dialog.tsx:424
@@ -491,8 +540,8 @@ msgstr "Mboty"
 msgid "Close dialog"
 msgstr "Mboty diálogo"
 
-#: ../../../lib/web/src/components/layout/app-sidebar.tsx:107
-#: ../../../lib/web/src/components/layout/app-sidebar.tsx:112
+#: ../../../lib/web/src/components/layout/app-sidebar.tsx:108
+#: ../../../lib/web/src/components/layout/app-sidebar.tsx:113
 msgid "Close navigation"
 msgstr "Mboty navegación"
 
@@ -657,6 +706,7 @@ msgid "Custom"
 msgstr "Ñemomba'e"
 
 #: ../../../lib/web/src/components/config-drawer.tsx:218
+#: ../../../lib/web/src/components/theme-switch.tsx:52
 #: ../../../lib/web/src/lib/preference-utils.ts:20
 msgid "Dark"
 msgstr "Yvotypaha"
@@ -857,8 +907,8 @@ msgstr "Apopyre"
 msgid "Double click on a column to add content"
 msgstr "Eikutu mokõi jey peteĩ columna-pe emoĩ haguã contenido"
 
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:338
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:348
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:342
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:352
 #: src/features/objects/components/object-attachments.tsx:193
 msgid "Download"
 msgstr "Emboguejy"
@@ -1045,6 +1095,10 @@ msgstr "Ndaikatúi oñembojuaju datos"
 msgid "Failed to import design"
 msgstr "Ndaikatúi oñembojuaju diseño"
 
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:263
+msgid "Failed to load image"
+msgstr "Ndaikatúi omyanyhẽ ta'anga"
+
 #: src/features/objects/components/object-detail-panel.tsx:344
 #: src/features/objects/components/object-detail-panel.tsx:347
 msgid "Failed to load item"
@@ -1062,6 +1116,10 @@ msgstr "Ndaikatúi oñembogue proyecto diseño"
 #: src/stores/projects-store.ts:31
 msgid "Failed to load projects"
 msgstr "Ndaikatúi oñembogue proyectokuéra"
+
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:263
+msgid "Failed to load video"
+msgstr "Ndaikatúi omyanyhẽ video"
 
 #: src/features/requests/components/merge-button.tsx:97
 msgid "Failed to merge"
@@ -1195,29 +1253,29 @@ msgstr "Téma guive"
 msgid "Full layout"
 msgstr "Layout iguasúva"
 
-#: ../../../lib/web/src/features/errors/forbidden.tsx:24
-#: ../../../lib/web/src/features/errors/not-found-error.tsx:24
-#: ../../../lib/web/src/features/errors/unauthorized-error.tsx:24
+#: ../../../lib/web/src/features/errors/forbidden.tsx:26
+#: ../../../lib/web/src/features/errors/not-found-error.tsx:26
+#: ../../../lib/web/src/features/errors/unauthorized-error.tsx:26
 msgid "Go back"
 msgstr "Tereje jey"
 
-#: ../../../lib/web/src/components/data-table/pagination.tsx:78
+#: ../../../lib/web/src/components/data-table/pagination.tsx:82
 msgid "Go to first page"
 msgstr "Tenondegua kuatiaroguépe"
 
-#: ../../../lib/web/src/components/data-table/pagination.tsx:124
+#: ../../../lib/web/src/components/data-table/pagination.tsx:128
 msgid "Go to last page"
 msgstr "Pahague kuatiaroguépe"
 
-#: ../../../lib/web/src/components/data-table/pagination.tsx:115
+#: ../../../lib/web/src/components/data-table/pagination.tsx:119
 msgid "Go to next page"
 msgstr "Tenondegua kuatiaroguépe"
 
-#: ../../../lib/web/src/components/data-table/pagination.tsx:102
+#: ../../../lib/web/src/components/data-table/pagination.tsx:106
 msgid "Go to page {pageNumber}"
 msgstr "Tereho kuatiarogue {pageNumber}-pe"
 
-#: ../../../lib/web/src/components/data-table/pagination.tsx:87
+#: ../../../lib/web/src/components/data-table/pagination.tsx:91
 msgid "Go to previous page"
 msgstr "Mboyvegua kuatiaroguépe"
 
@@ -1248,9 +1306,19 @@ msgstr "Óga"
 msgid "Hot"
 msgstr "Akúva"
 
+#: src/features/editor/components/edit-dialogs.tsx:755
+#: src/features/editor/components/edit-dialogs.tsx:1075
+msgid "ID"
+msgstr "ID"
+
 #: src/routes/_authenticated/$projectId_.settings.tsx:297
 msgid "Identity"
 msgstr "Identidad"
+
+#. placeholder {0}: currentMedia.name
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:247
+msgid "Image viewer: {0}"
+msgstr "Ta'anga jehecha: {0}"
 
 #: ../../../lib/web/src/lib/preference-utils.ts:86
 msgid "Imperial"
@@ -1290,6 +1358,10 @@ msgstr "Archivo JSON ndoikóiva"
 msgid "Invalid verification code"
 msgstr "Verificación código ndoikóiva"
 
+#: ../../../lib/web/src/features/errors/not-found-error.tsx:18
+msgid "It seems like the page you're looking for <0/>does not exist or might have been removed."
+msgstr "Ojehecha pe kuatiarogue rehekáva <0/>ndaipóri térã oñemboguéma."
+
 #: src/features/objects/components/object-detail-panel.tsx:424
 msgid "Item details"
 msgstr "Artículo detalles"
@@ -1318,6 +1390,7 @@ msgid "Left to Right"
 msgstr "Asu gotyo Akatúa peve"
 
 #: ../../../lib/web/src/components/config-drawer.tsx:213
+#: ../../../lib/web/src/components/theme-switch.tsx:45
 #: ../../../lib/web/src/lib/preference-utils.ts:19
 msgid "Light"
 msgstr "Hesakã"
@@ -1390,8 +1463,8 @@ msgstr "Osẽhína…"
 msgid "Manual"
 msgstr "Manual"
 
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:92
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:99
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:93
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:100
 #: ../../../lib/web/src/components/notifications-dropdown.tsx:224
 msgid "Mark all as read"
 msgstr "Ehecha pyre opavave"
@@ -1495,8 +1568,8 @@ msgstr "{className} pyahu"
 msgid "Next"
 msgstr "Tenondeve"
 
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:388
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:393
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:392
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:397
 msgid "Next image"
 msgstr "Ta'anga oseguíva"
 
@@ -1582,7 +1655,7 @@ msgid "No repositories available"
 msgstr "Ndaipóri repositorios oĩva"
 
 #: ../../../lib/web/src/components/command-menu.tsx:55
-#: ../../../lib/web/src/components/data-table/faceted-filter.tsx:90
+#: ../../../lib/web/src/components/data-table/faceted-filter.tsx:94
 msgid "No results found."
 msgstr "Ndojejuhúi resultados."
 
@@ -1655,6 +1728,11 @@ msgstr "Ndojejuhúi mba'eve"
 #: ../../../lib/web/src/components/notifications-dropdown.tsx:261
 msgid "Notifications"
 msgstr "Ñehenói"
+
+#. placeholder {0}: unread.length
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:86
+msgid "Notifications: {0}"
+msgstr "Marandu: {0}"
 
 #: src/components/view-options-bar.tsx:42
 #: src/features/editor/components/add-dialogs.tsx:138
@@ -1756,6 +1834,11 @@ msgstr "Ambue"
 msgid "Owner"
 msgstr "Mburuvicha"
 
+#: ../../../lib/web/src/components/data-table/pagination.tsx:43
+#: ../../../lib/web/src/components/data-table/pagination.tsx:71
+msgid "Page {currentPage} of {totalPages}"
+msgstr "Kuatiarogue {currentPage} / {totalPages}"
+
 #: src/features/objects/components/create-object-dialog.tsx:442
 #: src/features/objects/components/object-detail-panel.tsx:544
 msgid "Parent"
@@ -1787,6 +1870,10 @@ msgstr "Embojuajumi peteĩ térã hetave clases mba'apo diseñope."
 msgid "Please check your internet connection and try again."
 msgstr "Ehechami nde internet conexión ha eha'ã jey."
 
+#: ../../../lib/web/src/features/errors/unauthorized-error.tsx:18
+msgid "Please log in with the appropriate credentials <0/> to access this resource."
+msgstr "Eike ehecha hag̃ua ko mba'e <0/> kuatia'atã hekopeguáva reheve."
+
 #: src/features/projects/components/create-project-dialog.tsx:103
 msgid "Please select a template"
 msgstr "Eporavo template"
@@ -1804,8 +1891,8 @@ msgstr "Eha'arõmi sapy'aite ha eha'ã jey."
 msgid "Prefix"
 msgstr "Prefijo"
 
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:373
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:378
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:377
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:382
 msgid "Previous image"
 msgstr "Ta'anga tenondete"
 
@@ -1938,6 +2025,11 @@ msgstr "Embogue"
 msgid "Remove access rule"
 msgstr "Embogue acceso regla"
 
+#. placeholder {0}: formatSubject(subject, data.name)
+#: ../../../lib/web/src/features/access/access-list.tsx:259
+msgid "Remove access rule for \"{0}\"?"
+msgstr "¿Emboguéta jeike rembiapoukapy \"{0}\" peg̃uarã?"
+
 #: ../../../lib/web/src/features/access/access-list.tsx:257
 msgid "Remove access?"
 msgstr "Embogue acceso?"
@@ -2021,7 +2113,7 @@ msgstr "Embojevy"
 msgid "Reset all settings to default values"
 msgstr "Embojevy opa ñembosako'i ypy peguávape"
 
-#: src/features/requests/components/conflict-list.tsx:37
+#: src/features/requests/components/conflict-list.tsx:40
 msgid "Resolve these conflicts manually before merging."
 msgstr "Embohovái ko'ã apañuãi añónte merge mboyve."
 
@@ -2042,7 +2134,7 @@ msgstr "Rows"
 msgid "Rows group by"
 msgstr "Rows oñembyaty rehe"
 
-#: ../../../lib/web/src/components/data-table/pagination.tsx:63
+#: ../../../lib/web/src/components/data-table/pagination.tsx:65
 msgid "Rows per page"
 msgstr "Rows kuatiaroguépe"
 
@@ -2175,7 +2267,16 @@ msgstr "Eiporavo theme jeporavo"
 msgid "Select..."
 msgstr "Eiporavo..."
 
-#: ../../../lib/web/src/features/accounts/account-verify.tsx:98
+#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:216
+msgid "selected"
+msgstr "poravopyre"
+
+#. placeholder {0}: getSelectedName()
+#: ../../../lib/web/src/features/access/access-dialog.tsx:309
+msgid "Selected: <0>{0}</0>"
+msgstr "Poravopyre: <0>{0}</0>"
+
+#: ../../../lib/web/src/features/accounts/account-verify.tsx:100
 msgid "Send again"
 msgstr "Emondo jey"
 
@@ -2351,6 +2452,7 @@ msgid "Switch to view 1-9"
 msgstr "Eike vista 1-9"
 
 #: ../../../lib/web/src/components/config-drawer.tsx:208
+#: ../../../lib/web/src/components/theme-switch.tsx:59
 #: ../../../lib/web/src/lib/preference-utils.ts:21
 #: ../../../lib/web/src/lib/preference-utils.ts:144
 msgid "System"
@@ -2390,6 +2492,10 @@ msgstr "Upe código ndoikoporãi térã hiʼaravoʼimáma."
 msgid "The requested content could not be found."
 msgstr "Ndaikatúi ojejuhu tetepy ojejeruréva."
 
+#: ../../../lib/web/src/features/errors/maintenance-error.tsx:15
+msgid "The site is not available at the moment."
+msgstr "Ko tenda ndaipóri ko'ág̃a."
+
 #: ../../../lib/web/src/components/config-drawer.tsx:194
 msgid "Theme"
 msgstr "Theme"
@@ -2406,6 +2512,10 @@ msgstr "Ko merge request ojepoíma {0}-pe."
 #: src/features/requests/components/request-panel.tsx:351
 msgid "This merge request is a draft and cannot be merged."
 msgstr "Ko merge request ha'e borrador ha ndaikatúi ojepoi."
+
+#: ../../../lib/web/src/components/coming-soon.tsx:14
+msgid "This page has not been created yet."
+msgstr "Ko kuatiarogue ndojejapói gueteri."
 
 #: src/routes/_authenticated/$projectId_.settings.tsx:210
 msgid "This project could not be loaded right now."
@@ -2445,6 +2555,10 @@ msgstr "Téra"
 #: src/features/editor/components/edit-dialogs.tsx:764
 msgid "Title field"
 msgstr "Téra rogue"
+
+#: ../../../lib/web/src/components/travelling-picker.tsx:220
+msgid "To"
+msgstr "Peve"
 
 #: ../../../lib/web/src/components/data-table/view-options.tsx:37
 msgid "Toggle columns"
@@ -2619,7 +2733,7 @@ msgstr "Oiporu ID jeleeha pe g̃uarã, techapyrã {0}-1, {1}-2"
 msgid "User"
 msgstr "Mboapurevahára"
 
-#: ../../../lib/web/src/features/accounts/account-verify.tsx:71
+#: ../../../lib/web/src/features/accounts/account-verify.tsx:73
 msgid "Verification code"
 msgstr "Verificación código"
 
@@ -2633,7 +2747,7 @@ msgstr "Verificación ndoiporãi"
 
 #: ../../../lib/web/src/components/step-up-dialog.tsx:388
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:172
-#: ../../../lib/web/src/features/accounts/account-verify.tsx:109
+#: ../../../lib/web/src/features/accounts/account-verify.tsx:111
 msgid "Verify"
 msgstr "Ehesa'ỹijo"
 
@@ -2645,6 +2759,11 @@ msgstr "Ehesa'ỹijo email tape"
 msgid "Video thumbnail"
 msgstr "Video ta'ãnga'i"
 
+#. placeholder {0}: currentMedia.name
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:246
+msgid "Video viewer: {0}"
+msgstr "Video jehecha: {0}"
+
 #: ../../../lib/web/src/components/data-table/view-options.tsx:33
 msgid "View"
 msgstr "Ehecha"
@@ -2653,8 +2772,8 @@ msgstr "Ehecha"
 msgid "View all"
 msgstr "Ehecha opa"
 
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:105
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:113
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:106
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:114
 msgid "View all notifications"
 msgstr "Ehecha opa marandu"
 
@@ -2695,6 +2814,11 @@ msgstr "Ojehechapyre mante"
 msgid "We have auto-selected the best matching template."
 msgstr "Oñeporavo ijehegui template ojojáva porãvéva."
 
+#. placeholder {0}: account.identifier
+#: ../../../lib/web/src/features/accounts/account-verify.tsx:63
+msgid "We sent a verification code to <0>{0}</0>. Enter the code below to verify your email address."
+msgstr "Romondo peteĩ código jehechajeýva <0>{0}</0> peg̃uarã. Emoinge código kóva guýpe ne correo emoañete hag̃ua."
+
 #: ../../../lib/web/src/features/errors/maintenance-error.tsx:16
 msgid "We'll be back online shortly."
 msgstr "Roike jeýta línea-pe pya'e."
@@ -2714,6 +2838,10 @@ msgstr "Ndereguerekói jeike ko vorépe."
 #: src/routes/_authenticated/$projectId/index.tsx:109
 msgid "You don't have access to this project."
 msgstr "Nderejeikéi ko proyécto-pe."
+
+#: ../../../lib/web/src/features/errors/forbidden.tsx:18
+msgid "You don't have necessary permission <0/>to view this resource."
+msgstr "Nderehecháiva ko mba'e <0/>ndaipóri ne ñemoneĩ."
 
 #: src/features/projects/pages/projects-list-page.tsx:98
 msgid "You have no projects yet."

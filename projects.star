@@ -2492,7 +2492,7 @@ def action_object_get(a):
 
 	# Clear notifications for this object if watching
 	if watching:
-		mochi.service.call("notifications", "clear/object", "projects", object_id)
+		mochi.service.call("notifications", "clear/object", object_id)
 
 	# Get requests (merge requests etc.)
 	requests = mochi.db.rows("select id, object, type, repository, source, target, status, title, description, draft, created, updated from requests where object=?", object_id) or []

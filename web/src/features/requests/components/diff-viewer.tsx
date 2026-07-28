@@ -134,7 +134,7 @@ function FileHeader({
       <span className="truncate text-start flex-1">{file.path}</span>
       {file.oldPath && (
         <span className="text-muted-foreground text-xs font-sans shrink-0">
-          (from {file.oldPath})
+          <Trans>(from {file.oldPath})</Trans>
         </span>
       )}
       <span className="flex items-center gap-2 shrink-0 font-sans text-xs">

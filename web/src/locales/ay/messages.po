@@ -18,19 +18,42 @@ msgstr ""
 msgid "Please check your internet connection and try again."
 msgstr "Mira internet conexion ukat wasitat yant'asim."
 
+#: src/features/objects/components/comment-thread.tsx:165
+msgid "(edited)"
+msgstr "(askichata)"
+
+#: src/features/objects/components/comment-thread.tsx:149
+msgid "(expand)"
+msgstr "(jathiqaña)"
+
+#. placeholder {0}: file.oldPath
+#: src/features/requests/components/diff-viewer.tsx:137
+msgid "(from {0})"
+msgstr "({0} tuqita)"
+
 #: src/features/editor/components/edit-dialogs.tsx:813
 msgid "(itself)"
 msgstr "(pachpa)"
 
 #: src/features/board/components/board-container.tsx:794
 msgid "[not set]"
-msgstr "{domain} ukar mantaña"
+msgstr "[jan uskuta]"
+
+#. placeholder {0}: conflicts.length
+#: src/features/requests/components/conflict-list.tsx:23
+msgid "{0, plural, one {# conflicting file} other {# conflicting files}}"
+msgstr "{0, plural, one {# nuwasiri archivo} other {# nuwasiri archivonaka}}"
+
+#. placeholder {0}: selectedValues.size
+#: ../../../lib/web/src/components/data-table/faceted-filter.tsx:66
+msgid "{0, plural, one {# selected} other {# selected}}"
+msgstr "{0, plural, one {# tila qhipart'i} other {# tila qhipart'i}}"
 
 #. placeholder {0}: project.project.name
 #: src/routes/_authenticated/$projectId/design.tsx:64
 #: src/routes/_authenticated/$projectId/design.tsx:157
 msgid "{0} - Design"
-msgstr "{0} ukan {1}{2}, clic luram apaqañataki"
+msgstr "{0} - Diseño"
 
 #. placeholder {0}: data.behind
 #: src/features/requests/components/merge-status.tsx:77
@@ -47,12 +70,41 @@ msgstr "{0} recommendaciones ukar yapxatata."
 #: src/routes/_authenticated/$projectId_.settings.tsx:122
 #: src/routes/_authenticated/$projectId_.settings.tsx:222
 msgid "{0} settings"
-msgstr "{0} {1}-na tagiyata"
+msgstr "{0} wakichäwinaka"
+
+#: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:173
+msgid "{entityLabel} name"
+msgstr "{entityLabel} suti"
+
+#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:210
+msgid "{selectedCount, plural, one {{entityName} selected} other {{manyName} selected}}"
+msgstr "{selectedCount, plural, one {{entityName} ajllita} other {{manyName} ajllita}}"
+
+#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:52
+msgid "{selectedCount, plural, one {# {entityName} selected. Bulk actions toolbar is available.} other {# {manyName} selected. Bulk actions toolbar is available.}}"
+msgstr "{selectedCount, plural, one {# {entityName} ajllita. Luräwi barrax utjiwa.} other {# {manyName} ajllita. Luräwi barrax utjiwa.}}"
+
+#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:202
+msgid "{selectedCount, plural, one {# selected} other {# selected}}"
+msgstr "{selectedCount, plural, one {# ajllita} other {# ajllita}}"
+
+#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:149
+msgid "{selectedCount, plural, one {Bulk actions for # selected {entityName}} other {Bulk actions for # selected {manyName}}}"
+msgstr "{selectedCount, plural, one {# ajllita {entityName} taypi luräwinaka} other {# ajllita {manyName} taypi luräwinaka}}"
+
+#: src/features/board/components/board-column.tsx:522
+msgid "{totalCount, plural, one {# item} other {# items}}"
+msgstr "{totalCount, plural, one {# yänaka} other {# yänaka}}"
 
 #. placeholder {0}: data.ahead
 #: src/features/requests/components/merge-status.tsx:76
 msgid "+{0} ahead"
 msgstr "+{0} nayraqata"
+
+#. placeholder {0}: countDeepChildren(object.id)
+#: src/features/board/components/board-card.tsx:362
+msgid "+{0} nested"
+msgstr "+{0} manqhankiri"
 
 #: src/features/objects/components/comment-thread.tsx:146
 msgid "+{totalDescendants} more replies"
@@ -127,7 +179,7 @@ msgid "Activity"
 msgstr "Lurawi"
 
 #: ../../../lib/web/src/features/accounts/account-add.tsx:196
-#: src/features/objects/components/field-editor.tsx:647
+#: src/features/objects/components/field-editor.tsx:649
 #: src/features/requests/components/request-panel.tsx:103
 msgid "Add"
 msgstr "Yapxataña"
@@ -157,7 +209,7 @@ msgstr "Cuenta yapxataña"
 msgid "Add an account to receive notifications and use services."
 msgstr "Mä cuenta yapxataña yatiyawinaka katuqañataki ukat servicionaka apnaqañataki."
 
-#: src/features/objects/components/field-editor.tsx:617
+#: src/features/objects/components/field-editor.tsx:619
 msgid "Add checklist item"
 msgstr "Checklist itim yapxataña"
 
@@ -178,7 +230,7 @@ msgstr "Columna yapxataña"
 msgid "Add field"
 msgstr "Campo yapxataña"
 
-#: src/features/objects/components/field-editor.tsx:635
+#: src/features/objects/components/field-editor.tsx:637
 msgid "Add item..."
 msgstr "Itim yapxataña..."
 
@@ -317,9 +369,9 @@ msgstr "Utjir teclado shortcuts"
 msgid "Back"
 msgstr "Kutta"
 
-#: ../../../lib/web/src/features/errors/forbidden.tsx:26
-#: ../../../lib/web/src/features/errors/not-found-error.tsx:26
-#: ../../../lib/web/src/features/errors/unauthorized-error.tsx:26
+#: ../../../lib/web/src/features/errors/forbidden.tsx:28
+#: ../../../lib/web/src/features/errors/not-found-error.tsx:28
+#: ../../../lib/web/src/features/errors/unauthorized-error.tsx:28
 msgid "Back to home"
 msgstr "Utar kutiña"
 
@@ -338,7 +390,7 @@ msgstr "Proyectos-ru kutta"
 
 #: src/features/requests/components/diff-viewer.tsx:449
 msgid "Binary file not shown"
-msgstr ""
+msgstr "Archivo binario janiw uñacht'ayatakiti"
 
 #: src/features/objects/components/object-links.tsx:49
 #: src/features/objects/components/object-links.tsx:179
@@ -378,7 +430,7 @@ msgstr "Wawanjaspawa"
 #: ../../../lib/web/src/features/access/access-dialog.tsx:328
 #: ../../../lib/web/src/features/access/access-list.tsx:263
 #: ../../../lib/web/src/features/accounts/account-add.tsx:188
-#: ../../../lib/web/src/features/accounts/account-verify.tsx:89
+#: ../../../lib/web/src/features/accounts/account-verify.tsx:91
 #: src/features/board/components/board-column.tsx:606
 #: src/features/editor/components/option-dialog.tsx:146
 #: src/features/objects/components/comment-thread.tsx:185
@@ -460,22 +512,23 @@ msgstr "Q'umachaña"
 msgid "Clear all"
 msgstr "Taqpach q'umachaña"
 
-#: ../../../lib/web/src/components/data-table/faceted-filter.tsx:140
+#: ../../../lib/web/src/components/data-table/faceted-filter.tsx:144
 msgid "Clear filters"
 msgstr "Filtronak q'umachaña"
 
-#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:167
-#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:171
+#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:177
+#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:181
 msgid "Clear selection"
 msgstr "Ajllxawi q'umachaña"
 
-#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:168
+#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:178
+#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:185
 msgid "Clear selection (Escape)"
 msgstr "Ajllxawi q'umachaña (Escape)"
 
 #: ../../../lib/web/src/components/ui/dialog.tsx:78
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:354
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:357
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:358
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:361
 #: ../../../lib/web/src/components/ui/sheet.tsx:79
 #: src/features/objects/components/create-object-dialog.tsx:419
 #: src/features/objects/components/create-object-dialog.tsx:424
@@ -491,8 +544,8 @@ msgstr "Jist'antaña"
 msgid "Close dialog"
 msgstr "Dialogo jist'antaña"
 
-#: ../../../lib/web/src/components/layout/app-sidebar.tsx:107
-#: ../../../lib/web/src/components/layout/app-sidebar.tsx:112
+#: ../../../lib/web/src/components/layout/app-sidebar.tsx:108
+#: ../../../lib/web/src/components/layout/app-sidebar.tsx:113
 msgid "Close navigation"
 msgstr "Navegación jist'antaña"
 
@@ -657,6 +710,7 @@ msgid "Custom"
 msgstr "Sapa"
 
 #: ../../../lib/web/src/components/config-drawer.tsx:218
+#: ../../../lib/web/src/components/theme-switch.tsx:52
 #: ../../../lib/web/src/lib/preference-utils.ts:20
 msgid "Dark"
 msgstr "Ch'amaka"
@@ -857,8 +911,8 @@ msgstr "Tukuyata"
 msgid "Double click on a column to add content"
 msgstr "Mä columnaru paypach apnaqaña contenido yapxatañataki"
 
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:338
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:348
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:342
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:352
 #: src/features/objects/components/object-attachments.tsx:193
 msgid "Download"
 msgstr "Apaqaña"
@@ -1045,6 +1099,10 @@ msgstr "Janiw datonakax apantasiwayiti"
 msgid "Failed to import design"
 msgstr "Janiw diseño mantayaña atinkti"
 
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:263
+msgid "Failed to load image"
+msgstr "Jana uñacht'awi apsuñax janiw walikiti"
+
 #: src/features/objects/components/object-detail-panel.tsx:329
 #: src/features/objects/components/object-detail-panel.tsx:332
 msgid "Failed to load item"
@@ -1062,6 +1120,10 @@ msgstr "Janiw proyecto diseño apaqaña atinkti"
 #: src/stores/projects-store.ts:31
 msgid "Failed to load projects"
 msgstr "Janiw proyectonak apaqaña atinkti"
+
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:263
+msgid "Failed to load video"
+msgstr "Jana videox apsuñax janiw walikiti"
 
 #: src/features/requests/components/merge-button.tsx:97
 msgid "Failed to merge"
@@ -1195,29 +1257,29 @@ msgstr "Temata"
 msgid "Full layout"
 msgstr "Taqpach diseño"
 
-#: ../../../lib/web/src/features/errors/forbidden.tsx:24
-#: ../../../lib/web/src/features/errors/not-found-error.tsx:24
-#: ../../../lib/web/src/features/errors/unauthorized-error.tsx:24
+#: ../../../lib/web/src/features/errors/forbidden.tsx:26
+#: ../../../lib/web/src/features/errors/not-found-error.tsx:26
+#: ../../../lib/web/src/features/errors/unauthorized-error.tsx:26
 msgid "Go back"
 msgstr "Kutiña"
 
-#: ../../../lib/web/src/components/data-table/pagination.tsx:78
+#: ../../../lib/web/src/components/data-table/pagination.tsx:82
 msgid "Go to first page"
 msgstr "Nayrïr páginar saraña"
 
-#: ../../../lib/web/src/components/data-table/pagination.tsx:124
+#: ../../../lib/web/src/components/data-table/pagination.tsx:128
 msgid "Go to last page"
 msgstr "Qhipa páginar saraña"
 
-#: ../../../lib/web/src/components/data-table/pagination.tsx:115
+#: ../../../lib/web/src/components/data-table/pagination.tsx:119
 msgid "Go to next page"
 msgstr "Jutïr páginar saraña"
 
-#: ../../../lib/web/src/components/data-table/pagination.tsx:102
+#: ../../../lib/web/src/components/data-table/pagination.tsx:106
 msgid "Go to page {pageNumber}"
 msgstr "{pageNumber} jananakaru saraña"
 
-#: ../../../lib/web/src/components/data-table/pagination.tsx:87
+#: ../../../lib/web/src/components/data-table/pagination.tsx:91
 msgid "Go to previous page"
 msgstr "Nayraqat páginar saraña"
 
@@ -1248,9 +1310,19 @@ msgstr "Uta"
 msgid "Hot"
 msgstr "Junt'u"
 
+#: src/features/editor/components/edit-dialogs.tsx:755
+#: src/features/editor/components/edit-dialogs.tsx:1075
+msgid "ID"
+msgstr "ID"
+
 #: src/routes/_authenticated/$projectId_.settings.tsx:297
 msgid "Identity"
 msgstr "Identidad"
+
+#. placeholder {0}: currentMedia.name
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:247
+msgid "Image viewer: {0}"
+msgstr "Uñacht'awi uñjaña: {0}"
 
 #: ../../../lib/web/src/lib/preference-utils.ts:86
 msgid "Imperial"
@@ -1277,7 +1349,7 @@ msgstr "Manqaru"
 msgid "Interests"
 msgstr "Interesanaka"
 
-#: src/features/objects/components/field-editor.tsx:478
+#: src/features/objects/components/field-editor.tsx:480
 msgid "Invalid date"
 msgstr "Jan wakisir fecha"
 
@@ -1289,6 +1361,10 @@ msgstr "Jan wakisir JSON archivo"
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:245
 msgid "Invalid verification code"
 msgstr "Jan wakisir verificación código"
+
+#: ../../../lib/web/src/features/errors/not-found-error.tsx:18
+msgid "It seems like the page you're looking for <0/>does not exist or might have been removed."
+msgstr "Thaqhkta uka janax <0/>janiw utjkiti jan ukax apsutawa."
 
 #: src/features/objects/components/object-detail-panel.tsx:409
 msgid "Item details"
@@ -1318,6 +1394,7 @@ msgid "Left to Right"
 msgstr "Ch'iqat Kupïru"
 
 #: ../../../lib/web/src/components/config-drawer.tsx:213
+#: ../../../lib/web/src/components/theme-switch.tsx:45
 #: ../../../lib/web/src/lib/preference-utils.ts:19
 msgid "Light"
 msgstr "Qhana"
@@ -1361,8 +1438,8 @@ msgstr "Templatenak apaqaskiwa..."
 #: ../../../lib/web/src/components/ui/load-more.tsx:35
 #: ../../../lib/web/src/features/document/document-page.tsx:90
 #: src/routes/_authenticated/$projectId/index.tsx:207
-msgid "Loading…"
-msgstr "Apaqaskiwa…"
+msgid "Loading..."
+msgstr "Apaqaskiwa..."
 
 #: ../../../lib/web/src/components/layout/nav-user.tsx:101
 #: ../../../lib/web/src/components/layout/nav-user.tsx:167
@@ -1390,8 +1467,8 @@ msgstr "Mistuskiwa…"
 msgid "Manual"
 msgstr "Manual"
 
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:92
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:99
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:93
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:100
 #: ../../../lib/web/src/components/notifications-dropdown.tsx:224
 msgid "Mark all as read"
 msgstr "Taqpach ullt'ata uñacht'ayaña"
@@ -1495,8 +1572,8 @@ msgstr "Machaqa {className}"
 msgid "Next"
 msgstr "Arkiri"
 
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:388
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:393
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:392
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:397
 msgid "Next image"
 msgstr "Arkiri imagen"
 
@@ -1582,7 +1659,7 @@ msgid "No repositories available"
 msgstr "Jan repositorionak utjki"
 
 #: ../../../lib/web/src/components/command-menu.tsx:55
-#: ../../../lib/web/src/components/data-table/faceted-filter.tsx:90
+#: ../../../lib/web/src/components/data-table/faceted-filter.tsx:94
 msgid "No results found."
 msgstr "Jan resultadonak jikxatasiti."
 
@@ -1655,6 +1732,11 @@ msgstr "Jan kunas jikxatasiti"
 #: ../../../lib/web/src/components/notifications-dropdown.tsx:261
 msgid "Notifications"
 msgstr "Yatiyawinaka"
+
+#. placeholder {0}: unread.length
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:86
+msgid "Notifications: {0}"
+msgstr "Yatiyawinaka: {0}"
 
 #: src/components/view-options-bar.tsx:42
 #: src/features/editor/components/add-dialogs.tsx:138
@@ -1756,6 +1838,11 @@ msgstr "Yaqha"
 msgid "Owner"
 msgstr "Dueño"
 
+#: ../../../lib/web/src/components/data-table/pagination.tsx:43
+#: ../../../lib/web/src/components/data-table/pagination.tsx:71
+msgid "Page {currentPage} of {totalPages}"
+msgstr "Jana {currentPage} / {totalPages}"
+
 #: src/features/objects/components/create-object-dialog.tsx:442
 #: src/features/objects/components/object-detail-panel.tsx:526
 msgid "Parent"
@@ -1787,6 +1874,10 @@ msgstr "Mayni jan ukax juk'amp clase lurawi diseño taypi yapxatma."
 msgid "Please check your internet connection and try again."
 msgstr "Mira internet conexion ukat wasitat yant'asim."
 
+#: ../../../lib/web/src/features/errors/unauthorized-error.tsx:18
+msgid "Please log in with the appropriate credentials <0/> to access this resource."
+msgstr "Aka yänak katuqañatakix suma yatiyawinakampi <0/> mantam."
+
 #: src/features/projects/components/create-project-dialog.tsx:103
 msgid "Please select a template"
 msgstr "Mä template ajllima"
@@ -1804,8 +1895,8 @@ msgstr "Mä juk'a suyt'am, ukat wasitat yant'am."
 msgid "Prefix"
 msgstr "Prefijo"
 
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:373
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:378
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:377
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:382
 msgid "Previous image"
 msgstr "Nayrïri imagen"
 
@@ -1938,6 +2029,11 @@ msgstr "Aparma"
 msgid "Remove access rule"
 msgstr "Mantañ kamachi aparma"
 
+#. placeholder {0}: formatSubject(subject, data.name)
+#: ../../../lib/web/src/features/access/access-list.tsx:259
+msgid "Remove access rule for \"{0}\"?"
+msgstr "¿\"{0}\" mantañataki kamachi apsuñati?"
+
 #: ../../../lib/web/src/features/access/access-list.tsx:257
 msgid "Remove access?"
 msgstr "¿Mantañ aparma?"
@@ -1953,7 +2049,7 @@ msgstr "Field {0} aparma"
 msgid "Remove interest"
 msgstr "Interés aparma"
 
-#: src/features/objects/components/field-editor.tsx:601
+#: src/features/objects/components/field-editor.tsx:603
 msgid "Remove item"
 msgstr "Item aparma"
 
@@ -2021,7 +2117,7 @@ msgstr "Kutintayama"
 msgid "Reset all settings to default values"
 msgstr "Taqi configuracionanak default valoranakar kutintayama"
 
-#: src/features/requests/components/conflict-list.tsx:37
+#: src/features/requests/components/conflict-list.tsx:40
 msgid "Resolve these conflicts manually before merging."
 msgstr "Aka conflictonak manual ukamp resolvama merge nayrqata."
 
@@ -2042,7 +2138,7 @@ msgstr "Filanaka"
 msgid "Rows group by"
 msgstr "Filanak agrupama"
 
-#: ../../../lib/web/src/components/data-table/pagination.tsx:63
+#: ../../../lib/web/src/components/data-table/pagination.tsx:65
 msgid "Rows per page"
 msgstr "Página taypi filanaka"
 
@@ -2175,7 +2271,16 @@ msgstr "Tema preferencia ajlliña"
 msgid "Select..."
 msgstr "Ajlliña..."
 
-#: ../../../lib/web/src/features/accounts/account-verify.tsx:98
+#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:216
+msgid "selected"
+msgstr "ajllita"
+
+#. placeholder {0}: getSelectedName()
+#: ../../../lib/web/src/features/access/access-dialog.tsx:309
+msgid "Selected: <0>{0}</0>"
+msgstr "Ajllita: <0>{0}</0>"
+
+#: ../../../lib/web/src/features/accounts/account-verify.tsx:100
 msgid "Send again"
 msgstr "Wasitata apayaña"
 
@@ -2351,6 +2456,7 @@ msgid "Switch to view 1-9"
 msgstr "1-9 uñjaña ukar muyt'aña"
 
 #: ../../../lib/web/src/components/config-drawer.tsx:208
+#: ../../../lib/web/src/components/theme-switch.tsx:59
 #: ../../../lib/web/src/lib/preference-utils.ts:21
 #: ../../../lib/web/src/lib/preference-utils.ts:144
 msgid "System"
@@ -2390,6 +2496,10 @@ msgstr "Uka codigox jan walikiti jan ukax tukutawa."
 msgid "The requested content could not be found."
 msgstr "Mayit contenidox janiw jikxataskiti."
 
+#: ../../../lib/web/src/features/errors/maintenance-error.tsx:15
+msgid "The site is not available at the moment."
+msgstr "Aka sitiox jichhax janiw utjkiti."
+
 #: ../../../lib/web/src/components/config-drawer.tsx:194
 msgid "Theme"
 msgstr "Tema Configuración"
@@ -2401,11 +2511,15 @@ msgstr "Tema machaqachata"
 #. placeholder {0}: request.target
 #: src/features/requests/components/request-panel.tsx:411
 msgid "This merge request has been merged into {0}."
-msgstr "Aka merge requestax borradorawa, ukatx janiw juntayañ atikiti."
+msgstr "Aka mayacht'aña mayiwix {0} ukar mayachtatawa."
 
 #: src/features/requests/components/request-panel.tsx:372
 msgid "This merge request is a draft and cannot be merged."
 msgstr "Aka hojax repositorio contexto munaski."
+
+#: ../../../lib/web/src/components/coming-soon.tsx:14
+msgid "This page has not been created yet."
+msgstr "Aka jana janïraw lurasiti."
 
 #: src/routes/_authenticated/$projectId_.settings.tsx:210
 msgid "This project could not be loaded right now."
@@ -2417,21 +2531,21 @@ msgstr "Aka aljirix jichhax janiw machaq bidnaka katuqkiti."
 
 #: src/features/requests/components/merge-button.tsx:105
 msgid "This will merge \"{source}\" into \"{target}\". This action cannot be undone."
-msgstr "Akax wiñayatak \"{0}\" taqpach objetonakapampi, comentarionakapampi ukat archivonakapampi apaqatani. Aka acción janiw kut'ayatakiti."
+msgstr "Akax \"{source}\" ukax \"{target}\" ukar mayachtaniwa. Aka luräwix janiw kuttayasiñjamäkiti."
 
 #: src/routes/_authenticated/$projectId_.settings.tsx:367
 msgid "This will permanently delete \"{projectName}\" and all its objects, comments, and attachments. This action cannot be undone."
-msgstr "Akax wiñayatak \"{0}\" token apaqatani. Kuna aplicacionanakax aka token apnaqipkix janiw mayamp autenticatak atxañtati."
+msgstr "Akax \"{projectName}\" ukat taqi yänakapa, qhanañchawinakapa ukat yapxatatanakapa wiñayataki chhaqtayaniwa. Aka luräwix janiw kuttayasiñjamäkiti."
 
 #. placeholder {0}: project.project.name
 #: src/routes/_authenticated/$projectId/index.tsx:1181
 msgid "This will remove \"{0}\" from your sidebar and stop updates for this project."
-msgstr "Akax \"{repoName}\" repositorio listamat apaqani. Qhiparu mayamp suscribiñ atta."
+msgstr "Akax \"{0}\" ukax barra lateral ukat apsuniwa ukat aka proyecto machaqachañanakap sayt'ayaniwa."
 
 #. placeholder {0}: pendingImport?.label
 #: src/routes/_authenticated/$projectId/design.tsx:204
 msgid "This will replace the current design with <0>{0}</0>. All existing classes, fields, options, and views will be deleted. Existing objects will not be deleted but may no longer appear in views."
-msgstr "Akax \"{settingNameLabel}\" predeterminada (ch'usa) ukar kut'ayani."
+msgstr "Akax jichha diseñox <0>{0}</0> ukamp turkani. Taqi utjir clasenaka, camponaka, opcionanaka ukat vistanakax chhaqtayatäni. Utjir objetonakax janiw chhaqtayaskaniti, ukampis vistanakanx janiw uñstxaspati."
 
 #: ../../../lib/web/src/lib/preference-utils.ts:62
 msgid "Thursday"
@@ -2445,6 +2559,10 @@ msgstr "Suti campo"
 #: src/features/editor/components/edit-dialogs.tsx:764
 msgid "Title field"
 msgstr "Sutix munaski"
+
+#: ../../../lib/web/src/components/travelling-picker.tsx:220
+msgid "To"
+msgstr "Ukhamaru"
 
 #: ../../../lib/web/src/components/data-table/view-options.tsx:37
 msgid "Toggle columns"
@@ -2583,7 +2701,7 @@ msgstr "Suscripción jaytasa…"
 
 #: src/features/objects/components/object-links.tsx:150
 msgid "Untitled"
-msgstr ""
+msgstr "Jan sutini listing"
 
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:135
 msgid "Unverified"
@@ -2592,7 +2710,7 @@ msgstr "Machaqachaña"
 #: src/components/view-options-bar.tsx:44
 #: src/features/editor/components/edit-dialogs.tsx:508
 msgid "Updated"
-msgstr "{0}-na machaqachata"
+msgstr "Machaqachatawa"
 
 #: src/routes/_authenticated/$projectId_.settings.tsx:497
 msgid "Updating access..."
@@ -2616,14 +2734,14 @@ msgstr "Passkey ukma apnaqama"
 #. placeholder {1}: prefix || "project"
 #: src/features/projects/components/create-project-dialog.tsx:335
 msgid "Used for readable IDs like {0}-1, {1}-2"
-msgstr "Apnaqiri"
+msgstr "{0}-1, {1}-2 kikpa uñjañ ID-nakatakiw apnaqasi"
 
 #: ../../../lib/web/src/features/access/access-dialog.tsx:158
 #: src/features/editor/components/add-dialogs.tsx:141
 msgid "User"
 msgstr "Apnaqiri banata"
 
-#: ../../../lib/web/src/features/accounts/account-verify.tsx:71
+#: ../../../lib/web/src/features/accounts/account-verify.tsx:73
 msgid "Verification code"
 msgstr "Verificación código apayata"
 
@@ -2637,7 +2755,7 @@ msgstr "Verificata"
 
 #: ../../../lib/web/src/components/step-up-dialog.tsx:388
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:172
-#: ../../../lib/web/src/features/accounts/account-verify.tsx:109
+#: ../../../lib/web/src/features/accounts/account-verify.tsx:111
 msgid "Verify"
 msgstr "Verificaña ukat habilitaña"
 
@@ -2647,7 +2765,12 @@ msgstr "Passkey ukamp verificaña"
 
 #: ../../../lib/web/src/components/attachment-gallery.tsx:79
 msgid "Video thumbnail"
-msgstr "Uñjaña"
+msgstr "Video uñacht'awi"
+
+#. placeholder {0}: currentMedia.name
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:246
+msgid "Video viewer: {0}"
+msgstr "Video uñjaña: {0}"
 
 #: ../../../lib/web/src/components/data-table/view-options.tsx:33
 msgid "View"
@@ -2657,8 +2780,8 @@ msgstr "Taqi uñjaña"
 msgid "View all"
 msgstr "Taqi yatiyawinaka uñjaña"
 
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:105
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:113
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:106
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:114
 msgid "View all notifications"
 msgstr "Taqi posts uñjaña"
 
@@ -2676,7 +2799,7 @@ msgstr "Uñjañ opcionanaka"
 
 #: src/routes/_authenticated/$projectId/index.tsx:955
 msgid "View options"
-msgstr "{0} foto uñjaña"
+msgstr "Uñjaña ajlliwinaka"
 
 #: src/features/editor/components/design-editor.tsx:457
 msgid "Views"
@@ -2693,11 +2816,16 @@ msgstr "Uñch'ukita sapa"
 
 #: src/components/view-options-bar.tsx:161
 msgid "Watched only"
-msgstr "Janiw kuna apps jumatakix jikxatkiti. Akax jan suyt'atawa."
+msgstr "Uñjatakiw"
 
 #: src/features/projects/components/create-project-dialog.tsx:427
 msgid "We have auto-selected the best matching template."
 msgstr "Juk'amp aski template pachpat ajllitawa."
+
+#. placeholder {0}: account.identifier
+#: ../../../lib/web/src/features/accounts/account-verify.tsx:63
+msgid "We sent a verification code to <0>{0}</0>. Enter the code below to verify your email address."
+msgstr "<0>{0}</0> ukar mä chiqapa yatiyawi khitanipxta. Correo electrónico chiqanchañatakix aka jaqhu uchma."
 
 #: ../../../lib/web/src/features/errors/maintenance-error.tsx:16
 msgid "We'll be back online shortly."
@@ -2705,7 +2833,7 @@ msgstr "Aka chanikam bid lurañani jumatuyu, ukatpachakix wakischiri sapaki nayr
 
 #: ../../../lib/web/src/features/errors/maintenance-error.tsx:13
 msgid "Website is under maintenance!"
-msgstr "Miércoles"
+msgstr "¡Web sitiox askichasiskiwa!"
 
 #: ../../../lib/web/src/lib/preference-utils.ts:61
 msgid "Wednesday"
@@ -2718,6 +2846,10 @@ msgstr "Janiw aka t'aqar mantañ utjktamti."
 #: src/routes/_authenticated/$projectId/index.tsx:124
 msgid "You don't have access to this project."
 msgstr "Aka proyector jan mantañ atimti."
+
+#: ../../../lib/web/src/features/errors/forbidden.tsx:18
+msgid "You don't have necessary permission <0/>to view this resource."
+msgstr "Aka yänak uñjañatakix janiw <0/>iyawsäwimakiti."
 
 #: src/features/projects/pages/projects-list-page.tsx:98
 msgid "You have no projects yet."

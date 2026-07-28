@@ -18,6 +18,19 @@ msgstr ""
 msgid "Please check your internet connection and try again."
 msgstr "Thoir sùil air a' cheangal eadar-lìn agad agus feuch ris a-rithist."
 
+#: src/features/objects/components/comment-thread.tsx:165
+msgid "(edited)"
+msgstr "(deasaichte)"
+
+#: src/features/objects/components/comment-thread.tsx:149
+msgid "(expand)"
+msgstr "(leudaich)"
+
+#. placeholder {0}: file.oldPath
+#: src/features/requests/components/diff-viewer.tsx:137
+msgid "(from {0})"
+msgstr "(bho {0})"
+
 #: src/features/editor/components/edit-dialogs.tsx:813
 msgid "(itself)"
 msgstr "(e fhèin)"
@@ -25,6 +38,16 @@ msgstr "(e fhèin)"
 #: src/features/board/components/board-container.tsx:794
 msgid "[not set]"
 msgstr "[gun shuidheachadh]"
+
+#. placeholder {0}: conflicts.length
+#: src/features/requests/components/conflict-list.tsx:23
+msgid "{0, plural, one {# conflicting file} other {# conflicting files}}"
+msgstr "{0, plural, one {# fhaidhle le còmhstri} two {# fhaidhle le còmhstri} few {# faidhlichean le còmhstri} other {# faidhle le còmhstri}}"
+
+#. placeholder {0}: selectedValues.size
+#: ../../../lib/web/src/components/data-table/faceted-filter.tsx:66
+msgid "{0, plural, one {# selected} other {# selected}}"
+msgstr "{0, plural, one {# air a thaghadh} two {# air an taghadh} few {# air an taghadh} other {# air an taghadh}}"
 
 #. placeholder {0}: project.project.name
 #: src/routes/_authenticated/$projectId/design.tsx:64
@@ -49,10 +72,39 @@ msgstr "{0} faidhlichean atharraichte"
 msgid "{0} settings"
 msgstr "Roghainnean {0}"
 
+#: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:173
+msgid "{entityLabel} name"
+msgstr "Ainm {entityLabel}"
+
+#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:210
+msgid "{selectedCount, plural, one {{entityName} selected} other {{manyName} selected}}"
+msgstr "{selectedCount, plural, one {{entityName} air a thaghadh} two {{manyName} air an taghadh} few {{manyName} air an taghadh} other {{manyName} air an taghadh}}"
+
+#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:52
+msgid "{selectedCount, plural, one {# {entityName} selected. Bulk actions toolbar is available.} other {# {manyName} selected. Bulk actions toolbar is available.}}"
+msgstr "{selectedCount, plural, one {# {entityName} air a thaghadh. Tha bàr-inneal nan gnìomhan mòr-chuid ri fhaighinn.} two {# {manyName} air an taghadh. Tha bàr-inneal nan gnìomhan mòr-chuid ri fhaighinn.} few {# {manyName} air an taghadh. Tha bàr-inneal nan gnìomhan mòr-chuid ri fhaighinn.} other {# {manyName} air an taghadh. Tha bàr-inneal nan gnìomhan mòr-chuid ri fhaighinn.}}"
+
+#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:202
+msgid "{selectedCount, plural, one {# selected} other {# selected}}"
+msgstr "{selectedCount, plural, one {# air an taghadh} two {# air an taghadh} few {# air an taghadh} other {# air an taghadh}}"
+
+#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:149
+msgid "{selectedCount, plural, one {Bulk actions for # selected {entityName}} other {Bulk actions for # selected {manyName}}}"
+msgstr "{selectedCount, plural, one {Gnìomhan mòr-chuid airson # {entityName} a thaghadh} two {Gnìomhan mòr-chuid airson # {manyName} a thaghadh} few {Gnìomhan mòr-chuid airson # {manyName} a thaghadh} other {Gnìomhan mòr-chuid airson # {manyName} a thaghadh}}"
+
+#: src/features/board/components/board-column.tsx:522
+msgid "{totalCount, plural, one {# item} other {# items}}"
+msgstr "{totalCount, plural, one {# nì} two {# nì} few {# nithean} other {# nì}}"
+
 #. placeholder {0}: data.ahead
 #: src/features/requests/components/merge-status.tsx:76
 msgid "+{0} ahead"
 msgstr "+{0} air thoiseach"
+
+#. placeholder {0}: countDeepChildren(object.id)
+#: src/features/board/components/board-card.tsx:362
+msgid "+{0} nested"
+msgstr "+{0} neadaichte"
 
 #: src/features/objects/components/comment-thread.tsx:146
 msgid "+{totalDescendants} more replies"
@@ -127,7 +179,7 @@ msgid "Activity"
 msgstr "Gnìomhachd"
 
 #: ../../../lib/web/src/features/accounts/account-add.tsx:196
-#: src/features/objects/components/field-editor.tsx:647
+#: src/features/objects/components/field-editor.tsx:649
 #: src/features/requests/components/request-panel.tsx:103
 msgid "Add"
 msgstr "Cuir ris"
@@ -157,7 +209,7 @@ msgstr "Cuir cunntas ris"
 msgid "Add an account to receive notifications and use services."
 msgstr "Cuir cunntas ris gus brathan fhaighinn agus seirbheisean a chleachdadh."
 
-#: src/features/objects/components/field-editor.tsx:617
+#: src/features/objects/components/field-editor.tsx:619
 msgid "Add checklist item"
 msgstr "Cuir nì ris an liosta-dearbhaidh"
 
@@ -178,7 +230,7 @@ msgstr "Cuir colbh ris"
 msgid "Add field"
 msgstr "Cuir raon ris"
 
-#: src/features/objects/components/field-editor.tsx:635
+#: src/features/objects/components/field-editor.tsx:637
 msgid "Add item..."
 msgstr "Cuir nì ris..."
 
@@ -317,9 +369,9 @@ msgstr "Ath-ghoiridean meur-chlàir ri làimh"
 msgid "Back"
 msgstr "Air ais"
 
-#: ../../../lib/web/src/features/errors/forbidden.tsx:26
-#: ../../../lib/web/src/features/errors/not-found-error.tsx:26
-#: ../../../lib/web/src/features/errors/unauthorized-error.tsx:26
+#: ../../../lib/web/src/features/errors/forbidden.tsx:28
+#: ../../../lib/web/src/features/errors/not-found-error.tsx:28
+#: ../../../lib/web/src/features/errors/unauthorized-error.tsx:28
 msgid "Back to home"
 msgstr "Air ais dhan dachaigh"
 
@@ -338,7 +390,7 @@ msgstr "Air ais gu pròiseactan"
 
 #: src/features/requests/components/diff-viewer.tsx:449
 msgid "Binary file not shown"
-msgstr ""
+msgstr "Cha dèid am faidhle dà-fhillte a shealltainn"
 
 #: src/features/objects/components/object-links.tsx:49
 #: src/features/objects/components/object-links.tsx:179
@@ -378,7 +430,7 @@ msgstr "Faodaidh e a bhith na phàiste de"
 #: ../../../lib/web/src/features/access/access-dialog.tsx:328
 #: ../../../lib/web/src/features/access/access-list.tsx:263
 #: ../../../lib/web/src/features/accounts/account-add.tsx:188
-#: ../../../lib/web/src/features/accounts/account-verify.tsx:89
+#: ../../../lib/web/src/features/accounts/account-verify.tsx:91
 #: src/features/board/components/board-column.tsx:606
 #: src/features/editor/components/option-dialog.tsx:146
 #: src/features/objects/components/comment-thread.tsx:185
@@ -460,22 +512,23 @@ msgstr "Falamhaich"
 msgid "Clear all"
 msgstr "Falamhaich a h-uile"
 
-#: ../../../lib/web/src/components/data-table/faceted-filter.tsx:140
+#: ../../../lib/web/src/components/data-table/faceted-filter.tsx:144
 msgid "Clear filters"
 msgstr "Falamhaich criathragan"
 
-#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:167
-#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:171
+#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:177
+#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:181
 msgid "Clear selection"
 msgstr "Falamhaich an taghadh"
 
-#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:168
+#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:178
+#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:185
 msgid "Clear selection (Escape)"
 msgstr "Falamhaich an taghadh (Escape)"
 
 #: ../../../lib/web/src/components/ui/dialog.tsx:78
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:354
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:357
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:358
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:361
 #: ../../../lib/web/src/components/ui/sheet.tsx:79
 #: src/features/objects/components/create-object-dialog.tsx:419
 #: src/features/objects/components/create-object-dialog.tsx:424
@@ -491,8 +544,8 @@ msgstr "Dùin"
 msgid "Close dialog"
 msgstr "Dùin an còmhradh"
 
-#: ../../../lib/web/src/components/layout/app-sidebar.tsx:107
-#: ../../../lib/web/src/components/layout/app-sidebar.tsx:112
+#: ../../../lib/web/src/components/layout/app-sidebar.tsx:108
+#: ../../../lib/web/src/components/layout/app-sidebar.tsx:113
 msgid "Close navigation"
 msgstr "Dùin an t-seòladaireachd"
 
@@ -657,6 +710,7 @@ msgid "Custom"
 msgstr "Gnàthaichte"
 
 #: ../../../lib/web/src/components/config-drawer.tsx:218
+#: ../../../lib/web/src/components/theme-switch.tsx:52
 #: ../../../lib/web/src/lib/preference-utils.ts:20
 msgid "Dark"
 msgstr "Dorcha"
@@ -857,8 +911,8 @@ msgstr "Deiseil"
 msgid "Double click on a column to add content"
 msgstr "Dèan briogadh dùbailte air colbh gus susbaint a chur ris"
 
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:338
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:348
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:342
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:352
 #: src/features/objects/components/object-attachments.tsx:193
 msgid "Download"
 msgstr "Luchdaich a-nuas"
@@ -1045,6 +1099,10 @@ msgstr "Cha b' urrainn an dàta ion-phortadh"
 msgid "Failed to import design"
 msgstr "Cha b' urrainn an dealbhadh ion-phortadh"
 
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:263
+msgid "Failed to load image"
+msgstr "Dh'fhàillig luchdachadh an deilbh"
+
 #: src/features/objects/components/object-detail-panel.tsx:329
 #: src/features/objects/components/object-detail-panel.tsx:332
 msgid "Failed to load item"
@@ -1062,6 +1120,10 @@ msgstr "Cha b' urrainn dealbhadh a' phròiseict a luchdadh"
 #: src/stores/projects-store.ts:31
 msgid "Failed to load projects"
 msgstr "Cha b' urrainn na pròiseactan a luchdadh"
+
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:263
+msgid "Failed to load video"
+msgstr "Dh'fhàillig luchdachadh a' video"
 
 #: src/features/requests/components/merge-button.tsx:97
 msgid "Failed to merge"
@@ -1195,29 +1257,29 @@ msgstr "On ùrlar"
 msgid "Full layout"
 msgstr "Làn-chruth"
 
-#: ../../../lib/web/src/features/errors/forbidden.tsx:24
-#: ../../../lib/web/src/features/errors/not-found-error.tsx:24
-#: ../../../lib/web/src/features/errors/unauthorized-error.tsx:24
+#: ../../../lib/web/src/features/errors/forbidden.tsx:26
+#: ../../../lib/web/src/features/errors/not-found-error.tsx:26
+#: ../../../lib/web/src/features/errors/unauthorized-error.tsx:26
 msgid "Go back"
 msgstr "Air ais"
 
-#: ../../../lib/web/src/components/data-table/pagination.tsx:78
+#: ../../../lib/web/src/components/data-table/pagination.tsx:82
 msgid "Go to first page"
 msgstr "Rach dhan chiad duilleag"
 
-#: ../../../lib/web/src/components/data-table/pagination.tsx:124
+#: ../../../lib/web/src/components/data-table/pagination.tsx:128
 msgid "Go to last page"
 msgstr "Rach dhan duilleag mu dheireadh"
 
-#: ../../../lib/web/src/components/data-table/pagination.tsx:115
+#: ../../../lib/web/src/components/data-table/pagination.tsx:119
 msgid "Go to next page"
 msgstr "Rach dhan ath dhuilleag"
 
-#: ../../../lib/web/src/components/data-table/pagination.tsx:102
+#: ../../../lib/web/src/components/data-table/pagination.tsx:106
 msgid "Go to page {pageNumber}"
 msgstr "Rach gu duilleag {pageNumber}"
 
-#: ../../../lib/web/src/components/data-table/pagination.tsx:87
+#: ../../../lib/web/src/components/data-table/pagination.tsx:91
 msgid "Go to previous page"
 msgstr "Rach dhan duilleag roimhe"
 
@@ -1248,9 +1310,19 @@ msgstr "Dachaigh"
 msgid "Hot"
 msgstr "Teth"
 
+#: src/features/editor/components/edit-dialogs.tsx:755
+#: src/features/editor/components/edit-dialogs.tsx:1075
+msgid "ID"
+msgstr "ID"
+
 #: src/routes/_authenticated/$projectId_.settings.tsx:297
 msgid "Identity"
 msgstr "Dearbh-aithne"
+
+#. placeholder {0}: currentMedia.name
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:247
+msgid "Image viewer: {0}"
+msgstr "Sealladair dhealbhan: {0}"
 
 #: ../../../lib/web/src/lib/preference-utils.ts:86
 msgid "Imperial"
@@ -1277,7 +1349,7 @@ msgstr "A-staigh"
 msgid "Interests"
 msgstr "Ùidhean"
 
-#: src/features/objects/components/field-editor.tsx:478
+#: src/features/objects/components/field-editor.tsx:480
 msgid "Invalid date"
 msgstr "Ceann-latha mì-dhligheach"
 
@@ -1289,6 +1361,10 @@ msgstr "Faidhle JSON mì-dhligheach"
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:245
 msgid "Invalid verification code"
 msgstr "Còd dearbhaidh mì-dhligheach"
+
+#: ../../../lib/web/src/features/errors/not-found-error.tsx:18
+msgid "It seems like the page you're looking for <0/>does not exist or might have been removed."
+msgstr "Tha coltas nach eil an duilleag a tha thu a' sireadh <0/>ann no gun deach a toirt air falbh."
 
 #: src/features/objects/components/object-detail-panel.tsx:409
 msgid "Item details"
@@ -1318,6 +1394,7 @@ msgid "Left to Right"
 msgstr "Clì gu Deas"
 
 #: ../../../lib/web/src/components/config-drawer.tsx:213
+#: ../../../lib/web/src/components/theme-switch.tsx:45
 #: ../../../lib/web/src/lib/preference-utils.ts:19
 msgid "Light"
 msgstr "Soilleir"
@@ -1361,8 +1438,8 @@ msgstr "A' luchdadh nan teamplaidean..."
 #: ../../../lib/web/src/components/ui/load-more.tsx:35
 #: ../../../lib/web/src/features/document/document-page.tsx:90
 #: src/routes/_authenticated/$projectId/index.tsx:207
-msgid "Loading…"
-msgstr "A' luchdadh…"
+msgid "Loading..."
+msgstr "A' luchdadh..."
 
 #: ../../../lib/web/src/components/layout/nav-user.tsx:101
 #: ../../../lib/web/src/components/layout/nav-user.tsx:167
@@ -1390,8 +1467,8 @@ msgstr "A' clàradh a-mach…"
 msgid "Manual"
 msgstr "Le làimh"
 
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:92
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:99
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:93
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:100
 #: ../../../lib/web/src/components/notifications-dropdown.tsx:224
 msgid "Mark all as read"
 msgstr "Comharraich gach nì mar leughte"
@@ -1495,8 +1572,8 @@ msgstr "{className} ùr"
 msgid "Next"
 msgstr "Air adhart"
 
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:388
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:393
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:392
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:397
 msgid "Next image"
 msgstr "An ath dhealbh"
 
@@ -1582,7 +1659,7 @@ msgid "No repositories available"
 msgstr "Chan eil tasgadain rim faotainn"
 
 #: ../../../lib/web/src/components/command-menu.tsx:55
-#: ../../../lib/web/src/components/data-table/faceted-filter.tsx:90
+#: ../../../lib/web/src/components/data-table/faceted-filter.tsx:94
 msgid "No results found."
 msgstr "Cha deach toraidhean a lorg."
 
@@ -1655,6 +1732,11 @@ msgstr "Cha deach dad a lorg"
 #: ../../../lib/web/src/components/notifications-dropdown.tsx:261
 msgid "Notifications"
 msgstr "Brathan"
+
+#. placeholder {0}: unread.length
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:86
+msgid "Notifications: {0}"
+msgstr "Brathan: {0}"
 
 #: src/components/view-options-bar.tsx:42
 #: src/features/editor/components/add-dialogs.tsx:138
@@ -1756,6 +1838,11 @@ msgstr "Eile"
 msgid "Owner"
 msgstr "Sealbhadair"
 
+#: ../../../lib/web/src/components/data-table/pagination.tsx:43
+#: ../../../lib/web/src/components/data-table/pagination.tsx:71
+msgid "Page {currentPage} of {totalPages}"
+msgstr "Duilleag {currentPage} à {totalPages}"
+
 #: src/features/objects/components/create-object-dialog.tsx:442
 #: src/features/objects/components/object-detail-panel.tsx:526
 msgid "Parent"
@@ -1787,6 +1874,10 @@ msgstr "Cuir a-steach aon clas no barrachd ri dealbhadh a' phròiseict."
 msgid "Please check your internet connection and try again."
 msgstr "Thoir sùil air a' cheangal eadar-lìn agad agus feuch ris a-rithist."
 
+#: ../../../lib/web/src/features/errors/unauthorized-error.tsx:18
+msgid "Please log in with the appropriate credentials <0/> to access this resource."
+msgstr "Clàraich a-steach le teisteanas iomchaidh <0/> gus an goireas seo inntrigeadh."
+
 #: src/features/projects/components/create-project-dialog.tsx:103
 msgid "Please select a template"
 msgstr "Tagh teamplaid"
@@ -1804,8 +1895,8 @@ msgstr "Fuirich greiseag is feuch ris a-rithist."
 msgid "Prefix"
 msgstr "Ro-leasachan"
 
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:373
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:378
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:377
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:382
 msgid "Previous image"
 msgstr "An dealbh roimhe"
 
@@ -1938,6 +2029,11 @@ msgstr "Thoir air falbh"
 msgid "Remove access rule"
 msgstr "Thoir an riaghailt cothraim air falbh"
 
+#. placeholder {0}: formatSubject(subject, data.name)
+#: ../../../lib/web/src/features/access/access-list.tsx:259
+msgid "Remove access rule for \"{0}\"?"
+msgstr "A bheil thu airson riaghailt inntrigidh \"{0}\" a thoirt air falbh?"
+
 #: ../../../lib/web/src/features/access/access-list.tsx:257
 msgid "Remove access?"
 msgstr "Thoir an cothrom air falbh?"
@@ -1953,7 +2049,7 @@ msgstr "Thoir an raon {0} air falbh"
 msgid "Remove interest"
 msgstr "Thoir an ùidh air falbh"
 
-#: src/features/objects/components/field-editor.tsx:601
+#: src/features/objects/components/field-editor.tsx:603
 msgid "Remove item"
 msgstr "Thoir an nì air falbh"
 
@@ -2021,7 +2117,7 @@ msgstr "Ath-shuidhich"
 msgid "Reset all settings to default values"
 msgstr "Ath-shuidhich a h-uile roghainn chun a' bhun-tuiteamais"
 
-#: src/features/requests/components/conflict-list.tsx:37
+#: src/features/requests/components/conflict-list.tsx:40
 msgid "Resolve these conflicts manually before merging."
 msgstr "Fuasgail na h-aimhreitean seo a làimh ron aonachadh."
 
@@ -2042,7 +2138,7 @@ msgstr "Sreathan"
 msgid "Rows group by"
 msgstr "Buidheanaich sreathan a-rèir"
 
-#: ../../../lib/web/src/components/data-table/pagination.tsx:63
+#: ../../../lib/web/src/components/data-table/pagination.tsx:65
 msgid "Rows per page"
 msgstr "Sreathan gach duilleag"
 
@@ -2175,7 +2271,16 @@ msgstr "Tagh roghainn an ùrlair"
 msgid "Select..."
 msgstr "Tagh..."
 
-#: ../../../lib/web/src/features/accounts/account-verify.tsx:98
+#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:216
+msgid "selected"
+msgstr "air an taghadh"
+
+#. placeholder {0}: getSelectedName()
+#: ../../../lib/web/src/features/access/access-dialog.tsx:309
+msgid "Selected: <0>{0}</0>"
+msgstr "Air a thaghadh: <0>{0}</0>"
+
+#: ../../../lib/web/src/features/accounts/account-verify.tsx:100
 msgid "Send again"
 msgstr "Cuir a-rithist"
 
@@ -2351,6 +2456,7 @@ msgid "Switch to view 1-9"
 msgstr "Atharraich gu sealladh 1-9"
 
 #: ../../../lib/web/src/components/config-drawer.tsx:208
+#: ../../../lib/web/src/components/theme-switch.tsx:59
 #: ../../../lib/web/src/lib/preference-utils.ts:21
 #: ../../../lib/web/src/lib/preference-utils.ts:144
 msgid "System"
@@ -2390,6 +2496,10 @@ msgstr "Tha an còd sin ceàrr no air a dhol à bann."
 msgid "The requested content could not be found."
 msgstr "Cha b' urrainn dhuinn an t-susbaint a chaidh iarraidh a lorg."
 
+#: ../../../lib/web/src/features/errors/maintenance-error.tsx:15
+msgid "The site is not available at the moment."
+msgstr "Chan eil an làrach ri fhaighinn an-dràsta."
+
 #: ../../../lib/web/src/components/config-drawer.tsx:194
 msgid "Theme"
 msgstr "Ùrlar"
@@ -2406,6 +2516,10 @@ msgstr "Chaidh an t-iarrtas co-aonachaidh seo a cho-aonadh ri {0}."
 #: src/features/requests/components/request-panel.tsx:372
 msgid "This merge request is a draft and cannot be merged."
 msgstr "'S e dreachd a th' anns an iarrtas co-aonachaidh seo agus chan urrainnear a cho-aonachadh."
+
+#: ../../../lib/web/src/components/coming-soon.tsx:14
+msgid "This page has not been created yet."
+msgstr "Cha deach an duilleag seo a chruthachadh fhathast."
 
 #: src/routes/_authenticated/$projectId_.settings.tsx:210
 msgid "This project could not be loaded right now."
@@ -2445,6 +2559,10 @@ msgstr "Tiotal"
 #: src/features/editor/components/edit-dialogs.tsx:764
 msgid "Title field"
 msgstr "Raon tiotail"
+
+#: ../../../lib/web/src/components/travelling-picker.tsx:220
+msgid "To"
+msgstr "Gu"
 
 #: ../../../lib/web/src/components/data-table/view-options.tsx:37
 msgid "Toggle columns"
@@ -2583,7 +2701,7 @@ msgstr "A' dì-fho-sgrìobhadh..."
 
 #: src/features/objects/components/object-links.tsx:150
 msgid "Untitled"
-msgstr ""
+msgstr "Gun tiotal"
 
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:135
 msgid "Unverified"
@@ -2623,7 +2741,7 @@ msgstr "Air a chleachdadh airson IDs leughtach mar {0}-1, {1}-2"
 msgid "User"
 msgstr "Cleachdaiche"
 
-#: ../../../lib/web/src/features/accounts/account-verify.tsx:71
+#: ../../../lib/web/src/features/accounts/account-verify.tsx:73
 msgid "Verification code"
 msgstr "Còd dearbhaidh"
 
@@ -2637,7 +2755,7 @@ msgstr "Dh'fhàillig an dearbhadh"
 
 #: ../../../lib/web/src/components/step-up-dialog.tsx:388
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:172
-#: ../../../lib/web/src/features/accounts/account-verify.tsx:109
+#: ../../../lib/web/src/features/accounts/account-verify.tsx:111
 msgid "Verify"
 msgstr "Dearbh"
 
@@ -2649,6 +2767,11 @@ msgstr "Dearbh seòladh puist-d"
 msgid "Video thumbnail"
 msgstr "Dealbhag video"
 
+#. placeholder {0}: currentMedia.name
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:246
+msgid "Video viewer: {0}"
+msgstr "Sealladair video: {0}"
+
 #: ../../../lib/web/src/components/data-table/view-options.tsx:33
 msgid "View"
 msgstr "Seall"
@@ -2657,8 +2780,8 @@ msgstr "Seall"
 msgid "View all"
 msgstr "Seall a h-uile"
 
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:105
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:113
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:106
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:114
 msgid "View all notifications"
 msgstr "Seall a h-uile brath"
 
@@ -2699,6 +2822,11 @@ msgstr "Air am bheilear a' coimhead a-mhàin"
 msgid "We have auto-selected the best matching template."
 msgstr "Thagh sinn an teamplaid as freagarraiche gu fèin-obrachail."
 
+#. placeholder {0}: account.identifier
+#: ../../../lib/web/src/features/accounts/account-verify.tsx:63
+msgid "We sent a verification code to <0>{0}</0>. Enter the code below to verify your email address."
+msgstr "Chuir sinn còd dearbhaidh gu <0>{0}</0>. Cuir a-steach an còd gu h-ìosal gus an seòladh puist-d agad a dhearbhadh."
+
 #: ../../../lib/web/src/features/errors/maintenance-error.tsx:16
 msgid "We'll be back online shortly."
 msgstr "Bidh sinn air ais air-loidhne goirid."
@@ -2718,6 +2846,10 @@ msgstr "Chan eil cead-inntrigidh agad dhan earrann seo."
 #: src/routes/_authenticated/$projectId/index.tsx:124
 msgid "You don't have access to this project."
 msgstr "Chan eil inntrigeadh agad dhan phròiseact seo."
+
+#: ../../../lib/web/src/features/errors/forbidden.tsx:18
+msgid "You don't have necessary permission <0/>to view this resource."
+msgstr "Chan eil an cead riatanach agad <0/>gus an goireas seo fhaicinn."
 
 #: src/features/projects/pages/projects-list-page.tsx:98
 msgid "You have no projects yet."

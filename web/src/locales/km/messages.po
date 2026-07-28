@@ -18,6 +18,19 @@ msgstr ""
 msgid "Please check your internet connection and try again."
 msgstr "សូមពិនិត្យការតភ្ជាប់អ៊ីនធឺណិតរបស់អ្នក រួចព្យាយាមម្តងទៀត។"
 
+#: src/features/objects/components/comment-thread.tsx:165
+msgid "(edited)"
+msgstr "(បានកែ)"
+
+#: src/features/objects/components/comment-thread.tsx:149
+msgid "(expand)"
+msgstr "(ពង្រីក)"
+
+#. placeholder {0}: file.oldPath
+#: src/features/requests/components/diff-viewer.tsx:137
+msgid "(from {0})"
+msgstr "(ពី {0})"
+
 #: src/features/editor/components/edit-dialogs.tsx:813
 msgid "(itself)"
 msgstr "(ខ្លួនឯង)"
@@ -25,6 +38,16 @@ msgstr "(ខ្លួនឯង)"
 #: src/features/board/components/board-container.tsx:794
 msgid "[not set]"
 msgstr "[មិនបានកំណត់]"
+
+#. placeholder {0}: conflicts.length
+#: src/features/requests/components/conflict-list.tsx:23
+msgid "{0, plural, one {# conflicting file} other {# conflicting files}}"
+msgstr "{0, plural, other {# ឯកសារជម្លោះ}}"
+
+#. placeholder {0}: selectedValues.size
+#: ../../../lib/web/src/components/data-table/faceted-filter.tsx:66
+msgid "{0, plural, one {# selected} other {# selected}}"
+msgstr "{0, plural, other {# បានជ្រើសរើស}}"
 
 #. placeholder {0}: project.project.name
 #: src/routes/_authenticated/$projectId/design.tsx:64
@@ -49,10 +72,39 @@ msgstr "{0} ឯកសារបានផ្លាស់ប្តូរ"
 msgid "{0} settings"
 msgstr "ការកំណត់ {0}"
 
+#: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:173
+msgid "{entityLabel} name"
+msgstr "ឈ្មោះ {entityLabel}"
+
+#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:210
+msgid "{selectedCount, plural, one {{entityName} selected} other {{manyName} selected}}"
+msgstr "{selectedCount, plural, other {បានជ្រើសរើស {manyName}}}"
+
+#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:52
+msgid "{selectedCount, plural, one {# {entityName} selected. Bulk actions toolbar is available.} other {# {manyName} selected. Bulk actions toolbar is available.}}"
+msgstr "{selectedCount, plural, other {បានជ្រើសរើស # {manyName}។ របារឧបករណ៍សកម្មភាពជាបណ្តុំអាចប្រើបាន។}}"
+
+#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:202
+msgid "{selectedCount, plural, one {# selected} other {# selected}}"
+msgstr "{selectedCount, plural, other {# បានជ្រើសរើស}}"
+
+#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:149
+msgid "{selectedCount, plural, one {Bulk actions for # selected {entityName}} other {Bulk actions for # selected {manyName}}}"
+msgstr "{selectedCount, plural, other {សកម្មភាពជាបណ្តុំសម្រាប់ {manyName} # ដែលបានជ្រើសរើស}}"
+
+#: src/features/board/components/board-column.tsx:522
+msgid "{totalCount, plural, one {# item} other {# items}}"
+msgstr "{totalCount, plural, other {# ធាតុ}}"
+
 #. placeholder {0}: data.ahead
 #: src/features/requests/components/merge-status.tsx:76
 msgid "+{0} ahead"
 msgstr "+{0} នាំមុខ"
+
+#. placeholder {0}: countDeepChildren(object.id)
+#: src/features/board/components/board-card.tsx:362
+msgid "+{0} nested"
+msgstr "+{0} ជាន់គ្នា"
 
 #: src/features/objects/components/comment-thread.tsx:146
 msgid "+{totalDescendants} more replies"
@@ -127,7 +179,7 @@ msgid "Activity"
 msgstr "សកម្មភាព"
 
 #: ../../../lib/web/src/features/accounts/account-add.tsx:196
-#: src/features/objects/components/field-editor.tsx:647
+#: src/features/objects/components/field-editor.tsx:649
 #: src/features/requests/components/request-panel.tsx:103
 msgid "Add"
 msgstr "បន្ថែម"
@@ -157,7 +209,7 @@ msgstr "បន្ថែមគណនី"
 msgid "Add an account to receive notifications and use services."
 msgstr "បន្ថែមគណនីដើម្បីទទួលបានការជូនដំណឹង និងប្រើប្រាស់សេវាកម្ម។"
 
-#: src/features/objects/components/field-editor.tsx:617
+#: src/features/objects/components/field-editor.tsx:619
 msgid "Add checklist item"
 msgstr "បន្ថែមធាតុបញ្ជី"
 
@@ -178,7 +230,7 @@ msgstr "បន្ថែមជួរឈរ"
 msgid "Add field"
 msgstr "បន្ថែមប្រអប់"
 
-#: src/features/objects/components/field-editor.tsx:635
+#: src/features/objects/components/field-editor.tsx:637
 msgid "Add item..."
 msgstr "បន្ថែមធាតុ..."
 
@@ -317,9 +369,9 @@ msgstr "ផ្លូវកាត់គ្រាប់ចុចដែលមាន
 msgid "Back"
 msgstr "ត្រឡប់"
 
-#: ../../../lib/web/src/features/errors/forbidden.tsx:26
-#: ../../../lib/web/src/features/errors/not-found-error.tsx:26
-#: ../../../lib/web/src/features/errors/unauthorized-error.tsx:26
+#: ../../../lib/web/src/features/errors/forbidden.tsx:28
+#: ../../../lib/web/src/features/errors/not-found-error.tsx:28
+#: ../../../lib/web/src/features/errors/unauthorized-error.tsx:28
 msgid "Back to home"
 msgstr "ត្រឡប់ទៅទំព័រដើម"
 
@@ -338,7 +390,7 @@ msgstr "ត្រឡប់ទៅគម្រោង"
 
 #: src/features/requests/components/diff-viewer.tsx:449
 msgid "Binary file not shown"
-msgstr ""
+msgstr "ឯកសារ​គោលពីរ​មិន​ត្រូវ​បាន​បង្ហាញ​ទេ"
 
 #: src/features/objects/components/object-links.tsx:49
 #: src/features/objects/components/object-links.tsx:179
@@ -378,7 +430,7 @@ msgstr "អាចជាកូននៃ"
 #: ../../../lib/web/src/features/access/access-dialog.tsx:328
 #: ../../../lib/web/src/features/access/access-list.tsx:263
 #: ../../../lib/web/src/features/accounts/account-add.tsx:188
-#: ../../../lib/web/src/features/accounts/account-verify.tsx:89
+#: ../../../lib/web/src/features/accounts/account-verify.tsx:91
 #: src/features/board/components/board-column.tsx:606
 #: src/features/editor/components/option-dialog.tsx:146
 #: src/features/objects/components/comment-thread.tsx:185
@@ -460,22 +512,23 @@ msgstr "សម្អាត"
 msgid "Clear all"
 msgstr "សម្អាតទាំងអស់"
 
-#: ../../../lib/web/src/components/data-table/faceted-filter.tsx:140
+#: ../../../lib/web/src/components/data-table/faceted-filter.tsx:144
 msgid "Clear filters"
 msgstr "សម្អាតតម្រង"
 
-#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:167
-#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:171
+#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:177
+#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:181
 msgid "Clear selection"
 msgstr "សម្អាតការជ្រើសរើស"
 
-#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:168
+#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:178
+#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:185
 msgid "Clear selection (Escape)"
 msgstr "សម្អាតការជ្រើសរើស (Escape)"
 
 #: ../../../lib/web/src/components/ui/dialog.tsx:78
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:354
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:357
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:358
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:361
 #: ../../../lib/web/src/components/ui/sheet.tsx:79
 #: src/features/objects/components/create-object-dialog.tsx:419
 #: src/features/objects/components/create-object-dialog.tsx:424
@@ -491,8 +544,8 @@ msgstr "បិទ"
 msgid "Close dialog"
 msgstr "បិទប្រអប់"
 
-#: ../../../lib/web/src/components/layout/app-sidebar.tsx:107
-#: ../../../lib/web/src/components/layout/app-sidebar.tsx:112
+#: ../../../lib/web/src/components/layout/app-sidebar.tsx:108
+#: ../../../lib/web/src/components/layout/app-sidebar.tsx:113
 msgid "Close navigation"
 msgstr "បិទការនាំផ្លូវ"
 
@@ -657,6 +710,7 @@ msgid "Custom"
 msgstr "ផ្ទាល់ខ្លួន"
 
 #: ../../../lib/web/src/components/config-drawer.tsx:218
+#: ../../../lib/web/src/components/theme-switch.tsx:52
 #: ../../../lib/web/src/lib/preference-utils.ts:20
 msgid "Dark"
 msgstr "ងងឹត"
@@ -857,8 +911,8 @@ msgstr "រួចរាល់"
 msgid "Double click on a column to add content"
 msgstr "ចុចពីរដងលើជួរឈរដើម្បីបន្ថែមមាតិកា"
 
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:338
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:348
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:342
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:352
 #: src/features/objects/components/object-attachments.tsx:193
 msgid "Download"
 msgstr "ទាញយក"
@@ -1045,6 +1099,10 @@ msgstr "បរាជ័យក្នុងការនាំចូលទិន្
 msgid "Failed to import design"
 msgstr "បរាជ័យក្នុងការនាំចូលការរចនា"
 
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:263
+msgid "Failed to load image"
+msgstr "បរាជ័យក្នុងការផ្ទុករូបភាព"
+
 #: src/features/objects/components/object-detail-panel.tsx:329
 #: src/features/objects/components/object-detail-panel.tsx:332
 msgid "Failed to load item"
@@ -1062,6 +1120,10 @@ msgstr "បរាជ័យក្នុងការផ្ទុកការរច
 #: src/stores/projects-store.ts:31
 msgid "Failed to load projects"
 msgstr "បរាជ័យក្នុងការផ្ទុកគម្រោង"
+
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:263
+msgid "Failed to load video"
+msgstr "បរាជ័យក្នុងការផ្ទុកវីដេអូ"
 
 #: src/features/requests/components/merge-button.tsx:97
 msgid "Failed to merge"
@@ -1195,29 +1257,29 @@ msgstr "ពីរូបរាង"
 msgid "Full layout"
 msgstr "ប្លង់ពេញលេញ"
 
-#: ../../../lib/web/src/features/errors/forbidden.tsx:24
-#: ../../../lib/web/src/features/errors/not-found-error.tsx:24
-#: ../../../lib/web/src/features/errors/unauthorized-error.tsx:24
+#: ../../../lib/web/src/features/errors/forbidden.tsx:26
+#: ../../../lib/web/src/features/errors/not-found-error.tsx:26
+#: ../../../lib/web/src/features/errors/unauthorized-error.tsx:26
 msgid "Go back"
 msgstr "ត្រឡប់ក្រោយ"
 
-#: ../../../lib/web/src/components/data-table/pagination.tsx:78
+#: ../../../lib/web/src/components/data-table/pagination.tsx:82
 msgid "Go to first page"
 msgstr "ទៅទំព័រដំបូង"
 
-#: ../../../lib/web/src/components/data-table/pagination.tsx:124
+#: ../../../lib/web/src/components/data-table/pagination.tsx:128
 msgid "Go to last page"
 msgstr "ទៅទំព័រចុងក្រោយ"
 
-#: ../../../lib/web/src/components/data-table/pagination.tsx:115
+#: ../../../lib/web/src/components/data-table/pagination.tsx:119
 msgid "Go to next page"
 msgstr "ទៅទំព័របន្ទាប់"
 
-#: ../../../lib/web/src/components/data-table/pagination.tsx:102
+#: ../../../lib/web/src/components/data-table/pagination.tsx:106
 msgid "Go to page {pageNumber}"
 msgstr "ទៅទំព័រ {pageNumber}"
 
-#: ../../../lib/web/src/components/data-table/pagination.tsx:87
+#: ../../../lib/web/src/components/data-table/pagination.tsx:91
 msgid "Go to previous page"
 msgstr "ទៅទំព័រមុន"
 
@@ -1248,9 +1310,19 @@ msgstr "ដើម"
 msgid "Hot"
 msgstr "ក្ដៅ"
 
+#: src/features/editor/components/edit-dialogs.tsx:755
+#: src/features/editor/components/edit-dialogs.tsx:1075
+msgid "ID"
+msgstr "លេខសម្គាល់"
+
 #: src/routes/_authenticated/$projectId_.settings.tsx:297
 msgid "Identity"
 msgstr "អត្តសញ្ញាណ"
+
+#. placeholder {0}: currentMedia.name
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:247
+msgid "Image viewer: {0}"
+msgstr "កម្មវិធីមើលរូបភាព៖ {0}"
 
 #: ../../../lib/web/src/lib/preference-utils.ts:86
 msgid "Imperial"
@@ -1277,7 +1349,7 @@ msgstr "ខាងក្នុង"
 msgid "Interests"
 msgstr "ចំណាប់អារម្មណ៍"
 
-#: src/features/objects/components/field-editor.tsx:478
+#: src/features/objects/components/field-editor.tsx:480
 msgid "Invalid date"
 msgstr "កាលបរិច្ឆេទមិនត្រឹមត្រូវ"
 
@@ -1289,6 +1361,10 @@ msgstr "ឯកសារ JSON មិនត្រឹមត្រូវ"
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:245
 msgid "Invalid verification code"
 msgstr "កូដផ្ទៀងផ្ទាត់មិនត្រឹមត្រូវ"
+
+#: ../../../lib/web/src/features/errors/not-found-error.tsx:18
+msgid "It seems like the page you're looking for <0/>does not exist or might have been removed."
+msgstr "ហាក់ដូចជាទំព័រដែលអ្នកកំពុងស្វែងរក <0/>មិនមាន ឬត្រូវបានលុបចេញ។"
 
 #: src/features/objects/components/object-detail-panel.tsx:409
 msgid "Item details"
@@ -1318,6 +1394,7 @@ msgid "Left to Right"
 msgstr "ឆ្វេងទៅស្ដាំ"
 
 #: ../../../lib/web/src/components/config-drawer.tsx:213
+#: ../../../lib/web/src/components/theme-switch.tsx:45
 #: ../../../lib/web/src/lib/preference-utils.ts:19
 msgid "Light"
 msgstr "ភ្លឺ"
@@ -1361,8 +1438,8 @@ msgstr "កំពុងផ្ទុកគំរូ..."
 #: ../../../lib/web/src/components/ui/load-more.tsx:35
 #: ../../../lib/web/src/features/document/document-page.tsx:90
 #: src/routes/_authenticated/$projectId/index.tsx:207
-msgid "Loading…"
-msgstr "កំពុងផ្ទុក…"
+msgid "Loading..."
+msgstr "កំពុងផ្ទុក..."
 
 #: ../../../lib/web/src/components/layout/nav-user.tsx:101
 #: ../../../lib/web/src/components/layout/nav-user.tsx:167
@@ -1390,8 +1467,8 @@ msgstr "កំពុងចាកចេញ…"
 msgid "Manual"
 msgstr "សៀវភៅណែនាំ"
 
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:92
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:99
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:93
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:100
 #: ../../../lib/web/src/components/notifications-dropdown.tsx:224
 msgid "Mark all as read"
 msgstr "សម្គាល់ទាំងអស់ថាបានអាន"
@@ -1495,8 +1572,8 @@ msgstr "{className} ថ្មី"
 msgid "Next"
 msgstr "បន្ទាប់"
 
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:388
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:393
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:392
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:397
 msgid "Next image"
 msgstr "រូបភាពបន្ទាប់"
 
@@ -1582,7 +1659,7 @@ msgid "No repositories available"
 msgstr "មិនមានឃ្លាំង"
 
 #: ../../../lib/web/src/components/command-menu.tsx:55
-#: ../../../lib/web/src/components/data-table/faceted-filter.tsx:90
+#: ../../../lib/web/src/components/data-table/faceted-filter.tsx:94
 msgid "No results found."
 msgstr "រកមិនឃើញលទ្ធផល។"
 
@@ -1655,6 +1732,11 @@ msgstr "រកមិនឃើញ"
 #: ../../../lib/web/src/components/notifications-dropdown.tsx:261
 msgid "Notifications"
 msgstr "ការជូនដំណឹង"
+
+#. placeholder {0}: unread.length
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:86
+msgid "Notifications: {0}"
+msgstr "ការជូនដំណឹង៖ {0}"
 
 #: src/components/view-options-bar.tsx:42
 #: src/features/editor/components/add-dialogs.tsx:138
@@ -1756,6 +1838,11 @@ msgstr "ផ្សេងទៀត"
 msgid "Owner"
 msgstr "ម្ចាស់"
 
+#: ../../../lib/web/src/components/data-table/pagination.tsx:43
+#: ../../../lib/web/src/components/data-table/pagination.tsx:71
+msgid "Page {currentPage} of {totalPages}"
+msgstr "ទំព័រ {currentPage} នៃ {totalPages}"
+
 #: src/features/objects/components/create-object-dialog.tsx:442
 #: src/features/objects/components/object-detail-panel.tsx:526
 msgid "Parent"
@@ -1787,6 +1874,10 @@ msgstr "សូមបន្ថែមថ្នាក់មួយ ឬច្រើ�
 msgid "Please check your internet connection and try again."
 msgstr "សូមពិនិត្យការតភ្ជាប់អ៊ីនធឺណិតរបស់អ្នក រួចព្យាយាមម្តងទៀត។"
 
+#: ../../../lib/web/src/features/errors/unauthorized-error.tsx:18
+msgid "Please log in with the appropriate credentials <0/> to access this resource."
+msgstr "សូមចូលដោយប្រើព័ត៌មានសម្គាល់ត្រឹមត្រូវ <0/> ដើម្បីចូលប្រើធនធាននេះ។"
+
 #: src/features/projects/components/create-project-dialog.tsx:103
 msgid "Please select a template"
 msgstr "សូមជ្រើសរើសគំរូ"
@@ -1804,8 +1895,8 @@ msgstr "សូមរង់ចាំបន្តិច ហើយព្យាយ�
 msgid "Prefix"
 msgstr "បុព្វបទ"
 
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:373
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:378
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:377
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:382
 msgid "Previous image"
 msgstr "រូបភាពមុន"
 
@@ -1938,6 +2029,11 @@ msgstr "យកចេញ"
 msgid "Remove access rule"
 msgstr "យកច្បាប់ចូលប្រើចេញ"
 
+#. placeholder {0}: formatSubject(subject, data.name)
+#: ../../../lib/web/src/features/access/access-list.tsx:259
+msgid "Remove access rule for \"{0}\"?"
+msgstr "លុបច្បាប់ចូលប្រើសម្រាប់ \"{0}\"?"
+
 #: ../../../lib/web/src/features/access/access-list.tsx:257
 msgid "Remove access?"
 msgstr "យកសិទ្ធិចូលប្រើចេញ?"
@@ -1953,7 +2049,7 @@ msgstr "យកវាល {0} ចេញ"
 msgid "Remove interest"
 msgstr "យកចំណាប់អារម្មណ៍ចេញ"
 
-#: src/features/objects/components/field-editor.tsx:601
+#: src/features/objects/components/field-editor.tsx:603
 msgid "Remove item"
 msgstr "យកធាតុចេញ"
 
@@ -2021,7 +2117,7 @@ msgstr "កំណត់ឡើងវិញ"
 msgid "Reset all settings to default values"
 msgstr "កំណត់ការកំណត់ទាំងអស់ឡើងវិញទៅតម្លៃលំនាំដើម"
 
-#: src/features/requests/components/conflict-list.tsx:37
+#: src/features/requests/components/conflict-list.tsx:40
 msgid "Resolve these conflicts manually before merging."
 msgstr "ដោះស្រាយជម្លោះទាំងនេះដោយដៃមុនពេល merge។"
 
@@ -2042,7 +2138,7 @@ msgstr "ជួរ"
 msgid "Rows group by"
 msgstr "ដាក់ជួរតាម"
 
-#: ../../../lib/web/src/components/data-table/pagination.tsx:63
+#: ../../../lib/web/src/components/data-table/pagination.tsx:65
 msgid "Rows per page"
 msgstr "ជួរក្នុងមួយទំព័រ"
 
@@ -2175,7 +2271,16 @@ msgstr "ជ្រើសរើសចំណូលចិត្តរូបរាង
 msgid "Select..."
 msgstr "ជ្រើសរើស..."
 
-#: ../../../lib/web/src/features/accounts/account-verify.tsx:98
+#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:216
+msgid "selected"
+msgstr "បានជ្រើសរើស"
+
+#. placeholder {0}: getSelectedName()
+#: ../../../lib/web/src/features/access/access-dialog.tsx:309
+msgid "Selected: <0>{0}</0>"
+msgstr "បានជ្រើសរើស៖ <0>{0}</0>"
+
+#: ../../../lib/web/src/features/accounts/account-verify.tsx:100
 msgid "Send again"
 msgstr "ផ្ញើម្តងទៀត"
 
@@ -2351,6 +2456,7 @@ msgid "Switch to view 1-9"
 msgstr "ប្តូរទៅទិដ្ឋភាព 1-9"
 
 #: ../../../lib/web/src/components/config-drawer.tsx:208
+#: ../../../lib/web/src/components/theme-switch.tsx:59
 #: ../../../lib/web/src/lib/preference-utils.ts:21
 #: ../../../lib/web/src/lib/preference-utils.ts:144
 msgid "System"
@@ -2390,6 +2496,10 @@ msgstr "កូដនោះមិនត្រឹមត្រូវ ឬផុត�
 msgid "The requested content could not be found."
 msgstr "រកមិនឃើញខ្លឹមសារដែលបានស្នើសុំទេ។"
 
+#: ../../../lib/web/src/features/errors/maintenance-error.tsx:15
+msgid "The site is not available at the moment."
+msgstr "គេហទំព័រមិនអាចប្រើបាននៅពេលនេះទេ។"
+
 #: ../../../lib/web/src/components/config-drawer.tsx:194
 msgid "Theme"
 msgstr "រូបរាង"
@@ -2406,6 +2516,10 @@ msgstr "សំណើបញ្ចូលគ្នានេះត្រូវបា
 #: src/features/requests/components/request-panel.tsx:372
 msgid "This merge request is a draft and cannot be merged."
 msgstr "សំណើបញ្ចូលគ្នានេះជាសេចក្តីព្រាង ហើយមិនអាចបញ្ចូលគ្នាបានទេ។"
+
+#: ../../../lib/web/src/components/coming-soon.tsx:14
+msgid "This page has not been created yet."
+msgstr "ទំព័រនេះមិនទាន់ត្រូវបានបង្កើតទេ។"
 
 #: src/routes/_authenticated/$projectId_.settings.tsx:210
 msgid "This project could not be loaded right now."
@@ -2445,6 +2559,10 @@ msgstr "ចំណងជើង"
 #: src/features/editor/components/edit-dialogs.tsx:764
 msgid "Title field"
 msgstr "វាលចំណងជើង"
+
+#: ../../../lib/web/src/components/travelling-picker.tsx:220
+msgid "To"
+msgstr "ទៅ"
 
 #: ../../../lib/web/src/components/data-table/view-options.tsx:37
 msgid "Toggle columns"
@@ -2583,7 +2701,7 @@ msgstr "កំពុងឈប់ជាវ..."
 
 #: src/features/objects/components/object-links.tsx:150
 msgid "Untitled"
-msgstr ""
+msgstr "គ្មានចំណងជើង"
 
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:135
 msgid "Unverified"
@@ -2623,7 +2741,7 @@ msgstr "ប្រើសម្រាប់លេខសម្គាល់ដែល
 msgid "User"
 msgstr "អ្នកប្រើប្រាស់"
 
-#: ../../../lib/web/src/features/accounts/account-verify.tsx:71
+#: ../../../lib/web/src/features/accounts/account-verify.tsx:73
 msgid "Verification code"
 msgstr "កូដផ្ទៀងផ្ទាត់"
 
@@ -2637,7 +2755,7 @@ msgstr "ការផ្ទៀងផ្ទាត់បរាជ័យ"
 
 #: ../../../lib/web/src/components/step-up-dialog.tsx:388
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:172
-#: ../../../lib/web/src/features/accounts/account-verify.tsx:109
+#: ../../../lib/web/src/features/accounts/account-verify.tsx:111
 msgid "Verify"
 msgstr "ផ្ទៀងផ្ទាត់"
 
@@ -2649,6 +2767,11 @@ msgstr "ផ្ទៀងផ្ទាត់អាសយដ្ឋានអ៊ីម
 msgid "Video thumbnail"
 msgstr "រូបភាពតូចវីដេអូ"
 
+#. placeholder {0}: currentMedia.name
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:246
+msgid "Video viewer: {0}"
+msgstr "កម្មវិធីមើលវីដេអូ៖ {0}"
+
 #: ../../../lib/web/src/components/data-table/view-options.tsx:33
 msgid "View"
 msgstr "មើល"
@@ -2657,8 +2780,8 @@ msgstr "មើល"
 msgid "View all"
 msgstr "មើលទាំងអស់"
 
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:105
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:113
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:106
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:114
 msgid "View all notifications"
 msgstr "មើលការជូនដំណឹងទាំងអស់"
 
@@ -2699,6 +2822,11 @@ msgstr "បានមើលតែប៉ុណ្ណោះ"
 msgid "We have auto-selected the best matching template."
 msgstr "យើងបានជ្រើសរើសគំរូដែលសមស្របបំផុតដោយស្វ័យប្រវត្តិ។"
 
+#. placeholder {0}: account.identifier
+#: ../../../lib/web/src/features/accounts/account-verify.tsx:63
+msgid "We sent a verification code to <0>{0}</0>. Enter the code below to verify your email address."
+msgstr "យើងបានផ្ញើលេខកូដផ្ទៀងផ្ទាត់ទៅ <0>{0}</0>។ បញ្ចូលលេខកូដខាងក្រោមដើម្បីផ្ទៀងផ្ទាត់អាសយដ្ឋានអ៊ីមែលរបស់អ្នក។"
+
 #: ../../../lib/web/src/features/errors/maintenance-error.tsx:16
 msgid "We'll be back online shortly."
 msgstr "យើងនឹងត្រឡប់មកដំណើរការវិញឆាប់ៗនេះ។"
@@ -2718,6 +2846,10 @@ msgstr "អ្នកមិនមានសិទ្ធិចូលប្រើផ
 #: src/routes/_authenticated/$projectId/index.tsx:124
 msgid "You don't have access to this project."
 msgstr "អ្នកមិនមានសិទ្ធិចូលប្រើគម្រោងនេះទេ។"
+
+#: ../../../lib/web/src/features/errors/forbidden.tsx:18
+msgid "You don't have necessary permission <0/>to view this resource."
+msgstr "អ្នកមិនមានការអនុញ្ញាតចាំបាច់ <0/>ដើម្បីមើលធនធាននេះទេ។"
 
 #: src/features/projects/pages/projects-list-page.tsx:98
 msgid "You have no projects yet."

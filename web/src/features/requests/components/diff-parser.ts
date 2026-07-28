@@ -10,6 +10,8 @@ export interface DiffFile {
   hunks: DiffHunk[];
   additions: number;
   deletions: number;
+  /** Binary files carry no hunks — the viewer shows a placeholder instead. */
+  isBinary: boolean;
 }
 
 interface DiffHunk {
@@ -49,6 +51,10 @@ export function parseDiff(raw: string): DiffFile[] {
       status = "renamed";
     }
 
+    // A binary file is encoded as a header plus a single "Binary files … differ"
+    // line and no hunks at all, so it cannot be recognised by its hunks.
+    const isBinary = lines.some((l) => l.startsWith("Binary files "));
+
     // Parse hunks
     const hunks: DiffHunk[] = [];
     let currentHunk: DiffHunk | null = null;
@@ -58,6 +64,12 @@ export function parseDiff(raw: string): DiffFile[] {
     let deletions = 0;
 
     for (const line of lines) {
+      // Splitting on "\n" leaves an empty string for the section's final
+      // newline. Every real hunk line carries a prefix byte — a blank context
+      // line is " ", never "" — so an empty string here is always that
+      // artefact. Without this it was parsed as a context line and rendered as
+      // an extra numbered blank row at the end of every file.
+      if (line === "") continue;
       if (line.startsWith("@@")) {
         const match = line.match(/@@ -(\d+)(?:,\d+)? \+(\d+)(?:,\d+)? @@(.*)/);
         if (match) {
@@ -98,7 +110,10 @@ export function parseDiff(raw: string): DiffFile[] {
       }
     }
 
-    if (hunks.length > 0) {
+    // Keep any section that names a file. Gating on hunks alone silently
+    // dropped binary files, so adding an image to a merge request listed
+    // nothing — and a binary-only change rendered "No changes to display".
+    if (hunks.length > 0 || (isBinary && newPath)) {
       files.push({
         path: newPath,
         oldPath: oldPath !== newPath ? oldPath : undefined,
@@ -106,6 +121,7 @@ export function parseDiff(raw: string): DiffFile[] {
         hunks,
         additions,
         deletions,
+        isBinary,
       });
     }
   }

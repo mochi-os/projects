@@ -8,7 +8,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Trans, useLingui } from '@lingui/react/macro'
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Loader2, Rows3, Columns2 } from "lucide-react";
-import { EmptyState, GeneralError, Main, PageHeader, usePageTitle, useAuthStore } from "@mochi/web";
+import { EmptyState, GeneralError, Main, PageHeader, usePageTitle, useAuthStore, isInShell } from "@mochi/web";
 import projectsApi from "@/api/projects";
 import { DiffViewer } from "@/features/requests/components/diff-viewer";
 
@@ -88,8 +88,13 @@ function DiffPage() {
     );
   }
 
+  // Every other page routes through AuthenticatedLayout, which reserves this
+  // space so a page's own content clears the shell's fixed app-switcher
+  // overlay (see its "ps-24" comment). This page is standalone — no sidebar,
+  // so it skips that layout entirely — and picked up the overlap because it
+  // never applied the same offset itself.
   return (
-    <div className="h-svh flex flex-col overflow-hidden">
+    <div className={`h-svh flex flex-col overflow-hidden ${isInShell() ? "md:ps-24" : ""}`}>
       <PageHeader
         title={`${source} → ${target}`}
         actions={

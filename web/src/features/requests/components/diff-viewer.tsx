@@ -442,7 +442,13 @@ export function DiffViewer({ diff, viewStyle }: DiffViewerProps) {
           />
           {!collapsed[file.path] && (
             <div className="overflow-x-auto">
-              {viewStyle === "split" ? (
+              {file.isBinary ? (
+                // Binary files carry no hunks — say so rather than render an
+                // empty body, which reads as "nothing changed".
+                <p className="text-sm text-muted-foreground px-3 py-4">
+                  <Trans>Binary file not shown</Trans>
+                </p>
+              ) : viewStyle === "split" ? (
                 <SplitView file={file} />
               ) : (
                 <UnifiedView file={file} />

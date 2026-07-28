@@ -66,15 +66,24 @@ msgstr "{0} naiiwan"
 msgid "{0} files changed"
 msgstr "{0} mga file na binago"
 
+#. placeholder {0}: item.label
+#: ../../../lib/web/src/components/config-drawer.tsx:160
+msgid "{0} option preview"
+msgstr ""
+
 #. placeholder {0}: project.project.name
 #: src/routes/_authenticated/$projectId_.settings.tsx:122
 #: src/routes/_authenticated/$projectId_.settings.tsx:222
 msgid "{0} settings"
 msgstr "Mga setting ng {0}"
 
-#: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:173
+#: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:174
 msgid "{entityLabel} name"
 msgstr "Pangalan ng {entityLabel}"
+
+#: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:99
+msgid "{entityLabel} name is required"
+msgstr ""
 
 #: ../../../lib/web/src/components/data-table/bulk-actions.tsx:210
 msgid "{selectedCount, plural, one {{entityName} selected} other {{manyName} selected}}"
@@ -95,6 +104,10 @@ msgstr "{selectedCount, plural, one {Mga bulk action para sa # napiling {entityN
 #: src/features/board/components/board-column.tsx:522
 msgid "{totalCount, plural, one {# item} other {# items}}"
 msgstr "{totalCount, plural, one {# item} other {# na item}}"
+
+#: ../../../lib/web/src/components/layout/mochi-menu.tsx:132
+msgid "{unreadCount, plural, one {Open menu (# unread notification)} other {Open menu (# unread notifications)}}"
+msgstr ""
 
 #. placeholder {0}: data.ahead
 #: src/features/requests/components/merge-status.tsx:76
@@ -138,7 +151,7 @@ msgstr "Tinanggihan ang access"
 msgid "Access Forbidden"
 msgstr "Bawal ang access"
 
-#: ../../../lib/web/src/features/access/access-list.tsx:192
+#: ../../../lib/web/src/features/access/access-list.tsx:197
 msgid "Access level"
 msgstr "Antas ng access"
 
@@ -178,6 +191,7 @@ msgstr "Na-verify ang account"
 msgid "Activity"
 msgstr "Aktibidad"
 
+#: ../../../lib/web/src/features/access/access-dialog.tsx:332
 #: ../../../lib/web/src/features/accounts/account-add.tsx:196
 #: src/features/objects/components/field-editor.tsx:649
 #: src/features/requests/components/request-panel.tsx:103
@@ -238,7 +252,7 @@ msgstr "Magdagdag ng item..."
 msgid "Add link"
 msgstr "Magdagdag ng link"
 
-#: ../../../lib/web/src/features/accounts/account-picker.tsx:101
+#: ../../../lib/web/src/features/accounts/account-picker.tsx:102
 msgid "Add new account"
 msgstr "Magdagdag ng bagong account"
 
@@ -254,6 +268,7 @@ msgid "Add rule"
 msgstr "Magdagdag ng panuntunan"
 
 #: ../../../lib/web/src/components/post-tags.tsx:137
+#: ../../../lib/web/src/components/tag-input.tsx:40
 msgid "Add tag..."
 msgstr "Magdagdag ng tag..."
 
@@ -273,7 +288,11 @@ msgstr "Idagdag sa mga umiiral na notification"
 msgid "Add view"
 msgstr "Magdagdag ng view"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:71
+#: ../../../lib/web/src/features/access/access-dialog.tsx:332
+msgid "Adding..."
+msgstr "Idinadagdag..."
+
+#: ../../../lib/web/src/components/config-drawer.tsx:72
 msgid "Adjust the appearance and layout to suit your preferences."
 msgstr "Ayusin ang hitsura at layout ayon sa iyong kagustuhan."
 
@@ -288,6 +307,11 @@ msgstr "Lahat"
 #: src/components/layout/projects-layout.tsx:53
 msgid "All projects"
 msgstr "Lahat ng project"
+
+#. placeholder {0}: entityLabel.toLowerCase()
+#: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:85
+msgid "Allow anyone to search for {0}"
+msgstr ""
 
 #: src/features/projects/components/create-project-dialog.tsx:341
 msgid "Allow anyone to search for project"
@@ -308,6 +332,19 @@ msgstr "May naganap na error"
 #: ../../../lib/web/src/lib/api-response-interceptors.ts:256
 msgid "An unexpected error occurred"
 msgstr "May naganap na hindi inaasahang error"
+
+#: ../../../lib/web/src/features/accounts/types.ts:16
+msgid "Android push"
+msgstr ""
+
+#: ../../../lib/web/src/features/access/access-list.tsx:45
+#: ../../../lib/web/src/features/access/types.ts:42
+msgid "Anyone"
+msgstr "Kahit sino"
+
+#: ../../../lib/web/src/features/access/types.ts:41
+msgid "Anyone who is logged in"
+msgstr ""
 
 #. placeholder {0}: deleteTarget?.name
 #: src/features/objects/components/object-attachments.tsx:249
@@ -356,6 +393,11 @@ msgstr "I-attach ang mga file ng komento"
 msgid "Attach reply files"
 msgstr "I-attach ang mga file ng sagot"
 
+#: ../../../lib/web/src/features/access/access-list.tsx:46
+#: ../../../lib/web/src/features/access/types.ts:41
+msgid "Authenticated users"
+msgstr "Mga naka-authenticate na user"
+
 #: ../../../lib/web/src/components/step-up-dialog.tsx:315
 msgid "Authenticator code"
 msgstr "Code ng authenticator"
@@ -364,7 +406,15 @@ msgstr "Code ng authenticator"
 msgid "Available keyboard shortcuts"
 msgstr "Mga available na keyboard shortcut"
 
-#: ../../../lib/web/src/components/place-picker.tsx:155
+#: ../../../lib/web/src/components/entity-avatar.tsx:99
+msgid "Avatar"
+msgstr "Avatar"
+
+#: ../../../lib/web/src/components/entity-avatar.tsx:99
+msgid "Avatar for {name}"
+msgstr ""
+
+#: ../../../lib/web/src/components/place-picker.tsx:156
 #: src/features/projects/components/create-project-dialog.tsx:495
 msgid "Back"
 msgstr "Bumalik"
@@ -387,6 +437,10 @@ msgstr "Bumalik sa project"
 #: src/routes/_authenticated/$projectId/index.tsx:138
 msgid "Back to projects"
 msgstr "Bumalik sa mga project"
+
+#: ../../../lib/web/src/components/entity-banner.tsx:17
+msgid "Banner"
+msgstr ""
 
 #: src/features/requests/components/diff-viewer.tsx:449
 msgid "Binary file not shown"
@@ -414,6 +468,10 @@ msgstr "Palakasin ang interes"
 msgid "Border colour"
 msgstr "Kulay ng border"
 
+#: ../../../lib/web/src/features/accounts/types.ts:13
+msgid "Browser notifications"
+msgstr "Mga notification ng browser"
+
 #: src/routes/_authenticated/$projectId/design.tsx:300
 msgid "Built-in templates"
 msgstr "Mga built-in na template"
@@ -425,10 +483,10 @@ msgstr "Maaaring maging child ng"
 #: ../../../lib/web/src/components/responsive-confirm-dialog.tsx:67
 #: ../../../lib/web/src/components/step-up-dialog.tsx:363
 #: ../../../lib/web/src/components/travelling-picker.tsx:308
-#: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:248
+#: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:249
 #: ../../../lib/web/src/components/ui/editable-field-row.tsx:132
 #: ../../../lib/web/src/features/access/access-dialog.tsx:328
-#: ../../../lib/web/src/features/access/access-list.tsx:263
+#: ../../../lib/web/src/features/access/access-list.tsx:268
 #: ../../../lib/web/src/features/accounts/account-add.tsx:188
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:91
 #: src/features/board/components/board-column.tsx:606
@@ -458,6 +516,10 @@ msgstr "Category para sa notification na ito"
 msgid "Change notification category"
 msgstr "Baguhin ang category ng notification"
 
+#: ../../../lib/web/src/components/notifications-dropdown.tsx:198
+msgid "Check \"All\" to see your past notifications."
+msgstr "Piliin ang \"Lahat\" para makita ang mga dating notification."
+
 #: src/features/editor/components/add-dialogs.tsx:135
 msgid "Checkbox"
 msgstr "Checkbox"
@@ -474,19 +536,19 @@ msgstr "Checklist"
 msgid "Choose a template"
 msgstr "Pumili ng template"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:328
+#: ../../../lib/web/src/components/config-drawer.tsx:329
 msgid "Choose between default expanded, compact icon-only, or full layout mode"
 msgstr "Pumili sa pagitan ng default expanded, compact icon-only, o full layout mode"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:270
+#: ../../../lib/web/src/components/config-drawer.tsx:271
 msgid "Choose between inset, floating, or standard sidebar layout"
 msgstr "Pumili sa pagitan ng inset, floating, o standard na sidebar layout"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:371
+#: ../../../lib/web/src/components/config-drawer.tsx:372
 msgid "Choose between left-to-right or right-to-left site direction"
 msgstr "Pumili sa pagitan ng kaliwa-pakanan o kanan-pakaliwa na direksyon ng site"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:226
+#: ../../../lib/web/src/components/config-drawer.tsx:227
 msgid "Choose between system preference, light mode, or dark mode"
 msgstr "Pumili sa pagitan ng system preference, light mode, o dark mode"
 
@@ -499,8 +561,8 @@ msgstr "Pumili ng wika"
 msgid "Classes"
 msgstr "Mga class"
 
-#: ../../../lib/web/src/components/colour-picker.tsx:269
-#: ../../../lib/web/src/components/colour-picker.tsx:350
+#: ../../../lib/web/src/components/colour-picker.tsx:270
+#: ../../../lib/web/src/components/colour-picker.tsx:351
 #: ../../../lib/web/src/components/travelling-picker.tsx:164
 #: ../../../lib/web/src/components/travelling-picker.tsx:170
 #: ../../../lib/web/src/components/travelling-picker.tsx:231
@@ -508,13 +570,17 @@ msgstr "Mga class"
 msgid "Clear"
 msgstr "Burahin"
 
-#: ../../../lib/web/src/components/filter-bar.tsx:73
+#: ../../../lib/web/src/components/filter-bar.tsx:74
 msgid "Clear all"
 msgstr "Burahin lahat"
 
 #: ../../../lib/web/src/components/data-table/faceted-filter.tsx:144
 msgid "Clear filters"
 msgstr "Burahin ang mga filter"
+
+#: ../../../lib/web/src/components/search-input.tsx:26
+msgid "Clear search"
+msgstr "Burahin ang paghahanap"
 
 #: ../../../lib/web/src/components/data-table/bulk-actions.tsx:177
 #: ../../../lib/web/src/components/data-table/bulk-actions.tsx:181
@@ -589,6 +655,10 @@ msgstr "Komportable"
 msgid "Coming Soon!"
 msgstr "Malapit nang dumating!"
 
+#: ../../../lib/web/src/components/ui/command.tsx:34
+msgid "Command Palette"
+msgstr ""
+
 #: src/routes/_authenticated/$projectId_.settings.tsx:405
 msgid "Comment and view"
 msgstr "Magkomento at tingnan"
@@ -598,7 +668,7 @@ msgstr "Magkomento at tingnan"
 msgid "Comments ({0})"
 msgstr "Mga komento ({0})"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:315
+#: ../../../lib/web/src/components/config-drawer.tsx:316
 #: ../../../lib/web/src/lib/preference-utils.ts:95
 msgid "Compact"
 msgstr "Compact"
@@ -615,10 +685,26 @@ msgstr "I-configure ang mga setting ng option"
 msgid "Configure view settings"
 msgstr "I-configure ang mga setting ng view"
 
-#: ../../../lib/web/src/components/place-picker.tsx:159
+#: ../../../lib/web/src/components/place-picker.tsx:160
 #: ../../../lib/web/src/components/travelling-picker.tsx:316
 msgid "Confirm"
 msgstr "Kumpirmahin"
+
+#: ../../../lib/web/src/lib/chat-ui.ts:18
+msgid "Connected"
+msgstr "Konektado"
+
+#: ../../../lib/web/src/features/accounts/account-manager.tsx:191
+msgid "Connected accounts"
+msgstr "Mga konektadong account"
+
+#: ../../../lib/web/src/lib/chat-ui.ts:21
+msgid "Connecting..."
+msgstr "Kumokonekta..."
+
+#: ../../../lib/web/src/lib/handle-server-error.ts:18
+msgid "Content not found."
+msgstr "Hindi nahanap ang nilalaman."
 
 #: ../../../lib/web/src/lib/query-client.ts:81
 msgid "Content not modified"
@@ -636,7 +722,15 @@ msgstr "Magpatuloy"
 msgid "Continue with {label}"
 msgstr "Magpatuloy gamit ang {label}"
 
-#: ../../../lib/web/src/components/ui/copy-button.tsx:63
+#: ../../../lib/web/src/lib/toast-utils.ts:42
+msgid "Copied"
+msgstr "Nakopya"
+
+#: ../../../lib/web/src/components/ui/copy-button.tsx:25
+msgid "Copied to clipboard"
+msgstr "Nakopya sa clipboard"
+
+#: ../../../lib/web/src/components/ui/copy-button.tsx:64
 msgid "Copy"
 msgstr "Kopyahin"
 
@@ -663,6 +757,11 @@ msgstr "Hindi ma-verify gamit ang account na iyon. Pakisubukang muli."
 #: src/features/tree/components/tree-view.tsx:697
 msgid "Create"
 msgstr "Gumawa"
+
+#. placeholder {0}: entityLabel.toLowerCase()
+#: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:144
+msgid "Create {0}"
+msgstr ""
 
 #: src/features/objects/components/create-object-dialog.tsx:387
 msgid "Create a new item in this project"
@@ -699,17 +798,22 @@ msgstr "Nagawa"
 msgid "Creating project..."
 msgstr "Gumagawa ng proyekto..."
 
+#: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:258
 #: src/features/objects/components/create-object-dialog.tsx:579
 #: src/features/projects/components/create-project-dialog.tsx:411
 #: src/features/projects/components/create-project-dialog.tsx:498
 msgid "Creating..."
 msgstr "Ginagawa..."
 
-#: ../../../lib/web/src/components/colour-picker.tsx:260
+#: ../../../lib/web/src/components/map-view.tsx:208
+msgid "Current location"
+msgstr "Kasalukuyang lokasyon"
+
+#: ../../../lib/web/src/components/colour-picker.tsx:261
 msgid "Custom"
 msgstr "Pasadya"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:218
+#: ../../../lib/web/src/components/config-drawer.tsx:219
 #: ../../../lib/web/src/components/theme-switch.tsx:52
 #: ../../../lib/web/src/lib/preference-utils.ts:20
 msgid "Dark"
@@ -738,7 +842,7 @@ msgstr "Na-import ang data ({0, plural, one {# object} other {# na object}}, {1,
 msgid "Date"
 msgstr "Petsa"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:310
+#: ../../../lib/web/src/components/config-drawer.tsx:311
 msgid "Default"
 msgstr "Default"
 
@@ -839,6 +943,7 @@ msgstr "Desc"
 msgid "Descending"
 msgstr "Pababa"
 
+#: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:83
 #: src/features/requests/components/request-panel.tsx:308
 #: src/routes/_authenticated/$projectId_.settings.tsx:310
 msgid "Description"
@@ -882,9 +987,18 @@ msgstr "Diff"
 msgid "Diff: {source} → {target}"
 msgstr "Pagkakaiba: {source} → {target}"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:340
+#: ../../../lib/web/src/components/config-drawer.tsx:341
 msgid "Direction"
 msgstr "Direksyon"
+
+#: ../../../lib/web/src/components/person-picker.tsx:214
+msgid "Directory"
+msgstr "Direktoryo"
+
+#: ../../../lib/web/src/lib/chat-ui.ts:25
+#: ../../../lib/web/src/lib/chat-ui.ts:29
+msgid "Disconnected"
+msgstr "Nadiskonekta"
 
 #: ../../../lib/web/src/components/restore-banner.tsx:79
 #: ../../../lib/web/src/components/restore-banner.tsx:85
@@ -985,6 +1099,10 @@ msgstr "I-edit ang piniling card"
 msgid "Edit view"
 msgstr "I-edit ang view"
 
+#: ../../../lib/web/src/features/accounts/types.ts:15
+msgid "Email"
+msgstr ""
+
 #: ../../../lib/web/src/components/step-up-dialog.tsx:289
 msgid "Email code"
 msgstr "Email code"
@@ -1024,6 +1142,10 @@ msgstr "I-export ang data"
 msgid "Export design"
 msgstr "I-export ang design"
 
+#: ../../../lib/web/src/features/accounts/types.ts:22
+msgid "External URL"
+msgstr ""
+
 #: ../../../lib/web/src/lib/preference-utils.ts:136
 msgid "Extra large"
 msgstr "Sobrang laki"
@@ -1032,9 +1154,18 @@ msgstr "Sobrang laki"
 msgid "Failed to add account"
 msgstr "Nabigong magdagdag ng account"
 
+#: ../../../lib/web/src/components/tag-input.tsx:39
+msgid "Failed to add tag"
+msgstr "Nabigong magdagdag ng tag"
+
 #: src/features/requests/components/merge-status.tsx:48
 msgid "Failed to check merge status"
 msgstr "Nabigong i-check ang merge status"
+
+#: ../../../lib/web/src/components/ui/copy-button.tsx:26
+#: ../../../lib/web/src/lib/toast-utils.ts:44
+msgid "Failed to copy"
+msgstr "Nabigong kumopya"
 
 #: src/features/editor/components/design-editor.tsx:113
 msgid "Failed to create class"
@@ -1098,6 +1229,10 @@ msgstr "Hindi na-import ang data"
 #: src/routes/_authenticated/$projectId/design.tsx:114
 msgid "Failed to import design"
 msgstr "Nabigong i-import ang design"
+
+#: ../../../lib/web/src/hooks/use-load-more.ts:74
+msgid "Failed to load"
+msgstr "Nabigong i-load"
 
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:263
 msgid "Failed to load image"
@@ -1207,6 +1342,10 @@ msgstr "Mga field"
 msgid "Files"
 msgstr "Mga file"
 
+#: ../../../lib/web/src/components/data-table/toolbar.tsx:30
+msgid "Filter..."
+msgstr "I-filter..."
+
 #: src/components/layout/projects-layout.tsx:61
 #: src/routes/_authenticated/find.tsx:88
 msgid "Find projects"
@@ -1228,13 +1367,17 @@ msgstr "Mga flag"
 msgid "Flat"
 msgstr "Patag"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:257
+#: ../../../lib/web/src/components/config-drawer.tsx:258
 msgid "Floating"
 msgstr "Floating"
 
 #: ../../../lib/web/src/lib/preference-utils.ts:63
 msgid "Friday"
 msgstr "Biyernes"
+
+#: ../../../lib/web/src/components/person-picker.tsx:207
+msgid "Friends"
+msgstr "Mga kaibigan"
 
 #: ../../../lib/web/src/components/travelling-picker.tsx:153
 msgid "From"
@@ -1253,7 +1396,7 @@ msgstr "Mula sa file"
 msgid "From theme"
 msgstr "Mula sa tema"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:320
+#: ../../../lib/web/src/components/config-drawer.tsx:321
 msgid "Full layout"
 msgstr "Full layout"
 
@@ -1290,6 +1433,11 @@ msgstr "Group"
 #: src/features/editor/components/edit-dialogs.tsx:361
 msgid "Group by"
 msgstr "Pangkatin ayon sa"
+
+#. placeholder {0}: name || subject.slice(1)
+#: ../../../lib/web/src/features/access/access-list.tsx:68
+msgid "Group: {0}"
+msgstr "Grupo: {0}"
 
 #: ../../../lib/web/src/components/data-table/column-header.tsx:70
 msgid "Hide"
@@ -1341,7 +1489,19 @@ msgstr "I-import mula sa backup (opsyonal)"
 msgid "Importing data..."
 msgstr "Ini-import ang data..."
 
-#: ../../../lib/web/src/components/config-drawer.tsx:252
+#: ../../../lib/web/src/features/access/types.ts:42
+msgid "Including anonymous users"
+msgstr ""
+
+#: ../../../lib/web/src/components/faceless-avatar.tsx:69
+msgid "Initials avatar"
+msgstr ""
+
+#: ../../../lib/web/src/components/faceless-avatar.tsx:69
+msgid "Initials avatar for {name}"
+msgstr ""
+
+#: ../../../lib/web/src/components/config-drawer.tsx:253
 msgid "Inset"
 msgstr "Inset"
 
@@ -1358,6 +1518,10 @@ msgstr "Invalid na petsa"
 msgid "Invalid JSON file"
 msgstr "Invalid na JSON file"
 
+#: ../../../lib/web/src/components/tag-input.tsx:38
+msgid "Invalid tag: letters, numbers, spaces, hyphens, and slashes only (max 50 chars)"
+msgstr ""
+
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:245
 msgid "Invalid verification code"
 msgstr "Invalid na verification code"
@@ -1370,6 +1534,10 @@ msgstr "Mukhang ang pahinang hinahanap mo <0/>ay wala o maaaring inalis na."
 msgid "Item details"
 msgstr "Detalye ng item"
 
+#: ../../../lib/web/src/lib/locale-format.ts:62
+msgid "Just now"
+msgstr "Ngayon lang"
+
 #: src/components/keyboard-shortcuts-help.tsx:49
 msgid "Keyboard shortcuts"
 msgstr "Mga keyboard shortcut"
@@ -1379,7 +1547,7 @@ msgstr "Mga keyboard shortcut"
 msgid "Large"
 msgstr "Malaki"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:286
+#: ../../../lib/web/src/components/config-drawer.tsx:287
 #: src/features/editor/components/edit-dialogs.tsx:320
 msgid "Layout"
 msgstr "Layout"
@@ -1389,11 +1557,15 @@ msgstr "Layout"
 msgid "Learn more"
 msgstr "Matuto pa"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:354
+#: ../../../lib/web/src/components/config-drawer.tsx:355
 msgid "Left to Right"
 msgstr "Kaliwa pakanan"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:213
+#: ../../../lib/web/src/components/post-tags.tsx:72
+msgid "Letters, numbers, spaces, and hyphens only"
+msgstr "Mga letra, numero, espasyo, at gitling lamang"
+
+#: ../../../lib/web/src/components/config-drawer.tsx:214
 #: ../../../lib/web/src/components/theme-switch.tsx:45
 #: ../../../lib/web/src/lib/preference-utils.ts:19
 msgid "Light"
@@ -1463,6 +1635,10 @@ msgstr "Matagumpay na nag-log out"
 msgid "Logging out…"
 msgstr "Nagla-log out…"
 
+#: ../../../lib/web/src/features/accounts/account-manager.tsx:192
+msgid "Manage your connected accounts for notifications and services."
+msgstr ""
+
 #: src/components/view-options-bar.tsx:41
 msgid "Manual"
 msgstr "Manwal"
@@ -1476,6 +1652,10 @@ msgstr "Markahan lahat bilang nabasa"
 #: src/features/editor/components/edit-dialogs.tsx:1121
 msgid "Maximum length"
 msgstr "Pinakamataas na haba"
+
+#: ../../../lib/web/src/features/accounts/types.ts:17
+msgid "MCP server"
+msgstr ""
 
 #: ../../../lib/web/src/lib/preference-utils.ts:107
 msgid "Medium"
@@ -1529,6 +1709,10 @@ msgstr "Pinakamababang haba"
 msgid "Missing repo, source, or target parameters"
 msgstr "Kulang ang mga repo, source, o target parameter"
 
+#: ../../../lib/web/src/features/accounts/types.ts:23
+msgid "Mochi web"
+msgstr ""
+
 #: ../../../lib/web/src/lib/preference-utils.ts:59
 msgid "Monday"
 msgstr "Lunes"
@@ -1548,9 +1732,17 @@ msgstr "Aking proyekto"
 msgid "Name"
 msgstr "Pangalan"
 
+#: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:102
+msgid "Name cannot contain angle brackets, backslash, semicolon, quotes or backticks"
+msgstr ""
+
 #: src/features/projects/components/create-project-dialog.tsx:87
 msgid "Name is required"
 msgstr "Kailangan ang pangalan"
+
+#: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:100
+msgid "Name must be 1000 characters or less"
+msgstr "Ang pangalan ay dapat 1000 karakter o mas mababa"
 
 #: ../../../lib/web/src/features/errors/general-error.tsx:53
 #: ../../../lib/web/src/lib/api-response-interceptors.ts:303
@@ -1585,7 +1777,7 @@ msgstr "Walang {parentClassNames} na maaaring idagdag"
 msgid "No access"
 msgstr "Walang access"
 
-#: ../../../lib/web/src/features/access/access-list.tsx:160
+#: ../../../lib/web/src/features/access/access-list.tsx:165
 msgid "No access rules configured. Add rules to control who can access this resource."
 msgstr "Walang naka-configure na access rule. Magdagdag ng mga rule upang kontrolin kung sino ang maaaring mag-access sa resource na ito."
 
@@ -1637,11 +1829,16 @@ msgstr "Walang tugmang object"
 msgid "No merge requests"
 msgstr "Walang merge request"
 
+#: ../../../lib/web/src/components/notifications-dropdown.tsx:193
+msgid "No notifications yet"
+msgstr "Wala pang notification"
+
+#: ../../../lib/web/src/components/person-picker.tsx:84
 #: src/features/objects/components/field-editor.tsx:280
 msgid "No people found"
 msgstr "Walang nakitang tao"
 
-#: ../../../lib/web/src/components/place-picker.tsx:132
+#: ../../../lib/web/src/components/place-picker.tsx:133
 msgid "No places found"
 msgstr "Walang nakitang lugar"
 
@@ -1657,6 +1854,11 @@ msgstr "Walang nakitang proyekto"
 #: src/features/requests/components/repository-select.tsx:64
 msgid "No repositories available"
 msgstr "Walang available na repository"
+
+#: ../../../lib/web/src/components/search-entity-dialog.tsx:82
+#: ../../../lib/web/src/components/search-entity-page.tsx:73
+msgid "No results found"
+msgstr "Walang nahanap na resulta"
 
 #: ../../../lib/web/src/components/command-menu.tsx:55
 #: ../../../lib/web/src/components/data-table/faceted-filter.tsx:94
@@ -1685,6 +1887,7 @@ msgstr "Walang nakitang user"
 msgid "No views"
 msgstr "Walang view"
 
+#: ../../../lib/web/src/components/colour-picker.tsx:345
 #: ../../../lib/web/src/components/person-picker.tsx:350
 #: ../../../lib/web/src/lib/preference-utils.ts:105
 #: ../../../lib/web/src/lib/preference-utils.ts:125
@@ -1744,6 +1947,10 @@ msgstr "Mga notification: {0}"
 msgid "Number"
 msgstr "Numero"
 
+#: ../../../lib/web/src/components/filter-bar.tsx:35
+msgid "On"
+msgstr "Naka-on"
+
 #: ../../../lib/web/src/features/errors/not-found-error.tsx:16
 msgid "Oops! Page Not Found!"
 msgstr "Ay! Hindi Nahanap ang Pahina!"
@@ -1782,6 +1989,10 @@ msgstr "Buksan ang mga aksyon sa column"
 msgid "Open design actions"
 msgstr "Buksan ang mga aksyon ng design"
 
+#: ../../../lib/web/src/components/layout/mochi-menu.tsx:133
+msgid "Open menu"
+msgstr "Buksan ang menu"
+
 #: ../../../lib/web/src/components/layout/top-bar.tsx:63
 #: ../../../lib/web/src/components/layout/top-bar.tsx:68
 msgid "Open navigation"
@@ -1805,8 +2016,8 @@ msgstr "Buksan ang mga aksyon ng pahina"
 msgid "Open selected card"
 msgstr "Buksan ang piniling card"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:57
-#: ../../../lib/web/src/components/config-drawer.tsx:65
+#: ../../../lib/web/src/components/config-drawer.tsx:58
+#: ../../../lib/web/src/components/config-drawer.tsx:66
 msgid "Open theme settings"
 msgstr "Buksan ang mga setting ng theme"
 
@@ -1834,7 +2045,7 @@ msgstr "Mga Opsyon"
 msgid "Other"
 msgstr "Iba pa"
 
-#: ../../../lib/web/src/features/access/access-list.tsx:217
+#: ../../../lib/web/src/features/access/access-list.tsx:222
 msgid "Owner"
 msgstr "May-ari"
 
@@ -1863,6 +2074,10 @@ msgstr "Mga Passkey"
 #: src/features/editor/components/edit-dialogs.tsx:1132
 msgid "Pattern (regex)"
 msgstr "Pattern (regex)"
+
+#: ../../../lib/web/src/components/date-picker.tsx:20
+msgid "Pick a date"
+msgstr "Pumili ng petsa"
 
 #: src/routes/_authenticated/$projectId/index.tsx:756
 #: src/routes/_authenticated/$projectId/index.tsx:790
@@ -1932,6 +2147,10 @@ msgstr "Natanggal ang proyekto"
 msgid "Project link"
 msgstr "Link ng proyekto"
 
+#: ../../../lib/web/src/components/person-picker.tsx:200
+msgid "Project members"
+msgstr "Mga miyembro ng proyekto"
+
 #: src/routes/_authenticated/$projectId_.settings.tsx:207
 msgid "Project not found"
 msgstr "Hindi nahanap ang proyekto"
@@ -1959,6 +2178,10 @@ msgstr "Mga Proyekto"
 msgid "Properties"
 msgstr "Mga katangian"
 
+#: ../../../lib/web/src/features/accounts/types.ts:21
+msgid "Push notification"
+msgstr ""
+
 #: ../../../lib/web/src/lib/preference-utils.ts:117
 msgid "Raised"
 msgstr "Nakaangat"
@@ -1983,8 +2206,8 @@ msgstr "Handa nang pagsamahin"
 msgid "Rebase and merge"
 msgstr "Rebase at pagsamahin"
 
-#: ../../../lib/web/src/components/search-entity-dialog.tsx:216
-#: ../../../lib/web/src/components/search-entity-page.tsx:242
+#: ../../../lib/web/src/components/search-entity-dialog.tsx:217
+#: ../../../lib/web/src/components/search-entity-page.tsx:243
 msgid "Recommended"
 msgstr "Inirerekomenda"
 
@@ -1992,6 +2215,10 @@ msgstr "Inirerekomenda"
 #: src/features/projects/components/recommended-projects.tsx:129
 msgid "Recommended projects"
 msgstr "Mga inirerekomendang proyekto"
+
+#: ../../../lib/web/src/lib/chat-ui.ts:21
+msgid "Reconnecting ({retries})..."
+msgstr ""
 
 #: ../../../lib/web/src/components/layout/authenticated-layout.tsx:133
 msgid "Redirecting to login."
@@ -2014,7 +2241,7 @@ msgstr "Relatibo (5m, 3h, 2d)"
 msgid "Relative within 24 hours, else absolute"
 msgstr "Relatibo sa loob ng 24 na oras, kung hindi ay absolute"
 
-#: ../../../lib/web/src/features/access/access-list.tsx:265
+#: ../../../lib/web/src/features/access/access-list.tsx:270
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:180
 #: src/features/editor/components/add-dialogs.tsx:188
 #: src/features/objects/components/comment-list.tsx:249
@@ -2024,17 +2251,23 @@ msgstr "Relatibo sa loob ng 24 na oras, kung hindi ay absolute"
 msgid "Remove"
 msgstr "Alisin"
 
-#: ../../../lib/web/src/features/access/access-list.tsx:247
-#: ../../../lib/web/src/features/access/access-list.tsx:253
+#. placeholder {0}: filter.label
+#: ../../../lib/web/src/components/filter-bar.tsx:56
+#: ../../../lib/web/src/components/filter-bar.tsx:62
+msgid "Remove {0} filter"
+msgstr "Alisin ang filter na {0}"
+
+#: ../../../lib/web/src/features/access/access-list.tsx:252
+#: ../../../lib/web/src/features/access/access-list.tsx:258
 msgid "Remove access rule"
 msgstr "Alisin ang access rule"
 
 #. placeholder {0}: formatSubject(subject, data.name)
-#: ../../../lib/web/src/features/access/access-list.tsx:259
+#: ../../../lib/web/src/features/access/access-list.tsx:264
 msgid "Remove access rule for \"{0}\"?"
 msgstr "Alisin ang panuntunan sa access para sa \"{0}\"?"
 
-#: ../../../lib/web/src/features/access/access-list.tsx:257
+#: ../../../lib/web/src/features/access/access-list.tsx:262
 msgid "Remove access?"
 msgstr "Alisin ang access?"
 
@@ -2108,12 +2341,17 @@ msgstr "Kinakailangan"
 msgid "Resend email"
 msgstr "Muling ipadala ang email"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:86
-#: ../../../lib/web/src/components/data-table/toolbar.tsx:81
+#: ../../../lib/web/src/components/config-drawer.tsx:87
+#: ../../../lib/web/src/components/data-table/toolbar.tsx:82
 msgid "Reset"
 msgstr "I-reset"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:84
+#: ../../../lib/web/src/components/config-drawer.tsx:122
+#: ../../../lib/web/src/components/config-drawer.tsx:127
+msgid "Reset {title}"
+msgstr ""
+
+#: ../../../lib/web/src/components/config-drawer.tsx:85
 msgid "Reset all settings to default values"
 msgstr "I-reset ang lahat ng setting sa mga default na halaga"
 
@@ -2125,7 +2363,7 @@ msgstr "Ayusin ang mga conflict na ito nang manu-mano bago i-merge."
 msgid "Retry projects load"
 msgstr "Subukang muli i-load ang mga project"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:361
+#: ../../../lib/web/src/components/config-drawer.tsx:362
 msgid "Right to Left"
 msgstr "Kanan papuntang Kaliwa"
 
@@ -2158,6 +2396,9 @@ msgstr "I-save"
 msgid "Saving..."
 msgstr "Sini-save..."
 
+#: ../../../lib/web/src/components/filter-bar.tsx:32
+#: ../../../lib/web/src/components/header-search.tsx:22
+#: ../../../lib/web/src/components/search.tsx:18
 #: src/components/view-options-bar.tsx:144
 msgid "Search"
 msgstr "Maghanap"
@@ -2166,9 +2407,17 @@ msgstr "Maghanap"
 msgid "Search by name, ID, fingerprint, or URL..."
 msgstr "Maghanap ayon sa pangalan, ID, fingerprint, o URL..."
 
-#: ../../../lib/web/src/components/place-picker.tsx:85
+#: ../../../lib/web/src/components/ui/command.tsx:35
+msgid "Search for a command to run..."
+msgstr ""
+
+#: ../../../lib/web/src/components/place-picker.tsx:86
 msgid "Search for a place"
 msgstr "Maghanap ng lugar"
+
+#: ../../../lib/web/src/components/place-picker.tsx:50
+msgid "Search for a place..."
+msgstr ""
 
 #: ../../../lib/web/src/components/travelling-picker.tsx:250
 msgid "Search for destination..."
@@ -2199,13 +2448,15 @@ msgid "Search, watch, and sort this view."
 msgstr "Maghanap, bantayan, at ayusin ang view na ito."
 
 #: ../../../lib/web/src/components/person-picker.tsx:324
+#: ../../../lib/web/src/components/search-entity-dialog.tsx:81
+#: ../../../lib/web/src/components/search-entity-page.tsx:72
 #: src/components/view-options-bar.tsx:148
 #: src/components/view-options-bar.tsx:223
 msgid "Search..."
 msgstr "Maghanap..."
 
-#: ../../../lib/web/src/components/search-entity-dialog.tsx:174
-#: ../../../lib/web/src/components/search-entity-page.tsx:200
+#: ../../../lib/web/src/components/search-entity-dialog.tsx:175
+#: ../../../lib/web/src/components/search-entity-page.tsx:201
 #: ../../../lib/web/src/features/access/access-dialog.tsx:202
 msgid "Searching..."
 msgstr "Naghahanap..."
@@ -2213,6 +2464,11 @@ msgstr "Naghahanap..."
 #: src/features/editor/components/add-dialogs.tsx:139
 msgid "Select"
 msgstr "Pumili"
+
+#. placeholder {0}: item.label.toLowerCase()
+#: ../../../lib/web/src/components/config-drawer.tsx:149
+msgid "Select {0}"
+msgstr ""
 
 #: src/features/editor/components/edit-dialogs.tsx:370
 msgid "Select a field"
@@ -2226,6 +2482,10 @@ msgstr "Pumili ng user, group, o iba pang panuntunan para magbigay ng access."
 msgid "Select access rule"
 msgstr "Pumili ng access rule"
 
+#: ../../../lib/web/src/features/accounts/account-picker.tsx:34
+msgid "Select account"
+msgstr ""
+
 #: ../../../lib/web/src/features/accounts/account-add.tsx:129
 msgid "Select account type"
 msgstr "Pumili ng uri ng account"
@@ -2238,13 +2498,21 @@ msgstr "Pumili ng branch"
 msgid "Select group"
 msgstr "Pumili ng group"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:304
+#: ../../../lib/web/src/components/config-drawer.tsx:305
 msgid "Select layout style"
 msgstr "Pumili ng layout style"
+
+#: ../../../lib/web/src/components/place-picker.tsx:49
+msgid "Select location"
+msgstr "Pumili ng lokasyon"
 
 #: src/components/keyboard-shortcuts-help.tsx:30
 msgid "Select next card"
 msgstr "Piliin ang susunod na card"
+
+#: ../../../lib/web/src/components/person-picker.tsx:83
+msgid "Select person..."
+msgstr ""
 
 #: src/components/keyboard-shortcuts-help.tsx:31
 msgid "Select previous card"
@@ -2254,15 +2522,15 @@ msgstr "Piliin ang nakaraang card"
 msgid "Select repository"
 msgstr "Pumili ng repository"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:246
+#: ../../../lib/web/src/components/config-drawer.tsx:247
 msgid "Select sidebar style"
 msgstr "Pumili ng sidebar style"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:348
+#: ../../../lib/web/src/components/config-drawer.tsx:349
 msgid "Select site direction"
 msgstr "Pumili ng direksyon ng site"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:202
+#: ../../../lib/web/src/components/config-drawer.tsx:203
 msgid "Select theme preference"
 msgstr "Pumili ng theme preference"
 
@@ -2350,8 +2618,8 @@ msgstr "Ipakita ang tulong na ito"
 msgid "Showing {totalShown} of {total}"
 msgstr "Ipinapakita ang {totalShown} sa {total}"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:238
-#: ../../../lib/web/src/components/config-drawer.tsx:262
+#: ../../../lib/web/src/components/config-drawer.tsx:239
+#: ../../../lib/web/src/components/config-drawer.tsx:263
 #: ../../../lib/web/src/components/ui/sidebar.tsx:237
 msgid "Sidebar"
 msgstr "Sidebar"
@@ -2412,7 +2680,7 @@ msgstr "Pero manatiling nakaabang!"
 msgid "Stop watching"
 msgstr "Itigil ang pagmamasid"
 
-#: ../../../lib/web/src/features/access/access-list.tsx:191
+#: ../../../lib/web/src/features/access/access-list.tsx:196
 msgid "Subject"
 msgstr "Paksa"
 
@@ -2426,6 +2694,8 @@ msgstr "Ipasa ang komento"
 msgid "Submit reply"
 msgstr "Ipasa ang sagot"
 
+#: ../../../lib/web/src/components/search-entity-dialog.tsx:83
+#: ../../../lib/web/src/components/search-entity-page.tsx:74
 #: src/features/projects/components/inline-project-search.tsx:205
 #: src/features/projects/components/recommended-projects.tsx:163
 msgid "Subscribe"
@@ -2455,16 +2725,24 @@ msgstr "Linggo"
 msgid "Switch to view 1-9"
 msgstr "Lumipat sa view 1-9"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:208
+#: ../../../lib/web/src/components/config-drawer.tsx:209
 #: ../../../lib/web/src/components/theme-switch.tsx:59
 #: ../../../lib/web/src/lib/preference-utils.ts:21
 #: ../../../lib/web/src/lib/preference-utils.ts:144
 msgid "System"
 msgstr "System"
 
-#: ../../../lib/web/src/components/tag-input.tsx:94
+#: ../../../lib/web/src/components/tag-input.tsx:95
 msgid "Tag"
 msgstr "Tag"
+
+#: ../../../lib/web/src/components/post-tags.tsx:76
+msgid "Tag already exists"
+msgstr "May tag na"
+
+#: ../../../lib/web/src/components/post-tags.tsx:68
+msgid "Tag must be 50 characters or less"
+msgstr "Ang tag ay dapat 50 character o mas kaunti"
 
 #: ../../../lib/web/src/components/post-tags.tsx:101
 #: ../../../lib/web/src/components/post-tags.tsx:115
@@ -2500,11 +2778,11 @@ msgstr "Hindi mahanap ang hiniling na content."
 msgid "The site is not available at the moment."
 msgstr "Hindi available ang site sa ngayon."
 
-#: ../../../lib/web/src/components/config-drawer.tsx:194
+#: ../../../lib/web/src/components/config-drawer.tsx:195
 msgid "Theme"
 msgstr "Theme"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:69
+#: ../../../lib/web/src/components/config-drawer.tsx:70
 msgid "Theme Settings"
 msgstr "Mga Setting ng Theme"
 
@@ -2620,8 +2898,8 @@ msgstr "Top level"
 msgid "Travelling"
 msgstr "Naglalakbay"
 
-#: ../../../lib/web/src/components/search-entity-dialog.tsx:190
-#: ../../../lib/web/src/components/search-entity-page.tsx:216
+#: ../../../lib/web/src/components/search-entity-dialog.tsx:191
+#: ../../../lib/web/src/components/search-entity-page.tsx:217
 msgid "Try adjusting your search terms"
 msgstr "Subukang ayusin ang iyong mga search term"
 
@@ -2669,6 +2947,11 @@ msgstr "Walang nakatalaga"
 msgid "Unauthorized Access"
 msgstr "Hindi Pinahihintulutang Pag-access"
 
+#: ../../../lib/web/src/lib/request.ts:133
+#: ../../../lib/web/src/lib/request.ts:206
+msgid "Unexpected API error"
+msgstr "Hindi inaasahang API error"
+
 #: src/routes/$projectId.diff.tsx:112
 msgid "Unified"
 msgstr "Unified"
@@ -2676,6 +2959,10 @@ msgstr "Unified"
 #: ../../../lib/web/src/lib/preference-utils.ts:87
 msgid "United States"
 msgstr "United States"
+
+#: ../../../lib/web/src/features/accounts/types.ts:29
+msgid "Unknown"
+msgstr "Hindi alam"
 
 #: src/features/projects/pages/projects-list-page.tsx:147
 #: src/features/projects/pages/projects-list-page.tsx:166
@@ -2736,6 +3023,7 @@ msgstr "Gamitin ang iyong passkey"
 msgid "Used for readable IDs like {0}-1, {1}-2"
 msgstr "Ginagamit para sa nababasang IDs gaya ng {0}-1, {1}-2"
 
+#: ../../../lib/web/src/components/layout/mochi-menu.tsx:86
 #: ../../../lib/web/src/features/access/access-dialog.tsx:158
 #: src/features/editor/components/add-dialogs.tsx:141
 msgid "User"
@@ -2810,6 +3098,7 @@ msgstr "Mga view"
 msgid "Watch"
 msgstr "Manood"
 
+#: ../../../lib/web/src/components/filter-bar.tsx:35
 #: src/components/view-options-bar.tsx:237
 msgid "Watched"
 msgstr "Binabantayan"
@@ -2830,6 +3119,10 @@ msgstr "Nagpadala kami ng verification code sa <0>{0}</0>. Ilagay ang code sa ib
 #: ../../../lib/web/src/features/errors/maintenance-error.tsx:16
 msgid "We'll be back online shortly."
 msgstr "Babalik kami online sa lalong madaling panahon."
+
+#: ../../../lib/web/src/components/notifications-dropdown.tsx:197
+msgid "We'll notify you when something important happens."
+msgstr "Aabisuhan ka namin kapag may mahalagang nangyari."
 
 #: ../../../lib/web/src/features/errors/maintenance-error.tsx:13
 msgid "Website is under maintenance!"
@@ -2854,6 +3147,14 @@ msgstr "Wala kang kinakailangang pahintulot <0/>upang tingnan ang mapagkukunang 
 #: src/features/projects/pages/projects-list-page.tsx:98
 msgid "You have no projects yet."
 msgstr "Wala ka pang project."
+
+#: ../../../lib/web/src/lib/show-submitted-data.tsx:9
+msgid "You submitted the following values:"
+msgstr ""
+
+#: ../../../lib/web/src/components/notifications-dropdown.tsx:193
+msgid "You're all caught up!"
+msgstr "Nakita mo na lahat!"
 
 #: ../../../lib/web/src/components/restore-banner.tsx:91
 msgid "Your account was moved here from {source}. Until you delete it there, messages and notifications may reach both servers, some of your content keeps being served from the old server, and followers may take a few minutes to find you here."

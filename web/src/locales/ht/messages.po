@@ -66,15 +66,24 @@ msgstr "{0} dèyè"
 msgid "{0} files changed"
 msgstr "{0} fichye chanje"
 
+#. placeholder {0}: item.label
+#: ../../../lib/web/src/components/config-drawer.tsx:160
+msgid "{0} option preview"
+msgstr ""
+
 #. placeholder {0}: project.project.name
 #: src/routes/_authenticated/$projectId_.settings.tsx:122
 #: src/routes/_authenticated/$projectId_.settings.tsx:222
 msgid "{0} settings"
 msgstr "Paramèt {0}"
 
-#: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:173
+#: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:174
 msgid "{entityLabel} name"
 msgstr "Non {entityLabel}"
+
+#: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:99
+msgid "{entityLabel} name is required"
+msgstr ""
 
 #: ../../../lib/web/src/components/data-table/bulk-actions.tsx:210
 msgid "{selectedCount, plural, one {{entityName} selected} other {{manyName} selected}}"
@@ -95,6 +104,10 @@ msgstr "{selectedCount, plural, other {Aksyon an gwoup pou # {manyName} chwazi}}
 #: src/features/board/components/board-column.tsx:522
 msgid "{totalCount, plural, one {# item} other {# items}}"
 msgstr "{totalCount, plural, other {# atik}}"
+
+#: ../../../lib/web/src/components/layout/mochi-menu.tsx:132
+msgid "{unreadCount, plural, one {Open menu (# unread notification)} other {Open menu (# unread notifications)}}"
+msgstr ""
 
 #. placeholder {0}: data.ahead
 #: src/features/requests/components/merge-status.tsx:76
@@ -138,7 +151,7 @@ msgstr "Aksè refize"
 msgid "Access Forbidden"
 msgstr "Aksè Entèdi"
 
-#: ../../../lib/web/src/features/access/access-list.tsx:192
+#: ../../../lib/web/src/features/access/access-list.tsx:197
 msgid "Access level"
 msgstr "Nivo aksè"
 
@@ -178,6 +191,7 @@ msgstr "Kont verifye"
 msgid "Activity"
 msgstr "Aktivite"
 
+#: ../../../lib/web/src/features/access/access-dialog.tsx:332
 #: ../../../lib/web/src/features/accounts/account-add.tsx:196
 #: src/features/objects/components/field-editor.tsx:649
 #: src/features/requests/components/request-panel.tsx:103
@@ -238,7 +252,7 @@ msgstr "Ajoute eleman..."
 msgid "Add link"
 msgstr "Ajoute lyen"
 
-#: ../../../lib/web/src/features/accounts/account-picker.tsx:101
+#: ../../../lib/web/src/features/accounts/account-picker.tsx:102
 msgid "Add new account"
 msgstr "Ajoute nouvo kont"
 
@@ -254,6 +268,7 @@ msgid "Add rule"
 msgstr "Ajoute yon règ"
 
 #: ../../../lib/web/src/components/post-tags.tsx:137
+#: ../../../lib/web/src/components/tag-input.tsx:40
 msgid "Add tag..."
 msgstr "Ajoute etikèt..."
 
@@ -273,7 +288,11 @@ msgstr "Ajoute nan notifikasyon ki egziste"
 msgid "Add view"
 msgstr "Ajoute vi"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:71
+#: ../../../lib/web/src/features/access/access-dialog.tsx:332
+msgid "Adding..."
+msgstr "Ap ajoute..."
+
+#: ../../../lib/web/src/components/config-drawer.tsx:72
 msgid "Adjust the appearance and layout to suit your preferences."
 msgstr "Ajiste aparans ak layout dapre preferans ou."
 
@@ -288,6 +307,11 @@ msgstr "Tout"
 #: src/components/layout/projects-layout.tsx:53
 msgid "All projects"
 msgstr "Tout pwojè"
+
+#. placeholder {0}: entityLabel.toLowerCase()
+#: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:85
+msgid "Allow anyone to search for {0}"
+msgstr ""
 
 #: src/features/projects/components/create-project-dialog.tsx:341
 msgid "Allow anyone to search for project"
@@ -308,6 +332,19 @@ msgstr "Yon erè te rive"
 #: ../../../lib/web/src/lib/api-response-interceptors.ts:256
 msgid "An unexpected error occurred"
 msgstr "Yon erè inatandi te rive"
+
+#: ../../../lib/web/src/features/accounts/types.ts:16
+msgid "Android push"
+msgstr ""
+
+#: ../../../lib/web/src/features/access/access-list.tsx:45
+#: ../../../lib/web/src/features/access/types.ts:42
+msgid "Anyone"
+msgstr "Nenpòt moun"
+
+#: ../../../lib/web/src/features/access/types.ts:41
+msgid "Anyone who is logged in"
+msgstr ""
 
 #. placeholder {0}: deleteTarget?.name
 #: src/features/objects/components/object-attachments.tsx:249
@@ -356,6 +393,11 @@ msgstr "Tache fichye kòmantè"
 msgid "Attach reply files"
 msgstr "Tache fichye repons"
 
+#: ../../../lib/web/src/features/access/access-list.tsx:46
+#: ../../../lib/web/src/features/access/types.ts:41
+msgid "Authenticated users"
+msgstr "Itilizatè ki otantifye"
+
 #: ../../../lib/web/src/components/step-up-dialog.tsx:315
 msgid "Authenticator code"
 msgstr "Kòd otantifikatè"
@@ -364,7 +406,15 @@ msgstr "Kòd otantifikatè"
 msgid "Available keyboard shortcuts"
 msgstr "Rakousi klavye disponib"
 
-#: ../../../lib/web/src/components/place-picker.tsx:155
+#: ../../../lib/web/src/components/entity-avatar.tsx:99
+msgid "Avatar"
+msgstr "Avata"
+
+#: ../../../lib/web/src/components/entity-avatar.tsx:99
+msgid "Avatar for {name}"
+msgstr ""
+
+#: ../../../lib/web/src/components/place-picker.tsx:156
 #: src/features/projects/components/create-project-dialog.tsx:495
 msgid "Back"
 msgstr "Retounen"
@@ -387,6 +437,10 @@ msgstr "Retounen nan pwojè"
 #: src/routes/_authenticated/$projectId/index.tsx:138
 msgid "Back to projects"
 msgstr "Retounen nan pwojè yo"
+
+#: ../../../lib/web/src/components/entity-banner.tsx:17
+msgid "Banner"
+msgstr "Banyè"
 
 #: src/features/requests/components/diff-viewer.tsx:449
 msgid "Binary file not shown"
@@ -414,6 +468,10 @@ msgstr "Ogmante enterè"
 msgid "Border colour"
 msgstr "Koulè bòdi"
 
+#: ../../../lib/web/src/features/accounts/types.ts:13
+msgid "Browser notifications"
+msgstr "Notifikasyon navigatè"
+
 #: src/routes/_authenticated/$projectId/design.tsx:300
 msgid "Built-in templates"
 msgstr "Modèl entegre"
@@ -425,10 +483,10 @@ msgstr "Ka pitit"
 #: ../../../lib/web/src/components/responsive-confirm-dialog.tsx:67
 #: ../../../lib/web/src/components/step-up-dialog.tsx:363
 #: ../../../lib/web/src/components/travelling-picker.tsx:308
-#: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:248
+#: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:249
 #: ../../../lib/web/src/components/ui/editable-field-row.tsx:132
 #: ../../../lib/web/src/features/access/access-dialog.tsx:328
-#: ../../../lib/web/src/features/access/access-list.tsx:263
+#: ../../../lib/web/src/features/access/access-list.tsx:268
 #: ../../../lib/web/src/features/accounts/account-add.tsx:188
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:91
 #: src/features/board/components/board-column.tsx:606
@@ -458,6 +516,10 @@ msgstr "Kategori pou notifikasyon sa a"
 msgid "Change notification category"
 msgstr "Chanje kategori notifikasyon"
 
+#: ../../../lib/web/src/components/notifications-dropdown.tsx:198
+msgid "Check \"All\" to see your past notifications."
+msgstr "Tcheke \"Tout\" pou wè ansyen notifikasyon ou yo."
+
 #: src/features/editor/components/add-dialogs.tsx:135
 msgid "Checkbox"
 msgstr "Kaz"
@@ -474,19 +536,19 @@ msgstr "Lis verifikasyon"
 msgid "Choose a template"
 msgstr "Chwazi yon modèl"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:328
+#: ../../../lib/web/src/components/config-drawer.tsx:329
 msgid "Choose between default expanded, compact icon-only, or full layout mode"
 msgstr "Chwazi ant elaji defo, konpak ikon-sèlman, oswa mòd layout konplè"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:270
+#: ../../../lib/web/src/components/config-drawer.tsx:271
 msgid "Choose between inset, floating, or standard sidebar layout"
 msgstr "Chwazi ant ankastre, flotan, oswa layout ba kote estanda"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:371
+#: ../../../lib/web/src/components/config-drawer.tsx:372
 msgid "Choose between left-to-right or right-to-left site direction"
 msgstr "Chwazi ant direksyon sit gòch-a-dwat oswa dwat-a-gòch"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:226
+#: ../../../lib/web/src/components/config-drawer.tsx:227
 msgid "Choose between system preference, light mode, or dark mode"
 msgstr "Chwazi ant preferans sistèm, mòd klè, oswa mòd fonse"
 
@@ -499,8 +561,8 @@ msgstr "Chwazi lang"
 msgid "Classes"
 msgstr "Klas yo"
 
-#: ../../../lib/web/src/components/colour-picker.tsx:269
-#: ../../../lib/web/src/components/colour-picker.tsx:350
+#: ../../../lib/web/src/components/colour-picker.tsx:270
+#: ../../../lib/web/src/components/colour-picker.tsx:351
 #: ../../../lib/web/src/components/travelling-picker.tsx:164
 #: ../../../lib/web/src/components/travelling-picker.tsx:170
 #: ../../../lib/web/src/components/travelling-picker.tsx:231
@@ -508,13 +570,17 @@ msgstr "Klas yo"
 msgid "Clear"
 msgstr "Efase"
 
-#: ../../../lib/web/src/components/filter-bar.tsx:73
+#: ../../../lib/web/src/components/filter-bar.tsx:74
 msgid "Clear all"
 msgstr "Efase tout"
 
 #: ../../../lib/web/src/components/data-table/faceted-filter.tsx:144
 msgid "Clear filters"
 msgstr "Efase filtè"
+
+#: ../../../lib/web/src/components/search-input.tsx:26
+msgid "Clear search"
+msgstr "Efase rechèch"
 
 #: ../../../lib/web/src/components/data-table/bulk-actions.tsx:177
 #: ../../../lib/web/src/components/data-table/bulk-actions.tsx:181
@@ -589,6 +655,10 @@ msgstr "Konfòtab"
 msgid "Coming Soon!"
 msgstr "Vini Talè!"
 
+#: ../../../lib/web/src/components/ui/command.tsx:34
+msgid "Command Palette"
+msgstr ""
+
 #: src/routes/_authenticated/$projectId_.settings.tsx:405
 msgid "Comment and view"
 msgstr "Kòmante ak gade"
@@ -598,7 +668,7 @@ msgstr "Kòmante ak gade"
 msgid "Comments ({0})"
 msgstr "Kòmantè ({0})"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:315
+#: ../../../lib/web/src/components/config-drawer.tsx:316
 #: ../../../lib/web/src/lib/preference-utils.ts:95
 msgid "Compact"
 msgstr "Konpak"
@@ -615,10 +685,26 @@ msgstr "Konfigire paramèt opsyon"
 msgid "Configure view settings"
 msgstr "Konfigire paramèt vi"
 
-#: ../../../lib/web/src/components/place-picker.tsx:159
+#: ../../../lib/web/src/components/place-picker.tsx:160
 #: ../../../lib/web/src/components/travelling-picker.tsx:316
 msgid "Confirm"
 msgstr "Konfime"
+
+#: ../../../lib/web/src/lib/chat-ui.ts:18
+msgid "Connected"
+msgstr "Konekte"
+
+#: ../../../lib/web/src/features/accounts/account-manager.tsx:191
+msgid "Connected accounts"
+msgstr "Kont konekte"
+
+#: ../../../lib/web/src/lib/chat-ui.ts:21
+msgid "Connecting..."
+msgstr "Konekte..."
+
+#: ../../../lib/web/src/lib/handle-server-error.ts:18
+msgid "Content not found."
+msgstr "Kontni pa jwenn."
 
 #: ../../../lib/web/src/lib/query-client.ts:81
 msgid "Content not modified"
@@ -636,7 +722,15 @@ msgstr "Kontinye"
 msgid "Continue with {label}"
 msgstr "Kontinye ak {label}"
 
-#: ../../../lib/web/src/components/ui/copy-button.tsx:63
+#: ../../../lib/web/src/lib/toast-utils.ts:42
+msgid "Copied"
+msgstr "Kopye"
+
+#: ../../../lib/web/src/components/ui/copy-button.tsx:25
+msgid "Copied to clipboard"
+msgstr "Kopye nan clipboard"
+
+#: ../../../lib/web/src/components/ui/copy-button.tsx:64
 msgid "Copy"
 msgstr "Kopye"
 
@@ -663,6 +757,11 @@ msgstr "Nou pa t kapab verifye ak kont sa a. Tanpri eseye ankò."
 #: src/features/tree/components/tree-view.tsx:697
 msgid "Create"
 msgstr "Kreye"
+
+#. placeholder {0}: entityLabel.toLowerCase()
+#: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:144
+msgid "Create {0}"
+msgstr ""
 
 #: src/features/objects/components/create-object-dialog.tsx:387
 msgid "Create a new item in this project"
@@ -699,17 +798,22 @@ msgstr "Kreye"
 msgid "Creating project..."
 msgstr "Ap kreye pwojè..."
 
+#: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:258
 #: src/features/objects/components/create-object-dialog.tsx:579
 #: src/features/projects/components/create-project-dialog.tsx:411
 #: src/features/projects/components/create-project-dialog.tsx:498
 msgid "Creating..."
 msgstr "Ap kreye..."
 
-#: ../../../lib/web/src/components/colour-picker.tsx:260
+#: ../../../lib/web/src/components/map-view.tsx:208
+msgid "Current location"
+msgstr "Kote ou ye kounye a"
+
+#: ../../../lib/web/src/components/colour-picker.tsx:261
 msgid "Custom"
 msgstr "Pèsonalize"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:218
+#: ../../../lib/web/src/components/config-drawer.tsx:219
 #: ../../../lib/web/src/components/theme-switch.tsx:52
 #: ../../../lib/web/src/lib/preference-utils.ts:20
 msgid "Dark"
@@ -738,7 +842,7 @@ msgstr "Done enpòte ({0, plural, one {# objè} other {# objè}}, {1, plural, on
 msgid "Date"
 msgstr "Dat"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:310
+#: ../../../lib/web/src/components/config-drawer.tsx:311
 msgid "Default"
 msgstr "Defo"
 
@@ -839,6 +943,7 @@ msgstr "Desann"
 msgid "Descending"
 msgstr "Desann"
 
+#: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:83
 #: src/features/requests/components/request-panel.tsx:308
 #: src/routes/_authenticated/$projectId_.settings.tsx:310
 msgid "Description"
@@ -882,9 +987,18 @@ msgstr "Diff"
 msgid "Diff: {source} → {target}"
 msgstr "Diff: {source} → {target}"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:340
+#: ../../../lib/web/src/components/config-drawer.tsx:341
 msgid "Direction"
 msgstr "Direksyon"
+
+#: ../../../lib/web/src/components/person-picker.tsx:214
+msgid "Directory"
+msgstr "Anyè"
+
+#: ../../../lib/web/src/lib/chat-ui.ts:25
+#: ../../../lib/web/src/lib/chat-ui.ts:29
+msgid "Disconnected"
+msgstr "Dekonekte"
 
 #: ../../../lib/web/src/components/restore-banner.tsx:79
 #: ../../../lib/web/src/components/restore-banner.tsx:85
@@ -985,6 +1099,10 @@ msgstr "Modifye kat ki seleksyone a"
 msgid "Edit view"
 msgstr "Modifye vi"
 
+#: ../../../lib/web/src/features/accounts/types.ts:15
+msgid "Email"
+msgstr "Imèl"
+
 #: ../../../lib/web/src/components/step-up-dialog.tsx:289
 msgid "Email code"
 msgstr "Kòd imèl"
@@ -1024,6 +1142,10 @@ msgstr "Ekspòte done"
 msgid "Export design"
 msgstr "Ekspòte konsepsyon"
 
+#: ../../../lib/web/src/features/accounts/types.ts:22
+msgid "External URL"
+msgstr "URL Ekstèn"
+
 #: ../../../lib/web/src/lib/preference-utils.ts:136
 msgid "Extra large"
 msgstr "Trè gwo"
@@ -1032,9 +1154,18 @@ msgstr "Trè gwo"
 msgid "Failed to add account"
 msgstr "Echwe pou ajoute kont"
 
+#: ../../../lib/web/src/components/tag-input.tsx:39
+msgid "Failed to add tag"
+msgstr "Echwe pou ajoute tag"
+
 #: src/features/requests/components/merge-status.tsx:48
 msgid "Failed to check merge status"
 msgstr "Echwe pou tcheke estati merge"
+
+#: ../../../lib/web/src/components/ui/copy-button.tsx:26
+#: ../../../lib/web/src/lib/toast-utils.ts:44
+msgid "Failed to copy"
+msgstr "Echwe pou kopye"
 
 #: src/features/editor/components/design-editor.tsx:113
 msgid "Failed to create class"
@@ -1098,6 +1229,10 @@ msgstr "Enpòtasyon done yo echwe"
 #: src/routes/_authenticated/$projectId/design.tsx:114
 msgid "Failed to import design"
 msgstr "Echwe pou enpòte konsepsyon"
+
+#: ../../../lib/web/src/hooks/use-load-more.ts:74
+msgid "Failed to load"
+msgstr "Echwe pou chaje"
 
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:263
 msgid "Failed to load image"
@@ -1207,6 +1342,10 @@ msgstr "Chan"
 msgid "Files"
 msgstr "Fichye"
 
+#: ../../../lib/web/src/components/data-table/toolbar.tsx:30
+msgid "Filter..."
+msgstr "Filtre..."
+
 #: src/components/layout/projects-layout.tsx:61
 #: src/routes/_authenticated/find.tsx:88
 msgid "Find projects"
@@ -1228,13 +1367,17 @@ msgstr "Drapo"
 msgid "Flat"
 msgstr "Plat"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:257
+#: ../../../lib/web/src/components/config-drawer.tsx:258
 msgid "Floating"
 msgstr "Flotan"
 
 #: ../../../lib/web/src/lib/preference-utils.ts:63
 msgid "Friday"
 msgstr "Vandredi"
+
+#: ../../../lib/web/src/components/person-picker.tsx:207
+msgid "Friends"
+msgstr "Zanmi"
 
 #: ../../../lib/web/src/components/travelling-picker.tsx:153
 msgid "From"
@@ -1253,7 +1396,7 @@ msgstr "Soti nan fichye"
 msgid "From theme"
 msgstr "Soti nan tèm"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:320
+#: ../../../lib/web/src/components/config-drawer.tsx:321
 msgid "Full layout"
 msgstr "Layout konplè"
 
@@ -1290,6 +1433,11 @@ msgstr "Gwoup"
 #: src/features/editor/components/edit-dialogs.tsx:361
 msgid "Group by"
 msgstr "Gwoupe pa"
+
+#. placeholder {0}: name || subject.slice(1)
+#: ../../../lib/web/src/features/access/access-list.tsx:68
+msgid "Group: {0}"
+msgstr "Gwoup: {0}"
 
 #: ../../../lib/web/src/components/data-table/column-header.tsx:70
 msgid "Hide"
@@ -1341,7 +1489,19 @@ msgstr "Enpòte soti nan backup (opsyonèl)"
 msgid "Importing data..."
 msgstr "Ap enpòte done yo..."
 
-#: ../../../lib/web/src/components/config-drawer.tsx:252
+#: ../../../lib/web/src/features/access/types.ts:42
+msgid "Including anonymous users"
+msgstr ""
+
+#: ../../../lib/web/src/components/faceless-avatar.tsx:69
+msgid "Initials avatar"
+msgstr ""
+
+#: ../../../lib/web/src/components/faceless-avatar.tsx:69
+msgid "Initials avatar for {name}"
+msgstr ""
+
+#: ../../../lib/web/src/components/config-drawer.tsx:253
 msgid "Inset"
 msgstr "Inset"
 
@@ -1358,6 +1518,10 @@ msgstr "Dat envalid"
 msgid "Invalid JSON file"
 msgstr "Fichye JSON envalid"
 
+#: ../../../lib/web/src/components/tag-input.tsx:38
+msgid "Invalid tag: letters, numbers, spaces, hyphens, and slashes only (max 50 chars)"
+msgstr ""
+
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:245
 msgid "Invalid verification code"
 msgstr "Kòd verifikasyon envalid"
@@ -1370,6 +1534,10 @@ msgstr "Sanble paj w ap chèche a <0/>pa egziste oswa yo retire l."
 msgid "Item details"
 msgstr "Detay atik"
 
+#: ../../../lib/web/src/lib/locale-format.ts:62
+msgid "Just now"
+msgstr "Kounye a"
+
 #: src/components/keyboard-shortcuts-help.tsx:49
 msgid "Keyboard shortcuts"
 msgstr "Rakousi klavye"
@@ -1379,7 +1547,7 @@ msgstr "Rakousi klavye"
 msgid "Large"
 msgstr "Gwo"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:286
+#: ../../../lib/web/src/components/config-drawer.tsx:287
 #: src/features/editor/components/edit-dialogs.tsx:320
 msgid "Layout"
 msgstr "Layout"
@@ -1389,11 +1557,15 @@ msgstr "Layout"
 msgid "Learn more"
 msgstr "Aprann plis"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:354
+#: ../../../lib/web/src/components/config-drawer.tsx:355
 msgid "Left to Right"
 msgstr "Goch a Dwat"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:213
+#: ../../../lib/web/src/components/post-tags.tsx:72
+msgid "Letters, numbers, spaces, and hyphens only"
+msgstr "Sèlman lèt, chif, espas ak tirè"
+
+#: ../../../lib/web/src/components/config-drawer.tsx:214
 #: ../../../lib/web/src/components/theme-switch.tsx:45
 #: ../../../lib/web/src/lib/preference-utils.ts:19
 msgid "Light"
@@ -1463,6 +1635,10 @@ msgstr "Dekonekte avèk siksè"
 msgid "Logging out…"
 msgstr "Ap dekonekte…"
 
+#: ../../../lib/web/src/features/accounts/account-manager.tsx:192
+msgid "Manage your connected accounts for notifications and services."
+msgstr ""
+
 #: src/components/view-options-bar.tsx:41
 msgid "Manual"
 msgstr "Manyèl"
@@ -1476,6 +1652,10 @@ msgstr "Make tout kòm li"
 #: src/features/editor/components/edit-dialogs.tsx:1121
 msgid "Maximum length"
 msgstr "Longè maksimòm"
+
+#: ../../../lib/web/src/features/accounts/types.ts:17
+msgid "MCP server"
+msgstr ""
 
 #: ../../../lib/web/src/lib/preference-utils.ts:107
 msgid "Medium"
@@ -1529,6 +1709,10 @@ msgstr "Longè minimòm"
 msgid "Missing repo, source, or target parameters"
 msgstr "Pa gen repo, sous, oswa paramèt sib"
 
+#: ../../../lib/web/src/features/accounts/types.ts:23
+msgid "Mochi web"
+msgstr ""
+
 #: ../../../lib/web/src/lib/preference-utils.ts:59
 msgid "Monday"
 msgstr "Lendi"
@@ -1548,9 +1732,17 @@ msgstr "Pwojè mwen"
 msgid "Name"
 msgstr "Non"
 
+#: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:102
+msgid "Name cannot contain angle brackets, backslash, semicolon, quotes or backticks"
+msgstr ""
+
 #: src/features/projects/components/create-project-dialog.tsx:87
 msgid "Name is required"
 msgstr "Non obligatwa"
+
+#: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:100
+msgid "Name must be 1000 characters or less"
+msgstr "Non dwe gen 1000 karaktè oswa mwens"
 
 #: ../../../lib/web/src/features/errors/general-error.tsx:53
 #: ../../../lib/web/src/lib/api-response-interceptors.ts:303
@@ -1585,7 +1777,7 @@ msgstr "Pa gen {parentClassNames} pou ajoute"
 msgid "No access"
 msgstr "Pa gen aksè"
 
-#: ../../../lib/web/src/features/access/access-list.tsx:160
+#: ../../../lib/web/src/features/access/access-list.tsx:165
 msgid "No access rules configured. Add rules to control who can access this resource."
 msgstr "Pa gen règ aksè konfigire. Ajoute règ pou kontwole kiyès ki ka jwenn aksè nan resous sa a."
 
@@ -1637,11 +1829,16 @@ msgstr "Pa gen objè ki koresponn"
 msgid "No merge requests"
 msgstr "Pa gen demand merge"
 
+#: ../../../lib/web/src/components/notifications-dropdown.tsx:193
+msgid "No notifications yet"
+msgstr "Poko gen notifikasyon"
+
+#: ../../../lib/web/src/components/person-picker.tsx:84
 #: src/features/objects/components/field-editor.tsx:280
 msgid "No people found"
 msgstr "Pa gen moun ki jwenn"
 
-#: ../../../lib/web/src/components/place-picker.tsx:132
+#: ../../../lib/web/src/components/place-picker.tsx:133
 msgid "No places found"
 msgstr "Pa gen kote ki jwenn"
 
@@ -1657,6 +1854,11 @@ msgstr "Pa gen pwojè ki jwenn"
 #: src/features/requests/components/repository-select.tsx:64
 msgid "No repositories available"
 msgstr "Pa gen depo disponib"
+
+#: ../../../lib/web/src/components/search-entity-dialog.tsx:82
+#: ../../../lib/web/src/components/search-entity-page.tsx:73
+msgid "No results found"
+msgstr "Pa jwenn okenn rezilta"
 
 #: ../../../lib/web/src/components/command-menu.tsx:55
 #: ../../../lib/web/src/components/data-table/faceted-filter.tsx:94
@@ -1685,6 +1887,7 @@ msgstr "Pa gen itilizatè ki jwenn"
 msgid "No views"
 msgstr "Pa gen vi"
 
+#: ../../../lib/web/src/components/colour-picker.tsx:345
 #: ../../../lib/web/src/components/person-picker.tsx:350
 #: ../../../lib/web/src/lib/preference-utils.ts:105
 #: ../../../lib/web/src/lib/preference-utils.ts:125
@@ -1744,6 +1947,10 @@ msgstr "Notifikasyon: {0}"
 msgid "Number"
 msgstr "Nimewo"
 
+#: ../../../lib/web/src/components/filter-bar.tsx:35
+msgid "On"
+msgstr "Aktive"
+
 #: ../../../lib/web/src/features/errors/not-found-error.tsx:16
 msgid "Oops! Page Not Found!"
 msgstr "Oops! Paj Pa Jwenn!"
@@ -1782,6 +1989,10 @@ msgstr "Louvri aksyon kolòn"
 msgid "Open design actions"
 msgstr "Ouvri aksyon konsepsyon yo"
 
+#: ../../../lib/web/src/components/layout/mochi-menu.tsx:133
+msgid "Open menu"
+msgstr "Ouvri meni"
+
 #: ../../../lib/web/src/components/layout/top-bar.tsx:63
 #: ../../../lib/web/src/components/layout/top-bar.tsx:68
 msgid "Open navigation"
@@ -1805,8 +2016,8 @@ msgstr "Ouvri aksyon paj yo"
 msgid "Open selected card"
 msgstr "Ouvri kat ki chwazi"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:57
-#: ../../../lib/web/src/components/config-drawer.tsx:65
+#: ../../../lib/web/src/components/config-drawer.tsx:58
+#: ../../../lib/web/src/components/config-drawer.tsx:66
 msgid "Open theme settings"
 msgstr "Ouvri paramèt tèm"
 
@@ -1834,7 +2045,7 @@ msgstr "Opsyon"
 msgid "Other"
 msgstr "Lòt"
 
-#: ../../../lib/web/src/features/access/access-list.tsx:217
+#: ../../../lib/web/src/features/access/access-list.tsx:222
 msgid "Owner"
 msgstr "Pwopriyetè"
 
@@ -1863,6 +2074,10 @@ msgstr "Paskey"
 #: src/features/editor/components/edit-dialogs.tsx:1132
 msgid "Pattern (regex)"
 msgstr "Modèl (regex)"
+
+#: ../../../lib/web/src/components/date-picker.tsx:20
+msgid "Pick a date"
+msgstr "Chwazi yon dat"
 
 #: src/routes/_authenticated/$projectId/index.tsx:756
 #: src/routes/_authenticated/$projectId/index.tsx:790
@@ -1932,6 +2147,10 @@ msgstr "Pwojè efase"
 msgid "Project link"
 msgstr "Lyen pwojè"
 
+#: ../../../lib/web/src/components/person-picker.tsx:200
+msgid "Project members"
+msgstr "Manm pwojè a"
+
 #: src/routes/_authenticated/$projectId_.settings.tsx:207
 msgid "Project not found"
 msgstr "Pwojè pa jwenn"
@@ -1959,6 +2178,10 @@ msgstr "Pwojè yo"
 msgid "Properties"
 msgstr "Pwopriyete"
 
+#: ../../../lib/web/src/features/accounts/types.ts:21
+msgid "Push notification"
+msgstr ""
+
 #: ../../../lib/web/src/lib/preference-utils.ts:117
 msgid "Raised"
 msgstr "Leve"
@@ -1983,8 +2206,8 @@ msgstr "Pare pou merge"
 msgid "Rebase and merge"
 msgstr "Rebase ak merge"
 
-#: ../../../lib/web/src/components/search-entity-dialog.tsx:216
-#: ../../../lib/web/src/components/search-entity-page.tsx:242
+#: ../../../lib/web/src/components/search-entity-dialog.tsx:217
+#: ../../../lib/web/src/components/search-entity-page.tsx:243
 msgid "Recommended"
 msgstr "Rekòmande"
 
@@ -1992,6 +2215,10 @@ msgstr "Rekòmande"
 #: src/features/projects/components/recommended-projects.tsx:129
 msgid "Recommended projects"
 msgstr "Pwojè rekòmande"
+
+#: ../../../lib/web/src/lib/chat-ui.ts:21
+msgid "Reconnecting ({retries})..."
+msgstr ""
 
 #: ../../../lib/web/src/components/layout/authenticated-layout.tsx:133
 msgid "Redirecting to login."
@@ -2014,7 +2241,7 @@ msgstr "Relatif (5m, 3h, 2d)"
 msgid "Relative within 24 hours, else absolute"
 msgstr "Relatif nan 24 èdtan, sinon absoli"
 
-#: ../../../lib/web/src/features/access/access-list.tsx:265
+#: ../../../lib/web/src/features/access/access-list.tsx:270
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:180
 #: src/features/editor/components/add-dialogs.tsx:188
 #: src/features/objects/components/comment-list.tsx:249
@@ -2024,17 +2251,23 @@ msgstr "Relatif nan 24 èdtan, sinon absoli"
 msgid "Remove"
 msgstr "Retire"
 
-#: ../../../lib/web/src/features/access/access-list.tsx:247
-#: ../../../lib/web/src/features/access/access-list.tsx:253
+#. placeholder {0}: filter.label
+#: ../../../lib/web/src/components/filter-bar.tsx:56
+#: ../../../lib/web/src/components/filter-bar.tsx:62
+msgid "Remove {0} filter"
+msgstr "Retire filtè {0}"
+
+#: ../../../lib/web/src/features/access/access-list.tsx:252
+#: ../../../lib/web/src/features/access/access-list.tsx:258
 msgid "Remove access rule"
 msgstr "Retire règ aksè"
 
 #. placeholder {0}: formatSubject(subject, data.name)
-#: ../../../lib/web/src/features/access/access-list.tsx:259
+#: ../../../lib/web/src/features/access/access-list.tsx:264
 msgid "Remove access rule for \"{0}\"?"
 msgstr "Retire règ aksè pou \"{0}\"?"
 
-#: ../../../lib/web/src/features/access/access-list.tsx:257
+#: ../../../lib/web/src/features/access/access-list.tsx:262
 msgid "Remove access?"
 msgstr "Retire aksè?"
 
@@ -2108,12 +2341,17 @@ msgstr "Obligatwa"
 msgid "Resend email"
 msgstr "Voye imèl la ankò"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:86
-#: ../../../lib/web/src/components/data-table/toolbar.tsx:81
+#: ../../../lib/web/src/components/config-drawer.tsx:87
+#: ../../../lib/web/src/components/data-table/toolbar.tsx:82
 msgid "Reset"
 msgstr "Reset"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:84
+#: ../../../lib/web/src/components/config-drawer.tsx:122
+#: ../../../lib/web/src/components/config-drawer.tsx:127
+msgid "Reset {title}"
+msgstr ""
+
+#: ../../../lib/web/src/components/config-drawer.tsx:85
 msgid "Reset all settings to default values"
 msgstr "Reset tout paramèt nan valè default"
 
@@ -2125,7 +2363,7 @@ msgstr "Rezoud konfli sa yo manyèlman anvan merge."
 msgid "Retry projects load"
 msgstr "Eseye ankò chaje pwojè"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:361
+#: ../../../lib/web/src/components/config-drawer.tsx:362
 msgid "Right to Left"
 msgstr "Dwat a Goch"
 
@@ -2158,6 +2396,9 @@ msgstr "Sove"
 msgid "Saving..."
 msgstr "Ap sove..."
 
+#: ../../../lib/web/src/components/filter-bar.tsx:32
+#: ../../../lib/web/src/components/header-search.tsx:22
+#: ../../../lib/web/src/components/search.tsx:18
 #: src/components/view-options-bar.tsx:144
 msgid "Search"
 msgstr "Chèche"
@@ -2166,9 +2407,17 @@ msgstr "Chèche"
 msgid "Search by name, ID, fingerprint, or URL..."
 msgstr "Chèche pa non, ID, fingerprint, oswa URL..."
 
-#: ../../../lib/web/src/components/place-picker.tsx:85
+#: ../../../lib/web/src/components/ui/command.tsx:35
+msgid "Search for a command to run..."
+msgstr ""
+
+#: ../../../lib/web/src/components/place-picker.tsx:86
 msgid "Search for a place"
 msgstr "Chèche yon kote"
+
+#: ../../../lib/web/src/components/place-picker.tsx:50
+msgid "Search for a place..."
+msgstr ""
 
 #: ../../../lib/web/src/components/travelling-picker.tsx:250
 msgid "Search for destination..."
@@ -2199,13 +2448,15 @@ msgid "Search, watch, and sort this view."
 msgstr "Chèche, gade, ak triye vi sa a."
 
 #: ../../../lib/web/src/components/person-picker.tsx:324
+#: ../../../lib/web/src/components/search-entity-dialog.tsx:81
+#: ../../../lib/web/src/components/search-entity-page.tsx:72
 #: src/components/view-options-bar.tsx:148
 #: src/components/view-options-bar.tsx:223
 msgid "Search..."
 msgstr "Chèche..."
 
-#: ../../../lib/web/src/components/search-entity-dialog.tsx:174
-#: ../../../lib/web/src/components/search-entity-page.tsx:200
+#: ../../../lib/web/src/components/search-entity-dialog.tsx:175
+#: ../../../lib/web/src/components/search-entity-page.tsx:201
 #: ../../../lib/web/src/features/access/access-dialog.tsx:202
 msgid "Searching..."
 msgstr "Ap chèche..."
@@ -2213,6 +2464,11 @@ msgstr "Ap chèche..."
 #: src/features/editor/components/add-dialogs.tsx:139
 msgid "Select"
 msgstr "Chwazi"
+
+#. placeholder {0}: item.label.toLowerCase()
+#: ../../../lib/web/src/components/config-drawer.tsx:149
+msgid "Select {0}"
+msgstr ""
 
 #: src/features/editor/components/edit-dialogs.tsx:370
 msgid "Select a field"
@@ -2226,6 +2482,10 @@ msgstr "Chwazi yon itilizatè, gwoup, oswa lòt règ pou bay aksè."
 msgid "Select access rule"
 msgstr "Chwazi règ aksè"
 
+#: ../../../lib/web/src/features/accounts/account-picker.tsx:34
+msgid "Select account"
+msgstr ""
+
 #: ../../../lib/web/src/features/accounts/account-add.tsx:129
 msgid "Select account type"
 msgstr "Chwazi tip kont"
@@ -2238,13 +2498,21 @@ msgstr "Chwazi branch"
 msgid "Select group"
 msgstr "Chwazi gwoup"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:304
+#: ../../../lib/web/src/components/config-drawer.tsx:305
 msgid "Select layout style"
 msgstr "Chwazi style layout"
+
+#: ../../../lib/web/src/components/place-picker.tsx:49
+msgid "Select location"
+msgstr "Chwazi kote"
 
 #: src/components/keyboard-shortcuts-help.tsx:30
 msgid "Select next card"
 msgstr "Chwazi pwochen kat la"
+
+#: ../../../lib/web/src/components/person-picker.tsx:83
+msgid "Select person..."
+msgstr ""
 
 #: src/components/keyboard-shortcuts-help.tsx:31
 msgid "Select previous card"
@@ -2254,15 +2522,15 @@ msgstr "Chwazi kat anvan an"
 msgid "Select repository"
 msgstr "Chwazi depo"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:246
+#: ../../../lib/web/src/components/config-drawer.tsx:247
 msgid "Select sidebar style"
 msgstr "Chwazi style sidebar"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:348
+#: ../../../lib/web/src/components/config-drawer.tsx:349
 msgid "Select site direction"
 msgstr "Chwazi direksyon sit la"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:202
+#: ../../../lib/web/src/components/config-drawer.tsx:203
 msgid "Select theme preference"
 msgstr "Chwazi preferans tèm"
 
@@ -2350,8 +2618,8 @@ msgstr "Montre èd sa"
 msgid "Showing {totalShown} of {total}"
 msgstr "Ap montre {totalShown} nan {total}"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:238
-#: ../../../lib/web/src/components/config-drawer.tsx:262
+#: ../../../lib/web/src/components/config-drawer.tsx:239
+#: ../../../lib/web/src/components/config-drawer.tsx:263
 #: ../../../lib/web/src/components/ui/sidebar.tsx:237
 msgid "Sidebar"
 msgstr "Sidebar"
@@ -2412,7 +2680,7 @@ msgstr "Men rete kanpe!"
 msgid "Stop watching"
 msgstr "Sispann gade"
 
-#: ../../../lib/web/src/features/access/access-list.tsx:191
+#: ../../../lib/web/src/features/access/access-list.tsx:196
 msgid "Subject"
 msgstr "Sijè"
 
@@ -2426,6 +2694,8 @@ msgstr "Soumèt kòmantè"
 msgid "Submit reply"
 msgstr "Soumèt repons"
 
+#: ../../../lib/web/src/components/search-entity-dialog.tsx:83
+#: ../../../lib/web/src/components/search-entity-page.tsx:74
 #: src/features/projects/components/inline-project-search.tsx:205
 #: src/features/projects/components/recommended-projects.tsx:163
 msgid "Subscribe"
@@ -2455,16 +2725,24 @@ msgstr "Dimanch"
 msgid "Switch to view 1-9"
 msgstr "Chanje pou wè 1-9"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:208
+#: ../../../lib/web/src/components/config-drawer.tsx:209
 #: ../../../lib/web/src/components/theme-switch.tsx:59
 #: ../../../lib/web/src/lib/preference-utils.ts:21
 #: ../../../lib/web/src/lib/preference-utils.ts:144
 msgid "System"
 msgstr "Sistèm"
 
-#: ../../../lib/web/src/components/tag-input.tsx:94
+#: ../../../lib/web/src/components/tag-input.tsx:95
 msgid "Tag"
 msgstr "Tag"
+
+#: ../../../lib/web/src/components/post-tags.tsx:76
+msgid "Tag already exists"
+msgstr "Tag deja egziste"
+
+#: ../../../lib/web/src/components/post-tags.tsx:68
+msgid "Tag must be 50 characters or less"
+msgstr "Etikèt la dwe gen 50 karaktè oswa mwens"
 
 #: ../../../lib/web/src/components/post-tags.tsx:101
 #: ../../../lib/web/src/components/post-tags.tsx:115
@@ -2500,11 +2778,11 @@ msgstr "Nou pa t ka jwenn kontni ou te mande a."
 msgid "The site is not available at the moment."
 msgstr "Sit la pa disponib kounye a."
 
-#: ../../../lib/web/src/components/config-drawer.tsx:194
+#: ../../../lib/web/src/components/config-drawer.tsx:195
 msgid "Theme"
 msgstr "Tèm"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:69
+#: ../../../lib/web/src/components/config-drawer.tsx:70
 msgid "Theme Settings"
 msgstr "Paramèt Tèm"
 
@@ -2620,8 +2898,8 @@ msgstr "Nivo anwo"
 msgid "Travelling"
 msgstr "Vwayaje"
 
-#: ../../../lib/web/src/components/search-entity-dialog.tsx:190
-#: ../../../lib/web/src/components/search-entity-page.tsx:216
+#: ../../../lib/web/src/components/search-entity-dialog.tsx:191
+#: ../../../lib/web/src/components/search-entity-page.tsx:217
 msgid "Try adjusting your search terms"
 msgstr "Eseye ajiste tèm rechèch ou"
 
@@ -2669,6 +2947,11 @@ msgstr "Pa asiyen"
 msgid "Unauthorized Access"
 msgstr "Aksè Pa Otorize"
 
+#: ../../../lib/web/src/lib/request.ts:133
+#: ../../../lib/web/src/lib/request.ts:206
+msgid "Unexpected API error"
+msgstr "Erè API inatandi"
+
 #: src/routes/$projectId.diff.tsx:112
 msgid "Unified"
 msgstr "Inifye"
@@ -2676,6 +2959,10 @@ msgstr "Inifye"
 #: ../../../lib/web/src/lib/preference-utils.ts:87
 msgid "United States"
 msgstr "Etazini"
+
+#: ../../../lib/web/src/features/accounts/types.ts:29
+msgid "Unknown"
+msgstr "Enkoni"
 
 #: src/features/projects/pages/projects-list-page.tsx:147
 #: src/features/projects/pages/projects-list-page.tsx:166
@@ -2736,6 +3023,7 @@ msgstr "Sèvi ak passkey ou"
 msgid "Used for readable IDs like {0}-1, {1}-2"
 msgstr "Itilize pou ID lizib tankou {0}-1, {1}-2"
 
+#: ../../../lib/web/src/components/layout/mochi-menu.tsx:86
 #: ../../../lib/web/src/features/access/access-dialog.tsx:158
 #: src/features/editor/components/add-dialogs.tsx:141
 msgid "User"
@@ -2810,6 +3098,7 @@ msgstr "Vi"
 msgid "Watch"
 msgstr "Gade"
 
+#: ../../../lib/web/src/components/filter-bar.tsx:35
 #: src/components/view-options-bar.tsx:237
 msgid "Watched"
 msgstr "Gade"
@@ -2830,6 +3119,10 @@ msgstr "Nou voye yon kòd verifikasyon nan <0>{0}</0>. Antre kòd la anba a pou 
 #: ../../../lib/web/src/features/errors/maintenance-error.tsx:16
 msgid "We'll be back online shortly."
 msgstr "Nou ap retounen online byento."
+
+#: ../../../lib/web/src/components/notifications-dropdown.tsx:197
+msgid "We'll notify you when something important happens."
+msgstr "N ap fè w konnen lè yon bagay enpòtan rive."
 
 #: ../../../lib/web/src/features/errors/maintenance-error.tsx:13
 msgid "Website is under maintenance!"
@@ -2854,6 +3147,14 @@ msgstr "Ou pa gen pèmisyon nesesè a <0/>pou w wè resous sa a."
 #: src/features/projects/pages/projects-list-page.tsx:98
 msgid "You have no projects yet."
 msgstr "Ou poko gen okenn pwojè."
+
+#: ../../../lib/web/src/lib/show-submitted-data.tsx:9
+msgid "You submitted the following values:"
+msgstr ""
+
+#: ../../../lib/web/src/components/notifications-dropdown.tsx:193
+msgid "You're all caught up!"
+msgstr "Ou wè tout bagay!"
 
 #: ../../../lib/web/src/components/restore-banner.tsx:91
 msgid "Your account was moved here from {source}. Until you delete it there, messages and notifications may reach both servers, some of your content keeps being served from the old server, and followers may take a few minutes to find you here."

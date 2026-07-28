@@ -102,7 +102,7 @@ msgid "+{0} ahead"
 msgstr "+{0} ar y blaen"
 
 #. placeholder {0}: countDeepChildren(object.id)
-#: src/features/board/components/board-card.tsx:355
+#: src/features/board/components/board-card.tsx:362
 msgid "+{0} nested"
 msgstr "+{0} wedi'u nythu"
 
@@ -174,12 +174,12 @@ msgstr "Math o gyfrif"
 msgid "Account verified"
 msgstr "Cyfrif wedi'i wirio"
 
-#: src/features/objects/components/object-detail-panel.tsx:406
+#: src/features/objects/components/object-detail-panel.tsx:391
 msgid "Activity"
 msgstr "Gweithgaredd"
 
 #: ../../../lib/web/src/features/accounts/account-add.tsx:196
-#: src/features/objects/components/field-editor.tsx:548
+#: src/features/objects/components/field-editor.tsx:649
 #: src/features/requests/components/request-panel.tsx:103
 msgid "Add"
 msgstr "Ychwanegu"
@@ -209,7 +209,7 @@ msgstr "Ychwanegu cyfrif"
 msgid "Add an account to receive notifications and use services."
 msgstr "Ychwanegu cyfrif i dderbyn hysbysiadau a defnyddio gwasanaethau."
 
-#: src/features/objects/components/field-editor.tsx:518
+#: src/features/objects/components/field-editor.tsx:619
 msgid "Add checklist item"
 msgstr "Ychwanegu eitem rhestr wirio"
 
@@ -219,8 +219,8 @@ msgstr "Ychwanegu eitem rhestr wirio"
 msgid "Add class"
 msgstr "Ychwanegu dosbarth"
 
-#: src/routes/_authenticated/$projectId/index.tsx:948
-#: src/routes/_authenticated/$projectId/index.tsx:1142
+#: src/routes/_authenticated/$projectId/index.tsx:966
+#: src/routes/_authenticated/$projectId/index.tsx:1160
 msgid "Add column"
 msgstr "Ychwanegu colofn"
 
@@ -230,11 +230,11 @@ msgstr "Ychwanegu colofn"
 msgid "Add field"
 msgstr "Ychwanegu maes"
 
-#: src/features/objects/components/field-editor.tsx:536
+#: src/features/objects/components/field-editor.tsx:637
 msgid "Add item..."
 msgstr "Ychwanegu eitem..."
 
-#: src/features/objects/components/object-links.tsx:272
+#: src/features/objects/components/object-links.tsx:285
 msgid "Add link"
 msgstr "Ychwanegu dolen"
 
@@ -314,7 +314,7 @@ msgstr "Digwyddodd gwall annisgwyl"
 msgid "Are you sure you want to delete \"{0}\"?"
 msgstr "Ydych chi'n siŵr eich bod am ddileu \"{0}\"?"
 
-#: src/features/objects/components/object-detail-panel.tsx:656
+#: src/features/objects/components/object-detail-panel.tsx:635
 msgid "Are you sure you want to delete \"{title}\"? This action cannot be undone."
 msgstr "Ydych chi'n siŵr eich bod am ddileu \"{title}\"? Ni ellir dadwneud y weithred hon."
 
@@ -384,12 +384,16 @@ msgid "Back to project"
 msgstr "Yn ôl i'r prosiect"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:67
-#: src/routes/_authenticated/$projectId/index.tsx:123
+#: src/routes/_authenticated/$projectId/index.tsx:138
 msgid "Back to projects"
 msgstr "Yn ôl i'r prosiectau"
 
+#: src/features/requests/components/diff-viewer.tsx:449
+msgid "Binary file not shown"
+msgstr "Ni ddangosir y ffeil ddeuaidd"
+
 #: src/features/objects/components/object-links.tsx:49
-#: src/features/objects/components/object-links.tsx:166
+#: src/features/objects/components/object-links.tsx:179
 msgid "Blocked by"
 msgstr "Wedi'i flocio gan"
 
@@ -432,7 +436,7 @@ msgstr "Gall fod yn blentyn i"
 #: src/features/objects/components/comment-thread.tsx:185
 #: src/features/projects/components/create-project-dialog.tsx:407
 #: src/routes/_authenticated/$projectId/design.tsx:344
-#: src/routes/_authenticated/$projectId/index.tsx:1021
+#: src/routes/_authenticated/$projectId/index.tsx:1039
 msgid "Cancel"
 msgstr "Canslo"
 
@@ -590,7 +594,7 @@ msgid "Comment and view"
 msgstr "Sylwi a gweld"
 
 #. placeholder {0}: data.comment_count || 0
-#: src/features/objects/components/object-detail-panel.tsx:392
+#: src/features/objects/components/object-detail-panel.tsx:377
 msgid "Comments ({0})"
 msgstr "Sylwadau ({0})"
 
@@ -754,7 +758,7 @@ msgstr "Trefnu diofyn"
 #: src/features/objects/components/object-attachments.tsx:157
 #: src/features/objects/components/object-attachments.tsx:206
 #: src/features/objects/components/object-attachments.tsx:250
-#: src/features/objects/components/object-detail-panel.tsx:657
+#: src/features/objects/components/object-detail-panel.tsx:636
 #: src/features/requests/components/request-panel.tsx:132
 #: src/routes/_authenticated/$projectId_.settings.tsx:357
 msgid "Delete"
@@ -780,19 +784,19 @@ msgstr "Dileu sylw"
 msgid "Delete field"
 msgstr "Dileu maes"
 
-#: src/features/objects/components/object-detail-panel.tsx:466
-#: src/features/objects/components/object-detail-panel.tsx:471
-#: src/features/objects/components/object-detail-panel.tsx:655
+#: src/features/objects/components/object-detail-panel.tsx:451
+#: src/features/objects/components/object-detail-panel.tsx:456
+#: src/features/objects/components/object-detail-panel.tsx:634
 msgid "Delete item"
 msgstr "Dileu eitem"
 
 #: src/features/requests/components/request-panel.tsx:130
-#: src/features/requests/components/request-panel.tsx:375
-#: src/features/requests/components/request-panel.tsx:380
-#: src/features/requests/components/request-panel.tsx:400
-#: src/features/requests/components/request-panel.tsx:405
-#: src/features/requests/components/request-panel.tsx:422
-#: src/features/requests/components/request-panel.tsx:427
+#: src/features/requests/components/request-panel.tsx:396
+#: src/features/requests/components/request-panel.tsx:401
+#: src/features/requests/components/request-panel.tsx:421
+#: src/features/requests/components/request-panel.tsx:426
+#: src/features/requests/components/request-panel.tsx:443
+#: src/features/requests/components/request-panel.tsx:448
 msgid "Delete merge request"
 msgstr "Dileu cais cyfuno"
 
@@ -835,14 +839,14 @@ msgstr "Disg"
 msgid "Descending"
 msgstr "Disgynnol"
 
-#: src/features/requests/components/request-panel.tsx:287
+#: src/features/requests/components/request-panel.tsx:308
 #: src/routes/_authenticated/$projectId_.settings.tsx:310
 msgid "Description"
 msgstr "Disgrifiad"
 
 #: src/routes/_authenticated/$projectId/design.tsx:64
 #: src/routes/_authenticated/$projectId/design.tsx:132
-#: src/routes/_authenticated/$projectId/index.tsx:975
+#: src/routes/_authenticated/$projectId/index.tsx:993
 msgid "Design"
 msgstr "Dyluniad"
 
@@ -887,8 +891,8 @@ msgstr "Cyfeiriad"
 msgid "Dismiss"
 msgstr "Diystyru"
 
-#: src/routes/_authenticated/$projectId/index.tsx:1050
-#: src/routes/_authenticated/$projectId/index.tsx:1055
+#: src/routes/_authenticated/$projectId/index.tsx:1068
+#: src/routes/_authenticated/$projectId/index.tsx:1073
 msgid "Dismiss board hint"
 msgstr "Diystyru awgrym bwrdd"
 
@@ -899,11 +903,11 @@ msgstr "Yn dangos y bar ochr symudol."
 #: src/features/editor/components/edit-dialogs.tsx:532
 #: src/features/editor/components/edit-dialogs.tsx:922
 #: src/features/editor/components/edit-dialogs.tsx:1228
-#: src/features/objects/components/object-detail-panel.tsx:480
+#: src/features/objects/components/object-detail-panel.tsx:465
 msgid "Done"
 msgstr "Wedi gorffen"
 
-#: src/routes/_authenticated/$projectId/index.tsx:1041
+#: src/routes/_authenticated/$projectId/index.tsx:1059
 msgid "Double click on a column to add content"
 msgstr "Cliciwch ddwywaith ar golofn i ychwanegu cynnwys"
 
@@ -922,16 +926,16 @@ msgid "Download failed"
 msgstr "Methwyd â lawrlwytho"
 
 #: src/routes/_authenticated/$projectId/design.tsx:88
-#: src/routes/_authenticated/$projectId/index.tsx:207
+#: src/routes/_authenticated/$projectId/index.tsx:222
 msgid "Downloaded {filename}"
 msgstr "Lawrlwythwyd {filename}"
 
-#: src/features/requests/components/request-panel.tsx:255
-#: src/features/requests/components/request-panel.tsx:325
+#: src/features/requests/components/request-panel.tsx:274
+#: src/features/requests/components/request-panel.tsx:346
 msgid "Draft"
 msgstr "Drafft"
 
-#: src/routes/_authenticated/$projectId/index.tsx:1017
+#: src/routes/_authenticated/$projectId/index.tsx:1035
 msgid "Drag columns to re-order them"
 msgstr "Llusgwch golofnau i'w hailosod"
 
@@ -997,7 +1001,7 @@ msgstr "Rhowch god eich ap dilysu"
 msgid "Entity ID"
 msgstr "ID endid"
 
-#: src/features/objects/components/object-detail-panel.tsx:343
+#: src/features/objects/components/object-detail-panel.tsx:328
 msgid "Error"
 msgstr "Gwall"
 
@@ -1012,7 +1016,7 @@ msgstr "Ehangu"
 msgid "Expand sidebar"
 msgstr "Ehangu'r bar ochr"
 
-#: src/routes/_authenticated/$projectId/index.tsx:959
+#: src/routes/_authenticated/$projectId/index.tsx:977
 msgid "Export data"
 msgstr "Allforio data"
 
@@ -1041,7 +1045,7 @@ msgid "Failed to create field"
 msgstr "Methwyd creu maes"
 
 #: src/features/objects/components/object-links.tsx:105
-#: src/routes/_authenticated/$projectId/index.tsx:175
+#: src/routes/_authenticated/$projectId/index.tsx:190
 msgid "Failed to create link"
 msgstr "Methwyd creu dolen"
 
@@ -1077,8 +1081,8 @@ msgstr "Methwyd dileu'r prosiect"
 msgid "Failed to delete view"
 msgstr "Methwyd dileu'r olwg"
 
-#: src/routes/_authenticated/$projectId/index.tsx:209
-#: src/routes/_authenticated/$projectId/index.tsx:212
+#: src/routes/_authenticated/$projectId/index.tsx:224
+#: src/routes/_authenticated/$projectId/index.tsx:227
 msgid "Failed to export data"
 msgstr "Methwyd ag allforio'r data"
 
@@ -1099,13 +1103,13 @@ msgstr "Methwyd mewnforio'r dyluniad"
 msgid "Failed to load image"
 msgstr "Methwyd llwytho'r ddelwedd"
 
-#: src/features/objects/components/object-detail-panel.tsx:344
-#: src/features/objects/components/object-detail-panel.tsx:347
+#: src/features/objects/components/object-detail-panel.tsx:329
+#: src/features/objects/components/object-detail-panel.tsx:332
 msgid "Failed to load item"
 msgstr "Methwyd llwytho'r eitem"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:43
-#: src/routes/_authenticated/$projectId/index.tsx:87
+#: src/routes/_authenticated/$projectId/index.tsx:102
 msgid "Failed to load project"
 msgstr "Methwyd llwytho'r prosiect"
 
@@ -1165,7 +1169,7 @@ msgid "Failed to subscribe"
 msgstr "Methwyd tanysgrifio"
 
 #: src/features/projects/pages/projects-list-page.tsx:177
-#: src/routes/_authenticated/$projectId/index.tsx:630
+#: src/routes/_authenticated/$projectId/index.tsx:648
 msgid "Failed to unsubscribe"
 msgstr "Methwyd dad-danysgrifio"
 
@@ -1345,7 +1349,7 @@ msgstr "Mewnol"
 msgid "Interests"
 msgstr "Diddordebau"
 
-#: src/features/objects/components/field-editor.tsx:379
+#: src/features/objects/components/field-editor.tsx:480
 msgid "Invalid date"
 msgstr "Dyddiad annilys"
 
@@ -1362,7 +1366,7 @@ msgstr "Cod dilysu annilys"
 msgid "It seems like the page you're looking for <0/>does not exist or might have been removed."
 msgstr "Mae'n ymddangos nad yw'r dudalen rydych yn chwilio amdani <0/>yn bodoli neu ei bod wedi'i thynnu."
 
-#: src/features/objects/components/object-detail-panel.tsx:424
+#: src/features/objects/components/object-detail-panel.tsx:409
 msgid "Item details"
 msgstr "Manylion yr eitem"
 
@@ -1395,11 +1399,11 @@ msgstr "Chwith i'r Dde"
 msgid "Light"
 msgstr "Golau"
 
-#: src/routes/_authenticated/$projectId/index.tsx:965
+#: src/routes/_authenticated/$projectId/index.tsx:983
 msgid "Link"
 msgstr "Dolen"
 
-#: src/features/objects/components/object-links.tsx:228
+#: src/features/objects/components/object-links.tsx:241
 msgid "Links"
 msgstr "Dolenni"
 
@@ -1419,11 +1423,11 @@ msgstr "Yn llwytho cynnwys…"
 msgid "Loading diff..."
 msgstr "Yn llwytho diff..."
 
-#: src/features/objects/components/object-detail-panel.tsx:324
+#: src/features/objects/components/object-detail-panel.tsx:309
 msgid "Loading item"
 msgstr "Yn llwytho eitem"
 
-#: src/features/objects/components/object-detail-panel.tsx:325
+#: src/features/objects/components/object-detail-panel.tsx:310
 msgid "Loading item details"
 msgstr "Yn llwytho manylion yr eitem"
 
@@ -1433,7 +1437,7 @@ msgstr "Yn llwytho templedi..."
 
 #: ../../../lib/web/src/components/ui/load-more.tsx:35
 #: ../../../lib/web/src/features/document/document-page.tsx:90
-#: src/routes/_authenticated/$projectId/index.tsx:192
+#: src/routes/_authenticated/$projectId/index.tsx:207
 msgid "Loading..."
 msgstr "Yn llwytho..."
 
@@ -1497,11 +1501,11 @@ msgstr "Cyfuno ymrwymiad"
 msgid "Merge requests"
 msgstr "Ceisiadau cyfuno"
 
-#: src/features/objects/components/object-detail-panel.tsx:399
+#: src/features/objects/components/object-detail-panel.tsx:384
 msgid "Merge requests ({requestCount})"
 msgstr "Ceisiadau cyfuno ({requestCount})"
 
-#: src/features/requests/components/request-panel.tsx:258
+#: src/features/requests/components/request-panel.tsx:277
 msgid "Merged"
 msgstr "Wedi'i gyfuno"
 
@@ -1555,12 +1559,12 @@ msgstr "Gwall rhwydwaith"
 
 #: ../../../lib/web/src/components/ui/sort-selector.tsx:43
 #: src/features/objects/components/create-object-dialog.tsx:394
-#: src/routes/_authenticated/$projectId/index.tsx:902
 #: src/routes/_authenticated/$projectId/index.tsx:920
+#: src/routes/_authenticated/$projectId/index.tsx:938
 msgid "New"
 msgstr "Newydd"
 
-#: src/routes/_authenticated/$projectId/index.tsx:899
+#: src/routes/_authenticated/$projectId/index.tsx:917
 msgid "New {className}"
 msgstr "{className} newydd"
 
@@ -1601,7 +1605,7 @@ msgstr "Heb ganfod newidiadau"
 msgid "No changes to display"
 msgstr "Dim newidiadau i'w dangos"
 
-#: src/routes/$projectId.diff.tsx:155
+#: src/routes/$projectId.diff.tsx:160
 msgid "No changes were found for the selected comparison."
 msgstr "Heb ganfod newidiadau ar gyfer y cymhariad a ddewiswyd."
 
@@ -1613,7 +1617,7 @@ msgstr "Dim sylwadau eto"
 msgid "No connected accounts"
 msgstr "Dim cyfrifon wedi'u cysylltu"
 
-#: src/routes/$projectId.diff.tsx:154
+#: src/routes/$projectId.diff.tsx:159
 msgid "No diff available"
 msgstr "Dim diff ar gael"
 
@@ -1625,7 +1629,7 @@ msgstr "Dim grwpiau ar gael"
 msgid "No item types can be created yet. Create the required parent items first."
 msgstr "Ni ellir creu unrhyw fathau o eitemau eto. Crëwch yr eitemau rhiant gofynnol yn gyntaf."
 
-#: src/features/objects/components/object-links.tsx:314
+#: src/features/objects/components/object-links.tsx:327
 msgid "No matching objects"
 msgstr "Dim gwrthrychau cyfatebol"
 
@@ -1633,7 +1637,7 @@ msgstr "Dim gwrthrychau cyfatebol"
 msgid "No merge requests"
 msgstr "Dim ceisiadau cyfuno"
 
-#: src/features/objects/components/field-editor.tsx:279
+#: src/features/objects/components/field-editor.tsx:280
 msgid "No people found"
 msgstr "Heb ddod o hyd i bobl"
 
@@ -1695,9 +1699,9 @@ msgstr "Dim golygiadau"
 #: src/features/editor/components/edit-dialogs.tsx:782
 #: src/features/objects/components/create-object-dialog.tsx:450
 #: src/features/objects/components/create-object-dialog.tsx:457
+#: src/features/objects/components/object-detail-panel.tsx:530
+#: src/features/objects/components/object-detail-panel.tsx:543
 #: src/features/objects/components/object-detail-panel.tsx:548
-#: src/features/objects/components/object-detail-panel.tsx:561
-#: src/features/objects/components/object-detail-panel.tsx:566
 msgid "None"
 msgstr "Dim"
 
@@ -1705,7 +1709,7 @@ msgstr "Dim"
 msgid "Normal"
 msgstr "Arferol"
 
-#: src/features/requests/components/request-panel.tsx:231
+#: src/features/requests/components/request-panel.tsx:250
 msgid "Not configured"
 msgstr "Heb ei ffurfweddu"
 
@@ -1744,7 +1748,7 @@ msgstr "Rhif"
 msgid "Oops! Page Not Found!"
 msgstr "Wps! Heb Ddod o Hyd i'r Dudalen!"
 
-#: src/features/requests/components/request-panel.tsx:261
+#: src/features/requests/components/request-panel.tsx:280
 msgctxt "state"
 msgid "Open"
 msgstr "Ar agor"
@@ -1793,7 +1797,7 @@ msgstr "Agor dewislen llywio"
 msgid "Open option actions"
 msgstr "Agor camau gweithredu opsiwn"
 
-#: src/routes/_authenticated/$projectId/index.tsx:928
+#: src/routes/_authenticated/$projectId/index.tsx:946
 msgid "Open page actions"
 msgstr "Agor camau gweithredu tudalen"
 
@@ -1811,8 +1815,8 @@ msgstr "Agor gosodiadau thema"
 msgid "Open view actions"
 msgstr "Agor camau gweithredu golwg"
 
-#: src/components/view-options-bar.tsx:108
-#: src/components/view-options-bar.tsx:114
+#: src/components/view-options-bar.tsx:120
+#: src/components/view-options-bar.tsx:126
 msgid "Open view controls"
 msgstr "Agor rheolyddion golwg"
 
@@ -1840,7 +1844,7 @@ msgid "Page {currentPage} of {totalPages}"
 msgstr "Tudalen {currentPage} o {totalPages}"
 
 #: src/features/objects/components/create-object-dialog.tsx:442
-#: src/features/objects/components/object-detail-panel.tsx:544
+#: src/features/objects/components/object-detail-panel.tsx:526
 msgid "Parent"
 msgstr "Rhiant"
 
@@ -1860,8 +1864,8 @@ msgstr "Pasallweddi"
 msgid "Pattern (regex)"
 msgstr "Patrwm (regex)"
 
-#: src/routes/_authenticated/$projectId/index.tsx:738
-#: src/routes/_authenticated/$projectId/index.tsx:772
+#: src/routes/_authenticated/$projectId/index.tsx:756
+#: src/routes/_authenticated/$projectId/index.tsx:790
 msgid "Please add one or more classes to the project design."
 msgstr "Ychwanegwch un neu fwy o ddosbarthiadau at ddyluniad y prosiect."
 
@@ -1907,7 +1911,7 @@ msgid "Profile"
 msgstr "Proffil"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:65
-#: src/routes/_authenticated/$projectId/index.tsx:121
+#: src/routes/_authenticated/$projectId/index.tsx:136
 msgid "Project"
 msgstr "Prosiect"
 
@@ -1924,7 +1928,7 @@ msgstr "Prosiect wedi'i greu"
 msgid "Project deleted"
 msgstr "Prosiect wedi'i ddileu"
 
-#: src/routes/_authenticated/$projectId/index.tsx:1147
+#: src/routes/_authenticated/$projectId/index.tsx:1165
 msgid "Project link"
 msgstr "Dolen y prosiect"
 
@@ -1951,7 +1955,7 @@ msgstr "Prosiect wedi'i ddiweddaru"
 msgid "Projects"
 msgstr "Prosiectau"
 
-#: src/features/objects/components/object-detail-panel.tsx:387
+#: src/features/objects/components/object-detail-panel.tsx:372
 msgid "Properties"
 msgstr "Priodweddau"
 
@@ -1963,7 +1967,7 @@ msgstr "Wedi codi"
 msgid "Re-link your accounts on this server"
 msgstr "Ail-gysylltwch eich cyfrifon ar y gweinydd hwn"
 
-#: src/routes/_authenticated/$projectId/index.tsx:952
+#: src/routes/_authenticated/$projectId/index.tsx:970
 msgid "Re-order columns"
 msgstr "Aildrefnu colofnau"
 
@@ -2045,12 +2049,12 @@ msgstr "Tynnu maes {0}"
 msgid "Remove interest"
 msgstr "Tynnu diddordeb"
 
-#: src/features/objects/components/field-editor.tsx:502
+#: src/features/objects/components/field-editor.tsx:603
 msgid "Remove item"
 msgstr "Tynnu eitem"
 
-#: src/features/objects/components/object-links.tsx:256
-#: src/features/objects/components/object-links.tsx:261
+#: src/features/objects/components/object-links.tsx:269
+#: src/features/objects/components/object-links.tsx:274
 msgid "Remove link"
 msgstr "Tynnu dolen"
 
@@ -2146,7 +2150,7 @@ msgstr "Dydd Sadwrn"
 #: ../../../lib/web/src/components/ui/secret-field.tsx:77
 #: src/features/editor/components/option-dialog.tsx:150
 #: src/features/objects/components/comment-thread.tsx:205
-#: src/routes/_authenticated/$projectId/index.tsx:1033
+#: src/routes/_authenticated/$projectId/index.tsx:1051
 msgid "Save"
 msgstr "Cadw"
 
@@ -2154,7 +2158,7 @@ msgstr "Cadw"
 msgid "Saving..."
 msgstr "Yn cadw..."
 
-#: src/components/view-options-bar.tsx:132
+#: src/components/view-options-bar.tsx:144
 msgid "Search"
 msgstr "Chwilio"
 
@@ -2178,7 +2182,7 @@ msgstr "Chwilio am darddiad..."
 msgid "Search for projects..."
 msgstr "Chwilio am brosiectau..."
 
-#: src/features/objects/components/object-links.tsx:289
+#: src/features/objects/components/object-links.tsx:302
 msgid "Search objects..."
 msgstr "Chwilio gwrthrychau..."
 
@@ -2190,13 +2194,13 @@ msgstr "Chwilio parth amser..."
 msgid "Search users"
 msgstr "Chwilio defnyddwyr"
 
-#: src/components/view-options-bar.tsx:128
+#: src/components/view-options-bar.tsx:140
 msgid "Search, watch, and sort this view."
 msgstr "Chwilio, gwylio, a didoli'r olygfa hon."
 
 #: ../../../lib/web/src/components/person-picker.tsx:324
-#: src/components/view-options-bar.tsx:136
-#: src/components/view-options-bar.tsx:211
+#: src/components/view-options-bar.tsx:148
+#: src/components/view-options-bar.tsx:223
 msgid "Search..."
 msgstr "Chwilio..."
 
@@ -2263,7 +2267,7 @@ msgid "Select theme preference"
 msgstr "Dewis dewis thema"
 
 #: src/features/objects/components/field-editor.tsx:196
-#: src/features/objects/components/field-editor.tsx:278
+#: src/features/objects/components/field-editor.tsx:279
 msgid "Select..."
 msgstr "Dewis..."
 
@@ -2322,7 +2326,7 @@ msgstr "Yn gosod mynediad..."
 #: src/routes/_authenticated/$projectId_.settings.tsx:76
 #: src/routes/_authenticated/$projectId_.settings.tsx:167
 #: src/routes/_authenticated/$projectId_.settings.tsx:190
-#: src/routes/_authenticated/$projectId/index.tsx:985
+#: src/routes/_authenticated/$projectId/index.tsx:1003
 msgid "Settings"
 msgstr "Gosodiadau"
 
@@ -2375,11 +2379,11 @@ msgstr "Sgipio i'r Prif"
 msgid "Small"
 msgstr "Bach"
 
-#: src/components/view-options-bar.tsx:154
+#: src/components/view-options-bar.tsx:166
 msgid "Sort"
 msgstr "Trefnu"
 
-#: src/features/requests/components/request-panel.tsx:306
+#: src/features/requests/components/request-panel.tsx:327
 msgid "Source"
 msgstr "Ffynhonnell"
 
@@ -2387,7 +2391,7 @@ msgstr "Ffynhonnell"
 msgid "Spacious"
 msgstr "Helaeth"
 
-#: src/routes/$projectId.diff.tsx:119
+#: src/routes/$projectId.diff.tsx:124
 msgid "Split"
 msgstr "Hollti"
 
@@ -2403,8 +2407,8 @@ msgstr "Cychwynnwch y drafodaeth drwy ychwanegu'r sylw cyntaf."
 msgid "Stay tuned though!"
 msgstr "Cadwch lygad serch hynny!"
 
-#: src/features/objects/components/object-detail-panel.tsx:447
-#: src/features/objects/components/object-detail-panel.tsx:456
+#: src/features/objects/components/object-detail-panel.tsx:432
+#: src/features/objects/components/object-detail-panel.tsx:441
 msgid "Stop watching"
 msgstr "Stopio gwylio"
 
@@ -2467,7 +2471,7 @@ msgstr "Tag"
 msgid "Tags"
 msgstr "Tagiau"
 
-#: src/features/requests/components/request-panel.tsx:314
+#: src/features/requests/components/request-panel.tsx:335
 msgid "Target"
 msgstr "Targed"
 
@@ -2505,11 +2509,11 @@ msgid "Theme Settings"
 msgstr "Gosodiadau Thema"
 
 #. placeholder {0}: request.target
-#: src/features/requests/components/request-panel.tsx:390
+#: src/features/requests/components/request-panel.tsx:411
 msgid "This merge request has been merged into {0}."
 msgstr "Mae'r cais uno hwn wedi'i uno i mewn i {0}."
 
-#: src/features/requests/components/request-panel.tsx:351
+#: src/features/requests/components/request-panel.tsx:372
 msgid "This merge request is a draft and cannot be merged."
 msgstr "Mae'r cais uno hwn yn ddrafft ac ni ellir ei uno."
 
@@ -2534,7 +2538,7 @@ msgid "This will permanently delete \"{projectName}\" and all its objects, comme
 msgstr "Bydd hyn yn dileu \"{projectName}\" a'i holl wrthrychau, sylwadau ac atodiadau yn barhaol. Ni ellir dadwneud y weithred hon."
 
 #. placeholder {0}: project.project.name
-#: src/routes/_authenticated/$projectId/index.tsx:1163
+#: src/routes/_authenticated/$projectId/index.tsx:1181
 msgid "This will remove \"{0}\" from your sidebar and stop updates for this project."
 msgstr "Bydd hyn yn tynnu \"{0}\" o'ch bar ochr ac yn stopio diweddariadau ar gyfer y prosiect hwn."
 
@@ -2548,7 +2552,7 @@ msgid "Thursday"
 msgstr "Dydd Iau"
 
 #: src/features/editor/components/edit-dialogs.tsx:593
-#: src/features/requests/components/request-panel.tsx:274
+#: src/features/requests/components/request-panel.tsx:294
 msgid "Title"
 msgstr "Teitl"
 
@@ -2595,8 +2599,8 @@ msgstr "Toglo thema"
 msgid "Toggle view options"
 msgstr "Toglo opsiynau golwg"
 
-#: src/components/view-options-bar.tsx:145
-#: src/components/view-options-bar.tsx:221
+#: src/components/view-options-bar.tsx:157
+#: src/components/view-options-bar.tsx:233
 msgid "Toggle watched filter"
 msgstr "Toglo'r hidlydd a wyliwyd"
 
@@ -2665,7 +2669,7 @@ msgstr "Heb ei neilltuo"
 msgid "Unauthorized Access"
 msgstr "Mynediad Heb Awdurdod"
 
-#: src/routes/$projectId.diff.tsx:107
+#: src/routes/$projectId.diff.tsx:112
 msgid "Unified"
 msgstr "Unedig"
 
@@ -2676,24 +2680,28 @@ msgstr "Yr Unol Daleithiau"
 #: src/features/projects/pages/projects-list-page.tsx:147
 #: src/features/projects/pages/projects-list-page.tsx:166
 #: src/features/projects/pages/projects-list-page.tsx:168
-#: src/routes/_authenticated/$projectId/index.tsx:993
-#: src/routes/_authenticated/$projectId/index.tsx:1164
+#: src/routes/_authenticated/$projectId/index.tsx:1011
+#: src/routes/_authenticated/$projectId/index.tsx:1182
 msgid "Unsubscribe"
 msgstr "Dad-danysgrifio"
 
-#: src/routes/_authenticated/$projectId/index.tsx:1162
+#: src/routes/_authenticated/$projectId/index.tsx:1180
 msgid "Unsubscribe from project?"
 msgstr "Dad-danysgrifio o brosiect?"
 
 #: src/features/projects/pages/projects-list-page.tsx:176
-#: src/routes/_authenticated/$projectId/index.tsx:629
+#: src/routes/_authenticated/$projectId/index.tsx:647
 msgid "Unsubscribed"
 msgstr "Wedi dad-danysgrifio"
 
 #: src/features/projects/pages/projects-list-page.tsx:175
-#: src/routes/_authenticated/$projectId/index.tsx:628
+#: src/routes/_authenticated/$projectId/index.tsx:646
 msgid "Unsubscribing..."
 msgstr "Yn dad-danysgrifio..."
+
+#: src/features/objects/components/object-links.tsx:150
+msgid "Untitled"
+msgstr "Heb deitl"
 
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:135
 msgid "Unverified"
@@ -2777,11 +2785,11 @@ msgstr "Gweld pob un"
 msgid "View all notifications"
 msgstr "Gweld pob hysbysiad"
 
-#: src/features/objects/components/object-detail-panel.tsx:425
+#: src/features/objects/components/object-detail-panel.tsx:410
 msgid "View and edit item details"
 msgstr "Gweld a golygu manylion eitem"
 
-#: src/components/view-options-bar.tsx:127
+#: src/components/view-options-bar.tsx:139
 msgid "View controls"
 msgstr "Rheolaethau golwg"
 
@@ -2789,7 +2797,7 @@ msgstr "Rheolaethau golwg"
 msgid "View only"
 msgstr "Gweld yn unig"
 
-#: src/routes/_authenticated/$projectId/index.tsx:937
+#: src/routes/_authenticated/$projectId/index.tsx:955
 msgid "View options"
 msgstr "Opsiynau golwg"
 
@@ -2797,16 +2805,16 @@ msgstr "Opsiynau golwg"
 msgid "Views"
 msgstr "Golygfeydd"
 
-#: src/features/objects/components/object-detail-panel.tsx:447
-#: src/features/objects/components/object-detail-panel.tsx:456
+#: src/features/objects/components/object-detail-panel.tsx:432
+#: src/features/objects/components/object-detail-panel.tsx:441
 msgid "Watch"
 msgstr "Gwylio"
 
-#: src/components/view-options-bar.tsx:225
+#: src/components/view-options-bar.tsx:237
 msgid "Watched"
 msgstr "Wedi'i wylio"
 
-#: src/components/view-options-bar.tsx:149
+#: src/components/view-options-bar.tsx:161
 msgid "Watched only"
 msgstr "Wedi'i wylio yn unig"
 
@@ -2835,7 +2843,7 @@ msgstr "Dydd Mercher"
 msgid "You do not have access to this section."
 msgstr "Nid oes gennych fynediad i'r adran hon."
 
-#: src/routes/_authenticated/$projectId/index.tsx:109
+#: src/routes/_authenticated/$projectId/index.tsx:124
 msgid "You don't have access to this project."
 msgstr "Nid oes gennych fynediad i'r prosiect hwn."
 

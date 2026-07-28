@@ -102,7 +102,7 @@ msgid "+{0} ahead"
 msgstr "+{0} முன்னே"
 
 #. placeholder {0}: countDeepChildren(object.id)
-#: src/features/board/components/board-card.tsx:355
+#: src/features/board/components/board-card.tsx:362
 msgid "+{0} nested"
 msgstr "+{0} உள்ளடங்கியவை"
 
@@ -174,12 +174,12 @@ msgstr "கணக்கு வகை"
 msgid "Account verified"
 msgstr "கணக்கு சரிபார்க்கப்பட்டது"
 
-#: src/features/objects/components/object-detail-panel.tsx:406
+#: src/features/objects/components/object-detail-panel.tsx:391
 msgid "Activity"
 msgstr "செயல்பாடு"
 
 #: ../../../lib/web/src/features/accounts/account-add.tsx:196
-#: src/features/objects/components/field-editor.tsx:548
+#: src/features/objects/components/field-editor.tsx:649
 #: src/features/requests/components/request-panel.tsx:103
 msgid "Add"
 msgstr "சேர்"
@@ -209,7 +209,7 @@ msgstr "கணக்கு சேர்"
 msgid "Add an account to receive notifications and use services."
 msgstr "அறிவிப்புகளைப் பெறவும் சேவைகளைப் பயன்படுத்தவும் கணக்கைச் சேர்க்கவும்."
 
-#: src/features/objects/components/field-editor.tsx:518
+#: src/features/objects/components/field-editor.tsx:619
 msgid "Add checklist item"
 msgstr "சரிபார்ப்பு பட்டியல் உருப்படி சேர்"
 
@@ -219,8 +219,8 @@ msgstr "சரிபார்ப்பு பட்டியல் உருப�
 msgid "Add class"
 msgstr "வகுப்பு சேர்"
 
-#: src/routes/_authenticated/$projectId/index.tsx:948
-#: src/routes/_authenticated/$projectId/index.tsx:1142
+#: src/routes/_authenticated/$projectId/index.tsx:966
+#: src/routes/_authenticated/$projectId/index.tsx:1160
 msgid "Add column"
 msgstr "நெடுவரிசை சேர்"
 
@@ -230,11 +230,11 @@ msgstr "நெடுவரிசை சேர்"
 msgid "Add field"
 msgstr "புலம் சேர்"
 
-#: src/features/objects/components/field-editor.tsx:536
+#: src/features/objects/components/field-editor.tsx:637
 msgid "Add item..."
 msgstr "உருப்படி சேர்..."
 
-#: src/features/objects/components/object-links.tsx:272
+#: src/features/objects/components/object-links.tsx:285
 msgid "Add link"
 msgstr "இணைப்பு சேர்"
 
@@ -314,7 +314,7 @@ msgstr "எதிர்பாராத பிழை ஏற்பட்டது"
 msgid "Are you sure you want to delete \"{0}\"?"
 msgstr "\"{0}\"-ஐ நீக்க விரும்புகிறீர்களா?"
 
-#: src/features/objects/components/object-detail-panel.tsx:656
+#: src/features/objects/components/object-detail-panel.tsx:635
 msgid "Are you sure you want to delete \"{title}\"? This action cannot be undone."
 msgstr "\"{title}\"-ஐ நீக்க விரும்புகிறீர்களா? இந்த செயலை மாற்ற முடியாது."
 
@@ -384,12 +384,16 @@ msgid "Back to project"
 msgstr "திட்டத்திற்கு திரும்பு"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:67
-#: src/routes/_authenticated/$projectId/index.tsx:123
+#: src/routes/_authenticated/$projectId/index.tsx:138
 msgid "Back to projects"
 msgstr "திட்டங்களுக்கு திரும்பு"
 
+#: src/features/requests/components/diff-viewer.tsx:449
+msgid "Binary file not shown"
+msgstr "பைனரி கோப்பு காட்டப்படவில்லை"
+
 #: src/features/objects/components/object-links.tsx:49
-#: src/features/objects/components/object-links.tsx:166
+#: src/features/objects/components/object-links.tsx:179
 msgid "Blocked by"
 msgstr "தடுக்கப்பட்டது"
 
@@ -432,7 +436,7 @@ msgstr "ஒரு குழந்தையாக இருக்க முடி
 #: src/features/objects/components/comment-thread.tsx:185
 #: src/features/projects/components/create-project-dialog.tsx:407
 #: src/routes/_authenticated/$projectId/design.tsx:344
-#: src/routes/_authenticated/$projectId/index.tsx:1021
+#: src/routes/_authenticated/$projectId/index.tsx:1039
 msgid "Cancel"
 msgstr "ரத்துசெய்"
 
@@ -590,7 +594,7 @@ msgid "Comment and view"
 msgstr "கருத்து தெரிவித்து பார்"
 
 #. placeholder {0}: data.comment_count || 0
-#: src/features/objects/components/object-detail-panel.tsx:392
+#: src/features/objects/components/object-detail-panel.tsx:377
 msgid "Comments ({0})"
 msgstr "கருத்துகள் ({0})"
 
@@ -754,7 +758,7 @@ msgstr "இயல்புநிலை வரிசை"
 #: src/features/objects/components/object-attachments.tsx:157
 #: src/features/objects/components/object-attachments.tsx:206
 #: src/features/objects/components/object-attachments.tsx:250
-#: src/features/objects/components/object-detail-panel.tsx:657
+#: src/features/objects/components/object-detail-panel.tsx:636
 #: src/features/requests/components/request-panel.tsx:132
 #: src/routes/_authenticated/$projectId_.settings.tsx:357
 msgid "Delete"
@@ -780,19 +784,19 @@ msgstr "கருத்தை நீக்கு"
 msgid "Delete field"
 msgstr "புலத்தை நீக்கு"
 
-#: src/features/objects/components/object-detail-panel.tsx:466
-#: src/features/objects/components/object-detail-panel.tsx:471
-#: src/features/objects/components/object-detail-panel.tsx:655
+#: src/features/objects/components/object-detail-panel.tsx:451
+#: src/features/objects/components/object-detail-panel.tsx:456
+#: src/features/objects/components/object-detail-panel.tsx:634
 msgid "Delete item"
 msgstr "உருப்படியை நீக்கு"
 
 #: src/features/requests/components/request-panel.tsx:130
-#: src/features/requests/components/request-panel.tsx:375
-#: src/features/requests/components/request-panel.tsx:380
-#: src/features/requests/components/request-panel.tsx:400
-#: src/features/requests/components/request-panel.tsx:405
-#: src/features/requests/components/request-panel.tsx:422
-#: src/features/requests/components/request-panel.tsx:427
+#: src/features/requests/components/request-panel.tsx:396
+#: src/features/requests/components/request-panel.tsx:401
+#: src/features/requests/components/request-panel.tsx:421
+#: src/features/requests/components/request-panel.tsx:426
+#: src/features/requests/components/request-panel.tsx:443
+#: src/features/requests/components/request-panel.tsx:448
 msgid "Delete merge request"
 msgstr "Merge request-ஐ நீக்கு"
 
@@ -835,14 +839,14 @@ msgstr "இறங்கு"
 msgid "Descending"
 msgstr "இறங்குவரிசை"
 
-#: src/features/requests/components/request-panel.tsx:287
+#: src/features/requests/components/request-panel.tsx:308
 #: src/routes/_authenticated/$projectId_.settings.tsx:310
 msgid "Description"
 msgstr "விளக்கம்"
 
 #: src/routes/_authenticated/$projectId/design.tsx:64
 #: src/routes/_authenticated/$projectId/design.tsx:132
-#: src/routes/_authenticated/$projectId/index.tsx:975
+#: src/routes/_authenticated/$projectId/index.tsx:993
 msgid "Design"
 msgstr "வடிவமைப்பு"
 
@@ -887,8 +891,8 @@ msgstr "திசை"
 msgid "Dismiss"
 msgstr "நிராகரி"
 
-#: src/routes/_authenticated/$projectId/index.tsx:1050
-#: src/routes/_authenticated/$projectId/index.tsx:1055
+#: src/routes/_authenticated/$projectId/index.tsx:1068
+#: src/routes/_authenticated/$projectId/index.tsx:1073
 msgid "Dismiss board hint"
 msgstr "போர்டு குறிப்பை நிராகரி"
 
@@ -899,11 +903,11 @@ msgstr "மொபைல் பக்கப்பட்டியைக் கா�
 #: src/features/editor/components/edit-dialogs.tsx:532
 #: src/features/editor/components/edit-dialogs.tsx:922
 #: src/features/editor/components/edit-dialogs.tsx:1228
-#: src/features/objects/components/object-detail-panel.tsx:480
+#: src/features/objects/components/object-detail-panel.tsx:465
 msgid "Done"
 msgstr "முடிந்தது"
 
-#: src/routes/_authenticated/$projectId/index.tsx:1041
+#: src/routes/_authenticated/$projectId/index.tsx:1059
 msgid "Double click on a column to add content"
 msgstr "உள்ளடக்கத்தைச் சேர்க்க ஒரு நெடுவரிசையில் இருமுறை கிளிக் செய்யவும்"
 
@@ -922,16 +926,16 @@ msgid "Download failed"
 msgstr "பதிவிறக்கம் தோல்வியடைந்தது"
 
 #: src/routes/_authenticated/$projectId/design.tsx:88
-#: src/routes/_authenticated/$projectId/index.tsx:207
+#: src/routes/_authenticated/$projectId/index.tsx:222
 msgid "Downloaded {filename}"
 msgstr "{filename} பதிவிறக்கப்பட்டது"
 
-#: src/features/requests/components/request-panel.tsx:255
-#: src/features/requests/components/request-panel.tsx:325
+#: src/features/requests/components/request-panel.tsx:274
+#: src/features/requests/components/request-panel.tsx:346
 msgid "Draft"
 msgstr "வரைவு"
 
-#: src/routes/_authenticated/$projectId/index.tsx:1017
+#: src/routes/_authenticated/$projectId/index.tsx:1035
 msgid "Drag columns to re-order them"
 msgstr "நெடுவரிசைகளை மறுவரிசைப்படுத்த இழுக்கவும்"
 
@@ -997,7 +1001,7 @@ msgstr "உங்கள் அங்கீகரிப்பான் குற�
 msgid "Entity ID"
 msgstr "எண்ட்டிட்டி ID"
 
-#: src/features/objects/components/object-detail-panel.tsx:343
+#: src/features/objects/components/object-detail-panel.tsx:328
 msgid "Error"
 msgstr "பிழை"
 
@@ -1012,7 +1016,7 @@ msgstr "விரிவாக்கு"
 msgid "Expand sidebar"
 msgstr "பக்கப்பட்டியை விரிவாக்கு"
 
-#: src/routes/_authenticated/$projectId/index.tsx:959
+#: src/routes/_authenticated/$projectId/index.tsx:977
 msgid "Export data"
 msgstr "தரவை ஏற்றுமதி செய்"
 
@@ -1041,7 +1045,7 @@ msgid "Failed to create field"
 msgstr "புலத்தை உருவாக்க முடியவில்லை"
 
 #: src/features/objects/components/object-links.tsx:105
-#: src/routes/_authenticated/$projectId/index.tsx:175
+#: src/routes/_authenticated/$projectId/index.tsx:190
 msgid "Failed to create link"
 msgstr "இணைப்பை உருவாக்க முடியவில்லை"
 
@@ -1077,8 +1081,8 @@ msgstr "திட்டத்தை நீக்க முடியவில்�
 msgid "Failed to delete view"
 msgstr "காட்சியை நீக்க முடியவில்லை"
 
-#: src/routes/_authenticated/$projectId/index.tsx:209
-#: src/routes/_authenticated/$projectId/index.tsx:212
+#: src/routes/_authenticated/$projectId/index.tsx:224
+#: src/routes/_authenticated/$projectId/index.tsx:227
 msgid "Failed to export data"
 msgstr "தரவை ஏற்றுமதி செய்ய முடியவில்லை"
 
@@ -1099,13 +1103,13 @@ msgstr "வடிவமைப்பை இறக்குமதி செய்�
 msgid "Failed to load image"
 msgstr "படத்தை ஏற்ற முடியவில்லை"
 
-#: src/features/objects/components/object-detail-panel.tsx:344
-#: src/features/objects/components/object-detail-panel.tsx:347
+#: src/features/objects/components/object-detail-panel.tsx:329
+#: src/features/objects/components/object-detail-panel.tsx:332
 msgid "Failed to load item"
 msgstr "உருப்படியை ஏற்ற முடியவில்லை"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:43
-#: src/routes/_authenticated/$projectId/index.tsx:87
+#: src/routes/_authenticated/$projectId/index.tsx:102
 msgid "Failed to load project"
 msgstr "திட்டத்தை ஏற்ற முடியவில்லை"
 
@@ -1165,7 +1169,7 @@ msgid "Failed to subscribe"
 msgstr "சந்தா செய்ய முடியவில்லை"
 
 #: src/features/projects/pages/projects-list-page.tsx:177
-#: src/routes/_authenticated/$projectId/index.tsx:630
+#: src/routes/_authenticated/$projectId/index.tsx:648
 msgid "Failed to unsubscribe"
 msgstr "சந்தாவை ரத்து செய்ய முடியவில்லை"
 
@@ -1345,7 +1349,7 @@ msgstr "உள்ளமைக்கப்பட்ட"
 msgid "Interests"
 msgstr "ஆர்வங்கள்"
 
-#: src/features/objects/components/field-editor.tsx:379
+#: src/features/objects/components/field-editor.tsx:480
 msgid "Invalid date"
 msgstr "தவறான தேதி"
 
@@ -1362,7 +1366,7 @@ msgstr "தவறான சரிபார்ப்பு குறியீட�
 msgid "It seems like the page you're looking for <0/>does not exist or might have been removed."
 msgstr "நீங்கள் தேடும் பக்கம் <0/>இல்லை அல்லது அகற்றப்பட்டிருக்கலாம்."
 
-#: src/features/objects/components/object-detail-panel.tsx:424
+#: src/features/objects/components/object-detail-panel.tsx:409
 msgid "Item details"
 msgstr "உருப்படி விவரங்கள்"
 
@@ -1395,11 +1399,11 @@ msgstr "இடமிருந்து வலம்"
 msgid "Light"
 msgstr "லைட்"
 
-#: src/routes/_authenticated/$projectId/index.tsx:965
+#: src/routes/_authenticated/$projectId/index.tsx:983
 msgid "Link"
 msgstr "இணைப்பு"
 
-#: src/features/objects/components/object-links.tsx:228
+#: src/features/objects/components/object-links.tsx:241
 msgid "Links"
 msgstr "இணைப்புகள்"
 
@@ -1419,11 +1423,11 @@ msgstr "உள்ளடக்கம் ஏற்றப்படுகிறத�
 msgid "Loading diff..."
 msgstr "diff ஐ ஏற்றுகிறது..."
 
-#: src/features/objects/components/object-detail-panel.tsx:324
+#: src/features/objects/components/object-detail-panel.tsx:309
 msgid "Loading item"
 msgstr "உருப்படியை ஏற்றுகிறது"
 
-#: src/features/objects/components/object-detail-panel.tsx:325
+#: src/features/objects/components/object-detail-panel.tsx:310
 msgid "Loading item details"
 msgstr "உருப்படி விவரங்களை ஏற்றுகிறது"
 
@@ -1433,7 +1437,7 @@ msgstr "டெம்ப்ளேட்களை ஏற்றுகிறது..
 
 #: ../../../lib/web/src/components/ui/load-more.tsx:35
 #: ../../../lib/web/src/features/document/document-page.tsx:90
-#: src/routes/_authenticated/$projectId/index.tsx:192
+#: src/routes/_authenticated/$projectId/index.tsx:207
 msgid "Loading..."
 msgstr "ஏற்றுகிறது..."
 
@@ -1497,11 +1501,11 @@ msgstr "மெர்ஜ் கமிட்"
 msgid "Merge requests"
 msgstr "Merge கோரிக்கைகள்"
 
-#: src/features/objects/components/object-detail-panel.tsx:399
+#: src/features/objects/components/object-detail-panel.tsx:384
 msgid "Merge requests ({requestCount})"
 msgstr "மெர்ஜ் கோரிக்கைகள் ({requestCount})"
 
-#: src/features/requests/components/request-panel.tsx:258
+#: src/features/requests/components/request-panel.tsx:277
 msgid "Merged"
 msgstr "ஒன்றிணைக்கப்பட்டது"
 
@@ -1555,12 +1559,12 @@ msgstr "பிணையப் பிழை"
 
 #: ../../../lib/web/src/components/ui/sort-selector.tsx:43
 #: src/features/objects/components/create-object-dialog.tsx:394
-#: src/routes/_authenticated/$projectId/index.tsx:902
 #: src/routes/_authenticated/$projectId/index.tsx:920
+#: src/routes/_authenticated/$projectId/index.tsx:938
 msgid "New"
 msgstr "புதியது"
 
-#: src/routes/_authenticated/$projectId/index.tsx:899
+#: src/routes/_authenticated/$projectId/index.tsx:917
 msgid "New {className}"
 msgstr "புதிய {className}"
 
@@ -1601,7 +1605,7 @@ msgstr "மாற்றங்கள் எதுவும் கண்டறி�
 msgid "No changes to display"
 msgstr "காட்ட மாற்றங்கள் எதுவும் இல்லை"
 
-#: src/routes/$projectId.diff.tsx:155
+#: src/routes/$projectId.diff.tsx:160
 msgid "No changes were found for the selected comparison."
 msgstr "தேர்ந்தெடுக்கப்பட்ட ஒப்பீட்டிற்கு மாற்றங்கள் எதுவும் கண்டறியப்படவில்லை."
 
@@ -1613,7 +1617,7 @@ msgstr "கருத்துகள் இன்னும் இல்லை"
 msgid "No connected accounts"
 msgstr "இணைக்கப்பட்ட கணக்குகள் இல்லை"
 
-#: src/routes/$projectId.diff.tsx:154
+#: src/routes/$projectId.diff.tsx:159
 msgid "No diff available"
 msgstr "Diff கிடைக்கவில்லை"
 
@@ -1625,7 +1629,7 @@ msgstr "குழுக்கள் கிடைக்கவில்லை"
 msgid "No item types can be created yet. Create the required parent items first."
 msgstr "உருப்படி வகைகள் எதையும் இன்னும் உருவாக்க முடியாது. முதலில் தேவையான பெற்றோர் உருப்படிகளை உருவாக்கவும்."
 
-#: src/features/objects/components/object-links.tsx:314
+#: src/features/objects/components/object-links.tsx:327
 msgid "No matching objects"
 msgstr "பொருந்தும் ஆப்ஜெக்ட்கள் இல்லை"
 
@@ -1633,7 +1637,7 @@ msgstr "பொருந்தும் ஆப்ஜெக்ட்கள் இ�
 msgid "No merge requests"
 msgstr "Merge கோரிக்கைகள் இல்லை"
 
-#: src/features/objects/components/field-editor.tsx:279
+#: src/features/objects/components/field-editor.tsx:280
 msgid "No people found"
 msgstr "நபர்கள் எதுவும் கிடைக்கவில்லை"
 
@@ -1695,9 +1699,9 @@ msgstr "காட்சிகள் இல்லை"
 #: src/features/editor/components/edit-dialogs.tsx:782
 #: src/features/objects/components/create-object-dialog.tsx:450
 #: src/features/objects/components/create-object-dialog.tsx:457
+#: src/features/objects/components/object-detail-panel.tsx:530
+#: src/features/objects/components/object-detail-panel.tsx:543
 #: src/features/objects/components/object-detail-panel.tsx:548
-#: src/features/objects/components/object-detail-panel.tsx:561
-#: src/features/objects/components/object-detail-panel.tsx:566
 msgid "None"
 msgstr "ஒன்றுமில்லை"
 
@@ -1705,7 +1709,7 @@ msgstr "ஒன்றுமில்லை"
 msgid "Normal"
 msgstr "சாதாரணம்"
 
-#: src/features/requests/components/request-panel.tsx:231
+#: src/features/requests/components/request-panel.tsx:250
 msgid "Not configured"
 msgstr "உள்ளமைக்கப்படவில்லை"
 
@@ -1744,7 +1748,7 @@ msgstr "எண்"
 msgid "Oops! Page Not Found!"
 msgstr "அய்யோ! பக்கம் கிடைக்கவில்லை!"
 
-#: src/features/requests/components/request-panel.tsx:261
+#: src/features/requests/components/request-panel.tsx:280
 msgctxt "state"
 msgid "Open"
 msgstr "திறந்துள்ளது"
@@ -1793,7 +1797,7 @@ msgstr "வழிசெலுத்தல் மெனுவைத் திற�
 msgid "Open option actions"
 msgstr "விருப்பத் செயல்களைத் திறக்கவும்"
 
-#: src/routes/_authenticated/$projectId/index.tsx:928
+#: src/routes/_authenticated/$projectId/index.tsx:946
 msgid "Open page actions"
 msgstr "பக்கச் செயல்களைத் திறக்கவும்"
 
@@ -1811,8 +1815,8 @@ msgstr "தீம் அமைப்புகளைத் திறக்கவ�
 msgid "Open view actions"
 msgstr "காட்சி செயல்களைத் திறக்கவும்"
 
-#: src/components/view-options-bar.tsx:108
-#: src/components/view-options-bar.tsx:114
+#: src/components/view-options-bar.tsx:120
+#: src/components/view-options-bar.tsx:126
 msgid "Open view controls"
 msgstr "காட்சி கட்டுப்பாடுகளைத் திறக்கவும்"
 
@@ -1840,7 +1844,7 @@ msgid "Page {currentPage} of {totalPages}"
 msgstr "பக்கம் {currentPage} / {totalPages}"
 
 #: src/features/objects/components/create-object-dialog.tsx:442
-#: src/features/objects/components/object-detail-panel.tsx:544
+#: src/features/objects/components/object-detail-panel.tsx:526
 msgid "Parent"
 msgstr "பெற்றோர்"
 
@@ -1860,8 +1864,8 @@ msgstr "Passkeyக்கள்"
 msgid "Pattern (regex)"
 msgstr "வடிவம் (regex)"
 
-#: src/routes/_authenticated/$projectId/index.tsx:738
-#: src/routes/_authenticated/$projectId/index.tsx:772
+#: src/routes/_authenticated/$projectId/index.tsx:756
+#: src/routes/_authenticated/$projectId/index.tsx:790
 msgid "Please add one or more classes to the project design."
 msgstr "Project டிசைனில் ஒன்று அல்லது அதற்கு மேற்பட்ட கிளாஸ்களைச் சேர்க்கவும்."
 
@@ -1907,7 +1911,7 @@ msgid "Profile"
 msgstr "சுயவிவரம்"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:65
-#: src/routes/_authenticated/$projectId/index.tsx:121
+#: src/routes/_authenticated/$projectId/index.tsx:136
 msgid "Project"
 msgstr "திட்டம்"
 
@@ -1924,7 +1928,7 @@ msgstr "Project உருவாக்கப்பட்டது"
 msgid "Project deleted"
 msgstr "Project நீக்கப்பட்டது"
 
-#: src/routes/_authenticated/$projectId/index.tsx:1147
+#: src/routes/_authenticated/$projectId/index.tsx:1165
 msgid "Project link"
 msgstr "திட்ட இணைப்பு"
 
@@ -1951,7 +1955,7 @@ msgstr "Project புதுப்பிக்கப்பட்டது"
 msgid "Projects"
 msgstr "Projectகள்"
 
-#: src/features/objects/components/object-detail-panel.tsx:387
+#: src/features/objects/components/object-detail-panel.tsx:372
 msgid "Properties"
 msgstr "பண்புகள்"
 
@@ -1963,7 +1967,7 @@ msgstr "உயர்த்தப்பட்டது"
 msgid "Re-link your accounts on this server"
 msgstr "இந்த சேவையகத்தில் உங்கள் கணக்குகளை மீண்டும் இணைக்கவும்"
 
-#: src/routes/_authenticated/$projectId/index.tsx:952
+#: src/routes/_authenticated/$projectId/index.tsx:970
 msgid "Re-order columns"
 msgstr "நெடுவரிசைகளை மறுவரிசைப்படுத்தவும்"
 
@@ -2045,12 +2049,12 @@ msgstr "புலம் {0}-ஐ அகற்று"
 msgid "Remove interest"
 msgstr "ஆர்வத்தை அகற்று"
 
-#: src/features/objects/components/field-editor.tsx:502
+#: src/features/objects/components/field-editor.tsx:603
 msgid "Remove item"
 msgstr "உருப்படியை அகற்று"
 
-#: src/features/objects/components/object-links.tsx:256
-#: src/features/objects/components/object-links.tsx:261
+#: src/features/objects/components/object-links.tsx:269
+#: src/features/objects/components/object-links.tsx:274
 msgid "Remove link"
 msgstr "இணைப்பை அகற்று"
 
@@ -2146,7 +2150,7 @@ msgstr "சனிக்கிழமை"
 #: ../../../lib/web/src/components/ui/secret-field.tsx:77
 #: src/features/editor/components/option-dialog.tsx:150
 #: src/features/objects/components/comment-thread.tsx:205
-#: src/routes/_authenticated/$projectId/index.tsx:1033
+#: src/routes/_authenticated/$projectId/index.tsx:1051
 msgid "Save"
 msgstr "சேமி"
 
@@ -2154,7 +2158,7 @@ msgstr "சேமி"
 msgid "Saving..."
 msgstr "சேமிக்கிறது..."
 
-#: src/components/view-options-bar.tsx:132
+#: src/components/view-options-bar.tsx:144
 msgid "Search"
 msgstr "தேடு"
 
@@ -2178,7 +2182,7 @@ msgstr "துவக்கத்தைத் தேடு..."
 msgid "Search for projects..."
 msgstr "திட்டங்களைத் தேடு..."
 
-#: src/features/objects/components/object-links.tsx:289
+#: src/features/objects/components/object-links.tsx:302
 msgid "Search objects..."
 msgstr "பொருள்களைத் தேடு..."
 
@@ -2190,13 +2194,13 @@ msgstr "நேர மண்டலத்தைத் தேடு..."
 msgid "Search users"
 msgstr "பயனர்களைத் தேடு"
 
-#: src/components/view-options-bar.tsx:128
+#: src/components/view-options-bar.tsx:140
 msgid "Search, watch, and sort this view."
 msgstr "இந்த காட்சியைத் தேடு, கவனி, வரிசைப்படுத்து."
 
 #: ../../../lib/web/src/components/person-picker.tsx:324
-#: src/components/view-options-bar.tsx:136
-#: src/components/view-options-bar.tsx:211
+#: src/components/view-options-bar.tsx:148
+#: src/components/view-options-bar.tsx:223
 msgid "Search..."
 msgstr "தேடு..."
 
@@ -2263,7 +2267,7 @@ msgid "Select theme preference"
 msgstr "தீம் விருப்பத்தை தேர்ந்தெடு"
 
 #: src/features/objects/components/field-editor.tsx:196
-#: src/features/objects/components/field-editor.tsx:278
+#: src/features/objects/components/field-editor.tsx:279
 msgid "Select..."
 msgstr "தேர்ந்தெடு..."
 
@@ -2322,7 +2326,7 @@ msgstr "அணுகலை அமைக்கிறது..."
 #: src/routes/_authenticated/$projectId_.settings.tsx:76
 #: src/routes/_authenticated/$projectId_.settings.tsx:167
 #: src/routes/_authenticated/$projectId_.settings.tsx:190
-#: src/routes/_authenticated/$projectId/index.tsx:985
+#: src/routes/_authenticated/$projectId/index.tsx:1003
 msgid "Settings"
 msgstr "அமைப்புகள்"
 
@@ -2375,11 +2379,11 @@ msgstr "முதன்மை பகுதிக்கு தவிர்"
 msgid "Small"
 msgstr "சிறியது"
 
-#: src/components/view-options-bar.tsx:154
+#: src/components/view-options-bar.tsx:166
 msgid "Sort"
 msgstr "வரிசைப்படுத்து"
 
-#: src/features/requests/components/request-panel.tsx:306
+#: src/features/requests/components/request-panel.tsx:327
 msgid "Source"
 msgstr "மூலம்"
 
@@ -2387,7 +2391,7 @@ msgstr "மூலம்"
 msgid "Spacious"
 msgstr "விரிவான"
 
-#: src/routes/$projectId.diff.tsx:119
+#: src/routes/$projectId.diff.tsx:124
 msgid "Split"
 msgstr "பிரி"
 
@@ -2403,8 +2407,8 @@ msgstr "முதல் கருத்தை சேர்த்து விவ
 msgid "Stay tuned though!"
 msgstr "எனினும் காத்திருங்கள்!"
 
-#: src/features/objects/components/object-detail-panel.tsx:447
-#: src/features/objects/components/object-detail-panel.tsx:456
+#: src/features/objects/components/object-detail-panel.tsx:432
+#: src/features/objects/components/object-detail-panel.tsx:441
 msgid "Stop watching"
 msgstr "பார்ப்பதை நிறுத்து"
 
@@ -2467,7 +2471,7 @@ msgstr "டேக்"
 msgid "Tags"
 msgstr "டேக்குகள்"
 
-#: src/features/requests/components/request-panel.tsx:314
+#: src/features/requests/components/request-panel.tsx:335
 msgid "Target"
 msgstr "இலக்கு"
 
@@ -2505,11 +2509,11 @@ msgid "Theme Settings"
 msgstr "தீம் அமைப்புகள்"
 
 #. placeholder {0}: request.target
-#: src/features/requests/components/request-panel.tsx:390
+#: src/features/requests/components/request-panel.tsx:411
 msgid "This merge request has been merged into {0}."
 msgstr "இந்த மெர்ஜ் கோரிக்கை {0} இல் ஒன்றிணைக்கப்பட்டது."
 
-#: src/features/requests/components/request-panel.tsx:351
+#: src/features/requests/components/request-panel.tsx:372
 msgid "This merge request is a draft and cannot be merged."
 msgstr "இந்த merge கோரிக்கை ஒரு வரைவு மற்றும் merge செய்ய முடியாது."
 
@@ -2534,7 +2538,7 @@ msgid "This will permanently delete \"{projectName}\" and all its objects, comme
 msgstr "இது \"{projectName}\" மற்றும் அதன் அனைத்து பொருள்கள், கருத்துகள் மற்றும் இணைப்புகளை நிரந்தரமாக நீக்கும். இந்த செயலை திரும்ப மாற்ற முடியாது."
 
 #. placeholder {0}: project.project.name
-#: src/routes/_authenticated/$projectId/index.tsx:1163
+#: src/routes/_authenticated/$projectId/index.tsx:1181
 msgid "This will remove \"{0}\" from your sidebar and stop updates for this project."
 msgstr "இது உங்கள் பக்கப்பட்டியிலிருந்து \"{0}\"-ஐ நீக்கி இந்த திட்டத்திற்கான புதுப்பிப்புகளை நிறுத்தும்."
 
@@ -2548,7 +2552,7 @@ msgid "Thursday"
 msgstr "வியாழக்கிழமை"
 
 #: src/features/editor/components/edit-dialogs.tsx:593
-#: src/features/requests/components/request-panel.tsx:274
+#: src/features/requests/components/request-panel.tsx:294
 msgid "Title"
 msgstr "தலைப்பு"
 
@@ -2595,8 +2599,8 @@ msgstr "தீமை மாற்று"
 msgid "Toggle view options"
 msgstr "காட்சி விருப்பங்களை மாற்று"
 
-#: src/components/view-options-bar.tsx:145
-#: src/components/view-options-bar.tsx:221
+#: src/components/view-options-bar.tsx:157
+#: src/components/view-options-bar.tsx:233
 msgid "Toggle watched filter"
 msgstr "கவனிக்கப்பட்ட வடிகட்டியை மாற்று"
 
@@ -2665,7 +2669,7 @@ msgstr "ஒதுக்கப்படாதது"
 msgid "Unauthorized Access"
 msgstr "அனுமதிக்கப்படாத அணுகல்"
 
-#: src/routes/$projectId.diff.tsx:107
+#: src/routes/$projectId.diff.tsx:112
 msgid "Unified"
 msgstr "ஒருங்கிணைந்த"
 
@@ -2676,24 +2680,28 @@ msgstr "ஐக்கிய அமெரிக்கா"
 #: src/features/projects/pages/projects-list-page.tsx:147
 #: src/features/projects/pages/projects-list-page.tsx:166
 #: src/features/projects/pages/projects-list-page.tsx:168
-#: src/routes/_authenticated/$projectId/index.tsx:993
-#: src/routes/_authenticated/$projectId/index.tsx:1164
+#: src/routes/_authenticated/$projectId/index.tsx:1011
+#: src/routes/_authenticated/$projectId/index.tsx:1182
 msgid "Unsubscribe"
 msgstr "சந்தா நீக்கு"
 
-#: src/routes/_authenticated/$projectId/index.tsx:1162
+#: src/routes/_authenticated/$projectId/index.tsx:1180
 msgid "Unsubscribe from project?"
 msgstr "திட்டத்திலிருந்து சந்தா நீக்க வேண்டுமா?"
 
 #: src/features/projects/pages/projects-list-page.tsx:176
-#: src/routes/_authenticated/$projectId/index.tsx:629
+#: src/routes/_authenticated/$projectId/index.tsx:647
 msgid "Unsubscribed"
 msgstr "சந்தா நீக்கப்பட்டது"
 
 #: src/features/projects/pages/projects-list-page.tsx:175
-#: src/routes/_authenticated/$projectId/index.tsx:628
+#: src/routes/_authenticated/$projectId/index.tsx:646
 msgid "Unsubscribing..."
 msgstr "சந்தா நீக்குகிறது..."
+
+#: src/features/objects/components/object-links.tsx:150
+msgid "Untitled"
+msgstr "தலைப்பிடாதது"
 
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:135
 msgid "Unverified"
@@ -2777,11 +2785,11 @@ msgstr "அனைத்தையும் காட்டு"
 msgid "View all notifications"
 msgstr "அனைத்து அறிவிப்புகளையும் காட்டு"
 
-#: src/features/objects/components/object-detail-panel.tsx:425
+#: src/features/objects/components/object-detail-panel.tsx:410
 msgid "View and edit item details"
 msgstr "உருப்படி விவரங்களை பார்த்து திருத்து"
 
-#: src/components/view-options-bar.tsx:127
+#: src/components/view-options-bar.tsx:139
 msgid "View controls"
 msgstr "காட்சி கட்டுப்பாடுகள்"
 
@@ -2789,7 +2797,7 @@ msgstr "காட்சி கட்டுப்பாடுகள்"
 msgid "View only"
 msgstr "காட்சி மட்டும்"
 
-#: src/routes/_authenticated/$projectId/index.tsx:937
+#: src/routes/_authenticated/$projectId/index.tsx:955
 msgid "View options"
 msgstr "காட்சி விருப்பங்கள்"
 
@@ -2797,16 +2805,16 @@ msgstr "காட்சி விருப்பங்கள்"
 msgid "Views"
 msgstr "காட்சிகள்"
 
-#: src/features/objects/components/object-detail-panel.tsx:447
-#: src/features/objects/components/object-detail-panel.tsx:456
+#: src/features/objects/components/object-detail-panel.tsx:432
+#: src/features/objects/components/object-detail-panel.tsx:441
 msgid "Watch"
 msgstr "பார்"
 
-#: src/components/view-options-bar.tsx:225
+#: src/components/view-options-bar.tsx:237
 msgid "Watched"
 msgstr "கவனிக்கப்பட்டது"
 
-#: src/components/view-options-bar.tsx:149
+#: src/components/view-options-bar.tsx:161
 msgid "Watched only"
 msgstr "கவனிக்கப்பட்டது மட்டும்"
 
@@ -2835,7 +2843,7 @@ msgstr "புதன்கிழமை"
 msgid "You do not have access to this section."
 msgstr "இந்தப் பிரிவுக்கான அணுகல் உங்களுக்கு இல்லை."
 
-#: src/routes/_authenticated/$projectId/index.tsx:109
+#: src/routes/_authenticated/$projectId/index.tsx:124
 msgid "You don't have access to this project."
 msgstr "இந்தத் திட்டத்திற்கு உங்களுக்கு அணுகல் இல்லை."
 

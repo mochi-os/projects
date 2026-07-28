@@ -102,7 +102,7 @@ msgid "+{0} ahead"
 msgstr "+{0} ඉදිරියේ"
 
 #. placeholder {0}: countDeepChildren(object.id)
-#: src/features/board/components/board-card.tsx:355
+#: src/features/board/components/board-card.tsx:362
 msgid "+{0} nested"
 msgstr "+{0} කැදලි"
 
@@ -174,12 +174,12 @@ msgstr "ගිණුම් වර්ගය"
 msgid "Account verified"
 msgstr "ගිණුම සත්‍යාපනය කරන ලදී"
 
-#: src/features/objects/components/object-detail-panel.tsx:406
+#: src/features/objects/components/object-detail-panel.tsx:391
 msgid "Activity"
 msgstr "ක්‍රියාකාරකම"
 
 #: ../../../lib/web/src/features/accounts/account-add.tsx:196
-#: src/features/objects/components/field-editor.tsx:548
+#: src/features/objects/components/field-editor.tsx:649
 #: src/features/requests/components/request-panel.tsx:103
 msgid "Add"
 msgstr "එක් කරන්න"
@@ -209,7 +209,7 @@ msgstr "ගිණුමක් එක් කරන්න"
 msgid "Add an account to receive notifications and use services."
 msgstr "දැනුම්දීම් ලබා ගැනීමට සහ සේවාවන් භාවිත කිරීමට ගිණුමක් එක් කරන්න."
 
-#: src/features/objects/components/field-editor.tsx:518
+#: src/features/objects/components/field-editor.tsx:619
 msgid "Add checklist item"
 msgstr "පරීක්ෂා ලැයිස්තු අයිතමයක් එක් කරන්න"
 
@@ -219,8 +219,8 @@ msgstr "පරීක්ෂා ලැයිස්තු අයිතමයක් 
 msgid "Add class"
 msgstr "පන්තියක් එක් කරන්න"
 
-#: src/routes/_authenticated/$projectId/index.tsx:948
-#: src/routes/_authenticated/$projectId/index.tsx:1142
+#: src/routes/_authenticated/$projectId/index.tsx:966
+#: src/routes/_authenticated/$projectId/index.tsx:1160
 msgid "Add column"
 msgstr "තීරුවක් එක් කරන්න"
 
@@ -230,11 +230,11 @@ msgstr "තීරුවක් එක් කරන්න"
 msgid "Add field"
 msgstr "ක්ෂේත්‍රයක් එක් කරන්න"
 
-#: src/features/objects/components/field-editor.tsx:536
+#: src/features/objects/components/field-editor.tsx:637
 msgid "Add item..."
 msgstr "අයිතමයක් එක් කරන්න..."
 
-#: src/features/objects/components/object-links.tsx:272
+#: src/features/objects/components/object-links.tsx:285
 msgid "Add link"
 msgstr "සබැඳියක් එක් කරන්න"
 
@@ -314,7 +314,7 @@ msgstr "අනපේක්ෂිත දෝෂයක් සිදු විය"
 msgid "Are you sure you want to delete \"{0}\"?"
 msgstr "ඔබට \"{0}\" මැකීමට අවශ්‍ය බව විශ්වාසද?"
 
-#: src/features/objects/components/object-detail-panel.tsx:656
+#: src/features/objects/components/object-detail-panel.tsx:635
 msgid "Are you sure you want to delete \"{title}\"? This action cannot be undone."
 msgstr "ඔබට \"{title}\" මැකීමට අවශ්‍ය බව විශ්වාසද? මෙම ක්‍රියාව අහෝසි කළ නොහැක."
 
@@ -384,12 +384,16 @@ msgid "Back to project"
 msgstr "project වෙත ආපසු"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:67
-#: src/routes/_authenticated/$projectId/index.tsx:123
+#: src/routes/_authenticated/$projectId/index.tsx:138
 msgid "Back to projects"
 msgstr "projects වෙත ආපසු"
 
+#: src/features/requests/components/diff-viewer.tsx:449
+msgid "Binary file not shown"
+msgstr "ද්විමය ගොනුව නොපෙන්වයි"
+
 #: src/features/objects/components/object-links.tsx:49
-#: src/features/objects/components/object-links.tsx:166
+#: src/features/objects/components/object-links.tsx:179
 msgid "Blocked by"
 msgstr "අවහිර කළ"
 
@@ -432,7 +436,7 @@ msgstr "මෙහි දරුවෙකු විය හැක"
 #: src/features/objects/components/comment-thread.tsx:185
 #: src/features/projects/components/create-project-dialog.tsx:407
 #: src/routes/_authenticated/$projectId/design.tsx:344
-#: src/routes/_authenticated/$projectId/index.tsx:1021
+#: src/routes/_authenticated/$projectId/index.tsx:1039
 msgid "Cancel"
 msgstr "අවලංගු කරන්න"
 
@@ -590,7 +594,7 @@ msgid "Comment and view"
 msgstr "අදහස් දැක්වීම සහ බැලීම"
 
 #. placeholder {0}: data.comment_count || 0
-#: src/features/objects/components/object-detail-panel.tsx:392
+#: src/features/objects/components/object-detail-panel.tsx:377
 msgid "Comments ({0})"
 msgstr "අදහස් ({0})"
 
@@ -754,7 +758,7 @@ msgstr "පෙරනිමි වර්ග කිරීම"
 #: src/features/objects/components/object-attachments.tsx:157
 #: src/features/objects/components/object-attachments.tsx:206
 #: src/features/objects/components/object-attachments.tsx:250
-#: src/features/objects/components/object-detail-panel.tsx:657
+#: src/features/objects/components/object-detail-panel.tsx:636
 #: src/features/requests/components/request-panel.tsx:132
 #: src/routes/_authenticated/$projectId_.settings.tsx:357
 msgid "Delete"
@@ -780,19 +784,19 @@ msgstr "අදහස මකන්න"
 msgid "Delete field"
 msgstr "ක්ෂේත්‍රය මකන්න"
 
-#: src/features/objects/components/object-detail-panel.tsx:466
-#: src/features/objects/components/object-detail-panel.tsx:471
-#: src/features/objects/components/object-detail-panel.tsx:655
+#: src/features/objects/components/object-detail-panel.tsx:451
+#: src/features/objects/components/object-detail-panel.tsx:456
+#: src/features/objects/components/object-detail-panel.tsx:634
 msgid "Delete item"
 msgstr "අයිතමය මකන්න"
 
 #: src/features/requests/components/request-panel.tsx:130
-#: src/features/requests/components/request-panel.tsx:375
-#: src/features/requests/components/request-panel.tsx:380
-#: src/features/requests/components/request-panel.tsx:400
-#: src/features/requests/components/request-panel.tsx:405
-#: src/features/requests/components/request-panel.tsx:422
-#: src/features/requests/components/request-panel.tsx:427
+#: src/features/requests/components/request-panel.tsx:396
+#: src/features/requests/components/request-panel.tsx:401
+#: src/features/requests/components/request-panel.tsx:421
+#: src/features/requests/components/request-panel.tsx:426
+#: src/features/requests/components/request-panel.tsx:443
+#: src/features/requests/components/request-panel.tsx:448
 msgid "Delete merge request"
 msgstr "merge request එක මකන්න"
 
@@ -835,14 +839,14 @@ msgstr "අවරෝහණ"
 msgid "Descending"
 msgstr "අවරෝහණ"
 
-#: src/features/requests/components/request-panel.tsx:287
+#: src/features/requests/components/request-panel.tsx:308
 #: src/routes/_authenticated/$projectId_.settings.tsx:310
 msgid "Description"
 msgstr "විස්තරය"
 
 #: src/routes/_authenticated/$projectId/design.tsx:64
 #: src/routes/_authenticated/$projectId/design.tsx:132
-#: src/routes/_authenticated/$projectId/index.tsx:975
+#: src/routes/_authenticated/$projectId/index.tsx:993
 msgid "Design"
 msgstr "Design"
 
@@ -887,8 +891,8 @@ msgstr "දිශාව"
 msgid "Dismiss"
 msgstr "ඉවත ලන්න"
 
-#: src/routes/_authenticated/$projectId/index.tsx:1050
-#: src/routes/_authenticated/$projectId/index.tsx:1055
+#: src/routes/_authenticated/$projectId/index.tsx:1068
+#: src/routes/_authenticated/$projectId/index.tsx:1073
 msgid "Dismiss board hint"
 msgstr "පුවරු ඉඟිය ඉවත ලන්න"
 
@@ -899,11 +903,11 @@ msgstr "ජංගම පැති තීරුව සංදර්ශනය ක�
 #: src/features/editor/components/edit-dialogs.tsx:532
 #: src/features/editor/components/edit-dialogs.tsx:922
 #: src/features/editor/components/edit-dialogs.tsx:1228
-#: src/features/objects/components/object-detail-panel.tsx:480
+#: src/features/objects/components/object-detail-panel.tsx:465
 msgid "Done"
 msgstr "නිමයි"
 
-#: src/routes/_authenticated/$projectId/index.tsx:1041
+#: src/routes/_authenticated/$projectId/index.tsx:1059
 msgid "Double click on a column to add content"
 msgstr "අන්තර්ගතය එක් කිරීමට තීරුවක් මත දෙවරක් ක්ලික් කරන්න"
 
@@ -922,16 +926,16 @@ msgid "Download failed"
 msgstr "බාගත කිරීම අසාර්ථක විය"
 
 #: src/routes/_authenticated/$projectId/design.tsx:88
-#: src/routes/_authenticated/$projectId/index.tsx:207
+#: src/routes/_authenticated/$projectId/index.tsx:222
 msgid "Downloaded {filename}"
 msgstr "{filename} බාගත කළා"
 
-#: src/features/requests/components/request-panel.tsx:255
-#: src/features/requests/components/request-panel.tsx:325
+#: src/features/requests/components/request-panel.tsx:274
+#: src/features/requests/components/request-panel.tsx:346
 msgid "Draft"
 msgstr "කෙටුම්පත"
 
-#: src/routes/_authenticated/$projectId/index.tsx:1017
+#: src/routes/_authenticated/$projectId/index.tsx:1035
 msgid "Drag columns to re-order them"
 msgstr "තීරු නැවත අනුපිළිවෙල කිරීමට ඒවා ඇදගෙන යන්න"
 
@@ -997,7 +1001,7 @@ msgstr "ඔබගේ සත්‍යාපන කේතය ඇතුළත් �
 msgid "Entity ID"
 msgstr "ආයතන හැඳුනුම"
 
-#: src/features/objects/components/object-detail-panel.tsx:343
+#: src/features/objects/components/object-detail-panel.tsx:328
 msgid "Error"
 msgstr "දෝෂයක්"
 
@@ -1012,7 +1016,7 @@ msgstr "විහිදන්න"
 msgid "Expand sidebar"
 msgstr "පැති තීරුව ප්‍රසාරණය කරන්න"
 
-#: src/routes/_authenticated/$projectId/index.tsx:959
+#: src/routes/_authenticated/$projectId/index.tsx:977
 msgid "Export data"
 msgstr "දත්ත නිර්යාත කරන්න"
 
@@ -1041,7 +1045,7 @@ msgid "Failed to create field"
 msgstr "ක්ෂේත්‍රයක් සෑදීමට අසමත් විය"
 
 #: src/features/objects/components/object-links.tsx:105
-#: src/routes/_authenticated/$projectId/index.tsx:175
+#: src/routes/_authenticated/$projectId/index.tsx:190
 msgid "Failed to create link"
 msgstr "සබැඳියක් සෑදීමට අසමත් විය"
 
@@ -1077,8 +1081,8 @@ msgstr "ව්‍යාපෘතිය මැකීමට අසමත් වි
 msgid "Failed to delete view"
 msgstr "දසුන මැකීමට අසමත් විය"
 
-#: src/routes/_authenticated/$projectId/index.tsx:209
-#: src/routes/_authenticated/$projectId/index.tsx:212
+#: src/routes/_authenticated/$projectId/index.tsx:224
+#: src/routes/_authenticated/$projectId/index.tsx:227
 msgid "Failed to export data"
 msgstr "දත්ත නිර්යාත කිරීමට අසමත් විය"
 
@@ -1099,13 +1103,13 @@ msgstr "සැලසුම ආයාත කිරීමට අසමත් ව�
 msgid "Failed to load image"
 msgstr "රූපය පූරණය කිරීමට අසමත් විය"
 
-#: src/features/objects/components/object-detail-panel.tsx:344
-#: src/features/objects/components/object-detail-panel.tsx:347
+#: src/features/objects/components/object-detail-panel.tsx:329
+#: src/features/objects/components/object-detail-panel.tsx:332
 msgid "Failed to load item"
 msgstr "අයිතමය පූරණය කිරීමට අසමත් විය"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:43
-#: src/routes/_authenticated/$projectId/index.tsx:87
+#: src/routes/_authenticated/$projectId/index.tsx:102
 msgid "Failed to load project"
 msgstr "ව්‍යාපෘතිය පූරණය කිරීමට අසමත් විය"
 
@@ -1165,7 +1169,7 @@ msgid "Failed to subscribe"
 msgstr "දායක වීමට අසමත් විය"
 
 #: src/features/projects/pages/projects-list-page.tsx:177
-#: src/routes/_authenticated/$projectId/index.tsx:630
+#: src/routes/_authenticated/$projectId/index.tsx:648
 msgid "Failed to unsubscribe"
 msgstr "දායකත්වයෙන් ඉවත් වීමට අසමත් විය"
 
@@ -1345,7 +1349,7 @@ msgstr "ඇතුළත"
 msgid "Interests"
 msgstr "උනන්දු"
 
-#: src/features/objects/components/field-editor.tsx:379
+#: src/features/objects/components/field-editor.tsx:480
 msgid "Invalid date"
 msgstr "අවලංගු දිනය"
 
@@ -1362,7 +1366,7 @@ msgstr "අවලංගු සත්‍යාපන කේතය"
 msgid "It seems like the page you're looking for <0/>does not exist or might have been removed."
 msgstr "ඔබ සොයන පිටුව <0/>නොපවතින බවක් හෝ ඉවත් කර ඇති බවක් පෙනේ."
 
-#: src/features/objects/components/object-detail-panel.tsx:424
+#: src/features/objects/components/object-detail-panel.tsx:409
 msgid "Item details"
 msgstr "අයිතම විස්තර"
 
@@ -1395,11 +1399,11 @@ msgstr "වමේ සිට දකුණට"
 msgid "Light"
 msgstr "ලා"
 
-#: src/routes/_authenticated/$projectId/index.tsx:965
+#: src/routes/_authenticated/$projectId/index.tsx:983
 msgid "Link"
 msgstr "සබැඳිය"
 
-#: src/features/objects/components/object-links.tsx:228
+#: src/features/objects/components/object-links.tsx:241
 msgid "Links"
 msgstr "සබැඳි"
 
@@ -1419,11 +1423,11 @@ msgstr "අන්තර්ගතය පූරණය වෙමින්…"
 msgid "Loading diff..."
 msgstr "diff පූරණය වෙමින්..."
 
-#: src/features/objects/components/object-detail-panel.tsx:324
+#: src/features/objects/components/object-detail-panel.tsx:309
 msgid "Loading item"
 msgstr "අයිතමය පූරණය වෙමින්"
 
-#: src/features/objects/components/object-detail-panel.tsx:325
+#: src/features/objects/components/object-detail-panel.tsx:310
 msgid "Loading item details"
 msgstr "අයිතම විස්තර පූරණය වෙමින්"
 
@@ -1433,7 +1437,7 @@ msgstr "සැකිලි පූරණය වෙමින්..."
 
 #: ../../../lib/web/src/components/ui/load-more.tsx:35
 #: ../../../lib/web/src/features/document/document-page.tsx:90
-#: src/routes/_authenticated/$projectId/index.tsx:192
+#: src/routes/_authenticated/$projectId/index.tsx:207
 msgid "Loading..."
 msgstr "පූරණය වෙමින්..."
 
@@ -1497,11 +1501,11 @@ msgstr "ඒකාබද්ධ කිරීමේ commit"
 msgid "Merge requests"
 msgstr "ඒකාබද්ධ කිරීමේ ඉල්ලීම්"
 
-#: src/features/objects/components/object-detail-panel.tsx:399
+#: src/features/objects/components/object-detail-panel.tsx:384
 msgid "Merge requests ({requestCount})"
 msgstr "ඒකාබද්ධ කිරීමේ ඉල්ලීම් ({requestCount})"
 
-#: src/features/requests/components/request-panel.tsx:258
+#: src/features/requests/components/request-panel.tsx:277
 msgid "Merged"
 msgstr "ඒකාබද්ධ කරන ලදී"
 
@@ -1555,12 +1559,12 @@ msgstr "ජාල දෝෂය"
 
 #: ../../../lib/web/src/components/ui/sort-selector.tsx:43
 #: src/features/objects/components/create-object-dialog.tsx:394
-#: src/routes/_authenticated/$projectId/index.tsx:902
 #: src/routes/_authenticated/$projectId/index.tsx:920
+#: src/routes/_authenticated/$projectId/index.tsx:938
 msgid "New"
 msgstr "අලුත්"
 
-#: src/routes/_authenticated/$projectId/index.tsx:899
+#: src/routes/_authenticated/$projectId/index.tsx:917
 msgid "New {className}"
 msgstr "නව {className}"
 
@@ -1601,7 +1605,7 @@ msgstr "වෙනස්කම් කිසිවක් හඳුනා නොග
 msgid "No changes to display"
 msgstr "පෙන්වීමට වෙනස්කම් නැත"
 
-#: src/routes/$projectId.diff.tsx:155
+#: src/routes/$projectId.diff.tsx:160
 msgid "No changes were found for the selected comparison."
 msgstr "තෝරාගත් සංසන්දනය සඳහා වෙනස්කම් කිසිවක් හමු නොවීය."
 
@@ -1613,7 +1617,7 @@ msgstr "තවම අදහස් නැත"
 msgid "No connected accounts"
 msgstr "සම්බන්ධිත ගිණුම් නැත"
 
-#: src/routes/$projectId.diff.tsx:154
+#: src/routes/$projectId.diff.tsx:159
 msgid "No diff available"
 msgstr "diff නොමැත"
 
@@ -1625,7 +1629,7 @@ msgstr "කණ්ඩායම් ලබා ගත නොහැක"
 msgid "No item types can be created yet. Create the required parent items first."
 msgstr "තවම අයිතම වර්ග සෑදිය නොහැක. අවශ්‍ය මූලික අයිතම පළමුව සාදන්න."
 
-#: src/features/objects/components/object-links.tsx:314
+#: src/features/objects/components/object-links.tsx:327
 msgid "No matching objects"
 msgstr "ගැලපෙන objects නැත"
 
@@ -1633,7 +1637,7 @@ msgstr "ගැලපෙන objects නැත"
 msgid "No merge requests"
 msgstr "ඒකාබද්ධ කිරීමේ ඉල්ලීම් නැත"
 
-#: src/features/objects/components/field-editor.tsx:279
+#: src/features/objects/components/field-editor.tsx:280
 msgid "No people found"
 msgstr "පුද්ගලයන් හමු නොවීය"
 
@@ -1695,9 +1699,9 @@ msgstr "බැලීම් නැත"
 #: src/features/editor/components/edit-dialogs.tsx:782
 #: src/features/objects/components/create-object-dialog.tsx:450
 #: src/features/objects/components/create-object-dialog.tsx:457
+#: src/features/objects/components/object-detail-panel.tsx:530
+#: src/features/objects/components/object-detail-panel.tsx:543
 #: src/features/objects/components/object-detail-panel.tsx:548
-#: src/features/objects/components/object-detail-panel.tsx:561
-#: src/features/objects/components/object-detail-panel.tsx:566
 msgid "None"
 msgstr "කිසිවක් නැත"
 
@@ -1705,7 +1709,7 @@ msgstr "කිසිවක් නැත"
 msgid "Normal"
 msgstr "සාමාන්‍ය"
 
-#: src/features/requests/components/request-panel.tsx:231
+#: src/features/requests/components/request-panel.tsx:250
 msgid "Not configured"
 msgstr "වින්‍යාස කර නැත"
 
@@ -1744,7 +1748,7 @@ msgstr "අංකය"
 msgid "Oops! Page Not Found!"
 msgstr "අහෝ! පිටුව හමු නොවීය!"
 
-#: src/features/requests/components/request-panel.tsx:261
+#: src/features/requests/components/request-panel.tsx:280
 msgctxt "state"
 msgid "Open"
 msgstr "විවෘතයි"
@@ -1793,7 +1797,7 @@ msgstr "සංචාලන මෙනුව විවෘත කරන්න"
 msgid "Open option actions"
 msgstr "විකල්ප ක්‍රියා විවෘත කරන්න"
 
-#: src/routes/_authenticated/$projectId/index.tsx:928
+#: src/routes/_authenticated/$projectId/index.tsx:946
 msgid "Open page actions"
 msgstr "පිටු ක්‍රියා විවෘත කරන්න"
 
@@ -1811,8 +1815,8 @@ msgstr "theme සැකසුම් විවෘත කරන්න"
 msgid "Open view actions"
 msgstr "view ක්‍රියා විවෘත කරන්න"
 
-#: src/components/view-options-bar.tsx:108
-#: src/components/view-options-bar.tsx:114
+#: src/components/view-options-bar.tsx:120
+#: src/components/view-options-bar.tsx:126
 msgid "Open view controls"
 msgstr "view පාලන විවෘත කරන්න"
 
@@ -1840,7 +1844,7 @@ msgid "Page {currentPage} of {totalPages}"
 msgstr "පිටුව {currentPage} / {totalPages}"
 
 #: src/features/objects/components/create-object-dialog.tsx:442
-#: src/features/objects/components/object-detail-panel.tsx:544
+#: src/features/objects/components/object-detail-panel.tsx:526
 msgid "Parent"
 msgstr "මව්"
 
@@ -1860,8 +1864,8 @@ msgstr "මුරයතුරු"
 msgid "Pattern (regex)"
 msgstr "රටාව (regex)"
 
-#: src/routes/_authenticated/$projectId/index.tsx:738
-#: src/routes/_authenticated/$projectId/index.tsx:772
+#: src/routes/_authenticated/$projectId/index.tsx:756
+#: src/routes/_authenticated/$projectId/index.tsx:790
 msgid "Please add one or more classes to the project design."
 msgstr "කරුණාකර ව්‍යාපෘති design එකට එක් හෝ වැඩි classes එක් කරන්න."
 
@@ -1907,7 +1911,7 @@ msgid "Profile"
 msgstr "පැතිකඩ"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:65
-#: src/routes/_authenticated/$projectId/index.tsx:121
+#: src/routes/_authenticated/$projectId/index.tsx:136
 msgid "Project"
 msgstr "ව්‍යාපෘතිය"
 
@@ -1924,7 +1928,7 @@ msgstr "ව්‍යාපෘතිය සාදන ලදී"
 msgid "Project deleted"
 msgstr "ව්‍යාපෘතිය මකන ලදී"
 
-#: src/routes/_authenticated/$projectId/index.tsx:1147
+#: src/routes/_authenticated/$projectId/index.tsx:1165
 msgid "Project link"
 msgstr "ව්‍යාපෘති සබැඳිය"
 
@@ -1951,7 +1955,7 @@ msgstr "ව්‍යාපෘතිය යාවත්කාලීන කරන 
 msgid "Projects"
 msgstr "ව්‍යාපෘති"
 
-#: src/features/objects/components/object-detail-panel.tsx:387
+#: src/features/objects/components/object-detail-panel.tsx:372
 msgid "Properties"
 msgstr "ගුණාංග"
 
@@ -1963,7 +1967,7 @@ msgstr "උස්කළ"
 msgid "Re-link your accounts on this server"
 msgstr "මෙම සේවාදායකයේ ඔබේ ගිණුම් නැවත සම්බන්ධ කරන්න"
 
-#: src/routes/_authenticated/$projectId/index.tsx:952
+#: src/routes/_authenticated/$projectId/index.tsx:970
 msgid "Re-order columns"
 msgstr "තීරු නැවත අනුපිළිවෙළට සැකසීම"
 
@@ -2045,12 +2049,12 @@ msgstr "{0} ක්ෂේත්‍රය ඉවත් කරන්න"
 msgid "Remove interest"
 msgstr "උනන්දුව ඉවත් කරන්න"
 
-#: src/features/objects/components/field-editor.tsx:502
+#: src/features/objects/components/field-editor.tsx:603
 msgid "Remove item"
 msgstr "අයිතමය ඉවත් කරන්න"
 
-#: src/features/objects/components/object-links.tsx:256
-#: src/features/objects/components/object-links.tsx:261
+#: src/features/objects/components/object-links.tsx:269
+#: src/features/objects/components/object-links.tsx:274
 msgid "Remove link"
 msgstr "සබැඳිය ඉවත් කරන්න"
 
@@ -2146,7 +2150,7 @@ msgstr "සෙනසුරාදා"
 #: ../../../lib/web/src/components/ui/secret-field.tsx:77
 #: src/features/editor/components/option-dialog.tsx:150
 #: src/features/objects/components/comment-thread.tsx:205
-#: src/routes/_authenticated/$projectId/index.tsx:1033
+#: src/routes/_authenticated/$projectId/index.tsx:1051
 msgid "Save"
 msgstr "සුරකින්න"
 
@@ -2154,7 +2158,7 @@ msgstr "සුරකින්න"
 msgid "Saving..."
 msgstr "සුරකිමින්..."
 
-#: src/components/view-options-bar.tsx:132
+#: src/components/view-options-bar.tsx:144
 msgid "Search"
 msgstr "සොයන්න"
 
@@ -2178,7 +2182,7 @@ msgstr "මූලාරම්භය සොයන්න..."
 msgid "Search for projects..."
 msgstr "ව්‍යාපෘති සොයන්න..."
 
-#: src/features/objects/components/object-links.tsx:289
+#: src/features/objects/components/object-links.tsx:302
 msgid "Search objects..."
 msgstr "වස්තූන් සොයන්න..."
 
@@ -2190,13 +2194,13 @@ msgstr "කාල කලාපය සොයන්න..."
 msgid "Search users"
 msgstr "පරිශීලකයින් සොයන්න"
 
-#: src/components/view-options-bar.tsx:128
+#: src/components/view-options-bar.tsx:140
 msgid "Search, watch, and sort this view."
 msgstr "මෙම දසුන සොයන්න, නරඹන්න, සහ වර්ග කරන්න."
 
 #: ../../../lib/web/src/components/person-picker.tsx:324
-#: src/components/view-options-bar.tsx:136
-#: src/components/view-options-bar.tsx:211
+#: src/components/view-options-bar.tsx:148
+#: src/components/view-options-bar.tsx:223
 msgid "Search..."
 msgstr "සොයන්න..."
 
@@ -2263,7 +2267,7 @@ msgid "Select theme preference"
 msgstr "theme මනාපය තෝරන්න"
 
 #: src/features/objects/components/field-editor.tsx:196
-#: src/features/objects/components/field-editor.tsx:278
+#: src/features/objects/components/field-editor.tsx:279
 msgid "Select..."
 msgstr "තෝරන්න..."
 
@@ -2322,7 +2326,7 @@ msgstr "ප්‍රවේශය සකසමින්..."
 #: src/routes/_authenticated/$projectId_.settings.tsx:76
 #: src/routes/_authenticated/$projectId_.settings.tsx:167
 #: src/routes/_authenticated/$projectId_.settings.tsx:190
-#: src/routes/_authenticated/$projectId/index.tsx:985
+#: src/routes/_authenticated/$projectId/index.tsx:1003
 msgid "Settings"
 msgstr "සැකසුම්"
 
@@ -2375,11 +2379,11 @@ msgstr "ප්‍රධාන කොටසට මඟ හරින්න"
 msgid "Small"
 msgstr "කුඩා"
 
-#: src/components/view-options-bar.tsx:154
+#: src/components/view-options-bar.tsx:166
 msgid "Sort"
 msgstr "වර්ග කරන්න"
 
-#: src/features/requests/components/request-panel.tsx:306
+#: src/features/requests/components/request-panel.tsx:327
 msgid "Source"
 msgstr "මූලාරම්භය"
 
@@ -2387,7 +2391,7 @@ msgstr "මූලාරම්භය"
 msgid "Spacious"
 msgstr "විශාල"
 
-#: src/routes/$projectId.diff.tsx:119
+#: src/routes/$projectId.diff.tsx:124
 msgid "Split"
 msgstr "බෙදන්න"
 
@@ -2403,8 +2407,8 @@ msgstr "පළමු අදහස එක් කිරීමෙන් සාක�
 msgid "Stay tuned though!"
 msgstr "නමුත් රැඳී සිටින්න!"
 
-#: src/features/objects/components/object-detail-panel.tsx:447
-#: src/features/objects/components/object-detail-panel.tsx:456
+#: src/features/objects/components/object-detail-panel.tsx:432
+#: src/features/objects/components/object-detail-panel.tsx:441
 msgid "Stop watching"
 msgstr "නැරඹීම නවත්වන්න"
 
@@ -2467,7 +2471,7 @@ msgstr "ටැගය"
 msgid "Tags"
 msgstr "ටැග"
 
-#: src/features/requests/components/request-panel.tsx:314
+#: src/features/requests/components/request-panel.tsx:335
 msgid "Target"
 msgstr "ඉලක්කය"
 
@@ -2505,11 +2509,11 @@ msgid "Theme Settings"
 msgstr "theme සැකසුම්"
 
 #. placeholder {0}: request.target
-#: src/features/requests/components/request-panel.tsx:390
+#: src/features/requests/components/request-panel.tsx:411
 msgid "This merge request has been merged into {0}."
 msgstr "මෙම ඒකාබද්ධ කිරීමේ ඉල්ලීම {0} වෙත ඒකාබද්ධ කර ඇත."
 
-#: src/features/requests/components/request-panel.tsx:351
+#: src/features/requests/components/request-panel.tsx:372
 msgid "This merge request is a draft and cannot be merged."
 msgstr "මෙම merge ඉල්ලීම කෙටුම්පතක් වන අතර merge කළ නොහැක."
 
@@ -2534,7 +2538,7 @@ msgid "This will permanently delete \"{projectName}\" and all its objects, comme
 msgstr "මෙය \"{projectName}\" සහ එහි සියලුම වස්තු, අදහස්, සහ ඇමුණුම් ස්ථිරවම මකා දමනු ඇත. මෙම ක්‍රියාව ආපසු හැරවිය නොහැක."
 
 #. placeholder {0}: project.project.name
-#: src/routes/_authenticated/$projectId/index.tsx:1163
+#: src/routes/_authenticated/$projectId/index.tsx:1181
 msgid "This will remove \"{0}\" from your sidebar and stop updates for this project."
 msgstr "මෙය ඔබේ sidebar එකෙන් \"{0}\" ඉවත් කර මෙම ව්‍යාපෘතිය සඳහා යාවත්කාලීන නවත්වනු ඇත."
 
@@ -2548,7 +2552,7 @@ msgid "Thursday"
 msgstr "බ්‍රහස්පතින්දා"
 
 #: src/features/editor/components/edit-dialogs.tsx:593
-#: src/features/requests/components/request-panel.tsx:274
+#: src/features/requests/components/request-panel.tsx:294
 msgid "Title"
 msgstr "මාතෘකාව"
 
@@ -2595,8 +2599,8 @@ msgstr "theme මාරු කරන්න"
 msgid "Toggle view options"
 msgstr "දර්ශන විකල්ප ටොගල කරන්න"
 
-#: src/components/view-options-bar.tsx:145
-#: src/components/view-options-bar.tsx:221
+#: src/components/view-options-bar.tsx:157
+#: src/components/view-options-bar.tsx:233
 msgid "Toggle watched filter"
 msgstr "නැරඹූ පෙරහන මාරු කරන්න"
 
@@ -2665,7 +2669,7 @@ msgstr "පවරා නැත"
 msgid "Unauthorized Access"
 msgstr "අනවසර ප්‍රවේශය"
 
-#: src/routes/$projectId.diff.tsx:107
+#: src/routes/$projectId.diff.tsx:112
 msgid "Unified"
 msgstr "ඒකාබද්ධ"
 
@@ -2676,24 +2680,28 @@ msgstr "එක්සත් ජනපදය"
 #: src/features/projects/pages/projects-list-page.tsx:147
 #: src/features/projects/pages/projects-list-page.tsx:166
 #: src/features/projects/pages/projects-list-page.tsx:168
-#: src/routes/_authenticated/$projectId/index.tsx:993
-#: src/routes/_authenticated/$projectId/index.tsx:1164
+#: src/routes/_authenticated/$projectId/index.tsx:1011
+#: src/routes/_authenticated/$projectId/index.tsx:1182
 msgid "Unsubscribe"
 msgstr "දායකත්වය ඉවත් කරන්න"
 
-#: src/routes/_authenticated/$projectId/index.tsx:1162
+#: src/routes/_authenticated/$projectId/index.tsx:1180
 msgid "Unsubscribe from project?"
 msgstr "ව්‍යාපෘතියෙන් දායකත්වය ඉවත් කරන්නද?"
 
 #: src/features/projects/pages/projects-list-page.tsx:176
-#: src/routes/_authenticated/$projectId/index.tsx:629
+#: src/routes/_authenticated/$projectId/index.tsx:647
 msgid "Unsubscribed"
 msgstr "දායකත්වය ඉවත් කරන ලදී"
 
 #: src/features/projects/pages/projects-list-page.tsx:175
-#: src/routes/_authenticated/$projectId/index.tsx:628
+#: src/routes/_authenticated/$projectId/index.tsx:646
 msgid "Unsubscribing..."
 msgstr "දායකත්වය ඉවත් කරමින්..."
+
+#: src/features/objects/components/object-links.tsx:150
+msgid "Untitled"
+msgstr "මාතෘකා රහිත"
 
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:135
 msgid "Unverified"
@@ -2777,11 +2785,11 @@ msgstr "සියල්ල බලන්න"
 msgid "View all notifications"
 msgstr "සියලුම දැනුම්දීම් බලන්න"
 
-#: src/features/objects/components/object-detail-panel.tsx:425
+#: src/features/objects/components/object-detail-panel.tsx:410
 msgid "View and edit item details"
 msgstr "අයිතමයේ විස්තර බලන්න සහ සංස්කරණය කරන්න"
 
-#: src/components/view-options-bar.tsx:127
+#: src/components/view-options-bar.tsx:139
 msgid "View controls"
 msgstr "පාලන බලන්න"
 
@@ -2789,7 +2797,7 @@ msgstr "පාලන බලන්න"
 msgid "View only"
 msgstr "බැලීම පමණි"
 
-#: src/routes/_authenticated/$projectId/index.tsx:937
+#: src/routes/_authenticated/$projectId/index.tsx:955
 msgid "View options"
 msgstr "දසුන් විකල්ප"
 
@@ -2797,16 +2805,16 @@ msgstr "දසුන් විකල්ප"
 msgid "Views"
 msgstr "දසුන්"
 
-#: src/features/objects/components/object-detail-panel.tsx:447
-#: src/features/objects/components/object-detail-panel.tsx:456
+#: src/features/objects/components/object-detail-panel.tsx:432
+#: src/features/objects/components/object-detail-panel.tsx:441
 msgid "Watch"
 msgstr "නරඹන්න"
 
-#: src/components/view-options-bar.tsx:225
+#: src/components/view-options-bar.tsx:237
 msgid "Watched"
 msgstr "නැරඹූ"
 
-#: src/components/view-options-bar.tsx:149
+#: src/components/view-options-bar.tsx:161
 msgid "Watched only"
 msgstr "නැරඹූ පමණි"
 
@@ -2835,7 +2843,7 @@ msgstr "බදාදා"
 msgid "You do not have access to this section."
 msgstr "ඔබට මෙම කොටසට ප්‍රවේශය නොමැත."
 
-#: src/routes/_authenticated/$projectId/index.tsx:109
+#: src/routes/_authenticated/$projectId/index.tsx:124
 msgid "You don't have access to this project."
 msgstr "ඔබට මෙම ව්‍යාපෘතිය වෙත ප්‍රවේශය නැත."
 

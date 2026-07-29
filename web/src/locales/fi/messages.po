@@ -85,6 +85,10 @@ msgstr "{entityLabel}: nimi"
 msgid "{entityLabel} name is required"
 msgstr "{entityLabel}-nimi vaaditaan"
 
+#: ../../../lib/web/src/components/game/game-draw-offer-banner.tsx:29
+msgid "{opponentName} offered a draw"
+msgstr ""
+
 #: ../../../lib/web/src/components/data-table/bulk-actions.tsx:210
 msgid "{selectedCount, plural, one {{entityName} selected} other {{manyName} selected}}"
 msgstr "{selectedCount, plural, one {{entityName} valittu} other {{manyName} valittu}}"
@@ -115,7 +119,7 @@ msgid "+{0} ahead"
 msgstr "+{0} edellä"
 
 #. placeholder {0}: countDeepChildren(object.id)
-#: src/features/board/components/board-card.tsx:362
+#: ../../../lib/web/src/components/entity/entity-board-card.tsx:421
 msgid "+{0} nested"
 msgstr "+{0} sisäkkäistä"
 
@@ -138,6 +142,10 @@ msgstr "24 tuntia"
 #: ../../../lib/web/src/lib/preference-utils.ts:51
 msgid "Absolute (date and time)"
 msgstr "Absoluuttinen (päivämäärä ja kellonaika)"
+
+#: ../../../lib/web/src/components/game/game-draw-offer-banner.tsx:45
+msgid "Accept"
+msgstr ""
 
 #: src/routes/_authenticated/$projectId_.settings.tsx:77
 msgid "Access"
@@ -191,9 +199,9 @@ msgstr "Tili vahvistettu"
 msgid "Activity"
 msgstr "Toiminta"
 
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:717
 #: ../../../lib/web/src/features/access/access-dialog.tsx:332
 #: ../../../lib/web/src/features/accounts/account-add.tsx:196
-#: src/features/objects/components/field-editor.tsx:649
 #: src/features/requests/components/request-panel.tsx:103
 msgid "Add"
 msgstr "Lisää"
@@ -223,7 +231,7 @@ msgstr "Lisää tili"
 msgid "Add an account to receive notifications and use services."
 msgstr "Lisää tili saadaksesi ilmoituksia ja käyttääksesi palveluita."
 
-#: src/features/objects/components/field-editor.tsx:619
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:687
 msgid "Add checklist item"
 msgstr "Lisää tarkistuslistakohde"
 
@@ -244,7 +252,7 @@ msgstr "Lisää sarake"
 msgid "Add field"
 msgstr "Lisää kenttä"
 
-#: src/features/objects/components/field-editor.tsx:637
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:705
 msgid "Add item..."
 msgstr "Lisää kohde..."
 
@@ -536,6 +544,10 @@ msgstr "Tarkistetaan yhdistämistilaa..."
 #: src/features/editor/components/add-dialogs.tsx:136
 msgid "Checklist"
 msgstr "Tarkistuslista"
+
+#: ../../../lib/web/src/components/game/game-empty-state.tsx:30
+msgid "Choose a game from the sidebar or start a new one."
+msgstr ""
 
 #: src/features/projects/components/create-project-dialog.tsx:288
 msgid "Choose a template"
@@ -846,6 +858,10 @@ msgstr "Tiedot tuotu ({0, plural, one {# kohde} other {# kohdetta}}, {1, plural,
 #: src/features/editor/components/add-dialogs.tsx:137
 msgid "Date"
 msgstr "Päivämäärä"
+
+#: ../../../lib/web/src/components/game/game-draw-offer-banner.tsx:41
+msgid "Decline"
+msgstr ""
 
 #: ../../../lib/web/src/components/config-drawer.tsx:311
 msgid "Default"
@@ -1522,7 +1538,7 @@ msgstr "Sisennetty"
 msgid "Interests"
 msgstr "Kiinnostuksen kohteet"
 
-#: src/features/objects/components/field-editor.tsx:480
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:550
 msgid "Invalid date"
 msgstr "Virheellinen päivämäärä"
 
@@ -1710,6 +1726,10 @@ msgstr "Yhdistäminen onnistui"
 msgid "Merging..."
 msgstr "Yhdistetään..."
 
+#: ../../../lib/web/src/components/game/game-chat-input.tsx:35
+msgid "Message"
+msgstr ""
+
 #: ../../../lib/web/src/lib/preference-utils.ts:85
 msgid "Metric"
 msgstr "Metrinen"
@@ -1773,6 +1793,11 @@ msgstr "Uusi"
 msgid "New {className}"
 msgstr "Uusi {className}"
 
+#: ../../../lib/web/src/components/game/game-empty-state.tsx:34
+#: ../../../lib/web/src/components/game/game-empty-state.tsx:46
+msgid "New game"
+msgstr ""
+
 #: src/features/projects/components/create-project-dialog.tsx:413
 msgid "Next"
 msgstr "Seuraava"
@@ -1826,6 +1851,10 @@ msgstr "Ei yhdistettyjä tilejä"
 msgid "No diff available"
 msgstr "Ei saatavilla olevaa diffiä"
 
+#: ../../../lib/web/src/components/game/game-empty-state.tsx:43
+msgid "No games yet"
+msgstr ""
+
 #: ../../../lib/web/src/features/access/access-dialog.tsx:241
 msgid "No groups available"
 msgstr "Ei saatavilla olevia ryhmiä"
@@ -1846,8 +1875,8 @@ msgstr "Ei yhdistämispyyntöjä"
 msgid "No notifications yet"
 msgstr "Ei vielä ilmoituksia"
 
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:336
 #: ../../../lib/web/src/components/person-picker.tsx:84
-#: src/features/objects/components/field-editor.tsx:280
 msgid "No people found"
 msgstr "Henkilöitä ei löytynyt"
 
@@ -2295,7 +2324,7 @@ msgstr "Poista kenttä {0}"
 msgid "Remove interest"
 msgstr "Poista kiinnostus"
 
-#: src/features/objects/components/field-editor.tsx:603
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:671
 msgid "Remove item"
 msgstr "Poista kohde"
 
@@ -2491,6 +2520,10 @@ msgstr "Valitse {0}"
 msgid "Select a field"
 msgstr "Valitse kenttä"
 
+#: ../../../lib/web/src/components/game/game-empty-state.tsx:29
+msgid "Select a game"
+msgstr ""
+
 #: ../../../lib/web/src/features/access/access-dialog.tsx:150
 msgid "Select a user, group, or other rule to grant access."
 msgstr "Valitse käyttäjä, ryhmä tai muu sääntö, jolle myönnät käyttöoikeuden."
@@ -2551,8 +2584,8 @@ msgstr "Valitse sivuston suunta"
 msgid "Select theme preference"
 msgstr "Valitse teeman asetus"
 
-#: src/features/objects/components/field-editor.tsx:196
-#: src/features/objects/components/field-editor.tsx:279
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:252
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:335
 msgid "Select..."
 msgstr "Valitse..."
 
@@ -2572,6 +2605,11 @@ msgstr "Lähetä uudelleen"
 #: ../../../lib/web/src/components/step-up-dialog.tsx:307
 msgid "Send email"
 msgstr "Lähetä sähköposti"
+
+#: ../../../lib/web/src/components/game/game-chat-input.tsx:52
+#: ../../../lib/web/src/components/game/game-chat-input.tsx:61
+msgid "Send message"
+msgstr ""
 
 #: ../../../lib/web/src/lib/preference-utils.ts:145
 msgid "Serif"
@@ -2938,6 +2976,10 @@ msgstr "Tyyppi"
 #: ../../../lib/web/src/components/command-menu.tsx:52
 msgid "Type a command or search..."
 msgstr "Kirjoita komento tai hae..."
+
+#: ../../../lib/web/src/components/game/game-chat-input.tsx:39
+msgid "Type a message..."
+msgstr ""
 
 #: ../../../lib/web/src/features/access/access-dialog.tsx:191
 msgid "Type to search users"

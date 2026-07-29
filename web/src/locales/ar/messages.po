@@ -85,6 +85,10 @@ msgstr "اسم {entityLabel}"
 msgid "{entityLabel} name is required"
 msgstr "اسم {entityLabel} مطلوب"
 
+#: ../../../lib/web/src/components/game/game-draw-offer-banner.tsx:29
+msgid "{opponentName} offered a draw"
+msgstr ""
+
 #: ../../../lib/web/src/components/data-table/bulk-actions.tsx:210
 msgid "{selectedCount, plural, one {{entityName} selected} other {{manyName} selected}}"
 msgstr "{selectedCount, plural, zero {لم يتم تحديد {manyName}} one {تم تحديد {entityName}} two {تم تحديد {manyName}} few {تم تحديد {manyName}} many {تم تحديد {manyName}} other {تم تحديد {manyName}}}"
@@ -115,7 +119,7 @@ msgid "+{0} ahead"
 msgstr "+{0} متقدم"
 
 #. placeholder {0}: countDeepChildren(object.id)
-#: src/features/board/components/board-card.tsx:362
+#: ../../../lib/web/src/components/entity/entity-board-card.tsx:421
 msgid "+{0} nested"
 msgstr "+{0} متداخلة"
 
@@ -138,6 +142,10 @@ msgstr "24 ساعة"
 #: ../../../lib/web/src/lib/preference-utils.ts:51
 msgid "Absolute (date and time)"
 msgstr "مطلق (تاريخ ووقت)"
+
+#: ../../../lib/web/src/components/game/game-draw-offer-banner.tsx:45
+msgid "Accept"
+msgstr ""
 
 #: src/routes/_authenticated/$projectId_.settings.tsx:77
 msgid "Access"
@@ -191,9 +199,9 @@ msgstr "تم التحقق من الحساب"
 msgid "Activity"
 msgstr "النشاط"
 
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:717
 #: ../../../lib/web/src/features/access/access-dialog.tsx:332
 #: ../../../lib/web/src/features/accounts/account-add.tsx:196
-#: src/features/objects/components/field-editor.tsx:649
 #: src/features/requests/components/request-panel.tsx:103
 msgid "Add"
 msgstr "إضافة"
@@ -223,7 +231,7 @@ msgstr "إضافة حساب"
 msgid "Add an account to receive notifications and use services."
 msgstr "أضف حسابًا لتلقي الإشعارات واستخدام الخدمات."
 
-#: src/features/objects/components/field-editor.tsx:619
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:687
 msgid "Add checklist item"
 msgstr "إضافة عنصر إلى قائمة المهام"
 
@@ -244,7 +252,7 @@ msgstr "إضافة عمود"
 msgid "Add field"
 msgstr "إضافة حقل"
 
-#: src/features/objects/components/field-editor.tsx:637
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:705
 msgid "Add item..."
 msgstr "إضافة عنصر..."
 
@@ -536,6 +544,10 @@ msgstr "جارٍ التحقق من حالة الدمج..."
 #: src/features/editor/components/add-dialogs.tsx:136
 msgid "Checklist"
 msgstr "قائمة المهام"
+
+#: ../../../lib/web/src/components/game/game-empty-state.tsx:30
+msgid "Choose a game from the sidebar or start a new one."
+msgstr ""
 
 #: src/features/projects/components/create-project-dialog.tsx:288
 msgid "Choose a template"
@@ -846,6 +858,10 @@ msgstr "تم استيراد البيانات ({0, plural, zero {# كائن} one 
 #: src/features/editor/components/add-dialogs.tsx:137
 msgid "Date"
 msgstr "التاريخ"
+
+#: ../../../lib/web/src/components/game/game-draw-offer-banner.tsx:41
+msgid "Decline"
+msgstr ""
 
 #: ../../../lib/web/src/components/config-drawer.tsx:311
 msgid "Default"
@@ -1522,7 +1538,7 @@ msgstr "داخلي"
 msgid "Interests"
 msgstr "الاهتمامات"
 
-#: src/features/objects/components/field-editor.tsx:480
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:550
 msgid "Invalid date"
 msgstr "تاريخ غير صالح"
 
@@ -1710,6 +1726,10 @@ msgstr "تم الدمج بنجاح"
 msgid "Merging..."
 msgstr "جاري الدمج..."
 
+#: ../../../lib/web/src/components/game/game-chat-input.tsx:35
+msgid "Message"
+msgstr ""
+
 #: ../../../lib/web/src/lib/preference-utils.ts:85
 msgid "Metric"
 msgstr "متري"
@@ -1773,6 +1793,11 @@ msgstr "جديد"
 msgid "New {className}"
 msgstr "{className} جديد"
 
+#: ../../../lib/web/src/components/game/game-empty-state.tsx:34
+#: ../../../lib/web/src/components/game/game-empty-state.tsx:46
+msgid "New game"
+msgstr ""
+
 #: src/features/projects/components/create-project-dialog.tsx:413
 msgid "Next"
 msgstr "التالي"
@@ -1826,6 +1851,10 @@ msgstr "لا توجد حسابات متصلة"
 msgid "No diff available"
 msgstr "لا يوجد فرق متاح"
 
+#: ../../../lib/web/src/components/game/game-empty-state.tsx:43
+msgid "No games yet"
+msgstr ""
+
 #: ../../../lib/web/src/features/access/access-dialog.tsx:241
 msgid "No groups available"
 msgstr "لا توجد مجموعات متاحة"
@@ -1846,8 +1875,8 @@ msgstr "لا توجد طلبات دمج"
 msgid "No notifications yet"
 msgstr "لا إشعارات بعد"
 
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:336
 #: ../../../lib/web/src/components/person-picker.tsx:84
-#: src/features/objects/components/field-editor.tsx:280
 msgid "No people found"
 msgstr "لم يتم العثور على أشخاص"
 
@@ -2295,7 +2324,7 @@ msgstr "إزالة الحقل {0}"
 msgid "Remove interest"
 msgstr "إزالة الاهتمام"
 
-#: src/features/objects/components/field-editor.tsx:603
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:671
 msgid "Remove item"
 msgstr "إزالة العنصر"
 
@@ -2491,6 +2520,10 @@ msgstr "اختر {0}"
 msgid "Select a field"
 msgstr "اختر حقلاً"
 
+#: ../../../lib/web/src/components/game/game-empty-state.tsx:29
+msgid "Select a game"
+msgstr ""
+
 #: ../../../lib/web/src/features/access/access-dialog.tsx:150
 msgid "Select a user, group, or other rule to grant access."
 msgstr "اختر مستخدمًا أو مجموعة أو قاعدة أخرى لمنح الوصول."
@@ -2551,8 +2584,8 @@ msgstr "اختر اتجاه الموقع"
 msgid "Select theme preference"
 msgstr "اختر تفضيل السمة"
 
-#: src/features/objects/components/field-editor.tsx:196
-#: src/features/objects/components/field-editor.tsx:279
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:252
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:335
 msgid "Select..."
 msgstr "اختر..."
 
@@ -2572,6 +2605,11 @@ msgstr "إرسال مرة أخرى"
 #: ../../../lib/web/src/components/step-up-dialog.tsx:307
 msgid "Send email"
 msgstr "إرسال بريد إلكتروني"
+
+#: ../../../lib/web/src/components/game/game-chat-input.tsx:52
+#: ../../../lib/web/src/components/game/game-chat-input.tsx:61
+msgid "Send message"
+msgstr ""
 
 #: ../../../lib/web/src/lib/preference-utils.ts:145
 msgid "Serif"
@@ -2938,6 +2976,10 @@ msgstr "النوع"
 #: ../../../lib/web/src/components/command-menu.tsx:52
 msgid "Type a command or search..."
 msgstr "اكتب أمرًا أو ابحث..."
+
+#: ../../../lib/web/src/components/game/game-chat-input.tsx:39
+msgid "Type a message..."
+msgstr ""
 
 #: ../../../lib/web/src/features/access/access-dialog.tsx:191
 msgid "Type to search users"

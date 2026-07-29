@@ -85,6 +85,10 @@ msgstr "{entityLabel}-ის სახელი"
 msgid "{entityLabel} name is required"
 msgstr "{entityLabel}-ის სახელი სავალდებულოა"
 
+#: ../../../lib/web/src/components/game/game-draw-offer-banner.tsx:29
+msgid "{opponentName} offered a draw"
+msgstr ""
+
 #: ../../../lib/web/src/components/data-table/bulk-actions.tsx:210
 msgid "{selectedCount, plural, one {{entityName} selected} other {{manyName} selected}}"
 msgstr "{selectedCount, plural, other {არჩეულია {manyName}}}"
@@ -115,7 +119,7 @@ msgid "+{0} ahead"
 msgstr "+{0} წინ"
 
 #. placeholder {0}: countDeepChildren(object.id)
-#: src/features/board/components/board-card.tsx:362
+#: ../../../lib/web/src/components/entity/entity-board-card.tsx:421
 msgid "+{0} nested"
 msgstr "+{0} ჩადგმული"
 
@@ -138,6 +142,10 @@ msgstr "24 საათი"
 #: ../../../lib/web/src/lib/preference-utils.ts:51
 msgid "Absolute (date and time)"
 msgstr "აბსოლუტური (თარიღი და დრო)"
+
+#: ../../../lib/web/src/components/game/game-draw-offer-banner.tsx:45
+msgid "Accept"
+msgstr ""
 
 #: src/routes/_authenticated/$projectId_.settings.tsx:77
 msgid "Access"
@@ -191,9 +199,9 @@ msgstr "ანგარიში დადასტურებულია"
 msgid "Activity"
 msgstr "აქტივობა"
 
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:717
 #: ../../../lib/web/src/features/access/access-dialog.tsx:332
 #: ../../../lib/web/src/features/accounts/account-add.tsx:196
-#: src/features/objects/components/field-editor.tsx:649
 #: src/features/requests/components/request-panel.tsx:103
 msgid "Add"
 msgstr "დამატება"
@@ -223,7 +231,7 @@ msgstr "ანგარიშის დამატება"
 msgid "Add an account to receive notifications and use services."
 msgstr "დაამატეთ ანგარიში შეტყობინებების მისაღებად და სერვისების გამოსაყენებლად."
 
-#: src/features/objects/components/field-editor.tsx:619
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:687
 msgid "Add checklist item"
 msgstr "ჩამონათვალის ერთეულის დამატება"
 
@@ -244,7 +252,7 @@ msgstr "სვეტის დამატება"
 msgid "Add field"
 msgstr "ველის დამატება"
 
-#: src/features/objects/components/field-editor.tsx:637
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:705
 msgid "Add item..."
 msgstr "ერთეულის დამატება..."
 
@@ -536,6 +544,10 @@ msgstr "შერწყმის სტატუსის შემოწმე�
 #: src/features/editor/components/add-dialogs.tsx:136
 msgid "Checklist"
 msgstr "ჩამონათვალი"
+
+#: ../../../lib/web/src/components/game/game-empty-state.tsx:30
+msgid "Choose a game from the sidebar or start a new one."
+msgstr ""
 
 #: src/features/projects/components/create-project-dialog.tsx:288
 msgid "Choose a template"
@@ -846,6 +858,10 @@ msgstr "მონაცემები იმპორტირებული�
 #: src/features/editor/components/add-dialogs.tsx:137
 msgid "Date"
 msgstr "თარიღი"
+
+#: ../../../lib/web/src/components/game/game-draw-offer-banner.tsx:41
+msgid "Decline"
+msgstr ""
 
 #: ../../../lib/web/src/components/config-drawer.tsx:311
 msgid "Default"
@@ -1522,7 +1538,7 @@ msgstr "ჩაკიდებული"
 msgid "Interests"
 msgstr "ინტერესები"
 
-#: src/features/objects/components/field-editor.tsx:480
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:550
 msgid "Invalid date"
 msgstr "არასწორი თარიღი"
 
@@ -1710,6 +1726,10 @@ msgstr "წარმატებით შეერწყა"
 msgid "Merging..."
 msgstr "შერწყმა..."
 
+#: ../../../lib/web/src/components/game/game-chat-input.tsx:35
+msgid "Message"
+msgstr ""
+
 #: ../../../lib/web/src/lib/preference-utils.ts:85
 msgid "Metric"
 msgstr "მეტრიკული"
@@ -1773,6 +1793,11 @@ msgstr "ახალი"
 msgid "New {className}"
 msgstr "ახალი {className}"
 
+#: ../../../lib/web/src/components/game/game-empty-state.tsx:34
+#: ../../../lib/web/src/components/game/game-empty-state.tsx:46
+msgid "New game"
+msgstr ""
+
 #: src/features/projects/components/create-project-dialog.tsx:413
 msgid "Next"
 msgstr "შემდეგი"
@@ -1826,6 +1851,10 @@ msgstr "დაკავშირებული ანგარიშები �
 msgid "No diff available"
 msgstr "diff მიუწვდომელია"
 
+#: ../../../lib/web/src/components/game/game-empty-state.tsx:43
+msgid "No games yet"
+msgstr ""
+
 #: ../../../lib/web/src/features/access/access-dialog.tsx:241
 msgid "No groups available"
 msgstr "ხელმისაწვდომი ჯგუფები არ არის"
@@ -1846,8 +1875,8 @@ msgstr "merge მოთხოვნები არ არის"
 msgid "No notifications yet"
 msgstr "ჯერ არ არის შეტყობინებები"
 
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:336
 #: ../../../lib/web/src/components/person-picker.tsx:84
-#: src/features/objects/components/field-editor.tsx:280
 msgid "No people found"
 msgstr "ხალხი ვერ მოიძებნა"
 
@@ -2295,7 +2324,7 @@ msgstr "ველის წაშლა {0}"
 msgid "Remove interest"
 msgstr "ინტერესის წაშლა"
 
-#: src/features/objects/components/field-editor.tsx:603
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:671
 msgid "Remove item"
 msgstr "ნივთის წაშლა"
 
@@ -2491,6 +2520,10 @@ msgstr "აირჩიეთ {0}"
 msgid "Select a field"
 msgstr "ველის არჩევა"
 
+#: ../../../lib/web/src/components/game/game-empty-state.tsx:29
+msgid "Select a game"
+msgstr ""
+
 #: ../../../lib/web/src/features/access/access-dialog.tsx:150
 msgid "Select a user, group, or other rule to grant access."
 msgstr "აირჩიეთ მომხმარებელი, ჯგუფი ან სხვა წესი წვდომის გადასაცემად."
@@ -2551,8 +2584,8 @@ msgstr "აირჩიეთ საიტის მიმართულებ�
 msgid "Select theme preference"
 msgstr "აირჩიეთ თემის პრიორიტეტი"
 
-#: src/features/objects/components/field-editor.tsx:196
-#: src/features/objects/components/field-editor.tsx:279
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:252
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:335
 msgid "Select..."
 msgstr "აირჩიეთ..."
 
@@ -2572,6 +2605,11 @@ msgstr "თავიდან გაგზავნა"
 #: ../../../lib/web/src/components/step-up-dialog.tsx:307
 msgid "Send email"
 msgstr "ელფოსტის გაგზავნა"
+
+#: ../../../lib/web/src/components/game/game-chat-input.tsx:52
+#: ../../../lib/web/src/components/game/game-chat-input.tsx:61
+msgid "Send message"
+msgstr ""
 
 #: ../../../lib/web/src/lib/preference-utils.ts:145
 msgid "Serif"
@@ -2938,6 +2976,10 @@ msgstr "სამშაბათი"
 #: ../../../lib/web/src/components/command-menu.tsx:52
 msgid "Type a command or search..."
 msgstr "აკრიფეთ ბრძანება ან მოძებნეთ..."
+
+#: ../../../lib/web/src/components/game/game-chat-input.tsx:39
+msgid "Type a message..."
+msgstr ""
 
 #: ../../../lib/web/src/features/access/access-dialog.tsx:191
 msgid "Type to search users"

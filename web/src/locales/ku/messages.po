@@ -85,6 +85,10 @@ msgstr "Navê {entityLabel}"
 msgid "{entityLabel} name is required"
 msgstr "Navê {entityLabel} pêwîst e"
 
+#: ../../../lib/web/src/components/game/game-draw-offer-banner.tsx:29
+msgid "{opponentName} offered a draw"
+msgstr ""
+
 #: ../../../lib/web/src/components/data-table/bulk-actions.tsx:210
 msgid "{selectedCount, plural, one {{entityName} selected} other {{manyName} selected}}"
 msgstr "{selectedCount, plural, one {{entityName} hilbijartî} other {{manyName} hilbijartî}}"
@@ -115,7 +119,7 @@ msgid "+{0} ahead"
 msgstr "+{0} li pêş"
 
 #. placeholder {0}: countDeepChildren(object.id)
-#: src/features/board/components/board-card.tsx:362
+#: ../../../lib/web/src/components/entity/entity-board-card.tsx:421
 msgid "+{0} nested"
 msgstr "+{0} hêlînkirî"
 
@@ -138,6 +142,10 @@ msgstr "24 saet"
 #: ../../../lib/web/src/lib/preference-utils.ts:51
 msgid "Absolute (date and time)"
 msgstr "Mutleq (dîrok û saet)"
+
+#: ../../../lib/web/src/components/game/game-draw-offer-banner.tsx:45
+msgid "Accept"
+msgstr ""
 
 #: src/routes/_authenticated/$projectId_.settings.tsx:77
 msgid "Access"
@@ -191,9 +199,9 @@ msgstr "Hesab hat piştrastkirin"
 msgid "Activity"
 msgstr "Çalakî"
 
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:717
 #: ../../../lib/web/src/features/access/access-dialog.tsx:332
 #: ../../../lib/web/src/features/accounts/account-add.tsx:196
-#: src/features/objects/components/field-editor.tsx:649
 #: src/features/requests/components/request-panel.tsx:103
 msgid "Add"
 msgstr "Zêde bike"
@@ -223,7 +231,7 @@ msgstr "Hesab zêde bike"
 msgid "Add an account to receive notifications and use services."
 msgstr "Hesabekê zêde bike da ku agahdarî werbigirî û xizmetan bi kar bînî."
 
-#: src/features/objects/components/field-editor.tsx:619
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:687
 msgid "Add checklist item"
 msgstr "Hêmana lîsteya kontrolê zêde bike"
 
@@ -244,7 +252,7 @@ msgstr "Stûn zêde bike"
 msgid "Add field"
 msgstr "Qad zêde bike"
 
-#: src/features/objects/components/field-editor.tsx:637
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:705
 msgid "Add item..."
 msgstr "Hêman zêde bike..."
 
@@ -536,6 +544,10 @@ msgstr "Rewşa hevkirinê tê kontrolkirin..."
 #: src/features/editor/components/add-dialogs.tsx:136
 msgid "Checklist"
 msgstr "Lîsteya kontrolê"
+
+#: ../../../lib/web/src/components/game/game-empty-state.tsx:30
+msgid "Choose a game from the sidebar or start a new one."
+msgstr ""
 
 #: src/features/projects/components/create-project-dialog.tsx:288
 msgid "Choose a template"
@@ -846,6 +858,10 @@ msgstr "Dane hatin împortkirin ({0, plural, one {# obje} other {# obje}}, {1, p
 #: src/features/editor/components/add-dialogs.tsx:137
 msgid "Date"
 msgstr "Dîrok"
+
+#: ../../../lib/web/src/components/game/game-draw-offer-banner.tsx:41
+msgid "Decline"
+msgstr ""
 
 #: ../../../lib/web/src/components/config-drawer.tsx:311
 msgid "Default"
@@ -1522,7 +1538,7 @@ msgstr "Inset"
 msgid "Interests"
 msgstr "Balkêşî"
 
-#: src/features/objects/components/field-editor.tsx:480
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:550
 msgid "Invalid date"
 msgstr "Tarîxa nederbasdar"
 
@@ -1710,6 +1726,10 @@ msgstr "Bi serkeftî tevlîkirî"
 msgid "Merging..."
 msgstr "Tê tevlîkirin..."
 
+#: ../../../lib/web/src/components/game/game-chat-input.tsx:35
+msgid "Message"
+msgstr ""
+
 #: ../../../lib/web/src/lib/preference-utils.ts:85
 msgid "Metric"
 msgstr "Mîtrîk"
@@ -1773,6 +1793,11 @@ msgstr "Nû"
 msgid "New {className}"
 msgstr "{className} nû"
 
+#: ../../../lib/web/src/components/game/game-empty-state.tsx:34
+#: ../../../lib/web/src/components/game/game-empty-state.tsx:46
+msgid "New game"
+msgstr ""
+
 #: src/features/projects/components/create-project-dialog.tsx:413
 msgid "Next"
 msgstr "Pêştir"
@@ -1826,6 +1851,10 @@ msgstr "Tu hesabên girêdayî tune"
 msgid "No diff available"
 msgstr "Tu diff peyda nabe"
 
+#: ../../../lib/web/src/components/game/game-empty-state.tsx:43
+msgid "No games yet"
+msgstr ""
+
 #: ../../../lib/web/src/features/access/access-dialog.tsx:241
 msgid "No groups available"
 msgstr "Tu kom berdest nîn in"
@@ -1846,8 +1875,8 @@ msgstr "Tu daxwazên hevkirinê tune"
 msgid "No notifications yet"
 msgstr "Hîna agahdarî tune"
 
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:336
 #: ../../../lib/web/src/components/person-picker.tsx:84
-#: src/features/objects/components/field-editor.tsx:280
 msgid "No people found"
 msgstr "Tu kes nehatin dîtin"
 
@@ -2295,7 +2324,7 @@ msgstr "Qadê {0} rake"
 msgid "Remove interest"
 msgstr "Balkêşiyê rake"
 
-#: src/features/objects/components/field-editor.tsx:603
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:671
 msgid "Remove item"
 msgstr "Babetê rake"
 
@@ -2491,6 +2520,10 @@ msgstr "{0} hilbijêre"
 msgid "Select a field"
 msgstr "Qadekê hilbijêre"
 
+#: ../../../lib/web/src/components/game/game-empty-state.tsx:29
+msgid "Select a game"
+msgstr ""
+
 #: ../../../lib/web/src/features/access/access-dialog.tsx:150
 msgid "Select a user, group, or other rule to grant access."
 msgstr "Bikarhêner, kom an rêzikek din hilbijêre da ku destûr bidî."
@@ -2551,8 +2584,8 @@ msgstr "Beralîkirina malperê hilbijêre"
 msgid "Select theme preference"
 msgstr "Tercîha temayê hilbijêre"
 
-#: src/features/objects/components/field-editor.tsx:196
-#: src/features/objects/components/field-editor.tsx:279
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:252
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:335
 msgid "Select..."
 msgstr "Hilbijêre..."
 
@@ -2572,6 +2605,11 @@ msgstr "Dîsa bişîne"
 #: ../../../lib/web/src/components/step-up-dialog.tsx:307
 msgid "Send email"
 msgstr "E-nameyê bişîne"
+
+#: ../../../lib/web/src/components/game/game-chat-input.tsx:52
+#: ../../../lib/web/src/components/game/game-chat-input.tsx:61
+msgid "Send message"
+msgstr ""
 
 #: ../../../lib/web/src/lib/preference-utils.ts:145
 msgid "Serif"
@@ -2938,6 +2976,10 @@ msgstr "Cure"
 #: ../../../lib/web/src/components/command-menu.tsx:52
 msgid "Type a command or search..."
 msgstr "Fermanek an lêgerînê binivîse..."
+
+#: ../../../lib/web/src/components/game/game-chat-input.tsx:39
+msgid "Type a message..."
+msgstr ""
 
 #: ../../../lib/web/src/features/access/access-dialog.tsx:191
 msgid "Type to search users"

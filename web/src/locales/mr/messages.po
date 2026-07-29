@@ -85,6 +85,10 @@ msgstr "{entityLabel} नाव"
 msgid "{entityLabel} name is required"
 msgstr "{entityLabel} नाव आवश्यक आहे"
 
+#: ../../../lib/web/src/components/game/game-draw-offer-banner.tsx:29
+msgid "{opponentName} offered a draw"
+msgstr ""
+
 #: ../../../lib/web/src/components/data-table/bulk-actions.tsx:210
 msgid "{selectedCount, plural, one {{entityName} selected} other {{manyName} selected}}"
 msgstr "{selectedCount, plural, one {{entityName} निवडले} other {{manyName} निवडले}}"
@@ -115,7 +119,7 @@ msgid "+{0} ahead"
 msgstr "+{0} पुढे"
 
 #. placeholder {0}: countDeepChildren(object.id)
-#: src/features/board/components/board-card.tsx:362
+#: ../../../lib/web/src/components/entity/entity-board-card.tsx:421
 msgid "+{0} nested"
 msgstr "+{0} नेस्टेड"
 
@@ -138,6 +142,10 @@ msgstr "24 तास"
 #: ../../../lib/web/src/lib/preference-utils.ts:51
 msgid "Absolute (date and time)"
 msgstr "निरपेक्ष (तारीख आणि वेळ)"
+
+#: ../../../lib/web/src/components/game/game-draw-offer-banner.tsx:45
+msgid "Accept"
+msgstr ""
 
 #: src/routes/_authenticated/$projectId_.settings.tsx:77
 msgid "Access"
@@ -191,9 +199,9 @@ msgstr "खाते सत्यापित केले"
 msgid "Activity"
 msgstr "क्रियाकलाप"
 
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:717
 #: ../../../lib/web/src/features/access/access-dialog.tsx:332
 #: ../../../lib/web/src/features/accounts/account-add.tsx:196
-#: src/features/objects/components/field-editor.tsx:649
 #: src/features/requests/components/request-panel.tsx:103
 msgid "Add"
 msgstr "जोडा"
@@ -223,7 +231,7 @@ msgstr "खाते जोडा"
 msgid "Add an account to receive notifications and use services."
 msgstr "सूचना प्राप्त करण्यासाठी आणि सेवा वापरण्यासाठी खाते जोडा."
 
-#: src/features/objects/components/field-editor.tsx:619
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:687
 msgid "Add checklist item"
 msgstr "चेकलिस्ट आयटम जोडा"
 
@@ -244,7 +252,7 @@ msgstr "कॉलम जोडा"
 msgid "Add field"
 msgstr "फील्ड जोडा"
 
-#: src/features/objects/components/field-editor.tsx:637
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:705
 msgid "Add item..."
 msgstr "आयटम जोडा..."
 
@@ -536,6 +544,10 @@ msgstr "मर्ज स्थिती तपासत आहे..."
 #: src/features/editor/components/add-dialogs.tsx:136
 msgid "Checklist"
 msgstr "चेकलिस्ट"
+
+#: ../../../lib/web/src/components/game/game-empty-state.tsx:30
+msgid "Choose a game from the sidebar or start a new one."
+msgstr ""
 
 #: src/features/projects/components/create-project-dialog.tsx:288
 msgid "Choose a template"
@@ -846,6 +858,10 @@ msgstr "डेटा आयात केला ({0, plural, one {# ऑब्ज�
 #: src/features/editor/components/add-dialogs.tsx:137
 msgid "Date"
 msgstr "तारीख"
+
+#: ../../../lib/web/src/components/game/game-draw-offer-banner.tsx:41
+msgid "Decline"
+msgstr ""
 
 #: ../../../lib/web/src/components/config-drawer.tsx:311
 msgid "Default"
@@ -1522,7 +1538,7 @@ msgstr "इनसेट"
 msgid "Interests"
 msgstr "इंटरेस्ट्स"
 
-#: src/features/objects/components/field-editor.tsx:480
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:550
 msgid "Invalid date"
 msgstr "अवैध तारीख"
 
@@ -1710,6 +1726,10 @@ msgstr "यशस्वीरित्या मर्ज केले"
 msgid "Merging..."
 msgstr "मर्ज करत आहे..."
 
+#: ../../../lib/web/src/components/game/game-chat-input.tsx:35
+msgid "Message"
+msgstr ""
+
 #: ../../../lib/web/src/lib/preference-utils.ts:85
 msgid "Metric"
 msgstr "मेट्रिक"
@@ -1773,6 +1793,11 @@ msgstr "नवीन"
 msgid "New {className}"
 msgstr "नवीन {className}"
 
+#: ../../../lib/web/src/components/game/game-empty-state.tsx:34
+#: ../../../lib/web/src/components/game/game-empty-state.tsx:46
+msgid "New game"
+msgstr ""
+
 #: src/features/projects/components/create-project-dialog.tsx:413
 msgid "Next"
 msgstr "पुढे"
@@ -1826,6 +1851,10 @@ msgstr "कनेक्ट केलेले अकाउंट्स नाह
 msgid "No diff available"
 msgstr "डिफ उपलब्ध नाही"
 
+#: ../../../lib/web/src/components/game/game-empty-state.tsx:43
+msgid "No games yet"
+msgstr ""
+
 #: ../../../lib/web/src/features/access/access-dialog.tsx:241
 msgid "No groups available"
 msgstr "गट उपलब्ध नाहीत"
@@ -1846,8 +1875,8 @@ msgstr "मर्ज रिक्वेस्ट्स नाहीत"
 msgid "No notifications yet"
 msgstr "अद्याप कोणत्याही सूचना नाहीत"
 
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:336
 #: ../../../lib/web/src/components/person-picker.tsx:84
-#: src/features/objects/components/field-editor.tsx:280
 msgid "No people found"
 msgstr "लोक सापडले नाहीत"
 
@@ -2295,7 +2324,7 @@ msgstr "फील्ड {0} काढा"
 msgid "Remove interest"
 msgstr "स्वारस्य काढा"
 
-#: src/features/objects/components/field-editor.tsx:603
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:671
 msgid "Remove item"
 msgstr "आयटम काढा"
 
@@ -2491,6 +2520,10 @@ msgstr "{0} निवडा"
 msgid "Select a field"
 msgstr "फील्ड निवडा"
 
+#: ../../../lib/web/src/components/game/game-empty-state.tsx:29
+msgid "Select a game"
+msgstr ""
+
 #: ../../../lib/web/src/features/access/access-dialog.tsx:150
 msgid "Select a user, group, or other rule to grant access."
 msgstr "अॅक्सेस देण्यासाठी वापरकर्ता, गट, किंवा इतर नियम निवडा."
@@ -2551,8 +2584,8 @@ msgstr "साइट दिशा निवडा"
 msgid "Select theme preference"
 msgstr "थीम प्राधान्य निवडा"
 
-#: src/features/objects/components/field-editor.tsx:196
-#: src/features/objects/components/field-editor.tsx:279
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:252
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:335
 msgid "Select..."
 msgstr "निवडा..."
 
@@ -2572,6 +2605,11 @@ msgstr "पुन्हा पाठवा"
 #: ../../../lib/web/src/components/step-up-dialog.tsx:307
 msgid "Send email"
 msgstr "ईमेल पाठवा"
+
+#: ../../../lib/web/src/components/game/game-chat-input.tsx:52
+#: ../../../lib/web/src/components/game/game-chat-input.tsx:61
+msgid "Send message"
+msgstr ""
 
 #: ../../../lib/web/src/lib/preference-utils.ts:145
 msgid "Serif"
@@ -2938,6 +2976,10 @@ msgstr "प्रकार"
 #: ../../../lib/web/src/components/command-menu.tsx:52
 msgid "Type a command or search..."
 msgstr "कमांड टाइप करा किंवा शोधा..."
+
+#: ../../../lib/web/src/components/game/game-chat-input.tsx:39
+msgid "Type a message..."
+msgstr ""
 
 #: ../../../lib/web/src/features/access/access-dialog.tsx:191
 msgid "Type to search users"

@@ -3,8 +3,27 @@
 // This file is part of Mochi, licensed under the GNU AGPL v3 with the
 // Mochi Application Interface Exception - see license.txt and license-exception.md.
 
+// The object model itself is shared with the crm app — see @mochi/web
+// types/entity-object. Only the project container, the request/repository
+// integration and the response envelopes are app-specific and defined here.
+import type {
+  EntityAccess,
+  EntityActivity,
+  EntityAttachment,
+  EntityChecklistItem,
+  EntityClass,
+  EntityComment,
+  EntityField,
+  EntityFieldOption,
+  EntityObject,
+  EntityObjectLink,
+  EntitySortState,
+  EntityView,
+  EntityWatcher,
+} from "@mochi/web";
+
 // Project types
-export type ProjectAccess = "owner" | "design" | "write" | "comment" | "view";
+export type ProjectAccess = EntityAccess;
 
 export interface Project {
   id: string;
@@ -23,51 +42,14 @@ export interface Project {
   access: ProjectAccess;
 }
 
-export interface ProjectClass {
-  id: string;
-  name: string;
-  rank: number;
+// Projects add per-class request settings; the rest of the class is shared.
+export interface ProjectClass extends EntityClass {
   requests: string;
-  title: string;
 }
 
-export interface ProjectField {
-  id: string;
-  name: string;
-  fieldtype: string;
-  flags: string;
-  multi: number;
-  rank: number;
-  card: number;
-  position: string;
-  rows: number;
-  pattern?: string;
-  minlength?: number;
-  maxlength?: number;
-}
-
-export interface FieldOption {
-  id: string;
-  name: string;
-  colour: string;
-  icon: string;
-  rank: number;
-}
-
-export interface ProjectView {
-  id: string;
-  name: string;
-  viewtype: string;
-  filter: string;
-  columns: string;
-  rows: string;
-  fields: string;
-  sort: string;
-  direction: string;
-  classes: string[];
-  rank: number;
-  border: string;
-}
+export type ProjectField = EntityField;
+export type FieldOption = EntityFieldOption;
+export type ProjectView = EntityView;
 
 export interface ProjectTemplate {
   id: string;
@@ -87,82 +69,20 @@ export interface ProjectDetails {
   hierarchy: Record<string, string[]>;
 }
 
-// Object types
-export interface ProjectObject {
-  id: string;
+// Object types. Projects issue human-readable identifiers (PROJ-14), so number
+// is always present here even though the shared model leaves it optional.
+export type ProjectObject = EntityObject & {
   project: string;
-  class: string;
   number: number;
-  parent: string;
-  // Fractional-index ordering key (#53): an opaque base-62 string, compared
-  // lexicographically. Not a position — the move action still sends a 1-based
-  // target index, the server computes the key.
-  rank: string;
-  created: number;
-  updated: number;
-  readable?: string;
-  values: Record<string, string>;
-}
+};
 
-export interface ObjectLink {
-  target?: string;
-  source?: string;
-  linktype: string;
-  created: number;
-  number?: number;
-  type?: string;
-  title?: string;
-}
-
-export interface CommentAttachment {
-  id: string;
-  name: string;
-  size: number;
-  type: string;
-  created: number;
-}
-
-export interface Comment {
-  id: string;
-  parent: string;
-  author: string;
-  name: string;
-  content: string;
-  created: number;
-  edited: number;
-  children: Comment[];
-  attachments: CommentAttachment[];
-}
-
-export interface Attachment {
-  id: string;
-  name: string;
-  size: number;
-  type: string;
-  created: number;
-}
-
-export interface ChecklistItem {
-  id: string;
-  text: string;
-  done: boolean;
-}
-
-export interface Activity {
-  id: string;
-  user: string;
-  name: string;
-  action: string;
-  field: string;
-  oldvalue: string;
-  newvalue: string;
-  created: number;
-}
-
-export interface Watcher {
-  user: string;
-  created: number;
-}
+export type ObjectLink = EntityObjectLink;
+export type CommentAttachment = EntityAttachment;
+export type Comment = EntityComment;
+export type Attachment = EntityAttachment;
+export type ChecklistItem = EntityChecklistItem;
+export type Activity = EntityActivity;
+export type Watcher = EntityWatcher;
 
 export interface RequestData {
   id: string;
@@ -180,10 +100,7 @@ export interface RequestData {
 }
 
 // Sort state for views
-export interface SortState {
-  field: string;
-  direction: "asc" | "desc";
-}
+export type SortState = EntitySortState;
 
 // API Response types
 export interface ObjectListResponse {

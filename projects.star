@@ -3389,7 +3389,7 @@ def action_comment_create(a):
 		# Save locally for optimistic UI
 		comment_merge({"id": comment_id, "object": object_id, "parent": parent, "author": a.user.identity.id, "name": a.user.identity.name, "content": content.strip(), "created": now, "edited": 0})
 		# Save attachments locally
-		attachments = mochi.attachment.save(comment_id, "files", [], [], [])
+		attachments = mochi.attachment.save(comment_id, "files", [], [])
 		# Fire-and-forget to project owner with attachment metadata
 		submit_data = {"id": comment_id, "object": object_id, "parent": parent,
 			 "content": content.strip(), "name": a.user.identity.name}
@@ -3435,7 +3435,7 @@ def action_comment_create(a):
 
 	comment_merge({"id": comment_id, "object": object_id, "parent": parent, "author": a.user.identity.id, "name": a.user.identity.name, "content": content.strip(), "created": now, "edited": 0})
 
-	attachments = mochi.attachment.save(comment_id, "files", [], [], []) or []
+	attachments = mochi.attachment.save(comment_id, "files", [], []) or []
 
 	object_set(object_id, {"updated": now})
 	log_activity(object_id, a.user.identity.id, "commented")
@@ -3674,7 +3674,7 @@ def action_attachment_create(a):
 			a.error.label(404, "errors.object_not_found")
 			return
 		# Save locally
-		attachments = mochi.attachment.save(object_id, "files", [], [], []) or []
+		attachments = mochi.attachment.save(object_id, "files", [], []) or []
 		if not attachments:
 			a.error.label(400, "errors.file_is_required")
 			return
@@ -3699,7 +3699,7 @@ def action_attachment_create(a):
 	now = mochi.time.now()
 
 	# Save uploaded files locally
-	attachments = mochi.attachment.save(object_id, "files", [], [], []) or []
+	attachments = mochi.attachment.save(object_id, "files", [], []) or []
 
 	if not attachments:
 		a.error.label(400, "errors.file_is_required")
@@ -3754,7 +3754,7 @@ def action_attachment_delete(a):
 		a.error.label(404, "errors.attachment_not_found")
 		return
 
-	mochi.attachment.delete(attachment_id, [])
+	mochi.attachment.delete(attachment_id)
 
 	# Broadcast delete to subscribers
 	broadcast_event(project_id, "attachment/remove", {
@@ -7979,7 +7979,7 @@ def do_attachment_delete(project_id, project, params, user_id):
 			return {"error": "errors.attachment_not_found", "code": 404}
 	if not mochi.attachment.exists(attachment_id):
 		return {"error": "errors.attachment_not_found", "code": 404}
-	mochi.attachment.delete(attachment_id, [])
+	mochi.attachment.delete(attachment_id)
 	broadcast_event(project_id, "attachment/remove", {
 		"project": project_id, "attachment": attachment_id
 	})

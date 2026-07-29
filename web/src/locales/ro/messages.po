@@ -18,11 +18,11 @@ msgstr ""
 msgid "Please check your internet connection and try again."
 msgstr "Verifică conexiunea la internet și încearcă din nou."
 
-#: src/features/objects/components/comment-thread.tsx:165
+#: src/features/objects/components/comment-thread.tsx:197
 msgid "(edited)"
 msgstr "(editat)"
 
-#: src/features/objects/components/comment-thread.tsx:149
+#: src/features/objects/components/comment-thread.tsx:181
 msgid "(expand)"
 msgstr "(extinde)"
 
@@ -106,11 +106,11 @@ msgstr "+{0} înainte"
 msgid "+{0} nested"
 msgstr "+{0} imbricate"
 
-#: src/features/objects/components/comment-thread.tsx:146
+#: src/features/objects/components/comment-thread.tsx:178
 msgid "+{totalDescendants} more replies"
 msgstr "+{totalDescendants} răspunsuri în plus"
 
-#: src/features/objects/components/comment-thread.tsx:145
+#: src/features/objects/components/comment-thread.tsx:177
 msgid "1 reply"
 msgstr "1 răspuns"
 
@@ -184,7 +184,7 @@ msgstr "Activitate"
 msgid "Add"
 msgstr "Adaugă"
 
-#: src/features/objects/components/comment-list.tsx:217
+#: src/features/objects/components/comment-list.tsx:244
 msgid "Add a comment..."
 msgstr "Adaugă un comentariu..."
 
@@ -322,7 +322,7 @@ msgstr "Sigur vrei să ștergi „{title}”? Această acțiune nu poate fi anul
 msgid "Are you sure you want to delete the \"{name}\" column? This cannot be undone."
 msgstr "Sigur vrei să ștergi coloana „{name}”? Această acțiune nu poate fi anulată."
 
-#: src/features/objects/components/comment-thread.tsx:389
+#: src/features/objects/components/comment-thread.tsx:404
 msgid "Are you sure you want to delete this comment? This will also delete all replies."
 msgstr "Sigur vrei să ștergi acest comentariu? Asta va șterge și toate răspunsurile."
 
@@ -346,13 +346,13 @@ msgstr "Cresc."
 msgid "Ascending"
 msgstr "Crescător"
 
-#: src/features/objects/components/comment-list.tsx:275
-#: src/features/objects/components/comment-list.tsx:280
+#: src/features/objects/components/comment-list.tsx:278
+#: src/features/objects/components/comment-list.tsx:283
 msgid "Attach comment files"
 msgstr "Atașează fișiere la comentariu"
 
-#: src/features/objects/components/comment-thread.tsx:343
-#: src/features/objects/components/comment-thread.tsx:348
+#: src/features/objects/components/comment-thread.tsx:358
+#: src/features/objects/components/comment-thread.tsx:363
 msgid "Attach reply files"
 msgstr "Atașează fișiere la răspuns"
 
@@ -433,15 +433,15 @@ msgstr "Poate fi copilul lui"
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:91
 #: src/features/board/components/board-column.tsx:606
 #: src/features/editor/components/option-dialog.tsx:146
-#: src/features/objects/components/comment-thread.tsx:185
+#: src/features/objects/components/comment-thread.tsx:218
 #: src/features/projects/components/create-project-dialog.tsx:407
 #: src/routes/_authenticated/$projectId/design.tsx:344
 #: src/routes/_authenticated/$projectId/index.tsx:1039
 msgid "Cancel"
 msgstr "Anulează"
 
-#: src/features/objects/components/comment-thread.tsx:359
-#: src/features/objects/components/comment-thread.tsx:364
+#: src/features/objects/components/comment-thread.tsx:374
+#: src/features/objects/components/comment-thread.tsx:379
 msgid "Cancel reply"
 msgstr "Anulează răspunsul"
 
@@ -752,8 +752,8 @@ msgstr "Sortare implicită"
 
 #: src/features/board/components/board-column.tsx:561
 #: src/features/board/components/board-column.tsx:622
-#: src/features/objects/components/comment-thread.tsx:254
-#: src/features/objects/components/comment-thread.tsx:390
+#: src/features/objects/components/comment-thread.tsx:287
+#: src/features/objects/components/comment-thread.tsx:405
 #: src/features/objects/components/object-attachments.tsx:152
 #: src/features/objects/components/object-attachments.tsx:157
 #: src/features/objects/components/object-attachments.tsx:206
@@ -776,7 +776,7 @@ msgstr "Șterge clasa"
 msgid "Delete column"
 msgstr "Șterge coloana"
 
-#: src/features/objects/components/comment-thread.tsx:388
+#: src/features/objects/components/comment-thread.tsx:403
 msgid "Delete comment"
 msgstr "Șterge comentariul"
 
@@ -886,6 +886,14 @@ msgstr "Diff: {source} → {target}"
 msgid "Direction"
 msgstr "Direcție"
 
+#: src/components/comment-composer.tsx:269
+msgid "Discard"
+msgstr ""
+
+#: src/components/comment-composer.tsx:267
+msgid "Discard draft?"
+msgstr ""
+
 #: ../../../lib/web/src/components/restore-banner.tsx:79
 #: ../../../lib/web/src/components/restore-banner.tsx:85
 msgid "Dismiss"
@@ -947,7 +955,7 @@ msgstr "Duplicate"
 msgid "Dyslexia-friendly"
 msgstr "Potrivit pentru dislexie"
 
-#: src/features/objects/components/comment-thread.tsx:243
+#: src/features/objects/components/comment-thread.tsx:276
 msgid "Edit"
 msgstr "Editează"
 
@@ -1065,7 +1073,7 @@ msgstr "Crearea vizualizării a eșuat"
 msgid "Failed to delete attachment"
 msgstr "Ștergerea atașamentului a eșuat"
 
-#: src/features/objects/components/comment-list.tsx:144
+#: src/features/objects/components/comment-list.tsx:156
 msgid "Failed to delete comment"
 msgstr "Ștergerea comentariului a eșuat"
 
@@ -1129,7 +1137,7 @@ msgstr "Videoclipul nu a putut fi încărcat"
 msgid "Failed to merge"
 msgstr "Îmbinarea a eșuat"
 
-#: src/features/objects/components/comment-list.tsx:107
+#: src/features/objects/components/comment-list.tsx:119
 msgid "Failed to post comment"
 msgstr "Postarea comentariului a eșuat"
 
@@ -1181,7 +1189,7 @@ msgstr "Actualizarea nivelului de acces a eșuat"
 msgid "Failed to update category"
 msgstr "Actualizarea categoriei a eșuat"
 
-#: src/features/objects/components/comment-list.tsx:127
+#: src/features/objects/components/comment-list.tsx:139
 msgid "Failed to update comment"
 msgstr "Actualizarea comentariului a eșuat"
 
@@ -1609,7 +1617,7 @@ msgstr "Nicio modificare de afișat"
 msgid "No changes were found for the selected comparison."
 msgstr "Nu s-au găsit modificări pentru comparația selectată."
 
-#: src/features/objects/components/comment-list.tsx:304
+#: src/features/objects/components/comment-list.tsx:311
 msgid "No comments yet"
 msgstr "Încă niciun comentariu"
 
@@ -1871,6 +1879,7 @@ msgstr "Adaugă una sau mai multe clase la designul proiectului."
 
 #: ../../../lib/web/src/features/errors/general-error.tsx:54
 #: ../../../lib/web/src/lib/api-response-interceptors.ts:304
+#: src/components/comment-composer.tsx:69
 msgid "Please check your internet connection and try again."
 msgstr "Verifică conexiunea la internet și încearcă din nou."
 
@@ -2016,9 +2025,8 @@ msgstr "Relativ în 24 de ore, altfel absolut"
 
 #: ../../../lib/web/src/features/access/access-list.tsx:265
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:180
+#: src/components/comment-composer.tsx:201
 #: src/features/editor/components/add-dialogs.tsx:188
-#: src/features/objects/components/comment-list.tsx:249
-#: src/features/objects/components/comment-thread.tsx:308
 #: src/features/objects/components/create-object-dialog.tsx:531
 #: src/features/projects/components/create-project-dialog.tsx:394
 msgid "Remove"
@@ -2087,12 +2095,12 @@ msgstr "Înlocuiești designul?"
 msgid "Replacing..."
 msgstr "Se înlocuiește..."
 
-#: src/features/objects/components/comment-thread.tsx:230
+#: src/features/objects/components/comment-thread.tsx:263
 msgid "Reply"
 msgstr "Răspunde"
 
 #. placeholder {0}: comment.name || comment.author
-#: src/features/objects/components/comment-thread.tsx:265
+#: src/features/objects/components/comment-thread.tsx:308
 msgid "Reply to {0}..."
 msgstr "Răspunde lui {0}..."
 
@@ -2120,6 +2128,10 @@ msgstr "Resetează toate setările la valorile implicite"
 #: src/features/requests/components/conflict-list.tsx:40
 msgid "Resolve these conflicts manually before merging."
 msgstr "Rezolvă aceste conflicte manual înainte de merge."
+
+#: src/components/comment-composer.tsx:218
+msgid "Retry"
+msgstr ""
 
 #: src/components/layout/projects-layout.tsx:74
 msgid "Retry projects load"
@@ -2149,7 +2161,7 @@ msgstr "Sâmbătă"
 #: ../../../lib/web/src/components/ui/editable-field-row.tsx:122
 #: ../../../lib/web/src/components/ui/secret-field.tsx:77
 #: src/features/editor/components/option-dialog.tsx:150
-#: src/features/objects/components/comment-thread.tsx:205
+#: src/features/objects/components/comment-thread.tsx:238
 #: src/routes/_authenticated/$projectId/index.tsx:1051
 msgid "Save"
 msgstr "Salvează"
@@ -2399,7 +2411,7 @@ msgstr "Împarte"
 msgid "Squash and merge"
 msgstr "Squash și merge"
 
-#: src/features/objects/components/comment-list.tsx:305
+#: src/features/objects/components/comment-list.tsx:312
 msgid "Start the discussion by adding the first comment."
 msgstr "Începe discuția adăugând primul comentariu."
 
@@ -2416,13 +2428,13 @@ msgstr "Nu mai urmări"
 msgid "Subject"
 msgstr "Subiect"
 
-#: src/features/objects/components/comment-list.tsx:290
-#: src/features/objects/components/comment-list.tsx:295
+#: src/features/objects/components/comment-list.tsx:293
+#: src/features/objects/components/comment-list.tsx:302
 msgid "Submit comment"
 msgstr "Trimite comentariul"
 
-#: src/features/objects/components/comment-thread.tsx:374
-#: src/features/objects/components/comment-thread.tsx:379
+#: src/features/objects/components/comment-thread.tsx:389
+#: src/features/objects/components/comment-thread.tsx:394
 msgid "Submit reply"
 msgstr "Trimite răspunsul"
 
@@ -2859,6 +2871,18 @@ msgstr "Nu ai încă niciun proiect."
 msgid "Your account was moved here from {source}. Until you delete it there, messages and notifications may reach both servers, some of your content keeps being served from the old server, and followers may take a few minutes to find you here."
 msgstr "Contul dvs. a fost mutat aici de la {source}. Până când îl ștergeți de acolo, mesajele și notificările pot ajunge pe ambele servere, o parte din conținutul dvs. continuă să fie servit de pe serverul vechi, iar urmăritorii pot avea nevoie de câteva minute pentru a vă găsi aici."
 
+#: src/components/comment-composer.tsx:260
+msgid "Your attachments will be lost."
+msgstr ""
+
 #: src/features/projects/components/create-project-dialog.tsx:423
 msgid "Your backup contains objects of type:"
 msgstr "Backup-ul tău conține obiecte de tipul:"
+
+#: src/components/comment-composer.tsx:258
+msgid "Your text and attachments will be lost."
+msgstr ""
+
+#: src/components/comment-composer.tsx:261
+msgid "Your text will be lost."
+msgstr ""

@@ -22,19 +22,19 @@ import {
   TooltipTrigger,
   TooltipContent,
   textUnchanged,
-  Attachment,
-  AttachmentGroup,
-  AttachmentMedia,
-  AttachmentContent,
-  AttachmentTitle,
-  AttachmentDescription,
-  AttachmentActions,
-  AttachmentAction,
-  pendingFileKey,
+  cn,
   removePendingFile,
 } from "@mochi/web";
 import type { Comment } from "@/types";
 import { CommentAttachments } from "./comment-attachments";
+import {
+  ComposerAttachments,
+  SendShortcutHint,
+  dropActiveClass,
+  offlineBlocked,
+  useComposerDrop,
+  useDiscardGuard,
+} from "@/components/comment-composer";
 
 interface Person {
   id: string;
@@ -74,35 +74,62 @@ export function CommentThread({
   people = [],
   depth = 0,
 }: CommentThreadProps) {
-  const { formatTimestamp, formatFileSize } = useFormat();
+  const { formatTimestamp } = useFormat();
   const [collapsed, setCollapsed] = useState(false);
   const [editing, setEditing] = useState(false);
   const [editBody, setEditBody] = useState("");
   const [deleting, setDeleting] = useState(false);
   const [replyFiles, setReplyFiles] = useState<File[]>([]);
   const [isSubmittingReply, setIsSubmittingReply] = useState(false);
+  const [replyFailed, setReplyFailed] = useState(false);
   const replyImageUrls = useImageObjectUrls(replyFiles);
   const replyFileRef = useRef<HTMLInputElement>(null);
 
   const handleSubmitReply = useCallback(async () => {
-    if (isSubmittingReply) return;
+    if (isSubmittingReply || !replyDraft.trim() || offlineBlocked()) return;
     setIsSubmittingReply(true);
+    setReplyFailed(false);
     try {
       await onSubmitReply(
         comment.id,
         replyFiles.length > 0 ? replyFiles : undefined,
       );
       setReplyFiles([]);
+    } catch {
+      // Reported by the mutation already. Keep the files staged so Retry can
+      // send the same reply again instead of losing the attachments.
+      setReplyFailed(true);
     } finally {
       setIsSubmittingReply(false);
     }
-  }, [isSubmittingReply, onSubmitReply, comment.id, replyFiles]);
+  }, [isSubmittingReply, replyDraft, onSubmitReply, comment.id, replyFiles]);
+
+  const addReplyFiles = useCallback((incoming: File[]) => {
+    setReplyFailed(false);
+    setReplyFiles((prev) => [...prev, ...incoming]);
+  }, []);
 
   const isReplying = replyingTo === comment.id;
 
   useEffect(() => {
     if (!isReplying && replyFiles.length > 0) setReplyFiles([]);
   }, [isReplying, replyFiles.length]);
+
+  useEffect(() => {
+    if (!isReplying && replyFailed) setReplyFailed(false);
+  }, [isReplying, replyFailed]);
+
+  const { isDragActive, dropzoneProps } = useComposerDrop({
+    onFiles: addReplyFiles,
+    disabled: isSubmittingReply,
+  });
+
+  const { requestClose: requestCloseReply, discardDialog } = useDiscardGuard({
+    hasText: replyDraft.trim().length > 0,
+    hasFiles: replyFiles.length > 0,
+    onDiscard: onCancelReply,
+    locked: isSubmittingReply,
+  });
 
   const hasChildren = comment.children && comment.children.length > 0;
   const canEdit = currentUserId === comment.author && !readOnly;
@@ -174,6 +201,7 @@ export function CommentThread({
         {editing ? (
           <div className="space-y-2">
             <MentionTextarea
+              className="placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50"
               value={editBody}
               onValueChange={setEditBody}
               rows={3}
@@ -266,76 +294,53 @@ export function CommentThread({
 
       {isReplying && (
         <div
-          className="mt-2 space-y-2 border-t pt-2"
+          className={cn(
+            "mt-2 space-y-2 border-t pt-2",
+            isDragActive && dropActiveClass,
+          )}
           onKeyDown={(e) => {
-            if (e.key === "Escape") onCancelReply();
+            if (e.key === "Escape") requestCloseReply();
           }}
+          {...dropzoneProps}
         >
           <MentionTextarea
+            className="placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50"
             placeholder={t`Reply to ${comment.name || comment.author}...`}
             value={replyDraft}
             onValueChange={onReplyDraftChange}
             onKeyDown={(e) => {
               if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) {
                 e.preventDefault();
-                if (replyDraft.trim()) void handleSubmitReply();
+                void handleSubmitReply();
               } else if (e.key === "Escape") {
-                onCancelReply();
+                requestCloseReply();
               }
             }}
             rows={2}
             autoFocus
+            disabled={isSubmittingReply}
             people={people}
           />
-          {replyFiles.length > 0 && (
-            <AttachmentGroup>
-              {replyFiles.map((file, i) => {
-                const isImage = file.type.startsWith("image/");
-                return (
-                  <Attachment key={pendingFileKey(file)} state="uploading" size="sm">
-                    <AttachmentMedia variant={isImage ? "image" : "icon"}>
-                      {isImage && replyImageUrls[i] ? (
-                        <img
-                          src={replyImageUrls[i] ?? undefined}
-                          alt={file.name}
-                          draggable={false}
-                        />
-                      ) : (
-                        <Paperclip />
-                      )}
-                    </AttachmentMedia>
-                    <AttachmentContent>
-                      <AttachmentTitle>{file.name}</AttachmentTitle>
-                      <AttachmentDescription>
-                        {formatFileSize(file.size)}
-                      </AttachmentDescription>
-                    </AttachmentContent>
-                    <AttachmentActions>
-                      <AttachmentAction
-                        onClick={() =>
-                          setReplyFiles((prev) => removePendingFile(prev, file))
-                        }
-                        aria-label={t`Remove`}
-                      >
-                        <X className="size-4" />
-                      </AttachmentAction>
-                    </AttachmentActions>
-                  </Attachment>
-                );
-              })}
-            </AttachmentGroup>
-          )}
+          <ComposerAttachments
+            files={replyFiles}
+            previewUrls={replyImageUrls}
+            state={
+              isSubmittingReply ? "uploading" : replyFailed ? "error" : "idle"
+            }
+            onRemove={(file) =>
+              setReplyFiles((prev) => removePendingFile(prev, file))
+            }
+            onRetry={() => void handleSubmitReply()}
+          />
           <div className="flex items-center justify-end gap-2">
+            <SendShortcutHint />
             <input
-              ref={(el) => {
-                replyFileRef.current = el;
-              }}
+              ref={replyFileRef}
               type="file"
               multiple
               onChange={(e) => {
                 if (e.target.files) {
-                  const f = Array.from(e.target.files);
-                  setReplyFiles((prev) => [...prev, ...f]);
+                  addReplyFiles(Array.from(e.target.files));
                 }
                 e.target.value = "";
               }}
@@ -364,7 +369,7 @@ export function CommentThread({
                   size="icon"
                   variant="ghost"
                   className="size-8"
-                  onClick={onCancelReply}
+                  onClick={requestCloseReply}
                   disabled={isSubmittingReply}
                   aria-label={t`Cancel reply`}
                 >
@@ -404,6 +409,7 @@ export function CommentThread({
           setDeleting(false);
         }}
       />
+      {discardDialog}
     </div>
   );
 

@@ -18,11 +18,11 @@ msgstr ""
 msgid "Please check your internet connection and try again."
 msgstr "કૃપા કરી તમારું ઇન્ટરનેટ કનેક્શન તપાસો અને ફરી પ્રયાસ કરો."
 
-#: src/features/objects/components/comment-thread.tsx:165
+#: src/features/objects/components/comment-thread.tsx:197
 msgid "(edited)"
 msgstr "(સંપાદિત)"
 
-#: src/features/objects/components/comment-thread.tsx:149
+#: src/features/objects/components/comment-thread.tsx:181
 msgid "(expand)"
 msgstr "(વિસ્તાર કરો)"
 
@@ -106,11 +106,11 @@ msgstr "+{0} આગળ"
 msgid "+{0} nested"
 msgstr "+{0} નેસ્ટેડ"
 
-#: src/features/objects/components/comment-thread.tsx:146
+#: src/features/objects/components/comment-thread.tsx:178
 msgid "+{totalDescendants} more replies"
 msgstr "+{totalDescendants} વધુ જવાબો"
 
-#: src/features/objects/components/comment-thread.tsx:145
+#: src/features/objects/components/comment-thread.tsx:177
 msgid "1 reply"
 msgstr "1 જવાબ"
 
@@ -184,7 +184,7 @@ msgstr "પ્રવૃત્તિ"
 msgid "Add"
 msgstr "ઉમેરો"
 
-#: src/features/objects/components/comment-list.tsx:217
+#: src/features/objects/components/comment-list.tsx:244
 msgid "Add a comment..."
 msgstr "ટિપ્પણી ઉમેરો..."
 
@@ -322,7 +322,7 @@ msgstr "શું તમે ખરેખર \"{title}\" કાઢી નાખ�
 msgid "Are you sure you want to delete the \"{name}\" column? This cannot be undone."
 msgstr "શું તમે ખરેખર \"{name}\" કૉલમ કાઢી નાખવા માંગો છો? આ પૂર્વવત્ કરી શકાતું નથી."
 
-#: src/features/objects/components/comment-thread.tsx:389
+#: src/features/objects/components/comment-thread.tsx:404
 msgid "Are you sure you want to delete this comment? This will also delete all replies."
 msgstr "શું તમે ખરેખર આ ટિપ્પણી કાઢી નાખવા માંગો છો? આ બધા જવાબો પણ કાઢી નાખશે."
 
@@ -346,13 +346,13 @@ msgstr "ચડતા"
 msgid "Ascending"
 msgstr "ચઢતો ક્રમ"
 
-#: src/features/objects/components/comment-list.tsx:275
-#: src/features/objects/components/comment-list.tsx:280
+#: src/features/objects/components/comment-list.tsx:278
+#: src/features/objects/components/comment-list.tsx:283
 msgid "Attach comment files"
 msgstr "ટિપ્પણી ફાઇલો જોડો"
 
-#: src/features/objects/components/comment-thread.tsx:343
-#: src/features/objects/components/comment-thread.tsx:348
+#: src/features/objects/components/comment-thread.tsx:358
+#: src/features/objects/components/comment-thread.tsx:363
 msgid "Attach reply files"
 msgstr "જવાબ ફાઇલો જોડો"
 
@@ -433,15 +433,15 @@ msgstr "આનું સંતાન બની શકે"
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:91
 #: src/features/board/components/board-column.tsx:606
 #: src/features/editor/components/option-dialog.tsx:146
-#: src/features/objects/components/comment-thread.tsx:185
+#: src/features/objects/components/comment-thread.tsx:218
 #: src/features/projects/components/create-project-dialog.tsx:407
 #: src/routes/_authenticated/$projectId/design.tsx:344
 #: src/routes/_authenticated/$projectId/index.tsx:1039
 msgid "Cancel"
 msgstr "રદ કરો"
 
-#: src/features/objects/components/comment-thread.tsx:359
-#: src/features/objects/components/comment-thread.tsx:364
+#: src/features/objects/components/comment-thread.tsx:374
+#: src/features/objects/components/comment-thread.tsx:379
 msgid "Cancel reply"
 msgstr "જવાબ રદ કરો"
 
@@ -752,8 +752,8 @@ msgstr "ડિફૉલ્ટ સૉર્ટ"
 
 #: src/features/board/components/board-column.tsx:561
 #: src/features/board/components/board-column.tsx:622
-#: src/features/objects/components/comment-thread.tsx:254
-#: src/features/objects/components/comment-thread.tsx:390
+#: src/features/objects/components/comment-thread.tsx:287
+#: src/features/objects/components/comment-thread.tsx:405
 #: src/features/objects/components/object-attachments.tsx:152
 #: src/features/objects/components/object-attachments.tsx:157
 #: src/features/objects/components/object-attachments.tsx:206
@@ -776,7 +776,7 @@ msgstr "ક્લાસ કાઢી નાખો"
 msgid "Delete column"
 msgstr "કૉલમ કાઢી નાખો"
 
-#: src/features/objects/components/comment-thread.tsx:388
+#: src/features/objects/components/comment-thread.tsx:403
 msgid "Delete comment"
 msgstr "ટિપ્પણી કાઢી નાખો"
 
@@ -886,6 +886,14 @@ msgstr "તફાવત: {source} → {target}"
 msgid "Direction"
 msgstr "દિશા"
 
+#: src/components/comment-composer.tsx:269
+msgid "Discard"
+msgstr ""
+
+#: src/components/comment-composer.tsx:267
+msgid "Discard draft?"
+msgstr ""
+
 #: ../../../lib/web/src/components/restore-banner.tsx:79
 #: ../../../lib/web/src/components/restore-banner.tsx:85
 msgid "Dismiss"
@@ -947,7 +955,7 @@ msgstr "ડુપ્લિકેટ"
 msgid "Dyslexia-friendly"
 msgstr "ડિસ્લેક્સિયા-મૈત્રીપૂર્ણ"
 
-#: src/features/objects/components/comment-thread.tsx:243
+#: src/features/objects/components/comment-thread.tsx:276
 msgid "Edit"
 msgstr "સંપાદિત કરો"
 
@@ -1065,7 +1073,7 @@ msgstr "વ્યૂ બનાવવામાં નિષ્ફળ"
 msgid "Failed to delete attachment"
 msgstr "એટેચમેન્ટ કાઢી નાખવામાં નિષ્ફળ"
 
-#: src/features/objects/components/comment-list.tsx:144
+#: src/features/objects/components/comment-list.tsx:156
 msgid "Failed to delete comment"
 msgstr "કમેન્ટ કાઢી નાખવામાં નિષ્ફળ"
 
@@ -1129,7 +1137,7 @@ msgstr "વિડિઓ લોડ કરવામાં નિષ્ફળ"
 msgid "Failed to merge"
 msgstr "મર્જ કરવામાં નિષ્ફળ"
 
-#: src/features/objects/components/comment-list.tsx:107
+#: src/features/objects/components/comment-list.tsx:119
 msgid "Failed to post comment"
 msgstr "કમેન્ટ પોસ્ટ કરવામાં નિષ્ફળ"
 
@@ -1181,7 +1189,7 @@ msgstr "ઍક્સેસ લેવલ અપડેટ કરવામાં �
 msgid "Failed to update category"
 msgstr "કેટેગરી અપડેટ કરવામાં નિષ્ફળ"
 
-#: src/features/objects/components/comment-list.tsx:127
+#: src/features/objects/components/comment-list.tsx:139
 msgid "Failed to update comment"
 msgstr "કમેન્ટ અપડેટ કરવામાં નિષ્ફળ"
 
@@ -1609,7 +1617,7 @@ msgstr "દર્શાવવા માટે કોઈ ફેરફારો �
 msgid "No changes were found for the selected comparison."
 msgstr "પસંદ કરેલા તુલના માટે કોઈ ફેરફારો મળ્યા નથી."
 
-#: src/features/objects/components/comment-list.tsx:304
+#: src/features/objects/components/comment-list.tsx:311
 msgid "No comments yet"
 msgstr "હજુ સુધી કોઈ કૉમેન્ટ્સ નથી"
 
@@ -1871,6 +1879,7 @@ msgstr "કૃપા કરીને પ્રોજેક્ટ ડિઝાઇ
 
 #: ../../../lib/web/src/features/errors/general-error.tsx:54
 #: ../../../lib/web/src/lib/api-response-interceptors.ts:304
+#: src/components/comment-composer.tsx:69
 msgid "Please check your internet connection and try again."
 msgstr "કૃપા કરી તમારું ઇન્ટરનેટ કનેક્શન તપાસો અને ફરી પ્રયાસ કરો."
 
@@ -2016,9 +2025,8 @@ msgstr "24 કલાકની અંદર સાપેક્ષ, અન્ય�
 
 #: ../../../lib/web/src/features/access/access-list.tsx:265
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:180
+#: src/components/comment-composer.tsx:201
 #: src/features/editor/components/add-dialogs.tsx:188
-#: src/features/objects/components/comment-list.tsx:249
-#: src/features/objects/components/comment-thread.tsx:308
 #: src/features/objects/components/create-object-dialog.tsx:531
 #: src/features/projects/components/create-project-dialog.tsx:394
 msgid "Remove"
@@ -2087,12 +2095,12 @@ msgstr "ડિઝાઇન બદલો?"
 msgid "Replacing..."
 msgstr "બદલી રહ્યું છે..."
 
-#: src/features/objects/components/comment-thread.tsx:230
+#: src/features/objects/components/comment-thread.tsx:263
 msgid "Reply"
 msgstr "જવાબ આપો"
 
 #. placeholder {0}: comment.name || comment.author
-#: src/features/objects/components/comment-thread.tsx:265
+#: src/features/objects/components/comment-thread.tsx:308
 msgid "Reply to {0}..."
 msgstr "{0} ને જવાબ આપો..."
 
@@ -2120,6 +2128,10 @@ msgstr "તમામ સેટિંગ્સને ડિફૉલ્ટ મૂ
 #: src/features/requests/components/conflict-list.tsx:40
 msgid "Resolve these conflicts manually before merging."
 msgstr "મર્જ કરતાં પહેલાં આ સંઘર્ષોને મેન્યુઅલી ઉકેલો."
+
+#: src/components/comment-composer.tsx:218
+msgid "Retry"
+msgstr ""
 
 #: src/components/layout/projects-layout.tsx:74
 msgid "Retry projects load"
@@ -2149,7 +2161,7 @@ msgstr "શનિવાર"
 #: ../../../lib/web/src/components/ui/editable-field-row.tsx:122
 #: ../../../lib/web/src/components/ui/secret-field.tsx:77
 #: src/features/editor/components/option-dialog.tsx:150
-#: src/features/objects/components/comment-thread.tsx:205
+#: src/features/objects/components/comment-thread.tsx:238
 #: src/routes/_authenticated/$projectId/index.tsx:1051
 msgid "Save"
 msgstr "સાચવો"
@@ -2399,7 +2411,7 @@ msgstr "વિભાજિત કરો"
 msgid "Squash and merge"
 msgstr "સ્કવોશ અને મર્જ"
 
-#: src/features/objects/components/comment-list.tsx:305
+#: src/features/objects/components/comment-list.tsx:312
 msgid "Start the discussion by adding the first comment."
 msgstr "પ્રથમ ટિપ્પણી ઉમેરીને ચર્ચા શરૂ કરો."
 
@@ -2416,13 +2428,13 @@ msgstr "જોવાનું બંધ કરો"
 msgid "Subject"
 msgstr "વિષય"
 
-#: src/features/objects/components/comment-list.tsx:290
-#: src/features/objects/components/comment-list.tsx:295
+#: src/features/objects/components/comment-list.tsx:293
+#: src/features/objects/components/comment-list.tsx:302
 msgid "Submit comment"
 msgstr "ટિપ્પણી સબમિટ કરો"
 
-#: src/features/objects/components/comment-thread.tsx:374
-#: src/features/objects/components/comment-thread.tsx:379
+#: src/features/objects/components/comment-thread.tsx:389
+#: src/features/objects/components/comment-thread.tsx:394
 msgid "Submit reply"
 msgstr "જવાબ સબમિટ કરો"
 
@@ -2859,6 +2871,18 @@ msgstr "તમારી પાસે હજુ સુધી કોઈ પ્ર�
 msgid "Your account was moved here from {source}. Until you delete it there, messages and notifications may reach both servers, some of your content keeps being served from the old server, and followers may take a few minutes to find you here."
 msgstr "તમારું ખાતું {source} પરથી અહીં ખસેડવામાં આવ્યું. જ્યાં સુધી તમે ત્યાં તેને કાઢી ન નાખો, સંદેશા અને સૂચનાઓ બંને સર્વર સુધી પહોંચી શકે, કેટલીક સામગ્રી જૂના સર્વરથી પ્રદાન કરાતી રહે, અને ફૉલોઅર્સ ને તમને અહીં શોધવામાં થોડી મિનિટ લાગી શકે."
 
+#: src/components/comment-composer.tsx:260
+msgid "Your attachments will be lost."
+msgstr ""
+
 #: src/features/projects/components/create-project-dialog.tsx:423
 msgid "Your backup contains objects of type:"
 msgstr "તમારા બેકઅપમાં આ પ્રકારના ઑબ્જેક્ટ્સ છે:"
+
+#: src/components/comment-composer.tsx:258
+msgid "Your text and attachments will be lost."
+msgstr ""
+
+#: src/components/comment-composer.tsx:261
+msgid "Your text will be lost."
+msgstr ""

@@ -7,7 +7,7 @@
 import { useCallback, useEffect, useState, useRef } from "react";
 import { useLingui } from '@lingui/react/macro'
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { Loader2, MessageSquare, Paperclip, Send } from "lucide-react";
+import { Loader2, MessageSquare, Paperclip, Send, X } from "lucide-react";
 import {
   Button,
   EmptyState,
@@ -24,16 +24,15 @@ import {
   findCommentTextInTree,
   cn,
   removePendingFile,
-} from "@mochi/web";
-import projectsApi from "@/api/projects";
-import { CommentThread } from "./comment-thread";
-import {
   ComposerAttachments,
   SendShortcutHint,
   dropActiveClass,
   offlineBlocked,
   useComposerDrop,
-} from "@/components/comment-composer";
+  useDiscardGuard,
+} from "@mochi/web";
+import projectsApi from "@/api/projects";
+import { CommentThread } from "./comment-thread";
 
 interface CommentListProps {
   projectId: string;
@@ -218,6 +217,23 @@ export function CommentList({
     disabled: isSendingComment,
   });
 
+  // The page composer is always on screen, so there is nothing to close —
+  // discarding clears it in place.
+  const discardNewComment = useCallback(() => {
+    setNewComment("");
+    setNewFiles([]);
+    setCreateFailed(false);
+  }, []);
+
+  const hasDraft = newComment.trim().length > 0 || newFiles.length > 0;
+
+  const { requestClose, discardDialog } = useDiscardGuard({
+    hasText: newComment.trim().length > 0,
+    hasFiles: newFiles.length > 0,
+    onDiscard: discardNewComment,
+    locked: isSendingComment,
+  });
+
   if (isLoading) {
     return <ListSkeleton count={3} variant="simple" height="h-12" />;
   }
@@ -239,6 +255,8 @@ export function CommentList({
               if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) {
                 e.preventDefault();
                 void handleCreate();
+              } else if (e.key === "Escape") {
+                requestClose();
               }
             }}
             placeholder={t`Add a comment...`}
@@ -282,6 +300,24 @@ export function CommentList({
               </TooltipTrigger>
               <TooltipContent>{t`Attach comment files`}</TooltipContent>
             </Tooltip>
+            {hasDraft && (
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="icon"
+                    className="size-8"
+                    onClick={requestClose}
+                    disabled={isSendingComment}
+                    aria-label={t`Cancel comment`}
+                  >
+                    <X className="size-4" />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>{t`Cancel comment`}</TooltipContent>
+              </Tooltip>
+            )}
             <Tooltip>
               <TooltipTrigger asChild>
                 <Button
@@ -302,6 +338,7 @@ export function CommentList({
               <TooltipContent>{t`Submit comment`}</TooltipContent>
             </Tooltip>
           </div>
+          {discardDialog}
         </div>
       )}
 

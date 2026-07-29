@@ -66,15 +66,24 @@ msgstr "{0} خلف"
 msgid "{0} files changed"
 msgstr "تم تغيير {0} ملفات"
 
+#. placeholder {0}: item.label
+#: ../../../lib/web/src/components/config-drawer.tsx:160
+msgid "{0} option preview"
+msgstr ""
+
 #. placeholder {0}: project.project.name
 #: src/routes/_authenticated/$projectId_.settings.tsx:122
 #: src/routes/_authenticated/$projectId_.settings.tsx:222
 msgid "{0} settings"
 msgstr "إعدادات {0}"
 
-#: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:173
+#: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:174
 msgid "{entityLabel} name"
 msgstr "اسم {entityLabel}"
+
+#: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:99
+msgid "{entityLabel} name is required"
+msgstr ""
 
 #: ../../../lib/web/src/components/data-table/bulk-actions.tsx:210
 msgid "{selectedCount, plural, one {{entityName} selected} other {{manyName} selected}}"
@@ -95,6 +104,10 @@ msgstr "{selectedCount, plural, zero {إجراءات مجمعة لـ {manyName}}
 #: src/features/board/components/board-column.tsx:522
 msgid "{totalCount, plural, one {# item} other {# items}}"
 msgstr "{totalCount, plural, zero {لا عناصر} one {عنصر واحد} two {عنصران} few {# عناصر} many {# عنصرًا} other {# عنصر}}"
+
+#: ../../../lib/web/src/components/layout/mochi-menu.tsx:132
+msgid "{unreadCount, plural, one {Open menu (# unread notification)} other {Open menu (# unread notifications)}}"
+msgstr ""
 
 #. placeholder {0}: data.ahead
 #: src/features/requests/components/merge-status.tsx:76
@@ -138,7 +151,7 @@ msgstr "تم رفض الوصول"
 msgid "Access Forbidden"
 msgstr "الوصول ممنوع"
 
-#: ../../../lib/web/src/features/access/access-list.tsx:192
+#: ../../../lib/web/src/features/access/access-list.tsx:197
 msgid "Access level"
 msgstr "مستوى الوصول"
 
@@ -178,6 +191,7 @@ msgstr "تم التحقق من الحساب"
 msgid "Activity"
 msgstr "النشاط"
 
+#: ../../../lib/web/src/features/access/access-dialog.tsx:332
 #: ../../../lib/web/src/features/accounts/account-add.tsx:196
 #: src/features/objects/components/field-editor.tsx:649
 #: src/features/requests/components/request-panel.tsx:103
@@ -238,7 +252,7 @@ msgstr "إضافة عنصر..."
 msgid "Add link"
 msgstr "إضافة رابط"
 
-#: ../../../lib/web/src/features/accounts/account-picker.tsx:101
+#: ../../../lib/web/src/features/accounts/account-picker.tsx:102
 msgid "Add new account"
 msgstr "إضافة حساب جديد"
 
@@ -254,6 +268,7 @@ msgid "Add rule"
 msgstr "إضافة قاعدة"
 
 #: ../../../lib/web/src/components/post-tags.tsx:137
+#: ../../../lib/web/src/components/tag-input.tsx:40
 msgid "Add tag..."
 msgstr "إضافة وسم..."
 
@@ -273,7 +288,11 @@ msgstr "إضافة إلى الإشعارات الحالية"
 msgid "Add view"
 msgstr "إضافة عرض"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:71
+#: ../../../lib/web/src/features/access/access-dialog.tsx:332
+msgid "Adding..."
+msgstr ""
+
+#: ../../../lib/web/src/components/config-drawer.tsx:72
 msgid "Adjust the appearance and layout to suit your preferences."
 msgstr "اضبط المظهر والتخطيط ليناسب تفضيلاتك."
 
@@ -288,6 +307,11 @@ msgstr "الكل"
 #: src/components/layout/projects-layout.tsx:53
 msgid "All projects"
 msgstr "جميع المشاريع"
+
+#. placeholder {0}: entityLabel.toLowerCase()
+#: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:85
+msgid "Allow anyone to search for {0}"
+msgstr ""
 
 #: src/features/projects/components/create-project-dialog.tsx:341
 msgid "Allow anyone to search for project"
@@ -308,6 +332,19 @@ msgstr "حدث خطأ"
 #: ../../../lib/web/src/lib/api-response-interceptors.ts:256
 msgid "An unexpected error occurred"
 msgstr "حدث خطأ غير متوقع"
+
+#: ../../../lib/web/src/features/accounts/types.ts:16
+msgid "Android push"
+msgstr ""
+
+#: ../../../lib/web/src/features/access/access-list.tsx:45
+#: ../../../lib/web/src/features/access/types.ts:42
+msgid "Anyone"
+msgstr ""
+
+#: ../../../lib/web/src/features/access/types.ts:41
+msgid "Anyone who is logged in"
+msgstr ""
 
 #. placeholder {0}: deleteTarget?.name
 #: src/features/objects/components/object-attachments.tsx:249
@@ -356,6 +393,11 @@ msgstr "إرفاق ملفات التعليق"
 msgid "Attach reply files"
 msgstr "إرفاق ملفات الرد"
 
+#: ../../../lib/web/src/features/access/access-list.tsx:46
+#: ../../../lib/web/src/features/access/types.ts:41
+msgid "Authenticated users"
+msgstr ""
+
 #: ../../../lib/web/src/components/step-up-dialog.tsx:315
 msgid "Authenticator code"
 msgstr "رمز المصادقة"
@@ -364,7 +406,15 @@ msgstr "رمز المصادقة"
 msgid "Available keyboard shortcuts"
 msgstr "اختصارات لوحة المفاتيح المتاحة"
 
-#: ../../../lib/web/src/components/place-picker.tsx:155
+#: ../../../lib/web/src/components/entity-avatar.tsx:99
+msgid "Avatar"
+msgstr ""
+
+#: ../../../lib/web/src/components/entity-avatar.tsx:99
+msgid "Avatar for {name}"
+msgstr ""
+
+#: ../../../lib/web/src/components/place-picker.tsx:156
 #: src/features/projects/components/create-project-dialog.tsx:495
 msgid "Back"
 msgstr "رجوع"
@@ -387,6 +437,10 @@ msgstr "العودة إلى المشروع"
 #: src/routes/_authenticated/$projectId/index.tsx:138
 msgid "Back to projects"
 msgstr "العودة إلى المشاريع"
+
+#: ../../../lib/web/src/components/entity-banner.tsx:17
+msgid "Banner"
+msgstr ""
 
 #: src/features/requests/components/diff-viewer.tsx:449
 msgid "Binary file not shown"
@@ -414,6 +468,10 @@ msgstr "تعزيز الاهتمام"
 msgid "Border colour"
 msgstr "لون الحدود"
 
+#: ../../../lib/web/src/features/accounts/types.ts:13
+msgid "Browser notifications"
+msgstr ""
+
 #: src/routes/_authenticated/$projectId/design.tsx:300
 msgid "Built-in templates"
 msgstr "القوالب المدمجة"
@@ -425,10 +483,10 @@ msgstr "يمكن أن يكون فرعًا من"
 #: ../../../lib/web/src/components/responsive-confirm-dialog.tsx:67
 #: ../../../lib/web/src/components/step-up-dialog.tsx:363
 #: ../../../lib/web/src/components/travelling-picker.tsx:308
-#: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:248
+#: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:249
 #: ../../../lib/web/src/components/ui/editable-field-row.tsx:132
 #: ../../../lib/web/src/features/access/access-dialog.tsx:328
-#: ../../../lib/web/src/features/access/access-list.tsx:263
+#: ../../../lib/web/src/features/access/access-list.tsx:268
 #: ../../../lib/web/src/features/accounts/account-add.tsx:188
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:91
 #: src/features/board/components/board-column.tsx:606
@@ -449,14 +507,18 @@ msgstr "إلغاء الرد"
 msgid "Cannot merge automatically"
 msgstr "لا يمكن الدمج تلقائياً"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:143
+#: ../../../lib/web/src/components/notification-category-button.tsx:146
 msgid "Category for this notification"
 msgstr "فئة هذا الإشعار"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:124
-#: ../../../lib/web/src/components/notification-category-button.tsx:135
+#: ../../../lib/web/src/components/notification-category-button.tsx:127
+#: ../../../lib/web/src/components/notification-category-button.tsx:138
 msgid "Change notification category"
 msgstr "تغيير فئة الإشعار"
+
+#: ../../../lib/web/src/components/notifications-dropdown.tsx:198
+msgid "Check \"All\" to see your past notifications."
+msgstr ""
 
 #: src/features/editor/components/add-dialogs.tsx:135
 msgid "Checkbox"
@@ -474,19 +536,19 @@ msgstr "قائمة المهام"
 msgid "Choose a template"
 msgstr "اختر قالباً"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:328
+#: ../../../lib/web/src/components/config-drawer.tsx:329
 msgid "Choose between default expanded, compact icon-only, or full layout mode"
 msgstr "اختر بين الوضع الافتراضي الموسّع، أو الأيقونات المضغوطة فقط، أو وضع التخطيط الكامل"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:270
+#: ../../../lib/web/src/components/config-drawer.tsx:271
 msgid "Choose between inset, floating, or standard sidebar layout"
 msgstr "اختر بين تخطيط الشريط الجانبي المدمج أو العائم أو القياسي"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:371
+#: ../../../lib/web/src/components/config-drawer.tsx:372
 msgid "Choose between left-to-right or right-to-left site direction"
 msgstr "اختر بين اتجاه الموقع من اليسار إلى اليمين أو من اليمين إلى اليسار"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:226
+#: ../../../lib/web/src/components/config-drawer.tsx:227
 msgid "Choose between system preference, light mode, or dark mode"
 msgstr "اختر بين تفضيلات النظام أو الوضع الفاتح أو الوضع الداكن"
 
@@ -499,8 +561,8 @@ msgstr "اختر اللغة"
 msgid "Classes"
 msgstr "الفئات"
 
-#: ../../../lib/web/src/components/colour-picker.tsx:269
-#: ../../../lib/web/src/components/colour-picker.tsx:350
+#: ../../../lib/web/src/components/colour-picker.tsx:270
+#: ../../../lib/web/src/components/colour-picker.tsx:351
 #: ../../../lib/web/src/components/travelling-picker.tsx:164
 #: ../../../lib/web/src/components/travelling-picker.tsx:170
 #: ../../../lib/web/src/components/travelling-picker.tsx:231
@@ -508,13 +570,17 @@ msgstr "الفئات"
 msgid "Clear"
 msgstr "مسح"
 
-#: ../../../lib/web/src/components/filter-bar.tsx:73
+#: ../../../lib/web/src/components/filter-bar.tsx:74
 msgid "Clear all"
 msgstr "مسح الكل"
 
 #: ../../../lib/web/src/components/data-table/faceted-filter.tsx:144
 msgid "Clear filters"
 msgstr "مسح الفلاتر"
+
+#: ../../../lib/web/src/components/search-input.tsx:26
+msgid "Clear search"
+msgstr ""
 
 #: ../../../lib/web/src/components/data-table/bulk-actions.tsx:177
 #: ../../../lib/web/src/components/data-table/bulk-actions.tsx:181
@@ -589,6 +655,10 @@ msgstr "مريح"
 msgid "Coming Soon!"
 msgstr "قريبًا!"
 
+#: ../../../lib/web/src/components/ui/command.tsx:34
+msgid "Command Palette"
+msgstr ""
+
 #: src/routes/_authenticated/$projectId_.settings.tsx:405
 msgid "Comment and view"
 msgstr "التعليق والعرض"
@@ -598,7 +668,7 @@ msgstr "التعليق والعرض"
 msgid "Comments ({0})"
 msgstr "التعليقات ({0})"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:315
+#: ../../../lib/web/src/components/config-drawer.tsx:316
 #: ../../../lib/web/src/lib/preference-utils.ts:95
 msgid "Compact"
 msgstr "مضغوط"
@@ -615,10 +685,26 @@ msgstr "تكوين إعدادات الخيار"
 msgid "Configure view settings"
 msgstr "تكوين إعدادات العرض"
 
-#: ../../../lib/web/src/components/place-picker.tsx:159
+#: ../../../lib/web/src/components/place-picker.tsx:160
 #: ../../../lib/web/src/components/travelling-picker.tsx:316
 msgid "Confirm"
 msgstr "تأكيد"
+
+#: ../../../lib/web/src/lib/chat-ui.ts:18
+msgid "Connected"
+msgstr ""
+
+#: ../../../lib/web/src/features/accounts/account-manager.tsx:191
+msgid "Connected accounts"
+msgstr ""
+
+#: ../../../lib/web/src/lib/chat-ui.ts:21
+msgid "Connecting..."
+msgstr ""
+
+#: ../../../lib/web/src/lib/handle-server-error.ts:18
+msgid "Content not found."
+msgstr ""
 
 #: ../../../lib/web/src/lib/query-client.ts:81
 msgid "Content not modified"
@@ -636,7 +722,15 @@ msgstr "متابعة"
 msgid "Continue with {label}"
 msgstr "المتابعة باستخدام {label}"
 
-#: ../../../lib/web/src/components/ui/copy-button.tsx:63
+#: ../../../lib/web/src/lib/toast-utils.ts:42
+msgid "Copied"
+msgstr ""
+
+#: ../../../lib/web/src/components/ui/copy-button.tsx:25
+msgid "Copied to clipboard"
+msgstr ""
+
+#: ../../../lib/web/src/components/ui/copy-button.tsx:64
 msgid "Copy"
 msgstr "نسخ"
 
@@ -663,6 +757,11 @@ msgstr "تعذّر التحقق باستخدام هذا الحساب. يرجى �
 #: src/features/tree/components/tree-view.tsx:697
 msgid "Create"
 msgstr "إنشاء"
+
+#. placeholder {0}: entityLabel.toLowerCase()
+#: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:144
+msgid "Create {0}"
+msgstr ""
 
 #: src/features/objects/components/create-object-dialog.tsx:387
 msgid "Create a new item in this project"
@@ -699,17 +798,22 @@ msgstr "تم الإنشاء"
 msgid "Creating project..."
 msgstr "جارٍ إنشاء المشروع..."
 
+#: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:258
 #: src/features/objects/components/create-object-dialog.tsx:579
 #: src/features/projects/components/create-project-dialog.tsx:411
 #: src/features/projects/components/create-project-dialog.tsx:498
 msgid "Creating..."
 msgstr "جارٍ الإنشاء..."
 
-#: ../../../lib/web/src/components/colour-picker.tsx:260
+#: ../../../lib/web/src/components/map-view.tsx:208
+msgid "Current location"
+msgstr ""
+
+#: ../../../lib/web/src/components/colour-picker.tsx:261
 msgid "Custom"
 msgstr "مخصص"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:218
+#: ../../../lib/web/src/components/config-drawer.tsx:219
 #: ../../../lib/web/src/components/theme-switch.tsx:52
 #: ../../../lib/web/src/lib/preference-utils.ts:20
 msgid "Dark"
@@ -738,7 +842,7 @@ msgstr "تم استيراد البيانات ({0, plural, zero {# كائن} one 
 msgid "Date"
 msgstr "التاريخ"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:310
+#: ../../../lib/web/src/components/config-drawer.tsx:311
 msgid "Default"
 msgstr "افتراضي"
 
@@ -839,6 +943,7 @@ msgstr "تنازلي"
 msgid "Descending"
 msgstr "تنازلي"
 
+#: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:83
 #: src/features/requests/components/request-panel.tsx:308
 #: src/routes/_authenticated/$projectId_.settings.tsx:310
 msgid "Description"
@@ -882,16 +987,25 @@ msgstr "الاختلاف"
 msgid "Diff: {source} → {target}"
 msgstr "الفرق: {source} → {target}"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:340
+#: ../../../lib/web/src/components/config-drawer.tsx:341
 msgid "Direction"
 msgstr "الاتجاه"
 
-#: src/components/comment-composer.tsx:269
+#: ../../../lib/web/src/components/person-picker.tsx:214
+msgid "Directory"
+msgstr ""
+
+#: src/components/comment-composer.tsx:302
 msgid "Discard"
 msgstr ""
 
-#: src/components/comment-composer.tsx:267
+#: src/components/comment-composer.tsx:300
 msgid "Discard draft?"
+msgstr ""
+
+#: ../../../lib/web/src/lib/chat-ui.ts:25
+#: ../../../lib/web/src/lib/chat-ui.ts:29
+msgid "Disconnected"
 msgstr ""
 
 #: ../../../lib/web/src/components/restore-banner.tsx:79
@@ -993,6 +1107,10 @@ msgstr "تعديل البطاقة المحددة"
 msgid "Edit view"
 msgstr "تعديل العرض"
 
+#: ../../../lib/web/src/features/accounts/types.ts:15
+msgid "Email"
+msgstr ""
+
 #: ../../../lib/web/src/components/step-up-dialog.tsx:289
 msgid "Email code"
 msgstr "رمز البريد الإلكتروني"
@@ -1032,6 +1150,10 @@ msgstr "تصدير البيانات"
 msgid "Export design"
 msgstr "تصدير التصميم"
 
+#: ../../../lib/web/src/features/accounts/types.ts:22
+msgid "External URL"
+msgstr ""
+
 #: ../../../lib/web/src/lib/preference-utils.ts:136
 msgid "Extra large"
 msgstr "كبير جداً"
@@ -1040,9 +1162,18 @@ msgstr "كبير جداً"
 msgid "Failed to add account"
 msgstr "فشل إضافة الحساب"
 
+#: ../../../lib/web/src/components/tag-input.tsx:39
+msgid "Failed to add tag"
+msgstr ""
+
 #: src/features/requests/components/merge-status.tsx:48
 msgid "Failed to check merge status"
 msgstr "فشل التحقق من حالة الدمج"
+
+#: ../../../lib/web/src/components/ui/copy-button.tsx:26
+#: ../../../lib/web/src/lib/toast-utils.ts:44
+msgid "Failed to copy"
+msgstr ""
 
 #: src/features/editor/components/design-editor.tsx:113
 msgid "Failed to create class"
@@ -1106,6 +1237,10 @@ msgstr "فشل استيراد البيانات"
 #: src/routes/_authenticated/$projectId/design.tsx:114
 msgid "Failed to import design"
 msgstr "فشل استيراد التصميم"
+
+#: ../../../lib/web/src/hooks/use-load-more.ts:74
+msgid "Failed to load"
+msgstr ""
 
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:263
 msgid "Failed to load image"
@@ -1185,7 +1320,7 @@ msgstr "فشل إلغاء الاشتراك"
 msgid "Failed to update access level"
 msgstr "فشل تحديث مستوى الوصول"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:111
+#: ../../../lib/web/src/components/notification-category-button.tsx:114
 msgid "Failed to update category"
 msgstr "فشل تحديث الفئة"
 
@@ -1215,6 +1350,10 @@ msgstr "الحقول"
 msgid "Files"
 msgstr "الملفات"
 
+#: ../../../lib/web/src/components/data-table/toolbar.tsx:30
+msgid "Filter..."
+msgstr ""
+
 #: src/components/layout/projects-layout.tsx:61
 #: src/routes/_authenticated/find.tsx:88
 msgid "Find projects"
@@ -1236,13 +1375,17 @@ msgstr "الأعلام"
 msgid "Flat"
 msgstr "مسطح"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:257
+#: ../../../lib/web/src/components/config-drawer.tsx:258
 msgid "Floating"
 msgstr "عائم"
 
 #: ../../../lib/web/src/lib/preference-utils.ts:63
 msgid "Friday"
 msgstr "الجمعة"
+
+#: ../../../lib/web/src/components/person-picker.tsx:207
+msgid "Friends"
+msgstr ""
 
 #: ../../../lib/web/src/components/travelling-picker.tsx:153
 msgid "From"
@@ -1261,7 +1404,7 @@ msgstr "من ملف"
 msgid "From theme"
 msgstr "من السمة"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:320
+#: ../../../lib/web/src/components/config-drawer.tsx:321
 msgid "Full layout"
 msgstr "تخطيط كامل"
 
@@ -1298,6 +1441,11 @@ msgstr "مجموعة"
 #: src/features/editor/components/edit-dialogs.tsx:361
 msgid "Group by"
 msgstr "تجميع حسب"
+
+#. placeholder {0}: name || subject.slice(1)
+#: ../../../lib/web/src/features/access/access-list.tsx:68
+msgid "Group: {0}"
+msgstr ""
 
 #: ../../../lib/web/src/components/data-table/column-header.tsx:70
 msgid "Hide"
@@ -1349,7 +1497,19 @@ msgstr "استيراد من نسخة احتياطية (اختياري)"
 msgid "Importing data..."
 msgstr "جارٍ استيراد البيانات..."
 
-#: ../../../lib/web/src/components/config-drawer.tsx:252
+#: ../../../lib/web/src/features/access/types.ts:42
+msgid "Including anonymous users"
+msgstr ""
+
+#: ../../../lib/web/src/components/faceless-avatar.tsx:69
+msgid "Initials avatar"
+msgstr ""
+
+#: ../../../lib/web/src/components/faceless-avatar.tsx:69
+msgid "Initials avatar for {name}"
+msgstr ""
+
+#: ../../../lib/web/src/components/config-drawer.tsx:253
 msgid "Inset"
 msgstr "داخلي"
 
@@ -1366,6 +1526,10 @@ msgstr "تاريخ غير صالح"
 msgid "Invalid JSON file"
 msgstr "ملف JSON غير صالح"
 
+#: ../../../lib/web/src/components/tag-input.tsx:38
+msgid "Invalid tag: letters, numbers, spaces, hyphens, and slashes only (max 50 chars)"
+msgstr ""
+
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:245
 msgid "Invalid verification code"
 msgstr "رمز التحقق غير صالح"
@@ -1378,6 +1542,10 @@ msgstr "يبدو أن الصفحة التي تبحث عنها <0/>غير موج�
 msgid "Item details"
 msgstr "تفاصيل العنصر"
 
+#: ../../../lib/web/src/lib/locale-format.ts:62
+msgid "Just now"
+msgstr ""
+
 #: src/components/keyboard-shortcuts-help.tsx:49
 msgid "Keyboard shortcuts"
 msgstr "اختصارات لوحة المفاتيح"
@@ -1387,7 +1555,7 @@ msgstr "اختصارات لوحة المفاتيح"
 msgid "Large"
 msgstr "كبير"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:286
+#: ../../../lib/web/src/components/config-drawer.tsx:287
 #: src/features/editor/components/edit-dialogs.tsx:320
 msgid "Layout"
 msgstr "التخطيط"
@@ -1397,11 +1565,15 @@ msgstr "التخطيط"
 msgid "Learn more"
 msgstr "اعرف المزيد"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:354
+#: ../../../lib/web/src/components/config-drawer.tsx:355
 msgid "Left to Right"
 msgstr "من اليسار إلى اليمين"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:213
+#: ../../../lib/web/src/components/post-tags.tsx:72
+msgid "Letters, numbers, spaces, and hyphens only"
+msgstr ""
+
+#: ../../../lib/web/src/components/config-drawer.tsx:214
 #: ../../../lib/web/src/components/theme-switch.tsx:45
 #: ../../../lib/web/src/lib/preference-utils.ts:19
 msgid "Light"
@@ -1471,6 +1643,10 @@ msgstr "تم تسجيل الخروج بنجاح"
 msgid "Logging out…"
 msgstr "جاري تسجيل الخروج…"
 
+#: ../../../lib/web/src/features/accounts/account-manager.tsx:192
+msgid "Manage your connected accounts for notifications and services."
+msgstr ""
+
 #: src/components/view-options-bar.tsx:41
 msgid "Manual"
 msgstr "يدوي"
@@ -1484,6 +1660,10 @@ msgstr "وضع علامة مقروء على الكل"
 #: src/features/editor/components/edit-dialogs.tsx:1121
 msgid "Maximum length"
 msgstr "الطول الأقصى"
+
+#: ../../../lib/web/src/features/accounts/types.ts:17
+msgid "MCP server"
+msgstr ""
 
 #: ../../../lib/web/src/lib/preference-utils.ts:107
 msgid "Medium"
@@ -1537,6 +1717,10 @@ msgstr "الطول الأدنى"
 msgid "Missing repo, source, or target parameters"
 msgstr "معاملات المستودع أو المصدر أو الهدف مفقودة"
 
+#: ../../../lib/web/src/features/accounts/types.ts:23
+msgid "Mochi web"
+msgstr ""
+
 #: ../../../lib/web/src/lib/preference-utils.ts:59
 msgid "Monday"
 msgstr "الاثنين"
@@ -1556,9 +1740,17 @@ msgstr "مشروعي"
 msgid "Name"
 msgstr "الاسم"
 
+#: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:102
+msgid "Name cannot contain angle brackets, backslash, semicolon, quotes or backticks"
+msgstr ""
+
 #: src/features/projects/components/create-project-dialog.tsx:87
 msgid "Name is required"
 msgstr "الاسم مطلوب"
+
+#: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:100
+msgid "Name must be 1000 characters or less"
+msgstr ""
 
 #: ../../../lib/web/src/features/errors/general-error.tsx:53
 #: ../../../lib/web/src/lib/api-response-interceptors.ts:303
@@ -1593,7 +1785,7 @@ msgstr "لا يوجد {parentClassNames} للإضافة إليه"
 msgid "No access"
 msgstr "لا يوجد وصول"
 
-#: ../../../lib/web/src/features/access/access-list.tsx:160
+#: ../../../lib/web/src/features/access/access-list.tsx:165
 msgid "No access rules configured. Add rules to control who can access this resource."
 msgstr "لم يتم تكوين قواعد وصول. أضف قواعد للتحكم في من يمكنه الوصول إلى هذا المورد."
 
@@ -1645,11 +1837,16 @@ msgstr "لا توجد كائنات مطابقة"
 msgid "No merge requests"
 msgstr "لا توجد طلبات دمج"
 
+#: ../../../lib/web/src/components/notifications-dropdown.tsx:193
+msgid "No notifications yet"
+msgstr ""
+
+#: ../../../lib/web/src/components/person-picker.tsx:84
 #: src/features/objects/components/field-editor.tsx:280
 msgid "No people found"
 msgstr "لم يتم العثور على أشخاص"
 
-#: ../../../lib/web/src/components/place-picker.tsx:132
+#: ../../../lib/web/src/components/place-picker.tsx:133
 msgid "No places found"
 msgstr "لم يتم العثور على أماكن"
 
@@ -1666,6 +1863,11 @@ msgstr "لم يتم العثور على مشاريع"
 msgid "No repositories available"
 msgstr "لا توجد مستودعات متاحة"
 
+#: ../../../lib/web/src/components/search-entity-dialog.tsx:82
+#: ../../../lib/web/src/components/search-entity-page.tsx:73
+msgid "No results found"
+msgstr ""
+
 #: ../../../lib/web/src/components/command-menu.tsx:55
 #: ../../../lib/web/src/components/data-table/faceted-filter.tsx:94
 msgid "No results found."
@@ -1681,7 +1883,7 @@ msgstr "لا توجد حالة"
 msgid "No time zone found."
 msgstr "لم يتم العثور على منطقة زمنية."
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:147
+#: ../../../lib/web/src/components/notification-category-button.tsx:150
 msgid "No topic record yet — try again after the next notification."
 msgstr "لا يوجد سجل موضوع بعد — حاول مرة أخرى بعد الإشعار التالي."
 
@@ -1693,6 +1895,7 @@ msgstr "لم يتم العثور على مستخدمين"
 msgid "No views"
 msgstr "لا توجد عروض"
 
+#: ../../../lib/web/src/components/colour-picker.tsx:345
 #: ../../../lib/web/src/components/person-picker.tsx:350
 #: ../../../lib/web/src/lib/preference-utils.ts:105
 #: ../../../lib/web/src/lib/preference-utils.ts:125
@@ -1752,6 +1955,10 @@ msgstr "الإشعارات: {0}"
 msgid "Number"
 msgstr "الرقم"
 
+#: ../../../lib/web/src/components/filter-bar.tsx:35
+msgid "On"
+msgstr ""
+
 #: ../../../lib/web/src/features/errors/not-found-error.tsx:16
 msgid "Oops! Page Not Found!"
 msgstr "عذراً! الصفحة غير موجودة!"
@@ -1790,6 +1997,10 @@ msgstr "فتح إجراءات العمود"
 msgid "Open design actions"
 msgstr "فتح إجراءات التصميم"
 
+#: ../../../lib/web/src/components/layout/mochi-menu.tsx:133
+msgid "Open menu"
+msgstr ""
+
 #: ../../../lib/web/src/components/layout/top-bar.tsx:63
 #: ../../../lib/web/src/components/layout/top-bar.tsx:68
 msgid "Open navigation"
@@ -1813,8 +2024,8 @@ msgstr "فتح إجراءات الصفحة"
 msgid "Open selected card"
 msgstr "فتح البطاقة المحددة"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:57
-#: ../../../lib/web/src/components/config-drawer.tsx:65
+#: ../../../lib/web/src/components/config-drawer.tsx:58
+#: ../../../lib/web/src/components/config-drawer.tsx:66
 msgid "Open theme settings"
 msgstr "فتح إعدادات السمة"
 
@@ -1842,7 +2053,7 @@ msgstr "خيارات"
 msgid "Other"
 msgstr "أخرى"
 
-#: ../../../lib/web/src/features/access/access-list.tsx:217
+#: ../../../lib/web/src/features/access/access-list.tsx:222
 msgid "Owner"
 msgstr "المالك"
 
@@ -1872,6 +2083,10 @@ msgstr "مفاتيح المرور"
 msgid "Pattern (regex)"
 msgstr "النمط (تعبير منتظم)"
 
+#: ../../../lib/web/src/components/date-picker.tsx:20
+msgid "Pick a date"
+msgstr ""
+
 #: src/routes/_authenticated/$projectId/index.tsx:756
 #: src/routes/_authenticated/$projectId/index.tsx:790
 msgid "Please add one or more classes to the project design."
@@ -1879,7 +2094,7 @@ msgstr "يرجى إضافة فئة واحدة أو أكثر إلى تصميم ا
 
 #: ../../../lib/web/src/features/errors/general-error.tsx:54
 #: ../../../lib/web/src/lib/api-response-interceptors.ts:304
-#: src/components/comment-composer.tsx:69
+#: src/components/comment-composer.tsx:97
 msgid "Please check your internet connection and try again."
 msgstr "يرجى التحقق من اتصالك بالإنترنت والمحاولة مرة أخرى."
 
@@ -1941,6 +2156,10 @@ msgstr "تم حذف المشروع"
 msgid "Project link"
 msgstr "رابط المشروع"
 
+#: ../../../lib/web/src/components/person-picker.tsx:200
+msgid "Project members"
+msgstr ""
+
 #: src/routes/_authenticated/$projectId_.settings.tsx:207
 msgid "Project not found"
 msgstr "المشروع غير موجود"
@@ -1968,6 +2187,10 @@ msgstr "المشاريع"
 msgid "Properties"
 msgstr "الخصائص"
 
+#: ../../../lib/web/src/features/accounts/types.ts:21
+msgid "Push notification"
+msgstr ""
+
 #: ../../../lib/web/src/lib/preference-utils.ts:117
 msgid "Raised"
 msgstr "بارز"
@@ -1992,8 +2215,8 @@ msgstr "جاهز للدمج"
 msgid "Rebase and merge"
 msgstr "إعادة الأساس والدمج"
 
-#: ../../../lib/web/src/components/search-entity-dialog.tsx:216
-#: ../../../lib/web/src/components/search-entity-page.tsx:242
+#: ../../../lib/web/src/components/search-entity-dialog.tsx:217
+#: ../../../lib/web/src/components/search-entity-page.tsx:243
 msgid "Recommended"
 msgstr "موصى به"
 
@@ -2001,6 +2224,10 @@ msgstr "موصى به"
 #: src/features/projects/components/recommended-projects.tsx:129
 msgid "Recommended projects"
 msgstr "مشاريع موصى بها"
+
+#: ../../../lib/web/src/lib/chat-ui.ts:21
+msgid "Reconnecting ({retries})..."
+msgstr ""
 
 #: ../../../lib/web/src/components/layout/authenticated-layout.tsx:133
 msgid "Redirecting to login."
@@ -2023,26 +2250,32 @@ msgstr "نسبي (5د, 3س, 2ي)"
 msgid "Relative within 24 hours, else absolute"
 msgstr "نسبي خلال 24 ساعة، وإلا مطلق"
 
-#: ../../../lib/web/src/features/access/access-list.tsx:265
+#: ../../../lib/web/src/features/access/access-list.tsx:270
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:180
-#: src/components/comment-composer.tsx:201
+#: src/components/comment-composer.tsx:234
 #: src/features/editor/components/add-dialogs.tsx:188
 #: src/features/objects/components/create-object-dialog.tsx:531
 #: src/features/projects/components/create-project-dialog.tsx:394
 msgid "Remove"
 msgstr "إزالة"
 
-#: ../../../lib/web/src/features/access/access-list.tsx:247
-#: ../../../lib/web/src/features/access/access-list.tsx:253
+#. placeholder {0}: filter.label
+#: ../../../lib/web/src/components/filter-bar.tsx:56
+#: ../../../lib/web/src/components/filter-bar.tsx:62
+msgid "Remove {0} filter"
+msgstr ""
+
+#: ../../../lib/web/src/features/access/access-list.tsx:252
+#: ../../../lib/web/src/features/access/access-list.tsx:258
 msgid "Remove access rule"
 msgstr "إزالة قاعدة الوصول"
 
 #. placeholder {0}: formatSubject(subject, data.name)
-#: ../../../lib/web/src/features/access/access-list.tsx:259
+#: ../../../lib/web/src/features/access/access-list.tsx:264
 msgid "Remove access rule for \"{0}\"?"
 msgstr "إزالة قاعدة الوصول لـ \"{0}\"؟"
 
-#: ../../../lib/web/src/features/access/access-list.tsx:257
+#: ../../../lib/web/src/features/access/access-list.tsx:262
 msgid "Remove access?"
 msgstr "إزالة الوصول؟"
 
@@ -2116,12 +2349,17 @@ msgstr "مطلوب"
 msgid "Resend email"
 msgstr "إعادة إرسال البريد الإلكتروني"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:86
-#: ../../../lib/web/src/components/data-table/toolbar.tsx:81
+#: ../../../lib/web/src/components/config-drawer.tsx:87
+#: ../../../lib/web/src/components/data-table/toolbar.tsx:82
 msgid "Reset"
 msgstr "إعادة تعيين"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:84
+#: ../../../lib/web/src/components/config-drawer.tsx:122
+#: ../../../lib/web/src/components/config-drawer.tsx:127
+msgid "Reset {title}"
+msgstr ""
+
+#: ../../../lib/web/src/components/config-drawer.tsx:85
 msgid "Reset all settings to default values"
 msgstr "إعادة تعيين كل الإعدادات إلى القيم الافتراضية"
 
@@ -2129,7 +2367,7 @@ msgstr "إعادة تعيين كل الإعدادات إلى القيم الاف
 msgid "Resolve these conflicts manually before merging."
 msgstr "قم بحل هذه التعارضات يدويًا قبل الدمج."
 
-#: src/components/comment-composer.tsx:218
+#: src/components/comment-composer.tsx:251
 msgid "Retry"
 msgstr ""
 
@@ -2137,7 +2375,7 @@ msgstr ""
 msgid "Retry projects load"
 msgstr "إعادة محاولة تحميل المشاريع"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:361
+#: ../../../lib/web/src/components/config-drawer.tsx:362
 msgid "Right to Left"
 msgstr "من اليمين إلى اليسار"
 
@@ -2170,6 +2408,9 @@ msgstr "حفظ"
 msgid "Saving..."
 msgstr "جاري الحفظ..."
 
+#: ../../../lib/web/src/components/filter-bar.tsx:32
+#: ../../../lib/web/src/components/header-search.tsx:22
+#: ../../../lib/web/src/components/search.tsx:18
 #: src/components/view-options-bar.tsx:144
 msgid "Search"
 msgstr "بحث"
@@ -2178,9 +2419,17 @@ msgstr "بحث"
 msgid "Search by name, ID, fingerprint, or URL..."
 msgstr "البحث بالاسم أو المعرف أو البصمة أو URL..."
 
-#: ../../../lib/web/src/components/place-picker.tsx:85
+#: ../../../lib/web/src/components/ui/command.tsx:35
+msgid "Search for a command to run..."
+msgstr ""
+
+#: ../../../lib/web/src/components/place-picker.tsx:86
 msgid "Search for a place"
 msgstr "البحث عن مكان"
+
+#: ../../../lib/web/src/components/place-picker.tsx:50
+msgid "Search for a place..."
+msgstr ""
 
 #: ../../../lib/web/src/components/travelling-picker.tsx:250
 msgid "Search for destination..."
@@ -2211,13 +2460,15 @@ msgid "Search, watch, and sort this view."
 msgstr "ابحث وراقب ورتب هذا العرض."
 
 #: ../../../lib/web/src/components/person-picker.tsx:324
+#: ../../../lib/web/src/components/search-entity-dialog.tsx:81
+#: ../../../lib/web/src/components/search-entity-page.tsx:72
 #: src/components/view-options-bar.tsx:148
 #: src/components/view-options-bar.tsx:223
 msgid "Search..."
 msgstr "بحث..."
 
-#: ../../../lib/web/src/components/search-entity-dialog.tsx:174
-#: ../../../lib/web/src/components/search-entity-page.tsx:200
+#: ../../../lib/web/src/components/search-entity-dialog.tsx:175
+#: ../../../lib/web/src/components/search-entity-page.tsx:201
 #: ../../../lib/web/src/features/access/access-dialog.tsx:202
 msgid "Searching..."
 msgstr "جاري البحث..."
@@ -2225,6 +2476,11 @@ msgstr "جاري البحث..."
 #: src/features/editor/components/add-dialogs.tsx:139
 msgid "Select"
 msgstr "تحديد"
+
+#. placeholder {0}: item.label.toLowerCase()
+#: ../../../lib/web/src/components/config-drawer.tsx:149
+msgid "Select {0}"
+msgstr ""
 
 #: src/features/editor/components/edit-dialogs.tsx:370
 msgid "Select a field"
@@ -2238,6 +2494,10 @@ msgstr "اختر مستخدمًا أو مجموعة أو قاعدة أخرى ل�
 msgid "Select access rule"
 msgstr "اختر قاعدة الوصول"
 
+#: ../../../lib/web/src/features/accounts/account-picker.tsx:34
+msgid "Select account"
+msgstr ""
+
 #: ../../../lib/web/src/features/accounts/account-add.tsx:129
 msgid "Select account type"
 msgstr "اختر نوع الحساب"
@@ -2250,13 +2510,21 @@ msgstr "اختر فرعًا"
 msgid "Select group"
 msgstr "اختر مجموعة"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:304
+#: ../../../lib/web/src/components/config-drawer.tsx:305
 msgid "Select layout style"
 msgstr "اختر نمط التخطيط"
+
+#: ../../../lib/web/src/components/place-picker.tsx:49
+msgid "Select location"
+msgstr ""
 
 #: src/components/keyboard-shortcuts-help.tsx:30
 msgid "Select next card"
 msgstr "تحديد البطاقة التالية"
+
+#: ../../../lib/web/src/components/person-picker.tsx:83
+msgid "Select person..."
+msgstr ""
 
 #: src/components/keyboard-shortcuts-help.tsx:31
 msgid "Select previous card"
@@ -2266,15 +2534,15 @@ msgstr "تحديد البطاقة السابقة"
 msgid "Select repository"
 msgstr "اختر المستودع"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:246
+#: ../../../lib/web/src/components/config-drawer.tsx:247
 msgid "Select sidebar style"
 msgstr "اختر نمط الشريط الجانبي"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:348
+#: ../../../lib/web/src/components/config-drawer.tsx:349
 msgid "Select site direction"
 msgstr "اختر اتجاه الموقع"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:202
+#: ../../../lib/web/src/components/config-drawer.tsx:203
 msgid "Select theme preference"
 msgstr "اختر تفضيل السمة"
 
@@ -2362,8 +2630,8 @@ msgstr "عرض هذه المساعدة"
 msgid "Showing {totalShown} of {total}"
 msgstr "عرض {totalShown} من {total}"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:238
-#: ../../../lib/web/src/components/config-drawer.tsx:262
+#: ../../../lib/web/src/components/config-drawer.tsx:239
+#: ../../../lib/web/src/components/config-drawer.tsx:263
 #: ../../../lib/web/src/components/ui/sidebar.tsx:237
 msgid "Sidebar"
 msgstr "الشريط الجانبي"
@@ -2424,7 +2692,7 @@ msgstr "ابقَ على اتصال!"
 msgid "Stop watching"
 msgstr "إيقاف المتابعة"
 
-#: ../../../lib/web/src/features/access/access-list.tsx:191
+#: ../../../lib/web/src/features/access/access-list.tsx:196
 msgid "Subject"
 msgstr "الموضوع"
 
@@ -2438,6 +2706,8 @@ msgstr "إرسال تعليق"
 msgid "Submit reply"
 msgstr "إرسال رد"
 
+#: ../../../lib/web/src/components/search-entity-dialog.tsx:83
+#: ../../../lib/web/src/components/search-entity-page.tsx:74
 #: src/features/projects/components/inline-project-search.tsx:205
 #: src/features/projects/components/recommended-projects.tsx:163
 msgid "Subscribe"
@@ -2467,16 +2737,24 @@ msgstr "الأحد"
 msgid "Switch to view 1-9"
 msgstr "التبديل إلى العرض 1-9"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:208
+#: ../../../lib/web/src/components/config-drawer.tsx:209
 #: ../../../lib/web/src/components/theme-switch.tsx:59
 #: ../../../lib/web/src/lib/preference-utils.ts:21
 #: ../../../lib/web/src/lib/preference-utils.ts:144
 msgid "System"
 msgstr "النظام"
 
-#: ../../../lib/web/src/components/tag-input.tsx:94
+#: ../../../lib/web/src/components/tag-input.tsx:95
 msgid "Tag"
 msgstr "وسم"
+
+#: ../../../lib/web/src/components/post-tags.tsx:76
+msgid "Tag already exists"
+msgstr ""
+
+#: ../../../lib/web/src/components/post-tags.tsx:68
+msgid "Tag must be 50 characters or less"
+msgstr ""
 
 #: ../../../lib/web/src/components/post-tags.tsx:101
 #: ../../../lib/web/src/components/post-tags.tsx:115
@@ -2512,11 +2790,11 @@ msgstr "تعذر العثور على المحتوى المطلوب."
 msgid "The site is not available at the moment."
 msgstr "الموقع غير متاح في الوقت الحالي."
 
-#: ../../../lib/web/src/components/config-drawer.tsx:194
+#: ../../../lib/web/src/components/config-drawer.tsx:195
 msgid "Theme"
 msgstr "السمة"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:69
+#: ../../../lib/web/src/components/config-drawer.tsx:70
 msgid "Theme Settings"
 msgstr "إعدادات السمة"
 
@@ -2632,8 +2910,8 @@ msgstr "المستوى الأعلى"
 msgid "Travelling"
 msgstr "السفر"
 
-#: ../../../lib/web/src/components/search-entity-dialog.tsx:190
-#: ../../../lib/web/src/components/search-entity-page.tsx:216
+#: ../../../lib/web/src/components/search-entity-dialog.tsx:191
+#: ../../../lib/web/src/components/search-entity-page.tsx:217
 msgid "Try adjusting your search terms"
 msgstr "حاول تعديل مصطلحات البحث"
 
@@ -2673,13 +2951,18 @@ msgstr "تعذّر الاتصال بالخادم البعيد"
 msgid "Unable to redirect to login. Please try again."
 msgstr "تعذر إعادة التوجيه إلى تسجيل الدخول. يرجى المحاولة مرة أخرى."
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:155
+#: ../../../lib/web/src/components/notification-category-button.tsx:158
 msgid "Unassigned"
 msgstr "غير معين"
 
 #: ../../../lib/web/src/features/errors/unauthorized-error.tsx:16
 msgid "Unauthorized Access"
 msgstr "وصول غير مصرح"
+
+#: ../../../lib/web/src/lib/request.ts:133
+#: ../../../lib/web/src/lib/request.ts:206
+msgid "Unexpected API error"
+msgstr ""
 
 #: src/routes/$projectId.diff.tsx:112
 msgid "Unified"
@@ -2688,6 +2971,10 @@ msgstr "موحد"
 #: ../../../lib/web/src/lib/preference-utils.ts:87
 msgid "United States"
 msgstr "الولايات المتحدة"
+
+#: ../../../lib/web/src/features/accounts/types.ts:29
+msgid "Unknown"
+msgstr ""
 
 #: src/features/projects/pages/projects-list-page.tsx:147
 #: src/features/projects/pages/projects-list-page.tsx:166
@@ -2748,6 +3035,7 @@ msgstr "استخدم مفتاح المرور الخاص بك"
 msgid "Used for readable IDs like {0}-1, {1}-2"
 msgstr "يُستخدم للمعرّفات القابلة للقراءة مثل {0}-1، {1}-2"
 
+#: ../../../lib/web/src/components/layout/mochi-menu.tsx:86
 #: ../../../lib/web/src/features/access/access-dialog.tsx:158
 #: src/features/editor/components/add-dialogs.tsx:141
 msgid "User"
@@ -2822,6 +3110,7 @@ msgstr "المشاهدات"
 msgid "Watch"
 msgstr "متابعة"
 
+#: ../../../lib/web/src/components/filter-bar.tsx:35
 #: src/components/view-options-bar.tsx:237
 msgid "Watched"
 msgstr "مراقَب"
@@ -2842,6 +3131,10 @@ msgstr "أرسلنا رمز تحقق إلى <0>{0}</0>. أدخل الرمز أد
 #: ../../../lib/web/src/features/errors/maintenance-error.tsx:16
 msgid "We'll be back online shortly."
 msgstr "سنعود للاتصال قريبًا."
+
+#: ../../../lib/web/src/components/notifications-dropdown.tsx:197
+msgid "We'll notify you when something important happens."
+msgstr ""
 
 #: ../../../lib/web/src/features/errors/maintenance-error.tsx:13
 msgid "Website is under maintenance!"
@@ -2867,11 +3160,19 @@ msgstr "ليس لديك الإذن اللازم <0/>لعرض هذا المورد
 msgid "You have no projects yet."
 msgstr "ليس لديك مشاريع بعد."
 
+#: ../../../lib/web/src/lib/show-submitted-data.tsx:9
+msgid "You submitted the following values:"
+msgstr ""
+
+#: ../../../lib/web/src/components/notifications-dropdown.tsx:193
+msgid "You're all caught up!"
+msgstr ""
+
 #: ../../../lib/web/src/components/restore-banner.tsx:91
 msgid "Your account was moved here from {source}. Until you delete it there, messages and notifications may reach both servers, some of your content keeps being served from the old server, and followers may take a few minutes to find you here."
 msgstr "تم نقل حسابك إلى هنا من {source}. حتى تحذفه من هناك، قد تصل الرسائل والإشعارات إلى كلا الخادمين، وقد يظل بعض محتواك يُقدَّم من الخادم القديم، وقد يستغرق المتابعون بضع دقائق للعثور عليك هنا."
 
-#: src/components/comment-composer.tsx:260
+#: src/components/comment-composer.tsx:293
 msgid "Your attachments will be lost."
 msgstr ""
 
@@ -2879,10 +3180,10 @@ msgstr ""
 msgid "Your backup contains objects of type:"
 msgstr "تحتوي نسختك الاحتياطية على كائنات من النوع:"
 
-#: src/components/comment-composer.tsx:258
+#: src/components/comment-composer.tsx:291
 msgid "Your text and attachments will be lost."
 msgstr ""
 
-#: src/components/comment-composer.tsx:261
+#: src/components/comment-composer.tsx:294
 msgid "Your text will be lost."
 msgstr ""

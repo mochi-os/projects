@@ -18,11 +18,11 @@ msgstr ""
 msgid "Please check your internet connection and try again."
 msgstr "İnternet bağlantınızı yoxlayıb yenidən cəhd edin."
 
-#: src/features/objects/components/comment-thread.tsx:165
+#: src/features/objects/components/comment-thread.tsx:214
 msgid "(edited)"
 msgstr "(redaktə edildi)"
 
-#: src/features/objects/components/comment-thread.tsx:149
+#: src/features/objects/components/comment-thread.tsx:198
 msgid "(expand)"
 msgstr "(genişləndir)"
 
@@ -119,11 +119,11 @@ msgstr "+{0} qabaqda"
 msgid "+{0} nested"
 msgstr "+{0} daxili"
 
-#: src/features/objects/components/comment-thread.tsx:146
+#: src/features/objects/components/comment-thread.tsx:195
 msgid "+{totalDescendants} more replies"
 msgstr "+{totalDescendants} əlavə cavab"
 
-#: src/features/objects/components/comment-thread.tsx:145
+#: src/features/objects/components/comment-thread.tsx:194
 msgid "1 reply"
 msgstr "1 cavab"
 
@@ -198,7 +198,7 @@ msgstr "Fəaliyyət"
 msgid "Add"
 msgstr "Əlavə et"
 
-#: src/features/objects/components/comment-list.tsx:217
+#: src/features/objects/components/comment-list.tsx:320
 msgid "Add a comment..."
 msgstr "Şərh əlavə et..."
 
@@ -359,7 +359,7 @@ msgstr "\"{title}\" silmək istədiyinizə əminsiniz? Bu əməliyyat geri qayta
 msgid "Are you sure you want to delete the \"{name}\" column? This cannot be undone."
 msgstr "\"{name}\" sütununu silmək istədiyinizə əminsiniz? Bu geri qaytarıla bilməz."
 
-#: src/features/objects/components/comment-thread.tsx:389
+#: src/features/objects/components/comment-thread.tsx:424
 msgid "Are you sure you want to delete this comment? This will also delete all replies."
 msgstr "Bu şərhi silmək istədiyinizə əminsiniz? Bu, bütün cavabları da siləcək."
 
@@ -383,13 +383,13 @@ msgstr "Artan"
 msgid "Ascending"
 msgstr "Artan"
 
-#: src/features/objects/components/comment-list.tsx:275
-#: src/features/objects/components/comment-list.tsx:280
+#: src/features/objects/components/comment-list.tsx:357
+#: src/features/objects/components/comment-list.tsx:362
 msgid "Attach comment files"
 msgstr "Şərh fayllarını qoş"
 
-#: src/features/objects/components/comment-thread.tsx:343
-#: src/features/objects/components/comment-thread.tsx:348
+#: src/features/objects/components/comment-thread.tsx:378
+#: src/features/objects/components/comment-thread.tsx:383
 msgid "Attach reply files"
 msgstr "Cavab fayllarını qoş"
 
@@ -491,15 +491,20 @@ msgstr "Övladı ola bilər"
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:91
 #: src/features/board/components/board-column.tsx:606
 #: src/features/editor/components/option-dialog.tsx:146
-#: src/features/objects/components/comment-thread.tsx:185
+#: src/features/objects/components/comment-thread.tsx:235
 #: src/features/projects/components/create-project-dialog.tsx:407
 #: src/routes/_authenticated/$projectId/design.tsx:344
 #: src/routes/_authenticated/$projectId/index.tsx:1039
 msgid "Cancel"
 msgstr "Ləğv et"
 
-#: src/features/objects/components/comment-thread.tsx:359
-#: src/features/objects/components/comment-thread.tsx:364
+#: src/features/objects/components/comment-list.tsx:374
+#: src/features/objects/components/comment-list.tsx:379
+msgid "Cancel comment"
+msgstr "Şərhi ləğv et"
+
+#: src/features/objects/components/comment-thread.tsx:394
+#: src/features/objects/components/comment-thread.tsx:399
 msgid "Cancel reply"
 msgstr "Cavabı ləğv et"
 
@@ -507,12 +512,12 @@ msgstr "Cavabı ləğv et"
 msgid "Cannot merge automatically"
 msgstr "Avtomatik birləşdirilə bilməz"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:143
+#: ../../../lib/web/src/components/notification-category-button.tsx:146
 msgid "Category for this notification"
 msgstr "Bu bildiriş üçün kateqoriya"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:124
-#: ../../../lib/web/src/components/notification-category-button.tsx:135
+#: ../../../lib/web/src/components/notification-category-button.tsx:127
+#: ../../../lib/web/src/components/notification-category-button.tsx:138
 msgid "Change notification category"
 msgstr "Bildiriş kateqoriyasını dəyişdir"
 
@@ -856,8 +861,8 @@ msgstr "Default sıralama"
 
 #: src/features/board/components/board-column.tsx:561
 #: src/features/board/components/board-column.tsx:622
-#: src/features/objects/components/comment-thread.tsx:254
-#: src/features/objects/components/comment-thread.tsx:390
+#: src/features/objects/components/comment-thread.tsx:304
+#: src/features/objects/components/comment-thread.tsx:425
 #: src/features/objects/components/object-attachments.tsx:152
 #: src/features/objects/components/object-attachments.tsx:157
 #: src/features/objects/components/object-attachments.tsx:206
@@ -880,7 +885,7 @@ msgstr "Sinifi sil"
 msgid "Delete column"
 msgstr "Sütunu sil"
 
-#: src/features/objects/components/comment-thread.tsx:388
+#: src/features/objects/components/comment-thread.tsx:423
 msgid "Delete comment"
 msgstr "Şərhi sil"
 
@@ -995,6 +1000,14 @@ msgstr "İstiqamət"
 msgid "Directory"
 msgstr "Kataloq"
 
+#: ../../../lib/web/src/components/comment-composer.tsx:300
+msgid "Discard"
+msgstr "Ləğv et"
+
+#: ../../../lib/web/src/components/comment-composer.tsx:298
+msgid "Discard draft?"
+msgstr "Qaralama ləğv edilsin?"
+
 #: ../../../lib/web/src/lib/chat-ui.ts:25
 #: ../../../lib/web/src/lib/chat-ui.ts:29
 msgid "Disconnected"
@@ -1061,7 +1074,7 @@ msgstr "Dublikatlar"
 msgid "Dyslexia-friendly"
 msgstr "Disleksiya üçün uyğun"
 
-#: src/features/objects/components/comment-thread.tsx:243
+#: src/features/objects/components/comment-thread.tsx:293
 msgid "Edit"
 msgstr "Redaktə et"
 
@@ -1196,7 +1209,7 @@ msgstr "Görünüş yaratmaq alınmadı"
 msgid "Failed to delete attachment"
 msgstr "Əlavəni silmək alınmadı"
 
-#: src/features/objects/components/comment-list.tsx:144
+#: src/features/objects/components/comment-list.tsx:167
 msgid "Failed to delete comment"
 msgstr "Şərhi silmək alınmadı"
 
@@ -1264,7 +1277,7 @@ msgstr "Video yüklənmədi"
 msgid "Failed to merge"
 msgstr "Birləşdirmək alınmadı"
 
-#: src/features/objects/components/comment-list.tsx:107
+#: src/features/objects/components/comment-list.tsx:130
 msgid "Failed to post comment"
 msgstr "Şərh göndərmək alınmadı"
 
@@ -1312,11 +1325,11 @@ msgstr "Abunəlikdən çıxmaq alınmadı"
 msgid "Failed to update access level"
 msgstr "Giriş səviyyəsini yeniləmək alınmadı"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:111
+#: ../../../lib/web/src/components/notification-category-button.tsx:114
 msgid "Failed to update category"
 msgstr "Kateqoriyanı yeniləmək alınmadı"
 
-#: src/features/objects/components/comment-list.tsx:127
+#: src/features/objects/components/comment-list.tsx:150
 msgid "Failed to update comment"
 msgstr "Şərhi yeniləmək alınmadı"
 
@@ -1801,7 +1814,7 @@ msgstr "Göstəriləcək dəyişiklik yoxdur"
 msgid "No changes were found for the selected comparison."
 msgstr "Seçilmiş müqayisə üçün dəyişiklik tapılmadı."
 
-#: src/features/objects/components/comment-list.tsx:304
+#: src/features/objects/components/comment-list.tsx:409
 msgid "No comments yet"
 msgstr "Hələ şərh yoxdur"
 
@@ -1875,7 +1888,7 @@ msgstr "Status yoxdur"
 msgid "No time zone found."
 msgstr "Saat qurşağı tapılmadı."
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:147
+#: ../../../lib/web/src/components/notification-category-button.tsx:150
 msgid "No topic record yet — try again after the next notification."
 msgstr "Hələ mövzu qeydi yoxdur — növbəti bildirişdən sonra yenidən cəhd edin."
 
@@ -2084,6 +2097,7 @@ msgstr "Tarix seçin"
 msgid "Please add one or more classes to the project design."
 msgstr "Layihə dizaynına bir və ya bir neçə sinif əlavə edin."
 
+#: ../../../lib/web/src/components/comment-composer.tsx:95
 #: ../../../lib/web/src/features/errors/general-error.tsx:54
 #: ../../../lib/web/src/lib/api-response-interceptors.ts:304
 msgid "Please check your internet connection and try again."
@@ -2241,11 +2255,10 @@ msgstr "Nisbi (5d, 3s, 2g)"
 msgid "Relative within 24 hours, else absolute"
 msgstr "24 saat içində nisbi, əks halda mütləq"
 
+#: ../../../lib/web/src/components/comment-composer.tsx:232
 #: ../../../lib/web/src/features/access/access-list.tsx:270
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:180
 #: src/features/editor/components/add-dialogs.tsx:188
-#: src/features/objects/components/comment-list.tsx:249
-#: src/features/objects/components/comment-thread.tsx:308
 #: src/features/objects/components/create-object-dialog.tsx:531
 #: src/features/projects/components/create-project-dialog.tsx:394
 msgid "Remove"
@@ -2320,12 +2333,12 @@ msgstr "Dizaynı əvəz edək?"
 msgid "Replacing..."
 msgstr "Əvəz olunur..."
 
-#: src/features/objects/components/comment-thread.tsx:230
+#: src/features/objects/components/comment-thread.tsx:280
 msgid "Reply"
 msgstr "Cavabla"
 
 #. placeholder {0}: comment.name || comment.author
-#: src/features/objects/components/comment-thread.tsx:265
+#: src/features/objects/components/comment-thread.tsx:325
 msgid "Reply to {0}..."
 msgstr "{0} üçün cavab..."
 
@@ -2359,6 +2372,10 @@ msgstr "Bütün parametrləri standart dəyərlərə sıfırla"
 msgid "Resolve these conflicts manually before merging."
 msgstr "Birləşdirməzdən əvvəl bu münaqişələri əl ilə həll edin."
 
+#: ../../../lib/web/src/components/comment-composer.tsx:249
+msgid "Retry"
+msgstr "Yenidən cəhd et"
+
 #: src/components/layout/projects-layout.tsx:74
 msgid "Retry projects load"
 msgstr "Layihə yükləməsini yenidən cəhd et"
@@ -2387,7 +2404,7 @@ msgstr "Şənbə"
 #: ../../../lib/web/src/components/ui/editable-field-row.tsx:122
 #: ../../../lib/web/src/components/ui/secret-field.tsx:77
 #: src/features/editor/components/option-dialog.tsx:150
-#: src/features/objects/components/comment-thread.tsx:205
+#: src/features/objects/components/comment-thread.tsx:255
 #: src/routes/_authenticated/$projectId/index.tsx:1051
 msgid "Save"
 msgstr "Saxla"
@@ -2667,7 +2684,7 @@ msgstr "Böl"
 msgid "Squash and merge"
 msgstr "Squash və birləşdir"
 
-#: src/features/objects/components/comment-list.tsx:305
+#: src/features/objects/components/comment-list.tsx:410
 msgid "Start the discussion by adding the first comment."
 msgstr "İlk şərhi əlavə edərək müzakirəyə başlayın."
 
@@ -2684,13 +2701,13 @@ msgstr "İzləməyi dayandır"
 msgid "Subject"
 msgstr "Mövzu"
 
-#: src/features/objects/components/comment-list.tsx:290
-#: src/features/objects/components/comment-list.tsx:295
+#: src/features/objects/components/comment-list.tsx:390
+#: src/features/objects/components/comment-list.tsx:399
 msgid "Submit comment"
 msgstr "Şərhi təqdim et"
 
-#: src/features/objects/components/comment-thread.tsx:374
-#: src/features/objects/components/comment-thread.tsx:379
+#: src/features/objects/components/comment-thread.tsx:409
+#: src/features/objects/components/comment-thread.tsx:414
 msgid "Submit reply"
 msgstr "Cavabı təqdim et"
 
@@ -2939,7 +2956,7 @@ msgstr "Uzaq serverə qoşulmaq mümkün olmadı"
 msgid "Unable to redirect to login. Please try again."
 msgstr "Girişə yönləndirmək mümkün olmadı. Yenidən cəhd edin."
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:155
+#: ../../../lib/web/src/components/notification-category-button.tsx:158
 msgid "Unassigned"
 msgstr "İcazəsiz giriş"
 
@@ -3160,6 +3177,18 @@ msgstr "Hər şeyi oxudunuz!"
 msgid "Your account was moved here from {source}. Until you delete it there, messages and notifications may reach both servers, some of your content keeps being served from the old server, and followers may take a few minutes to find you here."
 msgstr "Hesabınız {source} saytından buraya köçürüldü. Orada silənə qədər mesajlar və bildirişlər hər iki serverə çata bilər, bəzi məzmununuz köhnə serverdən təqdim edilməyə davam edər və izləyicilər sizi burada tapmaq üçün bir neçə dəqiqə gözləyə bilər."
 
+#: ../../../lib/web/src/components/comment-composer.tsx:291
+msgid "Your attachments will be lost."
+msgstr "Qoşmalarınız itiriləcək."
+
 #: src/features/projects/components/create-project-dialog.tsx:423
 msgid "Your backup contains objects of type:"
 msgstr "Ehtiyat nüsxənizdə bu növ obyektlər var:"
+
+#: ../../../lib/web/src/components/comment-composer.tsx:289
+msgid "Your text and attachments will be lost."
+msgstr "Mətniniz və qoşmalarınız itiriləcək."
+
+#: ../../../lib/web/src/components/comment-composer.tsx:292
+msgid "Your text will be lost."
+msgstr "Mətniniz itəcək."

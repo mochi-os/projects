@@ -18,11 +18,11 @@ msgstr ""
 msgid "Please check your internet connection and try again."
 msgstr "Controleer je internetverbinding en probeer het opnieuw."
 
-#: src/features/objects/components/comment-thread.tsx:165
+#: src/features/objects/components/comment-thread.tsx:214
 msgid "(edited)"
 msgstr "(bewerkt)"
 
-#: src/features/objects/components/comment-thread.tsx:149
+#: src/features/objects/components/comment-thread.tsx:198
 msgid "(expand)"
 msgstr "(uitvouwen)"
 
@@ -119,11 +119,11 @@ msgstr "+{0} voor"
 msgid "+{0} nested"
 msgstr "+{0} geneste"
 
-#: src/features/objects/components/comment-thread.tsx:146
+#: src/features/objects/components/comment-thread.tsx:195
 msgid "+{totalDescendants} more replies"
 msgstr "+{totalDescendants} meer antwoorden"
 
-#: src/features/objects/components/comment-thread.tsx:145
+#: src/features/objects/components/comment-thread.tsx:194
 msgid "1 reply"
 msgstr "1 antwoord"
 
@@ -198,7 +198,7 @@ msgstr "Activiteit"
 msgid "Add"
 msgstr "Toevoegen"
 
-#: src/features/objects/components/comment-list.tsx:217
+#: src/features/objects/components/comment-list.tsx:320
 msgid "Add a comment..."
 msgstr "Voeg een reactie toe..."
 
@@ -359,7 +359,7 @@ msgstr "Weet je zeker dat je \"{title}\" wilt verwijderen? Deze actie kan niet o
 msgid "Are you sure you want to delete the \"{name}\" column? This cannot be undone."
 msgstr "Weet je zeker dat je de kolom \"{name}\" wilt verwijderen? Dit kan niet ongedaan worden gemaakt."
 
-#: src/features/objects/components/comment-thread.tsx:389
+#: src/features/objects/components/comment-thread.tsx:424
 msgid "Are you sure you want to delete this comment? This will also delete all replies."
 msgstr "Weet je zeker dat je deze reactie wilt verwijderen? Hiermee worden ook alle antwoorden verwijderd."
 
@@ -383,13 +383,13 @@ msgstr "Oplopend"
 msgid "Ascending"
 msgstr "Oplopend"
 
-#: src/features/objects/components/comment-list.tsx:275
-#: src/features/objects/components/comment-list.tsx:280
+#: src/features/objects/components/comment-list.tsx:357
+#: src/features/objects/components/comment-list.tsx:362
 msgid "Attach comment files"
 msgstr "Reactiebestanden bijvoegen"
 
-#: src/features/objects/components/comment-thread.tsx:343
-#: src/features/objects/components/comment-thread.tsx:348
+#: src/features/objects/components/comment-thread.tsx:378
+#: src/features/objects/components/comment-thread.tsx:383
 msgid "Attach reply files"
 msgstr "Antwoordbestanden bijvoegen"
 
@@ -491,15 +491,20 @@ msgstr "Kan onderliggend zijn van"
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:91
 #: src/features/board/components/board-column.tsx:606
 #: src/features/editor/components/option-dialog.tsx:146
-#: src/features/objects/components/comment-thread.tsx:185
+#: src/features/objects/components/comment-thread.tsx:235
 #: src/features/projects/components/create-project-dialog.tsx:407
 #: src/routes/_authenticated/$projectId/design.tsx:344
 #: src/routes/_authenticated/$projectId/index.tsx:1039
 msgid "Cancel"
 msgstr "Annuleren"
 
-#: src/features/objects/components/comment-thread.tsx:359
-#: src/features/objects/components/comment-thread.tsx:364
+#: src/features/objects/components/comment-list.tsx:374
+#: src/features/objects/components/comment-list.tsx:379
+msgid "Cancel comment"
+msgstr "Reactie annuleren"
+
+#: src/features/objects/components/comment-thread.tsx:394
+#: src/features/objects/components/comment-thread.tsx:399
 msgid "Cancel reply"
 msgstr "Antwoord annuleren"
 
@@ -507,12 +512,12 @@ msgstr "Antwoord annuleren"
 msgid "Cannot merge automatically"
 msgstr "Kan niet automatisch samenvoegen"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:143
+#: ../../../lib/web/src/components/notification-category-button.tsx:146
 msgid "Category for this notification"
 msgstr "Categorie voor deze melding"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:124
-#: ../../../lib/web/src/components/notification-category-button.tsx:135
+#: ../../../lib/web/src/components/notification-category-button.tsx:127
+#: ../../../lib/web/src/components/notification-category-button.tsx:138
 msgid "Change notification category"
 msgstr "Meldingscategorie wijzigen"
 
@@ -856,8 +861,8 @@ msgstr "Standaardsortering"
 
 #: src/features/board/components/board-column.tsx:561
 #: src/features/board/components/board-column.tsx:622
-#: src/features/objects/components/comment-thread.tsx:254
-#: src/features/objects/components/comment-thread.tsx:390
+#: src/features/objects/components/comment-thread.tsx:304
+#: src/features/objects/components/comment-thread.tsx:425
 #: src/features/objects/components/object-attachments.tsx:152
 #: src/features/objects/components/object-attachments.tsx:157
 #: src/features/objects/components/object-attachments.tsx:206
@@ -880,7 +885,7 @@ msgstr "Klasse verwijderen"
 msgid "Delete column"
 msgstr "Kolom verwijderen"
 
-#: src/features/objects/components/comment-thread.tsx:388
+#: src/features/objects/components/comment-thread.tsx:423
 msgid "Delete comment"
 msgstr "Reactie verwijderen"
 
@@ -995,6 +1000,14 @@ msgstr "Richting"
 msgid "Directory"
 msgstr "Gids"
 
+#: ../../../lib/web/src/components/comment-composer.tsx:300
+msgid "Discard"
+msgstr "Verwerpen"
+
+#: ../../../lib/web/src/components/comment-composer.tsx:298
+msgid "Discard draft?"
+msgstr "Concept verwerpen?"
+
 #: ../../../lib/web/src/lib/chat-ui.ts:25
 #: ../../../lib/web/src/lib/chat-ui.ts:29
 msgid "Disconnected"
@@ -1061,7 +1074,7 @@ msgstr "Dupliceert"
 msgid "Dyslexia-friendly"
 msgstr "Dyslexie-vriendelijk"
 
-#: src/features/objects/components/comment-thread.tsx:243
+#: src/features/objects/components/comment-thread.tsx:293
 msgid "Edit"
 msgstr "Bewerken"
 
@@ -1196,7 +1209,7 @@ msgstr "Weergave aanmaken mislukt"
 msgid "Failed to delete attachment"
 msgstr "Bijlage verwijderen mislukt"
 
-#: src/features/objects/components/comment-list.tsx:144
+#: src/features/objects/components/comment-list.tsx:167
 msgid "Failed to delete comment"
 msgstr "Reactie verwijderen mislukt"
 
@@ -1264,7 +1277,7 @@ msgstr "Kan video niet laden"
 msgid "Failed to merge"
 msgstr "Samenvoegen mislukt"
 
-#: src/features/objects/components/comment-list.tsx:107
+#: src/features/objects/components/comment-list.tsx:130
 msgid "Failed to post comment"
 msgstr "Reactie plaatsen mislukt"
 
@@ -1312,11 +1325,11 @@ msgstr "Abonnement opzeggen mislukt"
 msgid "Failed to update access level"
 msgstr "Toegangsniveau bijwerken mislukt"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:111
+#: ../../../lib/web/src/components/notification-category-button.tsx:114
 msgid "Failed to update category"
 msgstr "Categorie bijwerken mislukt"
 
-#: src/features/objects/components/comment-list.tsx:127
+#: src/features/objects/components/comment-list.tsx:150
 msgid "Failed to update comment"
 msgstr "Reactie bijwerken mislukt"
 
@@ -1801,7 +1814,7 @@ msgstr "Geen wijzigingen om weer te geven"
 msgid "No changes were found for the selected comparison."
 msgstr "Er zijn geen wijzigingen gevonden voor de geselecteerde vergelijking."
 
-#: src/features/objects/components/comment-list.tsx:304
+#: src/features/objects/components/comment-list.tsx:409
 msgid "No comments yet"
 msgstr "Nog geen reacties"
 
@@ -1875,7 +1888,7 @@ msgstr "Geen status"
 msgid "No time zone found."
 msgstr "Geen tijdzone gevonden."
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:147
+#: ../../../lib/web/src/components/notification-category-button.tsx:150
 msgid "No topic record yet — try again after the next notification."
 msgstr "Nog geen topic-record — probeer het opnieuw na de volgende melding."
 
@@ -2084,6 +2097,7 @@ msgstr "Kies een datum"
 msgid "Please add one or more classes to the project design."
 msgstr "Voeg een of meer classes toe aan het projectontwerp."
 
+#: ../../../lib/web/src/components/comment-composer.tsx:95
 #: ../../../lib/web/src/features/errors/general-error.tsx:54
 #: ../../../lib/web/src/lib/api-response-interceptors.ts:304
 msgid "Please check your internet connection and try again."
@@ -2241,11 +2255,10 @@ msgstr "Relatief (5m, 3u, 2d)"
 msgid "Relative within 24 hours, else absolute"
 msgstr "Relatief binnen 24 uur, anders absoluut"
 
+#: ../../../lib/web/src/components/comment-composer.tsx:232
 #: ../../../lib/web/src/features/access/access-list.tsx:270
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:180
 #: src/features/editor/components/add-dialogs.tsx:188
-#: src/features/objects/components/comment-list.tsx:249
-#: src/features/objects/components/comment-thread.tsx:308
 #: src/features/objects/components/create-object-dialog.tsx:531
 #: src/features/projects/components/create-project-dialog.tsx:394
 msgid "Remove"
@@ -2320,12 +2333,12 @@ msgstr "Ontwerp vervangen?"
 msgid "Replacing..."
 msgstr "Bezig met vervangen..."
 
-#: src/features/objects/components/comment-thread.tsx:230
+#: src/features/objects/components/comment-thread.tsx:280
 msgid "Reply"
 msgstr "Antwoorden"
 
 #. placeholder {0}: comment.name || comment.author
-#: src/features/objects/components/comment-thread.tsx:265
+#: src/features/objects/components/comment-thread.tsx:325
 msgid "Reply to {0}..."
 msgstr "Reactie op {0}..."
 
@@ -2359,6 +2372,10 @@ msgstr "Alle instellingen resetten naar standaardwaarden"
 msgid "Resolve these conflicts manually before merging."
 msgstr "Los deze conflicten handmatig op voordat je samenvoegt."
 
+#: ../../../lib/web/src/components/comment-composer.tsx:249
+msgid "Retry"
+msgstr "Opnieuw proberen"
+
 #: src/components/layout/projects-layout.tsx:74
 msgid "Retry projects load"
 msgstr "Projecten opnieuw laden"
@@ -2387,7 +2404,7 @@ msgstr "Zaterdag"
 #: ../../../lib/web/src/components/ui/editable-field-row.tsx:122
 #: ../../../lib/web/src/components/ui/secret-field.tsx:77
 #: src/features/editor/components/option-dialog.tsx:150
-#: src/features/objects/components/comment-thread.tsx:205
+#: src/features/objects/components/comment-thread.tsx:255
 #: src/routes/_authenticated/$projectId/index.tsx:1051
 msgid "Save"
 msgstr "Opslaan"
@@ -2667,7 +2684,7 @@ msgstr "Splitsen"
 msgid "Squash and merge"
 msgstr "Squash en samenvoegen"
 
-#: src/features/objects/components/comment-list.tsx:305
+#: src/features/objects/components/comment-list.tsx:410
 msgid "Start the discussion by adding the first comment."
 msgstr "Start de discussie door de eerste reactie toe te voegen."
 
@@ -2684,13 +2701,13 @@ msgstr "Stoppen met volgen"
 msgid "Subject"
 msgstr "Onderwerp"
 
-#: src/features/objects/components/comment-list.tsx:290
-#: src/features/objects/components/comment-list.tsx:295
+#: src/features/objects/components/comment-list.tsx:390
+#: src/features/objects/components/comment-list.tsx:399
 msgid "Submit comment"
 msgstr "Reactie verzenden"
 
-#: src/features/objects/components/comment-thread.tsx:374
-#: src/features/objects/components/comment-thread.tsx:379
+#: src/features/objects/components/comment-thread.tsx:409
+#: src/features/objects/components/comment-thread.tsx:414
 msgid "Submit reply"
 msgstr "Antwoord verzenden"
 
@@ -2939,7 +2956,7 @@ msgstr "Kan geen verbinding maken met externe server"
 msgid "Unable to redirect to login. Please try again."
 msgstr "Doorverwijzen naar login is mislukt. Probeer het opnieuw."
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:155
+#: ../../../lib/web/src/components/notification-category-button.tsx:158
 msgid "Unassigned"
 msgstr "Niet toegewezen"
 
@@ -3160,6 +3177,18 @@ msgstr "Je bent helemaal bij!"
 msgid "Your account was moved here from {source}. Until you delete it there, messages and notifications may reach both servers, some of your content keeps being served from the old server, and followers may take a few minutes to find you here."
 msgstr "Uw account is hier naartoe verplaatst van {source}. Totdat u het daar verwijdert, kunnen berichten en meldingen beide servers bereiken, wordt een deel van uw inhoud nog steeds geleverd vanuit de oude server en kunnen volgers een paar minuten nodig hebben om u hier te vinden."
 
+#: ../../../lib/web/src/components/comment-composer.tsx:291
+msgid "Your attachments will be lost."
+msgstr "Je bijlagen gaan verloren."
+
 #: src/features/projects/components/create-project-dialog.tsx:423
 msgid "Your backup contains objects of type:"
 msgstr "Uw back-up bevat objecten van het type:"
+
+#: ../../../lib/web/src/components/comment-composer.tsx:289
+msgid "Your text and attachments will be lost."
+msgstr "Je tekst en bijlagen gaan verloren."
+
+#: ../../../lib/web/src/components/comment-composer.tsx:292
+msgid "Your text will be lost."
+msgstr "Je tekst gaat verloren."

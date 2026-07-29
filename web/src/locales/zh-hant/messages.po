@@ -18,11 +18,11 @@ msgstr ""
 msgid "Please check your internet connection and try again."
 msgstr "請檢查您的網際網路連線後再試一次。"
 
-#: src/features/objects/components/comment-thread.tsx:165
+#: src/features/objects/components/comment-thread.tsx:214
 msgid "(edited)"
 msgstr "(已編輯)"
 
-#: src/features/objects/components/comment-thread.tsx:149
+#: src/features/objects/components/comment-thread.tsx:198
 msgid "(expand)"
 msgstr "(展開)"
 
@@ -119,11 +119,11 @@ msgstr "+{0} 個領先"
 msgid "+{0} nested"
 msgstr "+{0} 個巢狀"
 
-#: src/features/objects/components/comment-thread.tsx:146
+#: src/features/objects/components/comment-thread.tsx:195
 msgid "+{totalDescendants} more replies"
 msgstr "+{totalDescendants} 則回覆"
 
-#: src/features/objects/components/comment-thread.tsx:145
+#: src/features/objects/components/comment-thread.tsx:194
 msgid "1 reply"
 msgstr "1 則回覆"
 
@@ -198,7 +198,7 @@ msgstr "動態"
 msgid "Add"
 msgstr "新增"
 
-#: src/features/objects/components/comment-list.tsx:217
+#: src/features/objects/components/comment-list.tsx:320
 msgid "Add a comment..."
 msgstr "新增留言..."
 
@@ -359,7 +359,7 @@ msgstr "您確定要刪除「{title}」嗎?此操作無法復原。"
 msgid "Are you sure you want to delete the \"{name}\" column? This cannot be undone."
 msgstr "您確定要刪除「{name}」欄位嗎?此操作無法復原。"
 
-#: src/features/objects/components/comment-thread.tsx:389
+#: src/features/objects/components/comment-thread.tsx:424
 msgid "Are you sure you want to delete this comment? This will also delete all replies."
 msgstr "您確定要刪除此留言嗎?這也會刪除所有回覆。"
 
@@ -383,13 +383,13 @@ msgstr "升序"
 msgid "Ascending"
 msgstr "升冪"
 
-#: src/features/objects/components/comment-list.tsx:275
-#: src/features/objects/components/comment-list.tsx:280
+#: src/features/objects/components/comment-list.tsx:357
+#: src/features/objects/components/comment-list.tsx:362
 msgid "Attach comment files"
 msgstr "附加留言檔案"
 
-#: src/features/objects/components/comment-thread.tsx:343
-#: src/features/objects/components/comment-thread.tsx:348
+#: src/features/objects/components/comment-thread.tsx:378
+#: src/features/objects/components/comment-thread.tsx:383
 msgid "Attach reply files"
 msgstr "附加回覆檔案"
 
@@ -491,15 +491,20 @@ msgstr "可作為子項"
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:91
 #: src/features/board/components/board-column.tsx:606
 #: src/features/editor/components/option-dialog.tsx:146
-#: src/features/objects/components/comment-thread.tsx:185
+#: src/features/objects/components/comment-thread.tsx:235
 #: src/features/projects/components/create-project-dialog.tsx:407
 #: src/routes/_authenticated/$projectId/design.tsx:344
 #: src/routes/_authenticated/$projectId/index.tsx:1039
 msgid "Cancel"
 msgstr "取消"
 
-#: src/features/objects/components/comment-thread.tsx:359
-#: src/features/objects/components/comment-thread.tsx:364
+#: src/features/objects/components/comment-list.tsx:374
+#: src/features/objects/components/comment-list.tsx:379
+msgid "Cancel comment"
+msgstr "取消留言"
+
+#: src/features/objects/components/comment-thread.tsx:394
+#: src/features/objects/components/comment-thread.tsx:399
 msgid "Cancel reply"
 msgstr "取消回覆"
 
@@ -507,12 +512,12 @@ msgstr "取消回覆"
 msgid "Cannot merge automatically"
 msgstr "無法自動合併"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:143
+#: ../../../lib/web/src/components/notification-category-button.tsx:146
 msgid "Category for this notification"
 msgstr "此通知的類別"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:124
-#: ../../../lib/web/src/components/notification-category-button.tsx:135
+#: ../../../lib/web/src/components/notification-category-button.tsx:127
+#: ../../../lib/web/src/components/notification-category-button.tsx:138
 msgid "Change notification category"
 msgstr "變更通知類別"
 
@@ -856,8 +861,8 @@ msgstr "預設排序"
 
 #: src/features/board/components/board-column.tsx:561
 #: src/features/board/components/board-column.tsx:622
-#: src/features/objects/components/comment-thread.tsx:254
-#: src/features/objects/components/comment-thread.tsx:390
+#: src/features/objects/components/comment-thread.tsx:304
+#: src/features/objects/components/comment-thread.tsx:425
 #: src/features/objects/components/object-attachments.tsx:152
 #: src/features/objects/components/object-attachments.tsx:157
 #: src/features/objects/components/object-attachments.tsx:206
@@ -880,7 +885,7 @@ msgstr "刪除類別"
 msgid "Delete column"
 msgstr "刪除欄位"
 
-#: src/features/objects/components/comment-thread.tsx:388
+#: src/features/objects/components/comment-thread.tsx:423
 msgid "Delete comment"
 msgstr "刪除留言"
 
@@ -995,6 +1000,14 @@ msgstr "方向"
 msgid "Directory"
 msgstr "目錄"
 
+#: ../../../lib/web/src/components/comment-composer.tsx:300
+msgid "Discard"
+msgstr "捨棄"
+
+#: ../../../lib/web/src/components/comment-composer.tsx:298
+msgid "Discard draft?"
+msgstr "捨棄草稿?"
+
 #: ../../../lib/web/src/lib/chat-ui.ts:25
 #: ../../../lib/web/src/lib/chat-ui.ts:29
 msgid "Disconnected"
@@ -1061,7 +1074,7 @@ msgstr "重複"
 msgid "Dyslexia-friendly"
 msgstr "閱讀障礙友善"
 
-#: src/features/objects/components/comment-thread.tsx:243
+#: src/features/objects/components/comment-thread.tsx:293
 msgid "Edit"
 msgstr "編輯"
 
@@ -1196,7 +1209,7 @@ msgstr "建立檢視失敗"
 msgid "Failed to delete attachment"
 msgstr "刪除附件失敗"
 
-#: src/features/objects/components/comment-list.tsx:144
+#: src/features/objects/components/comment-list.tsx:167
 msgid "Failed to delete comment"
 msgstr "刪除留言失敗"
 
@@ -1264,7 +1277,7 @@ msgstr "無法載入影片"
 msgid "Failed to merge"
 msgstr "合併失敗"
 
-#: src/features/objects/components/comment-list.tsx:107
+#: src/features/objects/components/comment-list.tsx:130
 msgid "Failed to post comment"
 msgstr "張貼留言失敗"
 
@@ -1312,11 +1325,11 @@ msgstr "取消訂閱失敗"
 msgid "Failed to update access level"
 msgstr "更新存取層級失敗"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:111
+#: ../../../lib/web/src/components/notification-category-button.tsx:114
 msgid "Failed to update category"
 msgstr "更新類別失敗"
 
-#: src/features/objects/components/comment-list.tsx:127
+#: src/features/objects/components/comment-list.tsx:150
 msgid "Failed to update comment"
 msgstr "更新留言失敗"
 
@@ -1801,7 +1814,7 @@ msgstr "無變更可顯示"
 msgid "No changes were found for the selected comparison."
 msgstr "找不到所選比較的變更。"
 
-#: src/features/objects/components/comment-list.tsx:304
+#: src/features/objects/components/comment-list.tsx:409
 msgid "No comments yet"
 msgstr "尚無留言"
 
@@ -1875,7 +1888,7 @@ msgstr "無狀態"
 msgid "No time zone found."
 msgstr "找不到時區。"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:147
+#: ../../../lib/web/src/components/notification-category-button.tsx:150
 msgid "No topic record yet — try again after the next notification."
 msgstr "尚無主題記錄 — 請在下次通知後再試一次。"
 
@@ -2084,6 +2097,7 @@ msgstr "選擇日期"
 msgid "Please add one or more classes to the project design."
 msgstr "請新增一個或多個類別至專案設計。"
 
+#: ../../../lib/web/src/components/comment-composer.tsx:95
 #: ../../../lib/web/src/features/errors/general-error.tsx:54
 #: ../../../lib/web/src/lib/api-response-interceptors.ts:304
 msgid "Please check your internet connection and try again."
@@ -2241,11 +2255,10 @@ msgstr "相對(5m、3h、2d)"
 msgid "Relative within 24 hours, else absolute"
 msgstr "24 小時內相對,否則絕對"
 
+#: ../../../lib/web/src/components/comment-composer.tsx:232
 #: ../../../lib/web/src/features/access/access-list.tsx:270
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:180
 #: src/features/editor/components/add-dialogs.tsx:188
-#: src/features/objects/components/comment-list.tsx:249
-#: src/features/objects/components/comment-thread.tsx:308
 #: src/features/objects/components/create-object-dialog.tsx:531
 #: src/features/projects/components/create-project-dialog.tsx:394
 msgid "Remove"
@@ -2320,12 +2333,12 @@ msgstr "取代設計?"
 msgid "Replacing..."
 msgstr "取代中..."
 
-#: src/features/objects/components/comment-thread.tsx:230
+#: src/features/objects/components/comment-thread.tsx:280
 msgid "Reply"
 msgstr "回覆"
 
 #. placeholder {0}: comment.name || comment.author
-#: src/features/objects/components/comment-thread.tsx:265
+#: src/features/objects/components/comment-thread.tsx:325
 msgid "Reply to {0}..."
 msgstr "回覆 {0}..."
 
@@ -2359,6 +2372,10 @@ msgstr "將所有設定重設為預設值"
 msgid "Resolve these conflicts manually before merging."
 msgstr "請在合併前手動解決這些衝突。"
 
+#: ../../../lib/web/src/components/comment-composer.tsx:249
+msgid "Retry"
+msgstr "重試"
+
 #: src/components/layout/projects-layout.tsx:74
 msgid "Retry projects load"
 msgstr "重試載入專案"
@@ -2387,7 +2404,7 @@ msgstr "星期六"
 #: ../../../lib/web/src/components/ui/editable-field-row.tsx:122
 #: ../../../lib/web/src/components/ui/secret-field.tsx:77
 #: src/features/editor/components/option-dialog.tsx:150
-#: src/features/objects/components/comment-thread.tsx:205
+#: src/features/objects/components/comment-thread.tsx:255
 #: src/routes/_authenticated/$projectId/index.tsx:1051
 msgid "Save"
 msgstr "儲存"
@@ -2667,7 +2684,7 @@ msgstr "分割"
 msgid "Squash and merge"
 msgstr "壓縮並合併"
 
-#: src/features/objects/components/comment-list.tsx:305
+#: src/features/objects/components/comment-list.tsx:410
 msgid "Start the discussion by adding the first comment."
 msgstr "新增第一則留言以開啟討論。"
 
@@ -2684,13 +2701,13 @@ msgstr "停止關注"
 msgid "Subject"
 msgstr "主旨"
 
-#: src/features/objects/components/comment-list.tsx:290
-#: src/features/objects/components/comment-list.tsx:295
+#: src/features/objects/components/comment-list.tsx:390
+#: src/features/objects/components/comment-list.tsx:399
 msgid "Submit comment"
 msgstr "送出留言"
 
-#: src/features/objects/components/comment-thread.tsx:374
-#: src/features/objects/components/comment-thread.tsx:379
+#: src/features/objects/components/comment-thread.tsx:409
+#: src/features/objects/components/comment-thread.tsx:414
 msgid "Submit reply"
 msgstr "送出回覆"
 
@@ -2939,7 +2956,7 @@ msgstr "無法連線至遠端伺服器"
 msgid "Unable to redirect to login. Please try again."
 msgstr "無法重新導向至登入頁面。請重試。"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:155
+#: ../../../lib/web/src/components/notification-category-button.tsx:158
 msgid "Unassigned"
 msgstr "未指派"
 
@@ -3160,6 +3177,18 @@ msgstr "全部已讀！"
 msgid "Your account was moved here from {source}. Until you delete it there, messages and notifications may reach both servers, some of your content keeps being served from the old server, and followers may take a few minutes to find you here."
 msgstr "您的帳號已從 {source} 遷移至此。在您於該處刪除帳號之前，訊息和通知可能會同時到達兩個伺服器，部分內容仍由舊伺服器提供，追蹤者可能需要幾分鐘才能在此找到您。"
 
+#: ../../../lib/web/src/components/comment-composer.tsx:291
+msgid "Your attachments will be lost."
+msgstr "您的附件將遺失。"
+
 #: src/features/projects/components/create-project-dialog.tsx:423
 msgid "Your backup contains objects of type:"
 msgstr "您的備份包含以下類型的物件："
+
+#: ../../../lib/web/src/components/comment-composer.tsx:289
+msgid "Your text and attachments will be lost."
+msgstr "您的文字和附件將遺失。"
+
+#: ../../../lib/web/src/components/comment-composer.tsx:292
+msgid "Your text will be lost."
+msgstr "你的內容將會遺失。"

@@ -18,11 +18,11 @@ msgstr ""
 msgid "Please check your internet connection and try again."
 msgstr "براہ کرم اپنا انٹرنیٹ کنکشن چیک کریں اور دوبارہ کوشش کریں۔"
 
-#: src/features/objects/components/comment-thread.tsx:165
+#: src/features/objects/components/comment-thread.tsx:214
 msgid "(edited)"
 msgstr "(ترمیم شدہ)"
 
-#: src/features/objects/components/comment-thread.tsx:149
+#: src/features/objects/components/comment-thread.tsx:198
 msgid "(expand)"
 msgstr "(پھیلائیں)"
 
@@ -119,11 +119,11 @@ msgstr "+{0} آگے"
 msgid "+{0} nested"
 msgstr "+{0} نیسٹڈ"
 
-#: src/features/objects/components/comment-thread.tsx:146
+#: src/features/objects/components/comment-thread.tsx:195
 msgid "+{totalDescendants} more replies"
 msgstr "+{totalDescendants} مزید جوابات"
 
-#: src/features/objects/components/comment-thread.tsx:145
+#: src/features/objects/components/comment-thread.tsx:194
 msgid "1 reply"
 msgstr "1 جواب"
 
@@ -198,7 +198,7 @@ msgstr "سرگرمی"
 msgid "Add"
 msgstr "شامل کریں"
 
-#: src/features/objects/components/comment-list.tsx:217
+#: src/features/objects/components/comment-list.tsx:320
 msgid "Add a comment..."
 msgstr "تبصرہ شامل کریں..."
 
@@ -359,7 +359,7 @@ msgstr "کیا آپ واقعی \"{title}\" کو حذف کرنا چاہتے ہی�
 msgid "Are you sure you want to delete the \"{name}\" column? This cannot be undone."
 msgstr "کیا آپ واقعی \"{name}\" کالم کو حذف کرنا چاہتے ہیں؟ یہ واپس نہیں لیا جا سکتا۔"
 
-#: src/features/objects/components/comment-thread.tsx:389
+#: src/features/objects/components/comment-thread.tsx:424
 msgid "Are you sure you want to delete this comment? This will also delete all replies."
 msgstr "کیا آپ واقعی اس تبصرے کو حذف کرنا چاہتے ہیں؟ یہ تمام جوابات کو بھی حذف کر دے گا۔"
 
@@ -383,13 +383,13 @@ msgstr "بڑھتا ہوا"
 msgid "Ascending"
 msgstr "صعودی"
 
-#: src/features/objects/components/comment-list.tsx:275
-#: src/features/objects/components/comment-list.tsx:280
+#: src/features/objects/components/comment-list.tsx:357
+#: src/features/objects/components/comment-list.tsx:362
 msgid "Attach comment files"
 msgstr "تبصرے کی فائلیں منسلک کریں"
 
-#: src/features/objects/components/comment-thread.tsx:343
-#: src/features/objects/components/comment-thread.tsx:348
+#: src/features/objects/components/comment-thread.tsx:378
+#: src/features/objects/components/comment-thread.tsx:383
 msgid "Attach reply files"
 msgstr "جواب کی فائلیں منسلک کریں"
 
@@ -491,15 +491,20 @@ msgstr "کا بچہ ہو سکتا ہے"
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:91
 #: src/features/board/components/board-column.tsx:606
 #: src/features/editor/components/option-dialog.tsx:146
-#: src/features/objects/components/comment-thread.tsx:185
+#: src/features/objects/components/comment-thread.tsx:235
 #: src/features/projects/components/create-project-dialog.tsx:407
 #: src/routes/_authenticated/$projectId/design.tsx:344
 #: src/routes/_authenticated/$projectId/index.tsx:1039
 msgid "Cancel"
 msgstr "منسوخ کریں"
 
-#: src/features/objects/components/comment-thread.tsx:359
-#: src/features/objects/components/comment-thread.tsx:364
+#: src/features/objects/components/comment-list.tsx:374
+#: src/features/objects/components/comment-list.tsx:379
+msgid "Cancel comment"
+msgstr "تبصرہ منسوخ کریں"
+
+#: src/features/objects/components/comment-thread.tsx:394
+#: src/features/objects/components/comment-thread.tsx:399
 msgid "Cancel reply"
 msgstr "جواب منسوخ کریں"
 
@@ -507,12 +512,12 @@ msgstr "جواب منسوخ کریں"
 msgid "Cannot merge automatically"
 msgstr "خودکار طریقے سے ضم نہیں کیا جا سکتا"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:143
+#: ../../../lib/web/src/components/notification-category-button.tsx:146
 msgid "Category for this notification"
 msgstr "اس نوٹیفکیشن کے لیے زمرہ"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:124
-#: ../../../lib/web/src/components/notification-category-button.tsx:135
+#: ../../../lib/web/src/components/notification-category-button.tsx:127
+#: ../../../lib/web/src/components/notification-category-button.tsx:138
 msgid "Change notification category"
 msgstr "نوٹیفکیشن کا زمرہ تبدیل کریں"
 
@@ -856,8 +861,8 @@ msgstr "ڈیفالٹ ترتیب"
 
 #: src/features/board/components/board-column.tsx:561
 #: src/features/board/components/board-column.tsx:622
-#: src/features/objects/components/comment-thread.tsx:254
-#: src/features/objects/components/comment-thread.tsx:390
+#: src/features/objects/components/comment-thread.tsx:304
+#: src/features/objects/components/comment-thread.tsx:425
 #: src/features/objects/components/object-attachments.tsx:152
 #: src/features/objects/components/object-attachments.tsx:157
 #: src/features/objects/components/object-attachments.tsx:206
@@ -880,7 +885,7 @@ msgstr "کلاس حذف کریں"
 msgid "Delete column"
 msgstr "کالم حذف کریں"
 
-#: src/features/objects/components/comment-thread.tsx:388
+#: src/features/objects/components/comment-thread.tsx:423
 msgid "Delete comment"
 msgstr "تبصرہ حذف کریں"
 
@@ -995,6 +1000,14 @@ msgstr "سمت"
 msgid "Directory"
 msgstr "ڈائریکٹری"
 
+#: ../../../lib/web/src/components/comment-composer.tsx:300
+msgid "Discard"
+msgstr "رد کریں"
+
+#: ../../../lib/web/src/components/comment-composer.tsx:298
+msgid "Discard draft?"
+msgstr "مسودہ رد کریں؟"
+
 #: ../../../lib/web/src/lib/chat-ui.ts:25
 #: ../../../lib/web/src/lib/chat-ui.ts:29
 msgid "Disconnected"
@@ -1061,7 +1074,7 @@ msgstr "نقل کرتا ہے"
 msgid "Dyslexia-friendly"
 msgstr "ڈسلیکسیا کے لیے موزوں"
 
-#: src/features/objects/components/comment-thread.tsx:243
+#: src/features/objects/components/comment-thread.tsx:293
 msgid "Edit"
 msgstr "ترمیم"
 
@@ -1196,7 +1209,7 @@ msgstr "منظر بنانے میں ناکامی"
 msgid "Failed to delete attachment"
 msgstr "اٹیچمنٹ حذف کرنے میں ناکامی"
 
-#: src/features/objects/components/comment-list.tsx:144
+#: src/features/objects/components/comment-list.tsx:167
 msgid "Failed to delete comment"
 msgstr "تبصرہ حذف کرنے میں ناکامی"
 
@@ -1264,7 +1277,7 @@ msgstr "ویڈیو لوڈ نہیں ہو سکی"
 msgid "Failed to merge"
 msgstr "مرج کرنے میں ناکامی"
 
-#: src/features/objects/components/comment-list.tsx:107
+#: src/features/objects/components/comment-list.tsx:130
 msgid "Failed to post comment"
 msgstr "تبصرہ پوسٹ کرنے میں ناکامی"
 
@@ -1312,11 +1325,11 @@ msgstr "ان سبسکرائب کرنے میں ناکامی"
 msgid "Failed to update access level"
 msgstr "رسائی کی سطح اپڈیٹ کرنے میں ناکامی"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:111
+#: ../../../lib/web/src/components/notification-category-button.tsx:114
 msgid "Failed to update category"
 msgstr "زمرہ اپڈیٹ کرنے میں ناکامی"
 
-#: src/features/objects/components/comment-list.tsx:127
+#: src/features/objects/components/comment-list.tsx:150
 msgid "Failed to update comment"
 msgstr "تبصرہ اپڈیٹ کرنے میں ناکامی"
 
@@ -1801,7 +1814,7 @@ msgstr "ظاہر کرنے کے لیے کوئی تبدیلیاں نہیں"
 msgid "No changes were found for the selected comparison."
 msgstr "منتخب کردہ موازنے کے لیے کوئی تبدیلیاں نہیں ملیں۔"
 
-#: src/features/objects/components/comment-list.tsx:304
+#: src/features/objects/components/comment-list.tsx:409
 msgid "No comments yet"
 msgstr "ابھی تک کوئی تبصرے نہیں"
 
@@ -1875,7 +1888,7 @@ msgstr "کوئی حالت نہیں"
 msgid "No time zone found."
 msgstr "کوئی time zone نہیں ملا۔"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:147
+#: ../../../lib/web/src/components/notification-category-button.tsx:150
 msgid "No topic record yet — try again after the next notification."
 msgstr "ابھی تک کوئی topic record نہیں — اگلی notification کے بعد دوبارہ کوشش کریں۔"
 
@@ -2084,6 +2097,7 @@ msgstr "تاریخ منتخب کریں"
 msgid "Please add one or more classes to the project design."
 msgstr "براہ کرم project design میں ایک یا زیادہ classes شامل کریں۔"
 
+#: ../../../lib/web/src/components/comment-composer.tsx:95
 #: ../../../lib/web/src/features/errors/general-error.tsx:54
 #: ../../../lib/web/src/lib/api-response-interceptors.ts:304
 msgid "Please check your internet connection and try again."
@@ -2241,11 +2255,10 @@ msgstr "نسبتی (5m، 3h، 2d)"
 msgid "Relative within 24 hours, else absolute"
 msgstr "24 گھنٹوں کے اندر نسبتی، ورنہ مطلق"
 
+#: ../../../lib/web/src/components/comment-composer.tsx:232
 #: ../../../lib/web/src/features/access/access-list.tsx:270
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:180
 #: src/features/editor/components/add-dialogs.tsx:188
-#: src/features/objects/components/comment-list.tsx:249
-#: src/features/objects/components/comment-thread.tsx:308
 #: src/features/objects/components/create-object-dialog.tsx:531
 #: src/features/projects/components/create-project-dialog.tsx:394
 msgid "Remove"
@@ -2320,12 +2333,12 @@ msgstr "design تبدیل کریں؟"
 msgid "Replacing..."
 msgstr "تبدیل ہو رہا ہے..."
 
-#: src/features/objects/components/comment-thread.tsx:230
+#: src/features/objects/components/comment-thread.tsx:280
 msgid "Reply"
 msgstr "جواب"
 
 #. placeholder {0}: comment.name || comment.author
-#: src/features/objects/components/comment-thread.tsx:265
+#: src/features/objects/components/comment-thread.tsx:325
 msgid "Reply to {0}..."
 msgstr "{0} کو جواب دیں..."
 
@@ -2359,6 +2372,10 @@ msgstr "تمام سیٹنگز کو ڈیفالٹ ویلیوز پر reset کریں
 msgid "Resolve these conflicts manually before merging."
 msgstr "ضم کرنے سے پہلے ان تنازعات کو دستی طور پر حل کریں۔"
 
+#: ../../../lib/web/src/components/comment-composer.tsx:249
+msgid "Retry"
+msgstr "دوبارہ کوشش کریں"
+
 #: src/components/layout/projects-layout.tsx:74
 msgid "Retry projects load"
 msgstr "پروجیکٹس دوبارہ لوڈ کریں"
@@ -2387,7 +2404,7 @@ msgstr "ہفتہ"
 #: ../../../lib/web/src/components/ui/editable-field-row.tsx:122
 #: ../../../lib/web/src/components/ui/secret-field.tsx:77
 #: src/features/editor/components/option-dialog.tsx:150
-#: src/features/objects/components/comment-thread.tsx:205
+#: src/features/objects/components/comment-thread.tsx:255
 #: src/routes/_authenticated/$projectId/index.tsx:1051
 msgid "Save"
 msgstr "محفوظ کریں"
@@ -2667,7 +2684,7 @@ msgstr "تقسیم کریں"
 msgid "Squash and merge"
 msgstr "سکواش اور ضم کریں"
 
-#: src/features/objects/components/comment-list.tsx:305
+#: src/features/objects/components/comment-list.tsx:410
 msgid "Start the discussion by adding the first comment."
 msgstr "پہلا تبصرہ شامل کر کے بحث شروع کریں۔"
 
@@ -2684,13 +2701,13 @@ msgstr "دیکھنا بند کریں"
 msgid "Subject"
 msgstr "موضوع"
 
-#: src/features/objects/components/comment-list.tsx:290
-#: src/features/objects/components/comment-list.tsx:295
+#: src/features/objects/components/comment-list.tsx:390
+#: src/features/objects/components/comment-list.tsx:399
 msgid "Submit comment"
 msgstr "تبصرہ جمع کریں"
 
-#: src/features/objects/components/comment-thread.tsx:374
-#: src/features/objects/components/comment-thread.tsx:379
+#: src/features/objects/components/comment-thread.tsx:409
+#: src/features/objects/components/comment-thread.tsx:414
 msgid "Submit reply"
 msgstr "جواب جمع کریں"
 
@@ -2939,7 +2956,7 @@ msgstr "دور دراز سرور سے منسلک ہونے سے قاصر"
 msgid "Unable to redirect to login. Please try again."
 msgstr "لاگ ان پر ری ڈائریکٹ کرنے سے قاصر۔ براہ کرم دوبارہ کوشش کریں۔"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:155
+#: ../../../lib/web/src/components/notification-category-button.tsx:158
 msgid "Unassigned"
 msgstr "غیر تفویض شدہ"
 
@@ -3160,6 +3177,18 @@ msgstr "آپ نے سب دیکھ لیا!"
 msgid "Your account was moved here from {source}. Until you delete it there, messages and notifications may reach both servers, some of your content keeps being served from the old server, and followers may take a few minutes to find you here."
 msgstr "آپ کا اکاؤنٹ {source} سے یہاں منتقل کر دیا گیا ہے۔ جب تک آپ اسے وہاں سے حذف نہیں کرتے، پیغامات اور اطلاعات دونوں سرورز تک پہنچ سکتی ہیں، آپ کے کچھ مواد پرانے سرور سے فراہم ہوتے رہیں گے، اور فالوورز کو آپ کو یہاں تلاش کرنے میں چند منٹ لگ سکتے ہیں۔"
 
+#: ../../../lib/web/src/components/comment-composer.tsx:291
+msgid "Your attachments will be lost."
+msgstr "آپ کے منسلکات ضائع ہو جائیں گے۔"
+
 #: src/features/projects/components/create-project-dialog.tsx:423
 msgid "Your backup contains objects of type:"
 msgstr "آپ کے بیک اپ میں اس قسم کے آبجیکٹس موجود ہیں:"
+
+#: ../../../lib/web/src/components/comment-composer.tsx:289
+msgid "Your text and attachments will be lost."
+msgstr "آپ کا متن اور منسلکات ضائع ہو جائیں گے۔"
+
+#: ../../../lib/web/src/components/comment-composer.tsx:292
+msgid "Your text will be lost."
+msgstr "آپ کا متن ضائع ہو جائے گا۔"

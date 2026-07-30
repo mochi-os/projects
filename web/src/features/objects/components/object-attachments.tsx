@@ -32,6 +32,8 @@ import {
   Tooltip,
   TooltipTrigger,
   TooltipContent,
+  useUploadProgress,
+  UploadProgress,
 } from "@mochi/web";
 import projectsApi from "@/api/projects";
 import type { Attachment as AttachmentData } from "@/types";
@@ -52,6 +54,7 @@ export function ObjectAttachments({
   const fileInputRef = useRef<HTMLInputElement>(null);
   const queryClient = useQueryClient();
   const { formatFileSize } = useFormat();
+  const { progress: uploadProgress, upload } = useUploadProgress();
 
   const { data, isLoading } = useQuery({
     queryKey: ["attachments", projectId, objectId],
@@ -63,7 +66,9 @@ export function ObjectAttachments({
 
   const uploadMutation = useMutation({
     mutationFn: async (files: File[]) => {
-      return projectsApi.uploadAttachments(projectId, objectId, files);
+      return upload((onProgress) =>
+        projectsApi.uploadAttachments(projectId, objectId, files, onProgress),
+      );
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
@@ -222,6 +227,7 @@ export function ObjectAttachments({
               className="hidden"
               onChange={handleFileChange}
             />
+            <UploadProgress progress={uploadProgress} />
             <Button
               variant="outline"
               size="sm"

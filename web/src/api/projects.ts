@@ -5,6 +5,7 @@
 
 import endpoints from "./endpoints";
 import { projectsRequest } from "./request";
+import type { AxiosProgressEvent } from "axios";
 import type { AccessRule } from "@mochi/web";
 import type {
   Project,
@@ -469,6 +470,7 @@ const projectsApi = {
     content: string,
     parent?: string,
     files?: File[],
+    onProgress?: (event: AxiosProgressEvent) => void,
   ): Promise<{ data: Comment }> => {
     const formData = new FormData();
     formData.append("content", content);
@@ -479,6 +481,7 @@ const projectsApi = {
     return projectsRequest.post<{ data: Comment }>(
       endpoints.projects.commentCreate(projectId, objectId),
       formData,
+      { timeout: 0, onUploadProgress: onProgress },
     );
   },
 
@@ -525,6 +528,7 @@ const projectsApi = {
     projectId: string,
     objectId: string,
     files: File[],
+    onProgress?: (event: AxiosProgressEvent) => void,
   ): Promise<AttachmentListResponse> => {
     const formData = new FormData();
     for (const file of files) {
@@ -533,6 +537,7 @@ const projectsApi = {
     return projectsRequest.post(
       endpoints.projects.attachmentCreate(projectId, objectId),
       formData,
+      { timeout: 0, onUploadProgress: onProgress },
     );
   },
 
@@ -644,10 +649,14 @@ const projectsApi = {
   importData: async (
     projectId: string,
     file: Blob,
+    onProgress?: (event: AxiosProgressEvent) => void,
   ): Promise<{ data: { objects: number; comments: number; attachments: number; links: number } }> => {
     const form = new FormData();
     form.append("file", file, "import.json");
-    return projectsRequest.post(endpoints.projects.dataImport(projectId), form);
+    return projectsRequest.post(endpoints.projects.dataImport(projectId), form, {
+      timeout: 0,
+      onUploadProgress: onProgress,
+    });
   },
 
   // ============= View Methods =============

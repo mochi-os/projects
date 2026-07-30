@@ -39,6 +39,8 @@ import {
   AttachmentAction,
   pendingFileKey,
   removePendingFile,
+  useUploadProgress,
+  UploadProgress,
 } from "@mochi/web";
 import projectsApi from "@/api/projects";
 import type { ProjectDetails, ProjectObject } from "@/types";
@@ -75,6 +77,7 @@ export function CreateObjectDialog({
   const pendingFilePreviewUrls = useImageObjectUrls(pendingFiles);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const queryClient = useQueryClient();
+  const { progress: uploadProgress, upload } = useUploadProgress();
 
   // Filter classes to those allowed by the current view
   const availableClasses = useMemo(() => {
@@ -278,7 +281,9 @@ export function CreateObjectDialog({
 
       // Upload any attached files
       if (pendingFiles.length > 0) {
-        await projectsApi.uploadAttachments(project.project.id, objectId, pendingFiles);
+        await upload((onProgress) =>
+          projectsApi.uploadAttachments(project.project.id, objectId, pendingFiles, onProgress),
+        );
       }
 
       return {
@@ -573,6 +578,7 @@ export function CreateObjectDialog({
             </div>
           </div>
 
+          <UploadProgress progress={uploadProgress} className="px-6 pb-2" />
           <SheetFooter className="px-6 py-4 border-t">
             <Button type="submit" disabled={createMutation.isPending || (parentRequired && !parent) || missingRequired || creatableClasses.length === 0}>
               <Check className="size-4" />

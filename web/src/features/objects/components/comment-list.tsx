@@ -30,6 +30,8 @@ import {
   offlineBlocked,
   useComposerDrop,
   useDiscardGuard,
+  useUploadProgress,
+  UploadProgress,
 } from "@mochi/web";
 import projectsApi from "@/api/projects";
 import { CommentThread } from "./comment-thread";
@@ -81,6 +83,7 @@ export function CommentList({
   }, [objectId]);
   const queryClient = useQueryClient();
   const currentUserId = useAuthStore((s) => s.identity);
+  const { progress: uploadProgress, upload } = useUploadProgress();
 
   const { data, isLoading } = useQuery({
     queryKey: ["comments", projectId, objectId],
@@ -110,6 +113,18 @@ export function CommentList({
       parent?: string;
       files?: File[];
     }) => {
+      if (files?.length) {
+        return upload((onProgress) =>
+          projectsApi.createComment(
+            projectId,
+            objectId,
+            content,
+            parent,
+            files,
+            onProgress,
+          ),
+        );
+      }
       return projectsApi.createComment(
         projectId,
         objectId,
@@ -336,6 +351,7 @@ export function CommentList({
               newComment.trim() ? () => void handleCreate() : undefined
             }
           />
+          {isSendingComment && <UploadProgress progress={uploadProgress} />}
           <div className="flex items-center justify-end gap-2">
             <SendShortcutHint />
             <input
@@ -427,6 +443,7 @@ export function CommentList({
               onReplyDraftChange={setReplyDraft}
               onReplyFilesChange={setReplyFileCount}
               onSubmitReply={handleReply}
+              uploadProgress={uploadProgress}
               onEdit={handleEdit}
               onDelete={handleDelete}
             />

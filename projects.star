@@ -8841,13 +8841,21 @@ def event_app_object_create(e):
 		e.write({"error": obj_result["error"], "code": obj_result["code"]})
 		return
 
+	# The object exists once _create_project_object returns, so a comment
+	# failure is not a failure of the whole request — reporting an error here
+	# would tell the caller a created ticket was not created and invite a
+	# duplicate. Instead the response carries the comment id, empty when the
+	# description did not attach, so the caller can tell a partial landing.
+	comment = ""
 	if body:
-		_create_project_comment(e.user, project_id, obj_result["id"], body)
+		comment_result = _create_project_comment(e.user, project_id, obj_result["id"], body)
+		comment = comment_result.get("id", "")
 
 	e.write({
 		"id": obj_result["id"],
 		"number": obj_result["number"],
 		"readable": obj_result["readable"],
 		"fingerprint": obj_result["fingerprint"],
+		"comment": comment,
 	})
 

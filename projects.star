@@ -5561,26 +5561,6 @@ def event_info(e):
 		"fingerprint": entity.get("fingerprint", mochi.entity.fingerprint(project_id)),
 	})
 
-# Handle access check request from subscribers. Read-only; reveals only the
-# requester's own access levels, never another user's — the requester is the
-# authenticated stream sender, not a content-supplied id (matches forums'
-# event_access_check).
-def event_access_check(e):
-	project_id = e.header("to")
-	requester = e.header("from")
-	levels = e.content("levels") or []
-
-	entity = mochi.entity.info(project_id)
-	if not entity or entity.get("class") != "project":
-		e.stream.write({"error": "errors.project_not_found"})
-		return
-
-	result = {}
-	for level in levels:
-		if level in ("view", "comment", "write", "design"):
-			result[level] = check_project_access(requester, project_id, level)
-	e.stream.write(result)
-
 # Return the full project schema (classes, fields, options, hierarchy, views)
 def event_schema(e):
 	project_id = e.header("to")
@@ -8763,18 +8743,27 @@ def _check_project(user, project_id):
 	if not mochi.text.valid(project_id, "entity"):
 		return {"error": "errors.invalid_project_id", "code": 400}
 
-	existing = mochi.db.row("select id, owner from projects where id=?", project_id)
-	if existing:
-		if existing["owner"] == 1:
-			return {"error": "errors.you_own_this_project", "code": 400}
-		fp = mochi.entity.fingerprint(project_id) or ""
-		return {"fingerprint": fp, "already_subscribed": True}
+	existing = mochi.db.row("select id, owner, server from projects where id=?", project_id)
+	if existing and existing["owner"] == 1:
+		return {"error": "errors.you_own_this_project", "code": 400}
+	subscribed = bool(existing)
 
-	directory = mochi.directory.get(project_id)
-	if directory == None or len(directory) == 0:
-		return {"error": "errors.unable_to_find_project_in_directory", "code": 404}
+	# An unsubscribed caller must resolve the project publicly; a subscriber
+	# already knows it (and may have joined a private project the directory
+	# does not list), so the directory gate applies only before membership.
+	peer = None
+	if subscribed:
+		if existing["server"]:
+			peer = mochi.remote.peer(existing["server"])
+	else:
+		directory = mochi.directory.get(project_id)
+		if directory == None or len(directory) == 0:
+			return {"error": "errors.unable_to_find_project_in_directory", "code": 404}
 
-	access = mochi.remote.request(project_id, "projects", "access/check", {"levels": ["write"]})
+	# Probe the owner even when subscribed: membership proves neither present
+	# reachability nor that the write grant survived (access/set replaces a
+	# subject's rules, so a downgrade after subscribing is invisible locally).
+	access = mochi.remote.request(project_id, "projects", "access/check", {}, peer)
 	if access.get("error"):
 		if access.get("transport"):
 			return {"error": "errors.remote", "code": access.get("code", 502)}
@@ -8783,7 +8772,7 @@ def _check_project(user, project_id):
 		return {"error": "errors.access_denied", "code": 403}
 
 	fp = mochi.entity.fingerprint(project_id) or ""
-	return {"fingerprint": fp, "already_subscribed": False}
+	return {"fingerprint": fp, "already_subscribed": subscribed}
 
 # Service event: another local app asks whether the user could subscribe to a
 # project and file objects in it, without changing anything — the read-only

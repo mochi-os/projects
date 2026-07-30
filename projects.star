@@ -5561,6 +5561,26 @@ def event_info(e):
 		"fingerprint": entity.get("fingerprint", mochi.entity.fingerprint(project_id)),
 	})
 
+# Handle access check request from subscribers. Read-only; reveals only the
+# requester's own access levels, never another user's — the requester is the
+# authenticated stream sender, not a content-supplied id (matches forums'
+# event_access_check).
+def event_access_check(e):
+	project_id = e.header("to")
+	requester = e.header("from")
+	levels = e.content("levels") or []
+
+	entity = mochi.entity.info(project_id)
+	if not entity or entity.get("class") != "project":
+		e.stream.write({"error": "errors.project_not_found"})
+		return
+
+	result = {}
+	for level in levels:
+		if level in ("view", "comment", "write", "design"):
+			result[level] = check_project_access(requester, project_id, level)
+	e.stream.write(result)
+
 # Return the full project schema (classes, fields, options, hierarchy, views)
 def event_schema(e):
 	project_id = e.header("to")
@@ -8731,6 +8751,54 @@ def _create_project_comment(user, project_id, object_id, content):
 	row_merge("watchers", ["object", "user"], {"object": object_id, "user": user_id, "created": now})
 
 	return {"id": comment_id}
+
+# Internal: read-only accessibility check for `project_id` on behalf of
+# `user`. Mirrors _subscribe_to_project's resolution steps without writing
+# anything: no project row, no schema fetch, no subscribe message. The
+# access/check probe both proves the owner is reachable and confirms the
+# user holds write access — what event_request demands for object/create —
+# before the user writes a report.
+# Returns {"fingerprint", "already_subscribed"} or {"error", "code"}.
+def _check_project(user, project_id):
+	if not mochi.text.valid(project_id, "entity"):
+		return {"error": "errors.invalid_project_id", "code": 400}
+
+	existing = mochi.db.row("select id, owner from projects where id=?", project_id)
+	if existing:
+		if existing["owner"] == 1:
+			return {"error": "errors.you_own_this_project", "code": 400}
+		fp = mochi.entity.fingerprint(project_id) or ""
+		return {"fingerprint": fp, "already_subscribed": True}
+
+	directory = mochi.directory.get(project_id)
+	if directory == None or len(directory) == 0:
+		return {"error": "errors.unable_to_find_project_in_directory", "code": 404}
+
+	access = mochi.remote.request(project_id, "projects", "access/check", {"levels": ["write"]})
+	if access.get("error"):
+		if access.get("transport"):
+			return {"error": "errors.remote", "code": access.get("code", 502)}
+		return {"error": access["error"], "code": access.get("code", 502)}
+	if not access.get("write", False):
+		return {"error": "errors.access_denied", "code": 403}
+
+	fp = mochi.entity.fingerprint(project_id) or ""
+	return {"fingerprint": fp, "already_subscribed": False}
+
+# Service event: another local app asks whether the user could subscribe to a
+# project and file objects in it, without changing anything — the read-only
+# counterpart of event_app_subscribe. Help calls this when a contribute
+# dialog opens, before the user has committed to anything.
+def event_app_check(e):
+	project_id = e.content("project") or ""
+	result = _check_project(e.user, project_id)
+	if "error" in result:
+		e.write({"error": result["error"], "code": result["code"]})
+		return
+	e.write({
+		"fingerprint": result.get("fingerprint", ""),
+		"already_subscribed": result.get("already_subscribed", False),
+	})
 
 # Service event: another local app asks us to subscribe the user to a project.
 def event_app_subscribe(e):

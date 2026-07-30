@@ -355,6 +355,13 @@ def database_upgrade(version):
 		# sequence/log copies mislead diagnosis.
 		for table in ["sequence", "log", "acknowledged", "received"]:
 			mochi.db.execute("drop table if exists " + table)
+	if version == 3:
+		# Attachments move into this database, owned by the shared library.
+		# Create the table and copy existing rows across the transition bridge;
+		# the migrate helper aborts without advancing the version if the bridge
+		# is gone, so the step retries later.
+		attachment_schema_create()
+		attachment_migrate()
 
 # Create database with all 16 tables
 def database_create():
@@ -583,6 +590,9 @@ def database_create():
 		updated integer not null
 	)""")
 	mochi.db.execute("create index if not exists requests_object on requests(object)")
+
+	# Attachments now live in this database, owned by the shared library.
+	attachment_schema_create()
 
 # Generic row write helpers (used by the config / set tables). merge = upsert the
 # whole row; set = a partial update; remove = delete. set / remove / rekey take a
@@ -1094,10 +1104,10 @@ def action_design_import(a):
 # P2P for subscribed projects. An attachment whose bytes cannot be read
 # (deleted file, unreachable owner) is skipped rather than failing the
 # whole export.
-def export_attachments(object_id, project_id):
+def export_attachments(object_id, project_id, frm):
 	result = []
-	for att in mochi.attachment.list(object_id, project_id) or []:
-		data = mochi.attachment.data(att["id"])
+	for att in attachment_list(object_id, project_id) or []:
+		data = attachment_data(att["id"], frm)
 		if data == None:
 			continue
 		result.append({
@@ -1122,17 +1132,17 @@ def action_data_export_warm(a):
 
 	identifiers = []
 	for row in mochi.db.rows("select id from objects where project=? order by rank, id", project_id) or []:
-		for att in mochi.attachment.list(row["id"], project_id) or []:
+		for att in attachment_list(row["id"], project_id) or []:
 			identifiers.append(att["id"])
 		for c in mochi.db.rows("select id from comments where object=?", row["id"]) or []:
-			for att in mochi.attachment.list(c["id"], project_id) or []:
+			for att in attachment_list(c["id"], project_id) or []:
 				identifiers.append(att["id"])
 
 	start = mochi.time.now()
 	for i, identifier in enumerate(identifiers):
 		if mochi.time.now() - start > 60:
 			return {"data": {"attachments": len(identifiers), "remaining": len(identifiers) - i}}
-		mochi.attachment.data(identifier)
+		attachment_data(identifier, a.user.identity.id)
 
 	return {"data": {"attachments": len(identifiers), "remaining": 0}}
 
@@ -1214,13 +1224,13 @@ def action_data_export(a):
 				comment["parent"] = c["parent"]
 			if c["edited"]:
 				comment["edited"] = c["edited"]
-			attachments = export_attachments(c["id"], project_id)
+			attachments = export_attachments(c["id"], project_id, a.user.identity.id)
 			if attachments:
 				comment["attachments"] = attachments
 			comments.append(comment)
 		if comments:
 			object["comments"] = comments
-		attachments = export_attachments(row["id"], project_id)
+		attachments = export_attachments(row["id"], project_id, a.user.identity.id)
 		if attachments:
 			object["attachments"] = attachments
 		activity = []
@@ -1506,10 +1516,10 @@ def action_data_import(a):
 			row_merge("comments", ["id"], {"id": comment_ids[i], "object": object_id, "parent": comment_parent, "author": c.get("author") or user, "name": c.get("name") or a.user.identity.name, "content": str(c["content"]), "created": safe_int(c.get("created")) or now, "edited": safe_int(c.get("edited"))})
 			comment_count += 1
 			for att in (c.get("attachments") or []):
-				mochi.attachment.create(comment_ids[i], att["name"], att["data"], att.get("content_type") or "", att.get("caption") or "", att.get("description") or "")
+				attachment_create(comment_ids[i], att["name"], att["data"], att.get("content_type") or "", att.get("caption") or "", att.get("description") or "")
 				attachment_count += 1
 		for att in (o.get("attachments") or []):
-			mochi.attachment.create(object_id, att["name"], att["data"], att.get("content_type") or "", att.get("caption") or "", att.get("description") or "")
+			attachment_create(object_id, att["name"], att["data"], att.get("content_type") or "", att.get("caption") or "", att.get("description") or "")
 			attachment_count += 1
 		file_activity = o.get("activity") or []
 		if file_activity:
@@ -1851,7 +1861,7 @@ def action_project_delete(a):
 
 	delete_project_comment_attachments(project_id)
 	for obj in (mochi.db.rows("select id from objects where project=?", project_id) or []):
-		mochi.attachment.clear(obj["id"])
+		attachment_clear(obj["id"])
 	# Notify subscribers that project is being deleted (before purging the
 	# subscriber list). Send from the project entity so receivers can verify
 	# the sender, matching broadcast_event and the verify_subscription check.
@@ -2256,7 +2266,7 @@ def delete_object_cascade(project_id, object_id, user=""):
 
 	# Then delete this object's related data
 	row_remove("requests", ["id"], "object=?", [object_id])
-	mochi.attachment.clear(object_id)
+	attachment_clear(object_id)
 	row_remove("watchers", ["object", "user"], "object=?", [object_id])
 	mochi.db.execute("delete from activity where object=?", object_id)
 	delete_object_comments(object_id, project_id)
@@ -2278,11 +2288,11 @@ def delete_object_cascade(project_id, object_id, user=""):
 # pass preserve=False and clear everything, as before.
 def prune_attachments(object_id, project_id, preserve):
 	kept = 0
-	for att in (mochi.attachment.list(object_id, project_id) or []):
+	for att in (attachment_list(object_id, project_id) or []):
 		if preserve and not att["entity"]:
 			kept += 1
 			continue
-		mochi.attachment.delete(att["id"])
+		attachment_delete(att["id"])
 	if kept:
 		mochi.log.debug("prune_attachments: kept " + str(kept) + " locally-stored attachment(s) for " + str(object_id))
 
@@ -3208,7 +3218,7 @@ def object_comments(project_id, object_id, parent_id, depth):
 	) or []
 	for i in range(len(comments)):
 		comments[i]["children"] = object_comments(project_id, object_id, comments[i]["id"], depth + 1)
-		comments[i]["attachments"] = mochi.attachment.list(comments[i]["id"], project_id) or []
+		comments[i]["attachments"] = attachment_list(comments[i]["id"], project_id) or []
 	return comments
 
 # Recursively delete a comment and all its children and attachments
@@ -3221,8 +3231,8 @@ def delete_comment_tree(comment_id, project_id):
 	children = mochi.db.rows("select id from comments where parent=?", comment_id) or []
 	for child in children:
 		delete_comment_tree(child["id"], project_id)
-	for att in (mochi.attachment.list(comment_id, project_id) or []):
-		mochi.attachment.delete(att["id"])
+	for att in (attachment_list(comment_id, project_id) or []):
+		attachment_delete(att["id"])
 	comment_remove(comment_id)
 
 # Delete all comments and their attachments for an object
@@ -3238,8 +3248,8 @@ def delete_project_comment_attachments(project_id):
 		"select c.id from comments c join objects o on c.object=o.id where o.project=?", project_id
 	) or []
 	for c in comments:
-		for att in (mochi.attachment.list(c["id"], project_id) or []):
-			mochi.attachment.delete(att["id"])
+		for att in (attachment_list(c["id"], project_id) or []):
+			attachment_delete(att["id"])
 
 # ============================================================================
 # Person asset proxy (avatar, banner, favicon, style, information)
@@ -3395,7 +3405,7 @@ def action_comment_create(a):
 		# Save locally for optimistic UI
 		comment_merge({"id": comment_id, "object": object_id, "parent": parent, "author": a.user.identity.id, "name": a.user.identity.name, "content": content.strip(), "created": now, "edited": 0})
 		# Save attachments locally
-		attachments = mochi.attachment.save(comment_id, "files", [], [])
+		attachments = attachment_save(a, comment_id)
 		# Fire-and-forget to project owner with attachment metadata
 		submit_data = {"id": comment_id, "object": object_id, "parent": parent,
 			 "content": content.strip(), "name": a.user.identity.name}
@@ -3411,7 +3421,7 @@ def action_comment_create(a):
 			"id": comment_id, "parent": parent,
 			"author": a.user.identity.id, "name": a.user.identity.name,
 			"content": content.strip(), "created": now, "edited": 0,
-			"children": [], "attachments": mochi.attachment.list(comment_id, project_id) or [],
+			"children": [], "attachments": attachment_list(comment_id, project_id) or [],
 		}}
 
 	if not check_project_access(a.user.identity.id, project_id, "comment"):
@@ -3441,7 +3451,7 @@ def action_comment_create(a):
 
 	comment_merge({"id": comment_id, "object": object_id, "parent": parent, "author": a.user.identity.id, "name": a.user.identity.name, "content": content.strip(), "created": now, "edited": 0})
 
-	attachments = mochi.attachment.save(comment_id, "files", [], []) or []
+	attachments = attachment_save(a, comment_id) or []
 
 	object_set(object_id, {"updated": now})
 	log_activity(object_id, a.user.identity.id, "commented")
@@ -3614,28 +3624,34 @@ def serve_attachment(a, variant):
 		return
 	attachment = a.input("id")
 
-	# require_project enforced view access on the ROUTE project. Bind the
-	# attachment to an object or a comment (comment -> object -> project) in
-	# that same project, for projects we own AND for subscribed ones. Never
-	# defer to "the owning server enforces the binding when a.write.attachment
-	# fetches over P2P": that holds only until the bytes are cached locally,
-	# after which core serves them from disk and the owner is never consulted
-	# again - so without this an attachment belonging to a subscribed project
-	# whose access was later revoked stays reachable through a project the
-	# caller can still see.
-	att = mochi.attachment.get(attachment)
-	if not att:
-		a.error.label(404, "errors.attachment_not_found")
-		return
-	obj = att.get("object")
-	in_project = mochi.db.exists("select 1 from objects where id=? and project=?", obj, project_id)
-	if not in_project:
-		in_project = mochi.db.exists("select 1 from comments c join objects o on o.id=c.object where c.id=? and o.project=?", obj, project_id)
-	if not in_project:
-		a.error.label(404, "errors.attachment_not_found")
-		return
+	# require_project enforced view access on the ROUTE project. The library
+	# serves the bytes with no access check of its own; the per-attachment
+	# binding runs in the member predicate, for projects we own AND subscribed
+	# ones. Never defer to "the owner enforces access on pull": a subscribed
+	# project whose access was later revoked keeps a locally-cached copy
+	# reachable otherwise.
+	def in_project(obj):
+		if mochi.db.exists("select 1 from objects where id=? and project=?", obj, project_id):
+			return True
+		return mochi.db.exists("select 1 from comments c join objects o on o.id=c.object where c.id=? and o.project=?", obj, project_id)
 
-	a.write.attachment(attachment, variant=variant)
+	attachment_serve(a, attachment, project_id, lambda container: True, variant=variant, member=in_project)
+
+# P2P byte-pull responder. A subscriber stores an object's attachment metadata
+# (entity = the project), then pulls the bytes from the owner here on demand.
+# The project is the addressed entity; the requester must hold view access, and
+# the attachment must bind to an object or comment in that project.
+def event_attachment_fetch(e):
+	project_id = e.header("to")
+
+	def in_project(obj):
+		if mochi.db.exists("select 1 from objects where id=? and project=?", obj, project_id):
+			return True
+		return mochi.db.exists("select 1 from comments c join objects o on o.id=c.object where c.id=? and o.project=?", obj, project_id)
+
+	attachment_respond(e, project_id,
+		lambda sender, container: check_project_access(sender, container, "view"),
+		member=in_project)
 
 def action_attachment_list(a):
 
@@ -3653,7 +3669,7 @@ def action_attachment_list(a):
 		a.error.label(404, "errors.object_not_found")
 		return
 
-	attachments = mochi.attachment.list(object_id, project_id) or []
+	attachments = attachment_list(object_id, project_id) or []
 
 	return {"data": {"attachments": attachments}}
 
@@ -3680,7 +3696,7 @@ def action_attachment_create(a):
 			a.error.label(404, "errors.object_not_found")
 			return
 		# Save locally
-		attachments = mochi.attachment.save(object_id, "files", [], []) or []
+		attachments = attachment_save(a, object_id) or []
 		if not attachments:
 			a.error.label(400, "errors.file_is_required")
 			return
@@ -3705,7 +3721,7 @@ def action_attachment_create(a):
 	now = mochi.time.now()
 
 	# Save uploaded files locally
-	attachments = mochi.attachment.save(object_id, "files", [], []) or []
+	attachments = attachment_save(a, object_id) or []
 
 	if not attachments:
 		a.error.label(400, "errors.file_is_required")
@@ -3756,11 +3772,11 @@ def action_attachment_delete(a):
 			a.error.label(404, "errors.object_not_found")
 			return
 
-	if not mochi.attachment.exists(attachment_id):
+	if not attachment_exists(attachment_id):
 		a.error.label(404, "errors.attachment_not_found")
 		return
 
-	mochi.attachment.delete(attachment_id)
+	attachment_delete(attachment_id)
 
 	# Broadcast delete to subscribers
 	broadcast_event(project_id, "attachment/remove", {
@@ -5644,7 +5660,7 @@ def event_schema(e):
 		if obj["id"] in comments_map:
 			# Attach per-comment attachment metadata before nesting.
 			for c in comments_map[obj["id"]]:
-				c_atts = mochi.attachment.list(c["id"])
+				c_atts = attachment_list(c["id"])
 				if c_atts:
 					c["attachments"] = c_atts
 			obj["comments"] = comments_map[obj["id"]]
@@ -5652,7 +5668,7 @@ def event_schema(e):
 			obj["activity"] = activity_map[obj["id"]]
 		# Inline object-level attachment metadata so subscribers don't have to
 		# rely on real-time events arriving after the initial schema dump.
-		obj_atts = mochi.attachment.list(obj["id"])
+		obj_atts = attachment_list(obj["id"])
 		if obj_atts:
 			obj["attachments"] = obj_atts
 		objects.append(obj)
@@ -5736,7 +5752,7 @@ def insert_schema(project_id, schema):
 		object_merge({"id": obj.get("id", ""), "project": project_id, "class": obj.get("class", ""), "number": obj.get("number", 0), "parent": obj.get("parent", ""), "rank": obj.get("rank", 0), "created": obj.get("created", 0), "updated": obj.get("updated", 0)})
 		obj_atts = obj.get("attachments") or []
 		if obj_atts:
-			mochi.attachment.store(obj_atts, project_id, obj.get("id", ""))
+			attachment_store(obj_atts, project_id, obj.get("id", ""))
 		values = obj.get("values")
 		if values:
 			for field in values:
@@ -5748,7 +5764,7 @@ def insert_schema(project_id, schema):
 			comment_merge({"id": c.get("id", ""), "object": obj.get("id", ""), "parent": c.get("parent", ""), "author": c.get("author", ""), "name": c.get("name", ""), "content": c.get("content", ""), "created": c.get("created", ""), "edited": c.get("edited", 0)})
 			c_atts = c.get("attachments") or []
 			if c_atts:
-				mochi.attachment.store(c_atts, project_id, c.get("id", ""))
+				attachment_store(c_atts, project_id, c.get("id", ""))
 		for act in (obj.get("activity") or []):
 			# Activity is append-only; ignore is correct.
 			mochi.db.execute(
@@ -5800,11 +5816,11 @@ def insert_schema(project_id, schema):
 		remaining = {}
 		for att in (obj.get("attachments") or []):
 			remaining[att.get("id", "")] = True
-		for att in (mochi.attachment.list(identifier, project_id) or []):
+		for att in (attachment_list(identifier, project_id) or []):
 			# Only drop references to files hosted elsewhere; never this
 			# replica's own uploads (see prune_attachments).
 			if att["id"] not in remaining and att["entity"]:
-				mochi.attachment.delete(att["id"])
+				attachment_delete(att["id"])
 		for c in (obj.get("comments") or []):
 			comment_id = c.get("id", "")
 			if not comment_id or foreign_comment(comment_id, project_id):
@@ -5812,9 +5828,9 @@ def insert_schema(project_id, schema):
 			remaining = {}
 			for att in (c.get("attachments") or []):
 				remaining[att.get("id", "")] = True
-			for att in (mochi.attachment.list(comment_id, project_id) or []):
+			for att in (attachment_list(comment_id, project_id) or []):
 				if att["id"] not in remaining and att["entity"]:
-					mochi.attachment.delete(att["id"])
+					attachment_delete(att["id"])
 	class_survivors = {}
 	for c in (schema.get("classes") or []):
 		class_survivors[c.get("id", "")] = True
@@ -5948,12 +5964,12 @@ def send_project_data(project_id, subscriber_id):
 					"parent": c["parent"], "author": c["author"], "name": c["name"],
 					"content": c["content"], "created": c["created"]
 				}
-				comment_data["attachments"] = mochi.attachment.list(c["id"], project_id) or []
+				comment_data["attachments"] = attachment_list(c["id"], project_id) or []
 				comment_list.append(comment_data)
 			obj_data["comments"] = comment_list
 
 		# Object attachments
-		obj_attachments = mochi.attachment.list(obj["id"], project_id) or []
+		obj_attachments = attachment_list(obj["id"], project_id) or []
 		if obj_attachments:
 			obj_data["attachments"] = obj_attachments
 
@@ -6468,7 +6484,7 @@ def event_comment_submit(e):
 	# Store attachment metadata from the subscriber's event
 	attachments = e.content("attachments") or []
 	if attachments:
-		mochi.attachment.store(attachments, sender, comment_id)
+		attachment_store(attachments, sender, comment_id)
 	object_set(object_id, {"updated": now})
 	log_activity(object_id, sender, "commented")
 	row_merge("watchers", ["object", "user"], {"object": object_id, "user": sender, "created": now})
@@ -6512,7 +6528,7 @@ def event_attachment_submit(e):
 	# Store attachment metadata from the subscriber's event
 	attachments = e.content("attachments") or []
 	if attachments:
-		mochi.attachment.store(attachments, sender, object_id)
+		attachment_store(attachments, sender, object_id)
 	# Broadcast to other subscribers with attachment metadata
 	if attachments:
 		broadcast_event(project_id, "attachment/add", {
@@ -6533,7 +6549,7 @@ def event_attachment_add(e):
 	attachments = e.content("attachments") or []
 	# Only attach to an object that belongs to this project.
 	if attachments and object_id and mochi.db.exists("select 1 from objects where id=? and project=?", object_id, project_id):
-		mochi.attachment.store(attachments, e.header("from"), object_id)
+		attachment_store(attachments, e.header("from"), object_id)
 	fp = mochi.entity.fingerprint(project_id)
 	if fp:
 		mochi.websocket.write(fp, {"type": "attachment/create", "project": project_id, "object": object_id})
@@ -6547,14 +6563,14 @@ def event_attachment_remove(e):
 	if attachment_id:
 		# Bind the attachment to an object/comment in this project before deleting
 		# so a colliding id can't reach another project's attachment.
-		att = mochi.attachment.get(attachment_id)
+		att = attachment_get(attachment_id)
 		if att:
 			obj = att.get("object")
 			in_project = mochi.db.exists("select 1 from objects where id=? and project=?", obj, project_id)
 			if not in_project:
 				in_project = mochi.db.exists("select 1 from comments c join objects o on o.id=c.object where c.id=? and o.project=?", obj, project_id)
 			if in_project:
-				mochi.attachment.delete(attachment_id)
+				attachment_delete(attachment_id)
 	fp = mochi.entity.fingerprint(project_id)
 	if fp:
 		mochi.websocket.write(fp, {"type": "attachment/delete", "project": project_id, "attachment": attachment_id})
@@ -6576,7 +6592,7 @@ def event_comment_create(e):
 	# Store attachment metadata from the event
 	attachments = e.content("attachments") or []
 	if attachments:
-		mochi.attachment.store(attachments, e.header("from"), comment_id)
+		attachment_store(attachments, e.header("from"), comment_id)
 	fp = mochi.entity.fingerprint(project_id)
 	if fp:
 		mochi.websocket.write(fp, {"type": "comment/create", "project": project_id, "object": e.content("object")})
@@ -7447,7 +7463,7 @@ def do_comment_create(project_id, project, params, user_id, user_name):
 	# Auto-watch commenter on owner's server
 	row_merge("watchers", ["object", "user"], {"object": object_id, "user": user_id, "created": now})
 	# Include attachments in broadcast
-	comment_attachments = mochi.attachment.list(comment_id, project_id) or []
+	comment_attachments = attachment_list(comment_id, project_id) or []
 	comment_event = {
 		"project": project_id, "object": object_id, "id": comment_id,
 		"parent": parent, "author": user_id, "name": user_name,
@@ -7976,16 +7992,16 @@ def do_attachment_delete(project_id, project, params, user_id):
 	else:
 		# No object given: bind the attachment to an object/comment in this
 		# project so a member can't delete another project's attachment by id.
-		att = mochi.attachment.get(attachment_id)
+		att = attachment_get(attachment_id)
 		obj = att.get("object") if att else ""
 		in_project = mochi.db.exists("select 1 from objects where id=? and project=?", obj, project_id)
 		if not in_project:
 			in_project = mochi.db.exists("select 1 from comments c join objects o on o.id=c.object where c.id=? and o.project=?", obj, project_id)
 		if not in_project:
 			return {"error": "errors.attachment_not_found", "code": 404}
-	if not mochi.attachment.exists(attachment_id):
+	if not attachment_exists(attachment_id):
 		return {"error": "errors.attachment_not_found", "code": 404}
-	mochi.attachment.delete(attachment_id)
+	attachment_delete(attachment_id)
 	broadcast_event(project_id, "attachment/remove", {
 		"project": project_id, "attachment": attachment_id
 	})

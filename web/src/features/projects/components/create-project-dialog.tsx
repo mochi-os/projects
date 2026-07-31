@@ -43,6 +43,7 @@ export function CreateProjectDialog({
   const [allowSearch, setAllowSearch] = useState(true);
   const [importData, setImportData] = useState<Record<string, unknown> | null>(null);
   const [importFile, setImportFile] = useState<File | null>(null);
+  const [importArchive, setImportArchive] = useState(false);
   const [importFileName, setImportFileName] = useState("");
   const fileInputRef = useRef<HTMLInputElement>(null);
   const prefixDirty = useRef(false);
@@ -123,7 +124,26 @@ export function CreateProjectDialog({
 
       const fingerprint = response.data?.fingerprint;
 
-      if (fingerprint && importData && importFile) {
+      if (fingerprint && importArchive && importFile) {
+        // The archive restores design and data together, so there is no
+        // separate design pass and nothing to decide from client-side parsing.
+        try {
+          await toastAction(
+            upload((onProgress) =>
+              projectsApi.importData(fingerprint, importFile, onProgress, true),
+            ),
+            {
+              loading: t`Importing data...`,
+              success: (imported) =>
+                t`Data imported (${plural(imported.data?.objects ?? 0, { one: '# object', other: '# objects' })}, ${plural(imported.data?.comments ?? 0, { one: '# comment', other: '# comments' })}, ${plural(imported.data?.links ?? 0, { one: '# link', other: '# links' })})`,
+              error: (e) => getErrorMessage(e, t`Failed to import data`),
+            }
+          );
+        } catch (e) {
+          await projectsApi.delete(fingerprint).catch(() => {});
+          throw e;
+        }
+      } else if (fingerprint && importData && importFile) {
         // A design-only backup (an empty project) has nothing for
         // data/import, which rejects an empty payload — skip the call
         // rather than fail and roll the new project back.
@@ -188,6 +208,18 @@ export function CreateProjectDialog({
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
+
+    // A container backup keeps its attachments as archive entries rather than
+    // base64 in JSON, so there is nothing here to parse: the server reads the
+    // manifest out of the archive and applies the design it carries.
+    if (file.name.toLowerCase().endsWith(".zip")) {
+      setImportArchive(true);
+      setImportData(null);
+      setImportFile(file);
+      setImportFileName(file.name);
+      return;
+    }
+    setImportArchive(false);
 
     const reader = new FileReader();
     reader.onload = () => {
@@ -355,7 +387,7 @@ export function CreateProjectDialog({
               <input
                 ref={fileInputRef}
                 type="file"
-                accept=".json"
+                accept=".zip,.json"
                 onChange={handleFileChange}
                 className="hidden"
               />

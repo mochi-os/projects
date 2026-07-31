@@ -7,7 +7,7 @@ import { useEffect, useRef, useState, useMemo } from "react";
 import { Trans, useLingui } from '@lingui/react/macro'
 import { plural } from '@lingui/core/macro'
 import { useNavigate } from "@tanstack/react-router";
-import { Button, cn, getErrorMessage, Input, Label, naturalCompare, ResponsiveDialog, ResponsiveDialogContent, ResponsiveDialogDescription, ResponsiveDialogFooter, ResponsiveDialogHeader, ResponsiveDialogTitle, ResponsiveDialogTrigger, Switch, toast, toastAction, Attachment, AttachmentMedia, AttachmentContent, AttachmentTitle, AttachmentAction, Tooltip, TooltipContent, TooltipTrigger } from "@mochi/web"
+import { Button, cn, getErrorMessage, Input, Label, naturalCompare, ResponsiveDialog, ResponsiveDialogContent, ResponsiveDialogDescription, ResponsiveDialogFooter, ResponsiveDialogHeader, ResponsiveDialogTitle, ResponsiveDialogTrigger, Switch, toast, toastAction, Attachment, AttachmentMedia, AttachmentContent, AttachmentTitle, AttachmentAction, Tooltip, TooltipContent, TooltipTrigger, UploadProgress, useUploadProgress } from "@mochi/web"
 import { ArrowLeft, ArrowRight, Check, File, FolderKanban, LayoutGrid, Plus, Ticket, Upload, Zap, X } from "lucide-react";
 import projectsApi from "@/api/projects";
 import { useProjectsStore } from "@/stores/projects-store";
@@ -48,6 +48,7 @@ export function CreateProjectDialog({
   const prefixDirty = useRef(false);
   const navigate = useNavigate();
   const refreshProjects = useProjectsStore((state) => state.refresh);
+  const { progress: importProgress, upload } = useUploadProgress();
 
   // Load templates when dialog opens
   useEffect(() => {
@@ -136,7 +137,9 @@ export function CreateProjectDialog({
                 if (importDesign) {
                   await projectsApi.importDesign(fingerprint, importDesign);
                 }
-                return importHasData ? projectsApi.importData(fingerprint, importFile) : null;
+                return importHasData
+                  ? upload((onProgress) => projectsApi.importData(fingerprint, importFile, onProgress))
+                  : null;
               })(),
               {
                 loading: t`Importing data...`,
@@ -398,6 +401,7 @@ export function CreateProjectDialog({
               )}
             </div>
 
+            <UploadProgress progress={importProgress} className="mt-4" />
             <ResponsiveDialogFooter className="mt-6">
               <Button
                 type="button"
@@ -485,6 +489,7 @@ export function CreateProjectDialog({
             </div>
 
 
+            <UploadProgress progress={importProgress} className="mt-4" />
             <ResponsiveDialogFooter className="mt-6">
               <Button
                 type="button"

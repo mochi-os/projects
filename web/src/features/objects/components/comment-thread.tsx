@@ -30,6 +30,8 @@ import {
   offlineBlocked,
   useComposerDrop,
   useDiscardGuard,
+  UploadProgress,
+  type Upload,
 } from "@mochi/web";
 import type { Comment } from "@/types";
 import { CommentAttachments } from "./comment-attachments";
@@ -54,6 +56,8 @@ interface CommentThreadProps {
    * replied to, so the list can warn before a switch throws them away. */
   onReplyFilesChange?: (count: number) => void;
   onSubmitReply: (commentId: string, files?: File[]) => void | Promise<void>;
+  /** Byte progress of the reply upload, when the caller tracks it */
+  uploadProgress?: Upload | null;
   onEdit: (commentId: string, content: string) => void;
   onDelete: (commentId: string) => void;
   people?: Person[];
@@ -72,6 +76,7 @@ export function CommentThread({
   onReplyDraftChange,
   onReplyFilesChange,
   onSubmitReply,
+  uploadProgress,
   onEdit,
   onDelete,
   people = [],
@@ -352,6 +357,9 @@ export function CommentThread({
               replyDraft.trim() ? () => void handleSubmitReply() : undefined
             }
           />
+          {isSubmittingReply && (
+            <UploadProgress progress={uploadProgress ?? null} />
+          )}
           <div className="flex items-center justify-end gap-2">
             <SendShortcutHint />
             <input
@@ -449,6 +457,7 @@ export function CommentThread({
           onReplyDraftChange={onReplyDraftChange}
           onReplyFilesChange={onReplyFilesChange}
           onSubmitReply={onSubmitReply}
+          uploadProgress={uploadProgress}
           onEdit={onEdit}
           onDelete={onDelete}
           people={people}

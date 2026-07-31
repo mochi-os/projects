@@ -16,13 +16,13 @@ msgstr ""
 #. js-lingui-explicit-id
 #: ../../../lib/web/src/lib/error-normalizer.ts:204
 msgid "Please check your internet connection and try again."
-msgstr "인터넷 연결을 확인하고 다시 시도하세요."
+msgstr ""
 
-#: src/features/objects/components/comment-thread.tsx:214
+#: src/features/objects/components/comment-thread.tsx:219
 msgid "(edited)"
 msgstr "(편집됨)"
 
-#: src/features/objects/components/comment-thread.tsx:198
+#: src/features/objects/components/comment-thread.tsx:203
 msgid "(expand)"
 msgstr "(확장)"
 
@@ -87,7 +87,7 @@ msgstr "{entityLabel} 이름은 필수입니다"
 
 #: ../../../lib/web/src/components/game/game-draw-offer-banner.tsx:29
 msgid "{opponentName} offered a draw"
-msgstr ""
+msgstr "{opponentName}이(가) 무승부를 제안했습니다"
 
 #: ../../../lib/web/src/components/data-table/bulk-actions.tsx:210
 msgid "{selectedCount, plural, one {{entityName} selected} other {{manyName} selected}}"
@@ -104,6 +104,10 @@ msgstr "{selectedCount, plural, one {# 개 선택됨} other {# 개 선택됨}}"
 #: ../../../lib/web/src/components/data-table/bulk-actions.tsx:149
 msgid "{selectedCount, plural, one {Bulk actions for # selected {entityName}} other {Bulk actions for # selected {manyName}}}"
 msgstr "{selectedCount, plural, one {선택된 {entityName} # 개에 대한 일괄 작업} other {선택된 {manyName} # 개에 대한 일괄 작업}}"
+
+#: ../../../lib/web/src/components/ui/upload-progress.tsx:52
+msgid "{sentLabel} of {totalLabel}"
+msgstr "{totalLabel} 중 {sentLabel}"
 
 #: src/features/board/components/board-column.tsx:522
 msgid "{totalCount, plural, one {# item} other {# items}}"
@@ -123,11 +127,11 @@ msgstr "+{0}개 앞섬"
 msgid "+{0} nested"
 msgstr "+{0}개 중첩"
 
-#: src/features/objects/components/comment-thread.tsx:195
+#: src/features/objects/components/comment-thread.tsx:200
 msgid "+{totalDescendants} more replies"
 msgstr "답글 +{totalDescendants}개"
 
-#: src/features/objects/components/comment-thread.tsx:194
+#: src/features/objects/components/comment-thread.tsx:199
 msgid "1 reply"
 msgstr "답글 1개"
 
@@ -145,7 +149,7 @@ msgstr "절대값 (날짜 및 시간)"
 
 #: ../../../lib/web/src/components/game/game-draw-offer-banner.tsx:45
 msgid "Accept"
-msgstr ""
+msgstr "수락"
 
 #: src/routes/_authenticated/$projectId_.settings.tsx:77
 msgid "Access"
@@ -206,7 +210,7 @@ msgstr "활동"
 msgid "Add"
 msgstr "추가"
 
-#: src/features/objects/components/comment-list.tsx:320
+#: src/features/objects/components/comment-list.tsx:335
 msgid "Add a comment..."
 msgstr "댓글 추가..."
 
@@ -321,7 +325,7 @@ msgstr "모든 프로젝트"
 msgid "Allow anyone to search for {0}"
 msgstr "누구나 {0}을(를) 검색할 수 있도록 허용"
 
-#: src/features/projects/components/create-project-dialog.tsx:341
+#: src/features/projects/components/create-project-dialog.tsx:344
 msgid "Allow anyone to search for project"
 msgstr "누구나 프로젝트를 검색할 수 있도록 허용"
 
@@ -355,7 +359,7 @@ msgid "Anyone who is logged in"
 msgstr "로그인한 모든 사람"
 
 #. placeholder {0}: deleteTarget?.name
-#: src/features/objects/components/object-attachments.tsx:249
+#: src/features/objects/components/object-attachments.tsx:255
 msgid "Are you sure you want to delete \"{0}\"?"
 msgstr "\"{0}\"을(를) 삭제할까요?"
 
@@ -367,7 +371,7 @@ msgstr "\"{title}\"을(를) 삭제할까요? 이 작업은 되돌릴 수 없어�
 msgid "Are you sure you want to delete the \"{name}\" column? This cannot be undone."
 msgstr "\"{name}\" 컬럼을 삭제할까요? 이 작업은 되돌릴 수 없어요."
 
-#: src/features/objects/components/comment-thread.tsx:424
+#: src/features/objects/components/comment-thread.tsx:432
 msgid "Are you sure you want to delete this comment? This will also delete all replies."
 msgstr "이 댓글을 삭제할까요? 모든 답글도 함께 삭제돼요."
 
@@ -391,13 +395,13 @@ msgstr "오름차순"
 msgid "Ascending"
 msgstr "오름차순"
 
-#: src/features/objects/components/comment-list.tsx:357
-#: src/features/objects/components/comment-list.tsx:362
+#: src/features/objects/components/comment-list.tsx:373
+#: src/features/objects/components/comment-list.tsx:378
 msgid "Attach comment files"
 msgstr "댓글 파일 첨부"
 
-#: src/features/objects/components/comment-thread.tsx:378
-#: src/features/objects/components/comment-thread.tsx:383
+#: src/features/objects/components/comment-thread.tsx:386
+#: src/features/objects/components/comment-thread.tsx:391
 msgid "Attach reply files"
 msgstr "답글 파일 첨부"
 
@@ -423,7 +427,7 @@ msgid "Avatar for {name}"
 msgstr "{name}의 아바타"
 
 #: ../../../lib/web/src/components/place-picker.tsx:156
-#: src/features/projects/components/create-project-dialog.tsx:495
+#: src/features/projects/components/create-project-dialog.tsx:500
 msgid "Back"
 msgstr "뒤로"
 
@@ -499,20 +503,20 @@ msgstr "다음의 하위가 될 수 있음"
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:91
 #: src/features/board/components/board-column.tsx:606
 #: src/features/editor/components/option-dialog.tsx:146
-#: src/features/objects/components/comment-thread.tsx:235
-#: src/features/projects/components/create-project-dialog.tsx:407
+#: src/features/objects/components/comment-thread.tsx:240
+#: src/features/projects/components/create-project-dialog.tsx:411
 #: src/routes/_authenticated/$projectId/design.tsx:344
 #: src/routes/_authenticated/$projectId/index.tsx:1039
 msgid "Cancel"
 msgstr "취소"
 
-#: src/features/objects/components/comment-list.tsx:374
-#: src/features/objects/components/comment-list.tsx:379
+#: src/features/objects/components/comment-list.tsx:390
+#: src/features/objects/components/comment-list.tsx:395
 msgid "Cancel comment"
 msgstr "댓글 취소"
 
-#: src/features/objects/components/comment-thread.tsx:394
-#: src/features/objects/components/comment-thread.tsx:399
+#: src/features/objects/components/comment-thread.tsx:402
+#: src/features/objects/components/comment-thread.tsx:407
 msgid "Cancel reply"
 msgstr "답글 취소"
 
@@ -547,9 +551,9 @@ msgstr "체크리스트"
 
 #: ../../../lib/web/src/components/game/game-empty-state.tsx:38
 msgid "Choose a game from the sidebar or start a new one."
-msgstr ""
+msgstr "사이드바에서 게임을 선택하거나 새로 시작하세요."
 
-#: src/features/projects/components/create-project-dialog.tsx:288
+#: src/features/projects/components/create-project-dialog.tsx:291
 msgid "Choose a template"
 msgstr "템플릿 선택"
 
@@ -613,8 +617,8 @@ msgstr "선택 해제 (Escape)"
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:358
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:361
 #: ../../../lib/web/src/components/ui/sheet.tsx:79
-#: src/features/objects/components/create-object-dialog.tsx:419
 #: src/features/objects/components/create-object-dialog.tsx:424
+#: src/features/objects/components/create-object-dialog.tsx:429
 msgid "Close"
 msgstr "닫기"
 
@@ -769,8 +773,8 @@ msgstr "해당 계정으로 인증하지 못했습니다. 다시 시도해 주�
 
 #: src/features/board/components/board-column.tsx:542
 #: src/features/board/components/board-column.tsx:681
-#: src/features/objects/components/create-object-dialog.tsx:409
-#: src/features/objects/components/create-object-dialog.tsx:579
+#: src/features/objects/components/create-object-dialog.tsx:414
+#: src/features/objects/components/create-object-dialog.tsx:585
 #: src/features/tree/components/tree-view.tsx:697
 msgid "Create"
 msgstr "생성"
@@ -780,25 +784,25 @@ msgstr "생성"
 msgid "Create {0}"
 msgstr "{0} 만들기"
 
-#: src/features/objects/components/create-object-dialog.tsx:387
+#: src/features/objects/components/create-object-dialog.tsx:392
 msgid "Create a new item in this project"
 msgstr "이 프로젝트에 새 항목 생성"
 
-#: src/features/projects/components/create-project-dialog.tsx:290
+#: src/features/projects/components/create-project-dialog.tsx:293
 #: src/features/projects/pages/projects-list-page.tsx:103
 msgid "Create a new project"
 msgstr "새 프로젝트 생성"
 
 #: ../../../lib/web/src/components/entity/keyboard-shortcuts-help.tsx:25
-#: src/features/objects/components/create-object-dialog.tsx:386
+#: src/features/objects/components/create-object-dialog.tsx:391
 msgid "Create new item"
 msgstr "새 항목 생성"
 
 #: src/components/layout/projects-layout.tsx:62
-#: src/features/projects/components/create-project-dialog.tsx:278
-#: src/features/projects/components/create-project-dialog.tsx:288
-#: src/features/projects/components/create-project-dialog.tsx:411
-#: src/features/projects/components/create-project-dialog.tsx:498
+#: src/features/projects/components/create-project-dialog.tsx:281
+#: src/features/projects/components/create-project-dialog.tsx:291
+#: src/features/projects/components/create-project-dialog.tsx:415
+#: src/features/projects/components/create-project-dialog.tsx:503
 msgid "Create project"
 msgstr "프로젝트 생성"
 
@@ -811,14 +815,14 @@ msgstr "생성, 편집, 댓글 및 보기"
 msgid "Created"
 msgstr "생성됨"
 
-#: src/features/projects/components/create-project-dialog.tsx:117
+#: src/features/projects/components/create-project-dialog.tsx:118
 msgid "Creating project..."
 msgstr "프로젝트 생성 중..."
 
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:258
-#: src/features/objects/components/create-object-dialog.tsx:579
-#: src/features/projects/components/create-project-dialog.tsx:411
-#: src/features/projects/components/create-project-dialog.tsx:498
+#: src/features/objects/components/create-object-dialog.tsx:585
+#: src/features/projects/components/create-project-dialog.tsx:415
+#: src/features/projects/components/create-project-dialog.tsx:503
 msgid "Creating..."
 msgstr "생성 중..."
 
@@ -851,7 +855,7 @@ msgstr "데이터 충돌"
 #. placeholder {0}: imported.data?.objects ?? 0
 #. placeholder {1}: imported.data?.comments ?? 0
 #. placeholder {2}: imported.data?.links ?? 0
-#: src/features/projects/components/create-project-dialog.tsx:145
+#: src/features/projects/components/create-project-dialog.tsx:148
 msgid "Data imported ({0, plural, one {# object} other {# objects}}, {1, plural, one {# comment} other {# comments}}, {2, plural, one {# link} other {# links}})"
 msgstr "데이터를 가져왔습니다({0, plural, other {개체 #개}}, {1, plural, other {댓글 #개}}, {2, plural, other {링크 #개}})"
 
@@ -861,7 +865,7 @@ msgstr "날짜"
 
 #: ../../../lib/web/src/components/game/game-draw-offer-banner.tsx:41
 msgid "Decline"
-msgstr ""
+msgstr "거절"
 
 #: ../../../lib/web/src/components/config-drawer.tsx:311
 msgid "Default"
@@ -877,19 +881,19 @@ msgstr "기본 정렬"
 
 #: src/features/board/components/board-column.tsx:561
 #: src/features/board/components/board-column.tsx:622
-#: src/features/objects/components/comment-thread.tsx:304
-#: src/features/objects/components/comment-thread.tsx:425
-#: src/features/objects/components/object-attachments.tsx:152
+#: src/features/objects/components/comment-thread.tsx:309
+#: src/features/objects/components/comment-thread.tsx:433
 #: src/features/objects/components/object-attachments.tsx:157
-#: src/features/objects/components/object-attachments.tsx:206
-#: src/features/objects/components/object-attachments.tsx:250
+#: src/features/objects/components/object-attachments.tsx:162
+#: src/features/objects/components/object-attachments.tsx:211
+#: src/features/objects/components/object-attachments.tsx:256
 #: src/features/objects/components/object-detail-panel.tsx:636
 #: src/features/requests/components/request-panel.tsx:132
 #: src/routes/_authenticated/$projectId_.settings.tsx:357
 msgid "Delete"
 msgstr "삭제"
 
-#: src/features/objects/components/object-attachments.tsx:248
+#: src/features/objects/components/object-attachments.tsx:254
 msgid "Delete attachment"
 msgstr "첨부 파일 삭제"
 
@@ -901,7 +905,7 @@ msgstr "클래스 삭제"
 msgid "Delete column"
 msgstr "컬럼 삭제"
 
-#: src/features/objects/components/comment-thread.tsx:423
+#: src/features/objects/components/comment-thread.tsx:431
 msgid "Delete comment"
 msgstr "댓글 삭제"
 
@@ -948,7 +952,7 @@ msgstr "프로젝트를 삭제할까요?"
 msgid "Delete view"
 msgstr "뷰 삭제"
 
-#: ../../../lib/web/src/components/restore-banner.tsx:99
+#: ../../../lib/web/src/components/restore-banner.tsx:115
 msgid "Delete your account on the old server"
 msgstr "이전 서버에서 계정 삭제"
 
@@ -976,7 +980,7 @@ msgstr "설명"
 msgid "Design"
 msgstr "디자인"
 
-#: src/features/projects/components/create-project-dialog.tsx:146
+#: src/features/projects/components/create-project-dialog.tsx:149
 #: src/routes/_authenticated/$projectId/design.tsx:109
 msgid "Design imported"
 msgstr "디자인을 가져왔어요"
@@ -1029,8 +1033,8 @@ msgstr "초안을 버릴까요?"
 msgid "Disconnected"
 msgstr "연결 끊김"
 
-#: ../../../lib/web/src/components/restore-banner.tsx:79
-#: ../../../lib/web/src/components/restore-banner.tsx:85
+#: ../../../lib/web/src/components/restore-banner.tsx:94
+#: ../../../lib/web/src/components/restore-banner.tsx:100
 msgid "Dismiss"
 msgstr "닫기"
 
@@ -1056,7 +1060,7 @@ msgstr "열을 두 번 클릭하여 내용을 추가하세요"
 
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:342
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:352
-#: src/features/objects/components/object-attachments.tsx:193
+#: src/features/objects/components/object-attachments.tsx:198
 msgid "Download"
 msgstr "다운로드"
 
@@ -1090,7 +1094,7 @@ msgstr "중복"
 msgid "Dyslexia-friendly"
 msgstr "난독증 친화적"
 
-#: src/features/objects/components/comment-thread.tsx:293
+#: src/features/objects/components/comment-thread.tsx:298
 msgid "Edit"
 msgstr "편집"
 
@@ -1204,6 +1208,7 @@ msgstr "클래스 생성에 실패했어요"
 msgid "Failed to create field"
 msgstr "필드 생성에 실패했어요"
 
+#: ../../../lib/web/src/components/options-menu.tsx:99
 #: src/features/objects/components/object-links.tsx:105
 #: src/routes/_authenticated/$projectId/index.tsx:190
 msgid "Failed to create link"
@@ -1213,7 +1218,7 @@ msgstr "링크 생성에 실패했어요"
 msgid "Failed to create option"
 msgstr "옵션 생성에 실패했어요"
 
-#: src/features/projects/components/create-project-dialog.tsx:119
+#: src/features/projects/components/create-project-dialog.tsx:120
 msgid "Failed to create project"
 msgstr "프로젝트 생성에 실패했어요"
 
@@ -1221,11 +1226,11 @@ msgstr "프로젝트 생성에 실패했어요"
 msgid "Failed to create view"
 msgstr "뷰 생성에 실패했어요"
 
-#: src/features/objects/components/object-attachments.tsx:89
+#: src/features/objects/components/object-attachments.tsx:94
 msgid "Failed to delete attachment"
 msgstr "첨부 파일 삭제에 실패했어요"
 
-#: src/features/objects/components/comment-list.tsx:167
+#: src/features/objects/components/comment-list.tsx:182
 msgid "Failed to delete comment"
 msgstr "댓글 삭제에 실패했어요"
 
@@ -1251,7 +1256,11 @@ msgstr "데이터를 내보내지 못했습니다"
 msgid "Failed to export design"
 msgstr "디자인 내보내기에 실패했어요"
 
-#: src/features/projects/components/create-project-dialog.tsx:147
+#: ../../../lib/web/src/components/options-menu.tsx:123
+msgid "Failed to get RSS token"
+msgstr ""
+
+#: src/features/projects/components/create-project-dialog.tsx:150
 msgid "Failed to import data"
 msgstr "데이터를 가져오지 못했습니다"
 
@@ -1262,6 +1271,10 @@ msgstr "디자인 가져오기에 실패했어요"
 #: ../../../lib/web/src/hooks/use-load-more.ts:74
 msgid "Failed to load"
 msgstr "불러오기에 실패했어요"
+
+#: ../../../lib/web/src/components/audit-timeline.tsx:81
+msgid "Failed to load history"
+msgstr ""
 
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:263
 msgid "Failed to load image"
@@ -1293,11 +1306,11 @@ msgstr "동영상을 불러오지 못했어요"
 msgid "Failed to merge"
 msgstr "병합에 실패했어요"
 
-#: src/features/objects/components/comment-list.tsx:130
+#: src/features/objects/components/comment-list.tsx:145
 msgid "Failed to post comment"
 msgstr "댓글 게시에 실패했어요"
 
-#: src/features/projects/components/create-project-dialog.tsx:215
+#: src/features/projects/components/create-project-dialog.tsx:218
 #: src/routes/_authenticated/$projectId/design.tsx:282
 msgid "Failed to read file"
 msgstr "파일 읽기에 실패했어요"
@@ -1317,6 +1330,10 @@ msgstr "필드 순서 변경에 실패했어요"
 #: src/features/editor/components/design-editor.tsx:350
 msgid "Failed to reorder views"
 msgstr "뷰 순서 변경에 실패했어요"
+
+#: ../../../lib/web/src/components/options-menu.tsx:133
+msgid "Failed to revoke RSS access"
+msgstr ""
 
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:257
 msgid "Failed to send verification code"
@@ -1345,7 +1362,7 @@ msgstr "접근 레벨 업데이트에 실패했어요"
 msgid "Failed to update category"
 msgstr "카테고리 업데이트에 실패했어요"
 
-#: src/features/objects/components/comment-list.tsx:150
+#: src/features/objects/components/comment-list.tsx:165
 msgid "Failed to update comment"
 msgstr "댓글 업데이트에 실패했어요"
 
@@ -1357,7 +1374,7 @@ msgstr "필드 업데이트에 실패했어요"
 msgid "Failed to update project"
 msgstr "프로젝트 업데이트에 실패했어요"
 
-#: src/features/objects/components/object-attachments.tsx:74
+#: src/features/objects/components/object-attachments.tsx:79
 msgid "Failed to upload attachment"
 msgstr "첨부 파일 업로드에 실패했어요"
 
@@ -1365,9 +1382,9 @@ msgstr "첨부 파일 업로드에 실패했어요"
 msgid "Fields"
 msgstr "필드"
 
-#: src/features/objects/components/create-object-dialog.tsx:500
-#: src/features/objects/components/object-attachments.tsx:112
-#: src/features/objects/components/object-attachments.tsx:129
+#: src/features/objects/components/create-object-dialog.tsx:505
+#: src/features/objects/components/object-attachments.tsx:117
+#: src/features/objects/components/object-attachments.tsx:134
 msgid "Files"
 msgstr "파일"
 
@@ -1384,7 +1401,7 @@ msgstr "프로젝트 찾기"
 msgid "Fingerprint"
 msgstr "지문"
 
-#: ../../../lib/web/src/components/restore-banner.tsx:88
+#: ../../../lib/web/src/components/restore-banner.tsx:103
 msgid "Finish moving your account"
 msgstr "계정 이전 완료"
 
@@ -1476,6 +1493,10 @@ msgstr "숨기기"
 msgid "Hide password"
 msgstr "비밀번호 숨기기"
 
+#: ../../../lib/web/src/components/audit-timeline.tsx:64
+msgid "History"
+msgstr ""
+
 #: ../../../lib/web/src/components/layout/app-sidebar.tsx:90
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx:158
 #: ../../../lib/web/src/components/layout/top-bar.tsx:71
@@ -1510,11 +1531,11 @@ msgstr "야드파운드법"
 msgid "Import design"
 msgstr "디자인 가져오기"
 
-#: src/features/projects/components/create-project-dialog.tsx:351
+#: src/features/projects/components/create-project-dialog.tsx:354
 msgid "Import from backup (optional)"
 msgstr "백업에서 가져오기 (선택 사항)"
 
-#: src/features/projects/components/create-project-dialog.tsx:142
+#: src/features/projects/components/create-project-dialog.tsx:145
 msgid "Importing data..."
 msgstr "데이터 가져오는 중..."
 
@@ -1542,7 +1563,7 @@ msgstr "관심사"
 msgid "Invalid date"
 msgstr "잘못된 날짜"
 
-#: src/features/projects/components/create-project-dialog.tsx:208
+#: src/features/projects/components/create-project-dialog.tsx:211
 #: src/routes/_authenticated/$projectId/design.tsx:278
 msgid "Invalid JSON file"
 msgstr "잘못된 JSON 파일"
@@ -1600,6 +1621,7 @@ msgstr "문자, 숫자, 공백, 하이픈만 가능해요"
 msgid "Light"
 msgstr "라이트"
 
+#: ../../../lib/web/src/components/options-menu.tsx:190
 #: src/routes/_authenticated/$projectId/index.tsx:983
 msgid "Link"
 msgstr "링크"
@@ -1632,7 +1654,7 @@ msgstr "항목 로딩 중"
 msgid "Loading item details"
 msgstr "항목 세부 정보 로딩 중"
 
-#: src/features/projects/components/create-project-dialog.tsx:432
+#: src/features/projects/components/create-project-dialog.tsx:436
 msgid "Loading templates..."
 msgstr "템플릿 로딩 중..."
 
@@ -1728,7 +1750,7 @@ msgstr "머지 중..."
 
 #: ../../../lib/web/src/components/game/game-chat-input.tsx:35
 msgid "Message"
-msgstr ""
+msgstr "메시지"
 
 #: ../../../lib/web/src/lib/preference-utils.ts:85
 msgid "Metric"
@@ -1746,11 +1768,20 @@ msgstr "리포지토리, 소스 또는 대상 매개변수가 누락되었어요
 msgid "Mochi web"
 msgstr "Mochi 웹"
 
+#: ../../../lib/web/src/components/options-menu.tsx:164
+msgid "Moderation"
+msgstr ""
+
 #: ../../../lib/web/src/lib/preference-utils.ts:59
 msgid "Monday"
 msgstr "월요일"
 
-#: src/features/projects/components/create-project-dialog.tsx:306
+#: ../../../lib/web/src/components/options-menu.tsx:145
+#: ../../../lib/web/src/components/options-menu.tsx:152
+msgid "More options"
+msgstr ""
+
+#: src/features/projects/components/create-project-dialog.tsx:309
 msgid "My project"
 msgstr "내 프로젝트"
 
@@ -1760,7 +1791,7 @@ msgstr "내 프로젝트"
 #: src/features/editor/components/edit-dialogs.tsx:741
 #: src/features/editor/components/edit-dialogs.tsx:1065
 #: src/features/editor/components/option-dialog.tsx:112
-#: src/features/projects/components/create-project-dialog.tsx:296
+#: src/features/projects/components/create-project-dialog.tsx:299
 #: src/routes/_authenticated/$projectId_.settings.tsx:301
 msgid "Name"
 msgstr "이름"
@@ -1769,7 +1800,7 @@ msgstr "이름"
 msgid "Name cannot contain angle brackets, backslash, semicolon, quotes or backticks"
 msgstr "이름에는 꺾쇠괄호, 백슬래시, 세미콜론, 따옴표, 백틱을 사용할 수 없습니다"
 
-#: src/features/projects/components/create-project-dialog.tsx:87
+#: src/features/projects/components/create-project-dialog.tsx:88
 msgid "Name is required"
 msgstr "이름은 필수예요"
 
@@ -1783,7 +1814,7 @@ msgid "Network error"
 msgstr "네트워크 오류"
 
 #: ../../../lib/web/src/components/ui/sort-selector.tsx:43
-#: src/features/objects/components/create-object-dialog.tsx:394
+#: src/features/objects/components/create-object-dialog.tsx:399
 #: src/routes/_authenticated/$projectId/index.tsx:920
 #: src/routes/_authenticated/$projectId/index.tsx:938
 msgid "New"
@@ -1796,9 +1827,9 @@ msgstr "새 {className}"
 #: ../../../lib/web/src/components/game/game-empty-state.tsx:42
 #: ../../../lib/web/src/components/game/game-empty-state.tsx:54
 msgid "New game"
-msgstr ""
+msgstr "새 게임"
 
-#: src/features/projects/components/create-project-dialog.tsx:413
+#: src/features/projects/components/create-project-dialog.tsx:417
 msgid "Next"
 msgstr "다음"
 
@@ -1807,7 +1838,7 @@ msgstr "다음"
 msgid "Next image"
 msgstr "다음 이미지"
 
-#: src/features/objects/components/create-object-dialog.tsx:467
+#: src/features/objects/components/create-object-dialog.tsx:472
 msgid "No {parentClassNames} to add to"
 msgstr "추가할 {parentClassNames}이(가) 없음"
 
@@ -1839,7 +1870,7 @@ msgstr "표시할 변경 사항이 없어요"
 msgid "No changes were found for the selected comparison."
 msgstr "선택한 비교에서 변경 사항을 찾을 수 없어요."
 
-#: src/features/objects/components/comment-list.tsx:409
+#: src/features/objects/components/comment-list.tsx:425
 msgid "No comments yet"
 msgstr "아직 댓글이 없어요"
 
@@ -1853,13 +1884,13 @@ msgstr "이용 가능한 diff가 없어요"
 
 #: ../../../lib/web/src/components/game/game-empty-state.tsx:51
 msgid "No games yet"
-msgstr ""
+msgstr "아직 게임이 없어요"
 
 #: ../../../lib/web/src/features/access/access-dialog.tsx:241
 msgid "No groups available"
 msgstr "이용 가능한 그룹이 없어요"
 
-#: src/features/objects/components/create-object-dialog.tsx:434
+#: src/features/objects/components/create-object-dialog.tsx:439
 msgid "No item types can be created yet. Create the required parent items first."
 msgstr "아직 항목 유형을 만들 수 없어요. 먼저 필요한 상위 항목을 만들어 주세요."
 
@@ -1942,8 +1973,8 @@ msgstr "조회수가 없어요"
 #: src/features/editor/components/edit-dialogs.tsx:505
 #: src/features/editor/components/edit-dialogs.tsx:779
 #: src/features/editor/components/edit-dialogs.tsx:782
-#: src/features/objects/components/create-object-dialog.tsx:450
-#: src/features/objects/components/create-object-dialog.tsx:457
+#: src/features/objects/components/create-object-dialog.tsx:455
+#: src/features/objects/components/create-object-dialog.tsx:462
 #: src/features/objects/components/object-detail-panel.tsx:530
 #: src/features/objects/components/object-detail-panel.tsx:543
 #: src/features/objects/components/object-detail-panel.tsx:548
@@ -2096,7 +2127,7 @@ msgstr "소유자"
 msgid "Page {currentPage} of {totalPages}"
 msgstr "{totalPages}페이지 중 {currentPage}페이지"
 
-#: src/features/objects/components/create-object-dialog.tsx:442
+#: src/features/objects/components/create-object-dialog.tsx:447
 #: src/features/objects/components/object-detail-panel.tsx:526
 msgid "Parent"
 msgstr "상위"
@@ -2109,7 +2140,7 @@ msgstr "패스키"
 msgid "Passkey verification failed. Please try again."
 msgstr "패스키 인증에 실패했습니다. 다시 시도해 주세요."
 
-#: ../../../lib/web/src/components/restore-banner.tsx:135
+#: ../../../lib/web/src/components/restore-banner.tsx:152
 msgid "Passkeys"
 msgstr "패스키"
 
@@ -2136,7 +2167,7 @@ msgstr "인터넷 연결을 확인하고 다시 시도하세요."
 msgid "Please log in with the appropriate credentials <0/> to access this resource."
 msgstr "이 리소스에 접근하려면 <0/> 적절한 자격 증명으로 로그인해 주세요."
 
-#: src/features/projects/components/create-project-dialog.tsx:103
+#: src/features/projects/components/create-project-dialog.tsx:104
 msgid "Please select a template"
 msgstr "템플릿을 선택해 주세요"
 
@@ -2148,7 +2179,15 @@ msgstr "다시 시도해 주세요."
 msgid "Please wait a moment and try again."
 msgstr "잠시 후 다시 시도해 주세요."
 
-#: src/features/projects/components/create-project-dialog.tsx:318
+#: ../../../lib/web/src/components/options-menu.tsx:175
+msgid "Posts"
+msgstr ""
+
+#: ../../../lib/web/src/components/options-menu.tsx:178
+msgid "Posts and comments"
+msgstr ""
+
+#: src/features/projects/components/create-project-dialog.tsx:321
 #: src/routes/_authenticated/$projectId_.settings.tsx:318
 msgid "Prefix"
 msgstr "접두어"
@@ -2162,6 +2201,10 @@ msgstr "이전 이미지"
 #: ../../../lib/web/src/features/document/document-page.tsx:44
 msgid "Privacy"
 msgstr "개인정보"
+
+#: ../../../lib/web/src/components/ui/upload-progress.tsx:50
+msgid "Processing…"
+msgstr "처리 중…"
 
 #: ../../../lib/web/src/components/layout/nav-user.tsx:137
 #: ../../../lib/web/src/components/profile-dropdown.tsx:114
@@ -2178,7 +2221,7 @@ msgstr "프로젝트"
 msgid "Project actions"
 msgstr "프로젝트 작업"
 
-#: src/features/projects/components/create-project-dialog.tsx:118
+#: src/features/projects/components/create-project-dialog.tsx:119
 msgid "Project created"
 msgstr "프로젝트가 만들어졌어요"
 
@@ -2229,7 +2272,7 @@ msgstr "푸시 알림"
 msgid "Raised"
 msgstr "돌출"
 
-#: ../../../lib/web/src/components/restore-banner.tsx:107
+#: ../../../lib/web/src/components/restore-banner.tsx:124
 msgid "Re-link your accounts on this server"
 msgstr "이 서버에서 계정 다시 연결"
 
@@ -2237,7 +2280,7 @@ msgstr "이 서버에서 계정 다시 연결"
 msgid "Re-order columns"
 msgstr "열 순서 변경"
 
-#: ../../../lib/web/src/components/restore-banner.tsx:129
+#: ../../../lib/web/src/components/restore-banner.tsx:146
 msgid "Re-register your passkeys on this server"
 msgstr "이 서버에서 패스키를 다시 등록하세요"
 
@@ -2288,8 +2331,8 @@ msgstr "24시간 이내는 상대적, 그 외는 절대적"
 #: ../../../lib/web/src/features/access/access-list.tsx:270
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:180
 #: src/features/editor/components/add-dialogs.tsx:188
-#: src/features/objects/components/create-object-dialog.tsx:531
-#: src/features/projects/components/create-project-dialog.tsx:394
+#: src/features/objects/components/create-object-dialog.tsx:536
+#: src/features/projects/components/create-project-dialog.tsx:397
 msgid "Remove"
 msgstr "제거"
 
@@ -2362,12 +2405,12 @@ msgstr "디자인을 교체할까요?"
 msgid "Replacing..."
 msgstr "교체 중..."
 
-#: src/features/objects/components/comment-thread.tsx:280
+#: src/features/objects/components/comment-thread.tsx:285
 msgid "Reply"
 msgstr "답글"
 
 #. placeholder {0}: comment.name || comment.author
-#: src/features/objects/components/comment-thread.tsx:325
+#: src/features/objects/components/comment-thread.tsx:330
 msgid "Reply to {0}..."
 msgstr "{0}에게 답글..."
 
@@ -2409,6 +2452,10 @@ msgstr "다시 시도"
 msgid "Retry projects load"
 msgstr "프로젝트 불러오기 다시 시도"
 
+#: ../../../lib/web/src/components/options-menu.tsx:181
+msgid "Revoke access"
+msgstr ""
+
 #: ../../../lib/web/src/components/config-drawer.tsx:362
 msgid "Right to Left"
 msgstr "오른쪽에서 왼쪽"
@@ -2426,6 +2473,18 @@ msgstr "행 그룹화 기준"
 msgid "Rows per page"
 msgstr "페이지당 행"
 
+#: ../../../lib/web/src/components/options-menu.tsx:131
+msgid "RSS access revoked"
+msgstr ""
+
+#: ../../../lib/web/src/components/options-menu.tsx:171
+msgid "RSS feed"
+msgstr ""
+
+#: ../../../lib/web/src/components/options-menu.tsx:121
+msgid "RSS URL copied to clipboard"
+msgstr ""
+
 #: ../../../lib/web/src/lib/preference-utils.ts:64
 msgid "Saturday"
 msgstr "토요일"
@@ -2433,7 +2492,7 @@ msgstr "토요일"
 #: ../../../lib/web/src/components/ui/editable-field-row.tsx:122
 #: ../../../lib/web/src/components/ui/secret-field.tsx:77
 #: src/features/editor/components/option-dialog.tsx:150
-#: src/features/objects/components/comment-thread.tsx:255
+#: src/features/objects/components/comment-thread.tsx:260
 #: src/routes/_authenticated/$projectId/index.tsx:1051
 msgid "Save"
 msgstr "저장"
@@ -2522,7 +2581,7 @@ msgstr "필드 선택"
 
 #: ../../../lib/web/src/components/game/game-empty-state.tsx:37
 msgid "Select a game"
-msgstr ""
+msgstr "게임 선택"
 
 #: ../../../lib/web/src/features/access/access-dialog.tsx:150
 msgid "Select a user, group, or other rule to grant access."
@@ -2609,7 +2668,7 @@ msgstr "이메일 보내기"
 #: ../../../lib/web/src/components/game/game-chat-input.tsx:52
 #: ../../../lib/web/src/components/game/game-chat-input.tsx:61
 msgid "Send message"
-msgstr ""
+msgstr "메시지 보내기"
 
 #: ../../../lib/web/src/lib/preference-utils.ts:145
 msgid "Serif"
@@ -2646,6 +2705,7 @@ msgstr "접근 권한 설정 중..."
 #: ../../../lib/web/src/components/layout/nav-user.tsx:84
 #: ../../../lib/web/src/components/layout/nav-user.tsx:148
 #: ../../../lib/web/src/components/layout/nav-user.tsx:198
+#: ../../../lib/web/src/components/options-menu.tsx:196
 #: src/routes/_authenticated/$projectId_.settings.tsx:76
 #: src/routes/_authenticated/$projectId_.settings.tsx:167
 #: src/routes/_authenticated/$projectId_.settings.tsx:190
@@ -2710,6 +2770,10 @@ msgstr "정렬"
 msgid "Source"
 msgstr "소스"
 
+#: ../../../lib/web/src/components/options-menu.tsx:158
+msgid "Sources"
+msgstr ""
+
 #: ../../../lib/web/src/lib/preference-utils.ts:97
 msgid "Spacious"
 msgstr "여유로운"
@@ -2722,7 +2786,7 @@ msgstr "분할"
 msgid "Squash and merge"
 msgstr "스쿼시 후 병합"
 
-#: src/features/objects/components/comment-list.tsx:410
+#: src/features/objects/components/comment-list.tsx:426
 msgid "Start the discussion by adding the first comment."
 msgstr "첫 번째 댓글을 추가하여 토론을 시작해 주세요."
 
@@ -2739,13 +2803,13 @@ msgstr "관찰 중지"
 msgid "Subject"
 msgstr "제목"
 
-#: src/features/objects/components/comment-list.tsx:390
-#: src/features/objects/components/comment-list.tsx:399
+#: src/features/objects/components/comment-list.tsx:406
+#: src/features/objects/components/comment-list.tsx:415
 msgid "Submit comment"
 msgstr "댓글 제출"
 
-#: src/features/objects/components/comment-thread.tsx:409
-#: src/features/objects/components/comment-thread.tsx:414
+#: src/features/objects/components/comment-thread.tsx:417
+#: src/features/objects/components/comment-thread.tsx:422
 msgid "Submit reply"
 msgstr "답글 제출"
 
@@ -2780,6 +2844,7 @@ msgstr "일요일"
 msgid "Switch to view 1-9"
 msgstr "보기 1-9로 전환"
 
+#: ../../../lib/web/src/components/audit-timeline.tsx:101
 #: ../../../lib/web/src/components/config-drawer.tsx:209
 #: ../../../lib/web/src/components/theme-switch.tsx:59
 #: ../../../lib/web/src/lib/preference-utils.ts:21
@@ -2979,7 +3044,7 @@ msgstr "명령어를 입력하거나 검색..."
 
 #: ../../../lib/web/src/components/game/game-chat-input.tsx:39
 msgid "Type a message…"
-msgstr ""
+msgstr "메시지 입력…"
 
 #: ../../../lib/web/src/features/access/access-dialog.tsx:191
 msgid "Type to search users"
@@ -3023,6 +3088,7 @@ msgstr "미국"
 msgid "Unknown"
 msgstr "알 수 없음"
 
+#: ../../../lib/web/src/components/options-menu.tsx:211
 #: src/features/projects/pages/projects-list-page.tsx:147
 #: src/features/projects/pages/projects-list-page.tsx:166
 #: src/features/projects/pages/projects-list-page.tsx:168
@@ -3062,15 +3128,19 @@ msgstr "업데이트됨"
 msgid "Updating access..."
 msgstr "접근 권한 업데이트 중..."
 
-#: src/features/objects/components/create-object-dialog.tsx:563
-#: src/features/objects/components/object-attachments.tsx:237
+#: src/features/objects/components/create-object-dialog.tsx:568
+#: src/features/objects/components/object-attachments.tsx:243
 msgid "Upload"
 msgstr "업로드"
 
-#: src/features/projects/components/create-project-dialog.tsx:367
+#: src/features/projects/components/create-project-dialog.tsx:370
 #: src/routes/_authenticated/$projectId/design.tsx:337
 msgid "Upload .json file"
 msgstr ".json 파일 업로드"
+
+#: ../../../lib/web/src/components/ui/upload-progress.tsx:34
+msgid "Upload progress"
+msgstr "업로드 진행률"
 
 #: ../../../lib/web/src/components/step-up-dialog.tsx:338
 msgid "Use your passkey"
@@ -3078,7 +3148,7 @@ msgstr "패스키 사용"
 
 #. placeholder {0}: prefix || "project"
 #. placeholder {1}: prefix || "project"
-#: src/features/projects/components/create-project-dialog.tsx:335
+#: src/features/projects/components/create-project-dialog.tsx:338
 msgid "Used for readable IDs like {0}-1, {1}-2"
 msgstr "{0}-1, {1}-2와 같이 읽기 쉬운 ID에 사용"
 
@@ -3166,7 +3236,7 @@ msgstr "관찰 중"
 msgid "Watched only"
 msgstr "관찰 중만"
 
-#: src/features/projects/components/create-project-dialog.tsx:427
+#: src/features/projects/components/create-project-dialog.tsx:431
 msgid "We have auto-selected the best matching template."
 msgstr "가장 잘 맞는 템플릿을 자동으로 선택했습니다."
 
@@ -3215,7 +3285,7 @@ msgstr "다음 값을 제출했어요:"
 msgid "You're all caught up!"
 msgstr "모두 확인했어요!"
 
-#: ../../../lib/web/src/components/restore-banner.tsx:91
+#: ../../../lib/web/src/components/restore-banner.tsx:106
 msgid "Your account was moved here from {source}. Until you delete it there, messages and notifications may reach both servers, some of your content keeps being served from the old server, and followers may take a few minutes to find you here."
 msgstr "계정이 {source}에서 이곳으로 이전되었습니다. 거기서 삭제할 때까지 메시지와 알림이 두 서버 모두에 전달될 수 있으며, 일부 콘텐츠는 이전 서버에서 계속 제공되고 팔로워가 이곳에서 나를 찾는 데 몇 분이 걸릴 수 있습니다."
 
@@ -3223,7 +3293,7 @@ msgstr "계정이 {source}에서 이곳으로 이전되었습니다. 거기서 �
 msgid "Your attachments will be lost."
 msgstr "첨부 파일이 사라집니다."
 
-#: src/features/projects/components/create-project-dialog.tsx:423
+#: src/features/projects/components/create-project-dialog.tsx:427
 msgid "Your backup contains objects of type:"
 msgstr "백업에 다음 유형의 개체가 포함되어 있습니다:"
 

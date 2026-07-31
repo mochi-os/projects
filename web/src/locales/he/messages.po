@@ -85,6 +85,10 @@ msgstr "שם {entityLabel}"
 msgid "{entityLabel} name is required"
 msgstr "נדרש שם {entityLabel}"
 
+#: ../../../lib/web/src/components/game/game-draw-offer-banner.tsx:29
+msgid "{opponentName} offered a draw"
+msgstr ""
+
 #: ../../../lib/web/src/components/data-table/bulk-actions.tsx:210
 msgid "{selectedCount, plural, one {{entityName} selected} other {{manyName} selected}}"
 msgstr "{selectedCount, plural, one {{entityName} נבחר} two {{manyName} נבחרו} many {{manyName} נבחרו} other {{manyName} נבחרו}}"
@@ -119,7 +123,7 @@ msgid "+{0} ahead"
 msgstr "+{0} לפני"
 
 #. placeholder {0}: countDeepChildren(object.id)
-#: src/features/board/components/board-card.tsx:362
+#: ../../../lib/web/src/components/entity/entity-board-card.tsx:421
 msgid "+{0} nested"
 msgstr "+{0} מקוננים"
 
@@ -142,6 +146,10 @@ msgstr "24 שעות"
 #: ../../../lib/web/src/lib/preference-utils.ts:51
 msgid "Absolute (date and time)"
 msgstr "מוחלט (תאריך ושעה)"
+
+#: ../../../lib/web/src/components/game/game-draw-offer-banner.tsx:45
+msgid "Accept"
+msgstr ""
 
 #: src/routes/_authenticated/$projectId_.settings.tsx:77
 msgid "Access"
@@ -195,9 +203,9 @@ msgstr "החשבון אומת"
 msgid "Activity"
 msgstr "פעילות"
 
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:717
 #: ../../../lib/web/src/features/access/access-dialog.tsx:332
 #: ../../../lib/web/src/features/accounts/account-add.tsx:196
-#: src/features/objects/components/field-editor.tsx:649
 #: src/features/requests/components/request-panel.tsx:103
 msgid "Add"
 msgstr "הוספה"
@@ -227,7 +235,7 @@ msgstr "הוסף חשבון"
 msgid "Add an account to receive notifications and use services."
 msgstr "הוסף חשבון כדי לקבל התראות ולהשתמש בשירותים."
 
-#: src/features/objects/components/field-editor.tsx:619
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:687
 msgid "Add checklist item"
 msgstr "הוסף פריט לרשימת משימות"
 
@@ -248,7 +256,7 @@ msgstr "הוסף עמודה"
 msgid "Add field"
 msgstr "הוסף שדה"
 
-#: src/features/objects/components/field-editor.tsx:637
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:705
 msgid "Add item..."
 msgstr "הוסף פריט..."
 
@@ -540,6 +548,10 @@ msgstr "בודק סטטוס Merge..."
 #: src/features/editor/components/add-dialogs.tsx:136
 msgid "Checklist"
 msgstr "רשימת משימות"
+
+#: ../../../lib/web/src/components/game/game-empty-state.tsx:38
+msgid "Choose a game from the sidebar or start a new one."
+msgstr ""
 
 #: src/features/projects/components/create-project-dialog.tsx:288
 msgid "Choose a template"
@@ -850,6 +862,10 @@ msgstr "הנתונים יובאו ({0, plural, one {# אובייקט} two {# א�
 #: src/features/editor/components/add-dialogs.tsx:137
 msgid "Date"
 msgstr "תאריך"
+
+#: ../../../lib/web/src/components/game/game-draw-offer-banner.tsx:41
+msgid "Decline"
+msgstr ""
 
 #: ../../../lib/web/src/components/config-drawer.tsx:311
 msgid "Default"
@@ -1526,7 +1542,7 @@ msgstr "פנימי"
 msgid "Interests"
 msgstr "תחומי עניין"
 
-#: src/features/objects/components/field-editor.tsx:480
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:550
 msgid "Invalid date"
 msgstr "תאריך לא תקין"
 
@@ -1714,6 +1730,10 @@ msgstr "המיזוג בוצע בהצלחה"
 msgid "Merging..."
 msgstr "ממזג..."
 
+#: ../../../lib/web/src/components/game/game-chat-input.tsx:35
+msgid "Message"
+msgstr ""
+
 #: ../../../lib/web/src/lib/preference-utils.ts:85
 msgid "Metric"
 msgstr "מטרי"
@@ -1777,6 +1797,11 @@ msgstr "חדש"
 msgid "New {className}"
 msgstr "{className} חדש"
 
+#: ../../../lib/web/src/components/game/game-empty-state.tsx:42
+#: ../../../lib/web/src/components/game/game-empty-state.tsx:54
+msgid "New game"
+msgstr ""
+
 #: src/features/projects/components/create-project-dialog.tsx:413
 msgid "Next"
 msgstr "הבא"
@@ -1830,6 +1855,10 @@ msgstr "אין חשבונות מקושרים"
 msgid "No diff available"
 msgstr "אין diff זמין"
 
+#: ../../../lib/web/src/components/game/game-empty-state.tsx:51
+msgid "No games yet"
+msgstr ""
+
 #: ../../../lib/web/src/features/access/access-dialog.tsx:241
 msgid "No groups available"
 msgstr "אין קבוצות זמינות"
@@ -1850,8 +1879,8 @@ msgstr "אין בקשות מיזוג"
 msgid "No notifications yet"
 msgstr "אין עדיין התראות"
 
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:336
 #: ../../../lib/web/src/components/person-picker.tsx:84
-#: src/features/objects/components/field-editor.tsx:280
 msgid "No people found"
 msgstr "לא נמצאו אנשים"
 
@@ -2303,7 +2332,7 @@ msgstr "הסר שדה {0}"
 msgid "Remove interest"
 msgstr "הסר עניין"
 
-#: src/features/objects/components/field-editor.tsx:603
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:671
 msgid "Remove item"
 msgstr "הסר פריט"
 
@@ -2499,6 +2528,10 @@ msgstr "בחר {0}"
 msgid "Select a field"
 msgstr "בחר שדה"
 
+#: ../../../lib/web/src/components/game/game-empty-state.tsx:37
+msgid "Select a game"
+msgstr ""
+
 #: ../../../lib/web/src/features/access/access-dialog.tsx:150
 msgid "Select a user, group, or other rule to grant access."
 msgstr "בחר משתמש, קבוצה או כלל אחר כדי לתת גישה."
@@ -2559,8 +2592,8 @@ msgstr "בחר כיוון אתר"
 msgid "Select theme preference"
 msgstr "בחר העדפת ערכת נושא"
 
-#: src/features/objects/components/field-editor.tsx:196
-#: src/features/objects/components/field-editor.tsx:279
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:252
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:335
 msgid "Select..."
 msgstr "בחר..."
 
@@ -2580,6 +2613,11 @@ msgstr "שלח שוב"
 #: ../../../lib/web/src/components/step-up-dialog.tsx:307
 msgid "Send email"
 msgstr "שלח אימייל"
+
+#: ../../../lib/web/src/components/game/game-chat-input.tsx:52
+#: ../../../lib/web/src/components/game/game-chat-input.tsx:61
+msgid "Send message"
+msgstr ""
 
 #: ../../../lib/web/src/lib/preference-utils.ts:145
 msgid "Serif"
@@ -2946,6 +2984,10 @@ msgstr "סוג"
 #: ../../../lib/web/src/components/command-menu.tsx:52
 msgid "Type a command or search..."
 msgstr "הקלד פקודה או חיפוש..."
+
+#: ../../../lib/web/src/components/game/game-chat-input.tsx:39
+msgid "Type a message…"
+msgstr ""
 
 #: ../../../lib/web/src/features/access/access-dialog.tsx:191
 msgid "Type to search users"

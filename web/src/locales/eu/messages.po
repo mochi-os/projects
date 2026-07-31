@@ -85,6 +85,10 @@ msgstr "{entityLabel} izena"
 msgid "{entityLabel} name is required"
 msgstr "{entityLabel} izena beharrezkoa da"
 
+#: ../../../lib/web/src/components/game/game-draw-offer-banner.tsx:29
+msgid "{opponentName} offered a draw"
+msgstr ""
+
 #: ../../../lib/web/src/components/data-table/bulk-actions.tsx:210
 msgid "{selectedCount, plural, one {{entityName} selected} other {{manyName} selected}}"
 msgstr "{selectedCount, plural, one {{entityName} hautatuta} other {{manyName} hautatuta}}"
@@ -119,7 +123,7 @@ msgid "+{0} ahead"
 msgstr "+{0} aurretik"
 
 #. placeholder {0}: countDeepChildren(object.id)
-#: src/features/board/components/board-card.tsx:362
+#: ../../../lib/web/src/components/entity/entity-board-card.tsx:421
 msgid "+{0} nested"
 msgstr "+{0} kabiratuta"
 
@@ -142,6 +146,10 @@ msgstr "24 ordu"
 #: ../../../lib/web/src/lib/preference-utils.ts:51
 msgid "Absolute (date and time)"
 msgstr "Absolutua (data eta ordua)"
+
+#: ../../../lib/web/src/components/game/game-draw-offer-banner.tsx:45
+msgid "Accept"
+msgstr ""
 
 #: src/routes/_authenticated/$projectId_.settings.tsx:77
 msgid "Access"
@@ -195,9 +203,9 @@ msgstr "Kontua egiaztatua"
 msgid "Activity"
 msgstr "Jarduera"
 
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:717
 #: ../../../lib/web/src/features/access/access-dialog.tsx:332
 #: ../../../lib/web/src/features/accounts/account-add.tsx:196
-#: src/features/objects/components/field-editor.tsx:649
 #: src/features/requests/components/request-panel.tsx:103
 msgid "Add"
 msgstr "Gehitu"
@@ -227,7 +235,7 @@ msgstr "Gehitu kontua"
 msgid "Add an account to receive notifications and use services."
 msgstr "Gehitu kontu bat jakinarazpenak jasotzeko eta zerbitzuak erabiltzeko."
 
-#: src/features/objects/components/field-editor.tsx:619
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:687
 msgid "Add checklist item"
 msgstr "Gehitu egiaztapen-zerrendako elementua"
 
@@ -248,7 +256,7 @@ msgstr "Gehitu zutabea"
 msgid "Add field"
 msgstr "Gehitu eremua"
 
-#: src/features/objects/components/field-editor.tsx:637
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:705
 msgid "Add item..."
 msgstr "Gehitu elementua..."
 
@@ -540,6 +548,10 @@ msgstr "Fusio egoera egiaztatzen..."
 #: src/features/editor/components/add-dialogs.tsx:136
 msgid "Checklist"
 msgstr "Egiaztapen-zerrenda"
+
+#: ../../../lib/web/src/components/game/game-empty-state.tsx:38
+msgid "Choose a game from the sidebar or start a new one."
+msgstr ""
 
 #: src/features/projects/components/create-project-dialog.tsx:288
 msgid "Choose a template"
@@ -850,6 +862,10 @@ msgstr "Datuak inportatu dira ({0, plural, one {# objektu} other {# objektu}}, {
 #: src/features/editor/components/add-dialogs.tsx:137
 msgid "Date"
 msgstr "Data"
+
+#: ../../../lib/web/src/components/game/game-draw-offer-banner.tsx:41
+msgid "Decline"
+msgstr ""
 
 #: ../../../lib/web/src/components/config-drawer.tsx:311
 msgid "Default"
@@ -1526,7 +1542,7 @@ msgstr "Sartzea"
 msgid "Interests"
 msgstr "Interesak"
 
-#: src/features/objects/components/field-editor.tsx:480
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:550
 msgid "Invalid date"
 msgstr "Data baliogabea"
 
@@ -1714,6 +1730,10 @@ msgstr "Ondo bateratuta"
 msgid "Merging..."
 msgstr "Bateratzen..."
 
+#: ../../../lib/web/src/components/game/game-chat-input.tsx:35
+msgid "Message"
+msgstr ""
+
 #: ../../../lib/web/src/lib/preference-utils.ts:85
 msgid "Metric"
 msgstr "Metrikoa"
@@ -1777,6 +1797,11 @@ msgstr "Berria"
 msgid "New {className}"
 msgstr "{className} berria"
 
+#: ../../../lib/web/src/components/game/game-empty-state.tsx:42
+#: ../../../lib/web/src/components/game/game-empty-state.tsx:54
+msgid "New game"
+msgstr ""
+
 #: src/features/projects/components/create-project-dialog.tsx:413
 msgid "Next"
 msgstr "Hurrengoa"
@@ -1830,6 +1855,10 @@ msgstr "Konektatutako konturik ez"
 msgid "No diff available"
 msgstr "Ez dago diff erabilgarririk"
 
+#: ../../../lib/web/src/components/game/game-empty-state.tsx:51
+msgid "No games yet"
+msgstr ""
+
 #: ../../../lib/web/src/features/access/access-dialog.tsx:241
 msgid "No groups available"
 msgstr "Ez dago talde erabilgarririk"
@@ -1850,8 +1879,8 @@ msgstr "Bateratze-eskaerarik ez"
 msgid "No notifications yet"
 msgstr "Oraindik ez dago jakinarazpenik"
 
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:336
 #: ../../../lib/web/src/components/person-picker.tsx:84
-#: src/features/objects/components/field-editor.tsx:280
 msgid "No people found"
 msgstr "Ez da pertsonarik aurkitu"
 
@@ -2303,7 +2332,7 @@ msgstr "Kendu {0} eremua"
 msgid "Remove interest"
 msgstr "Kendu interesa"
 
-#: src/features/objects/components/field-editor.tsx:603
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:671
 msgid "Remove item"
 msgstr "Kendu elementua"
 
@@ -2499,6 +2528,10 @@ msgstr "Hautatu {0}"
 msgid "Select a field"
 msgstr "Hautatu eremu bat"
 
+#: ../../../lib/web/src/components/game/game-empty-state.tsx:37
+msgid "Select a game"
+msgstr ""
+
 #: ../../../lib/web/src/features/access/access-dialog.tsx:150
 msgid "Select a user, group, or other rule to grant access."
 msgstr "Hautatu erabiltzaile, talde edo beste arau bat sarbidea emateko."
@@ -2559,8 +2592,8 @@ msgstr "Hautatu gunearen norabidea"
 msgid "Select theme preference"
 msgstr "Hautatu gaiaren hobespena"
 
-#: src/features/objects/components/field-editor.tsx:196
-#: src/features/objects/components/field-editor.tsx:279
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:252
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:335
 msgid "Select..."
 msgstr "Hautatu..."
 
@@ -2580,6 +2613,11 @@ msgstr "Bidali berriz"
 #: ../../../lib/web/src/components/step-up-dialog.tsx:307
 msgid "Send email"
 msgstr "Bidali emaila"
+
+#: ../../../lib/web/src/components/game/game-chat-input.tsx:52
+#: ../../../lib/web/src/components/game/game-chat-input.tsx:61
+msgid "Send message"
+msgstr ""
 
 #: ../../../lib/web/src/lib/preference-utils.ts:145
 msgid "Serif"
@@ -2946,6 +2984,10 @@ msgstr "Mota"
 #: ../../../lib/web/src/components/command-menu.tsx:52
 msgid "Type a command or search..."
 msgstr "Idatzi komando bat edo bilatu..."
+
+#: ../../../lib/web/src/components/game/game-chat-input.tsx:39
+msgid "Type a message…"
+msgstr ""
 
 #: ../../../lib/web/src/features/access/access-dialog.tsx:191
 msgid "Type to search users"

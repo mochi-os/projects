@@ -85,6 +85,10 @@ msgstr "Naziv {entityLabel}"
 msgid "{entityLabel} name is required"
 msgstr "Naziv za {entityLabel} je obavezan"
 
+#: ../../../lib/web/src/components/game/game-draw-offer-banner.tsx:29
+msgid "{opponentName} offered a draw"
+msgstr ""
+
 #: ../../../lib/web/src/components/data-table/bulk-actions.tsx:210
 msgid "{selectedCount, plural, one {{entityName} selected} other {{manyName} selected}}"
 msgstr "{selectedCount, plural, one {{entityName} odabran} few {{manyName} odabrana} other {{manyName} odabranih}}"
@@ -119,7 +123,7 @@ msgid "+{0} ahead"
 msgstr "+{0} ispred"
 
 #. placeholder {0}: countDeepChildren(object.id)
-#: src/features/board/components/board-card.tsx:362
+#: ../../../lib/web/src/components/entity/entity-board-card.tsx:421
 msgid "+{0} nested"
 msgstr "+{0} ugniježđenih"
 
@@ -142,6 +146,10 @@ msgstr "24 sata"
 #: ../../../lib/web/src/lib/preference-utils.ts:51
 msgid "Absolute (date and time)"
 msgstr "Apsolutno (datum i vrijeme)"
+
+#: ../../../lib/web/src/components/game/game-draw-offer-banner.tsx:45
+msgid "Accept"
+msgstr ""
 
 #: src/routes/_authenticated/$projectId_.settings.tsx:77
 msgid "Access"
@@ -195,9 +203,9 @@ msgstr "Račun verificiran"
 msgid "Activity"
 msgstr "Aktivnost"
 
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:717
 #: ../../../lib/web/src/features/access/access-dialog.tsx:332
 #: ../../../lib/web/src/features/accounts/account-add.tsx:196
-#: src/features/objects/components/field-editor.tsx:649
 #: src/features/requests/components/request-panel.tsx:103
 msgid "Add"
 msgstr "Dodaj"
@@ -227,7 +235,7 @@ msgstr "Dodaj račun"
 msgid "Add an account to receive notifications and use services."
 msgstr "Dodajte račun za primanje obavijesti i korištenje servisa."
 
-#: src/features/objects/components/field-editor.tsx:619
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:687
 msgid "Add checklist item"
 msgstr "Dodaj stavku liste"
 
@@ -248,7 +256,7 @@ msgstr "Dodaj stupac"
 msgid "Add field"
 msgstr "Dodaj polje"
 
-#: src/features/objects/components/field-editor.tsx:637
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:705
 msgid "Add item..."
 msgstr "Dodaj stavku..."
 
@@ -540,6 +548,10 @@ msgstr "Provjera statusa spajanja..."
 #: src/features/editor/components/add-dialogs.tsx:136
 msgid "Checklist"
 msgstr "Lista"
+
+#: ../../../lib/web/src/components/game/game-empty-state.tsx:38
+msgid "Choose a game from the sidebar or start a new one."
+msgstr ""
 
 #: src/features/projects/components/create-project-dialog.tsx:288
 msgid "Choose a template"
@@ -850,6 +862,10 @@ msgstr "Podaci uvezeni ({0, plural, one {# objekt} few {# objekta} other {# obje
 #: src/features/editor/components/add-dialogs.tsx:137
 msgid "Date"
 msgstr "Datum"
+
+#: ../../../lib/web/src/components/game/game-draw-offer-banner.tsx:41
+msgid "Decline"
+msgstr ""
 
 #: ../../../lib/web/src/components/config-drawer.tsx:311
 msgid "Default"
@@ -1526,7 +1542,7 @@ msgstr "Uvučeno"
 msgid "Interests"
 msgstr "Interesi"
 
-#: src/features/objects/components/field-editor.tsx:480
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:550
 msgid "Invalid date"
 msgstr "Nevažeći datum"
 
@@ -1714,6 +1730,10 @@ msgstr "Uspješno spojeno"
 msgid "Merging..."
 msgstr "Spajanje..."
 
+#: ../../../lib/web/src/components/game/game-chat-input.tsx:35
+msgid "Message"
+msgstr ""
+
 #: ../../../lib/web/src/lib/preference-utils.ts:85
 msgid "Metric"
 msgstr "Metrički"
@@ -1777,6 +1797,11 @@ msgstr "Novo"
 msgid "New {className}"
 msgstr "Novi {className}"
 
+#: ../../../lib/web/src/components/game/game-empty-state.tsx:42
+#: ../../../lib/web/src/components/game/game-empty-state.tsx:54
+msgid "New game"
+msgstr ""
+
 #: src/features/projects/components/create-project-dialog.tsx:413
 msgid "Next"
 msgstr "Sljedeće"
@@ -1830,6 +1855,10 @@ msgstr "Nema povezanih računa"
 msgid "No diff available"
 msgstr "Diff nije dostupan"
 
+#: ../../../lib/web/src/components/game/game-empty-state.tsx:51
+msgid "No games yet"
+msgstr ""
+
 #: ../../../lib/web/src/features/access/access-dialog.tsx:241
 msgid "No groups available"
 msgstr "Nema dostupnih grupa"
@@ -1850,8 +1879,8 @@ msgstr "Nema merge requestova"
 msgid "No notifications yet"
 msgstr "Još nema obavijesti"
 
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:336
 #: ../../../lib/web/src/components/person-picker.tsx:84
-#: src/features/objects/components/field-editor.tsx:280
 msgid "No people found"
 msgstr "Nije pronađen nijedan korisnik"
 
@@ -2303,7 +2332,7 @@ msgstr "Ukloni polje {0}"
 msgid "Remove interest"
 msgstr "Ukloni interes"
 
-#: src/features/objects/components/field-editor.tsx:603
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:671
 msgid "Remove item"
 msgstr "Ukloni stavku"
 
@@ -2499,6 +2528,10 @@ msgstr "Odaberi {0}"
 msgid "Select a field"
 msgstr "Odaberite polje"
 
+#: ../../../lib/web/src/components/game/game-empty-state.tsx:37
+msgid "Select a game"
+msgstr ""
+
 #: ../../../lib/web/src/features/access/access-dialog.tsx:150
 msgid "Select a user, group, or other rule to grant access."
 msgstr "Odaberite korisnika, grupu ili drugo pravilo za dodjelu pristupa."
@@ -2559,8 +2592,8 @@ msgstr "Odaberi smjer stranice"
 msgid "Select theme preference"
 msgstr "Odaberi preferenciju teme"
 
-#: src/features/objects/components/field-editor.tsx:196
-#: src/features/objects/components/field-editor.tsx:279
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:252
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:335
 msgid "Select..."
 msgstr "Odaberi..."
 
@@ -2580,6 +2613,11 @@ msgstr "Pošalji ponovno"
 #: ../../../lib/web/src/components/step-up-dialog.tsx:307
 msgid "Send email"
 msgstr "Pošalji e-poštu"
+
+#: ../../../lib/web/src/components/game/game-chat-input.tsx:52
+#: ../../../lib/web/src/components/game/game-chat-input.tsx:61
+msgid "Send message"
+msgstr ""
 
 #: ../../../lib/web/src/lib/preference-utils.ts:145
 msgid "Serif"
@@ -2946,6 +2984,10 @@ msgstr "Tip"
 #: ../../../lib/web/src/components/command-menu.tsx:52
 msgid "Type a command or search..."
 msgstr "Upišite naredbu ili pretragu..."
+
+#: ../../../lib/web/src/components/game/game-chat-input.tsx:39
+msgid "Type a message…"
+msgstr ""
 
 #: ../../../lib/web/src/features/access/access-dialog.tsx:191
 msgid "Type to search users"

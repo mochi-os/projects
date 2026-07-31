@@ -85,6 +85,10 @@ msgstr "{entityLabel} নাম"
 msgid "{entityLabel} name is required"
 msgstr "{entityLabel}-এর নাম আবশ্যক"
 
+#: ../../../lib/web/src/components/game/game-draw-offer-banner.tsx:29
+msgid "{opponentName} offered a draw"
+msgstr ""
+
 #: ../../../lib/web/src/components/data-table/bulk-actions.tsx:210
 msgid "{selectedCount, plural, one {{entityName} selected} other {{manyName} selected}}"
 msgstr "{selectedCount, plural, one {{entityName} নির্বাচিত} other {{manyName} নির্বাচিত}}"
@@ -119,7 +123,7 @@ msgid "+{0} ahead"
 msgstr "+{0} এগিয়ে"
 
 #. placeholder {0}: countDeepChildren(object.id)
-#: src/features/board/components/board-card.tsx:362
+#: ../../../lib/web/src/components/entity/entity-board-card.tsx:421
 msgid "+{0} nested"
 msgstr "+{0} নেস্টেড"
 
@@ -142,6 +146,10 @@ msgstr "২৪ ঘণ্টা"
 #: ../../../lib/web/src/lib/preference-utils.ts:51
 msgid "Absolute (date and time)"
 msgstr "নিরঙ্কুশ (তারিখ এবং সময়)"
+
+#: ../../../lib/web/src/components/game/game-draw-offer-banner.tsx:45
+msgid "Accept"
+msgstr ""
 
 #: src/routes/_authenticated/$projectId_.settings.tsx:77
 msgid "Access"
@@ -195,9 +203,9 @@ msgstr "অ্যাকাউন্ট যাচাই করা হয়েছ
 msgid "Activity"
 msgstr "কার্যকলাপ"
 
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:717
 #: ../../../lib/web/src/features/access/access-dialog.tsx:332
 #: ../../../lib/web/src/features/accounts/account-add.tsx:196
-#: src/features/objects/components/field-editor.tsx:649
 #: src/features/requests/components/request-panel.tsx:103
 msgid "Add"
 msgstr "যোগ করুন"
@@ -227,7 +235,7 @@ msgstr "অ্যাকাউন্ট যোগ করুন"
 msgid "Add an account to receive notifications and use services."
 msgstr "নোটিফিকেশন পেতে এবং পরিষেবা ব্যবহার করতে একটি অ্যাকাউন্ট যোগ করুন।"
 
-#: src/features/objects/components/field-editor.tsx:619
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:687
 msgid "Add checklist item"
 msgstr "চেকলিস্ট আইটেম যোগ করুন"
 
@@ -248,7 +256,7 @@ msgstr "কলাম যোগ করুন"
 msgid "Add field"
 msgstr "ফিল্ড যোগ করুন"
 
-#: src/features/objects/components/field-editor.tsx:637
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:705
 msgid "Add item..."
 msgstr "আইটেম যোগ করুন..."
 
@@ -540,6 +548,10 @@ msgstr "মার্জ স্ট্যাটাস চেক করা হচ�
 #: src/features/editor/components/add-dialogs.tsx:136
 msgid "Checklist"
 msgstr "চেকলিস্ট"
+
+#: ../../../lib/web/src/components/game/game-empty-state.tsx:38
+msgid "Choose a game from the sidebar or start a new one."
+msgstr ""
 
 #: src/features/projects/components/create-project-dialog.tsx:288
 msgid "Choose a template"
@@ -850,6 +862,10 @@ msgstr "ডেটা ইম্পোর্ট করা হয়েছে ({0, 
 #: src/features/editor/components/add-dialogs.tsx:137
 msgid "Date"
 msgstr "তারিখ"
+
+#: ../../../lib/web/src/components/game/game-draw-offer-banner.tsx:41
+msgid "Decline"
+msgstr ""
 
 #: ../../../lib/web/src/components/config-drawer.tsx:311
 msgid "Default"
@@ -1526,7 +1542,7 @@ msgstr "ইনসেট"
 msgid "Interests"
 msgstr "আগ্রহসমূহ"
 
-#: src/features/objects/components/field-editor.tsx:480
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:550
 msgid "Invalid date"
 msgstr "অবৈধ তারিখ"
 
@@ -1714,6 +1730,10 @@ msgstr "সফলভাবে মার্জ করা হয়েছে"
 msgid "Merging..."
 msgstr "মার্জ করা হচ্ছে..."
 
+#: ../../../lib/web/src/components/game/game-chat-input.tsx:35
+msgid "Message"
+msgstr ""
+
 #: ../../../lib/web/src/lib/preference-utils.ts:85
 msgid "Metric"
 msgstr "মেট্রিক"
@@ -1777,6 +1797,11 @@ msgstr "নতুন"
 msgid "New {className}"
 msgstr "নতুন {className}"
 
+#: ../../../lib/web/src/components/game/game-empty-state.tsx:42
+#: ../../../lib/web/src/components/game/game-empty-state.tsx:54
+msgid "New game"
+msgstr ""
+
 #: src/features/projects/components/create-project-dialog.tsx:413
 msgid "Next"
 msgstr "পরবর্তী"
@@ -1830,6 +1855,10 @@ msgstr "কোনো সংযুক্ত অ্যাকাউন্ট নে
 msgid "No diff available"
 msgstr "কোনো diff উপলব্ধ নেই"
 
+#: ../../../lib/web/src/components/game/game-empty-state.tsx:51
+msgid "No games yet"
+msgstr ""
+
 #: ../../../lib/web/src/features/access/access-dialog.tsx:241
 msgid "No groups available"
 msgstr "কোনো গ্রুপ উপলব্ধ নেই"
@@ -1850,8 +1879,8 @@ msgstr "কোনো মার্জ অনুরোধ নেই"
 msgid "No notifications yet"
 msgstr "এখনও কোনও বিজ্ঞপ্তি নেই"
 
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:336
 #: ../../../lib/web/src/components/person-picker.tsx:84
-#: src/features/objects/components/field-editor.tsx:280
 msgid "No people found"
 msgstr "কোনো ব্যক্তি পাওয়া যায়নি"
 
@@ -2303,7 +2332,7 @@ msgstr "{0} ফিল্ড সরান"
 msgid "Remove interest"
 msgstr "আগ্রহ সরান"
 
-#: src/features/objects/components/field-editor.tsx:603
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:671
 msgid "Remove item"
 msgstr "আইটেম সরান"
 
@@ -2499,6 +2528,10 @@ msgstr "{0} নির্বাচন করুন"
 msgid "Select a field"
 msgstr "একটি ফিল্ড নির্বাচন করুন"
 
+#: ../../../lib/web/src/components/game/game-empty-state.tsx:37
+msgid "Select a game"
+msgstr ""
+
 #: ../../../lib/web/src/features/access/access-dialog.tsx:150
 msgid "Select a user, group, or other rule to grant access."
 msgstr "অ্যাক্সেস দিতে একজন ব্যবহারকারী, গ্রুপ বা অন্য নিয়ম নির্বাচন করুন।"
@@ -2559,8 +2592,8 @@ msgstr "সাইটের দিক নির্বাচন করুন"
 msgid "Select theme preference"
 msgstr "থিম পছন্দ নির্বাচন করুন"
 
-#: src/features/objects/components/field-editor.tsx:196
-#: src/features/objects/components/field-editor.tsx:279
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:252
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:335
 msgid "Select..."
 msgstr "নির্বাচন করুন..."
 
@@ -2580,6 +2613,11 @@ msgstr "আবার পাঠান"
 #: ../../../lib/web/src/components/step-up-dialog.tsx:307
 msgid "Send email"
 msgstr "ইমেইল পাঠান"
+
+#: ../../../lib/web/src/components/game/game-chat-input.tsx:52
+#: ../../../lib/web/src/components/game/game-chat-input.tsx:61
+msgid "Send message"
+msgstr ""
 
 #: ../../../lib/web/src/lib/preference-utils.ts:145
 msgid "Serif"
@@ -2946,6 +2984,10 @@ msgstr "ধরন"
 #: ../../../lib/web/src/components/command-menu.tsx:52
 msgid "Type a command or search..."
 msgstr "একটি কমান্ড টাইপ করুন বা অনুসন্ধান করুন..."
+
+#: ../../../lib/web/src/components/game/game-chat-input.tsx:39
+msgid "Type a message…"
+msgstr ""
 
 #: ../../../lib/web/src/features/access/access-dialog.tsx:191
 msgid "Type to search users"

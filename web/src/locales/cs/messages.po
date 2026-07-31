@@ -85,6 +85,10 @@ msgstr "Název {entityLabel}"
 msgid "{entityLabel} name is required"
 msgstr "Název {entityLabel} je povinný"
 
+#: ../../../lib/web/src/components/game/game-draw-offer-banner.tsx:29
+msgid "{opponentName} offered a draw"
+msgstr ""
+
 #: ../../../lib/web/src/components/data-table/bulk-actions.tsx:210
 msgid "{selectedCount, plural, one {{entityName} selected} other {{manyName} selected}}"
 msgstr "{selectedCount, plural, one {Vybráno {entityName}} few {Vybrány {manyName}} other {Vybráno {manyName}}}"
@@ -119,7 +123,7 @@ msgid "+{0} ahead"
 msgstr "+{0} napřed"
 
 #. placeholder {0}: countDeepChildren(object.id)
-#: src/features/board/components/board-card.tsx:362
+#: ../../../lib/web/src/components/entity/entity-board-card.tsx:421
 msgid "+{0} nested"
 msgstr "+{0} vnořených"
 
@@ -142,6 +146,10 @@ msgstr "24 hodin"
 #: ../../../lib/web/src/lib/preference-utils.ts:51
 msgid "Absolute (date and time)"
 msgstr "Absolutní (datum a čas)"
+
+#: ../../../lib/web/src/components/game/game-draw-offer-banner.tsx:45
+msgid "Accept"
+msgstr ""
 
 #: src/routes/_authenticated/$projectId_.settings.tsx:77
 msgid "Access"
@@ -195,9 +203,9 @@ msgstr "Účet ověřen"
 msgid "Activity"
 msgstr "Aktivita"
 
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:717
 #: ../../../lib/web/src/features/access/access-dialog.tsx:332
 #: ../../../lib/web/src/features/accounts/account-add.tsx:196
-#: src/features/objects/components/field-editor.tsx:649
 #: src/features/requests/components/request-panel.tsx:103
 msgid "Add"
 msgstr "Přidat"
@@ -227,7 +235,7 @@ msgstr "Přidat účet"
 msgid "Add an account to receive notifications and use services."
 msgstr "Přidejte účet pro příjem oznámení a využívání služeb."
 
-#: src/features/objects/components/field-editor.tsx:619
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:687
 msgid "Add checklist item"
 msgstr "Přidat položku checklistu"
 
@@ -248,7 +256,7 @@ msgstr "Přidat sloupec"
 msgid "Add field"
 msgstr "Přidat pole"
 
-#: src/features/objects/components/field-editor.tsx:637
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:705
 msgid "Add item..."
 msgstr "Přidat položku..."
 
@@ -540,6 +548,10 @@ msgstr "Kontrola stavu sloučení..."
 #: src/features/editor/components/add-dialogs.tsx:136
 msgid "Checklist"
 msgstr "Checklist"
+
+#: ../../../lib/web/src/components/game/game-empty-state.tsx:38
+msgid "Choose a game from the sidebar or start a new one."
+msgstr ""
 
 #: src/features/projects/components/create-project-dialog.tsx:288
 msgid "Choose a template"
@@ -850,6 +862,10 @@ msgstr "Data byla importována ({0, plural, one {# objekt} few {# objekty} many 
 #: src/features/editor/components/add-dialogs.tsx:137
 msgid "Date"
 msgstr "Datum"
+
+#: ../../../lib/web/src/components/game/game-draw-offer-banner.tsx:41
+msgid "Decline"
+msgstr ""
 
 #: ../../../lib/web/src/components/config-drawer.tsx:311
 msgid "Default"
@@ -1526,7 +1542,7 @@ msgstr "Vložené"
 msgid "Interests"
 msgstr "Zájmy"
 
-#: src/features/objects/components/field-editor.tsx:480
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:550
 msgid "Invalid date"
 msgstr "Neplatné datum"
 
@@ -1714,6 +1730,10 @@ msgstr "Úspěšně sloučeno"
 msgid "Merging..."
 msgstr "Slučování…"
 
+#: ../../../lib/web/src/components/game/game-chat-input.tsx:35
+msgid "Message"
+msgstr ""
+
 #: ../../../lib/web/src/lib/preference-utils.ts:85
 msgid "Metric"
 msgstr "Metrika"
@@ -1777,6 +1797,11 @@ msgstr "Nové"
 msgid "New {className}"
 msgstr "Nový {className}"
 
+#: ../../../lib/web/src/components/game/game-empty-state.tsx:42
+#: ../../../lib/web/src/components/game/game-empty-state.tsx:54
+msgid "New game"
+msgstr ""
+
 #: src/features/projects/components/create-project-dialog.tsx:413
 msgid "Next"
 msgstr "Další"
@@ -1830,6 +1855,10 @@ msgstr "Žádné připojené účty"
 msgid "No diff available"
 msgstr "Žádný diff k dispozici"
 
+#: ../../../lib/web/src/components/game/game-empty-state.tsx:51
+msgid "No games yet"
+msgstr ""
+
 #: ../../../lib/web/src/features/access/access-dialog.tsx:241
 msgid "No groups available"
 msgstr "Žádné skupiny k dispozici"
@@ -1850,8 +1879,8 @@ msgstr "Žádné žádosti o sloučení"
 msgid "No notifications yet"
 msgstr "Zatím žádná oznámení"
 
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:336
 #: ../../../lib/web/src/components/person-picker.tsx:84
-#: src/features/objects/components/field-editor.tsx:280
 msgid "No people found"
 msgstr "Žádní lidé nenalezeni"
 
@@ -2303,7 +2332,7 @@ msgstr "Odebrat pole {0}"
 msgid "Remove interest"
 msgstr "Odebrat zájem"
 
-#: src/features/objects/components/field-editor.tsx:603
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:671
 msgid "Remove item"
 msgstr "Odebrat položku"
 
@@ -2499,6 +2528,10 @@ msgstr "Vybrat {0}"
 msgid "Select a field"
 msgstr "Vyberte pole"
 
+#: ../../../lib/web/src/components/game/game-empty-state.tsx:37
+msgid "Select a game"
+msgstr ""
+
 #: ../../../lib/web/src/features/access/access-dialog.tsx:150
 msgid "Select a user, group, or other rule to grant access."
 msgstr "Vyberte uživatele, skupinu nebo jiné pravidlo pro udělení přístupu."
@@ -2559,8 +2592,8 @@ msgstr "Vyberte směr písma"
 msgid "Select theme preference"
 msgstr "Vyberte preferenci motivu"
 
-#: src/features/objects/components/field-editor.tsx:196
-#: src/features/objects/components/field-editor.tsx:279
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:252
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:335
 msgid "Select..."
 msgstr "Vyberte..."
 
@@ -2580,6 +2613,11 @@ msgstr "Odeslat znovu"
 #: ../../../lib/web/src/components/step-up-dialog.tsx:307
 msgid "Send email"
 msgstr "Odeslat e-mail"
+
+#: ../../../lib/web/src/components/game/game-chat-input.tsx:52
+#: ../../../lib/web/src/components/game/game-chat-input.tsx:61
+msgid "Send message"
+msgstr ""
 
 #: ../../../lib/web/src/lib/preference-utils.ts:145
 msgid "Serif"
@@ -2946,6 +2984,10 @@ msgstr "Typ"
 #: ../../../lib/web/src/components/command-menu.tsx:52
 msgid "Type a command or search..."
 msgstr "Zadejte příkaz nebo hledejte..."
+
+#: ../../../lib/web/src/components/game/game-chat-input.tsx:39
+msgid "Type a message…"
+msgstr ""
 
 #: ../../../lib/web/src/features/access/access-dialog.tsx:191
 msgid "Type to search users"

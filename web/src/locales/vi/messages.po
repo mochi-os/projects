@@ -85,6 +85,10 @@ msgstr "Tên {entityLabel}"
 msgid "{entityLabel} name is required"
 msgstr "Bắt buộc nhập tên {entityLabel}"
 
+#: ../../../lib/web/src/components/game/game-draw-offer-banner.tsx:29
+msgid "{opponentName} offered a draw"
+msgstr ""
+
 #: ../../../lib/web/src/components/data-table/bulk-actions.tsx:210
 msgid "{selectedCount, plural, one {{entityName} selected} other {{manyName} selected}}"
 msgstr "{selectedCount, plural, one {Đã chọn {entityName}} other {Đã chọn {manyName}}}"
@@ -119,7 +123,7 @@ msgid "+{0} ahead"
 msgstr "+{0} phía trước"
 
 #. placeholder {0}: countDeepChildren(object.id)
-#: src/features/board/components/board-card.tsx:362
+#: ../../../lib/web/src/components/entity/entity-board-card.tsx:421
 msgid "+{0} nested"
 msgstr "+{0} lồng nhau"
 
@@ -142,6 +146,10 @@ msgstr "24 giờ"
 #: ../../../lib/web/src/lib/preference-utils.ts:51
 msgid "Absolute (date and time)"
 msgstr "Tuyệt đối (ngày và giờ)"
+
+#: ../../../lib/web/src/components/game/game-draw-offer-banner.tsx:45
+msgid "Accept"
+msgstr ""
 
 #: src/routes/_authenticated/$projectId_.settings.tsx:77
 msgid "Access"
@@ -195,9 +203,9 @@ msgstr "Đã xác minh tài khoản"
 msgid "Activity"
 msgstr "Hoạt động"
 
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:717
 #: ../../../lib/web/src/features/access/access-dialog.tsx:332
 #: ../../../lib/web/src/features/accounts/account-add.tsx:196
-#: src/features/objects/components/field-editor.tsx:649
 #: src/features/requests/components/request-panel.tsx:103
 msgid "Add"
 msgstr "Thêm"
@@ -227,7 +235,7 @@ msgstr "Thêm tài khoản"
 msgid "Add an account to receive notifications and use services."
 msgstr "Thêm tài khoản để nhận thông báo và dùng dịch vụ."
 
-#: src/features/objects/components/field-editor.tsx:619
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:687
 msgid "Add checklist item"
 msgstr "Thêm mục danh sách kiểm tra"
 
@@ -248,7 +256,7 @@ msgstr "Thêm cột"
 msgid "Add field"
 msgstr "Thêm trường"
 
-#: src/features/objects/components/field-editor.tsx:637
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:705
 msgid "Add item..."
 msgstr "Thêm mục..."
 
@@ -540,6 +548,10 @@ msgstr "Đang kiểm tra trạng thái hợp nhất..."
 #: src/features/editor/components/add-dialogs.tsx:136
 msgid "Checklist"
 msgstr "Danh sách kiểm tra"
+
+#: ../../../lib/web/src/components/game/game-empty-state.tsx:38
+msgid "Choose a game from the sidebar or start a new one."
+msgstr ""
 
 #: src/features/projects/components/create-project-dialog.tsx:288
 msgid "Choose a template"
@@ -850,6 +862,10 @@ msgstr "Đã nhập dữ liệu ({0, plural, other {# đối tượng}}, {1, plu
 #: src/features/editor/components/add-dialogs.tsx:137
 msgid "Date"
 msgstr "Ngày"
+
+#: ../../../lib/web/src/components/game/game-draw-offer-banner.tsx:41
+msgid "Decline"
+msgstr ""
 
 #: ../../../lib/web/src/components/config-drawer.tsx:311
 msgid "Default"
@@ -1526,7 +1542,7 @@ msgstr "Lõm vào"
 msgid "Interests"
 msgstr "Sở thích"
 
-#: src/features/objects/components/field-editor.tsx:480
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:550
 msgid "Invalid date"
 msgstr "Ngày không hợp lệ"
 
@@ -1714,6 +1730,10 @@ msgstr "Hợp nhất thành công"
 msgid "Merging..."
 msgstr "Đang hợp nhất..."
 
+#: ../../../lib/web/src/components/game/game-chat-input.tsx:35
+msgid "Message"
+msgstr ""
+
 #: ../../../lib/web/src/lib/preference-utils.ts:85
 msgid "Metric"
 msgstr "Hệ mét"
@@ -1777,6 +1797,11 @@ msgstr "Mới"
 msgid "New {className}"
 msgstr "{className} mới"
 
+#: ../../../lib/web/src/components/game/game-empty-state.tsx:42
+#: ../../../lib/web/src/components/game/game-empty-state.tsx:54
+msgid "New game"
+msgstr ""
+
 #: src/features/projects/components/create-project-dialog.tsx:413
 msgid "Next"
 msgstr "Tiếp"
@@ -1830,6 +1855,10 @@ msgstr "Không có tài khoản đã kết nối"
 msgid "No diff available"
 msgstr "Không có diff"
 
+#: ../../../lib/web/src/components/game/game-empty-state.tsx:51
+msgid "No games yet"
+msgstr ""
+
 #: ../../../lib/web/src/features/access/access-dialog.tsx:241
 msgid "No groups available"
 msgstr "Không có nhóm nào"
@@ -1850,8 +1879,8 @@ msgstr "Không có yêu cầu hợp nhất"
 msgid "No notifications yet"
 msgstr "Chưa có thông báo"
 
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:336
 #: ../../../lib/web/src/components/person-picker.tsx:84
-#: src/features/objects/components/field-editor.tsx:280
 msgid "No people found"
 msgstr "Không tìm thấy người nào"
 
@@ -2303,7 +2332,7 @@ msgstr "Xoá trường {0}"
 msgid "Remove interest"
 msgstr "Xoá sở thích"
 
-#: src/features/objects/components/field-editor.tsx:603
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:671
 msgid "Remove item"
 msgstr "Xoá mục"
 
@@ -2499,6 +2528,10 @@ msgstr "Chọn {0}"
 msgid "Select a field"
 msgstr "Chọn một trường"
 
+#: ../../../lib/web/src/components/game/game-empty-state.tsx:37
+msgid "Select a game"
+msgstr ""
+
 #: ../../../lib/web/src/features/access/access-dialog.tsx:150
 msgid "Select a user, group, or other rule to grant access."
 msgstr "Chọn một người dùng, nhóm hoặc quy tắc khác để cấp quyền truy cập."
@@ -2559,8 +2592,8 @@ msgstr "Chọn hướng trang web"
 msgid "Select theme preference"
 msgstr "Chọn tùy chọn giao diện"
 
-#: src/features/objects/components/field-editor.tsx:196
-#: src/features/objects/components/field-editor.tsx:279
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:252
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:335
 msgid "Select..."
 msgstr "Chọn..."
 
@@ -2580,6 +2613,11 @@ msgstr "Gửi lại"
 #: ../../../lib/web/src/components/step-up-dialog.tsx:307
 msgid "Send email"
 msgstr "Gửi email"
+
+#: ../../../lib/web/src/components/game/game-chat-input.tsx:52
+#: ../../../lib/web/src/components/game/game-chat-input.tsx:61
+msgid "Send message"
+msgstr ""
 
 #: ../../../lib/web/src/lib/preference-utils.ts:145
 msgid "Serif"
@@ -2946,6 +2984,10 @@ msgstr "Loại"
 #: ../../../lib/web/src/components/command-menu.tsx:52
 msgid "Type a command or search..."
 msgstr "Nhập lệnh hoặc tìm kiếm..."
+
+#: ../../../lib/web/src/components/game/game-chat-input.tsx:39
+msgid "Type a message…"
+msgstr ""
 
 #: ../../../lib/web/src/features/access/access-dialog.tsx:191
 msgid "Type to search users"

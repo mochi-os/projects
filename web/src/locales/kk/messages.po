@@ -85,6 +85,10 @@ msgstr "{entityLabel} атауы"
 msgid "{entityLabel} name is required"
 msgstr "{entityLabel} атауы қажет"
 
+#: ../../../lib/web/src/components/game/game-draw-offer-banner.tsx:29
+msgid "{opponentName} offered a draw"
+msgstr ""
+
 #: ../../../lib/web/src/components/data-table/bulk-actions.tsx:210
 msgid "{selectedCount, plural, one {{entityName} selected} other {{manyName} selected}}"
 msgstr "{selectedCount, plural, one {{entityName} таңдалды} other {{manyName} таңдалды}}"
@@ -119,7 +123,7 @@ msgid "+{0} ahead"
 msgstr "+{0} алда"
 
 #. placeholder {0}: countDeepChildren(object.id)
-#: src/features/board/components/board-card.tsx:362
+#: ../../../lib/web/src/components/entity/entity-board-card.tsx:421
 msgid "+{0} nested"
 msgstr "+{0} кірістірілген"
 
@@ -142,6 +146,10 @@ msgstr "24 сағат"
 #: ../../../lib/web/src/lib/preference-utils.ts:51
 msgid "Absolute (date and time)"
 msgstr "Абсолютті (күн және уақыт)"
+
+#: ../../../lib/web/src/components/game/game-draw-offer-banner.tsx:45
+msgid "Accept"
+msgstr ""
 
 #: src/routes/_authenticated/$projectId_.settings.tsx:77
 msgid "Access"
@@ -195,9 +203,9 @@ msgstr "Тіркелгі расталды"
 msgid "Activity"
 msgstr "Әрекет"
 
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:717
 #: ../../../lib/web/src/features/access/access-dialog.tsx:332
 #: ../../../lib/web/src/features/accounts/account-add.tsx:196
-#: src/features/objects/components/field-editor.tsx:649
 #: src/features/requests/components/request-panel.tsx:103
 msgid "Add"
 msgstr "Қосу"
@@ -227,7 +235,7 @@ msgstr "Тіркелгі қосу"
 msgid "Add an account to receive notifications and use services."
 msgstr "Хабарландырулар алу және қызметтерді пайдалану үшін тіркелгі қосыңыз."
 
-#: src/features/objects/components/field-editor.tsx:619
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:687
 msgid "Add checklist item"
 msgstr "Тапсырмалар тізімінің тармағын қосу"
 
@@ -248,7 +256,7 @@ msgstr "Баған қосу"
 msgid "Add field"
 msgstr "Өріс қосу"
 
-#: src/features/objects/components/field-editor.tsx:637
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:705
 msgid "Add item..."
 msgstr "Тармақ қосу..."
 
@@ -540,6 +548,10 @@ msgstr "Біріктіру күйі тексерілуде..."
 #: src/features/editor/components/add-dialogs.tsx:136
 msgid "Checklist"
 msgstr "Тапсырмалар тізімі"
+
+#: ../../../lib/web/src/components/game/game-empty-state.tsx:38
+msgid "Choose a game from the sidebar or start a new one."
+msgstr ""
 
 #: src/features/projects/components/create-project-dialog.tsx:288
 msgid "Choose a template"
@@ -850,6 +862,10 @@ msgstr "Деректер импортталды ({0, plural, one {# нысан} 
 #: src/features/editor/components/add-dialogs.tsx:137
 msgid "Date"
 msgstr "Күн"
+
+#: ../../../lib/web/src/components/game/game-draw-offer-banner.tsx:41
+msgid "Decline"
+msgstr ""
 
 #: ../../../lib/web/src/components/config-drawer.tsx:311
 msgid "Default"
@@ -1526,7 +1542,7 @@ msgstr "Ішкі"
 msgid "Interests"
 msgstr "Қызығушылықтар"
 
-#: src/features/objects/components/field-editor.tsx:480
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:550
 msgid "Invalid date"
 msgstr "Жарамсыз күн"
 
@@ -1714,6 +1730,10 @@ msgstr "Сәтті біріктірілді"
 msgid "Merging..."
 msgstr "Біріктірілуде..."
 
+#: ../../../lib/web/src/components/game/game-chat-input.tsx:35
+msgid "Message"
+msgstr ""
+
 #: ../../../lib/web/src/lib/preference-utils.ts:85
 msgid "Metric"
 msgstr "Метрикалық"
@@ -1777,6 +1797,11 @@ msgstr "Жаңа"
 msgid "New {className}"
 msgstr "Жаңа {className}"
 
+#: ../../../lib/web/src/components/game/game-empty-state.tsx:42
+#: ../../../lib/web/src/components/game/game-empty-state.tsx:54
+msgid "New game"
+msgstr ""
+
 #: src/features/projects/components/create-project-dialog.tsx:413
 msgid "Next"
 msgstr "Келесі"
@@ -1830,6 +1855,10 @@ msgstr "Байланысқан тіркелгілер жоқ"
 msgid "No diff available"
 msgstr "Diff қолжетімсіз"
 
+#: ../../../lib/web/src/components/game/game-empty-state.tsx:51
+msgid "No games yet"
+msgstr ""
+
 #: ../../../lib/web/src/features/access/access-dialog.tsx:241
 msgid "No groups available"
 msgstr "Топтар қолжетімсіз"
@@ -1850,8 +1879,8 @@ msgstr "Біріктіру сұраулары жоқ"
 msgid "No notifications yet"
 msgstr "Әзірге хабарландыру жоқ"
 
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:336
 #: ../../../lib/web/src/components/person-picker.tsx:84
-#: src/features/objects/components/field-editor.tsx:280
 msgid "No people found"
 msgstr "Адамдар табылмады"
 
@@ -2303,7 +2332,7 @@ msgstr "{0} өрісін жою"
 msgid "Remove interest"
 msgstr "Қызығушылықты жою"
 
-#: src/features/objects/components/field-editor.tsx:603
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:671
 msgid "Remove item"
 msgstr "Элементті жою"
 
@@ -2499,6 +2528,10 @@ msgstr "{0} таңдау"
 msgid "Select a field"
 msgstr "Өрісті таңдау"
 
+#: ../../../lib/web/src/components/game/game-empty-state.tsx:37
+msgid "Select a game"
+msgstr ""
+
 #: ../../../lib/web/src/features/access/access-dialog.tsx:150
 msgid "Select a user, group, or other rule to grant access."
 msgstr "Қатынау беру үшін қолданушыны, топты немесе басқа ережені таңдаңыз."
@@ -2559,8 +2592,8 @@ msgstr "Сайт бағытын таңдау"
 msgid "Select theme preference"
 msgstr "Тақырып теңшелімін таңдау"
 
-#: src/features/objects/components/field-editor.tsx:196
-#: src/features/objects/components/field-editor.tsx:279
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:252
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:335
 msgid "Select..."
 msgstr "Таңдау..."
 
@@ -2580,6 +2613,11 @@ msgstr "Қайта жіберу"
 #: ../../../lib/web/src/components/step-up-dialog.tsx:307
 msgid "Send email"
 msgstr "Электрондық пошта жіберу"
+
+#: ../../../lib/web/src/components/game/game-chat-input.tsx:52
+#: ../../../lib/web/src/components/game/game-chat-input.tsx:61
+msgid "Send message"
+msgstr ""
 
 #: ../../../lib/web/src/lib/preference-utils.ts:145
 msgid "Serif"
@@ -2946,6 +2984,10 @@ msgstr "Түрі"
 #: ../../../lib/web/src/components/command-menu.tsx:52
 msgid "Type a command or search..."
 msgstr "Команданы теріңіз немесе іздеңіз..."
+
+#: ../../../lib/web/src/components/game/game-chat-input.tsx:39
+msgid "Type a message…"
+msgstr ""
 
 #: ../../../lib/web/src/features/access/access-dialog.tsx:191
 msgid "Type to search users"

@@ -85,6 +85,10 @@ msgstr "Igama le-{entityLabel}"
 msgid "{entityLabel} name is required"
 msgstr "Kufuneka igama le-{entityLabel}"
 
+#: ../../../lib/web/src/components/game/game-draw-offer-banner.tsx:29
+msgid "{opponentName} offered a draw"
+msgstr ""
+
 #: ../../../lib/web/src/components/data-table/bulk-actions.tsx:210
 msgid "{selectedCount, plural, one {{entityName} selected} other {{manyName} selected}}"
 msgstr "{selectedCount, plural, one {{entityName} ekhethiweyo} other {{manyName} ezikhethiweyo}}"
@@ -119,7 +123,7 @@ msgid "+{0} ahead"
 msgstr "+{0} ngaphambili"
 
 #. placeholder {0}: countDeepChildren(object.id)
-#: src/features/board/components/board-card.tsx:362
+#: ../../../lib/web/src/components/entity/entity-board-card.tsx:421
 msgid "+{0} nested"
 msgstr "+{0} ezifakelweyo"
 
@@ -142,6 +146,10 @@ msgstr "iiyure ezingama-24"
 #: ../../../lib/web/src/lib/preference-utils.ts:51
 msgid "Absolute (date and time)"
 msgstr "Eyokwenene (umhla nexesha)"
+
+#: ../../../lib/web/src/components/game/game-draw-offer-banner.tsx:45
+msgid "Accept"
+msgstr ""
 
 #: src/routes/_authenticated/$projectId_.settings.tsx:77
 msgid "Access"
@@ -195,9 +203,9 @@ msgstr "I-akhawunti iqinisekisiwe"
 msgid "Activity"
 msgstr "Umsebenzi"
 
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:717
 #: ../../../lib/web/src/features/access/access-dialog.tsx:332
 #: ../../../lib/web/src/features/accounts/account-add.tsx:196
-#: src/features/objects/components/field-editor.tsx:649
 #: src/features/requests/components/request-panel.tsx:103
 msgid "Add"
 msgstr "Yongeza"
@@ -227,7 +235,7 @@ msgstr "Yongeza i-akhawunti"
 msgid "Add an account to receive notifications and use services."
 msgstr "Yongeza i-akhawunti ukuze ufumane izaziso kwaye usebenzise iinkonzo."
 
-#: src/features/objects/components/field-editor.tsx:619
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:687
 msgid "Add checklist item"
 msgstr "Yongeza into yoluhlu lokuhlola"
 
@@ -248,7 +256,7 @@ msgstr "Yongeza ikholamu"
 msgid "Add field"
 msgstr "Yongeza intsimi"
 
-#: src/features/objects/components/field-editor.tsx:637
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:705
 msgid "Add item..."
 msgstr "Yongeza into..."
 
@@ -540,6 +548,10 @@ msgstr "Kujongwa imo yokudibanisa..."
 #: src/features/editor/components/add-dialogs.tsx:136
 msgid "Checklist"
 msgstr "Uluhlu lokuhlola"
+
+#: ../../../lib/web/src/components/game/game-empty-state.tsx:38
+msgid "Choose a game from the sidebar or start a new one."
+msgstr ""
 
 #: src/features/projects/components/create-project-dialog.tsx:288
 msgid "Choose a template"
@@ -850,6 +862,10 @@ msgstr "Idatha ingenisiwe ({0, plural, one {# into} other {# izinto}}, {1, plura
 #: src/features/editor/components/add-dialogs.tsx:137
 msgid "Date"
 msgstr "Umhla"
+
+#: ../../../lib/web/src/components/game/game-draw-offer-banner.tsx:41
+msgid "Decline"
+msgstr ""
 
 #: ../../../lib/web/src/components/config-drawer.tsx:311
 msgid "Default"
@@ -1526,7 +1542,7 @@ msgstr "Yangaphakathi"
 msgid "Interests"
 msgstr "Imidla"
 
-#: src/features/objects/components/field-editor.tsx:480
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:550
 msgid "Invalid date"
 msgstr "Umhla ongasebenziyo"
 
@@ -1714,6 +1730,10 @@ msgstr "Idityanisiwe ngempumelelo"
 msgid "Merging..."
 msgstr "Iyadityaniswa..."
 
+#: ../../../lib/web/src/components/game/game-chat-input.tsx:35
+msgid "Message"
+msgstr ""
+
 #: ../../../lib/web/src/lib/preference-utils.ts:85
 msgid "Metric"
 msgstr "I-Metric"
@@ -1777,6 +1797,11 @@ msgstr "Entsha"
 msgid "New {className}"
 msgstr "{className} Entsha"
 
+#: ../../../lib/web/src/components/game/game-empty-state.tsx:42
+#: ../../../lib/web/src/components/game/game-empty-state.tsx:54
+msgid "New game"
+msgstr ""
+
 #: src/features/projects/components/create-project-dialog.tsx:413
 msgid "Next"
 msgstr "Olandelayo"
@@ -1830,6 +1855,10 @@ msgstr "Akukho akhawunti zinxulumeneyo"
 msgid "No diff available"
 msgstr "Akukho mahluko ufumanekayo"
 
+#: ../../../lib/web/src/components/game/game-empty-state.tsx:51
+msgid "No games yet"
+msgstr ""
+
 #: ../../../lib/web/src/features/access/access-dialog.tsx:241
 msgid "No groups available"
 msgstr "Akukho maqela afumanekayo"
@@ -1850,8 +1879,8 @@ msgstr "Akukho zicelo zokudibanisa"
 msgid "No notifications yet"
 msgstr "Akukho zaziso okwangoku"
 
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:336
 #: ../../../lib/web/src/components/person-picker.tsx:84
-#: src/features/objects/components/field-editor.tsx:280
 msgid "No people found"
 msgstr "Akukho bantu bafumanekileyo"
 
@@ -2303,7 +2332,7 @@ msgstr "Susa indawo {0}"
 msgid "Remove interest"
 msgstr "Susa umnxili"
 
-#: src/features/objects/components/field-editor.tsx:603
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:671
 msgid "Remove item"
 msgstr "Susa into"
 
@@ -2499,6 +2528,10 @@ msgstr "Khetha {0}"
 msgid "Select a field"
 msgstr "Khetha indawo"
 
+#: ../../../lib/web/src/components/game/game-empty-state.tsx:37
+msgid "Select a game"
+msgstr ""
+
 #: ../../../lib/web/src/features/access/access-dialog.tsx:150
 msgid "Select a user, group, or other rule to grant access."
 msgstr "Khetha umsebenzisi, iqela, okanye omnye umgaqo ovumela ufikelelo."
@@ -2559,8 +2592,8 @@ msgstr "Khetha icala lesayithi"
 msgid "Select theme preference"
 msgstr "Khetha okukhethiweyo kwetimu"
 
-#: src/features/objects/components/field-editor.tsx:196
-#: src/features/objects/components/field-editor.tsx:279
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:252
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:335
 msgid "Select..."
 msgstr "Khetha..."
 
@@ -2580,6 +2613,11 @@ msgstr "Thumela kwakhona"
 #: ../../../lib/web/src/components/step-up-dialog.tsx:307
 msgid "Send email"
 msgstr "Thumela i-imeyile"
+
+#: ../../../lib/web/src/components/game/game-chat-input.tsx:52
+#: ../../../lib/web/src/components/game/game-chat-input.tsx:61
+msgid "Send message"
+msgstr ""
 
 #: ../../../lib/web/src/lib/preference-utils.ts:145
 msgid "Serif"
@@ -2946,6 +2984,10 @@ msgstr "Uhlobo"
 #: ../../../lib/web/src/components/command-menu.tsx:52
 msgid "Type a command or search..."
 msgstr "Bhala umyalelo okanye khangela..."
+
+#: ../../../lib/web/src/components/game/game-chat-input.tsx:39
+msgid "Type a message…"
+msgstr ""
 
 #: ../../../lib/web/src/features/access/access-dialog.tsx:191
 msgid "Type to search users"

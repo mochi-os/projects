@@ -7,7 +7,12 @@
 // Uses getAppPath() + '/' as baseURL
 
 import axios, { type AxiosRequestConfig } from "axios";
-import { getAppPath, useAuthStore, isInShell } from "@mochi/web";
+import {
+  getAppPath,
+  useAuthStore,
+  isInShell,
+  isSameOriginRequest,
+} from "@mochi/web";
 
 // Create a projects-specific axios instance that uses app path as baseURL
 const projectsClient = axios.create({
@@ -36,7 +41,7 @@ projectsClient.interceptors.request.use((config) => {
   // Add auth token
   const token = useAuthStore.getState().token;
 
-  if (token) {
+  if (token && isSameOriginRequest(config.baseURL, config.url)) {
     config.headers.Authorization = token.startsWith("Bearer ")
       ? token
       // eslint-disable-next-line lingui/no-unlocalized-strings

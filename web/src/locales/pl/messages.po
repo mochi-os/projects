@@ -14,7 +14,7 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. js-lingui-explicit-id
-#: ../../../lib/web/src/lib/error-normalizer.ts:204
+#: ../../../lib/web/src/lib/error-normalizer.ts:236
 msgid "Please check your internet connection and try again."
 msgstr ""
 
@@ -113,7 +113,7 @@ msgstr "{sentLabel} z {totalLabel}"
 msgid "{totalCount, plural, one {# item} other {# items}}"
 msgstr "{totalCount, plural, one {# element} few {# elementy} many {# elementów} other {# elementu}}"
 
-#: ../../../lib/web/src/components/layout/mochi-menu.tsx:132
+#: ../../../lib/web/src/components/layout/mochi-menu.tsx:148
 msgid "{unreadCount, plural, one {Open menu (# unread notification)} other {Open menu (# unread notifications)}}"
 msgstr "{unreadCount, plural, one {Otwórz menu (# nieprzeczytane powiadomienie)} few {Otwórz menu (# nieprzeczytane powiadomienia)} many {Otwórz menu (# nieprzeczytanych powiadomień)} other {Otwórz menu (# nieprzeczytanego powiadomienia)}}"
 
@@ -337,11 +337,11 @@ msgstr "Zezwól na żądania scalenia"
 msgid "Allow sort by"
 msgstr "Zezwól na sortowanie według"
 
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:159
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:178
 msgid "An error occurred"
 msgstr "Wystąpił błąd"
 
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:256
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:275
 msgid "An unexpected error occurred"
 msgstr "Wystąpił nieoczekiwany błąd"
 
@@ -462,6 +462,11 @@ msgstr "Plik binarny nie jest wyświetlany"
 #: src/features/objects/components/object-links.tsx:179
 msgid "Blocked by"
 msgstr "Zablokowane przez"
+
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:156
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:166
+msgid "Blocked navigation to untrusted link"
+msgstr "Zablokowano nawigację do niezaufanego linku"
 
 #: src/features/objects/components/object-links.tsx:47
 msgid "Blocks"
@@ -848,7 +853,7 @@ msgstr "Ciemny"
 msgid "Dark mode"
 msgstr "Tryb ciemny"
 
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:240
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:259
 msgid "Data conflict"
 msgstr "Konflikt danych"
 
@@ -1498,7 +1503,7 @@ msgid "History"
 msgstr ""
 
 #: ../../../lib/web/src/components/layout/app-sidebar.tsx:90
-#: ../../../lib/web/src/components/layout/mochi-menu.tsx:158
+#: ../../../lib/web/src/components/layout/mochi-menu.tsx:175
 #: ../../../lib/web/src/components/layout/top-bar.tsx:71
 #: ../../../lib/web/src/components/layout/top-bar.tsx:100
 msgid "Home"
@@ -1694,8 +1699,8 @@ msgstr "Zarządzaj połączonymi kontami dla powiadomień i usług."
 msgid "Manual"
 msgstr "Ręczny"
 
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:93
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:100
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:118
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:125
 #: ../../../lib/web/src/components/notifications-dropdown.tsx:224
 msgid "Mark all as read"
 msgstr "Oznacz wszystkie jako przeczytane"
@@ -1712,7 +1717,7 @@ msgstr "Serwer MCP"
 msgid "Medium"
 msgstr "Średni"
 
-#: ../../../lib/web/src/components/layout/mochi-menu.tsx:173
+#: ../../../lib/web/src/components/layout/mochi-menu.tsx:190
 msgid "Menu"
 msgstr "Menu"
 
@@ -1809,7 +1814,7 @@ msgid "Name must be 1000 characters or less"
 msgstr "Nazwa może mieć maksymalnie 1000 znaków"
 
 #: ../../../lib/web/src/features/errors/general-error.tsx:53
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:303
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:322
 msgid "Network error"
 msgstr "Błąd sieci"
 
@@ -2010,7 +2015,7 @@ msgid "Notifications"
 msgstr "Powiadomienia"
 
 #. placeholder {0}: unread.length
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:86
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:111
 msgid "Notifications: {0}"
 msgstr "Powiadomienia: {0}"
 
@@ -2062,7 +2067,7 @@ msgstr "Otwórz działania kolumny"
 msgid "Open design actions"
 msgstr "Otwórz akcje projektu"
 
-#: ../../../lib/web/src/components/layout/mochi-menu.tsx:133
+#: ../../../lib/web/src/components/layout/mochi-menu.tsx:149
 msgid "Open menu"
 msgstr "Otwórz menu"
 
@@ -2159,7 +2164,7 @@ msgstr "Dodaj co najmniej jedną klasę do projektu."
 
 #: ../../../lib/web/src/components/comment-composer.tsx:95
 #: ../../../lib/web/src/features/errors/general-error.tsx:54
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:304
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:323
 msgid "Please check your internet connection and try again."
 msgstr "Sprawdź połączenie internetowe i spróbuj ponownie."
 
@@ -2678,8 +2683,8 @@ msgstr "Szeryfowa"
 msgid "Server"
 msgstr "Serwer"
 
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:260
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:286
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:279
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:305
 msgid "Server error"
 msgstr "Błąd serwera"
 
@@ -2688,7 +2693,7 @@ msgstr "Błąd serwera"
 msgid "Server rules"
 msgstr "Zasady serwera"
 
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:210
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:229
 msgid "Session expired. Please log in again."
 msgstr "Sesja wygasła. Zaloguj się ponownie."
 
@@ -2700,8 +2705,8 @@ msgstr "Ustaw źródło i cel"
 msgid "Setting access..."
 msgstr "Ustawianie dostępu..."
 
-#: ../../../lib/web/src/components/layout/mochi-menu.tsx:93
-#: ../../../lib/web/src/components/layout/mochi-menu.tsx:99
+#: ../../../lib/web/src/components/layout/mochi-menu.tsx:109
+#: ../../../lib/web/src/components/layout/mochi-menu.tsx:115
 #: ../../../lib/web/src/components/layout/nav-user.tsx:84
 #: ../../../lib/web/src/components/layout/nav-user.tsx:148
 #: ../../../lib/web/src/components/layout/nav-user.tsx:198
@@ -2739,8 +2744,8 @@ msgstr "Wyświetlanie {totalShown} z {total}"
 msgid "Sidebar"
 msgstr "Pasek boczny"
 
-#: ../../../lib/web/src/components/layout/mochi-menu.tsx:105
-#: ../../../lib/web/src/components/layout/mochi-menu.tsx:111
+#: ../../../lib/web/src/components/layout/mochi-menu.tsx:121
+#: ../../../lib/web/src/components/layout/mochi-menu.tsx:127
 msgid "Sign out"
 msgstr "Wyloguj się"
 
@@ -2893,6 +2898,14 @@ msgstr "Ten kod jest nieprawidłowy lub wygasł."
 #: ../../../lib/web/src/features/errors/general-error.tsx:68
 msgid "The requested content could not be found."
 msgstr "Nie można znaleźć żądanej treści."
+
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:152
+#~ msgid "The server returned a web page instead of data, which usually means the address was wrong."
+#~ msgstr ""
+
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:152
+msgid "The server returned a web page instead of data."
+msgstr "Serwer zwrócił stronę internetową zamiast danych."
 
 #: ../../../lib/web/src/features/errors/maintenance-error.tsx:15
 msgid "The site is not available at the moment."
@@ -3054,7 +3067,7 @@ msgstr "Wpisz, aby szukać użytkowników"
 msgid "Type to search..."
 msgstr "Wpisz, aby szukać..."
 
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:282
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:301
 msgid "Unable to connect to remote server"
 msgstr "Nie można połączyć się ze zdalnym serwerem"
 
@@ -3152,7 +3165,7 @@ msgstr "Użyj klucza dostępu"
 msgid "Used for readable IDs like {0}-1, {1}-2"
 msgstr "Używane dla czytelnych identyfikatorów jak {0}-1, {1}-2"
 
-#: ../../../lib/web/src/components/layout/mochi-menu.tsx:86
+#: ../../../lib/web/src/components/layout/mochi-menu.tsx:102
 #: ../../../lib/web/src/features/access/access-dialog.tsx:158
 #: src/features/editor/components/add-dialogs.tsx:141
 msgid "User"
@@ -3197,8 +3210,8 @@ msgstr "Zobacz"
 msgid "View all"
 msgstr "Zobacz wszystko"
 
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:106
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:114
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:131
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:139
 msgid "View all notifications"
 msgstr "Zobacz wszystkie powiadomienia"
 

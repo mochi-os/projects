@@ -628,10 +628,15 @@ const projectsApi = {
   // ============= Data Import/Export Methods =============
 
   // Export data as JSON
-  exportData: async (
-    projectId: string,
-  ): Promise<{ data: Record<string, unknown> }> => {
-    return projectsRequest.get(endpoints.projects.dataExport(projectId));
+  // Export data as a zip container: a manifest plus one entry per attachment.
+  // Fetched as a blob because the attachment bytes never become JSON - the
+  // server streams them into the archive rather than base64-encoding them.
+  exportData: async (projectId: string): Promise<Blob> => {
+    const response = await projectsRequest.get<Blob>(
+      endpoints.projects.dataExport(projectId),
+      { responseType: "blob" },
+    );
+    return response as unknown as Blob;
   },
 
   // Pre-fetch attachment bytes on the server before an export. Remote
@@ -650,9 +655,13 @@ const projectsApi = {
     projectId: string,
     file: Blob,
     onProgress?: (event: AxiosProgressEvent) => void,
+    design?: boolean,
   ): Promise<{ data: { objects: number; comments: number; attachments: number; links: number } }> => {
     const form = new FormData();
-    form.append("file", file, "import.json");
+    form.append("file", file, "import.zip");
+    // A container carries the design its objects were validated against, so a
+    // restore applies both in one upload.
+    if (design) form.append("design", "1");
     return projectsRequest.post(endpoints.projects.dataImport(projectId), form, {
       timeout: 0,
       onUploadProgress: onProgress,

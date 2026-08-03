@@ -113,7 +113,7 @@ msgstr "{sentLabel} van {totalLabel}"
 msgid "{totalCount, plural, one {# item} other {# items}}"
 msgstr "{totalCount, plural, one {# item} other {# items}}"
 
-#: ../../../lib/web/src/components/layout/mochi-menu.tsx:148
+#: ../../../lib/web/src/components/layout/mochi-menu.tsx:165
 msgid "{unreadCount, plural, one {Open menu (# unread notification)} other {Open menu (# unread notifications)}}"
 msgstr "{unreadCount, plural, one {Menu openen (# ongelezen melding)} other {Menu openen (# ongelezen meldingen)}}"
 
@@ -245,8 +245,8 @@ msgstr "Checklist-item toevoegen"
 msgid "Add class"
 msgstr "Klasse toevoegen"
 
-#: src/routes/_authenticated/$projectId/index.tsx:966
-#: src/routes/_authenticated/$projectId/index.tsx:1160
+#: src/routes/_authenticated/$projectId/index.tsx:964
+#: src/routes/_authenticated/$projectId/index.tsx:1158
 msgid "Add column"
 msgstr "Kolom toevoegen"
 
@@ -325,7 +325,7 @@ msgstr "Alle projecten"
 msgid "Allow anyone to search for {0}"
 msgstr "Iedereen laten zoeken naar {0}"
 
-#: src/features/projects/components/create-project-dialog.tsx:344
+#: src/features/projects/components/create-project-dialog.tsx:376
 msgid "Allow anyone to search for project"
 msgstr "Iedereen toestaan om naar het project te zoeken"
 
@@ -427,7 +427,7 @@ msgid "Avatar for {name}"
 msgstr "Avatar voor {name}"
 
 #: ../../../lib/web/src/components/place-picker.tsx:156
-#: src/features/projects/components/create-project-dialog.tsx:500
+#: src/features/projects/components/create-project-dialog.tsx:532
 msgid "Back"
 msgstr "Terug"
 
@@ -463,8 +463,8 @@ msgstr "Binair bestand wordt niet weergegeven"
 msgid "Blocked by"
 msgstr "Geblokkeerd door"
 
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:156
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:166
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:237
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:247
 msgid "Blocked navigation to untrusted link"
 msgstr "Navigatie naar onbetrouwbare link geblokkeerd"
 
@@ -509,9 +509,9 @@ msgstr "Kan kind zijn van"
 #: src/features/board/components/board-column.tsx:606
 #: src/features/editor/components/option-dialog.tsx:146
 #: src/features/objects/components/comment-thread.tsx:240
-#: src/features/projects/components/create-project-dialog.tsx:411
+#: src/features/projects/components/create-project-dialog.tsx:443
 #: src/routes/_authenticated/$projectId/design.tsx:344
-#: src/routes/_authenticated/$projectId/index.tsx:1039
+#: src/routes/_authenticated/$projectId/index.tsx:1037
 msgid "Cancel"
 msgstr "Annuleren"
 
@@ -529,12 +529,12 @@ msgstr "Antwoord annuleren"
 msgid "Cannot merge automatically"
 msgstr "Kan niet automatisch samenvoegen"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:146
+#: ../../../lib/web/src/components/notification-category-button.tsx:102
 msgid "Category for this notification"
 msgstr "Categorie voor deze melding"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:127
-#: ../../../lib/web/src/components/notification-category-button.tsx:138
+#: ../../../lib/web/src/components/notification-category-button.tsx:83
+#: ../../../lib/web/src/components/notification-category-button.tsx:94
 msgid "Change notification category"
 msgstr "Meldingscategorie wijzigen"
 
@@ -554,11 +554,11 @@ msgstr "Merge-status controleren..."
 msgid "Checklist"
 msgstr "Checklist"
 
-#: ../../../lib/web/src/components/game/game-empty-state.tsx:38
+#: ../../../lib/web/src/components/game/game-empty-state.tsx:37
 msgid "Choose a game from the sidebar or start a new one."
 msgstr "Kies een spel uit de zijbalk of start een nieuw spel."
 
-#: src/features/projects/components/create-project-dialog.tsx:291
+#: src/features/projects/components/create-project-dialog.tsx:323
 msgid "Choose a template"
 msgstr "Kies een sjabloon"
 
@@ -764,6 +764,10 @@ msgstr "Kopiëren"
 msgid "Could not load this document. Please try again later."
 msgstr "Kon dit document niet laden. Probeer het later opnieuw."
 
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:121
+msgid "Couldn't load notifications"
+msgstr ""
+
 #: ../../../lib/web/src/components/step-up-dialog.tsx:184
 msgid "Couldn't send the code. Please try again."
 msgstr "Kon de code niet versturen. Probeer het opnieuw."
@@ -793,7 +797,7 @@ msgstr "{0} maken"
 msgid "Create a new item in this project"
 msgstr "Een nieuw item aanmaken in dit project"
 
-#: src/features/projects/components/create-project-dialog.tsx:293
+#: src/features/projects/components/create-project-dialog.tsx:325
 #: src/features/projects/pages/projects-list-page.tsx:103
 msgid "Create a new project"
 msgstr "Een nieuw project aanmaken"
@@ -804,10 +808,10 @@ msgid "Create new item"
 msgstr "Nieuw item aanmaken"
 
 #: src/components/layout/projects-layout.tsx:62
-#: src/features/projects/components/create-project-dialog.tsx:281
-#: src/features/projects/components/create-project-dialog.tsx:291
-#: src/features/projects/components/create-project-dialog.tsx:415
-#: src/features/projects/components/create-project-dialog.tsx:503
+#: src/features/projects/components/create-project-dialog.tsx:313
+#: src/features/projects/components/create-project-dialog.tsx:323
+#: src/features/projects/components/create-project-dialog.tsx:447
+#: src/features/projects/components/create-project-dialog.tsx:535
 msgid "Create project"
 msgstr "Project aanmaken"
 
@@ -820,18 +824,18 @@ msgstr "Aanmaken, bewerken, reageren en bekijken"
 msgid "Created"
 msgstr "Aangemaakt"
 
-#: src/features/projects/components/create-project-dialog.tsx:118
+#: src/features/projects/components/create-project-dialog.tsx:119
 msgid "Creating project..."
 msgstr "Project aanmaken..."
 
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:258
 #: src/features/objects/components/create-object-dialog.tsx:585
-#: src/features/projects/components/create-project-dialog.tsx:415
-#: src/features/projects/components/create-project-dialog.tsx:503
+#: src/features/projects/components/create-project-dialog.tsx:447
+#: src/features/projects/components/create-project-dialog.tsx:535
 msgid "Creating..."
 msgstr "Aanmaken..."
 
-#: ../../../lib/web/src/components/map-view.tsx:208
+#: ../../../lib/web/src/components/map-view.tsx:217
 msgid "Current location"
 msgstr "Huidige locatie"
 
@@ -845,9 +849,6 @@ msgstr "Aangepast"
 msgid "Dark"
 msgstr "Donker"
 
-#: ../../../lib/web/src/components/layout/nav-user.tsx:91
-#: ../../../lib/web/src/components/layout/nav-user.tsx:154
-#: ../../../lib/web/src/components/layout/nav-user.tsx:205
 #: ../../../lib/web/src/components/profile-dropdown.tsx:87
 #: ../../../lib/web/src/components/profile-dropdown.tsx:123
 msgid "Dark mode"
@@ -860,7 +861,8 @@ msgstr "Gegevensconflict"
 #. placeholder {0}: imported.data?.objects ?? 0
 #. placeholder {1}: imported.data?.comments ?? 0
 #. placeholder {2}: imported.data?.links ?? 0
-#: src/features/projects/components/create-project-dialog.tsx:148
+#: src/features/projects/components/create-project-dialog.tsx:138
+#: src/features/projects/components/create-project-dialog.tsx:168
 msgid "Data imported ({0, plural, one {# object} other {# objects}}, {1, plural, one {# comment} other {# comments}}, {2, plural, one {# link} other {# links}})"
 msgstr "Gegevens geïmporteerd ({0, plural, one {# object} other {# objecten}}, {1, plural, one {# opmerking} other {# opmerkingen}}, {2, plural, one {# koppeling} other {# koppelingen}})"
 
@@ -981,11 +983,11 @@ msgstr "Beschrijving"
 
 #: src/routes/_authenticated/$projectId/design.tsx:64
 #: src/routes/_authenticated/$projectId/design.tsx:132
-#: src/routes/_authenticated/$projectId/index.tsx:993
+#: src/routes/_authenticated/$projectId/index.tsx:991
 msgid "Design"
 msgstr "Ontwerp"
 
-#: src/features/projects/components/create-project-dialog.tsx:149
+#: src/features/projects/components/create-project-dialog.tsx:169
 #: src/routes/_authenticated/$projectId/design.tsx:109
 msgid "Design imported"
 msgstr "Ontwerp geïmporteerd"
@@ -1025,11 +1027,11 @@ msgstr "Richting"
 msgid "Directory"
 msgstr "Gids"
 
-#: ../../../lib/web/src/components/comment-composer.tsx:300
+#: ../../../lib/web/src/components/comment-composer.tsx:304
 msgid "Discard"
 msgstr "Verwerpen"
 
-#: ../../../lib/web/src/components/comment-composer.tsx:298
+#: ../../../lib/web/src/components/comment-composer.tsx:302
 msgid "Discard draft?"
 msgstr "Klad verwerpen?"
 
@@ -1043,8 +1045,8 @@ msgstr "Verbinding verbroken"
 msgid "Dismiss"
 msgstr "Sluiten"
 
-#: src/routes/_authenticated/$projectId/index.tsx:1068
-#: src/routes/_authenticated/$projectId/index.tsx:1073
+#: src/routes/_authenticated/$projectId/index.tsx:1066
+#: src/routes/_authenticated/$projectId/index.tsx:1071
 msgid "Dismiss board hint"
 msgstr "Bordhint sluiten"
 
@@ -1059,7 +1061,7 @@ msgstr "Toont de mobiele zijbalk."
 msgid "Done"
 msgstr "Klaar"
 
-#: src/routes/_authenticated/$projectId/index.tsx:1059
+#: src/routes/_authenticated/$projectId/index.tsx:1057
 msgid "Double click on a column to add content"
 msgstr "Dubbelklik op een kolom om inhoud toe te voegen"
 
@@ -1078,7 +1080,7 @@ msgid "Download failed"
 msgstr "Download mislukt"
 
 #: src/routes/_authenticated/$projectId/design.tsx:88
-#: src/routes/_authenticated/$projectId/index.tsx:222
+#: src/routes/_authenticated/$projectId/index.tsx:220
 msgid "Downloaded {filename}"
 msgstr "{filename} gedownload"
 
@@ -1087,7 +1089,7 @@ msgstr "{filename} gedownload"
 msgid "Draft"
 msgstr "Concept"
 
-#: src/routes/_authenticated/$projectId/index.tsx:1035
+#: src/routes/_authenticated/$projectId/index.tsx:1033
 msgid "Drag columns to re-order them"
 msgstr "Sleep kolommen om ze te herschikken"
 
@@ -1172,7 +1174,7 @@ msgstr "Uitklappen"
 msgid "Expand sidebar"
 msgstr "Zijbalk uitvouwen"
 
-#: src/routes/_authenticated/$projectId/index.tsx:977
+#: src/routes/_authenticated/$projectId/index.tsx:975
 msgid "Export data"
 msgstr "Gegevens exporteren"
 
@@ -1223,7 +1225,7 @@ msgstr "Link aanmaken mislukt"
 msgid "Failed to create option"
 msgstr "Optie aanmaken mislukt"
 
-#: src/features/projects/components/create-project-dialog.tsx:120
+#: src/features/projects/components/create-project-dialog.tsx:121
 msgid "Failed to create project"
 msgstr "Project aanmaken mislukt"
 
@@ -1251,8 +1253,8 @@ msgstr "Project verwijderen mislukt"
 msgid "Failed to delete view"
 msgstr "Weergave verwijderen mislukt"
 
-#: src/routes/_authenticated/$projectId/index.tsx:224
-#: src/routes/_authenticated/$projectId/index.tsx:227
+#: src/routes/_authenticated/$projectId/index.tsx:222
+#: src/routes/_authenticated/$projectId/index.tsx:225
 msgid "Failed to export data"
 msgstr "Exporteren van gegevens mislukt"
 
@@ -1265,7 +1267,8 @@ msgstr "Ontwerp exporteren mislukt"
 msgid "Failed to get RSS token"
 msgstr ""
 
-#: src/features/projects/components/create-project-dialog.tsx:150
+#: src/features/projects/components/create-project-dialog.tsx:139
+#: src/features/projects/components/create-project-dialog.tsx:170
 msgid "Failed to import data"
 msgstr "Importeren van gegevens mislukt"
 
@@ -1277,7 +1280,7 @@ msgstr "Ontwerp importeren mislukt"
 msgid "Failed to load"
 msgstr "Laden mislukt"
 
-#: ../../../lib/web/src/components/audit-timeline.tsx:81
+#: ../../../lib/web/src/components/audit-timeline.tsx:72
 msgid "Failed to load history"
 msgstr ""
 
@@ -1315,7 +1318,7 @@ msgstr "Mergen mislukt"
 msgid "Failed to post comment"
 msgstr "Reactie plaatsen mislukt"
 
-#: src/features/projects/components/create-project-dialog.tsx:218
+#: src/features/projects/components/create-project-dialog.tsx:250
 #: src/routes/_authenticated/$projectId/design.tsx:282
 msgid "Failed to read file"
 msgstr "Bestand lezen mislukt"
@@ -1355,17 +1358,13 @@ msgid "Failed to subscribe"
 msgstr "Abonneren mislukt"
 
 #: src/features/projects/pages/projects-list-page.tsx:177
-#: src/routes/_authenticated/$projectId/index.tsx:648
+#: src/routes/_authenticated/$projectId/index.tsx:646
 msgid "Failed to unsubscribe"
 msgstr "Afmelden mislukt"
 
 #: src/routes/_authenticated/$projectId_.settings.tsx:499
 msgid "Failed to update access level"
 msgstr "Toegangsniveau bijwerken mislukt"
-
-#: ../../../lib/web/src/components/notification-category-button.tsx:114
-msgid "Failed to update category"
-msgstr "Categorie bijwerken mislukt"
 
 #: src/features/objects/components/comment-list.tsx:165
 msgid "Failed to update comment"
@@ -1503,7 +1502,7 @@ msgid "History"
 msgstr ""
 
 #: ../../../lib/web/src/components/layout/app-sidebar.tsx:90
-#: ../../../lib/web/src/components/layout/mochi-menu.tsx:175
+#: ../../../lib/web/src/components/layout/mochi-menu.tsx:192
 #: ../../../lib/web/src/components/layout/top-bar.tsx:71
 #: ../../../lib/web/src/components/layout/top-bar.tsx:100
 msgid "Home"
@@ -1536,11 +1535,12 @@ msgstr "Imperial"
 msgid "Import design"
 msgstr "Ontwerp importeren"
 
-#: src/features/projects/components/create-project-dialog.tsx:354
+#: src/features/projects/components/create-project-dialog.tsx:386
 msgid "Import from backup (optional)"
 msgstr "Importeren uit back-up (optioneel)"
 
-#: src/features/projects/components/create-project-dialog.tsx:145
+#: src/features/projects/components/create-project-dialog.tsx:136
+#: src/features/projects/components/create-project-dialog.tsx:165
 msgid "Importing data..."
 msgstr "Gegevens importeren..."
 
@@ -1568,7 +1568,7 @@ msgstr "Interesses"
 msgid "Invalid date"
 msgstr "Ongeldige datum"
 
-#: src/features/projects/components/create-project-dialog.tsx:211
+#: src/features/projects/components/create-project-dialog.tsx:243
 #: src/routes/_authenticated/$projectId/design.tsx:278
 msgid "Invalid JSON file"
 msgstr "Ongeldig JSON-bestand"
@@ -1627,7 +1627,7 @@ msgid "Light"
 msgstr "Licht"
 
 #: ../../../lib/web/src/components/options-menu.tsx:190
-#: src/routes/_authenticated/$projectId/index.tsx:983
+#: src/routes/_authenticated/$projectId/index.tsx:981
 msgid "Link"
 msgstr "Link"
 
@@ -1659,7 +1659,7 @@ msgstr "Item laden"
 msgid "Loading item details"
 msgstr "Itemdetails laden"
 
-#: src/features/projects/components/create-project-dialog.tsx:436
+#: src/features/projects/components/create-project-dialog.tsx:468
 msgid "Loading templates..."
 msgstr "Templates laden..."
 
@@ -1669,9 +1669,6 @@ msgstr "Templates laden..."
 msgid "Loading..."
 msgstr "Laden..."
 
-#: ../../../lib/web/src/components/layout/nav-user.tsx:101
-#: ../../../lib/web/src/components/layout/nav-user.tsx:167
-#: ../../../lib/web/src/components/layout/nav-user.tsx:215
 #: ../../../lib/web/src/components/profile-dropdown.tsx:69
 #: ../../../lib/web/src/components/profile-dropdown.tsx:98
 #: ../../../lib/web/src/components/sign-out-dialog.tsx:26
@@ -1699,8 +1696,8 @@ msgstr "Beheer je gekoppelde accounts voor meldingen en diensten."
 msgid "Manual"
 msgstr "Handmatig"
 
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:118
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:125
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:202
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:209
 #: ../../../lib/web/src/components/notifications-dropdown.tsx:224
 msgid "Mark all as read"
 msgstr "Alles als gelezen markeren"
@@ -1717,7 +1714,7 @@ msgstr "MCP-server"
 msgid "Medium"
 msgstr "Gemiddeld"
 
-#: ../../../lib/web/src/components/layout/mochi-menu.tsx:190
+#: ../../../lib/web/src/components/layout/mochi-menu.tsx:207
 msgid "Menu"
 msgstr "Menu"
 
@@ -1786,7 +1783,7 @@ msgstr "Maandag"
 msgid "More options"
 msgstr ""
 
-#: src/features/projects/components/create-project-dialog.tsx:309
+#: src/features/projects/components/create-project-dialog.tsx:341
 msgid "My project"
 msgstr "Mijn project"
 
@@ -1796,7 +1793,7 @@ msgstr "Mijn project"
 #: src/features/editor/components/edit-dialogs.tsx:741
 #: src/features/editor/components/edit-dialogs.tsx:1065
 #: src/features/editor/components/option-dialog.tsx:112
-#: src/features/projects/components/create-project-dialog.tsx:299
+#: src/features/projects/components/create-project-dialog.tsx:331
 #: src/routes/_authenticated/$projectId_.settings.tsx:301
 msgid "Name"
 msgstr "Naam"
@@ -1805,7 +1802,7 @@ msgstr "Naam"
 msgid "Name cannot contain angle brackets, backslash, semicolon, quotes or backticks"
 msgstr "Naam mag geen punthaken, backslash, puntkomma, aanhalingstekens of backticks bevatten"
 
-#: src/features/projects/components/create-project-dialog.tsx:88
+#: src/features/projects/components/create-project-dialog.tsx:89
 msgid "Name is required"
 msgstr "Naam is verplicht"
 
@@ -1820,21 +1817,21 @@ msgstr "Netwerkfout"
 
 #: ../../../lib/web/src/components/ui/sort-selector.tsx:43
 #: src/features/objects/components/create-object-dialog.tsx:399
-#: src/routes/_authenticated/$projectId/index.tsx:920
-#: src/routes/_authenticated/$projectId/index.tsx:938
+#: src/routes/_authenticated/$projectId/index.tsx:918
+#: src/routes/_authenticated/$projectId/index.tsx:936
 msgid "New"
 msgstr "Nieuw"
 
-#: src/routes/_authenticated/$projectId/index.tsx:917
+#: src/routes/_authenticated/$projectId/index.tsx:915
 msgid "New {className}"
 msgstr "Nieuw(e) {className}"
 
-#: ../../../lib/web/src/components/game/game-empty-state.tsx:42
-#: ../../../lib/web/src/components/game/game-empty-state.tsx:54
+#: ../../../lib/web/src/components/game/game-empty-state.tsx:41
+#: ../../../lib/web/src/components/game/game-empty-state.tsx:53
 msgid "New game"
 msgstr "Nieuw spel"
 
-#: src/features/projects/components/create-project-dialog.tsx:417
+#: src/features/projects/components/create-project-dialog.tsx:449
 msgid "Next"
 msgstr "Volgende"
 
@@ -1887,7 +1884,7 @@ msgstr "Geen verbonden accounts"
 msgid "No diff available"
 msgstr "Geen diff beschikbaar"
 
-#: ../../../lib/web/src/components/game/game-empty-state.tsx:51
+#: ../../../lib/web/src/components/game/game-empty-state.tsx:50
 msgid "No games yet"
 msgstr "Nog geen spellen"
 
@@ -1953,9 +1950,13 @@ msgstr "Geen status"
 msgid "No time zone found."
 msgstr "Geen tijdzone gevonden."
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:150
+#: ../../../lib/web/src/components/notification-category-button.tsx:106
 msgid "No topic record yet — try again after the next notification."
 msgstr "Nog geen topicregistratie — probeer opnieuw na de volgende melding."
+
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:132
+msgid "No unread notifications"
+msgstr ""
 
 #: ../../../lib/web/src/features/access/access-dialog.tsx:206
 msgid "No users found"
@@ -2015,7 +2016,7 @@ msgid "Notifications"
 msgstr "Meldingen"
 
 #. placeholder {0}: unread.length
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:111
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:195
 msgid "Notifications: {0}"
 msgstr "Meldingen: {0}"
 
@@ -2067,7 +2068,7 @@ msgstr "Kolomacties openen"
 msgid "Open design actions"
 msgstr "Designacties openen"
 
-#: ../../../lib/web/src/components/layout/mochi-menu.tsx:149
+#: ../../../lib/web/src/components/layout/mochi-menu.tsx:166
 msgid "Open menu"
 msgstr "Menu openen"
 
@@ -2086,7 +2087,7 @@ msgstr "Navigatiemenu openen"
 msgid "Open option actions"
 msgstr "Optieacties openen"
 
-#: src/routes/_authenticated/$projectId/index.tsx:946
+#: src/routes/_authenticated/$projectId/index.tsx:944
 msgid "Open page actions"
 msgstr "Pagina-acties openen"
 
@@ -2157,12 +2158,12 @@ msgstr "Patroon (regex)"
 msgid "Pick a date"
 msgstr "Kies een datum"
 
-#: src/routes/_authenticated/$projectId/index.tsx:756
-#: src/routes/_authenticated/$projectId/index.tsx:790
+#: src/routes/_authenticated/$projectId/index.tsx:754
+#: src/routes/_authenticated/$projectId/index.tsx:788
 msgid "Please add one or more classes to the project design."
 msgstr "Voeg een of meer klassen toe aan het project-design."
 
-#: ../../../lib/web/src/components/comment-composer.tsx:95
+#: ../../../lib/web/src/components/comment-composer.tsx:99
 #: ../../../lib/web/src/features/errors/general-error.tsx:54
 #: ../../../lib/web/src/lib/api-response-interceptors.ts:323
 msgid "Please check your internet connection and try again."
@@ -2172,7 +2173,7 @@ msgstr "Controleer je internetverbinding en probeer het opnieuw."
 msgid "Please log in with the appropriate credentials <0/> to access this resource."
 msgstr "Log in met de juiste inloggegevens <0/> om toegang te krijgen tot deze bron."
 
-#: src/features/projects/components/create-project-dialog.tsx:104
+#: src/features/projects/components/create-project-dialog.tsx:105
 msgid "Please select a template"
 msgstr "Selecteer een template"
 
@@ -2192,7 +2193,7 @@ msgstr ""
 msgid "Posts and comments"
 msgstr ""
 
-#: src/features/projects/components/create-project-dialog.tsx:321
+#: src/features/projects/components/create-project-dialog.tsx:353
 #: src/routes/_authenticated/$projectId_.settings.tsx:318
 msgid "Prefix"
 msgstr "Prefix"
@@ -2211,7 +2212,6 @@ msgstr "Privacy"
 msgid "Processing…"
 msgstr "Verwerken…"
 
-#: ../../../lib/web/src/components/layout/nav-user.tsx:137
 #: ../../../lib/web/src/components/profile-dropdown.tsx:114
 msgid "Profile"
 msgstr "Profiel"
@@ -2226,7 +2226,7 @@ msgstr "Project"
 msgid "Project actions"
 msgstr "Projectacties"
 
-#: src/features/projects/components/create-project-dialog.tsx:119
+#: src/features/projects/components/create-project-dialog.tsx:120
 msgid "Project created"
 msgstr "Project aangemaakt"
 
@@ -2234,7 +2234,7 @@ msgstr "Project aangemaakt"
 msgid "Project deleted"
 msgstr "Project verwijderd"
 
-#: src/routes/_authenticated/$projectId/index.tsx:1165
+#: src/routes/_authenticated/$projectId/index.tsx:1163
 msgid "Project link"
 msgstr "Projectlink"
 
@@ -2281,7 +2281,7 @@ msgstr "Verhoogd"
 msgid "Re-link your accounts on this server"
 msgstr "Uw accounts opnieuw koppelen op deze server"
 
-#: src/routes/_authenticated/$projectId/index.tsx:970
+#: src/routes/_authenticated/$projectId/index.tsx:968
 msgid "Re-order columns"
 msgstr "Kolommen herschikken"
 
@@ -2311,7 +2311,7 @@ msgstr "Aanbevolen projecten"
 msgid "Reconnecting ({retries})..."
 msgstr "Opnieuw verbinden ({retries})..."
 
-#: ../../../lib/web/src/components/layout/authenticated-layout.tsx:133
+#: ../../../lib/web/src/components/layout/authenticated-layout.tsx:136
 msgid "Redirecting to login."
 msgstr "Bezig met doorverwijzen naar login."
 
@@ -2332,12 +2332,12 @@ msgstr "Relatief (5m, 3u, 2d)"
 msgid "Relative within 24 hours, else absolute"
 msgstr "Relatief binnen 24 uur, anders absoluut"
 
-#: ../../../lib/web/src/components/comment-composer.tsx:232
+#: ../../../lib/web/src/components/comment-composer.tsx:236
 #: ../../../lib/web/src/features/access/access-list.tsx:270
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:180
 #: src/features/editor/components/add-dialogs.tsx:188
 #: src/features/objects/components/create-object-dialog.tsx:536
-#: src/features/projects/components/create-project-dialog.tsx:397
+#: src/features/projects/components/create-project-dialog.tsx:429
 msgid "Remove"
 msgstr "Verwijderen"
 
@@ -2449,7 +2449,7 @@ msgstr "Alle instellingen terugzetten naar standaardwaarden"
 msgid "Resolve these conflicts manually before merging."
 msgstr "Los deze conflicten handmatig op voor het mergen."
 
-#: ../../../lib/web/src/components/comment-composer.tsx:249
+#: ../../../lib/web/src/components/comment-composer.tsx:253
 msgid "Retry"
 msgstr "Opnieuw proberen"
 
@@ -2498,7 +2498,7 @@ msgstr "Zaterdag"
 #: ../../../lib/web/src/components/ui/secret-field.tsx:77
 #: src/features/editor/components/option-dialog.tsx:150
 #: src/features/objects/components/comment-thread.tsx:260
-#: src/routes/_authenticated/$projectId/index.tsx:1051
+#: src/routes/_authenticated/$projectId/index.tsx:1049
 msgid "Save"
 msgstr "Opslaan"
 
@@ -2584,7 +2584,7 @@ msgstr "{0} selecteren"
 msgid "Select a field"
 msgstr "Selecteer een veld"
 
-#: ../../../lib/web/src/components/game/game-empty-state.tsx:37
+#: ../../../lib/web/src/components/game/game-empty-state.tsx:36
 msgid "Select a game"
 msgstr "Selecteer een spel"
 
@@ -2705,16 +2705,13 @@ msgstr "Stel herkomst en bestemming in"
 msgid "Setting access..."
 msgstr "Toegang instellen..."
 
-#: ../../../lib/web/src/components/layout/mochi-menu.tsx:109
-#: ../../../lib/web/src/components/layout/mochi-menu.tsx:115
-#: ../../../lib/web/src/components/layout/nav-user.tsx:84
-#: ../../../lib/web/src/components/layout/nav-user.tsx:148
-#: ../../../lib/web/src/components/layout/nav-user.tsx:198
+#: ../../../lib/web/src/components/layout/mochi-menu.tsx:126
+#: ../../../lib/web/src/components/layout/mochi-menu.tsx:132
 #: ../../../lib/web/src/components/options-menu.tsx:196
 #: src/routes/_authenticated/$projectId_.settings.tsx:76
 #: src/routes/_authenticated/$projectId_.settings.tsx:167
 #: src/routes/_authenticated/$projectId_.settings.tsx:190
-#: src/routes/_authenticated/$projectId/index.tsx:1003
+#: src/routes/_authenticated/$projectId/index.tsx:1001
 msgid "Settings"
 msgstr "Instellingen"
 
@@ -2744,12 +2741,12 @@ msgstr "{totalShown} van {total} weergegeven"
 msgid "Sidebar"
 msgstr "Zijbalk"
 
-#: ../../../lib/web/src/components/layout/mochi-menu.tsx:121
-#: ../../../lib/web/src/components/layout/mochi-menu.tsx:127
+#: ../../../lib/web/src/components/layout/mochi-menu.tsx:138
+#: ../../../lib/web/src/components/layout/mochi-menu.tsx:144
 msgid "Sign out"
 msgstr "Afmelden"
 
-#: ../../../lib/web/src/components/layout/authenticated-layout.tsx:131
+#: ../../../lib/web/src/components/layout/authenticated-layout.tsx:134
 msgid "Signing out..."
 msgstr "Uitloggen..."
 
@@ -2849,7 +2846,7 @@ msgstr "Zondag"
 msgid "Switch to view 1-9"
 msgstr "Schakelen naar weergave 1-9"
 
-#: ../../../lib/web/src/components/audit-timeline.tsx:101
+#: ../../../lib/web/src/components/audit-timeline.tsx:111
 #: ../../../lib/web/src/components/config-drawer.tsx:209
 #: ../../../lib/web/src/components/theme-switch.tsx:59
 #: ../../../lib/web/src/lib/preference-utils.ts:21
@@ -2900,10 +2897,6 @@ msgid "The requested content could not be found."
 msgstr "De opgevraagde inhoud kon niet worden gevonden."
 
 #: ../../../lib/web/src/lib/api-response-interceptors.ts:152
-#~ msgid "The server returned a web page instead of data, which usually means the address was wrong."
-#~ msgstr ""
-
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:152
 msgid "The server returned a web page instead of data."
 msgstr "De server heeft een webpagina teruggestuurd in plaats van gegevens."
 
@@ -2949,7 +2942,7 @@ msgid "This will permanently delete \"{projectName}\" and all its objects, comme
 msgstr "Dit zal \"{projectName}\" en alle objecten, reacties en bijlagen permanent verwijderen. Deze actie kan niet ongedaan gemaakt worden."
 
 #. placeholder {0}: project.project.name
-#: src/routes/_authenticated/$projectId/index.tsx:1181
+#: src/routes/_authenticated/$projectId/index.tsx:1179
 msgid "This will remove \"{0}\" from your sidebar and stop updates for this project."
 msgstr "Dit zal \"{0}\" uit uw zijbalk verwijderen en updates voor dit project stoppen."
 
@@ -3071,12 +3064,12 @@ msgstr "Typ om te zoeken..."
 msgid "Unable to connect to remote server"
 msgstr "Kan geen verbinding maken met de externe server"
 
-#: ../../../lib/web/src/lib/auth-manager.ts:85
-#: ../../../lib/web/src/lib/auth-manager.ts:97
+#: ../../../lib/web/src/lib/auth-manager.ts:92
+#: ../../../lib/web/src/lib/auth-manager.ts:104
 msgid "Unable to redirect to login. Please try again."
 msgstr "Kan niet doorverwijzen naar login. Probeer opnieuw."
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:158
+#: ../../../lib/web/src/components/notification-category-button.tsx:114
 msgid "Unassigned"
 msgstr "Niet toegewezen"
 
@@ -3105,22 +3098,22 @@ msgstr "Onbekend"
 #: src/features/projects/pages/projects-list-page.tsx:147
 #: src/features/projects/pages/projects-list-page.tsx:166
 #: src/features/projects/pages/projects-list-page.tsx:168
-#: src/routes/_authenticated/$projectId/index.tsx:1011
-#: src/routes/_authenticated/$projectId/index.tsx:1182
+#: src/routes/_authenticated/$projectId/index.tsx:1009
+#: src/routes/_authenticated/$projectId/index.tsx:1180
 msgid "Unsubscribe"
 msgstr "Uitschrijven"
 
-#: src/routes/_authenticated/$projectId/index.tsx:1180
+#: src/routes/_authenticated/$projectId/index.tsx:1178
 msgid "Unsubscribe from project?"
 msgstr "Uitschrijven van project?"
 
 #: src/features/projects/pages/projects-list-page.tsx:176
-#: src/routes/_authenticated/$projectId/index.tsx:647
+#: src/routes/_authenticated/$projectId/index.tsx:645
 msgid "Unsubscribed"
 msgstr "Uitgeschreven"
 
 #: src/features/projects/pages/projects-list-page.tsx:175
-#: src/routes/_authenticated/$projectId/index.tsx:646
+#: src/routes/_authenticated/$projectId/index.tsx:644
 msgid "Unsubscribing..."
 msgstr "Uitschrijven..."
 
@@ -3146,7 +3139,7 @@ msgstr "Toegang bijwerken..."
 msgid "Upload"
 msgstr "Uploaden"
 
-#: src/features/projects/components/create-project-dialog.tsx:370
+#: src/features/projects/components/create-project-dialog.tsx:402
 #: src/routes/_authenticated/$projectId/design.tsx:337
 msgid "Upload .json file"
 msgstr ".json-bestand uploaden"
@@ -3161,11 +3154,11 @@ msgstr "Gebruik je passkey"
 
 #. placeholder {0}: prefix || "project"
 #. placeholder {1}: prefix || "project"
-#: src/features/projects/components/create-project-dialog.tsx:338
+#: src/features/projects/components/create-project-dialog.tsx:370
 msgid "Used for readable IDs like {0}-1, {1}-2"
 msgstr "Gebruikt voor leesbare ID's zoals {0}-1, {1}-2"
 
-#: ../../../lib/web/src/components/layout/mochi-menu.tsx:102
+#: ../../../lib/web/src/components/layout/mochi-menu.tsx:119
 #: ../../../lib/web/src/features/access/access-dialog.tsx:158
 #: src/features/editor/components/add-dialogs.tsx:141
 msgid "User"
@@ -3210,8 +3203,8 @@ msgstr "Weergeven"
 msgid "View all"
 msgstr "Alles weergeven"
 
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:131
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:139
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:215
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:223
 msgid "View all notifications"
 msgstr "Alle meldingen weergeven"
 
@@ -3227,7 +3220,7 @@ msgstr "Weergaveopties"
 msgid "View only"
 msgstr "Alleen-lezen"
 
-#: src/routes/_authenticated/$projectId/index.tsx:955
+#: src/routes/_authenticated/$projectId/index.tsx:953
 msgid "View options"
 msgstr "Weergaveopties"
 
@@ -3249,7 +3242,7 @@ msgstr "Gevolgd"
 msgid "Watched only"
 msgstr "Alleen gevolgd"
 
-#: src/features/projects/components/create-project-dialog.tsx:431
+#: src/features/projects/components/create-project-dialog.tsx:463
 msgid "We have auto-selected the best matching template."
 msgstr "We hebben automatisch het best passende sjabloon geselecteerd."
 
@@ -3290,10 +3283,6 @@ msgstr "Je hebt niet de benodigde toestemming <0/>om deze bron te bekijken."
 msgid "You have no projects yet."
 msgstr "U hebt nog geen projecten."
 
-#: ../../../lib/web/src/lib/show-submitted-data.tsx:9
-msgid "You submitted the following values:"
-msgstr "Je hebt de volgende waarden verzonden:"
-
 #: ../../../lib/web/src/components/notifications-dropdown.tsx:193
 msgid "You're all caught up!"
 msgstr "Je bent helemaal bij!"
@@ -3302,18 +3291,18 @@ msgstr "Je bent helemaal bij!"
 msgid "Your account was moved here from {source}. Until you delete it there, messages and notifications may reach both servers, some of your content keeps being served from the old server, and followers may take a few minutes to find you here."
 msgstr "Uw account is hier naartoe verplaatst vanuit {source}. Totdat u het daar verwijdert, kunnen berichten en meldingen beide servers bereiken, wordt een deel van uw inhoud nog steeds van de oude server geleverd, en kan het een paar minuten duren voordat volgers u hier vinden."
 
-#: ../../../lib/web/src/components/comment-composer.tsx:291
+#: ../../../lib/web/src/components/comment-composer.tsx:295
 msgid "Your attachments will be lost."
 msgstr "Je bijlagen gaan verloren."
 
-#: src/features/projects/components/create-project-dialog.tsx:427
+#: src/features/projects/components/create-project-dialog.tsx:459
 msgid "Your backup contains objects of type:"
 msgstr "Uw back-up bevat objecten van het type:"
 
-#: ../../../lib/web/src/components/comment-composer.tsx:289
+#: ../../../lib/web/src/components/comment-composer.tsx:293
 msgid "Your text and attachments will be lost."
 msgstr "Je tekst en bijlagen gaan verloren."
 
-#: ../../../lib/web/src/components/comment-composer.tsx:292
+#: ../../../lib/web/src/components/comment-composer.tsx:296
 msgid "Your text will be lost."
 msgstr "Uw tekst gaat verloren."

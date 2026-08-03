@@ -113,7 +113,7 @@ msgstr "{totalLabel} ичинен {sentLabel}"
 msgid "{totalCount, plural, one {# item} other {# items}}"
 msgstr "{totalCount, plural, one {# элемент} other {# элемент}}"
 
-#: ../../../lib/web/src/components/layout/mochi-menu.tsx:148
+#: ../../../lib/web/src/components/layout/mochi-menu.tsx:165
 msgid "{unreadCount, plural, one {Open menu (# unread notification)} other {Open menu (# unread notifications)}}"
 msgstr "{unreadCount, plural, one {Менюну ачуу (# окулбаган билдирүү)} other {Менюну ачуу (# окулбаган билдирүү)}}"
 
@@ -245,8 +245,8 @@ msgstr "Текшерүү тизмесине кошуу"
 msgid "Add class"
 msgstr "Класс кошуу"
 
-#: src/routes/_authenticated/$projectId/index.tsx:966
-#: src/routes/_authenticated/$projectId/index.tsx:1160
+#: src/routes/_authenticated/$projectId/index.tsx:964
+#: src/routes/_authenticated/$projectId/index.tsx:1158
 msgid "Add column"
 msgstr "Тилке кошуу"
 
@@ -325,7 +325,7 @@ msgstr "Бардык долбоорлор"
 msgid "Allow anyone to search for {0}"
 msgstr "Ар кимге {0} издөөгө уруксат берүү"
 
-#: src/features/projects/components/create-project-dialog.tsx:344
+#: src/features/projects/components/create-project-dialog.tsx:376
 msgid "Allow anyone to search for project"
 msgstr "Долбоорду издөөгө ар кимге уруксат берүү"
 
@@ -427,7 +427,7 @@ msgid "Avatar for {name}"
 msgstr "{name} үчүн аватар"
 
 #: ../../../lib/web/src/components/place-picker.tsx:156
-#: src/features/projects/components/create-project-dialog.tsx:500
+#: src/features/projects/components/create-project-dialog.tsx:532
 msgid "Back"
 msgstr "Артка"
 
@@ -463,8 +463,8 @@ msgstr "Экилик файл көрсөтүлбөйт"
 msgid "Blocked by"
 msgstr "Тарабынан бөгөттөлгөн"
 
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:156
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:166
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:237
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:247
 msgid "Blocked navigation to untrusted link"
 msgstr "Ишенимсиз шилтемеге өтүү бөгөттөлдү"
 
@@ -509,9 +509,9 @@ msgstr "Балдары боло алат"
 #: src/features/board/components/board-column.tsx:606
 #: src/features/editor/components/option-dialog.tsx:146
 #: src/features/objects/components/comment-thread.tsx:240
-#: src/features/projects/components/create-project-dialog.tsx:411
+#: src/features/projects/components/create-project-dialog.tsx:443
 #: src/routes/_authenticated/$projectId/design.tsx:344
-#: src/routes/_authenticated/$projectId/index.tsx:1039
+#: src/routes/_authenticated/$projectId/index.tsx:1037
 msgid "Cancel"
 msgstr "Жокко чыгаруу"
 
@@ -529,12 +529,12 @@ msgstr "Жоопту жокко чыгаруу"
 msgid "Cannot merge automatically"
 msgstr "Автоматтык бириктирүү мүмкүн эмес"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:146
+#: ../../../lib/web/src/components/notification-category-button.tsx:102
 msgid "Category for this notification"
 msgstr "Бул эскертүү үчүн категория"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:127
-#: ../../../lib/web/src/components/notification-category-button.tsx:138
+#: ../../../lib/web/src/components/notification-category-button.tsx:83
+#: ../../../lib/web/src/components/notification-category-button.tsx:94
 msgid "Change notification category"
 msgstr "Эскертүү категориясын өзгөртүү"
 
@@ -554,11 +554,11 @@ msgstr "Merge абалын текшерүү..."
 msgid "Checklist"
 msgstr "Текшерүү тизмеси"
 
-#: ../../../lib/web/src/components/game/game-empty-state.tsx:38
+#: ../../../lib/web/src/components/game/game-empty-state.tsx:37
 msgid "Choose a game from the sidebar or start a new one."
 msgstr "Каптал тилкесинен оюнду тандаңыз же жаңысын баштаңыз."
 
-#: src/features/projects/components/create-project-dialog.tsx:291
+#: src/features/projects/components/create-project-dialog.tsx:323
 msgid "Choose a template"
 msgstr "Шаблонду тандоо"
 
@@ -764,6 +764,10 @@ msgstr "Көчүрүү"
 msgid "Could not load this document. Please try again later."
 msgstr "Бул документти жүктөө мүмкүн болбоду. Кийинчерээк кайра аракет кылыңыз."
 
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:121
+msgid "Couldn't load notifications"
+msgstr ""
+
 #: ../../../lib/web/src/components/step-up-dialog.tsx:184
 msgid "Couldn't send the code. Please try again."
 msgstr "Кодду жөнөтүү мүмкүн болгон жок. Кайра аракет кылыңыз."
@@ -793,7 +797,7 @@ msgstr "{0} түзүү"
 msgid "Create a new item in this project"
 msgstr "Бул долбоордо жаңы нерсе түзүү"
 
-#: src/features/projects/components/create-project-dialog.tsx:293
+#: src/features/projects/components/create-project-dialog.tsx:325
 #: src/features/projects/pages/projects-list-page.tsx:103
 msgid "Create a new project"
 msgstr "Жаңы долбоор түзүү"
@@ -804,10 +808,10 @@ msgid "Create new item"
 msgstr "Жаңы нерсе түзүү"
 
 #: src/components/layout/projects-layout.tsx:62
-#: src/features/projects/components/create-project-dialog.tsx:281
-#: src/features/projects/components/create-project-dialog.tsx:291
-#: src/features/projects/components/create-project-dialog.tsx:415
-#: src/features/projects/components/create-project-dialog.tsx:503
+#: src/features/projects/components/create-project-dialog.tsx:313
+#: src/features/projects/components/create-project-dialog.tsx:323
+#: src/features/projects/components/create-project-dialog.tsx:447
+#: src/features/projects/components/create-project-dialog.tsx:535
 msgid "Create project"
 msgstr "Долбоор түзүү"
 
@@ -820,18 +824,18 @@ msgstr "Түзүү, түзөтүү, комментарий калтыруу жа
 msgid "Created"
 msgstr "Түзүлдү"
 
-#: src/features/projects/components/create-project-dialog.tsx:118
+#: src/features/projects/components/create-project-dialog.tsx:119
 msgid "Creating project..."
 msgstr "Долбоор түзүлүүдө..."
 
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:258
 #: src/features/objects/components/create-object-dialog.tsx:585
-#: src/features/projects/components/create-project-dialog.tsx:415
-#: src/features/projects/components/create-project-dialog.tsx:503
+#: src/features/projects/components/create-project-dialog.tsx:447
+#: src/features/projects/components/create-project-dialog.tsx:535
 msgid "Creating..."
 msgstr "Түзүлүүдө..."
 
-#: ../../../lib/web/src/components/map-view.tsx:208
+#: ../../../lib/web/src/components/map-view.tsx:217
 msgid "Current location"
 msgstr "Учурдагы жайгашкан жер"
 
@@ -845,9 +849,6 @@ msgstr "Ыңгайлаштырылган"
 msgid "Dark"
 msgstr "Караңгы"
 
-#: ../../../lib/web/src/components/layout/nav-user.tsx:91
-#: ../../../lib/web/src/components/layout/nav-user.tsx:154
-#: ../../../lib/web/src/components/layout/nav-user.tsx:205
 #: ../../../lib/web/src/components/profile-dropdown.tsx:87
 #: ../../../lib/web/src/components/profile-dropdown.tsx:123
 msgid "Dark mode"
@@ -860,7 +861,8 @@ msgstr "Дайындар карама-каршылыгы"
 #. placeholder {0}: imported.data?.objects ?? 0
 #. placeholder {1}: imported.data?.comments ?? 0
 #. placeholder {2}: imported.data?.links ?? 0
-#: src/features/projects/components/create-project-dialog.tsx:148
+#: src/features/projects/components/create-project-dialog.tsx:138
+#: src/features/projects/components/create-project-dialog.tsx:168
 msgid "Data imported ({0, plural, one {# object} other {# objects}}, {1, plural, one {# comment} other {# comments}}, {2, plural, one {# link} other {# links}})"
 msgstr "Маалыматтар импорттолду ({0, plural, one {# объект} other {# объект}}, {1, plural, one {# комментарий} other {# комментарий}}, {2, plural, one {# шилтеме} other {# шилтеме}})"
 
@@ -981,11 +983,11 @@ msgstr "Сүрөттөмө"
 
 #: src/routes/_authenticated/$projectId/design.tsx:64
 #: src/routes/_authenticated/$projectId/design.tsx:132
-#: src/routes/_authenticated/$projectId/index.tsx:993
+#: src/routes/_authenticated/$projectId/index.tsx:991
 msgid "Design"
 msgstr "Дизайн"
 
-#: src/features/projects/components/create-project-dialog.tsx:149
+#: src/features/projects/components/create-project-dialog.tsx:169
 #: src/routes/_authenticated/$projectId/design.tsx:109
 msgid "Design imported"
 msgstr "Дизайн импорттолду"
@@ -1025,11 +1027,11 @@ msgstr "Багыт"
 msgid "Directory"
 msgstr "Каталог"
 
-#: ../../../lib/web/src/components/comment-composer.tsx:300
+#: ../../../lib/web/src/components/comment-composer.tsx:304
 msgid "Discard"
 msgstr "Жокко чыгаруу"
 
-#: ../../../lib/web/src/components/comment-composer.tsx:298
+#: ../../../lib/web/src/components/comment-composer.tsx:302
 msgid "Discard draft?"
 msgstr "Долбоорду жокко чыгарасызбы?"
 
@@ -1043,8 +1045,8 @@ msgstr "Ажыратылды"
 msgid "Dismiss"
 msgstr "Четке кагуу"
 
-#: src/routes/_authenticated/$projectId/index.tsx:1068
-#: src/routes/_authenticated/$projectId/index.tsx:1073
+#: src/routes/_authenticated/$projectId/index.tsx:1066
+#: src/routes/_authenticated/$projectId/index.tsx:1071
 msgid "Dismiss board hint"
 msgstr "Тактай кеңешин четке кагуу"
 
@@ -1059,7 +1061,7 @@ msgstr "Мобилдик каптал тилкесин көрсөтөт."
 msgid "Done"
 msgstr "Бүттү"
 
-#: src/routes/_authenticated/$projectId/index.tsx:1059
+#: src/routes/_authenticated/$projectId/index.tsx:1057
 msgid "Double click on a column to add content"
 msgstr "Мазмун кошуу үчүн тилкеге эки жолу басыңыз"
 
@@ -1078,7 +1080,7 @@ msgid "Download failed"
 msgstr "Жүктөп алуу ишке ашкан жок"
 
 #: src/routes/_authenticated/$projectId/design.tsx:88
-#: src/routes/_authenticated/$projectId/index.tsx:222
+#: src/routes/_authenticated/$projectId/index.tsx:220
 msgid "Downloaded {filename}"
 msgstr "{filename} жүктөлдү"
 
@@ -1087,7 +1089,7 @@ msgstr "{filename} жүктөлдү"
 msgid "Draft"
 msgstr "Долбоор"
 
-#: src/routes/_authenticated/$projectId/index.tsx:1035
+#: src/routes/_authenticated/$projectId/index.tsx:1033
 msgid "Drag columns to re-order them"
 msgstr "Тилкелерди иретин өзгөртүү үчүн сүйрөңүз"
 
@@ -1172,7 +1174,7 @@ msgstr "Жайып көрсөтүү"
 msgid "Expand sidebar"
 msgstr "Каптал тилкесин жайылтуу"
 
-#: src/routes/_authenticated/$projectId/index.tsx:977
+#: src/routes/_authenticated/$projectId/index.tsx:975
 msgid "Export data"
 msgstr "Маалыматтарды экспорттоо"
 
@@ -1223,7 +1225,7 @@ msgstr "Шилтеме түзүү ишке ашкан жок"
 msgid "Failed to create option"
 msgstr "Тандоо түзүү ишке ашкан жок"
 
-#: src/features/projects/components/create-project-dialog.tsx:120
+#: src/features/projects/components/create-project-dialog.tsx:121
 msgid "Failed to create project"
 msgstr "Долбоор түзүү ишке ашкан жок"
 
@@ -1251,8 +1253,8 @@ msgstr "Долбоорду өчүрүү ишке ашкан жок"
 msgid "Failed to delete view"
 msgstr "Көрүнүштү өчүрүү ишке ашкан жок"
 
-#: src/routes/_authenticated/$projectId/index.tsx:224
-#: src/routes/_authenticated/$projectId/index.tsx:227
+#: src/routes/_authenticated/$projectId/index.tsx:222
+#: src/routes/_authenticated/$projectId/index.tsx:225
 msgid "Failed to export data"
 msgstr "Маалыматтарды экспорттоо ишке ашкан жок"
 
@@ -1265,7 +1267,8 @@ msgstr "Дизайнды экспорттоо ишке ашкан жок"
 msgid "Failed to get RSS token"
 msgstr ""
 
-#: src/features/projects/components/create-project-dialog.tsx:150
+#: src/features/projects/components/create-project-dialog.tsx:139
+#: src/features/projects/components/create-project-dialog.tsx:170
 msgid "Failed to import data"
 msgstr "Маалыматтарды импорттоо ишке ашкан жок"
 
@@ -1277,7 +1280,7 @@ msgstr "Дизайнды импорттоо ишке ашкан жок"
 msgid "Failed to load"
 msgstr "Жүктөө ишке ашкан жок"
 
-#: ../../../lib/web/src/components/audit-timeline.tsx:81
+#: ../../../lib/web/src/components/audit-timeline.tsx:72
 msgid "Failed to load history"
 msgstr ""
 
@@ -1315,7 +1318,7 @@ msgstr "Бириктирүү ишке ашкан жок"
 msgid "Failed to post comment"
 msgstr "Комментарий жазуу ишке ашкан жок"
 
-#: src/features/projects/components/create-project-dialog.tsx:218
+#: src/features/projects/components/create-project-dialog.tsx:250
 #: src/routes/_authenticated/$projectId/design.tsx:282
 msgid "Failed to read file"
 msgstr "Файлды окуу ишке ашкан жок"
@@ -1355,17 +1358,13 @@ msgid "Failed to subscribe"
 msgstr "Жазылуу ишке ашкан жок"
 
 #: src/features/projects/pages/projects-list-page.tsx:177
-#: src/routes/_authenticated/$projectId/index.tsx:648
+#: src/routes/_authenticated/$projectId/index.tsx:646
 msgid "Failed to unsubscribe"
 msgstr "Жазылуудан чыгуу ишке ашкан жок"
 
 #: src/routes/_authenticated/$projectId_.settings.tsx:499
 msgid "Failed to update access level"
 msgstr "Жетишүү деңгээлин жаңылоо ишке ашкан жок"
-
-#: ../../../lib/web/src/components/notification-category-button.tsx:114
-msgid "Failed to update category"
-msgstr "Категорияны жаңылоо ишке ашкан жок"
 
 #: src/features/objects/components/comment-list.tsx:165
 msgid "Failed to update comment"
@@ -1503,7 +1502,7 @@ msgid "History"
 msgstr ""
 
 #: ../../../lib/web/src/components/layout/app-sidebar.tsx:90
-#: ../../../lib/web/src/components/layout/mochi-menu.tsx:175
+#: ../../../lib/web/src/components/layout/mochi-menu.tsx:192
 #: ../../../lib/web/src/components/layout/top-bar.tsx:71
 #: ../../../lib/web/src/components/layout/top-bar.tsx:100
 msgid "Home"
@@ -1536,11 +1535,12 @@ msgstr "Империалдык"
 msgid "Import design"
 msgstr "Дизайнды импорттоо"
 
-#: src/features/projects/components/create-project-dialog.tsx:354
+#: src/features/projects/components/create-project-dialog.tsx:386
 msgid "Import from backup (optional)"
 msgstr "Камдыктан импорттоо (милдеттүү эмес)"
 
-#: src/features/projects/components/create-project-dialog.tsx:145
+#: src/features/projects/components/create-project-dialog.tsx:136
+#: src/features/projects/components/create-project-dialog.tsx:165
 msgid "Importing data..."
 msgstr "Маалыматтар импорттолууда..."
 
@@ -1568,7 +1568,7 @@ msgstr "Кызыкчылыктар"
 msgid "Invalid date"
 msgstr "Жараксыз дата"
 
-#: src/features/projects/components/create-project-dialog.tsx:211
+#: src/features/projects/components/create-project-dialog.tsx:243
 #: src/routes/_authenticated/$projectId/design.tsx:278
 msgid "Invalid JSON file"
 msgstr "Жараксыз JSON файл"
@@ -1627,7 +1627,7 @@ msgid "Light"
 msgstr "Жарык"
 
 #: ../../../lib/web/src/components/options-menu.tsx:190
-#: src/routes/_authenticated/$projectId/index.tsx:983
+#: src/routes/_authenticated/$projectId/index.tsx:981
 msgid "Link"
 msgstr "Шилтеме"
 
@@ -1659,7 +1659,7 @@ msgstr "Нерсе жүктөлүүдө"
 msgid "Loading item details"
 msgstr "Нерсе чоо-жайы жүктөлүүдө"
 
-#: src/features/projects/components/create-project-dialog.tsx:436
+#: src/features/projects/components/create-project-dialog.tsx:468
 msgid "Loading templates..."
 msgstr "Шаблондор жүктөлүүдө..."
 
@@ -1669,9 +1669,6 @@ msgstr "Шаблондор жүктөлүүдө..."
 msgid "Loading..."
 msgstr "Жүктөлүүдө..."
 
-#: ../../../lib/web/src/components/layout/nav-user.tsx:101
-#: ../../../lib/web/src/components/layout/nav-user.tsx:167
-#: ../../../lib/web/src/components/layout/nav-user.tsx:215
 #: ../../../lib/web/src/components/profile-dropdown.tsx:69
 #: ../../../lib/web/src/components/profile-dropdown.tsx:98
 #: ../../../lib/web/src/components/sign-out-dialog.tsx:26
@@ -1699,8 +1696,8 @@ msgstr "Билдирүүлөр жана кызматтар үчүн туташт
 msgid "Manual"
 msgstr "Кол менен"
 
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:118
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:125
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:202
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:209
 #: ../../../lib/web/src/components/notifications-dropdown.tsx:224
 msgid "Mark all as read"
 msgstr "Баарын окулду деп белгилөө"
@@ -1717,7 +1714,7 @@ msgstr "MCP сервери"
 msgid "Medium"
 msgstr "Орточо"
 
-#: ../../../lib/web/src/components/layout/mochi-menu.tsx:190
+#: ../../../lib/web/src/components/layout/mochi-menu.tsx:207
 msgid "Menu"
 msgstr "Меню"
 
@@ -1786,7 +1783,7 @@ msgstr "Дүйшөмбү"
 msgid "More options"
 msgstr ""
 
-#: src/features/projects/components/create-project-dialog.tsx:309
+#: src/features/projects/components/create-project-dialog.tsx:341
 msgid "My project"
 msgstr "Менин долбоорум"
 
@@ -1796,7 +1793,7 @@ msgstr "Менин долбоорум"
 #: src/features/editor/components/edit-dialogs.tsx:741
 #: src/features/editor/components/edit-dialogs.tsx:1065
 #: src/features/editor/components/option-dialog.tsx:112
-#: src/features/projects/components/create-project-dialog.tsx:299
+#: src/features/projects/components/create-project-dialog.tsx:331
 #: src/routes/_authenticated/$projectId_.settings.tsx:301
 msgid "Name"
 msgstr "Аты"
@@ -1805,7 +1802,7 @@ msgstr "Аты"
 msgid "Name cannot contain angle brackets, backslash, semicolon, quotes or backticks"
 msgstr "Аталышта бурчтуу кашаалар, кайра кыйгач сызык, чекиттүү үтүр, тырмакчалар же кайра тырмакчалар болбошу керек"
 
-#: src/features/projects/components/create-project-dialog.tsx:88
+#: src/features/projects/components/create-project-dialog.tsx:89
 msgid "Name is required"
 msgstr "Аты талап кылынат"
 
@@ -1820,21 +1817,21 @@ msgstr "Тармак катасы"
 
 #: ../../../lib/web/src/components/ui/sort-selector.tsx:43
 #: src/features/objects/components/create-object-dialog.tsx:399
-#: src/routes/_authenticated/$projectId/index.tsx:920
-#: src/routes/_authenticated/$projectId/index.tsx:938
+#: src/routes/_authenticated/$projectId/index.tsx:918
+#: src/routes/_authenticated/$projectId/index.tsx:936
 msgid "New"
 msgstr "Жаңы"
 
-#: src/routes/_authenticated/$projectId/index.tsx:917
+#: src/routes/_authenticated/$projectId/index.tsx:915
 msgid "New {className}"
 msgstr "Жаңы {className}"
 
-#: ../../../lib/web/src/components/game/game-empty-state.tsx:42
-#: ../../../lib/web/src/components/game/game-empty-state.tsx:54
+#: ../../../lib/web/src/components/game/game-empty-state.tsx:41
+#: ../../../lib/web/src/components/game/game-empty-state.tsx:53
 msgid "New game"
 msgstr "Жаңы оюн"
 
-#: src/features/projects/components/create-project-dialog.tsx:417
+#: src/features/projects/components/create-project-dialog.tsx:449
 msgid "Next"
 msgstr "Кийинки"
 
@@ -1887,7 +1884,7 @@ msgstr "Туташкан аккаунттар жок"
 msgid "No diff available"
 msgstr "Diff жеткиликсиз"
 
-#: ../../../lib/web/src/components/game/game-empty-state.tsx:51
+#: ../../../lib/web/src/components/game/game-empty-state.tsx:50
 msgid "No games yet"
 msgstr "Оюндар азырынча жок"
 
@@ -1953,9 +1950,13 @@ msgstr "Абалы жок"
 msgid "No time zone found."
 msgstr "Убакыт алкагы табылган жок."
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:150
+#: ../../../lib/web/src/components/notification-category-button.tsx:106
 msgid "No topic record yet — try again after the next notification."
 msgstr "Тема жазуусу азырынча жок — кийинки билдирмеден кийин кайра аракет кылыңыз."
+
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:132
+msgid "No unread notifications"
+msgstr ""
 
 #: ../../../lib/web/src/features/access/access-dialog.tsx:206
 msgid "No users found"
@@ -2015,7 +2016,7 @@ msgid "Notifications"
 msgstr "Билдирмелер"
 
 #. placeholder {0}: unread.length
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:111
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:195
 msgid "Notifications: {0}"
 msgstr "Билдирүүлөр: {0}"
 
@@ -2067,7 +2068,7 @@ msgstr "Тилке аракеттерин ачуу"
 msgid "Open design actions"
 msgstr "Дизайн аракеттерин ачуу"
 
-#: ../../../lib/web/src/components/layout/mochi-menu.tsx:149
+#: ../../../lib/web/src/components/layout/mochi-menu.tsx:166
 msgid "Open menu"
 msgstr "Менюну ачуу"
 
@@ -2086,7 +2087,7 @@ msgstr "Навигация менюсун ачуу"
 msgid "Open option actions"
 msgstr "Параметр аракеттерин ачуу"
 
-#: src/routes/_authenticated/$projectId/index.tsx:946
+#: src/routes/_authenticated/$projectId/index.tsx:944
 msgid "Open page actions"
 msgstr "Барак аракеттерин ачуу"
 
@@ -2157,12 +2158,12 @@ msgstr "Үлгү (regex)"
 msgid "Pick a date"
 msgstr "Күндү тандаңыз"
 
-#: src/routes/_authenticated/$projectId/index.tsx:756
-#: src/routes/_authenticated/$projectId/index.tsx:790
+#: src/routes/_authenticated/$projectId/index.tsx:754
+#: src/routes/_authenticated/$projectId/index.tsx:788
 msgid "Please add one or more classes to the project design."
 msgstr "Долбоор дизайнына бир же бир нече класс кошуңуз."
 
-#: ../../../lib/web/src/components/comment-composer.tsx:95
+#: ../../../lib/web/src/components/comment-composer.tsx:99
 #: ../../../lib/web/src/features/errors/general-error.tsx:54
 #: ../../../lib/web/src/lib/api-response-interceptors.ts:323
 msgid "Please check your internet connection and try again."
@@ -2172,7 +2173,7 @@ msgstr "Интернет байланышыңызды текшерип, кайр
 msgid "Please log in with the appropriate credentials <0/> to access this resource."
 msgstr "Бул ресурска жетүү үчүн <0/> тиешелүү эсептик маалыматтар менен кириңиз."
 
-#: src/features/projects/components/create-project-dialog.tsx:104
+#: src/features/projects/components/create-project-dialog.tsx:105
 msgid "Please select a template"
 msgstr "Шаблонду тандаңыз"
 
@@ -2192,7 +2193,7 @@ msgstr ""
 msgid "Posts and comments"
 msgstr ""
 
-#: src/features/projects/components/create-project-dialog.tsx:321
+#: src/features/projects/components/create-project-dialog.tsx:353
 #: src/routes/_authenticated/$projectId_.settings.tsx:318
 msgid "Prefix"
 msgstr "Префикс"
@@ -2211,7 +2212,6 @@ msgstr "Купуялык"
 msgid "Processing…"
 msgstr "Иштетилүүдө…"
 
-#: ../../../lib/web/src/components/layout/nav-user.tsx:137
 #: ../../../lib/web/src/components/profile-dropdown.tsx:114
 msgid "Profile"
 msgstr "Профиль"
@@ -2226,7 +2226,7 @@ msgstr "Долбоор"
 msgid "Project actions"
 msgstr "Долбоор аракеттери"
 
-#: src/features/projects/components/create-project-dialog.tsx:119
+#: src/features/projects/components/create-project-dialog.tsx:120
 msgid "Project created"
 msgstr "Долбоор түзүлдү"
 
@@ -2234,7 +2234,7 @@ msgstr "Долбоор түзүлдү"
 msgid "Project deleted"
 msgstr "Долбоор өчүрүлдү"
 
-#: src/routes/_authenticated/$projectId/index.tsx:1165
+#: src/routes/_authenticated/$projectId/index.tsx:1163
 msgid "Project link"
 msgstr "Долбоор шилтемеси"
 
@@ -2281,7 +2281,7 @@ msgstr "Көтөрүлгөн"
 msgid "Re-link your accounts on this server"
 msgstr "Бул серверде аккаунттарыңызды кайра байлаңыз"
 
-#: src/routes/_authenticated/$projectId/index.tsx:970
+#: src/routes/_authenticated/$projectId/index.tsx:968
 msgid "Re-order columns"
 msgstr "Тилкелерди кайра иргөө"
 
@@ -2311,7 +2311,7 @@ msgstr "Сунушталган долбоорлор"
 msgid "Reconnecting ({retries})..."
 msgstr "Кайра туташууда ({retries})..."
 
-#: ../../../lib/web/src/components/layout/authenticated-layout.tsx:133
+#: ../../../lib/web/src/components/layout/authenticated-layout.tsx:136
 msgid "Redirecting to login."
 msgstr "Кирүүгө кайра багытталууда."
 
@@ -2332,12 +2332,12 @@ msgstr "Салыштырмалуу (5m, 3h, 2d)"
 msgid "Relative within 24 hours, else absolute"
 msgstr "24 саат ичинде салыштырмалуу, антпесе абсолюттук"
 
-#: ../../../lib/web/src/components/comment-composer.tsx:232
+#: ../../../lib/web/src/components/comment-composer.tsx:236
 #: ../../../lib/web/src/features/access/access-list.tsx:270
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:180
 #: src/features/editor/components/add-dialogs.tsx:188
 #: src/features/objects/components/create-object-dialog.tsx:536
-#: src/features/projects/components/create-project-dialog.tsx:397
+#: src/features/projects/components/create-project-dialog.tsx:429
 msgid "Remove"
 msgstr "Алуу"
 
@@ -2449,7 +2449,7 @@ msgstr "Бардык жөндөөлөрдү демейки маанилерге 
 msgid "Resolve these conflicts manually before merging."
 msgstr "Бириктирүүдөн мурун бул конфликттерди кол менен чечиңиз."
 
-#: ../../../lib/web/src/components/comment-composer.tsx:249
+#: ../../../lib/web/src/components/comment-composer.tsx:253
 msgid "Retry"
 msgstr "Кайра аракет кылуу"
 
@@ -2498,7 +2498,7 @@ msgstr "Ишемби"
 #: ../../../lib/web/src/components/ui/secret-field.tsx:77
 #: src/features/editor/components/option-dialog.tsx:150
 #: src/features/objects/components/comment-thread.tsx:260
-#: src/routes/_authenticated/$projectId/index.tsx:1051
+#: src/routes/_authenticated/$projectId/index.tsx:1049
 msgid "Save"
 msgstr "Сактоо"
 
@@ -2584,7 +2584,7 @@ msgstr "{0} тандоо"
 msgid "Select a field"
 msgstr "Талааны тандоо"
 
-#: ../../../lib/web/src/components/game/game-empty-state.tsx:37
+#: ../../../lib/web/src/components/game/game-empty-state.tsx:36
 msgid "Select a game"
 msgstr "Оюнду тандоо"
 
@@ -2705,16 +2705,13 @@ msgstr "Чыгуу жана баруу жерин коюу"
 msgid "Setting access..."
 msgstr "Уруксат орнотулууда..."
 
-#: ../../../lib/web/src/components/layout/mochi-menu.tsx:109
-#: ../../../lib/web/src/components/layout/mochi-menu.tsx:115
-#: ../../../lib/web/src/components/layout/nav-user.tsx:84
-#: ../../../lib/web/src/components/layout/nav-user.tsx:148
-#: ../../../lib/web/src/components/layout/nav-user.tsx:198
+#: ../../../lib/web/src/components/layout/mochi-menu.tsx:126
+#: ../../../lib/web/src/components/layout/mochi-menu.tsx:132
 #: ../../../lib/web/src/components/options-menu.tsx:196
 #: src/routes/_authenticated/$projectId_.settings.tsx:76
 #: src/routes/_authenticated/$projectId_.settings.tsx:167
 #: src/routes/_authenticated/$projectId_.settings.tsx:190
-#: src/routes/_authenticated/$projectId/index.tsx:1003
+#: src/routes/_authenticated/$projectId/index.tsx:1001
 msgid "Settings"
 msgstr "Жөндөөлөр"
 
@@ -2744,12 +2741,12 @@ msgstr "{total} ичинен {totalShown} көрсөтүлүүдө"
 msgid "Sidebar"
 msgstr "Каптал панель"
 
-#: ../../../lib/web/src/components/layout/mochi-menu.tsx:121
-#: ../../../lib/web/src/components/layout/mochi-menu.tsx:127
+#: ../../../lib/web/src/components/layout/mochi-menu.tsx:138
+#: ../../../lib/web/src/components/layout/mochi-menu.tsx:144
 msgid "Sign out"
 msgstr "Чыгуу"
 
-#: ../../../lib/web/src/components/layout/authenticated-layout.tsx:131
+#: ../../../lib/web/src/components/layout/authenticated-layout.tsx:134
 msgid "Signing out..."
 msgstr "Чыгуу жүрүп жатат..."
 
@@ -2849,7 +2846,7 @@ msgstr "Жекшемби"
 msgid "Switch to view 1-9"
 msgstr "1-9 көрүнүшкө которулуу"
 
-#: ../../../lib/web/src/components/audit-timeline.tsx:101
+#: ../../../lib/web/src/components/audit-timeline.tsx:111
 #: ../../../lib/web/src/components/config-drawer.tsx:209
 #: ../../../lib/web/src/components/theme-switch.tsx:59
 #: ../../../lib/web/src/lib/preference-utils.ts:21
@@ -2900,10 +2897,6 @@ msgid "The requested content could not be found."
 msgstr "Суралган мазмун табылган жок."
 
 #: ../../../lib/web/src/lib/api-response-interceptors.ts:152
-#~ msgid "The server returned a web page instead of data, which usually means the address was wrong."
-#~ msgstr ""
-
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:152
 msgid "The server returned a web page instead of data."
 msgstr "Сервер маалыматтын ордуна веб-баракты кайтарды."
 
@@ -2949,7 +2942,7 @@ msgid "This will permanently delete \"{projectName}\" and all its objects, comme
 msgstr "Бул \"{projectName}\" жана анын бардык объектилерин, комментарийлерин жана тиркемелерин биротоло өчүрөт. Бул аракет жокко чыгарылбайт."
 
 #. placeholder {0}: project.project.name
-#: src/routes/_authenticated/$projectId/index.tsx:1181
+#: src/routes/_authenticated/$projectId/index.tsx:1179
 msgid "This will remove \"{0}\" from your sidebar and stop updates for this project."
 msgstr "Бул каптал панелден \"{0}\" дегенди алып салат жана бул долбоор үчүн жаңылыктарды токтотот."
 
@@ -3071,12 +3064,12 @@ msgstr "Издөө үчүн жазыңыз..."
 msgid "Unable to connect to remote server"
 msgstr "Алыскы серверге туташуу мүмкүн эмес"
 
-#: ../../../lib/web/src/lib/auth-manager.ts:85
-#: ../../../lib/web/src/lib/auth-manager.ts:97
+#: ../../../lib/web/src/lib/auth-manager.ts:92
+#: ../../../lib/web/src/lib/auth-manager.ts:104
 msgid "Unable to redirect to login. Please try again."
 msgstr "Кирүүгө багыттоо мүмкүн эмес. Кайра аракет кылыңыз."
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:158
+#: ../../../lib/web/src/components/notification-category-button.tsx:114
 msgid "Unassigned"
 msgstr "Дайындалган эмес"
 
@@ -3105,22 +3098,22 @@ msgstr "Белгисиз"
 #: src/features/projects/pages/projects-list-page.tsx:147
 #: src/features/projects/pages/projects-list-page.tsx:166
 #: src/features/projects/pages/projects-list-page.tsx:168
-#: src/routes/_authenticated/$projectId/index.tsx:1011
-#: src/routes/_authenticated/$projectId/index.tsx:1182
+#: src/routes/_authenticated/$projectId/index.tsx:1009
+#: src/routes/_authenticated/$projectId/index.tsx:1180
 msgid "Unsubscribe"
 msgstr "Жазылуудан баш тартуу"
 
-#: src/routes/_authenticated/$projectId/index.tsx:1180
+#: src/routes/_authenticated/$projectId/index.tsx:1178
 msgid "Unsubscribe from project?"
 msgstr "Долбоордон жазылуудан баш тартасызбы?"
 
 #: src/features/projects/pages/projects-list-page.tsx:176
-#: src/routes/_authenticated/$projectId/index.tsx:647
+#: src/routes/_authenticated/$projectId/index.tsx:645
 msgid "Unsubscribed"
 msgstr "Жазылуудан баш тартылды"
 
 #: src/features/projects/pages/projects-list-page.tsx:175
-#: src/routes/_authenticated/$projectId/index.tsx:646
+#: src/routes/_authenticated/$projectId/index.tsx:644
 msgid "Unsubscribing..."
 msgstr "Жазылуудан баш тартылууда..."
 
@@ -3146,7 +3139,7 @@ msgstr "Уруксат жаңыртылууда..."
 msgid "Upload"
 msgstr "Жүктөө"
 
-#: src/features/projects/components/create-project-dialog.tsx:370
+#: src/features/projects/components/create-project-dialog.tsx:402
 #: src/routes/_authenticated/$projectId/design.tsx:337
 msgid "Upload .json file"
 msgstr ".json файлды жүктөө"
@@ -3161,11 +3154,11 @@ msgstr "Passkey колдонуңуз"
 
 #. placeholder {0}: prefix || "project"
 #. placeholder {1}: prefix || "project"
-#: src/features/projects/components/create-project-dialog.tsx:338
+#: src/features/projects/components/create-project-dialog.tsx:370
 msgid "Used for readable IDs like {0}-1, {1}-2"
 msgstr "{0}-1, {1}-2 сыяктуу окулуучу IDлер үчүн колдонулат"
 
-#: ../../../lib/web/src/components/layout/mochi-menu.tsx:102
+#: ../../../lib/web/src/components/layout/mochi-menu.tsx:119
 #: ../../../lib/web/src/features/access/access-dialog.tsx:158
 #: src/features/editor/components/add-dialogs.tsx:141
 msgid "User"
@@ -3210,8 +3203,8 @@ msgstr "Көрүү"
 msgid "View all"
 msgstr "Бардыгын көрүү"
 
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:131
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:139
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:215
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:223
 msgid "View all notifications"
 msgstr "Бардык эскертүүлөрдү көрүү"
 
@@ -3227,7 +3220,7 @@ msgstr "Көрүү башкаруусу"
 msgid "View only"
 msgstr "Көрүү гана"
 
-#: src/routes/_authenticated/$projectId/index.tsx:955
+#: src/routes/_authenticated/$projectId/index.tsx:953
 msgid "View options"
 msgstr "Көрүү опциялары"
 
@@ -3249,7 +3242,7 @@ msgstr "Көрүлгөн"
 msgid "Watched only"
 msgstr "Көрүлгөн гана"
 
-#: src/features/projects/components/create-project-dialog.tsx:431
+#: src/features/projects/components/create-project-dialog.tsx:463
 msgid "We have auto-selected the best matching template."
 msgstr "Эң ылайыктуу шаблон автоматтык түрдө тандалды."
 
@@ -3290,10 +3283,6 @@ msgstr "Бул ресурсту көрүү үчүн <0/>сизде керект�
 msgid "You have no projects yet."
 msgstr "Сизде азырынча долбоорлор жок."
 
-#: ../../../lib/web/src/lib/show-submitted-data.tsx:9
-msgid "You submitted the following values:"
-msgstr "Сиз төмөнкү маанилерди жөнөттүңүз:"
-
 #: ../../../lib/web/src/components/notifications-dropdown.tsx:193
 msgid "You're all caught up!"
 msgstr "Баарын көрдүңүз!"
@@ -3302,18 +3291,18 @@ msgstr "Баарын көрдүңүз!"
 msgid "Your account was moved here from {source}. Until you delete it there, messages and notifications may reach both servers, some of your content keeps being served from the old server, and followers may take a few minutes to find you here."
 msgstr "Аккаунтуңуз {source} дан бул жерге которулду. Аны ал жерде жоккун кана дебегенче, билдирүүлөр жана эскертмелер эки серверге тең жете алат, мазмунуңуздун бир бөлүгү эски серверден берилүүдө калат, ал эми жолдоочулар сизди бул жерден табуу үчүн бир нече мүнөт керек кылышы мүмкүн."
 
-#: ../../../lib/web/src/components/comment-composer.tsx:291
+#: ../../../lib/web/src/components/comment-composer.tsx:295
 msgid "Your attachments will be lost."
 msgstr "Тиркемелериңиз жоголот."
 
-#: src/features/projects/components/create-project-dialog.tsx:427
+#: src/features/projects/components/create-project-dialog.tsx:459
 msgid "Your backup contains objects of type:"
 msgstr "Камдыгыңызда төмөнкү түрдөгү объекттер бар:"
 
-#: ../../../lib/web/src/components/comment-composer.tsx:289
+#: ../../../lib/web/src/components/comment-composer.tsx:293
 msgid "Your text and attachments will be lost."
 msgstr "Текстиңиз жана тиркемелериңиз жоголот."
 
-#: ../../../lib/web/src/components/comment-composer.tsx:292
+#: ../../../lib/web/src/components/comment-composer.tsx:296
 msgid "Your text will be lost."
 msgstr "Текстиңиз жоголот."

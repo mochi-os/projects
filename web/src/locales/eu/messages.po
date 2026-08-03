@@ -113,7 +113,7 @@ msgstr "{sentLabel} / {totalLabel}"
 msgid "{totalCount, plural, one {# item} other {# items}}"
 msgstr "{totalCount, plural, one {elementu #} other {# elementu}}"
 
-#: ../../../lib/web/src/components/layout/mochi-menu.tsx:148
+#: ../../../lib/web/src/components/layout/mochi-menu.tsx:165
 msgid "{unreadCount, plural, one {Open menu (# unread notification)} other {Open menu (# unread notifications)}}"
 msgstr "{unreadCount, plural, one {Ireki menua (irakurri gabeko # jakinarazpen)} other {Ireki menua (irakurri gabeko # jakinarazpen)}}"
 
@@ -245,8 +245,8 @@ msgstr "Gehitu egiaztapen-zerrendako elementua"
 msgid "Add class"
 msgstr "Gehitu klasea"
 
-#: src/routes/_authenticated/$projectId/index.tsx:966
-#: src/routes/_authenticated/$projectId/index.tsx:1160
+#: src/routes/_authenticated/$projectId/index.tsx:964
+#: src/routes/_authenticated/$projectId/index.tsx:1158
 msgid "Add column"
 msgstr "Gehitu zutabea"
 
@@ -325,7 +325,7 @@ msgstr "Proiektu guztiak"
 msgid "Allow anyone to search for {0}"
 msgstr "Baimendu edonork {0} bilatzea"
 
-#: src/features/projects/components/create-project-dialog.tsx:344
+#: src/features/projects/components/create-project-dialog.tsx:376
 msgid "Allow anyone to search for project"
 msgstr "Baimendu edonori proiektua bilatzea"
 
@@ -427,7 +427,7 @@ msgid "Avatar for {name}"
 msgstr "{name}(r)en avatarra"
 
 #: ../../../lib/web/src/components/place-picker.tsx:156
-#: src/features/projects/components/create-project-dialog.tsx:500
+#: src/features/projects/components/create-project-dialog.tsx:532
 msgid "Back"
 msgstr "Atzera"
 
@@ -463,8 +463,8 @@ msgstr "Fitxategi bitarra ez da erakusten"
 msgid "Blocked by"
 msgstr "Blokeatzailea"
 
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:156
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:166
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:237
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:247
 msgid "Blocked navigation to untrusted link"
 msgstr "Konfiantzazkoa ez den estekarako nabigazioa blokeatu da"
 
@@ -509,9 +509,9 @@ msgstr "Honen seme-alaba izan daiteke"
 #: src/features/board/components/board-column.tsx:606
 #: src/features/editor/components/option-dialog.tsx:146
 #: src/features/objects/components/comment-thread.tsx:240
-#: src/features/projects/components/create-project-dialog.tsx:411
+#: src/features/projects/components/create-project-dialog.tsx:443
 #: src/routes/_authenticated/$projectId/design.tsx:344
-#: src/routes/_authenticated/$projectId/index.tsx:1039
+#: src/routes/_authenticated/$projectId/index.tsx:1037
 msgid "Cancel"
 msgstr "Utzi"
 
@@ -529,12 +529,12 @@ msgstr "Utzi erantzuna"
 msgid "Cannot merge automatically"
 msgstr "Ezin da automatikoki bateratu"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:146
+#: ../../../lib/web/src/components/notification-category-button.tsx:102
 msgid "Category for this notification"
 msgstr "Jakinarazpen honentzako kategoria"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:127
-#: ../../../lib/web/src/components/notification-category-button.tsx:138
+#: ../../../lib/web/src/components/notification-category-button.tsx:83
+#: ../../../lib/web/src/components/notification-category-button.tsx:94
 msgid "Change notification category"
 msgstr "Aldatu jakinarazpen kategoria"
 
@@ -554,11 +554,11 @@ msgstr "Fusio egoera egiaztatzen..."
 msgid "Checklist"
 msgstr "Egiaztapen-zerrenda"
 
-#: ../../../lib/web/src/components/game/game-empty-state.tsx:38
+#: ../../../lib/web/src/components/game/game-empty-state.tsx:37
 msgid "Choose a game from the sidebar or start a new one."
 msgstr "Aukeratu joko bat alboko barratik edo hasi berri bat."
 
-#: src/features/projects/components/create-project-dialog.tsx:291
+#: src/features/projects/components/create-project-dialog.tsx:323
 msgid "Choose a template"
 msgstr "Aukeratu txantiloi bat"
 
@@ -764,6 +764,10 @@ msgstr "Kopiatu"
 msgid "Could not load this document. Please try again later."
 msgstr "Ezin izan da dokumentu hau kargatu. Saiatu berriro geroago."
 
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:121
+msgid "Couldn't load notifications"
+msgstr ""
+
 #: ../../../lib/web/src/components/step-up-dialog.tsx:184
 msgid "Couldn't send the code. Please try again."
 msgstr "Ezin izan da kodea bidali. Saiatu berriro."
@@ -793,7 +797,7 @@ msgstr "Sortu {0}"
 msgid "Create a new item in this project"
 msgstr "Sortu elementu berri bat proiektu honetan"
 
-#: src/features/projects/components/create-project-dialog.tsx:293
+#: src/features/projects/components/create-project-dialog.tsx:325
 #: src/features/projects/pages/projects-list-page.tsx:103
 msgid "Create a new project"
 msgstr "Sortu proiektu berri bat"
@@ -804,10 +808,10 @@ msgid "Create new item"
 msgstr "Sortu elementu berria"
 
 #: src/components/layout/projects-layout.tsx:62
-#: src/features/projects/components/create-project-dialog.tsx:281
-#: src/features/projects/components/create-project-dialog.tsx:291
-#: src/features/projects/components/create-project-dialog.tsx:415
-#: src/features/projects/components/create-project-dialog.tsx:503
+#: src/features/projects/components/create-project-dialog.tsx:313
+#: src/features/projects/components/create-project-dialog.tsx:323
+#: src/features/projects/components/create-project-dialog.tsx:447
+#: src/features/projects/components/create-project-dialog.tsx:535
 msgid "Create project"
 msgstr "Sortu proiektua"
 
@@ -820,18 +824,18 @@ msgstr "Sortu, editatu, iruzkindu eta ikusi"
 msgid "Created"
 msgstr "Sortua"
 
-#: src/features/projects/components/create-project-dialog.tsx:118
+#: src/features/projects/components/create-project-dialog.tsx:119
 msgid "Creating project..."
 msgstr "Proiektua sortzen..."
 
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:258
 #: src/features/objects/components/create-object-dialog.tsx:585
-#: src/features/projects/components/create-project-dialog.tsx:415
-#: src/features/projects/components/create-project-dialog.tsx:503
+#: src/features/projects/components/create-project-dialog.tsx:447
+#: src/features/projects/components/create-project-dialog.tsx:535
 msgid "Creating..."
 msgstr "Sortzen..."
 
-#: ../../../lib/web/src/components/map-view.tsx:208
+#: ../../../lib/web/src/components/map-view.tsx:217
 msgid "Current location"
 msgstr "Uneko kokapena"
 
@@ -845,9 +849,6 @@ msgstr "Pertsonalizatua"
 msgid "Dark"
 msgstr "Iluna"
 
-#: ../../../lib/web/src/components/layout/nav-user.tsx:91
-#: ../../../lib/web/src/components/layout/nav-user.tsx:154
-#: ../../../lib/web/src/components/layout/nav-user.tsx:205
 #: ../../../lib/web/src/components/profile-dropdown.tsx:87
 #: ../../../lib/web/src/components/profile-dropdown.tsx:123
 msgid "Dark mode"
@@ -860,7 +861,8 @@ msgstr "Datu-gatazka"
 #. placeholder {0}: imported.data?.objects ?? 0
 #. placeholder {1}: imported.data?.comments ?? 0
 #. placeholder {2}: imported.data?.links ?? 0
-#: src/features/projects/components/create-project-dialog.tsx:148
+#: src/features/projects/components/create-project-dialog.tsx:138
+#: src/features/projects/components/create-project-dialog.tsx:168
 msgid "Data imported ({0, plural, one {# object} other {# objects}}, {1, plural, one {# comment} other {# comments}}, {2, plural, one {# link} other {# links}})"
 msgstr "Datuak inportatu dira ({0, plural, one {# objektu} other {# objektu}}, {1, plural, one {# iruzkin} other {# iruzkin}}, {2, plural, one {# esteka} other {# esteka}})"
 
@@ -981,11 +983,11 @@ msgstr "Deskribapena"
 
 #: src/routes/_authenticated/$projectId/design.tsx:64
 #: src/routes/_authenticated/$projectId/design.tsx:132
-#: src/routes/_authenticated/$projectId/index.tsx:993
+#: src/routes/_authenticated/$projectId/index.tsx:991
 msgid "Design"
 msgstr "Diseinua"
 
-#: src/features/projects/components/create-project-dialog.tsx:149
+#: src/features/projects/components/create-project-dialog.tsx:169
 #: src/routes/_authenticated/$projectId/design.tsx:109
 msgid "Design imported"
 msgstr "Diseinua inportatu da"
@@ -1025,11 +1027,11 @@ msgstr "Norabidea"
 msgid "Directory"
 msgstr "Direktorioa"
 
-#: ../../../lib/web/src/components/comment-composer.tsx:300
+#: ../../../lib/web/src/components/comment-composer.tsx:304
 msgid "Discard"
 msgstr "Baztertu"
 
-#: ../../../lib/web/src/components/comment-composer.tsx:298
+#: ../../../lib/web/src/components/comment-composer.tsx:302
 msgid "Discard draft?"
 msgstr "Zirriborroa baztertu?"
 
@@ -1043,8 +1045,8 @@ msgstr "Deskonektatuta"
 msgid "Dismiss"
 msgstr "Baztertu"
 
-#: src/routes/_authenticated/$projectId/index.tsx:1068
-#: src/routes/_authenticated/$projectId/index.tsx:1073
+#: src/routes/_authenticated/$projectId/index.tsx:1066
+#: src/routes/_authenticated/$projectId/index.tsx:1071
 msgid "Dismiss board hint"
 msgstr "Baztertu taularen iradokizuna"
 
@@ -1059,7 +1061,7 @@ msgstr "Mugikorraren alboko barra erakusten du."
 msgid "Done"
 msgstr "Eginda"
 
-#: src/routes/_authenticated/$projectId/index.tsx:1059
+#: src/routes/_authenticated/$projectId/index.tsx:1057
 msgid "Double click on a column to add content"
 msgstr "Klik bikoitza zutabean edukia gehitzeko"
 
@@ -1078,7 +1080,7 @@ msgid "Download failed"
 msgstr "Deskargak huts egin du"
 
 #: src/routes/_authenticated/$projectId/design.tsx:88
-#: src/routes/_authenticated/$projectId/index.tsx:222
+#: src/routes/_authenticated/$projectId/index.tsx:220
 msgid "Downloaded {filename}"
 msgstr "{filename} deskargatuta"
 
@@ -1087,7 +1089,7 @@ msgstr "{filename} deskargatuta"
 msgid "Draft"
 msgstr "Zirriborroa"
 
-#: src/routes/_authenticated/$projectId/index.tsx:1035
+#: src/routes/_authenticated/$projectId/index.tsx:1033
 msgid "Drag columns to re-order them"
 msgstr "Arrastatu zutabeak ordena aldatzeko"
 
@@ -1172,7 +1174,7 @@ msgstr "Zabaldu"
 msgid "Expand sidebar"
 msgstr "Zabaldu alboko barra"
 
-#: src/routes/_authenticated/$projectId/index.tsx:977
+#: src/routes/_authenticated/$projectId/index.tsx:975
 msgid "Export data"
 msgstr "Esportatu datuak"
 
@@ -1223,7 +1225,7 @@ msgstr "Ezin izan da esteka sortu"
 msgid "Failed to create option"
 msgstr "Ezin izan da aukera sortu"
 
-#: src/features/projects/components/create-project-dialog.tsx:120
+#: src/features/projects/components/create-project-dialog.tsx:121
 msgid "Failed to create project"
 msgstr "Ezin izan da proiektua sortu"
 
@@ -1251,8 +1253,8 @@ msgstr "Ezin izan da proiektua ezabatu"
 msgid "Failed to delete view"
 msgstr "Ezin izan da ikuspegia ezabatu"
 
-#: src/routes/_authenticated/$projectId/index.tsx:224
-#: src/routes/_authenticated/$projectId/index.tsx:227
+#: src/routes/_authenticated/$projectId/index.tsx:222
+#: src/routes/_authenticated/$projectId/index.tsx:225
 msgid "Failed to export data"
 msgstr "Ezin izan dira datuak esportatu"
 
@@ -1265,7 +1267,8 @@ msgstr "Ezin izan da diseinua esportatu"
 msgid "Failed to get RSS token"
 msgstr ""
 
-#: src/features/projects/components/create-project-dialog.tsx:150
+#: src/features/projects/components/create-project-dialog.tsx:139
+#: src/features/projects/components/create-project-dialog.tsx:170
 msgid "Failed to import data"
 msgstr "Ezin izan dira datuak inportatu"
 
@@ -1277,7 +1280,7 @@ msgstr "Ezin izan da diseinua inportatu"
 msgid "Failed to load"
 msgstr "Ezin izan da kargatu"
 
-#: ../../../lib/web/src/components/audit-timeline.tsx:81
+#: ../../../lib/web/src/components/audit-timeline.tsx:72
 msgid "Failed to load history"
 msgstr ""
 
@@ -1315,7 +1318,7 @@ msgstr "Ezin izan da bateratu"
 msgid "Failed to post comment"
 msgstr "Ezin izan da iruzkina argitaratu"
 
-#: src/features/projects/components/create-project-dialog.tsx:218
+#: src/features/projects/components/create-project-dialog.tsx:250
 #: src/routes/_authenticated/$projectId/design.tsx:282
 msgid "Failed to read file"
 msgstr "Ezin izan da fitxategia irakurri"
@@ -1355,17 +1358,13 @@ msgid "Failed to subscribe"
 msgstr "Ezin izan da harpidetu"
 
 #: src/features/projects/pages/projects-list-page.tsx:177
-#: src/routes/_authenticated/$projectId/index.tsx:648
+#: src/routes/_authenticated/$projectId/index.tsx:646
 msgid "Failed to unsubscribe"
 msgstr "Ezin izan da harpidetza utzi"
 
 #: src/routes/_authenticated/$projectId_.settings.tsx:499
 msgid "Failed to update access level"
 msgstr "Ezin izan da sarbide-maila eguneratu"
-
-#: ../../../lib/web/src/components/notification-category-button.tsx:114
-msgid "Failed to update category"
-msgstr "Ezin izan da kategoria eguneratu"
 
 #: src/features/objects/components/comment-list.tsx:165
 msgid "Failed to update comment"
@@ -1503,7 +1502,7 @@ msgid "History"
 msgstr ""
 
 #: ../../../lib/web/src/components/layout/app-sidebar.tsx:90
-#: ../../../lib/web/src/components/layout/mochi-menu.tsx:175
+#: ../../../lib/web/src/components/layout/mochi-menu.tsx:192
 #: ../../../lib/web/src/components/layout/top-bar.tsx:71
 #: ../../../lib/web/src/components/layout/top-bar.tsx:100
 msgid "Home"
@@ -1536,11 +1535,12 @@ msgstr "Inperiala"
 msgid "Import design"
 msgstr "Inportatu diseinua"
 
-#: src/features/projects/components/create-project-dialog.tsx:354
+#: src/features/projects/components/create-project-dialog.tsx:386
 msgid "Import from backup (optional)"
 msgstr "Inportatu babeskopiatik (aukerakoa)"
 
-#: src/features/projects/components/create-project-dialog.tsx:145
+#: src/features/projects/components/create-project-dialog.tsx:136
+#: src/features/projects/components/create-project-dialog.tsx:165
 msgid "Importing data..."
 msgstr "Datuak inportatzen..."
 
@@ -1568,7 +1568,7 @@ msgstr "Interesak"
 msgid "Invalid date"
 msgstr "Data baliogabea"
 
-#: src/features/projects/components/create-project-dialog.tsx:211
+#: src/features/projects/components/create-project-dialog.tsx:243
 #: src/routes/_authenticated/$projectId/design.tsx:278
 msgid "Invalid JSON file"
 msgstr "JSON fitxategi baliogabea"
@@ -1627,7 +1627,7 @@ msgid "Light"
 msgstr "Argia"
 
 #: ../../../lib/web/src/components/options-menu.tsx:190
-#: src/routes/_authenticated/$projectId/index.tsx:983
+#: src/routes/_authenticated/$projectId/index.tsx:981
 msgid "Link"
 msgstr "Esteka"
 
@@ -1659,7 +1659,7 @@ msgstr "Elementua kargatzen"
 msgid "Loading item details"
 msgstr "Elementuaren xehetasunak kargatzen"
 
-#: src/features/projects/components/create-project-dialog.tsx:436
+#: src/features/projects/components/create-project-dialog.tsx:468
 msgid "Loading templates..."
 msgstr "Txantiloiak kargatzen..."
 
@@ -1669,9 +1669,6 @@ msgstr "Txantiloiak kargatzen..."
 msgid "Loading..."
 msgstr "Kargatzen..."
 
-#: ../../../lib/web/src/components/layout/nav-user.tsx:101
-#: ../../../lib/web/src/components/layout/nav-user.tsx:167
-#: ../../../lib/web/src/components/layout/nav-user.tsx:215
 #: ../../../lib/web/src/components/profile-dropdown.tsx:69
 #: ../../../lib/web/src/components/profile-dropdown.tsx:98
 #: ../../../lib/web/src/components/sign-out-dialog.tsx:26
@@ -1699,8 +1696,8 @@ msgstr "Kudeatu konektatutako kontuak jakinarazpenetarako eta zerbitzuetarako."
 msgid "Manual"
 msgstr "Eskuz"
 
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:118
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:125
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:202
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:209
 #: ../../../lib/web/src/components/notifications-dropdown.tsx:224
 msgid "Mark all as read"
 msgstr "Markatu denak irakurritzat"
@@ -1717,7 +1714,7 @@ msgstr "MCP zerbitzaria"
 msgid "Medium"
 msgstr "Ertaina"
 
-#: ../../../lib/web/src/components/layout/mochi-menu.tsx:190
+#: ../../../lib/web/src/components/layout/mochi-menu.tsx:207
 msgid "Menu"
 msgstr "Menua"
 
@@ -1786,7 +1783,7 @@ msgstr "Astelehena"
 msgid "More options"
 msgstr ""
 
-#: src/features/projects/components/create-project-dialog.tsx:309
+#: src/features/projects/components/create-project-dialog.tsx:341
 msgid "My project"
 msgstr "Nire proiektua"
 
@@ -1796,7 +1793,7 @@ msgstr "Nire proiektua"
 #: src/features/editor/components/edit-dialogs.tsx:741
 #: src/features/editor/components/edit-dialogs.tsx:1065
 #: src/features/editor/components/option-dialog.tsx:112
-#: src/features/projects/components/create-project-dialog.tsx:299
+#: src/features/projects/components/create-project-dialog.tsx:331
 #: src/routes/_authenticated/$projectId_.settings.tsx:301
 msgid "Name"
 msgstr "Izena"
@@ -1805,7 +1802,7 @@ msgstr "Izena"
 msgid "Name cannot contain angle brackets, backslash, semicolon, quotes or backticks"
 msgstr "Izenak ezin du angeluzuzenik, alderantzizko barrarik, puntu eta komarik, komatxorik edo alderantzizko komatxorik izan"
 
-#: src/features/projects/components/create-project-dialog.tsx:88
+#: src/features/projects/components/create-project-dialog.tsx:89
 msgid "Name is required"
 msgstr "Izena beharrezkoa da"
 
@@ -1820,21 +1817,21 @@ msgstr "Sareko errorea"
 
 #: ../../../lib/web/src/components/ui/sort-selector.tsx:43
 #: src/features/objects/components/create-object-dialog.tsx:399
-#: src/routes/_authenticated/$projectId/index.tsx:920
-#: src/routes/_authenticated/$projectId/index.tsx:938
+#: src/routes/_authenticated/$projectId/index.tsx:918
+#: src/routes/_authenticated/$projectId/index.tsx:936
 msgid "New"
 msgstr "Berria"
 
-#: src/routes/_authenticated/$projectId/index.tsx:917
+#: src/routes/_authenticated/$projectId/index.tsx:915
 msgid "New {className}"
 msgstr "{className} berria"
 
-#: ../../../lib/web/src/components/game/game-empty-state.tsx:42
-#: ../../../lib/web/src/components/game/game-empty-state.tsx:54
+#: ../../../lib/web/src/components/game/game-empty-state.tsx:41
+#: ../../../lib/web/src/components/game/game-empty-state.tsx:53
 msgid "New game"
 msgstr "Joko berria"
 
-#: src/features/projects/components/create-project-dialog.tsx:417
+#: src/features/projects/components/create-project-dialog.tsx:449
 msgid "Next"
 msgstr "Hurrengoa"
 
@@ -1887,7 +1884,7 @@ msgstr "Konektatutako konturik ez"
 msgid "No diff available"
 msgstr "Ez dago diff erabilgarririk"
 
-#: ../../../lib/web/src/components/game/game-empty-state.tsx:51
+#: ../../../lib/web/src/components/game/game-empty-state.tsx:50
 msgid "No games yet"
 msgstr "Oraindik jokorik ez"
 
@@ -1953,9 +1950,13 @@ msgstr "Egoerarik ez"
 msgid "No time zone found."
 msgstr "Ez da ordu-zonarik aurkitu."
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:150
+#: ../../../lib/web/src/components/notification-category-button.tsx:106
 msgid "No topic record yet — try again after the next notification."
 msgstr "Oraindik gairik ez — saiatu berriro hurrengo jakinarazpenaren ondoren."
+
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:132
+msgid "No unread notifications"
+msgstr ""
 
 #: ../../../lib/web/src/features/access/access-dialog.tsx:206
 msgid "No users found"
@@ -2015,7 +2016,7 @@ msgid "Notifications"
 msgstr "Jakinarazpenak"
 
 #. placeholder {0}: unread.length
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:111
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:195
 msgid "Notifications: {0}"
 msgstr "Jakinarazpenak: {0}"
 
@@ -2067,7 +2068,7 @@ msgstr "Ireki zutabearen ekintzak"
 msgid "Open design actions"
 msgstr "Ireki diseinu-ekintzak"
 
-#: ../../../lib/web/src/components/layout/mochi-menu.tsx:149
+#: ../../../lib/web/src/components/layout/mochi-menu.tsx:166
 msgid "Open menu"
 msgstr "Ireki menua"
 
@@ -2086,7 +2087,7 @@ msgstr "Ireki nabigazio-menua"
 msgid "Open option actions"
 msgstr "Ireki aukera-ekintzak"
 
-#: src/routes/_authenticated/$projectId/index.tsx:946
+#: src/routes/_authenticated/$projectId/index.tsx:944
 msgid "Open page actions"
 msgstr "Ireki orri-ekintzak"
 
@@ -2157,12 +2158,12 @@ msgstr "Eredua (regex)"
 msgid "Pick a date"
 msgstr "Hautatu data bat"
 
-#: src/routes/_authenticated/$projectId/index.tsx:756
-#: src/routes/_authenticated/$projectId/index.tsx:790
+#: src/routes/_authenticated/$projectId/index.tsx:754
+#: src/routes/_authenticated/$projectId/index.tsx:788
 msgid "Please add one or more classes to the project design."
 msgstr "Mesedez gehitu klase bat edo gehiago proiektuaren diseinura."
 
-#: ../../../lib/web/src/components/comment-composer.tsx:95
+#: ../../../lib/web/src/components/comment-composer.tsx:99
 #: ../../../lib/web/src/features/errors/general-error.tsx:54
 #: ../../../lib/web/src/lib/api-response-interceptors.ts:323
 msgid "Please check your internet connection and try again."
@@ -2172,7 +2173,7 @@ msgstr "Egiaztatu zure interneteko konexioa eta saiatu berriro."
 msgid "Please log in with the appropriate credentials <0/> to access this resource."
 msgstr "Baliabide honetara sartzeko <0/> hasi saioa kredentzial egokiekin."
 
-#: src/features/projects/components/create-project-dialog.tsx:104
+#: src/features/projects/components/create-project-dialog.tsx:105
 msgid "Please select a template"
 msgstr "Mesedez hautatu txantiloi bat"
 
@@ -2192,7 +2193,7 @@ msgstr ""
 msgid "Posts and comments"
 msgstr ""
 
-#: src/features/projects/components/create-project-dialog.tsx:321
+#: src/features/projects/components/create-project-dialog.tsx:353
 #: src/routes/_authenticated/$projectId_.settings.tsx:318
 msgid "Prefix"
 msgstr "Aurrizkia"
@@ -2211,7 +2212,6 @@ msgstr "Pribatutasuna"
 msgid "Processing…"
 msgstr "Prozesatzen…"
 
-#: ../../../lib/web/src/components/layout/nav-user.tsx:137
 #: ../../../lib/web/src/components/profile-dropdown.tsx:114
 msgid "Profile"
 msgstr "Profila"
@@ -2226,7 +2226,7 @@ msgstr "Proiektua"
 msgid "Project actions"
 msgstr "Proiektuaren ekintzak"
 
-#: src/features/projects/components/create-project-dialog.tsx:119
+#: src/features/projects/components/create-project-dialog.tsx:120
 msgid "Project created"
 msgstr "Proiektua sortu da"
 
@@ -2234,7 +2234,7 @@ msgstr "Proiektua sortu da"
 msgid "Project deleted"
 msgstr "Proiektua ezabatu da"
 
-#: src/routes/_authenticated/$projectId/index.tsx:1165
+#: src/routes/_authenticated/$projectId/index.tsx:1163
 msgid "Project link"
 msgstr "Proiektuaren esteka"
 
@@ -2281,7 +2281,7 @@ msgstr "Goratua"
 msgid "Re-link your accounts on this server"
 msgstr "Berriro lotu zure kontuak zerbitzari honetan"
 
-#: src/routes/_authenticated/$projectId/index.tsx:970
+#: src/routes/_authenticated/$projectId/index.tsx:968
 msgid "Re-order columns"
 msgstr "Berrordenatu zutabeak"
 
@@ -2311,7 +2311,7 @@ msgstr "Gomendatutako proiektuak"
 msgid "Reconnecting ({retries})..."
 msgstr "Berriz konektatzen ({retries})..."
 
-#: ../../../lib/web/src/components/layout/authenticated-layout.tsx:133
+#: ../../../lib/web/src/components/layout/authenticated-layout.tsx:136
 msgid "Redirecting to login."
 msgstr "Saio-hasierara birbideratzen."
 
@@ -2332,12 +2332,12 @@ msgstr "Erlatiboa (5m, 3o, 2e)"
 msgid "Relative within 24 hours, else absolute"
 msgstr "Erlatiboa 24 ordu barruan, bestela absolutua"
 
-#: ../../../lib/web/src/components/comment-composer.tsx:232
+#: ../../../lib/web/src/components/comment-composer.tsx:236
 #: ../../../lib/web/src/features/access/access-list.tsx:270
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:180
 #: src/features/editor/components/add-dialogs.tsx:188
 #: src/features/objects/components/create-object-dialog.tsx:536
-#: src/features/projects/components/create-project-dialog.tsx:397
+#: src/features/projects/components/create-project-dialog.tsx:429
 msgid "Remove"
 msgstr "Kendu"
 
@@ -2449,7 +2449,7 @@ msgstr "Berrezarri ezarpen guztiak balio lehenetsietara"
 msgid "Resolve these conflicts manually before merging."
 msgstr "Konpondu gatazka hauek eskuz bateratu aurretik."
 
-#: ../../../lib/web/src/components/comment-composer.tsx:249
+#: ../../../lib/web/src/components/comment-composer.tsx:253
 msgid "Retry"
 msgstr "Saiatu berriro"
 
@@ -2498,7 +2498,7 @@ msgstr "Larunbata"
 #: ../../../lib/web/src/components/ui/secret-field.tsx:77
 #: src/features/editor/components/option-dialog.tsx:150
 #: src/features/objects/components/comment-thread.tsx:260
-#: src/routes/_authenticated/$projectId/index.tsx:1051
+#: src/routes/_authenticated/$projectId/index.tsx:1049
 msgid "Save"
 msgstr "Gorde"
 
@@ -2584,7 +2584,7 @@ msgstr "Hautatu {0}"
 msgid "Select a field"
 msgstr "Hautatu eremu bat"
 
-#: ../../../lib/web/src/components/game/game-empty-state.tsx:37
+#: ../../../lib/web/src/components/game/game-empty-state.tsx:36
 msgid "Select a game"
 msgstr "Hautatu joko bat"
 
@@ -2705,16 +2705,13 @@ msgstr "Ezarri jatorria eta helmuga"
 msgid "Setting access..."
 msgstr "Sarbidea ezartzen..."
 
-#: ../../../lib/web/src/components/layout/mochi-menu.tsx:109
-#: ../../../lib/web/src/components/layout/mochi-menu.tsx:115
-#: ../../../lib/web/src/components/layout/nav-user.tsx:84
-#: ../../../lib/web/src/components/layout/nav-user.tsx:148
-#: ../../../lib/web/src/components/layout/nav-user.tsx:198
+#: ../../../lib/web/src/components/layout/mochi-menu.tsx:126
+#: ../../../lib/web/src/components/layout/mochi-menu.tsx:132
 #: ../../../lib/web/src/components/options-menu.tsx:196
 #: src/routes/_authenticated/$projectId_.settings.tsx:76
 #: src/routes/_authenticated/$projectId_.settings.tsx:167
 #: src/routes/_authenticated/$projectId_.settings.tsx:190
-#: src/routes/_authenticated/$projectId/index.tsx:1003
+#: src/routes/_authenticated/$projectId/index.tsx:1001
 msgid "Settings"
 msgstr "Ezarpenak"
 
@@ -2744,12 +2741,12 @@ msgstr "{total}etik {totalShown} erakusten"
 msgid "Sidebar"
 msgstr "Alboko barra"
 
-#: ../../../lib/web/src/components/layout/mochi-menu.tsx:121
-#: ../../../lib/web/src/components/layout/mochi-menu.tsx:127
+#: ../../../lib/web/src/components/layout/mochi-menu.tsx:138
+#: ../../../lib/web/src/components/layout/mochi-menu.tsx:144
 msgid "Sign out"
 msgstr "Amaitu saioa"
 
-#: ../../../lib/web/src/components/layout/authenticated-layout.tsx:131
+#: ../../../lib/web/src/components/layout/authenticated-layout.tsx:134
 msgid "Signing out..."
 msgstr "Saioa amaitzen..."
 
@@ -2849,7 +2846,7 @@ msgstr "Igandea"
 msgid "Switch to view 1-9"
 msgstr "Aldatu 1-9 ikuspegira"
 
-#: ../../../lib/web/src/components/audit-timeline.tsx:101
+#: ../../../lib/web/src/components/audit-timeline.tsx:111
 #: ../../../lib/web/src/components/config-drawer.tsx:209
 #: ../../../lib/web/src/components/theme-switch.tsx:59
 #: ../../../lib/web/src/lib/preference-utils.ts:21
@@ -2900,10 +2897,6 @@ msgid "The requested content could not be found."
 msgstr "Eskatutako edukia ezin izan da aurkitu."
 
 #: ../../../lib/web/src/lib/api-response-interceptors.ts:152
-#~ msgid "The server returned a web page instead of data, which usually means the address was wrong."
-#~ msgstr ""
-
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:152
 msgid "The server returned a web page instead of data."
 msgstr "Zerbitzariak web-orri bat itzuli du datuen ordez."
 
@@ -2949,7 +2942,7 @@ msgid "This will permanently delete \"{projectName}\" and all its objects, comme
 msgstr "Honek \"{projectName}\" eta bere objektu, iruzkin eta eranskin guztiak betiko ezabatuko ditu. Ekintza hau ezin da desegin."
 
 #. placeholder {0}: project.project.name
-#: src/routes/_authenticated/$projectId/index.tsx:1181
+#: src/routes/_authenticated/$projectId/index.tsx:1179
 msgid "This will remove \"{0}\" from your sidebar and stop updates for this project."
 msgstr "Honek \"{0}\" zure alboko barratik kenduko du eta proiektu honentzako eguneraketak gelditu egingo dira."
 
@@ -3071,12 +3064,12 @@ msgstr "Idatzi bilatzeko..."
 msgid "Unable to connect to remote server"
 msgstr "Ezin izan da urruneko zerbitzarira konektatu"
 
-#: ../../../lib/web/src/lib/auth-manager.ts:85
-#: ../../../lib/web/src/lib/auth-manager.ts:97
+#: ../../../lib/web/src/lib/auth-manager.ts:92
+#: ../../../lib/web/src/lib/auth-manager.ts:104
 msgid "Unable to redirect to login. Please try again."
 msgstr "Ezin da saio-hasierara birbideratu. Saiatu berriro."
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:158
+#: ../../../lib/web/src/components/notification-category-button.tsx:114
 msgid "Unassigned"
 msgstr "Esleitu gabe"
 
@@ -3105,22 +3098,22 @@ msgstr "Ezezaguna"
 #: src/features/projects/pages/projects-list-page.tsx:147
 #: src/features/projects/pages/projects-list-page.tsx:166
 #: src/features/projects/pages/projects-list-page.tsx:168
-#: src/routes/_authenticated/$projectId/index.tsx:1011
-#: src/routes/_authenticated/$projectId/index.tsx:1182
+#: src/routes/_authenticated/$projectId/index.tsx:1009
+#: src/routes/_authenticated/$projectId/index.tsx:1180
 msgid "Unsubscribe"
 msgstr "Harpidetza kendu"
 
-#: src/routes/_authenticated/$projectId/index.tsx:1180
+#: src/routes/_authenticated/$projectId/index.tsx:1178
 msgid "Unsubscribe from project?"
 msgstr "Proiektutik harpidetza kendu?"
 
 #: src/features/projects/pages/projects-list-page.tsx:176
-#: src/routes/_authenticated/$projectId/index.tsx:647
+#: src/routes/_authenticated/$projectId/index.tsx:645
 msgid "Unsubscribed"
 msgstr "Harpidetza kenduta"
 
 #: src/features/projects/pages/projects-list-page.tsx:175
-#: src/routes/_authenticated/$projectId/index.tsx:646
+#: src/routes/_authenticated/$projectId/index.tsx:644
 msgid "Unsubscribing..."
 msgstr "Harpidetza kentzen..."
 
@@ -3146,7 +3139,7 @@ msgstr "Sarbidea eguneratzen..."
 msgid "Upload"
 msgstr "Igo"
 
-#: src/features/projects/components/create-project-dialog.tsx:370
+#: src/features/projects/components/create-project-dialog.tsx:402
 #: src/routes/_authenticated/$projectId/design.tsx:337
 msgid "Upload .json file"
 msgstr "Igo .json fitxategia"
@@ -3161,11 +3154,11 @@ msgstr "Erabili zure sarbide-gakoa"
 
 #. placeholder {0}: prefix || "project"
 #. placeholder {1}: prefix || "project"
-#: src/features/projects/components/create-project-dialog.tsx:338
+#: src/features/projects/components/create-project-dialog.tsx:370
 msgid "Used for readable IDs like {0}-1, {1}-2"
 msgstr "Irakurgarriak diren ID-etarako erabiltzen da, hala nola {0}-1, {1}-2"
 
-#: ../../../lib/web/src/components/layout/mochi-menu.tsx:102
+#: ../../../lib/web/src/components/layout/mochi-menu.tsx:119
 #: ../../../lib/web/src/features/access/access-dialog.tsx:158
 #: src/features/editor/components/add-dialogs.tsx:141
 msgid "User"
@@ -3210,8 +3203,8 @@ msgstr "Ikusi"
 msgid "View all"
 msgstr "Ikusi guztiak"
 
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:131
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:139
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:215
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:223
 msgid "View all notifications"
 msgstr "Ikusi jakinarazpen guztiak"
 
@@ -3227,7 +3220,7 @@ msgstr "Ikuspegi-kontrolak"
 msgid "View only"
 msgstr "Ikusi soilik"
 
-#: src/routes/_authenticated/$projectId/index.tsx:955
+#: src/routes/_authenticated/$projectId/index.tsx:953
 msgid "View options"
 msgstr "Ikuspegi-aukerak"
 
@@ -3249,7 +3242,7 @@ msgstr "Ikusten"
 msgid "Watched only"
 msgstr "Ikusiak soilik"
 
-#: src/features/projects/components/create-project-dialog.tsx:431
+#: src/features/projects/components/create-project-dialog.tsx:463
 msgid "We have auto-selected the best matching template."
 msgstr "Ondoen bat datorren txantiloia automatikoki hautatu dugu."
 
@@ -3290,10 +3283,6 @@ msgstr "Ez duzu beharrezko baimenik <0/>baliabide hau ikusteko."
 msgid "You have no projects yet."
 msgstr "Oraindik ez duzu proiekturik."
 
-#: ../../../lib/web/src/lib/show-submitted-data.tsx:9
-msgid "You submitted the following values:"
-msgstr "Balio hauek bidali dituzu:"
-
 #: ../../../lib/web/src/components/notifications-dropdown.tsx:193
 msgid "You're all caught up!"
 msgstr "Dena irakurri duzu!"
@@ -3302,18 +3291,18 @@ msgstr "Dena irakurri duzu!"
 msgid "Your account was moved here from {source}. Until you delete it there, messages and notifications may reach both servers, some of your content keeps being served from the old server, and followers may take a few minutes to find you here."
 msgstr "Zure kontua {source}-etik hona mugitu da. Han ezabatu arte, mezuak eta jakinarazpenak bi zerbitzarietara irits daitezke, zure edukiaren zati bat zerbitzari zaharretik ematen jarraitzen du, eta jarraitzaileek minutu batzuk behar izan ditzakete zu hemen aurkitzeko."
 
-#: ../../../lib/web/src/components/comment-composer.tsx:291
+#: ../../../lib/web/src/components/comment-composer.tsx:295
 msgid "Your attachments will be lost."
 msgstr "Zure eranskinak galduko dira."
 
-#: src/features/projects/components/create-project-dialog.tsx:427
+#: src/features/projects/components/create-project-dialog.tsx:459
 msgid "Your backup contains objects of type:"
 msgstr "Zure babeskopiak mota hauetako objektuak ditu:"
 
-#: ../../../lib/web/src/components/comment-composer.tsx:289
+#: ../../../lib/web/src/components/comment-composer.tsx:293
 msgid "Your text and attachments will be lost."
 msgstr "Zure testua eta eranskinak galduko dira."
 
-#: ../../../lib/web/src/components/comment-composer.tsx:292
+#: ../../../lib/web/src/components/comment-composer.tsx:296
 msgid "Your text will be lost."
 msgstr "Zure testua galduko da."

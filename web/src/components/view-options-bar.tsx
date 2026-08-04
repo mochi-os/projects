@@ -7,10 +7,16 @@
 import { EntityViewOptionsBar, type EntityViewOptionsBarProps } from "@mochi/web";
 import type { ProjectDetails } from "@/types";
 
-type ViewOptionsBarProps = Omit<EntityViewOptionsBarProps, "views"> & {
+type ViewOptionsBarProps = Omit<
+  EntityViewOptionsBarProps,
+  "views" | "numbered"
+> & {
   project: ProjectDetails;
 };
 
+// Every project object carries a number, so the built-in Number sort is offered.
+// The crm binding leaves it off, which is what keeps a dead option out of a
+// dropdown that cannot sort by it.
 export function ViewOptionsBar({ project, ...props }: ViewOptionsBarProps) {
-  return <EntityViewOptionsBar {...props} views={project.views} />;
+  return <EntityViewOptionsBar {...props} views={project.views} numbered />;
 }

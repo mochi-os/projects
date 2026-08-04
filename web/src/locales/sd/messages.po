@@ -109,7 +109,7 @@ msgstr "{selectedCount, plural, one {# چونڊيل {entityName} لاءِ وڏي
 msgid "{sentLabel} of {totalLabel}"
 msgstr "{totalLabel} مان {sentLabel}"
 
-#: src/features/board/components/board-column.tsx:522
+#: ../../../lib/web/src/components/entity/entity-board-column.tsx:544
 msgid "{totalCount, plural, one {# item} other {# items}}"
 msgstr "{totalCount, plural, one {# شيءِ} other {# شيون}}"
 
@@ -218,7 +218,7 @@ msgstr "تبصرو شامل ڪريو..."
 msgid "Add a new account"
 msgstr "نئون اڪائونٽ شامل ڪريو"
 
-#: src/features/editor/components/add-dialogs.tsx:104
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:106
 msgid "Add a new field to this class"
 msgstr "هن ڪلاس ۾ نئون فيلڊ شامل ڪريو"
 
@@ -250,8 +250,8 @@ msgstr "ڪلاس شامل ڪريو"
 msgid "Add column"
 msgstr "ڪالم شامل ڪريو"
 
-#: src/features/editor/components/add-dialogs.tsx:103
-#: src/features/editor/components/add-dialogs.tsx:226
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:105
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:233
 #: src/features/editor/components/edit-dialogs.tsx:912
 msgid "Add field"
 msgstr "فيلڊ شامل ڪريو"
@@ -268,9 +268,10 @@ msgstr "لنڪ شامل ڪريو"
 msgid "Add new account"
 msgstr "نئون اڪائونٽ شامل ڪريو"
 
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:215
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:220
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:94
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:183
-#: src/features/editor/components/add-dialogs.tsx:211
 #: src/features/editor/components/edit-dialogs.tsx:1214
 msgid "Add option"
 msgstr "اختيار شامل ڪريو"
@@ -367,7 +368,7 @@ msgstr "ڇا توهان پڪ سان \"{0}\" ختم ڪرڻ چاهيو ٿا؟"
 msgid "Are you sure you want to delete \"{title}\"? This action cannot be undone."
 msgstr "ڇا توهان پڪ سان \"{title}\" ختم ڪرڻ چاهيو ٿا؟ هي عمل واپس نه ٿو ٿي سگهي."
 
-#: src/features/board/components/board-column.tsx:621
+#: ../../../lib/web/src/components/entity/entity-board-column.tsx:643
 msgid "Are you sure you want to delete the \"{name}\" column? This cannot be undone."
 msgstr "ڇا توهان پڪ سان \"{name}\" ڪالم ختم ڪرڻ چاهيو ٿا؟ هي واپس نه ٿو ٿي سگهي."
 
@@ -497,6 +498,7 @@ msgstr "اندروني ٽيمپليٽ"
 msgid "Can be child of"
 msgstr "جي اولاد ٿي سگهي ٿو"
 
+#: ../../../lib/web/src/components/entity/entity-board-column.tsx:628
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:169
 #: ../../../lib/web/src/components/responsive-confirm-dialog.tsx:67
 #: ../../../lib/web/src/components/step-up-dialog.tsx:363
@@ -507,7 +509,6 @@ msgstr "جي اولاد ٿي سگهي ٿو"
 #: ../../../lib/web/src/features/access/access-list.tsx:268
 #: ../../../lib/web/src/features/accounts/account-add.tsx:188
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:91
-#: src/features/board/components/board-column.tsx:606
 #: src/features/objects/components/comment-thread.tsx:240
 #: src/features/projects/components/create-project-dialog.tsx:443
 #: src/routes/_authenticated/$projectId/design.tsx:344
@@ -542,7 +543,7 @@ msgstr "اطلاع جو زمرو تبديل ڪريو"
 msgid "Check \"All\" to see your past notifications."
 msgstr "پنھنجون اڳوڻيون اطلاعون ڏسڻ لاءِ \"سڀ\" چونڊيو."
 
-#: src/features/editor/components/add-dialogs.tsx:135
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:137
 msgid "Checkbox"
 msgstr "چيڪ بڪس"
 
@@ -550,7 +551,7 @@ msgstr "چيڪ بڪس"
 msgid "Checking merge status..."
 msgstr "merge جي حالت چيڪ ڪري رهيو آهي..."
 
-#: src/features/editor/components/add-dialogs.tsx:136
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:138
 msgid "Checklist"
 msgstr "چيڪ لسٽ"
 
@@ -627,8 +628,8 @@ msgstr "انتخاب صاف ڪريو (Escape)"
 msgid "Close"
 msgstr "بند ڪريو"
 
-#: src/features/editor/components/add-dialogs.tsx:107
-#: src/features/editor/components/add-dialogs.tsx:111
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:109
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:113
 #: src/features/editor/components/edit-dialogs.tsx:277
 #: src/features/editor/components/edit-dialogs.tsx:281
 #: src/features/editor/components/edit-dialogs.tsx:711
@@ -668,6 +669,11 @@ msgstr "سائڊبار کي سُڪيڙيو"
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:149
 msgid "Colour"
 msgstr "رنگ"
+
+#: ../../../lib/web/src/components/entity/entity-board-column.tsx:553
+#: ../../../lib/web/src/components/entity/entity-board-column.tsx:558
+msgid "Column actions"
+msgstr ""
 
 #: src/features/editor/components/edit-dialogs.tsx:361
 msgid "Columns group by"
@@ -780,8 +786,8 @@ msgstr "ٻيهر تصديق شروع نه ٿي سگهي. مهرباني ڪري �
 msgid "Couldn't verify with that account. Please try again."
 msgstr "ان اڪائونٽ سان تصديق نه ٿي سگهي. مهرباني ڪري ٻيهر ڪوشش ڪريو."
 
-#: src/features/board/components/board-column.tsx:542
-#: src/features/board/components/board-column.tsx:681
+#: ../../../lib/web/src/components/entity/entity-board-column.tsx:564
+#: ../../../lib/web/src/components/entity/entity-board-column.tsx:703
 #: src/features/objects/components/create-object-dialog.tsx:414
 #: src/features/objects/components/create-object-dialog.tsx:585
 #: src/features/tree/components/tree-view.tsx:697
@@ -866,7 +872,7 @@ msgstr "ڊيٽا جو ٽڪراءُ"
 msgid "Data imported ({0, plural, one {# object} other {# objects}}, {1, plural, one {# comment} other {# comments}}, {2, plural, one {# link} other {# links}})"
 msgstr "ڊيٽا درآمد ٿي وئي ({0, plural, one {# شئي} other {# شيون}}، {1, plural, one {# تبصرو} other {# تبصرا}}، {2, plural, one {# لنڪ} other {# لنڪون}})"
 
-#: src/features/editor/components/add-dialogs.tsx:137
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:139
 msgid "Date"
 msgstr "تاريخ"
 
@@ -886,8 +892,8 @@ msgstr "ڊفالٽ AI اڪائونٽ"
 msgid "Default sort"
 msgstr "ڊفالٽ ترتيب"
 
-#: src/features/board/components/board-column.tsx:561
-#: src/features/board/components/board-column.tsx:622
+#: ../../../lib/web/src/components/entity/entity-board-column.tsx:583
+#: ../../../lib/web/src/components/entity/entity-board-column.tsx:644
 #: src/features/objects/components/comment-thread.tsx:309
 #: src/features/objects/components/comment-thread.tsx:433
 #: src/features/objects/components/object-attachments.tsx:157
@@ -908,7 +914,7 @@ msgstr "ڳنڍيل فائل ختم ڪريو"
 msgid "Delete class"
 msgstr "ڪلاس ختم ڪريو"
 
-#: src/features/board/components/board-column.tsx:620
+#: ../../../lib/web/src/components/entity/entity-board-column.tsx:642
 msgid "Delete column"
 msgstr "ڪالم ختم ڪريو"
 
@@ -1787,9 +1793,9 @@ msgstr ""
 msgid "My project"
 msgstr "منهنجو پروجيڪٽ"
 
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:118
+#: ../../../lib/web/src/components/entity/entity-board-column.tsx:614
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:128
-#: src/features/board/components/board-column.tsx:592
-#: src/features/editor/components/add-dialogs.tsx:116
 #: src/features/editor/components/edit-dialogs.tsx:307
 #: src/features/editor/components/edit-dialogs.tsx:741
 #: src/features/editor/components/edit-dialogs.tsx:1065
@@ -2020,8 +2026,8 @@ msgstr "اطلاعون"
 msgid "Notifications: {0}"
 msgstr "اطلاعون: {0}"
 
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:140
 #: src/components/view-options-bar.tsx:42
-#: src/features/editor/components/add-dialogs.tsx:138
 #: src/features/editor/components/edit-dialogs.tsx:507
 msgid "Number"
 msgstr "نمبر"
@@ -2058,11 +2064,6 @@ msgstr "ڪارروايون کوليو"
 #: src/features/editor/components/edit-dialogs.tsx:727
 msgid "Open class actions"
 msgstr "ڪلاس ڪارناما کوليو"
-
-#: src/features/board/components/board-column.tsx:531
-#: src/features/board/components/board-column.tsx:536
-msgid "Open column actions"
-msgstr "ڪالم جا عمل کوليو"
 
 #: src/routes/_authenticated/$projectId/design.tsx:166
 msgid "Open design actions"
@@ -2110,12 +2111,12 @@ msgstr "ڏيک ڪارناما کوليو"
 msgid "Open view controls"
 msgstr "ڏيک ڪنٽرول کوليو"
 
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:200
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:158
-#: src/features/editor/components/add-dialogs.tsx:198
 msgid "Option name"
 msgstr "اختيار جو نالو"
 
-#: src/features/editor/components/add-dialogs.tsx:166
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:168
 #: src/features/editor/components/edit-dialogs.tsx:1163
 msgid "Options"
 msgstr "اختيار"
@@ -2333,9 +2334,9 @@ msgid "Relative within 24 hours, else absolute"
 msgstr "24 ڪلاڪن اندر نسبتي، ٻي صورت ۾ مطلق"
 
 #: ../../../lib/web/src/components/comment-composer.tsx:236
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:190
 #: ../../../lib/web/src/features/access/access-list.tsx:270
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:180
-#: src/features/editor/components/add-dialogs.tsx:188
 #: src/features/objects/components/create-object-dialog.tsx:536
 #: src/features/projects/components/create-project-dialog.tsx:429
 msgid "Remove"
@@ -2385,16 +2386,16 @@ msgstr "لنڪ هٽايو"
 msgid "Removing access..."
 msgstr "رسائي هٽائي پئي وڃي..."
 
-#: src/features/board/components/board-column.tsx:553
-#: src/features/board/components/board-column.tsx:610
+#: ../../../lib/web/src/components/entity/entity-board-column.tsx:575
+#: ../../../lib/web/src/components/entity/entity-board-column.tsx:632
 msgid "Rename"
 msgstr "نالو تبديل ڪريو"
 
-#: src/features/board/components/board-column.tsx:588
+#: ../../../lib/web/src/components/entity/entity-board-column.tsx:610
 msgid "Rename column"
 msgstr "ڪالم جو نالو تبديل ڪريو"
 
-#: src/features/board/components/board-column.tsx:589
+#: ../../../lib/web/src/components/entity/entity-board-column.tsx:611
 msgid "Rename this board column"
 msgstr "هن بورڊ ڪالم جو نالو تبديل ڪريو"
 
@@ -2465,7 +2466,7 @@ msgstr ""
 msgid "Right to Left"
 msgstr "ساڄي کان کاٻي"
 
-#: src/features/editor/components/add-dialogs.tsx:148
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:150
 #: src/features/editor/components/edit-dialogs.tsx:1091
 msgid "Rows"
 msgstr "قطارون"
@@ -2571,7 +2572,7 @@ msgstr "ڳوليو..."
 msgid "Searching..."
 msgstr "ڳولي رهيو آهي..."
 
-#: src/features/editor/components/add-dialogs.tsx:139
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:141
 msgid "Select"
 msgstr "چونڊيو"
 
@@ -2750,7 +2751,7 @@ msgstr "سائن آئوٽ ڪريو"
 msgid "Signing out..."
 msgstr "سائن آئوٽ ٿي رهيو آھي..."
 
-#: src/features/editor/components/add-dialogs.tsx:159
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:161
 #: src/features/editor/components/edit-dialogs.tsx:1102
 msgid "Single line of text only"
 msgstr "صرف ٽيڪسٽ جي ھڪ سٽ"
@@ -2884,7 +2885,7 @@ msgstr "ٽيمز/ايپس"
 msgid "Terms and conditions"
 msgstr "شرطون ۽ ضابطا"
 
-#: src/features/editor/components/add-dialogs.tsx:140
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:142
 msgid "Text"
 msgstr "ٽيڪسٽ"
 
@@ -3039,7 +3040,7 @@ msgstr "ٻيهر ڪوشش ڪريو"
 msgid "Tuesday"
 msgstr "اڱارو"
 
-#: src/features/editor/components/add-dialogs.tsx:128
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:130
 #: src/features/editor/components/edit-dialogs.tsx:1085
 msgid "Type"
 msgstr "قسم"
@@ -3158,9 +3159,9 @@ msgstr "پنهنجي پاس ڪي استعمال ڪريو"
 msgid "Used for readable IDs like {0}-1, {1}-2"
 msgstr "{0}-1، {1}-2 جھڙا پڙھڻ جوڳا ID ڏيکارڻ لاءِ استعمال ٿيل"
 
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:143
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx:119
 #: ../../../lib/web/src/features/access/access-dialog.tsx:158
-#: src/features/editor/components/add-dialogs.tsx:141
 msgid "User"
 msgstr "صارف"
 

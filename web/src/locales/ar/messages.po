@@ -109,7 +109,7 @@ msgstr "{selectedCount, plural, zero {إجراءات مجمعة لـ {manyName}}
 msgid "{sentLabel} of {totalLabel}"
 msgstr "{sentLabel} من {totalLabel}"
 
-#: src/features/board/components/board-column.tsx:522
+#: ../../../lib/web/src/components/entity/entity-board-column.tsx:544
 msgid "{totalCount, plural, one {# item} other {# items}}"
 msgstr "{totalCount, plural, zero {لا عناصر} one {عنصر واحد} two {عنصران} few {# عناصر} many {# عنصرًا} other {# عنصر}}"
 
@@ -218,7 +218,7 @@ msgstr "إضافة تعليق..."
 msgid "Add a new account"
 msgstr "إضافة حساب جديد"
 
-#: src/features/editor/components/add-dialogs.tsx:104
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:106
 msgid "Add a new field to this class"
 msgstr "إضافة حقل جديد إلى هذه الفئة"
 
@@ -250,8 +250,8 @@ msgstr "إضافة فئة"
 msgid "Add column"
 msgstr "إضافة عمود"
 
-#: src/features/editor/components/add-dialogs.tsx:103
-#: src/features/editor/components/add-dialogs.tsx:226
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:105
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:233
 #: src/features/editor/components/edit-dialogs.tsx:912
 msgid "Add field"
 msgstr "إضافة حقل"
@@ -268,9 +268,10 @@ msgstr "إضافة رابط"
 msgid "Add new account"
 msgstr "إضافة حساب جديد"
 
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:215
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:220
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:94
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:183
-#: src/features/editor/components/add-dialogs.tsx:211
 #: src/features/editor/components/edit-dialogs.tsx:1214
 msgid "Add option"
 msgstr "إضافة خيار"
@@ -367,7 +368,7 @@ msgstr "هل أنت متأكد من حذف \"{0}\"؟"
 msgid "Are you sure you want to delete \"{title}\"? This action cannot be undone."
 msgstr "هل أنت متأكد من حذف \"{title}\"؟ لا يمكن التراجع عن هذا الإجراء."
 
-#: src/features/board/components/board-column.tsx:621
+#: ../../../lib/web/src/components/entity/entity-board-column.tsx:643
 msgid "Are you sure you want to delete the \"{name}\" column? This cannot be undone."
 msgstr "هل أنت متأكد من حذف العمود \"{name}\"؟ لا يمكن التراجع عن ذلك."
 
@@ -497,6 +498,7 @@ msgstr "القوالب المدمجة"
 msgid "Can be child of"
 msgstr "يمكن أن يكون فرعًا من"
 
+#: ../../../lib/web/src/components/entity/entity-board-column.tsx:628
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:169
 #: ../../../lib/web/src/components/responsive-confirm-dialog.tsx:67
 #: ../../../lib/web/src/components/step-up-dialog.tsx:363
@@ -507,7 +509,6 @@ msgstr "يمكن أن يكون فرعًا من"
 #: ../../../lib/web/src/features/access/access-list.tsx:268
 #: ../../../lib/web/src/features/accounts/account-add.tsx:188
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:91
-#: src/features/board/components/board-column.tsx:606
 #: src/features/objects/components/comment-thread.tsx:240
 #: src/features/projects/components/create-project-dialog.tsx:443
 #: src/routes/_authenticated/$projectId/design.tsx:344
@@ -542,7 +543,7 @@ msgstr "تغيير فئة الإشعار"
 msgid "Check \"All\" to see your past notifications."
 msgstr "حدّد \"الكل\" لعرض إشعاراتك السابقة."
 
-#: src/features/editor/components/add-dialogs.tsx:135
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:137
 msgid "Checkbox"
 msgstr "مربع اختيار"
 
@@ -550,7 +551,7 @@ msgstr "مربع اختيار"
 msgid "Checking merge status..."
 msgstr "جارٍ التحقق من حالة الدمج..."
 
-#: src/features/editor/components/add-dialogs.tsx:136
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:138
 msgid "Checklist"
 msgstr "قائمة المهام"
 
@@ -627,8 +628,8 @@ msgstr "مسح التحديد (Escape)"
 msgid "Close"
 msgstr "إغلاق"
 
-#: src/features/editor/components/add-dialogs.tsx:107
-#: src/features/editor/components/add-dialogs.tsx:111
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:109
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:113
 #: src/features/editor/components/edit-dialogs.tsx:277
 #: src/features/editor/components/edit-dialogs.tsx:281
 #: src/features/editor/components/edit-dialogs.tsx:711
@@ -668,6 +669,11 @@ msgstr "طيّ الشريط الجانبي"
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:149
 msgid "Colour"
 msgstr "اللون"
+
+#: ../../../lib/web/src/components/entity/entity-board-column.tsx:553
+#: ../../../lib/web/src/components/entity/entity-board-column.tsx:558
+msgid "Column actions"
+msgstr ""
 
 #: src/features/editor/components/edit-dialogs.tsx:361
 msgid "Columns group by"
@@ -780,8 +786,8 @@ msgstr "تعذّر بدء إعادة المصادقة. يرجى المحاولة
 msgid "Couldn't verify with that account. Please try again."
 msgstr "تعذّر التحقق باستخدام هذا الحساب. يرجى المحاولة مرة أخرى."
 
-#: src/features/board/components/board-column.tsx:542
-#: src/features/board/components/board-column.tsx:681
+#: ../../../lib/web/src/components/entity/entity-board-column.tsx:564
+#: ../../../lib/web/src/components/entity/entity-board-column.tsx:703
 #: src/features/objects/components/create-object-dialog.tsx:414
 #: src/features/objects/components/create-object-dialog.tsx:585
 #: src/features/tree/components/tree-view.tsx:697
@@ -866,7 +872,7 @@ msgstr "تعارض في البيانات"
 msgid "Data imported ({0, plural, one {# object} other {# objects}}, {1, plural, one {# comment} other {# comments}}, {2, plural, one {# link} other {# links}})"
 msgstr "تم استيراد البيانات ({0, plural, zero {# كائن} one {كائن واحد} two {كائنان} few {# كائنات} many {# كائنًا} other {# كائن}}، {1, plural, zero {# تعليق} one {تعليق واحد} two {تعليقان} few {# تعليقات} many {# تعليقًا} other {# تعليق}}، {2, plural, zero {# رابط} one {رابط واحد} two {رابطان} few {# روابط} many {# رابطًا} other {# رابط}})"
 
-#: src/features/editor/components/add-dialogs.tsx:137
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:139
 msgid "Date"
 msgstr "التاريخ"
 
@@ -886,8 +892,8 @@ msgstr "حساب الذكاء الاصطناعي الافتراضي"
 msgid "Default sort"
 msgstr "الترتيب الافتراضي"
 
-#: src/features/board/components/board-column.tsx:561
-#: src/features/board/components/board-column.tsx:622
+#: ../../../lib/web/src/components/entity/entity-board-column.tsx:583
+#: ../../../lib/web/src/components/entity/entity-board-column.tsx:644
 #: src/features/objects/components/comment-thread.tsx:309
 #: src/features/objects/components/comment-thread.tsx:433
 #: src/features/objects/components/object-attachments.tsx:157
@@ -908,7 +914,7 @@ msgstr "حذف المرفق"
 msgid "Delete class"
 msgstr "حذف الفئة"
 
-#: src/features/board/components/board-column.tsx:620
+#: ../../../lib/web/src/components/entity/entity-board-column.tsx:642
 msgid "Delete column"
 msgstr "حذف العمود"
 
@@ -1787,9 +1793,9 @@ msgstr ""
 msgid "My project"
 msgstr "مشروعي"
 
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:118
+#: ../../../lib/web/src/components/entity/entity-board-column.tsx:614
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:128
-#: src/features/board/components/board-column.tsx:592
-#: src/features/editor/components/add-dialogs.tsx:116
 #: src/features/editor/components/edit-dialogs.tsx:307
 #: src/features/editor/components/edit-dialogs.tsx:741
 #: src/features/editor/components/edit-dialogs.tsx:1065
@@ -2020,8 +2026,8 @@ msgstr "الإشعارات"
 msgid "Notifications: {0}"
 msgstr "الإشعارات: {0}"
 
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:140
 #: src/components/view-options-bar.tsx:42
-#: src/features/editor/components/add-dialogs.tsx:138
 #: src/features/editor/components/edit-dialogs.tsx:507
 msgid "Number"
 msgstr "الرقم"
@@ -2058,11 +2064,6 @@ msgstr "فتح الإجراءات"
 #: src/features/editor/components/edit-dialogs.tsx:727
 msgid "Open class actions"
 msgstr "فتح إجراءات الفئة"
-
-#: src/features/board/components/board-column.tsx:531
-#: src/features/board/components/board-column.tsx:536
-msgid "Open column actions"
-msgstr "فتح إجراءات العمود"
 
 #: src/routes/_authenticated/$projectId/design.tsx:166
 msgid "Open design actions"
@@ -2110,12 +2111,12 @@ msgstr "فتح إجراءات العرض"
 msgid "Open view controls"
 msgstr "فتح أدوات التحكم في العرض"
 
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:200
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:158
-#: src/features/editor/components/add-dialogs.tsx:198
 msgid "Option name"
 msgstr "اسم الخيار"
 
-#: src/features/editor/components/add-dialogs.tsx:166
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:168
 #: src/features/editor/components/edit-dialogs.tsx:1163
 msgid "Options"
 msgstr "خيارات"
@@ -2333,9 +2334,9 @@ msgid "Relative within 24 hours, else absolute"
 msgstr "نسبي خلال 24 ساعة، وإلا مطلق"
 
 #: ../../../lib/web/src/components/comment-composer.tsx:236
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:190
 #: ../../../lib/web/src/features/access/access-list.tsx:270
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:180
-#: src/features/editor/components/add-dialogs.tsx:188
 #: src/features/objects/components/create-object-dialog.tsx:536
 #: src/features/projects/components/create-project-dialog.tsx:429
 msgid "Remove"
@@ -2385,16 +2386,16 @@ msgstr "إزالة الرابط"
 msgid "Removing access..."
 msgstr "جارٍ إزالة الوصول..."
 
-#: src/features/board/components/board-column.tsx:553
-#: src/features/board/components/board-column.tsx:610
+#: ../../../lib/web/src/components/entity/entity-board-column.tsx:575
+#: ../../../lib/web/src/components/entity/entity-board-column.tsx:632
 msgid "Rename"
 msgstr "إعادة تسمية"
 
-#: src/features/board/components/board-column.tsx:588
+#: ../../../lib/web/src/components/entity/entity-board-column.tsx:610
 msgid "Rename column"
 msgstr "إعادة تسمية العمود"
 
-#: src/features/board/components/board-column.tsx:589
+#: ../../../lib/web/src/components/entity/entity-board-column.tsx:611
 msgid "Rename this board column"
 msgstr "إعادة تسمية عمود اللوحة هذا"
 
@@ -2465,7 +2466,7 @@ msgstr ""
 msgid "Right to Left"
 msgstr "من اليمين إلى اليسار"
 
-#: src/features/editor/components/add-dialogs.tsx:148
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:150
 #: src/features/editor/components/edit-dialogs.tsx:1091
 msgid "Rows"
 msgstr "الصفوف"
@@ -2571,7 +2572,7 @@ msgstr "بحث..."
 msgid "Searching..."
 msgstr "جاري البحث..."
 
-#: src/features/editor/components/add-dialogs.tsx:139
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:141
 msgid "Select"
 msgstr "تحديد"
 
@@ -2750,7 +2751,7 @@ msgstr "تسجيل الخروج"
 msgid "Signing out..."
 msgstr "جاري تسجيل الخروج..."
 
-#: src/features/editor/components/add-dialogs.tsx:159
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:161
 #: src/features/editor/components/edit-dialogs.tsx:1102
 msgid "Single line of text only"
 msgstr "سطر واحد من النص فقط"
@@ -2884,7 +2885,7 @@ msgstr "الفرق/التطبيقات"
 msgid "Terms and conditions"
 msgstr "الشروط والأحكام"
 
-#: src/features/editor/components/add-dialogs.tsx:140
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:142
 msgid "Text"
 msgstr "نص"
 
@@ -3039,7 +3040,7 @@ msgstr "حاول مرة أخرى"
 msgid "Tuesday"
 msgstr "الثلاثاء"
 
-#: src/features/editor/components/add-dialogs.tsx:128
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:130
 #: src/features/editor/components/edit-dialogs.tsx:1085
 msgid "Type"
 msgstr "النوع"
@@ -3158,9 +3159,9 @@ msgstr "استخدم مفتاح المرور الخاص بك"
 msgid "Used for readable IDs like {0}-1, {1}-2"
 msgstr "يُستخدم للمعرّفات القابلة للقراءة مثل {0}-1، {1}-2"
 
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:143
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx:119
 #: ../../../lib/web/src/features/access/access-dialog.tsx:158
-#: src/features/editor/components/add-dialogs.tsx:141
 msgid "User"
 msgstr "المستخدم"
 

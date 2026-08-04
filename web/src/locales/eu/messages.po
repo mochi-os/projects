@@ -109,7 +109,7 @@ msgstr "{selectedCount, plural, one {Hautatutako # {entityName}(r)en ekintza mas
 msgid "{sentLabel} of {totalLabel}"
 msgstr "{sentLabel} / {totalLabel}"
 
-#: src/features/board/components/board-column.tsx:522
+#: ../../../lib/web/src/components/entity/entity-board-column.tsx:544
 msgid "{totalCount, plural, one {# item} other {# items}}"
 msgstr "{totalCount, plural, one {elementu #} other {# elementu}}"
 
@@ -218,7 +218,7 @@ msgstr "Gehitu iruzkin bat..."
 msgid "Add a new account"
 msgstr "Gehitu kontu berri bat"
 
-#: src/features/editor/components/add-dialogs.tsx:104
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:106
 msgid "Add a new field to this class"
 msgstr "Gehitu eremu berri bat klase honi"
 
@@ -250,8 +250,8 @@ msgstr "Gehitu klasea"
 msgid "Add column"
 msgstr "Gehitu zutabea"
 
-#: src/features/editor/components/add-dialogs.tsx:103
-#: src/features/editor/components/add-dialogs.tsx:226
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:105
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:233
 #: src/features/editor/components/edit-dialogs.tsx:912
 msgid "Add field"
 msgstr "Gehitu eremua"
@@ -268,9 +268,10 @@ msgstr "Gehitu esteka"
 msgid "Add new account"
 msgstr "Gehitu kontu berria"
 
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:215
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:220
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:94
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:183
-#: src/features/editor/components/add-dialogs.tsx:211
 #: src/features/editor/components/edit-dialogs.tsx:1214
 msgid "Add option"
 msgstr "Gehitu aukera"
@@ -367,7 +368,7 @@ msgstr "Ziur al zaude \"{0}\" ezabatu nahi duzula?"
 msgid "Are you sure you want to delete \"{title}\"? This action cannot be undone."
 msgstr "Ziur al zaude \"{title}\" ezabatu nahi duzula? Ekintza hau ezin da desegin."
 
-#: src/features/board/components/board-column.tsx:621
+#: ../../../lib/web/src/components/entity/entity-board-column.tsx:643
 msgid "Are you sure you want to delete the \"{name}\" column? This cannot be undone."
 msgstr "Ziur al zaude \"{name}\" zutabea ezabatu nahi duzula? Hau ezin da desegin."
 
@@ -497,6 +498,7 @@ msgstr "Barneko txantiloiak"
 msgid "Can be child of"
 msgstr "Honen seme-alaba izan daiteke"
 
+#: ../../../lib/web/src/components/entity/entity-board-column.tsx:628
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:169
 #: ../../../lib/web/src/components/responsive-confirm-dialog.tsx:67
 #: ../../../lib/web/src/components/step-up-dialog.tsx:363
@@ -507,7 +509,6 @@ msgstr "Honen seme-alaba izan daiteke"
 #: ../../../lib/web/src/features/access/access-list.tsx:268
 #: ../../../lib/web/src/features/accounts/account-add.tsx:188
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:91
-#: src/features/board/components/board-column.tsx:606
 #: src/features/objects/components/comment-thread.tsx:240
 #: src/features/projects/components/create-project-dialog.tsx:443
 #: src/routes/_authenticated/$projectId/design.tsx:344
@@ -542,7 +543,7 @@ msgstr "Aldatu jakinarazpen kategoria"
 msgid "Check \"All\" to see your past notifications."
 msgstr "Markatu «Guztiak» aurreko jakinarazpenak ikusteko."
 
-#: src/features/editor/components/add-dialogs.tsx:135
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:137
 msgid "Checkbox"
 msgstr "Kontrol-laukia"
 
@@ -550,7 +551,7 @@ msgstr "Kontrol-laukia"
 msgid "Checking merge status..."
 msgstr "Fusio egoera egiaztatzen..."
 
-#: src/features/editor/components/add-dialogs.tsx:136
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:138
 msgid "Checklist"
 msgstr "Egiaztapen-zerrenda"
 
@@ -627,8 +628,8 @@ msgstr "Garbitu hautapena (Ihes)"
 msgid "Close"
 msgstr "Itxi"
 
-#: src/features/editor/components/add-dialogs.tsx:107
-#: src/features/editor/components/add-dialogs.tsx:111
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:109
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:113
 #: src/features/editor/components/edit-dialogs.tsx:277
 #: src/features/editor/components/edit-dialogs.tsx:281
 #: src/features/editor/components/edit-dialogs.tsx:711
@@ -668,6 +669,11 @@ msgstr "Tolestu alboko barra"
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:149
 msgid "Colour"
 msgstr "Kolorea"
+
+#: ../../../lib/web/src/components/entity/entity-board-column.tsx:553
+#: ../../../lib/web/src/components/entity/entity-board-column.tsx:558
+msgid "Column actions"
+msgstr ""
 
 #: src/features/editor/components/edit-dialogs.tsx:361
 msgid "Columns group by"
@@ -780,8 +786,8 @@ msgstr "Ezin izan da berrautentifikazioa hasi. Saiatu berriro."
 msgid "Couldn't verify with that account. Please try again."
 msgstr "Ezin izan da kontu horrekin egiaztatu. Saiatu berriro."
 
-#: src/features/board/components/board-column.tsx:542
-#: src/features/board/components/board-column.tsx:681
+#: ../../../lib/web/src/components/entity/entity-board-column.tsx:564
+#: ../../../lib/web/src/components/entity/entity-board-column.tsx:703
 #: src/features/objects/components/create-object-dialog.tsx:414
 #: src/features/objects/components/create-object-dialog.tsx:585
 #: src/features/tree/components/tree-view.tsx:697
@@ -866,7 +872,7 @@ msgstr "Datu-gatazka"
 msgid "Data imported ({0, plural, one {# object} other {# objects}}, {1, plural, one {# comment} other {# comments}}, {2, plural, one {# link} other {# links}})"
 msgstr "Datuak inportatu dira ({0, plural, one {# objektu} other {# objektu}}, {1, plural, one {# iruzkin} other {# iruzkin}}, {2, plural, one {# esteka} other {# esteka}})"
 
-#: src/features/editor/components/add-dialogs.tsx:137
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:139
 msgid "Date"
 msgstr "Data"
 
@@ -886,8 +892,8 @@ msgstr "Lehenetsitako AA kontua"
 msgid "Default sort"
 msgstr "Lehenetsitako ordena"
 
-#: src/features/board/components/board-column.tsx:561
-#: src/features/board/components/board-column.tsx:622
+#: ../../../lib/web/src/components/entity/entity-board-column.tsx:583
+#: ../../../lib/web/src/components/entity/entity-board-column.tsx:644
 #: src/features/objects/components/comment-thread.tsx:309
 #: src/features/objects/components/comment-thread.tsx:433
 #: src/features/objects/components/object-attachments.tsx:157
@@ -908,7 +914,7 @@ msgstr "Ezabatu eranskina"
 msgid "Delete class"
 msgstr "Ezabatu klasea"
 
-#: src/features/board/components/board-column.tsx:620
+#: ../../../lib/web/src/components/entity/entity-board-column.tsx:642
 msgid "Delete column"
 msgstr "Ezabatu zutabea"
 
@@ -1787,9 +1793,9 @@ msgstr ""
 msgid "My project"
 msgstr "Nire proiektua"
 
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:118
+#: ../../../lib/web/src/components/entity/entity-board-column.tsx:614
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:128
-#: src/features/board/components/board-column.tsx:592
-#: src/features/editor/components/add-dialogs.tsx:116
 #: src/features/editor/components/edit-dialogs.tsx:307
 #: src/features/editor/components/edit-dialogs.tsx:741
 #: src/features/editor/components/edit-dialogs.tsx:1065
@@ -2020,8 +2026,8 @@ msgstr "Jakinarazpenak"
 msgid "Notifications: {0}"
 msgstr "Jakinarazpenak: {0}"
 
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:140
 #: src/components/view-options-bar.tsx:42
-#: src/features/editor/components/add-dialogs.tsx:138
 #: src/features/editor/components/edit-dialogs.tsx:507
 msgid "Number"
 msgstr "Zenbakia"
@@ -2058,11 +2064,6 @@ msgstr "Ireki ekintzak"
 #: src/features/editor/components/edit-dialogs.tsx:727
 msgid "Open class actions"
 msgstr "Ireki klase-ekintzak"
-
-#: src/features/board/components/board-column.tsx:531
-#: src/features/board/components/board-column.tsx:536
-msgid "Open column actions"
-msgstr "Ireki zutabearen ekintzak"
 
 #: src/routes/_authenticated/$projectId/design.tsx:166
 msgid "Open design actions"
@@ -2110,12 +2111,12 @@ msgstr "Ireki ikuspegi-ekintzak"
 msgid "Open view controls"
 msgstr "Ireki ikuspegi-kontrolak"
 
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:200
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:158
-#: src/features/editor/components/add-dialogs.tsx:198
 msgid "Option name"
 msgstr "Aukera-izena"
 
-#: src/features/editor/components/add-dialogs.tsx:166
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:168
 #: src/features/editor/components/edit-dialogs.tsx:1163
 msgid "Options"
 msgstr "Aukerak"
@@ -2333,9 +2334,9 @@ msgid "Relative within 24 hours, else absolute"
 msgstr "Erlatiboa 24 ordu barruan, bestela absolutua"
 
 #: ../../../lib/web/src/components/comment-composer.tsx:236
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:190
 #: ../../../lib/web/src/features/access/access-list.tsx:270
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:180
-#: src/features/editor/components/add-dialogs.tsx:188
 #: src/features/objects/components/create-object-dialog.tsx:536
 #: src/features/projects/components/create-project-dialog.tsx:429
 msgid "Remove"
@@ -2385,16 +2386,16 @@ msgstr "Kendu esteka"
 msgid "Removing access..."
 msgstr "Sarbidea kentzen..."
 
-#: src/features/board/components/board-column.tsx:553
-#: src/features/board/components/board-column.tsx:610
+#: ../../../lib/web/src/components/entity/entity-board-column.tsx:575
+#: ../../../lib/web/src/components/entity/entity-board-column.tsx:632
 msgid "Rename"
 msgstr "Aldatu izena"
 
-#: src/features/board/components/board-column.tsx:588
+#: ../../../lib/web/src/components/entity/entity-board-column.tsx:610
 msgid "Rename column"
 msgstr "Aldatu zutabearen izena"
 
-#: src/features/board/components/board-column.tsx:589
+#: ../../../lib/web/src/components/entity/entity-board-column.tsx:611
 msgid "Rename this board column"
 msgstr "Aldatu taula honetako zutabearen izena"
 
@@ -2465,7 +2466,7 @@ msgstr ""
 msgid "Right to Left"
 msgstr "Eskuinetik ezkerrera"
 
-#: src/features/editor/components/add-dialogs.tsx:148
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:150
 #: src/features/editor/components/edit-dialogs.tsx:1091
 msgid "Rows"
 msgstr "Errenkadak"
@@ -2571,7 +2572,7 @@ msgstr "Bilatu..."
 msgid "Searching..."
 msgstr "Bilatzen..."
 
-#: src/features/editor/components/add-dialogs.tsx:139
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:141
 msgid "Select"
 msgstr "Hautatu"
 
@@ -2750,7 +2751,7 @@ msgstr "Amaitu saioa"
 msgid "Signing out..."
 msgstr "Saioa amaitzen..."
 
-#: src/features/editor/components/add-dialogs.tsx:159
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:161
 #: src/features/editor/components/edit-dialogs.tsx:1102
 msgid "Single line of text only"
 msgstr "Lerro bakarreko testua soilik"
@@ -2884,7 +2885,7 @@ msgstr "Taldeak/Aplikazioak"
 msgid "Terms and conditions"
 msgstr "Baldintzak"
 
-#: src/features/editor/components/add-dialogs.tsx:140
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:142
 msgid "Text"
 msgstr "Testua"
 
@@ -3039,7 +3040,7 @@ msgstr "Saiatu berriro"
 msgid "Tuesday"
 msgstr "Asteartea"
 
-#: src/features/editor/components/add-dialogs.tsx:128
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:130
 #: src/features/editor/components/edit-dialogs.tsx:1085
 msgid "Type"
 msgstr "Mota"
@@ -3158,9 +3159,9 @@ msgstr "Erabili zure sarbide-gakoa"
 msgid "Used for readable IDs like {0}-1, {1}-2"
 msgstr "Irakurgarriak diren ID-etarako erabiltzen da, hala nola {0}-1, {1}-2"
 
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:143
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx:119
 #: ../../../lib/web/src/features/access/access-dialog.tsx:158
-#: src/features/editor/components/add-dialogs.tsx:141
 msgid "User"
 msgstr "Erabiltzailea"
 

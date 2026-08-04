@@ -109,7 +109,7 @@ msgstr "{selectedCount, plural, one {# தேர்ந்தெடுக்க�
 msgid "{sentLabel} of {totalLabel}"
 msgstr "{totalLabel}இல் {sentLabel}"
 
-#: src/features/board/components/board-column.tsx:522
+#: ../../../lib/web/src/components/entity/entity-board-column.tsx:544
 msgid "{totalCount, plural, one {# item} other {# items}}"
 msgstr "{totalCount, plural, one {# உருப்படி} other {# உருப்படிகள்}}"
 
@@ -218,7 +218,7 @@ msgstr "ஒரு கருத்து சேர்..."
 msgid "Add a new account"
 msgstr "புதிய கணக்கு சேர்"
 
-#: src/features/editor/components/add-dialogs.tsx:104
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:106
 msgid "Add a new field to this class"
 msgstr "இந்த வகுப்பிற்கு புதிய புலம் சேர்"
 
@@ -250,8 +250,8 @@ msgstr "வகுப்பு சேர்"
 msgid "Add column"
 msgstr "நெடுவரிசை சேர்"
 
-#: src/features/editor/components/add-dialogs.tsx:103
-#: src/features/editor/components/add-dialogs.tsx:226
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:105
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:233
 #: src/features/editor/components/edit-dialogs.tsx:912
 msgid "Add field"
 msgstr "புலம் சேர்"
@@ -268,9 +268,10 @@ msgstr "இணைப்பு சேர்"
 msgid "Add new account"
 msgstr "புதிய கணக்கு சேர்"
 
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:215
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:220
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:94
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:183
-#: src/features/editor/components/add-dialogs.tsx:211
 #: src/features/editor/components/edit-dialogs.tsx:1214
 msgid "Add option"
 msgstr "விருப்பம் சேர்"
@@ -367,7 +368,7 @@ msgstr "\"{0}\"-ஐ நீக்க விரும்புகிறீர்�
 msgid "Are you sure you want to delete \"{title}\"? This action cannot be undone."
 msgstr "\"{title}\"-ஐ நீக்க விரும்புகிறீர்களா? இந்த செயலை மாற்ற முடியாது."
 
-#: src/features/board/components/board-column.tsx:621
+#: ../../../lib/web/src/components/entity/entity-board-column.tsx:643
 msgid "Are you sure you want to delete the \"{name}\" column? This cannot be undone."
 msgstr "\"{name}\" நெடுவரிசையை நீக்க விரும்புகிறீர்களா? இதை மாற்ற முடியாது."
 
@@ -497,6 +498,7 @@ msgstr "உள்ளமை வார்ப்புருக்கள்"
 msgid "Can be child of"
 msgstr "ஒரு குழந்தையாக இருக்க முடியும்"
 
+#: ../../../lib/web/src/components/entity/entity-board-column.tsx:628
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:169
 #: ../../../lib/web/src/components/responsive-confirm-dialog.tsx:67
 #: ../../../lib/web/src/components/step-up-dialog.tsx:363
@@ -507,7 +509,6 @@ msgstr "ஒரு குழந்தையாக இருக்க முடி
 #: ../../../lib/web/src/features/access/access-list.tsx:268
 #: ../../../lib/web/src/features/accounts/account-add.tsx:188
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:91
-#: src/features/board/components/board-column.tsx:606
 #: src/features/objects/components/comment-thread.tsx:240
 #: src/features/projects/components/create-project-dialog.tsx:443
 #: src/routes/_authenticated/$projectId/design.tsx:344
@@ -542,7 +543,7 @@ msgstr "அறிவிப்பு வகையை மாற்று"
 msgid "Check \"All\" to see your past notifications."
 msgstr "முந்தைய அறிவிப்புகளைப் பார்க்க \"அனைத்தும்\" தேர்ந்தெடுக்கவும்."
 
-#: src/features/editor/components/add-dialogs.tsx:135
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:137
 msgid "Checkbox"
 msgstr "தேர்வுப் பெட்டி"
 
@@ -550,7 +551,7 @@ msgstr "தேர்வுப் பெட்டி"
 msgid "Checking merge status..."
 msgstr "Merge நிலையைச் சரிபார்க்கிறது..."
 
-#: src/features/editor/components/add-dialogs.tsx:136
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:138
 msgid "Checklist"
 msgstr "சரிபார்ப்பு பட்டியல்"
 
@@ -627,8 +628,8 @@ msgstr "தேர்வை அழி (Escape)"
 msgid "Close"
 msgstr "மூடு"
 
-#: src/features/editor/components/add-dialogs.tsx:107
-#: src/features/editor/components/add-dialogs.tsx:111
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:109
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:113
 #: src/features/editor/components/edit-dialogs.tsx:277
 #: src/features/editor/components/edit-dialogs.tsx:281
 #: src/features/editor/components/edit-dialogs.tsx:711
@@ -668,6 +669,11 @@ msgstr "பக்கப்பட்டியைச் சுருக்கு"
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:149
 msgid "Colour"
 msgstr "நிறம்"
+
+#: ../../../lib/web/src/components/entity/entity-board-column.tsx:553
+#: ../../../lib/web/src/components/entity/entity-board-column.tsx:558
+msgid "Column actions"
+msgstr ""
 
 #: src/features/editor/components/edit-dialogs.tsx:361
 msgid "Columns group by"
@@ -780,8 +786,8 @@ msgstr "மறுஅங்கீகாரத்தைத் தொடங்க �
 msgid "Couldn't verify with that account. Please try again."
 msgstr "அந்தக் கணக்கைச் சரிபார்க்க முடியவில்லை. மீண்டும் முயற்சிக்கவும்."
 
-#: src/features/board/components/board-column.tsx:542
-#: src/features/board/components/board-column.tsx:681
+#: ../../../lib/web/src/components/entity/entity-board-column.tsx:564
+#: ../../../lib/web/src/components/entity/entity-board-column.tsx:703
 #: src/features/objects/components/create-object-dialog.tsx:414
 #: src/features/objects/components/create-object-dialog.tsx:585
 #: src/features/tree/components/tree-view.tsx:697
@@ -866,7 +872,7 @@ msgstr "தரவு முரண்பாடு"
 msgid "Data imported ({0, plural, one {# object} other {# objects}}, {1, plural, one {# comment} other {# comments}}, {2, plural, one {# link} other {# links}})"
 msgstr "தரவு இறக்குமதி செய்யப்பட்டது ({0, plural, one {# பொருள்} other {# பொருள்கள்}}, {1, plural, one {# கருத்து} other {# கருத்துகள்}}, {2, plural, one {# இணைப்பு} other {# இணைப்புகள்}})"
 
-#: src/features/editor/components/add-dialogs.tsx:137
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:139
 msgid "Date"
 msgstr "தேதி"
 
@@ -886,8 +892,8 @@ msgstr "இயல்புநிலை AI கணக்கு"
 msgid "Default sort"
 msgstr "இயல்புநிலை வரிசை"
 
-#: src/features/board/components/board-column.tsx:561
-#: src/features/board/components/board-column.tsx:622
+#: ../../../lib/web/src/components/entity/entity-board-column.tsx:583
+#: ../../../lib/web/src/components/entity/entity-board-column.tsx:644
 #: src/features/objects/components/comment-thread.tsx:309
 #: src/features/objects/components/comment-thread.tsx:433
 #: src/features/objects/components/object-attachments.tsx:157
@@ -908,7 +914,7 @@ msgstr "இணைப்பை நீக்கு"
 msgid "Delete class"
 msgstr "வகுப்பை நீக்கு"
 
-#: src/features/board/components/board-column.tsx:620
+#: ../../../lib/web/src/components/entity/entity-board-column.tsx:642
 msgid "Delete column"
 msgstr "நெடுவரிசையை நீக்கு"
 
@@ -1787,9 +1793,9 @@ msgstr ""
 msgid "My project"
 msgstr "எனது project"
 
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:118
+#: ../../../lib/web/src/components/entity/entity-board-column.tsx:614
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:128
-#: src/features/board/components/board-column.tsx:592
-#: src/features/editor/components/add-dialogs.tsx:116
 #: src/features/editor/components/edit-dialogs.tsx:307
 #: src/features/editor/components/edit-dialogs.tsx:741
 #: src/features/editor/components/edit-dialogs.tsx:1065
@@ -2020,8 +2026,8 @@ msgstr "அறிவிப்புகள்"
 msgid "Notifications: {0}"
 msgstr "அறிவிப்புகள்: {0}"
 
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:140
 #: src/components/view-options-bar.tsx:42
-#: src/features/editor/components/add-dialogs.tsx:138
 #: src/features/editor/components/edit-dialogs.tsx:507
 msgid "Number"
 msgstr "எண்"
@@ -2058,11 +2064,6 @@ msgstr "செயல்களைத் திற"
 #: src/features/editor/components/edit-dialogs.tsx:727
 msgid "Open class actions"
 msgstr "கிளாஸ் செயல்களைத் திறக்கவும்"
-
-#: src/features/board/components/board-column.tsx:531
-#: src/features/board/components/board-column.tsx:536
-msgid "Open column actions"
-msgstr "நெடுவரிசை செயல்களைத் திற"
 
 #: src/routes/_authenticated/$projectId/design.tsx:166
 msgid "Open design actions"
@@ -2110,12 +2111,12 @@ msgstr "காட்சி செயல்களைத் திறக்கவ�
 msgid "Open view controls"
 msgstr "காட்சி கட்டுப்பாடுகளைத் திறக்கவும்"
 
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:200
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:158
-#: src/features/editor/components/add-dialogs.tsx:198
 msgid "Option name"
 msgstr "விருப்பத்தின் பெயர்"
 
-#: src/features/editor/components/add-dialogs.tsx:166
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:168
 #: src/features/editor/components/edit-dialogs.tsx:1163
 msgid "Options"
 msgstr "விருப்பங்கள்"
@@ -2333,9 +2334,9 @@ msgid "Relative within 24 hours, else absolute"
 msgstr "24 மணி நேரத்திற்குள் சார்பு, இல்லையெனில் முழுமையானது"
 
 #: ../../../lib/web/src/components/comment-composer.tsx:236
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:190
 #: ../../../lib/web/src/features/access/access-list.tsx:270
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:180
-#: src/features/editor/components/add-dialogs.tsx:188
 #: src/features/objects/components/create-object-dialog.tsx:536
 #: src/features/projects/components/create-project-dialog.tsx:429
 msgid "Remove"
@@ -2385,16 +2386,16 @@ msgstr "இணைப்பை அகற்று"
 msgid "Removing access..."
 msgstr "அணுகலை அகற்றுகிறது..."
 
-#: src/features/board/components/board-column.tsx:553
-#: src/features/board/components/board-column.tsx:610
+#: ../../../lib/web/src/components/entity/entity-board-column.tsx:575
+#: ../../../lib/web/src/components/entity/entity-board-column.tsx:632
 msgid "Rename"
 msgstr "பெயர் மாற்று"
 
-#: src/features/board/components/board-column.tsx:588
+#: ../../../lib/web/src/components/entity/entity-board-column.tsx:610
 msgid "Rename column"
 msgstr "நெடுவரிசையின் பெயரை மாற்று"
 
-#: src/features/board/components/board-column.tsx:589
+#: ../../../lib/web/src/components/entity/entity-board-column.tsx:611
 msgid "Rename this board column"
 msgstr "இந்த போர்டு நெடுவரிசையின் பெயரை மாற்று"
 
@@ -2465,7 +2466,7 @@ msgstr ""
 msgid "Right to Left"
 msgstr "வலமிருந்து இடம்"
 
-#: src/features/editor/components/add-dialogs.tsx:148
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:150
 #: src/features/editor/components/edit-dialogs.tsx:1091
 msgid "Rows"
 msgstr "வரிசைகள்"
@@ -2571,7 +2572,7 @@ msgstr "தேடு..."
 msgid "Searching..."
 msgstr "தேடுகிறது..."
 
-#: src/features/editor/components/add-dialogs.tsx:139
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:141
 msgid "Select"
 msgstr "தேர்ந்தெடு"
 
@@ -2750,7 +2751,7 @@ msgstr "வெளியேறு"
 msgid "Signing out..."
 msgstr "வெளியேறுகிறது..."
 
-#: src/features/editor/components/add-dialogs.tsx:159
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:161
 #: src/features/editor/components/edit-dialogs.tsx:1102
 msgid "Single line of text only"
 msgstr "ஒரே வரி உரை மட்டும்"
@@ -2884,7 +2885,7 @@ msgstr "டீம்கள்/ஆப்கள்"
 msgid "Terms and conditions"
 msgstr "விதிமுறைகள் மற்றும் நிபந்தனைகள்"
 
-#: src/features/editor/components/add-dialogs.tsx:140
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:142
 msgid "Text"
 msgstr "உரை"
 
@@ -3039,7 +3040,7 @@ msgstr "மீண்டும் முயற்சி செய்"
 msgid "Tuesday"
 msgstr "செவ்வாய்க்கிழமை"
 
-#: src/features/editor/components/add-dialogs.tsx:128
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:130
 #: src/features/editor/components/edit-dialogs.tsx:1085
 msgid "Type"
 msgstr "வகை"
@@ -3158,9 +3159,9 @@ msgstr "உங்கள் கடவுவிசையைப் பயன்ப�
 msgid "Used for readable IDs like {0}-1, {1}-2"
 msgstr "{0}-1, {1}-2 போன்ற படிக்கக்கூடிய IDs க்கு பயன்படுகிறது"
 
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:143
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx:119
 #: ../../../lib/web/src/features/access/access-dialog.tsx:158
-#: src/features/editor/components/add-dialogs.tsx:141
 msgid "User"
 msgstr "பயனர்"
 

@@ -18,11 +18,15 @@ msgstr ""
 msgid "Please check your internet connection and try again."
 msgstr ""
 
-#: src/features/objects/components/comment-thread.tsx:219
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:300
+msgid " or "
+msgstr ""
+
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:228
 msgid "(edited)"
 msgstr "(נערך)"
 
-#: src/features/objects/components/comment-thread.tsx:203
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:212
 msgid "(expand)"
 msgstr "(הרחב)"
 
@@ -127,11 +131,11 @@ msgstr "+{0} לפני"
 msgid "+{0} nested"
 msgstr "+{0} מקוננים"
 
-#: src/features/objects/components/comment-thread.tsx:200
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:209
 msgid "+{totalDescendants} more replies"
 msgstr "+{totalDescendants} תגובות נוספות"
 
-#: src/features/objects/components/comment-thread.tsx:199
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:208
 msgid "1 reply"
 msgstr "תגובה אחת"
 
@@ -210,7 +214,7 @@ msgstr "פעילות"
 msgid "Add"
 msgstr "הוספה"
 
-#: src/features/objects/components/comment-list.tsx:335
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:360
 msgid "Add a comment..."
 msgstr "הוסף תגובה..."
 
@@ -260,7 +264,7 @@ msgstr "הוסף שדה"
 msgid "Add item..."
 msgstr "הוסף פריט..."
 
-#: src/features/objects/components/object-links.tsx:285
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:315
 msgid "Add link"
 msgstr "הוסף קישור"
 
@@ -360,7 +364,7 @@ msgid "Anyone who is logged in"
 msgstr "כל מי שמחובר"
 
 #. placeholder {0}: deleteTarget?.name
-#: src/features/objects/components/object-attachments.tsx:255
+#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:271
 msgid "Are you sure you want to delete \"{0}\"?"
 msgstr "האם אתה בטוח שברצונך למחוק את \"{0}\"?"
 
@@ -372,7 +376,7 @@ msgstr "האם אתה בטוח שברצונך למחוק את \"{title}\"? לא 
 msgid "Are you sure you want to delete the \"{name}\" column? This cannot be undone."
 msgstr "האם אתה בטוח שברצונך למחוק את העמודה \"{name}\"? לא ניתן לבטל פעולה זו."
 
-#: src/features/objects/components/comment-thread.tsx:432
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:485
 msgid "Are you sure you want to delete this comment? This will also delete all replies."
 msgstr "האם אתה בטוח שברצונך למחוק תגובה זו? פעולה זו תמחק גם את כל התשובות."
 
@@ -396,13 +400,13 @@ msgstr "עולה"
 msgid "Ascending"
 msgstr "סדר עולה"
 
-#: src/features/objects/components/comment-list.tsx:373
-#: src/features/objects/components/comment-list.tsx:378
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:398
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:403
 msgid "Attach comment files"
 msgstr "צרף קובצי תגובה"
 
-#: src/features/objects/components/comment-thread.tsx:386
-#: src/features/objects/components/comment-thread.tsx:391
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:439
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:444
 msgid "Attach reply files"
 msgstr "צרף קובצי תשובה"
 
@@ -459,8 +463,8 @@ msgstr "באנר"
 msgid "Binary file not shown"
 msgstr "קובץ בינארי אינו מוצג"
 
-#: src/features/objects/components/object-links.tsx:49
-#: src/features/objects/components/object-links.tsx:179
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:68
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:210
 msgid "Blocked by"
 msgstr "חסום על ידי"
 
@@ -469,7 +473,7 @@ msgstr "חסום על ידי"
 msgid "Blocked navigation to untrusted link"
 msgstr "ניווט לקישור לא מהימן נחסם"
 
-#: src/features/objects/components/object-links.tsx:47
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:66
 msgid "Blocks"
 msgstr "חוסם"
 
@@ -499,6 +503,7 @@ msgid "Can be child of"
 msgstr "יכול להיות צאצא של"
 
 #: ../../../lib/web/src/components/entity/entity-board-column.tsx:628
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:249
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:169
 #: ../../../lib/web/src/components/responsive-confirm-dialog.tsx:67
 #: ../../../lib/web/src/components/step-up-dialog.tsx:363
@@ -509,20 +514,19 @@ msgstr "יכול להיות צאצא של"
 #: ../../../lib/web/src/features/access/access-list.tsx:268
 #: ../../../lib/web/src/features/accounts/account-add.tsx:201
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:91
-#: src/features/objects/components/comment-thread.tsx:240
 #: src/features/projects/components/create-project-dialog.tsx:443
 #: src/routes/_authenticated/$projectId/design.tsx:344
 #: src/routes/_authenticated/$projectId/index.tsx:1037
 msgid "Cancel"
 msgstr "ביטול"
 
-#: src/features/objects/components/comment-list.tsx:390
-#: src/features/objects/components/comment-list.tsx:395
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:415
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:420
 msgid "Cancel comment"
 msgstr "בטל תגובה"
 
-#: src/features/objects/components/comment-thread.tsx:402
-#: src/features/objects/components/comment-thread.tsx:407
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:455
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:460
 msgid "Cancel reply"
 msgstr "בטל תשובה"
 
@@ -619,12 +623,12 @@ msgstr "נקה בחירה"
 msgid "Clear selection (Escape)"
 msgstr "נקה בחירה (Escape)"
 
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:483
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:488
 #: ../../../lib/web/src/components/ui/dialog.tsx:78
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:358
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:361
 #: ../../../lib/web/src/components/ui/sheet.tsx:79
-#: src/features/objects/components/create-object-dialog.tsx:424
-#: src/features/objects/components/create-object-dialog.tsx:429
 msgid "Close"
 msgstr "סגור"
 
@@ -690,6 +694,11 @@ msgstr "בקרוב!"
 #: ../../../lib/web/src/components/ui/command.tsx:34
 msgid "Command Palette"
 msgstr "לוח פקודות"
+
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:330
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:337
+msgid "Comment actions"
+msgstr ""
 
 #: src/routes/_authenticated/$projectId_.settings.tsx:405
 msgid "Comment and view"
@@ -788,9 +797,9 @@ msgstr "לא ניתן היה לאמת עם החשבון הזה. נסה שוב."
 
 #: ../../../lib/web/src/components/entity/entity-board-column.tsx:564
 #: ../../../lib/web/src/components/entity/entity-board-column.tsx:703
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:473
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:645
 #: ../../../lib/web/src/components/entity/entity-tree-view.tsx:672
-#: src/features/objects/components/create-object-dialog.tsx:414
-#: src/features/objects/components/create-object-dialog.tsx:585
 msgid "Create"
 msgstr "צור"
 
@@ -799,7 +808,7 @@ msgstr "צור"
 msgid "Create {0}"
 msgstr "צור {0}"
 
-#: src/features/objects/components/create-object-dialog.tsx:392
+#: src/features/objects/components/create-object-dialog.tsx:45
 msgid "Create a new item in this project"
 msgstr "צור פריט חדש בפרויקט זה"
 
@@ -809,7 +818,7 @@ msgid "Create a new project"
 msgstr "צור פרויקט חדש"
 
 #: ../../../lib/web/src/components/entity/keyboard-shortcuts-help.tsx:25
-#: src/features/objects/components/create-object-dialog.tsx:391
+#: src/features/objects/components/create-object-dialog.tsx:44
 msgid "Create new item"
 msgstr "צור פריט חדש"
 
@@ -825,8 +834,8 @@ msgstr "צור פרויקט"
 msgid "Create, edit, comment, and view"
 msgstr "יצירה, עריכה, הוספת תגובות וצפייה"
 
+#: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:49
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:498
-#: src/components/view-options-bar.tsx:43
 msgid "Created"
 msgstr "נוצר"
 
@@ -834,8 +843,8 @@ msgstr "נוצר"
 msgid "Creating project..."
 msgstr "יוצר פרויקט..."
 
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:645
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:258
-#: src/features/objects/components/create-object-dialog.tsx:585
 #: src/features/projects/components/create-project-dialog.tsx:447
 #: src/features/projects/components/create-project-dialog.tsx:535
 msgid "Creating..."
@@ -894,19 +903,20 @@ msgstr "מיון ברירת מחדל"
 
 #: ../../../lib/web/src/components/entity/entity-board-column.tsx:583
 #: ../../../lib/web/src/components/entity/entity-board-column.tsx:644
-#: src/features/objects/components/comment-thread.tsx:309
-#: src/features/objects/components/comment-thread.tsx:433
-#: src/features/objects/components/object-attachments.tsx:157
-#: src/features/objects/components/object-attachments.tsx:162
-#: src/features/objects/components/object-attachments.tsx:211
-#: src/features/objects/components/object-attachments.tsx:256
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:318
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:361
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:486
+#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:173
+#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:178
+#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:227
+#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:272
 #: src/features/objects/components/object-detail-panel.tsx:636
 #: src/features/requests/components/request-panel.tsx:132
 #: src/routes/_authenticated/$projectId_.settings.tsx:357
 msgid "Delete"
 msgstr "מחק"
 
-#: src/features/objects/components/object-attachments.tsx:254
+#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:270
 msgid "Delete attachment"
 msgstr "מחק קובץ מצורף"
 
@@ -918,7 +928,7 @@ msgstr "מחק מחלקה"
 msgid "Delete column"
 msgstr "מחק עמודה"
 
-#: src/features/objects/components/comment-thread.tsx:431
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:484
 msgid "Delete comment"
 msgstr "מחק תגובה"
 
@@ -1071,9 +1081,9 @@ msgstr "בוצע"
 msgid "Double click on a column to add content"
 msgstr "לחץ פעמיים על עמודה כדי להוסיף תוכן"
 
+#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:214
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:342
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:352
-#: src/features/objects/components/object-attachments.tsx:198
 msgid "Download"
 msgstr "הורדה"
 
@@ -1099,7 +1109,7 @@ msgstr "טיוטה"
 msgid "Drag columns to re-order them"
 msgstr "גרור עמודות כדי לשנות את סדרן"
 
-#: src/features/objects/components/object-links.tsx:48
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:67
 msgid "Duplicates"
 msgstr "משכפל"
 
@@ -1107,7 +1117,8 @@ msgstr "משכפל"
 msgid "Dyslexia-friendly"
 msgstr "ידידותי לדיסלקציה"
 
-#: src/features/objects/components/comment-thread.tsx:298
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:307
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:352
 msgid "Edit"
 msgstr "עריכה"
 
@@ -1221,8 +1232,8 @@ msgstr "יצירת המחלקה נכשלה"
 msgid "Failed to create field"
 msgstr "יצירת השדה נכשלה"
 
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:132
 #: ../../../lib/web/src/components/options-menu.tsx:99
-#: src/features/objects/components/object-links.tsx:105
 #: src/routes/_authenticated/$projectId/index.tsx:190
 msgid "Failed to create link"
 msgstr "יצירת הקישור נכשלה"
@@ -1239,15 +1250,15 @@ msgstr "יצירת הפרויקט נכשלה"
 msgid "Failed to create view"
 msgstr "יצירת התצוגה נכשלה"
 
-#: src/features/objects/components/object-attachments.tsx:94
+#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:110
 msgid "Failed to delete attachment"
 msgstr "מחיקת הקובץ המצורף נכשלה"
 
-#: src/features/objects/components/comment-list.tsx:182
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:207
 msgid "Failed to delete comment"
 msgstr "מחיקת התגובה נכשלה"
 
-#: src/features/objects/components/object-links.tsx:127
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:154
 msgid "Failed to delete link"
 msgstr "מחיקת הקישור נכשלה"
 
@@ -1320,7 +1331,7 @@ msgstr "טעינת הווידאו נכשלה"
 msgid "Failed to merge"
 msgstr "המיזוג נכשל"
 
-#: src/features/objects/components/comment-list.tsx:145
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:170
 msgid "Failed to post comment"
 msgstr "פרסום התגובה נכשל"
 
@@ -1372,7 +1383,7 @@ msgstr "ביטול ההרשמה נכשל"
 msgid "Failed to update access level"
 msgstr "עדכון רמת הגישה נכשל"
 
-#: src/features/objects/components/comment-list.tsx:165
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:190
 msgid "Failed to update comment"
 msgstr "עדכון התגובה נכשל"
 
@@ -1384,7 +1395,7 @@ msgstr "עדכון השדה נכשל"
 msgid "Failed to update project"
 msgstr "עדכון הפרויקט נכשל"
 
-#: src/features/objects/components/object-attachments.tsx:79
+#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:95
 msgid "Failed to upload attachment"
 msgstr "העלאת הקובץ המצורף נכשלה"
 
@@ -1392,9 +1403,9 @@ msgstr "העלאת הקובץ המצורף נכשלה"
 msgid "Fields"
 msgstr "שדות"
 
-#: src/features/objects/components/create-object-dialog.tsx:505
-#: src/features/objects/components/object-attachments.tsx:117
-#: src/features/objects/components/object-attachments.tsx:134
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:565
+#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:133
+#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:150
 msgid "Files"
 msgstr "קבצים"
 
@@ -1637,7 +1648,7 @@ msgstr "בהיר"
 msgid "Link"
 msgstr "קישור"
 
-#: src/features/objects/components/object-links.tsx:241
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:274
 msgid "Links"
 msgstr "קישורים"
 
@@ -1698,7 +1709,7 @@ msgstr "מתנתק…"
 msgid "Manage your connected accounts for notifications and services."
 msgstr "נהל את החשבונות המחוברים שלך להתראות ולשירותים."
 
-#: src/components/view-options-bar.tsx:41
+#: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:47
 msgid "Manual"
 msgstr "ידני"
 
@@ -1821,8 +1832,8 @@ msgstr "השם חייב להיות 1000 תווים או פחות"
 msgid "Network error"
 msgstr "שגיאת רשת"
 
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:458
 #: ../../../lib/web/src/components/ui/sort-selector.tsx:43
-#: src/features/objects/components/create-object-dialog.tsx:399
 #: src/routes/_authenticated/$projectId/index.tsx:918
 #: src/routes/_authenticated/$projectId/index.tsx:936
 msgid "New"
@@ -1846,7 +1857,7 @@ msgstr "הבא"
 msgid "Next image"
 msgstr "התמונה הבאה"
 
-#: src/features/objects/components/create-object-dialog.tsx:472
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:531
 msgid "No {parentClassNames} to add to"
 msgstr "אין {parentClassNames} להוסיף אליו"
 
@@ -1858,7 +1869,7 @@ msgstr "אין גישה"
 msgid "No access rules configured. Add rules to control who can access this resource."
 msgstr "לא הוגדרו כללי גישה. הוסף כללים כדי לשלוט במי יכול לגשת למשאב זה."
 
-#: src/features/objects/components/activity-list.tsx:50
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx:65
 msgid "No activity yet"
 msgstr "עדיין אין פעילות"
 
@@ -1878,7 +1889,7 @@ msgstr "אין שינויים להציג"
 msgid "No changes were found for the selected comparison."
 msgstr "לא נמצאו שינויים בהשוואה הנבחרת."
 
-#: src/features/objects/components/comment-list.tsx:425
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:450
 msgid "No comments yet"
 msgstr "עדיין אין תגובות"
 
@@ -1898,11 +1909,11 @@ msgstr "עדיין אין משחקים"
 msgid "No groups available"
 msgstr "אין קבוצות זמינות"
 
-#: src/features/objects/components/create-object-dialog.tsx:439
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:498
 msgid "No item types can be created yet. Create the required parent items first."
 msgstr "עדיין לא ניתן ליצור סוגי פריטים. צור תחילה את פריטי האב הנדרשים."
 
-#: src/features/objects/components/object-links.tsx:327
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:355
 msgid "No matching objects"
 msgstr "אין אובייקטים תואמים"
 
@@ -1973,6 +1984,8 @@ msgid "No views"
 msgstr "אין תצוגות"
 
 #: ../../../lib/web/src/components/colour-picker.tsx:349
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:514
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:521
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:365
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:388
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:391
@@ -1985,8 +1998,6 @@ msgstr "אין תצוגות"
 #: ../../../lib/web/src/lib/preference-utils.ts:125
 #: src/features/editor/components/edit-dialogs.tsx:293
 #: src/features/editor/components/edit-dialogs.tsx:296
-#: src/features/objects/components/create-object-dialog.tsx:455
-#: src/features/objects/components/create-object-dialog.tsx:462
 #: src/features/objects/components/object-detail-panel.tsx:530
 #: src/features/objects/components/object-detail-panel.tsx:543
 #: src/features/objects/components/object-detail-panel.tsx:548
@@ -2027,8 +2038,8 @@ msgid "Notifications: {0}"
 msgstr "התראות: {0}"
 
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:140
+#: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:48
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:499
-#: src/components/view-options-bar.tsx:42
 msgid "Number"
 msgstr "מספר"
 
@@ -2106,8 +2117,8 @@ msgstr "פתח הגדרות ערכת נושא"
 msgid "Open view actions"
 msgstr "פתח פעולות תצוגה"
 
-#: src/components/view-options-bar.tsx:120
-#: src/components/view-options-bar.tsx:126
+#: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:126
+#: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:132
 msgid "Open view controls"
 msgstr "פתח פקדי תצוגה"
 
@@ -2134,7 +2145,7 @@ msgstr "בעלים"
 msgid "Page {currentPage} of {totalPages}"
 msgstr "עמוד {currentPage} מתוך {totalPages}"
 
-#: src/features/objects/components/create-object-dialog.tsx:447
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:506
 #: src/features/objects/components/object-detail-panel.tsx:526
 msgid "Parent"
 msgstr "אב"
@@ -2321,7 +2332,7 @@ msgstr "מפנה לדף ההתחברות."
 msgid "Reduce interest"
 msgstr "הפחת עניין"
 
-#: src/features/objects/components/object-links.tsx:46
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:65
 msgid "Relates"
 msgstr "מתייחס"
 
@@ -2335,9 +2346,9 @@ msgstr "יחסי בתוך 24 שעות, אחרת מוחלט"
 
 #: ../../../lib/web/src/components/comment-composer.tsx:236
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:190
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:596
 #: ../../../lib/web/src/features/access/access-list.tsx:270
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:180
-#: src/features/objects/components/create-object-dialog.tsx:536
 #: src/features/projects/components/create-project-dialog.tsx:429
 msgid "Remove"
 msgstr "הסר"
@@ -2377,8 +2388,8 @@ msgstr "הסר עניין"
 msgid "Remove item"
 msgstr "הסר פריט"
 
-#: src/features/objects/components/object-links.tsx:269
-#: src/features/objects/components/object-links.tsx:274
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:299
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:304
 msgid "Remove link"
 msgstr "הסרת קישור"
 
@@ -2411,12 +2422,13 @@ msgstr "להחליף עיצוב?"
 msgid "Replacing..."
 msgstr "מחליף..."
 
-#: src/features/objects/components/comment-thread.tsx:285
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:294
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:342
 msgid "Reply"
 msgstr "השב"
 
 #. placeholder {0}: comment.name || comment.author
-#: src/features/objects/components/comment-thread.tsx:330
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:385
 msgid "Reply to {0}..."
 msgstr "הגב ל-{0}..."
 
@@ -2495,10 +2507,10 @@ msgstr ""
 msgid "Saturday"
 msgstr "שבת"
 
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:269
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:173
 #: ../../../lib/web/src/components/ui/editable-field-row.tsx:122
 #: ../../../lib/web/src/components/ui/secret-field.tsx:77
-#: src/features/objects/components/comment-thread.tsx:260
 #: src/routes/_authenticated/$projectId/index.tsx:1049
 msgid "Save"
 msgstr "שמור"
@@ -2507,10 +2519,10 @@ msgstr "שמור"
 msgid "Saving..."
 msgstr "שומר..."
 
+#: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:150
 #: ../../../lib/web/src/components/filter-bar.tsx:32
 #: ../../../lib/web/src/components/header-search.tsx:22
 #: ../../../lib/web/src/components/search.tsx:18
-#: src/components/view-options-bar.tsx:144
 msgid "Search"
 msgstr "חיפוש"
 
@@ -2542,7 +2554,7 @@ msgstr "חפש מקור..."
 msgid "Search for projects..."
 msgstr "חפש פרויקטים..."
 
-#: src/features/objects/components/object-links.tsx:302
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:332
 msgid "Search objects..."
 msgstr "חפש פריטים..."
 
@@ -2554,15 +2566,15 @@ msgstr "חפש אזור זמן..."
 msgid "Search users"
 msgstr "חפש משתמשים"
 
-#: src/components/view-options-bar.tsx:140
+#: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:146
 msgid "Search, watch, and sort this view."
 msgstr "חפש, עקוב ומיין תצוגה זו."
 
+#: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:154
+#: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:229
 #: ../../../lib/web/src/components/person-picker.tsx:324
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:81
 #: ../../../lib/web/src/components/search-entity-page.tsx:72
-#: src/components/view-options-bar.tsx:148
-#: src/components/view-options-bar.tsx:223
 msgid "Search..."
 msgstr "חיפוש..."
 
@@ -2765,7 +2777,7 @@ msgstr "דלג לראשי"
 msgid "Small"
 msgstr "קטן"
 
-#: src/components/view-options-bar.tsx:166
+#: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:172
 msgid "Sort"
 msgstr "מיין"
 
@@ -2789,7 +2801,7 @@ msgstr "פצל"
 msgid "Squash and merge"
 msgstr "Squash ומיזוג"
 
-#: src/features/objects/components/comment-list.tsx:426
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:451
 msgid "Start the discussion by adding the first comment."
 msgstr "התחל את הדיון על ידי הוספת התגובה הראשונה."
 
@@ -2806,13 +2818,13 @@ msgstr "הפסק לעקוב"
 msgid "Subject"
 msgstr "נושא"
 
-#: src/features/objects/components/comment-list.tsx:406
-#: src/features/objects/components/comment-list.tsx:415
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:431
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:440
 msgid "Submit comment"
 msgstr "שלח תגובה"
 
-#: src/features/objects/components/comment-thread.tsx:417
-#: src/features/objects/components/comment-thread.tsx:422
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:470
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:475
 msgid "Submit reply"
 msgstr "שלח תשובה"
 
@@ -3004,8 +3016,8 @@ msgstr "החלף ערכת נושא"
 msgid "Toggle view options"
 msgstr "החלף אפשרויות תצוגה"
 
-#: src/components/view-options-bar.tsx:157
-#: src/components/view-options-bar.tsx:233
+#: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:163
+#: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:239
 msgid "Toggle watched filter"
 msgstr "החלף מסנן צפייה"
 
@@ -3118,7 +3130,9 @@ msgstr "ההרשמה בוטלה"
 msgid "Unsubscribing..."
 msgstr "מבטל הרשמה..."
 
-#: src/features/objects/components/object-links.tsx:150
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:284
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:98
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:179
 msgid "Untitled"
 msgstr "ללא כותרת"
 
@@ -3126,8 +3140,8 @@ msgstr "ללא כותרת"
 msgid "Unverified"
 msgstr "לא מאומת"
 
+#: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:50
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:500
-#: src/components/view-options-bar.tsx:44
 msgid "Updated"
 msgstr "עודכן"
 
@@ -3135,8 +3149,8 @@ msgstr "עודכן"
 msgid "Updating access..."
 msgstr "מעדכן גישה..."
 
-#: src/features/objects/components/create-object-dialog.tsx:568
-#: src/features/objects/components/object-attachments.tsx:243
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:628
+#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:259
 msgid "Upload"
 msgstr "העלה"
 
@@ -3213,7 +3227,7 @@ msgstr "הצג את כל ההתראות"
 msgid "View and edit item details"
 msgstr "הצג וערוך פרטי פריט"
 
-#: src/components/view-options-bar.tsx:139
+#: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:145
 msgid "View controls"
 msgstr "פקדי תצוגה"
 
@@ -3234,12 +3248,12 @@ msgstr "צפיות"
 msgid "Watch"
 msgstr "עקוב"
 
+#: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:243
 #: ../../../lib/web/src/components/filter-bar.tsx:35
-#: src/components/view-options-bar.tsx:237
 msgid "Watched"
 msgstr "במעקב"
 
-#: src/components/view-options-bar.tsx:161
+#: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:167
 msgid "Watched only"
 msgstr "במעקב בלבד"
 

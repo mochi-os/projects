@@ -18,11 +18,15 @@ msgstr ""
 msgid "Please check your internet connection and try again."
 msgstr ""
 
-#: src/features/objects/components/comment-thread.tsx:219
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:300
+msgid " or "
+msgstr ""
+
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:228
 msgid "(edited)"
 msgstr "(đã chỉnh sửa)"
 
-#: src/features/objects/components/comment-thread.tsx:203
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:212
 msgid "(expand)"
 msgstr "(mở rộng)"
 
@@ -127,11 +131,11 @@ msgstr "+{0} phía trước"
 msgid "+{0} nested"
 msgstr "+{0} lồng nhau"
 
-#: src/features/objects/components/comment-thread.tsx:200
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:209
 msgid "+{totalDescendants} more replies"
 msgstr "+{totalDescendants} phản hồi khác"
 
-#: src/features/objects/components/comment-thread.tsx:199
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:208
 msgid "1 reply"
 msgstr "1 phản hồi"
 
@@ -210,7 +214,7 @@ msgstr "Hoạt động"
 msgid "Add"
 msgstr "Thêm"
 
-#: src/features/objects/components/comment-list.tsx:335
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:360
 msgid "Add a comment..."
 msgstr "Thêm bình luận..."
 
@@ -260,7 +264,7 @@ msgstr "Thêm trường"
 msgid "Add item..."
 msgstr "Thêm mục..."
 
-#: src/features/objects/components/object-links.tsx:285
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:315
 msgid "Add link"
 msgstr "Thêm liên kết"
 
@@ -360,7 +364,7 @@ msgid "Anyone who is logged in"
 msgstr "Bất kỳ ai đã đăng nhập"
 
 #. placeholder {0}: deleteTarget?.name
-#: src/features/objects/components/object-attachments.tsx:255
+#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:271
 msgid "Are you sure you want to delete \"{0}\"?"
 msgstr "Bạn có chắc muốn xóa \"{0}\"?"
 
@@ -372,7 +376,7 @@ msgstr "Bạn có chắc muốn xóa \"{title}\"? Hành động này không th�
 msgid "Are you sure you want to delete the \"{name}\" column? This cannot be undone."
 msgstr "Bạn có chắc muốn xóa cột \"{name}\"? Không thể hoàn tác."
 
-#: src/features/objects/components/comment-thread.tsx:432
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:485
 msgid "Are you sure you want to delete this comment? This will also delete all replies."
 msgstr "Bạn có chắc muốn xóa bình luận này? Tất cả phản hồi cũng sẽ bị xóa."
 
@@ -396,13 +400,13 @@ msgstr "Tăng dần"
 msgid "Ascending"
 msgstr "Tăng dần"
 
-#: src/features/objects/components/comment-list.tsx:373
-#: src/features/objects/components/comment-list.tsx:378
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:398
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:403
 msgid "Attach comment files"
 msgstr "Đính kèm tệp bình luận"
 
-#: src/features/objects/components/comment-thread.tsx:386
-#: src/features/objects/components/comment-thread.tsx:391
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:439
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:444
 msgid "Attach reply files"
 msgstr "Đính kèm tệp phản hồi"
 
@@ -459,8 +463,8 @@ msgstr "Biểu ngữ"
 msgid "Binary file not shown"
 msgstr "Không hiển thị tệp nhị phân"
 
-#: src/features/objects/components/object-links.tsx:49
-#: src/features/objects/components/object-links.tsx:179
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:68
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:210
 msgid "Blocked by"
 msgstr "Bị chặn bởi"
 
@@ -469,7 +473,7 @@ msgstr "Bị chặn bởi"
 msgid "Blocked navigation to untrusted link"
 msgstr "Đã chặn điều hướng tới liên kết không tin cậy"
 
-#: src/features/objects/components/object-links.tsx:47
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:66
 msgid "Blocks"
 msgstr "Chặn"
 
@@ -499,6 +503,7 @@ msgid "Can be child of"
 msgstr "Có thể là con của"
 
 #: ../../../lib/web/src/components/entity/entity-board-column.tsx:628
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:249
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:169
 #: ../../../lib/web/src/components/responsive-confirm-dialog.tsx:67
 #: ../../../lib/web/src/components/step-up-dialog.tsx:363
@@ -509,20 +514,19 @@ msgstr "Có thể là con của"
 #: ../../../lib/web/src/features/access/access-list.tsx:268
 #: ../../../lib/web/src/features/accounts/account-add.tsx:201
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:91
-#: src/features/objects/components/comment-thread.tsx:240
 #: src/features/projects/components/create-project-dialog.tsx:443
 #: src/routes/_authenticated/$projectId/design.tsx:344
 #: src/routes/_authenticated/$projectId/index.tsx:1037
 msgid "Cancel"
 msgstr "Hủy"
 
-#: src/features/objects/components/comment-list.tsx:390
-#: src/features/objects/components/comment-list.tsx:395
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:415
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:420
 msgid "Cancel comment"
 msgstr "Hủy bình luận"
 
-#: src/features/objects/components/comment-thread.tsx:402
-#: src/features/objects/components/comment-thread.tsx:407
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:455
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:460
 msgid "Cancel reply"
 msgstr "Hủy phản hồi"
 
@@ -619,12 +623,12 @@ msgstr "Bỏ chọn"
 msgid "Clear selection (Escape)"
 msgstr "Bỏ chọn (Escape)"
 
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:483
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:488
 #: ../../../lib/web/src/components/ui/dialog.tsx:78
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:358
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:361
 #: ../../../lib/web/src/components/ui/sheet.tsx:79
-#: src/features/objects/components/create-object-dialog.tsx:424
-#: src/features/objects/components/create-object-dialog.tsx:429
 msgid "Close"
 msgstr "Đóng"
 
@@ -690,6 +694,11 @@ msgstr "Sắp ra mắt!"
 #: ../../../lib/web/src/components/ui/command.tsx:34
 msgid "Command Palette"
 msgstr "Bảng lệnh"
+
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:330
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:337
+msgid "Comment actions"
+msgstr ""
 
 #: src/routes/_authenticated/$projectId_.settings.tsx:405
 msgid "Comment and view"
@@ -788,9 +797,9 @@ msgstr "Không thể xác minh bằng tài khoản đó. Vui lòng thử lại."
 
 #: ../../../lib/web/src/components/entity/entity-board-column.tsx:564
 #: ../../../lib/web/src/components/entity/entity-board-column.tsx:703
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:473
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:645
 #: ../../../lib/web/src/components/entity/entity-tree-view.tsx:672
-#: src/features/objects/components/create-object-dialog.tsx:414
-#: src/features/objects/components/create-object-dialog.tsx:585
 msgid "Create"
 msgstr "Tạo"
 
@@ -799,7 +808,7 @@ msgstr "Tạo"
 msgid "Create {0}"
 msgstr "Tạo {0}"
 
-#: src/features/objects/components/create-object-dialog.tsx:392
+#: src/features/objects/components/create-object-dialog.tsx:45
 msgid "Create a new item in this project"
 msgstr "Tạo mục mới trong dự án này"
 
@@ -809,7 +818,7 @@ msgid "Create a new project"
 msgstr "Tạo dự án mới"
 
 #: ../../../lib/web/src/components/entity/keyboard-shortcuts-help.tsx:25
-#: src/features/objects/components/create-object-dialog.tsx:391
+#: src/features/objects/components/create-object-dialog.tsx:44
 msgid "Create new item"
 msgstr "Tạo mục mới"
 
@@ -825,8 +834,8 @@ msgstr "Tạo dự án"
 msgid "Create, edit, comment, and view"
 msgstr "Tạo, chỉnh sửa, bình luận và xem"
 
+#: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:49
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:498
-#: src/components/view-options-bar.tsx:43
 msgid "Created"
 msgstr "Đã tạo"
 
@@ -834,8 +843,8 @@ msgstr "Đã tạo"
 msgid "Creating project..."
 msgstr "Đang tạo dự án..."
 
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:645
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:258
-#: src/features/objects/components/create-object-dialog.tsx:585
 #: src/features/projects/components/create-project-dialog.tsx:447
 #: src/features/projects/components/create-project-dialog.tsx:535
 msgid "Creating..."
@@ -894,19 +903,20 @@ msgstr "Sắp xếp mặc định"
 
 #: ../../../lib/web/src/components/entity/entity-board-column.tsx:583
 #: ../../../lib/web/src/components/entity/entity-board-column.tsx:644
-#: src/features/objects/components/comment-thread.tsx:309
-#: src/features/objects/components/comment-thread.tsx:433
-#: src/features/objects/components/object-attachments.tsx:157
-#: src/features/objects/components/object-attachments.tsx:162
-#: src/features/objects/components/object-attachments.tsx:211
-#: src/features/objects/components/object-attachments.tsx:256
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:318
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:361
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:486
+#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:173
+#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:178
+#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:227
+#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:272
 #: src/features/objects/components/object-detail-panel.tsx:636
 #: src/features/requests/components/request-panel.tsx:132
 #: src/routes/_authenticated/$projectId_.settings.tsx:357
 msgid "Delete"
 msgstr "Xóa"
 
-#: src/features/objects/components/object-attachments.tsx:254
+#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:270
 msgid "Delete attachment"
 msgstr "Xóa tệp đính kèm"
 
@@ -918,7 +928,7 @@ msgstr "Xóa class"
 msgid "Delete column"
 msgstr "Xóa cột"
 
-#: src/features/objects/components/comment-thread.tsx:431
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:484
 msgid "Delete comment"
 msgstr "Xóa bình luận"
 
@@ -1071,9 +1081,9 @@ msgstr "Xong"
 msgid "Double click on a column to add content"
 msgstr "Nhấp đúp vào một cột để thêm nội dung"
 
+#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:214
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:342
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:352
-#: src/features/objects/components/object-attachments.tsx:198
 msgid "Download"
 msgstr "Tải xuống"
 
@@ -1099,7 +1109,7 @@ msgstr "Bản nháp"
 msgid "Drag columns to re-order them"
 msgstr "Kéo các cột để sắp xếp lại"
 
-#: src/features/objects/components/object-links.tsx:48
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:67
 msgid "Duplicates"
 msgstr "Trùng lặp"
 
@@ -1107,7 +1117,8 @@ msgstr "Trùng lặp"
 msgid "Dyslexia-friendly"
 msgstr "Thân thiện với chứng khó đọc"
 
-#: src/features/objects/components/comment-thread.tsx:298
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:307
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:352
 msgid "Edit"
 msgstr "Sửa"
 
@@ -1221,8 +1232,8 @@ msgstr "Không tạo lớp được"
 msgid "Failed to create field"
 msgstr "Không tạo trường được"
 
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:132
 #: ../../../lib/web/src/components/options-menu.tsx:99
-#: src/features/objects/components/object-links.tsx:105
 #: src/routes/_authenticated/$projectId/index.tsx:190
 msgid "Failed to create link"
 msgstr "Không tạo liên kết được"
@@ -1239,15 +1250,15 @@ msgstr "Không tạo dự án được"
 msgid "Failed to create view"
 msgstr "Không tạo chế độ xem được"
 
-#: src/features/objects/components/object-attachments.tsx:94
+#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:110
 msgid "Failed to delete attachment"
 msgstr "Không xoá tệp đính kèm được"
 
-#: src/features/objects/components/comment-list.tsx:182
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:207
 msgid "Failed to delete comment"
 msgstr "Không xoá bình luận được"
 
-#: src/features/objects/components/object-links.tsx:127
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:154
 msgid "Failed to delete link"
 msgstr "Không xoá liên kết được"
 
@@ -1320,7 +1331,7 @@ msgstr "Không tải được video"
 msgid "Failed to merge"
 msgstr "Không hợp nhất được"
 
-#: src/features/objects/components/comment-list.tsx:145
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:170
 msgid "Failed to post comment"
 msgstr "Không đăng bình luận được"
 
@@ -1372,7 +1383,7 @@ msgstr "Không huỷ đăng ký được"
 msgid "Failed to update access level"
 msgstr "Không cập nhật mức truy cập được"
 
-#: src/features/objects/components/comment-list.tsx:165
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:190
 msgid "Failed to update comment"
 msgstr "Không cập nhật bình luận được"
 
@@ -1384,7 +1395,7 @@ msgstr "Không cập nhật trường được"
 msgid "Failed to update project"
 msgstr "Không cập nhật dự án được"
 
-#: src/features/objects/components/object-attachments.tsx:79
+#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:95
 msgid "Failed to upload attachment"
 msgstr "Không tải tệp đính kèm lên được"
 
@@ -1392,9 +1403,9 @@ msgstr "Không tải tệp đính kèm lên được"
 msgid "Fields"
 msgstr "Trường"
 
-#: src/features/objects/components/create-object-dialog.tsx:505
-#: src/features/objects/components/object-attachments.tsx:117
-#: src/features/objects/components/object-attachments.tsx:134
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:565
+#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:133
+#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:150
 msgid "Files"
 msgstr "Tệp"
 
@@ -1637,7 +1648,7 @@ msgstr "Sáng"
 msgid "Link"
 msgstr "Liên kết"
 
-#: src/features/objects/components/object-links.tsx:241
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:274
 msgid "Links"
 msgstr "Liên kết"
 
@@ -1698,7 +1709,7 @@ msgstr "Đang đăng xuất…"
 msgid "Manage your connected accounts for notifications and services."
 msgstr "Quản lý các tài khoản đã kết nối của bạn để nhận thông báo và dịch vụ."
 
-#: src/components/view-options-bar.tsx:41
+#: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:47
 msgid "Manual"
 msgstr "Thủ công"
 
@@ -1821,8 +1832,8 @@ msgstr "Tên phải có 1000 ký tự trở xuống"
 msgid "Network error"
 msgstr "Lỗi mạng"
 
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:458
 #: ../../../lib/web/src/components/ui/sort-selector.tsx:43
-#: src/features/objects/components/create-object-dialog.tsx:399
 #: src/routes/_authenticated/$projectId/index.tsx:918
 #: src/routes/_authenticated/$projectId/index.tsx:936
 msgid "New"
@@ -1846,7 +1857,7 @@ msgstr "Tiếp"
 msgid "Next image"
 msgstr "Hình tiếp theo"
 
-#: src/features/objects/components/create-object-dialog.tsx:472
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:531
 msgid "No {parentClassNames} to add to"
 msgstr "Không có {parentClassNames} để thêm vào"
 
@@ -1858,7 +1869,7 @@ msgstr "Không có quyền truy cập"
 msgid "No access rules configured. Add rules to control who can access this resource."
 msgstr "Chưa cấu hình quy tắc truy cập. Thêm quy tắc để kiểm soát ai có thể truy cập tài nguyên này."
 
-#: src/features/objects/components/activity-list.tsx:50
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx:65
 msgid "No activity yet"
 msgstr "Chưa có hoạt động"
 
@@ -1878,7 +1889,7 @@ msgstr "Không có thay đổi để hiển thị"
 msgid "No changes were found for the selected comparison."
 msgstr "Không tìm thấy thay đổi nào cho phép so sánh đã chọn."
 
-#: src/features/objects/components/comment-list.tsx:425
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:450
 msgid "No comments yet"
 msgstr "Chưa có bình luận"
 
@@ -1898,11 +1909,11 @@ msgstr "Chưa có trò chơi"
 msgid "No groups available"
 msgstr "Không có nhóm nào"
 
-#: src/features/objects/components/create-object-dialog.tsx:439
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:498
 msgid "No item types can be created yet. Create the required parent items first."
 msgstr "Chưa thể tạo loại mục nào. Hãy tạo các mục cha cần thiết trước."
 
-#: src/features/objects/components/object-links.tsx:327
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:355
 msgid "No matching objects"
 msgstr "Không có đối tượng khớp"
 
@@ -1973,6 +1984,8 @@ msgid "No views"
 msgstr "Không có lượt xem"
 
 #: ../../../lib/web/src/components/colour-picker.tsx:349
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:514
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:521
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:365
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:388
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:391
@@ -1985,8 +1998,6 @@ msgstr "Không có lượt xem"
 #: ../../../lib/web/src/lib/preference-utils.ts:125
 #: src/features/editor/components/edit-dialogs.tsx:293
 #: src/features/editor/components/edit-dialogs.tsx:296
-#: src/features/objects/components/create-object-dialog.tsx:455
-#: src/features/objects/components/create-object-dialog.tsx:462
 #: src/features/objects/components/object-detail-panel.tsx:530
 #: src/features/objects/components/object-detail-panel.tsx:543
 #: src/features/objects/components/object-detail-panel.tsx:548
@@ -2027,8 +2038,8 @@ msgid "Notifications: {0}"
 msgstr "Thông báo: {0}"
 
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:140
+#: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:48
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:499
-#: src/components/view-options-bar.tsx:42
 msgid "Number"
 msgstr "Số"
 
@@ -2106,8 +2117,8 @@ msgstr "Mở cài đặt theme"
 msgid "Open view actions"
 msgstr "Mở thao tác chế độ xem"
 
-#: src/components/view-options-bar.tsx:120
-#: src/components/view-options-bar.tsx:126
+#: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:126
+#: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:132
 msgid "Open view controls"
 msgstr "Mở điều khiển chế độ xem"
 
@@ -2134,7 +2145,7 @@ msgstr "Chủ sở hữu"
 msgid "Page {currentPage} of {totalPages}"
 msgstr "Trang {currentPage} trên {totalPages}"
 
-#: src/features/objects/components/create-object-dialog.tsx:447
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:506
 #: src/features/objects/components/object-detail-panel.tsx:526
 msgid "Parent"
 msgstr "Cha"
@@ -2321,7 +2332,7 @@ msgstr "Đang chuyển hướng đến đăng nhập."
 msgid "Reduce interest"
 msgstr "Giảm sự quan tâm"
 
-#: src/features/objects/components/object-links.tsx:46
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:65
 msgid "Relates"
 msgstr "Liên quan đến"
 
@@ -2335,9 +2346,9 @@ msgstr "Tương đối trong vòng 24 giờ, ngoài ra dùng tuyệt đối"
 
 #: ../../../lib/web/src/components/comment-composer.tsx:236
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:190
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:596
 #: ../../../lib/web/src/features/access/access-list.tsx:270
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:180
-#: src/features/objects/components/create-object-dialog.tsx:536
 #: src/features/projects/components/create-project-dialog.tsx:429
 msgid "Remove"
 msgstr "Xoá"
@@ -2377,8 +2388,8 @@ msgstr "Xoá sở thích"
 msgid "Remove item"
 msgstr "Xoá mục"
 
-#: src/features/objects/components/object-links.tsx:269
-#: src/features/objects/components/object-links.tsx:274
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:299
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:304
 msgid "Remove link"
 msgstr "Xóa liên kết"
 
@@ -2411,12 +2422,13 @@ msgstr "Thay thế thiết kế?"
 msgid "Replacing..."
 msgstr "Đang thay thế..."
 
-#: src/features/objects/components/comment-thread.tsx:285
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:294
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:342
 msgid "Reply"
 msgstr "Trả lời"
 
 #. placeholder {0}: comment.name || comment.author
-#: src/features/objects/components/comment-thread.tsx:330
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:385
 msgid "Reply to {0}..."
 msgstr "Trả lời {0}..."
 
@@ -2495,10 +2507,10 @@ msgstr ""
 msgid "Saturday"
 msgstr "Thứ bảy"
 
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:269
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:173
 #: ../../../lib/web/src/components/ui/editable-field-row.tsx:122
 #: ../../../lib/web/src/components/ui/secret-field.tsx:77
-#: src/features/objects/components/comment-thread.tsx:260
 #: src/routes/_authenticated/$projectId/index.tsx:1049
 msgid "Save"
 msgstr "Lưu"
@@ -2507,10 +2519,10 @@ msgstr "Lưu"
 msgid "Saving..."
 msgstr "Đang lưu..."
 
+#: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:150
 #: ../../../lib/web/src/components/filter-bar.tsx:32
 #: ../../../lib/web/src/components/header-search.tsx:22
 #: ../../../lib/web/src/components/search.tsx:18
-#: src/components/view-options-bar.tsx:144
 msgid "Search"
 msgstr "Tìm kiếm"
 
@@ -2542,7 +2554,7 @@ msgstr "Tìm kiếm điểm xuất phát..."
 msgid "Search for projects..."
 msgstr "Tìm kiếm dự án..."
 
-#: src/features/objects/components/object-links.tsx:302
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:332
 msgid "Search objects..."
 msgstr "Tìm kiếm đối tượng..."
 
@@ -2554,15 +2566,15 @@ msgstr "Tìm kiếm múi giờ..."
 msgid "Search users"
 msgstr "Tìm kiếm người dùng"
 
-#: src/components/view-options-bar.tsx:140
+#: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:146
 msgid "Search, watch, and sort this view."
 msgstr "Tìm kiếm, theo dõi và sắp xếp chế độ xem này."
 
+#: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:154
+#: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:229
 #: ../../../lib/web/src/components/person-picker.tsx:324
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:81
 #: ../../../lib/web/src/components/search-entity-page.tsx:72
-#: src/components/view-options-bar.tsx:148
-#: src/components/view-options-bar.tsx:223
 msgid "Search..."
 msgstr "Tìm kiếm..."
 
@@ -2765,7 +2777,7 @@ msgstr "Chuyển đến nội dung chính"
 msgid "Small"
 msgstr "Nhỏ"
 
-#: src/components/view-options-bar.tsx:166
+#: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:172
 msgid "Sort"
 msgstr "Sắp xếp"
 
@@ -2789,7 +2801,7 @@ msgstr "Chia"
 msgid "Squash and merge"
 msgstr "Squash và hợp nhất"
 
-#: src/features/objects/components/comment-list.tsx:426
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:451
 msgid "Start the discussion by adding the first comment."
 msgstr "Bắt đầu thảo luận bằng cách thêm bình luận đầu tiên."
 
@@ -2806,13 +2818,13 @@ msgstr "Ngừng theo dõi"
 msgid "Subject"
 msgstr "Tiêu đề"
 
-#: src/features/objects/components/comment-list.tsx:406
-#: src/features/objects/components/comment-list.tsx:415
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:431
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:440
 msgid "Submit comment"
 msgstr "Gửi bình luận"
 
-#: src/features/objects/components/comment-thread.tsx:417
-#: src/features/objects/components/comment-thread.tsx:422
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:470
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:475
 msgid "Submit reply"
 msgstr "Gửi trả lời"
 
@@ -3004,8 +3016,8 @@ msgstr "Bật/tắt giao diện"
 msgid "Toggle view options"
 msgstr "Bật/tắt tùy chọn xem"
 
-#: src/components/view-options-bar.tsx:157
-#: src/components/view-options-bar.tsx:233
+#: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:163
+#: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:239
 msgid "Toggle watched filter"
 msgstr "Bật/tắt bộ lọc đã theo dõi"
 
@@ -3118,7 +3130,9 @@ msgstr "Đã hủy đăng ký"
 msgid "Unsubscribing..."
 msgstr "Đang hủy đăng ký..."
 
-#: src/features/objects/components/object-links.tsx:150
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:284
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:98
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:179
 msgid "Untitled"
 msgstr "Không có tiêu đề"
 
@@ -3126,8 +3140,8 @@ msgstr "Không có tiêu đề"
 msgid "Unverified"
 msgstr "Chưa xác minh"
 
+#: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:50
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:500
-#: src/components/view-options-bar.tsx:44
 msgid "Updated"
 msgstr "Đã cập nhật"
 
@@ -3135,8 +3149,8 @@ msgstr "Đã cập nhật"
 msgid "Updating access..."
 msgstr "Đang cập nhật quyền truy cập..."
 
-#: src/features/objects/components/create-object-dialog.tsx:568
-#: src/features/objects/components/object-attachments.tsx:243
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:628
+#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:259
 msgid "Upload"
 msgstr "Tải lên"
 
@@ -3213,7 +3227,7 @@ msgstr "Xem tất cả thông báo"
 msgid "View and edit item details"
 msgstr "Xem và chỉnh sửa chi tiết mục"
 
-#: src/components/view-options-bar.tsx:139
+#: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:145
 msgid "View controls"
 msgstr "Điều khiển xem"
 
@@ -3234,12 +3248,12 @@ msgstr "Lượt xem"
 msgid "Watch"
 msgstr "Theo dõi"
 
+#: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:243
 #: ../../../lib/web/src/components/filter-bar.tsx:35
-#: src/components/view-options-bar.tsx:237
 msgid "Watched"
 msgstr "Đã theo dõi"
 
-#: src/components/view-options-bar.tsx:161
+#: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:167
 msgid "Watched only"
 msgstr "Chỉ đã theo dõi"
 

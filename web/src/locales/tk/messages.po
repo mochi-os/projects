@@ -18,11 +18,15 @@ msgstr ""
 msgid "Please check your internet connection and try again."
 msgstr ""
 
-#: src/features/objects/components/comment-thread.tsx:219
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:300
+msgid " or "
+msgstr ""
+
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:228
 msgid "(edited)"
 msgstr "(redaktirlendi)"
 
-#: src/features/objects/components/comment-thread.tsx:203
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:212
 msgid "(expand)"
 msgstr "(giňelt)"
 
@@ -127,11 +131,11 @@ msgstr "+{0} öňde"
 msgid "+{0} nested"
 msgstr "+{0} içki"
 
-#: src/features/objects/components/comment-thread.tsx:200
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:209
 msgid "+{totalDescendants} more replies"
 msgstr "+{totalDescendants} ýene jogaplar"
 
-#: src/features/objects/components/comment-thread.tsx:199
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:208
 msgid "1 reply"
 msgstr "1 jogap"
 
@@ -210,7 +214,7 @@ msgstr "Hereketlilik"
 msgid "Add"
 msgstr "Goşmak"
 
-#: src/features/objects/components/comment-list.tsx:335
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:360
 msgid "Add a comment..."
 msgstr "Teswir goşuň..."
 
@@ -260,7 +264,7 @@ msgstr "Meýdan goşmak"
 msgid "Add item..."
 msgstr "Element goşuň..."
 
-#: src/features/objects/components/object-links.tsx:285
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:315
 msgid "Add link"
 msgstr "Baglanyşyk goşmak"
 
@@ -360,7 +364,7 @@ msgid "Anyone who is logged in"
 msgstr "Giren islendik adam"
 
 #. placeholder {0}: deleteTarget?.name
-#: src/features/objects/components/object-attachments.tsx:255
+#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:271
 msgid "Are you sure you want to delete \"{0}\"?"
 msgstr "\"{0}\" pozmak isleýändigiňize ynamlymy?"
 
@@ -372,7 +376,7 @@ msgstr "\"{title}\" pozmak isleýändigiňize ynamlymy? Bu hereket yzyna gaýtar
 msgid "Are you sure you want to delete the \"{name}\" column? This cannot be undone."
 msgstr "\"{name}\" sütünini pozmak isleýändigiňize ynamlymy? Bu yzyna gaýtarylyp bilinmez."
 
-#: src/features/objects/components/comment-thread.tsx:432
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:485
 msgid "Are you sure you want to delete this comment? This will also delete all replies."
 msgstr "Bu teswiri pozmak isleýärsiňizmi? Bu ähli jogaplary hem pozar."
 
@@ -396,13 +400,13 @@ msgstr "Aşak"
 msgid "Ascending"
 msgstr "Artýan tertipde"
 
-#: src/features/objects/components/comment-list.tsx:373
-#: src/features/objects/components/comment-list.tsx:378
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:398
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:403
 msgid "Attach comment files"
 msgstr "Teswir faýllaryny goşmak"
 
-#: src/features/objects/components/comment-thread.tsx:386
-#: src/features/objects/components/comment-thread.tsx:391
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:439
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:444
 msgid "Attach reply files"
 msgstr "Jogap faýllaryny goşmak"
 
@@ -459,8 +463,8 @@ msgstr "Banner"
 msgid "Binary file not shown"
 msgstr "Ikilik faýl görkezilmeýär"
 
-#: src/features/objects/components/object-links.tsx:49
-#: src/features/objects/components/object-links.tsx:179
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:68
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:210
 msgid "Blocked by"
 msgstr "Gabsalanan tarapyndan"
 
@@ -469,7 +473,7 @@ msgstr "Gabsalanan tarapyndan"
 msgid "Blocked navigation to untrusted link"
 msgstr "Ynamsyz baglanyşyga geçiş gabsaldy"
 
-#: src/features/objects/components/object-links.tsx:47
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:66
 msgid "Blocks"
 msgstr "Bloklar"
 
@@ -499,6 +503,7 @@ msgid "Can be child of"
 msgstr "Çaga bolup biler"
 
 #: ../../../lib/web/src/components/entity/entity-board-column.tsx:628
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:249
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:169
 #: ../../../lib/web/src/components/responsive-confirm-dialog.tsx:67
 #: ../../../lib/web/src/components/step-up-dialog.tsx:363
@@ -509,20 +514,19 @@ msgstr "Çaga bolup biler"
 #: ../../../lib/web/src/features/access/access-list.tsx:268
 #: ../../../lib/web/src/features/accounts/account-add.tsx:201
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:91
-#: src/features/objects/components/comment-thread.tsx:240
 #: src/features/projects/components/create-project-dialog.tsx:443
 #: src/routes/_authenticated/$projectId/design.tsx:344
 #: src/routes/_authenticated/$projectId/index.tsx:1037
 msgid "Cancel"
 msgstr "Ýatyrmak"
 
-#: src/features/objects/components/comment-list.tsx:390
-#: src/features/objects/components/comment-list.tsx:395
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:415
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:420
 msgid "Cancel comment"
 msgstr "Teswiri ýatyrmak"
 
-#: src/features/objects/components/comment-thread.tsx:402
-#: src/features/objects/components/comment-thread.tsx:407
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:455
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:460
 msgid "Cancel reply"
 msgstr "Jogaby ýatyrmak"
 
@@ -619,12 +623,12 @@ msgstr "Saýlamany arassalamak"
 msgid "Clear selection (Escape)"
 msgstr "Saýlamany arassalamak (Escape)"
 
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:483
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:488
 #: ../../../lib/web/src/components/ui/dialog.tsx:78
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:358
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:361
 #: ../../../lib/web/src/components/ui/sheet.tsx:79
-#: src/features/objects/components/create-object-dialog.tsx:424
-#: src/features/objects/components/create-object-dialog.tsx:429
 msgid "Close"
 msgstr "Ýapmak"
 
@@ -690,6 +694,11 @@ msgstr "Tiz wagtda!"
 #: ../../../lib/web/src/components/ui/command.tsx:34
 msgid "Command Palette"
 msgstr "Buýruk paneli"
+
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:330
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:337
+msgid "Comment actions"
+msgstr ""
 
 #: src/routes/_authenticated/$projectId_.settings.tsx:405
 msgid "Comment and view"
@@ -788,9 +797,9 @@ msgstr "Şol hasap bilen barlap bolmady. Täzeden synanyşyň."
 
 #: ../../../lib/web/src/components/entity/entity-board-column.tsx:564
 #: ../../../lib/web/src/components/entity/entity-board-column.tsx:703
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:473
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:645
 #: ../../../lib/web/src/components/entity/entity-tree-view.tsx:672
-#: src/features/objects/components/create-object-dialog.tsx:414
-#: src/features/objects/components/create-object-dialog.tsx:585
 msgid "Create"
 msgstr "Döretmek"
 
@@ -799,7 +808,7 @@ msgstr "Döretmek"
 msgid "Create {0}"
 msgstr "{0} döret"
 
-#: src/features/objects/components/create-object-dialog.tsx:392
+#: src/features/objects/components/create-object-dialog.tsx:45
 msgid "Create a new item in this project"
 msgstr "Bu proýektde täze element döretmek"
 
@@ -809,7 +818,7 @@ msgid "Create a new project"
 msgstr "Täze proýekt döretmek"
 
 #: ../../../lib/web/src/components/entity/keyboard-shortcuts-help.tsx:25
-#: src/features/objects/components/create-object-dialog.tsx:391
+#: src/features/objects/components/create-object-dialog.tsx:44
 msgid "Create new item"
 msgstr "Täze element döretmek"
 
@@ -825,8 +834,8 @@ msgstr "Proýekt döretmek"
 msgid "Create, edit, comment, and view"
 msgstr "Döretmek, redaktirlemek, teswir ýazmak we görmek"
 
+#: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:49
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:498
-#: src/components/view-options-bar.tsx:43
 msgid "Created"
 msgstr "Döredildi"
 
@@ -834,8 +843,8 @@ msgstr "Döredildi"
 msgid "Creating project..."
 msgstr "Taslama döredilýär..."
 
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:645
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:258
-#: src/features/objects/components/create-object-dialog.tsx:585
 #: src/features/projects/components/create-project-dialog.tsx:447
 #: src/features/projects/components/create-project-dialog.tsx:535
 msgid "Creating..."
@@ -894,19 +903,20 @@ msgstr "Adaty tertipleşdirme"
 
 #: ../../../lib/web/src/components/entity/entity-board-column.tsx:583
 #: ../../../lib/web/src/components/entity/entity-board-column.tsx:644
-#: src/features/objects/components/comment-thread.tsx:309
-#: src/features/objects/components/comment-thread.tsx:433
-#: src/features/objects/components/object-attachments.tsx:157
-#: src/features/objects/components/object-attachments.tsx:162
-#: src/features/objects/components/object-attachments.tsx:211
-#: src/features/objects/components/object-attachments.tsx:256
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:318
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:361
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:486
+#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:173
+#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:178
+#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:227
+#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:272
 #: src/features/objects/components/object-detail-panel.tsx:636
 #: src/features/requests/components/request-panel.tsx:132
 #: src/routes/_authenticated/$projectId_.settings.tsx:357
 msgid "Delete"
 msgstr "Pozmak"
 
-#: src/features/objects/components/object-attachments.tsx:254
+#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:270
 msgid "Delete attachment"
 msgstr "Goşundy pozmak"
 
@@ -918,7 +928,7 @@ msgstr "Klass pozmak"
 msgid "Delete column"
 msgstr "Sütüni pozmak"
 
-#: src/features/objects/components/comment-thread.tsx:431
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:484
 msgid "Delete comment"
 msgstr "Teswiri pozmak"
 
@@ -1071,9 +1081,9 @@ msgstr "Taýýar"
 msgid "Double click on a column to add content"
 msgstr "Mazmun goşmak üçin sütüne iki gezek basyň"
 
+#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:214
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:342
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:352
-#: src/features/objects/components/object-attachments.tsx:198
 msgid "Download"
 msgstr "Ýükläp al"
 
@@ -1099,7 +1109,7 @@ msgstr "Taslama"
 msgid "Drag columns to re-order them"
 msgstr "Sütünleri täzeden tertiplemek üçin süýräň"
 
-#: src/features/objects/components/object-links.tsx:48
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:67
 msgid "Duplicates"
 msgstr "Gaýtalanmalar"
 
@@ -1107,7 +1117,8 @@ msgstr "Gaýtalanmalar"
 msgid "Dyslexia-friendly"
 msgstr "Disleksiýa uýgunlaşan"
 
-#: src/features/objects/components/comment-thread.tsx:298
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:307
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:352
 msgid "Edit"
 msgstr "Düzet"
 
@@ -1221,8 +1232,8 @@ msgstr "Synp döredilmedi"
 msgid "Failed to create field"
 msgstr "Meýdan döredilmedi"
 
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:132
 #: ../../../lib/web/src/components/options-menu.tsx:99
-#: src/features/objects/components/object-links.tsx:105
 #: src/routes/_authenticated/$projectId/index.tsx:190
 msgid "Failed to create link"
 msgstr "Baglanyşyk döredilmedi"
@@ -1239,15 +1250,15 @@ msgstr "Taslama döredilmedi"
 msgid "Failed to create view"
 msgstr "Görnüş döredilmedi"
 
-#: src/features/objects/components/object-attachments.tsx:94
+#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:110
 msgid "Failed to delete attachment"
 msgstr "Goşundy pozulmady"
 
-#: src/features/objects/components/comment-list.tsx:182
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:207
 msgid "Failed to delete comment"
 msgstr "Teswir pozulmady"
 
-#: src/features/objects/components/object-links.tsx:127
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:154
 msgid "Failed to delete link"
 msgstr "Baglanyşyk pozulmady"
 
@@ -1320,7 +1331,7 @@ msgstr "Wideo ýüklenip bilinmedi"
 msgid "Failed to merge"
 msgstr "Birleşdirilmedi"
 
-#: src/features/objects/components/comment-list.tsx:145
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:170
 msgid "Failed to post comment"
 msgstr "Teswir ýerleşdirilmedi"
 
@@ -1372,7 +1383,7 @@ msgstr "Abunalyk ýatyrylmady"
 msgid "Failed to update access level"
 msgstr "Rugsat derejesi täzelenmedi"
 
-#: src/features/objects/components/comment-list.tsx:165
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:190
 msgid "Failed to update comment"
 msgstr "Teswir täzelenmedi"
 
@@ -1384,7 +1395,7 @@ msgstr "Meýdan täzelenmedi"
 msgid "Failed to update project"
 msgstr "Taslama täzelenmedi"
 
-#: src/features/objects/components/object-attachments.tsx:79
+#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:95
 msgid "Failed to upload attachment"
 msgstr "Goşundy ýüklenmedi"
 
@@ -1392,9 +1403,9 @@ msgstr "Goşundy ýüklenmedi"
 msgid "Fields"
 msgstr "Meýdanlar"
 
-#: src/features/objects/components/create-object-dialog.tsx:505
-#: src/features/objects/components/object-attachments.tsx:117
-#: src/features/objects/components/object-attachments.tsx:134
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:565
+#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:133
+#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:150
 msgid "Files"
 msgstr "Faýllar"
 
@@ -1637,7 +1648,7 @@ msgstr "Açyk"
 msgid "Link"
 msgstr "Salgy"
 
-#: src/features/objects/components/object-links.tsx:241
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:274
 msgid "Links"
 msgstr "Baglanyşyklar"
 
@@ -1698,7 +1709,7 @@ msgstr "Çykylýar…"
 msgid "Manage your connected accounts for notifications and services."
 msgstr "Bildirişler we hyzmatlar üçin birikdirilen hasaplaryňyzy dolandyryň."
 
-#: src/components/view-options-bar.tsx:41
+#: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:47
 msgid "Manual"
 msgstr "El bilen"
 
@@ -1821,8 +1832,8 @@ msgstr "At 1000 nyşandan az bolmaly"
 msgid "Network error"
 msgstr "Tor ýalňyşlygy"
 
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:458
 #: ../../../lib/web/src/components/ui/sort-selector.tsx:43
-#: src/features/objects/components/create-object-dialog.tsx:399
 #: src/routes/_authenticated/$projectId/index.tsx:918
 #: src/routes/_authenticated/$projectId/index.tsx:936
 msgid "New"
@@ -1846,7 +1857,7 @@ msgstr "Indiki"
 msgid "Next image"
 msgstr "Indiki surat"
 
-#: src/features/objects/components/create-object-dialog.tsx:472
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:531
 msgid "No {parentClassNames} to add to"
 msgstr "Goşmak üçin {parentClassNames} ýok"
 
@@ -1858,7 +1869,7 @@ msgstr "Girip bolmaýar"
 msgid "No access rules configured. Add rules to control who can access this resource."
 msgstr "Giriş düzgünleri ýok. Bu çeşmä kim girip biljekdigini dolandyrmak üçin düzgünler goşuň."
 
-#: src/features/objects/components/activity-list.tsx:50
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx:65
 msgid "No activity yet"
 msgstr "Heniz işjeňlik ýok"
 
@@ -1878,7 +1889,7 @@ msgstr "Görkezmek üçin üýtgeşiklikler ýok"
 msgid "No changes were found for the selected comparison."
 msgstr "Saýlanan deňeşdirme üçin üýtgeşiklikler tapylmady."
 
-#: src/features/objects/components/comment-list.tsx:425
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:450
 msgid "No comments yet"
 msgstr "Heniz teswirler ýok"
 
@@ -1898,11 +1909,11 @@ msgstr "Heniz oýunlar ýok"
 msgid "No groups available"
 msgstr "Elýeterli toparlar ýok"
 
-#: src/features/objects/components/create-object-dialog.tsx:439
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:498
 msgid "No item types can be created yet. Create the required parent items first."
 msgstr "Heniz hiç bir element görnüşi döredilip bilinmez. Ilki bilen zerur ene-atalar elementlerini dörediň."
 
-#: src/features/objects/components/object-links.tsx:327
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:355
 msgid "No matching objects"
 msgstr "Gabat gelýän obýektler ýok"
 
@@ -1973,6 +1984,8 @@ msgid "No views"
 msgstr "Görnüşler ýok"
 
 #: ../../../lib/web/src/components/colour-picker.tsx:349
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:514
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:521
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:365
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:388
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:391
@@ -1985,8 +1998,6 @@ msgstr "Görnüşler ýok"
 #: ../../../lib/web/src/lib/preference-utils.ts:125
 #: src/features/editor/components/edit-dialogs.tsx:293
 #: src/features/editor/components/edit-dialogs.tsx:296
-#: src/features/objects/components/create-object-dialog.tsx:455
-#: src/features/objects/components/create-object-dialog.tsx:462
 #: src/features/objects/components/object-detail-panel.tsx:530
 #: src/features/objects/components/object-detail-panel.tsx:543
 #: src/features/objects/components/object-detail-panel.tsx:548
@@ -2027,8 +2038,8 @@ msgid "Notifications: {0}"
 msgstr "Bildirişler: {0}"
 
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:140
+#: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:48
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:499
-#: src/components/view-options-bar.tsx:42
 msgid "Number"
 msgstr "San"
 
@@ -2106,8 +2117,8 @@ msgstr "Tema sazlamalaryny aç"
 msgid "Open view actions"
 msgstr "Görnüş hereketlerini aç"
 
-#: src/components/view-options-bar.tsx:120
-#: src/components/view-options-bar.tsx:126
+#: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:126
+#: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:132
 msgid "Open view controls"
 msgstr "Görnüş dolandyryşlaryny aç"
 
@@ -2134,7 +2145,7 @@ msgstr "Eýesi"
 msgid "Page {currentPage} of {totalPages}"
 msgstr "Sahypa {currentPage} / {totalPages}"
 
-#: src/features/objects/components/create-object-dialog.tsx:447
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:506
 #: src/features/objects/components/object-detail-panel.tsx:526
 msgid "Parent"
 msgstr "Ene-ata"
@@ -2321,7 +2332,7 @@ msgstr "Girişe gönükdirilýär."
 msgid "Reduce interest"
 msgstr "Gyzyklanmany azalt"
 
-#: src/features/objects/components/object-links.tsx:46
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:65
 msgid "Relates"
 msgstr "Baglanyşygy bar"
 
@@ -2335,9 +2346,9 @@ msgstr "24 sagat içinde otnositel, başga absolýut"
 
 #: ../../../lib/web/src/components/comment-composer.tsx:236
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:190
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:596
 #: ../../../lib/web/src/features/access/access-list.tsx:270
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:180
-#: src/features/objects/components/create-object-dialog.tsx:536
 #: src/features/projects/components/create-project-dialog.tsx:429
 msgid "Remove"
 msgstr "Aýyr"
@@ -2377,8 +2388,8 @@ msgstr "Gyzyklanmany aýyr"
 msgid "Remove item"
 msgstr "Elementi aýyr"
 
-#: src/features/objects/components/object-links.tsx:269
-#: src/features/objects/components/object-links.tsx:274
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:299
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:304
 msgid "Remove link"
 msgstr "Baglanyşygy aýyr"
 
@@ -2411,12 +2422,13 @@ msgstr "Dizaýny çalyşmak?"
 msgid "Replacing..."
 msgstr "Çalşylýar..."
 
-#: src/features/objects/components/comment-thread.tsx:285
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:294
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:342
 msgid "Reply"
 msgstr "Jogap"
 
 #. placeholder {0}: comment.name || comment.author
-#: src/features/objects/components/comment-thread.tsx:330
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:385
 msgid "Reply to {0}..."
 msgstr "{0} jogap ber..."
 
@@ -2495,10 +2507,10 @@ msgstr ""
 msgid "Saturday"
 msgstr "Şenbe"
 
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:269
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:173
 #: ../../../lib/web/src/components/ui/editable-field-row.tsx:122
 #: ../../../lib/web/src/components/ui/secret-field.tsx:77
-#: src/features/objects/components/comment-thread.tsx:260
 #: src/routes/_authenticated/$projectId/index.tsx:1049
 msgid "Save"
 msgstr "Saklaýyş"
@@ -2507,10 +2519,10 @@ msgstr "Saklaýyş"
 msgid "Saving..."
 msgstr "Saklanýar..."
 
+#: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:150
 #: ../../../lib/web/src/components/filter-bar.tsx:32
 #: ../../../lib/web/src/components/header-search.tsx:22
 #: ../../../lib/web/src/components/search.tsx:18
-#: src/components/view-options-bar.tsx:144
 msgid "Search"
 msgstr "Gözle"
 
@@ -2542,7 +2554,7 @@ msgstr "Gelen ýeri gözle..."
 msgid "Search for projects..."
 msgstr "Taslamalary gözle..."
 
-#: src/features/objects/components/object-links.tsx:302
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:332
 msgid "Search objects..."
 msgstr "Obýektleri gözle..."
 
@@ -2554,15 +2566,15 @@ msgstr "Wagt zolagyny gözle..."
 msgid "Search users"
 msgstr "Ulanyjylary gözle"
 
-#: src/components/view-options-bar.tsx:140
+#: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:146
 msgid "Search, watch, and sort this view."
 msgstr "Bu görnüşi gözle, syna we tertipleşdir."
 
+#: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:154
+#: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:229
 #: ../../../lib/web/src/components/person-picker.tsx:324
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:81
 #: ../../../lib/web/src/components/search-entity-page.tsx:72
-#: src/components/view-options-bar.tsx:148
-#: src/components/view-options-bar.tsx:223
 msgid "Search..."
 msgstr "Gözle..."
 
@@ -2765,7 +2777,7 @@ msgstr "Esasy mazmuna geç"
 msgid "Small"
 msgstr "Kiçi"
 
-#: src/components/view-options-bar.tsx:166
+#: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:172
 msgid "Sort"
 msgstr "Tertiple"
 
@@ -2789,7 +2801,7 @@ msgstr "Bölmek"
 msgid "Squash and merge"
 msgstr "Gysga we birleşdir"
 
-#: src/features/objects/components/comment-list.tsx:426
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:451
 msgid "Start the discussion by adding the first comment."
 msgstr "Birinji teswiri goşup, ara alyp maslahatlaşmagy başla."
 
@@ -2806,13 +2818,13 @@ msgstr "Synlamagy bes et"
 msgid "Subject"
 msgstr "Mowzuk"
 
-#: src/features/objects/components/comment-list.tsx:406
-#: src/features/objects/components/comment-list.tsx:415
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:431
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:440
 msgid "Submit comment"
 msgstr "Teswiri tabşyr"
 
-#: src/features/objects/components/comment-thread.tsx:417
-#: src/features/objects/components/comment-thread.tsx:422
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:470
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:475
 msgid "Submit reply"
 msgstr "Jogap tabşyr"
 
@@ -3004,8 +3016,8 @@ msgstr "Temany geçir"
 msgid "Toggle view options"
 msgstr "Görnüş saýlawlaryny geçir"
 
-#: src/components/view-options-bar.tsx:157
-#: src/components/view-options-bar.tsx:233
+#: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:163
+#: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:239
 msgid "Toggle watched filter"
 msgstr "Görülen filtri geçir"
 
@@ -3118,7 +3130,9 @@ msgstr "Abuna ýazylyşygy ýatyryldy"
 msgid "Unsubscribing..."
 msgstr "Abuna ýazylyşygy ýatyrylýar..."
 
-#: src/features/objects/components/object-links.tsx:150
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:284
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:98
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:179
 msgid "Untitled"
 msgstr "Atsyz"
 
@@ -3126,8 +3140,8 @@ msgstr "Atsyz"
 msgid "Unverified"
 msgstr "Tassyklanmadyk"
 
+#: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:50
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:500
-#: src/components/view-options-bar.tsx:44
 msgid "Updated"
 msgstr "Täzelendi"
 
@@ -3135,8 +3149,8 @@ msgstr "Täzelendi"
 msgid "Updating access..."
 msgstr "Elýeterlilik täzelenýär..."
 
-#: src/features/objects/components/create-object-dialog.tsx:568
-#: src/features/objects/components/object-attachments.tsx:243
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:628
+#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:259
 msgid "Upload"
 msgstr "Ýükle"
 
@@ -3213,7 +3227,7 @@ msgstr "Ähli bildirişleri görkez"
 msgid "View and edit item details"
 msgstr "Element jikme-jikliklerini görkez we redaktirle"
 
-#: src/components/view-options-bar.tsx:139
+#: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:145
 msgid "View controls"
 msgstr "Görnüş dolandyryşlary"
 
@@ -3234,12 +3248,12 @@ msgstr "Görnüşler"
 msgid "Watch"
 msgstr "Synla"
 
+#: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:243
 #: ../../../lib/web/src/components/filter-bar.tsx:35
-#: src/components/view-options-bar.tsx:237
 msgid "Watched"
 msgstr "Synlandy"
 
-#: src/components/view-options-bar.tsx:161
+#: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:167
 msgid "Watched only"
 msgstr "Diňe synlandy"
 

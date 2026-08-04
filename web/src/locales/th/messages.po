@@ -18,11 +18,15 @@ msgstr ""
 msgid "Please check your internet connection and try again."
 msgstr ""
 
-#: src/features/objects/components/comment-thread.tsx:219
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:300
+msgid " or "
+msgstr ""
+
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:228
 msgid "(edited)"
 msgstr "(แก้ไขแล้ว)"
 
-#: src/features/objects/components/comment-thread.tsx:203
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:212
 msgid "(expand)"
 msgstr "(ขยาย)"
 
@@ -127,11 +131,11 @@ msgstr "+{0} ข้างหน้า"
 msgid "+{0} nested"
 msgstr "+{0} ที่ซ้อนกัน"
 
-#: src/features/objects/components/comment-thread.tsx:200
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:209
 msgid "+{totalDescendants} more replies"
 msgstr "+{totalDescendants} การตอบกลับเพิ่มเติม"
 
-#: src/features/objects/components/comment-thread.tsx:199
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:208
 msgid "1 reply"
 msgstr "1 การตอบกลับ"
 
@@ -210,7 +214,7 @@ msgstr "กิจกรรม"
 msgid "Add"
 msgstr "เพิ่ม"
 
-#: src/features/objects/components/comment-list.tsx:335
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:360
 msgid "Add a comment..."
 msgstr "เพิ่มความคิดเห็น..."
 
@@ -260,7 +264,7 @@ msgstr "เพิ่มฟิลด์"
 msgid "Add item..."
 msgstr "เพิ่มรายการ..."
 
-#: src/features/objects/components/object-links.tsx:285
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:315
 msgid "Add link"
 msgstr "เพิ่มลิงก์"
 
@@ -360,7 +364,7 @@ msgid "Anyone who is logged in"
 msgstr "ใครก็ตามที่เข้าสู่ระบบ"
 
 #. placeholder {0}: deleteTarget?.name
-#: src/features/objects/components/object-attachments.tsx:255
+#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:271
 msgid "Are you sure you want to delete \"{0}\"?"
 msgstr "คุณแน่ใจหรือไม่ว่าต้องการลบ\"{0}\"?"
 
@@ -372,7 +376,7 @@ msgstr "คุณแน่ใจหรือไม่ว่าต้องกา
 msgid "Are you sure you want to delete the \"{name}\" column? This cannot be undone."
 msgstr "คุณแน่ใจหรือไม่ว่าต้องการลบคอลัมน์\"{name}\"? การกระทำนี้ไม่สามารถยกเลิกได้"
 
-#: src/features/objects/components/comment-thread.tsx:432
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:485
 msgid "Are you sure you want to delete this comment? This will also delete all replies."
 msgstr "คุณแน่ใจหรือไม่ว่าต้องการลบความคิดเห็นนี้? การตอบกลับทั้งหมดจะถูกลบด้วย"
 
@@ -396,13 +400,13 @@ msgstr "น้อยไปมาก"
 msgid "Ascending"
 msgstr "จากน้อยไปมาก"
 
-#: src/features/objects/components/comment-list.tsx:373
-#: src/features/objects/components/comment-list.tsx:378
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:398
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:403
 msgid "Attach comment files"
 msgstr "แนบไฟล์ความคิดเห็น"
 
-#: src/features/objects/components/comment-thread.tsx:386
-#: src/features/objects/components/comment-thread.tsx:391
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:439
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:444
 msgid "Attach reply files"
 msgstr "แนบไฟล์ตอบกลับ"
 
@@ -459,8 +463,8 @@ msgstr "แบนเนอร์"
 msgid "Binary file not shown"
 msgstr "ไม่แสดงไฟล์ไบนารี"
 
-#: src/features/objects/components/object-links.tsx:49
-#: src/features/objects/components/object-links.tsx:179
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:68
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:210
 msgid "Blocked by"
 msgstr "ถูกบล็อกโดย"
 
@@ -469,7 +473,7 @@ msgstr "ถูกบล็อกโดย"
 msgid "Blocked navigation to untrusted link"
 msgstr "บล็อกการนำทางไปยังลิงก์ที่ไม่น่าเชื่อถือ"
 
-#: src/features/objects/components/object-links.tsx:47
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:66
 msgid "Blocks"
 msgstr "บล็อก"
 
@@ -499,6 +503,7 @@ msgid "Can be child of"
 msgstr "สามารถเป็นลูกของ"
 
 #: ../../../lib/web/src/components/entity/entity-board-column.tsx:628
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:249
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:169
 #: ../../../lib/web/src/components/responsive-confirm-dialog.tsx:67
 #: ../../../lib/web/src/components/step-up-dialog.tsx:363
@@ -509,20 +514,19 @@ msgstr "สามารถเป็นลูกของ"
 #: ../../../lib/web/src/features/access/access-list.tsx:268
 #: ../../../lib/web/src/features/accounts/account-add.tsx:201
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:91
-#: src/features/objects/components/comment-thread.tsx:240
 #: src/features/projects/components/create-project-dialog.tsx:443
 #: src/routes/_authenticated/$projectId/design.tsx:344
 #: src/routes/_authenticated/$projectId/index.tsx:1037
 msgid "Cancel"
 msgstr "ยกเลิก"
 
-#: src/features/objects/components/comment-list.tsx:390
-#: src/features/objects/components/comment-list.tsx:395
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:415
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:420
 msgid "Cancel comment"
 msgstr "ยกเลิกความคิดเห็น"
 
-#: src/features/objects/components/comment-thread.tsx:402
-#: src/features/objects/components/comment-thread.tsx:407
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:455
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:460
 msgid "Cancel reply"
 msgstr "ยกเลิกการตอบกลับ"
 
@@ -619,12 +623,12 @@ msgstr "ล้างการเลือก"
 msgid "Clear selection (Escape)"
 msgstr "ล้างการเลือก (Escape)"
 
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:483
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:488
 #: ../../../lib/web/src/components/ui/dialog.tsx:78
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:358
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:361
 #: ../../../lib/web/src/components/ui/sheet.tsx:79
-#: src/features/objects/components/create-object-dialog.tsx:424
-#: src/features/objects/components/create-object-dialog.tsx:429
 msgid "Close"
 msgstr "ปิด"
 
@@ -690,6 +694,11 @@ msgstr "เร็วๆนี้!"
 #: ../../../lib/web/src/components/ui/command.tsx:34
 msgid "Command Palette"
 msgstr "แผงคำสั่ง"
+
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:330
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:337
+msgid "Comment actions"
+msgstr ""
 
 #: src/routes/_authenticated/$projectId_.settings.tsx:405
 msgid "Comment and view"
@@ -788,9 +797,9 @@ msgstr "ไม่สามารถยืนยันด้วยบัญชี
 
 #: ../../../lib/web/src/components/entity/entity-board-column.tsx:564
 #: ../../../lib/web/src/components/entity/entity-board-column.tsx:703
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:473
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:645
 #: ../../../lib/web/src/components/entity/entity-tree-view.tsx:672
-#: src/features/objects/components/create-object-dialog.tsx:414
-#: src/features/objects/components/create-object-dialog.tsx:585
 msgid "Create"
 msgstr "สร้าง"
 
@@ -799,7 +808,7 @@ msgstr "สร้าง"
 msgid "Create {0}"
 msgstr "สร้าง{0}"
 
-#: src/features/objects/components/create-object-dialog.tsx:392
+#: src/features/objects/components/create-object-dialog.tsx:45
 msgid "Create a new item in this project"
 msgstr "สร้างรายการใหม่ในโครงการนี้"
 
@@ -809,7 +818,7 @@ msgid "Create a new project"
 msgstr "สร้างโครงการใหม่"
 
 #: ../../../lib/web/src/components/entity/keyboard-shortcuts-help.tsx:25
-#: src/features/objects/components/create-object-dialog.tsx:391
+#: src/features/objects/components/create-object-dialog.tsx:44
 msgid "Create new item"
 msgstr "สร้างรายการใหม่"
 
@@ -825,8 +834,8 @@ msgstr "สร้างโครงการ"
 msgid "Create, edit, comment, and view"
 msgstr "สร้าง แก้ไข แสดงความคิดเห็น และดู"
 
+#: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:49
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:498
-#: src/components/view-options-bar.tsx:43
 msgid "Created"
 msgstr "สร้างแล้ว"
 
@@ -834,8 +843,8 @@ msgstr "สร้างแล้ว"
 msgid "Creating project..."
 msgstr "กำลังสร้างโปรเจกต์..."
 
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:645
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:258
-#: src/features/objects/components/create-object-dialog.tsx:585
 #: src/features/projects/components/create-project-dialog.tsx:447
 #: src/features/projects/components/create-project-dialog.tsx:535
 msgid "Creating..."
@@ -894,19 +903,20 @@ msgstr "การเรียงลำดับเริ่มต้น"
 
 #: ../../../lib/web/src/components/entity/entity-board-column.tsx:583
 #: ../../../lib/web/src/components/entity/entity-board-column.tsx:644
-#: src/features/objects/components/comment-thread.tsx:309
-#: src/features/objects/components/comment-thread.tsx:433
-#: src/features/objects/components/object-attachments.tsx:157
-#: src/features/objects/components/object-attachments.tsx:162
-#: src/features/objects/components/object-attachments.tsx:211
-#: src/features/objects/components/object-attachments.tsx:256
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:318
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:361
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:486
+#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:173
+#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:178
+#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:227
+#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:272
 #: src/features/objects/components/object-detail-panel.tsx:636
 #: src/features/requests/components/request-panel.tsx:132
 #: src/routes/_authenticated/$projectId_.settings.tsx:357
 msgid "Delete"
 msgstr "ลบ"
 
-#: src/features/objects/components/object-attachments.tsx:254
+#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:270
 msgid "Delete attachment"
 msgstr "ลบไฟล์แนบ"
 
@@ -918,7 +928,7 @@ msgstr "ลบคลาส"
 msgid "Delete column"
 msgstr "ลบคอลัมน์"
 
-#: src/features/objects/components/comment-thread.tsx:431
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:484
 msgid "Delete comment"
 msgstr "ลบความคิดเห็น"
 
@@ -1071,9 +1081,9 @@ msgstr "เสร็จสิ้น"
 msgid "Double click on a column to add content"
 msgstr "ดับเบิลคลิกบนคอลัมน์เพื่อเพิ่มเนื้อหา"
 
+#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:214
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:342
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:352
-#: src/features/objects/components/object-attachments.tsx:198
 msgid "Download"
 msgstr "ดาวน์โหลด"
 
@@ -1099,7 +1109,7 @@ msgstr "ฉบับร่าง"
 msgid "Drag columns to re-order them"
 msgstr "ลากคอลัมน์เพื่อเรียงลำดับใหม่"
 
-#: src/features/objects/components/object-links.tsx:48
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:67
 msgid "Duplicates"
 msgstr "ทำซ้ำ"
 
@@ -1107,7 +1117,8 @@ msgstr "ทำซ้ำ"
 msgid "Dyslexia-friendly"
 msgstr "เหมาะสำหรับผู้บกพร่องการอ่าน"
 
-#: src/features/objects/components/comment-thread.tsx:298
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:307
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:352
 msgid "Edit"
 msgstr "แก้ไข"
 
@@ -1221,8 +1232,8 @@ msgstr "ไม่สามารถสร้างคลาสได้"
 msgid "Failed to create field"
 msgstr "ไม่สามารถสร้างฟิลด์ได้"
 
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:132
 #: ../../../lib/web/src/components/options-menu.tsx:99
-#: src/features/objects/components/object-links.tsx:105
 #: src/routes/_authenticated/$projectId/index.tsx:190
 msgid "Failed to create link"
 msgstr "ไม่สามารถสร้างลิงก์ได้"
@@ -1239,15 +1250,15 @@ msgstr "ไม่สามารถสร้างโปรเจกต์ได
 msgid "Failed to create view"
 msgstr "ไม่สามารถสร้างมุมมองได้"
 
-#: src/features/objects/components/object-attachments.tsx:94
+#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:110
 msgid "Failed to delete attachment"
 msgstr "ไม่สามารถลบไฟล์แนบได้"
 
-#: src/features/objects/components/comment-list.tsx:182
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:207
 msgid "Failed to delete comment"
 msgstr "ไม่สามารถลบความคิดเห็นได้"
 
-#: src/features/objects/components/object-links.tsx:127
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:154
 msgid "Failed to delete link"
 msgstr "ไม่สามารถลบลิงก์ได้"
 
@@ -1320,7 +1331,7 @@ msgstr "โหลดวิดีโอไม่สำเร็จ"
 msgid "Failed to merge"
 msgstr "ไม่สามารถ merge ได้"
 
-#: src/features/objects/components/comment-list.tsx:145
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:170
 msgid "Failed to post comment"
 msgstr "ไม่สามารถโพสต์ความคิดเห็นได้"
 
@@ -1372,7 +1383,7 @@ msgstr "ไม่สามารถยกเลิกการติดตาม
 msgid "Failed to update access level"
 msgstr "ไม่สามารถอัปเดตระดับการเข้าถึงได้"
 
-#: src/features/objects/components/comment-list.tsx:165
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:190
 msgid "Failed to update comment"
 msgstr "ไม่สามารถอัปเดตความคิดเห็นได้"
 
@@ -1384,7 +1395,7 @@ msgstr "ไม่สามารถอัปเดตฟิลด์ได้"
 msgid "Failed to update project"
 msgstr "ไม่สามารถอัปเดตโปรเจกต์ได้"
 
-#: src/features/objects/components/object-attachments.tsx:79
+#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:95
 msgid "Failed to upload attachment"
 msgstr "ไม่สามารถอัปโหลดไฟล์แนบได้"
 
@@ -1392,9 +1403,9 @@ msgstr "ไม่สามารถอัปโหลดไฟล์แนบไ
 msgid "Fields"
 msgstr "ฟิลด์"
 
-#: src/features/objects/components/create-object-dialog.tsx:505
-#: src/features/objects/components/object-attachments.tsx:117
-#: src/features/objects/components/object-attachments.tsx:134
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:565
+#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:133
+#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:150
 msgid "Files"
 msgstr "ไฟล์"
 
@@ -1637,7 +1648,7 @@ msgstr "สว่าง"
 msgid "Link"
 msgstr "ลิงก์"
 
-#: src/features/objects/components/object-links.tsx:241
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:274
 msgid "Links"
 msgstr "ลิงก์"
 
@@ -1698,7 +1709,7 @@ msgstr "กำลังออกจากระบบ…"
 msgid "Manage your connected accounts for notifications and services."
 msgstr "จัดการบัญชีที่เชื่อมต่อของคุณสำหรับการแจ้งเตือนและบริการ"
 
-#: src/components/view-options-bar.tsx:41
+#: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:47
 msgid "Manual"
 msgstr "คู่มือ"
 
@@ -1821,8 +1832,8 @@ msgstr "ชื่อต้องไม่เกิน 1000 ตัวอักษ
 msgid "Network error"
 msgstr "ข้อผิดพลาดของเครือข่าย"
 
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:458
 #: ../../../lib/web/src/components/ui/sort-selector.tsx:43
-#: src/features/objects/components/create-object-dialog.tsx:399
 #: src/routes/_authenticated/$projectId/index.tsx:918
 #: src/routes/_authenticated/$projectId/index.tsx:936
 msgid "New"
@@ -1846,7 +1857,7 @@ msgstr "ถัดไป"
 msgid "Next image"
 msgstr "รูปถัดไป"
 
-#: src/features/objects/components/create-object-dialog.tsx:472
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:531
 msgid "No {parentClassNames} to add to"
 msgstr "ไม่มี {parentClassNames} ให้เพิ่ม"
 
@@ -1858,7 +1869,7 @@ msgstr "ไม่มีสิทธิ์เข้าถึง"
 msgid "No access rules configured. Add rules to control who can access this resource."
 msgstr "ยังไม่ได้ตั้งกฎการเข้าถึง เพิ่มกฎเพื่อควบคุมว่าใครสามารถเข้าถึงทรัพยากรนี้ได้"
 
-#: src/features/objects/components/activity-list.tsx:50
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx:65
 msgid "No activity yet"
 msgstr "ยังไม่มีกิจกรรม"
 
@@ -1878,7 +1889,7 @@ msgstr "ไม่มีการเปลี่ยนแปลงให้แส
 msgid "No changes were found for the selected comparison."
 msgstr "ไม่พบการเปลี่ยนแปลงสำหรับการเปรียบเทียบที่เลือก"
 
-#: src/features/objects/components/comment-list.tsx:425
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:450
 msgid "No comments yet"
 msgstr "ยังไม่มีความคิดเห็น"
 
@@ -1898,11 +1909,11 @@ msgstr "ยังไม่มีเกม"
 msgid "No groups available"
 msgstr "ไม่มีกลุ่มที่ใช้งานได้"
 
-#: src/features/objects/components/create-object-dialog.tsx:439
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:498
 msgid "No item types can be created yet. Create the required parent items first."
 msgstr "ยังไม่สามารถสร้างประเภทรายการได้ กรุณาสร้างรายการแม่ที่จำเป็นก่อน"
 
-#: src/features/objects/components/object-links.tsx:327
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:355
 msgid "No matching objects"
 msgstr "ไม่มีออบเจกต์ที่ตรงกัน"
 
@@ -1973,6 +1984,8 @@ msgid "No views"
 msgstr "ไม่มีการเข้าชม"
 
 #: ../../../lib/web/src/components/colour-picker.tsx:349
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:514
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:521
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:365
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:388
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:391
@@ -1985,8 +1998,6 @@ msgstr "ไม่มีการเข้าชม"
 #: ../../../lib/web/src/lib/preference-utils.ts:125
 #: src/features/editor/components/edit-dialogs.tsx:293
 #: src/features/editor/components/edit-dialogs.tsx:296
-#: src/features/objects/components/create-object-dialog.tsx:455
-#: src/features/objects/components/create-object-dialog.tsx:462
 #: src/features/objects/components/object-detail-panel.tsx:530
 #: src/features/objects/components/object-detail-panel.tsx:543
 #: src/features/objects/components/object-detail-panel.tsx:548
@@ -2027,8 +2038,8 @@ msgid "Notifications: {0}"
 msgstr "การแจ้งเตือน: {0}"
 
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:140
+#: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:48
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:499
-#: src/components/view-options-bar.tsx:42
 msgid "Number"
 msgstr "ตัวเลข"
 
@@ -2106,8 +2117,8 @@ msgstr "เปิดการตั้งค่าธีม"
 msgid "Open view actions"
 msgstr "เปิดการดำเนินการของมุมมอง"
 
-#: src/components/view-options-bar.tsx:120
-#: src/components/view-options-bar.tsx:126
+#: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:126
+#: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:132
 msgid "Open view controls"
 msgstr "เปิดตัวควบคุมมุมมอง"
 
@@ -2134,7 +2145,7 @@ msgstr "เจ้าของ"
 msgid "Page {currentPage} of {totalPages}"
 msgstr "หน้า {currentPage} จาก {totalPages}"
 
-#: src/features/objects/components/create-object-dialog.tsx:447
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:506
 #: src/features/objects/components/object-detail-panel.tsx:526
 msgid "Parent"
 msgstr "แม่"
@@ -2321,7 +2332,7 @@ msgstr "กำลังเปลี่ยนเส้นทางไปยัง
 msgid "Reduce interest"
 msgstr "ลดความสนใจ"
 
-#: src/features/objects/components/object-links.tsx:46
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:65
 msgid "Relates"
 msgstr "เกี่ยวข้อง"
 
@@ -2335,9 +2346,9 @@ msgstr "สัมพัทธ์ภายใน 24 ชั่วโมง นอ�
 
 #: ../../../lib/web/src/components/comment-composer.tsx:236
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:190
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:596
 #: ../../../lib/web/src/features/access/access-list.tsx:270
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:180
-#: src/features/objects/components/create-object-dialog.tsx:536
 #: src/features/projects/components/create-project-dialog.tsx:429
 msgid "Remove"
 msgstr "ลบ"
@@ -2377,8 +2388,8 @@ msgstr "ลบความสนใจ"
 msgid "Remove item"
 msgstr "ลบรายการ"
 
-#: src/features/objects/components/object-links.tsx:269
-#: src/features/objects/components/object-links.tsx:274
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:299
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:304
 msgid "Remove link"
 msgstr "ลบลิงก์"
 
@@ -2411,12 +2422,13 @@ msgstr "แทนที่ดีไซน์?"
 msgid "Replacing..."
 msgstr "กำลังแทนที่..."
 
-#: src/features/objects/components/comment-thread.tsx:285
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:294
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:342
 msgid "Reply"
 msgstr "ตอบกลับ"
 
 #. placeholder {0}: comment.name || comment.author
-#: src/features/objects/components/comment-thread.tsx:330
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:385
 msgid "Reply to {0}..."
 msgstr "ตอบกลับ {0}..."
 
@@ -2495,10 +2507,10 @@ msgstr ""
 msgid "Saturday"
 msgstr "วันเสาร์"
 
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:269
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:173
 #: ../../../lib/web/src/components/ui/editable-field-row.tsx:122
 #: ../../../lib/web/src/components/ui/secret-field.tsx:77
-#: src/features/objects/components/comment-thread.tsx:260
 #: src/routes/_authenticated/$projectId/index.tsx:1049
 msgid "Save"
 msgstr "บันทึก"
@@ -2507,10 +2519,10 @@ msgstr "บันทึก"
 msgid "Saving..."
 msgstr "กำลังบันทึก..."
 
+#: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:150
 #: ../../../lib/web/src/components/filter-bar.tsx:32
 #: ../../../lib/web/src/components/header-search.tsx:22
 #: ../../../lib/web/src/components/search.tsx:18
-#: src/components/view-options-bar.tsx:144
 msgid "Search"
 msgstr "ค้นหา"
 
@@ -2542,7 +2554,7 @@ msgstr "ค้นหาต้นทาง..."
 msgid "Search for projects..."
 msgstr "ค้นหาโปรเจกต์..."
 
-#: src/features/objects/components/object-links.tsx:302
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:332
 msgid "Search objects..."
 msgstr "ค้นหาออบเจ็กต์..."
 
@@ -2554,15 +2566,15 @@ msgstr "ค้นหาเขตเวลา..."
 msgid "Search users"
 msgstr "ค้นหาผู้ใช้"
 
-#: src/components/view-options-bar.tsx:140
+#: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:146
 msgid "Search, watch, and sort this view."
 msgstr "ค้นหา ติดตาม และจัดเรียงมุมมองนี้"
 
+#: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:154
+#: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:229
 #: ../../../lib/web/src/components/person-picker.tsx:324
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:81
 #: ../../../lib/web/src/components/search-entity-page.tsx:72
-#: src/components/view-options-bar.tsx:148
-#: src/components/view-options-bar.tsx:223
 msgid "Search..."
 msgstr "ค้นหา..."
 
@@ -2765,7 +2777,7 @@ msgstr "ข้ามไปยังเนื้อหาหลัก"
 msgid "Small"
 msgstr "เล็ก"
 
-#: src/components/view-options-bar.tsx:166
+#: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:172
 msgid "Sort"
 msgstr "เรียงลำดับ"
 
@@ -2789,7 +2801,7 @@ msgstr "แยก"
 msgid "Squash and merge"
 msgstr "Squash และรวม"
 
-#: src/features/objects/components/comment-list.tsx:426
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:451
 msgid "Start the discussion by adding the first comment."
 msgstr "เริ่มการสนทนาโดยเพิ่มความคิดเห็นแรก"
 
@@ -2806,13 +2818,13 @@ msgstr "หยุดติดตาม"
 msgid "Subject"
 msgstr "หัวเรื่อง"
 
-#: src/features/objects/components/comment-list.tsx:406
-#: src/features/objects/components/comment-list.tsx:415
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:431
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:440
 msgid "Submit comment"
 msgstr "ส่งความคิดเห็น"
 
-#: src/features/objects/components/comment-thread.tsx:417
-#: src/features/objects/components/comment-thread.tsx:422
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:470
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:475
 msgid "Submit reply"
 msgstr "ส่งการตอบกลับ"
 
@@ -3004,8 +3016,8 @@ msgstr "สลับธีม"
 msgid "Toggle view options"
 msgstr "สลับตัวเลือกมุมมอง"
 
-#: src/components/view-options-bar.tsx:157
-#: src/components/view-options-bar.tsx:233
+#: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:163
+#: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:239
 msgid "Toggle watched filter"
 msgstr "สลับตัวกรองที่ติดตาม"
 
@@ -3118,7 +3130,9 @@ msgstr "ยกเลิกการติดตามแล้ว"
 msgid "Unsubscribing..."
 msgstr "กำลังยกเลิกการติดตาม..."
 
-#: src/features/objects/components/object-links.tsx:150
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:284
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:98
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:179
 msgid "Untitled"
 msgstr "ไม่มีชื่อ"
 
@@ -3126,8 +3140,8 @@ msgstr "ไม่มีชื่อ"
 msgid "Unverified"
 msgstr "ยังไม่ยืนยัน"
 
+#: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:50
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:500
-#: src/components/view-options-bar.tsx:44
 msgid "Updated"
 msgstr "อัปเดตแล้ว"
 
@@ -3135,8 +3149,8 @@ msgstr "อัปเดตแล้ว"
 msgid "Updating access..."
 msgstr "กำลังอัปเดตสิทธิ์การเข้าถึง..."
 
-#: src/features/objects/components/create-object-dialog.tsx:568
-#: src/features/objects/components/object-attachments.tsx:243
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:628
+#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:259
 msgid "Upload"
 msgstr "อัปโหลด"
 
@@ -3213,7 +3227,7 @@ msgstr "ดูการแจ้งเตือนทั้งหมด"
 msgid "View and edit item details"
 msgstr "ดูและแก้ไขรายละเอียดรายการ"
 
-#: src/components/view-options-bar.tsx:139
+#: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:145
 msgid "View controls"
 msgstr "ตัวควบคุมมุมมอง"
 
@@ -3234,12 +3248,12 @@ msgstr "การดู"
 msgid "Watch"
 msgstr "ติดตาม"
 
+#: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:243
 #: ../../../lib/web/src/components/filter-bar.tsx:35
-#: src/components/view-options-bar.tsx:237
 msgid "Watched"
 msgstr "ติดตามแล้ว"
 
-#: src/components/view-options-bar.tsx:161
+#: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:167
 msgid "Watched only"
 msgstr "ที่ติดตามเท่านั้น"
 

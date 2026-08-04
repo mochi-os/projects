@@ -18,11 +18,15 @@ msgstr ""
 msgid "Please check your internet connection and try again."
 msgstr ""
 
-#: src/features/objects/components/comment-thread.tsx:219
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:300
+msgid " or "
+msgstr ""
+
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:228
 msgid "(edited)"
 msgstr "(បានកែ)"
 
-#: src/features/objects/components/comment-thread.tsx:203
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:212
 msgid "(expand)"
 msgstr "(ពង្រីក)"
 
@@ -127,11 +131,11 @@ msgstr "+{0} នាំមុខ"
 msgid "+{0} nested"
 msgstr "+{0} ជាន់គ្នា"
 
-#: src/features/objects/components/comment-thread.tsx:200
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:209
 msgid "+{totalDescendants} more replies"
 msgstr "+{totalDescendants} ការឆ្លើយតបបន្ថែម"
 
-#: src/features/objects/components/comment-thread.tsx:199
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:208
 msgid "1 reply"
 msgstr "ឆ្លើយតប ១"
 
@@ -210,7 +214,7 @@ msgstr "សកម្មភាព"
 msgid "Add"
 msgstr "បន្ថែម"
 
-#: src/features/objects/components/comment-list.tsx:335
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:360
 msgid "Add a comment..."
 msgstr "បន្ថែមមតិយោបល់..."
 
@@ -260,7 +264,7 @@ msgstr "បន្ថែមប្រអប់"
 msgid "Add item..."
 msgstr "បន្ថែមធាតុ..."
 
-#: src/features/objects/components/object-links.tsx:285
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:315
 msgid "Add link"
 msgstr "បន្ថែមតំណ"
 
@@ -360,7 +364,7 @@ msgid "Anyone who is logged in"
 msgstr "នរណាម្នាក់ដែលបានចូល"
 
 #. placeholder {0}: deleteTarget?.name
-#: src/features/objects/components/object-attachments.tsx:255
+#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:271
 msgid "Are you sure you want to delete \"{0}\"?"
 msgstr "តើអ្នកប្រាកដថាចង់លុប \"{0}\" មែនទេ?"
 
@@ -372,7 +376,7 @@ msgstr "តើអ្នកប្រាកដថាចង់លុប \"{title}\"
 msgid "Are you sure you want to delete the \"{name}\" column? This cannot be undone."
 msgstr "តើអ្នកប្រាកដថាចង់លុបជួរឈរ \"{name}\" មែនទេ? វាមិនអាចបញ្ច្រាសបានទេ។"
 
-#: src/features/objects/components/comment-thread.tsx:432
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:485
 msgid "Are you sure you want to delete this comment? This will also delete all replies."
 msgstr "តើអ្នកប្រាកដថាចង់លុបមតិយោបល់នេះមែនទេ? វានឹងលុបការឆ្លើយតបទាំងអស់ផងដែរ។"
 
@@ -396,13 +400,13 @@ msgstr "ឡើង"
 msgid "Ascending"
 msgstr "តាមលំដាប់កើន"
 
-#: src/features/objects/components/comment-list.tsx:373
-#: src/features/objects/components/comment-list.tsx:378
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:398
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:403
 msgid "Attach comment files"
 msgstr "ភ្ជាប់ឯកសារមតិយោបល់"
 
-#: src/features/objects/components/comment-thread.tsx:386
-#: src/features/objects/components/comment-thread.tsx:391
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:439
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:444
 msgid "Attach reply files"
 msgstr "ភ្ជាប់ឯកសារឆ្លើយតប"
 
@@ -459,8 +463,8 @@ msgstr "បដា"
 msgid "Binary file not shown"
 msgstr "ឯកសារ​គោលពីរ​មិន​ត្រូវ​បាន​បង្ហាញ​ទេ"
 
-#: src/features/objects/components/object-links.tsx:49
-#: src/features/objects/components/object-links.tsx:179
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:68
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:210
 msgid "Blocked by"
 msgstr "ត្រូវបានរារាំងដោយ"
 
@@ -469,7 +473,7 @@ msgstr "ត្រូវបានរារាំងដោយ"
 msgid "Blocked navigation to untrusted link"
 msgstr "បានរារាំងការរុករកទៅតំណមិនគួរឱ្យទុកចិត្ត"
 
-#: src/features/objects/components/object-links.tsx:47
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:66
 msgid "Blocks"
 msgstr "ប្លុក"
 
@@ -499,6 +503,7 @@ msgid "Can be child of"
 msgstr "អាចជាកូននៃ"
 
 #: ../../../lib/web/src/components/entity/entity-board-column.tsx:628
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:249
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:169
 #: ../../../lib/web/src/components/responsive-confirm-dialog.tsx:67
 #: ../../../lib/web/src/components/step-up-dialog.tsx:363
@@ -509,20 +514,19 @@ msgstr "អាចជាកូននៃ"
 #: ../../../lib/web/src/features/access/access-list.tsx:268
 #: ../../../lib/web/src/features/accounts/account-add.tsx:201
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:91
-#: src/features/objects/components/comment-thread.tsx:240
 #: src/features/projects/components/create-project-dialog.tsx:443
 #: src/routes/_authenticated/$projectId/design.tsx:344
 #: src/routes/_authenticated/$projectId/index.tsx:1037
 msgid "Cancel"
 msgstr "បោះបង់"
 
-#: src/features/objects/components/comment-list.tsx:390
-#: src/features/objects/components/comment-list.tsx:395
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:415
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:420
 msgid "Cancel comment"
 msgstr "បោះបង់មតិយោបល់"
 
-#: src/features/objects/components/comment-thread.tsx:402
-#: src/features/objects/components/comment-thread.tsx:407
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:455
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:460
 msgid "Cancel reply"
 msgstr "បោះបង់ការឆ្លើយតប"
 
@@ -619,12 +623,12 @@ msgstr "សម្អាតការជ្រើសរើស"
 msgid "Clear selection (Escape)"
 msgstr "សម្អាតការជ្រើសរើស (Escape)"
 
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:483
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:488
 #: ../../../lib/web/src/components/ui/dialog.tsx:78
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:358
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:361
 #: ../../../lib/web/src/components/ui/sheet.tsx:79
-#: src/features/objects/components/create-object-dialog.tsx:424
-#: src/features/objects/components/create-object-dialog.tsx:429
 msgid "Close"
 msgstr "បិទ"
 
@@ -690,6 +694,11 @@ msgstr "នឹងមកដល់ឆាប់ៗ!"
 #: ../../../lib/web/src/components/ui/command.tsx:34
 msgid "Command Palette"
 msgstr "ផ្ទាំងពាក្យបញ្ជា"
+
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:330
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:337
+msgid "Comment actions"
+msgstr ""
 
 #: src/routes/_authenticated/$projectId_.settings.tsx:405
 msgid "Comment and view"
@@ -788,9 +797,9 @@ msgstr "មិនអាចផ្ទៀងផ្ទាត់ជាមួយគណ
 
 #: ../../../lib/web/src/components/entity/entity-board-column.tsx:564
 #: ../../../lib/web/src/components/entity/entity-board-column.tsx:703
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:473
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:645
 #: ../../../lib/web/src/components/entity/entity-tree-view.tsx:672
-#: src/features/objects/components/create-object-dialog.tsx:414
-#: src/features/objects/components/create-object-dialog.tsx:585
 msgid "Create"
 msgstr "បង្កើត"
 
@@ -799,7 +808,7 @@ msgstr "បង្កើត"
 msgid "Create {0}"
 msgstr "បង្កើត {0}"
 
-#: src/features/objects/components/create-object-dialog.tsx:392
+#: src/features/objects/components/create-object-dialog.tsx:45
 msgid "Create a new item in this project"
 msgstr "បង្កើតធាតុថ្មីនៅក្នុងគម្រោងនេះ"
 
@@ -809,7 +818,7 @@ msgid "Create a new project"
 msgstr "បង្កើតគម្រោងថ្មី"
 
 #: ../../../lib/web/src/components/entity/keyboard-shortcuts-help.tsx:25
-#: src/features/objects/components/create-object-dialog.tsx:391
+#: src/features/objects/components/create-object-dialog.tsx:44
 msgid "Create new item"
 msgstr "បង្កើតធាតុថ្មី"
 
@@ -825,8 +834,8 @@ msgstr "បង្កើតគម្រោង"
 msgid "Create, edit, comment, and view"
 msgstr "បង្កើត កែសម្រួល បញ្ចេញមតិ និងមើល"
 
+#: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:49
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:498
-#: src/components/view-options-bar.tsx:43
 msgid "Created"
 msgstr "បានបង្កើត"
 
@@ -834,8 +843,8 @@ msgstr "បានបង្កើត"
 msgid "Creating project..."
 msgstr "កំពុងបង្កើតគម្រោង..."
 
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:645
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:258
-#: src/features/objects/components/create-object-dialog.tsx:585
 #: src/features/projects/components/create-project-dialog.tsx:447
 #: src/features/projects/components/create-project-dialog.tsx:535
 msgid "Creating..."
@@ -894,19 +903,20 @@ msgstr "ការតម្រៀបលំនាំដើម"
 
 #: ../../../lib/web/src/components/entity/entity-board-column.tsx:583
 #: ../../../lib/web/src/components/entity/entity-board-column.tsx:644
-#: src/features/objects/components/comment-thread.tsx:309
-#: src/features/objects/components/comment-thread.tsx:433
-#: src/features/objects/components/object-attachments.tsx:157
-#: src/features/objects/components/object-attachments.tsx:162
-#: src/features/objects/components/object-attachments.tsx:211
-#: src/features/objects/components/object-attachments.tsx:256
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:318
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:361
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:486
+#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:173
+#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:178
+#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:227
+#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:272
 #: src/features/objects/components/object-detail-panel.tsx:636
 #: src/features/requests/components/request-panel.tsx:132
 #: src/routes/_authenticated/$projectId_.settings.tsx:357
 msgid "Delete"
 msgstr "លុប"
 
-#: src/features/objects/components/object-attachments.tsx:254
+#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:270
 msgid "Delete attachment"
 msgstr "លុបឯកសារភ្ជាប់"
 
@@ -918,7 +928,7 @@ msgstr "លុបថ្នាក់"
 msgid "Delete column"
 msgstr "លុបជួរឈរ"
 
-#: src/features/objects/components/comment-thread.tsx:431
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:484
 msgid "Delete comment"
 msgstr "លុបមតិយោបល់"
 
@@ -1071,9 +1081,9 @@ msgstr "រួចរាល់"
 msgid "Double click on a column to add content"
 msgstr "ចុចពីរដងលើជួរឈរដើម្បីបន្ថែមមាតិកា"
 
+#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:214
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:342
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:352
-#: src/features/objects/components/object-attachments.tsx:198
 msgid "Download"
 msgstr "ទាញយក"
 
@@ -1099,7 +1109,7 @@ msgstr "សេចក្ដីព្រាង"
 msgid "Drag columns to re-order them"
 msgstr "អូសជួរឈរដើម្បីរៀបលំដាប់ឡើងវិញ"
 
-#: src/features/objects/components/object-links.tsx:48
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:67
 msgid "Duplicates"
 msgstr "ស្ទួន"
 
@@ -1107,7 +1117,8 @@ msgstr "ស្ទួន"
 msgid "Dyslexia-friendly"
 msgstr "ស័ក្តិសមនឹងជំងឺឌីស្លេកស៊ី"
 
-#: src/features/objects/components/comment-thread.tsx:298
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:307
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:352
 msgid "Edit"
 msgstr "កែសម្រួល"
 
@@ -1221,8 +1232,8 @@ msgstr "បរាជ័យក្នុងការបង្កើតថ្នា
 msgid "Failed to create field"
 msgstr "បរាជ័យក្នុងការបង្កើតវាល"
 
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:132
 #: ../../../lib/web/src/components/options-menu.tsx:99
-#: src/features/objects/components/object-links.tsx:105
 #: src/routes/_authenticated/$projectId/index.tsx:190
 msgid "Failed to create link"
 msgstr "បរាជ័យក្នុងការបង្កើតតំណ"
@@ -1239,15 +1250,15 @@ msgstr "បរាជ័យក្នុងការបង្កើតគម្រ
 msgid "Failed to create view"
 msgstr "បរាជ័យក្នុងការបង្កើតទិដ្ឋភាព"
 
-#: src/features/objects/components/object-attachments.tsx:94
+#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:110
 msgid "Failed to delete attachment"
 msgstr "បរាជ័យក្នុងការលុបឯកសារភ្ជាប់"
 
-#: src/features/objects/components/comment-list.tsx:182
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:207
 msgid "Failed to delete comment"
 msgstr "បរាជ័យក្នុងការលុបមតិយោបល់"
 
-#: src/features/objects/components/object-links.tsx:127
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:154
 msgid "Failed to delete link"
 msgstr "បរាជ័យក្នុងការលុបតំណ"
 
@@ -1320,7 +1331,7 @@ msgstr "បរាជ័យក្នុងការផ្ទុកវីដេអ
 msgid "Failed to merge"
 msgstr "បរាជ័យក្នុងការបញ្ចូល"
 
-#: src/features/objects/components/comment-list.tsx:145
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:170
 msgid "Failed to post comment"
 msgstr "បរាជ័យក្នុងការបង្ហោះមតិយោបល់"
 
@@ -1372,7 +1383,7 @@ msgstr "បរាជ័យក្នុងការបោះបង់ការជ
 msgid "Failed to update access level"
 msgstr "បរាជ័យក្នុងការធ្វើបច្ចុប្បន្នភាពកម្រិតចូលដំណើរការ"
 
-#: src/features/objects/components/comment-list.tsx:165
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:190
 msgid "Failed to update comment"
 msgstr "បរាជ័យក្នុងការធ្វើបច្ចុប្បន្នភាពមតិយោបល់"
 
@@ -1384,7 +1395,7 @@ msgstr "បរាជ័យក្នុងការធ្វើបច្ចុប
 msgid "Failed to update project"
 msgstr "បរាជ័យក្នុងការធ្វើបច្ចុប្បន្នភាពគម្រោង"
 
-#: src/features/objects/components/object-attachments.tsx:79
+#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:95
 msgid "Failed to upload attachment"
 msgstr "បរាជ័យក្នុងការផ្ទុកឡើងឯកសារភ្ជាប់"
 
@@ -1392,9 +1403,9 @@ msgstr "បរាជ័យក្នុងការផ្ទុកឡើងឯក
 msgid "Fields"
 msgstr "វាល"
 
-#: src/features/objects/components/create-object-dialog.tsx:505
-#: src/features/objects/components/object-attachments.tsx:117
-#: src/features/objects/components/object-attachments.tsx:134
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:565
+#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:133
+#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:150
 msgid "Files"
 msgstr "ឯកសារ"
 
@@ -1637,7 +1648,7 @@ msgstr "ភ្លឺ"
 msgid "Link"
 msgstr "តំណ"
 
-#: src/features/objects/components/object-links.tsx:241
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:274
 msgid "Links"
 msgstr "តំណ"
 
@@ -1698,7 +1709,7 @@ msgstr "កំពុងចាកចេញ…"
 msgid "Manage your connected accounts for notifications and services."
 msgstr "គ្រប់គ្រងគណនីដែលបានភ្ជាប់របស់អ្នកសម្រាប់ការជូនដំណឹង និងសេវាកម្ម។"
 
-#: src/components/view-options-bar.tsx:41
+#: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:47
 msgid "Manual"
 msgstr "សៀវភៅណែនាំ"
 
@@ -1821,8 +1832,8 @@ msgstr "ឈ្មោះត្រូវតែមាន 1000 តួអក្សរ
 msgid "Network error"
 msgstr "កំហុសបណ្តាញ"
 
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:458
 #: ../../../lib/web/src/components/ui/sort-selector.tsx:43
-#: src/features/objects/components/create-object-dialog.tsx:399
 #: src/routes/_authenticated/$projectId/index.tsx:918
 #: src/routes/_authenticated/$projectId/index.tsx:936
 msgid "New"
@@ -1846,7 +1857,7 @@ msgstr "បន្ទាប់"
 msgid "Next image"
 msgstr "រូបភាពបន្ទាប់"
 
-#: src/features/objects/components/create-object-dialog.tsx:472
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:531
 msgid "No {parentClassNames} to add to"
 msgstr "មិនមាន {parentClassNames} ដើម្បីបន្ថែមទៅ"
 
@@ -1858,7 +1869,7 @@ msgstr "គ្មានសិទ្ធិចូលប្រើ"
 msgid "No access rules configured. Add rules to control who can access this resource."
 msgstr "មិនមានច្បាប់ចូលប្រើបានកំណត់រចនាសម្ព័ន្ធទេ។ បន្ថែមច្បាប់ដើម្បីគ្រប់គ្រងអ្នកដែលអាចចូលប្រើធនធាននេះ។"
 
-#: src/features/objects/components/activity-list.tsx:50
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx:65
 msgid "No activity yet"
 msgstr "មិនទាន់មានសកម្មភាព"
 
@@ -1878,7 +1889,7 @@ msgstr "មិនមានការផ្លាស់ប្តូរដើម្
 msgid "No changes were found for the selected comparison."
 msgstr "រកមិនឃើញការផ្លាស់ប្តូរសម្រាប់ការប្រៀបធៀបដែលបានជ្រើសរើស។"
 
-#: src/features/objects/components/comment-list.tsx:425
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:450
 msgid "No comments yet"
 msgstr "មិនទាន់មានមតិយោបល់"
 
@@ -1898,11 +1909,11 @@ msgstr "មិនទាន់មានហ្គេម"
 msgid "No groups available"
 msgstr "មិនមានក្រុម"
 
-#: src/features/objects/components/create-object-dialog.tsx:439
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:498
 msgid "No item types can be created yet. Create the required parent items first."
 msgstr "មិនអាចបង្កើតប្រភេទធាតុបានទេ។ បង្កើតធាតុមេដែលត្រូវការជាមុនសិន។"
 
-#: src/features/objects/components/object-links.tsx:327
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:355
 msgid "No matching objects"
 msgstr "មិនមានវត្ថុដែលត្រូវនឹង"
 
@@ -1973,6 +1984,8 @@ msgid "No views"
 msgstr "មិនមានការមើល"
 
 #: ../../../lib/web/src/components/colour-picker.tsx:349
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:514
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:521
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:365
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:388
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:391
@@ -1985,8 +1998,6 @@ msgstr "មិនមានការមើល"
 #: ../../../lib/web/src/lib/preference-utils.ts:125
 #: src/features/editor/components/edit-dialogs.tsx:293
 #: src/features/editor/components/edit-dialogs.tsx:296
-#: src/features/objects/components/create-object-dialog.tsx:455
-#: src/features/objects/components/create-object-dialog.tsx:462
 #: src/features/objects/components/object-detail-panel.tsx:530
 #: src/features/objects/components/object-detail-panel.tsx:543
 #: src/features/objects/components/object-detail-panel.tsx:548
@@ -2027,8 +2038,8 @@ msgid "Notifications: {0}"
 msgstr "ការជូនដំណឹង៖ {0}"
 
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:140
+#: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:48
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:499
-#: src/components/view-options-bar.tsx:42
 msgid "Number"
 msgstr "លេខ"
 
@@ -2106,8 +2117,8 @@ msgstr "បើកការកំណត់រចនាប័ទ្ម"
 msgid "Open view actions"
 msgstr "បើកសកម្មភាពទិដ្ឋភាព"
 
-#: src/components/view-options-bar.tsx:120
-#: src/components/view-options-bar.tsx:126
+#: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:126
+#: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:132
 msgid "Open view controls"
 msgstr "បើកការគ្រប់គ្រងទិដ្ឋភាព"
 
@@ -2134,7 +2145,7 @@ msgstr "ម្ចាស់"
 msgid "Page {currentPage} of {totalPages}"
 msgstr "ទំព័រ {currentPage} នៃ {totalPages}"
 
-#: src/features/objects/components/create-object-dialog.tsx:447
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:506
 #: src/features/objects/components/object-detail-panel.tsx:526
 msgid "Parent"
 msgstr "មេ"
@@ -2321,7 +2332,7 @@ msgstr "កំពុងបញ្ជូនបន្តទៅការចូល។
 msgid "Reduce interest"
 msgstr "កាត់បន្ថយចំណាប់អារម្មណ៍"
 
-#: src/features/objects/components/object-links.tsx:46
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:65
 msgid "Relates"
 msgstr "ទាក់ទង"
 
@@ -2335,9 +2346,9 @@ msgstr "ទាក់ទងក្នុង 24 ម៉ោង បើមិនដូ�
 
 #: ../../../lib/web/src/components/comment-composer.tsx:236
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:190
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:596
 #: ../../../lib/web/src/features/access/access-list.tsx:270
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:180
-#: src/features/objects/components/create-object-dialog.tsx:536
 #: src/features/projects/components/create-project-dialog.tsx:429
 msgid "Remove"
 msgstr "យកចេញ"
@@ -2377,8 +2388,8 @@ msgstr "យកចំណាប់អារម្មណ៍ចេញ"
 msgid "Remove item"
 msgstr "យកធាតុចេញ"
 
-#: src/features/objects/components/object-links.tsx:269
-#: src/features/objects/components/object-links.tsx:274
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:299
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:304
 msgid "Remove link"
 msgstr "លុបតំណ"
 
@@ -2411,12 +2422,13 @@ msgstr "ជំនួសការរចនា?"
 msgid "Replacing..."
 msgstr "កំពុងជំនួស..."
 
-#: src/features/objects/components/comment-thread.tsx:285
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:294
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:342
 msgid "Reply"
 msgstr "ឆ្លើយតប"
 
 #. placeholder {0}: comment.name || comment.author
-#: src/features/objects/components/comment-thread.tsx:330
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:385
 msgid "Reply to {0}..."
 msgstr "ឆ្លើយតបទៅ {0}..."
 
@@ -2495,10 +2507,10 @@ msgstr ""
 msgid "Saturday"
 msgstr "ថ្ងៃសៅរ៍"
 
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:269
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:173
 #: ../../../lib/web/src/components/ui/editable-field-row.tsx:122
 #: ../../../lib/web/src/components/ui/secret-field.tsx:77
-#: src/features/objects/components/comment-thread.tsx:260
 #: src/routes/_authenticated/$projectId/index.tsx:1049
 msgid "Save"
 msgstr "រក្សាទុក"
@@ -2507,10 +2519,10 @@ msgstr "រក្សាទុក"
 msgid "Saving..."
 msgstr "កំពុងរក្សាទុក..."
 
+#: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:150
 #: ../../../lib/web/src/components/filter-bar.tsx:32
 #: ../../../lib/web/src/components/header-search.tsx:22
 #: ../../../lib/web/src/components/search.tsx:18
-#: src/components/view-options-bar.tsx:144
 msgid "Search"
 msgstr "ស្វែងរក"
 
@@ -2542,7 +2554,7 @@ msgstr "ស្វែងរកប្រភពដើម..."
 msgid "Search for projects..."
 msgstr "ស្វែងរកគម្រោង..."
 
-#: src/features/objects/components/object-links.tsx:302
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:332
 msgid "Search objects..."
 msgstr "ស្វែងរកវត្ថុ..."
 
@@ -2554,15 +2566,15 @@ msgstr "ស្វែងរកតំបន់ពេលវេលា..."
 msgid "Search users"
 msgstr "ស្វែងរកអ្នកប្រើ"
 
-#: src/components/view-options-bar.tsx:140
+#: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:146
 msgid "Search, watch, and sort this view."
 msgstr "ស្វែងរក មើល និងតម្រៀបទិដ្ឋភាពនេះ។"
 
+#: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:154
+#: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:229
 #: ../../../lib/web/src/components/person-picker.tsx:324
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:81
 #: ../../../lib/web/src/components/search-entity-page.tsx:72
-#: src/components/view-options-bar.tsx:148
-#: src/components/view-options-bar.tsx:223
 msgid "Search..."
 msgstr "ស្វែងរក..."
 
@@ -2765,7 +2777,7 @@ msgstr "រំលងទៅមាតិកាសំខាន់"
 msgid "Small"
 msgstr "តូច"
 
-#: src/components/view-options-bar.tsx:166
+#: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:172
 msgid "Sort"
 msgstr "តម្រៀប"
 
@@ -2789,7 +2801,7 @@ msgstr "បំបែក"
 msgid "Squash and merge"
 msgstr "Squash និងបញ្ចូលគ្នា"
 
-#: src/features/objects/components/comment-list.tsx:426
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:451
 msgid "Start the discussion by adding the first comment."
 msgstr "ចាប់ផ្តើមការពិភាក្សាដោយបន្ថែមមតិយោបល់ដំបូង។"
 
@@ -2806,13 +2818,13 @@ msgstr "បញ្ឈប់ការតាមដាន"
 msgid "Subject"
 msgstr "ប្រធានបទ"
 
-#: src/features/objects/components/comment-list.tsx:406
-#: src/features/objects/components/comment-list.tsx:415
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:431
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:440
 msgid "Submit comment"
 msgstr "ដាក់ស្នើមតិយោបល់"
 
-#: src/features/objects/components/comment-thread.tsx:417
-#: src/features/objects/components/comment-thread.tsx:422
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:470
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:475
 msgid "Submit reply"
 msgstr "ដាក់ស្នើការឆ្លើយតប"
 
@@ -3004,8 +3016,8 @@ msgstr "បិទ/បើករូបរាង"
 msgid "Toggle view options"
 msgstr "បិទ/បើកជម្រើសទិដ្ឋភាព"
 
-#: src/components/view-options-bar.tsx:157
-#: src/components/view-options-bar.tsx:233
+#: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:163
+#: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:239
 msgid "Toggle watched filter"
 msgstr "បិទ/បើកតម្រងដែលបានមើល"
 
@@ -3118,7 +3130,9 @@ msgstr "បានឈប់ជាវ"
 msgid "Unsubscribing..."
 msgstr "កំពុងឈប់ជាវ..."
 
-#: src/features/objects/components/object-links.tsx:150
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:284
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:98
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:179
 msgid "Untitled"
 msgstr "គ្មានចំណងជើង"
 
@@ -3126,8 +3140,8 @@ msgstr "គ្មានចំណងជើង"
 msgid "Unverified"
 msgstr "មិនបានផ្ទៀងផ្ទាត់"
 
+#: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:50
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:500
-#: src/components/view-options-bar.tsx:44
 msgid "Updated"
 msgstr "បានធ្វើបច្ចុប្បន្នភាព"
 
@@ -3135,8 +3149,8 @@ msgstr "បានធ្វើបច្ចុប្បន្នភាព"
 msgid "Updating access..."
 msgstr "កំពុងធ្វើបច្ចុប្បន្នភាពការចូលប្រើ..."
 
-#: src/features/objects/components/create-object-dialog.tsx:568
-#: src/features/objects/components/object-attachments.tsx:243
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:628
+#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:259
 msgid "Upload"
 msgstr "បង្ហោះ"
 
@@ -3213,7 +3227,7 @@ msgstr "មើលការជូនដំណឹងទាំងអស់"
 msgid "View and edit item details"
 msgstr "មើល និងកែសម្រួលព័ត៌មានលម្អិតធាតុ"
 
-#: src/components/view-options-bar.tsx:139
+#: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:145
 msgid "View controls"
 msgstr "ការគ្រប់គ្រងទិដ្ឋភាព"
 
@@ -3234,12 +3248,12 @@ msgstr "ទិដ្ឋភាព"
 msgid "Watch"
 msgstr "មើល"
 
+#: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:243
 #: ../../../lib/web/src/components/filter-bar.tsx:35
-#: src/components/view-options-bar.tsx:237
 msgid "Watched"
 msgstr "បានមើល"
 
-#: src/components/view-options-bar.tsx:161
+#: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:167
 msgid "Watched only"
 msgstr "បានមើលតែប៉ុណ្ណោះ"
 

@@ -31,11 +31,11 @@ msgstr "(fẹ̀ jáde)"
 msgid "(from {0})"
 msgstr "(láti {0})"
 
-#: src/features/editor/components/edit-dialogs.tsx:813
+#: src/features/editor/components/edit-dialogs.tsx:327
 msgid "(itself)"
 msgstr "(fúnra rẹ̀)"
 
-#: src/features/board/components/board-container.tsx:794
+#: ../../../lib/web/src/components/entity/entity-board-container.tsx:818
 msgid "[not set]"
 msgstr "[kò sí]"
 
@@ -240,8 +240,8 @@ msgid "Add checklist item"
 msgstr "Fi ohun ìmọ́ ìṣàyẹ̀wò kún"
 
 #: src/features/editor/components/design-editor.tsx:511
-#: src/features/editor/components/edit-dialogs.tsx:706
-#: src/features/editor/components/edit-dialogs.tsx:917
+#: src/features/editor/components/edit-dialogs.tsx:220
+#: src/features/editor/components/edit-dialogs.tsx:431
 msgid "Add class"
 msgstr "Fi kíláàsì kún"
 
@@ -252,7 +252,7 @@ msgstr "Fi ọ̀wọ́n kún"
 
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:105
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:233
-#: src/features/editor/components/edit-dialogs.tsx:912
+#: src/features/editor/components/edit-dialogs.tsx:426
 msgid "Add field"
 msgstr "Fi pápá kún"
 
@@ -270,9 +270,9 @@ msgstr "Fi àkáǹtì tuntun kún"
 
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:215
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:220
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:292
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:94
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:183
-#: src/features/editor/components/edit-dialogs.tsx:1214
 msgid "Add option"
 msgstr "Fi àṣàyàn kún"
 
@@ -293,11 +293,11 @@ msgstr "Fi ẹgbẹ́/app kún"
 msgid "Add to existing notifications"
 msgstr "Fi sí àwọn ìfitónilétí tó wà"
 
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:264
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:519
 #: ../../../lib/web/src/components/view-tabs.tsx:87
 #: ../../../lib/web/src/components/view-tabs.tsx:93
 #: src/features/editor/components/design-editor.tsx:462
-#: src/features/editor/components/edit-dialogs.tsx:272
-#: src/features/editor/components/edit-dialogs.tsx:527
 msgid "Add view"
 msgstr "Fi ìran kún"
 
@@ -330,11 +330,11 @@ msgstr "Gba ẹnikẹ́ni láàyè láti wá {0}"
 msgid "Allow anyone to search for project"
 msgstr "Jẹ́ kí ẹnikẹ́ni wá iṣẹ́ àkànṣe"
 
-#: src/features/editor/components/edit-dialogs.tsx:832
+#: src/features/editor/components/edit-dialogs.tsx:346
 msgid "Allow merge requests"
 msgstr "Jẹ́ kí àwọn ìbéèrè merge"
 
-#: src/features/editor/components/edit-dialogs.tsx:1148
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:226
 msgid "Allow sort by"
 msgstr "Jẹ́ kí a tò nípa"
 
@@ -473,7 +473,7 @@ msgstr "A dí ìrìnnà sí ọ̀nà tí a kò gbẹ́kẹ̀lé"
 msgid "Blocks"
 msgstr "Dí"
 
-#: src/features/editor/components/edit-dialogs.tsx:326
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:318
 msgid "Board"
 msgstr "Pátákó"
 
@@ -482,7 +482,7 @@ msgstr "Pátákó"
 msgid "Boost interest"
 msgstr "Mú ìfẹ́ pọ̀"
 
-#: src/features/editor/components/edit-dialogs.tsx:413
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:405
 msgid "Border colour"
 msgstr "Àwọ̀ ààlà"
 
@@ -494,7 +494,7 @@ msgstr "Àwọn ìfitónilétí browser"
 msgid "Built-in templates"
 msgstr "Àwọn template abínibí"
 
-#: src/features/editor/components/edit-dialogs.tsx:795
+#: src/features/editor/components/edit-dialogs.tsx:309
 msgid "Can be child of"
 msgstr "Ó lè jẹ́ ọmọ ti"
 
@@ -630,10 +630,10 @@ msgstr "Tì"
 
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:109
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:113
-#: src/features/editor/components/edit-dialogs.tsx:277
-#: src/features/editor/components/edit-dialogs.tsx:281
-#: src/features/editor/components/edit-dialogs.tsx:711
-#: src/features/editor/components/edit-dialogs.tsx:715
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:269
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:273
+#: src/features/editor/components/edit-dialogs.tsx:225
+#: src/features/editor/components/edit-dialogs.tsx:229
 msgid "Close dialog"
 msgstr "Ti òrò sísọ"
 
@@ -675,7 +675,7 @@ msgstr "Àwọ̀"
 msgid "Column actions"
 msgstr ""
 
-#: src/features/editor/components/edit-dialogs.tsx:361
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:353
 msgid "Columns group by"
 msgstr "Àwọn ọ̀wọ́n ṣe àwùjọ nípa"
 
@@ -705,7 +705,7 @@ msgstr "Àwọn ọ̀rọ̀ ({0})"
 msgid "Compact"
 msgstr "Kékeré"
 
-#: src/features/editor/components/edit-dialogs.tsx:707
+#: src/features/editor/components/edit-dialogs.tsx:221
 msgid "Configure class settings"
 msgstr "Ṣètò ètò kíláàsì"
 
@@ -713,7 +713,7 @@ msgstr "Ṣètò ètò kíláàsì"
 msgid "Configure option settings"
 msgstr "Ṣètò ètò àṣàyàn"
 
-#: src/features/editor/components/edit-dialogs.tsx:273
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:265
 msgid "Configure view settings"
 msgstr "Ṣètò ètò ìran"
 
@@ -825,8 +825,8 @@ msgstr "Dá iṣẹ́ àkànṣe"
 msgid "Create, edit, comment, and view"
 msgstr "Ṣẹ̀dá, ṣàtúnṣe, sọ̀rọ̀, kí o sì wò"
 
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:498
 #: src/components/view-options-bar.tsx:43
-#: src/features/editor/components/edit-dialogs.tsx:506
 msgid "Created"
 msgstr "Tí a dá"
 
@@ -888,7 +888,7 @@ msgstr "Àìpé"
 msgid "Default AI account"
 msgstr "Àkáǹtì AI àìpé"
 
-#: src/features/editor/components/edit-dialogs.tsx:493
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:485
 msgid "Default sort"
 msgstr "Ìtò àìpé"
 
@@ -910,7 +910,7 @@ msgstr "Pa rẹ́"
 msgid "Delete attachment"
 msgstr "Pa ìsomọ́ rẹ́"
 
-#: src/features/editor/components/edit-dialogs.tsx:732
+#: src/features/editor/components/edit-dialogs.tsx:246
 msgid "Delete class"
 msgstr "Pa kíláàsì rẹ́"
 
@@ -922,7 +922,7 @@ msgstr "Pa ọ̀wọ́n rẹ́"
 msgid "Delete comment"
 msgstr "Pa àlàyé rẹ́"
 
-#: src/features/editor/components/edit-dialogs.tsx:1223
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:301
 msgid "Delete field"
 msgstr "Pa pápá rẹ́"
 
@@ -947,8 +947,8 @@ msgid "Delete option"
 msgstr "Pa àṣàyàn rẹ́"
 
 #. placeholder {0}: opt.name
-#: src/features/editor/components/edit-dialogs.tsx:1201
-#: src/features/editor/components/edit-dialogs.tsx:1206
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:279
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:284
 msgid "Delete option {0}"
 msgstr "Pa àṣàyàn {0} rẹ́"
 
@@ -961,7 +961,7 @@ msgstr "Pa iṣẹ́ àkànṣe rẹ́"
 msgid "Delete project?"
 msgstr "Pa iṣẹ́ àkànṣe rẹ́?"
 
-#: src/features/editor/components/edit-dialogs.tsx:298
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:290
 msgid "Delete view"
 msgstr "Pa ìran rẹ́"
 
@@ -1060,9 +1060,9 @@ msgstr "Mú ìtọ́ka pátákó kúrò"
 msgid "Displays the mobile sidebar."
 msgstr "Ó ń fi sidebar fóònù hàn."
 
-#: src/features/editor/components/edit-dialogs.tsx:532
-#: src/features/editor/components/edit-dialogs.tsx:922
-#: src/features/editor/components/edit-dialogs.tsx:1228
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:306
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:524
+#: src/features/editor/components/edit-dialogs.tsx:436
 #: src/features/objects/components/object-detail-panel.tsx:465
 msgid "Done"
 msgstr "Ti parí"
@@ -1115,15 +1115,15 @@ msgstr "Ṣàtúnṣe"
 msgid "Edit {label}"
 msgstr "Ṣàtúnṣe {label}"
 
-#: src/features/editor/components/edit-dialogs.tsx:706
+#: src/features/editor/components/edit-dialogs.tsx:220
 msgid "Edit class"
 msgstr "Ṣàtúnṣe class"
 
-#: src/features/editor/components/edit-dialogs.tsx:1060
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:138
 msgid "Edit field"
 msgstr "Ṣàtúnṣe field"
 
-#: src/features/editor/components/edit-dialogs.tsx:1061
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:139
 msgid "Edit field settings"
 msgstr "Ṣàtúnṣe ètò field"
 
@@ -1132,8 +1132,8 @@ msgid "Edit option"
 msgstr "Ṣàtúnṣe àṣàyàn"
 
 #. placeholder {0}: opt.name
-#: src/features/editor/components/edit-dialogs.tsx:1186
-#: src/features/editor/components/edit-dialogs.tsx:1191
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:264
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:269
 msgid "Edit option {0}"
 msgstr "Ṣàtúnṣe àṣàyàn {0}"
 
@@ -1141,7 +1141,7 @@ msgstr "Ṣàtúnṣe àṣàyàn {0}"
 msgid "Edit selected card"
 msgstr "Ṣàtúnṣe káàdì tó yàn"
 
-#: src/features/editor/components/edit-dialogs.tsx:272
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:264
 msgid "Edit view"
 msgstr "Ṣàtúnṣe wíwò"
 
@@ -1388,7 +1388,7 @@ msgstr "Kò lè mú iṣẹ́ dòde"
 msgid "Failed to upload attachment"
 msgstr "Kò lè gbé àfikún sókè"
 
-#: src/features/editor/components/edit-dialogs.tsx:838
+#: src/features/editor/components/edit-dialogs.tsx:352
 msgid "Fields"
 msgstr "Àwọn field"
 
@@ -1415,7 +1415,7 @@ msgstr "Àmì-ìka"
 msgid "Finish moving your account"
 msgstr "Pari gbigbe akonti rẹ"
 
-#: src/features/editor/components/edit-dialogs.tsx:1144
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:222
 msgid "Flags"
 msgstr "Àwọn àsíá"
 
@@ -1486,7 +1486,7 @@ msgstr "Lọ sí ojú-ewé tí ó ṣáájú"
 msgid "Group"
 msgstr "Àwùjọ"
 
-#: src/features/editor/components/edit-dialogs.tsx:361
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:353
 msgid "Group by"
 msgstr "Ṣàkójọ nípa"
 
@@ -1518,8 +1518,8 @@ msgstr "Ilé"
 msgid "Hot"
 msgstr "Gbígbóná"
 
-#: src/features/editor/components/edit-dialogs.tsx:755
-#: src/features/editor/components/edit-dialogs.tsx:1075
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:153
+#: src/features/editor/components/edit-dialogs.tsx:269
 msgid "ID"
 msgstr "ID"
 
@@ -1609,7 +1609,7 @@ msgid "Large"
 msgstr "Tóbi"
 
 #: ../../../lib/web/src/components/config-drawer.tsx:287
-#: src/features/editor/components/edit-dialogs.tsx:320
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:312
 msgid "Layout"
 msgstr "Àtòjọ"
 
@@ -1641,7 +1641,7 @@ msgstr "Ọna asopọ"
 msgid "Links"
 msgstr "Àwọn ìjápọ̀"
 
-#: src/features/editor/components/edit-dialogs.tsx:332
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:324
 msgid "List"
 msgstr "Àkójọ"
 
@@ -1708,7 +1708,7 @@ msgstr "Ìwé ìtọ́nisọ́nà"
 msgid "Mark all as read"
 msgstr "Sàmì sí gbogbo gẹ́gẹ́ bí kíkà"
 
-#: src/features/editor/components/edit-dialogs.tsx:1121
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:199
 msgid "Maximum length"
 msgstr "Gígùn tí ó pọ̀ jùlọ"
 
@@ -1764,7 +1764,7 @@ msgstr "Ìránṣẹ́"
 msgid "Metric"
 msgstr "Òṣùwọ̀n"
 
-#: src/features/editor/components/edit-dialogs.tsx:1110
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:188
 msgid "Minimum length"
 msgstr "Gígùn tí ó kéré jùlọ"
 
@@ -1795,10 +1795,10 @@ msgstr "Project mi"
 
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:118
 #: ../../../lib/web/src/components/entity/entity-board-column.tsx:614
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:143
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:128
-#: src/features/editor/components/edit-dialogs.tsx:307
-#: src/features/editor/components/edit-dialogs.tsx:741
-#: src/features/editor/components/edit-dialogs.tsx:1065
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:299
+#: src/features/editor/components/edit-dialogs.tsx:255
 #: src/features/projects/components/create-project-dialog.tsx:331
 #: src/routes/_authenticated/$projectId_.settings.tsx:301
 msgid "Name"
@@ -1946,8 +1946,8 @@ msgstr "Kò sí àbájáde"
 msgid "No results found."
 msgstr "A kò rí àbájáde kankan."
 
-#: src/features/board/components/board-container.tsx:865
-#: src/features/board/components/board-container.tsx:910
+#: ../../../lib/web/src/components/entity/entity-board-container.tsx:889
+#: ../../../lib/web/src/components/entity/entity-board-container.tsx:934
 #: src/features/tree/components/tree-view.tsx:363
 msgid "No status"
 msgstr "Kò sí ipò"
@@ -1973,18 +1973,18 @@ msgid "No views"
 msgstr "Kò sí ìwò"
 
 #: ../../../lib/web/src/components/colour-picker.tsx:345
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:365
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:388
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:391
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:418
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:421
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:494
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:497
 #: ../../../lib/web/src/components/person-picker.tsx:350
 #: ../../../lib/web/src/lib/preference-utils.ts:105
 #: ../../../lib/web/src/lib/preference-utils.ts:125
-#: src/features/editor/components/edit-dialogs.tsx:373
-#: src/features/editor/components/edit-dialogs.tsx:396
-#: src/features/editor/components/edit-dialogs.tsx:399
-#: src/features/editor/components/edit-dialogs.tsx:426
-#: src/features/editor/components/edit-dialogs.tsx:429
-#: src/features/editor/components/edit-dialogs.tsx:502
-#: src/features/editor/components/edit-dialogs.tsx:505
-#: src/features/editor/components/edit-dialogs.tsx:779
-#: src/features/editor/components/edit-dialogs.tsx:782
+#: src/features/editor/components/edit-dialogs.tsx:293
+#: src/features/editor/components/edit-dialogs.tsx:296
 #: src/features/objects/components/create-object-dialog.tsx:455
 #: src/features/objects/components/create-object-dialog.tsx:462
 #: src/features/objects/components/object-detail-panel.tsx:530
@@ -2027,8 +2027,8 @@ msgid "Notifications: {0}"
 msgstr "Àwọn ìfitónilétí: {0}"
 
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:140
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:499
 #: src/components/view-options-bar.tsx:42
-#: src/features/editor/components/edit-dialogs.tsx:507
 msgid "Number"
 msgstr "Nọ́mbà"
 
@@ -2060,8 +2060,8 @@ msgstr "Ṣí àwọn iṣẹ́ ìròyìn"
 msgid "Open actions"
 msgstr "Ṣí àwọn ìṣe"
 
-#: src/features/editor/components/edit-dialogs.tsx:722
-#: src/features/editor/components/edit-dialogs.tsx:727
+#: src/features/editor/components/edit-dialogs.tsx:236
+#: src/features/editor/components/edit-dialogs.tsx:241
 msgid "Open class actions"
 msgstr "Ṣí àwọn iṣẹ́ kíláàsì"
 
@@ -2101,8 +2101,8 @@ msgstr "Ṣí káàdì tó yàn"
 msgid "Open theme settings"
 msgstr "Ṣí àwọn ètò àkórí"
 
-#: src/features/editor/components/edit-dialogs.tsx:288
-#: src/features/editor/components/edit-dialogs.tsx:293
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:280
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:285
 msgid "Open view actions"
 msgstr "Ṣí àwọn iṣẹ́ ìwò"
 
@@ -2117,7 +2117,7 @@ msgid "Option name"
 msgstr "Orúkọ àṣàyàn"
 
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:168
-#: src/features/editor/components/edit-dialogs.tsx:1163
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:241
 msgid "Options"
 msgstr "Àwọn àṣàyàn"
 
@@ -2151,7 +2151,7 @@ msgstr "Ìjẹ́rìísí passkey kùnà. Jọ̀wọ́ gbìyànjú lẹ́ẹ̀kan
 msgid "Passkeys"
 msgstr "Àwọn passkey"
 
-#: src/features/editor/components/edit-dialogs.tsx:1132
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:210
 msgid "Pattern (regex)"
 msgstr "Àpẹẹrẹ (regex)"
 
@@ -2363,8 +2363,8 @@ msgid "Remove access?"
 msgstr "Yọ àyè kúrò?"
 
 #. placeholder {0}: field.name || field.id
-#: src/features/editor/components/edit-dialogs.tsx:880
-#: src/features/editor/components/edit-dialogs.tsx:885
+#: src/features/editor/components/edit-dialogs.tsx:394
+#: src/features/editor/components/edit-dialogs.tsx:399
 msgid "Remove field {0}"
 msgstr "Yọ field {0} kúrò"
 
@@ -2420,11 +2420,11 @@ msgstr "Dáhùn"
 msgid "Reply to {0}..."
 msgstr "Dáhùn {0}..."
 
-#: src/features/editor/components/edit-dialogs.tsx:820
+#: src/features/editor/components/edit-dialogs.tsx:334
 msgid "Requests"
 msgstr "Àwọn ìbéèrè"
 
-#: src/features/editor/components/edit-dialogs.tsx:1147
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:225
 msgid "Required"
 msgstr "Pọn dandan"
 
@@ -2467,11 +2467,11 @@ msgid "Right to Left"
 msgstr "Ọ̀tún sí Òsì"
 
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:150
-#: src/features/editor/components/edit-dialogs.tsx:1091
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:169
 msgid "Rows"
 msgstr "Àwọn ila"
 
-#: src/features/editor/components/edit-dialogs.tsx:387
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:379
 msgid "Rows group by"
 msgstr "Àwọn ila kójọ nípa"
 
@@ -2581,7 +2581,7 @@ msgstr "Yan"
 msgid "Select {0}"
 msgstr "Yan {0}"
 
-#: src/features/editor/components/edit-dialogs.tsx:370
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:362
 msgid "Select a field"
 msgstr "Yan aaye kan"
 
@@ -2716,11 +2716,11 @@ msgstr "Ń ṣètò ààyè..."
 msgid "Settings"
 msgstr "Àwọn ìṣètò"
 
-#: src/features/editor/components/edit-dialogs.tsx:341
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:333
 msgid "Show classes"
 msgstr "Fi àwọn classes hàn"
 
-#: src/features/editor/components/edit-dialogs.tsx:442
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:434
 msgid "Show fields"
 msgstr "Fi àwọn aaye hàn"
 
@@ -2752,7 +2752,7 @@ msgid "Signing out..."
 msgstr "Ń jáde..."
 
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:161
-#: src/features/editor/components/edit-dialogs.tsx:1102
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:180
 msgid "Single line of text only"
 msgstr "Ila ọ̀rọ̀ kan ṣoṣo"
 
@@ -2956,12 +2956,12 @@ msgstr "Èyí yóò rọ́pò àpẹrẹ ọwọ́lọ́wọ́ pẹ̀lú <0>{0}<
 msgid "Thursday"
 msgstr "Ọjọ́bọ̀"
 
-#: src/features/editor/components/edit-dialogs.tsx:593
+#: src/features/editor/components/edit-dialogs.tsx:107
 #: src/features/requests/components/request-panel.tsx:294
 msgid "Title"
 msgstr "Àkọlé"
 
-#: src/features/editor/components/edit-dialogs.tsx:764
+#: src/features/editor/components/edit-dialogs.tsx:278
 msgid "Title field"
 msgstr "Aaye àkọlé"
 
@@ -3017,7 +3017,7 @@ msgstr "Àwọn ìbéèrè ti pọ̀ jù"
 msgid "Top"
 msgstr "Òkè"
 
-#: src/features/editor/components/edit-dialogs.tsx:802
+#: src/features/editor/components/edit-dialogs.tsx:316
 msgid "Top level"
 msgstr "Ipele òkè"
 
@@ -3041,7 +3041,7 @@ msgid "Tuesday"
 msgstr "Ọjọ́ Ìṣẹ́gun"
 
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:130
-#: src/features/editor/components/edit-dialogs.tsx:1085
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:163
 msgid "Type"
 msgstr "Irú"
 
@@ -3126,8 +3126,8 @@ msgstr "Aláìlórúkọ"
 msgid "Unverified"
 msgstr "Kò tíì jẹ́rìí sí"
 
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:500
 #: src/components/view-options-bar.tsx:44
-#: src/features/editor/components/edit-dialogs.tsx:508
 msgid "Updated"
 msgstr "Ti ṣe imudojúìwọ̀n"
 

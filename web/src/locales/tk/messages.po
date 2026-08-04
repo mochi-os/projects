@@ -31,11 +31,11 @@ msgstr "(giňelt)"
 msgid "(from {0})"
 msgstr "({0}-dan)"
 
-#: src/features/editor/components/edit-dialogs.tsx:813
+#: src/features/editor/components/edit-dialogs.tsx:327
 msgid "(itself)"
 msgstr "(özi)"
 
-#: src/features/board/components/board-container.tsx:794
+#: ../../../lib/web/src/components/entity/entity-board-container.tsx:818
 msgid "[not set]"
 msgstr "[bellenilmedik]"
 
@@ -240,8 +240,8 @@ msgid "Add checklist item"
 msgstr "Kontrol sanawynyň elementi goşmak"
 
 #: src/features/editor/components/design-editor.tsx:511
-#: src/features/editor/components/edit-dialogs.tsx:706
-#: src/features/editor/components/edit-dialogs.tsx:917
+#: src/features/editor/components/edit-dialogs.tsx:220
+#: src/features/editor/components/edit-dialogs.tsx:431
 msgid "Add class"
 msgstr "Klass goşmak"
 
@@ -252,7 +252,7 @@ msgstr "Sütün goşmak"
 
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:105
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:233
-#: src/features/editor/components/edit-dialogs.tsx:912
+#: src/features/editor/components/edit-dialogs.tsx:426
 msgid "Add field"
 msgstr "Meýdan goşmak"
 
@@ -270,9 +270,9 @@ msgstr "Täze hasap goşmak"
 
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:215
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:220
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:292
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:94
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:183
-#: src/features/editor/components/edit-dialogs.tsx:1214
 msgid "Add option"
 msgstr "Wariant goşmak"
 
@@ -293,11 +293,11 @@ msgstr "Topar/programma goşmak"
 msgid "Add to existing notifications"
 msgstr "Bar bolan bildirişlere goşmak"
 
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:264
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:519
 #: ../../../lib/web/src/components/view-tabs.tsx:87
 #: ../../../lib/web/src/components/view-tabs.tsx:93
 #: src/features/editor/components/design-editor.tsx:462
-#: src/features/editor/components/edit-dialogs.tsx:272
-#: src/features/editor/components/edit-dialogs.tsx:527
 msgid "Add view"
 msgstr "Görnüş goşmak"
 
@@ -330,11 +330,11 @@ msgstr "Islendik adama {0} gözlemäge rugsat ber"
 msgid "Allow anyone to search for project"
 msgstr "Islendik adamyň proýekt gözlemegine rugsat bermek"
 
-#: src/features/editor/components/edit-dialogs.tsx:832
+#: src/features/editor/components/edit-dialogs.tsx:346
 msgid "Allow merge requests"
 msgstr "Birleşdirme haýyşlaryna rugsat bermek"
 
-#: src/features/editor/components/edit-dialogs.tsx:1148
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:226
 msgid "Allow sort by"
 msgstr "Tertipleşdirmäge rugsat bermek"
 
@@ -473,7 +473,7 @@ msgstr "Ynamsyz baglanyşyga geçiş gabsaldy"
 msgid "Blocks"
 msgstr "Bloklar"
 
-#: src/features/editor/components/edit-dialogs.tsx:326
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:318
 msgid "Board"
 msgstr "Tagta"
 
@@ -482,7 +482,7 @@ msgstr "Tagta"
 msgid "Boost interest"
 msgstr "Gyzyklanmany ýokarlandyrmak"
 
-#: src/features/editor/components/edit-dialogs.tsx:413
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:405
 msgid "Border colour"
 msgstr "Çäk reňki"
 
@@ -494,7 +494,7 @@ msgstr "Brauzer bildirişleri"
 msgid "Built-in templates"
 msgstr "Içerki şablonlar"
 
-#: src/features/editor/components/edit-dialogs.tsx:795
+#: src/features/editor/components/edit-dialogs.tsx:309
 msgid "Can be child of"
 msgstr "Çaga bolup biler"
 
@@ -630,10 +630,10 @@ msgstr "Ýapmak"
 
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:109
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:113
-#: src/features/editor/components/edit-dialogs.tsx:277
-#: src/features/editor/components/edit-dialogs.tsx:281
-#: src/features/editor/components/edit-dialogs.tsx:711
-#: src/features/editor/components/edit-dialogs.tsx:715
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:269
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:273
+#: src/features/editor/components/edit-dialogs.tsx:225
+#: src/features/editor/components/edit-dialogs.tsx:229
 msgid "Close dialog"
 msgstr "Dialogy ýapmak"
 
@@ -675,7 +675,7 @@ msgstr "Reňk"
 msgid "Column actions"
 msgstr ""
 
-#: src/features/editor/components/edit-dialogs.tsx:361
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:353
 msgid "Columns group by"
 msgstr "Sütünler boýunça toparlamak"
 
@@ -705,7 +705,7 @@ msgstr "Teswirler ({0})"
 msgid "Compact"
 msgstr "Gysga"
 
-#: src/features/editor/components/edit-dialogs.tsx:707
+#: src/features/editor/components/edit-dialogs.tsx:221
 msgid "Configure class settings"
 msgstr "Klass sazlamalaryny düzediň"
 
@@ -713,7 +713,7 @@ msgstr "Klass sazlamalaryny düzediň"
 msgid "Configure option settings"
 msgstr "Wariant sazlamalaryny düzediň"
 
-#: src/features/editor/components/edit-dialogs.tsx:273
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:265
 msgid "Configure view settings"
 msgstr "Görnüş sazlamalaryny düzediň"
 
@@ -825,8 +825,8 @@ msgstr "Proýekt döretmek"
 msgid "Create, edit, comment, and view"
 msgstr "Döretmek, redaktirlemek, teswir ýazmak we görmek"
 
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:498
 #: src/components/view-options-bar.tsx:43
-#: src/features/editor/components/edit-dialogs.tsx:506
 msgid "Created"
 msgstr "Döredildi"
 
@@ -888,7 +888,7 @@ msgstr "Adaty"
 msgid "Default AI account"
 msgstr "Adaty AI hasap"
 
-#: src/features/editor/components/edit-dialogs.tsx:493
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:485
 msgid "Default sort"
 msgstr "Adaty tertipleşdirme"
 
@@ -910,7 +910,7 @@ msgstr "Pozmak"
 msgid "Delete attachment"
 msgstr "Goşundy pozmak"
 
-#: src/features/editor/components/edit-dialogs.tsx:732
+#: src/features/editor/components/edit-dialogs.tsx:246
 msgid "Delete class"
 msgstr "Klass pozmak"
 
@@ -922,7 +922,7 @@ msgstr "Sütüni pozmak"
 msgid "Delete comment"
 msgstr "Teswiri pozmak"
 
-#: src/features/editor/components/edit-dialogs.tsx:1223
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:301
 msgid "Delete field"
 msgstr "Meýdany pozmak"
 
@@ -947,8 +947,8 @@ msgid "Delete option"
 msgstr "Wariant pozmak"
 
 #. placeholder {0}: opt.name
-#: src/features/editor/components/edit-dialogs.tsx:1201
-#: src/features/editor/components/edit-dialogs.tsx:1206
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:279
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:284
 msgid "Delete option {0}"
 msgstr "{0} wariant pozmak"
 
@@ -961,7 +961,7 @@ msgstr "Proýekt pozmak"
 msgid "Delete project?"
 msgstr "Proýekt pozmaly?"
 
-#: src/features/editor/components/edit-dialogs.tsx:298
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:290
 msgid "Delete view"
 msgstr "Görnüşi pozmak"
 
@@ -1060,9 +1060,9 @@ msgstr "Tagta maslahatyny goýbermek"
 msgid "Displays the mobile sidebar."
 msgstr "Mobil gapdal paneli görkezýär."
 
-#: src/features/editor/components/edit-dialogs.tsx:532
-#: src/features/editor/components/edit-dialogs.tsx:922
-#: src/features/editor/components/edit-dialogs.tsx:1228
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:306
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:524
+#: src/features/editor/components/edit-dialogs.tsx:436
 #: src/features/objects/components/object-detail-panel.tsx:465
 msgid "Done"
 msgstr "Taýýar"
@@ -1115,15 +1115,15 @@ msgstr "Düzet"
 msgid "Edit {label}"
 msgstr "{label} redaktirle"
 
-#: src/features/editor/components/edit-dialogs.tsx:706
+#: src/features/editor/components/edit-dialogs.tsx:220
 msgid "Edit class"
 msgstr "Synpy düzet"
 
-#: src/features/editor/components/edit-dialogs.tsx:1060
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:138
 msgid "Edit field"
 msgstr "Meýdany düzet"
 
-#: src/features/editor/components/edit-dialogs.tsx:1061
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:139
 msgid "Edit field settings"
 msgstr "Meýdan sazlamalaryny düzet"
 
@@ -1132,8 +1132,8 @@ msgid "Edit option"
 msgstr "Saýlawy düzet"
 
 #. placeholder {0}: opt.name
-#: src/features/editor/components/edit-dialogs.tsx:1186
-#: src/features/editor/components/edit-dialogs.tsx:1191
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:264
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:269
 msgid "Edit option {0}"
 msgstr "{0} saýlawyny düzet"
 
@@ -1141,7 +1141,7 @@ msgstr "{0} saýlawyny düzet"
 msgid "Edit selected card"
 msgstr "Saýlanan kartoçkany düzet"
 
-#: src/features/editor/components/edit-dialogs.tsx:272
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:264
 msgid "Edit view"
 msgstr "Görnüşi düzet"
 
@@ -1388,7 +1388,7 @@ msgstr "Taslama täzelenmedi"
 msgid "Failed to upload attachment"
 msgstr "Goşundy ýüklenmedi"
 
-#: src/features/editor/components/edit-dialogs.tsx:838
+#: src/features/editor/components/edit-dialogs.tsx:352
 msgid "Fields"
 msgstr "Meýdanlar"
 
@@ -1415,7 +1415,7 @@ msgstr "Barmak yzy"
 msgid "Finish moving your account"
 msgstr "Hasabyňyzy göçürip gutaryň"
 
-#: src/features/editor/components/edit-dialogs.tsx:1144
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:222
 msgid "Flags"
 msgstr "Belliler"
 
@@ -1486,7 +1486,7 @@ msgstr "Öňki sahypa git"
 msgid "Group"
 msgstr "Topar"
 
-#: src/features/editor/components/edit-dialogs.tsx:361
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:353
 msgid "Group by"
 msgstr "Boýunça topla"
 
@@ -1518,8 +1518,8 @@ msgstr "Baş sahypa"
 msgid "Hot"
 msgstr "Gyzgyn"
 
-#: src/features/editor/components/edit-dialogs.tsx:755
-#: src/features/editor/components/edit-dialogs.tsx:1075
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:153
+#: src/features/editor/components/edit-dialogs.tsx:269
 msgid "ID"
 msgstr "ID"
 
@@ -1609,7 +1609,7 @@ msgid "Large"
 msgstr "Uly"
 
 #: ../../../lib/web/src/components/config-drawer.tsx:287
-#: src/features/editor/components/edit-dialogs.tsx:320
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:312
 msgid "Layout"
 msgstr "Ýerleşiş"
 
@@ -1641,7 +1641,7 @@ msgstr "Salgy"
 msgid "Links"
 msgstr "Baglanyşyklar"
 
-#: src/features/editor/components/edit-dialogs.tsx:332
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:324
 msgid "List"
 msgstr "Sanaw"
 
@@ -1708,7 +1708,7 @@ msgstr "El bilen"
 msgid "Mark all as read"
 msgstr "Hemmesini okaldy diýip belgile"
 
-#: src/features/editor/components/edit-dialogs.tsx:1121
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:199
 msgid "Maximum length"
 msgstr "Iň köp uzynlyk"
 
@@ -1764,7 +1764,7 @@ msgstr "Habar"
 msgid "Metric"
 msgstr "Metrik"
 
-#: src/features/editor/components/edit-dialogs.tsx:1110
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:188
 msgid "Minimum length"
 msgstr "Iň az uzynlyk"
 
@@ -1795,10 +1795,10 @@ msgstr "Meniň taslamam"
 
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:118
 #: ../../../lib/web/src/components/entity/entity-board-column.tsx:614
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:143
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:128
-#: src/features/editor/components/edit-dialogs.tsx:307
-#: src/features/editor/components/edit-dialogs.tsx:741
-#: src/features/editor/components/edit-dialogs.tsx:1065
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:299
+#: src/features/editor/components/edit-dialogs.tsx:255
 #: src/features/projects/components/create-project-dialog.tsx:331
 #: src/routes/_authenticated/$projectId_.settings.tsx:301
 msgid "Name"
@@ -1946,8 +1946,8 @@ msgstr "Netije tapylmady"
 msgid "No results found."
 msgstr "Netijeler tapylmady."
 
-#: src/features/board/components/board-container.tsx:865
-#: src/features/board/components/board-container.tsx:910
+#: ../../../lib/web/src/components/entity/entity-board-container.tsx:889
+#: ../../../lib/web/src/components/entity/entity-board-container.tsx:934
 #: src/features/tree/components/tree-view.tsx:363
 msgid "No status"
 msgstr "Ýagdaý ýok"
@@ -1973,18 +1973,18 @@ msgid "No views"
 msgstr "Görnüşler ýok"
 
 #: ../../../lib/web/src/components/colour-picker.tsx:345
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:365
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:388
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:391
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:418
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:421
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:494
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:497
 #: ../../../lib/web/src/components/person-picker.tsx:350
 #: ../../../lib/web/src/lib/preference-utils.ts:105
 #: ../../../lib/web/src/lib/preference-utils.ts:125
-#: src/features/editor/components/edit-dialogs.tsx:373
-#: src/features/editor/components/edit-dialogs.tsx:396
-#: src/features/editor/components/edit-dialogs.tsx:399
-#: src/features/editor/components/edit-dialogs.tsx:426
-#: src/features/editor/components/edit-dialogs.tsx:429
-#: src/features/editor/components/edit-dialogs.tsx:502
-#: src/features/editor/components/edit-dialogs.tsx:505
-#: src/features/editor/components/edit-dialogs.tsx:779
-#: src/features/editor/components/edit-dialogs.tsx:782
+#: src/features/editor/components/edit-dialogs.tsx:293
+#: src/features/editor/components/edit-dialogs.tsx:296
 #: src/features/objects/components/create-object-dialog.tsx:455
 #: src/features/objects/components/create-object-dialog.tsx:462
 #: src/features/objects/components/object-detail-panel.tsx:530
@@ -2027,8 +2027,8 @@ msgid "Notifications: {0}"
 msgstr "Bildirişler: {0}"
 
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:140
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:499
 #: src/components/view-options-bar.tsx:42
-#: src/features/editor/components/edit-dialogs.tsx:507
 msgid "Number"
 msgstr "San"
 
@@ -2060,8 +2060,8 @@ msgstr "Hasap hereketlerini aç"
 msgid "Open actions"
 msgstr "Amallary aç"
 
-#: src/features/editor/components/edit-dialogs.tsx:722
-#: src/features/editor/components/edit-dialogs.tsx:727
+#: src/features/editor/components/edit-dialogs.tsx:236
+#: src/features/editor/components/edit-dialogs.tsx:241
 msgid "Open class actions"
 msgstr "Klas hereketlerini aç"
 
@@ -2101,8 +2101,8 @@ msgstr "Saýlanan kartoçkany aç"
 msgid "Open theme settings"
 msgstr "Tema sazlamalaryny aç"
 
-#: src/features/editor/components/edit-dialogs.tsx:288
-#: src/features/editor/components/edit-dialogs.tsx:293
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:280
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:285
 msgid "Open view actions"
 msgstr "Görnüş hereketlerini aç"
 
@@ -2117,7 +2117,7 @@ msgid "Option name"
 msgstr "Wariantyň ady"
 
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:168
-#: src/features/editor/components/edit-dialogs.tsx:1163
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:241
 msgid "Options"
 msgstr "Wariantlar"
 
@@ -2151,7 +2151,7 @@ msgstr "Giriş açary bilen tassyklamak şowsuz boldy. Täzeden synanyşyň."
 msgid "Passkeys"
 msgstr "Giriş açarlary"
 
-#: src/features/editor/components/edit-dialogs.tsx:1132
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:210
 msgid "Pattern (regex)"
 msgstr "Nusga (regex)"
 
@@ -2363,8 +2363,8 @@ msgid "Remove access?"
 msgstr "Girişi aýyrmak?"
 
 #. placeholder {0}: field.name || field.id
-#: src/features/editor/components/edit-dialogs.tsx:880
-#: src/features/editor/components/edit-dialogs.tsx:885
+#: src/features/editor/components/edit-dialogs.tsx:394
+#: src/features/editor/components/edit-dialogs.tsx:399
 msgid "Remove field {0}"
 msgstr "{0} meýdanyny aýyr"
 
@@ -2420,11 +2420,11 @@ msgstr "Jogap"
 msgid "Reply to {0}..."
 msgstr "{0} jogap ber..."
 
-#: src/features/editor/components/edit-dialogs.tsx:820
+#: src/features/editor/components/edit-dialogs.tsx:334
 msgid "Requests"
 msgstr "Haýyşlar"
 
-#: src/features/editor/components/edit-dialogs.tsx:1147
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:225
 msgid "Required"
 msgstr "Talap edilýär"
 
@@ -2467,11 +2467,11 @@ msgid "Right to Left"
 msgstr "Sagdan çepe"
 
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:150
-#: src/features/editor/components/edit-dialogs.tsx:1091
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:169
 msgid "Rows"
 msgstr "Hatarlar"
 
-#: src/features/editor/components/edit-dialogs.tsx:387
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:379
 msgid "Rows group by"
 msgstr "Hatarlary toparlamak"
 
@@ -2581,7 +2581,7 @@ msgstr "Saýla"
 msgid "Select {0}"
 msgstr "{0} saýlaň"
 
-#: src/features/editor/components/edit-dialogs.tsx:370
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:362
 msgid "Select a field"
 msgstr "Meýdan saýla"
 
@@ -2716,11 +2716,11 @@ msgstr "Elýeterlilik bellenilýär..."
 msgid "Settings"
 msgstr "Sazlamalar"
 
-#: src/features/editor/components/edit-dialogs.tsx:341
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:333
 msgid "Show classes"
 msgstr "Synplary görkez"
 
-#: src/features/editor/components/edit-dialogs.tsx:442
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:434
 msgid "Show fields"
 msgstr "Meýdanlary görkez"
 
@@ -2752,7 +2752,7 @@ msgid "Signing out..."
 msgstr "Çykylýar..."
 
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:161
-#: src/features/editor/components/edit-dialogs.tsx:1102
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:180
 msgid "Single line of text only"
 msgstr "Diňe bir setir tekst"
 
@@ -2956,12 +2956,12 @@ msgstr "Bu häzirki dizaýny <0>{0}</0> bilen çalşar. Ähli mowjut synplar, me
 msgid "Thursday"
 msgstr "Penşenbe"
 
-#: src/features/editor/components/edit-dialogs.tsx:593
+#: src/features/editor/components/edit-dialogs.tsx:107
 #: src/features/requests/components/request-panel.tsx:294
 msgid "Title"
 msgstr "At"
 
-#: src/features/editor/components/edit-dialogs.tsx:764
+#: src/features/editor/components/edit-dialogs.tsx:278
 msgid "Title field"
 msgstr "At meýdany"
 
@@ -3017,7 +3017,7 @@ msgstr "Aşa köp haýyş"
 msgid "Top"
 msgstr "Ýokarky"
 
-#: src/features/editor/components/edit-dialogs.tsx:802
+#: src/features/editor/components/edit-dialogs.tsx:316
 msgid "Top level"
 msgstr "Iň ýokarky derejesi"
 
@@ -3041,7 +3041,7 @@ msgid "Tuesday"
 msgstr "Sişenbe"
 
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:130
-#: src/features/editor/components/edit-dialogs.tsx:1085
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:163
 msgid "Type"
 msgstr "Görnüş"
 
@@ -3126,8 +3126,8 @@ msgstr "Atsyz"
 msgid "Unverified"
 msgstr "Tassyklanmadyk"
 
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:500
 #: src/components/view-options-bar.tsx:44
-#: src/features/editor/components/edit-dialogs.tsx:508
 msgid "Updated"
 msgstr "Täzelendi"
 

@@ -31,11 +31,11 @@ msgstr "(leudaich)"
 msgid "(from {0})"
 msgstr "(bho {0})"
 
-#: src/features/editor/components/edit-dialogs.tsx:813
+#: src/features/editor/components/edit-dialogs.tsx:327
 msgid "(itself)"
 msgstr "(e fhèin)"
 
-#: src/features/board/components/board-container.tsx:794
+#: ../../../lib/web/src/components/entity/entity-board-container.tsx:818
 msgid "[not set]"
 msgstr "[gun shuidheachadh]"
 
@@ -240,8 +240,8 @@ msgid "Add checklist item"
 msgstr "Cuir nì ris an liosta-dearbhaidh"
 
 #: src/features/editor/components/design-editor.tsx:511
-#: src/features/editor/components/edit-dialogs.tsx:706
-#: src/features/editor/components/edit-dialogs.tsx:917
+#: src/features/editor/components/edit-dialogs.tsx:220
+#: src/features/editor/components/edit-dialogs.tsx:431
 msgid "Add class"
 msgstr "Cuir clas ris"
 
@@ -252,7 +252,7 @@ msgstr "Cuir colbh ris"
 
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:105
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:233
-#: src/features/editor/components/edit-dialogs.tsx:912
+#: src/features/editor/components/edit-dialogs.tsx:426
 msgid "Add field"
 msgstr "Cuir raon ris"
 
@@ -270,9 +270,9 @@ msgstr "Cuir cunntas ùr ris"
 
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:215
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:220
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:292
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:94
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:183
-#: src/features/editor/components/edit-dialogs.tsx:1214
 msgid "Add option"
 msgstr "Cuir roghainn ris"
 
@@ -293,11 +293,11 @@ msgstr "Cuir sgioba/aplacaid ris"
 msgid "Add to existing notifications"
 msgstr "Cuir ri brathan a tha ann"
 
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:264
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:519
 #: ../../../lib/web/src/components/view-tabs.tsx:87
 #: ../../../lib/web/src/components/view-tabs.tsx:93
 #: src/features/editor/components/design-editor.tsx:462
-#: src/features/editor/components/edit-dialogs.tsx:272
-#: src/features/editor/components/edit-dialogs.tsx:527
 msgid "Add view"
 msgstr "Cuir sealladh ris"
 
@@ -330,11 +330,11 @@ msgstr "Leig le neach sam bith {0} a lorg"
 msgid "Allow anyone to search for project"
 msgstr "Ceadaich do dhuine sam bith pròiseact a lorg"
 
-#: src/features/editor/components/edit-dialogs.tsx:832
+#: src/features/editor/components/edit-dialogs.tsx:346
 msgid "Allow merge requests"
 msgstr "Ceadaich iarrtasan co-aonaidh"
 
-#: src/features/editor/components/edit-dialogs.tsx:1148
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:226
 msgid "Allow sort by"
 msgstr "Ceadaich seòrsachadh a rèir"
 
@@ -473,7 +473,7 @@ msgstr "Chaidh seòladaireachd gu ceangal neo-earbsach a bhacadh"
 msgid "Blocks"
 msgstr "Blocaichean"
 
-#: src/features/editor/components/edit-dialogs.tsx:326
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:318
 msgid "Board"
 msgstr "Bòrd"
 
@@ -482,7 +482,7 @@ msgstr "Bòrd"
 msgid "Boost interest"
 msgstr "Brosnaich ùidh"
 
-#: src/features/editor/components/edit-dialogs.tsx:413
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:405
 msgid "Border colour"
 msgstr "Dath na crìche"
 
@@ -494,7 +494,7 @@ msgstr "Brathan brabhsair"
 msgid "Built-in templates"
 msgstr "Teamplaidean a tha togte a-staigh"
 
-#: src/features/editor/components/edit-dialogs.tsx:795
+#: src/features/editor/components/edit-dialogs.tsx:309
 msgid "Can be child of"
 msgstr "Faodaidh e a bhith na phàiste de"
 
@@ -630,10 +630,10 @@ msgstr "Dùin"
 
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:109
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:113
-#: src/features/editor/components/edit-dialogs.tsx:277
-#: src/features/editor/components/edit-dialogs.tsx:281
-#: src/features/editor/components/edit-dialogs.tsx:711
-#: src/features/editor/components/edit-dialogs.tsx:715
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:269
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:273
+#: src/features/editor/components/edit-dialogs.tsx:225
+#: src/features/editor/components/edit-dialogs.tsx:229
 msgid "Close dialog"
 msgstr "Dùin an còmhradh"
 
@@ -675,7 +675,7 @@ msgstr "Dath"
 msgid "Column actions"
 msgstr ""
 
-#: src/features/editor/components/edit-dialogs.tsx:361
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:353
 msgid "Columns group by"
 msgstr "Cuir colbhan ann am buidhnean a rèir"
 
@@ -705,7 +705,7 @@ msgstr "Beachdan ({0})"
 msgid "Compact"
 msgstr "Dùmhail"
 
-#: src/features/editor/components/edit-dialogs.tsx:707
+#: src/features/editor/components/edit-dialogs.tsx:221
 msgid "Configure class settings"
 msgstr "Rèitich roghainnean clas"
 
@@ -713,7 +713,7 @@ msgstr "Rèitich roghainnean clas"
 msgid "Configure option settings"
 msgstr "Rèitich roghainnean roghainn"
 
-#: src/features/editor/components/edit-dialogs.tsx:273
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:265
 msgid "Configure view settings"
 msgstr "Rèitich roghainnean seallaidh"
 
@@ -825,8 +825,8 @@ msgstr "Cruthaich pròiseact"
 msgid "Create, edit, comment, and view"
 msgstr "Cruthaich, deasaich, thoir beachd agus seall"
 
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:498
 #: src/components/view-options-bar.tsx:43
-#: src/features/editor/components/edit-dialogs.tsx:506
 msgid "Created"
 msgstr "Cruthaichte"
 
@@ -888,7 +888,7 @@ msgstr "Bunaiteach"
 msgid "Default AI account"
 msgstr "Cunntas AI bunaiteach"
 
-#: src/features/editor/components/edit-dialogs.tsx:493
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:485
 msgid "Default sort"
 msgstr "Seòrsachadh bunaiteach"
 
@@ -910,7 +910,7 @@ msgstr "Sguab às"
 msgid "Delete attachment"
 msgstr "Sguab às ceanglachan"
 
-#: src/features/editor/components/edit-dialogs.tsx:732
+#: src/features/editor/components/edit-dialogs.tsx:246
 msgid "Delete class"
 msgstr "Sguab às clas"
 
@@ -922,7 +922,7 @@ msgstr "Sguab às colbh"
 msgid "Delete comment"
 msgstr "Sguab às beachd"
 
-#: src/features/editor/components/edit-dialogs.tsx:1223
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:301
 msgid "Delete field"
 msgstr "Sguab às raon"
 
@@ -947,8 +947,8 @@ msgid "Delete option"
 msgstr "Sguab às roghainn"
 
 #. placeholder {0}: opt.name
-#: src/features/editor/components/edit-dialogs.tsx:1201
-#: src/features/editor/components/edit-dialogs.tsx:1206
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:279
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:284
 msgid "Delete option {0}"
 msgstr "Sguab às roghainn {0}"
 
@@ -961,7 +961,7 @@ msgstr "Sguab às pròiseact"
 msgid "Delete project?"
 msgstr "Sguab às pròiseact?"
 
-#: src/features/editor/components/edit-dialogs.tsx:298
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:290
 msgid "Delete view"
 msgstr "Sguab às sealladh"
 
@@ -1060,9 +1060,9 @@ msgstr "Leig seachad sanas a' bhùird"
 msgid "Displays the mobile sidebar."
 msgstr "Seallaidh am bàr-thaobh fòn-làimhe."
 
-#: src/features/editor/components/edit-dialogs.tsx:532
-#: src/features/editor/components/edit-dialogs.tsx:922
-#: src/features/editor/components/edit-dialogs.tsx:1228
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:306
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:524
+#: src/features/editor/components/edit-dialogs.tsx:436
 #: src/features/objects/components/object-detail-panel.tsx:465
 msgid "Done"
 msgstr "Deiseil"
@@ -1115,15 +1115,15 @@ msgstr "Deasaich"
 msgid "Edit {label}"
 msgstr "Deasaich {label}"
 
-#: src/features/editor/components/edit-dialogs.tsx:706
+#: src/features/editor/components/edit-dialogs.tsx:220
 msgid "Edit class"
 msgstr "Deasaich an clas"
 
-#: src/features/editor/components/edit-dialogs.tsx:1060
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:138
 msgid "Edit field"
 msgstr "Deasaich an raon"
 
-#: src/features/editor/components/edit-dialogs.tsx:1061
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:139
 msgid "Edit field settings"
 msgstr "Deasaich roghainnean an raoin"
 
@@ -1132,8 +1132,8 @@ msgid "Edit option"
 msgstr "Deasaich an roghainn"
 
 #. placeholder {0}: opt.name
-#: src/features/editor/components/edit-dialogs.tsx:1186
-#: src/features/editor/components/edit-dialogs.tsx:1191
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:264
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:269
 msgid "Edit option {0}"
 msgstr "Deasaich an roghainn {0}"
 
@@ -1141,7 +1141,7 @@ msgstr "Deasaich an roghainn {0}"
 msgid "Edit selected card"
 msgstr "Deasaich a' chairt thaghte"
 
-#: src/features/editor/components/edit-dialogs.tsx:272
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:264
 msgid "Edit view"
 msgstr "Deasaich an sealladh"
 
@@ -1388,7 +1388,7 @@ msgstr "Cha b' urrainn am pròiseact ùrachadh"
 msgid "Failed to upload attachment"
 msgstr "Cha b' urrainn an ceangaltas a luchdadh suas"
 
-#: src/features/editor/components/edit-dialogs.tsx:838
+#: src/features/editor/components/edit-dialogs.tsx:352
 msgid "Fields"
 msgstr "Raointean"
 
@@ -1415,7 +1415,7 @@ msgstr "Meur-lorg"
 msgid "Finish moving your account"
 msgstr "Crìochnaich gluasad do chunntas"
 
-#: src/features/editor/components/edit-dialogs.tsx:1144
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:222
 msgid "Flags"
 msgstr "Brataichean"
 
@@ -1486,7 +1486,7 @@ msgstr "Rach dhan duilleag roimhe"
 msgid "Group"
 msgstr "Buidheann"
 
-#: src/features/editor/components/edit-dialogs.tsx:361
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:353
 msgid "Group by"
 msgstr "Cuir ann am buidhnean a rèir"
 
@@ -1518,8 +1518,8 @@ msgstr "Dachaigh"
 msgid "Hot"
 msgstr "Teth"
 
-#: src/features/editor/components/edit-dialogs.tsx:755
-#: src/features/editor/components/edit-dialogs.tsx:1075
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:153
+#: src/features/editor/components/edit-dialogs.tsx:269
 msgid "ID"
 msgstr "ID"
 
@@ -1609,7 +1609,7 @@ msgid "Large"
 msgstr "Mòr"
 
 #: ../../../lib/web/src/components/config-drawer.tsx:287
-#: src/features/editor/components/edit-dialogs.tsx:320
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:312
 msgid "Layout"
 msgstr "Cruth"
 
@@ -1641,7 +1641,7 @@ msgstr "Ceangal"
 msgid "Links"
 msgstr "Ceanglaichean"
 
-#: src/features/editor/components/edit-dialogs.tsx:332
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:324
 msgid "List"
 msgstr "Liosta"
 
@@ -1708,7 +1708,7 @@ msgstr "Le làimh"
 msgid "Mark all as read"
 msgstr "Comharraich gach nì mar leughte"
 
-#: src/features/editor/components/edit-dialogs.tsx:1121
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:199
 msgid "Maximum length"
 msgstr "Faid as motha"
 
@@ -1764,7 +1764,7 @@ msgstr "Teachdaireachd"
 msgid "Metric"
 msgstr "Meatraigeach"
 
-#: src/features/editor/components/edit-dialogs.tsx:1110
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:188
 msgid "Minimum length"
 msgstr "Faid as lugha"
 
@@ -1795,10 +1795,10 @@ msgstr "Mo phròiseact"
 
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:118
 #: ../../../lib/web/src/components/entity/entity-board-column.tsx:614
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:143
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:128
-#: src/features/editor/components/edit-dialogs.tsx:307
-#: src/features/editor/components/edit-dialogs.tsx:741
-#: src/features/editor/components/edit-dialogs.tsx:1065
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:299
+#: src/features/editor/components/edit-dialogs.tsx:255
 #: src/features/projects/components/create-project-dialog.tsx:331
 #: src/routes/_authenticated/$projectId_.settings.tsx:301
 msgid "Name"
@@ -1946,8 +1946,8 @@ msgstr "Cha deach toradh a lorg"
 msgid "No results found."
 msgstr "Cha deach toraidhean a lorg."
 
-#: src/features/board/components/board-container.tsx:865
-#: src/features/board/components/board-container.tsx:910
+#: ../../../lib/web/src/components/entity/entity-board-container.tsx:889
+#: ../../../lib/web/src/components/entity/entity-board-container.tsx:934
 #: src/features/tree/components/tree-view.tsx:363
 msgid "No status"
 msgstr "Gun chor"
@@ -1973,18 +1973,18 @@ msgid "No views"
 msgstr "Gun shealladh"
 
 #: ../../../lib/web/src/components/colour-picker.tsx:345
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:365
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:388
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:391
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:418
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:421
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:494
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:497
 #: ../../../lib/web/src/components/person-picker.tsx:350
 #: ../../../lib/web/src/lib/preference-utils.ts:105
 #: ../../../lib/web/src/lib/preference-utils.ts:125
-#: src/features/editor/components/edit-dialogs.tsx:373
-#: src/features/editor/components/edit-dialogs.tsx:396
-#: src/features/editor/components/edit-dialogs.tsx:399
-#: src/features/editor/components/edit-dialogs.tsx:426
-#: src/features/editor/components/edit-dialogs.tsx:429
-#: src/features/editor/components/edit-dialogs.tsx:502
-#: src/features/editor/components/edit-dialogs.tsx:505
-#: src/features/editor/components/edit-dialogs.tsx:779
-#: src/features/editor/components/edit-dialogs.tsx:782
+#: src/features/editor/components/edit-dialogs.tsx:293
+#: src/features/editor/components/edit-dialogs.tsx:296
 #: src/features/objects/components/create-object-dialog.tsx:455
 #: src/features/objects/components/create-object-dialog.tsx:462
 #: src/features/objects/components/object-detail-panel.tsx:530
@@ -2027,8 +2027,8 @@ msgid "Notifications: {0}"
 msgstr "Brathan: {0}"
 
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:140
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:499
 #: src/components/view-options-bar.tsx:42
-#: src/features/editor/components/edit-dialogs.tsx:507
 msgid "Number"
 msgstr "Àireamh"
 
@@ -2060,8 +2060,8 @@ msgstr "Fosgail gnìomhan a' chunntais"
 msgid "Open actions"
 msgstr "Fosgail na gnìomhan"
 
-#: src/features/editor/components/edit-dialogs.tsx:722
-#: src/features/editor/components/edit-dialogs.tsx:727
+#: src/features/editor/components/edit-dialogs.tsx:236
+#: src/features/editor/components/edit-dialogs.tsx:241
 msgid "Open class actions"
 msgstr "Fosgail gnìomhan a' chlas"
 
@@ -2101,8 +2101,8 @@ msgstr "Fosgail a' chairt thaghte"
 msgid "Open theme settings"
 msgstr "Fosgail roghainnean an ùrlair"
 
-#: src/features/editor/components/edit-dialogs.tsx:288
-#: src/features/editor/components/edit-dialogs.tsx:293
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:280
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:285
 msgid "Open view actions"
 msgstr "Fosgail gnìomhan an t-seallaidh"
 
@@ -2117,7 +2117,7 @@ msgid "Option name"
 msgstr "Ainm na roghainn"
 
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:168
-#: src/features/editor/components/edit-dialogs.tsx:1163
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:241
 msgid "Options"
 msgstr "Roghainnean"
 
@@ -2151,7 +2151,7 @@ msgstr "Dh'fhàillig dearbhadh na h-iuchrach-inntrigidh. Feuch ris a-rithist."
 msgid "Passkeys"
 msgstr "Pasgairean"
 
-#: src/features/editor/components/edit-dialogs.tsx:1132
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:210
 msgid "Pattern (regex)"
 msgstr "Pàtran (regex)"
 
@@ -2363,8 +2363,8 @@ msgid "Remove access?"
 msgstr "Thoir an cothrom air falbh?"
 
 #. placeholder {0}: field.name || field.id
-#: src/features/editor/components/edit-dialogs.tsx:880
-#: src/features/editor/components/edit-dialogs.tsx:885
+#: src/features/editor/components/edit-dialogs.tsx:394
+#: src/features/editor/components/edit-dialogs.tsx:399
 msgid "Remove field {0}"
 msgstr "Thoir an raon {0} air falbh"
 
@@ -2420,11 +2420,11 @@ msgstr "Freagair"
 msgid "Reply to {0}..."
 msgstr "Freagair {0}..."
 
-#: src/features/editor/components/edit-dialogs.tsx:820
+#: src/features/editor/components/edit-dialogs.tsx:334
 msgid "Requests"
 msgstr "Iarrtasan"
 
-#: src/features/editor/components/edit-dialogs.tsx:1147
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:225
 msgid "Required"
 msgstr "Riatanach"
 
@@ -2467,11 +2467,11 @@ msgid "Right to Left"
 msgstr "Deas gu Clì"
 
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:150
-#: src/features/editor/components/edit-dialogs.tsx:1091
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:169
 msgid "Rows"
 msgstr "Sreathan"
 
-#: src/features/editor/components/edit-dialogs.tsx:387
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:379
 msgid "Rows group by"
 msgstr "Buidheanaich sreathan a-rèir"
 
@@ -2581,7 +2581,7 @@ msgstr "Tagh"
 msgid "Select {0}"
 msgstr "Tagh {0}"
 
-#: src/features/editor/components/edit-dialogs.tsx:370
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:362
 msgid "Select a field"
 msgstr "Tagh raon"
 
@@ -2716,11 +2716,11 @@ msgstr "A' suidheachadh inntrigidh..."
 msgid "Settings"
 msgstr "Roghainnean"
 
-#: src/features/editor/components/edit-dialogs.tsx:341
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:333
 msgid "Show classes"
 msgstr "Seall clasaichean"
 
-#: src/features/editor/components/edit-dialogs.tsx:442
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:434
 msgid "Show fields"
 msgstr "Seall raointean"
 
@@ -2752,7 +2752,7 @@ msgid "Signing out..."
 msgstr "A' soidhnigeadh a-mach..."
 
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:161
-#: src/features/editor/components/edit-dialogs.tsx:1102
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:180
 msgid "Single line of text only"
 msgstr "Aon loidhne teacsa a-mhàin"
 
@@ -2956,12 +2956,12 @@ msgstr "Cuiridh seo an dealbhadh làithreach an àite le <0>{0}</0>. Thèid a h-
 msgid "Thursday"
 msgstr "Diardaoin"
 
-#: src/features/editor/components/edit-dialogs.tsx:593
+#: src/features/editor/components/edit-dialogs.tsx:107
 #: src/features/requests/components/request-panel.tsx:294
 msgid "Title"
 msgstr "Tiotal"
 
-#: src/features/editor/components/edit-dialogs.tsx:764
+#: src/features/editor/components/edit-dialogs.tsx:278
 msgid "Title field"
 msgstr "Raon tiotail"
 
@@ -3017,7 +3017,7 @@ msgstr "Cus iarrtasan"
 msgid "Top"
 msgstr "Mullach"
 
-#: src/features/editor/components/edit-dialogs.tsx:802
+#: src/features/editor/components/edit-dialogs.tsx:316
 msgid "Top level"
 msgstr "Ìre àrd"
 
@@ -3041,7 +3041,7 @@ msgid "Tuesday"
 msgstr "Dimàirt"
 
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:130
-#: src/features/editor/components/edit-dialogs.tsx:1085
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:163
 msgid "Type"
 msgstr "Seòrsa"
 
@@ -3126,8 +3126,8 @@ msgstr "Gun tiotal"
 msgid "Unverified"
 msgstr "Gun dearbhadh"
 
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:500
 #: src/components/view-options-bar.tsx:44
-#: src/features/editor/components/edit-dialogs.tsx:508
 msgid "Updated"
 msgstr "Ùraichte"
 

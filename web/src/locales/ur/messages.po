@@ -31,11 +31,11 @@ msgstr "(پھیلائیں)"
 msgid "(from {0})"
 msgstr "({0} سے)"
 
-#: src/features/editor/components/edit-dialogs.tsx:813
+#: src/features/editor/components/edit-dialogs.tsx:327
 msgid "(itself)"
 msgstr "(خود)"
 
-#: src/features/board/components/board-container.tsx:794
+#: ../../../lib/web/src/components/entity/entity-board-container.tsx:818
 msgid "[not set]"
 msgstr "[سیٹ نہیں]"
 
@@ -240,8 +240,8 @@ msgid "Add checklist item"
 msgstr "چیک لسٹ آئٹم شامل کریں"
 
 #: src/features/editor/components/design-editor.tsx:511
-#: src/features/editor/components/edit-dialogs.tsx:706
-#: src/features/editor/components/edit-dialogs.tsx:917
+#: src/features/editor/components/edit-dialogs.tsx:220
+#: src/features/editor/components/edit-dialogs.tsx:431
 msgid "Add class"
 msgstr "کلاس شامل کریں"
 
@@ -252,7 +252,7 @@ msgstr "کالم شامل کریں"
 
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:105
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:233
-#: src/features/editor/components/edit-dialogs.tsx:912
+#: src/features/editor/components/edit-dialogs.tsx:426
 msgid "Add field"
 msgstr "فیلڈ شامل کریں"
 
@@ -270,9 +270,9 @@ msgstr "نیا اکاؤنٹ شامل کریں"
 
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:215
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:220
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:292
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:94
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:183
-#: src/features/editor/components/edit-dialogs.tsx:1214
 msgid "Add option"
 msgstr "آپشن شامل کریں"
 
@@ -293,11 +293,11 @@ msgstr "ٹیم/ایپ شامل کریں"
 msgid "Add to existing notifications"
 msgstr "موجودہ نوٹیفکیشنز میں شامل کریں"
 
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:264
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:519
 #: ../../../lib/web/src/components/view-tabs.tsx:87
 #: ../../../lib/web/src/components/view-tabs.tsx:93
 #: src/features/editor/components/design-editor.tsx:462
-#: src/features/editor/components/edit-dialogs.tsx:272
-#: src/features/editor/components/edit-dialogs.tsx:527
 msgid "Add view"
 msgstr "ویو شامل کریں"
 
@@ -330,11 +330,11 @@ msgstr "کسی کو بھی {0} تلاش کرنے کی اجازت دیں"
 msgid "Allow anyone to search for project"
 msgstr "کسی کو بھی پروجیکٹ تلاش کرنے کی اجازت دیں"
 
-#: src/features/editor/components/edit-dialogs.tsx:832
+#: src/features/editor/components/edit-dialogs.tsx:346
 msgid "Allow merge requests"
 msgstr "Merge requests کی اجازت دیں"
 
-#: src/features/editor/components/edit-dialogs.tsx:1148
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:226
 msgid "Allow sort by"
 msgstr "ترتیب کی اجازت دیں"
 
@@ -473,7 +473,7 @@ msgstr "غیر بھروسہ مند لنک پر نیویگیشن مسدود"
 msgid "Blocks"
 msgstr "بلاک کرتا ہے"
 
-#: src/features/editor/components/edit-dialogs.tsx:326
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:318
 msgid "Board"
 msgstr "بورڈ"
 
@@ -482,7 +482,7 @@ msgstr "بورڈ"
 msgid "Boost interest"
 msgstr "دلچسپی بڑھائیں"
 
-#: src/features/editor/components/edit-dialogs.tsx:413
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:405
 msgid "Border colour"
 msgstr "بارڈر کا رنگ"
 
@@ -494,7 +494,7 @@ msgstr "براؤزر نوٹیفکیشنز"
 msgid "Built-in templates"
 msgstr "بلٹ ان templates"
 
-#: src/features/editor/components/edit-dialogs.tsx:795
+#: src/features/editor/components/edit-dialogs.tsx:309
 msgid "Can be child of"
 msgstr "کا بچہ ہو سکتا ہے"
 
@@ -630,10 +630,10 @@ msgstr "بند کریں"
 
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:109
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:113
-#: src/features/editor/components/edit-dialogs.tsx:277
-#: src/features/editor/components/edit-dialogs.tsx:281
-#: src/features/editor/components/edit-dialogs.tsx:711
-#: src/features/editor/components/edit-dialogs.tsx:715
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:269
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:273
+#: src/features/editor/components/edit-dialogs.tsx:225
+#: src/features/editor/components/edit-dialogs.tsx:229
 msgid "Close dialog"
 msgstr "ڈائیلاگ بند کریں"
 
@@ -675,7 +675,7 @@ msgstr "رنگ"
 msgid "Column actions"
 msgstr ""
 
-#: src/features/editor/components/edit-dialogs.tsx:361
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:353
 msgid "Columns group by"
 msgstr "کالمز کا گروپ بنائیں"
 
@@ -705,7 +705,7 @@ msgstr "تبصرے ({0})"
 msgid "Compact"
 msgstr "کمپیکٹ"
 
-#: src/features/editor/components/edit-dialogs.tsx:707
+#: src/features/editor/components/edit-dialogs.tsx:221
 msgid "Configure class settings"
 msgstr "کلاس کی ترتیبات configure کریں"
 
@@ -713,7 +713,7 @@ msgstr "کلاس کی ترتیبات configure کریں"
 msgid "Configure option settings"
 msgstr "آپشن کی ترتیبات configure کریں"
 
-#: src/features/editor/components/edit-dialogs.tsx:273
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:265
 msgid "Configure view settings"
 msgstr "ویو کی ترتیبات configure کریں"
 
@@ -825,8 +825,8 @@ msgstr "پروجیکٹ بنائیں"
 msgid "Create, edit, comment, and view"
 msgstr "بنانا، ترمیم کرنا، تبصرہ کرنا اور دیکھنا"
 
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:498
 #: src/components/view-options-bar.tsx:43
-#: src/features/editor/components/edit-dialogs.tsx:506
 msgid "Created"
 msgstr "بنایا گیا"
 
@@ -888,7 +888,7 @@ msgstr "ڈیفالٹ"
 msgid "Default AI account"
 msgstr "ڈیفالٹ AI اکاؤنٹ"
 
-#: src/features/editor/components/edit-dialogs.tsx:493
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:485
 msgid "Default sort"
 msgstr "ڈیفالٹ ترتیب"
 
@@ -910,7 +910,7 @@ msgstr "حذف کریں"
 msgid "Delete attachment"
 msgstr "اٹیچمنٹ حذف کریں"
 
-#: src/features/editor/components/edit-dialogs.tsx:732
+#: src/features/editor/components/edit-dialogs.tsx:246
 msgid "Delete class"
 msgstr "کلاس حذف کریں"
 
@@ -922,7 +922,7 @@ msgstr "کالم حذف کریں"
 msgid "Delete comment"
 msgstr "تبصرہ حذف کریں"
 
-#: src/features/editor/components/edit-dialogs.tsx:1223
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:301
 msgid "Delete field"
 msgstr "فیلڈ حذف کریں"
 
@@ -947,8 +947,8 @@ msgid "Delete option"
 msgstr "آپشن حذف کریں"
 
 #. placeholder {0}: opt.name
-#: src/features/editor/components/edit-dialogs.tsx:1201
-#: src/features/editor/components/edit-dialogs.tsx:1206
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:279
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:284
 msgid "Delete option {0}"
 msgstr "آپشن {0} حذف کریں"
 
@@ -961,7 +961,7 @@ msgstr "پروجیکٹ حذف کریں"
 msgid "Delete project?"
 msgstr "پروجیکٹ حذف کریں؟"
 
-#: src/features/editor/components/edit-dialogs.tsx:298
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:290
 msgid "Delete view"
 msgstr "ویو حذف کریں"
 
@@ -1060,9 +1060,9 @@ msgstr "بورڈ کا اشارہ برخاست کریں"
 msgid "Displays the mobile sidebar."
 msgstr "موبائل سائڈبار دکھاتا ہے۔"
 
-#: src/features/editor/components/edit-dialogs.tsx:532
-#: src/features/editor/components/edit-dialogs.tsx:922
-#: src/features/editor/components/edit-dialogs.tsx:1228
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:306
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:524
+#: src/features/editor/components/edit-dialogs.tsx:436
 #: src/features/objects/components/object-detail-panel.tsx:465
 msgid "Done"
 msgstr "مکمل"
@@ -1115,15 +1115,15 @@ msgstr "ترمیم"
 msgid "Edit {label}"
 msgstr "{label} میں ترمیم کریں"
 
-#: src/features/editor/components/edit-dialogs.tsx:706
+#: src/features/editor/components/edit-dialogs.tsx:220
 msgid "Edit class"
 msgstr "کلاس میں ترمیم"
 
-#: src/features/editor/components/edit-dialogs.tsx:1060
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:138
 msgid "Edit field"
 msgstr "فیلڈ میں ترمیم"
 
-#: src/features/editor/components/edit-dialogs.tsx:1061
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:139
 msgid "Edit field settings"
 msgstr "فیلڈ کی ترتیبات میں ترمیم"
 
@@ -1132,8 +1132,8 @@ msgid "Edit option"
 msgstr "آپشن میں ترمیم کریں"
 
 #. placeholder {0}: opt.name
-#: src/features/editor/components/edit-dialogs.tsx:1186
-#: src/features/editor/components/edit-dialogs.tsx:1191
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:264
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:269
 msgid "Edit option {0}"
 msgstr "آپشن {0} میں ترمیم"
 
@@ -1141,7 +1141,7 @@ msgstr "آپشن {0} میں ترمیم"
 msgid "Edit selected card"
 msgstr "منتخب کارڈ میں ترمیم کریں"
 
-#: src/features/editor/components/edit-dialogs.tsx:272
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:264
 msgid "Edit view"
 msgstr "منظر میں ترمیم"
 
@@ -1388,7 +1388,7 @@ msgstr "پروجیکٹ اپڈیٹ کرنے میں ناکامی"
 msgid "Failed to upload attachment"
 msgstr "اٹیچمنٹ اپ لوڈ کرنے میں ناکامی"
 
-#: src/features/editor/components/edit-dialogs.tsx:838
+#: src/features/editor/components/edit-dialogs.tsx:352
 msgid "Fields"
 msgstr "فیلڈز"
 
@@ -1415,7 +1415,7 @@ msgstr "فنگر پرنٹ"
 msgid "Finish moving your account"
 msgstr "اپنا اکاؤنٹ منتقل کرنا مکمل کریں"
 
-#: src/features/editor/components/edit-dialogs.tsx:1144
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:222
 msgid "Flags"
 msgstr "فلیگز"
 
@@ -1486,7 +1486,7 @@ msgstr "پچھلے صفحے پر جائیں"
 msgid "Group"
 msgstr "گروپ"
 
-#: src/features/editor/components/edit-dialogs.tsx:361
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:353
 msgid "Group by"
 msgstr "گروپ بندی بلحاظ"
 
@@ -1518,8 +1518,8 @@ msgstr "ہوم"
 msgid "Hot"
 msgstr "ہاٹ"
 
-#: src/features/editor/components/edit-dialogs.tsx:755
-#: src/features/editor/components/edit-dialogs.tsx:1075
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:153
+#: src/features/editor/components/edit-dialogs.tsx:269
 msgid "ID"
 msgstr "آئی ڈی"
 
@@ -1609,7 +1609,7 @@ msgid "Large"
 msgstr "بڑا"
 
 #: ../../../lib/web/src/components/config-drawer.tsx:287
-#: src/features/editor/components/edit-dialogs.tsx:320
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:312
 msgid "Layout"
 msgstr "لے آؤٹ"
 
@@ -1641,7 +1641,7 @@ msgstr "لنک"
 msgid "Links"
 msgstr "لنکس"
 
-#: src/features/editor/components/edit-dialogs.tsx:332
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:324
 msgid "List"
 msgstr "فہرست"
 
@@ -1708,7 +1708,7 @@ msgstr "دستی"
 msgid "Mark all as read"
 msgstr "سب کو پڑھا ہوا نشان زد کریں"
 
-#: src/features/editor/components/edit-dialogs.tsx:1121
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:199
 msgid "Maximum length"
 msgstr "زیادہ سے زیادہ لمبائی"
 
@@ -1764,7 +1764,7 @@ msgstr "پیغام"
 msgid "Metric"
 msgstr "metric"
 
-#: src/features/editor/components/edit-dialogs.tsx:1110
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:188
 msgid "Minimum length"
 msgstr "کم از کم لمبائی"
 
@@ -1795,10 +1795,10 @@ msgstr "میرا project"
 
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:118
 #: ../../../lib/web/src/components/entity/entity-board-column.tsx:614
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:143
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:128
-#: src/features/editor/components/edit-dialogs.tsx:307
-#: src/features/editor/components/edit-dialogs.tsx:741
-#: src/features/editor/components/edit-dialogs.tsx:1065
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:299
+#: src/features/editor/components/edit-dialogs.tsx:255
 #: src/features/projects/components/create-project-dialog.tsx:331
 #: src/routes/_authenticated/$projectId_.settings.tsx:301
 msgid "Name"
@@ -1946,8 +1946,8 @@ msgstr "کوئی نتیجہ نہیں ملا"
 msgid "No results found."
 msgstr "کوئی نتائج نہیں ملے۔"
 
-#: src/features/board/components/board-container.tsx:865
-#: src/features/board/components/board-container.tsx:910
+#: ../../../lib/web/src/components/entity/entity-board-container.tsx:889
+#: ../../../lib/web/src/components/entity/entity-board-container.tsx:934
 #: src/features/tree/components/tree-view.tsx:363
 msgid "No status"
 msgstr "کوئی حالت نہیں"
@@ -1973,18 +1973,18 @@ msgid "No views"
 msgstr "کوئی views نہیں"
 
 #: ../../../lib/web/src/components/colour-picker.tsx:345
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:365
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:388
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:391
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:418
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:421
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:494
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:497
 #: ../../../lib/web/src/components/person-picker.tsx:350
 #: ../../../lib/web/src/lib/preference-utils.ts:105
 #: ../../../lib/web/src/lib/preference-utils.ts:125
-#: src/features/editor/components/edit-dialogs.tsx:373
-#: src/features/editor/components/edit-dialogs.tsx:396
-#: src/features/editor/components/edit-dialogs.tsx:399
-#: src/features/editor/components/edit-dialogs.tsx:426
-#: src/features/editor/components/edit-dialogs.tsx:429
-#: src/features/editor/components/edit-dialogs.tsx:502
-#: src/features/editor/components/edit-dialogs.tsx:505
-#: src/features/editor/components/edit-dialogs.tsx:779
-#: src/features/editor/components/edit-dialogs.tsx:782
+#: src/features/editor/components/edit-dialogs.tsx:293
+#: src/features/editor/components/edit-dialogs.tsx:296
 #: src/features/objects/components/create-object-dialog.tsx:455
 #: src/features/objects/components/create-object-dialog.tsx:462
 #: src/features/objects/components/object-detail-panel.tsx:530
@@ -2027,8 +2027,8 @@ msgid "Notifications: {0}"
 msgstr "اطلاعات: {0}"
 
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:140
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:499
 #: src/components/view-options-bar.tsx:42
-#: src/features/editor/components/edit-dialogs.tsx:507
 msgid "Number"
 msgstr "نمبر"
 
@@ -2060,8 +2060,8 @@ msgstr "اکاؤنٹ کی actions کھولیں"
 msgid "Open actions"
 msgstr "کارروائیاں کھولیں"
 
-#: src/features/editor/components/edit-dialogs.tsx:722
-#: src/features/editor/components/edit-dialogs.tsx:727
+#: src/features/editor/components/edit-dialogs.tsx:236
+#: src/features/editor/components/edit-dialogs.tsx:241
 msgid "Open class actions"
 msgstr "class actions کھولیں"
 
@@ -2101,8 +2101,8 @@ msgstr "منتخب کارڈ کھولیں"
 msgid "Open theme settings"
 msgstr "تھیم سیٹنگز کھولیں"
 
-#: src/features/editor/components/edit-dialogs.tsx:288
-#: src/features/editor/components/edit-dialogs.tsx:293
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:280
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:285
 msgid "Open view actions"
 msgstr "view actions کھولیں"
 
@@ -2117,7 +2117,7 @@ msgid "Option name"
 msgstr "option کا نام"
 
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:168
-#: src/features/editor/components/edit-dialogs.tsx:1163
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:241
 msgid "Options"
 msgstr "اختیارات"
 
@@ -2151,7 +2151,7 @@ msgstr "پاس کی کی تصدیق ناکام ہو گئی۔ براہ کرم د�
 msgid "Passkeys"
 msgstr "passkeys"
 
-#: src/features/editor/components/edit-dialogs.tsx:1132
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:210
 msgid "Pattern (regex)"
 msgstr "پیٹرن (regex)"
 
@@ -2363,8 +2363,8 @@ msgid "Remove access?"
 msgstr "رسائی ہٹائیں؟"
 
 #. placeholder {0}: field.name || field.id
-#: src/features/editor/components/edit-dialogs.tsx:880
-#: src/features/editor/components/edit-dialogs.tsx:885
+#: src/features/editor/components/edit-dialogs.tsx:394
+#: src/features/editor/components/edit-dialogs.tsx:399
 msgid "Remove field {0}"
 msgstr "فیلڈ {0} ہٹائیں"
 
@@ -2420,11 +2420,11 @@ msgstr "جواب"
 msgid "Reply to {0}..."
 msgstr "{0} کو جواب دیں..."
 
-#: src/features/editor/components/edit-dialogs.tsx:820
+#: src/features/editor/components/edit-dialogs.tsx:334
 msgid "Requests"
 msgstr "درخواستیں"
 
-#: src/features/editor/components/edit-dialogs.tsx:1147
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:225
 msgid "Required"
 msgstr "درکار"
 
@@ -2467,11 +2467,11 @@ msgid "Right to Left"
 msgstr "دائیں سے بائیں"
 
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:150
-#: src/features/editor/components/edit-dialogs.tsx:1091
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:169
 msgid "Rows"
 msgstr "قطاریں"
 
-#: src/features/editor/components/edit-dialogs.tsx:387
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:379
 msgid "Rows group by"
 msgstr "قطاریں گروپ بہ"
 
@@ -2581,7 +2581,7 @@ msgstr "منتخب کریں"
 msgid "Select {0}"
 msgstr "{0} منتخب کریں"
 
-#: src/features/editor/components/edit-dialogs.tsx:370
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:362
 msgid "Select a field"
 msgstr "فیلڈ منتخب کریں"
 
@@ -2716,11 +2716,11 @@ msgstr "رسائی مقرر کی جا رہی ہے..."
 msgid "Settings"
 msgstr "سیٹنگز"
 
-#: src/features/editor/components/edit-dialogs.tsx:341
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:333
 msgid "Show classes"
 msgstr "کلاسز دکھائیں"
 
-#: src/features/editor/components/edit-dialogs.tsx:442
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:434
 msgid "Show fields"
 msgstr "فیلڈز دکھائیں"
 
@@ -2752,7 +2752,7 @@ msgid "Signing out..."
 msgstr "سائن آؤٹ کیا جا رہا ہے..."
 
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:161
-#: src/features/editor/components/edit-dialogs.tsx:1102
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:180
 msgid "Single line of text only"
 msgstr "صرف ایک سطر پر مشتمل متن"
 
@@ -2956,12 +2956,12 @@ msgstr "یہ موجودہ ڈیزائن کو <0>{0}</0> سے تبدیل کرے گ
 msgid "Thursday"
 msgstr "جمعرات"
 
-#: src/features/editor/components/edit-dialogs.tsx:593
+#: src/features/editor/components/edit-dialogs.tsx:107
 #: src/features/requests/components/request-panel.tsx:294
 msgid "Title"
 msgstr "عنوان"
 
-#: src/features/editor/components/edit-dialogs.tsx:764
+#: src/features/editor/components/edit-dialogs.tsx:278
 msgid "Title field"
 msgstr "عنوان فیلڈ"
 
@@ -3017,7 +3017,7 @@ msgstr "بہت زیادہ درخواستیں"
 msgid "Top"
 msgstr "اوپر"
 
-#: src/features/editor/components/edit-dialogs.tsx:802
+#: src/features/editor/components/edit-dialogs.tsx:316
 msgid "Top level"
 msgstr "اوپر کی سطح"
 
@@ -3041,7 +3041,7 @@ msgid "Tuesday"
 msgstr "منگل"
 
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:130
-#: src/features/editor/components/edit-dialogs.tsx:1085
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:163
 msgid "Type"
 msgstr "قسم"
 
@@ -3126,8 +3126,8 @@ msgstr "بے عنوان"
 msgid "Unverified"
 msgstr "غیر تصدیق شدہ"
 
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:500
 #: src/components/view-options-bar.tsx:44
-#: src/features/editor/components/edit-dialogs.tsx:508
 msgid "Updated"
 msgstr "اپ ڈیٹ ہو گیا"
 

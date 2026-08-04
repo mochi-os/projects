@@ -31,11 +31,11 @@ msgstr "(ανάπτυξη)"
 msgid "(from {0})"
 msgstr "(από {0})"
 
-#: src/features/editor/components/edit-dialogs.tsx:813
+#: src/features/editor/components/edit-dialogs.tsx:327
 msgid "(itself)"
 msgstr "(το ίδιο)"
 
-#: src/features/board/components/board-container.tsx:794
+#: ../../../lib/web/src/components/entity/entity-board-container.tsx:818
 msgid "[not set]"
 msgstr "[χωρίς ορισμό]"
 
@@ -240,8 +240,8 @@ msgid "Add checklist item"
 msgstr "Προσθήκη στοιχείου λίστας ελέγχου"
 
 #: src/features/editor/components/design-editor.tsx:511
-#: src/features/editor/components/edit-dialogs.tsx:706
-#: src/features/editor/components/edit-dialogs.tsx:917
+#: src/features/editor/components/edit-dialogs.tsx:220
+#: src/features/editor/components/edit-dialogs.tsx:431
 msgid "Add class"
 msgstr "Προσθήκη κλάσης"
 
@@ -252,7 +252,7 @@ msgstr "Προσθήκη στήλης"
 
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:105
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:233
-#: src/features/editor/components/edit-dialogs.tsx:912
+#: src/features/editor/components/edit-dialogs.tsx:426
 msgid "Add field"
 msgstr "Προσθήκη πεδίου"
 
@@ -270,9 +270,9 @@ msgstr "Προσθήκη νέου λογαριασμού"
 
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:215
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:220
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:292
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:94
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:183
-#: src/features/editor/components/edit-dialogs.tsx:1214
 msgid "Add option"
 msgstr "Προσθήκη επιλογής"
 
@@ -293,11 +293,11 @@ msgstr "Προσθήκη ομάδας/εφαρμογής"
 msgid "Add to existing notifications"
 msgstr "Προσθήκη σε υπάρχουσες ειδοποιήσεις"
 
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:264
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:519
 #: ../../../lib/web/src/components/view-tabs.tsx:87
 #: ../../../lib/web/src/components/view-tabs.tsx:93
 #: src/features/editor/components/design-editor.tsx:462
-#: src/features/editor/components/edit-dialogs.tsx:272
-#: src/features/editor/components/edit-dialogs.tsx:527
 msgid "Add view"
 msgstr "Προσθήκη προβολής"
 
@@ -330,11 +330,11 @@ msgstr "Να επιτρέπεται σε οποιονδήποτε η αναζή�
 msgid "Allow anyone to search for project"
 msgstr "Να επιτρέπεται σε όλους η αναζήτηση έργου"
 
-#: src/features/editor/components/edit-dialogs.tsx:832
+#: src/features/editor/components/edit-dialogs.tsx:346
 msgid "Allow merge requests"
 msgstr "Να επιτρέπονται αιτήματα συγχώνευσης"
 
-#: src/features/editor/components/edit-dialogs.tsx:1148
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:226
 msgid "Allow sort by"
 msgstr "Να επιτρέπεται η ταξινόμηση κατά"
 
@@ -473,7 +473,7 @@ msgstr "Αποκλείστηκε η πλοήγηση σε μη αξιόπιστ�
 msgid "Blocks"
 msgstr "Αποκλείει"
 
-#: src/features/editor/components/edit-dialogs.tsx:326
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:318
 msgid "Board"
 msgstr "Πίνακας"
 
@@ -482,7 +482,7 @@ msgstr "Πίνακας"
 msgid "Boost interest"
 msgstr "Ενίσχυση ενδιαφέροντος"
 
-#: src/features/editor/components/edit-dialogs.tsx:413
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:405
 msgid "Border colour"
 msgstr "Χρώμα περιγράμματος"
 
@@ -494,7 +494,7 @@ msgstr "Ειδοποιήσεις προγράμματος περιήγησης"
 msgid "Built-in templates"
 msgstr "Ενσωματωμένα πρότυπα"
 
-#: src/features/editor/components/edit-dialogs.tsx:795
+#: src/features/editor/components/edit-dialogs.tsx:309
 msgid "Can be child of"
 msgstr "Μπορεί να είναι θυγατρικό του"
 
@@ -630,10 +630,10 @@ msgstr "Κλείσιμο"
 
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:109
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:113
-#: src/features/editor/components/edit-dialogs.tsx:277
-#: src/features/editor/components/edit-dialogs.tsx:281
-#: src/features/editor/components/edit-dialogs.tsx:711
-#: src/features/editor/components/edit-dialogs.tsx:715
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:269
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:273
+#: src/features/editor/components/edit-dialogs.tsx:225
+#: src/features/editor/components/edit-dialogs.tsx:229
 msgid "Close dialog"
 msgstr "Κλείσιμο διαλόγου"
 
@@ -675,7 +675,7 @@ msgstr "Χρώμα"
 msgid "Column actions"
 msgstr ""
 
-#: src/features/editor/components/edit-dialogs.tsx:361
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:353
 msgid "Columns group by"
 msgstr "Οι στήλες ομαδοποιούνται κατά"
 
@@ -705,7 +705,7 @@ msgstr "Σχόλια ({0})"
 msgid "Compact"
 msgstr "Συμπαγές"
 
-#: src/features/editor/components/edit-dialogs.tsx:707
+#: src/features/editor/components/edit-dialogs.tsx:221
 msgid "Configure class settings"
 msgstr "Διαμόρφωση ρυθμίσεων κλάσης"
 
@@ -713,7 +713,7 @@ msgstr "Διαμόρφωση ρυθμίσεων κλάσης"
 msgid "Configure option settings"
 msgstr "Διαμόρφωση ρυθμίσεων επιλογής"
 
-#: src/features/editor/components/edit-dialogs.tsx:273
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:265
 msgid "Configure view settings"
 msgstr "Διαμόρφωση ρυθμίσεων προβολής"
 
@@ -825,8 +825,8 @@ msgstr "Δημιουργία έργου"
 msgid "Create, edit, comment, and view"
 msgstr "Δημιουργία, επεξεργασία, σχολιασμός και προβολή"
 
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:498
 #: src/components/view-options-bar.tsx:43
-#: src/features/editor/components/edit-dialogs.tsx:506
 msgid "Created"
 msgstr "Δημιουργήθηκε"
 
@@ -888,7 +888,7 @@ msgstr "Προεπιλογή"
 msgid "Default AI account"
 msgstr "Προεπιλεγμένος λογαριασμός AI"
 
-#: src/features/editor/components/edit-dialogs.tsx:493
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:485
 msgid "Default sort"
 msgstr "Προεπιλεγμένη ταξινόμηση"
 
@@ -910,7 +910,7 @@ msgstr "Διαγραφή"
 msgid "Delete attachment"
 msgstr "Διαγραφή συνημμένου"
 
-#: src/features/editor/components/edit-dialogs.tsx:732
+#: src/features/editor/components/edit-dialogs.tsx:246
 msgid "Delete class"
 msgstr "Διαγραφή κλάσης"
 
@@ -922,7 +922,7 @@ msgstr "Διαγραφή στήλης"
 msgid "Delete comment"
 msgstr "Διαγραφή σχολίου"
 
-#: src/features/editor/components/edit-dialogs.tsx:1223
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:301
 msgid "Delete field"
 msgstr "Διαγραφή πεδίου"
 
@@ -947,8 +947,8 @@ msgid "Delete option"
 msgstr "Διαγραφή επιλογής"
 
 #. placeholder {0}: opt.name
-#: src/features/editor/components/edit-dialogs.tsx:1201
-#: src/features/editor/components/edit-dialogs.tsx:1206
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:279
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:284
 msgid "Delete option {0}"
 msgstr "Διαγραφή επιλογής {0}"
 
@@ -961,7 +961,7 @@ msgstr "Διαγραφή έργου"
 msgid "Delete project?"
 msgstr "Διαγραφή έργου;"
 
-#: src/features/editor/components/edit-dialogs.tsx:298
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:290
 msgid "Delete view"
 msgstr "Διαγραφή προβολής"
 
@@ -1060,9 +1060,9 @@ msgstr "Απόρριψη υπόδειξης πίνακα"
 msgid "Displays the mobile sidebar."
 msgstr "Εμφανίζει την πλευρική μπάρα κινητού."
 
-#: src/features/editor/components/edit-dialogs.tsx:532
-#: src/features/editor/components/edit-dialogs.tsx:922
-#: src/features/editor/components/edit-dialogs.tsx:1228
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:306
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:524
+#: src/features/editor/components/edit-dialogs.tsx:436
 #: src/features/objects/components/object-detail-panel.tsx:465
 msgid "Done"
 msgstr "Ολοκληρώθηκε"
@@ -1115,15 +1115,15 @@ msgstr "Επεξεργασία"
 msgid "Edit {label}"
 msgstr "Επεξεργασία {label}"
 
-#: src/features/editor/components/edit-dialogs.tsx:706
+#: src/features/editor/components/edit-dialogs.tsx:220
 msgid "Edit class"
 msgstr "Επεξεργασία κλάσης"
 
-#: src/features/editor/components/edit-dialogs.tsx:1060
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:138
 msgid "Edit field"
 msgstr "Επεξεργασία πεδίου"
 
-#: src/features/editor/components/edit-dialogs.tsx:1061
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:139
 msgid "Edit field settings"
 msgstr "Επεξεργασία ρυθμίσεων πεδίου"
 
@@ -1132,8 +1132,8 @@ msgid "Edit option"
 msgstr "Επεξεργασία επιλογής"
 
 #. placeholder {0}: opt.name
-#: src/features/editor/components/edit-dialogs.tsx:1186
-#: src/features/editor/components/edit-dialogs.tsx:1191
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:264
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:269
 msgid "Edit option {0}"
 msgstr "Επεξεργασία επιλογής {0}"
 
@@ -1141,7 +1141,7 @@ msgstr "Επεξεργασία επιλογής {0}"
 msgid "Edit selected card"
 msgstr "Επεξεργασία επιλεγμένης κάρτας"
 
-#: src/features/editor/components/edit-dialogs.tsx:272
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:264
 msgid "Edit view"
 msgstr "Επεξεργασία προβολής"
 
@@ -1388,7 +1388,7 @@ msgstr "Αποτυχία ενημέρωσης έργου"
 msgid "Failed to upload attachment"
 msgstr "Αποτυχία μεταφόρτωσης συνημμένου"
 
-#: src/features/editor/components/edit-dialogs.tsx:838
+#: src/features/editor/components/edit-dialogs.tsx:352
 msgid "Fields"
 msgstr "Πεδία"
 
@@ -1415,7 +1415,7 @@ msgstr "Αποτύπωμα"
 msgid "Finish moving your account"
 msgstr "Ολοκληρώστε τη μεταφορά του λογαριασμού σας"
 
-#: src/features/editor/components/edit-dialogs.tsx:1144
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:222
 msgid "Flags"
 msgstr "Σημαίες"
 
@@ -1486,7 +1486,7 @@ msgstr "Μετάβαση στην προηγούμενη σελίδα"
 msgid "Group"
 msgstr "Ομάδα"
 
-#: src/features/editor/components/edit-dialogs.tsx:361
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:353
 msgid "Group by"
 msgstr "Ομαδοποίηση κατά"
 
@@ -1518,8 +1518,8 @@ msgstr "Αρχική"
 msgid "Hot"
 msgstr "Δημοφιλή"
 
-#: src/features/editor/components/edit-dialogs.tsx:755
-#: src/features/editor/components/edit-dialogs.tsx:1075
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:153
+#: src/features/editor/components/edit-dialogs.tsx:269
 msgid "ID"
 msgstr "Αναγνωριστικό"
 
@@ -1609,7 +1609,7 @@ msgid "Large"
 msgstr "Μεγάλο"
 
 #: ../../../lib/web/src/components/config-drawer.tsx:287
-#: src/features/editor/components/edit-dialogs.tsx:320
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:312
 msgid "Layout"
 msgstr "Διάταξη"
 
@@ -1641,7 +1641,7 @@ msgstr "Σύνδεσμος"
 msgid "Links"
 msgstr "Σύνδεσμοι"
 
-#: src/features/editor/components/edit-dialogs.tsx:332
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:324
 msgid "List"
 msgstr "Λίστα"
 
@@ -1708,7 +1708,7 @@ msgstr "Χειροκίνητο"
 msgid "Mark all as read"
 msgstr "Σήμανση όλων ως αναγνωσμένα"
 
-#: src/features/editor/components/edit-dialogs.tsx:1121
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:199
 msgid "Maximum length"
 msgstr "Μέγιστο μήκος"
 
@@ -1764,7 +1764,7 @@ msgstr "Μήνυμα"
 msgid "Metric"
 msgstr "Μετρικό"
 
-#: src/features/editor/components/edit-dialogs.tsx:1110
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:188
 msgid "Minimum length"
 msgstr "Ελάχιστο μήκος"
 
@@ -1795,10 +1795,10 @@ msgstr "Το έργο μου"
 
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:118
 #: ../../../lib/web/src/components/entity/entity-board-column.tsx:614
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:143
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:128
-#: src/features/editor/components/edit-dialogs.tsx:307
-#: src/features/editor/components/edit-dialogs.tsx:741
-#: src/features/editor/components/edit-dialogs.tsx:1065
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:299
+#: src/features/editor/components/edit-dialogs.tsx:255
 #: src/features/projects/components/create-project-dialog.tsx:331
 #: src/routes/_authenticated/$projectId_.settings.tsx:301
 msgid "Name"
@@ -1946,8 +1946,8 @@ msgstr "Δεν βρέθηκαν αποτελέσματα"
 msgid "No results found."
 msgstr "Δεν βρέθηκαν αποτελέσματα."
 
-#: src/features/board/components/board-container.tsx:865
-#: src/features/board/components/board-container.tsx:910
+#: ../../../lib/web/src/components/entity/entity-board-container.tsx:889
+#: ../../../lib/web/src/components/entity/entity-board-container.tsx:934
 #: src/features/tree/components/tree-view.tsx:363
 msgid "No status"
 msgstr "Χωρίς κατάσταση"
@@ -1973,18 +1973,18 @@ msgid "No views"
 msgstr "Χωρίς προβολές"
 
 #: ../../../lib/web/src/components/colour-picker.tsx:345
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:365
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:388
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:391
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:418
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:421
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:494
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:497
 #: ../../../lib/web/src/components/person-picker.tsx:350
 #: ../../../lib/web/src/lib/preference-utils.ts:105
 #: ../../../lib/web/src/lib/preference-utils.ts:125
-#: src/features/editor/components/edit-dialogs.tsx:373
-#: src/features/editor/components/edit-dialogs.tsx:396
-#: src/features/editor/components/edit-dialogs.tsx:399
-#: src/features/editor/components/edit-dialogs.tsx:426
-#: src/features/editor/components/edit-dialogs.tsx:429
-#: src/features/editor/components/edit-dialogs.tsx:502
-#: src/features/editor/components/edit-dialogs.tsx:505
-#: src/features/editor/components/edit-dialogs.tsx:779
-#: src/features/editor/components/edit-dialogs.tsx:782
+#: src/features/editor/components/edit-dialogs.tsx:293
+#: src/features/editor/components/edit-dialogs.tsx:296
 #: src/features/objects/components/create-object-dialog.tsx:455
 #: src/features/objects/components/create-object-dialog.tsx:462
 #: src/features/objects/components/object-detail-panel.tsx:530
@@ -2027,8 +2027,8 @@ msgid "Notifications: {0}"
 msgstr "Ειδοποιήσεις: {0}"
 
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:140
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:499
 #: src/components/view-options-bar.tsx:42
-#: src/features/editor/components/edit-dialogs.tsx:507
 msgid "Number"
 msgstr "Αριθμός"
 
@@ -2060,8 +2060,8 @@ msgstr "Άνοιγμα ενεργειών λογαριασμού"
 msgid "Open actions"
 msgstr "Άνοιγμα ενεργειών"
 
-#: src/features/editor/components/edit-dialogs.tsx:722
-#: src/features/editor/components/edit-dialogs.tsx:727
+#: src/features/editor/components/edit-dialogs.tsx:236
+#: src/features/editor/components/edit-dialogs.tsx:241
 msgid "Open class actions"
 msgstr "Άνοιγμα ενεργειών κλάσης"
 
@@ -2101,8 +2101,8 @@ msgstr "Άνοιγμα επιλεγμένης κάρτας"
 msgid "Open theme settings"
 msgstr "Άνοιγμα ρυθμίσεων θέματος"
 
-#: src/features/editor/components/edit-dialogs.tsx:288
-#: src/features/editor/components/edit-dialogs.tsx:293
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:280
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:285
 msgid "Open view actions"
 msgstr "Άνοιγμα ενεργειών προβολής"
 
@@ -2117,7 +2117,7 @@ msgid "Option name"
 msgstr "Όνομα επιλογής"
 
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:168
-#: src/features/editor/components/edit-dialogs.tsx:1163
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:241
 msgid "Options"
 msgstr "Επιλογές"
 
@@ -2151,7 +2151,7 @@ msgstr "Η επαλήθευση με κλειδί πρόσβασης απέτυ�
 msgid "Passkeys"
 msgstr "Κλειδιά πρόσβασης"
 
-#: src/features/editor/components/edit-dialogs.tsx:1132
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:210
 msgid "Pattern (regex)"
 msgstr "Μοτίβο (regex)"
 
@@ -2363,8 +2363,8 @@ msgid "Remove access?"
 msgstr "Αφαίρεση πρόσβασης;"
 
 #. placeholder {0}: field.name || field.id
-#: src/features/editor/components/edit-dialogs.tsx:880
-#: src/features/editor/components/edit-dialogs.tsx:885
+#: src/features/editor/components/edit-dialogs.tsx:394
+#: src/features/editor/components/edit-dialogs.tsx:399
 msgid "Remove field {0}"
 msgstr "Αφαίρεση πεδίου {0}"
 
@@ -2420,11 +2420,11 @@ msgstr "Απάντηση"
 msgid "Reply to {0}..."
 msgstr "Απάντηση σε {0}..."
 
-#: src/features/editor/components/edit-dialogs.tsx:820
+#: src/features/editor/components/edit-dialogs.tsx:334
 msgid "Requests"
 msgstr "Αιτήματα"
 
-#: src/features/editor/components/edit-dialogs.tsx:1147
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:225
 msgid "Required"
 msgstr "Υποχρεωτικό"
 
@@ -2467,11 +2467,11 @@ msgid "Right to Left"
 msgstr "Από δεξιά προς αριστερά"
 
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:150
-#: src/features/editor/components/edit-dialogs.tsx:1091
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:169
 msgid "Rows"
 msgstr "Γραμμές"
 
-#: src/features/editor/components/edit-dialogs.tsx:387
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:379
 msgid "Rows group by"
 msgstr "Ομαδοποίηση γραμμών κατά"
 
@@ -2581,7 +2581,7 @@ msgstr "Επιλογή"
 msgid "Select {0}"
 msgstr "Επιλογή {0}"
 
-#: src/features/editor/components/edit-dialogs.tsx:370
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:362
 msgid "Select a field"
 msgstr "Επιλέξτε ένα πεδίο"
 
@@ -2716,11 +2716,11 @@ msgstr "Ορισμός πρόσβασης..."
 msgid "Settings"
 msgstr "Ρυθμίσεις"
 
-#: src/features/editor/components/edit-dialogs.tsx:341
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:333
 msgid "Show classes"
 msgstr "Εμφάνιση κλάσεων"
 
-#: src/features/editor/components/edit-dialogs.tsx:442
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:434
 msgid "Show fields"
 msgstr "Εμφάνιση πεδίων"
 
@@ -2752,7 +2752,7 @@ msgid "Signing out..."
 msgstr "Αποσύνδεση..."
 
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:161
-#: src/features/editor/components/edit-dialogs.tsx:1102
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:180
 msgid "Single line of text only"
 msgstr "Μόνο μία γραμμή κειμένου"
 
@@ -2956,12 +2956,12 @@ msgstr "Αυτό θα αντικαταστήσει την τρέχουσα σχ�
 msgid "Thursday"
 msgstr "Πέμπτη"
 
-#: src/features/editor/components/edit-dialogs.tsx:593
+#: src/features/editor/components/edit-dialogs.tsx:107
 #: src/features/requests/components/request-panel.tsx:294
 msgid "Title"
 msgstr "Τίτλος"
 
-#: src/features/editor/components/edit-dialogs.tsx:764
+#: src/features/editor/components/edit-dialogs.tsx:278
 msgid "Title field"
 msgstr "Πεδίο τίτλου"
 
@@ -3017,7 +3017,7 @@ msgstr "Πάρα πολλά αιτήματα"
 msgid "Top"
 msgstr "Κορυφή"
 
-#: src/features/editor/components/edit-dialogs.tsx:802
+#: src/features/editor/components/edit-dialogs.tsx:316
 msgid "Top level"
 msgstr "Ανώτατο επίπεδο"
 
@@ -3041,7 +3041,7 @@ msgid "Tuesday"
 msgstr "Τρίτη"
 
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:130
-#: src/features/editor/components/edit-dialogs.tsx:1085
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:163
 msgid "Type"
 msgstr "Τύπος"
 
@@ -3126,8 +3126,8 @@ msgstr "Χωρίς τίτλο"
 msgid "Unverified"
 msgstr "Μη επαληθευμένο"
 
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:500
 #: src/components/view-options-bar.tsx:44
-#: src/features/editor/components/edit-dialogs.tsx:508
 msgid "Updated"
 msgstr "Ενημερώθηκε"
 

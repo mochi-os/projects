@@ -3,84 +3,33 @@
 // This file is part of Mochi, licensed under the GNU AGPL v3 with the
 // Mochi Application Interface Exception - see license.txt and license-exception.md.
 
+// The projects API is the shared entity API plus what only this app has:
+// templates, merge requests, and the repository integration behind them.
+// Class create/update are overridden rather than shared, since a project class
+// carries a `requests` setting that a CRM class has no concept of.
+
+import { createEntityApi, type EntityApiShapes } from "@mochi/web";
 import endpoints from "./endpoints";
 import { projectsRequest } from "./request";
-import type { AxiosProgressEvent } from "axios";
-import type { AccessRule } from "@mochi/web";
 import type {
   Project,
   ProjectDetails,
   ProjectTemplate,
-  ProjectView,
   ProjectClass,
-  ProjectField,
-  FieldOption,
-  ObjectListResponse,
-  ObjectCreateResponse,
-  ObjectGetResponse,
-  CommentListResponse,
-  ActivityListResponse,
-  AttachmentListResponse,
-  WatcherListResponse,
-  LinkListResponse,
-  Comment,
+  ObjectLink,
   RequestData,
   RepositoryListResponse,
   BranchListResponse,
   MergeCheckResponse,
   DiffResponse,
   MergeResponse,
+  ProjectObject,
 } from "@/types";
 
-// Response types
-interface ProjectListResponse {
-  data: {
-    projects: Project[];
-  };
-}
-
-interface ProjectCreateResponse {
-  data: {
-    id: string;
-    fingerprint: string;
-  };
-}
-
-interface ProjectGetResponse {
-  data: ProjectDetails;
-}
-
-interface TemplatesResponse {
-  data: {
-    templates: ProjectTemplate[];
-  };
-}
-
-interface SuccessResponse {
-  data: {
-    success: boolean;
-  };
-}
-
-interface ViewListResponse {
-  data: {
-    views: ProjectView[];
-  };
-}
-
-interface ViewCreateResponse {
-  data: {
-    id: string;
-    name: string;
-    viewtype: string;
-  };
-}
-
-// Request types
 interface CreateProjectRequest {
   name: string;
-  template: string;
   description?: string;
+  template: string;
   prefix?: string;
   privacy?: "public" | "private";
 }
@@ -91,664 +40,75 @@ interface UpdateProjectRequest {
   prefix?: string;
 }
 
-interface CreateObjectRequest {
-  class: string;
-  title?: string;
-  template?: string;
-  parent?: string;
-}
-
-interface MoveObjectRequest {
-  field?: string;  // Column field name (e.g., "status" or "column")
-  value?: string;  // New column value
-  rank?: number;
-  row_field?: string;  // Row field name (for swimlane moves)
-  row_value?: string;  // New row value
-  scope_parent?: string;  // Scope rank renumbering to siblings of this parent
-  promote?: string;  // "true" to clear parent (promote child to top-level)
-}
-
-interface CreateViewRequest {
-  name: string;
-  viewtype?: "board" | "list";
-  filter?: string;
-  columns?: string;
-  rows?: string;
-  fields?: string;
-  sort?: string;
-  direction?: "asc" | "desc";
-  classes?: string;
-  border?: string;
-}
-
-interface UpdateViewRequest {
-  name?: string;
-  viewtype?: "board" | "list";
-  filter?: string;
-  columns?: string;
-  rows?: string;
-  fields?: string;
-  sort?: string;
-  direction?: "asc" | "desc";
-  classes?: string;
-  border?: string;
-}
-
-// Class response/request types
-interface ClassListResponse {
-  data: {
-    classes: ProjectClass[];
-  };
-}
-
-interface ClassCreateResponse {
-  data: {
-    id: string;
-    name: string;
-    sort: number;
-  };
-}
-
 interface CreateClassRequest {
   name: string;
-  requests?: string;
   title?: string;
+  requests?: string;
 }
 
 interface UpdateClassRequest {
   name?: string;
-  requests?: string;
   title?: string;
+  requests?: string;
 }
 
-// Hierarchy response/request types
-interface HierarchyGetResponse {
+interface SuccessResponse {
   data: {
-    parents: string[];
+    success: boolean;
   };
 }
 
-interface SetHierarchyRequest {
-  parents: string;
-}
-
-// Field response/request types
-interface FieldListResponse {
-  data: {
-    fields: ProjectField[];
+interface ProjectApiShapes extends EntityApiShapes {
+  summary: Project;
+  details: ProjectDetails;
+  object: ProjectObject;
+  objectDetail: {
+    object: ProjectObject & { readable: string };
+    values: Record<string, string>;
+    outgoing: ObjectLink[];
+    incoming: ObjectLink[];
+    watching: boolean;
+    comment_count: number;
+    requests: RequestData[];
   };
+  objectCreated: { id: string; number: number; readable: string };
+  createRequest: CreateProjectRequest;
+  updateRequest: UpdateProjectRequest;
+  listKey: "projects";
 }
 
-interface FieldCreateResponse {
-  data: {
-    id: string;
-    name: string;
-    fieldtype: string;
-    sort: number;
-  };
-}
+const entityApi = createEntityApi<ProjectApiShapes>({
+  request: projectsRequest,
+  endpoints: endpoints.projects,
+  resourceKey: "project",
+});
 
-interface CreateFieldRequest {
-  name: string;
-  fieldtype?: string;
-  flags?: string;
-  multi?: string;
-  card?: string;
-  rows?: string;
-}
-
-interface UpdateFieldRequest {
-  id?: string;
-  name?: string;
-  flags?: string;
-  multi?: string;
-  card?: string;
-  min?: string;
-  max?: string;
-  pattern?: string;
-  minlength?: string;
-  maxlength?: string;
-  prefix?: string;
-  suffix?: string;
-  format?: string;
-  position?: string;
-  rows?: string;
-}
-
-// Option response/request types
-interface OptionListResponse {
-  data: {
-    options: FieldOption[];
-  };
-}
-
-interface OptionCreateResponse {
-  data: {
-    id: string;
-    name: string;
-    colour: string;
-    sort: number;
-  };
-}
-
-interface CreateOptionRequest {
-  name: string;
-  colour?: string;
-  icon?: string;
-}
-
-interface UpdateOptionRequest {
-  name?: string;
-  colour?: string;
-  icon?: string;
-}
-
-// Search response type
-interface DirectoryEntry {
-  id: string;
-  name: string;
-  fingerprint: string;
-  location?: string;
-}
-
-interface SearchResponse {
-  data: DirectoryEntry[];
-}
-
-// API methods
 const projectsApi = {
-  // List all projects
-  list: async (): Promise<ProjectListResponse> => {
-    return projectsRequest.get<ProjectListResponse>(endpoints.projects.list);
-  },
-
-  // Search for projects in the directory
-  search: async (params: { search: string }): Promise<SearchResponse> => {
-    return projectsRequest.get<SearchResponse>(
-      `${endpoints.projects.search}?search=${encodeURIComponent(params.search)}`
-    );
-  },
+  ...entityApi,
 
   // Get available templates
-  templates: async (): Promise<TemplatesResponse> => {
-    return projectsRequest.get<TemplatesResponse>(endpoints.projects.templates);
+  templates: async (): Promise<{ data: { templates: ProjectTemplate[] } }> => {
+    return projectsRequest.get(endpoints.projects.templates);
   },
 
-  // Create a new project
-  create: async (
-    data: CreateProjectRequest,
-  ): Promise<ProjectCreateResponse> => {
-    return projectsRequest.post<ProjectCreateResponse, CreateProjectRequest>(
-      endpoints.projects.create,
-      data,
-    );
-  },
+  // ============= Class Methods (project classes carry `requests`) =============
 
-  // Get project details
-  get: async (projectId: string): Promise<ProjectGetResponse> => {
-    return projectsRequest.get<ProjectGetResponse>(
-      endpoints.projects.info(projectId),
-    );
-  },
-
-  // Update project
-  update: async (
+  listClasses: async (
     projectId: string,
-    data: UpdateProjectRequest,
-  ): Promise<SuccessResponse> => {
-    return projectsRequest.post<SuccessResponse, UpdateProjectRequest>(
-      endpoints.projects.update(projectId),
-      data,
-    );
+  ): Promise<{ data: { classes: ProjectClass[] } }> => {
+    return projectsRequest.get(endpoints.projects.classes(projectId));
   },
 
-  // Delete project
-  delete: async (projectId: string): Promise<SuccessResponse> => {
-    return projectsRequest.post<SuccessResponse>(
-      endpoints.projects.delete(projectId),
-    );
-  },
-
-  // List project members (subscribers + owners)
-  listPeople: async (
-    projectId: string,
-  ): Promise<{ data: { people: { id: string; name: string }[] } }> => {
-    return projectsRequest.get(endpoints.projects.people(projectId));
-  },
-
-  // ============= Object Methods =============
-
-  // List objects
-  listObjects: async (
-    projectId: string,
-    params?: { class?: string; status?: string; parent?: string },
-  ): Promise<ObjectListResponse> => {
-    const searchParams = new URLSearchParams();
-    if (params?.class) searchParams.set("class", params.class);
-    if (params?.status) searchParams.set("status", params.status);
-    if (params?.parent !== undefined) searchParams.set("parent", params.parent);
-    const query = searchParams.toString();
-    const url =
-      endpoints.projects.objects(projectId) + (query ? `?${query}` : "");
-    return projectsRequest.get<ObjectListResponse>(url);
-  },
-
-  // Create object
-  createObject: async (
-    projectId: string,
-    data: CreateObjectRequest,
-  ): Promise<ObjectCreateResponse> => {
-    return projectsRequest.post<ObjectCreateResponse, CreateObjectRequest>(
-      endpoints.projects.objectCreate(projectId),
-      data,
-    );
-  },
-
-  // Get object
-  getObject: async (
-    projectId: string,
-    objectId: string,
-  ): Promise<ObjectGetResponse> => {
-    return projectsRequest.get<ObjectGetResponse>(
-      endpoints.projects.object(projectId, objectId),
-    );
-  },
-
-  // Update object
-  updateObject: async (
-    projectId: string,
-    objectId: string,
-    data: { parent?: string; class?: string },
-  ): Promise<SuccessResponse> => {
-    return projectsRequest.post<SuccessResponse>(
-      endpoints.projects.objectUpdate(projectId, objectId),
-      data,
-    );
-  },
-
-  // Delete object
-  deleteObject: async (
-    projectId: string,
-    objectId: string,
-  ): Promise<SuccessResponse> => {
-    return projectsRequest.post<SuccessResponse>(
-      endpoints.projects.objectDelete(projectId, objectId),
-    );
-  },
-
-  // Move object (change status - for drag-drop)
-  moveObject: async (
-    projectId: string,
-    objectId: string,
-    data: MoveObjectRequest,
-  ): Promise<SuccessResponse> => {
-    return projectsRequest.post<SuccessResponse, MoveObjectRequest>(
-      endpoints.projects.objectMove(projectId, objectId),
-      data,
-    );
-  },
-
-  // Set multiple values
-  setValues: async (
-    projectId: string,
-    objectId: string,
-    values: Record<string, string>,
-  ): Promise<SuccessResponse> => {
-    return projectsRequest.post<SuccessResponse>(
-      endpoints.projects.valuesSet(projectId, objectId),
-      values,
-    );
-  },
-
-  // Set single value
-  setValue: async (
-    projectId: string,
-    objectId: string,
-    field: string,
-    value: string,
-  ): Promise<SuccessResponse> => {
-    return projectsRequest.post<SuccessResponse>(
-      endpoints.projects.valueSet(projectId, objectId, field),
-      { value },
-    );
-  },
-
-  // ============= Link Methods =============
-
-  // List links
-  listLinks: async (
-    projectId: string,
-    objectId: string,
-  ): Promise<LinkListResponse> => {
-    return projectsRequest.get<LinkListResponse>(
-      endpoints.projects.links(projectId, objectId),
-    );
-  },
-
-  // Create link
-  createLink: async (
-    projectId: string,
-    objectId: string,
-    target: string,
-    linktype: string,
-  ): Promise<SuccessResponse> => {
-    return projectsRequest.post<SuccessResponse>(
-      endpoints.projects.linkCreate(projectId, objectId),
-      { target, linktype },
-    );
-  },
-
-  // Delete link
-  deleteLink: async (
-    projectId: string,
-    objectId: string,
-    target: string,
-    linktype: string,
-  ): Promise<SuccessResponse> => {
-    return projectsRequest.post<SuccessResponse>(
-      endpoints.projects.linkDelete(projectId, objectId),
-      { target, linktype },
-    );
-  },
-
-  // ============= Comment Methods =============
-
-  // List comments
-  listComments: async (
-    projectId: string,
-    objectId: string,
-  ): Promise<CommentListResponse> => {
-    return projectsRequest.get<CommentListResponse>(
-      endpoints.projects.comments(projectId, objectId),
-    );
-  },
-
-  // Create comment
-  createComment: async (
-    projectId: string,
-    objectId: string,
-    content: string,
-    parent?: string,
-    files?: File[],
-    onProgress?: (event: AxiosProgressEvent) => void,
-  ): Promise<{ data: Comment }> => {
-    const formData = new FormData();
-    formData.append("content", content);
-    if (parent) formData.append("parent", parent);
-    if (files) {
-      files.forEach((file) => formData.append("files", file));
-    }
-    return projectsRequest.post<{ data: Comment }>(
-      endpoints.projects.commentCreate(projectId, objectId),
-      formData,
-      { timeout: 0, onUploadProgress: onProgress },
-    );
-  },
-
-  // Update comment
-  updateComment: async (
-    projectId: string,
-    objectId: string,
-    commentId: string,
-    content: string,
-  ): Promise<SuccessResponse> => {
-    return projectsRequest.post<SuccessResponse>(
-      endpoints.projects.commentUpdate(projectId, objectId, commentId),
-      { content },
-    );
-  },
-
-  // Delete comment
-  deleteComment: async (
-    projectId: string,
-    objectId: string,
-    commentId: string,
-  ): Promise<SuccessResponse> => {
-    return projectsRequest.post<SuccessResponse>(
-      endpoints.projects.commentDelete(projectId, objectId, commentId),
-    );
-  },
-
-  // ============= Activity Methods =============
-
-  // List activity
-  listActivity: async (
-    projectId: string,
-    objectId: string,
-  ): Promise<ActivityListResponse> => {
-    return projectsRequest.get<ActivityListResponse>(
-      endpoints.projects.activity(projectId, objectId),
-    );
-  },
-
-  // ============= Attachment Methods =============
-
-  // Upload attachments
-  uploadAttachments: async (
-    projectId: string,
-    objectId: string,
-    files: File[],
-    onProgress?: (event: AxiosProgressEvent) => void,
-  ): Promise<AttachmentListResponse> => {
-    const formData = new FormData();
-    for (const file of files) {
-      formData.append("files", file);
-    }
-    return projectsRequest.post(
-      endpoints.projects.attachmentCreate(projectId, objectId),
-      formData,
-      { timeout: 0, onUploadProgress: onProgress },
-    );
-  },
-
-  // List attachments
-  listAttachments: async (
-    projectId: string,
-    objectId: string,
-  ): Promise<AttachmentListResponse> => {
-    return projectsRequest.get<AttachmentListResponse>(
-      endpoints.projects.attachments(projectId, objectId),
-    );
-  },
-
-  // Delete attachment
-  deleteAttachment: async (
-    projectId: string,
-    objectId: string,
-    attachmentId: string,
-  ): Promise<SuccessResponse> => {
-    return projectsRequest.post<SuccessResponse>(
-      endpoints.projects.attachmentDelete(projectId, objectId, attachmentId),
-    );
-  },
-
-  // ============= Watcher Methods =============
-
-  // List watchers
-  listWatchers: async (
-    projectId: string,
-    objectId: string,
-  ): Promise<WatcherListResponse> => {
-    return projectsRequest.get<WatcherListResponse>(
-      endpoints.projects.watchers(projectId, objectId),
-    );
-  },
-
-  // Add watcher (self)
-  addWatcher: async (
-    projectId: string,
-    objectId: string,
-  ): Promise<SuccessResponse & { data: { watching: boolean } }> => {
-    return projectsRequest.post<
-      SuccessResponse & { data: { watching: boolean } }
-    >(endpoints.projects.watcherAdd(projectId, objectId));
-  },
-
-  // Remove watcher (self)
-  removeWatcher: async (
-    projectId: string,
-    objectId: string,
-  ): Promise<SuccessResponse & { data: { watching: boolean } }> => {
-    return projectsRequest.post<
-      SuccessResponse & { data: { watching: boolean } }
-    >(endpoints.projects.watcherRemove(projectId, objectId));
-  },
-
-  // ============= Design Import/Export Methods =============
-
-  // Export design as template JSON
-  exportDesign: async (
-    projectId: string,
-  ): Promise<{ data: Record<string, unknown> }> => {
-    return projectsRequest.get(endpoints.projects.designExport(projectId));
-  },
-
-  // Import design from template JSON or built-in template ID
-  importDesign: async (
-    projectId: string,
-    data: Record<string, unknown>,
-    template?: string,
-    templateVersion?: number,
-  ): Promise<SuccessResponse> => {
-    const payload: Record<string, string> = {
-      template: template || "",
-      template_version: String(templateVersion || 0),
-    };
-    // Only send data if it has content (for file imports)
-    // For built-in templates, the backend loads the template file by template ID
-    if (Object.keys(data).length > 0) {
-      payload.data = JSON.stringify(data);
-    }
-    return projectsRequest.post<SuccessResponse>(
-      endpoints.projects.designImport(projectId),
-      payload,
-    );
-  },
-
-  // ============= Data Import/Export Methods =============
-
-  // Export data as JSON
-  // Export data as a zip container: a manifest plus one entry per attachment.
-  // Fetched as a blob because the attachment bytes never become JSON - the
-  // server streams them into the archive rather than base64-encoding them.
-  exportData: async (projectId: string): Promise<Blob> => {
-    const response = await projectsRequest.get<Blob>(
-      endpoints.projects.dataExport(projectId),
-      { responseType: "blob" },
-    );
-    return response as unknown as Blob;
-  },
-
-  // Pre-fetch attachment bytes on the server before an export. Remote
-  // projects fetch bytes over P2P in bounded rounds; loop until remaining
-  // is zero, then call exportData.
-  warmExport: async (
-    projectId: string,
-  ): Promise<{ data: { attachments: number; remaining: number } }> => {
-    return projectsRequest.post(endpoints.projects.dataExportWarm(projectId), {});
-  },
-
-  // Import data from an export file. Uploaded as a multipart file part:
-  // form fields cap out at a few megabytes at the HTTP layer, while file
-  // parts spool to disk.
-  importData: async (
-    projectId: string,
-    file: Blob,
-    onProgress?: (event: AxiosProgressEvent) => void,
-    design?: boolean,
-  ): Promise<{ data: { objects: number; comments: number; attachments: number; links: number } }> => {
-    const form = new FormData();
-    form.append("file", file, "import.zip");
-    // A container carries the design its objects were validated against, so a
-    // restore applies both in one upload.
-    if (design) form.append("design", "1");
-    return projectsRequest.post(endpoints.projects.dataImport(projectId), form, {
-      timeout: 0,
-      onUploadProgress: onProgress,
-    });
-  },
-
-  // ============= View Methods =============
-
-  // List views
-  listViews: async (projectId: string): Promise<ViewListResponse> => {
-    return projectsRequest.get<ViewListResponse>(
-      endpoints.projects.views(projectId),
-    );
-  },
-
-  // Create view
-  createView: async (
-    projectId: string,
-    data: CreateViewRequest,
-  ): Promise<ViewCreateResponse> => {
-    return projectsRequest.post<ViewCreateResponse, CreateViewRequest>(
-      endpoints.projects.viewCreate(projectId),
-      data,
-    );
-  },
-
-  // Update view
-  updateView: async (
-    projectId: string,
-    viewId: string,
-    data: UpdateViewRequest,
-  ): Promise<SuccessResponse> => {
-    // Filter out undefined values before sending
-    const cleanData: Record<string, string> = {};
-    for (const [key, value] of Object.entries(data)) {
-      if (value !== undefined && value !== null) {
-        cleanData[key] = value;
-      }
-    }
-    return projectsRequest.post<SuccessResponse, Record<string, string>>(
-      endpoints.projects.viewUpdate(projectId, viewId),
-      cleanData,
-    );
-  },
-
-  // Delete view
-  deleteView: async (
-    projectId: string,
-    viewId: string,
-  ): Promise<SuccessResponse> => {
-    return projectsRequest.post<SuccessResponse>(
-      endpoints.projects.viewDelete(projectId, viewId),
-    );
-  },
-
-  // Reorder views
-  reorderViews: async (
-    projectId: string,
-    order: string[],
-  ): Promise<SuccessResponse> => {
-    return projectsRequest.post<SuccessResponse>(
-      endpoints.projects.viewReorder(projectId),
-      { order: order.join(",") },
-    );
-  },
-
-  // ============= Class Methods =============
-
-  // List classes
-  listClasses: async (projectId: string): Promise<ClassListResponse> => {
-    return projectsRequest.get<ClassListResponse>(
-      endpoints.projects.classes(projectId),
-    );
-  },
-
-  // Create class
   createClass: async (
     projectId: string,
     data: CreateClassRequest,
-  ): Promise<ClassCreateResponse> => {
-    return projectsRequest.post<ClassCreateResponse, CreateClassRequest>(
-      endpoints.projects.classCreate(projectId),
-      data,
-    );
+  ): Promise<{ data: { id: string; name: string; sort: number } }> => {
+    return projectsRequest.post<
+      { data: { id: string; name: string; sort: number } },
+      CreateClassRequest
+    >(endpoints.projects.classCreate(projectId), data);
   },
 
-  // Update class
   updateClass: async (
     projectId: string,
     classId: string,
@@ -757,167 +117,6 @@ const projectsApi = {
     return projectsRequest.post<SuccessResponse, UpdateClassRequest>(
       endpoints.projects.classUpdate(projectId, classId),
       data,
-    );
-  },
-
-  // Delete class
-  deleteClass: async (
-    projectId: string,
-    classId: string,
-  ): Promise<SuccessResponse> => {
-    return projectsRequest.post<SuccessResponse>(
-      endpoints.projects.classDelete(projectId, classId),
-    );
-  },
-
-  // ============= Hierarchy Methods =============
-
-  // Get hierarchy
-  getHierarchy: async (
-    projectId: string,
-    classId: string,
-  ): Promise<HierarchyGetResponse> => {
-    return projectsRequest.get<HierarchyGetResponse>(
-      endpoints.projects.hierarchy(projectId, classId),
-    );
-  },
-
-  // Set hierarchy
-  setHierarchy: async (
-    projectId: string,
-    classId: string,
-    parents: string[],
-  ): Promise<SuccessResponse> => {
-    // Use _none_ to indicate empty list, since empty string means "can be root"
-    const parentsStr = parents.length === 0 ? "_none_" : parents.join(",");
-    return projectsRequest.post<SuccessResponse, SetHierarchyRequest>(
-      endpoints.projects.hierarchySet(projectId, classId),
-      { parents: parentsStr },
-    );
-  },
-
-  // ============= Field Methods =============
-
-  // List fields
-  listFields: async (
-    projectId: string,
-    classId: string,
-  ): Promise<FieldListResponse> => {
-    return projectsRequest.get<FieldListResponse>(
-      endpoints.projects.fields(projectId, classId),
-    );
-  },
-
-  // Create field
-  createField: async (
-    projectId: string,
-    classId: string,
-    data: CreateFieldRequest,
-  ): Promise<FieldCreateResponse> => {
-    return projectsRequest.post<FieldCreateResponse, CreateFieldRequest>(
-      endpoints.projects.fieldCreate(projectId, classId),
-      data,
-    );
-  },
-
-  // Update field
-  updateField: async (
-    projectId: string,
-    classId: string,
-    fieldId: string,
-    data: UpdateFieldRequest,
-  ): Promise<SuccessResponse> => {
-    return projectsRequest.post<SuccessResponse, UpdateFieldRequest>(
-      endpoints.projects.fieldUpdate(projectId, classId, fieldId),
-      data,
-    );
-  },
-
-  // Delete field
-  deleteField: async (
-    projectId: string,
-    classId: string,
-    fieldId: string,
-  ): Promise<SuccessResponse> => {
-    return projectsRequest.post<SuccessResponse>(
-      endpoints.projects.fieldDelete(projectId, classId, fieldId),
-    );
-  },
-
-  // Reorder fields
-  reorderFields: async (
-    projectId: string,
-    classId: string,
-    order: string[],
-  ): Promise<SuccessResponse> => {
-    return projectsRequest.post<SuccessResponse>(
-      endpoints.projects.fieldReorder(projectId, classId),
-      { order: order.join(",") },
-    );
-  },
-
-  // ============= Option Methods =============
-
-  // List options
-  listOptions: async (
-    projectId: string,
-    classId: string,
-    fieldId: string,
-  ): Promise<OptionListResponse> => {
-    return projectsRequest.get<OptionListResponse>(
-      endpoints.projects.options(projectId, classId, fieldId),
-    );
-  },
-
-  // Create option
-  createOption: async (
-    projectId: string,
-    classId: string,
-    fieldId: string,
-    data: CreateOptionRequest,
-  ): Promise<OptionCreateResponse> => {
-    return projectsRequest.post<OptionCreateResponse, CreateOptionRequest>(
-      endpoints.projects.optionCreate(projectId, classId, fieldId),
-      data,
-    );
-  },
-
-  // Update option
-  updateOption: async (
-    projectId: string,
-    classId: string,
-    fieldId: string,
-    optionId: string,
-    data: UpdateOptionRequest,
-  ): Promise<SuccessResponse> => {
-    return projectsRequest.post<SuccessResponse, UpdateOptionRequest>(
-      endpoints.projects.optionUpdate(projectId, classId, fieldId, optionId),
-      data,
-    );
-  },
-
-  // Delete option
-  deleteOption: async (
-    projectId: string,
-    classId: string,
-    fieldId: string,
-    optionId: string,
-  ): Promise<SuccessResponse> => {
-    return projectsRequest.post<SuccessResponse>(
-      endpoints.projects.optionDelete(projectId, classId, fieldId, optionId),
-    );
-  },
-
-  // Reorder options
-  reorderOptions: async (
-    projectId: string,
-    classId: string,
-    fieldId: string,
-    order: string[],
-  ): Promise<SuccessResponse> => {
-    return projectsRequest.post<SuccessResponse>(
-      endpoints.projects.optionReorder(projectId, classId, fieldId),
-      { order: order.join(",") },
     );
   },
 
@@ -1038,124 +237,6 @@ const projectsApi = {
       endpoints.projects.repositoryMerge(repoId),
       { source, target, message, project: projectId, method },
     );
-  },
-
-  // ============================================================================
-  // Remote Projects (Subscribe)
-  // ============================================================================
-
-  // Probe a remote project by URL
-  probe: async (
-    url: string,
-  ): Promise<{
-    data: {
-      id: string;
-      name: string;
-      description: string;
-      prefix: string;
-      fingerprint: string;
-      class: string;
-      server?: string;
-      /** owner's peer from a mochi:// share-link probe; subscribe pins the same peer. */
-      peer?: string;
-      remote: boolean;
-    };
-  }> => {
-    return projectsRequest.post(endpoints.projects.probe, { url });
-  },
-
-  // Get recommended projects
-  recommendations: async (): Promise<{
-    data: {
-      projects: Array<{
-        id: string;
-        name: string;
-        blurb: string;
-        fingerprint: string;
-        server: string;
-      }>;
-    };
-  }> => {
-    return projectsRequest.get(endpoints.projects.recommendations);
-  },
-
-  // Subscribe to a remote project
-  subscribe: async (
-    projectId: string,
-    server?: string,
-    peer?: string,
-  ): Promise<{ data: { fingerprint: string } }> => {
-    return projectsRequest.post(endpoints.projects.subscribe, {
-      project: projectId,
-      server,
-      peer,
-    });
-  },
-
-  // Produce a mochi://<peer>/<project> share link for a project the caller owns.
-  share: async (
-    projectId: string,
-  ): Promise<{ data: { link: string; peer: string; project: string } }> => {
-    return projectsRequest.post(endpoints.projects.share(projectId), {});
-  },
-
-  // Unsubscribe from a remote project
-  unsubscribe: async (
-    projectId: string,
-  ): Promise<{ data: { success: boolean } }> => {
-    return projectsRequest.post(endpoints.projects.unsubscribe, {
-      project: projectId,
-    });
-  },
-
-  // ============================================================================
-  // Access Control
-  // ============================================================================
-
-  // Get access rules for a project
-  getAccessRules: async (
-    projectId: string,
-  ): Promise<{
-    data: {
-      rules: AccessRule[];
-      owner: { id: string; name: string };
-    };
-  }> => {
-    return projectsRequest.get(endpoints.projects.access(projectId));
-  },
-
-  // Set access level for a subject
-  setAccessLevel: async (
-    projectId: string,
-    subject: string,
-    level: string,
-  ): Promise<{ data: { success: boolean } }> => {
-    return projectsRequest.post(endpoints.projects.accessSet(projectId), {
-      subject,
-      level,
-    });
-  },
-
-  // Revoke access for a subject
-  revokeAccess: async (
-    projectId: string,
-    subject: string,
-  ): Promise<{ data: { success: boolean } }> => {
-    return projectsRequest.post(endpoints.projects.accessRevoke(projectId), {
-      subject,
-    });
-  },
-
-  // Search users (for adding access rules)
-  searchUsers: async (
-    query: string,
-  ): Promise<{ data: { results: { id: string; name: string; fingerprint: string }[] } }> => {
-    return projectsRequest.get(`${endpoints.projects.usersSearch}?search=${encodeURIComponent(query)}`);
-  },
-
-  // List groups (for adding access rules)
-  listGroups: async (): Promise<{ data: { groups: { id: string; name: string }[] } }> => {
-    return projectsRequest.get(endpoints.projects.groups);
   },
 };
 

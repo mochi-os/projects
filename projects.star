@@ -3720,23 +3720,78 @@ def serve_attachment(a, variant):
 			return True
 		return mochi.db.exists("select 1 from comments c join objects o on o.id=c.object where c.id=? and o.project=?", obj, project_id)
 
-	attachment_serve(a, attachment, project_id, variant=variant, member=in_project)
+	# The owner adopts legacy remote-provenance rows on first serve, taking
+	# the bytes in so the project's canonical host serves its own file from
+	# then on; subscribers keep pulling to cache.
+	attachment_serve(a, attachment, project_id, variant=variant, member=in_project,
+		adopt=project.get("owner") == 1)
 
 # P2P byte-pull responder. A subscriber stores an object's attachment metadata
 # (entity = the project), then pulls the bytes from the owner here on demand.
 # The project is the addressed entity; the requester must hold view access, and
 # the attachment must bind to an object or comment in that project.
 def event_attachment_fetch(e):
-	project_id = e.header("to")
+	# `to` is routing only - the entity the puller dialled to reach these
+	# bytes. For a subscriber-held upload that is this user's own identity,
+	# not a project, so the container comes from the requested row: the
+	# attachment's object, resolved to the project it belongs to here.
+	id = e.content("id")
+	project_id = ""
+	if attachment_identifier(id):
+		row = attachment_row(id)
+		if row:
+			obj = mochi.db.row("select project from objects where id=?", row["object"])
+			if not obj:
+				obj = mochi.db.row("select o.project from comments c join objects o on o.id=c.object where c.id=?", row["object"])
+			if obj:
+				project_id = obj["project"]
 
 	def in_project(obj):
 		if mochi.db.exists("select 1 from objects where id=? and project=?", obj, project_id):
 			return True
 		return mochi.db.exists("select 1 from comments c join objects o on o.id=c.object where c.id=? and o.project=?", obj, project_id)
 
+	# The project's own entity may always fetch bytes bound to it - that is
+	# the owner taking a subscriber's upload in (attachment_accept / adopt).
 	attachment_respond(e, project_id,
-		lambda sender, container: check_project_access(sender, container, "view"),
+		lambda sender, container: sender == container or check_project_access(sender, container, "view"),
 		member=in_project)
+
+# Attachment pushed by a subscriber: the bytes arrive with the metadata, are
+# stored as our own, and the metadata fans out. Replaces attachment/submit's
+# metadata-only flow, which left the owner holding references it could not
+# reliably serve (#484); that handler stays for subscribers not yet upgraded.
+def event_attachment_push(e):
+	project_id = e.header("to")
+	mochi.log.debug("attachment/push: to=%s from=%s object=%s id=%s", project_id, e.header("from"), e.content("object"), e.content("id"))
+	project = mochi.db.row("select * from projects where id=? and owner=1", project_id)
+	if not project:
+		e.write({"status": "404"})
+		return
+	sender = e.header("from")
+	if not sender or not check_project_access(sender, project_id, "write"):
+		e.write({"status": "403"})
+		return
+	object_id = e.content("object")
+	if type(object_id) != "string" or not object_id:
+		e.write({"status": "400"})
+		return
+	if not mochi.db.row("select id from objects where id=? and project=?", object_id, project_id):
+		e.write({"status": "404"})
+		return
+	attachment = attachment_push_receive(e, object_id, creator=sender)
+	if not attachment:
+		return
+	now = mochi.time.now()
+	object_set(object_id, {"updated": now})
+	log_activity(object_id, sender, "attached", "", "", attachment["name"])
+	broadcast_event(project_id, "attachment/add", {
+		"project": project_id, "object": object_id,
+		"attachments": [{"id": attachment["id"], "name": attachment["name"], "size": attachment["size"], "content_type": attachment.get("type", ""), "rank": attachment.get("rank", 0), "created": attachment.get("created", now)}]
+	}, exclude=sender)
+	fp = mochi.entity.fingerprint(project_id)
+	if fp:
+		mochi.websocket.write(fp, {"type": "attachment/create", "project": project_id, "object": object_id})
 
 def action_attachment_list(a):
 
@@ -3785,13 +3840,15 @@ def action_attachment_create(a):
 		if not attachments:
 			a.error.label(400, "errors.file_is_required")
 			return
-		# Fire-and-forget to project owner with attachment metadata
-		submit_data = {"object": object_id, "names": [att["name"] for att in attachments]}
-		submit_data["attachments"] = [{"id": att["id"], "name": att["name"], "size": att["size"], "content_type": att.get("type", ""), "rank": att.get("rank", 0), "created": att.get("created", 0)} for att in attachments]
-		mochi.message.send(
-			{"from": a.user.identity.id, "to": project_id, "service": "projects", "event": "attachment/submit"},
-			submit_data
-		)
+		# The owner is canonical: the bytes go to it now, synchronously, and
+		# the metadata fans out from there. A push that fails unwinds the
+		# local save - an upload only this host can see is the broken state
+		# this scheme exists to remove (#484).
+		if not attachment_push(project_id, object_id, attachments, a.user.identity.id):
+			for att in attachments:
+				attachment_delete(att["id"])
+			a.error.label(502, "errors.could_not_reach_project_owner")
+			return
 		return {"data": {"attachments": attachments}}
 
 	if not check_project_access(a.user.identity.id, project_id, "write"):
@@ -6566,10 +6623,11 @@ def event_comment_submit(e):
 	now = mochi.time.now()
 	if not mochi.db.exists("select 1 from comments where id=?", comment_id):
 		comment_merge({"id": comment_id, "object": object_id, "parent": parent, "author": sender, "name": name, "content": content.strip(), "created": now, "edited": 0})
-	# Store attachment metadata from the subscriber's event
+	# Store the submission's attachment metadata and take the bytes in from
+	# the sender now, while it is online; a pull that fails heals on serve.
 	attachments = e.content("attachments") or []
 	if attachments:
-		attachment_store(attachments, sender, comment_id)
+		attachment_accept(attachments, sender, comment_id, project_id)
 	object_set(object_id, {"updated": now})
 	log_activity(object_id, sender, "commented")
 	row_merge("watchers", ["object", "user"], {"object": object_id, "user": sender, "created": now})
@@ -6610,10 +6668,11 @@ def event_attachment_submit(e):
 	names = e.content("names") or []
 	for name in names:
 		log_activity(object_id, sender, "attached", "", "", name)
-	# Store attachment metadata from the subscriber's event
+	# Store the legacy metadata-only submission (subscribers not yet on the
+	# push flow) and take the bytes in from the sender while it is online.
 	attachments = e.content("attachments") or []
 	if attachments:
-		attachment_store(attachments, sender, object_id)
+		attachment_accept(attachments, sender, object_id, project_id)
 	# Broadcast to other subscribers with attachment metadata
 	if attachments:
 		broadcast_event(project_id, "attachment/add", {

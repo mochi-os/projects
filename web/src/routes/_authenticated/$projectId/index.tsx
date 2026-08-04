@@ -40,6 +40,7 @@ import {
   TooltipTrigger,
   TooltipContent,
   LoadingContent,
+  KeyboardShortcutsHelp,
   arraysEqual,
 } from "@mochi/web";
 import { Check, Columns3, Copy, Ellipsis, FileDown, FolderKanban, GripVertical, Link as LinkIcon, LogOut, Plus, Settings, Settings2, SlidersHorizontal, X } from "lucide-react";
@@ -57,7 +58,6 @@ import {
 } from "@/features/objects/components";
 import { useKeyboardShortcuts } from "@/hooks/use-keyboard-shortcuts";
 import { useProjectWebsocket } from "@/hooks/use-project-websocket";
-import { KeyboardShortcutsHelp } from "@/components/keyboard-shortcuts-help";
 import { ViewOptionsBar } from "@/components/view-options-bar";
 import { OptionDialog } from "@/features/editor/components/option-dialog";
 

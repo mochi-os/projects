@@ -722,7 +722,6 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
             });
           }
         }}
-        onReorderOptions={() => {}}
       />
 
       <OptionDialog

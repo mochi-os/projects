@@ -4,6 +4,7 @@
 // This file is part of Mochi, licensed under the GNU AGPL v3 with the
 // Mochi Application Interface Exception - see license.txt and license-exception.md.
 
+import { t } from "@lingui/core/macro";
 import {
   EntityBoardColumn,
   type EntityBoardColumnProps,
@@ -27,7 +28,9 @@ export function BoardColumn({
     <EntityBoardColumn
       {...props}
       containerId={projectId}
-      fallbackTitle={(object) => `${prefix}-${object.number}`}
+      fallbackTitle={(object) =>
+        typeof object.number === "number" ? `${prefix}-${object.number}` : t`Untitled`
+      }
     />
   );
 }

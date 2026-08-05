@@ -1361,6 +1361,10 @@ msgstr "Ansichten konnten nicht neu angeordnet werden"
 msgid "Failed to revoke RSS access"
 msgstr "RSS-Zugriff konnte nicht widerrufen werden"
 
+#: src/features/projects/components/inline-project-search.tsx:89
+msgid "Failed to search projects"
+msgstr ""
+
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:257
 msgid "Failed to send verification code"
 msgstr "Bestätigungscode konnte nicht gesendet werden"
@@ -1369,7 +1373,7 @@ msgstr "Bestätigungscode konnte nicht gesendet werden"
 msgid "Failed to set access level"
 msgstr "Zugriffsebene konnte nicht festgelegt werden"
 
-#: src/features/projects/components/inline-project-search.tsx:114
+#: src/features/projects/components/inline-project-search.tsx:69
 #: src/features/projects/components/recommended-projects.tsx:61
 #: src/routes/_authenticated/find.tsx:58
 msgid "Failed to subscribe"
@@ -1943,7 +1947,7 @@ msgstr "Keine Orte gefunden"
 msgid "No profile"
 msgstr "Kein Profil"
 
-#: src/features/projects/components/inline-project-search.tsx:162
+#: src/features/projects/components/inline-project-search.tsx:88
 #: src/routes/_authenticated/find.tsx:90
 msgid "No projects found"
 msgstr "Keine Projekte gefunden"
@@ -1952,6 +1956,7 @@ msgstr "Keine Projekte gefunden"
 msgid "No repositories available"
 msgstr "Keine Repositories verfügbar"
 
+#: ../../../lib/web/src/components/inline-entity-search.tsx:74
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:82
 #: ../../../lib/web/src/components/search-entity-page.tsx:73
 msgid "No results found"
@@ -2555,7 +2560,7 @@ msgstr "Nach Ziel suchen..."
 msgid "Search for origin..."
 msgstr "Nach Ausgangspunkt suchen..."
 
-#: src/features/projects/components/inline-project-search.tsx:136
+#: src/features/projects/components/inline-project-search.tsx:87
 msgid "Search for projects..."
 msgstr "Nach Projekten suchen..."
 
@@ -2577,6 +2582,7 @@ msgstr "Diese Ansicht durchsuchen, beobachten und sortieren."
 
 #: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:181
 #: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:257
+#: ../../../lib/web/src/components/inline-entity-search.tsx:73
 #: ../../../lib/web/src/components/person-picker.tsx:324
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:81
 #: ../../../lib/web/src/components/search-entity-page.tsx:72
@@ -2833,14 +2839,15 @@ msgstr "Kommentar absenden"
 msgid "Submit reply"
 msgstr "Antwort absenden"
 
+#: ../../../lib/web/src/components/inline-entity-search.tsx:76
 #: ../../../lib/web/src/components/search-entity-dialog.tsx:83
 #: ../../../lib/web/src/components/search-entity-page.tsx:74
-#: src/features/projects/components/inline-project-search.tsx:205
+#: src/features/projects/components/inline-project-search.tsx:90
 #: src/features/projects/components/recommended-projects.tsx:163
 msgid "Subscribe"
 msgstr "Abonnieren"
 
-#: src/features/projects/components/inline-project-search.tsx:113
+#: src/features/projects/components/inline-project-search.tsx:68
 #: src/routes/_authenticated/find.tsx:57
 msgid "Subscribed"
 msgstr "Abonniert"
@@ -2850,7 +2857,7 @@ msgstr "Abonniert"
 msgid "Subscribed to {0}"
 msgstr "{0} abonniert"
 
-#: src/features/projects/components/inline-project-search.tsx:112
+#: src/features/projects/components/inline-project-search.tsx:67
 #: src/features/projects/components/recommended-projects.tsx:59
 #: src/routes/_authenticated/find.tsx:56
 msgid "Subscribing..."

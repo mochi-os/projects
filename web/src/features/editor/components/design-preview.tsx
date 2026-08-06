@@ -4,6 +4,7 @@
 // This file is part of Mochi, licensed under the GNU AGPL v3 with the
 // Mochi Application Interface Exception - see license.txt and license-exception.md.
 
+import { t } from "@lingui/core/macro";
 import { EntityDesignPreview } from "@mochi/web";
 import type { ProjectDetails, ProjectObject } from "@/types";
 
@@ -24,7 +25,11 @@ export function DesignPreview({ project, projectId, objects, selectedClassId }: 
       treeContainerId={projectId}
       storagePrefix="projects"
       prefix={project.project.prefix}
-      fallbackTitle={(object) => `${project.project.prefix}-${object.number}`}
+      fallbackTitle={(object) =>
+        typeof object.number === "number"
+          ? `${project.project.prefix}-${object.number}`
+          : t`Untitled`
+      }
     />
   );
 }

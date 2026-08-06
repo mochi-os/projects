@@ -666,6 +666,29 @@ def foreign_request(request_id, project_id):
 	row = mochi.db.row("select o.project from requests r join objects o on r.object=o.id where r.id=?", request_id)
 	return row != None and row["project"] != project_id
 
+# A peer names a comment by id, and the id alone says nothing about which
+# project the comment belongs to. Where the handler has already checked the
+# object against the routed project, requiring the comment to hang off that
+# same object settles it: a comment id belonging to another project's object
+# fails the pair even though it exists.
+def comment_bound(comment_id, object_id):
+	if not comment_id or not object_id:
+		return False
+	return mochi.db.exists("select 1 from comments where id=? and object=?", comment_id, object_id)
+
+# attachment_delete keys on the attachment id alone, across every project in
+# this database, so the id is not proof of anything on its own. Resolve the
+# attachment's own container and require it to sit in this project - an
+# attachment hangs off either an object or a comment.
+def attachment_in_project(attachment_id, project_id):
+	attachment = attachment_get(attachment_id)
+	container = attachment.get("object") if attachment else ""
+	if not container:
+		return False
+	if mochi.db.exists("select 1 from objects where id=? and project=?", container, project_id):
+		return True
+	return mochi.db.exists("select 1 from comments c join objects o on o.id=c.object where c.id=? and o.project=?", container, project_id)
+
 def values_remove_object(object_id):
 	mochi.db.execute("delete from \"values\" where object=?", object_id)
 
@@ -3918,6 +3941,10 @@ def action_attachment_delete(a):
 		a.error.label(404, "errors.attachment_not_found")
 		return
 
+	if not attachment_in_project(attachment_id, project_id):
+		a.error.label(404, "errors.attachment_not_found")
+		return
+
 	attachment_delete(attachment_id)
 
 	# Broadcast delete to subscribers
@@ -6623,6 +6650,12 @@ def event_comment_submit(e):
 	now = mochi.time.now()
 	if not mochi.db.exists("select 1 from comments where id=?", comment_id):
 		comment_merge({"id": comment_id, "object": object_id, "parent": parent, "author": sender, "name": name, "content": content.strip(), "created": now, "edited": 0})
+	# The existence test above is idempotence for a redelivered submission, and
+	# on its own it is also the way in: an id that already belongs to another
+	# project's comment skips the insert and then names that comment below.
+	# The object was checked against this project, so agreeing with it is proof.
+	if not comment_bound(comment_id, object_id):
+		return
 	# Store the submission's attachment metadata and take the bytes in from
 	# the sender now, while it is online; a pull that fails heals on serve.
 	attachments = e.content("attachments") or []
@@ -6733,6 +6766,11 @@ def event_comment_create(e):
 		return
 	if not mochi.db.exists("select 1 from comments where id=?", comment_id):
 		comment_merge({"id": comment_id, "object": object_id, "parent": e.content("parent") or "", "author": e.content("author") or "", "name": e.content("name") or "", "content": e.content("content") or "", "created": e.content("created") or mochi.time.now(), "edited": 0})
+	# The object was checked against this project; the id was not. Without this
+	# the owner of a project we subscribe to names a comment in a different
+	# project, and its attachments then resolve to bytes held by that owner.
+	if not comment_bound(comment_id, object_id):
+		return
 	# Store attachment metadata from the event
 	attachments = e.content("attachments") or []
 	if attachments:
@@ -8133,17 +8171,12 @@ def do_attachment_delete(project_id, project, params, user_id):
 	if object_id:
 		if not mochi.db.exists("select 1 from objects where id=? and project=?", object_id, project_id):
 			return {"error": "errors.object_not_found", "code": 404}
-	else:
-		# No object given: bind the attachment to an object/comment in this
-		# project so a member can't delete another project's attachment by id.
-		att = attachment_get(attachment_id)
-		obj = att.get("object") if att else ""
-		in_project = mochi.db.exists("select 1 from objects where id=? and project=?", obj, project_id)
-		if not in_project:
-			in_project = mochi.db.exists("select 1 from comments c join objects o on o.id=c.object where c.id=? and o.project=?", obj, project_id)
-		if not in_project:
-			return {"error": "errors.attachment_not_found", "code": 404}
 	if not attachment_exists(attachment_id):
+		return {"error": "errors.attachment_not_found", "code": 404}
+	# Unconditional, not an else: an object the caller does hold says nothing
+	# about the attachment they named, so supplying one must not stand in for
+	# binding the attachment itself.
+	if not attachment_in_project(attachment_id, project_id):
 		return {"error": "errors.attachment_not_found", "code": 404}
 	attachment_delete(attachment_id)
 	broadcast_event(project_id, "attachment/remove", {

@@ -3615,7 +3615,28 @@ def action_user_asset(a):
 	if not check_project_access(user_id, project_id, "view"):
 		a.error.label(403, "errors.access_denied")
 		return
-	return stream_asset(a, a.input("user") or "", "people", asset)
+	# Bind the subject to someone who actually appears in the routed project,
+	# the way the activity variant above does. Taken from the path unchecked,
+	# this proxied an avatar or profile for ANY entity id a caller named, with
+	# view access to any one project as the only cost of entry - and the route
+	# is public, so that access can be the "*" grant.
+	subject = a.input("user") or ""
+	if not subject:
+		a.error.label(404, "errors.unknown_asset")
+		return
+	known = mochi.db.exists(
+		"select 1 from activity a2 join objects o on a2.object=o.id where a2.user=? and o.project=?",
+		subject, project_id)
+	if not known:
+		known = mochi.db.exists(
+			"select 1 from comments c join objects o on c.object=o.id where c.author=? and o.project=?",
+			subject, project_id)
+	if not known:
+		known = mochi.db.exists("select 1 from subscribers where project=? and id=?", project_id, subject)
+	if not known:
+		a.error.label(404, "errors.unknown_asset")
+		return
+	return stream_asset(a, subject, "people", asset)
 
 # ============================================================================
 # Comment Actions

@@ -688,6 +688,20 @@ def comment_bound(comment_id, object_id):
 		return False
 	return mochi.db.exists("select 1 from comments where id=? and object=?", comment_id, object_id)
 
+# Both ends of a link must be objects in this project. The links table is keyed
+# (source, target, linktype) with the project deliberately OUTSIDE the key, so a
+# row whose endpoints live in another project does not merely sit there unused -
+# it collides with, and overwrites, that project's own link. An importing
+# subscriber would find blocks/relates injected across projects the sender has
+# nothing to do with. event_link_create has always checked this; the import and
+# sync paths did not.
+def link_endpoints_bound(project_id, source, target):
+	if not source or not target:
+		return False
+	if not mochi.db.exists("select 1 from objects where id=? and project=?", source, project_id):
+		return False
+	return mochi.db.exists("select 1 from objects where id=? and project=?", target, project_id)
+
 # attachment_delete keys on the attachment id alone, across every project in
 # this database, so the id is not proof of anything on its own. Resolve the
 # attachment's own container and require it to sit in this project - an
@@ -1793,6 +1807,8 @@ def action_data_import(a):
 	for l in links:
 		source = remap.get(l["source"], l["source"])
 		target = remap.get(l["target"], l["target"])
+		if not link_endpoints_bound(project_id, source, target):
+			continue
 		row_merge("links", ["source", "target", "linktype"], {"project": project_id, "source": source, "target": target, "linktype": str(l["linktype"]), "created": safe_int(l.get("created")) or now})
 
 	if archive:
@@ -6095,6 +6111,8 @@ def insert_schema(project_id, schema):
 	for l in (schema.get("links") or []):
 		# (project, source, target, linktype) is the full key; links
 		# are created/deleted, never edited in place.
+		if not link_endpoints_bound(project_id, l.get("source", ""), l.get("target", "")):
+			continue
 		row_merge("links", ["source", "target", "linktype"], {"project": project_id, "source": l.get("source", ""), "target": l.get("target", ""), "linktype": l.get("linktype", ""), "created": 0})
 
 	# Reconcile deletions: the dump is the owner's canonical full state, so
@@ -6480,6 +6498,8 @@ def event_sync_batch(e):
 
 	# Process links
 	for l in (e.content("links") or []):
+		if not link_endpoints_bound(project_id, l["source"], l["target"]):
+			continue
 		row_merge("links", ["source", "target", "linktype"], {"project": project_id, "source": l["source"], "target": l["target"], "linktype": l.get("linktype", "relates"), "created": now})
 
 	# Mark the subscription's initial bulk content as arrived so the board stops
@@ -7789,6 +7809,13 @@ def do_comment_create(project_id, project, params, user_id, user_name):
 	now = mochi.time.now()
 	if not mochi.db.exists("select 1 from comments where id=?", comment_id):
 		comment_merge({"id": comment_id, "object": object_id, "parent": parent, "author": user_id, "name": user_name, "content": content.strip(), "created": now, "edited": 0})
+	# The existence test above is global, so a supplied id that already belongs
+	# to another project's comment skips the insert - and the attachment_list
+	# below would then read THAT comment's metadata and broadcast it here. The
+	# object was checked against this project, so agreeing with it is proof.
+	# Same guard as event_comment_submit and event_comment_create.
+	if not comment_bound(comment_id, object_id):
+		return {"error": "errors.comment_not_found", "code": 404}
 	object_set(object_id, {"updated": now})
 	log_activity(object_id, user_id, "commented")
 	# Auto-watch commenter on owner's server

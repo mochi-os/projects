@@ -9179,11 +9179,33 @@ def _check_project(user, project_id):
 	fp = mochi.entity.fingerprint(project_id) or ""
 	return {"fingerprint": fp, "already_subscribed": subscribed}
 
+# Whether an app/* service event really came from the user it acts for.
+#
+# These handlers subscribe the receiving user and create objects as them, and
+# their only gate used to be the `apps` allowlist in app.json. That allowlist
+# is checked against `from-app`, an UNSIGNED wire field the sender writes about
+# itself (core protocol2.go Frame.FromApp; the claim signature covers v,
+# stream, entity, receiver and protocol, and not this), so it constrained
+# nobody: any authenticated peer could name an allowed app and pass.
+#
+# The sender identity IS authenticated, and the callers are self-directed -
+# help.star sends these with mochi.remote.request(a.user.identity.id, ...), so
+# the sender and the recipient are the same person. Requiring that is both
+# enforceable and stronger than the allowlist ever was: only you can make
+# yourself subscribe and create objects, whatever app claims to be asking.
+def _app_event_is_self(e):
+	sender = e.header("from")
+	return bool(sender) and e.user and e.user.identity and sender == e.user.identity.id
+
+
 # Service event: another local app asks whether the user could subscribe to a
 # project and file objects in it, without changing anything — the read-only
 # counterpart of event_app_subscribe. Help calls this when a contribute
 # dialog opens, before the user has committed to anything.
 def event_app_check(e):
+	if not _app_event_is_self(e):
+		e.write({"error": "errors.access_denied", "code": 403})
+		return
 	project_id = e.content("project") or ""
 	result = _check_project(e.user, project_id)
 	if "error" in result:
@@ -9196,6 +9218,9 @@ def event_app_check(e):
 
 # Service event: another local app asks us to subscribe the user to a project.
 def event_app_subscribe(e):
+	if not _app_event_is_self(e):
+		e.write({"error": "errors.access_denied", "code": 403})
+		return
 	project_id = e.content("project") or ""
 	result = _subscribe_to_project(e.user, project_id, "")
 	if "error" in result:
@@ -9219,6 +9244,9 @@ def event_app_subscribe(e):
 #   body:    optional description (becomes a comment)
 #   values:  optional dict of field_id → value to set after creation
 def event_app_object_create(e):
+	if not _app_event_is_self(e):
+		e.write({"error": "errors.access_denied", "code": 403})
+		return
 	project_id = e.content("project") or ""
 	obj_class = e.content("class") or ""
 	title = e.content("title") or ""

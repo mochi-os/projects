@@ -18,15 +18,15 @@ msgstr ""
 msgid "Please check your internet connection and try again."
 msgstr "Tarkista internetyhteytesi ja yritä uudelleen."
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:302
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:292
 msgid " or "
 msgstr " tai "
 
-#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:228
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:229
 msgid "(edited)"
 msgstr "(muokattu)"
 
-#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:212
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:213
 msgid "(expand)"
 msgstr "(laajenna)"
 
@@ -109,6 +109,7 @@ msgstr "{selectedCount, plural, one {# valittu} other {# valittu}}"
 msgid "{selectedCount, plural, one {Bulk actions for # selected {entityName}} other {Bulk actions for # selected {manyName}}}"
 msgstr "{selectedCount, plural, one {Joukkotoiminnot # valitulle {entityName}} other {Joukkotoiminnot # valitulle {manyName}}}"
 
+#: ../../../lib/web/src/components/attachment-composer.tsx:150
 #: ../../../lib/web/src/components/ui/upload-progress.tsx:52
 msgid "{sentLabel} of {totalLabel}"
 msgstr "{sentLabel} / {totalLabel}"
@@ -131,11 +132,11 @@ msgstr "+{0} edellä"
 msgid "+{0} nested"
 msgstr "+{0} sisäkkäistä"
 
-#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:209
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:210
 msgid "+{totalDescendants} more replies"
 msgstr "+{totalDescendants} lisää vastauksia"
 
-#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:208
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:209
 msgid "1 reply"
 msgstr "1 vastaus"
 
@@ -214,7 +215,7 @@ msgstr "Toiminta"
 msgid "Add"
 msgstr "Lisää"
 
-#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:360
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:363
 msgid "Add a comment..."
 msgstr "Lisää kommentti..."
 
@@ -364,7 +365,7 @@ msgid "Anyone who is logged in"
 msgstr "Kuka tahansa kirjautunut"
 
 #. placeholder {0}: deleteTarget?.name
-#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:271
+#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:308
 msgid "Are you sure you want to delete \"{0}\"?"
 msgstr "Haluatko varmasti poistaa kohteen \"{0}\"?"
 
@@ -376,7 +377,7 @@ msgstr "Haluatko varmasti poistaa kohteen \"{title}\"? Tätä toimintoa ei voi k
 msgid "Are you sure you want to delete the \"{name}\" column? This cannot be undone."
 msgstr "Haluatko varmasti poistaa sarakkeen \"{name}\"? Tätä ei voi kumota."
 
-#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:485
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:490
 msgid "Are you sure you want to delete this comment? This will also delete all replies."
 msgstr "Haluatko varmasti poistaa tämän kommentin? Tämä poistaa myös kaikki vastaukset."
 
@@ -400,13 +401,13 @@ msgstr "Nouseva"
 msgid "Ascending"
 msgstr "Nouseva"
 
-#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:398
-#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:403
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:405
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:410
 msgid "Attach comment files"
 msgstr "Liitä kommenttitiedostoja"
 
-#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:439
 #: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:444
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:449
 msgid "Attach reply files"
 msgstr "Liitä vastaustiedostoja"
 
@@ -503,7 +504,7 @@ msgid "Can be child of"
 msgstr "Voi olla alikohde kohteelle"
 
 #: ../../../lib/web/src/components/entity/entity-board-column.tsx:628
-#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:249
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:250
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:169
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:186
 #: ../../../lib/web/src/components/responsive-confirm-dialog.tsx:67
@@ -521,13 +522,13 @@ msgstr "Voi olla alikohde kohteelle"
 msgid "Cancel"
 msgstr "Peruuta"
 
-#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:415
-#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:420
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:422
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:427
 msgid "Cancel comment"
 msgstr "Peruuta kommentti"
 
-#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:455
 #: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:460
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:465
 msgid "Cancel reply"
 msgstr "Peruuta vastaus"
 
@@ -624,8 +625,8 @@ msgstr "Tyhjennä valinta"
 msgid "Clear selection (Escape)"
 msgstr "Tyhjennä valinta (Escape)"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:485
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:490
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:477
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:482
 #: ../../../lib/web/src/components/ui/dialog.tsx:78
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:358
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:361
@@ -696,8 +697,8 @@ msgstr "Tulossa pian!"
 msgid "Command Palette"
 msgstr "Komentopaletti"
 
-#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:330
-#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:337
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:331
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:338
 msgid "Comment actions"
 msgstr "Kommentin toiminnot"
 
@@ -798,8 +799,8 @@ msgstr "Vahvistaminen tällä tilillä ei onnistunut. Yritä uudelleen."
 
 #: ../../../lib/web/src/components/entity/entity-board-column.tsx:564
 #: ../../../lib/web/src/components/entity/entity-board-column.tsx:703
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:475
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:647
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:467
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:616
 #: ../../../lib/web/src/components/entity/entity-tree-view.tsx:672
 msgid "Create"
 msgstr "Luo"
@@ -844,7 +845,7 @@ msgstr "Luotu"
 msgid "Creating project..."
 msgstr "Luodaan projektia..."
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:647
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:616
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:258
 #: src/features/projects/components/create-project-dialog.tsx:447
 #: src/features/projects/components/create-project-dialog.tsx:535
@@ -904,20 +905,20 @@ msgstr "Oletuslajittelu"
 
 #: ../../../lib/web/src/components/entity/entity-board-column.tsx:583
 #: ../../../lib/web/src/components/entity/entity-board-column.tsx:644
-#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:318
-#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:361
-#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:486
-#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:173
-#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:178
-#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:227
-#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:272
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:319
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:362
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:491
+#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:196
+#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:201
+#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:250
+#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:309
 #: src/features/objects/components/object-detail-panel.tsx:636
 #: src/features/requests/components/request-panel.tsx:132
 #: src/routes/_authenticated/$projectId_.settings.tsx:357
 msgid "Delete"
 msgstr "Poista"
 
-#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:270
+#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:307
 msgid "Delete attachment"
 msgstr "Poista liite"
 
@@ -929,7 +930,7 @@ msgstr "Poista luokka"
 msgid "Delete column"
 msgstr "Poista sarake"
 
-#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:484
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:489
 msgid "Delete comment"
 msgstr "Poista kommentti"
 
@@ -1044,11 +1045,11 @@ msgstr "Suunta"
 msgid "Directory"
 msgstr "Hakemisto"
 
-#: ../../../lib/web/src/components/comment-composer.tsx:304
+#: ../../../lib/web/src/components/comment-composer.tsx:284
 msgid "Discard"
 msgstr "Hylkää"
 
-#: ../../../lib/web/src/components/comment-composer.tsx:302
+#: ../../../lib/web/src/components/comment-composer.tsx:282
 msgid "Discard draft?"
 msgstr "Hylätäänkö luonnos?"
 
@@ -1082,7 +1083,7 @@ msgstr "Valmis"
 msgid "Double click on a column to add content"
 msgstr "Lisää sisältöä kaksoisnapsauttamalla saraketta"
 
-#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:214
+#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:237
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:342
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:352
 msgid "Download"
@@ -1118,8 +1119,8 @@ msgstr "Duplikoi"
 msgid "Dyslexia-friendly"
 msgstr "Lukihäiriöystävällinen"
 
-#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:307
-#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:352
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:308
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:353
 msgid "Edit"
 msgstr "Muokkaa"
 
@@ -1251,11 +1252,11 @@ msgstr "Projektin luominen epäonnistui"
 msgid "Failed to create view"
 msgstr "Näkymän luominen epäonnistui"
 
-#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:110
+#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:128
 msgid "Failed to delete attachment"
 msgstr "Liitteen poistaminen epäonnistui"
 
-#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:207
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:210
 msgid "Failed to delete comment"
 msgstr "Kommentin poistaminen epäonnistui"
 
@@ -1336,7 +1337,7 @@ msgstr "Videon lataus epäonnistui"
 msgid "Failed to merge"
 msgstr "Yhdistäminen epäonnistui"
 
-#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:170
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:173
 msgid "Failed to post comment"
 msgstr "Kommentin lähettäminen epäonnistui"
 
@@ -1392,7 +1393,7 @@ msgstr "Tilauksen peruutus epäonnistui"
 msgid "Failed to update access level"
 msgstr "Käyttöoikeustason päivitys epäonnistui"
 
-#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:190
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:193
 msgid "Failed to update comment"
 msgstr "Kommentin päivitys epäonnistui"
 
@@ -1404,7 +1405,7 @@ msgstr "Kentän päivitys epäonnistui"
 msgid "Failed to update project"
 msgstr "Projektin päivitys epäonnistui"
 
-#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:95
+#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:112
 msgid "Failed to upload attachment"
 msgstr "Liitteen lähetys epäonnistui"
 
@@ -1412,9 +1413,9 @@ msgstr "Liitteen lähetys epäonnistui"
 msgid "Fields"
 msgstr "Kentät"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:567
-#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:133
-#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:150
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:559
+#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:153
+#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:173
 msgid "Files"
 msgstr "Tiedostot"
 
@@ -1845,7 +1846,7 @@ msgstr "Nimen on oltava enintään 1000 merkkiä"
 msgid "Network error"
 msgstr "Verkkovirhe"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:460
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:452
 #: ../../../lib/web/src/components/ui/sort-selector.tsx:43
 #: src/routes/_authenticated/$projectId/index.tsx:918
 #: src/routes/_authenticated/$projectId/index.tsx:936
@@ -1870,7 +1871,7 @@ msgstr "Seuraava"
 msgid "Next image"
 msgstr "Seuraava kuva"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:533
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:525
 msgid "No {parentClassNames} to add to"
 msgstr "Ei {parentClassNames}, johon lisätä"
 
@@ -1902,7 +1903,7 @@ msgstr "Ei näytettäviä muutoksia"
 msgid "No changes were found for the selected comparison."
 msgstr "Valitulle vertailulle ei löytynyt muutoksia."
 
-#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:450
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:457
 msgid "No comments yet"
 msgstr "Ei vielä kommentteja"
 
@@ -1922,7 +1923,7 @@ msgstr "Ei vielä pelejä"
 msgid "No groups available"
 msgstr "Ei saatavilla olevia ryhmiä"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:500
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:492
 msgid "No item types can be created yet. Create the required parent items first."
 msgstr "Mitään kohdetyyppiä ei voi vielä luoda. Luo ensin vaaditut yläkohteet."
 
@@ -1998,9 +1999,9 @@ msgid "No views"
 msgstr "Ei näkymiä"
 
 #: ../../../lib/web/src/components/colour-picker.tsx:349
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:516
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:519
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:523
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:508
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:511
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:515
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:365
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:388
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:391
@@ -2160,7 +2161,7 @@ msgstr "Omistaja"
 msgid "Page {currentPage} of {totalPages}"
 msgstr "Sivu {currentPage} / {totalPages}"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:508
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:500
 #: src/features/objects/components/object-detail-panel.tsx:526
 msgid "Parent"
 msgstr "Yläkohde"
@@ -2190,7 +2191,7 @@ msgstr "Valitse päivä"
 msgid "Please add one or more classes to the project design."
 msgstr "Lisää yksi tai useampi luokka projektisuunnitelmaan."
 
-#: ../../../lib/web/src/components/comment-composer.tsx:99
+#: ../../../lib/web/src/components/comment-composer.tsx:84
 #: ../../../lib/web/src/features/errors/general-error.tsx:54
 #: ../../../lib/web/src/lib/api-response-interceptors.ts:323
 msgid "Please check your internet connection and try again."
@@ -2358,9 +2359,9 @@ msgstr "Suhteellinen (5m, 3h, 2d)"
 msgid "Relative within 24 hours, else absolute"
 msgstr "Suhteellinen 24 tunnin sisällä, muuten absoluuttinen"
 
-#: ../../../lib/web/src/components/comment-composer.tsx:236
+#: ../../../lib/web/src/components/attachment-composer.tsx:171
+#: ../../../lib/web/src/components/attachment-composer.tsx:208
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:190
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:598
 #: ../../../lib/web/src/features/access/access-list.tsx:270
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:180
 #: src/features/projects/components/create-project-dialog.tsx:429
@@ -2436,13 +2437,13 @@ msgstr "Korvataanko suunnittelu?"
 msgid "Replacing..."
 msgstr "Korvataan..."
 
-#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:294
-#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:342
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:295
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:343
 msgid "Reply"
 msgstr "Vastaa"
 
 #. placeholder {0}: comment.name || comment.author
-#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:385
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:386
 msgid "Reply to {0}..."
 msgstr "Vastaa käyttäjälle {0}..."
 
@@ -2476,7 +2477,7 @@ msgstr "Palauta kaikki asetukset oletusarvoihin"
 msgid "Resolve these conflicts manually before merging."
 msgstr "Ratkaise nämä ristiriidat manuaalisesti ennen yhdistämistä."
 
-#: ../../../lib/web/src/components/comment-composer.tsx:253
+#: ../../../lib/web/src/components/attachment-composer.tsx:225
 msgid "Retry"
 msgstr "Yritä uudelleen"
 
@@ -2521,7 +2522,7 @@ msgstr "RSS-URL kopioitu leikepöydälle"
 msgid "Saturday"
 msgstr "Lauantai"
 
-#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:269
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:270
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:173
 #: ../../../lib/web/src/components/ui/editable-field-row.tsx:122
 #: ../../../lib/web/src/components/ui/secret-field.tsx:77
@@ -2816,7 +2817,7 @@ msgstr "Jaa"
 msgid "Squash and merge"
 msgstr "Squash ja yhdistä"
 
-#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:451
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:458
 msgid "Start the discussion by adding the first comment."
 msgstr "Aloita keskustelu lisäämällä ensimmäinen kommentti."
 
@@ -2833,13 +2834,13 @@ msgstr "Lopeta seuranta"
 msgid "Subject"
 msgstr "Aihe"
 
-#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:431
-#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:440
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:438
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:447
 msgid "Submit comment"
 msgstr "Lähetä kommentti"
 
-#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:470
 #: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:475
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:480
 msgid "Submit reply"
 msgstr "Lähetä vastaus"
 
@@ -3147,7 +3148,7 @@ msgstr "Tilaus peruttu"
 msgid "Unsubscribing..."
 msgstr "Perutaan tilausta..."
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:286
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:276
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx:103
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx:184
 #: src/features/board/components/board-card.tsx:22
@@ -3169,8 +3170,8 @@ msgstr "Päivitetty"
 msgid "Updating access..."
 msgstr "Päivitetään käyttöoikeutta..."
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:630
-#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:259
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:599
+#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:296
 msgid "Upload"
 msgstr "Lähetä"
 
@@ -3326,7 +3327,7 @@ msgstr "Olet ajan tasalla!"
 msgid "Your account was moved here from {source}. Until you delete it there, messages and notifications may reach both servers, some of your content keeps being served from the old server, and followers may take a few minutes to find you here."
 msgstr "Tilisi siirrettiin tänne kohteesta {source}. Kunnes poistat sen sieltä, viestit ja ilmoitukset voivat tavoittaa molemmat palvelimet, osa sisällöstäsi toimitetaan edelleen vanhalta palvelimelta ja seuraajillasi voi kestää muutama minuutti löytää sinut täältä."
 
-#: ../../../lib/web/src/components/comment-composer.tsx:295
+#: ../../../lib/web/src/components/comment-composer.tsx:275
 msgid "Your attachments will be lost."
 msgstr "Liitteesi menetetään."
 
@@ -3334,10 +3335,10 @@ msgstr "Liitteesi menetetään."
 msgid "Your backup contains objects of type:"
 msgstr "Varmuuskopiosi sisältää seuraavan tyyppisiä kohteita:"
 
-#: ../../../lib/web/src/components/comment-composer.tsx:293
+#: ../../../lib/web/src/components/comment-composer.tsx:273
 msgid "Your text and attachments will be lost."
 msgstr "Tekstisi ja liitteesi menetetään."
 
-#: ../../../lib/web/src/components/comment-composer.tsx:296
+#: ../../../lib/web/src/components/comment-composer.tsx:276
 msgid "Your text will be lost."
 msgstr "Tekstisi menetetään."

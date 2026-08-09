@@ -8,6 +8,31 @@
 # This is what .isdigit() was reached for, but isdigit() also accepts Unicode
 # digit forms (Arabic-Indic "٣", Devanagari "३") that int() rejects,
 # which aborts the action as a 500 instead of taking the guard's else branch.
+# Derive a structural id from a user-supplied name.
+#
+# The id becomes a database key, a URL segment, and - for fields - an element
+# of the COMMA-SEPARATED views.fields list. Lowercasing and swapping spaces
+# for underscores left everything else intact, so a name carrying a comma
+# produced an id that silently corrupts that list when it is encoded, and one
+# carrying a slash produced an id that breaks the route built from it. Only
+# rename validated; every create path derived and stored.
+#
+# Keep letters, digits, underscore and hyphen; fold anything else to an
+# underscore, then collapse and trim so "Sales, EU" and "Sales / EU" do not
+# both become unreadable. Returns "" when nothing usable survives, which the
+# callers already treat as a missing name.
+def structural_id(name):
+    out = ""
+    for ch in name.strip().lower().elems():
+        if ch.isalpha() or ch.isdigit() or ch == "_" or ch == "-":
+            out += ch
+        else:
+            out += "_"
+    while out.find("__") >= 0:
+        out = out.replace("__", "_")
+    return out.strip("_")
+
+
 def decimal(value):
     if not value:
         return False
@@ -4353,7 +4378,7 @@ def action_view_create(a):
 		return
 
 	# Generate view ID from name
-	view_id = name.strip().lower().replace(" ", "_")
+	view_id = structural_id(name)
 
 	# Check if ID already exists
 	existing = mochi.db.exists("select 1 from views where project=? and id=?", project_id, view_id)
@@ -4626,7 +4651,7 @@ def action_class_create(a):
 		return
 
 	# Generate class ID from name
-	class_id = name.strip().lower().replace(" ", "_")
+	class_id = structural_id(name)
 
 	# Check if ID already exists
 	existing = mochi.db.exists("select 1 from classes where project=? and id=?", project_id, class_id)
@@ -4908,7 +4933,7 @@ def action_field_create(a):
 		return
 
 	# Generate field ID from name
-	field_id = name.strip().lower().replace(" ", "_")
+	field_id = structural_id(name)
 
 	# Check if ID already exists
 	existing = mochi.db.exists("select 1 from fields where project=? and class=? and id=?", project_id, class_id, field_id)
@@ -5199,7 +5224,7 @@ def action_option_create(a):
 		return
 
 	# Generate option ID from name
-	option_id = name.strip().lower().replace(" ", "_")
+	option_id = structural_id(name)
 
 	# Check if ID already exists
 	existing = mochi.db.exists("select 1 from options where project=? and class=? and field=? and id=?", project_id, class_id, field_id, option_id)
@@ -8502,7 +8527,7 @@ def do_class_create(project_id, project, params):
 		return {"error": "errors.name_is_required", "code": 400}
 	if check_length(name, 100):
 		return {"error": "errors.name_too_long", "code": 400}
-	class_id = name.strip().lower().replace(" ", "_")
+	class_id = structural_id(name)
 	existing = mochi.db.exists("select 1 from classes where project=? and id=?", project_id, class_id)
 	if existing:
 		return {"error": "errors.class_name_taken", "code": 400}
@@ -8582,7 +8607,7 @@ def do_field_create(project_id, project, params):
 	fieldtype = params.get("fieldtype", "text")
 	if fieldtype not in ["text", "number", "date", "enumerated", "user", "object", "checkbox", "checklist"]:
 		return {"error": "errors.invalid_field_type", "code": 400}
-	field_id = name.strip().lower().replace(" ", "_")
+	field_id = structural_id(name)
 	existing = mochi.db.exists("select 1 from fields where project=? and class=? and id=?", project_id, class_id, field_id)
 	if existing:
 		return {"error": "errors.a_field_with_this_name_already_exists", "code": 400}
@@ -8636,7 +8661,11 @@ def do_field_update(project_id, project, params):
 	card = params.get("card")
 	position = params.get("position")
 	rows_val = params.get("rows")
-	if name != None:
+	# params arrives from a peer as well as from the owner's own UI, and
+	# Starlark has no try/except: .strip() on a number or list, or int() on a
+	# non-numeric string, aborts do_field_update outright - the field is not
+	# updated and nothing says so.
+	if name != None and type(name) == "string":
 		row_set("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, field_id], {"name": name.strip()})
 	if flags != None:
 		row_set("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, field_id], {"flags": flags})
@@ -8646,13 +8675,19 @@ def do_field_update(project_id, project, params):
 	if card != None:
 		card_val = 1 if card == "1" or card == "true" else 0
 		row_set("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, field_id], {"card": card_val})
-	if position != None:
+	if position != None and type(position) in ["int", "float", "string"]:
 		row_set("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, field_id], {"position": position})
 	if rows_val != None:
-		row_set("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, field_id], {"rows": int(rows_val)})
+		# decimal(), not isdigit(): isdigit() accepts Arabic-Indic and
+		# Devanagari digits that int() then rejects, turning the guard's own
+		# else branch into the abort it exists to prevent.
+		if type(rows_val) in ["int", "float"]:
+			row_set("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, field_id], {"rows": int(rows_val)})
+		elif type(rows_val) == "string" and mochi.text.valid(rows_val, "integer"):
+			row_set("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, field_id], {"rows": int(rows_val)})
 	# Rename field ID if requested
 	new_id = params.get("id")
-	if new_id != None:
+	if new_id != None and type(new_id) == "string":
 		new_id = new_id.strip().lower()
 		if new_id and new_id != field_id:
 			for ch in new_id.elems():
@@ -8720,7 +8755,7 @@ def do_option_create(project_id, project, params):
 		return {"error": "errors.colour_too_long", "code": 400}
 	if check_length(params.get("icon"), 100):
 		return {"error": "errors.icon_too_long", "code": 400}
-	option_id = name.strip().lower().replace(" ", "_")
+	option_id = structural_id(name)
 	existing = mochi.db.exists("select 1 from options where project=? and class=? and field=? and id=?", project_id, class_id, field_id, option_id)
 	if existing:
 		return {"error": "errors.an_option_with_this_name_already_exists", "code": 400}
@@ -8831,7 +8866,7 @@ def do_view_create(project_id, project, params):
 	viewtype = params.get("viewtype", "board")
 	if viewtype not in ["board", "list"]:
 		return {"error": "errors.invalid_view_type", "code": 400}
-	view_id = name.strip().lower().replace(" ", "_")
+	view_id = structural_id(name)
 	existing = mochi.db.exists("select 1 from views where project=? and id=?", project_id, view_id)
 	if existing:
 		return {"error": "errors.view_name_taken", "code": 400}

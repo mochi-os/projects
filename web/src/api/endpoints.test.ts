@@ -4,20 +4,24 @@
 // Mochi Application Interface Exception - see license.txt and license-exception.md.
 
 /* eslint-disable lingui/no-unlocalized-strings */
-// Tests for API endpoint URL generation
+// The shared object/class/field routes are asserted once in @mochi/web, in
+// lib/entity-endpoints.test.ts. What is left here is what only projects has:
+// templates, merge requests, diff preferences and the repository integration
+// behind them.
 import { describe, it, expect } from "vitest";
+import { entityEndpoints } from "@mochi/web";
 import endpoints from "./endpoints";
 
 describe("endpoints.projects", () => {
-  describe("class-level endpoints (static strings)", () => {
-    it("should have list endpoint", () => {
-      expect(endpoints.projects.list).toBe("-/list");
-    });
+  it("carries the shared entity table", () => {
+    for (const [name, route] of Object.entries(entityEndpoints)) {
+      expect(endpoints.projects[name as keyof typeof entityEndpoints]).toBe(
+        route,
+      );
+    }
+  });
 
-    it("should have create endpoint", () => {
-      expect(endpoints.projects.create).toBe("-/create");
-    });
-
+  describe("template and repository endpoints", () => {
     it("should have templates endpoint", () => {
       expect(endpoints.projects.templates).toBe("-/templates");
     });
@@ -27,198 +31,37 @@ describe("endpoints.projects", () => {
     });
   });
 
-  describe("entity-level project endpoints", () => {
-    it("should generate info endpoint with project ID", () => {
-      expect(endpoints.projects.info("abc123")).toBe("abc123/-/info");
-    });
-
-    it("should generate update endpoint with project ID", () => {
-      expect(endpoints.projects.update("abc123")).toBe("abc123/-/update");
-    });
-
-    it("should generate delete endpoint with project ID", () => {
-      expect(endpoints.projects.delete("abc123")).toBe("abc123/-/delete");
-    });
-  });
-
-  describe("object endpoints", () => {
-    it("should generate objects list endpoint", () => {
-      expect(endpoints.projects.objects("proj1")).toBe("proj1/-/objects");
-    });
-
-    it("should generate object create endpoint", () => {
-      expect(endpoints.projects.objectCreate("proj1")).toBe(
-        "proj1/-/objects/create",
+  describe("request endpoints", () => {
+    it("should generate requests list endpoint", () => {
+      expect(endpoints.projects.requests("proj1", "obj1")).toBe(
+        "proj1/-/objects/obj1/requests",
       );
     });
 
-    it("should generate object get endpoint", () => {
-      expect(endpoints.projects.object("proj1", "obj1")).toBe(
-        "proj1/-/objects/obj1",
+    it("should generate request create endpoint", () => {
+      expect(endpoints.projects.requestCreate("proj1", "obj1")).toBe(
+        "proj1/-/objects/obj1/requests/create",
       );
     });
 
-    it("should generate object update endpoint", () => {
-      expect(endpoints.projects.objectUpdate("proj1", "obj1")).toBe(
-        "proj1/-/objects/obj1/update",
+    it("should generate request update endpoint", () => {
+      expect(endpoints.projects.requestUpdate("proj1", "obj1", "req1")).toBe(
+        "proj1/-/objects/obj1/requests/req1/update",
       );
     });
 
-    it("should generate object delete endpoint", () => {
-      expect(endpoints.projects.objectDelete("proj1", "obj1")).toBe(
-        "proj1/-/objects/obj1/delete",
-      );
-    });
-
-    it("should generate object move endpoint", () => {
-      expect(endpoints.projects.objectMove("proj1", "obj1")).toBe(
-        "proj1/-/objects/obj1/move",
+    it("should generate request delete endpoint", () => {
+      expect(endpoints.projects.requestDelete("proj1", "obj1", "req1")).toBe(
+        "proj1/-/objects/obj1/requests/req1/delete",
       );
     });
   });
 
-  describe("value endpoints", () => {
-    it("should generate values set endpoint", () => {
-      expect(endpoints.projects.valuesSet("proj1", "obj1")).toBe(
-        "proj1/-/objects/obj1/values",
-      );
-    });
-
-    it("should generate single value set endpoint", () => {
-      expect(endpoints.projects.valueSet("proj1", "obj1", "status")).toBe(
-        "proj1/-/objects/obj1/values/status",
-      );
-    });
-  });
-
-  describe("view endpoints", () => {
-    it("should generate views list endpoint", () => {
-      expect(endpoints.projects.views("proj1")).toBe("proj1/-/views");
-    });
-
-    it("should generate view create endpoint", () => {
-      expect(endpoints.projects.viewCreate("proj1")).toBe(
-        "proj1/-/views/create",
-      );
-    });
-
-    it("should generate view update endpoint", () => {
-      expect(endpoints.projects.viewUpdate("proj1", "view1")).toBe(
-        "proj1/-/views/view1/update",
-      );
-    });
-
-    it("should generate view delete endpoint", () => {
-      expect(endpoints.projects.viewDelete("proj1", "view1")).toBe(
-        "proj1/-/views/view1/delete",
-      );
-    });
-  });
-
-  describe("class endpoints", () => {
-    it("should generate classes list endpoint", () => {
-      expect(endpoints.projects.classes("proj1")).toBe("proj1/-/classes");
-    });
-
-    it("should generate class create endpoint", () => {
-      expect(endpoints.projects.classCreate("proj1")).toBe(
-        "proj1/-/classes/create",
-      );
-    });
-
-    it("should generate class update endpoint", () => {
-      expect(endpoints.projects.classUpdate("proj1", "task")).toBe(
-        "proj1/-/classes/task/update",
-      );
-    });
-
-    it("should generate class delete endpoint", () => {
-      expect(endpoints.projects.classDelete("proj1", "task")).toBe(
-        "proj1/-/classes/task/delete",
-      );
-    });
-  });
-
-  describe("field endpoints", () => {
-    it("should generate fields list endpoint", () => {
-      expect(endpoints.projects.fields("proj1", "task")).toBe(
-        "proj1/-/classes/task/fields",
-      );
-    });
-
-    it("should generate field create endpoint", () => {
-      expect(endpoints.projects.fieldCreate("proj1", "task")).toBe(
-        "proj1/-/classes/task/fields/create",
-      );
-    });
-
-    it("should generate field reorder endpoint", () => {
-      expect(endpoints.projects.fieldReorder("proj1", "task")).toBe(
-        "proj1/-/classes/task/fields/reorder",
-      );
-    });
-
-    it("should generate field update endpoint", () => {
-      expect(endpoints.projects.fieldUpdate("proj1", "task", "field1")).toBe(
-        "proj1/-/classes/task/fields/field1/update",
-      );
-    });
-
-    it("should generate field delete endpoint", () => {
-      expect(endpoints.projects.fieldDelete("proj1", "task", "field1")).toBe(
-        "proj1/-/classes/task/fields/field1/delete",
-      );
-    });
-  });
-
-  describe("option endpoints", () => {
-    it("should generate options list endpoint", () => {
-      expect(endpoints.projects.options("proj1", "task", "status")).toBe(
-        "proj1/-/classes/task/fields/status/options",
-      );
-    });
-
-    it("should generate option create endpoint", () => {
-      expect(endpoints.projects.optionCreate("proj1", "task", "status")).toBe(
-        "proj1/-/classes/task/fields/status/options/create",
-      );
-    });
-
-    it("should generate option update endpoint", () => {
-      expect(
-        endpoints.projects.optionUpdate("proj1", "task", "status", "opt1"),
-      ).toBe("proj1/-/classes/task/fields/status/options/opt1/update");
-    });
-
-    it("should generate option delete endpoint", () => {
-      expect(
-        endpoints.projects.optionDelete("proj1", "task", "status", "opt1"),
-      ).toBe("proj1/-/classes/task/fields/status/options/opt1/delete");
-    });
-  });
-
-  describe("comment endpoints", () => {
-    it("should generate comments list endpoint", () => {
-      expect(endpoints.projects.comments("proj1", "obj1")).toBe(
-        "proj1/-/objects/obj1/comments",
-      );
-    });
-
-    it("should generate comment create endpoint", () => {
-      expect(endpoints.projects.commentCreate("proj1", "obj1")).toBe(
-        "proj1/-/objects/obj1/comments/create",
-      );
-    });
-
-    it("should generate comment update endpoint", () => {
-      expect(endpoints.projects.commentUpdate("proj1", "obj1", "comment1")).toBe(
-        "proj1/-/objects/obj1/comments/comment1/update",
-      );
-    });
-
-    it("should generate comment delete endpoint", () => {
-      expect(endpoints.projects.commentDelete("proj1", "obj1", "comment1")).toBe(
-        "proj1/-/objects/obj1/comments/comment1/delete",
+  describe("diff preference endpoints", () => {
+    it("should have diff preference endpoints", () => {
+      expect(endpoints.projects.diffPreference).toBe("-/diff/preference");
+      expect(endpoints.projects.diffPreferenceSet).toBe(
+        "-/diff/preference/set",
       );
     });
   });
@@ -245,34 +88,6 @@ describe("endpoints.projects", () => {
     it("should generate repository merge endpoint", () => {
       expect(endpoints.projects.repositoryMerge("repo1")).toBe(
         "-/repositories/repo1/merge",
-      );
-    });
-  });
-
-  describe("watcher endpoints", () => {
-    it("should generate watchers list endpoint", () => {
-      expect(endpoints.projects.watchers("proj1", "obj1")).toBe(
-        "proj1/-/objects/obj1/watchers",
-      );
-    });
-
-    it("should generate watcher add endpoint", () => {
-      expect(endpoints.projects.watcherAdd("proj1", "obj1")).toBe(
-        "proj1/-/objects/obj1/watchers/add",
-      );
-    });
-
-    it("should generate watcher remove endpoint", () => {
-      expect(endpoints.projects.watcherRemove("proj1", "obj1")).toBe(
-        "proj1/-/objects/obj1/watchers/remove",
-      );
-    });
-  });
-
-  describe("activity endpoint", () => {
-    it("should generate activity endpoint", () => {
-      expect(endpoints.projects.activity("proj1", "obj1")).toBe(
-        "proj1/-/objects/obj1/activity",
       );
     });
   });

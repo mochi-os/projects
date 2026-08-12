@@ -17,6 +17,12 @@ import type {
   EntityFieldOption,
   EntityObject,
   EntityObjectLink,
+  EntityObjectListResponse,
+  EntityCommentListResponse,
+  EntityActivityListResponse,
+  EntityAttachmentListResponse,
+  EntityWatcherListResponse,
+  EntityLinkListResponse,
   EntitySortState,
   EntityView,
   EntityWatcher,
@@ -103,12 +109,16 @@ export interface RequestData {
 export type SortState = EntitySortState;
 
 // API Response types
-export interface ObjectListResponse {
-  data: {
-    objects: ProjectObject[];
-    watched?: string[];
-  };
-}
+//
+// The envelopes below are the shared client's own, re-exported under this
+// app's names so call sites keep reading `CommentListResponse`. Only the ones
+// this app shapes differently are declared here.
+export type ObjectListResponse = EntityObjectListResponse<ProjectObject>;
+export type CommentListResponse = EntityCommentListResponse;
+export type ActivityListResponse = EntityActivityListResponse;
+export type AttachmentListResponse = EntityAttachmentListResponse;
+export type WatcherListResponse = EntityWatcherListResponse;
+export type LinkListResponse = EntityLinkListResponse;
 
 export interface ObjectCreateResponse {
   data: {
@@ -127,39 +137,6 @@ export interface ObjectGetResponse {
     watching: boolean;
     requests: RequestData[];
     comment_count: number;
-  };
-}
-
-export interface CommentListResponse {
-  data: {
-    comments: Comment[];
-    count: number;
-  };
-}
-
-export interface ActivityListResponse {
-  data: {
-    activities: Activity[];
-  };
-}
-
-export interface AttachmentListResponse {
-  data: {
-    attachments: Attachment[];
-  };
-}
-
-export interface WatcherListResponse {
-  data: {
-    watchers: Watcher[];
-    watching: boolean;
-  };
-}
-
-export interface LinkListResponse {
-  data: {
-    outgoing: ObjectLink[];
-    incoming: ObjectLink[];
   };
 }
 

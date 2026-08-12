@@ -6487,6 +6487,21 @@ def event_access_revoke(e):
 # ============================================================================
 
 # Handle batched sync data from owner (single message with all project data)
+# sync_element: is this batch element usable? Copied from crm, which has had it
+# since the same bug there. A peer chooses the shape of every element, and this
+# handler subscripts them directly (t["id"], f["fieldtype"]) - a non-dict or a
+# missing key raises, which in Starlark ends the whole handler, so the rest of
+# the batch never lands and the board silently truncates at whatever element
+# was malformed.
+def sync_element(item, keys):
+	if type(item) != "dict":
+		return False
+	for key in keys:
+		if item.get(key) == None:
+			return False
+	return True
+
+
 def event_sync_batch(e):
 	# Sync is sent from the project entity (p2p_headers(project_id, ...)), so the
 	# authenticated sender is the project. Trust the from header, not a spoofable
@@ -6503,6 +6518,8 @@ def event_sync_batch(e):
 	# Process classes
 	classes = e.content("classes") or []
 	for t in classes:
+		if not sync_element(t, ["id", "name"]):
+			continue
 		row_merge("classes", ["project", "id"], {"project": project_id, "id": t["id"], "name": t["name"], "rank": t.get("rank", 0), "requests": t.get("requests", ""), "title": t.get("title", "title")})
 		# Hierarchy
 		parents = t.get("parents")
@@ -6512,13 +6529,19 @@ def event_sync_batch(e):
 				row_merge("hierarchy", ["project", "class", "parent"], {"project": project_id, "class": t["id"], "parent": p})
 		# Fields
 		for f in (t.get("fields") or []):
+			if not sync_element(f, ["id", "name", "fieldtype"]):
+				continue
 			row_merge("fields", ["project", "class", "id"], {"project": project_id, "class": t["id"], "id": f["id"], "name": f["name"], "fieldtype": f["fieldtype"], "flags": f.get("flags", ""), "multi": f.get("multi", 0), "rank": f.get("rank", 0), "card": f.get("card", ""), "position": f.get("position", ""), "rows": f.get("rows", 0)})
 			# Options
 			for o in (f.get("options") or []):
+				if not sync_element(o, ["id", "name"]):
+					continue
 				row_merge("options", ["project", "class", "field", "id"], {"project": project_id, "class": t["id"], "field": f["id"], "id": o["id"], "name": o["name"], "colour": o.get("colour", "#94a3b8"), "icon": o.get("icon", ""), "rank": o.get("rank", 0)})
 
 	# Process views
 	for v in (e.content("views") or []):
+		if not sync_element(v, ["id", "name", "viewtype"]):
+			continue
 		row_merge("views", ["project", "id"], {"project": project_id, "id": v["id"], "name": v["name"], "viewtype": v["viewtype"], "filter": v.get("filter", ""), "columns": v.get("columns", ""), "rows": v.get("rows", ""), "sort": v.get("sort", ""), "direction": v.get("direction", ""), "rank": v.get("rank", 0), "border": v.get("border", "")})
 		# View fields
 		row_remove("view_fields", ["project", "view", "field"], "project=? and view=?", [project_id, v["id"]])
@@ -6536,6 +6559,8 @@ def event_sync_batch(e):
 					row_merge("view_classes", ["project", "view", "class"], {"project": project_id, "view": v["id"], "class": class_id})
 	# Process objects
 	for obj in (e.content("objects") or []):
+		if not sync_element(obj, ["id"]):
+			continue
 		# Never adopt/reassign an object that already belongs to another
 		# project - a hijacking owner's batch could otherwise write values,
 		# comments and activity onto our other projects' rows via a colliding
@@ -7361,6 +7386,24 @@ def event_field_reorder(e):
 	fp = mochi.entity.fingerprint(project_id)
 	if fp:
 		mochi.websocket.write(fp, {"type": "field/reorder", "project": project_id, "class_id": class_id})
+
+# View reordered. do_view_reorder broadcasts this on the owner, and every other
+# reorder here has a handler, but this one never did: a subscriber received the
+# event and had nothing to apply it with, so views stayed in whatever order they
+# arrived in and drifted further apart with every reorder. Mirrors
+# event_field_reorder, which is the same operation one level up.
+def event_view_reorder(e):
+	project_id = verify_subscription(e)
+	if not project_id:
+		return
+	order = e.content("order")
+	if not order:
+		return
+	for i, view_id in enumerate(order):
+		row_set("views", ["project", "id"], "project=? and id=?", [project_id, view_id], {"rank": i})
+	fp = mochi.entity.fingerprint(project_id)
+	if fp:
+		mochi.websocket.write(fp, {"type": "view/reorder", "project": project_id})
 
 # Option created
 def event_option_create(e):

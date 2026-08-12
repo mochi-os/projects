@@ -117,6 +117,11 @@ def subscribers_revalidate(project_id):
 		row_remove("watchers", ["object", "user"], "user=? and object in (select id from objects where project=?)", [s["id"], project_id])
 		mochi.db.execute("delete from activity where user=? and object in (select id from objects where project=?)", s["id"], project_id)
 		row_remove("subscribers", ["project", "id"], "project=? and id=?", [project_id, s["id"]])
+		# Dropping them from the fan-out list stops new events but not replay:
+		# core keeps a subscription record so a lagging subscriber can resync,
+		# and it lives on the log's own clock. Without this a revoked subject
+		# could still pull events created after their access was withdrawn.
+		mochi.broadcast.subscriber.remove(project_id, s["id"])
 		removed = True
 	if removed:
 		row_set("projects", ["id"], "id=?", [project_id], {"updated": mochi.time.now()})
@@ -6407,6 +6412,9 @@ def event_subscribe(e):
 
 	now = mochi.time.now()
 	row_merge("subscribers", ["project", "id"], {"project": project_id, "id": subscriber_id, "name": name, "subscribed": now})
+	# Record them for replay now rather than waiting for the next broadcast to
+	# do it, so a gap opening before that can still be healed.
+	mochi.broadcast.subscriber.add(project_id, subscriber_id)
 
 	# Update project timestamp
 	row_set("projects", ["id"], "id=?", [project_id], {"updated": now})

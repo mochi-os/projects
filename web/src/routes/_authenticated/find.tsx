@@ -58,7 +58,11 @@ function FindProjectsPage() {
           error: (e) => getErrorMessage(e, t`Failed to subscribe`),
         })
         await refresh()
-        const id = entity.fingerprint ?? projectId
+        // `||`, not `??`: a probed remote with no fingerprint of its own comes
+        // back carrying "" rather than nothing (see action_search in
+        // projects.star), and an empty id routes to the list root instead of
+        // the project.
+        const id = entity.fingerprint || projectId
         await navigate({ to: APP_ROUTES.PROJECTS.VIEW(id) })
       } catch {
         // toast already shown

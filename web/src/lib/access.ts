@@ -3,9 +3,7 @@
 // This file is part of Mochi, licensed under the GNU AGPL v3 with the
 // Mochi Application Interface Exception - see license.txt and license-exception.md.
 
-import type { ProjectAccess } from "@/types";
+// The ladder itself is shared with the crm app, and the shared object page
+// gates on the same helpers. ProjectAccess is EntityAccess.
 
-export const canDesign = (a: ProjectAccess) => a === "owner" || a === "design";
-export const canWrite = (a: ProjectAccess) => canDesign(a) || a === "write";
-export const canCreate = canWrite;
-export const canComment = (a: ProjectAccess) => canWrite(a) || a === "comment";
+export { canComment, canCreate, canDesign, canWrite } from "@mochi/web";

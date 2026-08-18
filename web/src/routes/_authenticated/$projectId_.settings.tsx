@@ -4,42 +4,20 @@
 // This file is part of Mochi, licensed under the GNU AGPL v3 with the
 // Mochi Application Interface Exception - see license.txt and license-exception.md.
 
+// The page body is EntitySettingsPage in @mochi/web, shared with the crm app.
+// What stays here is the route and its tab param, the wording, the name and
+// prefix rules, the access ladder, and the prefix row itself, which only this
+// app has.
+
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { Trans, useLingui } from '@lingui/react/macro'
-import { useCallback, useMemo, useState } from "react";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useLingui } from '@lingui/react/macro'
 import {
-  Button,
-  ConfirmDialog,
-  PageHeader,
-  Main,
-  Tabs,
-  TabsList,
-  TabsTrigger,
-  usePageTitle,
-  EmptyState,
-  Skeleton,
-  Section,
-  FieldRow,
   EditableFieldRow,
-  DataChip,
-  toastAction,
-  getErrorMessage,
-  extractStatus,
-  AccessDialog,
-  AccessList,
-  coerceObjectArray,
-  GeneralError,
-  type AccessRule,
+  EntitySettingsPage,
   type AccessLevel,
+  type EntitySettingsTab,
 } from "@mochi/web";
-import {
-  FolderKanban,
-  Settings,
-  Shield,
-  Trash2,
-  Plus,
-} from "lucide-react";
+import { FolderKanban } from "lucide-react";
 import projectsApi from "@/api/projects";
 import type { ProjectDetails } from "@/types";
 import { useProjectsStore } from "@/stores/projects-store";
@@ -47,11 +25,8 @@ import { useProjectsStore } from "@/stores/projects-store";
 // Characters disallowed in project names (matches backend validation)
 const DISALLOWED_NAME_CHARS = /[<>\r\n]/;
 
-
-type TabId = "general" | "access";
-
 type SettingsSearch = {
-  tab?: TabId;
+  tab?: EntitySettingsTab;
 };
 
 export const Route = createFileRoute("/_authenticated/$projectId_/settings")({
@@ -64,498 +39,106 @@ export const Route = createFileRoute("/_authenticated/$projectId_/settings")({
   component: ProjectSettingsPage,
 });
 
-interface Tab {
-  id: TabId;
-  label: string;
-  icon: React.ReactNode;
-}
-
 function ProjectSettingsPage() {
   const { t } = useLingui()
-  const tabs: Tab[] = [
-    { id: "general", label: t`Settings`, icon: <Settings className="h-4 w-4" /> },
-    { id: "access", label: t`Access`, icon: <Shield className="h-4 w-4" /> },
-  ];
   const { projectId } = Route.useParams();
   const navigate = useNavigate();
   const navigateSettings = Route.useNavigate();
   const { tab } = Route.useSearch();
-  const activeTab = tab ?? "general";
-  const queryClient = useQueryClient();
   const refreshSidebar = useProjectsStore((state) => state.refresh);
-  const goBackToProject = () => navigate({ to: "/$projectId", params: { projectId } });
 
-  const setActiveTab = (newTab: TabId) => {
-    void navigateSettings({ search: { tab: newTab }, replace: true });
-  };
-
-  const [isDeleting, setIsDeleting] = useState(false);
-  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
-
-  const {
-    data: projectData,
-    isLoading,
-    error,
-    refetch: refetchProject,
-  } = useQuery({
-    queryKey: ["project", projectId],
-    queryFn: async () => {
-      const response = await projectsApi.get(projectId);
-      return response.data;
-    },
-    retry: false,
-    refetchOnWindowFocus: false,
-  });
-
-  const project = projectData as ProjectDetails | undefined;
-  const isOwner = project?.project.owner === 1;
-  const projectStatus = extractStatus(error);
-  const projectLookupError =
-    error && projectStatus !== 403 && projectStatus !== 404
-      ? error
-      : null;
-  const projectNotFound =
-    !project &&
-    (projectStatus === 403 || projectStatus === 404 || (!isLoading && !error));
-
-  usePageTitle(
-    project ? t`${project.project.name} settings` : t`Project settings`
-  );
-
-  const handleDelete = useCallback(async () => {
-    if (!project || !isOwner || isDeleting) return;
-
-    setIsDeleting(true);
-    try {
-      await toastAction(projectsApi.delete(project.project.id), {
-        loading: t`Deleting project...`,
-        success: t`Project deleted`,
-        error: (e) => getErrorMessage(e, t`Failed to delete project`),
-      });
-      void refreshSidebar();
-      void navigate({ to: "/" });
-    } catch {
-      // toast already shown
-    } finally {
-      setIsDeleting(false);
-    }
-  }, [project, isOwner, isDeleting, refreshSidebar, navigate, t]);
-
-  const handleUpdate = useCallback(
-    async (updates: {
-      name?: string;
-      description?: string;
-      prefix?: string;
-    }) => {
-      if (!project || !isOwner) return;
-
-      await toastAction(projectsApi.update(project.project.id, updates), {
-        loading: t`Saving...`,
-        success: t`Project updated`,
-        error: (e) => getErrorMessage(e, t`Failed to update project`),
-      });
-      void refreshSidebar();
-      queryClient.invalidateQueries({ queryKey: ["project", projectId] });
-    },
-    [project, isOwner, refreshSidebar, queryClient, projectId, t]
-  );
-
-  if (isLoading) {
-    return (
-      <>
-        <PageHeader
-          title={t`Settings`}
-          icon={<Settings className="size-4 md:size-5" />}
-          back={{ label: t`Back to project`, onFallback: goBackToProject }}
-        />
-        <Main className="space-y-6">
-          <div className="flex gap-1 border-b">
-            <div className="flex items-center gap-2 px-4 py-2 border-b-2 border-transparent">
-              <Skeleton className="h-4 w-4" />
-              <Skeleton className="h-4 w-16" />
-            </div>
-          </div>
-          <div className="pt-2">
-            <Skeleton className="h-64 w-full rounded-xl" />
-          </div>
-        </Main>
-      </>
-    );
-  }
-
-  if (!project) {
-    return (
-      <>
-        <PageHeader
-          title={t`Settings`}
-          icon={<Settings className="size-4 md:size-5" />}
-          back={{ label: t`Back to project`, onFallback: goBackToProject }}
-        />
-        <Main>
-          {projectLookupError ? (
-            <GeneralError
-              error={projectLookupError}
-              minimal
-              mode="inline"
-              reset={() => {
-                void refetchProject();
-              }}
-            />
-          ) : (
-            <EmptyState
-              icon={FolderKanban}
-              title={projectNotFound ? t`Project not found` : t`Project unavailable`}
-              description={
-                projectNotFound
-                  ? t`This project may have been deleted or you don't have access to it.` : t`This project could not be loaded right now.`
-              }
-            />
-          )}
-        </Main>
-      </>
-    );
-  }
-
-  return (
-    <>
-      <PageHeader
-        title={t`${project.project.name} settings`}
-        icon={<Settings className="size-4 md:size-5" />}
-        back={{ label: t`Back to project`, onFallback: goBackToProject }}
-      />
-      <Main className="space-y-6">
-        {/* Tabs - only show for owners */}
-        {isOwner && (
-          <Tabs
-            variant="underline"
-            value={activeTab}
-            onValueChange={(value) => setActiveTab(value as TabId)}
-          >
-            <TabsList>
-              {tabs.map((tab) => (
-                <TabsTrigger key={tab.id} value={tab.id} className="gap-2">
-                  {tab.icon}
-                  {tab.label}
-                </TabsTrigger>
-              ))}
-            </TabsList>
-          </Tabs>
-        )}
-
-        {/* Tab content */}
-        <div className="pt-2">
-          {activeTab === "general" && (
-            <GeneralTab
-              project={project}
-              isOwner={isOwner}
-              isDeleting={isDeleting}
-              showDeleteDialog={showDeleteDialog}
-              setShowDeleteDialog={setShowDeleteDialog}
-              onDelete={handleDelete}
-              onUpdate={handleUpdate}
-            />
-          )}
-          {activeTab === "access" && isOwner && (
-            <AccessTab projectId={project.project.id} />
-          )}
-        </div>
-      </Main>
-    </>
-  );
-}
-
-interface GeneralTabProps {
-  project: ProjectDetails;
-  isOwner: boolean;
-  isDeleting: boolean;
-  showDeleteDialog: boolean;
-  setShowDeleteDialog: (show: boolean) => void;
-  onDelete: () => void;
-  onUpdate: (updates: {
-    name?: string;
-    description?: string;
-    prefix?: string;
-  }) => Promise<void>;
-}
-
-function GeneralTab({
-  project,
-  isOwner,
-  isDeleting,
-  showDeleteDialog,
-  setShowDeleteDialog,
-  onDelete,
-  onUpdate,
-}: GeneralTabProps) {
-  const { t } = useLingui();
-
-  const projectName = project.project.name;
-
-  return (
-    <div className="space-y-6">
-      <Section
-        title={t`Identity`}
-      >
-        <div className="divide-y-0">
-          <EditableFieldRow
-            label={t`Name`}
-            value={project.project.name}
-            canEdit={isOwner}
-            onSave={(value) => onUpdate({ name: value })}
-            validate={(value) => validateName(t, value)}
-            emphasize
-          />
-
-          <EditableFieldRow
-            label={t`Description`}
-            value={project.project.description}
-            canEdit={isOwner}
-            onSave={(value) => onUpdate({ description: value })}
-            multiline
-          />
-
-          <EditableFieldRow
-            label={t`Prefix`}
-            value={project.project.prefix}
-            canEdit={isOwner}
-            onSave={(value) => onUpdate({ prefix: value })}
-            validate={(value) => validatePrefix(t, value)}
-          />
-
-          <FieldRow label={t`Entity ID`}>
-            <DataChip value={project.project.id} truncate='middle' />
-          </FieldRow>
-
-          {project.project.fingerprint && (
-            <FieldRow label={t`Fingerprint`}>
-              <DataChip
-                value={project.project.fingerprint}
-                truncate='middle'
-              />
-            </FieldRow>
-          )}
-
-          {project.project.server && (
-            <FieldRow label={t`Server`}>
-              <DataChip value={project.project.server} />
-            </FieldRow>
-          )}
-        </div>
-      </Section>
-
-      {isOwner && (
-        <Section
-          title={t`Delete project`}
-          action={
-            <Button
-              variant="outline"
-              onClick={() => setShowDeleteDialog(true)}
-              disabled={isDeleting}
-              size="sm"
-            >
-              <Trash2 className="size-4 me-2" />
-              <Trans>Delete</Trans>
-            </Button>
-          }
-        />
-      )}
-
-      <ConfirmDialog
-        open={showDeleteDialog}
-        onOpenChange={setShowDeleteDialog}
-        title={t`Delete project?`}
-        desc={t`This will permanently delete "${projectName}" and all its objects, comments, and attachments. This action cannot be undone.`}
-        confirmText={t`Delete project`}
-        destructive
-        handleConfirm={onDelete}
-        isLoading={isDeleting}
-      />
-    </div>
-  );
-}
-
-type Translator = ReturnType<typeof useLingui>["t"];
-
-function validateName(t: Translator, name: string): string | null {
-  if (!name.trim()) return t`Project name is required`;
-  if (name.length > 1000) return t`Name must be 1000 characters or less`;
-  if (DISALLOWED_NAME_CHARS.test(name))
-    return t`Name cannot contain < or > characters`;
-  return null;
-}
-
-function validatePrefix(t: Translator, prefix: string): string | null {
-  if (prefix && !/^[A-Za-z0-9-]+$/.test(prefix))
-    return t`Prefix can only contain letters, numbers, and hyphens`;
-  if (prefix.length > 10) return t`Prefix must be 10 characters or less`;
-  return null;
-}
-
-
-// Access levels for projects
-interface AccessTabProps {
-  projectId: string;
-}
-
-function AccessTab({ projectId }: AccessTabProps) {
-  const { t } = useLingui()
-  const PROJECTS_ACCESS_LEVELS: AccessLevel[] = [
+  const accessLevels: AccessLevel[] = [
     { value: "design", label: t`Design, create, edit, comment, and view` },
     { value: "write", label: t`Create, edit, comment, and view` },
     { value: "comment", label: t`Comment and view` },
     { value: "view", label: t`View only` },
     { value: "none", label: t`No access` },
   ];
-  const [dialogOpen, setDialogOpen] = useState(false);
-  const [userSearchQuery, setUserSearchQuery] = useState("");
-
-  const {
-    data: rulesData,
-    isLoading: isLoadingRules,
-    error: rulesErrorRaw,
-    refetch: refetchRules,
-  } = useQuery({
-    queryKey: ["projects", "access-rules", projectId],
-    queryFn: () => projectsApi.getAccessRules(projectId),
-    retry: false,
-    refetchOnWindowFocus: false,
-  });
-
-  const {
-    data: userSearchData,
-    isLoading: userSearchLoading,
-    error: userSearchErrorRaw,
-    refetch: refetchUserSearch,
-  } = useQuery({
-    queryKey: ["users", "search", userSearchQuery],
-    queryFn: () => projectsApi.searchUsers(userSearchQuery),
-    enabled: userSearchQuery.length >= 1,
-    retry: false,
-  });
-
-  const {
-    data: groupsData,
-    error: groupsErrorRaw,
-    refetch: refetchGroups,
-  } = useQuery({
-    queryKey: ["groups", "list"],
-    queryFn: () => projectsApi.listGroups(),
-    retry: false,
-    refetchOnWindowFocus: false,
-  });
-
-  const rules = useMemo<AccessRule[]>(
-    () => coerceObjectArray<AccessRule>(rulesData?.data?.rules),
-    [rulesData],
-  );
-  const rulesError = rulesErrorRaw ?? null;
-  const userSearchError =
-    userSearchQuery.length >= 1 && userSearchErrorRaw
-      ? userSearchErrorRaw
-      : null;
-  const groupsError = groupsErrorRaw ?? null;
-  const canManageRules = !rulesError && !isLoadingRules && !!rulesData;
-  const userSearchResults = coerceObjectArray<{ id: string; name: string }>(
-    userSearchData?.data?.results,
-  );
-  const groups = coerceObjectArray<{ id: string; name: string; description?: string }>(
-    groupsData?.data?.groups,
-  );
-
-  const handleAdd = async (
-    subject: string,
-    subjectName: string,
-    level: string
-  ) => {
-    if (!canManageRules) return;
-    await toastAction(projectsApi.setAccessLevel(projectId, subject, level), {
-      loading: t`Setting access...`,
-      success: t`Access set for ${subjectName}`,
-      error: (e) => getErrorMessage(e, t`Failed to set access level`),
-    });
-    await refetchRules();
-  };
-
-  const handleRevoke = async (subject: string) => {
-    if (!canManageRules) return;
-    try {
-      await toastAction(projectsApi.revokeAccess(projectId, subject), {
-        loading: t`Removing access...`,
-        success: t`Access removed`,
-        error: (e) => getErrorMessage(e, t`Failed to remove access`),
-      });
-      await refetchRules();
-    } catch {
-      // toast already shown
-    }
-  };
-
-  const handleLevelChange = async (subject: string, newLevel: string) => {
-    if (!canManageRules) return;
-    try {
-      await toastAction(projectsApi.setAccessLevel(projectId, subject, newLevel), {
-        loading: t`Updating access...`,
-        success: t`Access level updated`,
-        error: (e) => getErrorMessage(e, t`Failed to update access level`),
-      });
-      await refetchRules();
-    } catch {
-      // toast already shown
-    }
-  };
 
   return (
-    <Section
-      title={t`Access management`}
-    >
-      <div className="space-y-4">
-        <div className="flex justify-end">
-          <Button onClick={() => setDialogOpen(true)} size="sm" disabled={!canManageRules}>
-            <Plus className="h-4 w-4 me-2" />
-            <Trans>Add rule</Trans>
-          </Button>
-        </div>
-
-        <AccessDialog
-          open={dialogOpen}
-          onOpenChange={setDialogOpen}
-          onAdd={handleAdd}
-          levels={PROJECTS_ACCESS_LEVELS}
-          defaultLevel="comment"
-          userSearchResults={userSearchResults}
-          userSearchLoading={userSearchLoading}
-          userSearchError={userSearchError}
-          onRetryUserSearch={() => {
-            void refetchUserSearch();
-          }}
-          onUserSearch={setUserSearchQuery}
-          groups={groups}
-          groupsError={groupsError}
-          onRetryGroups={() => {
-            void refetchGroups();
+    <EntitySettingsPage<ProjectDetails["project"], ProjectDetails>
+      containerId={projectId}
+      selectContainer={(details) => details.project}
+      queryKey="project"
+      accessRulesKey="projects"
+      api={projectsApi}
+      icon={FolderKanban}
+      accessLevels={accessLevels}
+      activeTab={tab ?? "general"}
+      onTabChange={(newTab) =>
+        void navigateSettings({ search: { tab: newTab }, replace: true })
+      }
+      onBack={() => void navigate({ to: "/$projectId", params: { projectId } })}
+      onDeleted={() => void navigate({ to: "/" })}
+      refreshSidebar={refreshSidebar}
+      validateName={(name) => {
+        if (!name.trim()) return t`Project name is required`;
+        if (name.length > 1000) return t`Name must be 1000 characters or less`;
+        if (DISALLOWED_NAME_CHARS.test(name))
+          return t`Name cannot contain < or > characters`;
+        return null;
+      }}
+      renderIdentityExtras={({ container, canEdit, onUpdate }) => (
+        // The prefix is this app's alone: it is what makes an object readable
+        // as PROJ-14, and crm issues no object numbers at all.
+        <EditableFieldRow
+          label={t`Prefix`}
+          value={container.prefix}
+          canEdit={canEdit}
+          onSave={(value) => onUpdate({ prefix: value })}
+          validate={(value) => {
+            if (value && !/^[A-Za-z0-9-]+$/.test(value))
+              return t`Prefix can only contain letters, numbers, and hyphens`;
+            if (value.length > 10)
+              return t`Prefix must be 10 characters or less`;
+            return null;
           }}
         />
-
-        {rulesError ? (
-          <GeneralError
-            error={rulesError}
-            minimal
-            mode="inline"
-            reset={() => {
-              void refetchRules();
-            }}
-          />
-        ) : (
-          <AccessList
-            rules={rules}
-            levels={PROJECTS_ACCESS_LEVELS}
-            onLevelChange={handleLevelChange}
-            onRevoke={handleRevoke}
-            isLoading={isLoadingRules}
-            error={null}
-          />
-        )}
-      </div>
-    </Section>
+      )}
+      labels={{
+        settings: t`Settings`,
+        access: t`Access`,
+        back: t`Back to project`,
+        // `String(name)` rather than a variable, so the extracted message keeps
+        // the positional placeholder this app already ships.
+        pageTitle: (name) =>
+          name ? t`${String(name)} settings` : t`Project settings`,
+        notFound: t`Project not found`,
+        notFoundDescription: t`This project may have been deleted or you don't have access to it.`,
+        unavailable: t`Project unavailable`,
+        unavailableDescription: t`This project could not be loaded right now.`,
+        identity: t`Identity`,
+        name: t`Name`,
+        description: t`Description`,
+        entityId: t`Entity ID`,
+        fingerprint: t`Fingerprint`,
+        server: t`Server`,
+        saving: t`Saving...`,
+        updated: t`Project updated`,
+        updateFailed: t`Failed to update project`,
+        deleteSection: t`Delete project`,
+        delete: t`Delete`,
+        deleteTitle: t`Delete project?`,
+        deleteConfirm: t`Delete project`,
+        deleteDescription: (name) => {
+          const projectName = name;
+          return t`This will permanently delete "${projectName}" and all its objects, comments, and attachments. This action cannot be undone.`;
+        },
+        deleting: t`Deleting project...`,
+        deleted: t`Project deleted`,
+        deleteFailed: t`Failed to delete project`,
+        accessManagement: t`Access management`,
+        addRule: t`Add rule`,
+        settingAccess: t`Setting access...`,
+        accessSet: (subjectName) => t`Access set for ${subjectName}`,
+        setAccessFailed: t`Failed to set access level`,
+        removingAccess: t`Removing access...`,
+        accessRemoved: t`Access removed`,
+        removeAccessFailed: t`Failed to remove access`,
+        updatingAccess: t`Updating access...`,
+        accessUpdated: t`Access level updated`,
+        updateAccessFailed: t`Failed to update access level`,
+      }}
+    />
   );
 }

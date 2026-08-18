@@ -53,9 +53,8 @@ msgstr "{0, plural, one {# fil med konflikt} other {# filer med konflikter}}"
 msgid "{0, plural, one {# selected} other {# selected}}"
 msgstr "{0, plural, one {# valgt} other {# valgt}}"
 
-#. placeholder {0}: project.project.name
-#: src/routes/_authenticated/$projectId/design.tsx:64
-#: src/routes/_authenticated/$projectId/design.tsx:157
+#. placeholder {0}: String(name)
+#: src/routes/_authenticated/$projectId/design.tsx:46
 msgid "{0} - Design"
 msgstr "{0} - Design"
 
@@ -75,9 +74,8 @@ msgstr "{0} filer endret"
 msgid "{0} option preview"
 msgstr "Forhåndsvisning av {0}-alternativet"
 
-#. placeholder {0}: project.project.name
-#: src/routes/_authenticated/$projectId_.settings.tsx:122
-#: src/routes/_authenticated/$projectId_.settings.tsx:222
+#. placeholder {0}: String(name)
+#: src/routes/_authenticated/$projectId_.settings.tsx:105
 msgid "{0} settings"
 msgstr "{0}-innstillinger"
 
@@ -172,7 +170,7 @@ msgstr "Absolutt (dato og klokkeslett)"
 msgid "Accept"
 msgstr "Godta"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:77
+#: src/routes/_authenticated/$projectId_.settings.tsx:100
 msgid "Access"
 msgstr "Tilgang"
 
@@ -188,19 +186,19 @@ msgstr "Tilgang forbudt"
 msgid "Access level"
 msgstr "Tilgangsnivå"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:498
+#: src/routes/_authenticated/$projectId_.settings.tsx:139
 msgid "Access level updated"
 msgstr "Tilgangsnivå oppdatert"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:509
+#: src/routes/_authenticated/$projectId_.settings.tsx:130
 msgid "Access management"
 msgstr "Tilgangsstyring"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:484
+#: src/routes/_authenticated/$projectId_.settings.tsx:136
 msgid "Access removed"
 msgstr "Tilgang fjernet"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:473
+#: src/routes/_authenticated/$projectId_.settings.tsx:133
 msgid "Access set for {subjectName}"
 msgstr "Tilgang angitt for {subjectName}"
 
@@ -270,7 +268,7 @@ msgstr "Legg til sjekklisteelement"
 msgid "Add class"
 msgstr "Legg til klasse"
 
-#: src/routes/_authenticated/$projectId/index.tsx:159
+#: src/routes/_authenticated/$projectId/index.tsx:149
 msgid "Add column"
 msgstr "Legg til kolonne"
 
@@ -300,7 +298,7 @@ msgstr "Legg til ny konto"
 msgid "Add option"
 msgstr "Legg til alternativ"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:515
+#: src/routes/_authenticated/$projectId_.settings.tsx:131
 msgid "Add rule"
 msgstr "Legg til regel"
 
@@ -466,16 +464,13 @@ msgstr "Tilbake"
 msgid "Back to home"
 msgstr "Tilbake til start"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:169
-#: src/routes/_authenticated/$projectId_.settings.tsx:192
-#: src/routes/_authenticated/$projectId_.settings.tsx:224
-#: src/routes/_authenticated/$projectId/design.tsx:134
-#: src/routes/_authenticated/$projectId/design.tsx:159
+#: src/routes/_authenticated/$projectId_.settings.tsx:101
+#: src/routes/_authenticated/$projectId/design.tsx:47
 msgid "Back to project"
 msgstr "Tilbake til prosjekt"
 
-#: src/routes/_authenticated/$projectId/$objectId.tsx:67
-#: src/routes/_authenticated/$projectId/index.tsx:96
+#: src/routes/_authenticated/$projectId/$objectId.tsx:64
+#: src/routes/_authenticated/$projectId/index.tsx:93
 msgid "Back to projects"
 msgstr "Tilbake til prosjekter"
 
@@ -518,7 +513,7 @@ msgstr "Kantfarge"
 msgid "Browser notifications"
 msgstr "Nettleservarsler"
 
-#: src/routes/_authenticated/$projectId/design.tsx:300
+#: src/routes/_authenticated/$projectId/design.tsx:100
 msgid "Built-in templates"
 msgstr "Innebygde maler"
 
@@ -541,8 +536,8 @@ msgstr "Kan være underordnet"
 #: ../../../lib/web/src/features/accounts/account-add.tsx:201
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:91
 #: src/features/projects/components/create-project-dialog.tsx:443
-#: src/routes/_authenticated/$projectId/design.tsx:344
-#: src/routes/_authenticated/$projectId/index.tsx:162
+#: src/routes/_authenticated/$projectId/design.tsx:61
+#: src/routes/_authenticated/$projectId/index.tsx:152
 msgid "Cancel"
 msgstr "Avbryt"
 
@@ -731,7 +726,7 @@ msgstr "Kommandopalett"
 msgid "Comment actions"
 msgstr "Kommentarhandlinger"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:405
+#: src/routes/_authenticated/$projectId_.settings.tsx:53
 msgid "Comment and view"
 msgstr "Kommenter og se"
 
@@ -861,7 +856,7 @@ msgstr "Opprett nytt element"
 msgid "Create project"
 msgstr "Opprett prosjekt"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:404
+#: src/routes/_authenticated/$projectId_.settings.tsx:52
 msgid "Create, edit, comment, and view"
 msgstr "Opprett, rediger, kommenter og vis"
 
@@ -943,7 +938,7 @@ msgstr "Standard sortering"
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:314
 #: src/features/objects/components/object-detail-panel.tsx:636
 #: src/features/requests/components/request-panel.tsx:132
-#: src/routes/_authenticated/$projectId_.settings.tsx:357
+#: src/routes/_authenticated/$projectId_.settings.tsx:120
 msgid "Delete"
 msgstr "Slett"
 
@@ -993,12 +988,12 @@ msgstr "Slett alternativ"
 msgid "Delete option {0}"
 msgstr "Slett alternativ {0}"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:348
-#: src/routes/_authenticated/$projectId_.settings.tsx:368
+#: src/routes/_authenticated/$projectId_.settings.tsx:119
+#: src/routes/_authenticated/$projectId_.settings.tsx:122
 msgid "Delete project"
 msgstr "Slett prosjekt"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:366
+#: src/routes/_authenticated/$projectId_.settings.tsx:121
 msgid "Delete project?"
 msgstr "Slette prosjekt?"
 
@@ -1010,7 +1005,7 @@ msgstr "Slett visning"
 msgid "Delete your account on the old server"
 msgstr "Slett kontoen din på den gamle serveren"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:131
+#: src/routes/_authenticated/$projectId_.settings.tsx:127
 msgid "Deleting project..."
 msgstr "Sletter prosjekt..."
 
@@ -1024,22 +1019,22 @@ msgstr "Synkende"
 
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:83
 #: src/features/requests/components/request-panel.tsx:308
-#: src/routes/_authenticated/$projectId_.settings.tsx:310
+#: src/routes/_authenticated/$projectId_.settings.tsx:112
 msgid "Description"
 msgstr "Beskrivelse"
 
-#: src/routes/_authenticated/$projectId/design.tsx:64
-#: src/routes/_authenticated/$projectId/design.tsx:132
-#: src/routes/_authenticated/$projectId/index.tsx:184
+#: src/routes/_authenticated/$projectId/design.tsx:43
+#: src/routes/_authenticated/$projectId/design.tsx:46
+#: src/routes/_authenticated/$projectId/index.tsx:174
 msgid "Design"
 msgstr "Design"
 
 #: src/features/projects/components/create-project-dialog.tsx:169
-#: src/routes/_authenticated/$projectId/design.tsx:109
+#: src/routes/_authenticated/$projectId/design.tsx:54
 msgid "Design imported"
 msgstr "Design importert"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:403
+#: src/routes/_authenticated/$projectId_.settings.tsx:51
 msgid "Design, create, edit, comment, and view"
 msgstr "Utform, opprett, rediger, kommenter og vis"
 
@@ -1092,7 +1087,7 @@ msgstr "Frakoblet"
 msgid "Dismiss"
 msgstr "Lukk"
 
-#: src/routes/_authenticated/$projectId/index.tsx:165
+#: src/routes/_authenticated/$projectId/index.tsx:155
 msgid "Dismiss board hint"
 msgstr "Lukk tavletips"
 
@@ -1107,7 +1102,7 @@ msgstr "Viser sidefeltet for mobil."
 msgid "Done"
 msgstr "Ferdig"
 
-#: src/routes/_authenticated/$projectId/index.tsx:164
+#: src/routes/_authenticated/$projectId/index.tsx:154
 msgid "Double click on a column to add content"
 msgstr "Dobbeltklikk på en kolonne for å legge til innhold"
 
@@ -1117,7 +1112,7 @@ msgstr "Dobbeltklikk på en kolonne for å legge til innhold"
 msgid "Download"
 msgstr "Last ned"
 
-#: src/routes/_authenticated/$projectId/design.tsx:226
+#: src/routes/_authenticated/$projectId/design.tsx:75
 msgid "Download backup first"
 msgstr "Last ned sikkerhetskopi først"
 
@@ -1125,8 +1120,8 @@ msgstr "Last ned sikkerhetskopi først"
 msgid "Download failed"
 msgstr "Nedlastingen mislyktes"
 
-#: src/routes/_authenticated/$projectId/design.tsx:88
-#: src/routes/_authenticated/$projectId/index.tsx:168
+#: src/routes/_authenticated/$projectId/design.tsx:52
+#: src/routes/_authenticated/$projectId/index.tsx:158
 msgid "Downloaded {filename}"
 msgstr "Lastet ned {filename}"
 
@@ -1135,7 +1130,7 @@ msgstr "Lastet ned {filename}"
 msgid "Draft"
 msgstr "Utkast"
 
-#: src/routes/_authenticated/$projectId/index.tsx:161
+#: src/routes/_authenticated/$projectId/index.tsx:151
 msgid "Drag columns to re-order them"
 msgstr "Dra kolonner for å endre rekkefølgen"
 
@@ -1206,7 +1201,7 @@ msgstr "Skriv inn koden fra e-posten din"
 msgid "Enter your authenticator code"
 msgstr "Skriv inn autentiseringskoden din"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:325
+#: src/routes/_authenticated/$projectId_.settings.tsx:113
 msgid "Entity ID"
 msgstr "Entitets-ID"
 
@@ -1225,11 +1220,11 @@ msgstr "Utvid"
 msgid "Expand sidebar"
 msgstr "Utvid sidefelt"
 
-#: src/routes/_authenticated/$projectId/index.tsx:166
+#: src/routes/_authenticated/$projectId/index.tsx:156
 msgid "Export data"
 msgstr "Eksporter data"
 
-#: src/routes/_authenticated/$projectId/design.tsx:174
+#: src/routes/_authenticated/$projectId/design.tsx:50
 msgid "Export design"
 msgstr "Eksporter design"
 
@@ -1268,7 +1263,7 @@ msgstr "Kunne ikke opprette felt"
 
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx:137
 #: ../../../lib/web/src/components/options-menu.tsx:101
-#: src/routes/_authenticated/$projectId/index.tsx:172
+#: src/routes/_authenticated/$projectId/index.tsx:162
 msgid "Failed to create link"
 msgstr "Kunne ikke opprette lenke"
 
@@ -1296,7 +1291,7 @@ msgstr "Kunne ikke slette kommentar"
 msgid "Failed to delete link"
 msgstr "Kunne ikke slette lenke"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:133
+#: src/routes/_authenticated/$projectId_.settings.tsx:129
 msgid "Failed to delete project"
 msgstr "Kunne ikke slette prosjekt"
 
@@ -1304,12 +1299,11 @@ msgstr "Kunne ikke slette prosjekt"
 msgid "Failed to delete view"
 msgstr "Kunne ikke slette visning"
 
-#: src/routes/_authenticated/$projectId/index.tsx:169
+#: src/routes/_authenticated/$projectId/index.tsx:159
 msgid "Failed to export data"
 msgstr "Kunne ikke eksportere data"
 
-#: src/routes/_authenticated/$projectId/design.tsx:90
-#: src/routes/_authenticated/$projectId/design.tsx:93
+#: src/routes/_authenticated/$projectId/design.tsx:53
 msgid "Failed to export design"
 msgstr "Kunne ikke eksportere design"
 
@@ -1322,7 +1316,7 @@ msgstr "Kunne ikke hente RSS-token"
 msgid "Failed to import data"
 msgstr "Kunne ikke importere data"
 
-#: src/routes/_authenticated/$projectId/design.tsx:114
+#: src/routes/_authenticated/$projectId/design.tsx:55
 msgid "Failed to import design"
 msgstr "Kunne ikke importere design"
 
@@ -1343,16 +1337,18 @@ msgstr "Kunne ikke laste bildet"
 msgid "Failed to load item"
 msgstr "Kunne ikke laste element"
 
-#: src/routes/_authenticated/$projectId/$objectId.tsx:43
-#: src/routes/_authenticated/$projectId/index.tsx:60
+#: src/routes/_authenticated/$projectId/$objectId.tsx:41
+#: src/routes/_authenticated/$projectId/$objectId.tsx:65
+#: src/routes/_authenticated/$projectId/index.tsx:58
+#: src/routes/_authenticated/$projectId/index.tsx:94
 msgid "Failed to load project"
 msgstr "Kunne ikke laste prosjekt"
 
-#: src/routes/_authenticated/$projectId/design.tsx:138
+#: src/routes/_authenticated/$projectId/design.tsx:48
 msgid "Failed to load project design"
 msgstr "Kunne ikke laste prosjektdesign"
 
-#: src/stores/projects-store.ts:31
+#: src/stores/projects-store.ts:17
 msgid "Failed to load projects"
 msgstr "Kunne ikke laste prosjekter"
 
@@ -1373,11 +1369,11 @@ msgid "Failed to post comment"
 msgstr "Kunne ikke legge ut kommentar"
 
 #: src/features/projects/components/create-project-dialog.tsx:250
-#: src/routes/_authenticated/$projectId/design.tsx:282
+#: src/routes/_authenticated/$projectId/design.tsx:60
 msgid "Failed to read file"
 msgstr "Kunne ikke lese fil"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:485
+#: src/routes/_authenticated/$projectId_.settings.tsx:137
 msgid "Failed to remove access"
 msgstr "Kunne ikke fjerne tilgang"
 
@@ -1405,22 +1401,22 @@ msgstr "Kunne ikke søke i prosjekter"
 msgid "Failed to send verification code"
 msgstr "Kunne ikke sende bekreftelseskode"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:474
+#: src/routes/_authenticated/$projectId_.settings.tsx:134
 msgid "Failed to set access level"
 msgstr "Kunne ikke angi tilgangsnivå"
 
 #: src/features/projects/components/inline-project-search.tsx:69
 #: src/features/projects/components/recommended-projects.tsx:44
-#: src/routes/_authenticated/find.tsx:58
+#: src/routes/_authenticated/find.tsx:46
 msgid "Failed to subscribe"
 msgstr "Kunne ikke abonnere"
 
 #: src/features/projects/pages/projects-list-page.tsx:43
-#: src/routes/_authenticated/$projectId/index.tsx:178
+#: src/routes/_authenticated/$projectId/index.tsx:168
 msgid "Failed to unsubscribe"
 msgstr "Kunne ikke avslutte abonnement"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:499
+#: src/routes/_authenticated/$projectId_.settings.tsx:140
 msgid "Failed to update access level"
 msgstr "Kunne ikke oppdatere tilgangsnivå"
 
@@ -1432,7 +1428,7 @@ msgstr "Kunne ikke oppdatere kommentar"
 msgid "Failed to update field"
 msgstr "Kunne ikke oppdatere felt"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:155
+#: src/routes/_authenticated/$projectId_.settings.tsx:118
 msgid "Failed to update project"
 msgstr "Kunne ikke oppdatere prosjekt"
 
@@ -1455,11 +1451,11 @@ msgid "Filter..."
 msgstr "Filtrer..."
 
 #: src/components/layout/projects-layout.tsx:36
-#: src/routes/_authenticated/find.tsx:92
+#: src/routes/_authenticated/find.tsx:41
 msgid "Find projects"
 msgstr "Finn prosjekter"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:330
+#: src/routes/_authenticated/$projectId_.settings.tsx:114
 msgid "Fingerprint"
 msgstr "Fingeravtrykk"
 
@@ -1491,7 +1487,7 @@ msgstr "Venner"
 msgid "From"
 msgstr "Fra"
 
-#: src/routes/_authenticated/$projectId/design.tsx:323
+#: src/routes/_authenticated/$projectId/design.tsx:57
 msgid "From file"
 msgstr "Fra fil"
 
@@ -1575,7 +1571,7 @@ msgstr "Populært"
 msgid "ID"
 msgstr "ID"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:297
+#: src/routes/_authenticated/$projectId_.settings.tsx:110
 msgid "Identity"
 msgstr "Identitet"
 
@@ -1588,8 +1584,8 @@ msgstr "Bildeviser: {0}"
 msgid "Imperial"
 msgstr "Imperialsk"
 
-#: src/routes/_authenticated/$projectId/design.tsx:178
-#: src/routes/_authenticated/$projectId/design.tsx:294
+#: src/routes/_authenticated/$projectId/design.tsx:51
+#: src/routes/_authenticated/$projectId/design.tsx:56
 msgid "Import design"
 msgstr "Importer design"
 
@@ -1627,7 +1623,7 @@ msgid "Invalid date"
 msgstr "Ugyldig dato"
 
 #: src/features/projects/components/create-project-dialog.tsx:243
-#: src/routes/_authenticated/$projectId/design.tsx:278
+#: src/routes/_authenticated/$projectId/design.tsx:59
 msgid "Invalid JSON file"
 msgstr "Ugyldig JSON-fil"
 
@@ -1685,7 +1681,7 @@ msgid "Light"
 msgstr "Lys"
 
 #: ../../../lib/web/src/components/options-menu.tsx:193
-#: src/routes/_authenticated/$projectId/index.tsx:170
+#: src/routes/_authenticated/$projectId/index.tsx:160
 msgid "Link"
 msgstr "Lenke"
 
@@ -1723,7 +1719,7 @@ msgstr "Laster maler ..."
 
 #: ../../../lib/web/src/components/ui/load-more.tsx:35
 #: ../../../lib/web/src/features/document/document-page.tsx:90
-#: src/routes/_authenticated/$projectId/index.tsx:167
+#: src/routes/_authenticated/$projectId/index.tsx:157
 msgid "Loading..."
 msgstr "Laster ..."
 
@@ -1856,9 +1852,13 @@ msgstr "Mitt prosjekt"
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:299
 #: src/features/editor/components/edit-dialogs.tsx:255
 #: src/features/projects/components/create-project-dialog.tsx:331
-#: src/routes/_authenticated/$projectId_.settings.tsx:301
+#: src/routes/_authenticated/$projectId_.settings.tsx:111
 msgid "Name"
 msgstr "Navn"
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:78
+msgid "Name cannot contain < or > characters"
+msgstr ""
 
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:102
 msgid "Name cannot contain angle brackets, backslash, semicolon, quotes or backticks"
@@ -1869,6 +1869,7 @@ msgid "Name is required"
 msgstr "Navn er påkrevd"
 
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:100
+#: src/routes/_authenticated/$projectId_.settings.tsx:76
 msgid "Name must be 1000 characters or less"
 msgstr "Navn må være 1000 tegn eller kortere"
 
@@ -1879,12 +1880,12 @@ msgstr "Nettverksfeil"
 
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:481
 #: ../../../lib/web/src/components/ui/sort-selector.tsx:43
-#: src/routes/_authenticated/$projectId/index.tsx:149
-#: src/routes/_authenticated/$projectId/index.tsx:153
+#: src/routes/_authenticated/$projectId/index.tsx:139
+#: src/routes/_authenticated/$projectId/index.tsx:143
 msgid "New"
 msgstr "Ny"
 
-#: src/routes/_authenticated/$projectId/index.tsx:155
+#: src/routes/_authenticated/$projectId/index.tsx:145
 msgid "New {className}"
 msgstr "Ny {className}"
 
@@ -1906,7 +1907,7 @@ msgstr "Neste bilde"
 msgid "No {parentClassNames} to add to"
 msgstr "Ingen {parentClassNames} å legge til i"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:407
+#: src/routes/_authenticated/$projectId_.settings.tsx:55
 msgid "No access"
 msgstr "Ingen tilgang"
 
@@ -1984,7 +1985,7 @@ msgid "No profile"
 msgstr "Ingen profil"
 
 #: src/features/projects/components/inline-project-search.tsx:88
-#: src/routes/_authenticated/find.tsx:94
+#: src/routes/_authenticated/find.tsx:43
 msgid "No projects found"
 msgstr "Ingen prosjekter funnet"
 
@@ -2123,7 +2124,7 @@ msgstr "Åpne handlinger"
 msgid "Open class actions"
 msgstr "Åpne klassehandlinger"
 
-#: src/routes/_authenticated/$projectId/design.tsx:166
+#: src/routes/_authenticated/$projectId/design.tsx:49
 msgid "Open design actions"
 msgstr "Åpne designhandlinger"
 
@@ -2146,7 +2147,7 @@ msgstr "Åpne navigasjonsmeny"
 msgid "Open option actions"
 msgstr "Åpne valghandlinger"
 
-#: src/routes/_authenticated/$projectId/index.tsx:148
+#: src/routes/_authenticated/$projectId/index.tsx:138
 msgid "Open page actions"
 msgstr "Åpne sidehandlinger"
 
@@ -2217,7 +2218,7 @@ msgstr "Mønster (regex)"
 msgid "Pick a date"
 msgstr "Velg en dato"
 
-#: src/routes/_authenticated/$projectId/index.tsx:157
+#: src/routes/_authenticated/$projectId/index.tsx:147
 msgid "Please add one or more classes to the project design."
 msgstr "Legg til én eller flere klasser i prosjektdesignet."
 
@@ -2252,9 +2253,17 @@ msgid "Posts and comments"
 msgstr "Innlegg og kommentarer"
 
 #: src/features/projects/components/create-project-dialog.tsx:353
-#: src/routes/_authenticated/$projectId_.settings.tsx:318
+#: src/routes/_authenticated/$projectId_.settings.tsx:85
 msgid "Prefix"
 msgstr "Prefiks"
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:91
+msgid "Prefix can only contain letters, numbers, and hyphens"
+msgstr ""
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:93
+msgid "Prefix must be 10 characters or less"
+msgstr ""
 
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:427
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:432
@@ -2274,8 +2283,8 @@ msgstr "Behandler…"
 msgid "Profile"
 msgstr "Profil"
 
-#: src/routes/_authenticated/$projectId/$objectId.tsx:65
-#: src/routes/_authenticated/$projectId/index.tsx:94
+#: src/routes/_authenticated/$projectId/$objectId.tsx:62
+#: src/routes/_authenticated/$projectId/index.tsx:91
 msgid "Project"
 msgstr "Prosjekt"
 
@@ -2287,11 +2296,11 @@ msgstr "Prosjekthandlinger"
 msgid "Project created"
 msgstr "Prosjekt opprettet"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:132
+#: src/routes/_authenticated/$projectId_.settings.tsx:128
 msgid "Project deleted"
 msgstr "Prosjekt slettet"
 
-#: src/routes/_authenticated/$projectId/index.tsx:171
+#: src/routes/_authenticated/$projectId/index.tsx:161
 msgid "Project link"
 msgstr "Prosjektlenke"
 
@@ -2299,19 +2308,23 @@ msgstr "Prosjektlenke"
 msgid "Project members"
 msgstr "Prosjektmedlemmer"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:207
+#: src/routes/_authenticated/$projectId_.settings.tsx:75
+msgid "Project name is required"
+msgstr ""
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:106
 msgid "Project not found"
 msgstr "Prosjekt ikke funnet"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:122
+#: src/routes/_authenticated/$projectId_.settings.tsx:105
 msgid "Project settings"
 msgstr "Prosjektinnstillinger"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:207
+#: src/routes/_authenticated/$projectId_.settings.tsx:108
 msgid "Project unavailable"
 msgstr "Prosjekt utilgjengelig"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:154
+#: src/routes/_authenticated/$projectId_.settings.tsx:117
 msgid "Project updated"
 msgstr "Prosjekt oppdatert"
 
@@ -2336,7 +2349,7 @@ msgstr "Hevet"
 msgid "Re-link your accounts on this server"
 msgstr "Koble kontoene dine til på nytt på denne serveren"
 
-#: src/routes/_authenticated/$projectId/index.tsx:160
+#: src/routes/_authenticated/$projectId/index.tsx:150
 msgid "Re-order columns"
 msgstr "Endre rekkefølge på kolonner"
 
@@ -2435,7 +2448,7 @@ msgstr "Fjern element"
 msgid "Remove link"
 msgstr "Fjern lenke"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:483
+#: src/routes/_authenticated/$projectId_.settings.tsx:135
 msgid "Removing access..."
 msgstr "Fjerner tilgang..."
 
@@ -2452,15 +2465,15 @@ msgstr "Gi kolonnen nytt navn"
 msgid "Rename this board column"
 msgstr "Gi denne tavlekolonnen nytt navn"
 
-#: src/routes/_authenticated/$projectId/design.tsx:218
+#: src/routes/_authenticated/$projectId/design.tsx:73
 msgid "Replace design"
 msgstr "Erstatt design"
 
-#: src/routes/_authenticated/$projectId/design.tsx:202
+#: src/routes/_authenticated/$projectId/design.tsx:62
 msgid "Replace design?"
 msgstr "Erstatte design?"
 
-#: src/routes/_authenticated/$projectId/design.tsx:215
+#: src/routes/_authenticated/$projectId/design.tsx:74
 msgid "Replacing..."
 msgstr "Erstatter …"
 
@@ -2562,11 +2575,11 @@ msgstr "Lørdag"
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:173
 #: ../../../lib/web/src/components/ui/editable-field-row.tsx:122
 #: ../../../lib/web/src/components/ui/secret-field.tsx:79
-#: src/routes/_authenticated/$projectId/index.tsx:163
+#: src/routes/_authenticated/$projectId/index.tsx:153
 msgid "Save"
 msgstr "Lagre"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:153
+#: src/routes/_authenticated/$projectId_.settings.tsx:116
 msgid "Saving..."
 msgstr "Lagrer ..."
 
@@ -2577,7 +2590,7 @@ msgstr "Lagrer ..."
 msgid "Search"
 msgstr "Søk"
 
-#: src/routes/_authenticated/find.tsx:93
+#: src/routes/_authenticated/find.tsx:42
 msgid "Search by name, ID, fingerprint, or URL..."
 msgstr "Søk etter navn, ID, fingeravtrykk eller URL ..."
 
@@ -2744,7 +2757,7 @@ msgstr "Send melding"
 msgid "Serif"
 msgstr "Antikva"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:339
+#: src/routes/_authenticated/$projectId_.settings.tsx:115
 msgid "Server"
 msgstr "Server"
 
@@ -2766,17 +2779,15 @@ msgstr "Økten er utløpt. Logg inn på nytt."
 msgid "Set origin and destination"
 msgstr "Angi opprinnelse og destinasjon"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:472
+#: src/routes/_authenticated/$projectId_.settings.tsx:132
 msgid "Setting access..."
 msgstr "Angir tilgang..."
 
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx:126
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx:132
 #: ../../../lib/web/src/components/options-menu.tsx:199
-#: src/routes/_authenticated/$projectId_.settings.tsx:76
-#: src/routes/_authenticated/$projectId_.settings.tsx:167
-#: src/routes/_authenticated/$projectId_.settings.tsx:190
-#: src/routes/_authenticated/$projectId/index.tsx:192
+#: src/routes/_authenticated/$projectId_.settings.tsx:99
+#: src/routes/_authenticated/$projectId/index.tsx:182
 msgid "Settings"
 msgstr "Innstillinger"
 
@@ -2890,7 +2901,7 @@ msgid "Subscribe"
 msgstr "Abonner"
 
 #: src/features/projects/components/inline-project-search.tsx:68
-#: src/routes/_authenticated/find.tsx:57
+#: src/routes/_authenticated/find.tsx:45
 msgid "Subscribed"
 msgstr "Abonnert"
 
@@ -2901,7 +2912,7 @@ msgstr "Abonnerer på {0}"
 
 #: src/features/projects/components/inline-project-search.tsx:67
 #: src/features/projects/components/recommended-projects.tsx:42
-#: src/routes/_authenticated/find.tsx:56
+#: src/routes/_authenticated/find.tsx:44
 msgid "Subscribing..."
 msgstr "Abonnerer ..."
 
@@ -3001,11 +3012,11 @@ msgstr "Denne sammenslåingsforespørselen er et utkast og kan ikke slås sammen
 msgid "This page has not been created yet."
 msgstr "Denne siden er ikke opprettet ennå."
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:210
+#: src/routes/_authenticated/$projectId_.settings.tsx:109
 msgid "This project could not be loaded right now."
 msgstr "Dette prosjektet kunne ikke lastes akkurat nå."
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:210
+#: src/routes/_authenticated/$projectId_.settings.tsx:107
 msgid "This project may have been deleted or you don't have access to it."
 msgstr "Dette prosjektet kan ha blitt slettet, eller du har ikke tilgang til det."
 
@@ -3013,17 +3024,17 @@ msgstr "Dette prosjektet kan ha blitt slettet, eller du har ikke tilgang til det
 msgid "This will merge \"{source}\" into \"{target}\". This action cannot be undone."
 msgstr "Dette fletter \"{source}\" inn i \"{target}\". Denne handlingen kan ikke angres."
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:367
+#: src/routes/_authenticated/$projectId_.settings.tsx:125
 msgid "This will permanently delete \"{projectName}\" and all its objects, comments, and attachments. This action cannot be undone."
 msgstr "Dette sletter «{projectName}» og alle dens objekter, kommentarer og vedlegg permanent. Denne handlingen kan ikke angres."
 
 #. placeholder {0}: project.project.name
-#: src/routes/_authenticated/$projectId/index.tsx:175
+#: src/routes/_authenticated/$projectId/index.tsx:165
 msgid "This will remove \"{0}\" from your sidebar and stop updates for this project."
 msgstr "Dette fjerner «{0}» fra sidefeltet og stopper oppdateringer for dette prosjektet."
 
-#. placeholder {0}: pendingImport?.label
-#: src/routes/_authenticated/$projectId/design.tsx:204
+#. placeholder {0}: String(label)
+#: src/routes/_authenticated/$projectId/design.tsx:66
 msgid "This will replace the current design with <0>{0}</0>. All existing classes, fields, options, and views will be deleted. Existing objects will not be deleted but may no longer appear in views."
 msgstr "Dette vil erstatte gjeldende design med <0>{0}</0>. Alle eksisterende klasser, felt, valg og visninger vil bli slettet. Eksisterende objekter vil ikke bli slettet, men vises kanskje ikke lenger i visninger."
 
@@ -3172,21 +3183,21 @@ msgstr "Ukjent"
 
 #: ../../../lib/web/src/components/options-menu.tsx:214
 #: src/features/projects/pages/projects-list-page.tsx:39
-#: src/routes/_authenticated/$projectId/index.tsx:173
+#: src/routes/_authenticated/$projectId/index.tsx:163
 msgid "Unsubscribe"
 msgstr "Avslutt abonnement"
 
-#: src/routes/_authenticated/$projectId/index.tsx:174
+#: src/routes/_authenticated/$projectId/index.tsx:164
 msgid "Unsubscribe from project?"
 msgstr "Avslutte abonnement på prosjekt?"
 
 #: src/features/projects/pages/projects-list-page.tsx:42
-#: src/routes/_authenticated/$projectId/index.tsx:177
+#: src/routes/_authenticated/$projectId/index.tsx:167
 msgid "Unsubscribed"
 msgstr "Abonnement avsluttet"
 
 #: src/features/projects/pages/projects-list-page.tsx:41
-#: src/routes/_authenticated/$projectId/index.tsx:176
+#: src/routes/_authenticated/$projectId/index.tsx:166
 msgid "Unsubscribing..."
 msgstr "Avslutter abonnement ..."
 
@@ -3208,7 +3219,7 @@ msgstr "Ikke verifisert"
 msgid "Updated"
 msgstr "Oppdatert"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:497
+#: src/routes/_authenticated/$projectId_.settings.tsx:138
 msgid "Updating access..."
 msgstr "Oppdaterer tilgang..."
 
@@ -3218,7 +3229,7 @@ msgid "Upload"
 msgstr "Last opp"
 
 #: src/features/projects/components/create-project-dialog.tsx:402
-#: src/routes/_authenticated/$projectId/design.tsx:337
+#: src/routes/_authenticated/$projectId/design.tsx:58
 msgid "Upload .json file"
 msgstr "Last opp .json-fil"
 
@@ -3294,11 +3305,11 @@ msgstr "Vis og rediger elementdetaljer"
 msgid "View controls"
 msgstr "Visningskontroller"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:406
+#: src/routes/_authenticated/$projectId_.settings.tsx:54
 msgid "View only"
 msgstr "Bare visning"
 
-#: src/routes/_authenticated/$projectId/index.tsx:158
+#: src/routes/_authenticated/$projectId/index.tsx:148
 msgid "View options"
 msgstr "Visningsalternativer"
 
@@ -3349,7 +3360,7 @@ msgstr "Onsdag"
 msgid "You do not have access to this section."
 msgstr "Du har ikke tilgang til denne delen."
 
-#: src/routes/_authenticated/$projectId/index.tsx:82
+#: src/routes/_authenticated/$projectId/index.tsx:80
 msgid "You don't have access to this project."
 msgstr "Du har ikke tilgang til dette prosjektet."
 

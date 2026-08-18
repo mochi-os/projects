@@ -53,9 +53,8 @@ msgstr "{0, plural, one {# ütköző fájl} other {# ütköző fájl}}"
 msgid "{0, plural, one {# selected} other {# selected}}"
 msgstr "{0, plural, one {# kiválasztva} other {# kiválasztva}}"
 
-#. placeholder {0}: project.project.name
-#: src/routes/_authenticated/$projectId/design.tsx:64
-#: src/routes/_authenticated/$projectId/design.tsx:157
+#. placeholder {0}: String(name)
+#: src/routes/_authenticated/$projectId/design.tsx:46
 msgid "{0} - Design"
 msgstr "{0} - Tervezés"
 
@@ -75,9 +74,8 @@ msgstr "{0} fájl módosult"
 msgid "{0} option preview"
 msgstr "{0} beállítás előnézete"
 
-#. placeholder {0}: project.project.name
-#: src/routes/_authenticated/$projectId_.settings.tsx:122
-#: src/routes/_authenticated/$projectId_.settings.tsx:222
+#. placeholder {0}: String(name)
+#: src/routes/_authenticated/$projectId_.settings.tsx:105
 msgid "{0} settings"
 msgstr "{0} beállításai"
 
@@ -172,7 +170,7 @@ msgstr "Abszolút (dátum és idő)"
 msgid "Accept"
 msgstr "Elfogadás"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:77
+#: src/routes/_authenticated/$projectId_.settings.tsx:100
 msgid "Access"
 msgstr "Hozzáférés"
 
@@ -188,19 +186,19 @@ msgstr "Hozzáférés tiltva"
 msgid "Access level"
 msgstr "Hozzáférési szint"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:498
+#: src/routes/_authenticated/$projectId_.settings.tsx:139
 msgid "Access level updated"
 msgstr "Hozzáférési szint frissítve"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:509
+#: src/routes/_authenticated/$projectId_.settings.tsx:130
 msgid "Access management"
 msgstr "Hozzáférés-kezelés"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:484
+#: src/routes/_authenticated/$projectId_.settings.tsx:136
 msgid "Access removed"
 msgstr "Hozzáférés eltávolítva"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:473
+#: src/routes/_authenticated/$projectId_.settings.tsx:133
 msgid "Access set for {subjectName}"
 msgstr "Hozzáférés beállítva: {subjectName}"
 
@@ -270,7 +268,7 @@ msgstr "Ellenőrzőlista-elem hozzáadása"
 msgid "Add class"
 msgstr "Osztály hozzáadása"
 
-#: src/routes/_authenticated/$projectId/index.tsx:159
+#: src/routes/_authenticated/$projectId/index.tsx:149
 msgid "Add column"
 msgstr "Oszlop hozzáadása"
 
@@ -300,7 +298,7 @@ msgstr "Új fiók hozzáadása"
 msgid "Add option"
 msgstr "Beállítás hozzáadása"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:515
+#: src/routes/_authenticated/$projectId_.settings.tsx:131
 msgid "Add rule"
 msgstr "Szabály hozzáadása"
 
@@ -466,16 +464,13 @@ msgstr "Vissza"
 msgid "Back to home"
 msgstr "Vissza a kezdőlapra"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:169
-#: src/routes/_authenticated/$projectId_.settings.tsx:192
-#: src/routes/_authenticated/$projectId_.settings.tsx:224
-#: src/routes/_authenticated/$projectId/design.tsx:134
-#: src/routes/_authenticated/$projectId/design.tsx:159
+#: src/routes/_authenticated/$projectId_.settings.tsx:101
+#: src/routes/_authenticated/$projectId/design.tsx:47
 msgid "Back to project"
 msgstr "Vissza a projekthez"
 
-#: src/routes/_authenticated/$projectId/$objectId.tsx:67
-#: src/routes/_authenticated/$projectId/index.tsx:96
+#: src/routes/_authenticated/$projectId/$objectId.tsx:64
+#: src/routes/_authenticated/$projectId/index.tsx:93
 msgid "Back to projects"
 msgstr "Vissza a projektekhez"
 
@@ -518,7 +513,7 @@ msgstr "Szegélyszín"
 msgid "Browser notifications"
 msgstr "Böngészőértesítések"
 
-#: src/routes/_authenticated/$projectId/design.tsx:300
+#: src/routes/_authenticated/$projectId/design.tsx:100
 msgid "Built-in templates"
 msgstr "Beépített sablonok"
 
@@ -541,8 +536,8 @@ msgstr "Lehet gyermeke ennek"
 #: ../../../lib/web/src/features/accounts/account-add.tsx:201
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:91
 #: src/features/projects/components/create-project-dialog.tsx:443
-#: src/routes/_authenticated/$projectId/design.tsx:344
-#: src/routes/_authenticated/$projectId/index.tsx:162
+#: src/routes/_authenticated/$projectId/design.tsx:61
+#: src/routes/_authenticated/$projectId/index.tsx:152
 msgid "Cancel"
 msgstr "Mégse"
 
@@ -731,7 +726,7 @@ msgstr "Parancspaletta"
 msgid "Comment actions"
 msgstr "Megjegyzésműveletek"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:405
+#: src/routes/_authenticated/$projectId_.settings.tsx:53
 msgid "Comment and view"
 msgstr "Megjegyzés és megtekintés"
 
@@ -861,7 +856,7 @@ msgstr "Új elem létrehozása"
 msgid "Create project"
 msgstr "Projekt létrehozása"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:404
+#: src/routes/_authenticated/$projectId_.settings.tsx:52
 msgid "Create, edit, comment, and view"
 msgstr "Létrehozás, szerkesztés, hozzászólás és megtekintés"
 
@@ -943,7 +938,7 @@ msgstr "Alapértelmezett rendezés"
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:314
 #: src/features/objects/components/object-detail-panel.tsx:636
 #: src/features/requests/components/request-panel.tsx:132
-#: src/routes/_authenticated/$projectId_.settings.tsx:357
+#: src/routes/_authenticated/$projectId_.settings.tsx:120
 msgid "Delete"
 msgstr "Törlés"
 
@@ -993,12 +988,12 @@ msgstr "Beállítás törlése"
 msgid "Delete option {0}"
 msgstr "{0} beállítás törlése"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:348
-#: src/routes/_authenticated/$projectId_.settings.tsx:368
+#: src/routes/_authenticated/$projectId_.settings.tsx:119
+#: src/routes/_authenticated/$projectId_.settings.tsx:122
 msgid "Delete project"
 msgstr "Projekt törlése"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:366
+#: src/routes/_authenticated/$projectId_.settings.tsx:121
 msgid "Delete project?"
 msgstr "Törli a projektet?"
 
@@ -1010,7 +1005,7 @@ msgstr "Nézet törlése"
 msgid "Delete your account on the old server"
 msgstr "Törölje fiókját a régi szerveren"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:131
+#: src/routes/_authenticated/$projectId_.settings.tsx:127
 msgid "Deleting project..."
 msgstr "Projekt törlése..."
 
@@ -1024,22 +1019,22 @@ msgstr "Csökkenő"
 
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:83
 #: src/features/requests/components/request-panel.tsx:308
-#: src/routes/_authenticated/$projectId_.settings.tsx:310
+#: src/routes/_authenticated/$projectId_.settings.tsx:112
 msgid "Description"
 msgstr "Leírás"
 
-#: src/routes/_authenticated/$projectId/design.tsx:64
-#: src/routes/_authenticated/$projectId/design.tsx:132
-#: src/routes/_authenticated/$projectId/index.tsx:184
+#: src/routes/_authenticated/$projectId/design.tsx:43
+#: src/routes/_authenticated/$projectId/design.tsx:46
+#: src/routes/_authenticated/$projectId/index.tsx:174
 msgid "Design"
 msgstr "Tervezés"
 
 #: src/features/projects/components/create-project-dialog.tsx:169
-#: src/routes/_authenticated/$projectId/design.tsx:109
+#: src/routes/_authenticated/$projectId/design.tsx:54
 msgid "Design imported"
 msgstr "Terv importálva"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:403
+#: src/routes/_authenticated/$projectId_.settings.tsx:51
 msgid "Design, create, edit, comment, and view"
 msgstr "Tervezés, létrehozás, szerkesztés, hozzászólás és megtekintés"
 
@@ -1092,7 +1087,7 @@ msgstr "Leválasztva"
 msgid "Dismiss"
 msgstr "Elvetés"
 
-#: src/routes/_authenticated/$projectId/index.tsx:165
+#: src/routes/_authenticated/$projectId/index.tsx:155
 msgid "Dismiss board hint"
 msgstr "Tábla tipp elvetése"
 
@@ -1107,7 +1102,7 @@ msgstr "Megjeleníti a mobil oldalsávot."
 msgid "Done"
 msgstr "Kész"
 
-#: src/routes/_authenticated/$projectId/index.tsx:164
+#: src/routes/_authenticated/$projectId/index.tsx:154
 msgid "Double click on a column to add content"
 msgstr "Kattintson duplán egy oszlopra a tartalom hozzáadásához"
 
@@ -1117,7 +1112,7 @@ msgstr "Kattintson duplán egy oszlopra a tartalom hozzáadásához"
 msgid "Download"
 msgstr "Letöltés"
 
-#: src/routes/_authenticated/$projectId/design.tsx:226
+#: src/routes/_authenticated/$projectId/design.tsx:75
 msgid "Download backup first"
 msgstr "Töltse le először a biztonsági mentést"
 
@@ -1125,8 +1120,8 @@ msgstr "Töltse le először a biztonsági mentést"
 msgid "Download failed"
 msgstr "A letöltés sikertelen"
 
-#: src/routes/_authenticated/$projectId/design.tsx:88
-#: src/routes/_authenticated/$projectId/index.tsx:168
+#: src/routes/_authenticated/$projectId/design.tsx:52
+#: src/routes/_authenticated/$projectId/index.tsx:158
 msgid "Downloaded {filename}"
 msgstr "Letöltve: {filename}"
 
@@ -1135,7 +1130,7 @@ msgstr "Letöltve: {filename}"
 msgid "Draft"
 msgstr "Vázlat"
 
-#: src/routes/_authenticated/$projectId/index.tsx:161
+#: src/routes/_authenticated/$projectId/index.tsx:151
 msgid "Drag columns to re-order them"
 msgstr "Húzza az oszlopokat az átrendezésükhöz"
 
@@ -1206,7 +1201,7 @@ msgstr "Adja meg az e-mailben kapott kódot"
 msgid "Enter your authenticator code"
 msgstr "Adja meg a hitelesítő kódját"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:325
+#: src/routes/_authenticated/$projectId_.settings.tsx:113
 msgid "Entity ID"
 msgstr "Entitás azonosító"
 
@@ -1225,11 +1220,11 @@ msgstr "Kibontás"
 msgid "Expand sidebar"
 msgstr "Oldalsáv kibontása"
 
-#: src/routes/_authenticated/$projectId/index.tsx:166
+#: src/routes/_authenticated/$projectId/index.tsx:156
 msgid "Export data"
 msgstr "Adatok exportálása"
 
-#: src/routes/_authenticated/$projectId/design.tsx:174
+#: src/routes/_authenticated/$projectId/design.tsx:50
 msgid "Export design"
 msgstr "Terv exportálása"
 
@@ -1268,7 +1263,7 @@ msgstr "Nem sikerült létrehozni a mezőt"
 
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx:137
 #: ../../../lib/web/src/components/options-menu.tsx:101
-#: src/routes/_authenticated/$projectId/index.tsx:172
+#: src/routes/_authenticated/$projectId/index.tsx:162
 msgid "Failed to create link"
 msgstr "Nem sikerült létrehozni a hivatkozást"
 
@@ -1296,7 +1291,7 @@ msgstr "Nem sikerült törölni a hozzászólást"
 msgid "Failed to delete link"
 msgstr "Nem sikerült törölni a hivatkozást"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:133
+#: src/routes/_authenticated/$projectId_.settings.tsx:129
 msgid "Failed to delete project"
 msgstr "Nem sikerült törölni a projektet"
 
@@ -1304,12 +1299,11 @@ msgstr "Nem sikerült törölni a projektet"
 msgid "Failed to delete view"
 msgstr "Nem sikerült törölni a nézetet"
 
-#: src/routes/_authenticated/$projectId/index.tsx:169
+#: src/routes/_authenticated/$projectId/index.tsx:159
 msgid "Failed to export data"
 msgstr "Az adatok exportálása nem sikerült"
 
-#: src/routes/_authenticated/$projectId/design.tsx:90
-#: src/routes/_authenticated/$projectId/design.tsx:93
+#: src/routes/_authenticated/$projectId/design.tsx:53
 msgid "Failed to export design"
 msgstr "Nem sikerült exportálni a tervet"
 
@@ -1322,7 +1316,7 @@ msgstr "Nem sikerült megszerezni az RSS tokent"
 msgid "Failed to import data"
 msgstr "Az adatok importálása nem sikerült"
 
-#: src/routes/_authenticated/$projectId/design.tsx:114
+#: src/routes/_authenticated/$projectId/design.tsx:55
 msgid "Failed to import design"
 msgstr "Nem sikerült importálni a tervet"
 
@@ -1343,16 +1337,18 @@ msgstr "A kép betöltése sikertelen"
 msgid "Failed to load item"
 msgstr "Nem sikerült betölteni az elemet"
 
-#: src/routes/_authenticated/$projectId/$objectId.tsx:43
-#: src/routes/_authenticated/$projectId/index.tsx:60
+#: src/routes/_authenticated/$projectId/$objectId.tsx:41
+#: src/routes/_authenticated/$projectId/$objectId.tsx:65
+#: src/routes/_authenticated/$projectId/index.tsx:58
+#: src/routes/_authenticated/$projectId/index.tsx:94
 msgid "Failed to load project"
 msgstr "Nem sikerült betölteni a projektet"
 
-#: src/routes/_authenticated/$projectId/design.tsx:138
+#: src/routes/_authenticated/$projectId/design.tsx:48
 msgid "Failed to load project design"
 msgstr "Nem sikerült betölteni a projekt tervét"
 
-#: src/stores/projects-store.ts:31
+#: src/stores/projects-store.ts:17
 msgid "Failed to load projects"
 msgstr "Nem sikerült betölteni a projekteket"
 
@@ -1373,11 +1369,11 @@ msgid "Failed to post comment"
 msgstr "Nem sikerült közzétenni a hozzászólást"
 
 #: src/features/projects/components/create-project-dialog.tsx:250
-#: src/routes/_authenticated/$projectId/design.tsx:282
+#: src/routes/_authenticated/$projectId/design.tsx:60
 msgid "Failed to read file"
 msgstr "Nem sikerült olvasni a fájlt"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:485
+#: src/routes/_authenticated/$projectId_.settings.tsx:137
 msgid "Failed to remove access"
 msgstr "Nem sikerült eltávolítani a hozzáférést"
 
@@ -1405,22 +1401,22 @@ msgstr "A projektek keresése nem sikerült"
 msgid "Failed to send verification code"
 msgstr "Nem sikerült elküldeni az ellenőrző kódot"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:474
+#: src/routes/_authenticated/$projectId_.settings.tsx:134
 msgid "Failed to set access level"
 msgstr "Nem sikerült beállítani a hozzáférési szintet"
 
 #: src/features/projects/components/inline-project-search.tsx:69
 #: src/features/projects/components/recommended-projects.tsx:44
-#: src/routes/_authenticated/find.tsx:58
+#: src/routes/_authenticated/find.tsx:46
 msgid "Failed to subscribe"
 msgstr "Nem sikerült feliratkozni"
 
 #: src/features/projects/pages/projects-list-page.tsx:43
-#: src/routes/_authenticated/$projectId/index.tsx:178
+#: src/routes/_authenticated/$projectId/index.tsx:168
 msgid "Failed to unsubscribe"
 msgstr "Nem sikerült leiratkozni"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:499
+#: src/routes/_authenticated/$projectId_.settings.tsx:140
 msgid "Failed to update access level"
 msgstr "Nem sikerült frissíteni a hozzáférési szintet"
 
@@ -1432,7 +1428,7 @@ msgstr "Nem sikerült frissíteni a hozzászólást"
 msgid "Failed to update field"
 msgstr "Nem sikerült frissíteni a mezőt"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:155
+#: src/routes/_authenticated/$projectId_.settings.tsx:118
 msgid "Failed to update project"
 msgstr "Nem sikerült frissíteni a projektet"
 
@@ -1455,11 +1451,11 @@ msgid "Filter..."
 msgstr "Szűrés…"
 
 #: src/components/layout/projects-layout.tsx:36
-#: src/routes/_authenticated/find.tsx:92
+#: src/routes/_authenticated/find.tsx:41
 msgid "Find projects"
 msgstr "Projektek keresése"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:330
+#: src/routes/_authenticated/$projectId_.settings.tsx:114
 msgid "Fingerprint"
 msgstr "Ujjlenyomat"
 
@@ -1491,7 +1487,7 @@ msgstr "Barátok"
 msgid "From"
 msgstr "Kezdete"
 
-#: src/routes/_authenticated/$projectId/design.tsx:323
+#: src/routes/_authenticated/$projectId/design.tsx:57
 msgid "From file"
 msgstr "Fájlból"
 
@@ -1575,7 +1571,7 @@ msgstr "Forró"
 msgid "ID"
 msgstr "Azonosító"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:297
+#: src/routes/_authenticated/$projectId_.settings.tsx:110
 msgid "Identity"
 msgstr "Azonosító"
 
@@ -1588,8 +1584,8 @@ msgstr "Képnézegető: {0}"
 msgid "Imperial"
 msgstr "Imperial"
 
-#: src/routes/_authenticated/$projectId/design.tsx:178
-#: src/routes/_authenticated/$projectId/design.tsx:294
+#: src/routes/_authenticated/$projectId/design.tsx:51
+#: src/routes/_authenticated/$projectId/design.tsx:56
 msgid "Import design"
 msgstr "Terv importálása"
 
@@ -1627,7 +1623,7 @@ msgid "Invalid date"
 msgstr "Érvénytelen dátum"
 
 #: src/features/projects/components/create-project-dialog.tsx:243
-#: src/routes/_authenticated/$projectId/design.tsx:278
+#: src/routes/_authenticated/$projectId/design.tsx:59
 msgid "Invalid JSON file"
 msgstr "Érvénytelen JSON fájl"
 
@@ -1685,7 +1681,7 @@ msgid "Light"
 msgstr "Világos"
 
 #: ../../../lib/web/src/components/options-menu.tsx:193
-#: src/routes/_authenticated/$projectId/index.tsx:170
+#: src/routes/_authenticated/$projectId/index.tsx:160
 msgid "Link"
 msgstr "Hivatkozás"
 
@@ -1723,7 +1719,7 @@ msgstr "Sablonok betöltése..."
 
 #: ../../../lib/web/src/components/ui/load-more.tsx:35
 #: ../../../lib/web/src/features/document/document-page.tsx:90
-#: src/routes/_authenticated/$projectId/index.tsx:167
+#: src/routes/_authenticated/$projectId/index.tsx:157
 msgid "Loading..."
 msgstr "Betöltés..."
 
@@ -1856,9 +1852,13 @@ msgstr "Saját projektem"
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:299
 #: src/features/editor/components/edit-dialogs.tsx:255
 #: src/features/projects/components/create-project-dialog.tsx:331
-#: src/routes/_authenticated/$projectId_.settings.tsx:301
+#: src/routes/_authenticated/$projectId_.settings.tsx:111
 msgid "Name"
 msgstr "Név"
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:78
+msgid "Name cannot contain < or > characters"
+msgstr ""
 
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:102
 msgid "Name cannot contain angle brackets, backslash, semicolon, quotes or backticks"
@@ -1869,6 +1869,7 @@ msgid "Name is required"
 msgstr "A név kötelező"
 
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:100
+#: src/routes/_authenticated/$projectId_.settings.tsx:76
 msgid "Name must be 1000 characters or less"
 msgstr "A név legfeljebb 1000 karakter lehet"
 
@@ -1879,12 +1880,12 @@ msgstr "Hálózati hiba"
 
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:481
 #: ../../../lib/web/src/components/ui/sort-selector.tsx:43
-#: src/routes/_authenticated/$projectId/index.tsx:149
-#: src/routes/_authenticated/$projectId/index.tsx:153
+#: src/routes/_authenticated/$projectId/index.tsx:139
+#: src/routes/_authenticated/$projectId/index.tsx:143
 msgid "New"
 msgstr "Új"
 
-#: src/routes/_authenticated/$projectId/index.tsx:155
+#: src/routes/_authenticated/$projectId/index.tsx:145
 msgid "New {className}"
 msgstr "Új {className}"
 
@@ -1906,7 +1907,7 @@ msgstr "Következő kép"
 msgid "No {parentClassNames} to add to"
 msgstr "Nincs {parentClassNames}, amelyhez hozzáadható"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:407
+#: src/routes/_authenticated/$projectId_.settings.tsx:55
 msgid "No access"
 msgstr "Nincs hozzáférés"
 
@@ -1984,7 +1985,7 @@ msgid "No profile"
 msgstr "Nincs profil"
 
 #: src/features/projects/components/inline-project-search.tsx:88
-#: src/routes/_authenticated/find.tsx:94
+#: src/routes/_authenticated/find.tsx:43
 msgid "No projects found"
 msgstr "Nem találhatók projektek"
 
@@ -2123,7 +2124,7 @@ msgstr "Műveletek megnyitása"
 msgid "Open class actions"
 msgstr "Osztályműveletek megnyitása"
 
-#: src/routes/_authenticated/$projectId/design.tsx:166
+#: src/routes/_authenticated/$projectId/design.tsx:49
 msgid "Open design actions"
 msgstr "Tervezési műveletek megnyitása"
 
@@ -2146,7 +2147,7 @@ msgstr "Navigációs menü megnyitása"
 msgid "Open option actions"
 msgstr "Opcióműveletek megnyitása"
 
-#: src/routes/_authenticated/$projectId/index.tsx:148
+#: src/routes/_authenticated/$projectId/index.tsx:138
 msgid "Open page actions"
 msgstr "Oldalműveletek megnyitása"
 
@@ -2217,7 +2218,7 @@ msgstr "Minta (regex)"
 msgid "Pick a date"
 msgstr "Válasszon dátumot"
 
-#: src/routes/_authenticated/$projectId/index.tsx:157
+#: src/routes/_authenticated/$projectId/index.tsx:147
 msgid "Please add one or more classes to the project design."
 msgstr "Adjon hozzá egy vagy több osztályt a projekttervezéshez."
 
@@ -2252,9 +2253,17 @@ msgid "Posts and comments"
 msgstr "Bejegyzések és hozzászólások"
 
 #: src/features/projects/components/create-project-dialog.tsx:353
-#: src/routes/_authenticated/$projectId_.settings.tsx:318
+#: src/routes/_authenticated/$projectId_.settings.tsx:85
 msgid "Prefix"
 msgstr "Előtag"
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:91
+msgid "Prefix can only contain letters, numbers, and hyphens"
+msgstr ""
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:93
+msgid "Prefix must be 10 characters or less"
+msgstr ""
 
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:427
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:432
@@ -2274,8 +2283,8 @@ msgstr "Feldolgozás…"
 msgid "Profile"
 msgstr "Profil"
 
-#: src/routes/_authenticated/$projectId/$objectId.tsx:65
-#: src/routes/_authenticated/$projectId/index.tsx:94
+#: src/routes/_authenticated/$projectId/$objectId.tsx:62
+#: src/routes/_authenticated/$projectId/index.tsx:91
 msgid "Project"
 msgstr "Projekt"
 
@@ -2287,11 +2296,11 @@ msgstr "Projektműveletek"
 msgid "Project created"
 msgstr "Projekt létrehozva"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:132
+#: src/routes/_authenticated/$projectId_.settings.tsx:128
 msgid "Project deleted"
 msgstr "Projekt törölve"
 
-#: src/routes/_authenticated/$projectId/index.tsx:171
+#: src/routes/_authenticated/$projectId/index.tsx:161
 msgid "Project link"
 msgstr "Projekthivatkozás"
 
@@ -2299,19 +2308,23 @@ msgstr "Projekthivatkozás"
 msgid "Project members"
 msgstr "Projekttagok"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:207
+#: src/routes/_authenticated/$projectId_.settings.tsx:75
+msgid "Project name is required"
+msgstr ""
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:106
 msgid "Project not found"
 msgstr "A projekt nem található"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:122
+#: src/routes/_authenticated/$projectId_.settings.tsx:105
 msgid "Project settings"
 msgstr "Projekt beállításai"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:207
+#: src/routes/_authenticated/$projectId_.settings.tsx:108
 msgid "Project unavailable"
 msgstr "A projekt nem elérhető"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:154
+#: src/routes/_authenticated/$projectId_.settings.tsx:117
 msgid "Project updated"
 msgstr "Projekt frissítve"
 
@@ -2336,7 +2349,7 @@ msgstr "Kiemelt"
 msgid "Re-link your accounts on this server"
 msgstr "Kapcsolja újra össze fiókjait ezen a szerveren"
 
-#: src/routes/_authenticated/$projectId/index.tsx:160
+#: src/routes/_authenticated/$projectId/index.tsx:150
 msgid "Re-order columns"
 msgstr "Oszlopok újrarendezése"
 
@@ -2435,7 +2448,7 @@ msgstr "Elem eltávolítása"
 msgid "Remove link"
 msgstr "Hivatkozás eltávolítása"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:483
+#: src/routes/_authenticated/$projectId_.settings.tsx:135
 msgid "Removing access..."
 msgstr "Hozzáférés eltávolítása..."
 
@@ -2452,15 +2465,15 @@ msgstr "Oszlop átnevezése"
 msgid "Rename this board column"
 msgstr "Tábla oszlopának átnevezése"
 
-#: src/routes/_authenticated/$projectId/design.tsx:218
+#: src/routes/_authenticated/$projectId/design.tsx:73
 msgid "Replace design"
 msgstr "Tervezés cseréje"
 
-#: src/routes/_authenticated/$projectId/design.tsx:202
+#: src/routes/_authenticated/$projectId/design.tsx:62
 msgid "Replace design?"
 msgstr "Lecseréli a tervet?"
 
-#: src/routes/_authenticated/$projectId/design.tsx:215
+#: src/routes/_authenticated/$projectId/design.tsx:74
 msgid "Replacing..."
 msgstr "Csere..."
 
@@ -2562,11 +2575,11 @@ msgstr "Szombat"
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:173
 #: ../../../lib/web/src/components/ui/editable-field-row.tsx:122
 #: ../../../lib/web/src/components/ui/secret-field.tsx:79
-#: src/routes/_authenticated/$projectId/index.tsx:163
+#: src/routes/_authenticated/$projectId/index.tsx:153
 msgid "Save"
 msgstr "Mentés"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:153
+#: src/routes/_authenticated/$projectId_.settings.tsx:116
 msgid "Saving..."
 msgstr "Mentés..."
 
@@ -2577,7 +2590,7 @@ msgstr "Mentés..."
 msgid "Search"
 msgstr "Keresés"
 
-#: src/routes/_authenticated/find.tsx:93
+#: src/routes/_authenticated/find.tsx:42
 msgid "Search by name, ID, fingerprint, or URL..."
 msgstr "Keresés név, azonosító, ujjlenyomat vagy URL alapján..."
 
@@ -2744,7 +2757,7 @@ msgstr "Üzenet küldése"
 msgid "Serif"
 msgstr "Talpas"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:339
+#: src/routes/_authenticated/$projectId_.settings.tsx:115
 msgid "Server"
 msgstr "Kiszolgáló"
 
@@ -2766,17 +2779,15 @@ msgstr "A munkamenet lejárt. Kérjük, jelentkezzen be újra."
 msgid "Set origin and destination"
 msgstr "Kiindulási és úti cél beállítása"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:472
+#: src/routes/_authenticated/$projectId_.settings.tsx:132
 msgid "Setting access..."
 msgstr "Hozzáférés beállítása..."
 
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx:126
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx:132
 #: ../../../lib/web/src/components/options-menu.tsx:199
-#: src/routes/_authenticated/$projectId_.settings.tsx:76
-#: src/routes/_authenticated/$projectId_.settings.tsx:167
-#: src/routes/_authenticated/$projectId_.settings.tsx:190
-#: src/routes/_authenticated/$projectId/index.tsx:192
+#: src/routes/_authenticated/$projectId_.settings.tsx:99
+#: src/routes/_authenticated/$projectId/index.tsx:182
 msgid "Settings"
 msgstr "Beállítások"
 
@@ -2890,7 +2901,7 @@ msgid "Subscribe"
 msgstr "Feliratkozás"
 
 #: src/features/projects/components/inline-project-search.tsx:68
-#: src/routes/_authenticated/find.tsx:57
+#: src/routes/_authenticated/find.tsx:45
 msgid "Subscribed"
 msgstr "Feliratkozva"
 
@@ -2901,7 +2912,7 @@ msgstr "Feliratkozva: {0}"
 
 #: src/features/projects/components/inline-project-search.tsx:67
 #: src/features/projects/components/recommended-projects.tsx:42
-#: src/routes/_authenticated/find.tsx:56
+#: src/routes/_authenticated/find.tsx:44
 msgid "Subscribing..."
 msgstr "Feliratkozás..."
 
@@ -3001,11 +3012,11 @@ msgstr "Ez az egyesítési kérés vázlat, és nem egyesíthető."
 msgid "This page has not been created yet."
 msgstr "Ez az oldal még nem jött létre."
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:210
+#: src/routes/_authenticated/$projectId_.settings.tsx:109
 msgid "This project could not be loaded right now."
 msgstr "Ez a projekt jelenleg nem tölthető be."
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:210
+#: src/routes/_authenticated/$projectId_.settings.tsx:107
 msgid "This project may have been deleted or you don't have access to it."
 msgstr "Lehet, hogy ezt a projektet törölték, vagy nincs hozzáférése."
 
@@ -3013,17 +3024,17 @@ msgstr "Lehet, hogy ezt a projektet törölték, vagy nincs hozzáférése."
 msgid "This will merge \"{source}\" into \"{target}\". This action cannot be undone."
 msgstr "Ez egyesíti a(z) \"{source}\" ágat a(z) \"{target}\" ágba. A művelet nem visszavonható."
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:367
+#: src/routes/_authenticated/$projectId_.settings.tsx:125
 msgid "This will permanently delete \"{projectName}\" and all its objects, comments, and attachments. This action cannot be undone."
 msgstr "Ez véglegesen törli a következőt: „{projectName}”, és annak összes objektumát, hozzászólását és mellékletét. Ez a művelet nem vonható vissza."
 
 #. placeholder {0}: project.project.name
-#: src/routes/_authenticated/$projectId/index.tsx:175
+#: src/routes/_authenticated/$projectId/index.tsx:165
 msgid "This will remove \"{0}\" from your sidebar and stop updates for this project."
 msgstr "Ez eltávolítja a következőt: „{0}” az oldalsávjáról, és leállítja a frissítéseket ehhez a projekthez."
 
-#. placeholder {0}: pendingImport?.label
-#: src/routes/_authenticated/$projectId/design.tsx:204
+#. placeholder {0}: String(label)
+#: src/routes/_authenticated/$projectId/design.tsx:66
 msgid "This will replace the current design with <0>{0}</0>. All existing classes, fields, options, and views will be deleted. Existing objects will not be deleted but may no longer appear in views."
 msgstr "Ez lecseréli az aktuális tervezést erre: <0>{0}</0>. Minden meglévő osztály, mező, beállítás és nézet törlődik. A meglévő objektumok nem törlődnek, de lehet, hogy többé nem jelennek meg a nézetekben."
 
@@ -3172,21 +3183,21 @@ msgstr "Ismeretlen"
 
 #: ../../../lib/web/src/components/options-menu.tsx:214
 #: src/features/projects/pages/projects-list-page.tsx:39
-#: src/routes/_authenticated/$projectId/index.tsx:173
+#: src/routes/_authenticated/$projectId/index.tsx:163
 msgid "Unsubscribe"
 msgstr "Leiratkozás"
 
-#: src/routes/_authenticated/$projectId/index.tsx:174
+#: src/routes/_authenticated/$projectId/index.tsx:164
 msgid "Unsubscribe from project?"
 msgstr "Leiratkozik a projektről?"
 
 #: src/features/projects/pages/projects-list-page.tsx:42
-#: src/routes/_authenticated/$projectId/index.tsx:177
+#: src/routes/_authenticated/$projectId/index.tsx:167
 msgid "Unsubscribed"
 msgstr "Leiratkozva"
 
 #: src/features/projects/pages/projects-list-page.tsx:41
-#: src/routes/_authenticated/$projectId/index.tsx:176
+#: src/routes/_authenticated/$projectId/index.tsx:166
 msgid "Unsubscribing..."
 msgstr "Leiratkozás..."
 
@@ -3208,7 +3219,7 @@ msgstr "Nem ellenőrzött"
 msgid "Updated"
 msgstr "Frissítve"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:497
+#: src/routes/_authenticated/$projectId_.settings.tsx:138
 msgid "Updating access..."
 msgstr "Hozzáférés frissítése..."
 
@@ -3218,7 +3229,7 @@ msgid "Upload"
 msgstr "Feltöltés"
 
 #: src/features/projects/components/create-project-dialog.tsx:402
-#: src/routes/_authenticated/$projectId/design.tsx:337
+#: src/routes/_authenticated/$projectId/design.tsx:58
 msgid "Upload .json file"
 msgstr ".json fájl feltöltése"
 
@@ -3294,11 +3305,11 @@ msgstr "Tétel adatainak megtekintése és szerkesztése"
 msgid "View controls"
 msgstr "Vezérlők megtekintése"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:406
+#: src/routes/_authenticated/$projectId_.settings.tsx:54
 msgid "View only"
 msgstr "Csak megtekintés"
 
-#: src/routes/_authenticated/$projectId/index.tsx:158
+#: src/routes/_authenticated/$projectId/index.tsx:148
 msgid "View options"
 msgstr "Megtekintési beállítások"
 
@@ -3349,7 +3360,7 @@ msgstr "Szerda"
 msgid "You do not have access to this section."
 msgstr "Nincs hozzáférése ehhez a részhez."
 
-#: src/routes/_authenticated/$projectId/index.tsx:82
+#: src/routes/_authenticated/$projectId/index.tsx:80
 msgid "You don't have access to this project."
 msgstr "Nincs hozzáférésed ehhez a projekthez."
 

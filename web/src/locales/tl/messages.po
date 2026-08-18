@@ -53,9 +53,8 @@ msgstr "{0, plural, one {# salungat na file} other {# na salungat na file}}"
 msgid "{0, plural, one {# selected} other {# selected}}"
 msgstr "{0, plural, one {# napili} other {# napili}}"
 
-#. placeholder {0}: project.project.name
-#: src/routes/_authenticated/$projectId/design.tsx:64
-#: src/routes/_authenticated/$projectId/design.tsx:157
+#. placeholder {0}: String(name)
+#: src/routes/_authenticated/$projectId/design.tsx:46
 msgid "{0} - Design"
 msgstr "{0} - Disenyo"
 
@@ -75,9 +74,8 @@ msgstr "{0} mga file na binago"
 msgid "{0} option preview"
 msgstr "Preview ng opsyong {0}"
 
-#. placeholder {0}: project.project.name
-#: src/routes/_authenticated/$projectId_.settings.tsx:122
-#: src/routes/_authenticated/$projectId_.settings.tsx:222
+#. placeholder {0}: String(name)
+#: src/routes/_authenticated/$projectId_.settings.tsx:105
 msgid "{0} settings"
 msgstr "Mga setting ng {0}"
 
@@ -172,7 +170,7 @@ msgstr "Absolute (petsa at oras)"
 msgid "Accept"
 msgstr "Tanggapin"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:77
+#: src/routes/_authenticated/$projectId_.settings.tsx:100
 msgid "Access"
 msgstr "Access"
 
@@ -188,19 +186,19 @@ msgstr "Bawal ang access"
 msgid "Access level"
 msgstr "Antas ng access"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:498
+#: src/routes/_authenticated/$projectId_.settings.tsx:139
 msgid "Access level updated"
 msgstr "Na-update ang antas ng access"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:509
+#: src/routes/_authenticated/$projectId_.settings.tsx:130
 msgid "Access management"
 msgstr "Pamamahala ng access"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:484
+#: src/routes/_authenticated/$projectId_.settings.tsx:136
 msgid "Access removed"
 msgstr "Tinanggal ang access"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:473
+#: src/routes/_authenticated/$projectId_.settings.tsx:133
 msgid "Access set for {subjectName}"
 msgstr "Naitakda ang access para kay {subjectName}"
 
@@ -270,7 +268,7 @@ msgstr "Magdagdag ng checklist item"
 msgid "Add class"
 msgstr "Magdagdag ng class"
 
-#: src/routes/_authenticated/$projectId/index.tsx:159
+#: src/routes/_authenticated/$projectId/index.tsx:149
 msgid "Add column"
 msgstr "Magdagdag ng column"
 
@@ -300,7 +298,7 @@ msgstr "Magdagdag ng bagong account"
 msgid "Add option"
 msgstr "Magdagdag ng option"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:515
+#: src/routes/_authenticated/$projectId_.settings.tsx:131
 msgid "Add rule"
 msgstr "Magdagdag ng panuntunan"
 
@@ -466,16 +464,13 @@ msgstr "Bumalik"
 msgid "Back to home"
 msgstr "Bumalik sa home"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:169
-#: src/routes/_authenticated/$projectId_.settings.tsx:192
-#: src/routes/_authenticated/$projectId_.settings.tsx:224
-#: src/routes/_authenticated/$projectId/design.tsx:134
-#: src/routes/_authenticated/$projectId/design.tsx:159
+#: src/routes/_authenticated/$projectId_.settings.tsx:101
+#: src/routes/_authenticated/$projectId/design.tsx:47
 msgid "Back to project"
 msgstr "Bumalik sa project"
 
-#: src/routes/_authenticated/$projectId/$objectId.tsx:67
-#: src/routes/_authenticated/$projectId/index.tsx:96
+#: src/routes/_authenticated/$projectId/$objectId.tsx:64
+#: src/routes/_authenticated/$projectId/index.tsx:93
 msgid "Back to projects"
 msgstr "Bumalik sa mga project"
 
@@ -518,7 +513,7 @@ msgstr "Kulay ng border"
 msgid "Browser notifications"
 msgstr "Mga notification ng browser"
 
-#: src/routes/_authenticated/$projectId/design.tsx:300
+#: src/routes/_authenticated/$projectId/design.tsx:100
 msgid "Built-in templates"
 msgstr "Mga built-in na template"
 
@@ -541,8 +536,8 @@ msgstr "Maaaring maging child ng"
 #: ../../../lib/web/src/features/accounts/account-add.tsx:201
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:91
 #: src/features/projects/components/create-project-dialog.tsx:443
-#: src/routes/_authenticated/$projectId/design.tsx:344
-#: src/routes/_authenticated/$projectId/index.tsx:162
+#: src/routes/_authenticated/$projectId/design.tsx:61
+#: src/routes/_authenticated/$projectId/index.tsx:152
 msgid "Cancel"
 msgstr "Kanselahin"
 
@@ -731,7 +726,7 @@ msgstr "Command palette"
 msgid "Comment actions"
 msgstr "Mga aksyon sa komento"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:405
+#: src/routes/_authenticated/$projectId_.settings.tsx:53
 msgid "Comment and view"
 msgstr "Magkomento at tingnan"
 
@@ -861,7 +856,7 @@ msgstr "Gumawa ng bagong item"
 msgid "Create project"
 msgstr "Gumawa ng project"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:404
+#: src/routes/_authenticated/$projectId_.settings.tsx:52
 msgid "Create, edit, comment, and view"
 msgstr "Gumawa, mag-edit, magkomento, at tumingin"
 
@@ -943,7 +938,7 @@ msgstr "Default na sort"
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:314
 #: src/features/objects/components/object-detail-panel.tsx:636
 #: src/features/requests/components/request-panel.tsx:132
-#: src/routes/_authenticated/$projectId_.settings.tsx:357
+#: src/routes/_authenticated/$projectId_.settings.tsx:120
 msgid "Delete"
 msgstr "I-delete"
 
@@ -993,12 +988,12 @@ msgstr "I-delete ang option"
 msgid "Delete option {0}"
 msgstr "I-delete ang option {0}"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:348
-#: src/routes/_authenticated/$projectId_.settings.tsx:368
+#: src/routes/_authenticated/$projectId_.settings.tsx:119
+#: src/routes/_authenticated/$projectId_.settings.tsx:122
 msgid "Delete project"
 msgstr "I-delete ang project"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:366
+#: src/routes/_authenticated/$projectId_.settings.tsx:121
 msgid "Delete project?"
 msgstr "I-delete ang project?"
 
@@ -1010,7 +1005,7 @@ msgstr "I-delete ang view"
 msgid "Delete your account on the old server"
 msgstr "Burahin ang iyong account sa lumang server"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:131
+#: src/routes/_authenticated/$projectId_.settings.tsx:127
 msgid "Deleting project..."
 msgstr "Tinatanggal ang proyekto..."
 
@@ -1024,22 +1019,22 @@ msgstr "Pababa"
 
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:83
 #: src/features/requests/components/request-panel.tsx:308
-#: src/routes/_authenticated/$projectId_.settings.tsx:310
+#: src/routes/_authenticated/$projectId_.settings.tsx:112
 msgid "Description"
 msgstr "Paglalarawan"
 
-#: src/routes/_authenticated/$projectId/design.tsx:64
-#: src/routes/_authenticated/$projectId/design.tsx:132
-#: src/routes/_authenticated/$projectId/index.tsx:184
+#: src/routes/_authenticated/$projectId/design.tsx:43
+#: src/routes/_authenticated/$projectId/design.tsx:46
+#: src/routes/_authenticated/$projectId/index.tsx:174
 msgid "Design"
 msgstr "Disenyo"
 
 #: src/features/projects/components/create-project-dialog.tsx:169
-#: src/routes/_authenticated/$projectId/design.tsx:109
+#: src/routes/_authenticated/$projectId/design.tsx:54
 msgid "Design imported"
 msgstr "Na-import ang disenyo"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:403
+#: src/routes/_authenticated/$projectId_.settings.tsx:51
 msgid "Design, create, edit, comment, and view"
 msgstr "Magdisenyo, gumawa, mag-edit, magkomento, at tumingin"
 
@@ -1092,7 +1087,7 @@ msgstr "Nadiskonekta"
 msgid "Dismiss"
 msgstr "I-dismiss"
 
-#: src/routes/_authenticated/$projectId/index.tsx:165
+#: src/routes/_authenticated/$projectId/index.tsx:155
 msgid "Dismiss board hint"
 msgstr "I-dismiss ang board hint"
 
@@ -1107,7 +1102,7 @@ msgstr "Ipinapakita ang mobile sidebar."
 msgid "Done"
 msgstr "Tapos na"
 
-#: src/routes/_authenticated/$projectId/index.tsx:164
+#: src/routes/_authenticated/$projectId/index.tsx:154
 msgid "Double click on a column to add content"
 msgstr "I-double click ang isang column para magdagdag ng content"
 
@@ -1117,7 +1112,7 @@ msgstr "I-double click ang isang column para magdagdag ng content"
 msgid "Download"
 msgstr "I-download"
 
-#: src/routes/_authenticated/$projectId/design.tsx:226
+#: src/routes/_authenticated/$projectId/design.tsx:75
 msgid "Download backup first"
 msgstr "I-download muna ang backup"
 
@@ -1125,8 +1120,8 @@ msgstr "I-download muna ang backup"
 msgid "Download failed"
 msgstr "Nabigo ang pag-download"
 
-#: src/routes/_authenticated/$projectId/design.tsx:88
-#: src/routes/_authenticated/$projectId/index.tsx:168
+#: src/routes/_authenticated/$projectId/design.tsx:52
+#: src/routes/_authenticated/$projectId/index.tsx:158
 msgid "Downloaded {filename}"
 msgstr "Na-download ang {filename}"
 
@@ -1135,7 +1130,7 @@ msgstr "Na-download ang {filename}"
 msgid "Draft"
 msgstr "Draft"
 
-#: src/routes/_authenticated/$projectId/index.tsx:161
+#: src/routes/_authenticated/$projectId/index.tsx:151
 msgid "Drag columns to re-order them"
 msgstr "I-drag ang mga column para i-reorder"
 
@@ -1206,7 +1201,7 @@ msgstr "Ilagay ang code mula sa iyong email"
 msgid "Enter your authenticator code"
 msgstr "Ilagay ang iyong authenticator code"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:325
+#: src/routes/_authenticated/$projectId_.settings.tsx:113
 msgid "Entity ID"
 msgstr "Entity ID"
 
@@ -1225,11 +1220,11 @@ msgstr "Palawakin"
 msgid "Expand sidebar"
 msgstr "I-expand ang sidebar"
 
-#: src/routes/_authenticated/$projectId/index.tsx:166
+#: src/routes/_authenticated/$projectId/index.tsx:156
 msgid "Export data"
 msgstr "I-export ang data"
 
-#: src/routes/_authenticated/$projectId/design.tsx:174
+#: src/routes/_authenticated/$projectId/design.tsx:50
 msgid "Export design"
 msgstr "I-export ang design"
 
@@ -1268,7 +1263,7 @@ msgstr "Nabigong gumawa ng field"
 
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx:137
 #: ../../../lib/web/src/components/options-menu.tsx:101
-#: src/routes/_authenticated/$projectId/index.tsx:172
+#: src/routes/_authenticated/$projectId/index.tsx:162
 msgid "Failed to create link"
 msgstr "Nabigong gumawa ng link"
 
@@ -1296,7 +1291,7 @@ msgstr "Nabigong magdelete ng comment"
 msgid "Failed to delete link"
 msgstr "Nabigong magdelete ng link"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:133
+#: src/routes/_authenticated/$projectId_.settings.tsx:129
 msgid "Failed to delete project"
 msgstr "Nabigong magdelete ng project"
 
@@ -1304,12 +1299,11 @@ msgstr "Nabigong magdelete ng project"
 msgid "Failed to delete view"
 msgstr "Nabigong magdelete ng view"
 
-#: src/routes/_authenticated/$projectId/index.tsx:169
+#: src/routes/_authenticated/$projectId/index.tsx:159
 msgid "Failed to export data"
 msgstr "Hindi na-export ang data"
 
-#: src/routes/_authenticated/$projectId/design.tsx:90
-#: src/routes/_authenticated/$projectId/design.tsx:93
+#: src/routes/_authenticated/$projectId/design.tsx:53
 msgid "Failed to export design"
 msgstr "Nabigong i-export ang design"
 
@@ -1322,7 +1316,7 @@ msgstr "Nabigong makakuha ng RSS token"
 msgid "Failed to import data"
 msgstr "Hindi na-import ang data"
 
-#: src/routes/_authenticated/$projectId/design.tsx:114
+#: src/routes/_authenticated/$projectId/design.tsx:55
 msgid "Failed to import design"
 msgstr "Nabigong i-import ang design"
 
@@ -1343,16 +1337,18 @@ msgstr "Nabigong i-load ang larawan"
 msgid "Failed to load item"
 msgstr "Nabigong i-load ang item"
 
-#: src/routes/_authenticated/$projectId/$objectId.tsx:43
-#: src/routes/_authenticated/$projectId/index.tsx:60
+#: src/routes/_authenticated/$projectId/$objectId.tsx:41
+#: src/routes/_authenticated/$projectId/$objectId.tsx:65
+#: src/routes/_authenticated/$projectId/index.tsx:58
+#: src/routes/_authenticated/$projectId/index.tsx:94
 msgid "Failed to load project"
 msgstr "Nabigong i-load ang project"
 
-#: src/routes/_authenticated/$projectId/design.tsx:138
+#: src/routes/_authenticated/$projectId/design.tsx:48
 msgid "Failed to load project design"
 msgstr "Nabigong i-load ang project design"
 
-#: src/stores/projects-store.ts:31
+#: src/stores/projects-store.ts:17
 msgid "Failed to load projects"
 msgstr "Nabigong i-load ang mga project"
 
@@ -1373,11 +1369,11 @@ msgid "Failed to post comment"
 msgstr "Nabigong mag-post ng comment"
 
 #: src/features/projects/components/create-project-dialog.tsx:250
-#: src/routes/_authenticated/$projectId/design.tsx:282
+#: src/routes/_authenticated/$projectId/design.tsx:60
 msgid "Failed to read file"
 msgstr "Nabigong basahin ang file"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:485
+#: src/routes/_authenticated/$projectId_.settings.tsx:137
 msgid "Failed to remove access"
 msgstr "Nabigong tanggalin ang access"
 
@@ -1405,22 +1401,22 @@ msgstr "Hindi nahanap ang mga proyekto"
 msgid "Failed to send verification code"
 msgstr "Nabigong magpadala ng verification code"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:474
+#: src/routes/_authenticated/$projectId_.settings.tsx:134
 msgid "Failed to set access level"
 msgstr "Nabigong i-set ang access level"
 
 #: src/features/projects/components/inline-project-search.tsx:69
 #: src/features/projects/components/recommended-projects.tsx:44
-#: src/routes/_authenticated/find.tsx:58
+#: src/routes/_authenticated/find.tsx:46
 msgid "Failed to subscribe"
 msgstr "Nabigong mag-subscribe"
 
 #: src/features/projects/pages/projects-list-page.tsx:43
-#: src/routes/_authenticated/$projectId/index.tsx:178
+#: src/routes/_authenticated/$projectId/index.tsx:168
 msgid "Failed to unsubscribe"
 msgstr "Nabigong mag-unsubscribe"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:499
+#: src/routes/_authenticated/$projectId_.settings.tsx:140
 msgid "Failed to update access level"
 msgstr "Nabigong i-update ang access level"
 
@@ -1432,7 +1428,7 @@ msgstr "Nabigong i-update ang comment"
 msgid "Failed to update field"
 msgstr "Nabigong i-update ang field"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:155
+#: src/routes/_authenticated/$projectId_.settings.tsx:118
 msgid "Failed to update project"
 msgstr "Nabigong i-update ang project"
 
@@ -1455,11 +1451,11 @@ msgid "Filter..."
 msgstr "I-filter..."
 
 #: src/components/layout/projects-layout.tsx:36
-#: src/routes/_authenticated/find.tsx:92
+#: src/routes/_authenticated/find.tsx:41
 msgid "Find projects"
 msgstr "Maghanap ng mga project"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:330
+#: src/routes/_authenticated/$projectId_.settings.tsx:114
 msgid "Fingerprint"
 msgstr "Fingerprint"
 
@@ -1491,7 +1487,7 @@ msgstr "Mga kaibigan"
 msgid "From"
 msgstr "Mula sa"
 
-#: src/routes/_authenticated/$projectId/design.tsx:323
+#: src/routes/_authenticated/$projectId/design.tsx:57
 msgid "From file"
 msgstr "Mula sa file"
 
@@ -1575,7 +1571,7 @@ msgstr "Hot"
 msgid "ID"
 msgstr "ID"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:297
+#: src/routes/_authenticated/$projectId_.settings.tsx:110
 msgid "Identity"
 msgstr "Identity"
 
@@ -1588,8 +1584,8 @@ msgstr "Image viewer: {0}"
 msgid "Imperial"
 msgstr "Imperial"
 
-#: src/routes/_authenticated/$projectId/design.tsx:178
-#: src/routes/_authenticated/$projectId/design.tsx:294
+#: src/routes/_authenticated/$projectId/design.tsx:51
+#: src/routes/_authenticated/$projectId/design.tsx:56
 msgid "Import design"
 msgstr "I-import ang design"
 
@@ -1627,7 +1623,7 @@ msgid "Invalid date"
 msgstr "Invalid na petsa"
 
 #: src/features/projects/components/create-project-dialog.tsx:243
-#: src/routes/_authenticated/$projectId/design.tsx:278
+#: src/routes/_authenticated/$projectId/design.tsx:59
 msgid "Invalid JSON file"
 msgstr "Invalid na JSON file"
 
@@ -1685,7 +1681,7 @@ msgid "Light"
 msgstr "Light"
 
 #: ../../../lib/web/src/components/options-menu.tsx:193
-#: src/routes/_authenticated/$projectId/index.tsx:170
+#: src/routes/_authenticated/$projectId/index.tsx:160
 msgid "Link"
 msgstr "Link"
 
@@ -1723,7 +1719,7 @@ msgstr "Nilo-load ang mga template..."
 
 #: ../../../lib/web/src/components/ui/load-more.tsx:35
 #: ../../../lib/web/src/features/document/document-page.tsx:90
-#: src/routes/_authenticated/$projectId/index.tsx:167
+#: src/routes/_authenticated/$projectId/index.tsx:157
 msgid "Loading..."
 msgstr "Nilo-load..."
 
@@ -1856,9 +1852,13 @@ msgstr "Aking proyekto"
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:299
 #: src/features/editor/components/edit-dialogs.tsx:255
 #: src/features/projects/components/create-project-dialog.tsx:331
-#: src/routes/_authenticated/$projectId_.settings.tsx:301
+#: src/routes/_authenticated/$projectId_.settings.tsx:111
 msgid "Name"
 msgstr "Pangalan"
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:78
+msgid "Name cannot contain < or > characters"
+msgstr ""
 
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:102
 msgid "Name cannot contain angle brackets, backslash, semicolon, quotes or backticks"
@@ -1869,6 +1869,7 @@ msgid "Name is required"
 msgstr "Kailangan ang pangalan"
 
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:100
+#: src/routes/_authenticated/$projectId_.settings.tsx:76
 msgid "Name must be 1000 characters or less"
 msgstr "Ang pangalan ay dapat 1000 karakter o mas mababa"
 
@@ -1879,12 +1880,12 @@ msgstr "Error sa network"
 
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:481
 #: ../../../lib/web/src/components/ui/sort-selector.tsx:43
-#: src/routes/_authenticated/$projectId/index.tsx:149
-#: src/routes/_authenticated/$projectId/index.tsx:153
+#: src/routes/_authenticated/$projectId/index.tsx:139
+#: src/routes/_authenticated/$projectId/index.tsx:143
 msgid "New"
 msgstr "Bago"
 
-#: src/routes/_authenticated/$projectId/index.tsx:155
+#: src/routes/_authenticated/$projectId/index.tsx:145
 msgid "New {className}"
 msgstr "Bagong {className}"
 
@@ -1906,7 +1907,7 @@ msgstr "Susunod na imahe"
 msgid "No {parentClassNames} to add to"
 msgstr "Walang {parentClassNames} na maaaring idagdag"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:407
+#: src/routes/_authenticated/$projectId_.settings.tsx:55
 msgid "No access"
 msgstr "Walang access"
 
@@ -1984,7 +1985,7 @@ msgid "No profile"
 msgstr "Walang profile"
 
 #: src/features/projects/components/inline-project-search.tsx:88
-#: src/routes/_authenticated/find.tsx:94
+#: src/routes/_authenticated/find.tsx:43
 msgid "No projects found"
 msgstr "Walang nakitang proyekto"
 
@@ -2123,7 +2124,7 @@ msgstr "Buksan ang mga aksyon"
 msgid "Open class actions"
 msgstr "Buksan ang mga aksyon ng class"
 
-#: src/routes/_authenticated/$projectId/design.tsx:166
+#: src/routes/_authenticated/$projectId/design.tsx:49
 msgid "Open design actions"
 msgstr "Buksan ang mga aksyon ng design"
 
@@ -2146,7 +2147,7 @@ msgstr "Buksan ang navigation menu"
 msgid "Open option actions"
 msgstr "Buksan ang mga aksyon ng opsyon"
 
-#: src/routes/_authenticated/$projectId/index.tsx:148
+#: src/routes/_authenticated/$projectId/index.tsx:138
 msgid "Open page actions"
 msgstr "Buksan ang mga aksyon ng pahina"
 
@@ -2217,7 +2218,7 @@ msgstr "Pattern (regex)"
 msgid "Pick a date"
 msgstr "Pumili ng petsa"
 
-#: src/routes/_authenticated/$projectId/index.tsx:157
+#: src/routes/_authenticated/$projectId/index.tsx:147
 msgid "Please add one or more classes to the project design."
 msgstr "Mangyaring magdagdag ng isa o higit pang class sa project design."
 
@@ -2252,9 +2253,17 @@ msgid "Posts and comments"
 msgstr "Mga post at komento"
 
 #: src/features/projects/components/create-project-dialog.tsx:353
-#: src/routes/_authenticated/$projectId_.settings.tsx:318
+#: src/routes/_authenticated/$projectId_.settings.tsx:85
 msgid "Prefix"
 msgstr "Prefix"
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:91
+msgid "Prefix can only contain letters, numbers, and hyphens"
+msgstr ""
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:93
+msgid "Prefix must be 10 characters or less"
+msgstr ""
 
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:427
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:432
@@ -2274,8 +2283,8 @@ msgstr "Pinoproseso…"
 msgid "Profile"
 msgstr "Profile"
 
-#: src/routes/_authenticated/$projectId/$objectId.tsx:65
-#: src/routes/_authenticated/$projectId/index.tsx:94
+#: src/routes/_authenticated/$projectId/$objectId.tsx:62
+#: src/routes/_authenticated/$projectId/index.tsx:91
 msgid "Project"
 msgstr "Proyekto"
 
@@ -2287,11 +2296,11 @@ msgstr "Mga aksyon sa proyekto"
 msgid "Project created"
 msgstr "Nagawa ang proyekto"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:132
+#: src/routes/_authenticated/$projectId_.settings.tsx:128
 msgid "Project deleted"
 msgstr "Natanggal ang proyekto"
 
-#: src/routes/_authenticated/$projectId/index.tsx:171
+#: src/routes/_authenticated/$projectId/index.tsx:161
 msgid "Project link"
 msgstr "Link ng proyekto"
 
@@ -2299,19 +2308,23 @@ msgstr "Link ng proyekto"
 msgid "Project members"
 msgstr "Mga miyembro ng proyekto"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:207
+#: src/routes/_authenticated/$projectId_.settings.tsx:75
+msgid "Project name is required"
+msgstr ""
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:106
 msgid "Project not found"
 msgstr "Hindi nahanap ang proyekto"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:122
+#: src/routes/_authenticated/$projectId_.settings.tsx:105
 msgid "Project settings"
 msgstr "Mga setting ng proyekto"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:207
+#: src/routes/_authenticated/$projectId_.settings.tsx:108
 msgid "Project unavailable"
 msgstr "Hindi available ang proyekto"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:154
+#: src/routes/_authenticated/$projectId_.settings.tsx:117
 msgid "Project updated"
 msgstr "Na-update ang proyekto"
 
@@ -2336,7 +2349,7 @@ msgstr "Nakaangat"
 msgid "Re-link your accounts on this server"
 msgstr "I-relink ang iyong mga account sa server na ito"
 
-#: src/routes/_authenticated/$projectId/index.tsx:160
+#: src/routes/_authenticated/$projectId/index.tsx:150
 msgid "Re-order columns"
 msgstr "Muling ayusin ang mga column"
 
@@ -2435,7 +2448,7 @@ msgstr "Alisin ang item"
 msgid "Remove link"
 msgstr "Alisin ang link"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:483
+#: src/routes/_authenticated/$projectId_.settings.tsx:135
 msgid "Removing access..."
 msgstr "Inaalis ang access..."
 
@@ -2452,15 +2465,15 @@ msgstr "Palitan ang pangalan ng column"
 msgid "Rename this board column"
 msgstr "Palitan ang pangalan ng board column na ito"
 
-#: src/routes/_authenticated/$projectId/design.tsx:218
+#: src/routes/_authenticated/$projectId/design.tsx:73
 msgid "Replace design"
 msgstr "Palitan ang disenyo"
 
-#: src/routes/_authenticated/$projectId/design.tsx:202
+#: src/routes/_authenticated/$projectId/design.tsx:62
 msgid "Replace design?"
 msgstr "Palitan ang design?"
 
-#: src/routes/_authenticated/$projectId/design.tsx:215
+#: src/routes/_authenticated/$projectId/design.tsx:74
 msgid "Replacing..."
 msgstr "Pinapalitan..."
 
@@ -2562,11 +2575,11 @@ msgstr "Sabado"
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:173
 #: ../../../lib/web/src/components/ui/editable-field-row.tsx:122
 #: ../../../lib/web/src/components/ui/secret-field.tsx:79
-#: src/routes/_authenticated/$projectId/index.tsx:163
+#: src/routes/_authenticated/$projectId/index.tsx:153
 msgid "Save"
 msgstr "I-save"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:153
+#: src/routes/_authenticated/$projectId_.settings.tsx:116
 msgid "Saving..."
 msgstr "Sini-save..."
 
@@ -2577,7 +2590,7 @@ msgstr "Sini-save..."
 msgid "Search"
 msgstr "Maghanap"
 
-#: src/routes/_authenticated/find.tsx:93
+#: src/routes/_authenticated/find.tsx:42
 msgid "Search by name, ID, fingerprint, or URL..."
 msgstr "Maghanap ayon sa pangalan, ID, fingerprint, o URL..."
 
@@ -2744,7 +2757,7 @@ msgstr "Ipadala ang mensahe"
 msgid "Serif"
 msgstr "Serif"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:339
+#: src/routes/_authenticated/$projectId_.settings.tsx:115
 msgid "Server"
 msgstr "Server"
 
@@ -2766,17 +2779,15 @@ msgstr "Nag-expire na ang session. Mag-log in muli."
 msgid "Set origin and destination"
 msgstr "Itakda ang origin at destination"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:472
+#: src/routes/_authenticated/$projectId_.settings.tsx:132
 msgid "Setting access..."
 msgstr "Itinatakda ang access..."
 
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx:126
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx:132
 #: ../../../lib/web/src/components/options-menu.tsx:199
-#: src/routes/_authenticated/$projectId_.settings.tsx:76
-#: src/routes/_authenticated/$projectId_.settings.tsx:167
-#: src/routes/_authenticated/$projectId_.settings.tsx:190
-#: src/routes/_authenticated/$projectId/index.tsx:192
+#: src/routes/_authenticated/$projectId_.settings.tsx:99
+#: src/routes/_authenticated/$projectId/index.tsx:182
 msgid "Settings"
 msgstr "Mga setting"
 
@@ -2890,7 +2901,7 @@ msgid "Subscribe"
 msgstr "Mag-subscribe"
 
 #: src/features/projects/components/inline-project-search.tsx:68
-#: src/routes/_authenticated/find.tsx:57
+#: src/routes/_authenticated/find.tsx:45
 msgid "Subscribed"
 msgstr "Naka-subscribe"
 
@@ -2901,7 +2912,7 @@ msgstr "Naka-subscribe sa {0}"
 
 #: src/features/projects/components/inline-project-search.tsx:67
 #: src/features/projects/components/recommended-projects.tsx:42
-#: src/routes/_authenticated/find.tsx:56
+#: src/routes/_authenticated/find.tsx:44
 msgid "Subscribing..."
 msgstr "Nag-su-subscribe..."
 
@@ -3001,11 +3012,11 @@ msgstr "Draft ang merge request na ito at hindi maaaring i-merge."
 msgid "This page has not been created yet."
 msgstr "Hindi pa nagagawa ang pahinang ito."
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:210
+#: src/routes/_authenticated/$projectId_.settings.tsx:109
 msgid "This project could not be loaded right now."
 msgstr "Hindi ma-load ang project na ito sa ngayon."
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:210
+#: src/routes/_authenticated/$projectId_.settings.tsx:107
 msgid "This project may have been deleted or you don't have access to it."
 msgstr "Maaaring natanggal ang project na ito o wala kang access dito."
 
@@ -3013,17 +3024,17 @@ msgstr "Maaaring natanggal ang project na ito o wala kang access dito."
 msgid "This will merge \"{source}\" into \"{target}\". This action cannot be undone."
 msgstr "Pagsasamahin nito ang \"{source}\" sa \"{target}\". Hindi na maaaring bawiin ang aksyong ito."
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:367
+#: src/routes/_authenticated/$projectId_.settings.tsx:125
 msgid "This will permanently delete \"{projectName}\" and all its objects, comments, and attachments. This action cannot be undone."
 msgstr "Permanenteng tatanggalin nito ang \"{projectName}\" at lahat ng object, komento, at attachment nito. Hindi maaaring bawiin ang aksyong ito."
 
 #. placeholder {0}: project.project.name
-#: src/routes/_authenticated/$projectId/index.tsx:175
+#: src/routes/_authenticated/$projectId/index.tsx:165
 msgid "This will remove \"{0}\" from your sidebar and stop updates for this project."
 msgstr "Tatanggalin nito ang \"{0}\" mula sa iyong sidebar at ihihinto ang mga update para sa project na ito."
 
-#. placeholder {0}: pendingImport?.label
-#: src/routes/_authenticated/$projectId/design.tsx:204
+#. placeholder {0}: String(label)
+#: src/routes/_authenticated/$projectId/design.tsx:66
 msgid "This will replace the current design with <0>{0}</0>. All existing classes, fields, options, and views will be deleted. Existing objects will not be deleted but may no longer appear in views."
 msgstr "Papalitan nito ang kasalukuyang disenyo ng <0>{0}</0>. Lahat ng kasalukuyang klase, field, pagpipilian at view ay buburahin. Hindi buburahin ang mga kasalukuyang object pero maaaring hindi na lumitaw sa mga view."
 
@@ -3172,21 +3183,21 @@ msgstr "Hindi alam"
 
 #: ../../../lib/web/src/components/options-menu.tsx:214
 #: src/features/projects/pages/projects-list-page.tsx:39
-#: src/routes/_authenticated/$projectId/index.tsx:173
+#: src/routes/_authenticated/$projectId/index.tsx:163
 msgid "Unsubscribe"
 msgstr "Mag-unsubscribe"
 
-#: src/routes/_authenticated/$projectId/index.tsx:174
+#: src/routes/_authenticated/$projectId/index.tsx:164
 msgid "Unsubscribe from project?"
 msgstr "Mag-unsubscribe sa project?"
 
 #: src/features/projects/pages/projects-list-page.tsx:42
-#: src/routes/_authenticated/$projectId/index.tsx:177
+#: src/routes/_authenticated/$projectId/index.tsx:167
 msgid "Unsubscribed"
 msgstr "Hindi na naka-subscribe"
 
 #: src/features/projects/pages/projects-list-page.tsx:41
-#: src/routes/_authenticated/$projectId/index.tsx:176
+#: src/routes/_authenticated/$projectId/index.tsx:166
 msgid "Unsubscribing..."
 msgstr "Nag-a-unsubscribe..."
 
@@ -3208,7 +3219,7 @@ msgstr "Hindi naberipika"
 msgid "Updated"
 msgstr "Na-update"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:497
+#: src/routes/_authenticated/$projectId_.settings.tsx:138
 msgid "Updating access..."
 msgstr "Ina-update ang access..."
 
@@ -3218,7 +3229,7 @@ msgid "Upload"
 msgstr "Mag-upload"
 
 #: src/features/projects/components/create-project-dialog.tsx:402
-#: src/routes/_authenticated/$projectId/design.tsx:337
+#: src/routes/_authenticated/$projectId/design.tsx:58
 msgid "Upload .json file"
 msgstr "Mag-upload ng .json file"
 
@@ -3294,11 +3305,11 @@ msgstr "Tingnan at i-edit ang mga detalye ng item"
 msgid "View controls"
 msgstr "Mga view control"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:406
+#: src/routes/_authenticated/$projectId_.settings.tsx:54
 msgid "View only"
 msgstr "Tingnan lamang"
 
-#: src/routes/_authenticated/$projectId/index.tsx:158
+#: src/routes/_authenticated/$projectId/index.tsx:148
 msgid "View options"
 msgstr "Mga opsyon ng view"
 
@@ -3349,7 +3360,7 @@ msgstr "Miyerkules"
 msgid "You do not have access to this section."
 msgstr "Wala kang access sa seksyong ito."
 
-#: src/routes/_authenticated/$projectId/index.tsx:82
+#: src/routes/_authenticated/$projectId/index.tsx:80
 msgid "You don't have access to this project."
 msgstr "Wala kang access sa proyektong ito."
 

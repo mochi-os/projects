@@ -4,12 +4,12 @@
 // Mochi Application Interface Exception - see license.txt and license-exception.md.
 
 /* eslint-disable lingui/no-unlocalized-strings */
-// Tests for the projects store
+// The store behaviour is asserted once in @mochi/web
+// (create-entity-list-store.test.ts). What is left here is this app's wiring:
+// the list call it makes and the key it reads the rows out of.
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { useProjectsStore } from "./projects-store";
-import type { Project } from "@/types";
 
-// Mock the API module
 vi.mock("@/api/projects", () => ({
   default: {
     list: vi.fn(),
@@ -18,119 +18,45 @@ vi.mock("@/api/projects", () => ({
 
 import projectsApi from "@/api/projects";
 
-describe("useProjectsStore", () => {
+describe("useProjectsStore wiring", () => {
   beforeEach(() => {
-    // Reset store state between tests
-    useProjectsStore.setState({
-      projects: [],
-      isLoading: false,
-      error: null,
-    });
+    useProjectsStore.setState({ rows: [], isLoading: false, error: null });
     vi.clearAllMocks();
   });
 
-  it("should have correct initial state", () => {
-    const state = useProjectsStore.getState();
-
-    expect(state.projects).toEqual([]);
-    expect(state.isLoading).toBe(false);
-    expect(state.error).toBeNull();
-  });
-
-  it("should set loading state when refreshing", async () => {
+  it("reads the rows out of the `projects` key this app's server answers under", async () => {
     vi.mocked(projectsApi.list).mockResolvedValue({
-      data: { projects: [] },
-    });
-
-    const refreshPromise = useProjectsStore.getState().refresh();
-
-    // Should be loading immediately
-    expect(useProjectsStore.getState().isLoading).toBe(true);
-
-    await refreshPromise;
-
-    // Should not be loading after completion
-    expect(useProjectsStore.getState().isLoading).toBe(false);
-  });
-
-  it("should load projects successfully", async () => {
-    const mockProjects: Project[] = [
-      {
-        id: "1",
-        fingerprint: "abc123",
-        name: "Project 1",
-        description: "",
-        prefix: "P1",
-        owner: 1,
-        ownername: "testuser",
-        server: "local",
-        created: Date.now(),
-        updated: Date.now(),
-        populated: 1,
-        access: "owner",
+      data: {
+        projects: [
+          {
+            id: "1",
+            fingerprint: "abc",
+            name: "Project 1",
+            description: "",
+            owner: 1,
+            ownername: "me",
+            server: "",
+            created: 0,
+            updated: 0,
+            populated: 1,
+            access: "owner",
+            prefix: "PROJ",
+          },
+        ],
       },
-      {
-        id: "2",
-        fingerprint: "def456",
-        name: "Project 2",
-        description: "Test project",
-        prefix: "P2",
-        owner: 1,
-        ownername: "testuser",
-        server: "local",
-        created: Date.now(),
-        updated: Date.now(),
-        populated: 1,
-        access: "owner",
-      },
-    ];
-
-    vi.mocked(projectsApi.list).mockResolvedValue({
-      data: { projects: mockProjects },
     });
 
     await useProjectsStore.getState().refresh();
 
-    const state = useProjectsStore.getState();
-    expect(state.projects).toEqual(mockProjects);
-    expect(state.isLoading).toBe(false);
-    expect(state.error).toBeNull();
+    expect(projectsApi.list).toHaveBeenCalled();
+    expect(useProjectsStore.getState().rows).toHaveLength(1);
   });
 
-  it("should handle API errors", async () => {
-    vi.mocked(projectsApi.list).mockRejectedValue(new Error("Network error"));
+  it("falls back to this app's wording when a load fails without a message", async () => {
+    vi.mocked(projectsApi.list).mockRejectedValue(new Error(""));
 
     await useProjectsStore.getState().refresh();
 
-    const state = useProjectsStore.getState();
-    expect(state.projects).toEqual([]);
-    expect(state.isLoading).toBe(false);
-    // The store surfaces the real error message via getErrorMessage(error, …);
-    // the "Failed to load projects" fallback only applies when the error has none.
-    expect(state.error).toBe("Network error");
-  });
-
-  it("should handle empty projects list", async () => {
-    vi.mocked(projectsApi.list).mockResolvedValue({
-      data: { projects: [] },
-    });
-
-    await useProjectsStore.getState().refresh();
-
-    const state = useProjectsStore.getState();
-    expect(state.projects).toEqual([]);
-    expect(state.error).toBeNull();
-  });
-
-  it("should handle missing projects array gracefully", async () => {
-    vi.mocked(projectsApi.list).mockResolvedValue({
-      data: { projects: undefined as unknown as [] },
-    });
-
-    await useProjectsStore.getState().refresh();
-
-    const state = useProjectsStore.getState();
-    expect(state.projects).toEqual([]);
-    expect(state.error).toBeNull();
+    expect(useProjectsStore.getState().error).toBe("Failed to load projects");
   });
 });

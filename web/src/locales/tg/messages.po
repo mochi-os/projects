@@ -53,9 +53,8 @@ msgstr "{0, plural, one {# файли мухолиф} other {# файли мух
 msgid "{0, plural, one {# selected} other {# selected}}"
 msgstr "{0, plural, one {# интихобшуда} other {# интихобшуда}}"
 
-#. placeholder {0}: project.project.name
-#: src/routes/_authenticated/$projectId/design.tsx:64
-#: src/routes/_authenticated/$projectId/design.tsx:157
+#. placeholder {0}: String(name)
+#: src/routes/_authenticated/$projectId/design.tsx:46
 msgid "{0} - Design"
 msgstr "{0} - Тарҳ"
 
@@ -75,9 +74,8 @@ msgstr "{0} файлҳо тағйир ёфт"
 msgid "{0} option preview"
 msgstr "Пешнамоиши имконоти {0}"
 
-#. placeholder {0}: project.project.name
-#: src/routes/_authenticated/$projectId_.settings.tsx:122
-#: src/routes/_authenticated/$projectId_.settings.tsx:222
+#. placeholder {0}: String(name)
+#: src/routes/_authenticated/$projectId_.settings.tsx:105
 msgid "{0} settings"
 msgstr "{0} танзимот"
 
@@ -172,7 +170,7 @@ msgstr "Мутлақ (сана ва вақт)"
 msgid "Accept"
 msgstr "Қабул кардан"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:77
+#: src/routes/_authenticated/$projectId_.settings.tsx:100
 msgid "Access"
 msgstr "Дастрасӣ"
 
@@ -188,19 +186,19 @@ msgstr "Дастрасӣ манъ аст"
 msgid "Access level"
 msgstr "Сатҳи дастрасӣ"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:498
+#: src/routes/_authenticated/$projectId_.settings.tsx:139
 msgid "Access level updated"
 msgstr "Сатҳи дастрасӣ навсозӣ шуд"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:509
+#: src/routes/_authenticated/$projectId_.settings.tsx:130
 msgid "Access management"
 msgstr "Идоракунии дастрасӣ"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:484
+#: src/routes/_authenticated/$projectId_.settings.tsx:136
 msgid "Access removed"
 msgstr "Дастрасӣ хориҷ карда шуд"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:473
+#: src/routes/_authenticated/$projectId_.settings.tsx:133
 msgid "Access set for {subjectName}"
 msgstr "Дастрасӣ барои {subjectName} танзим карда шуд"
 
@@ -270,7 +268,7 @@ msgstr "Иловаи нуктаи рӯйхат"
 msgid "Add class"
 msgstr "Иловаи синф"
 
-#: src/routes/_authenticated/$projectId/index.tsx:159
+#: src/routes/_authenticated/$projectId/index.tsx:149
 msgid "Add column"
 msgstr "Иловаи сутун"
 
@@ -300,7 +298,7 @@ msgstr "Иловаи ҳисоби нав"
 msgid "Add option"
 msgstr "Иловаи имкон"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:515
+#: src/routes/_authenticated/$projectId_.settings.tsx:131
 msgid "Add rule"
 msgstr "Қоида илова кардан"
 
@@ -466,16 +464,13 @@ msgstr "Бозгашт"
 msgid "Back to home"
 msgstr "Бозгашт ба саҳифаи асосӣ"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:169
-#: src/routes/_authenticated/$projectId_.settings.tsx:192
-#: src/routes/_authenticated/$projectId_.settings.tsx:224
-#: src/routes/_authenticated/$projectId/design.tsx:134
-#: src/routes/_authenticated/$projectId/design.tsx:159
+#: src/routes/_authenticated/$projectId_.settings.tsx:101
+#: src/routes/_authenticated/$projectId/design.tsx:47
 msgid "Back to project"
 msgstr "Бозгашт ба лоиҳа"
 
-#: src/routes/_authenticated/$projectId/$objectId.tsx:67
-#: src/routes/_authenticated/$projectId/index.tsx:96
+#: src/routes/_authenticated/$projectId/$objectId.tsx:64
+#: src/routes/_authenticated/$projectId/index.tsx:93
 msgid "Back to projects"
 msgstr "Бозгашт ба лоиҳаҳо"
 
@@ -518,7 +513,7 @@ msgstr "Ранги ҳошия"
 msgid "Browser notifications"
 msgstr "Огоҳиномаҳои браузер"
 
-#: src/routes/_authenticated/$projectId/design.tsx:300
+#: src/routes/_authenticated/$projectId/design.tsx:100
 msgid "Built-in templates"
 msgstr "Шаблонҳои дохилӣ"
 
@@ -541,8 +536,8 @@ msgstr "Метавонад фарзанди ин бошад"
 #: ../../../lib/web/src/features/accounts/account-add.tsx:201
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:91
 #: src/features/projects/components/create-project-dialog.tsx:443
-#: src/routes/_authenticated/$projectId/design.tsx:344
-#: src/routes/_authenticated/$projectId/index.tsx:162
+#: src/routes/_authenticated/$projectId/design.tsx:61
+#: src/routes/_authenticated/$projectId/index.tsx:152
 msgid "Cancel"
 msgstr "Бекор кардан"
 
@@ -731,7 +726,7 @@ msgstr "Палитраи фармонҳо"
 msgid "Comment actions"
 msgstr "Амалҳои шарҳ"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:405
+#: src/routes/_authenticated/$projectId_.settings.tsx:53
 msgid "Comment and view"
 msgstr "Шарҳ ва дидан"
 
@@ -861,7 +856,7 @@ msgstr "Эҷоди нуктаи нав"
 msgid "Create project"
 msgstr "Эҷоди лоиҳа"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:404
+#: src/routes/_authenticated/$projectId_.settings.tsx:52
 msgid "Create, edit, comment, and view"
 msgstr "Эҷод, таҳрир, шарҳ ва дидан"
 
@@ -943,7 +938,7 @@ msgstr "Ҷобаҷогузории пешфарз"
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:314
 #: src/features/objects/components/object-detail-panel.tsx:636
 #: src/features/requests/components/request-panel.tsx:132
-#: src/routes/_authenticated/$projectId_.settings.tsx:357
+#: src/routes/_authenticated/$projectId_.settings.tsx:120
 msgid "Delete"
 msgstr "Нест кардан"
 
@@ -993,12 +988,12 @@ msgstr "Нест кардани имкон"
 msgid "Delete option {0}"
 msgstr "Нест кардани имкони {0}"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:348
-#: src/routes/_authenticated/$projectId_.settings.tsx:368
+#: src/routes/_authenticated/$projectId_.settings.tsx:119
+#: src/routes/_authenticated/$projectId_.settings.tsx:122
 msgid "Delete project"
 msgstr "Нест кардани лоиҳа"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:366
+#: src/routes/_authenticated/$projectId_.settings.tsx:121
 msgid "Delete project?"
 msgstr "Лоиҳаро нест кунем?"
 
@@ -1010,7 +1005,7 @@ msgstr "Нест кардани намуд"
 msgid "Delete your account on the old server"
 msgstr "Ҳисоби худро дар сервери кӯҳна нест кунед"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:131
+#: src/routes/_authenticated/$projectId_.settings.tsx:127
 msgid "Deleting project..."
 msgstr "Нест кардани лоиҳа..."
 
@@ -1024,22 +1019,22 @@ msgstr "Камшаванда"
 
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:83
 #: src/features/requests/components/request-panel.tsx:308
-#: src/routes/_authenticated/$projectId_.settings.tsx:310
+#: src/routes/_authenticated/$projectId_.settings.tsx:112
 msgid "Description"
 msgstr "Тавсиф"
 
-#: src/routes/_authenticated/$projectId/design.tsx:64
-#: src/routes/_authenticated/$projectId/design.tsx:132
-#: src/routes/_authenticated/$projectId/index.tsx:184
+#: src/routes/_authenticated/$projectId/design.tsx:43
+#: src/routes/_authenticated/$projectId/design.tsx:46
+#: src/routes/_authenticated/$projectId/index.tsx:174
 msgid "Design"
 msgstr "Дизайн"
 
 #: src/features/projects/components/create-project-dialog.tsx:169
-#: src/routes/_authenticated/$projectId/design.tsx:109
+#: src/routes/_authenticated/$projectId/design.tsx:54
 msgid "Design imported"
 msgstr "Дизайн ворид карда шуд"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:403
+#: src/routes/_authenticated/$projectId_.settings.tsx:51
 msgid "Design, create, edit, comment, and view"
 msgstr "Тарроҳӣ, эҷод, таҳрир, шарҳ ва дидан"
 
@@ -1092,7 +1087,7 @@ msgstr "Ҷудо шуда"
 msgid "Dismiss"
 msgstr "Рад кардан"
 
-#: src/routes/_authenticated/$projectId/index.tsx:165
+#: src/routes/_authenticated/$projectId/index.tsx:155
 msgid "Dismiss board hint"
 msgstr "Рад кардани маслиҳати тахта"
 
@@ -1107,7 +1102,7 @@ msgstr "Панели канории мобилиро намоиш медиҳад
 msgid "Done"
 msgstr "Иҷро шуд"
 
-#: src/routes/_authenticated/$projectId/index.tsx:164
+#: src/routes/_authenticated/$projectId/index.tsx:154
 msgid "Double click on a column to add content"
 msgstr "Барои илова кардани мазмун ба сутун ду маротиба зер кунед"
 
@@ -1117,7 +1112,7 @@ msgstr "Барои илова кардани мазмун ба сутун ду �
 msgid "Download"
 msgstr "Боргирӣ"
 
-#: src/routes/_authenticated/$projectId/design.tsx:226
+#: src/routes/_authenticated/$projectId/design.tsx:75
 msgid "Download backup first"
 msgstr "Аввал нусхаи захиравиро боргирӣ кунед"
 
@@ -1125,8 +1120,8 @@ msgstr "Аввал нусхаи захиравиро боргирӣ кунед"
 msgid "Download failed"
 msgstr "Боргирӣ ноком шуд"
 
-#: src/routes/_authenticated/$projectId/design.tsx:88
-#: src/routes/_authenticated/$projectId/index.tsx:168
+#: src/routes/_authenticated/$projectId/design.tsx:52
+#: src/routes/_authenticated/$projectId/index.tsx:158
 msgid "Downloaded {filename}"
 msgstr "{filename} боргирӣ шуд"
 
@@ -1135,7 +1130,7 @@ msgstr "{filename} боргирӣ шуд"
 msgid "Draft"
 msgstr "Сиёҳнавис"
 
-#: src/routes/_authenticated/$projectId/index.tsx:161
+#: src/routes/_authenticated/$projectId/index.tsx:151
 msgid "Drag columns to re-order them"
 msgstr "Барои аз нав мураттаб кардан сутунҳоро кашола кунед"
 
@@ -1206,7 +1201,7 @@ msgstr "Рамзро аз почтаи электронии худ ворид к
 msgid "Enter your authenticator code"
 msgstr "Рамзи аутентификатори худро ворид кунед"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:325
+#: src/routes/_authenticated/$projectId_.settings.tsx:113
 msgid "Entity ID"
 msgstr "ID-и объект"
 
@@ -1225,11 +1220,11 @@ msgstr "Васеъ кардан"
 msgid "Expand sidebar"
 msgstr "Васеъ кардани панели канорӣ"
 
-#: src/routes/_authenticated/$projectId/index.tsx:166
+#: src/routes/_authenticated/$projectId/index.tsx:156
 msgid "Export data"
 msgstr "Содироти маълумот"
 
-#: src/routes/_authenticated/$projectId/design.tsx:174
+#: src/routes/_authenticated/$projectId/design.tsx:50
 msgid "Export design"
 msgstr "Содироти тарроҳӣ"
 
@@ -1268,7 +1263,7 @@ msgstr "Эҷоди майдон ба анҷом нарасид"
 
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx:137
 #: ../../../lib/web/src/components/options-menu.tsx:101
-#: src/routes/_authenticated/$projectId/index.tsx:172
+#: src/routes/_authenticated/$projectId/index.tsx:162
 msgid "Failed to create link"
 msgstr "Эҷоди пайванд ба анҷом нарасид"
 
@@ -1296,7 +1291,7 @@ msgstr "Ҳазфи шарҳ ба анҷом нарасид"
 msgid "Failed to delete link"
 msgstr "Ҳазфи пайванд ба анҷом нарасид"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:133
+#: src/routes/_authenticated/$projectId_.settings.tsx:129
 msgid "Failed to delete project"
 msgstr "Ҳазфи лоиҳа ба анҷом нарасид"
 
@@ -1304,12 +1299,11 @@ msgstr "Ҳазфи лоиҳа ба анҷом нарасид"
 msgid "Failed to delete view"
 msgstr "Ҳазфи намуди намоиш ба анҷом нарасид"
 
-#: src/routes/_authenticated/$projectId/index.tsx:169
+#: src/routes/_authenticated/$projectId/index.tsx:159
 msgid "Failed to export data"
 msgstr "Маълумот содир карда нашуд"
 
-#: src/routes/_authenticated/$projectId/design.tsx:90
-#: src/routes/_authenticated/$projectId/design.tsx:93
+#: src/routes/_authenticated/$projectId/design.tsx:53
 msgid "Failed to export design"
 msgstr "Содироти тарроҳӣ ба анҷом нарасид"
 
@@ -1322,7 +1316,7 @@ msgstr "Гирифтани токени RSS ба анҷом нарасид"
 msgid "Failed to import data"
 msgstr "Маълумот ворид карда нашуд"
 
-#: src/routes/_authenticated/$projectId/design.tsx:114
+#: src/routes/_authenticated/$projectId/design.tsx:55
 msgid "Failed to import design"
 msgstr "Воридкунии тарроҳӣ ба анҷом нарасид"
 
@@ -1343,16 +1337,18 @@ msgstr "Тасвир бор карда нашуд"
 msgid "Failed to load item"
 msgstr "Боркунии ашё ба анҷом нарасид"
 
-#: src/routes/_authenticated/$projectId/$objectId.tsx:43
-#: src/routes/_authenticated/$projectId/index.tsx:60
+#: src/routes/_authenticated/$projectId/$objectId.tsx:41
+#: src/routes/_authenticated/$projectId/$objectId.tsx:65
+#: src/routes/_authenticated/$projectId/index.tsx:58
+#: src/routes/_authenticated/$projectId/index.tsx:94
 msgid "Failed to load project"
 msgstr "Боркунии лоиҳа ба анҷом нарасид"
 
-#: src/routes/_authenticated/$projectId/design.tsx:138
+#: src/routes/_authenticated/$projectId/design.tsx:48
 msgid "Failed to load project design"
 msgstr "Боркунии тарроҳии лоиҳа ба анҷом нарасид"
 
-#: src/stores/projects-store.ts:31
+#: src/stores/projects-store.ts:17
 msgid "Failed to load projects"
 msgstr "Боркунии лоиҳаҳо ба анҷом нарасид"
 
@@ -1373,11 +1369,11 @@ msgid "Failed to post comment"
 msgstr "Гузоштани шарҳ ба анҷом нарасид"
 
 #: src/features/projects/components/create-project-dialog.tsx:250
-#: src/routes/_authenticated/$projectId/design.tsx:282
+#: src/routes/_authenticated/$projectId/design.tsx:60
 msgid "Failed to read file"
 msgstr "Хондани файл ба анҷом нарасид"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:485
+#: src/routes/_authenticated/$projectId_.settings.tsx:137
 msgid "Failed to remove access"
 msgstr "Бартараф кардани дастрасӣ ба анҷом нарасид"
 
@@ -1405,22 +1401,22 @@ msgstr "Ҷустуҷӯи лоиҳаҳо ноком шуд"
 msgid "Failed to send verification code"
 msgstr "Ирсоли рамзи тасдиқ ба анҷом нарасид"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:474
+#: src/routes/_authenticated/$projectId_.settings.tsx:134
 msgid "Failed to set access level"
 msgstr "Гузоштани сатҳи дастрасӣ ба анҷом нарасид"
 
 #: src/features/projects/components/inline-project-search.tsx:69
 #: src/features/projects/components/recommended-projects.tsx:44
-#: src/routes/_authenticated/find.tsx:58
+#: src/routes/_authenticated/find.tsx:46
 msgid "Failed to subscribe"
 msgstr "Обуна ба анҷом нарасид"
 
 #: src/features/projects/pages/projects-list-page.tsx:43
-#: src/routes/_authenticated/$projectId/index.tsx:178
+#: src/routes/_authenticated/$projectId/index.tsx:168
 msgid "Failed to unsubscribe"
 msgstr "Бекоркунии обуна ба анҷом нарасид"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:499
+#: src/routes/_authenticated/$projectId_.settings.tsx:140
 msgid "Failed to update access level"
 msgstr "Навсозии сатҳи дастрасӣ ба анҷом нарасид"
 
@@ -1432,7 +1428,7 @@ msgstr "Навсозии шарҳ ба анҷом нарасид"
 msgid "Failed to update field"
 msgstr "Навсозии майдон ба анҷом нарасид"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:155
+#: src/routes/_authenticated/$projectId_.settings.tsx:118
 msgid "Failed to update project"
 msgstr "Навсозии лоиҳа ба анҷом нарасид"
 
@@ -1455,11 +1451,11 @@ msgid "Filter..."
 msgstr "Филтр..."
 
 #: src/components/layout/projects-layout.tsx:36
-#: src/routes/_authenticated/find.tsx:92
+#: src/routes/_authenticated/find.tsx:41
 msgid "Find projects"
 msgstr "Лоиҳаҳоро ёбед"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:330
+#: src/routes/_authenticated/$projectId_.settings.tsx:114
 msgid "Fingerprint"
 msgstr "Нақши ангушт"
 
@@ -1491,7 +1487,7 @@ msgstr "Дӯстон"
 msgid "From"
 msgstr "Аз"
 
-#: src/routes/_authenticated/$projectId/design.tsx:323
+#: src/routes/_authenticated/$projectId/design.tsx:57
 msgid "From file"
 msgstr "Аз файл"
 
@@ -1575,7 +1571,7 @@ msgstr "Доғ"
 msgid "ID"
 msgstr "ID"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:297
+#: src/routes/_authenticated/$projectId_.settings.tsx:110
 msgid "Identity"
 msgstr "Шахсият"
 
@@ -1588,8 +1584,8 @@ msgstr "Тамошои тасвир: {0}"
 msgid "Imperial"
 msgstr "Империалӣ"
 
-#: src/routes/_authenticated/$projectId/design.tsx:178
-#: src/routes/_authenticated/$projectId/design.tsx:294
+#: src/routes/_authenticated/$projectId/design.tsx:51
+#: src/routes/_authenticated/$projectId/design.tsx:56
 msgid "Import design"
 msgstr "Воридкунии тарроҳӣ"
 
@@ -1627,7 +1623,7 @@ msgid "Invalid date"
 msgstr "Сана нодуруст"
 
 #: src/features/projects/components/create-project-dialog.tsx:243
-#: src/routes/_authenticated/$projectId/design.tsx:278
+#: src/routes/_authenticated/$projectId/design.tsx:59
 msgid "Invalid JSON file"
 msgstr "Файли JSON нодуруст"
 
@@ -1685,7 +1681,7 @@ msgid "Light"
 msgstr "Равшан"
 
 #: ../../../lib/web/src/components/options-menu.tsx:193
-#: src/routes/_authenticated/$projectId/index.tsx:170
+#: src/routes/_authenticated/$projectId/index.tsx:160
 msgid "Link"
 msgstr "Пайванд"
 
@@ -1723,7 +1719,7 @@ msgstr "Шаблонҳо бор карда мешаванд..."
 
 #: ../../../lib/web/src/components/ui/load-more.tsx:35
 #: ../../../lib/web/src/features/document/document-page.tsx:90
-#: src/routes/_authenticated/$projectId/index.tsx:167
+#: src/routes/_authenticated/$projectId/index.tsx:157
 msgid "Loading..."
 msgstr "Бор карда мешавад..."
 
@@ -1856,9 +1852,13 @@ msgstr "Лоиҳаи ман"
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:299
 #: src/features/editor/components/edit-dialogs.tsx:255
 #: src/features/projects/components/create-project-dialog.tsx:331
-#: src/routes/_authenticated/$projectId_.settings.tsx:301
+#: src/routes/_authenticated/$projectId_.settings.tsx:111
 msgid "Name"
 msgstr "Ном"
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:78
+msgid "Name cannot contain < or > characters"
+msgstr ""
 
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:102
 msgid "Name cannot contain angle brackets, backslash, semicolon, quotes or backticks"
@@ -1869,6 +1869,7 @@ msgid "Name is required"
 msgstr "Ном талаб карда мешавад"
 
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:100
+#: src/routes/_authenticated/$projectId_.settings.tsx:76
 msgid "Name must be 1000 characters or less"
 msgstr "Ном бояд 1000 аломат ё камтар бошад"
 
@@ -1879,12 +1880,12 @@ msgstr "Хатогии шабака"
 
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:481
 #: ../../../lib/web/src/components/ui/sort-selector.tsx:43
-#: src/routes/_authenticated/$projectId/index.tsx:149
-#: src/routes/_authenticated/$projectId/index.tsx:153
+#: src/routes/_authenticated/$projectId/index.tsx:139
+#: src/routes/_authenticated/$projectId/index.tsx:143
 msgid "New"
 msgstr "Нав"
 
-#: src/routes/_authenticated/$projectId/index.tsx:155
+#: src/routes/_authenticated/$projectId/index.tsx:145
 msgid "New {className}"
 msgstr "Нав {className}"
 
@@ -1906,7 +1907,7 @@ msgstr "Тасвири навбатӣ"
 msgid "No {parentClassNames} to add to"
 msgstr "Ягон {parentClassNames} барои илова кардан нест"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:407
+#: src/routes/_authenticated/$projectId_.settings.tsx:55
 msgid "No access"
 msgstr "Дастрасӣ нест"
 
@@ -1984,7 +1985,7 @@ msgid "No profile"
 msgstr "Профил нест"
 
 #: src/features/projects/components/inline-project-search.tsx:88
-#: src/routes/_authenticated/find.tsx:94
+#: src/routes/_authenticated/find.tsx:43
 msgid "No projects found"
 msgstr "Ягон лоиҳа ёфт нашуд"
 
@@ -2123,7 +2124,7 @@ msgstr "Кушодани амалҳо"
 msgid "Open class actions"
 msgstr "Кушодани амалҳои синф"
 
-#: src/routes/_authenticated/$projectId/design.tsx:166
+#: src/routes/_authenticated/$projectId/design.tsx:49
 msgid "Open design actions"
 msgstr "Кушодани амалҳои тарроҳӣ"
 
@@ -2146,7 +2147,7 @@ msgstr "Кушодани менюи навигатсия"
 msgid "Open option actions"
 msgstr "Кушодани амалҳои вариант"
 
-#: src/routes/_authenticated/$projectId/index.tsx:148
+#: src/routes/_authenticated/$projectId/index.tsx:138
 msgid "Open page actions"
 msgstr "Кушодани амалҳои саҳифа"
 
@@ -2217,7 +2218,7 @@ msgstr "Намуна (regex)"
 msgid "Pick a date"
 msgstr "Санаро интихоб кунед"
 
-#: src/routes/_authenticated/$projectId/index.tsx:157
+#: src/routes/_authenticated/$projectId/index.tsx:147
 msgid "Please add one or more classes to the project design."
 msgstr "Лутфан як ё якчанд синфҳоро ба тарҳи лоиҳа илова кунед."
 
@@ -2252,9 +2253,17 @@ msgid "Posts and comments"
 msgstr "Постҳо ва шарҳҳо"
 
 #: src/features/projects/components/create-project-dialog.tsx:353
-#: src/routes/_authenticated/$projectId_.settings.tsx:318
+#: src/routes/_authenticated/$projectId_.settings.tsx:85
 msgid "Prefix"
 msgstr "Префикс"
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:91
+msgid "Prefix can only contain letters, numbers, and hyphens"
+msgstr ""
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:93
+msgid "Prefix must be 10 characters or less"
+msgstr ""
 
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:427
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:432
@@ -2274,8 +2283,8 @@ msgstr "Коркард шуда истодааст…"
 msgid "Profile"
 msgstr "Профил"
 
-#: src/routes/_authenticated/$projectId/$objectId.tsx:65
-#: src/routes/_authenticated/$projectId/index.tsx:94
+#: src/routes/_authenticated/$projectId/$objectId.tsx:62
+#: src/routes/_authenticated/$projectId/index.tsx:91
 msgid "Project"
 msgstr "Лоиҳа"
 
@@ -2287,11 +2296,11 @@ msgstr "Амалҳои лоиҳа"
 msgid "Project created"
 msgstr "Лоиҳа эҷод шуд"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:132
+#: src/routes/_authenticated/$projectId_.settings.tsx:128
 msgid "Project deleted"
 msgstr "Лоиҳа нест карда шуд"
 
-#: src/routes/_authenticated/$projectId/index.tsx:171
+#: src/routes/_authenticated/$projectId/index.tsx:161
 msgid "Project link"
 msgstr "Пайванди лоиҳа"
 
@@ -2299,19 +2308,23 @@ msgstr "Пайванди лоиҳа"
 msgid "Project members"
 msgstr "Аъзои лоиҳа"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:207
+#: src/routes/_authenticated/$projectId_.settings.tsx:75
+msgid "Project name is required"
+msgstr ""
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:106
 msgid "Project not found"
 msgstr "Лоиҳа ёфт нашуд"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:122
+#: src/routes/_authenticated/$projectId_.settings.tsx:105
 msgid "Project settings"
 msgstr "Танзимоти лоиҳа"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:207
+#: src/routes/_authenticated/$projectId_.settings.tsx:108
 msgid "Project unavailable"
 msgstr "Лоиҳа дастнорас аст"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:154
+#: src/routes/_authenticated/$projectId_.settings.tsx:117
 msgid "Project updated"
 msgstr "Лоиҳа навсозӣ шуд"
 
@@ -2336,7 +2349,7 @@ msgstr "Бардошта"
 msgid "Re-link your accounts on this server"
 msgstr "Ҳисобҳоятонро дар ин сервер аз нав пайванд кунед"
 
-#: src/routes/_authenticated/$projectId/index.tsx:160
+#: src/routes/_authenticated/$projectId/index.tsx:150
 msgid "Re-order columns"
 msgstr "Тартиби сутунҳоро тағйир диҳед"
 
@@ -2435,7 +2448,7 @@ msgstr "Хориҷ кардани ашё"
 msgid "Remove link"
 msgstr "Истинодро тоза кунед"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:483
+#: src/routes/_authenticated/$projectId_.settings.tsx:135
 msgid "Removing access..."
 msgstr "Хориҷ кардани дастрасӣ..."
 
@@ -2452,15 +2465,15 @@ msgstr "Тағйири номи сутун"
 msgid "Rename this board column"
 msgstr "Тағйири номи ин сутуни тахта"
 
-#: src/routes/_authenticated/$projectId/design.tsx:218
+#: src/routes/_authenticated/$projectId/design.tsx:73
 msgid "Replace design"
 msgstr "Иваз кардани тарҳ"
 
-#: src/routes/_authenticated/$projectId/design.tsx:202
+#: src/routes/_authenticated/$projectId/design.tsx:62
 msgid "Replace design?"
 msgstr "Тарҳро иваз кардан?"
 
-#: src/routes/_authenticated/$projectId/design.tsx:215
+#: src/routes/_authenticated/$projectId/design.tsx:74
 msgid "Replacing..."
 msgstr "Иваз кардан..."
 
@@ -2562,11 +2575,11 @@ msgstr "Шанбе"
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:173
 #: ../../../lib/web/src/components/ui/editable-field-row.tsx:122
 #: ../../../lib/web/src/components/ui/secret-field.tsx:79
-#: src/routes/_authenticated/$projectId/index.tsx:163
+#: src/routes/_authenticated/$projectId/index.tsx:153
 msgid "Save"
 msgstr "Захира"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:153
+#: src/routes/_authenticated/$projectId_.settings.tsx:116
 msgid "Saving..."
 msgstr "Захира кардан..."
 
@@ -2577,7 +2590,7 @@ msgstr "Захира кардан..."
 msgid "Search"
 msgstr "Ҷустуҷӯ"
 
-#: src/routes/_authenticated/find.tsx:93
+#: src/routes/_authenticated/find.tsx:42
 msgid "Search by name, ID, fingerprint, or URL..."
 msgstr "Ҷустуҷӯ аз рӯи ном, ID, изи ангушт ё URL..."
 
@@ -2744,7 +2757,7 @@ msgstr "Паём фиристодан"
 msgid "Serif"
 msgstr "Сериф"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:339
+#: src/routes/_authenticated/$projectId_.settings.tsx:115
 msgid "Server"
 msgstr "Сервер"
 
@@ -2766,17 +2779,15 @@ msgstr "Мӯҳлати сессия гузашт. Лутфан аз нав во�
 msgid "Set origin and destination"
 msgstr "Сарчашма ва таъиноти манзилро таъин кунед"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:472
+#: src/routes/_authenticated/$projectId_.settings.tsx:132
 msgid "Setting access..."
 msgstr "Танзими дастрасӣ..."
 
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx:126
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx:132
 #: ../../../lib/web/src/components/options-menu.tsx:199
-#: src/routes/_authenticated/$projectId_.settings.tsx:76
-#: src/routes/_authenticated/$projectId_.settings.tsx:167
-#: src/routes/_authenticated/$projectId_.settings.tsx:190
-#: src/routes/_authenticated/$projectId/index.tsx:192
+#: src/routes/_authenticated/$projectId_.settings.tsx:99
+#: src/routes/_authenticated/$projectId/index.tsx:182
 msgid "Settings"
 msgstr "Танзимот"
 
@@ -2890,7 +2901,7 @@ msgid "Subscribe"
 msgstr "Обуна шудан"
 
 #: src/features/projects/components/inline-project-search.tsx:68
-#: src/routes/_authenticated/find.tsx:57
+#: src/routes/_authenticated/find.tsx:45
 msgid "Subscribed"
 msgstr "Обуна шуд"
 
@@ -2901,7 +2912,7 @@ msgstr "Ба {0} обуна шуд"
 
 #: src/features/projects/components/inline-project-search.tsx:67
 #: src/features/projects/components/recommended-projects.tsx:42
-#: src/routes/_authenticated/find.tsx:56
+#: src/routes/_authenticated/find.tsx:44
 msgid "Subscribing..."
 msgstr "Обуна шуда истодааст..."
 
@@ -3001,11 +3012,11 @@ msgstr "Ин дархости муттаҳидсозӣ сиёҳнавис аст
 msgid "This page has not been created yet."
 msgstr "Ин саҳифа ҳанӯз сохта нашудааст."
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:210
+#: src/routes/_authenticated/$projectId_.settings.tsx:109
 msgid "This project could not be loaded right now."
 msgstr "Ин лоиҳаро ҳозир бор кардан мумкин нест."
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:210
+#: src/routes/_authenticated/$projectId_.settings.tsx:107
 msgid "This project may have been deleted or you don't have access to it."
 msgstr "Ин лоиҳа шояд нест карда шуда бошад ё шумо ба он дастрасӣ надошта бошед."
 
@@ -3013,17 +3024,17 @@ msgstr "Ин лоиҳа шояд нест карда шуда бошад ё шу
 msgid "This will merge \"{source}\" into \"{target}\". This action cannot be undone."
 msgstr "Ин \"{source}\"-ро ба \"{target}\" муттаҳид мекунад. Ин амалро ботил кардан мумкин нест."
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:367
+#: src/routes/_authenticated/$projectId_.settings.tsx:125
 msgid "This will permanently delete \"{projectName}\" and all its objects, comments, and attachments. This action cannot be undone."
 msgstr "Ин \"{projectName}\" ва ҳама объектҳо, шарҳҳо ва замимаҳои онро ба таври доимӣ нест мекунад. Ин амалро ботил кардан мумкин нест."
 
 #. placeholder {0}: project.project.name
-#: src/routes/_authenticated/$projectId/index.tsx:175
+#: src/routes/_authenticated/$projectId/index.tsx:165
 msgid "This will remove \"{0}\" from your sidebar and stop updates for this project."
 msgstr "Ин \"{0}\"-ро аз панели паҳлӯи шумо хориҷ мекунад ва навсозиҳои ин лоиҳаро қатъ мекунад."
 
-#. placeholder {0}: pendingImport?.label
-#: src/routes/_authenticated/$projectId/design.tsx:204
+#. placeholder {0}: String(label)
+#: src/routes/_authenticated/$projectId/design.tsx:66
 msgid "This will replace the current design with <0>{0}</0>. All existing classes, fields, options, and views will be deleted. Existing objects will not be deleted but may no longer appear in views."
 msgstr "Ин тарҳи ҷориро бо <0>{0}</0> иваз мекунад. Ҳамаи синфҳо, майдонҳо, имконҳо ва назарҳои мавҷуда нест карда мешаванд. Объектҳои мавҷуда нест карда намешаванд, аммо метавонанд дигар дар назарҳо нишон дода нашаванд."
 
@@ -3172,21 +3183,21 @@ msgstr "Номаълум"
 
 #: ../../../lib/web/src/components/options-menu.tsx:214
 #: src/features/projects/pages/projects-list-page.tsx:39
-#: src/routes/_authenticated/$projectId/index.tsx:173
+#: src/routes/_authenticated/$projectId/index.tsx:163
 msgid "Unsubscribe"
 msgstr "Аз обуна баромадан"
 
-#: src/routes/_authenticated/$projectId/index.tsx:174
+#: src/routes/_authenticated/$projectId/index.tsx:164
 msgid "Unsubscribe from project?"
 msgstr "Аз лоиҳа хориҷ шудан?"
 
 #: src/features/projects/pages/projects-list-page.tsx:42
-#: src/routes/_authenticated/$projectId/index.tsx:177
+#: src/routes/_authenticated/$projectId/index.tsx:167
 msgid "Unsubscribed"
 msgstr "Хориҷ шуд"
 
 #: src/features/projects/pages/projects-list-page.tsx:41
-#: src/routes/_authenticated/$projectId/index.tsx:176
+#: src/routes/_authenticated/$projectId/index.tsx:166
 msgid "Unsubscribing..."
 msgstr "Хориҷ шуда истодааст..."
 
@@ -3208,7 +3219,7 @@ msgstr "Тасдиқ нашудааст"
 msgid "Updated"
 msgstr "Навсозӣ шуд"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:497
+#: src/routes/_authenticated/$projectId_.settings.tsx:138
 msgid "Updating access..."
 msgstr "Навсозии дастрасӣ..."
 
@@ -3218,7 +3229,7 @@ msgid "Upload"
 msgstr "Бор кардан"
 
 #: src/features/projects/components/create-project-dialog.tsx:402
-#: src/routes/_authenticated/$projectId/design.tsx:337
+#: src/routes/_authenticated/$projectId/design.tsx:58
 msgid "Upload .json file"
 msgstr "Бор кардани файли .json"
 
@@ -3294,11 +3305,11 @@ msgstr "Тафсилоти ҷузъро дидан ва таҳрир карда�
 msgid "View controls"
 msgstr "Назоратҳои намоиш"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:406
+#: src/routes/_authenticated/$projectId_.settings.tsx:54
 msgid "View only"
 msgstr "Танҳо назар"
 
-#: src/routes/_authenticated/$projectId/index.tsx:158
+#: src/routes/_authenticated/$projectId/index.tsx:148
 msgid "View options"
 msgstr "Имконоти намоиш"
 
@@ -3349,7 +3360,7 @@ msgstr "Чоршанбе"
 msgid "You do not have access to this section."
 msgstr "Шумо ба ин бахш дастрасӣ надоред."
 
-#: src/routes/_authenticated/$projectId/index.tsx:82
+#: src/routes/_authenticated/$projectId/index.tsx:80
 msgid "You don't have access to this project."
 msgstr "Шумо ба ин лоиҳа дастрасӣ надоред."
 

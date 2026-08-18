@@ -53,9 +53,8 @@ msgstr "{0, plural, one {# ziddiyyətli fayl} other {# ziddiyyətli fayl}}"
 msgid "{0, plural, one {# selected} other {# selected}}"
 msgstr "{0, plural, one {# istifadəçi banlandı} other {# istifadəçi banlandı}}"
 
-#. placeholder {0}: project.project.name
-#: src/routes/_authenticated/$projectId/design.tsx:64
-#: src/routes/_authenticated/$projectId/design.tsx:157
+#. placeholder {0}: String(name)
+#: src/routes/_authenticated/$projectId/design.tsx:46
 msgid "{0} - Design"
 msgstr "{0} arxada"
 
@@ -75,9 +74,8 @@ msgstr "{0} silindi."
 msgid "{0} option preview"
 msgstr "{0} seçiminin önizləməsi"
 
-#. placeholder {0}: project.project.name
-#: src/routes/_authenticated/$projectId_.settings.tsx:122
-#: src/routes/_authenticated/$projectId_.settings.tsx:222
+#. placeholder {0}: String(name)
+#: src/routes/_authenticated/$projectId_.settings.tsx:105
 msgid "{0} settings"
 msgstr "{0} etiket"
 
@@ -172,7 +170,7 @@ msgstr "Mütləq (tarix və saat)"
 msgid "Accept"
 msgstr "Qəbul et"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:77
+#: src/routes/_authenticated/$projectId_.settings.tsx:100
 msgid "Access"
 msgstr "Giriş"
 
@@ -188,19 +186,19 @@ msgstr "Giriş qadağandır"
 msgid "Access level"
 msgstr "Giriş səviyyəsi"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:498
+#: src/routes/_authenticated/$projectId_.settings.tsx:139
 msgid "Access level updated"
 msgstr "Giriş səviyyəsi yeniləndi"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:509
+#: src/routes/_authenticated/$projectId_.settings.tsx:130
 msgid "Access management"
 msgstr "Giriş idarəetməsi"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:484
+#: src/routes/_authenticated/$projectId_.settings.tsx:136
 msgid "Access removed"
 msgstr "Giriş silindi"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:473
+#: src/routes/_authenticated/$projectId_.settings.tsx:133
 msgid "Access set for {subjectName}"
 msgstr "{subjectName} üçün giriş təyin edildi"
 
@@ -270,7 +268,7 @@ msgstr "Yoxlama elementi əlavə et"
 msgid "Add class"
 msgstr "Sinif əlavə et"
 
-#: src/routes/_authenticated/$projectId/index.tsx:159
+#: src/routes/_authenticated/$projectId/index.tsx:149
 msgid "Add column"
 msgstr "Sütun əlavə et"
 
@@ -300,7 +298,7 @@ msgstr "Yeni hesab əlavə et"
 msgid "Add option"
 msgstr "Variant əlavə et"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:515
+#: src/routes/_authenticated/$projectId_.settings.tsx:131
 msgid "Add rule"
 msgstr "Qayda əlavə et"
 
@@ -466,16 +464,13 @@ msgstr "Geri"
 msgid "Back to home"
 msgstr "Ana səhifəyə qayıt"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:169
-#: src/routes/_authenticated/$projectId_.settings.tsx:192
-#: src/routes/_authenticated/$projectId_.settings.tsx:224
-#: src/routes/_authenticated/$projectId/design.tsx:134
-#: src/routes/_authenticated/$projectId/design.tsx:159
+#: src/routes/_authenticated/$projectId_.settings.tsx:101
+#: src/routes/_authenticated/$projectId/design.tsx:47
 msgid "Back to project"
 msgstr "Layihəyə geri"
 
-#: src/routes/_authenticated/$projectId/$objectId.tsx:67
-#: src/routes/_authenticated/$projectId/index.tsx:96
+#: src/routes/_authenticated/$projectId/$objectId.tsx:64
+#: src/routes/_authenticated/$projectId/index.tsx:93
 msgid "Back to projects"
 msgstr "Layihələrə geri"
 
@@ -518,7 +513,7 @@ msgstr "Sərhəd rəngi"
 msgid "Browser notifications"
 msgstr "Brauzer bildirişləri"
 
-#: src/routes/_authenticated/$projectId/design.tsx:300
+#: src/routes/_authenticated/$projectId/design.tsx:100
 msgid "Built-in templates"
 msgstr "Daxili şablonlar"
 
@@ -541,8 +536,8 @@ msgstr "Övladı ola bilər"
 #: ../../../lib/web/src/features/accounts/account-add.tsx:201
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:91
 #: src/features/projects/components/create-project-dialog.tsx:443
-#: src/routes/_authenticated/$projectId/design.tsx:344
-#: src/routes/_authenticated/$projectId/index.tsx:162
+#: src/routes/_authenticated/$projectId/design.tsx:61
+#: src/routes/_authenticated/$projectId/index.tsx:152
 msgid "Cancel"
 msgstr "Ləğv et"
 
@@ -731,7 +726,7 @@ msgstr "Əmr paleti"
 msgid "Comment actions"
 msgstr "Şərh əməliyyatları"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:405
+#: src/routes/_authenticated/$projectId_.settings.tsx:53
 msgid "Comment and view"
 msgstr "Şərh və bax"
 
@@ -861,7 +856,7 @@ msgstr "Yeni element yarat"
 msgid "Create project"
 msgstr "Layihə yarat"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:404
+#: src/routes/_authenticated/$projectId_.settings.tsx:52
 msgid "Create, edit, comment, and view"
 msgstr "Yaratma, redaktə, şərh və baxış"
 
@@ -943,7 +938,7 @@ msgstr "Default sıralama"
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:314
 #: src/features/objects/components/object-detail-panel.tsx:636
 #: src/features/requests/components/request-panel.tsx:132
-#: src/routes/_authenticated/$projectId_.settings.tsx:357
+#: src/routes/_authenticated/$projectId_.settings.tsx:120
 msgid "Delete"
 msgstr "Sil"
 
@@ -993,12 +988,12 @@ msgstr "Variantı sil"
 msgid "Delete option {0}"
 msgstr "{0} variantını sil"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:348
-#: src/routes/_authenticated/$projectId_.settings.tsx:368
+#: src/routes/_authenticated/$projectId_.settings.tsx:119
+#: src/routes/_authenticated/$projectId_.settings.tsx:122
 msgid "Delete project"
 msgstr "Layihəni sil"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:366
+#: src/routes/_authenticated/$projectId_.settings.tsx:121
 msgid "Delete project?"
 msgstr "Layihə silinsin?"
 
@@ -1010,7 +1005,7 @@ msgstr "Görünüşü sil"
 msgid "Delete your account on the old server"
 msgstr "Köhnə serverdə hesabınızı silin"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:131
+#: src/routes/_authenticated/$projectId_.settings.tsx:127
 msgid "Deleting project..."
 msgstr "Layihə silinir..."
 
@@ -1024,22 +1019,22 @@ msgstr "Azalan"
 
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:83
 #: src/features/requests/components/request-panel.tsx:308
-#: src/routes/_authenticated/$projectId_.settings.tsx:310
+#: src/routes/_authenticated/$projectId_.settings.tsx:112
 msgid "Description"
 msgstr "Təsvir"
 
-#: src/routes/_authenticated/$projectId/design.tsx:64
-#: src/routes/_authenticated/$projectId/design.tsx:132
-#: src/routes/_authenticated/$projectId/index.tsx:184
+#: src/routes/_authenticated/$projectId/design.tsx:43
+#: src/routes/_authenticated/$projectId/design.tsx:46
+#: src/routes/_authenticated/$projectId/index.tsx:174
 msgid "Design"
 msgstr "Dizayn"
 
 #: src/features/projects/components/create-project-dialog.tsx:169
-#: src/routes/_authenticated/$projectId/design.tsx:109
+#: src/routes/_authenticated/$projectId/design.tsx:54
 msgid "Design imported"
 msgstr "Dizayn idxal edildi"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:403
+#: src/routes/_authenticated/$projectId_.settings.tsx:51
 msgid "Design, create, edit, comment, and view"
 msgstr "Dizayn, yaratma, redaktə, şərh və baxış"
 
@@ -1092,7 +1087,7 @@ msgstr "Bağlantı kəsilib"
 msgid "Dismiss"
 msgstr "Rədd et"
 
-#: src/routes/_authenticated/$projectId/index.tsx:165
+#: src/routes/_authenticated/$projectId/index.tsx:155
 msgid "Dismiss board hint"
 msgstr "Lövhə tövsiyəsini rədd et"
 
@@ -1107,7 +1102,7 @@ msgstr "Mobil yan paneli göstərir."
 msgid "Done"
 msgstr "Hazırdır"
 
-#: src/routes/_authenticated/$projectId/index.tsx:164
+#: src/routes/_authenticated/$projectId/index.tsx:154
 msgid "Double click on a column to add content"
 msgstr "Məzmun əlavə etmək üçün sütuna iki dəfə klikləyin"
 
@@ -1117,7 +1112,7 @@ msgstr "Məzmun əlavə etmək üçün sütuna iki dəfə klikləyin"
 msgid "Download"
 msgstr "Yüklə"
 
-#: src/routes/_authenticated/$projectId/design.tsx:226
+#: src/routes/_authenticated/$projectId/design.tsx:75
 msgid "Download backup first"
 msgstr "Əvvəlcə ehtiyat nüsxəsini yükləyin"
 
@@ -1125,8 +1120,8 @@ msgstr "Əvvəlcə ehtiyat nüsxəsini yükləyin"
 msgid "Download failed"
 msgstr "Yükləmə alınmadı"
 
-#: src/routes/_authenticated/$projectId/design.tsx:88
-#: src/routes/_authenticated/$projectId/index.tsx:168
+#: src/routes/_authenticated/$projectId/design.tsx:52
+#: src/routes/_authenticated/$projectId/index.tsx:158
 msgid "Downloaded {filename}"
 msgstr "{filename} yükləndi"
 
@@ -1135,7 +1130,7 @@ msgstr "{filename} yükləndi"
 msgid "Draft"
 msgstr "Qaralama"
 
-#: src/routes/_authenticated/$projectId/index.tsx:161
+#: src/routes/_authenticated/$projectId/index.tsx:151
 msgid "Drag columns to re-order them"
 msgstr "Sütunları yenidən düzmək üçün sürüşdürün"
 
@@ -1206,7 +1201,7 @@ msgstr "E-poçtunuzdakı kodu daxil edin"
 msgid "Enter your authenticator code"
 msgstr "Autentifikator kodunuzu daxil edin"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:325
+#: src/routes/_authenticated/$projectId_.settings.tsx:113
 msgid "Entity ID"
 msgstr "Qurum ID"
 
@@ -1225,11 +1220,11 @@ msgstr "Genişlət"
 msgid "Expand sidebar"
 msgstr "Yan paneli genişləndir"
 
-#: src/routes/_authenticated/$projectId/index.tsx:166
+#: src/routes/_authenticated/$projectId/index.tsx:156
 msgid "Export data"
 msgstr "Məlumatları ixrac et"
 
-#: src/routes/_authenticated/$projectId/design.tsx:174
+#: src/routes/_authenticated/$projectId/design.tsx:50
 msgid "Export design"
 msgstr "Dizaynı ixrac et"
 
@@ -1268,7 +1263,7 @@ msgstr "Sahə yaratmaq alınmadı"
 
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx:137
 #: ../../../lib/web/src/components/options-menu.tsx:101
-#: src/routes/_authenticated/$projectId/index.tsx:172
+#: src/routes/_authenticated/$projectId/index.tsx:162
 msgid "Failed to create link"
 msgstr "Link yaratmaq alınmadı"
 
@@ -1296,7 +1291,7 @@ msgstr "Şərhi silmək alınmadı"
 msgid "Failed to delete link"
 msgstr "Linki silmək alınmadı"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:133
+#: src/routes/_authenticated/$projectId_.settings.tsx:129
 msgid "Failed to delete project"
 msgstr "Layihəni silmək alınmadı"
 
@@ -1304,12 +1299,11 @@ msgstr "Layihəni silmək alınmadı"
 msgid "Failed to delete view"
 msgstr "Görünüşü silmək alınmadı"
 
-#: src/routes/_authenticated/$projectId/index.tsx:169
+#: src/routes/_authenticated/$projectId/index.tsx:159
 msgid "Failed to export data"
 msgstr "Məlumatları ixrac etmək alınmadı"
 
-#: src/routes/_authenticated/$projectId/design.tsx:90
-#: src/routes/_authenticated/$projectId/design.tsx:93
+#: src/routes/_authenticated/$projectId/design.tsx:53
 msgid "Failed to export design"
 msgstr "Dizaynı ixrac etmək alınmadı"
 
@@ -1322,7 +1316,7 @@ msgstr "RSS tokenini almaq alınmadı"
 msgid "Failed to import data"
 msgstr "Məlumatları idxal etmək alınmadı"
 
-#: src/routes/_authenticated/$projectId/design.tsx:114
+#: src/routes/_authenticated/$projectId/design.tsx:55
 msgid "Failed to import design"
 msgstr "Dizaynı idxal etmək alınmadı"
 
@@ -1343,16 +1337,18 @@ msgstr "Şəkil yüklənmədi"
 msgid "Failed to load item"
 msgstr "Element yüklənmədi"
 
-#: src/routes/_authenticated/$projectId/$objectId.tsx:43
-#: src/routes/_authenticated/$projectId/index.tsx:60
+#: src/routes/_authenticated/$projectId/$objectId.tsx:41
+#: src/routes/_authenticated/$projectId/$objectId.tsx:65
+#: src/routes/_authenticated/$projectId/index.tsx:58
+#: src/routes/_authenticated/$projectId/index.tsx:94
 msgid "Failed to load project"
 msgstr "Layihə yüklənmədi"
 
-#: src/routes/_authenticated/$projectId/design.tsx:138
+#: src/routes/_authenticated/$projectId/design.tsx:48
 msgid "Failed to load project design"
 msgstr "Layihə dizaynı yüklənmədi"
 
-#: src/stores/projects-store.ts:31
+#: src/stores/projects-store.ts:17
 msgid "Failed to load projects"
 msgstr "Layihələr yüklənmədi"
 
@@ -1373,11 +1369,11 @@ msgid "Failed to post comment"
 msgstr "Şərh göndərmək alınmadı"
 
 #: src/features/projects/components/create-project-dialog.tsx:250
-#: src/routes/_authenticated/$projectId/design.tsx:282
+#: src/routes/_authenticated/$projectId/design.tsx:60
 msgid "Failed to read file"
 msgstr "Faylı oxumaq alınmadı"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:485
+#: src/routes/_authenticated/$projectId_.settings.tsx:137
 msgid "Failed to remove access"
 msgstr "Girişi silmək alınmadı"
 
@@ -1405,22 +1401,22 @@ msgstr "Layihələrin axtarışı alınmadı"
 msgid "Failed to send verification code"
 msgstr "Doğrulama kodu göndərmək alınmadı"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:474
+#: src/routes/_authenticated/$projectId_.settings.tsx:134
 msgid "Failed to set access level"
 msgstr "Giriş səviyyəsini təyin etmək alınmadı"
 
 #: src/features/projects/components/inline-project-search.tsx:69
 #: src/features/projects/components/recommended-projects.tsx:44
-#: src/routes/_authenticated/find.tsx:58
+#: src/routes/_authenticated/find.tsx:46
 msgid "Failed to subscribe"
 msgstr "Abunə olmaq alınmadı"
 
 #: src/features/projects/pages/projects-list-page.tsx:43
-#: src/routes/_authenticated/$projectId/index.tsx:178
+#: src/routes/_authenticated/$projectId/index.tsx:168
 msgid "Failed to unsubscribe"
 msgstr "Abunəlikdən çıxmaq alınmadı"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:499
+#: src/routes/_authenticated/$projectId_.settings.tsx:140
 msgid "Failed to update access level"
 msgstr "Giriş səviyyəsini yeniləmək alınmadı"
 
@@ -1432,7 +1428,7 @@ msgstr "Şərhi yeniləmək alınmadı"
 msgid "Failed to update field"
 msgstr "Sahəni yeniləmək alınmadı"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:155
+#: src/routes/_authenticated/$projectId_.settings.tsx:118
 msgid "Failed to update project"
 msgstr "Layihəni yeniləmək alınmadı"
 
@@ -1455,11 +1451,11 @@ msgid "Filter..."
 msgstr "Süz..."
 
 #: src/components/layout/projects-layout.tsx:36
-#: src/routes/_authenticated/find.tsx:92
+#: src/routes/_authenticated/find.tsx:41
 msgid "Find projects"
 msgstr "Layihələri tap"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:330
+#: src/routes/_authenticated/$projectId_.settings.tsx:114
 msgid "Fingerprint"
 msgstr "Barmaq izi"
 
@@ -1491,7 +1487,7 @@ msgstr "Dostlar"
 msgid "From"
 msgstr "Kimdən"
 
-#: src/routes/_authenticated/$projectId/design.tsx:323
+#: src/routes/_authenticated/$projectId/design.tsx:57
 msgid "From file"
 msgstr "Fayldan"
 
@@ -1575,7 +1571,7 @@ msgstr "İsti"
 msgid "ID"
 msgstr "ID"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:297
+#: src/routes/_authenticated/$projectId_.settings.tsx:110
 msgid "Identity"
 msgstr "Şəxsiyyət"
 
@@ -1588,8 +1584,8 @@ msgstr "Şəkil göstəricisi: {0}"
 msgid "Imperial"
 msgstr "İmperial"
 
-#: src/routes/_authenticated/$projectId/design.tsx:178
-#: src/routes/_authenticated/$projectId/design.tsx:294
+#: src/routes/_authenticated/$projectId/design.tsx:51
+#: src/routes/_authenticated/$projectId/design.tsx:56
 msgid "Import design"
 msgstr "Dizaynı idxal et"
 
@@ -1627,7 +1623,7 @@ msgid "Invalid date"
 msgstr "Etibarsız tarix"
 
 #: src/features/projects/components/create-project-dialog.tsx:243
-#: src/routes/_authenticated/$projectId/design.tsx:278
+#: src/routes/_authenticated/$projectId/design.tsx:59
 msgid "Invalid JSON file"
 msgstr "Etibarsız JSON faylı"
 
@@ -1685,7 +1681,7 @@ msgid "Light"
 msgstr "İşıqlı"
 
 #: ../../../lib/web/src/components/options-menu.tsx:193
-#: src/routes/_authenticated/$projectId/index.tsx:170
+#: src/routes/_authenticated/$projectId/index.tsx:160
 msgid "Link"
 msgstr "Keçid"
 
@@ -1723,7 +1719,7 @@ msgstr "Şablonlar yüklənir..."
 
 #: ../../../lib/web/src/components/ui/load-more.tsx:35
 #: ../../../lib/web/src/features/document/document-page.tsx:90
-#: src/routes/_authenticated/$projectId/index.tsx:167
+#: src/routes/_authenticated/$projectId/index.tsx:157
 msgid "Loading..."
 msgstr "Yüklənir..."
 
@@ -1856,9 +1852,13 @@ msgstr "Mənim layihəm"
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:299
 #: src/features/editor/components/edit-dialogs.tsx:255
 #: src/features/projects/components/create-project-dialog.tsx:331
-#: src/routes/_authenticated/$projectId_.settings.tsx:301
+#: src/routes/_authenticated/$projectId_.settings.tsx:111
 msgid "Name"
 msgstr "Ad"
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:78
+msgid "Name cannot contain < or > characters"
+msgstr ""
 
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:102
 msgid "Name cannot contain angle brackets, backslash, semicolon, quotes or backticks"
@@ -1869,6 +1869,7 @@ msgid "Name is required"
 msgstr "Ad tələb olunur"
 
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:100
+#: src/routes/_authenticated/$projectId_.settings.tsx:76
 msgid "Name must be 1000 characters or less"
 msgstr "Ad 1000 simvol və ya daha az olmalıdır"
 
@@ -1879,12 +1880,12 @@ msgstr "Şəbəkə xətası"
 
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:481
 #: ../../../lib/web/src/components/ui/sort-selector.tsx:43
-#: src/routes/_authenticated/$projectId/index.tsx:149
-#: src/routes/_authenticated/$projectId/index.tsx:153
+#: src/routes/_authenticated/$projectId/index.tsx:139
+#: src/routes/_authenticated/$projectId/index.tsx:143
 msgid "New"
 msgstr "Yeni"
 
-#: src/routes/_authenticated/$projectId/index.tsx:155
+#: src/routes/_authenticated/$projectId/index.tsx:145
 msgid "New {className}"
 msgstr "Yeni {className}"
 
@@ -1906,7 +1907,7 @@ msgstr "Növbəti şəkil"
 msgid "No {parentClassNames} to add to"
 msgstr "Əlavə ediləcək {parentClassNames} yoxdur"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:407
+#: src/routes/_authenticated/$projectId_.settings.tsx:55
 msgid "No access"
 msgstr "Giriş yoxdur"
 
@@ -1984,7 +1985,7 @@ msgid "No profile"
 msgstr "Profil yoxdur"
 
 #: src/features/projects/components/inline-project-search.tsx:88
-#: src/routes/_authenticated/find.tsx:94
+#: src/routes/_authenticated/find.tsx:43
 msgid "No projects found"
 msgstr "Layihə tapılmadı"
 
@@ -2123,7 +2124,7 @@ msgstr "Əməliyyatları aç"
 msgid "Open class actions"
 msgstr "Sinif əməliyyatlarını aç"
 
-#: src/routes/_authenticated/$projectId/design.tsx:166
+#: src/routes/_authenticated/$projectId/design.tsx:49
 msgid "Open design actions"
 msgstr "Dizayn əməliyyatlarını aç"
 
@@ -2146,7 +2147,7 @@ msgstr "Naviqasiya menyusunu aç"
 msgid "Open option actions"
 msgstr "Seçim əməliyyatlarını aç"
 
-#: src/routes/_authenticated/$projectId/index.tsx:148
+#: src/routes/_authenticated/$projectId/index.tsx:138
 msgid "Open page actions"
 msgstr "Səhifə əməliyyatlarını aç"
 
@@ -2217,7 +2218,7 @@ msgstr "Şablon (regex)"
 msgid "Pick a date"
 msgstr "Tarix seçin"
 
-#: src/routes/_authenticated/$projectId/index.tsx:157
+#: src/routes/_authenticated/$projectId/index.tsx:147
 msgid "Please add one or more classes to the project design."
 msgstr "Layihə dizaynına bir və ya bir neçə sinif əlavə edin."
 
@@ -2252,9 +2253,17 @@ msgid "Posts and comments"
 msgstr "Postlar və şərhlər"
 
 #: src/features/projects/components/create-project-dialog.tsx:353
-#: src/routes/_authenticated/$projectId_.settings.tsx:318
+#: src/routes/_authenticated/$projectId_.settings.tsx:85
 msgid "Prefix"
 msgstr "Prefiks"
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:91
+msgid "Prefix can only contain letters, numbers, and hyphens"
+msgstr ""
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:93
+msgid "Prefix must be 10 characters or less"
+msgstr ""
 
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:427
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:432
@@ -2274,8 +2283,8 @@ msgstr "Emal olunur…"
 msgid "Profile"
 msgstr "Profil"
 
-#: src/routes/_authenticated/$projectId/$objectId.tsx:65
-#: src/routes/_authenticated/$projectId/index.tsx:94
+#: src/routes/_authenticated/$projectId/$objectId.tsx:62
+#: src/routes/_authenticated/$projectId/index.tsx:91
 msgid "Project"
 msgstr "Layihə"
 
@@ -2287,11 +2296,11 @@ msgstr "Layihə əməliyyatları"
 msgid "Project created"
 msgstr "Layihə yaradıldı"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:132
+#: src/routes/_authenticated/$projectId_.settings.tsx:128
 msgid "Project deleted"
 msgstr "Layihə silindi"
 
-#: src/routes/_authenticated/$projectId/index.tsx:171
+#: src/routes/_authenticated/$projectId/index.tsx:161
 msgid "Project link"
 msgstr "Layihə keçidi"
 
@@ -2299,19 +2308,23 @@ msgstr "Layihə keçidi"
 msgid "Project members"
 msgstr "Layihə üzvləri"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:207
+#: src/routes/_authenticated/$projectId_.settings.tsx:75
+msgid "Project name is required"
+msgstr ""
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:106
 msgid "Project not found"
 msgstr "Layihə tapılmadı"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:122
+#: src/routes/_authenticated/$projectId_.settings.tsx:105
 msgid "Project settings"
 msgstr "Layihə parametrləri"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:207
+#: src/routes/_authenticated/$projectId_.settings.tsx:108
 msgid "Project unavailable"
 msgstr "Layihə əlçatan deyil"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:154
+#: src/routes/_authenticated/$projectId_.settings.tsx:117
 msgid "Project updated"
 msgstr "Layihə yeniləndi"
 
@@ -2336,7 +2349,7 @@ msgstr "Qabarıq"
 msgid "Re-link your accounts on this server"
 msgstr "Bu serverdə hesablarınızı yenidən əlaqələndirin"
 
-#: src/routes/_authenticated/$projectId/index.tsx:160
+#: src/routes/_authenticated/$projectId/index.tsx:150
 msgid "Re-order columns"
 msgstr "Sütunları yenidən sıralayın"
 
@@ -2435,7 +2448,7 @@ msgstr "Elementi sil"
 msgid "Remove link"
 msgstr "Keçidi sil"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:483
+#: src/routes/_authenticated/$projectId_.settings.tsx:135
 msgid "Removing access..."
 msgstr "Giriş silinir..."
 
@@ -2452,15 +2465,15 @@ msgstr "Sütun adını dəyiş"
 msgid "Rename this board column"
 msgstr "Bu lövhə sütununun adını dəyiş"
 
-#: src/routes/_authenticated/$projectId/design.tsx:218
+#: src/routes/_authenticated/$projectId/design.tsx:73
 msgid "Replace design"
 msgstr "Dizaynı əvəz et"
 
-#: src/routes/_authenticated/$projectId/design.tsx:202
+#: src/routes/_authenticated/$projectId/design.tsx:62
 msgid "Replace design?"
 msgstr "Dizaynı əvəz edək?"
 
-#: src/routes/_authenticated/$projectId/design.tsx:215
+#: src/routes/_authenticated/$projectId/design.tsx:74
 msgid "Replacing..."
 msgstr "Əvəz olunur..."
 
@@ -2562,11 +2575,11 @@ msgstr "Şənbə"
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:173
 #: ../../../lib/web/src/components/ui/editable-field-row.tsx:122
 #: ../../../lib/web/src/components/ui/secret-field.tsx:79
-#: src/routes/_authenticated/$projectId/index.tsx:163
+#: src/routes/_authenticated/$projectId/index.tsx:153
 msgid "Save"
 msgstr "Saxla"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:153
+#: src/routes/_authenticated/$projectId_.settings.tsx:116
 msgid "Saving..."
 msgstr "Saxlanılır..."
 
@@ -2577,7 +2590,7 @@ msgstr "Saxlanılır..."
 msgid "Search"
 msgstr "Axtar"
 
-#: src/routes/_authenticated/find.tsx:93
+#: src/routes/_authenticated/find.tsx:42
 msgid "Search by name, ID, fingerprint, or URL..."
 msgstr "Ad, ID, fingerprint və ya URL ilə axtar..."
 
@@ -2744,7 +2757,7 @@ msgstr "Mesaj göndər"
 msgid "Serif"
 msgstr "Serif"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:339
+#: src/routes/_authenticated/$projectId_.settings.tsx:115
 msgid "Server"
 msgstr "Server"
 
@@ -2766,17 +2779,15 @@ msgstr "Sessiyanın vaxtı bitib. Zəhmət olmasa, yenidən daxil olun."
 msgid "Set origin and destination"
 msgstr "Başlanğıc və təyinat nöqtəsini təyin et"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:472
+#: src/routes/_authenticated/$projectId_.settings.tsx:132
 msgid "Setting access..."
 msgstr "Giriş təyin edilir..."
 
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx:126
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx:132
 #: ../../../lib/web/src/components/options-menu.tsx:199
-#: src/routes/_authenticated/$projectId_.settings.tsx:76
-#: src/routes/_authenticated/$projectId_.settings.tsx:167
-#: src/routes/_authenticated/$projectId_.settings.tsx:190
-#: src/routes/_authenticated/$projectId/index.tsx:192
+#: src/routes/_authenticated/$projectId_.settings.tsx:99
+#: src/routes/_authenticated/$projectId/index.tsx:182
 msgid "Settings"
 msgstr "Parametrlər"
 
@@ -2890,7 +2901,7 @@ msgid "Subscribe"
 msgstr "Abunə ol"
 
 #: src/features/projects/components/inline-project-search.tsx:68
-#: src/routes/_authenticated/find.tsx:57
+#: src/routes/_authenticated/find.tsx:45
 msgid "Subscribed"
 msgstr "Abunə oldun"
 
@@ -2901,7 +2912,7 @@ msgstr "{0}-ə abunə olundu"
 
 #: src/features/projects/components/inline-project-search.tsx:67
 #: src/features/projects/components/recommended-projects.tsx:42
-#: src/routes/_authenticated/find.tsx:56
+#: src/routes/_authenticated/find.tsx:44
 msgid "Subscribing..."
 msgstr "Abunə olunur..."
 
@@ -3001,11 +3012,11 @@ msgstr "Bu icazə tətbiq parametrlərində sizin tərəfinizdən aktivləşdiri
 msgid "This page has not been created yet."
 msgstr "Bu səhifə hələ yaradılmayıb."
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:210
+#: src/routes/_authenticated/$projectId_.settings.tsx:109
 msgid "This project could not be loaded right now."
 msgstr "Bu satıcı hazırda yeni təkliflər qəbul etmir."
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:210
+#: src/routes/_authenticated/$projectId_.settings.tsx:107
 msgid "This project may have been deleted or you don't have access to it."
 msgstr "Bu satıcı hazırda yeni sifarişlər qəbul etmir."
 
@@ -3013,17 +3024,17 @@ msgstr "Bu satıcı hazırda yeni sifarişlər qəbul etmir."
 msgid "This will merge \"{source}\" into \"{target}\". This action cannot be undone."
 msgstr "Bu, \"{source}\" ilə \"{target}\" birləşdirəcək. Bu əməliyyat geri qaytarıla bilməz."
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:367
+#: src/routes/_authenticated/$projectId_.settings.tsx:125
 msgid "This will permanently delete \"{projectName}\" and all its objects, comments, and attachments. This action cannot be undone."
 msgstr "Bu, \"{projectName}\" və onun bütün obyektlərini, şərhlərini və qoşmalarını həmişəlik siləcək. Bu əməliyyat geri qaytarıla bilməz."
 
 #. placeholder {0}: project.project.name
-#: src/routes/_authenticated/$projectId/index.tsx:175
+#: src/routes/_authenticated/$projectId/index.tsx:165
 msgid "This will remove \"{0}\" from your sidebar and stop updates for this project."
 msgstr "Bu, \"{0}\" yan paneldən siləcək və bu layihə üçün yeniləmələri dayandıracaq."
 
-#. placeholder {0}: pendingImport?.label
-#: src/routes/_authenticated/$projectId/design.tsx:204
+#. placeholder {0}: String(label)
+#: src/routes/_authenticated/$projectId/design.tsx:66
 msgid "This will replace the current design with <0>{0}</0>. All existing classes, fields, options, and views will be deleted. Existing objects will not be deleted but may no longer appear in views."
 msgstr "Bu, cari dizaynı <0>{0}</0> ilə əvəz edəcək. Bütün mövcud siniflər, sahələr, seçimlər və görünüşlər silinəcək. Mövcud obyektlər silinməyəcək, lakin görünüşlərdə artıq görünməyə bilər."
 
@@ -3172,21 +3183,21 @@ msgstr "Naməlum cihaz"
 
 #: ../../../lib/web/src/components/options-menu.tsx:214
 #: src/features/projects/pages/projects-list-page.tsx:39
-#: src/routes/_authenticated/$projectId/index.tsx:173
+#: src/routes/_authenticated/$projectId/index.tsx:163
 msgid "Unsubscribe"
 msgstr "CRM-dən abunəlikdən çıx"
 
-#: src/routes/_authenticated/$projectId/index.tsx:174
+#: src/routes/_authenticated/$projectId/index.tsx:164
 msgid "Unsubscribe from project?"
 msgstr "Abunəlikdən çıxıldı"
 
 #: src/features/projects/pages/projects-list-page.tsx:42
-#: src/routes/_authenticated/$projectId/index.tsx:177
+#: src/routes/_authenticated/$projectId/index.tsx:167
 msgid "Unsubscribed"
 msgstr "Abunəlik ləğv edildi"
 
 #: src/features/projects/pages/projects-list-page.tsx:41
-#: src/routes/_authenticated/$projectId/index.tsx:176
+#: src/routes/_authenticated/$projectId/index.tsx:166
 msgid "Unsubscribing..."
 msgstr "Dayandırmanı götür"
 
@@ -3208,7 +3219,7 @@ msgstr "İzləri yenilə"
 msgid "Updated"
 msgstr "Yenilənir..."
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:497
+#: src/routes/_authenticated/$projectId_.settings.tsx:138
 msgid "Updating access..."
 msgstr "Giriş yenilənir..."
 
@@ -3218,7 +3229,7 @@ msgid "Upload"
 msgstr "Yeni versiyanı yüklə"
 
 #: src/features/projects/components/create-project-dialog.tsx:402
-#: src/routes/_authenticated/$projectId/design.tsx:337
+#: src/routes/_authenticated/$projectId/design.tsx:58
 msgid "Upload .json file"
 msgstr "Versiyanı yüklə"
 
@@ -3294,11 +3305,11 @@ msgstr "Görünüş idarəetmələri"
 msgid "View controls"
 msgstr "Görünüş seçimləri"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:406
+#: src/routes/_authenticated/$projectId_.settings.tsx:54
 msgid "View only"
 msgstr "Yalnız baxış"
 
-#: src/routes/_authenticated/$projectId/index.tsx:158
+#: src/routes/_authenticated/$projectId/index.tsx:148
 msgid "View options"
 msgstr "Mənbə kodunu gör"
 
@@ -3349,7 +3360,7 @@ msgstr "Çərşənbə"
 msgid "You do not have access to this section."
 msgstr "Bu bölməyə girişiniz yoxdur."
 
-#: src/routes/_authenticated/$projectId/index.tsx:82
+#: src/routes/_authenticated/$projectId/index.tsx:80
 msgid "You don't have access to this project."
 msgstr "Bu layihəyə girişiniz yoxdur."
 

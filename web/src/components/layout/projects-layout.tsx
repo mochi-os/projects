@@ -13,7 +13,7 @@ import { APP_ROUTES } from "@/config/routes";
 
 function ProjectsLayoutInner() {
   const { t } = useLingui();
-  const projects = useProjectsStore((state) => state.projects);
+  const projects = useProjectsStore((state) => state.rows);
   const isLoading = useProjectsStore((state) => state.isLoading);
   const error = useProjectsStore((state) => state.error);
   const refresh = useProjectsStore((state) => state.refresh);

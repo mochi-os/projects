@@ -53,9 +53,8 @@ msgstr "{0, plural, one {# конфликтен файл} other {# конфли�
 msgid "{0, plural, one {# selected} other {# selected}}"
 msgstr "{0, plural, one {# избран} other {# избрани}}"
 
-#. placeholder {0}: project.project.name
-#: src/routes/_authenticated/$projectId/design.tsx:64
-#: src/routes/_authenticated/$projectId/design.tsx:157
+#. placeholder {0}: String(name)
+#: src/routes/_authenticated/$projectId/design.tsx:46
 msgid "{0} - Design"
 msgstr "{0} - Дизайн"
 
@@ -75,9 +74,8 @@ msgstr "{0} променени файла"
 msgid "{0} option preview"
 msgstr "Преглед на опцията {0}"
 
-#. placeholder {0}: project.project.name
-#: src/routes/_authenticated/$projectId_.settings.tsx:122
-#: src/routes/_authenticated/$projectId_.settings.tsx:222
+#. placeholder {0}: String(name)
+#: src/routes/_authenticated/$projectId_.settings.tsx:105
 msgid "{0} settings"
 msgstr "{0} настройки"
 
@@ -172,7 +170,7 @@ msgstr "Абсолютно (дата и час)"
 msgid "Accept"
 msgstr "Приеми"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:77
+#: src/routes/_authenticated/$projectId_.settings.tsx:100
 msgid "Access"
 msgstr "Достъп"
 
@@ -188,19 +186,19 @@ msgstr "Достъпът е забранен"
 msgid "Access level"
 msgstr "Ниво на достъп"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:498
+#: src/routes/_authenticated/$projectId_.settings.tsx:139
 msgid "Access level updated"
 msgstr "Нивото на достъп е обновено"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:509
+#: src/routes/_authenticated/$projectId_.settings.tsx:130
 msgid "Access management"
 msgstr "Управление на достъпа"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:484
+#: src/routes/_authenticated/$projectId_.settings.tsx:136
 msgid "Access removed"
 msgstr "Достъпът е премахнат"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:473
+#: src/routes/_authenticated/$projectId_.settings.tsx:133
 msgid "Access set for {subjectName}"
 msgstr "Достъпът е зададен за {subjectName}"
 
@@ -270,7 +268,7 @@ msgstr "Добави елемент от списъка"
 msgid "Add class"
 msgstr "Добави клас"
 
-#: src/routes/_authenticated/$projectId/index.tsx:159
+#: src/routes/_authenticated/$projectId/index.tsx:149
 msgid "Add column"
 msgstr "Добави колона"
 
@@ -300,7 +298,7 @@ msgstr "Добави нов акаунт"
 msgid "Add option"
 msgstr "Добави опция"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:515
+#: src/routes/_authenticated/$projectId_.settings.tsx:131
 msgid "Add rule"
 msgstr "Добави правило"
 
@@ -466,16 +464,13 @@ msgstr "Назад"
 msgid "Back to home"
 msgstr "Назад към началото"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:169
-#: src/routes/_authenticated/$projectId_.settings.tsx:192
-#: src/routes/_authenticated/$projectId_.settings.tsx:224
-#: src/routes/_authenticated/$projectId/design.tsx:134
-#: src/routes/_authenticated/$projectId/design.tsx:159
+#: src/routes/_authenticated/$projectId_.settings.tsx:101
+#: src/routes/_authenticated/$projectId/design.tsx:47
 msgid "Back to project"
 msgstr "Обратно към проекта"
 
-#: src/routes/_authenticated/$projectId/$objectId.tsx:67
-#: src/routes/_authenticated/$projectId/index.tsx:96
+#: src/routes/_authenticated/$projectId/$objectId.tsx:64
+#: src/routes/_authenticated/$projectId/index.tsx:93
 msgid "Back to projects"
 msgstr "Обратно към проектите"
 
@@ -518,7 +513,7 @@ msgstr "Цвят на рамката"
 msgid "Browser notifications"
 msgstr "Известия в браузъра"
 
-#: src/routes/_authenticated/$projectId/design.tsx:300
+#: src/routes/_authenticated/$projectId/design.tsx:100
 msgid "Built-in templates"
 msgstr "Вградени шаблони"
 
@@ -541,8 +536,8 @@ msgstr "Може да бъде дъщерен на"
 #: ../../../lib/web/src/features/accounts/account-add.tsx:201
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:91
 #: src/features/projects/components/create-project-dialog.tsx:443
-#: src/routes/_authenticated/$projectId/design.tsx:344
-#: src/routes/_authenticated/$projectId/index.tsx:162
+#: src/routes/_authenticated/$projectId/design.tsx:61
+#: src/routes/_authenticated/$projectId/index.tsx:152
 msgid "Cancel"
 msgstr "Отказ"
 
@@ -731,7 +726,7 @@ msgstr "Палитра с команди"
 msgid "Comment actions"
 msgstr "Действия за коментара"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:405
+#: src/routes/_authenticated/$projectId_.settings.tsx:53
 msgid "Comment and view"
 msgstr "Коментирай и преглеждай"
 
@@ -861,7 +856,7 @@ msgstr "Създай нов елемент"
 msgid "Create project"
 msgstr "Създай проект"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:404
+#: src/routes/_authenticated/$projectId_.settings.tsx:52
 msgid "Create, edit, comment, and view"
 msgstr "Създаване, редактиране, коментиране и преглед"
 
@@ -943,7 +938,7 @@ msgstr "Сортиране по подразбиране"
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:314
 #: src/features/objects/components/object-detail-panel.tsx:636
 #: src/features/requests/components/request-panel.tsx:132
-#: src/routes/_authenticated/$projectId_.settings.tsx:357
+#: src/routes/_authenticated/$projectId_.settings.tsx:120
 msgid "Delete"
 msgstr "Изтрий"
 
@@ -993,12 +988,12 @@ msgstr "Изтрий опцията"
 msgid "Delete option {0}"
 msgstr "Изтрий опцията {0}"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:348
-#: src/routes/_authenticated/$projectId_.settings.tsx:368
+#: src/routes/_authenticated/$projectId_.settings.tsx:119
+#: src/routes/_authenticated/$projectId_.settings.tsx:122
 msgid "Delete project"
 msgstr "Изтрий проекта"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:366
+#: src/routes/_authenticated/$projectId_.settings.tsx:121
 msgid "Delete project?"
 msgstr "Изтриване на проекта?"
 
@@ -1010,7 +1005,7 @@ msgstr "Изтрий изгледа"
 msgid "Delete your account on the old server"
 msgstr "Изтрийте профила си на стария сървър"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:131
+#: src/routes/_authenticated/$projectId_.settings.tsx:127
 msgid "Deleting project..."
 msgstr "Изтриване на проект..."
 
@@ -1024,22 +1019,22 @@ msgstr "Низходящ"
 
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:83
 #: src/features/requests/components/request-panel.tsx:308
-#: src/routes/_authenticated/$projectId_.settings.tsx:310
+#: src/routes/_authenticated/$projectId_.settings.tsx:112
 msgid "Description"
 msgstr "Описание"
 
-#: src/routes/_authenticated/$projectId/design.tsx:64
-#: src/routes/_authenticated/$projectId/design.tsx:132
-#: src/routes/_authenticated/$projectId/index.tsx:184
+#: src/routes/_authenticated/$projectId/design.tsx:43
+#: src/routes/_authenticated/$projectId/design.tsx:46
+#: src/routes/_authenticated/$projectId/index.tsx:174
 msgid "Design"
 msgstr "Дизайн"
 
 #: src/features/projects/components/create-project-dialog.tsx:169
-#: src/routes/_authenticated/$projectId/design.tsx:109
+#: src/routes/_authenticated/$projectId/design.tsx:54
 msgid "Design imported"
 msgstr "Дизайнът е импортиран"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:403
+#: src/routes/_authenticated/$projectId_.settings.tsx:51
 msgid "Design, create, edit, comment, and view"
 msgstr "Проектиране, създаване, редактиране, коментиране и преглед"
 
@@ -1092,7 +1087,7 @@ msgstr "Несвързано"
 msgid "Dismiss"
 msgstr "Отхвърли"
 
-#: src/routes/_authenticated/$projectId/index.tsx:165
+#: src/routes/_authenticated/$projectId/index.tsx:155
 msgid "Dismiss board hint"
 msgstr "Отхвърли подсказката за дъската"
 
@@ -1107,7 +1102,7 @@ msgstr "Показва мобилната странична лента."
 msgid "Done"
 msgstr "Готово"
 
-#: src/routes/_authenticated/$projectId/index.tsx:164
+#: src/routes/_authenticated/$projectId/index.tsx:154
 msgid "Double click on a column to add content"
 msgstr "Кликнете двукратно върху колона, за да добавите съдържание"
 
@@ -1117,7 +1112,7 @@ msgstr "Кликнете двукратно върху колона, за да �
 msgid "Download"
 msgstr "Изтегляне"
 
-#: src/routes/_authenticated/$projectId/design.tsx:226
+#: src/routes/_authenticated/$projectId/design.tsx:75
 msgid "Download backup first"
 msgstr "Изтеглете първо резервно копие"
 
@@ -1125,8 +1120,8 @@ msgstr "Изтеглете първо резервно копие"
 msgid "Download failed"
 msgstr "Изтеглянето е неуспешно"
 
-#: src/routes/_authenticated/$projectId/design.tsx:88
-#: src/routes/_authenticated/$projectId/index.tsx:168
+#: src/routes/_authenticated/$projectId/design.tsx:52
+#: src/routes/_authenticated/$projectId/index.tsx:158
 msgid "Downloaded {filename}"
 msgstr "Изтеглен {filename}"
 
@@ -1135,7 +1130,7 @@ msgstr "Изтеглен {filename}"
 msgid "Draft"
 msgstr "Чернова"
 
-#: src/routes/_authenticated/$projectId/index.tsx:161
+#: src/routes/_authenticated/$projectId/index.tsx:151
 msgid "Drag columns to re-order them"
 msgstr "Плъзнете колоните, за да ги пренаредите"
 
@@ -1206,7 +1201,7 @@ msgstr "Въведете кода от имейла си"
 msgid "Enter your authenticator code"
 msgstr "Въведете кода от приложението за удостоверяване"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:325
+#: src/routes/_authenticated/$projectId_.settings.tsx:113
 msgid "Entity ID"
 msgstr "ID на обект"
 
@@ -1225,11 +1220,11 @@ msgstr "Разгъване"
 msgid "Expand sidebar"
 msgstr "Разгъване на страничната лента"
 
-#: src/routes/_authenticated/$projectId/index.tsx:166
+#: src/routes/_authenticated/$projectId/index.tsx:156
 msgid "Export data"
 msgstr "Експортиране на данни"
 
-#: src/routes/_authenticated/$projectId/design.tsx:174
+#: src/routes/_authenticated/$projectId/design.tsx:50
 msgid "Export design"
 msgstr "Експорт на дизайн"
 
@@ -1268,7 +1263,7 @@ msgstr "Неуспешно създаване на поле"
 
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx:137
 #: ../../../lib/web/src/components/options-menu.tsx:101
-#: src/routes/_authenticated/$projectId/index.tsx:172
+#: src/routes/_authenticated/$projectId/index.tsx:162
 msgid "Failed to create link"
 msgstr "Неуспешно създаване на връзка"
 
@@ -1296,7 +1291,7 @@ msgstr "Неуспешно изтриване на коментар"
 msgid "Failed to delete link"
 msgstr "Неуспешно изтриване на връзка"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:133
+#: src/routes/_authenticated/$projectId_.settings.tsx:129
 msgid "Failed to delete project"
 msgstr "Неуспешно изтриване на проект"
 
@@ -1304,12 +1299,11 @@ msgstr "Неуспешно изтриване на проект"
 msgid "Failed to delete view"
 msgstr "Неуспешно изтриване на изглед"
 
-#: src/routes/_authenticated/$projectId/index.tsx:169
+#: src/routes/_authenticated/$projectId/index.tsx:159
 msgid "Failed to export data"
 msgstr "Неуспешно експортиране на данните"
 
-#: src/routes/_authenticated/$projectId/design.tsx:90
-#: src/routes/_authenticated/$projectId/design.tsx:93
+#: src/routes/_authenticated/$projectId/design.tsx:53
 msgid "Failed to export design"
 msgstr "Неуспешен експорт на дизайн"
 
@@ -1322,7 +1316,7 @@ msgstr "Неуспешно получаване на RSS токен"
 msgid "Failed to import data"
 msgstr "Неуспешно импортиране на данните"
 
-#: src/routes/_authenticated/$projectId/design.tsx:114
+#: src/routes/_authenticated/$projectId/design.tsx:55
 msgid "Failed to import design"
 msgstr "Неуспешен импорт на дизайн"
 
@@ -1343,16 +1337,18 @@ msgstr "Изображението не можа да се зареди"
 msgid "Failed to load item"
 msgstr "Неуспешно зареждане на елемент"
 
-#: src/routes/_authenticated/$projectId/$objectId.tsx:43
-#: src/routes/_authenticated/$projectId/index.tsx:60
+#: src/routes/_authenticated/$projectId/$objectId.tsx:41
+#: src/routes/_authenticated/$projectId/$objectId.tsx:65
+#: src/routes/_authenticated/$projectId/index.tsx:58
+#: src/routes/_authenticated/$projectId/index.tsx:94
 msgid "Failed to load project"
 msgstr "Неуспешно зареждане на проект"
 
-#: src/routes/_authenticated/$projectId/design.tsx:138
+#: src/routes/_authenticated/$projectId/design.tsx:48
 msgid "Failed to load project design"
 msgstr "Неуспешно зареждане на дизайн на проект"
 
-#: src/stores/projects-store.ts:31
+#: src/stores/projects-store.ts:17
 msgid "Failed to load projects"
 msgstr "Неуспешно зареждане на проекти"
 
@@ -1373,11 +1369,11 @@ msgid "Failed to post comment"
 msgstr "Неуспешно публикуване на коментар"
 
 #: src/features/projects/components/create-project-dialog.tsx:250
-#: src/routes/_authenticated/$projectId/design.tsx:282
+#: src/routes/_authenticated/$projectId/design.tsx:60
 msgid "Failed to read file"
 msgstr "Неуспешно четене на файл"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:485
+#: src/routes/_authenticated/$projectId_.settings.tsx:137
 msgid "Failed to remove access"
 msgstr "Неуспешно премахване на достъп"
 
@@ -1405,22 +1401,22 @@ msgstr "Търсенето на проекти не успя"
 msgid "Failed to send verification code"
 msgstr "Неуспешно изпращане на код за потвърждение"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:474
+#: src/routes/_authenticated/$projectId_.settings.tsx:134
 msgid "Failed to set access level"
 msgstr "Неуспешно задаване на ниво на достъп"
 
 #: src/features/projects/components/inline-project-search.tsx:69
 #: src/features/projects/components/recommended-projects.tsx:44
-#: src/routes/_authenticated/find.tsx:58
+#: src/routes/_authenticated/find.tsx:46
 msgid "Failed to subscribe"
 msgstr "Неуспешно абониране"
 
 #: src/features/projects/pages/projects-list-page.tsx:43
-#: src/routes/_authenticated/$projectId/index.tsx:178
+#: src/routes/_authenticated/$projectId/index.tsx:168
 msgid "Failed to unsubscribe"
 msgstr "Неуспешно отписване"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:499
+#: src/routes/_authenticated/$projectId_.settings.tsx:140
 msgid "Failed to update access level"
 msgstr "Неуспешна актуализация на ниво на достъп"
 
@@ -1432,7 +1428,7 @@ msgstr "Неуспешна актуализация на коментар"
 msgid "Failed to update field"
 msgstr "Неуспешна актуализация на поле"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:155
+#: src/routes/_authenticated/$projectId_.settings.tsx:118
 msgid "Failed to update project"
 msgstr "Неуспешна актуализация на проект"
 
@@ -1455,11 +1451,11 @@ msgid "Filter..."
 msgstr "Филтриране..."
 
 #: src/components/layout/projects-layout.tsx:36
-#: src/routes/_authenticated/find.tsx:92
+#: src/routes/_authenticated/find.tsx:41
 msgid "Find projects"
 msgstr "Намери проекти"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:330
+#: src/routes/_authenticated/$projectId_.settings.tsx:114
 msgid "Fingerprint"
 msgstr "Отпечатък"
 
@@ -1491,7 +1487,7 @@ msgstr "Приятели"
 msgid "From"
 msgstr "От"
 
-#: src/routes/_authenticated/$projectId/design.tsx:323
+#: src/routes/_authenticated/$projectId/design.tsx:57
 msgid "From file"
 msgstr "От файл"
 
@@ -1575,7 +1571,7 @@ msgstr "Горещо"
 msgid "ID"
 msgstr "ID"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:297
+#: src/routes/_authenticated/$projectId_.settings.tsx:110
 msgid "Identity"
 msgstr "Самоличност"
 
@@ -1588,8 +1584,8 @@ msgstr "Преглед на изображения: {0}"
 msgid "Imperial"
 msgstr "Имперски"
 
-#: src/routes/_authenticated/$projectId/design.tsx:178
-#: src/routes/_authenticated/$projectId/design.tsx:294
+#: src/routes/_authenticated/$projectId/design.tsx:51
+#: src/routes/_authenticated/$projectId/design.tsx:56
 msgid "Import design"
 msgstr "Импорт на дизайн"
 
@@ -1627,7 +1623,7 @@ msgid "Invalid date"
 msgstr "Невалидна дата"
 
 #: src/features/projects/components/create-project-dialog.tsx:243
-#: src/routes/_authenticated/$projectId/design.tsx:278
+#: src/routes/_authenticated/$projectId/design.tsx:59
 msgid "Invalid JSON file"
 msgstr "Невалиден JSON файл"
 
@@ -1685,7 +1681,7 @@ msgid "Light"
 msgstr "Светъл"
 
 #: ../../../lib/web/src/components/options-menu.tsx:193
-#: src/routes/_authenticated/$projectId/index.tsx:170
+#: src/routes/_authenticated/$projectId/index.tsx:160
 msgid "Link"
 msgstr "Връзка"
 
@@ -1723,7 +1719,7 @@ msgstr "Зареждане на шаблони..."
 
 #: ../../../lib/web/src/components/ui/load-more.tsx:35
 #: ../../../lib/web/src/features/document/document-page.tsx:90
-#: src/routes/_authenticated/$projectId/index.tsx:167
+#: src/routes/_authenticated/$projectId/index.tsx:157
 msgid "Loading..."
 msgstr "Зареждане..."
 
@@ -1856,9 +1852,13 @@ msgstr "Моят проект"
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:299
 #: src/features/editor/components/edit-dialogs.tsx:255
 #: src/features/projects/components/create-project-dialog.tsx:331
-#: src/routes/_authenticated/$projectId_.settings.tsx:301
+#: src/routes/_authenticated/$projectId_.settings.tsx:111
 msgid "Name"
 msgstr "Име"
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:78
+msgid "Name cannot contain < or > characters"
+msgstr ""
 
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:102
 msgid "Name cannot contain angle brackets, backslash, semicolon, quotes or backticks"
@@ -1869,6 +1869,7 @@ msgid "Name is required"
 msgstr "Името е задължително"
 
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:100
+#: src/routes/_authenticated/$projectId_.settings.tsx:76
 msgid "Name must be 1000 characters or less"
 msgstr "Името трябва да е до 1000 символа"
 
@@ -1879,12 +1880,12 @@ msgstr "Мрежова грешка"
 
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:481
 #: ../../../lib/web/src/components/ui/sort-selector.tsx:43
-#: src/routes/_authenticated/$projectId/index.tsx:149
-#: src/routes/_authenticated/$projectId/index.tsx:153
+#: src/routes/_authenticated/$projectId/index.tsx:139
+#: src/routes/_authenticated/$projectId/index.tsx:143
 msgid "New"
 msgstr "Ново"
 
-#: src/routes/_authenticated/$projectId/index.tsx:155
+#: src/routes/_authenticated/$projectId/index.tsx:145
 msgid "New {className}"
 msgstr "Ново {className}"
 
@@ -1906,7 +1907,7 @@ msgstr "Следващо изображение"
 msgid "No {parentClassNames} to add to"
 msgstr "Няма {parentClassNames} за добавяне"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:407
+#: src/routes/_authenticated/$projectId_.settings.tsx:55
 msgid "No access"
 msgstr "Няма достъп"
 
@@ -1984,7 +1985,7 @@ msgid "No profile"
 msgstr "Няма профил"
 
 #: src/features/projects/components/inline-project-search.tsx:88
-#: src/routes/_authenticated/find.tsx:94
+#: src/routes/_authenticated/find.tsx:43
 msgid "No projects found"
 msgstr "Не са намерени проекти"
 
@@ -2123,7 +2124,7 @@ msgstr "Отвори действията"
 msgid "Open class actions"
 msgstr "Отвори действия за класа"
 
-#: src/routes/_authenticated/$projectId/design.tsx:166
+#: src/routes/_authenticated/$projectId/design.tsx:49
 msgid "Open design actions"
 msgstr "Отвори действия за дизайна"
 
@@ -2146,7 +2147,7 @@ msgstr "Отвори менюто за навигация"
 msgid "Open option actions"
 msgstr "Отвори действия за опцията"
 
-#: src/routes/_authenticated/$projectId/index.tsx:148
+#: src/routes/_authenticated/$projectId/index.tsx:138
 msgid "Open page actions"
 msgstr "Отвори действия за страницата"
 
@@ -2217,7 +2218,7 @@ msgstr "Шаблон (регулярен израз)"
 msgid "Pick a date"
 msgstr "Изберете дата"
 
-#: src/routes/_authenticated/$projectId/index.tsx:157
+#: src/routes/_authenticated/$projectId/index.tsx:147
 msgid "Please add one or more classes to the project design."
 msgstr "Моля, добавете един или повече класове в дизайна на проекта."
 
@@ -2252,9 +2253,17 @@ msgid "Posts and comments"
 msgstr "Публикации и коментари"
 
 #: src/features/projects/components/create-project-dialog.tsx:353
-#: src/routes/_authenticated/$projectId_.settings.tsx:318
+#: src/routes/_authenticated/$projectId_.settings.tsx:85
 msgid "Prefix"
 msgstr "Префикс"
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:91
+msgid "Prefix can only contain letters, numbers, and hyphens"
+msgstr ""
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:93
+msgid "Prefix must be 10 characters or less"
+msgstr ""
 
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:427
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:432
@@ -2274,8 +2283,8 @@ msgstr "Обработва се…"
 msgid "Profile"
 msgstr "Профил"
 
-#: src/routes/_authenticated/$projectId/$objectId.tsx:65
-#: src/routes/_authenticated/$projectId/index.tsx:94
+#: src/routes/_authenticated/$projectId/$objectId.tsx:62
+#: src/routes/_authenticated/$projectId/index.tsx:91
 msgid "Project"
 msgstr "Проект"
 
@@ -2287,11 +2296,11 @@ msgstr "Действия по проекта"
 msgid "Project created"
 msgstr "Проектът е създаден"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:132
+#: src/routes/_authenticated/$projectId_.settings.tsx:128
 msgid "Project deleted"
 msgstr "Проектът е изтрит"
 
-#: src/routes/_authenticated/$projectId/index.tsx:171
+#: src/routes/_authenticated/$projectId/index.tsx:161
 msgid "Project link"
 msgstr "Връзка към проекта"
 
@@ -2299,19 +2308,23 @@ msgstr "Връзка към проекта"
 msgid "Project members"
 msgstr "Членове на проекта"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:207
+#: src/routes/_authenticated/$projectId_.settings.tsx:75
+msgid "Project name is required"
+msgstr ""
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:106
 msgid "Project not found"
 msgstr "Проектът не е намерен"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:122
+#: src/routes/_authenticated/$projectId_.settings.tsx:105
 msgid "Project settings"
 msgstr "Настройки на проекта"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:207
+#: src/routes/_authenticated/$projectId_.settings.tsx:108
 msgid "Project unavailable"
 msgstr "Проектът не е наличен"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:154
+#: src/routes/_authenticated/$projectId_.settings.tsx:117
 msgid "Project updated"
 msgstr "Проектът е обновен"
 
@@ -2336,7 +2349,7 @@ msgstr "Повдигнат"
 msgid "Re-link your accounts on this server"
 msgstr "Свържете отново профилите си на този сървър"
 
-#: src/routes/_authenticated/$projectId/index.tsx:160
+#: src/routes/_authenticated/$projectId/index.tsx:150
 msgid "Re-order columns"
 msgstr "Пренареди колоните"
 
@@ -2435,7 +2448,7 @@ msgstr "Премахни елемент"
 msgid "Remove link"
 msgstr "Премахване на връзката"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:483
+#: src/routes/_authenticated/$projectId_.settings.tsx:135
 msgid "Removing access..."
 msgstr "Премахване на достъп..."
 
@@ -2452,15 +2465,15 @@ msgstr "Преименувай колона"
 msgid "Rename this board column"
 msgstr "Преименувай тази колона"
 
-#: src/routes/_authenticated/$projectId/design.tsx:218
+#: src/routes/_authenticated/$projectId/design.tsx:73
 msgid "Replace design"
 msgstr "Замени дизайна"
 
-#: src/routes/_authenticated/$projectId/design.tsx:202
+#: src/routes/_authenticated/$projectId/design.tsx:62
 msgid "Replace design?"
 msgstr "Да заменя ли дизайна?"
 
-#: src/routes/_authenticated/$projectId/design.tsx:215
+#: src/routes/_authenticated/$projectId/design.tsx:74
 msgid "Replacing..."
 msgstr "Замества се..."
 
@@ -2562,11 +2575,11 @@ msgstr "Събота"
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:173
 #: ../../../lib/web/src/components/ui/editable-field-row.tsx:122
 #: ../../../lib/web/src/components/ui/secret-field.tsx:79
-#: src/routes/_authenticated/$projectId/index.tsx:163
+#: src/routes/_authenticated/$projectId/index.tsx:153
 msgid "Save"
 msgstr "Запази"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:153
+#: src/routes/_authenticated/$projectId_.settings.tsx:116
 msgid "Saving..."
 msgstr "Запазва се..."
 
@@ -2577,7 +2590,7 @@ msgstr "Запазва се..."
 msgid "Search"
 msgstr "Търсене"
 
-#: src/routes/_authenticated/find.tsx:93
+#: src/routes/_authenticated/find.tsx:42
 msgid "Search by name, ID, fingerprint, or URL..."
 msgstr "Търси по име, ID, fingerprint или URL..."
 
@@ -2744,7 +2757,7 @@ msgstr "Изпрати съобщение"
 msgid "Serif"
 msgstr "Серифен"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:339
+#: src/routes/_authenticated/$projectId_.settings.tsx:115
 msgid "Server"
 msgstr "Сървър"
 
@@ -2766,17 +2779,15 @@ msgstr "Сесията е изтекла. Моля, влезте отново."
 msgid "Set origin and destination"
 msgstr "Задай начало и край"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:472
+#: src/routes/_authenticated/$projectId_.settings.tsx:132
 msgid "Setting access..."
 msgstr "Задаване на достъп..."
 
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx:126
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx:132
 #: ../../../lib/web/src/components/options-menu.tsx:199
-#: src/routes/_authenticated/$projectId_.settings.tsx:76
-#: src/routes/_authenticated/$projectId_.settings.tsx:167
-#: src/routes/_authenticated/$projectId_.settings.tsx:190
-#: src/routes/_authenticated/$projectId/index.tsx:192
+#: src/routes/_authenticated/$projectId_.settings.tsx:99
+#: src/routes/_authenticated/$projectId/index.tsx:182
 msgid "Settings"
 msgstr "Настройки"
 
@@ -2890,7 +2901,7 @@ msgid "Subscribe"
 msgstr "Абонирай се"
 
 #: src/features/projects/components/inline-project-search.tsx:68
-#: src/routes/_authenticated/find.tsx:57
+#: src/routes/_authenticated/find.tsx:45
 msgid "Subscribed"
 msgstr "Абониран"
 
@@ -2901,7 +2912,7 @@ msgstr "Абониран за {0}"
 
 #: src/features/projects/components/inline-project-search.tsx:67
 #: src/features/projects/components/recommended-projects.tsx:42
-#: src/routes/_authenticated/find.tsx:56
+#: src/routes/_authenticated/find.tsx:44
 msgid "Subscribing..."
 msgstr "Абониране..."
 
@@ -3001,11 +3012,11 @@ msgstr "Тази заявка за сливане е чернова и не мо
 msgid "This page has not been created yet."
 msgstr "Тази страница още не е създадена."
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:210
+#: src/routes/_authenticated/$projectId_.settings.tsx:109
 msgid "This project could not be loaded right now."
 msgstr "Този проект не може да бъде зареден в момента."
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:210
+#: src/routes/_authenticated/$projectId_.settings.tsx:107
 msgid "This project may have been deleted or you don't have access to it."
 msgstr "Този проект може да е изтрит или нямате достъп до него."
 
@@ -3013,17 +3024,17 @@ msgstr "Този проект може да е изтрит или нямате 
 msgid "This will merge \"{source}\" into \"{target}\". This action cannot be undone."
 msgstr "Това ще слее „{source}“ в „{target}“. Това действие не може да бъде отменено."
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:367
+#: src/routes/_authenticated/$projectId_.settings.tsx:125
 msgid "This will permanently delete \"{projectName}\" and all its objects, comments, and attachments. This action cannot be undone."
 msgstr "Това ще изтрие окончателно „{projectName}“ и всичките му обекти, коментари и прикачени файлове. Това действие не може да бъде отменено."
 
 #. placeholder {0}: project.project.name
-#: src/routes/_authenticated/$projectId/index.tsx:175
+#: src/routes/_authenticated/$projectId/index.tsx:165
 msgid "This will remove \"{0}\" from your sidebar and stop updates for this project."
 msgstr "Това ще премахне „{0}“ от страничната ви лента и ще спре обновленията за този проект."
 
-#. placeholder {0}: pendingImport?.label
-#: src/routes/_authenticated/$projectId/design.tsx:204
+#. placeholder {0}: String(label)
+#: src/routes/_authenticated/$projectId/design.tsx:66
 msgid "This will replace the current design with <0>{0}</0>. All existing classes, fields, options, and views will be deleted. Existing objects will not be deleted but may no longer appear in views."
 msgstr "Това ще замени текущия дизайн с <0>{0}</0>. Всички съществуващи класове, полета, опции и изгледи ще бъдат изтрити. Съществуващите обекти няма да бъдат изтрити, но може повече да не се появяват в изгледите."
 
@@ -3172,21 +3183,21 @@ msgstr "Неизвестно"
 
 #: ../../../lib/web/src/components/options-menu.tsx:214
 #: src/features/projects/pages/projects-list-page.tsx:39
-#: src/routes/_authenticated/$projectId/index.tsx:173
+#: src/routes/_authenticated/$projectId/index.tsx:163
 msgid "Unsubscribe"
 msgstr "Отпиши се"
 
-#: src/routes/_authenticated/$projectId/index.tsx:174
+#: src/routes/_authenticated/$projectId/index.tsx:164
 msgid "Unsubscribe from project?"
 msgstr "Отписване от проект?"
 
 #: src/features/projects/pages/projects-list-page.tsx:42
-#: src/routes/_authenticated/$projectId/index.tsx:177
+#: src/routes/_authenticated/$projectId/index.tsx:167
 msgid "Unsubscribed"
 msgstr "Отписан"
 
 #: src/features/projects/pages/projects-list-page.tsx:41
-#: src/routes/_authenticated/$projectId/index.tsx:176
+#: src/routes/_authenticated/$projectId/index.tsx:166
 msgid "Unsubscribing..."
 msgstr "Отписване..."
 
@@ -3208,7 +3219,7 @@ msgstr "Непотвърдено"
 msgid "Updated"
 msgstr "Обновено"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:497
+#: src/routes/_authenticated/$projectId_.settings.tsx:138
 msgid "Updating access..."
 msgstr "Обновяване на достъп..."
 
@@ -3218,7 +3229,7 @@ msgid "Upload"
 msgstr "Качи"
 
 #: src/features/projects/components/create-project-dialog.tsx:402
-#: src/routes/_authenticated/$projectId/design.tsx:337
+#: src/routes/_authenticated/$projectId/design.tsx:58
 msgid "Upload .json file"
 msgstr "Качи .json файл"
 
@@ -3294,11 +3305,11 @@ msgstr "Преглед и редакция на детайлите за елем
 msgid "View controls"
 msgstr "Контроли за изглед"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:406
+#: src/routes/_authenticated/$projectId_.settings.tsx:54
 msgid "View only"
 msgstr "Само за преглед"
 
-#: src/routes/_authenticated/$projectId/index.tsx:158
+#: src/routes/_authenticated/$projectId/index.tsx:148
 msgid "View options"
 msgstr "Опции за изглед"
 
@@ -3349,7 +3360,7 @@ msgstr "Сряда"
 msgid "You do not have access to this section."
 msgstr "Нямате достъп до този раздел."
 
-#: src/routes/_authenticated/$projectId/index.tsx:82
+#: src/routes/_authenticated/$projectId/index.tsx:80
 msgid "You don't have access to this project."
 msgstr "Нямате достъп до този проект."
 

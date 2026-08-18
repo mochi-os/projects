@@ -8,11 +8,9 @@ import { createFileRoute, redirect, useNavigate, useRouter } from "@tanstack/rea
 import { useLingui } from '@lingui/react/macro'
 import { t } from '@lingui/core/macro'
 import {
-  GeneralError,
+  EntityLoadError,
   extractStatus,
   getErrorMessage,
-  Main,
-  PageHeader,
 } from "@mochi/web";
 import { FolderKanban } from "lucide-react";
 import projectsApi from "@/api/projects";
@@ -60,21 +58,13 @@ function ObjectPage() {
 
   if (!project) {
     return (
-      <>
-        <PageHeader
-          title={t`Project`}
-          icon={<FolderKanban className="size-4 md:size-5" />}
-          back={{ label: t`Back to projects`, onFallback: () => navigate({ to: "/" }) }}
-        />
-        <Main>
-          <GeneralError
-            error={new Error(loaderError ?? "Failed to load project")}
-            minimal
-            mode="inline"
-            reset={() => void router.invalidate()}
-          />
-        </Main>
-      </>
+      <EntityLoadError
+        title={t`Project`}
+        icon={<FolderKanban className="size-4 md:size-5" />}
+        back={{ label: t`Back to projects`, onFallback: () => navigate({ to: "/" }) }}
+        message={loaderError ?? t`Failed to load project`}
+        onRetry={() => void router.invalidate()}
+      />
     );
   }
 

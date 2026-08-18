@@ -53,9 +53,8 @@ msgstr "{0, plural, one {# հակասող ֆայլ} other {# հակասող ֆա
 msgid "{0, plural, one {# selected} other {# selected}}"
 msgstr "{0, plural, one {# ընտրված} other {# ընտրված}}"
 
-#. placeholder {0}: project.project.name
-#: src/routes/_authenticated/$projectId/design.tsx:64
-#: src/routes/_authenticated/$projectId/design.tsx:157
+#. placeholder {0}: String(name)
+#: src/routes/_authenticated/$projectId/design.tsx:46
 msgid "{0} - Design"
 msgstr "{0} - Ձևավորում"
 
@@ -75,9 +74,8 @@ msgstr "{0} ֆայլեր փոխվեցին"
 msgid "{0} option preview"
 msgstr "{0} տարբերակի նախադիտում"
 
-#. placeholder {0}: project.project.name
-#: src/routes/_authenticated/$projectId_.settings.tsx:122
-#: src/routes/_authenticated/$projectId_.settings.tsx:222
+#. placeholder {0}: String(name)
+#: src/routes/_authenticated/$projectId_.settings.tsx:105
 msgid "{0} settings"
 msgstr "{0} կարգավորումներ"
 
@@ -172,7 +170,7 @@ msgstr "Բացարձակ (ամսաթիվ և ժամ)"
 msgid "Accept"
 msgstr "Ընդունել"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:77
+#: src/routes/_authenticated/$projectId_.settings.tsx:100
 msgid "Access"
 msgstr "Մուտք"
 
@@ -188,19 +186,19 @@ msgstr "Մուտքն արգելված է"
 msgid "Access level"
 msgstr "Մուտքի մակարդակ"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:498
+#: src/routes/_authenticated/$projectId_.settings.tsx:139
 msgid "Access level updated"
 msgstr "Մուտքի մակարդակը թարմացված է"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:509
+#: src/routes/_authenticated/$projectId_.settings.tsx:130
 msgid "Access management"
 msgstr "Մուտքի կառավարում"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:484
+#: src/routes/_authenticated/$projectId_.settings.tsx:136
 msgid "Access removed"
 msgstr "Մուտքը հանված է"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:473
+#: src/routes/_authenticated/$projectId_.settings.tsx:133
 msgid "Access set for {subjectName}"
 msgstr "Մուտքը սահմանված է {subjectName}-ի համար"
 
@@ -270,7 +268,7 @@ msgstr "Ավելացնել դաս"
 msgid "Add class"
 msgstr "Ավելացնել սյունակ"
 
-#: src/routes/_authenticated/$projectId/index.tsx:159
+#: src/routes/_authenticated/$projectId/index.tsx:149
 msgid "Add column"
 msgstr "Ավելացնել պատվիրակություն"
 
@@ -300,7 +298,7 @@ msgstr "Ավելացնել տարբերակ"
 msgid "Add option"
 msgstr "Ավելացնել անցաբառ"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:515
+#: src/routes/_authenticated/$projectId_.settings.tsx:131
 msgid "Add rule"
 msgstr "Ավելացնել կանոն"
 
@@ -466,16 +464,13 @@ msgstr "Հետ դեպի CRM"
 msgid "Back to home"
 msgstr "Վերադառնալ տուն"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:169
-#: src/routes/_authenticated/$projectId_.settings.tsx:192
-#: src/routes/_authenticated/$projectId_.settings.tsx:224
-#: src/routes/_authenticated/$projectId/design.tsx:134
-#: src/routes/_authenticated/$projectId/design.tsx:159
+#: src/routes/_authenticated/$projectId_.settings.tsx:101
+#: src/routes/_authenticated/$projectId/design.tsx:47
 msgid "Back to project"
 msgstr "Հետ դեպի նախագծեր"
 
-#: src/routes/_authenticated/$projectId/$objectId.tsx:67
-#: src/routes/_authenticated/$projectId/index.tsx:96
+#: src/routes/_authenticated/$projectId/$objectId.tsx:64
+#: src/routes/_authenticated/$projectId/index.tsx:93
 msgid "Back to projects"
 msgstr "Հետ դեպի wiki-ներ"
 
@@ -518,7 +513,7 @@ msgstr "Աղբյուրը և թիրախը պարտադիր են"
 msgid "Browser notifications"
 msgstr "Build ֆայլ (.zip)"
 
-#: src/routes/_authenticated/$projectId/design.tsx:300
+#: src/routes/_authenticated/$projectId/design.tsx:100
 msgid "Built-in templates"
 msgstr "Կրկին գնել"
 
@@ -541,8 +536,8 @@ msgstr "Չեղարկել"
 #: ../../../lib/web/src/features/accounts/account-add.tsx:201
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:91
 #: src/features/projects/components/create-project-dialog.tsx:443
-#: src/routes/_authenticated/$projectId/design.tsx:344
-#: src/routes/_authenticated/$projectId/index.tsx:162
+#: src/routes/_authenticated/$projectId/design.tsx:61
+#: src/routes/_authenticated/$projectId/index.tsx:152
 msgid "Cancel"
 msgstr "Չեղարկել մեկնաբանությունը"
 
@@ -731,7 +726,7 @@ msgstr "Հրամանների վահանակ"
 msgid "Comment actions"
 msgstr "Մեկնաբանության գործողություններ"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:405
+#: src/routes/_authenticated/$projectId_.settings.tsx:53
 msgid "Comment and view"
 msgstr "Մեկնաբանությունը հաստատված է"
 
@@ -861,7 +856,7 @@ msgstr "Ստեղծել նոր էջ"
 msgid "Create project"
 msgstr "Ստեղծել վերահղում"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:404
+#: src/routes/_authenticated/$projectId_.settings.tsx:52
 msgid "Create, edit, comment, and view"
 msgstr "Ստեղծել, խմբագրել, մեկնաբանել և դիտել"
 
@@ -943,7 +938,7 @@ msgstr "Լռելյայն տեսակավորում"
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:314
 #: src/features/objects/components/object-detail-panel.tsx:636
 #: src/features/requests/components/request-panel.tsx:132
-#: src/routes/_authenticated/$projectId_.settings.tsx:357
+#: src/routes/_authenticated/$projectId_.settings.tsx:120
 msgid "Delete"
 msgstr "Ջնջել"
 
@@ -993,12 +988,12 @@ msgstr "Ջնջել տարբերակը"
 msgid "Delete option {0}"
 msgstr "Ջնջել {0} տարբերակը"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:348
-#: src/routes/_authenticated/$projectId_.settings.tsx:368
+#: src/routes/_authenticated/$projectId_.settings.tsx:119
+#: src/routes/_authenticated/$projectId_.settings.tsx:122
 msgid "Delete project"
 msgstr "Ջնջել նախագիծը"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:366
+#: src/routes/_authenticated/$projectId_.settings.tsx:121
 msgid "Delete project?"
 msgstr "Ջնջե՞լ նախագիծը։"
 
@@ -1010,7 +1005,7 @@ msgstr "Ջնջել տեսքը"
 msgid "Delete your account on the old server"
 msgstr "Ջնջեք ձեր հաշիվը հին սերվերում"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:131
+#: src/routes/_authenticated/$projectId_.settings.tsx:127
 msgid "Deleting project..."
 msgstr "Նախագիծը ջնջվում է..."
 
@@ -1024,22 +1019,22 @@ msgstr "Նվազման կարգով"
 
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:83
 #: src/features/requests/components/request-panel.tsx:308
-#: src/routes/_authenticated/$projectId_.settings.tsx:310
+#: src/routes/_authenticated/$projectId_.settings.tsx:112
 msgid "Description"
 msgstr "Նկարագրություն"
 
-#: src/routes/_authenticated/$projectId/design.tsx:64
-#: src/routes/_authenticated/$projectId/design.tsx:132
-#: src/routes/_authenticated/$projectId/index.tsx:184
+#: src/routes/_authenticated/$projectId/design.tsx:43
+#: src/routes/_authenticated/$projectId/design.tsx:46
+#: src/routes/_authenticated/$projectId/index.tsx:174
 msgid "Design"
 msgstr "Դիզայն"
 
 #: src/features/projects/components/create-project-dialog.tsx:169
-#: src/routes/_authenticated/$projectId/design.tsx:109
+#: src/routes/_authenticated/$projectId/design.tsx:54
 msgid "Design imported"
 msgstr "Դիզայնը ներմուծված է"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:403
+#: src/routes/_authenticated/$projectId_.settings.tsx:51
 msgid "Design, create, edit, comment, and view"
 msgstr "Ձևավորել, ստեղծել, խմբագրել, մեկնաբանել և դիտել"
 
@@ -1092,7 +1087,7 @@ msgstr "Անջատված"
 msgid "Dismiss"
 msgstr "Հեռացնել"
 
-#: src/routes/_authenticated/$projectId/index.tsx:165
+#: src/routes/_authenticated/$projectId/index.tsx:155
 msgid "Dismiss board hint"
 msgstr "Հեռացնել տախտակի հուշումը"
 
@@ -1107,7 +1102,7 @@ msgstr "Ցուցադրում է բջջային կողագոտին։"
 msgid "Done"
 msgstr "Կատարված է"
 
-#: src/routes/_authenticated/$projectId/index.tsx:164
+#: src/routes/_authenticated/$projectId/index.tsx:154
 msgid "Double click on a column to add content"
 msgstr "Կրկնակի սեղմեք սյունակի վրա բովանդակություն ավելացնելու համար"
 
@@ -1117,7 +1112,7 @@ msgstr "Կրկնակի սեղմեք սյունակի վրա բովանդակու
 msgid "Download"
 msgstr "Ներբեռնել"
 
-#: src/routes/_authenticated/$projectId/design.tsx:226
+#: src/routes/_authenticated/$projectId/design.tsx:75
 msgid "Download backup first"
 msgstr "Նախ ներբեռնեք պահուստավորումը"
 
@@ -1125,8 +1120,8 @@ msgstr "Նախ ներբեռնեք պահուստավորումը"
 msgid "Download failed"
 msgstr "Ներբեռնումը ձախողվեց"
 
-#: src/routes/_authenticated/$projectId/design.tsx:88
-#: src/routes/_authenticated/$projectId/index.tsx:168
+#: src/routes/_authenticated/$projectId/design.tsx:52
+#: src/routes/_authenticated/$projectId/index.tsx:158
 msgid "Downloaded {filename}"
 msgstr "Ներբեռնված է {filename}"
 
@@ -1135,7 +1130,7 @@ msgstr "Ներբեռնված է {filename}"
 msgid "Draft"
 msgstr "Սևագիր"
 
-#: src/routes/_authenticated/$projectId/index.tsx:161
+#: src/routes/_authenticated/$projectId/index.tsx:151
 msgid "Drag columns to re-order them"
 msgstr "Քաշեք սյունակները՝ դրանք վերադասավորելու համար"
 
@@ -1206,7 +1201,7 @@ msgstr "Մուտքագրեք ձեր էլ. փոստից ստացած կոդը"
 msgid "Enter your authenticator code"
 msgstr "Մուտքագրեք ձեր նույնականացուցիչի կոդը"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:325
+#: src/routes/_authenticated/$projectId_.settings.tsx:113
 msgid "Entity ID"
 msgstr "Անձի ID"
 
@@ -1225,11 +1220,11 @@ msgstr "Ծավալել"
 msgid "Expand sidebar"
 msgstr "Ընդարձակել կողագոտին"
 
-#: src/routes/_authenticated/$projectId/index.tsx:166
+#: src/routes/_authenticated/$projectId/index.tsx:156
 msgid "Export data"
 msgstr "Արտահանել տվյալները"
 
-#: src/routes/_authenticated/$projectId/design.tsx:174
+#: src/routes/_authenticated/$projectId/design.tsx:50
 msgid "Export design"
 msgstr "Արտահանել ձևավորումը"
 
@@ -1268,7 +1263,7 @@ msgstr "Չհաջողվեց ստեղծել դաշտը"
 
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx:137
 #: ../../../lib/web/src/components/options-menu.tsx:101
-#: src/routes/_authenticated/$projectId/index.tsx:172
+#: src/routes/_authenticated/$projectId/index.tsx:162
 msgid "Failed to create link"
 msgstr "Չհաջողվեց ստեղծել հղումը"
 
@@ -1296,7 +1291,7 @@ msgstr "Չհաջողվեց ջնջել մեկնաբանությունը"
 msgid "Failed to delete link"
 msgstr "Չհաջողվեց ջնջել հղումը"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:133
+#: src/routes/_authenticated/$projectId_.settings.tsx:129
 msgid "Failed to delete project"
 msgstr "Չհաջողվեց ջնջել նախագիծը"
 
@@ -1304,12 +1299,11 @@ msgstr "Չհաջողվեց ջնջել նախագիծը"
 msgid "Failed to delete view"
 msgstr "Չհաջողվեց ջնջել տեսքը"
 
-#: src/routes/_authenticated/$projectId/index.tsx:169
+#: src/routes/_authenticated/$projectId/index.tsx:159
 msgid "Failed to export data"
 msgstr "Չհաջողվեց արտահանել տվյալները"
 
-#: src/routes/_authenticated/$projectId/design.tsx:90
-#: src/routes/_authenticated/$projectId/design.tsx:93
+#: src/routes/_authenticated/$projectId/design.tsx:53
 msgid "Failed to export design"
 msgstr "Չհաջողվեց արտահանել ձևավորումը"
 
@@ -1322,7 +1316,7 @@ msgstr "Չհաջողվեց ստանալ RSS տոկենը"
 msgid "Failed to import data"
 msgstr "Չհաջողվեց ներմուծել տվյալները"
 
-#: src/routes/_authenticated/$projectId/design.tsx:114
+#: src/routes/_authenticated/$projectId/design.tsx:55
 msgid "Failed to import design"
 msgstr "Չհաջողվեց ներմուծել ձևավորումը"
 
@@ -1343,16 +1337,18 @@ msgstr "Չհաջողվեց բեռնել պատկերը"
 msgid "Failed to load item"
 msgstr "Չհաջողվեց բեռնել տարրը"
 
-#: src/routes/_authenticated/$projectId/$objectId.tsx:43
-#: src/routes/_authenticated/$projectId/index.tsx:60
+#: src/routes/_authenticated/$projectId/$objectId.tsx:41
+#: src/routes/_authenticated/$projectId/$objectId.tsx:65
+#: src/routes/_authenticated/$projectId/index.tsx:58
+#: src/routes/_authenticated/$projectId/index.tsx:94
 msgid "Failed to load project"
 msgstr "Չհաջողվեց բեռնել նախագիծը"
 
-#: src/routes/_authenticated/$projectId/design.tsx:138
+#: src/routes/_authenticated/$projectId/design.tsx:48
 msgid "Failed to load project design"
 msgstr "Չհաջողվեց բեռնել նախագծի ձևավորումը"
 
-#: src/stores/projects-store.ts:31
+#: src/stores/projects-store.ts:17
 msgid "Failed to load projects"
 msgstr "Չհաջողվեց բեռնել նախագծերը"
 
@@ -1373,11 +1369,11 @@ msgid "Failed to post comment"
 msgstr "Չհաջողվեց հրապարակել մեկնաբանությունը"
 
 #: src/features/projects/components/create-project-dialog.tsx:250
-#: src/routes/_authenticated/$projectId/design.tsx:282
+#: src/routes/_authenticated/$projectId/design.tsx:60
 msgid "Failed to read file"
 msgstr "Չհաջողվեց կարդալ ֆայլը"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:485
+#: src/routes/_authenticated/$projectId_.settings.tsx:137
 msgid "Failed to remove access"
 msgstr "Չհաջողվեց հեռացնել մուտքը"
 
@@ -1405,22 +1401,22 @@ msgstr "Նախագծերի որոնումը ձախողվեց"
 msgid "Failed to send verification code"
 msgstr "Չհաջողվեց ուղարկել հաստատման կոդը"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:474
+#: src/routes/_authenticated/$projectId_.settings.tsx:134
 msgid "Failed to set access level"
 msgstr "Չհաջողվեց սահմանել մուտքի մակարդակը"
 
 #: src/features/projects/components/inline-project-search.tsx:69
 #: src/features/projects/components/recommended-projects.tsx:44
-#: src/routes/_authenticated/find.tsx:58
+#: src/routes/_authenticated/find.tsx:46
 msgid "Failed to subscribe"
 msgstr "Չհաջողվեց բաժանորդագրվել"
 
 #: src/features/projects/pages/projects-list-page.tsx:43
-#: src/routes/_authenticated/$projectId/index.tsx:178
+#: src/routes/_authenticated/$projectId/index.tsx:168
 msgid "Failed to unsubscribe"
 msgstr "Չհաջողվեց ապաբաժանորդագրվել"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:499
+#: src/routes/_authenticated/$projectId_.settings.tsx:140
 msgid "Failed to update access level"
 msgstr "Չհաջողվեց թարմացնել մուտքի մակարդակը"
 
@@ -1432,7 +1428,7 @@ msgstr "Չհաջողվեց թարմացնել մեկնաբանությունը"
 msgid "Failed to update field"
 msgstr "Չհաջողվեց թարմացնել դաշտը"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:155
+#: src/routes/_authenticated/$projectId_.settings.tsx:118
 msgid "Failed to update project"
 msgstr "Չհաջողվեց թարմացնել նախագիծը"
 
@@ -1455,11 +1451,11 @@ msgid "Filter..."
 msgstr "Զտել..."
 
 #: src/components/layout/projects-layout.tsx:36
-#: src/routes/_authenticated/find.tsx:92
+#: src/routes/_authenticated/find.tsx:41
 msgid "Find projects"
 msgstr "Գտնել նախագծեր"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:330
+#: src/routes/_authenticated/$projectId_.settings.tsx:114
 msgid "Fingerprint"
 msgstr "Մատնահետք"
 
@@ -1491,7 +1487,7 @@ msgstr "Ընկերներ"
 msgid "From"
 msgstr "Ումից"
 
-#: src/routes/_authenticated/$projectId/design.tsx:323
+#: src/routes/_authenticated/$projectId/design.tsx:57
 msgid "From file"
 msgstr "Ֆայլից"
 
@@ -1575,7 +1571,7 @@ msgstr "Թեժ"
 msgid "ID"
 msgstr "ID"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:297
+#: src/routes/_authenticated/$projectId_.settings.tsx:110
 msgid "Identity"
 msgstr "Ինքնություն"
 
@@ -1588,8 +1584,8 @@ msgstr "Պատկերի դիտիչ՝ {0}"
 msgid "Imperial"
 msgstr "Իմպերիալ"
 
-#: src/routes/_authenticated/$projectId/design.tsx:178
-#: src/routes/_authenticated/$projectId/design.tsx:294
+#: src/routes/_authenticated/$projectId/design.tsx:51
+#: src/routes/_authenticated/$projectId/design.tsx:56
 msgid "Import design"
 msgstr "Ներմուծել ձևավորումը"
 
@@ -1627,7 +1623,7 @@ msgid "Invalid date"
 msgstr "Անվավեր հաստատման կոդ"
 
 #: src/features/projects/components/create-project-dialog.tsx:243
-#: src/routes/_authenticated/$projectId/design.tsx:278
+#: src/routes/_authenticated/$projectId/design.tsx:59
 msgid "Invalid JSON file"
 msgstr "Անվավեր ամսաթիվ"
 
@@ -1685,7 +1681,7 @@ msgid "Light"
 msgstr "Կապել հաշիվը"
 
 #: ../../../lib/web/src/components/options-menu.tsx:193
-#: src/routes/_authenticated/$projectId/index.tsx:170
+#: src/routes/_authenticated/$projectId/index.tsx:160
 msgid "Link"
 msgstr "Հղում"
 
@@ -1723,7 +1719,7 @@ msgstr "Բեռնվում է…"
 
 #: ../../../lib/web/src/components/ui/load-more.tsx:35
 #: ../../../lib/web/src/features/document/document-page.tsx:90
-#: src/routes/_authenticated/$projectId/index.tsx:167
+#: src/routes/_authenticated/$projectId/index.tsx:157
 msgid "Loading..."
 msgstr "Կողպել"
 
@@ -1856,9 +1852,13 @@ msgstr "Իմ նախագիծը"
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:299
 #: src/features/editor/components/edit-dialogs.tsx:255
 #: src/features/projects/components/create-project-dialog.tsx:331
-#: src/routes/_authenticated/$projectId_.settings.tsx:301
+#: src/routes/_authenticated/$projectId_.settings.tsx:111
 msgid "Name"
 msgstr "Անուն"
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:78
+msgid "Name cannot contain < or > characters"
+msgstr ""
 
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:102
 msgid "Name cannot contain angle brackets, backslash, semicolon, quotes or backticks"
@@ -1869,6 +1869,7 @@ msgid "Name is required"
 msgstr "Անունը պարտադիր է"
 
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:100
+#: src/routes/_authenticated/$projectId_.settings.tsx:76
 msgid "Name must be 1000 characters or less"
 msgstr "Անունը պետք է լինի 1000 նիշից ոչ ավելի"
 
@@ -1879,12 +1880,12 @@ msgstr "Ցանցի սխալ"
 
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:481
 #: ../../../lib/web/src/components/ui/sort-selector.tsx:43
-#: src/routes/_authenticated/$projectId/index.tsx:149
-#: src/routes/_authenticated/$projectId/index.tsx:153
+#: src/routes/_authenticated/$projectId/index.tsx:139
+#: src/routes/_authenticated/$projectId/index.tsx:143
 msgid "New"
 msgstr "Նոր"
 
-#: src/routes/_authenticated/$projectId/index.tsx:155
+#: src/routes/_authenticated/$projectId/index.tsx:145
 msgid "New {className}"
 msgstr "Նոր {className}"
 
@@ -1906,7 +1907,7 @@ msgstr "Հաջորդ նկարը"
 msgid "No {parentClassNames} to add to"
 msgstr "Ավելացնելու {parentClassNames} չկան"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:407
+#: src/routes/_authenticated/$projectId_.settings.tsx:55
 msgid "No access"
 msgstr "Մուտք չկա"
 
@@ -1984,7 +1985,7 @@ msgid "No profile"
 msgstr "Պրոֆիլ չկա"
 
 #: src/features/projects/components/inline-project-search.tsx:88
-#: src/routes/_authenticated/find.tsx:94
+#: src/routes/_authenticated/find.tsx:43
 msgid "No projects found"
 msgstr "Նախագծեր չեն գտնվել"
 
@@ -2123,7 +2124,7 @@ msgstr "Բացել գործողությունները"
 msgid "Open class actions"
 msgstr "Բացել դասի գործողությունները"
 
-#: src/routes/_authenticated/$projectId/design.tsx:166
+#: src/routes/_authenticated/$projectId/design.tsx:49
 msgid "Open design actions"
 msgstr "Բացել ձևավորման գործողությունները"
 
@@ -2146,7 +2147,7 @@ msgstr "Բացել նավիգացիոն մենյուն"
 msgid "Open option actions"
 msgstr "Բացել տարբերակի գործողությունները"
 
-#: src/routes/_authenticated/$projectId/index.tsx:148
+#: src/routes/_authenticated/$projectId/index.tsx:138
 msgid "Open page actions"
 msgstr "Բացել էջի գործողությունները"
 
@@ -2217,7 +2218,7 @@ msgstr "Ձևանմուշ (regex)"
 msgid "Pick a date"
 msgstr "Ընտրեք ամսաթիվ"
 
-#: src/routes/_authenticated/$projectId/index.tsx:157
+#: src/routes/_authenticated/$projectId/index.tsx:147
 msgid "Please add one or more classes to the project design."
 msgstr "Խնդրում ենք ավելացնել մեկ կամ ավելի դասեր նախագծի ձևավորմանը։"
 
@@ -2252,9 +2253,17 @@ msgid "Posts and comments"
 msgstr "Գրառումներ և մեկնաբանություններ"
 
 #: src/features/projects/components/create-project-dialog.tsx:353
-#: src/routes/_authenticated/$projectId_.settings.tsx:318
+#: src/routes/_authenticated/$projectId_.settings.tsx:85
 msgid "Prefix"
 msgstr "Նախածանց"
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:91
+msgid "Prefix can only contain letters, numbers, and hyphens"
+msgstr ""
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:93
+msgid "Prefix must be 10 characters or less"
+msgstr ""
 
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:427
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:432
@@ -2274,8 +2283,8 @@ msgstr "Մշակվում է…"
 msgid "Profile"
 msgstr "Պրոֆիլ"
 
-#: src/routes/_authenticated/$projectId/$objectId.tsx:65
-#: src/routes/_authenticated/$projectId/index.tsx:94
+#: src/routes/_authenticated/$projectId/$objectId.tsx:62
+#: src/routes/_authenticated/$projectId/index.tsx:91
 msgid "Project"
 msgstr "Նախագիծ"
 
@@ -2287,11 +2296,11 @@ msgstr "Նախագծի գործողություններ"
 msgid "Project created"
 msgstr "Նախագիծը ստեղծվեց"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:132
+#: src/routes/_authenticated/$projectId_.settings.tsx:128
 msgid "Project deleted"
 msgstr "Նախագիծը ջնջվեց"
 
-#: src/routes/_authenticated/$projectId/index.tsx:171
+#: src/routes/_authenticated/$projectId/index.tsx:161
 msgid "Project link"
 msgstr "Նախագծի հղում"
 
@@ -2299,19 +2308,23 @@ msgstr "Նախագծի հղում"
 msgid "Project members"
 msgstr "Նախագծի անդամներ"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:207
+#: src/routes/_authenticated/$projectId_.settings.tsx:75
+msgid "Project name is required"
+msgstr ""
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:106
 msgid "Project not found"
 msgstr "Նախագիծը չի գտնվել"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:122
+#: src/routes/_authenticated/$projectId_.settings.tsx:105
 msgid "Project settings"
 msgstr "Նախագծի կարգավորումներ"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:207
+#: src/routes/_authenticated/$projectId_.settings.tsx:108
 msgid "Project unavailable"
 msgstr "Նախագիծը հասանելի չէ"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:154
+#: src/routes/_authenticated/$projectId_.settings.tsx:117
 msgid "Project updated"
 msgstr "Նախագիծը թարմացվեց"
 
@@ -2336,7 +2349,7 @@ msgstr "Բարձրացված"
 msgid "Re-link your accounts on this server"
 msgstr "Նորից կապեք ձեր հաշիվները այս սերվերում"
 
-#: src/routes/_authenticated/$projectId/index.tsx:160
+#: src/routes/_authenticated/$projectId/index.tsx:150
 msgid "Re-order columns"
 msgstr "Վերադասավորել սյունակները"
 
@@ -2435,7 +2448,7 @@ msgstr "Հեռացնել տարրը"
 msgid "Remove link"
 msgstr "Հեռացնել հղումը"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:483
+#: src/routes/_authenticated/$projectId_.settings.tsx:135
 msgid "Removing access..."
 msgstr "Մուտքը հեռացվում է..."
 
@@ -2452,15 +2465,15 @@ msgstr "Վերանվանել սյունակը"
 msgid "Rename this board column"
 msgstr "Վերանվանել այս տախտակի սյունակը"
 
-#: src/routes/_authenticated/$projectId/design.tsx:218
+#: src/routes/_authenticated/$projectId/design.tsx:73
 msgid "Replace design"
 msgstr "Փոխարինել ձևավորումը"
 
-#: src/routes/_authenticated/$projectId/design.tsx:202
+#: src/routes/_authenticated/$projectId/design.tsx:62
 msgid "Replace design?"
 msgstr "Փոխարինե՞լ ձևավորումը։"
 
-#: src/routes/_authenticated/$projectId/design.tsx:215
+#: src/routes/_authenticated/$projectId/design.tsx:74
 msgid "Replacing..."
 msgstr "Փոխարինվում է..."
 
@@ -2562,11 +2575,11 @@ msgstr "Շաբաթ"
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:173
 #: ../../../lib/web/src/components/ui/editable-field-row.tsx:122
 #: ../../../lib/web/src/components/ui/secret-field.tsx:79
-#: src/routes/_authenticated/$projectId/index.tsx:163
+#: src/routes/_authenticated/$projectId/index.tsx:153
 msgid "Save"
 msgstr "Պահպանել"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:153
+#: src/routes/_authenticated/$projectId_.settings.tsx:116
 msgid "Saving..."
 msgstr "Պահպանում..."
 
@@ -2577,7 +2590,7 @@ msgstr "Պահպանում..."
 msgid "Search"
 msgstr "Որոնել"
 
-#: src/routes/_authenticated/find.tsx:93
+#: src/routes/_authenticated/find.tsx:42
 msgid "Search by name, ID, fingerprint, or URL..."
 msgstr "Որոնել ըստ անվան, ID-ի, մատնահետքի կամ URL-ի..."
 
@@ -2744,7 +2757,7 @@ msgstr "Ուղարկել հաղորդագրությունը"
 msgid "Serif"
 msgstr "Սերիֆ"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:339
+#: src/routes/_authenticated/$projectId_.settings.tsx:115
 msgid "Server"
 msgstr "Սերվեր"
 
@@ -2766,17 +2779,15 @@ msgstr "Աշխատաշրջանի ժամկետը սպառվել է։ Խնդրու
 msgid "Set origin and destination"
 msgstr "Սահմանել ծագումը և նպատակակետը"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:472
+#: src/routes/_authenticated/$projectId_.settings.tsx:132
 msgid "Setting access..."
 msgstr "Մուտքը սահմանվում է..."
 
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx:126
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx:132
 #: ../../../lib/web/src/components/options-menu.tsx:199
-#: src/routes/_authenticated/$projectId_.settings.tsx:76
-#: src/routes/_authenticated/$projectId_.settings.tsx:167
-#: src/routes/_authenticated/$projectId_.settings.tsx:190
-#: src/routes/_authenticated/$projectId/index.tsx:192
+#: src/routes/_authenticated/$projectId_.settings.tsx:99
+#: src/routes/_authenticated/$projectId/index.tsx:182
 msgid "Settings"
 msgstr "Կարգավորումներ"
 
@@ -2890,7 +2901,7 @@ msgid "Subscribe"
 msgstr "Բաժանորդագրվել"
 
 #: src/features/projects/components/inline-project-search.tsx:68
-#: src/routes/_authenticated/find.tsx:57
+#: src/routes/_authenticated/find.tsx:45
 msgid "Subscribed"
 msgstr "Բաժանորդագրված"
 
@@ -2901,7 +2912,7 @@ msgstr "Բաժանորդագրված է {0}-ին"
 
 #: src/features/projects/components/inline-project-search.tsx:67
 #: src/features/projects/components/recommended-projects.tsx:42
-#: src/routes/_authenticated/find.tsx:56
+#: src/routes/_authenticated/find.tsx:44
 msgid "Subscribing..."
 msgstr "Բաժանորդագրվում է..."
 
@@ -3001,11 +3012,11 @@ msgstr "Այս միաձուլման հարցումը սևագիր է և չի կ�
 msgid "This page has not been created yet."
 msgstr "Այս էջը դեռ ստեղծված չէ։"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:210
+#: src/routes/_authenticated/$projectId_.settings.tsx:109
 msgid "This project could not be loaded right now."
 msgstr "Այս նախագիծը հնարավոր չէ բեռնել հենց հիմա:"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:210
+#: src/routes/_authenticated/$projectId_.settings.tsx:107
 msgid "This project may have been deleted or you don't have access to it."
 msgstr "Այս նախագիծը կարող է ջնջվել, կամ դուք մուտք չունեք դրան:"
 
@@ -3013,17 +3024,17 @@ msgstr "Այս նախագիծը կարող է ջնջվել, կամ դուք մո
 msgid "This will merge \"{source}\" into \"{target}\". This action cannot be undone."
 msgstr "Սա կմիաձուլի \"{source}\"-ը \"{target}\"-ի մեջ: Այս գործողությունը հնարավոր չէ չեղարկել:"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:367
+#: src/routes/_authenticated/$projectId_.settings.tsx:125
 msgid "This will permanently delete \"{projectName}\" and all its objects, comments, and attachments. This action cannot be undone."
 msgstr "Սա մշտապես կջնջի \"{projectName}\"-ը և նրա բոլոր օբյեկտները, մեկնաբանությունները և կցորդները: Այս գործողությունը հնարավոր չէ չեղարկել:"
 
 #. placeholder {0}: project.project.name
-#: src/routes/_authenticated/$projectId/index.tsx:175
+#: src/routes/_authenticated/$projectId/index.tsx:165
 msgid "This will remove \"{0}\" from your sidebar and stop updates for this project."
 msgstr "Սա կհեռացնի \"{0}\"-ը ձեր կողագոտուց և կդադարեցնի թարմացումներն այս նախագծի համար:"
 
-#. placeholder {0}: pendingImport?.label
-#: src/routes/_authenticated/$projectId/design.tsx:204
+#. placeholder {0}: String(label)
+#: src/routes/_authenticated/$projectId/design.tsx:66
 msgid "This will replace the current design with <0>{0}</0>. All existing classes, fields, options, and views will be deleted. Existing objects will not be deleted but may no longer appear in views."
 msgstr "Սա կփոխարինի ընթացիկ ձևավորումը <0>{0}</0>-ով: Բոլոր գոյություն ունեցող դասերը, դաշտերը, տարբերակները և տեսարանները կջնջվեն: Գոյություն ունեցող օբյեկտները չեն ջնջվի, բայց կարող են այլևս չհայտնվել տեսարաններում:"
 
@@ -3172,21 +3183,21 @@ msgstr "Անհայտ"
 
 #: ../../../lib/web/src/components/options-menu.tsx:214
 #: src/features/projects/pages/projects-list-page.tsx:39
-#: src/routes/_authenticated/$projectId/index.tsx:173
+#: src/routes/_authenticated/$projectId/index.tsx:163
 msgid "Unsubscribe"
 msgstr "Բաժանորդագրությունից հրաժարվել"
 
-#: src/routes/_authenticated/$projectId/index.tsx:174
+#: src/routes/_authenticated/$projectId/index.tsx:164
 msgid "Unsubscribe from project?"
 msgstr "Հրաժարվե՞լ նախագծի բաժանորդագրությունից:"
 
 #: src/features/projects/pages/projects-list-page.tsx:42
-#: src/routes/_authenticated/$projectId/index.tsx:177
+#: src/routes/_authenticated/$projectId/index.tsx:167
 msgid "Unsubscribed"
 msgstr "Բաժանորդագրությունից հրաժարված"
 
 #: src/features/projects/pages/projects-list-page.tsx:41
-#: src/routes/_authenticated/$projectId/index.tsx:176
+#: src/routes/_authenticated/$projectId/index.tsx:166
 msgid "Unsubscribing..."
 msgstr "Հրաժարվում է բաժանորդագրությունից..."
 
@@ -3208,7 +3219,7 @@ msgstr "Չստուգված"
 msgid "Updated"
 msgstr "Թարմացված"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:497
+#: src/routes/_authenticated/$projectId_.settings.tsx:138
 msgid "Updating access..."
 msgstr "Մուտքը թարմացվում է..."
 
@@ -3218,7 +3229,7 @@ msgid "Upload"
 msgstr "Վերբեռնել"
 
 #: src/features/projects/components/create-project-dialog.tsx:402
-#: src/routes/_authenticated/$projectId/design.tsx:337
+#: src/routes/_authenticated/$projectId/design.tsx:58
 msgid "Upload .json file"
 msgstr "Վերբեռնել .json ֆայլ"
 
@@ -3294,11 +3305,11 @@ msgstr "Դիտել և խմբագրել տարրի մանրամասները"
 msgid "View controls"
 msgstr "Դիտել կառավարակետերը"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:406
+#: src/routes/_authenticated/$projectId_.settings.tsx:54
 msgid "View only"
 msgstr "Միայն դիտել"
 
-#: src/routes/_authenticated/$projectId/index.tsx:158
+#: src/routes/_authenticated/$projectId/index.tsx:148
 msgid "View options"
 msgstr "Դիտել տարբերակները"
 
@@ -3349,7 +3360,7 @@ msgstr "Չորեքշաբթի"
 msgid "You do not have access to this section."
 msgstr "Այս բաժինը ձեզ հասանելի չէ։"
 
-#: src/routes/_authenticated/$projectId/index.tsx:82
+#: src/routes/_authenticated/$projectId/index.tsx:80
 msgid "You don't have access to this project."
 msgstr "Դու այս նախագծին հասանելիություն չունես։"
 

@@ -407,9 +407,10 @@ def database_upgrade(version):
 		# schema with no attachments table. The step is idempotent, so a
 		# healthy database re-running it changes nothing.
 		# Attachments live in this database, owned by the shared library:
-		# create the table and copy any rows still held by the transition
-		# bridge, aborting without advancing if the bridge is unavailable.
-		# Both calls are idempotent, so the step runs at either version.
+		# create the table and copy any rows core's store still held - through
+		# the transition bridge while a core still has one, else from the
+		# export file core's cleanup wrote before dropping it. Both calls are
+		# idempotent, so the step runs at either version.
 		attachment_schema_create()
 		attachment_migrate()
 
@@ -1321,7 +1322,7 @@ def action_design_import(a):
 	return {"data": {"success": True}}
 
 # Collect an object's (or comment's) attachments with base64-encoded file
-# bytes for a data export. mochi.attachment.data fetches remote bytes over
+# bytes for a data export. attachment_data pulls remote bytes over
 # P2P for subscribed projects. An attachment whose bytes cannot be read
 # (deleted file, unreachable owner) is skipped rather than failing the
 # whole export.
@@ -3959,7 +3960,7 @@ def action_comment_delete(a):
 # ============================================================================
 
 # HTTP handlers serving a project's attachments (and thumbnails). Auth-only
-# routes. Core's a.write.attachment serves the bytes with no access check of
+# routes. The library's attachment_serve performs no access check of
 # its own, so this handler is the gate: require_project enforces project view
 # access (for projects we own), and the attachment must belong to an object or
 # comment in THIS project, so one project's attachment can't be fetched via

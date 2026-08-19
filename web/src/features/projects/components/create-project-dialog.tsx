@@ -269,10 +269,12 @@ export function CreateProjectDialog({
   }, [importData]);
 
   const importClasses = useMemo(() => {
-    if (!importData || !Array.isArray((importData as any).objects)) return [];
+    const objects = (importData as Record<string, unknown> | null)?.objects;
+    if (!Array.isArray(objects)) return [];
     const classes = new Set<string>();
-    (importData as any).objects.forEach((obj: any) => {
-      if (obj.class) classes.add(obj.class);
+    objects.forEach((obj) => {
+      const cls = (obj as Record<string, unknown> | null)?.class;
+      if (typeof cls === "string" && cls) classes.add(cls);
     });
     return Array.from(classes);
   }, [importData]);

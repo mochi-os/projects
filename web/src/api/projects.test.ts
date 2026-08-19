@@ -4,11 +4,11 @@
 // Mochi Application Interface Exception - see license.txt and license-exception.md.
 
 /* eslint-disable lingui/no-unlocalized-strings */
-// The shared object/class/field client is asserted once in @mochi/web
-// (entity-api.test.ts, 56 tests over the 46 routes both apps call). What is
-// left here is what only this app has, templates and the merge-request
-// surface, plus this app's own wiring: its request module, its endpoint table,
-// and the resource key its unsubscribe sends.
+// The shared object/class/field client is asserted once in @mochi/web, in
+// src/lib/entity-api.test.ts. What is left here is what only this app has,
+// templates and the merge-request surface, plus this app's own wiring: its
+// request module, its endpoint table, and the resource key its unsubscribe
+// sends.
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import projectsApi from "./projects";
 import { projectsRequest } from "./request";

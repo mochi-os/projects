@@ -22,11 +22,11 @@ msgstr "請檢查您的網際網路連線後再試一次。"
 msgid " or "
 msgstr "或"
 
-#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:229
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:190
 msgid "(edited)"
 msgstr "(已編輯)"
 
-#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:213
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:174
 msgid "(expand)"
 msgstr "(展開)"
 
@@ -146,11 +146,11 @@ msgstr "+{0} 個領先"
 msgid "+{0} nested"
 msgstr "+{0} 個巢狀"
 
-#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:210
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:171
 msgid "+{totalDescendants} more replies"
 msgstr "+{totalDescendants} 則回覆"
 
-#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:209
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:170
 msgid "1 reply"
 msgstr "1 則回覆"
 
@@ -229,7 +229,7 @@ msgstr "動態"
 msgid "Add"
 msgstr "新增"
 
-#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:365
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:312
 msgid "Add a comment..."
 msgstr "新增留言..."
 
@@ -348,7 +348,7 @@ msgstr "所有專案"
 msgid "Allow anyone to search for {0}"
 msgstr "允許任何人搜尋{0}"
 
-#: src/features/projects/components/create-project-dialog.tsx:376
+#: src/features/projects/components/create-project-dialog.tsx:378
 msgid "Allow anyone to search for project"
 msgstr "允許任何人搜尋專案"
 
@@ -398,7 +398,7 @@ msgstr "您確定要刪除「{title}」嗎?此操作無法復原。"
 msgid "Are you sure you want to delete the \"{name}\" column? This cannot be undone."
 msgstr "您確定要刪除「{name}」欄位嗎?此操作無法復原。"
 
-#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:491
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:352
 msgid "Are you sure you want to delete this comment? This will also delete all replies."
 msgstr "您確定要刪除此留言嗎?這也會刪除所有回覆。"
 
@@ -422,13 +422,11 @@ msgstr "升序"
 msgid "Ascending"
 msgstr "升冪"
 
-#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:408
-#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:413
+#: ../../../lib/web/src/components/comment-composer.tsx:442
 msgid "Attach comment files"
 msgstr "附加留言檔案"
 
-#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:445
-#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:450
+#: ../../../lib/web/src/components/comment-composer.tsx:441
 msgid "Attach reply files"
 msgstr "附加回覆檔案"
 
@@ -454,7 +452,7 @@ msgid "Avatar for {name}"
 msgstr "{name} 的頭像"
 
 #: ../../../lib/web/src/components/place-picker.tsx:156
-#: src/features/projects/components/create-project-dialog.tsx:532
+#: src/features/projects/components/create-project-dialog.tsx:534
 msgid "Back"
 msgstr "返回"
 
@@ -523,7 +521,7 @@ msgstr "可作為子項"
 
 #: ../../../lib/web/src/components/attachment-composer.tsx:461
 #: ../../../lib/web/src/components/entity/entity-board-column.tsx:628
-#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:250
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:211
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:169
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:186
 #: ../../../lib/web/src/components/responsive-confirm-dialog.tsx:67
@@ -535,19 +533,17 @@ msgstr "可作為子項"
 #: ../../../lib/web/src/features/access/access-list.tsx:268
 #: ../../../lib/web/src/features/accounts/account-add.tsx:201
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:91
-#: src/features/projects/components/create-project-dialog.tsx:443
+#: src/features/projects/components/create-project-dialog.tsx:445
 #: src/routes/_authenticated/$projectId/design.tsx:61
 #: src/routes/_authenticated/$projectId/index.tsx:152
 msgid "Cancel"
 msgstr "取消"
 
-#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:425
-#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:430
+#: ../../../lib/web/src/components/comment-composer.tsx:442
 msgid "Cancel comment"
 msgstr "取消留言"
 
-#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:461
-#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:466
+#: ../../../lib/web/src/components/comment-composer.tsx:441
 msgid "Cancel reply"
 msgstr "取消回覆"
 
@@ -589,7 +585,7 @@ msgstr "檢查清單"
 msgid "Choose a game from the sidebar or start a new one."
 msgstr "從側邊欄選擇遊戲或開始新的遊戲。"
 
-#: src/features/projects/components/create-project-dialog.tsx:323
+#: src/features/projects/components/create-project-dialog.tsx:325
 msgid "Choose a template"
 msgstr "選擇範本"
 
@@ -652,8 +648,8 @@ msgstr "清除選取 (Escape)"
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:506
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:511
 #: ../../../lib/web/src/components/ui/dialog.tsx:78
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:402
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:405
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:488
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:491
 #: ../../../lib/web/src/components/ui/sheet.tsx:79
 msgid "Close"
 msgstr "關閉"
@@ -687,8 +683,8 @@ msgstr "關閉搜尋"
 
 #: ../../../lib/web/src/components/comment-tree-layout.tsx:101
 #: ../../../lib/web/src/components/comment-tree-layout.tsx:110
-#: ../../../lib/web/src/components/tree-row.tsx:347
-#: ../../../lib/web/src/components/tree-row.tsx:361
+#: ../../../lib/web/src/components/tree-row.tsx:338
+#: ../../../lib/web/src/components/tree-row.tsx:352
 msgid "Collapse"
 msgstr "收合"
 
@@ -721,14 +717,19 @@ msgstr "敬請期待!"
 msgid "Command Palette"
 msgstr "命令選擇區"
 
-#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:331
-#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:338
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:292
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:299
 msgid "Comment actions"
 msgstr "留言操作"
 
 #: src/routes/_authenticated/$projectId_.settings.tsx:53
 msgid "Comment and view"
 msgstr "留言與檢視"
+
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:451
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:463
+msgid "Comments"
+msgstr "留言"
 
 #. placeholder {0}: data.comment_count || 0
 #: src/features/objects/components/object-detail-panel.tsx:377
@@ -825,7 +826,7 @@ msgstr "無法使用該帳戶進行驗證。請重試。"
 #: ../../../lib/web/src/components/entity/entity-board-column.tsx:703
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:496
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:665
-#: ../../../lib/web/src/components/entity/entity-tree-view.tsx:679
+#: ../../../lib/web/src/components/entity/entity-tree-view.tsx:672
 msgid "Create"
 msgstr "建立"
 
@@ -838,7 +839,7 @@ msgstr "建立{0}"
 msgid "Create a new item in this project"
 msgstr "在此專案中建立新項目"
 
-#: src/features/projects/components/create-project-dialog.tsx:325
+#: src/features/projects/components/create-project-dialog.tsx:327
 #: src/features/projects/pages/projects-list-page.tsx:37
 msgid "Create a new project"
 msgstr "建立新專案"
@@ -849,10 +850,10 @@ msgid "Create new item"
 msgstr "建立新項目"
 
 #: src/components/layout/projects-layout.tsx:37
-#: src/features/projects/components/create-project-dialog.tsx:313
-#: src/features/projects/components/create-project-dialog.tsx:323
-#: src/features/projects/components/create-project-dialog.tsx:447
-#: src/features/projects/components/create-project-dialog.tsx:535
+#: src/features/projects/components/create-project-dialog.tsx:315
+#: src/features/projects/components/create-project-dialog.tsx:325
+#: src/features/projects/components/create-project-dialog.tsx:449
+#: src/features/projects/components/create-project-dialog.tsx:537
 msgid "Create project"
 msgstr "建立專案"
 
@@ -871,8 +872,8 @@ msgstr "正在建立專案..."
 
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:665
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:258
-#: src/features/projects/components/create-project-dialog.tsx:447
-#: src/features/projects/components/create-project-dialog.tsx:535
+#: src/features/projects/components/create-project-dialog.tsx:449
+#: src/features/projects/components/create-project-dialog.tsx:537
 msgid "Creating..."
 msgstr "建立中..."
 
@@ -929,9 +930,9 @@ msgstr "預設排序"
 
 #: ../../../lib/web/src/components/entity/entity-board-column.tsx:583
 #: ../../../lib/web/src/components/entity/entity-board-column.tsx:644
-#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:319
-#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:362
-#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:492
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:280
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:323
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:353
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:198
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:203
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:252
@@ -954,7 +955,7 @@ msgstr "刪除類別"
 msgid "Delete column"
 msgstr "刪除欄位"
 
-#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:490
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:351
 msgid "Delete comment"
 msgstr "刪除留言"
 
@@ -1069,11 +1070,11 @@ msgstr "方向"
 msgid "Directory"
 msgstr "目錄"
 
-#: ../../../lib/web/src/components/comment-composer.tsx:313
+#: ../../../lib/web/src/components/comment-composer.tsx:322
 msgid "Discard"
 msgstr "捨棄"
 
-#: ../../../lib/web/src/components/comment-composer.tsx:311
+#: ../../../lib/web/src/components/comment-composer.tsx:320
 msgid "Discard draft?"
 msgstr "捨棄草稿?"
 
@@ -1107,8 +1108,8 @@ msgid "Double click on a column to add content"
 msgstr "雙擊欄位以新增內容"
 
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:239
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:386
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:396
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:472
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:482
 msgid "Download"
 msgstr "下載"
 
@@ -1116,7 +1117,7 @@ msgstr "下載"
 msgid "Download backup first"
 msgstr "請先下載備份"
 
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:69
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:111
 msgid "Download failed"
 msgstr "下載失敗"
 
@@ -1142,8 +1143,8 @@ msgstr "重複"
 msgid "Dyslexia-friendly"
 msgstr "閱讀障礙友善"
 
-#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:308
-#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:353
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:269
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:314
 msgid "Edit"
 msgstr "編輯"
 
@@ -1211,8 +1212,8 @@ msgstr "錯誤"
 
 #: ../../../lib/web/src/components/comment-tree-layout.tsx:101
 #: ../../../lib/web/src/components/comment-tree-layout.tsx:110
-#: ../../../lib/web/src/components/tree-row.tsx:347
-#: ../../../lib/web/src/components/tree-row.tsx:361
+#: ../../../lib/web/src/components/tree-row.tsx:338
+#: ../../../lib/web/src/components/tree-row.tsx:352
 msgid "Expand"
 msgstr "展開"
 
@@ -1283,7 +1284,7 @@ msgstr "建立檢視失敗"
 msgid "Failed to delete attachment"
 msgstr "刪除附件失敗"
 
-#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:212
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:191
 msgid "Failed to delete comment"
 msgstr "刪除留言失敗"
 
@@ -1328,7 +1329,7 @@ msgstr "載入失敗"
 msgid "Failed to load history"
 msgstr "載入記錄失敗"
 
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:297
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:358
 msgid "Failed to load image"
 msgstr "無法載入圖片"
 
@@ -1356,7 +1357,7 @@ msgstr "載入專案失敗"
 msgid "Failed to load recommended projects"
 msgstr "載入推薦專案失敗"
 
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:297
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:358
 msgid "Failed to load video"
 msgstr "無法載入影片"
 
@@ -1364,7 +1365,7 @@ msgstr "無法載入影片"
 msgid "Failed to merge"
 msgstr "合併失敗"
 
-#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:175
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:154
 msgid "Failed to post comment"
 msgstr "張貼留言失敗"
 
@@ -1420,7 +1421,7 @@ msgstr "取消訂閱失敗"
 msgid "Failed to update access level"
 msgstr "更新存取層級失敗"
 
-#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:195
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:174
 msgid "Failed to update comment"
 msgstr "更新留言失敗"
 
@@ -1576,7 +1577,7 @@ msgid "Identity"
 msgstr "身分"
 
 #. placeholder {0}: currentMedia.name
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:281
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:336
 msgid "Image viewer: {0}"
 msgstr "圖片檢視器：{0}"
 
@@ -1589,7 +1590,7 @@ msgstr "英制"
 msgid "Import design"
 msgstr "匯入設計"
 
-#: src/features/projects/components/create-project-dialog.tsx:386
+#: src/features/projects/components/create-project-dialog.tsx:388
 msgid "Import from backup (optional)"
 msgstr "從備份匯入（選用）"
 
@@ -1713,7 +1714,7 @@ msgstr "載入項目中"
 msgid "Loading item details"
 msgstr "載入項目詳情中"
 
-#: src/features/projects/components/create-project-dialog.tsx:468
+#: src/features/projects/components/create-project-dialog.tsx:470
 msgid "Loading templates..."
 msgstr "載入範本中..."
 
@@ -1841,7 +1842,7 @@ msgstr "星期一"
 msgid "More options"
 msgstr "更多選項"
 
-#: src/features/projects/components/create-project-dialog.tsx:341
+#: src/features/projects/components/create-project-dialog.tsx:343
 msgid "My project"
 msgstr "我的專案"
 
@@ -1851,7 +1852,7 @@ msgstr "我的專案"
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:128
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:299
 #: src/features/editor/components/edit-dialogs.tsx:255
-#: src/features/projects/components/create-project-dialog.tsx:331
+#: src/features/projects/components/create-project-dialog.tsx:333
 #: src/routes/_authenticated/$projectId_.settings.tsx:111
 msgid "Name"
 msgstr "名稱"
@@ -1894,12 +1895,12 @@ msgstr "新 {className}"
 msgid "New game"
 msgstr "新遊戲"
 
-#: src/features/projects/components/create-project-dialog.tsx:449
+#: src/features/projects/components/create-project-dialog.tsx:451
 msgid "Next"
 msgstr "下一個"
 
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:442
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:447
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:549
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:554
 msgid "Next image"
 msgstr "下一張圖片"
 
@@ -1935,7 +1936,7 @@ msgstr "無變更可顯示"
 msgid "No changes were found for the selected comparison."
 msgstr "找不到所選比較的變更。"
 
-#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:460
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:322
 msgid "No comments yet"
 msgstr "尚無留言"
 
@@ -2068,7 +2069,7 @@ msgstr "找不到"
 msgid "Not set"
 msgstr "未設定"
 
-#: ../../../lib/web/src/components/entity/entity-tree-view.tsx:675
+#: ../../../lib/web/src/components/entity/entity-tree-view.tsx:668
 msgid "Nothing found"
 msgstr "找不到任何項目"
 
@@ -2222,7 +2223,7 @@ msgstr "選擇日期"
 msgid "Please add one or more classes to the project design."
 msgstr "請新增一個或多個類別至專案設計。"
 
-#: ../../../lib/web/src/components/comment-composer.tsx:84
+#: ../../../lib/web/src/components/comment-composer.tsx:93
 #: ../../../lib/web/src/features/errors/general-error.tsx:54
 #: ../../../lib/web/src/lib/api-response-interceptors.ts:323
 msgid "Please check your internet connection and try again."
@@ -2252,7 +2253,7 @@ msgstr "貼文"
 msgid "Posts and comments"
 msgstr "貼文和留言"
 
-#: src/features/projects/components/create-project-dialog.tsx:353
+#: src/features/projects/components/create-project-dialog.tsx:355
 #: src/routes/_authenticated/$projectId_.settings.tsx:85
 msgid "Prefix"
 msgstr "前綴"
@@ -2265,8 +2266,8 @@ msgstr ""
 msgid "Prefix must be 10 characters or less"
 msgstr ""
 
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:427
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:432
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:533
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:538
 msgid "Previous image"
 msgstr "上一張圖片"
 
@@ -2404,7 +2405,7 @@ msgstr "24 小時內相對,否則絕對"
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:190
 #: ../../../lib/web/src/features/access/access-list.tsx:270
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:180
-#: src/features/projects/components/create-project-dialog.tsx:429
+#: src/features/projects/components/create-project-dialog.tsx:431
 msgid "Remove"
 msgstr "移除"
 
@@ -2477,13 +2478,13 @@ msgstr "取代設計?"
 msgid "Replacing..."
 msgstr "取代中..."
 
-#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:295
-#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:343
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:256
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:304
 msgid "Reply"
 msgstr "回覆"
 
 #. placeholder {0}: comment.name || comment.author
-#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:386
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:343
 msgid "Reply to {0}..."
 msgstr "回覆 {0}..."
 
@@ -2571,7 +2572,7 @@ msgid "Saturday"
 msgstr "星期六"
 
 #: ../../../lib/web/src/components/attachment-composer.tsx:465
-#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:270
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:231
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:173
 #: ../../../lib/web/src/components/ui/editable-field-row.tsx:122
 #: ../../../lib/web/src/components/ui/secret-field.tsx:79
@@ -2864,7 +2865,7 @@ msgstr "分割"
 msgid "Squash and merge"
 msgstr "壓縮並合併"
 
-#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:461
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:323
 msgid "Start the discussion by adding the first comment."
 msgstr "新增第一則留言以開啟討論。"
 
@@ -2881,13 +2882,11 @@ msgstr "停止關注"
 msgid "Subject"
 msgstr "主旨"
 
-#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:441
-#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:450
+#: ../../../lib/web/src/components/comment-composer.tsx:442
 msgid "Submit comment"
 msgstr "送出留言"
 
-#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:476
-#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:481
+#: ../../../lib/web/src/components/comment-composer.tsx:441
 msgid "Submit reply"
 msgstr "送出回覆"
 
@@ -3228,7 +3227,7 @@ msgstr "正在更新存取權..."
 msgid "Upload"
 msgstr "上傳"
 
-#: src/features/projects/components/create-project-dialog.tsx:402
+#: src/features/projects/components/create-project-dialog.tsx:404
 #: src/routes/_authenticated/$projectId/design.tsx:58
 msgid "Upload .json file"
 msgstr "上傳 .json 檔案"
@@ -3243,7 +3242,7 @@ msgstr "使用您的通行金鑰"
 
 #. placeholder {0}: prefix || "project"
 #. placeholder {1}: prefix || "project"
-#: src/features/projects/components/create-project-dialog.tsx:370
+#: src/features/projects/components/create-project-dialog.tsx:372
 msgid "Used for readable IDs like {0}-1, {1}-2"
 msgstr "用於可讀 IDs,如 {0}-1、{1}-2"
 
@@ -3275,12 +3274,12 @@ msgstr "驗證"
 msgid "Verify email address"
 msgstr "驗證電子郵件地址"
 
-#: ../../../lib/web/src/components/attachment-gallery.tsx:85
+#: ../../../lib/web/src/components/attachment-gallery.tsx:94
 msgid "Video thumbnail"
 msgstr "影片縮圖"
 
 #. placeholder {0}: currentMedia.name
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:280
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:335
 msgid "Video viewer: {0}"
 msgstr "影片檢視器：{0}"
 
@@ -3331,7 +3330,7 @@ msgstr "已關注"
 msgid "Watched only"
 msgstr "僅關注的"
 
-#: src/features/projects/components/create-project-dialog.tsx:463
+#: src/features/projects/components/create-project-dialog.tsx:465
 msgid "We have auto-selected the best matching template."
 msgstr "我們已自動選擇最符合的範本。"
 
@@ -3380,18 +3379,18 @@ msgstr "全部已讀！"
 msgid "Your account was moved here from {source}. Until you delete it there, messages and notifications may reach both servers, some of your content keeps being served from the old server, and followers may take a few minutes to find you here."
 msgstr "您的帳號已從 {source} 遷移至此。在您於該處刪除帳號之前，訊息和通知可能會同時到達兩個伺服器，部分內容仍由舊伺服器提供，追蹤者可能需要幾分鐘才能在此找到您。"
 
-#: ../../../lib/web/src/components/comment-composer.tsx:304
+#: ../../../lib/web/src/components/comment-composer.tsx:313
 msgid "Your attachments will be lost."
 msgstr "您的附件將遺失。"
 
-#: src/features/projects/components/create-project-dialog.tsx:459
+#: src/features/projects/components/create-project-dialog.tsx:461
 msgid "Your backup contains objects of type:"
 msgstr "您的備份包含以下類型的物件："
 
-#: ../../../lib/web/src/components/comment-composer.tsx:302
+#: ../../../lib/web/src/components/comment-composer.tsx:311
 msgid "Your text and attachments will be lost."
 msgstr "您的文字和附件將遺失。"
 
-#: ../../../lib/web/src/components/comment-composer.tsx:305
+#: ../../../lib/web/src/components/comment-composer.tsx:314
 msgid "Your text will be lost."
 msgstr "你的內容將會遺失。"

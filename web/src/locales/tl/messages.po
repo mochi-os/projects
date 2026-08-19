@@ -22,11 +22,11 @@ msgstr "Pakitingnan ang iyong koneksyon sa internet at subukang muli."
 msgid " or "
 msgstr " o "
 
-#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:229
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:190
 msgid "(edited)"
 msgstr "(in-edit)"
 
-#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:213
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:174
 msgid "(expand)"
 msgstr "(palawakin)"
 
@@ -146,11 +146,11 @@ msgstr "+{0} nauuna"
 msgid "+{0} nested"
 msgstr "+{0} naka-nest"
 
-#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:210
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:171
 msgid "+{totalDescendants} more replies"
 msgstr "+{totalDescendants} pang sagot"
 
-#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:209
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:170
 msgid "1 reply"
 msgstr "1 sagot"
 
@@ -229,7 +229,7 @@ msgstr "Aktibidad"
 msgid "Add"
 msgstr "Idagdag"
 
-#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:365
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:312
 msgid "Add a comment..."
 msgstr "Magdagdag ng komento..."
 
@@ -348,7 +348,7 @@ msgstr "Lahat ng project"
 msgid "Allow anyone to search for {0}"
 msgstr "Payagan ang sinuman na maghanap ng {0}"
 
-#: src/features/projects/components/create-project-dialog.tsx:376
+#: src/features/projects/components/create-project-dialog.tsx:378
 msgid "Allow anyone to search for project"
 msgstr "Payagan ang sinuman na maghanap ng project"
 
@@ -398,7 +398,7 @@ msgstr "Sigurado ka bang gusto mong i-delete ang \"{title}\"? Hindi na ito maiba
 msgid "Are you sure you want to delete the \"{name}\" column? This cannot be undone."
 msgstr "Sigurado ka bang gusto mong i-delete ang column na \"{name}\"? Hindi na ito maibabalik."
 
-#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:491
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:352
 msgid "Are you sure you want to delete this comment? This will also delete all replies."
 msgstr "Sigurado ka bang gusto mong i-delete ang komentong ito? Made-delete din lahat ng sagot."
 
@@ -422,13 +422,11 @@ msgstr "Asc"
 msgid "Ascending"
 msgstr "Pataas"
 
-#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:408
-#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:413
+#: ../../../lib/web/src/components/comment-composer.tsx:442
 msgid "Attach comment files"
 msgstr "I-attach ang mga file ng komento"
 
-#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:445
-#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:450
+#: ../../../lib/web/src/components/comment-composer.tsx:441
 msgid "Attach reply files"
 msgstr "I-attach ang mga file ng sagot"
 
@@ -454,7 +452,7 @@ msgid "Avatar for {name}"
 msgstr "Avatar para kay {name}"
 
 #: ../../../lib/web/src/components/place-picker.tsx:156
-#: src/features/projects/components/create-project-dialog.tsx:532
+#: src/features/projects/components/create-project-dialog.tsx:534
 msgid "Back"
 msgstr "Bumalik"
 
@@ -523,7 +521,7 @@ msgstr "Maaaring maging child ng"
 
 #: ../../../lib/web/src/components/attachment-composer.tsx:461
 #: ../../../lib/web/src/components/entity/entity-board-column.tsx:628
-#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:250
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:211
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:169
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:186
 #: ../../../lib/web/src/components/responsive-confirm-dialog.tsx:67
@@ -535,19 +533,17 @@ msgstr "Maaaring maging child ng"
 #: ../../../lib/web/src/features/access/access-list.tsx:268
 #: ../../../lib/web/src/features/accounts/account-add.tsx:201
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:91
-#: src/features/projects/components/create-project-dialog.tsx:443
+#: src/features/projects/components/create-project-dialog.tsx:445
 #: src/routes/_authenticated/$projectId/design.tsx:61
 #: src/routes/_authenticated/$projectId/index.tsx:152
 msgid "Cancel"
 msgstr "Kanselahin"
 
-#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:425
-#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:430
+#: ../../../lib/web/src/components/comment-composer.tsx:442
 msgid "Cancel comment"
 msgstr "Kanselahin ang komento"
 
-#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:461
-#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:466
+#: ../../../lib/web/src/components/comment-composer.tsx:441
 msgid "Cancel reply"
 msgstr "Kanselahin ang sagot"
 
@@ -589,7 +585,7 @@ msgstr "Checklist"
 msgid "Choose a game from the sidebar or start a new one."
 msgstr "Pumili ng laro mula sa sidebar o magsimula ng bago."
 
-#: src/features/projects/components/create-project-dialog.tsx:323
+#: src/features/projects/components/create-project-dialog.tsx:325
 msgid "Choose a template"
 msgstr "Pumili ng template"
 
@@ -652,8 +648,8 @@ msgstr "Burahin ang piniling (Escape)"
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:506
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:511
 #: ../../../lib/web/src/components/ui/dialog.tsx:78
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:402
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:405
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:488
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:491
 #: ../../../lib/web/src/components/ui/sheet.tsx:79
 msgid "Close"
 msgstr "Isara"
@@ -687,8 +683,8 @@ msgstr "Isara ang paghahanap"
 
 #: ../../../lib/web/src/components/comment-tree-layout.tsx:101
 #: ../../../lib/web/src/components/comment-tree-layout.tsx:110
-#: ../../../lib/web/src/components/tree-row.tsx:347
-#: ../../../lib/web/src/components/tree-row.tsx:361
+#: ../../../lib/web/src/components/tree-row.tsx:338
+#: ../../../lib/web/src/components/tree-row.tsx:352
 msgid "Collapse"
 msgstr "I-collapse"
 
@@ -721,14 +717,19 @@ msgstr "Malapit nang dumating!"
 msgid "Command Palette"
 msgstr "Command palette"
 
-#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:331
-#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:338
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:292
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:299
 msgid "Comment actions"
 msgstr "Mga aksyon sa komento"
 
 #: src/routes/_authenticated/$projectId_.settings.tsx:53
 msgid "Comment and view"
 msgstr "Magkomento at tingnan"
+
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:451
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:463
+msgid "Comments"
+msgstr "Mga komento"
 
 #. placeholder {0}: data.comment_count || 0
 #: src/features/objects/components/object-detail-panel.tsx:377
@@ -825,7 +826,7 @@ msgstr "Hindi ma-verify gamit ang account na iyon. Pakisubukang muli."
 #: ../../../lib/web/src/components/entity/entity-board-column.tsx:703
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:496
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:665
-#: ../../../lib/web/src/components/entity/entity-tree-view.tsx:679
+#: ../../../lib/web/src/components/entity/entity-tree-view.tsx:672
 msgid "Create"
 msgstr "Gumawa"
 
@@ -838,7 +839,7 @@ msgstr "Gumawa ng {0}"
 msgid "Create a new item in this project"
 msgstr "Gumawa ng bagong item sa project na ito"
 
-#: src/features/projects/components/create-project-dialog.tsx:325
+#: src/features/projects/components/create-project-dialog.tsx:327
 #: src/features/projects/pages/projects-list-page.tsx:37
 msgid "Create a new project"
 msgstr "Gumawa ng bagong project"
@@ -849,10 +850,10 @@ msgid "Create new item"
 msgstr "Gumawa ng bagong item"
 
 #: src/components/layout/projects-layout.tsx:37
-#: src/features/projects/components/create-project-dialog.tsx:313
-#: src/features/projects/components/create-project-dialog.tsx:323
-#: src/features/projects/components/create-project-dialog.tsx:447
-#: src/features/projects/components/create-project-dialog.tsx:535
+#: src/features/projects/components/create-project-dialog.tsx:315
+#: src/features/projects/components/create-project-dialog.tsx:325
+#: src/features/projects/components/create-project-dialog.tsx:449
+#: src/features/projects/components/create-project-dialog.tsx:537
 msgid "Create project"
 msgstr "Gumawa ng project"
 
@@ -871,8 +872,8 @@ msgstr "Gumagawa ng proyekto..."
 
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:665
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:258
-#: src/features/projects/components/create-project-dialog.tsx:447
-#: src/features/projects/components/create-project-dialog.tsx:535
+#: src/features/projects/components/create-project-dialog.tsx:449
+#: src/features/projects/components/create-project-dialog.tsx:537
 msgid "Creating..."
 msgstr "Ginagawa..."
 
@@ -929,9 +930,9 @@ msgstr "Default na sort"
 
 #: ../../../lib/web/src/components/entity/entity-board-column.tsx:583
 #: ../../../lib/web/src/components/entity/entity-board-column.tsx:644
-#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:319
-#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:362
-#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:492
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:280
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:323
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:353
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:198
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:203
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:252
@@ -954,7 +955,7 @@ msgstr "I-delete ang class"
 msgid "Delete column"
 msgstr "I-delete ang column"
 
-#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:490
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:351
 msgid "Delete comment"
 msgstr "I-delete ang komento"
 
@@ -1069,11 +1070,11 @@ msgstr "Direksyon"
 msgid "Directory"
 msgstr "Direktoryo"
 
-#: ../../../lib/web/src/components/comment-composer.tsx:313
+#: ../../../lib/web/src/components/comment-composer.tsx:322
 msgid "Discard"
 msgstr "Itapon"
 
-#: ../../../lib/web/src/components/comment-composer.tsx:311
+#: ../../../lib/web/src/components/comment-composer.tsx:320
 msgid "Discard draft?"
 msgstr "Itapon ang draft?"
 
@@ -1107,8 +1108,8 @@ msgid "Double click on a column to add content"
 msgstr "I-double click ang isang column para magdagdag ng content"
 
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:239
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:386
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:396
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:472
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:482
 msgid "Download"
 msgstr "I-download"
 
@@ -1116,7 +1117,7 @@ msgstr "I-download"
 msgid "Download backup first"
 msgstr "I-download muna ang backup"
 
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:69
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:111
 msgid "Download failed"
 msgstr "Nabigo ang pag-download"
 
@@ -1142,8 +1143,8 @@ msgstr "Duplicate"
 msgid "Dyslexia-friendly"
 msgstr "Angkop sa dyslexia"
 
-#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:308
-#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:353
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:269
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:314
 msgid "Edit"
 msgstr "I-edit"
 
@@ -1211,8 +1212,8 @@ msgstr "Error"
 
 #: ../../../lib/web/src/components/comment-tree-layout.tsx:101
 #: ../../../lib/web/src/components/comment-tree-layout.tsx:110
-#: ../../../lib/web/src/components/tree-row.tsx:347
-#: ../../../lib/web/src/components/tree-row.tsx:361
+#: ../../../lib/web/src/components/tree-row.tsx:338
+#: ../../../lib/web/src/components/tree-row.tsx:352
 msgid "Expand"
 msgstr "Palawakin"
 
@@ -1283,7 +1284,7 @@ msgstr "Nabigong gumawa ng view"
 msgid "Failed to delete attachment"
 msgstr "Nabigong magdelete ng attachment"
 
-#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:212
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:191
 msgid "Failed to delete comment"
 msgstr "Nabigong magdelete ng comment"
 
@@ -1328,7 +1329,7 @@ msgstr "Nabigong i-load"
 msgid "Failed to load history"
 msgstr "Nabigong i-load ang history"
 
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:297
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:358
 msgid "Failed to load image"
 msgstr "Nabigong i-load ang larawan"
 
@@ -1356,7 +1357,7 @@ msgstr "Nabigong i-load ang mga project"
 msgid "Failed to load recommended projects"
 msgstr "Hindi na-load ang mga inirerekomendang proyekto"
 
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:297
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:358
 msgid "Failed to load video"
 msgstr "Nabigong i-load ang video"
 
@@ -1364,7 +1365,7 @@ msgstr "Nabigong i-load ang video"
 msgid "Failed to merge"
 msgstr "Nabigong i-merge"
 
-#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:175
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:154
 msgid "Failed to post comment"
 msgstr "Nabigong mag-post ng comment"
 
@@ -1420,7 +1421,7 @@ msgstr "Nabigong mag-unsubscribe"
 msgid "Failed to update access level"
 msgstr "Nabigong i-update ang access level"
 
-#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:195
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:174
 msgid "Failed to update comment"
 msgstr "Nabigong i-update ang comment"
 
@@ -1576,7 +1577,7 @@ msgid "Identity"
 msgstr "Identity"
 
 #. placeholder {0}: currentMedia.name
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:281
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:336
 msgid "Image viewer: {0}"
 msgstr "Image viewer: {0}"
 
@@ -1589,7 +1590,7 @@ msgstr "Imperial"
 msgid "Import design"
 msgstr "I-import ang design"
 
-#: src/features/projects/components/create-project-dialog.tsx:386
+#: src/features/projects/components/create-project-dialog.tsx:388
 msgid "Import from backup (optional)"
 msgstr "I-import mula sa backup (opsyonal)"
 
@@ -1713,7 +1714,7 @@ msgstr "Nilo-load ang item"
 msgid "Loading item details"
 msgstr "Nilo-load ang detalye ng item"
 
-#: src/features/projects/components/create-project-dialog.tsx:468
+#: src/features/projects/components/create-project-dialog.tsx:470
 msgid "Loading templates..."
 msgstr "Nilo-load ang mga template..."
 
@@ -1841,7 +1842,7 @@ msgstr "Lunes"
 msgid "More options"
 msgstr "Iba pang opsyon"
 
-#: src/features/projects/components/create-project-dialog.tsx:341
+#: src/features/projects/components/create-project-dialog.tsx:343
 msgid "My project"
 msgstr "Aking proyekto"
 
@@ -1851,7 +1852,7 @@ msgstr "Aking proyekto"
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:128
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:299
 #: src/features/editor/components/edit-dialogs.tsx:255
-#: src/features/projects/components/create-project-dialog.tsx:331
+#: src/features/projects/components/create-project-dialog.tsx:333
 #: src/routes/_authenticated/$projectId_.settings.tsx:111
 msgid "Name"
 msgstr "Pangalan"
@@ -1894,12 +1895,12 @@ msgstr "Bagong {className}"
 msgid "New game"
 msgstr "Bagong laro"
 
-#: src/features/projects/components/create-project-dialog.tsx:449
+#: src/features/projects/components/create-project-dialog.tsx:451
 msgid "Next"
 msgstr "Susunod"
 
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:442
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:447
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:549
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:554
 msgid "Next image"
 msgstr "Susunod na imahe"
 
@@ -1935,7 +1936,7 @@ msgstr "Walang pagbabagong ipapakita"
 msgid "No changes were found for the selected comparison."
 msgstr "Walang nakitang pagbabago para sa napiling comparison."
 
-#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:460
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:322
 msgid "No comments yet"
 msgstr "Wala pang komento"
 
@@ -2068,7 +2069,7 @@ msgstr "Hindi nahanap"
 msgid "Not set"
 msgstr "Hindi naka-set"
 
-#: ../../../lib/web/src/components/entity/entity-tree-view.tsx:675
+#: ../../../lib/web/src/components/entity/entity-tree-view.tsx:668
 msgid "Nothing found"
 msgstr "Walang nakita"
 
@@ -2222,7 +2223,7 @@ msgstr "Pumili ng petsa"
 msgid "Please add one or more classes to the project design."
 msgstr "Mangyaring magdagdag ng isa o higit pang class sa project design."
 
-#: ../../../lib/web/src/components/comment-composer.tsx:84
+#: ../../../lib/web/src/components/comment-composer.tsx:93
 #: ../../../lib/web/src/features/errors/general-error.tsx:54
 #: ../../../lib/web/src/lib/api-response-interceptors.ts:323
 msgid "Please check your internet connection and try again."
@@ -2252,7 +2253,7 @@ msgstr "Mga Post"
 msgid "Posts and comments"
 msgstr "Mga post at komento"
 
-#: src/features/projects/components/create-project-dialog.tsx:353
+#: src/features/projects/components/create-project-dialog.tsx:355
 #: src/routes/_authenticated/$projectId_.settings.tsx:85
 msgid "Prefix"
 msgstr "Prefix"
@@ -2265,8 +2266,8 @@ msgstr ""
 msgid "Prefix must be 10 characters or less"
 msgstr ""
 
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:427
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:432
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:533
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:538
 msgid "Previous image"
 msgstr "Nakaraang imahe"
 
@@ -2404,7 +2405,7 @@ msgstr "Relatibo sa loob ng 24 na oras, kung hindi ay absolute"
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:190
 #: ../../../lib/web/src/features/access/access-list.tsx:270
 #: ../../../lib/web/src/features/accounts/account-manager.tsx:180
-#: src/features/projects/components/create-project-dialog.tsx:429
+#: src/features/projects/components/create-project-dialog.tsx:431
 msgid "Remove"
 msgstr "Alisin"
 
@@ -2477,13 +2478,13 @@ msgstr "Palitan ang design?"
 msgid "Replacing..."
 msgstr "Pinapalitan..."
 
-#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:295
-#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:343
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:256
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:304
 msgid "Reply"
 msgstr "Tumugon"
 
 #. placeholder {0}: comment.name || comment.author
-#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:386
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:343
 msgid "Reply to {0}..."
 msgstr "Sagutin si {0}..."
 
@@ -2571,7 +2572,7 @@ msgid "Saturday"
 msgstr "Sabado"
 
 #: ../../../lib/web/src/components/attachment-composer.tsx:465
-#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:270
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:231
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:173
 #: ../../../lib/web/src/components/ui/editable-field-row.tsx:122
 #: ../../../lib/web/src/components/ui/secret-field.tsx:79
@@ -2864,7 +2865,7 @@ msgstr "Hatiin"
 msgid "Squash and merge"
 msgstr "Squash at pagsamahin"
 
-#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:461
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:323
 msgid "Start the discussion by adding the first comment."
 msgstr "Simulan ang diskusyon sa pamamagitan ng pagdagdag ng unang komento."
 
@@ -2881,13 +2882,11 @@ msgstr "Itigil ang pagmamasid"
 msgid "Subject"
 msgstr "Paksa"
 
-#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:441
-#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:450
+#: ../../../lib/web/src/components/comment-composer.tsx:442
 msgid "Submit comment"
 msgstr "Ipasa ang komento"
 
-#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:476
-#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:481
+#: ../../../lib/web/src/components/comment-composer.tsx:441
 msgid "Submit reply"
 msgstr "Ipasa ang sagot"
 
@@ -3228,7 +3227,7 @@ msgstr "Ina-update ang access..."
 msgid "Upload"
 msgstr "Mag-upload"
 
-#: src/features/projects/components/create-project-dialog.tsx:402
+#: src/features/projects/components/create-project-dialog.tsx:404
 #: src/routes/_authenticated/$projectId/design.tsx:58
 msgid "Upload .json file"
 msgstr "Mag-upload ng .json file"
@@ -3243,7 +3242,7 @@ msgstr "Gamitin ang iyong passkey"
 
 #. placeholder {0}: prefix || "project"
 #. placeholder {1}: prefix || "project"
-#: src/features/projects/components/create-project-dialog.tsx:370
+#: src/features/projects/components/create-project-dialog.tsx:372
 msgid "Used for readable IDs like {0}-1, {1}-2"
 msgstr "Ginagamit para sa nababasang IDs gaya ng {0}-1, {1}-2"
 
@@ -3275,12 +3274,12 @@ msgstr "Beripikahin"
 msgid "Verify email address"
 msgstr "Beripikahin ang email address"
 
-#: ../../../lib/web/src/components/attachment-gallery.tsx:85
+#: ../../../lib/web/src/components/attachment-gallery.tsx:94
 msgid "Video thumbnail"
 msgstr "Thumbnail ng video"
 
 #. placeholder {0}: currentMedia.name
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:280
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:335
 msgid "Video viewer: {0}"
 msgstr "Video viewer: {0}"
 
@@ -3331,7 +3330,7 @@ msgstr "Binabantayan"
 msgid "Watched only"
 msgstr "Binabantayan lamang"
 
-#: src/features/projects/components/create-project-dialog.tsx:463
+#: src/features/projects/components/create-project-dialog.tsx:465
 msgid "We have auto-selected the best matching template."
 msgstr "Awtomatikong pinili namin ang pinakaangkop na template."
 
@@ -3380,18 +3379,18 @@ msgstr "Nakita mo na lahat!"
 msgid "Your account was moved here from {source}. Until you delete it there, messages and notifications may reach both servers, some of your content keeps being served from the old server, and followers may take a few minutes to find you here."
 msgstr "Ang iyong account ay inilipat dito mula sa {source}. Hanggang hindi mo ito binubura doon, ang mga mensahe at abiso ay maaaring maabot ang parehong mga server, ang ilan sa iyong nilalaman ay patuloy na pinaglilingkuran mula sa lumang server, at ang mga tagasunod ay maaaring maglaan ng ilang minuto upang mahanap ka dito."
 
-#: ../../../lib/web/src/components/comment-composer.tsx:304
+#: ../../../lib/web/src/components/comment-composer.tsx:313
 msgid "Your attachments will be lost."
 msgstr "Mawawala ang iyong mga attachment."
 
-#: src/features/projects/components/create-project-dialog.tsx:459
+#: src/features/projects/components/create-project-dialog.tsx:461
 msgid "Your backup contains objects of type:"
 msgstr "Naglalaman ang iyong backup ng mga object na may uri:"
 
-#: ../../../lib/web/src/components/comment-composer.tsx:302
+#: ../../../lib/web/src/components/comment-composer.tsx:311
 msgid "Your text and attachments will be lost."
 msgstr "Mawawala ang iyong teksto at mga attachment."
 
-#: ../../../lib/web/src/components/comment-composer.tsx:305
+#: ../../../lib/web/src/components/comment-composer.tsx:314
 msgid "Your text will be lost."
 msgstr "Mawawala ang iyong teksto."

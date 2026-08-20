@@ -777,6 +777,17 @@ def comments_remove_object(object_id):
 # Each execute pair-replicates as one statement, so the user's own hosts purge
 # identically. Children before parents so the foreign keys stay satisfied.
 def purge_project(project_id):
+	# Attachments first, and inside purge rather than at the call sites: they
+	# are addressed through the comment and object rows below, so clearing
+	# them afterwards finds nothing. The comment half used to be repeated at
+	# each call site and the object half only at the owner's delete, which
+	# left the other teardown paths - unsubscribe, the owner's deleted event,
+	# and access revocation - holding every object attachment row (and any
+	# local bytes it shields from the orphan sweep) for good. Mirrors
+	# purge_crm.
+	delete_project_comment_attachments(project_id)
+	for obj in (mochi.db.rows("select id from objects where project=?", project_id) or []):
+		attachment_clear(obj["id"])
 	mochi.db.execute("delete from requests where object in (select id from objects where project=?)", project_id)
 	mochi.db.execute("delete from watchers where object in (select id from objects where project=?)", project_id)
 	mochi.db.execute("delete from activity where object in (select id from objects where project=?)", project_id)
@@ -2178,9 +2189,7 @@ def action_project_delete(a):
 		a.error.label(403, "errors.access_denied")
 		return
 
-	delete_project_comment_attachments(project_id)
-	for obj in (mochi.db.rows("select id from objects where project=?", project_id) or []):
-		attachment_clear(obj["id"])
+	# Attachment cleanup lives in purge_project, so every teardown path gets it.
 	# Notify subscribers that project is being deleted (before purging the
 	# subscriber list). Send from the project entity so receivers can verify
 	# the sender, matching broadcast_event and the verify_subscription check.
@@ -5955,8 +5964,8 @@ def action_unsubscribe(a):
 		return
 
 	# Delete all local data for this remote project — physical purge, so a
-	# later re-subscribe imports cleanly (see purge_project).
-	delete_project_comment_attachments(project_id)
+	# later re-subscribe imports cleanly (see purge_project, which also clears
+	# the attachments, object and comment alike).
 	purge_project(project_id)
 	# Send P2P unsubscribe message
 	registration_send(project["server"], p2p_headers(user_id, project_id, "unsubscribe"), {})
@@ -6480,8 +6489,8 @@ def event_deleted(e):
 		return
 
 	# Delete all local data for this remote project — physical purge, so a
-	# later re-share imports cleanly (see purge_project).
-	delete_project_comment_attachments(project_id)
+	# later re-share imports cleanly (see purge_project, which also clears the
+	# attachments, object and comment alike).
 	purge_project(project_id)
 
 # Handle notification that the project owner has revoked our access. Sent
@@ -6497,7 +6506,7 @@ def event_access_revoke(e):
 	if not project:
 		return
 
-	delete_project_comment_attachments(project_id)
+	# purge_project clears the attachments, object and comment alike.
 	purge_project(project_id)
 # ============================================================================
 # Content Sync Event Handlers (received by subscribers)

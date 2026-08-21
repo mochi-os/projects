@@ -174,12 +174,9 @@ function RequestItem({
   const [title, setTitle] = useState(request.title);
   const [description, setDescription] = useState(request.description);
 
-  // These start as copies of the request, so without this they never caught up:
-  // a rename by someone else stayed invisible, and leaving the field — without
-  // typing a thing — pushed the stale copy straight back over their change.
-  // Skip the sync while the field has focus so an update landing mid-edit
-  // doesn't yank the text out from under whoever is typing (same rule the
-  // object field editor uses).
+  // Resync the local copies when the request changes, except while the field
+  // has focus, so an update landing mid-edit does not yank the text (same rule
+  // as the object field editor).
   const titleFocusedRef = useRef(false);
   const descriptionFocusedRef = useRef(false);
 

@@ -255,11 +255,4 @@ describe("BoardCard", () => {
     expect(screen.getByText("Urgent")).toBeInTheDocument();
   });
 
-  // Removed: "should show priority color strip" and "should show parent icon".
-  // Both asserted markup the current BoardCard no longer renders — there is no
-  // priority colour strip (priority is now a normal enumerated badge) and no
-  // parent-indicator icon. The tests had never run (blocked by the macro import
-  // error) so they encoded an earlier design; rather than test fictional markup
-  // they are dropped. Priority badge rendering is covered by the enumerated
-  // field tests above.
 });

@@ -88,11 +88,8 @@ function DiffPage() {
     );
   }
 
-  // Every other page routes through AuthenticatedLayout, which reserves this
-  // space so a page's own content clears the shell's fixed app-switcher
-  // overlay (see its "ps-24" comment). This page is standalone — no sidebar,
-  // so it skips that layout entirely — and picked up the overlap because it
-  // never applied the same offset itself.
+  // Standalone page (no AuthenticatedLayout), so it applies the shell
+  // app-switcher offset itself.
   return (
     <div className={`h-svh flex flex-col overflow-hidden ${isInShell() ? "md:ps-24" : ""}`}>
       <PageHeader

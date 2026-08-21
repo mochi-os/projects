@@ -108,11 +108,8 @@ export interface RequestData {
 // Sort state for views
 export type SortState = EntitySortState;
 
-// API Response types
-//
-// The envelopes below are the shared client's own, re-exported under this
-// app's names so call sites keep reading `CommentListResponse`. Only the ones
-// this app shapes differently are declared here.
+// API Response types: the shared client's envelopes under this app's names.
+// Only the ones this app shapes differently are declared here.
 export type ObjectListResponse = EntityObjectListResponse<ProjectObject>;
 export type CommentListResponse = EntityCommentListResponse;
 export type ActivityListResponse = EntityActivityListResponse;

@@ -64,11 +64,9 @@ export function parseDiff(raw: string): DiffFile[] {
     let deletions = 0;
 
     for (const line of lines) {
-      // Splitting on "\n" leaves an empty string for the section's final
-      // newline. Every real hunk line carries a prefix byte — a blank context
-      // line is " ", never "" — so an empty string here is always that
-      // artefact. Without this it was parsed as a context line and rendered as
-      // an extra numbered blank row at the end of every file.
+      // The trailing "" from splitting on "\n" is never a real hunk line - a
+      // blank context line is " " - so skip it rather than render an extra
+      // blank row.
       if (line === "") continue;
       if (line.startsWith("@@")) {
         const match = line.match(/@@ -(\d+)(?:,\d+)? \+(\d+)(?:,\d+)? @@(.*)/);

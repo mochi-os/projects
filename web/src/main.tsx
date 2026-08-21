@@ -206,11 +206,9 @@ const catalogs: Catalogs = {
 
 const queryClient = createQueryClient();
 
-// getAppBasepath keeps the entity fingerprint out of the basepath — the routes
-// carry it as $projectId — and follows the domain route path when the page is
-// served through one. createAppHistory is what lets an entity domain route
-// leave the fingerprint out of the URL entirely; it is undefined everywhere
-// else, which leaves the router on its default history.
+// getAppBasepath keeps the fingerprint out of the basepath (routes carry it as
+// $projectId) and follows a domain route path; createAppHistory is defined only
+// for entity domain routes.
 const router = createRouter({
   routeTree,
   context: { queryClient },

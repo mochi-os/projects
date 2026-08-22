@@ -7314,6 +7314,17 @@ def action_request_list(a):
 		a.error.label(400, "errors.object_id_required")
 		return
 
+	# Bind the object to the project require_project authorized, as every other
+	# list action does. Without it the query filters on object alone, and under a
+	# domain route - where mochi.db reads the ROUTE OWNER's database rather than
+	# the caller's - a visitor with view on one project reads merge requests from
+	# all of that owner's projects. 404, not 403, so the reply does not confirm
+	# the object exists elsewhere.
+	row = mochi.db.row("select id from objects where id=? and project=?", object_id, project_id)
+	if not row:
+		a.error.label(404, "errors.object_not_found")
+		return
+
 	type = a.input("type") or ""
 	if type:
 		requests = mochi.db.rows("select id, object, type, repository, source, target, status, title, description, draft, created, updated from requests where object=? and type=?", object_id, type) or []

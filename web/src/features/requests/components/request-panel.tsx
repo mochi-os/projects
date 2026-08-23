@@ -11,6 +11,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { ArrowRight, GitMerge, Plus, Trash2, ChevronDown, ChevronRight } from "lucide-react";
 import { Button, Card, ConfirmDialog, Input, Switch, Textarea, cn, Tooltip, TooltipTrigger, TooltipContent, getAppPath } from "@mochi/web";
 import projectsApi from "@/api/projects";
+import { diffUrl } from "@/lib/diff";
 import type { RequestData } from "@/types";
 import { RepositorySelect } from "./repository-select";
 import { BranchSelect } from "./branch-select";
@@ -361,7 +362,7 @@ function RequestItem({
                     repoId={request.repository}
                     base={request.target}
                     head={request.source}
-                    diffUrl={`${getAppPath()}/diff?repo=${encodeURIComponent(request.repository)}&source=${encodeURIComponent(request.source)}&target=${encodeURIComponent(request.target)}`}
+                    diffUrl={diffUrl(getAppPath(), projectId, request)}
                   />
 
                   {isDraft && (

@@ -3,7 +3,7 @@
 // This file is part of Mochi, licensed under the GNU AGPL v3 with the
 // Mochi Application Interface Exception - see license.txt and license-exception.md.
 
-import { useEffect, useRef, useState, useMemo } from "react";
+import { useCallback, useEffect, useRef, useState, useMemo } from "react";
 import { Trans, useLingui } from '@lingui/react/macro'
 import { plural } from '@lingui/core/macro'
 import { useNavigate } from "@tanstack/react-router";
@@ -51,6 +51,16 @@ export function CreateProjectDialog({
   const refreshProjects = useProjectsStore((state) => state.refresh);
   const { progress: importProgress, upload } = useUploadProgress();
 
+  // The submit guards read pairs of these four, so clearing a subset leaves a
+  // removed file still importable - and the archive branch rolls the new
+  // project back on failure, deleting one the user never meant to import into.
+  const clearImport = useCallback(() => {
+    setImportData(null);
+    setImportFile(null);
+    setImportArchive(false);
+    setImportFileName("");
+  }, []);
+
   // Load templates when dialog opens
   useEffect(() => {
     if (open) {
@@ -77,12 +87,10 @@ export function CreateProjectDialog({
       setPrefix("");
       setSelectedTemplate("");
       setAllowSearch(true);
-      setImportData(null);
-      setImportFile(null);
-      setImportFileName("");
+      clearImport();
       prefixDirty.current = false;
     }
-  }, [open]);
+  }, [open, clearImport]);
 
   const handleNext = () => {
     if (!name.trim()) {
@@ -241,16 +249,12 @@ export function CreateProjectDialog({
         }
       } catch {
         toast.error(t`Invalid JSON file`);
-        setImportData(null);
-        setImportFile(null);
-        setImportFileName("");
+        clearImport();
       }
     };
     reader.onerror = () => {
       toast.error(t`Failed to read file`);
-      setImportData(null);
-      setImportFile(null);
-      setImportFileName("");
+      clearImport();
     };
     reader.readAsText(file);
     e.target.value = "";
@@ -418,8 +422,7 @@ export function CreateProjectDialog({
                         <AttachmentAction
                           variant="ghost"
                           onClick={() => {
-                            setImportData(null);
-                            setImportFileName("");
+                            clearImport();
                             if (fileInputRef.current) {
                               fileInputRef.current.value = "";
                             }

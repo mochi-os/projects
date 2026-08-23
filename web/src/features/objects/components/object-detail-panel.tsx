@@ -22,6 +22,7 @@ import {
   cn,
   ConfirmDialog,
   GeneralError,
+  getErrorMessage,
   ListSkeleton,
   naturalCompare,
   Sheet,
@@ -39,6 +40,7 @@ import {
   TooltipTrigger,
   TooltipContent,
   textUnchanged,
+  toast,
 } from "@mochi/web";
 import projectsApi from "@/api/projects";
 import type { ProjectAccess, ProjectDetails } from "@/types";
@@ -184,6 +186,9 @@ export function ObjectDetailPanel({
         queryKey: ["objects", projectId],
       });
     },
+    onError: (error) => {
+      toast.error(getErrorMessage(error, t`Failed to save`));
+    },
   });
 
   const watchMutation = useMutation({
@@ -200,6 +205,9 @@ export function ObjectDetailPanel({
         queryKey: ["object", projectId, objectId],
       });
     },
+    onError: (error) => {
+      toast.error(getErrorMessage(error, t`Failed to update watching`));
+    },
   });
 
   const deleteMutation = useMutation({
@@ -213,6 +221,9 @@ export function ObjectDetailPanel({
         queryKey: ["objects", projectId],
       });
       requestAnimationFrame(() => onClose());
+    },
+    onError: (error) => {
+      toast.error(getErrorMessage(error, t`Failed to delete`));
     },
   });
 
@@ -230,6 +241,9 @@ export function ObjectDetailPanel({
       queryClient.invalidateQueries({
         queryKey: ["objects", projectId],
       });
+    },
+    onError: (error) => {
+      toast.error(getErrorMessage(error, t`Failed to move`));
     },
   });
 

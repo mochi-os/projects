@@ -8,7 +8,6 @@
 // What stays here is the route, the loader, the wording, and the bindings the
 // shared page renders through its slots.
 
-import { useEffect } from "react";
 import { useLingui } from '@lingui/react/macro'
 import { t } from '@lingui/core/macro'
 import { createFileRoute, Link, redirect, useNavigate, useRouter } from "@tanstack/react-router";
@@ -43,11 +42,15 @@ export const Route = createFileRoute("/_authenticated/$projectId/")({
   loader: async ({ params }) => {
     try {
       const projectResponse = await projectsApi.get(params.projectId);
-      return { project: projectResponse.data, loaderError: null, loaderStatus: null };
+      return { project: projectResponse.data, loaderError: null };
     } catch (error) {
       const status = extractStatus(error);
+      // Redirect from the loader, not the component: a project-to-project
+      // navigation re-renders the same instance rather than remounting, so a
+      // mount effect never re-fires and the page is left blank.
       if (status === 403) {
-        return { project: null as ProjectDetails | null, loaderError: null, loaderStatus: 403 };
+        toast.error(t`You don't have access to this project.`);
+        throw redirect({ to: "/" });
       }
       if (status === 404) {
         throw redirect({ to: "/" });
@@ -56,7 +59,6 @@ export const Route = createFileRoute("/_authenticated/$projectId/")({
       return {
         project: null as ProjectDetails | null,
         loaderError: getErrorMessage(error, t`Failed to load project`),
-        loaderStatus: status,
       };
     }
   },
@@ -65,25 +67,14 @@ export const Route = createFileRoute("/_authenticated/$projectId/")({
 
 function ProjectPage() {
   const { t } = useLingui()
-  const { project, loaderError, loaderStatus } = Route.useLoaderData() as {
+  const { project, loaderError } = Route.useLoaderData() as {
     project: ProjectDetails | null;
     loaderError: string | null;
-    loaderStatus: number | null;
   };
   const params = Route.useParams();
   const search = Route.useSearch();
   const navigate = useNavigate();
   const router = useRouter();
-
-  useEffect(() => {
-    if (loaderStatus === 403) {
-      toast.error(t`You don't have access to this project.`);
-      void navigate({ to: "/" });
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  if (loaderStatus === 403) return null;
 
   if (!project) {
     return (

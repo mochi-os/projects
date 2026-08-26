@@ -7,10 +7,9 @@
 // Binding for the shared tree view. The project prefix is what enables the ID
 // column, so it is passed even though the shared component treats it as optional.
 
-import { EntityTreeView, type EntityTreeNode, type EntityTreeViewProps } from "@mochi/web";
+import { EntityTreeView, type EntityTreeViewProps } from "@mochi/web";
 import type { ProjectDetails, ProjectObject } from "@/types";
 
-export type TreeNode = EntityTreeNode<ProjectObject>;
 
 type TreeViewProps = Omit<
   EntityTreeViewProps<ProjectObject>,
@@ -20,12 +19,15 @@ type TreeViewProps = Omit<
   projectId: string;
 };
 
-export function TreeView({ project, projectId, ...props }: TreeViewProps) {
+export function TreeView({ project, ...props }: TreeViewProps) {
   return (
+    // The entity id, matching BoardContainer: the route parameter is a
+    // fingerprint, and the two views would otherwise key container state under
+    // different ids for the same project.
     <EntityTreeView
       {...props}
       design={project}
-      containerId={projectId}
+      containerId={project.project.id}
       storagePrefix="projects"
       prefix={project.project.prefix}
     />

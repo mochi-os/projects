@@ -39,6 +39,7 @@ export function CreateProjectDialog({
   const [prefix, setPrefix] = useState("");
   const [selectedTemplate, setSelectedTemplate] = useState("");
   const [templates, setTemplates] = useState<ProjectTemplate[]>([]);
+  const [templatesError, setTemplatesError] = useState(false);
   const [isLoadingTemplates, setIsLoadingTemplates] = useState(false);
   const [allowSearch, setAllowSearch] = useState(true);
   const [importData, setImportData] = useState<Record<string, unknown> | null>(null);
@@ -65,19 +66,23 @@ export function CreateProjectDialog({
   useEffect(() => {
     if (open) {
       setIsLoadingTemplates(true);
+      setTemplatesError(false);
       projectsApi
         .templates()
         .then((response) => {
           setTemplates(response.data?.templates ?? []);
         })
-        .catch(() => {
-          // Template loading failed - user will see empty list
+        .catch((error) => {
+          // Not silent: with no templates step 2 is empty and the create
+          // button stays disabled, which reads as "there are none".
+          setTemplatesError(true);
+          toast.error(getErrorMessage(error, t`Could not load templates`));
         })
         .finally(() => {
           setIsLoadingTemplates(false);
         });
     }
-  }, [open]);
+  }, [open, t]);
 
   // Reset state when dialog closes
   useEffect(() => {
@@ -471,6 +476,10 @@ export function CreateProjectDialog({
               {isLoadingTemplates ? (
                 <div className="text-muted-foreground py-8 text-center text-sm">
                   <Trans>Loading templates...</Trans>
+                </div>
+              ) : templatesError ? (
+                <div className="text-destructive py-8 text-center text-sm">
+                  <Trans>Could not load templates</Trans>
                 </div>
               ) : (
                 <div className="grid grid-cols-1 gap-3">

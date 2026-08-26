@@ -8,24 +8,12 @@
 // integration and the response envelopes are app-specific and defined here.
 import type {
   EntityAccess,
-  EntityActivity,
-  EntityAttachment,
-  EntityChecklistItem,
   EntityClass,
-  EntityComment,
   EntityField,
   EntityFieldOption,
   EntityObject,
   EntityObjectLink,
-  EntityObjectListResponse,
-  EntityCommentListResponse,
-  EntityActivityListResponse,
-  EntityAttachmentListResponse,
-  EntityWatcherListResponse,
-  EntityLinkListResponse,
-  EntitySortState,
   EntityView,
-  EntityWatcher,
 } from "@mochi/web";
 
 // Project types
@@ -83,12 +71,6 @@ export type ProjectObject = EntityObject & {
 };
 
 export type ObjectLink = EntityObjectLink;
-export type CommentAttachment = EntityAttachment;
-export type Comment = EntityComment;
-export type Attachment = EntityAttachment;
-export type ChecklistItem = EntityChecklistItem;
-export type Activity = EntityActivity;
-export type Watcher = EntityWatcher;
 
 export interface RequestData {
   id: string;
@@ -105,47 +87,14 @@ export interface RequestData {
   updated: number;
 }
 
-// Sort state for views
-export type SortState = EntitySortState;
-
-// API Response types: the shared client's envelopes under this app's names.
-// Only the ones this app shapes differently are declared here.
-export type ObjectListResponse = EntityObjectListResponse<ProjectObject>;
-export type CommentListResponse = EntityCommentListResponse;
-export type ActivityListResponse = EntityActivityListResponse;
-export type AttachmentListResponse = EntityAttachmentListResponse;
-export type WatcherListResponse = EntityWatcherListResponse;
-export type LinkListResponse = EntityLinkListResponse;
-
-export interface ObjectCreateResponse {
-  data: {
-    id: string;
-    number: number;
-    readable: string;
-  };
-}
-
-export interface ObjectGetResponse {
-  data: {
-    object: ProjectObject & { readable: string };
-    values: Record<string, string>;
-    outgoing: ObjectLink[];
-    incoming: ObjectLink[];
-    watching: boolean;
-    requests: RequestData[];
-    comment_count: number;
-  };
-}
-
-// Repository types (for Request integration)
-export interface Repository {
+interface Repository {
   id: string;
   name: string;
   path: string;
   url: string;
 }
 
-export interface Branch {
+interface Branch {
   name: string;
   commit: string;
   current: boolean;

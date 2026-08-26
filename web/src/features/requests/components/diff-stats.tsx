@@ -24,7 +24,7 @@ interface DiffStatsProps {
 }
 
 export function DiffStats({ repoId, base, head, diffUrl }: DiffStatsProps) {
-  const { data: rawDiff, isLoading } = useQuery({
+  const { data: rawDiff, isLoading, isError } = useQuery({
     queryKey: ["diff", repoId, base, head],
     queryFn: async () => {
       const response = await projectsApi.getDiff(repoId, base, head);
@@ -51,6 +51,12 @@ export function DiffStats({ repoId, base, head, diffUrl }: DiffStatsProps) {
         <Loader2 className="size-4 animate-spin" />
         <Trans>Loading diff...</Trans>
       </div>
+    );
+  }
+
+  if (isError) {
+    return (
+      <div className="text-sm text-destructive"><Trans>Could not load the diff</Trans></div>
     );
   }
 

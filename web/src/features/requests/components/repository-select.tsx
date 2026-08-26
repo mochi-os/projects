@@ -29,7 +29,7 @@ export function RepositorySelect({
   onChange,
   disabled,
 }: RepositorySelectProps) {
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, isError } = useQuery({
     queryKey: ["repositories"],
     queryFn: async () => {
       const response = await projectsApi.listRepositories();
@@ -59,7 +59,12 @@ export function RepositorySelect({
             {repo.name}
           </SelectItem>
         ))}
-        {repositories.length === 0 && !isLoading && (
+        {isError && (
+          <div className="px-2 py-1.5 text-sm text-destructive">
+            <Trans>Could not load repositories</Trans>
+          </div>
+        )}
+        {repositories.length === 0 && !isLoading && !isError && (
           <div className="px-2 py-1.5 text-sm text-muted-foreground">
             <Trans>No repositories available</Trans>
           </div>

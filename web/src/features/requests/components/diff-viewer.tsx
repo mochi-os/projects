@@ -159,8 +159,8 @@ function FileHeader({
 function UnifiedView({ file }: { file: DiffFile }) {
   return (
     <table className="w-full text-xs font-mono border-collapse">
-      <tbody>
-        {file.hunks.map((hunk, hi) => {
+      {/* Each hunk is its own tbody; a wrapping tbody would nest them. */}
+      {file.hunks.map((hunk, hi) => {
           const groups = pairLines(hunk.lines);
           return (
             <tbody key={hi}>
@@ -181,7 +181,6 @@ function UnifiedView({ file }: { file: DiffFile }) {
             </tbody>
           );
         })}
-      </tbody>
     </table>
   );
 }
@@ -263,8 +262,8 @@ function UnifiedGroup({
 function SplitView({ file }: { file: DiffFile }) {
   return (
     <table className="w-full text-xs font-mono border-collapse">
-      <tbody>
-        {file.hunks.map((hunk, hi) => {
+      {/* Each hunk is its own tbody; a wrapping tbody would nest them. */}
+      {file.hunks.map((hunk, hi) => {
           const groups = pairLines(hunk.lines);
           return (
             <tbody key={hi}>
@@ -288,7 +287,6 @@ function SplitView({ file }: { file: DiffFile }) {
             </tbody>
           );
         })}
-      </tbody>
     </table>
   );
 }

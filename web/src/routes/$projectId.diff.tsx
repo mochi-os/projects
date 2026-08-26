@@ -8,7 +8,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Trans, useLingui } from '@lingui/react/macro'
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Loader2, Rows3, Columns2 } from "lucide-react";
-import { EmptyState, GeneralError, Main, PageHeader, usePageTitle, useAuthStore, isInShell } from "@mochi/web";
+import { EmptyState, GeneralError, Main, PageHeader, usePageTitle, useAuthStore, isInShell, toast, getErrorMessage } from "@mochi/web";
 import projectsApi from "@/api/projects";
 import { DiffViewer } from "@/features/requests/components/diff-viewer";
 
@@ -20,10 +20,10 @@ interface DiffSearchParams {
 
 export const Route = createFileRoute("/$projectId/diff")({
   component: DiffPage,
-  beforeLoad: () => {
+  beforeLoad: async () => {
     const store = useAuthStore.getState();
     if (!store.isInitialized) {
-      store.initialize();
+      await store.initialize();
     }
   },
   validateSearch: (search: Record<string, unknown>): DiffSearchParams => ({
@@ -68,6 +68,9 @@ function DiffPage() {
     mutationFn: (style: string) => projectsApi.setDiffPreference(style),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["diff-preference"] });
+    },
+    onError: (error) => {
+      toast.error(getErrorMessage(error, t`Could not change the view style`));
     },
   });
 

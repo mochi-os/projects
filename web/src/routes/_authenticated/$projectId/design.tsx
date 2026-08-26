@@ -85,7 +85,7 @@ function TemplateList({
 }: {
   onSelect: (choice: EntityDesignImport) => void;
 }) {
-  const { data: templatesData } = useQuery({
+  const { data: templatesData, isError } = useQuery({
     queryKey: ["templates"],
     queryFn: async () => {
       const response = await projectsApi.templates();
@@ -98,6 +98,9 @@ function TemplateList({
   return (
     <div className="space-y-2">
       <p className="text-sm font-medium"><Trans>Built-in templates</Trans></p>
+      {isError && (
+        <p className="text-sm text-destructive"><Trans>Could not load templates</Trans></p>
+      )}
       <div className="space-y-1">
         {templates
           .filter((template) => template.id !== "blank")

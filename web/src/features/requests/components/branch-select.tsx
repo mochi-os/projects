@@ -34,7 +34,7 @@ export function BranchSelect({
 }: BranchSelectProps) {
   const { t } = useLingui();
   const placeholderText = placeholder ?? t`Select branch`;
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, isError } = useQuery({
     queryKey: ["branches", repoId],
     queryFn: async () => {
       if (!repoId) return [];
@@ -71,7 +71,12 @@ export function BranchSelect({
             </div>
           </SelectItem>
         ))}
-        {branches.length === 0 && repoId && !isLoading && (
+        {isError && repoId && (
+          <div className="px-2 py-1.5 text-sm text-destructive">
+            <Trans>Could not load branches</Trans>
+          </div>
+        )}
+        {branches.length === 0 && repoId && !isLoading && !isError && (
           <div className="px-2 py-1.5 text-sm text-muted-foreground">
             <Trans>No branches found</Trans>
           </div>

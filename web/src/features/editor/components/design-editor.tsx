@@ -118,14 +118,23 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
     mutationFn: ({ classId, name, requests, title }: { classId: string; name: string; requests?: string; title?: string }) =>
       projectsApi.updateClass(projectId, classId, { name, requests, title }),
     onSuccess: invalidateProject,
+    onError: (error) => {
+      toast.error(getErrorMessage(error, t`Failed to update class`));
+    },
   });
 
   const deleteClassMutation = useMutation({
     mutationFn: (classId: string) => projectsApi.deleteClass(projectId, classId),
-    onSuccess: () => {
+    onSuccess: (_data, classId) => {
       invalidateProject();
-      setSelectedClassId(project.classes[0]?.id || null);
+      // `project` is the pre-delete prop and the invalidated query has not
+      // refetched yet, so [0] is the class that was just removed whenever the
+      // first one is the one being deleted.
+      setSelectedClassId(project.classes.filter((c) => c.id !== classId)[0]?.id || null);
       setEditClassOpen(false);
+    },
+    onError: (error) => {
+      toast.error(getErrorMessage(error, t`Failed to delete class`));
     },
   });
 
@@ -134,6 +143,9 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
     mutationFn: ({ classId, parents }: { classId: string; parents: string[] }) =>
       projectsApi.setHierarchy(projectId, classId, parents),
     onSuccess: invalidateProject,
+    onError: (error) => {
+      toast.error(getErrorMessage(error, t`Failed to update hierarchy`));
+    },
   });
 
   // Field mutations
@@ -150,6 +162,9 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
       rows?: number;
     }) => projectsApi.createField(projectId, classId, { name, fieldtype, rows: rows?.toString() }),
     onSuccess: invalidateProject,
+    onError: (error) => {
+      toast.error(getErrorMessage(error, t`Failed to create field`));
+    },
   });
 
   const updateFieldMutation = useMutation({
@@ -190,6 +205,9 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
       invalidateProject();
       setEditFieldOpen(false);
     },
+    onError: (error) => {
+      toast.error(getErrorMessage(error, t`Failed to delete field`));
+    },
   });
 
   const reorderFieldsMutation = useMutation({
@@ -216,6 +234,9 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
     }) =>
       projectsApi.createOption(projectId, classId, fieldId, { name, colour }),
     onSuccess: invalidateProject,
+    onError: (error) => {
+      toast.error(getErrorMessage(error, t`Failed to create option`));
+    },
   });
 
   const updateOptionMutation = useMutation({
@@ -232,6 +253,9 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
     }) =>
       projectsApi.updateOption(projectId, classId, fieldId, optionId, updates),
     onSuccess: invalidateProject,
+    onError: (error) => {
+      toast.error(getErrorMessage(error, t`Failed to update option`));
+    },
   });
 
   const deleteOptionMutation = useMutation({
@@ -247,6 +271,9 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
     onSuccess: () => {
       invalidateProject();
       setEditOptionOpen(false);
+    },
+    onError: (error) => {
+      toast.error(getErrorMessage(error, t`Failed to delete option`));
     },
   });
 
@@ -329,6 +356,9 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
       return projectsApi.updateView(projectId, viewId, payload);
     },
     onSuccess: invalidateProject,
+    onError: (error) => {
+      toast.error(getErrorMessage(error, t`Failed to update view`));
+    },
   });
 
   const deleteViewMutation = useMutation({

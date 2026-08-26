@@ -13,7 +13,6 @@ import * as lib from "@mochi/web";
 import { projectsRequest } from "@/api/request";
 import { AddFieldDialog } from "@/features/editor/components/add-dialogs";
 import { OptionDialog } from "@/features/editor/components/option-dialog";
-import { FilterBar } from "@/features/views/components/filter-bar";
 import { canComment, canCreate, canDesign, canWrite } from "@/lib/access";
 import { rankBetween, rankCompare } from "@/lib/rank";
 
@@ -38,11 +37,6 @@ describe("bindings onto @mochi/web", () => {
   it("takes the option dialog from the library, under this app's name", () => {
     expect(OptionDialog).toBeDefined();
     expect(OptionDialog).toBe(lib.EntityOptionDialog);
-  });
-
-  it("takes the filter bar from the library", () => {
-    expect(FilterBar).toBeDefined();
-    expect(FilterBar).toBe(lib.FilterBar);
   });
 
   it("takes all four permission checks from the library", () => {

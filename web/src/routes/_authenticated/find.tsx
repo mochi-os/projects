@@ -11,7 +11,6 @@ import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { FolderKanban } from 'lucide-react'
 import { EntityFindPage } from '@mochi/web'
 import { useProjectsStore } from '@/stores/projects-store'
-import { APP_ROUTES } from '@/config/routes'
 import endpoints from '@/api/endpoints'
 import projectsApi from '@/api/projects'
 
@@ -36,7 +35,7 @@ function FindProjectsPage() {
       searchEndpoint={endpoints.projects.search}
       icon={FolderKanban}
       iconClassName="bg-primary/10 text-primary"
-      onOpen={(id) => navigate({ to: APP_ROUTES.PROJECTS.VIEW(id) })}
+      onOpen={(id) => navigate({ to: "/$projectId", params: { projectId: id } })}
       labels={{
         title: t`Find projects`,
         placeholder: t`Search by name, ID, fingerprint, or URL...`,

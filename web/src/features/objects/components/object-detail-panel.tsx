@@ -588,13 +588,13 @@ export function ObjectDetailPanel({
 
             <ObjectAttachments
               projectId={projectId}
-              objectId={objectId!}
+              objectId={objectId}
               readOnly={!canWrite(access)}
             />
 
             <ObjectLinks
               projectId={projectId}
-              objectId={objectId!}
+              objectId={objectId}
               outgoing={data.outgoing}
               incoming={data.incoming}
               prefix={project.project.prefix}
@@ -607,7 +607,7 @@ export function ObjectDetailPanel({
             <div className="max-w-2xl">
               <RequestPanel
                 projectId={projectId}
-                objectId={objectId!}
+                objectId={objectId}
                 requests={data.requests || []}
                 objectTitle={title}
                 objectReadable={object.readable}

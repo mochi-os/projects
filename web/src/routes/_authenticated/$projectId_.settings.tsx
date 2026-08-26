@@ -87,10 +87,14 @@ function ProjectSettingsPage() {
           canEdit={canEdit}
           onSave={(value) => onUpdate({ prefix: value })}
           validate={(value) => {
-            if (value && !/^[A-Za-z0-9-]+$/.test(value))
-              return t`Prefix can only contain letters, numbers, and hyphens`;
-            if (value.length > 10)
-              return t`Prefix must be 10 characters or less`;
+            // Lowercase and 20: what create-project-dialog produces and what
+            // the server stores. This row used to accept mixed case and cap at
+            // 10, so it both refused valid prefixes and admitted ones the
+            // create path cannot make.
+            if (value && !/^[a-z0-9-]+$/.test(value))
+              return t`Prefix can only contain lowercase letters, numbers, and hyphens`;
+            if (value.length > 20)
+              return t`Prefix must be 20 characters or less`;
             return null;
           }}
         />

@@ -8,11 +8,9 @@ import { t } from "@lingui/core/macro";
 import {
   EntityBoardContainer,
   type EntityBoardContainerProps,
-  type EntityDragPreview,
 } from "@mochi/web";
 import type { ProjectObject, ProjectDetails } from "@/types";
 
-export type DragPreview = EntityDragPreview;
 
 type BoardContainerProps = Omit<
   EntityBoardContainerProps<ProjectObject>,

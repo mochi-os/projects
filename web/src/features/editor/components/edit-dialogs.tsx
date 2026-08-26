@@ -93,7 +93,7 @@ export function ClassSheet({
   const [dropIndicator, setDropIndicator] = useState<{ fieldId: string; position: "before" | "after" } | null>(null);
 
   // Create mode state
-  const [pendingParents, setPendingParents] = useState<string[]>([""]);
+  const [pendingParents, setPendingParents] = useState<string[]>([]);
   const [pendingFields, setPendingFields] = useState<PendingField[]>([]);
   const [addFieldOpen, setAddFieldOpen] = useState(false);
   const [mergeRequests, setMergeRequests] = useState(false);
@@ -110,7 +110,10 @@ export function ClassSheet({
       setName(cls.name);
       setMergeRequests(cls.requests?.includes("merge") ?? false);
     }
-  }, [open, cls, mode]);
+    // cls?.id, not cls: the object is fresh on every refetch, so depending on it
+    // re-ran this reset and wiped a name the user was still editing.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open, cls?.id, mode]);
 
   if (mode === "edit" && !cls) return null;
 

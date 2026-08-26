@@ -12,4 +12,3 @@ export {
   ClassSheet,
   EditFieldDialog,
 } from "./edit-dialogs";
-export type { PendingField } from "./edit-dialogs";

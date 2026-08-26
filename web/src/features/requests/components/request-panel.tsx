@@ -9,7 +9,7 @@ import { Trans } from '@lingui/react/macro'
 import { t } from '@lingui/core/macro'
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { ArrowRight, GitMerge, Plus, Trash2, ChevronDown, ChevronRight } from "lucide-react";
-import { Button, Card, ConfirmDialog, Input, Switch, Textarea, cn, Tooltip, TooltipTrigger, TooltipContent, getAppPath } from "@mochi/web";
+import { Button, Card, ConfirmDialog, Input, Switch, Textarea, cn, Tooltip, TooltipTrigger, TooltipContent, getAppPath, toast, getErrorMessage } from "@mochi/web";
 import projectsApi from "@/api/projects";
 import { diffUrl } from "@/lib/diff";
 import type { RequestData } from "@/types";
@@ -55,6 +55,9 @@ export function RequestPanel({
       setAdding(false);
       setExpandedId(response.data.id);
     },
+    onError: (error) => {
+      toast.error(getErrorMessage(error, t`Failed to create merge request`));
+    },
   });
 
   const updateMutation = useMutation({
@@ -63,6 +66,9 @@ export function RequestPanel({
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["object", projectId, objectId] });
+    },
+    onError: (error) => {
+      toast.error(getErrorMessage(error, t`Failed to update merge request`));
     },
   });
 
@@ -74,6 +80,9 @@ export function RequestPanel({
       queryClient.invalidateQueries({ queryKey: ["object", projectId, objectId] });
       setDeleteId(null);
       setExpandedId(null);
+    },
+    onError: (error) => {
+      toast.error(getErrorMessage(error, t`Failed to delete merge request`));
     },
   });
 

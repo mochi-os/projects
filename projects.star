@@ -30,11 +30,23 @@ def decimal(value):
             return False
     return True
 
+def remote_dict(response):
+	"""A remote response is usable only if it is a dict. mochi.remote.request
+	returns whatever the far end encoded, so a hostile or buggy peer answering
+	with a list or a string gives a value with no .get - and subscripting it
+	aborts the handler part-done. Callers keep their existing falsy tests."""
+	return response if type(response) == "dict" else None
+
 # remote_error surfaces a failed mochi.remote.request: core-authored
 # transport failures (marked "transport") become a translated generic
 # error with the detail kept in the server log; far-end app answers
 # pass through unchanged.
 def remote_error(a, response, code=502):
+	# response is None when remote_dict refused the far end's shape; that is a
+	# transport-class failure as far as the caller is concerned.
+	if not response:
+		a.error.label(code, "errors.remote")
+		return
 	if response.get("transport"):
 		mochi.log.info("Remote transport error: %s", response.get("error", ""))
 		a.error.label(response.get("code", code), "errors.remote")
@@ -69,6 +81,21 @@ def registration_send(server, headers, content):
 # log. View access is rechecked per recipient so a revocation cuts the flow even
 # when the subscriber row is stale; a failing recipient triggers the full
 # revalidation.
+# SQLite binds one variable per "?" and the ncruces driver caps them at 32766,
+# so an "object in (?,?,...)" built from a whole project's object list fails
+# outright once the project is large enough. Chunk instead. Every row for one
+# object lands in the same chunk, so per-object ordering survives.
+IN_CHUNK = 500
+
+def rows_in(before, ids, after=""):
+	"""Run a "... in (?,...)" query over ids in chunks and concatenate."""
+	out = []
+	for start in range(0, len(ids), IN_CHUNK):
+		chunk = ids[start:start + IN_CHUNK]
+		placeholders = ",".join(["?" for _ in chunk])
+		out.extend(mochi.db.rows(before + placeholders + after, *chunk) or [])
+	return out
+
 def broadcast_event(project_id, event, data, exclude=None):
 	if not project_id:
 		return
@@ -110,6 +137,16 @@ def subscribers_revalidate(project_id):
 		if fingerprint:
 			mochi.websocket.write(fingerprint, {"type": "project/update", "project": project_id})
 
+def subscriber_drop(entity):
+	"""Drop a subscriber from every project that has one, except where that row
+	is the project's owner anchor. get_owner_identity reads the first
+	subscribers row, so removing the owner's own row silently repoints it at
+	the next subscriber - which is what subscribers_revalidate exempts too."""
+	for row in mochi.db.rows("select project from subscribers where id=?", entity) or []:
+		if get_owner_identity(row["project"]) == entity:
+			continue
+		row_remove("subscribers", ["project", "id"], "project=? and id=?", [row["project"], entity])
+
 # error_message_timeout: core calls this when a fan-out to a subscriber aged
 # out undelivered. Remove them only when the directory shows no host left
 # (locations == 0) - definitely gone, not a transient outage or a server
@@ -117,14 +154,14 @@ def subscribers_revalidate(project_id):
 def error_message_timeout(e):
 	if e.detail.get("locations", 1) != 0:
 		return
-	row_remove("subscribers", ["project", "id"], "id=?", [e.entity])
+	subscriber_drop(e.entity)
 
 # error_subscriber_unreachable: core suspended this subscriber - every
 # delivery across the whole evict window failed with no contradicting
 # success - and asks us to drop them so fan-out stops paying for a dead
 # host. If they return, they re-subscribe.
 def error_subscriber_unreachable(e):
-	row_remove("subscribers", ["project", "id"], "id=?", [e.entity])
+	subscriber_drop(e.entity)
 # error_broadcast_gap: core calls this when an unfillable broadcast gap was
 # skipped and events were permanently lost. broadcast/resync can't replay a
 # pruned gap, so pull a fresh full snapshot.
@@ -159,7 +196,7 @@ def request_resync(project_id):
 	peer = ""
 	if server:
 		peer = mochi.remote.peer(server)
-	schema = mochi.remote.request(project_id, "projects", "schema", {}, peer)
+	schema = remote_dict(mochi.remote.request(project_id, "projects", "schema", {}, peer))
 	if not schema or schema.get("error"):
 		return False
 	insert_schema(project_id, schema)
@@ -1922,7 +1959,7 @@ def action_project_get(a):
 		peer = mochi.remote.peer(server) if server else None
 		# The owner checks the authenticated sender, which remote.request
 		# stamps with this user's identity - no payload needed.
-		response = mochi.remote.request(project_id, "projects", "access/check", {}, peer)
+		response = remote_dict(mochi.remote.request(project_id, "projects", "access/check", {}, peer))
 		if response:
 			if response.get("design"):
 				access = "design"
@@ -2139,10 +2176,10 @@ def forward_to_owner(a, project_id, action, params, handled=None):
 	server_row = mochi.db.row("select server from projects where id=?", project_id)
 	server = server_row["server"] if server_row else ""
 	peer = mochi.remote.peer(server) if server else None
-	result = mochi.remote.request(project_id, "projects", "request", {
+	result = remote_dict(mochi.remote.request(project_id, "projects", "request", {
 		"action": action,
 		"params": params,
-	}, peer)
+	}, peer))
 	if not result:
 		a.error.label(502, "errors.could_not_reach_project_owner")
 		return None
@@ -2328,11 +2365,13 @@ def resolve_project(a):
 	return project_id
 
 def get_project(project_id):
-	"""Get project row or None."""
-	row = mochi.db.row("select * from projects where id=?", project_id)
-	if not row:
-		row = mochi.db.row("select * from projects where fingerprint=?", project_id)
-	return row
+	"""Get project row by id, or None.
+
+	Deliberately no fingerprint fallback: callers pass the result's id onward as
+	project_id, so resolving a fingerprint here would hand back a row whose id
+	is not the value that was asked for. resolve_project() is the fingerprint
+	step, and every caller runs it first."""
+	return mochi.db.row("select * from projects where id=?", project_id)
 
 def require_project(a, level="view"):
 	"""Resolve project, check existence and access. Returns (project_id, project) or (None, None) on error."""
@@ -2402,31 +2441,61 @@ def notify_watchers(object_id, project_id, local_identity, user_id, body):
 	url = "/projects/" + fp + "/" + object_id if fp else "/projects"
 	notify("update/modified", project_id, title, body, url, event_id="update/modified:" + object_id)
 
+def mention_text(value, maximum):
+	"""Clip a peer-supplied notification string. Non-strings become empty
+	rather than aborting the handler, which Starlark has no way to catch."""
+	if type(value) != "string":
+		return ""
+	return value[:maximum]
+
 def notify_mentions(object_id, project_id, content, author_id, author_name):
-	"""Notify subscribers who are @mentioned in a comment."""
+	"""Notify each @mentioned subscriber on their OWN host.
+
+	notify() writes into the calling principal's notification store - there is
+	no recipient argument - so raising it here would tell the comment's author
+	that they had been mentioned and tell the mentioned subscriber nothing.
+	Same shape as forums and feeds: one message per recipient."""
 	content_lower = content.lower()
 	subscribers = mochi.db.rows(
 		"select id, name from subscribers where project=? and id!=?",
 		project_id, author_id)
 	if not subscribers:
 		return
-	mentioned = False
-	for sub in subscribers:
-		name = sub.get("name")
-		if name and ("@[" + name + "]").lower() in content_lower:
-			mentioned = True
-			break
-	if not mentioned:
-		return
 	project = get_project(project_id)
 	obj = mochi.db.row("select number, class from objects where id=?", object_id)
 	if not project or not obj:
 		return
 	title = get_object_display(project, obj, object_id)
-	fp = mochi.entity.fingerprint(project_id)
-	url = "/projects/" + fp + "/" + object_id if fp else "/projects"
 	excerpt = content.strip()[:80]
-	notify("mention", project_id, title, mochi.app.label("notifications.body.mentioned_you", author=author_name, excerpt=excerpt), url, event_id="mention:" + object_id)
+	for sub in subscribers:
+		name = sub.get("name")
+		if name and ("@[" + name + "]").lower() in content_lower:
+			mochi.message.send(
+				{"from": project_id, "to": sub["id"], "service": "projects", "event": "mention/notify"},
+				{"object": object_id, "title": title, "excerpt": excerpt, "author": author_name}
+			)
+
+def event_mention_notify(e):
+	"""Subscriber receives a mention notification from a project owner."""
+	project_id = e.header("from")
+	# Only for a project this user holds. Core authenticates "from" to an entity
+	# the sender owns, so this drops mentions forged from a stranger's project.
+	if not get_project(project_id):
+		return
+	title = mention_text(e.content("title"), 500)
+	excerpt = mention_text(e.content("excerpt"), 200)
+	# This handler runs on the recipient's host, so mochi.app.label resolves in
+	# the recipient's own language.
+	author = mention_text(e.content("author"), 255) or mochi.app.label("notifications.mention.author_unknown")
+	object_id = e.content("object") or ""
+	if object_id and not mochi.text.valid(str(object_id), "id"):
+		object_id = ""
+	# Build the link locally rather than trusting a sender-supplied url, so a
+	# forged mention cannot carry an arbitrary target.
+	fp = mochi.entity.fingerprint(project_id)
+	url = "/projects/" + fp + "/" + object_id if (fp and object_id) else ("/projects/" + fp if fp else "/projects")
+	body = mochi.app.label("notifications.body.mentioned_you", author=author, excerpt=excerpt)
+	notify("mention", project_id, title, body, url, event_id="mention:" + (object_id or project_id))
 
 def would_create_cycle(object_id, new_parent_id):
 	"""Check if setting new_parent_id as parent of object_id would create a cycle."""
@@ -2532,9 +2601,8 @@ def action_object_list(a):
 	# Batch-fetch all values for the returned objects
 	values_map = {}
 	if rows:
-		placeholders = ",".join(["?" for _ in rows])
 		object_ids = [row["id"] for row in rows]
-		all_values = mochi.db.rows("select object, field, value from \"values\" where object in (" + placeholders + ")", *object_ids) or []
+		all_values = rows_in("select object, field, value from \"values\" where object in (", object_ids, ")")
 		for v in all_values:
 			if v["object"] not in values_map:
 				values_map[v["object"]] = {}
@@ -2975,6 +3043,12 @@ def action_object_move(a):
 		a.error.label(400, "errors.field_not_found")
 		return
 
+	# A value with no field would land under the empty field name and cascade
+	# there; every guard above is "if field and ...", so nothing else stops it.
+	if value != None and not field:
+		a.error.label(400, "errors.field_not_found")
+		return
+
 	if value and len(str(value)) > 10000:
 		a.error.label(400, "errors.value_too_long")
 		return
@@ -3403,16 +3477,30 @@ def action_link_delete(a):
 
 # Build a recursive comment tree for an object
 def object_comments(project_id, object_id, parent_id, depth):
+	"""The whole thread for one object, nested from parent_id down.
+
+	One query for every comment on the object and one attachment_list per
+	comment that has attachments, rather than a query per comment per level:
+	the recursive form cost ~2N queries on the comment-list hot path."""
+	rows = mochi.db.rows(
+		"select id, parent, author, name, content, created, edited from comments where object=? order by created desc",
+		object_id
+	) or []
+	children = {}
+	for row in rows:
+		key = row["parent"] or ""
+		children[key] = children.get(key, []) + [row]
+		row["attachments"] = attachment_list(row["id"], project_id) or []
+	return comment_tree(children, parent_id or "", depth)
+
+def comment_tree(children, parent_id, depth):
 	if depth > 100:
 		return []
-	comments = mochi.db.rows(
-		"select id, parent, author, name, content, created, edited from comments where object=? and parent=? order by created desc",
-		object_id, parent_id
-	) or []
-	for i in range(len(comments)):
-		comments[i]["children"] = object_comments(project_id, object_id, comments[i]["id"], depth + 1)
-		comments[i]["attachments"] = attachment_list(comments[i]["id"], project_id) or []
-	return comments
+	out = []
+	for row in children.get(parent_id, []):
+		row["children"] = comment_tree(children, row["id"], depth + 1)
+		out.append(row)
+	return out
 
 # Recursively delete a comment and all its children and attachments
 def delete_comment_tree(comment_id, project_id):
@@ -3480,6 +3568,26 @@ def stream_asset(a, entity_id, service, asset):
 	a.write.stream(s, maximum=caps.get(asset, 10 * 1024 * 1024))
 	return None
 
+def asset_project(a):
+	"""Resolve the routed project for a public asset route, or None to refuse.
+
+	The access check takes an explicit user id because these routes are reached
+	anonymously, and the owner test mirrors require_project: a subscriber holds
+	no mochi.access rows for a remote project, so checking access there refuses
+	every subscribed project outright."""
+	project_id = resolve_project(a)
+	if not project_id:
+		return None
+	project = get_project(project_id)
+	if not project:
+		return None
+	if project["owner"] != 1:
+		return project_id
+	user_id = a.user.identity.id if a.user and a.user.identity else None
+	if not check_project_access(user_id, project_id, "view"):
+		return None
+	return project_id
+
 _PERSON_ASSETS = ("avatar", "banner", "favicon", "style", "information")
 
 def action_comment_asset(a):
@@ -3487,13 +3595,8 @@ def action_comment_asset(a):
 	if asset not in _PERSON_ASSETS:
 		a.error.label(404, "errors.unknown_asset")
 		return
-	# Public route - gate on project view access before resolving anyone.
-	# The helper takes a user id directly, so an anonymous caller passes None
-	# and is tested against the "*" grant alone. NOT require_project(), which
-	# dereferences a.user.identity.id and would 500 on an anonymous request.
-	user_id = a.user.identity.id if a.user and a.user.identity else None
-	project_id = a.input("project")
-	if not check_project_access(user_id, project_id, "view"):
+	project_id = asset_project(a)
+	if not project_id:
 		a.error.label(403, "errors.access_denied")
 		return
 	# Bind the comment to the route project (via its object) so this can't
@@ -3506,13 +3609,8 @@ def action_activity_asset(a):
 	if asset not in _PERSON_ASSETS:
 		a.error.label(404, "errors.unknown_asset")
 		return
-	# Public route - gate on project view access before resolving anyone.
-	# The helper takes a user id directly, so an anonymous caller passes None
-	# and is tested against the "*" grant alone. NOT require_project(), which
-	# dereferences a.user.identity.id and would 500 on an anonymous request.
-	user_id = a.user.identity.id if a.user and a.user.identity else None
-	project_id = a.input("project")
-	if not check_project_access(user_id, project_id, "view"):
+	project_id = asset_project(a)
+	if not project_id:
 		a.error.label(403, "errors.access_denied")
 		return
 	# Bind the activity to the route project (via its object).
@@ -3524,13 +3622,8 @@ def action_user_asset(a):
 	if asset not in _PERSON_ASSETS:
 		a.error.label(404, "errors.unknown_asset")
 		return
-	# Public route - gate on project view access before resolving anyone.
-	# The helper takes a user id directly, so an anonymous caller passes None
-	# and is tested against the "*" grant alone. NOT require_project(), which
-	# dereferences a.user.identity.id and would 500 on an anonymous request.
-	user_id = a.user.identity.id if a.user and a.user.identity else None
-	project_id = a.input("project")
-	if not check_project_access(user_id, project_id, "view"):
+	project_id = asset_project(a)
+	if not project_id:
 		a.error.label(403, "errors.access_denied")
 		return
 	# The subject must appear in the routed project; otherwise this public route
@@ -3539,15 +3632,11 @@ def action_user_asset(a):
 	if not subject:
 		a.error.label(404, "errors.unknown_asset")
 		return
-	known = mochi.db.exists(
-		"select 1 from activity a2 join objects o on a2.object=o.id where a2.user=? and o.project=?",
-		subject, project_id)
-	if not known:
-		known = mochi.db.exists(
-			"select 1 from comments c join objects o on c.object=o.id where c.author=? and o.project=?",
-			subject, project_id)
-	if not known:
-		known = mochi.db.exists("select 1 from subscribers where project=? and id=?", project_id, subject)
+	# Membership only. activity.user and comments.author are both written
+	# verbatim from an uploaded backup by action_data_import, so testing those
+	# would let a design-access user seed any entity id and have this public
+	# route proxy that entity's people assets.
+	known = mochi.db.exists("select 1 from subscribers where project=? and id=?", project_id, subject)
 	if not known:
 		a.error.label(404, "errors.unknown_asset")
 		return
@@ -5388,14 +5477,14 @@ def action_repositories_merge(a):
 		# resolves the repository entity's peer from the directory; the
 		# repositories merge event checks repository/<id> write against the
 		# verified sender.
-		result = mochi.remote.request(repo_id, "repositories", "merge", {
+		result = remote_dict(mochi.remote.request(repo_id, "repositories", "merge", {
 			"source": source,
 			"target": target,
 			"message": message,
 			"method": method,
 			"author_name": a.user.identity.name,
 			"author_email": a.user.username,
-		})
+		}))
 		if not result:
 			a.error.label(502, "errors.could_not_reach_project_owner")
 			return
@@ -5474,8 +5563,8 @@ def action_search(a):
 					# Not in directory — probe remote server via P2P
 					peer = mochi.remote.peer(server)
 					if peer:
-						response = mochi.remote.request(project_id, "projects", "info", {"project": project_id}, peer)
-						if not response.get("error"):
+						response = remote_dict(mochi.remote.request(project_id, "projects", "info", {"project": project_id}, peer))
+						if response and not response.get("error"):
 							results.append({
 								"id": response.get("id", project_id),
 								"name": response.get("name", ""),
@@ -5503,8 +5592,8 @@ def action_search(a):
 					# Not in directory — probe remote server via P2P
 					peer = mochi.remote.peer(server)
 					if peer:
-						response = mochi.remote.request(project_id, "projects", "info", {"project": project_id}, peer)
-						if not response.get("error"):
+						response = remote_dict(mochi.remote.request(project_id, "projects", "info", {"project": project_id}, peer))
+						if response and not response.get("error"):
 							results.append({
 								"id": response.get("id", project_id),
 								"name": response.get("name", ""),
@@ -5570,8 +5659,8 @@ def action_probe(a):
 		if not link_peer or not mochi.text.valid(link_project, "entity"):
 			a.error.label(400, "errors.invalid_data")
 			return
-		response = mochi.remote.request(link_project, "projects", "info", {"project": link_project}, link_peer)
-		if response.get("error"):
+		response = remote_dict(mochi.remote.request(link_project, "projects", "info", {"project": link_project}, link_peer))
+		if not response or response.get("error"):
 			remote_error(a, response, 404)
 			return
 		return {"data": {
@@ -5627,8 +5716,8 @@ def action_probe(a):
 	if not peer:
 		a.error.label(502, "errors.unable_to_connect_to_server")
 		return
-	response = mochi.remote.request(project_id, "projects", "info", {"project": project_id}, peer)
-	if response.get("error"):
+	response = remote_dict(mochi.remote.request(project_id, "projects", "info", {"project": project_id}, peer))
+	if not response or response.get("error"):
 		remote_error(a, response, 404)
 		return
 
@@ -5729,15 +5818,15 @@ def action_subscribe(a):
 		if not peer:
 			a.error.label(502, "errors.unable_to_connect_to_server")
 			return
-		response = mochi.remote.request(project_id, "projects", "info", {"project": project_id}, peer)
-		if response.get("error"):
+		response = remote_dict(mochi.remote.request(project_id, "projects", "info", {"project": project_id}, peer))
+		if not response or response.get("error"):
 			remote_error(a, response, 404)
 			return
 		project_name = response.get("name", "")
 		project_desc = response.get("description", "")
 		project_prefix = response.get("prefix", "PROJ")
 		# Fetch schema so it is available before the frontend navigates
-		schema = mochi.remote.request(project_id, "projects", "schema", {}, peer)
+		schema = remote_dict(mochi.remote.request(project_id, "projects", "schema", {}, peer))
 	else:
 		# Use directory lookup when no server specified
 		directory = mochi.directory.get(project_id)
@@ -5752,12 +5841,12 @@ def action_subscribe(a):
 		if server:
 			peer = mochi.remote.peer(server)
 			if peer:
-				response = mochi.remote.request(project_id, "projects", "info", {"project": project_id}, peer)
+				response = remote_dict(mochi.remote.request(project_id, "projects", "info", {"project": project_id}, peer))
 				if response and not response.get("error"):
 					project_name = response.get("name", project_name)
 					project_desc = response.get("description", "")
 					project_prefix = response.get("prefix", "PROJ")
-				schema = mochi.remote.request(project_id, "projects", "schema", {}, peer)
+				schema = remote_dict(mochi.remote.request(project_id, "projects", "schema", {}, peer))
 
 	now = mochi.time.now()
 	fp = mochi.entity.fingerprint(project_id) or ""
@@ -5899,22 +5988,19 @@ def event_schema(e):
 
 	values_map = {}
 	if object_ids:
-		placeholders = ",".join(["?" for _ in object_ids])
-		all_values = mochi.db.rows("select object, field, value from \"values\" where object in (" + placeholders + ")", *object_ids) or []
+		all_values = rows_in("select object, field, value from \"values\" where object in (", object_ids, ")")
 		for v in all_values:
 			values_map.setdefault(v["object"], {})[v["field"]] = v["value"]
 
 	comments_map = {}
 	if object_ids:
-		placeholders = ",".join(["?" for _ in object_ids])
-		all_comments = mochi.db.rows("select object, id, parent, author, name, content, created, edited from comments where object in (" + placeholders + ") order by created", *object_ids) or []
+		all_comments = rows_in("select object, id, parent, author, name, content, created, edited from comments where object in (", object_ids, ") order by created")
 		for c in all_comments:
 			comments_map.setdefault(c["object"], []).append(c)
 
 	activity_map = {}
 	if object_ids:
-		placeholders = ",".join(["?" for _ in object_ids])
-		all_activity = mochi.db.rows("select object, id, user, action, field, oldvalue, newvalue, created from activity where object in (" + placeholders + ") order by created", *object_ids) or []
+		all_activity = rows_in("select object, id, user, action, field, oldvalue, newvalue, created from activity where object in (", object_ids, ") order by created")
 		for a in all_activity:
 			activity_map.setdefault(a["object"], []).append(a)
 
@@ -5925,7 +6011,7 @@ def event_schema(e):
 		if obj["id"] in comments_map:
 			# Attach per-comment attachment metadata before nesting.
 			for c in comments_map[obj["id"]]:
-				c_atts = attachment_list(c["id"])
+				c_atts = attachment_list(c["id"], project_id)
 				if c_atts:
 					c["attachments"] = c_atts
 			obj["comments"] = comments_map[obj["id"]]
@@ -5933,7 +6019,7 @@ def event_schema(e):
 			obj["activity"] = activity_map[obj["id"]]
 		# Inline object-level attachment metadata so subscribers don't have to
 		# rely on real-time events arriving after the initial schema dump.
-		obj_atts = attachment_list(obj["id"])
+		obj_atts = attachment_list(obj["id"], project_id)
 		if obj_atts:
 			obj["attachments"] = obj_atts
 		objects.append(obj)
@@ -6417,6 +6503,8 @@ def event_sync_batch(e):
 				value_merge(obj["id"], field, value)
 		# Comments
 		for c in (obj.get("comments") or []):
+			if not sync_element(c, ["id"]):
+				continue
 			# Skip a comment id already owned by another project's object.
 			if foreign_comment(c["id"], project_id):
 				continue
@@ -6424,6 +6512,8 @@ def event_sync_batch(e):
 				comment_merge({"id": c["id"], "object": obj["id"], "parent": c.get("parent", ""), "author": c.get("author", ""), "name": c.get("name", ""), "content": c.get("content", ""), "created": c.get("created", now), "edited": c.get("edited", 0)})
 		# Activity history
 		for act in (obj.get("activity") or []):
+			if not sync_element(act, ["id"]):
+				continue
 			mochi.db.execute(
 				"insert or ignore into activity (id, object, user, action, field, oldvalue, newvalue, created) values (?, ?, ?, ?, ?, ?, ?, ?)",
 				act["id"], obj["id"], act.get("user", ""), act.get("action", ""),
@@ -6433,6 +6523,8 @@ def event_sync_batch(e):
 
 	# Process links
 	for l in (e.content("links") or []):
+		if not sync_element(l, ["source", "target"]):
+			continue
 		if not link_endpoints_bound(project_id, l["source"], l["target"]):
 			continue
 		row_merge("links", ["source", "target", "linktype"], {"project": project_id, "source": l["source"], "target": l["target"], "linktype": l.get("linktype", "relates"), "created": now})
@@ -7056,10 +7148,13 @@ def event_class_create(e):
 	project_id = verify_subscription(e)
 	if not project_id:
 		return
-	row_merge("classes", ["project", "id"], {"id": e.content("id"), "project": project_id, "name": e.content("name") or "", "rank": e.content("rank") or 0, "requests": e.content("requests") or "", "title": e.content("title") or ""})
+	class_id = e.content("id")
+	if not class_id:
+		return
+	row_merge("classes", ["project", "id"], {"id": class_id, "project": project_id, "name": e.content("name") or "", "rank": e.content("rank") or 0, "requests": e.content("requests") or "", "title": e.content("title") or ""})
 	fp = mochi.entity.fingerprint(project_id)
 	if fp:
-		mochi.websocket.write(fp, {"type": "class/create", "project": project_id, "id": e.content("id")})
+		mochi.websocket.write(fp, {"type": "class/create", "project": project_id, "id": class_id})
 
 # Type updated
 def event_class_update(e):
@@ -7459,11 +7554,11 @@ def action_request_update(a):
 		a.error.label(400, "errors.invalid_status")
 		return
 
-	if repository:
+	if repository != None:
 		row_set("requests", ["id"], "id=?", [request_id], {"repository": repository, "updated": now})
-	if source:
+	if source != None:
 		row_set("requests", ["id"], "id=?", [request_id], {"source": source, "updated": now})
-	if target:
+	if target != None:
 		row_set("requests", ["id"], "id=?", [request_id], {"target": target, "updated": now})
 	if status:
 		row_set("requests", ["id"], "id=?", [request_id], {"status": status, "updated": now})
@@ -7608,7 +7703,6 @@ def event_request_delete(e):
 # Required access level for each forwarded action
 REQUEST_LEVELS = {
 	"comment/create": "comment", "comment/update": "comment", "comment/delete": "comment",
-	"watcher/add": "view", "watcher/remove": "view",
 	"object/create": "write", "object/update": "write", "object/delete": "write",
 	"object/move": "write", "values/set": "write", "value/set": "write",
 	"link/create": "write", "link/delete": "write",
@@ -7665,10 +7759,6 @@ def event_request(e):
 		result = do_comment_update(project_id, project, params, user_id)
 	elif action == "comment/delete":
 		result = do_comment_delete(project_id, project, params, user_id)
-	elif action == "watcher/add":
-		result = do_watcher_add(project_id, params, user_id)
-	elif action == "watcher/remove":
-		result = do_watcher_remove(project_id, params, user_id)
 	elif action == "object/create":
 		result = do_object_create(project_id, project, params, user_id)
 	elif action == "object/update":
@@ -7835,27 +7925,6 @@ def do_comment_delete(project_id, project, params, user_id):
 	return {"success": True}
 
 # Watcher helpers
-def do_watcher_add(project_id, params, user_id):
-	object_id = params.get("object")
-	if not object_id:
-		return {"error": "errors.object_id_required", "code": 400}
-	row = mochi.db.row("select id from objects where id=? and project=?", object_id, project_id)
-	if not row:
-		return {"error": "errors.object_not_found", "code": 404}
-	now = mochi.time.now()
-	row_merge("watchers", ["object", "user"], {"object": object_id, "user": user_id, "created": now})
-	return {"success": True, "watching": True}
-
-def do_watcher_remove(project_id, params, user_id):
-	object_id = params.get("object")
-	if not object_id:
-		return {"error": "errors.object_id_required", "code": 400}
-	row = mochi.db.row("select id from objects where id=? and project=?", object_id, project_id)
-	if not row:
-		return {"error": "errors.object_not_found", "code": 404}
-	row_remove("watchers", ["object", "user"], "object=? and user=?", [object_id, user_id])
-	return {"success": True, "watching": False}
-
 # Object helpers
 def do_object_create(project_id, project, params, user_id):
 	obj_class = params.get("class")
@@ -7968,7 +8037,7 @@ def do_object_update(project_id, project, params, user_id):
 		"project": project_id, "id": object_id,
 		"parent": parent if parent != None else row["parent"],
 		"class": new_class if new_class and new_class != row["class"] else row["class"],
-		"user": user_id
+		"user": user_id, "updated": now
 	})
 	# Notify owner if watching
 	owner_id = get_owner_identity(project_id)
@@ -7995,9 +8064,9 @@ def do_object_move(project_id, project, params, user_id):
 	row = mochi.db.row("select id, class, rank from objects where id=? and project=?", object_id, project_id)
 	if not row:
 		return {"error": "errors.object_not_found", "code": 404}
-	if check_length(params.get("value"), 50000):
+	if check_length(params.get("value"), 10000):
 		return {"error": "errors.value_too_long", "code": 400}
-	if check_length(params.get("row_value"), 50000):
+	if check_length(params.get("row_value"), 10000):
 		return {"error": "errors.value_too_long", "code": 400}
 	old_rank = row["rank"]
 	obj_class = row["class"]
@@ -8005,6 +8074,9 @@ def do_object_move(project_id, project, params, user_id):
 	if check_length(field, 100):
 		return {"error": "errors.field_name_too_long", "code": 400}
 	if field and not mochi.db.exists("select 1 from fields where project=? and class=? and id=?", project_id, obj_class, field):
+		return {"error": "errors.field_not_found", "code": 400}
+	# Same as the HTTP twin: a value with no field is not a move.
+	if params.get("value") != None and not field:
 		return {"error": "errors.field_not_found", "code": 400}
 	value = params.get("value")
 	new_rank = params.get("rank")
@@ -8560,26 +8632,36 @@ def do_field_update(project_id, project, params):
 	# Starlark has no try/except: .strip() on a number or list, or int() on a
 	# non-numeric string, aborts do_field_update outright - the field is not
 	# updated and nothing says so.
-	if name != None and type(name) == "string":
-		row_set("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, field_id], {"name": name.strip()})
-	if flags != None:
-		row_set("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, field_id], {"flags": flags})
-	if multi != None:
-		multi_val = 1 if multi == "1" or multi == "true" else 0
+	# Each value is written twice - once to the row, once to the broadcast
+	# payload below - so validate once and carry the result. Re-testing
+	# "!= None" alone for the payload reintroduced the very abort these guards
+	# exist to prevent, on a call that had already committed the other fields.
+	name_val = name.strip() if (name != None and type(name) == "string") else None
+	flags_val = flags if flags != None else None
+	multi_val = (1 if multi == "1" or multi == "true" else 0) if multi != None else None
+	card_val = (1 if card == "1" or card == "true" else 0) if card != None else None
+	position_val = position if (position != None and type(position) in ["int", "float", "string"]) else None
+	# decimal(), not isdigit(): isdigit() accepts Arabic-Indic and Devanagari
+	# digits that int() then rejects, turning the guard's own else branch into
+	# the abort it exists to prevent.
+	rows_num = None
+	if type(rows_val) in ["int", "float"]:
+		rows_num = int(rows_val)
+	elif type(rows_val) == "string" and mochi.text.valid(rows_val, "integer"):
+		rows_num = int(rows_val)
+
+	if name_val != None:
+		row_set("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, field_id], {"name": name_val})
+	if flags_val != None:
+		row_set("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, field_id], {"flags": flags_val})
+	if multi_val != None:
 		row_set("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, field_id], {"multi": multi_val})
-	if card != None:
-		card_val = 1 if card == "1" or card == "true" else 0
+	if card_val != None:
 		row_set("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, field_id], {"card": card_val})
-	if position != None and type(position) in ["int", "float", "string"]:
-		row_set("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, field_id], {"position": position})
-	if rows_val != None:
-		# decimal(), not isdigit(): isdigit() accepts Arabic-Indic and
-		# Devanagari digits that int() then rejects, turning the guard's own
-		# else branch into the abort it exists to prevent.
-		if type(rows_val) in ["int", "float"]:
-			row_set("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, field_id], {"rows": int(rows_val)})
-		elif type(rows_val) == "string" and mochi.text.valid(rows_val, "integer"):
-			row_set("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, field_id], {"rows": int(rows_val)})
+	if position_val != None:
+		row_set("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, field_id], {"position": position_val})
+	if rows_num != None:
+		row_set("fields", ["project", "class", "id"], "project=? and class=? and id=?", [project_id, class_id, field_id], {"rows": rows_num})
 	# Rename field ID if requested
 	new_id = params.get("id")
 	if new_id != None and type(new_id) == "string":
@@ -8594,18 +8676,18 @@ def do_field_update(project_id, project, params):
 	update_data = {"project": project_id, "class": class_id, "id": new_id if (new_id != None and new_id and new_id != field_id) else field_id}
 	if new_id != None and new_id and new_id != field_id:
 		update_data["old_id"] = field_id
-	if name != None:
-		update_data["name"] = name.strip()
-	if flags != None:
-		update_data["flags"] = flags
-	if multi != None:
-		update_data["multi"] = 1 if multi == "1" or multi == "true" else 0
-	if card != None:
-		update_data["card"] = 1 if card == "1" or card == "true" else 0
-	if position != None:
-		update_data["position"] = position
-	if rows_val != None:
-		update_data["rows"] = int(rows_val)
+	if name_val != None:
+		update_data["name"] = name_val
+	if flags_val != None:
+		update_data["flags"] = flags_val
+	if multi_val != None:
+		update_data["multi"] = multi_val
+	if card_val != None:
+		update_data["card"] = card_val
+	if position_val != None:
+		update_data["position"] = position_val
+	if rows_num != None:
+		update_data["rows"] = rows_num
 	broadcast_event(project_id, "field/update", update_data)
 	return {"success": True}
 
@@ -8903,15 +8985,15 @@ def _subscribe_to_project(user, project_id, server):
 		peer = mochi.remote.peer(server)
 		if not peer:
 			return {"error": "errors.unable_to_connect_to_server", "code": 502}
-		response = mochi.remote.request(project_id, "projects", "info", {"project": project_id}, peer)
-		if response.get("error"):
+		response = remote_dict(mochi.remote.request(project_id, "projects", "info", {"project": project_id}, peer))
+		if not response or response.get("error"):
 			if response.get("transport"):
 				return {"error": "errors.remote", "code": response.get("code", 502)}
 			return {"error": response["error"], "code": response.get("code", 404)}
 		project_name = response.get("name", "")
 		project_desc = response.get("description", "")
 		project_prefix = response.get("prefix", "PROJ")
-		schema = mochi.remote.request(project_id, "projects", "schema", {}, peer)
+		schema = remote_dict(mochi.remote.request(project_id, "projects", "schema", {}, peer))
 	else:
 		directory = mochi.directory.get(project_id)
 		if directory == None or len(directory) == 0:
@@ -8921,12 +9003,12 @@ def _subscribe_to_project(user, project_id, server):
 		if server:
 			peer = mochi.remote.peer(server)
 			if peer:
-				response = mochi.remote.request(project_id, "projects", "info", {"project": project_id}, peer)
+				response = remote_dict(mochi.remote.request(project_id, "projects", "info", {"project": project_id}, peer))
 				if response and not response.get("error"):
 					project_name = response.get("name", project_name)
 					project_desc = response.get("description", "")
 					project_prefix = response.get("prefix", "PROJ")
-				schema = mochi.remote.request(project_id, "projects", "schema", {}, peer)
+				schema = remote_dict(mochi.remote.request(project_id, "projects", "schema", {}, peer))
 
 	now = mochi.time.now()
 	fp = mochi.entity.fingerprint(project_id) or ""
@@ -8953,10 +9035,10 @@ def _forward_to_owner(user, project_id, action_name, params):
 	server_row = mochi.db.row("select server from projects where id=?", project_id)
 	server = server_row["server"] if server_row else ""
 	peer = mochi.remote.peer(server) if server else None
-	result = mochi.remote.request(project_id, "projects", "request", {
+	result = remote_dict(mochi.remote.request(project_id, "projects", "request", {
 		"action": action_name,
 		"params": params,
-	}, peer)
+	}, peer))
 	if not result:
 		return {"error": "errors.could_not_reach_project_owner", "code": 502}
 	if result.get("error"):
@@ -9091,7 +9173,7 @@ def _check_project(user, project_id):
 	# Probe the owner even when subscribed: membership proves neither present
 	# reachability nor that the write grant survived (access/set replaces a
 	# subject's rules, so a downgrade after subscribing is invisible locally).
-	access = mochi.remote.request(project_id, "projects", "access/check", {}, peer)
+	access = remote_dict(mochi.remote.request(project_id, "projects", "access/check", {}, peer))
 	if access.get("error"):
 		if access.get("transport"):
 			return {"error": "errors.remote", "code": access.get("code", 502)}

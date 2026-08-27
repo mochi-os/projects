@@ -14,7 +14,7 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. js-lingui-explicit-id
-#: ../../../lib/web/src/lib/error-normalizer.ts:225
+#: ../../../lib/web/src/lib/error-normalizer.ts:215
 msgid "Please check your internet connection and try again."
 msgstr "براہ کرم اپنا انٹرنیٹ کنکشن چیک کریں اور دوبارہ کوشش کریں۔"
 
@@ -35,7 +35,7 @@ msgstr "(پھیلائیں)"
 msgid "(from {0})"
 msgstr "({0} سے)"
 
-#: src/features/editor/components/edit-dialogs.tsx:327
+#: src/features/editor/components/edit-dialogs.tsx:330
 msgid "(itself)"
 msgstr "(خود)"
 
@@ -48,11 +48,6 @@ msgstr "[سیٹ نہیں]"
 msgid "{0, plural, one {# conflicting file} other {# conflicting files}}"
 msgstr "{0, plural, one {# متضاد فائل} other {# متضاد فائلیں}}"
 
-#. placeholder {0}: selectedValues.size
-#: ../../../lib/web/src/components/data-table/faceted-filter.tsx:66
-msgid "{0, plural, one {# selected} other {# selected}}"
-msgstr "{0, plural, one {# منتخب} other {# منتخب}}"
-
 #. placeholder {0}: String(name)
 #: src/routes/_authenticated/$projectId/design.tsx:46
 msgid "{0} - Design"
@@ -64,18 +59,13 @@ msgid "{0} behind"
 msgstr "{0} پیچھے"
 
 #. placeholder {0}: files.length
-#: src/features/requests/components/diff-stats.tsx:68
-#: src/features/requests/components/diff-viewer.tsx:421
+#: src/features/requests/components/diff-stats.tsx:74
+#: src/features/requests/components/diff-viewer.tsx:419
 msgid "{0} files changed"
 msgstr "{0} فائلیں تبدیل ہوئیں"
 
-#. placeholder {0}: item.label
-#: ../../../lib/web/src/components/config-drawer.tsx:160
-msgid "{0} option preview"
-msgstr "{0} آپشن کا پیش منظر"
-
 #. placeholder {0}: String(name)
-#: src/routes/_authenticated/$projectId_.settings.tsx:105
+#: src/routes/_authenticated/$projectId_.settings.tsx:109
 msgid "{0} settings"
 msgstr "{0} سیٹنگز"
 
@@ -106,22 +96,6 @@ msgstr "{entityLabel} کا نام ضروری ہے"
 #: ../../../lib/web/src/components/game/game-draw-offer-banner.tsx:29
 msgid "{opponentName} offered a draw"
 msgstr "{opponentName} نے ڈرا کی پیشکش کی"
-
-#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:203
-msgid "{selectedCount, plural, one {{entityName} selected} other {{manyName} selected}}"
-msgstr "{selectedCount, plural, one {{entityName} منتخب} other {{manyName} منتخب}}"
-
-#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:45
-msgid "{selectedCount, plural, one {# {entityName} selected. Bulk actions toolbar is available.} other {# {manyName} selected. Bulk actions toolbar is available.}}"
-msgstr "{selectedCount, plural, one {# {entityName} منتخب۔ بلک کارروائی ٹول بار دستیاب ہے۔} other {# {manyName} منتخب۔ بلک کارروائی ٹول بار دستیاب ہے۔}}"
-
-#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:195
-msgid "{selectedCount, plural, one {# selected} other {# selected}}"
-msgstr "{selectedCount, plural, one {# منتخب} other {# منتخب}}"
-
-#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:142
-msgid "{selectedCount, plural, one {Bulk actions for # selected {entityName}} other {Bulk actions for # selected {manyName}}}"
-msgstr "{selectedCount, plural, one {# منتخب {entityName} کے لیے بلک کارروائیاں} other {# منتخب {manyName} کے لیے بلک کارروائیاں}}"
 
 #: ../../../lib/web/src/components/attachment-composer.tsx:248
 #: ../../../lib/web/src/components/ui/upload-progress.tsx:52
@@ -170,7 +144,7 @@ msgstr "مطلق (تاریخ اور وقت)"
 msgid "Accept"
 msgstr "قبول کریں"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:100
+#: src/routes/_authenticated/$projectId_.settings.tsx:104
 msgid "Access"
 msgstr "رسائی"
 
@@ -178,54 +152,38 @@ msgstr "رسائی"
 msgid "Access denied"
 msgstr "رسائی مسترد"
 
-#: ../../../lib/web/src/features/errors/forbidden.tsx:16
-msgid "Access Forbidden"
-msgstr "رسائی ممنوع"
-
 #: ../../../lib/web/src/features/access/access-list.tsx:197
 msgid "Access level"
 msgstr "رسائی کی سطح"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:139
+#: src/routes/_authenticated/$projectId_.settings.tsx:143
 msgid "Access level updated"
 msgstr "رسائی کی سطح اپ ڈیٹ ہو گئی"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:130
+#: src/routes/_authenticated/$projectId_.settings.tsx:134
 msgid "Access management"
 msgstr "رسائی کا انتظام"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:136
+#: src/routes/_authenticated/$projectId_.settings.tsx:140
 msgid "Access removed"
 msgstr "رسائی ہٹا دی گئی"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:133
+#: src/routes/_authenticated/$projectId_.settings.tsx:137
 msgid "Access set for {subjectName}"
 msgstr "{subjectName} کے لیے رسائی مقرر کی گئی"
-
-#: ../../../lib/web/src/features/accounts/account-manager.tsx:216
-msgid "Account added"
-msgstr "اکاؤنٹ شامل کر دیا گیا"
-
-#: ../../../lib/web/src/features/accounts/account-manager.tsx:232
-msgid "Account removed"
-msgstr "اکاؤنٹ ہٹا دیا گیا"
 
 #: ../../../lib/web/src/features/accounts/account-add.tsx:139
 msgid "Account type"
 msgstr "اکاؤنٹ کی قسم"
 
-#: ../../../lib/web/src/features/accounts/account-manager.tsx:242
-msgid "Account verified"
-msgstr "اکاؤنٹ تصدیق شدہ"
-
 #: src/features/objects/components/object-detail-panel.tsx:398
 msgid "Activity"
 msgstr "سرگرمی"
 
-#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:712
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:720
 #: ../../../lib/web/src/features/access/access-dialog.tsx:332
 #: ../../../lib/web/src/features/accounts/account-add.tsx:209
-#: src/features/requests/components/request-panel.tsx:104
+#: src/features/requests/components/request-panel.tsx:113
 msgid "Add"
 msgstr "شامل کریں"
 
@@ -246,25 +204,20 @@ msgid "Add access"
 msgstr "رسائی شامل کریں"
 
 #: ../../../lib/web/src/features/accounts/account-add.tsx:132
-#: ../../../lib/web/src/features/accounts/account-manager.tsx:288
 msgid "Add account"
 msgstr "اکاؤنٹ شامل کریں"
-
-#: ../../../lib/web/src/features/accounts/account-manager.tsx:297
-msgid "Add an account to receive notifications and use services."
-msgstr "نوٹیفکیشنز وصول کرنے اور سروسز استعمال کرنے کے لیے اکاؤنٹ شامل کریں۔"
 
 #: ../../../lib/web/src/components/attachment-composer.tsx:291
 msgid "Add caption"
 msgstr "کیپشن شامل کریں"
 
-#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:682
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:690
 msgid "Add checklist item"
 msgstr "چیک لسٹ آئٹم شامل کریں"
 
-#: src/features/editor/components/design-editor.tsx:511
-#: src/features/editor/components/edit-dialogs.tsx:220
-#: src/features/editor/components/edit-dialogs.tsx:431
+#: src/features/editor/components/design-editor.tsx:541
+#: src/features/editor/components/edit-dialogs.tsx:223
+#: src/features/editor/components/edit-dialogs.tsx:434
 msgid "Add class"
 msgstr "کلاس شامل کریں"
 
@@ -274,21 +227,17 @@ msgstr "کالم شامل کریں"
 
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:105
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:233
-#: src/features/editor/components/edit-dialogs.tsx:426
+#: src/features/editor/components/edit-dialogs.tsx:429
 msgid "Add field"
 msgstr "فیلڈ شامل کریں"
 
-#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:700
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:708
 msgid "Add item..."
 msgstr "آئٹم شامل کریں..."
 
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx:320
 msgid "Add link"
 msgstr "لنک شامل کریں"
-
-#: ../../../lib/web/src/features/accounts/account-picker.tsx:102
-msgid "Add new account"
-msgstr "نیا اکاؤنٹ شامل کریں"
 
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:215
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:220
@@ -298,18 +247,13 @@ msgstr "نیا اکاؤنٹ شامل کریں"
 msgid "Add option"
 msgstr "آپشن شامل کریں"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:131
+#: src/routes/_authenticated/$projectId_.settings.tsx:135
 msgid "Add rule"
 msgstr "قاعدہ شامل کریں"
 
 #: ../../../lib/web/src/components/post-tags.tsx:137
-#: ../../../lib/web/src/components/tag-input.tsx:40
 msgid "Add tag..."
 msgstr "ٹیگ شامل کریں..."
-
-#: ../../../lib/web/src/components/layout/team-switcher.tsx:83
-msgid "Add team/app"
-msgstr "ٹیم/ایپ شامل کریں"
 
 #: ../../../lib/web/src/features/accounts/account-add.tsx:175
 msgid "Add to existing notifications"
@@ -319,7 +263,7 @@ msgstr "موجودہ نوٹیفکیشنز میں شامل کریں"
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:513
 #: ../../../lib/web/src/components/view-tabs.tsx:87
 #: ../../../lib/web/src/components/view-tabs.tsx:93
-#: src/features/editor/components/design-editor.tsx:462
+#: src/features/editor/components/design-editor.tsx:492
 msgid "Add view"
 msgstr "ویو شامل کریں"
 
@@ -327,17 +271,9 @@ msgstr "ویو شامل کریں"
 msgid "Adding..."
 msgstr "شامل کر رہے ہیں..."
 
-#: ../../../lib/web/src/components/config-drawer.tsx:72
-msgid "Adjust the appearance and layout to suit your preferences."
-msgstr "اپنی ترجیحات کے مطابق ظاہری شکل اور layout کو ایڈجسٹ کریں۔"
-
 #: ../../../lib/web/src/components/ui/sort-selector.tsx:41
 msgid "AI"
 msgstr "AI"
-
-#: ../../../lib/web/src/components/notifications-dropdown.tsx:163
-msgid "All"
-msgstr "تمام"
 
 #: src/components/layout/projects-layout.tsx:35
 msgid "All projects"
@@ -348,11 +284,11 @@ msgstr "تمام پروجیکٹس"
 msgid "Allow anyone to search for {0}"
 msgstr "کسی کو بھی {0} تلاش کرنے کی اجازت دیں"
 
-#: src/features/projects/components/create-project-dialog.tsx:382
+#: src/features/projects/components/create-project-dialog.tsx:387
 msgid "Allow anyone to search for project"
 msgstr "کسی کو بھی پروجیکٹ تلاش کرنے کی اجازت دیں"
 
-#: src/features/editor/components/edit-dialogs.tsx:346
+#: src/features/editor/components/edit-dialogs.tsx:349
 msgid "Allow merge requests"
 msgstr "Merge requests کی اجازت دیں"
 
@@ -364,7 +300,7 @@ msgstr "ترتیب کی اجازت دیں"
 msgid "An error occurred"
 msgstr "ایک خرابی پیش آئی"
 
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:275
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:266
 msgid "An unexpected error occurred"
 msgstr "ایک غیر متوقع خرابی پیش آئی"
 
@@ -373,11 +309,11 @@ msgid "Android push"
 msgstr "Android پش"
 
 #: ../../../lib/web/src/features/access/access-list.tsx:45
-#: ../../../lib/web/src/features/access/types.ts:42
+#: ../../../lib/web/src/features/access/types.ts:36
 msgid "Anyone"
 msgstr "کوئی بھی"
 
-#: ../../../lib/web/src/features/access/types.ts:41
+#: ../../../lib/web/src/features/access/types.ts:35
 msgid "Anyone who is logged in"
 msgstr "کوئی بھی جو لاگ ان ہو"
 
@@ -402,7 +338,7 @@ msgstr "کیا آپ واقعی \"{name}\" کالم کو حذف کرنا چاہت
 msgid "Are you sure you want to delete this comment? This will also delete all replies."
 msgstr "کیا آپ واقعی اس تبصرے کو حذف کرنا چاہتے ہیں؟ یہ تمام جوابات کو بھی حذف کر دے گا۔"
 
-#: src/features/requests/components/request-panel.tsx:132
+#: src/features/requests/components/request-panel.tsx:141
 msgid "Are you sure you want to delete this merge request?"
 msgstr "کیا آپ واقعی اس merge request کو حذف کرنا چاہتے ہیں؟"
 
@@ -413,10 +349,6 @@ msgstr "کیا آپ واقعی لاگ آؤٹ کرنا چاہتے ہیں؟ آپ �
 #: src/features/projects/pages/projects-list-page.tsx:40
 msgid "Are you sure you want to unsubscribe from this project?"
 msgstr "کیا آپ واقعی اس پروجیکٹ سے ان سبسکرائب کرنا چاہتے ہیں؟"
-
-#: ../../../lib/web/src/components/data-table/column-header.tsx:59
-msgid "Asc"
-msgstr "بڑھتا ہوا"
 
 #: ../../../lib/web/src/components/ui/sort-direction-button.tsx:27
 msgid "Ascending"
@@ -431,7 +363,7 @@ msgid "Attach reply files"
 msgstr "جواب کی فائلیں منسلک کریں"
 
 #: ../../../lib/web/src/features/access/access-list.tsx:46
-#: ../../../lib/web/src/features/access/types.ts:41
+#: ../../../lib/web/src/features/access/types.ts:35
 msgid "Authenticated users"
 msgstr "تصدیق شدہ صارفین"
 
@@ -452,17 +384,16 @@ msgid "Avatar for {name}"
 msgstr "{name} کے لیے اوتار"
 
 #: ../../../lib/web/src/components/place-picker.tsx:156
-#: src/features/projects/components/create-project-dialog.tsx:537
+#: src/features/projects/components/create-project-dialog.tsx:546
 msgid "Back"
 msgstr "واپس"
 
-#: ../../../lib/web/src/features/errors/forbidden.tsx:28
 #: ../../../lib/web/src/features/errors/not-found-error.tsx:28
 #: ../../../lib/web/src/features/errors/unauthorized-error.tsx:28
 msgid "Back to home"
 msgstr "گھر واپس جائیں"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:101
+#: src/routes/_authenticated/$projectId_.settings.tsx:105
 #: src/routes/_authenticated/$projectId/design.tsx:47
 msgid "Back to project"
 msgstr "پروجیکٹ پر واپس"
@@ -476,7 +407,7 @@ msgstr "پروجیکٹس پر واپس"
 msgid "Banner"
 msgstr "بینر"
 
-#: src/features/requests/components/diff-viewer.tsx:449
+#: src/features/requests/components/diff-viewer.tsx:447
 msgid "Binary file not shown"
 msgstr "بائنری فائل نہیں دکھائی گئی"
 
@@ -485,8 +416,8 @@ msgstr "بائنری فائل نہیں دکھائی گئی"
 msgid "Blocked by"
 msgstr "بلاک کردہ"
 
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:227
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:237
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:242
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:252
 msgid "Blocked navigation to untrusted link"
 msgstr "غیر بھروسہ مند لنک پر نیویگیشن مسدود"
 
@@ -515,7 +446,7 @@ msgstr "براؤزر نوٹیفکیشنز"
 msgid "Built-in templates"
 msgstr "بلٹ ان templates"
 
-#: src/features/editor/components/edit-dialogs.tsx:309
+#: src/features/editor/components/edit-dialogs.tsx:312
 msgid "Can be child of"
 msgstr "کا بچہ ہو سکتا ہے"
 
@@ -533,7 +464,7 @@ msgstr "کا بچہ ہو سکتا ہے"
 #: ../../../lib/web/src/features/access/access-list.tsx:268
 #: ../../../lib/web/src/features/accounts/account-add.tsx:201
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:91
-#: src/features/projects/components/create-project-dialog.tsx:448
+#: src/features/projects/components/create-project-dialog.tsx:453
 #: src/routes/_authenticated/$projectId/design.tsx:61
 #: src/routes/_authenticated/$projectId/index.tsx:143
 msgid "Cancel"
@@ -556,18 +487,14 @@ msgstr "خودکار طریقے سے ضم نہیں کیا جا سکتا"
 msgid "Caption"
 msgstr "کیپشن"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:97
+#: ../../../lib/web/src/components/notification-category-button.tsx:99
 msgid "Category for these notifications"
 msgstr "ان نوٹیفکیشنز کے لیے زمرہ"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:78
-#: ../../../lib/web/src/components/notification-category-button.tsx:89
+#: ../../../lib/web/src/components/notification-category-button.tsx:80
+#: ../../../lib/web/src/components/notification-category-button.tsx:91
 msgid "Change notification category"
 msgstr "نوٹیفکیشن کا زمرہ تبدیل کریں"
-
-#: ../../../lib/web/src/components/notifications-dropdown.tsx:198
-msgid "Check \"All\" to see your past notifications."
-msgstr "اپنی پچھلی اطلاعات دیکھنے کے لیے \"سب\" منتخب کریں۔"
 
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:137
 msgid "Checkbox"
@@ -585,32 +512,16 @@ msgstr "چیک لسٹ"
 msgid "Choose a game from the sidebar or start a new one."
 msgstr "سائڈ بار سے گیم منتخب کریں یا نئی شروع کریں۔"
 
-#: src/features/projects/components/create-project-dialog.tsx:329
+#: src/features/projects/components/create-project-dialog.tsx:334
 msgid "Choose a template"
 msgstr "ٹیمپلیٹ منتخب کریں"
-
-#: ../../../lib/web/src/components/config-drawer.tsx:329
-msgid "Choose between default expanded, compact icon-only, or full layout mode"
-msgstr "ڈیفالٹ توسیع شدہ، کمپیکٹ صرف آئیکن، یا مکمل layout موڈ میں سے منتخب کریں"
-
-#: ../../../lib/web/src/components/config-drawer.tsx:271
-msgid "Choose between inset, floating, or standard sidebar layout"
-msgstr "Inset، floating، یا معیاری سائڈ بار layout میں سے منتخب کریں"
-
-#: ../../../lib/web/src/components/config-drawer.tsx:372
-msgid "Choose between left-to-right or right-to-left site direction"
-msgstr "بائیں سے دائیں یا دائیں سے بائیں سائٹ کی سمت میں سے منتخب کریں"
-
-#: ../../../lib/web/src/components/config-drawer.tsx:227
-msgid "Choose between system preference, light mode, or dark mode"
-msgstr "سسٹم کی ترجیح، light موڈ، یا dark موڈ میں سے منتخب کریں"
 
 #: ../../../lib/web/src/components/language-picker.tsx:264
 #: ../../../lib/web/src/components/language-picker.tsx:271
 msgid "Choose language"
 msgstr "زبان منتخب کریں"
 
-#: src/features/editor/components/design-editor.tsx:506
+#: src/features/editor/components/design-editor.tsx:536
 msgid "Classes"
 msgstr "کلاسز"
 
@@ -627,29 +538,15 @@ msgstr "صاف کریں"
 msgid "Clear all"
 msgstr "سب صاف کریں"
 
-#: ../../../lib/web/src/components/data-table/faceted-filter.tsx:144
-msgid "Clear filters"
-msgstr "Filters صاف کریں"
-
 #: ../../../lib/web/src/components/search-input.tsx:26
 msgid "Clear search"
 msgstr "تلاش صاف کریں"
 
-#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:170
-#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:174
-msgid "Clear selection"
-msgstr "انتخاب صاف کریں"
-
-#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:171
-#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:178
-msgid "Clear selection (Escape)"
-msgstr "انتخاب صاف کریں (Escape)"
-
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:501
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:506
 #: ../../../lib/web/src/components/ui/dialog.tsx:78
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:470
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:473
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:468
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:471
 #: ../../../lib/web/src/components/ui/sheet.tsx:79
 msgid "Close"
 msgstr "بند کریں"
@@ -658,8 +555,8 @@ msgstr "بند کریں"
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:113
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:263
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:267
-#: src/features/editor/components/edit-dialogs.tsx:225
-#: src/features/editor/components/edit-dialogs.tsx:229
+#: src/features/editor/components/edit-dialogs.tsx:228
+#: src/features/editor/components/edit-dialogs.tsx:232
 msgid "Close dialog"
 msgstr "ڈائیلاگ بند کریں"
 
@@ -668,8 +565,8 @@ msgstr "ڈائیلاگ بند کریں"
 msgid "Close navigation"
 msgstr "نیویگیشن بند کریں"
 
-#: ../../../lib/web/src/components/layout/right-panel.tsx:265
-#: ../../../lib/web/src/components/layout/right-panel.tsx:268
+#: ../../../lib/web/src/components/layout/right-panel.tsx:234
+#: ../../../lib/web/src/components/layout/right-panel.tsx:237
 msgid "Close panel"
 msgstr "پینل بند کریں"
 
@@ -709,10 +606,6 @@ msgstr "کالمز کا گروپ بنائیں"
 msgid "Comfortable"
 msgstr "آرام دہ"
 
-#: ../../../lib/web/src/components/coming-soon.tsx:12
-msgid "Coming Soon!"
-msgstr "جلد آرہا ہے!"
-
 #: ../../../lib/web/src/components/ui/command.tsx:34
 msgid "Command Palette"
 msgstr "کمانڈ پیلیٹ"
@@ -726,8 +619,8 @@ msgstr "تبصرے کے اعمال"
 msgid "Comment and view"
 msgstr "تبصرہ اور دیکھیں"
 
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:433
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:445
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:431
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:443
 msgid "Comments"
 msgstr "تبصرے"
 
@@ -736,12 +629,11 @@ msgstr "تبصرے"
 msgid "Comments ({0})"
 msgstr "تبصرے ({0})"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:316
 #: ../../../lib/web/src/lib/preference-utils.ts:90
 msgid "Compact"
 msgstr "کمپیکٹ"
 
-#: src/features/editor/components/edit-dialogs.tsx:221
+#: src/features/editor/components/edit-dialogs.tsx:224
 msgid "Configure class settings"
 msgstr "کلاس کی ترتیبات configure کریں"
 
@@ -761,10 +653,6 @@ msgstr "تصدیق کریں"
 #: ../../../lib/web/src/lib/chat-ui.ts:18
 msgid "Connected"
 msgstr "کنیکٹ ہو گیا"
-
-#: ../../../lib/web/src/features/accounts/account-manager.tsx:191
-msgid "Connected accounts"
-msgstr "کنیکٹ شدہ اکاؤنٹس"
 
 #: ../../../lib/web/src/lib/chat-ui.ts:21
 msgid "Connecting..."
@@ -802,11 +690,33 @@ msgstr "Clipboard پر کاپی ہو گیا"
 msgid "Copy"
 msgstr "کاپی کریں"
 
+#: src/routes/$projectId.diff.tsx:73
+msgid "Could not change the view style"
+msgstr ""
+
+#: src/features/requests/components/branch-select.tsx:76
+msgid "Could not load branches"
+msgstr "برانچز لوڈ کرنے میں ناکامی"
+
+#: src/features/requests/components/repository-select.tsx:64
+msgid "Could not load repositories"
+msgstr ""
+
+#: src/features/projects/components/create-project-dialog.tsx:79
+#: src/features/projects/components/create-project-dialog.tsx:482
+#: src/routes/_authenticated/$projectId/design.tsx:102
+msgid "Could not load templates"
+msgstr ""
+
+#: src/features/requests/components/diff-stats.tsx:59
+msgid "Could not load the diff"
+msgstr ""
+
 #: ../../../lib/web/src/features/document/document-page.tsx:82
 msgid "Could not load this document. Please try again later."
 msgstr "یہ دستاویز لوڈ نہیں ہو سکی۔ براہ کرم بعد میں دوبارہ کوشش کریں۔"
 
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:113
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:128
 msgid "Couldn't load notifications"
 msgstr "اطلاعات لوڈ نہیں ہو سکیں"
 
@@ -839,7 +749,7 @@ msgstr "{0} بنائیں"
 msgid "Create a new item in this project"
 msgstr "اس پروجیکٹ میں نیا آئٹم بنائیں"
 
-#: src/features/projects/components/create-project-dialog.tsx:331
+#: src/features/projects/components/create-project-dialog.tsx:336
 #: src/features/projects/pages/projects-list-page.tsx:37
 msgid "Create a new project"
 msgstr "نیا پروجیکٹ بنائیں"
@@ -850,10 +760,10 @@ msgid "Create new item"
 msgstr "نیا آئٹم بنائیں"
 
 #: src/components/layout/projects-layout.tsx:37
-#: src/features/projects/components/create-project-dialog.tsx:319
-#: src/features/projects/components/create-project-dialog.tsx:329
-#: src/features/projects/components/create-project-dialog.tsx:452
-#: src/features/projects/components/create-project-dialog.tsx:540
+#: src/features/projects/components/create-project-dialog.tsx:324
+#: src/features/projects/components/create-project-dialog.tsx:334
+#: src/features/projects/components/create-project-dialog.tsx:457
+#: src/features/projects/components/create-project-dialog.tsx:549
 msgid "Create project"
 msgstr "پروجیکٹ بنائیں"
 
@@ -866,14 +776,14 @@ msgstr "بنانا، ترمیم کرنا، تبصرہ کرنا اور دیکھن
 msgid "Created"
 msgstr "بنایا گیا"
 
-#: src/features/projects/components/create-project-dialog.tsx:127
+#: src/features/projects/components/create-project-dialog.tsx:132
 msgid "Creating project..."
 msgstr "پروجیکٹ بنایا جا رہا ہے..."
 
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:656
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:258
-#: src/features/projects/components/create-project-dialog.tsx:452
-#: src/features/projects/components/create-project-dialog.tsx:540
+#: src/features/projects/components/create-project-dialog.tsx:457
+#: src/features/projects/components/create-project-dialog.tsx:549
 msgid "Creating..."
 msgstr "بن رہا ہے..."
 
@@ -885,26 +795,19 @@ msgstr "موجودہ مقام"
 msgid "Custom"
 msgstr "اپنی مرضی کا"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:219
-#: ../../../lib/web/src/components/theme-switch.tsx:52
 #: ../../../lib/web/src/lib/preference-utils.ts:15
 msgid "Dark"
 msgstr "Dark"
 
-#: ../../../lib/web/src/components/profile-dropdown.tsx:87
-#: ../../../lib/web/src/components/profile-dropdown.tsx:123
-msgid "Dark mode"
-msgstr "Dark موڈ"
-
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:259
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:250
 msgid "Data conflict"
 msgstr "ڈیٹا کا تصادم"
 
 #. placeholder {0}: imported.data?.objects ?? 0
 #. placeholder {1}: imported.data?.comments ?? 0
 #. placeholder {2}: imported.data?.links ?? 0
-#: src/features/projects/components/create-project-dialog.tsx:146
-#: src/features/projects/components/create-project-dialog.tsx:176
+#: src/features/projects/components/create-project-dialog.tsx:151
+#: src/features/projects/components/create-project-dialog.tsx:181
 msgid "Data imported ({0, plural, one {# object} other {# objects}}, {1, plural, one {# comment} other {# comments}}, {2, plural, one {# link} other {# links}})"
 msgstr "ڈیٹا درآمد ہو گیا ({0, plural, one {# آبجیکٹ} other {# آبجیکٹس}}, {1, plural, one {# تبصرہ} other {# تبصرے}}, {2, plural, one {# لنک} other {# لنکس}})"
 
@@ -915,10 +818,6 @@ msgstr "تاریخ"
 #: ../../../lib/web/src/components/game/game-draw-offer-banner.tsx:41
 msgid "Decline"
 msgstr "انکار کریں"
-
-#: ../../../lib/web/src/components/config-drawer.tsx:311
-msgid "Default"
-msgstr "ڈیفالٹ"
 
 #: ../../../lib/web/src/features/accounts/account-add.tsx:185
 msgid "Default AI account"
@@ -938,8 +837,8 @@ msgstr "ڈیفالٹ ترتیب"
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:252
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:314
 #: src/features/objects/components/object-detail-panel.tsx:643
-#: src/features/requests/components/request-panel.tsx:133
-#: src/routes/_authenticated/$projectId_.settings.tsx:120
+#: src/features/requests/components/request-panel.tsx:142
+#: src/routes/_authenticated/$projectId_.settings.tsx:124
 msgid "Delete"
 msgstr "حذف کریں"
 
@@ -947,7 +846,7 @@ msgstr "حذف کریں"
 msgid "Delete attachment"
 msgstr "اٹیچمنٹ حذف کریں"
 
-#: src/features/editor/components/edit-dialogs.tsx:246
+#: src/features/editor/components/edit-dialogs.tsx:249
 msgid "Delete class"
 msgstr "کلاس حذف کریں"
 
@@ -969,13 +868,13 @@ msgstr "فیلڈ حذف کریں"
 msgid "Delete item"
 msgstr "آئٹم حذف کریں"
 
-#: src/features/requests/components/request-panel.tsx:131
-#: src/features/requests/components/request-panel.tsx:394
-#: src/features/requests/components/request-panel.tsx:399
-#: src/features/requests/components/request-panel.tsx:419
-#: src/features/requests/components/request-panel.tsx:424
-#: src/features/requests/components/request-panel.tsx:441
-#: src/features/requests/components/request-panel.tsx:446
+#: src/features/requests/components/request-panel.tsx:140
+#: src/features/requests/components/request-panel.tsx:403
+#: src/features/requests/components/request-panel.tsx:408
+#: src/features/requests/components/request-panel.tsx:428
+#: src/features/requests/components/request-panel.tsx:433
+#: src/features/requests/components/request-panel.tsx:450
+#: src/features/requests/components/request-panel.tsx:455
 msgid "Delete merge request"
 msgstr "Merge request حذف کریں"
 
@@ -989,12 +888,12 @@ msgstr "آپشن حذف کریں"
 msgid "Delete option {0}"
 msgstr "آپشن {0} حذف کریں"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:119
-#: src/routes/_authenticated/$projectId_.settings.tsx:122
+#: src/routes/_authenticated/$projectId_.settings.tsx:123
+#: src/routes/_authenticated/$projectId_.settings.tsx:126
 msgid "Delete project"
 msgstr "پروجیکٹ حذف کریں"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:121
+#: src/routes/_authenticated/$projectId_.settings.tsx:125
 msgid "Delete project?"
 msgstr "پروجیکٹ حذف کریں؟"
 
@@ -1006,21 +905,17 @@ msgstr "ویو حذف کریں"
 msgid "Delete your account on the old server"
 msgstr "پرانے سرور پر اپنا اکاؤنٹ حذف کریں"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:127
+#: src/routes/_authenticated/$projectId_.settings.tsx:131
 msgid "Deleting project..."
 msgstr "پروجیکٹ حذف کیا جا رہا ہے..."
-
-#: ../../../lib/web/src/components/data-table/column-header.tsx:63
-msgid "Desc"
-msgstr "گھٹتا ہوا"
 
 #: ../../../lib/web/src/components/ui/sort-direction-button.tsx:27
 msgid "Descending"
 msgstr "نزولی"
 
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:83
-#: src/features/requests/components/request-panel.tsx:306
-#: src/routes/_authenticated/$projectId_.settings.tsx:112
+#: src/features/requests/components/request-panel.tsx:315
+#: src/routes/_authenticated/$projectId_.settings.tsx:116
 msgid "Description"
 msgstr "تفصیل"
 
@@ -1030,7 +925,7 @@ msgstr "تفصیل"
 msgid "Design"
 msgstr "ڈیزائن"
 
-#: src/features/projects/components/create-project-dialog.tsx:177
+#: src/features/projects/components/create-project-dialog.tsx:182
 #: src/routes/_authenticated/$projectId/design.tsx:54
 msgid "Design imported"
 msgstr "ڈیزائن درآمد ہو گیا"
@@ -1054,17 +949,13 @@ msgstr "تفصیلات کا پینل"
 msgid "Detect from web browser"
 msgstr "ویب براؤزر سے پتہ لگائیں"
 
-#: src/features/requests/components/diff-stats.tsx:86
+#: src/features/requests/components/diff-stats.tsx:92
 msgid "Diff"
 msgstr "فرق"
 
 #: src/routes/$projectId.diff.tsx:41
 msgid "Diff: {source} → {target}"
 msgstr "فرق: {source} → {target}"
-
-#: ../../../lib/web/src/components/config-drawer.tsx:341
-msgid "Direction"
-msgstr "سمت"
 
 #: ../../../lib/web/src/components/person-picker.tsx:214
 msgid "Directory"
@@ -1092,13 +983,13 @@ msgstr "برخاست کریں"
 msgid "Dismiss board hint"
 msgstr "بورڈ کا اشارہ برخاست کریں"
 
-#: ../../../lib/web/src/components/ui/sidebar.tsx:238
+#: ../../../lib/web/src/components/ui/sidebar.tsx:258
 msgid "Displays the mobile sidebar."
 msgstr "موبائل سائڈبار دکھاتا ہے۔"
 
 #: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:305
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:518
-#: src/features/editor/components/edit-dialogs.tsx:436
+#: src/features/editor/components/edit-dialogs.tsx:439
 #: src/features/objects/components/object-detail-panel.tsx:472
 msgid "Done"
 msgstr "مکمل"
@@ -1108,8 +999,8 @@ msgid "Double click on a column to add content"
 msgstr "مواد شامل کرنے کے لیے کالم پر ڈبل کلک کریں"
 
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:239
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:454
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:464
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:452
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:462
 msgid "Download"
 msgstr "ڈاؤن لوڈ"
 
@@ -1117,7 +1008,7 @@ msgstr "ڈاؤن لوڈ"
 msgid "Download backup first"
 msgstr "پہلے بیک اپ ڈاؤن لوڈ کریں"
 
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:100
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:98
 msgid "Download failed"
 msgstr "ڈاؤن لوڈ ناکام"
 
@@ -1126,8 +1017,8 @@ msgstr "ڈاؤن لوڈ ناکام"
 msgid "Downloaded {filename}"
 msgstr "{filename} ڈاؤن لوڈ ہو گئی"
 
-#: src/features/requests/components/request-panel.tsx:272
-#: src/features/requests/components/request-panel.tsx:344
+#: src/features/requests/components/request-panel.tsx:281
+#: src/features/requests/components/request-panel.tsx:353
 msgid "Draft"
 msgstr "ڈرافٹ"
 
@@ -1139,7 +1030,7 @@ msgstr "ترتیب تبدیل کرنے کے لیے کالم گھسیٹیں"
 msgid "Duplicates"
 msgstr "نقل کرتا ہے"
 
-#: ../../../lib/web/src/lib/preference-utils.ts:141
+#: ../../../lib/web/src/lib/preference-utils.ts:134
 msgid "Dyslexia-friendly"
 msgstr "ڈسلیکسیا کے لیے موزوں"
 
@@ -1156,7 +1047,7 @@ msgstr "{label} میں ترمیم کریں"
 msgid "Edit caption"
 msgstr "کیپشن میں ترمیم کریں"
 
-#: src/features/editor/components/edit-dialogs.tsx:220
+#: src/features/editor/components/edit-dialogs.tsx:223
 msgid "Edit class"
 msgstr "کلاس میں ترمیم"
 
@@ -1202,7 +1093,7 @@ msgstr "اپنی ای میل میں موجود کوڈ درج کریں"
 msgid "Enter your authenticator code"
 msgstr "اپنا اتھینٹیکیٹر کوڈ درج کریں"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:113
+#: src/routes/_authenticated/$projectId_.settings.tsx:117
 msgid "Entity ID"
 msgstr "اینٹٹی ID"
 
@@ -1233,17 +1124,9 @@ msgstr "ڈیزائن ایکسپورٹ کریں"
 msgid "External URL"
 msgstr "بیرونی URL"
 
-#: ../../../lib/web/src/lib/preference-utils.ts:131
+#: ../../../lib/web/src/lib/preference-utils.ts:124
 msgid "Extra large"
 msgstr "بہت بڑا"
-
-#: ../../../lib/web/src/features/accounts/account-manager.tsx:225
-msgid "Failed to add account"
-msgstr "اکاؤنٹ شامل کرنے میں ناکامی"
-
-#: ../../../lib/web/src/components/tag-input.tsx:39
-msgid "Failed to add tag"
-msgstr "ٹیگ شامل کرنے میں ناکامی"
 
 #: src/features/requests/components/merge-status.tsx:48
 msgid "Failed to check merge status"
@@ -1258,7 +1141,8 @@ msgstr "کاپی کرنے میں ناکامی"
 msgid "Failed to create class"
 msgstr "کلاس بنانے میں ناکامی"
 
-#: src/features/editor/components/design-editor.tsx:601
+#: src/features/editor/components/design-editor.tsx:166
+#: src/features/editor/components/design-editor.tsx:631
 msgid "Failed to create field"
 msgstr "فیلڈ بنانے میں ناکامی"
 
@@ -1268,15 +1152,20 @@ msgstr "فیلڈ بنانے میں ناکامی"
 msgid "Failed to create link"
 msgstr "لنک بنانے میں ناکامی"
 
-#: src/features/editor/components/design-editor.tsx:621
+#: src/features/requests/components/request-panel.tsx:59
+msgid "Failed to create merge request"
+msgstr ""
+
+#: src/features/editor/components/design-editor.tsx:238
+#: src/features/editor/components/design-editor.tsx:651
 msgid "Failed to create option"
 msgstr "آپشن بنانے میں ناکامی"
 
-#: src/features/projects/components/create-project-dialog.tsx:129
+#: src/features/projects/components/create-project-dialog.tsx:134
 msgid "Failed to create project"
 msgstr "پروجیکٹ بنانے میں ناکامی"
 
-#: src/features/editor/components/design-editor.tsx:289
+#: src/features/editor/components/design-editor.tsx:316
 msgid "Failed to create view"
 msgstr "منظر بنانے میں ناکامی"
 
@@ -1288,19 +1177,35 @@ msgstr "حذف کرنے میں ناکامی"
 msgid "Failed to delete attachment"
 msgstr "اٹیچمنٹ حذف کرنے میں ناکامی"
 
+#: src/features/editor/components/design-editor.tsx:137
+msgid "Failed to delete class"
+msgstr "کلاس حذف کرنے میں ناکامی"
+
 #: ../../../lib/web/src/components/entity/entity-comment-list.tsx:191
 msgid "Failed to delete comment"
 msgstr "تبصرہ حذف کرنے میں ناکامی"
+
+#: src/features/editor/components/design-editor.tsx:209
+msgid "Failed to delete field"
+msgstr "فیلڈ حذف کرنے میں ناکامی"
 
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx:159
 msgid "Failed to delete link"
 msgstr "لنک حذف کرنے میں ناکامی"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:129
+#: src/features/requests/components/request-panel.tsx:85
+msgid "Failed to delete merge request"
+msgstr ""
+
+#: src/features/editor/components/design-editor.tsx:276
+msgid "Failed to delete option"
+msgstr "آپشن حذف کرنے میں ناکامی"
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:133
 msgid "Failed to delete project"
 msgstr "پروجیکٹ حذف کرنے میں ناکامی"
 
-#: src/features/editor/components/design-editor.tsx:341
+#: src/features/editor/components/design-editor.tsx:371
 msgid "Failed to delete view"
 msgstr "منظر حذف کرنے میں ناکامی"
 
@@ -1316,8 +1221,8 @@ msgstr "ڈیزائن ایکسپورٹ کرنے میں ناکامی"
 msgid "Failed to get RSS token"
 msgstr "RSS ٹوکن حاصل کرنے میں ناکامی"
 
-#: src/features/projects/components/create-project-dialog.tsx:147
-#: src/features/projects/components/create-project-dialog.tsx:178
+#: src/features/projects/components/create-project-dialog.tsx:152
+#: src/features/projects/components/create-project-dialog.tsx:183
 msgid "Failed to import data"
 msgstr "ڈیٹا درآمد نہیں ہو سکا"
 
@@ -1333,7 +1238,7 @@ msgstr "لوڈ کرنے میں ناکامی"
 msgid "Failed to load history"
 msgstr "تاریخ لوڈ کرنے میں ناکامی"
 
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:340
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:338
 msgid "Failed to load image"
 msgstr "تصویر لوڈ نہیں ہو سکی"
 
@@ -1361,7 +1266,7 @@ msgstr "پروجیکٹس لوڈ کرنے میں ناکامی"
 msgid "Failed to load recommended projects"
 msgstr "تجویز کردہ منصوبے لوڈ کرنا ناکام رہا"
 
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:340
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:338
 msgid "Failed to load video"
 msgstr "ویڈیو لوڈ نہیں ہو سکی"
 
@@ -1377,24 +1282,20 @@ msgstr "منتقل کرنے میں ناکام"
 msgid "Failed to post comment"
 msgstr "تبصرہ پوسٹ کرنے میں ناکامی"
 
-#: src/features/projects/components/create-project-dialog.tsx:256
+#: src/features/projects/components/create-project-dialog.tsx:261
 #: src/routes/_authenticated/$projectId/design.tsx:60
 msgid "Failed to read file"
 msgstr "فائل پڑھنے میں ناکامی"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:137
+#: src/routes/_authenticated/$projectId_.settings.tsx:141
 msgid "Failed to remove access"
 msgstr "رسائی ہٹانے میں ناکامی"
 
-#: ../../../lib/web/src/features/accounts/account-manager.tsx:234
-msgid "Failed to remove account"
-msgstr "اکاؤنٹ ہٹانے میں ناکامی"
-
-#: src/features/editor/components/design-editor.tsx:200
+#: src/features/editor/components/design-editor.tsx:218
 msgid "Failed to reorder fields"
 msgstr "فیلڈز کی ترتیب تبدیل کرنے میں ناکامی"
 
-#: src/features/editor/components/design-editor.tsx:350
+#: src/features/editor/components/design-editor.tsx:380
 msgid "Failed to reorder views"
 msgstr "مناظر کی ترتیب تبدیل کرنے میں ناکامی"
 
@@ -1410,17 +1311,13 @@ msgstr "محفوظ کرنے میں ناکامی"
 msgid "Failed to search projects"
 msgstr "منصوبوں کی تلاش ناکام رہی"
 
-#: ../../../lib/web/src/features/accounts/account-manager.tsx:257
-msgid "Failed to send verification code"
-msgstr "تصدیقی کوڈ بھیجنے میں ناکامی"
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:134
+#: src/routes/_authenticated/$projectId_.settings.tsx:138
 msgid "Failed to set access level"
 msgstr "رسائی کی سطح مقرر کرنے میں ناکامی"
 
 #: src/features/projects/components/inline-project-search.tsx:69
 #: src/features/projects/components/recommended-projects.tsx:44
-#: src/routes/_authenticated/find.tsx:46
+#: src/routes/_authenticated/find.tsx:45
 msgid "Failed to subscribe"
 msgstr "سبسکرائب کرنے میں ناکامی"
 
@@ -1429,21 +1326,41 @@ msgstr "سبسکرائب کرنے میں ناکامی"
 msgid "Failed to unsubscribe"
 msgstr "ان سبسکرائب کرنے میں ناکامی"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:140
+#: src/routes/_authenticated/$projectId_.settings.tsx:144
 msgid "Failed to update access level"
 msgstr "رسائی کی سطح اپڈیٹ کرنے میں ناکامی"
+
+#: src/features/editor/components/design-editor.tsx:122
+msgid "Failed to update class"
+msgstr "کلاس اپڈیٹ کرنے میں ناکامی"
 
 #: ../../../lib/web/src/components/entity/entity-comment-list.tsx:174
 msgid "Failed to update comment"
 msgstr "تبصرہ اپڈیٹ کرنے میں ناکامی"
 
-#: src/features/editor/components/design-editor.tsx:182
+#: src/features/editor/components/design-editor.tsx:197
 msgid "Failed to update field"
 msgstr "فیلڈ اپڈیٹ کرنے میں ناکامی"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:118
+#: src/features/editor/components/design-editor.tsx:147
+msgid "Failed to update hierarchy"
+msgstr ""
+
+#: src/features/requests/components/request-panel.tsx:71
+msgid "Failed to update merge request"
+msgstr ""
+
+#: src/features/editor/components/design-editor.tsx:257
+msgid "Failed to update option"
+msgstr "آپشن اپڈیٹ کرنے میں ناکامی"
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:122
 msgid "Failed to update project"
 msgstr "پروجیکٹ اپڈیٹ کرنے میں ناکامی"
+
+#: src/features/editor/components/design-editor.tsx:360
+msgid "Failed to update view"
+msgstr "منظر اپڈیٹ کرنے میں ناکامی"
 
 #: src/features/objects/components/object-detail-panel.tsx:209
 msgid "Failed to update watching"
@@ -1453,7 +1370,7 @@ msgstr "نگرانی اپ ڈیٹ کرنے میں ناکام"
 msgid "Failed to upload attachment"
 msgstr "اٹیچمنٹ اپ لوڈ کرنے میں ناکامی"
 
-#: src/features/editor/components/edit-dialogs.tsx:352
+#: src/features/editor/components/edit-dialogs.tsx:355
 msgid "Fields"
 msgstr "فیلڈز"
 
@@ -1463,16 +1380,12 @@ msgstr "فیلڈز"
 msgid "Files"
 msgstr "فائلیں"
 
-#: ../../../lib/web/src/components/data-table/toolbar.tsx:30
-msgid "Filter..."
-msgstr "فلٹر..."
-
 #: src/components/layout/projects-layout.tsx:36
-#: src/routes/_authenticated/find.tsx:41
+#: src/routes/_authenticated/find.tsx:40
 msgid "Find projects"
 msgstr "پروجیکٹس تلاش کریں"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:114
+#: src/routes/_authenticated/$projectId_.settings.tsx:118
 msgid "Fingerprint"
 msgstr "فنگر پرنٹ"
 
@@ -1487,10 +1400,6 @@ msgstr "فلیگز"
 #: ../../../lib/web/src/lib/preference-utils.ts:111
 msgid "Flat"
 msgstr "ہموار"
-
-#: ../../../lib/web/src/components/config-drawer.tsx:258
-msgid "Floating"
-msgstr "فلوٹنگ"
 
 #: ../../../lib/web/src/lib/preference-utils.ts:58
 msgid "Friday"
@@ -1511,41 +1420,15 @@ msgstr "فائل سے"
 #: ../../../lib/web/src/lib/preference-utils.ts:89
 #: ../../../lib/web/src/lib/preference-utils.ts:99
 #: ../../../lib/web/src/lib/preference-utils.ts:110
-#: ../../../lib/web/src/lib/preference-utils.ts:119
-#: ../../../lib/web/src/lib/preference-utils.ts:127
-#: ../../../lib/web/src/lib/preference-utils.ts:138
+#: ../../../lib/web/src/lib/preference-utils.ts:120
+#: ../../../lib/web/src/lib/preference-utils.ts:131
 msgid "From theme"
 msgstr "تھیم سے"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:321
-msgid "Full layout"
-msgstr "مکمل لے آؤٹ"
-
-#: ../../../lib/web/src/features/errors/forbidden.tsx:26
 #: ../../../lib/web/src/features/errors/not-found-error.tsx:26
 #: ../../../lib/web/src/features/errors/unauthorized-error.tsx:26
 msgid "Go back"
 msgstr "واپس جائیں"
-
-#: ../../../lib/web/src/components/data-table/pagination.tsx:82
-msgid "Go to first page"
-msgstr "پہلے صفحے پر جائیں"
-
-#: ../../../lib/web/src/components/data-table/pagination.tsx:128
-msgid "Go to last page"
-msgstr "آخری صفحے پر جائیں"
-
-#: ../../../lib/web/src/components/data-table/pagination.tsx:119
-msgid "Go to next page"
-msgstr "اگلے صفحے پر جائیں"
-
-#: ../../../lib/web/src/components/data-table/pagination.tsx:106
-msgid "Go to page {pageNumber}"
-msgstr "صفحہ {pageNumber} پر جائیں"
-
-#: ../../../lib/web/src/components/data-table/pagination.tsx:91
-msgid "Go to previous page"
-msgstr "پچھلے صفحے پر جائیں"
 
 #: ../../../lib/web/src/features/access/access-dialog.tsx:162
 msgid "Group"
@@ -1559,14 +1442,6 @@ msgstr "گروپ بندی بلحاظ"
 #: ../../../lib/web/src/features/access/access-list.tsx:68
 msgid "Group: {0}"
 msgstr "گروپ: {0}"
-
-#: ../../../lib/web/src/components/data-table/column-header.tsx:70
-msgid "Hide"
-msgstr "چھپائیں"
-
-#: ../../../lib/web/src/components/password-input.tsx:27
-msgid "Hide password"
-msgstr "پاس ورڈ چھپائیں"
 
 #: ../../../lib/web/src/components/audit-timeline.tsx:61
 msgid "History"
@@ -1584,16 +1459,16 @@ msgid "Hot"
 msgstr "ہاٹ"
 
 #: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:152
-#: src/features/editor/components/edit-dialogs.tsx:269
+#: src/features/editor/components/edit-dialogs.tsx:272
 msgid "ID"
 msgstr "آئی ڈی"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:110
+#: src/routes/_authenticated/$projectId_.settings.tsx:114
 msgid "Identity"
 msgstr "شناخت"
 
 #. placeholder {0}: currentMedia.name
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:318
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:316
 msgid "Image viewer: {0}"
 msgstr "تصویر ناظر: {0}"
 
@@ -1606,16 +1481,16 @@ msgstr "امپیریل"
 msgid "Import design"
 msgstr "ڈیزائن امپورٹ کریں"
 
-#: src/features/projects/components/create-project-dialog.tsx:392
+#: src/features/projects/components/create-project-dialog.tsx:397
 msgid "Import from backup (optional)"
 msgstr "بیک اپ سے درآمد کریں (اختیاری)"
 
-#: src/features/projects/components/create-project-dialog.tsx:144
-#: src/features/projects/components/create-project-dialog.tsx:173
+#: src/features/projects/components/create-project-dialog.tsx:149
+#: src/features/projects/components/create-project-dialog.tsx:178
 msgid "Importing data..."
 msgstr "ڈیٹا درآمد ہو رہا ہے..."
 
-#: ../../../lib/web/src/features/access/types.ts:42
+#: ../../../lib/web/src/features/access/types.ts:36
 msgid "Including anonymous users"
 msgstr "گمنام صارفین سمیت"
 
@@ -1627,30 +1502,18 @@ msgstr "ابتدائی حروف کا اوتار"
 msgid "Initials avatar for {name}"
 msgstr "{name} کے لیے ابتدائی حروف کا اوتار"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:253
-msgid "Inset"
-msgstr "انسیٹ"
-
 #: ../../../lib/web/src/components/ui/sort-selector.tsx:42
 msgid "Interests"
 msgstr "دلچسپیاں"
 
-#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:545
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:550
 msgid "Invalid date"
 msgstr "غلط تاریخ"
 
-#: src/features/projects/components/create-project-dialog.tsx:251
+#: src/features/projects/components/create-project-dialog.tsx:256
 #: src/routes/_authenticated/$projectId/design.tsx:59
 msgid "Invalid JSON file"
 msgstr "غلط JSON فائل"
-
-#: ../../../lib/web/src/components/tag-input.tsx:38
-msgid "Invalid tag: letters, numbers, spaces, hyphens, and slashes only (max 50 chars)"
-msgstr "غلط ٹیگ: صرف حروف، ہندسے، خالی جگہیں، ہائفن اور سلیش (زیادہ سے زیادہ 50 حروف)"
-
-#: ../../../lib/web/src/features/accounts/account-manager.tsx:245
-msgid "Invalid verification code"
-msgstr "غلط تصدیقی کوڈ"
 
 #: ../../../lib/web/src/features/errors/not-found-error.tsx:18
 msgid "It seems like the page you're looking for <0/>does not exist or might have been removed."
@@ -1669,30 +1532,18 @@ msgid "Keyboard shortcuts"
 msgstr "کی بورڈ شارٹ کٹس"
 
 #: ../../../lib/web/src/lib/preference-utils.ts:103
-#: ../../../lib/web/src/lib/preference-utils.ts:130
+#: ../../../lib/web/src/lib/preference-utils.ts:123
 msgid "Large"
 msgstr "بڑا"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:287
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:306
 msgid "Layout"
 msgstr "لے آؤٹ"
-
-#: ../../../lib/web/src/components/learn-more.tsx:33
-#: ../../../lib/web/src/components/learn-more.tsx:38
-msgid "Learn more"
-msgstr "مزید جانیں"
-
-#: ../../../lib/web/src/components/config-drawer.tsx:355
-msgid "Left to Right"
-msgstr "بائیں سے دائیں"
 
 #: ../../../lib/web/src/components/post-tags.tsx:72
 msgid "Letters, numbers, spaces, and hyphens only"
 msgstr "صرف حروف، اعداد، خالی جگہ اور ہائفن"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:214
-#: ../../../lib/web/src/components/theme-switch.tsx:45
 #: ../../../lib/web/src/lib/preference-utils.ts:14
 msgid "Light"
 msgstr "لائٹ"
@@ -1730,7 +1581,7 @@ msgstr "آئٹم لوڈ ہو رہا ہے"
 msgid "Loading item details"
 msgstr "آئٹم کی تفصیلات لوڈ ہو رہی ہیں"
 
-#: src/features/projects/components/create-project-dialog.tsx:473
+#: src/features/projects/components/create-project-dialog.tsx:478
 msgid "Loading templates..."
 msgstr "ٹیمپلیٹس لوڈ ہو رہے ہیں..."
 
@@ -1740,8 +1591,6 @@ msgstr "ٹیمپلیٹس لوڈ ہو رہے ہیں..."
 msgid "Loading..."
 msgstr "لوڈ ہو رہا ہے..."
 
-#: ../../../lib/web/src/components/profile-dropdown.tsx:69
-#: ../../../lib/web/src/components/profile-dropdown.tsx:98
 #: ../../../lib/web/src/components/sign-out-dialog.tsx:26
 #: ../../../lib/web/src/components/sign-out-dialog.tsx:28
 msgid "Log out"
@@ -1759,21 +1608,16 @@ msgstr "کامیابی سے لاگ آؤٹ ہو گئے"
 msgid "Logging out…"
 msgstr "لاگ آؤٹ ہو رہا ہے…"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:125
+#: ../../../lib/web/src/components/notification-category-button.tsx:127
 msgid "Manage categories"
 msgstr "زمروں کا نظم کریں"
-
-#: ../../../lib/web/src/features/accounts/account-manager.tsx:192
-msgid "Manage your connected accounts for notifications and services."
-msgstr "اطلاعات اور خدمات کے لیے اپنے منسلک اکاؤنٹس کا نظم کریں۔"
 
 #: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:52
 msgid "Manual"
 msgstr "دستی"
 
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:192
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:199
-#: ../../../lib/web/src/components/notifications-dropdown.tsx:224
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:207
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:214
 msgid "Mark all as read"
 msgstr "سب کو پڑھا ہوا نشان زد کریں"
 
@@ -1805,7 +1649,7 @@ msgstr "{objectReadable} ضم کریں: {objectTitle}"
 msgid "Merge commit"
 msgstr "ضم کرنے کا کمٹ"
 
-#: src/features/requests/components/request-panel.tsx:93
+#: src/features/requests/components/request-panel.tsx:102
 msgid "Merge requests"
 msgstr "merge requests"
 
@@ -1813,7 +1657,7 @@ msgstr "merge requests"
 msgid "Merge requests ({requestCount})"
 msgstr "ضم کرنے کی درخواستیں ({requestCount})"
 
-#: src/features/requests/components/request-panel.tsx:275
+#: src/features/requests/components/request-panel.tsx:284
 msgid "Merged"
 msgstr "merge ہو گیا"
 
@@ -1837,7 +1681,7 @@ msgstr "metric"
 msgid "Minimum length"
 msgstr "کم از کم لمبائی"
 
-#: src/routes/$projectId.diff.tsx:80
+#: src/routes/$projectId.diff.tsx:83
 msgid "Missing repo, source, or target parameters"
 msgstr "repo، source یا target parameters غائب ہیں"
 
@@ -1858,7 +1702,7 @@ msgstr "پیر"
 msgid "More options"
 msgstr "مزید اختیارات"
 
-#: src/features/projects/components/create-project-dialog.tsx:347
+#: src/features/projects/components/create-project-dialog.tsx:352
 msgid "My project"
 msgstr "میرا project"
 
@@ -1867,9 +1711,9 @@ msgstr "میرا project"
 #: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:142
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:125
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:293
-#: src/features/editor/components/edit-dialogs.tsx:255
-#: src/features/projects/components/create-project-dialog.tsx:337
-#: src/routes/_authenticated/$projectId_.settings.tsx:111
+#: src/features/editor/components/edit-dialogs.tsx:258
+#: src/features/projects/components/create-project-dialog.tsx:342
+#: src/routes/_authenticated/$projectId_.settings.tsx:115
 msgid "Name"
 msgstr "نام"
 
@@ -1881,7 +1725,7 @@ msgstr "نام میں < یا > کے حروف نہیں ہو سکتے"
 msgid "Name cannot contain angle brackets, backslash, semicolon, quotes or backticks"
 msgstr "نام میں زاویائی قوسین، بیک سلیش، سیمی کولن، واوین یا بیک ٹک نہیں ہو سکتے"
 
-#: src/features/projects/components/create-project-dialog.tsx:97
+#: src/features/projects/components/create-project-dialog.tsx:102
 msgid "Name is required"
 msgstr "نام درکار ہے"
 
@@ -1891,7 +1735,7 @@ msgid "Name must be 1000 characters or less"
 msgstr "نام 1000 حروف یا اس سے کم ہونا چاہیے"
 
 #: ../../../lib/web/src/features/errors/general-error.tsx:53
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:322
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:313
 msgid "Network error"
 msgstr "نیٹ ورک کی خرابی"
 
@@ -1911,12 +1755,12 @@ msgstr "نیا {className}"
 msgid "New game"
 msgstr "نیا گیم"
 
-#: src/features/projects/components/create-project-dialog.tsx:454
+#: src/features/projects/components/create-project-dialog.tsx:459
 msgid "Next"
 msgstr "اگلا"
 
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:527
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:532
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:525
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:530
 msgid "Next image"
 msgstr "اگلی تصویر"
 
@@ -1936,19 +1780,19 @@ msgstr "کوئی access rules configure نہیں ہیں۔ یہ کنٹرول کر
 msgid "No activity yet"
 msgstr "ابھی تک کوئی سرگرمی نہیں"
 
-#: src/features/requests/components/branch-select.tsx:76
+#: src/features/requests/components/branch-select.tsx:81
 msgid "No branches found"
 msgstr "کوئی branches نہیں ملیں"
 
-#: src/features/requests/components/diff-stats.tsx:59
+#: src/features/requests/components/diff-stats.tsx:65
 msgid "No changes detected"
 msgstr "کوئی تبدیلیاں نہیں ملیں"
 
-#: src/features/requests/components/diff-viewer.tsx:404
+#: src/features/requests/components/diff-viewer.tsx:402
 msgid "No changes to display"
 msgstr "ظاہر کرنے کے لیے کوئی تبدیلیاں نہیں"
 
-#: src/routes/$projectId.diff.tsx:157
+#: src/routes/$projectId.diff.tsx:160
 msgid "No changes were found for the selected comparison."
 msgstr "منتخب کردہ موازنے کے لیے کوئی تبدیلیاں نہیں ملیں۔"
 
@@ -1956,11 +1800,7 @@ msgstr "منتخب کردہ موازنے کے لیے کوئی تبدیلیاں �
 msgid "No comments yet"
 msgstr "ابھی تک کوئی تبصرے نہیں"
 
-#: ../../../lib/web/src/features/accounts/account-manager.tsx:295
-msgid "No connected accounts"
-msgstr "کوئی منسلک اکاؤنٹس نہیں"
-
-#: src/routes/$projectId.diff.tsx:156
+#: src/routes/$projectId.diff.tsx:159
 msgid "No diff available"
 msgstr "کوئی diff دستیاب نہیں"
 
@@ -1980,15 +1820,11 @@ msgstr "ابھی کوئی item types نہیں بنائے جا سکتے۔ پہل�
 msgid "No matching objects"
 msgstr "کوئی matching objects نہیں"
 
-#: src/features/requests/components/request-panel.tsx:110
+#: src/features/requests/components/request-panel.tsx:119
 msgid "No merge requests"
 msgstr "کوئی merge requests نہیں"
 
-#: ../../../lib/web/src/components/notifications-dropdown.tsx:193
-msgid "No notifications yet"
-msgstr "ابھی تک کوئی اطلاع نہیں"
-
-#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:336
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:341
 #: ../../../lib/web/src/components/person-picker.tsx:84
 msgid "No people found"
 msgstr "کوئی لوگ نہیں ملے"
@@ -1997,27 +1833,21 @@ msgstr "کوئی لوگ نہیں ملے"
 msgid "No places found"
 msgstr "کوئی مقامات نہیں ملے"
 
-#: ../../../lib/web/src/components/profile-dropdown.tsx:58
-msgid "No profile"
-msgstr "کوئی پروفائل نہیں"
-
 #: src/features/projects/components/inline-project-search.tsx:88
-#: src/routes/_authenticated/find.tsx:43
+#: src/routes/_authenticated/find.tsx:42
 msgid "No projects found"
 msgstr "کوئی projects نہیں ملے"
 
-#: src/features/requests/components/repository-select.tsx:64
+#: src/features/requests/components/repository-select.tsx:69
 msgid "No repositories available"
 msgstr "کوئی repositories دستیاب نہیں"
 
 #: ../../../lib/web/src/components/inline-entity-search.tsx:64
-#: ../../../lib/web/src/components/search-entity-dialog.tsx:82
 #: ../../../lib/web/src/components/search-entity-page.tsx:73
 msgid "No results found"
 msgstr "کوئی نتیجہ نہیں ملا"
 
 #: ../../../lib/web/src/components/command-menu.tsx:55
-#: ../../../lib/web/src/components/data-table/faceted-filter.tsx:94
 msgid "No results found."
 msgstr "کوئی نتائج نہیں ملے۔"
 
@@ -2031,11 +1861,11 @@ msgstr "کوئی حالت نہیں"
 msgid "No time zone found."
 msgstr "کوئی time zone نہیں ملا۔"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:104
+#: ../../../lib/web/src/components/notification-category-button.tsx:106
 msgid "No topic record yet — try again after the next notification."
 msgstr "ابھی تک کوئی topic record نہیں — اگلی notification کے بعد دوبارہ کوشش کریں۔"
 
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:124
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:139
 msgid "No unread notifications"
 msgstr "کوئی غیر پڑھی notifications نہیں"
 
@@ -2060,20 +1890,19 @@ msgstr "کوئی views نہیں"
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:491
 #: ../../../lib/web/src/components/person-picker.tsx:350
 #: ../../../lib/web/src/lib/preference-utils.ts:100
-#: ../../../lib/web/src/lib/preference-utils.ts:120
-#: src/features/editor/components/edit-dialogs.tsx:293
 #: src/features/editor/components/edit-dialogs.tsx:296
+#: src/features/editor/components/edit-dialogs.tsx:299
 #: src/features/objects/components/object-detail-panel.tsx:537
 #: src/features/objects/components/object-detail-panel.tsx:550
 #: src/features/objects/components/object-detail-panel.tsx:555
 msgid "None"
 msgstr "کوئی نہیں"
 
-#: ../../../lib/web/src/lib/preference-utils.ts:129
+#: ../../../lib/web/src/lib/preference-utils.ts:122
 msgid "Normal"
 msgstr "عام"
 
-#: src/features/requests/components/request-panel.tsx:248
+#: src/features/requests/components/request-panel.tsx:257
 msgid "Not configured"
 msgstr "ترتیب نہیں دیا گیا"
 
@@ -2090,16 +1919,8 @@ msgstr "سیٹ نہیں ہے"
 msgid "Nothing found"
 msgstr "کچھ نہیں ملا"
 
-#: ../../../lib/web/src/components/notifications-dropdown.tsx:136
-#: ../../../lib/web/src/components/notifications-dropdown.tsx:150
-#: ../../../lib/web/src/components/notifications-dropdown.tsx:236
-#: ../../../lib/web/src/components/notifications-dropdown.tsx:257
-#: ../../../lib/web/src/components/notifications-dropdown.tsx:261
-msgid "Notifications"
-msgstr "notifications"
-
 #. placeholder {0}: unread.length
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:185
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:200
 msgid "Notifications: {0}"
 msgstr "اطلاعات: {0}"
 
@@ -2117,7 +1938,7 @@ msgstr "آن"
 msgid "Oops! Page Not Found!"
 msgstr "اوہ! صفحہ نہیں ملا!"
 
-#: src/features/requests/components/request-panel.tsx:278
+#: src/features/requests/components/request-panel.tsx:287
 msgctxt "state"
 msgid "Open"
 msgstr "کھلا"
@@ -2127,18 +1948,13 @@ msgstr "کھلا"
 msgid "Open {0}"
 msgstr "{0} کھولیں"
 
-#: ../../../lib/web/src/features/accounts/account-manager.tsx:156
-#: ../../../lib/web/src/features/accounts/account-manager.tsx:166
-msgid "Open account actions"
-msgstr "اکاؤنٹ کی actions کھولیں"
-
 #: ../../../lib/web/src/components/layout/nav-group.tsx:199
 #: ../../../lib/web/src/components/layout/nav-group.tsx:204
 msgid "Open actions"
 msgstr "کارروائیاں کھولیں"
 
-#: src/features/editor/components/edit-dialogs.tsx:236
-#: src/features/editor/components/edit-dialogs.tsx:241
+#: src/features/editor/components/edit-dialogs.tsx:239
+#: src/features/editor/components/edit-dialogs.tsx:244
 msgid "Open class actions"
 msgstr "class actions کھولیں"
 
@@ -2155,11 +1971,6 @@ msgstr "مینو کھولیں"
 msgid "Open navigation"
 msgstr "navigation کھولیں"
 
-#: ../../../lib/web/src/components/layout/top-nav.tsx:38
-#: ../../../lib/web/src/components/layout/top-nav.tsx:44
-msgid "Open navigation menu"
-msgstr "navigation مینو کھولیں"
-
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:105
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:111
 msgid "Open option actions"
@@ -2172,11 +1983,6 @@ msgstr "صفحہ actions کھولیں"
 #: ../../../lib/web/src/components/entity/keyboard-shortcuts-help.tsx:30
 msgid "Open selected card"
 msgstr "منتخب کارڈ کھولیں"
-
-#: ../../../lib/web/src/components/config-drawer.tsx:58
-#: ../../../lib/web/src/components/config-drawer.tsx:66
-msgid "Open theme settings"
-msgstr "تھیم سیٹنگز کھولیں"
 
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:274
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:279
@@ -2206,11 +2012,6 @@ msgstr "دیگر"
 msgid "Owner"
 msgstr "مالک"
 
-#: ../../../lib/web/src/components/data-table/pagination.tsx:43
-#: ../../../lib/web/src/components/data-table/pagination.tsx:71
-msgid "Page {currentPage} of {totalPages}"
-msgstr "صفحہ {currentPage} از {totalPages}"
-
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:530
 #: src/features/objects/components/object-detail-panel.tsx:533
 msgid "Parent"
@@ -2232,17 +2033,13 @@ msgstr "passkeys"
 msgid "Pattern (regex)"
 msgstr "پیٹرن (regex)"
 
-#: ../../../lib/web/src/components/date-picker.tsx:20
-msgid "Pick a date"
-msgstr "تاریخ منتخب کریں"
-
 #: src/routes/_authenticated/$projectId/index.tsx:138
 msgid "Please add one or more classes to the project design."
 msgstr "براہ کرم project design میں ایک یا زیادہ classes شامل کریں۔"
 
 #: ../../../lib/web/src/components/comment-composer.tsx:89
 #: ../../../lib/web/src/features/errors/general-error.tsx:54
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:323
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:314
 msgid "Please check your internet connection and try again."
 msgstr "براہ کرم اپنا انٹرنیٹ کنکشن چیک کریں اور دوبارہ کوشش کریں۔"
 
@@ -2250,7 +2047,7 @@ msgstr "براہ کرم اپنا انٹرنیٹ کنکشن چیک کریں او�
 msgid "Please log in with the appropriate credentials <0/> to access this resource."
 msgstr "اس وسیلے تک رسائی کے لیے <0/> براہ کرم مناسب اسناد کے ساتھ لاگ ان کریں۔"
 
-#: src/features/projects/components/create-project-dialog.tsx:113
+#: src/features/projects/components/create-project-dialog.tsx:118
 msgid "Please select a template"
 msgstr "براہ کرم ایک template منتخب کریں"
 
@@ -2270,21 +2067,21 @@ msgstr "پوسٹس"
 msgid "Posts and comments"
 msgstr "پوسٹس اور تبصرے"
 
-#: src/features/projects/components/create-project-dialog.tsx:359
+#: src/features/projects/components/create-project-dialog.tsx:364
 #: src/routes/_authenticated/$projectId_.settings.tsx:85
 msgid "Prefix"
 msgstr "prefix"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:91
-msgid "Prefix can only contain letters, numbers, and hyphens"
-msgstr "سابقہ میں صرف حروف، اعداد اور ہائفن ہو سکتے ہیں"
+#: src/routes/_authenticated/$projectId_.settings.tsx:95
+msgid "Prefix can only contain lowercase letters, numbers, and hyphens"
+msgstr ""
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:93
-msgid "Prefix must be 10 characters or less"
-msgstr "سابقہ 10 حروف یا اس سے کم ہونا چاہیے"
+#: src/routes/_authenticated/$projectId_.settings.tsx:97
+msgid "Prefix must be 20 characters or less"
+msgstr ""
 
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:511
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:516
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:509
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:514
 msgid "Previous image"
 msgstr "پچھلی تصویر"
 
@@ -2297,10 +2094,6 @@ msgstr "پرائیویسی"
 msgid "Processing…"
 msgstr "پروسیس ہو رہا ہے…"
 
-#: ../../../lib/web/src/components/profile-dropdown.tsx:114
-msgid "Profile"
-msgstr "پروفائل"
-
 #: src/routes/_authenticated/$projectId/$objectId.tsx:62
 #: src/routes/_authenticated/$projectId/index.tsx:82
 msgid "Project"
@@ -2310,11 +2103,11 @@ msgstr "project"
 msgid "Project actions"
 msgstr "پروجیکٹ اعمال"
 
-#: src/features/projects/components/create-project-dialog.tsx:128
+#: src/features/projects/components/create-project-dialog.tsx:133
 msgid "Project created"
 msgstr "project بن گیا"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:128
+#: src/routes/_authenticated/$projectId_.settings.tsx:132
 msgid "Project deleted"
 msgstr "project حذف ہو گیا"
 
@@ -2330,19 +2123,19 @@ msgstr "پروجیکٹ ممبران"
 msgid "Project name is required"
 msgstr "پروجیکٹ کا نام درکار ہے"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:106
+#: src/routes/_authenticated/$projectId_.settings.tsx:110
 msgid "Project not found"
 msgstr "project نہیں ملا"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:105
+#: src/routes/_authenticated/$projectId_.settings.tsx:109
 msgid "Project settings"
 msgstr "پروجیکٹ کی ترتیبات"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:108
+#: src/routes/_authenticated/$projectId_.settings.tsx:112
 msgid "Project unavailable"
 msgstr "project دستیاب نہیں"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:117
+#: src/routes/_authenticated/$projectId_.settings.tsx:121
 msgid "Project updated"
 msgstr "project اپ ڈیٹ ہو گیا"
 
@@ -2383,7 +2176,6 @@ msgstr "ضم کرنے کے لیے تیار"
 msgid "Rebase and merge"
 msgstr "ری بیس اور ضم کریں"
 
-#: ../../../lib/web/src/components/search-entity-dialog.tsx:220
 #: ../../../lib/web/src/components/search-entity-page.tsx:243
 msgid "Recommended"
 msgstr "تجویز کردہ"
@@ -2421,8 +2213,7 @@ msgstr "24 گھنٹوں کے اندر نسبتی، ورنہ مطلق"
 #: ../../../lib/web/src/components/attachment-composer.tsx:330
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:190
 #: ../../../lib/web/src/features/access/access-list.tsx:270
-#: ../../../lib/web/src/features/accounts/account-manager.tsx:180
-#: src/features/projects/components/create-project-dialog.tsx:434
+#: src/features/projects/components/create-project-dialog.tsx:439
 msgid "Remove"
 msgstr "ہٹائیں"
 
@@ -2447,8 +2238,8 @@ msgid "Remove access?"
 msgstr "رسائی ہٹائیں؟"
 
 #. placeholder {0}: field.name || field.id
-#: src/features/editor/components/edit-dialogs.tsx:394
-#: src/features/editor/components/edit-dialogs.tsx:399
+#: src/features/editor/components/edit-dialogs.tsx:397
+#: src/features/editor/components/edit-dialogs.tsx:402
 msgid "Remove field {0}"
 msgstr "فیلڈ {0} ہٹائیں"
 
@@ -2457,7 +2248,7 @@ msgstr "فیلڈ {0} ہٹائیں"
 msgid "Remove interest"
 msgstr "دلچسپی ہٹائیں"
 
-#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:666
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:674
 msgid "Remove item"
 msgstr "item ہٹائیں"
 
@@ -2466,7 +2257,7 @@ msgstr "item ہٹائیں"
 msgid "Remove link"
 msgstr "لنک ہٹائیں"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:135
+#: src/routes/_authenticated/$projectId_.settings.tsx:139
 msgid "Removing access..."
 msgstr "رسائی ہٹائی جا رہی ہے..."
 
@@ -2505,7 +2296,7 @@ msgstr "جواب"
 msgid "Reply to {0}..."
 msgstr "{0} کو جواب دیں..."
 
-#: src/features/editor/components/edit-dialogs.tsx:334
+#: src/features/editor/components/edit-dialogs.tsx:337
 msgid "Requests"
 msgstr "درخواستیں"
 
@@ -2516,20 +2307,6 @@ msgstr "درکار"
 #: ../../../lib/web/src/components/step-up-dialog.tsx:370
 msgid "Resend email"
 msgstr "ای میل دوبارہ بھیجیں"
-
-#: ../../../lib/web/src/components/config-drawer.tsx:87
-#: ../../../lib/web/src/components/data-table/toolbar.tsx:82
-msgid "Reset"
-msgstr "reset کریں"
-
-#: ../../../lib/web/src/components/config-drawer.tsx:122
-#: ../../../lib/web/src/components/config-drawer.tsx:127
-msgid "Reset {title}"
-msgstr "{title} ری سیٹ کریں"
-
-#: ../../../lib/web/src/components/config-drawer.tsx:85
-msgid "Reset all settings to default values"
-msgstr "تمام سیٹنگز کو ڈیفالٹ ویلیوز پر reset کریں"
 
 #: src/features/requests/components/conflict-list.tsx:40
 msgid "Resolve these conflicts manually before merging."
@@ -2555,10 +2332,6 @@ msgstr "رسائی منسوخ کریں"
 msgid "Revoke RSS access?"
 msgstr "RSS رسائی منسوخ کریں؟"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:362
-msgid "Right to Left"
-msgstr "دائیں سے بائیں"
-
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:150
 #: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:168
 msgid "Rows"
@@ -2567,10 +2340,6 @@ msgstr "قطاریں"
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:373
 msgid "Rows group by"
 msgstr "قطاریں گروپ بہ"
-
-#: ../../../lib/web/src/components/data-table/pagination.tsx:65
-msgid "Rows per page"
-msgstr "ہر صفحے پر قطاریں"
 
 #: ../../../lib/web/src/components/options-menu.tsx:131
 msgid "RSS access revoked"
@@ -2597,7 +2366,7 @@ msgstr "ہفتہ"
 msgid "Save"
 msgstr "محفوظ کریں"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:116
+#: src/routes/_authenticated/$projectId_.settings.tsx:120
 msgid "Saving..."
 msgstr "محفوظ کیا جا رہا ہے..."
 
@@ -2608,7 +2377,7 @@ msgstr "محفوظ کیا جا رہا ہے..."
 msgid "Search"
 msgstr "تلاش کریں"
 
-#: src/routes/_authenticated/find.tsx:42
+#: src/routes/_authenticated/find.tsx:41
 msgid "Search by name, ID, fingerprint, or URL..."
 msgstr "نام، ID، فنگر پرنٹ، یا URL سے تلاش کریں..."
 
@@ -2656,12 +2425,10 @@ msgstr "اس ویو کو تلاش کریں، دیکھیں، اور ترتیب د
 #: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:255
 #: ../../../lib/web/src/components/inline-entity-search.tsx:63
 #: ../../../lib/web/src/components/person-picker.tsx:324
-#: ../../../lib/web/src/components/search-entity-dialog.tsx:81
 #: ../../../lib/web/src/components/search-entity-page.tsx:72
 msgid "Search..."
 msgstr "تلاش کریں..."
 
-#: ../../../lib/web/src/components/search-entity-dialog.tsx:178
 #: ../../../lib/web/src/components/search-entity-page.tsx:201
 #: ../../../lib/web/src/features/access/access-dialog.tsx:202
 msgid "Searching..."
@@ -2670,11 +2437,6 @@ msgstr "تلاش کیا جا رہا ہے..."
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:141
 msgid "Select"
 msgstr "منتخب کریں"
-
-#. placeholder {0}: item.label.toLowerCase()
-#: ../../../lib/web/src/components/config-drawer.tsx:149
-msgid "Select {0}"
-msgstr "{0} منتخب کریں"
 
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:356
 msgid "Select a field"
@@ -2692,10 +2454,6 @@ msgstr "رسائی دینے کے لیے صارف، گروپ، یا کوئی او
 msgid "Select access rule"
 msgstr "رسائی کا قاعدہ منتخب کریں"
 
-#: ../../../lib/web/src/features/accounts/account-picker.tsx:34
-msgid "Select account"
-msgstr "اکاؤنٹ منتخب کریں"
-
 #: ../../../lib/web/src/features/accounts/account-add.tsx:142
 msgid "Select account type"
 msgstr "اکاؤنٹ کی قسم منتخب کریں"
@@ -2707,10 +2465,6 @@ msgstr "برانچ منتخب کریں"
 #: ../../../lib/web/src/features/access/access-dialog.tsx:231
 msgid "Select group"
 msgstr "گروپ منتخب کریں"
-
-#: ../../../lib/web/src/components/config-drawer.tsx:305
-msgid "Select layout style"
-msgstr "لے آؤٹ سٹائل منتخب کریں"
 
 #: ../../../lib/web/src/components/place-picker.tsx:49
 msgid "Select location"
@@ -2732,26 +2486,10 @@ msgstr "پچھلا کارڈ منتخب کریں"
 msgid "Select repository"
 msgstr "ریپازٹری منتخب کریں"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:247
-msgid "Select sidebar style"
-msgstr "سائڈبار سٹائل منتخب کریں"
-
-#: ../../../lib/web/src/components/config-drawer.tsx:349
-msgid "Select site direction"
-msgstr "سائٹ کی سمت منتخب کریں"
-
-#: ../../../lib/web/src/components/config-drawer.tsx:203
-msgid "Select theme preference"
-msgstr "تھیم کی ترجیح منتخب کریں"
-
-#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:252
-#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:335
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:257
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:340
 msgid "Select..."
 msgstr "منتخب کریں..."
-
-#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:209
-msgid "selected"
-msgstr "منتخب"
 
 #. placeholder {0}: getSelectedName()
 #: ../../../lib/web/src/features/access/access-dialog.tsx:309
@@ -2771,16 +2509,16 @@ msgstr "ای میل بھیجیں"
 msgid "Send message"
 msgstr "پیغام بھیجیں"
 
-#: ../../../lib/web/src/lib/preference-utils.ts:140
+#: ../../../lib/web/src/lib/preference-utils.ts:133
 msgid "Serif"
 msgstr "سیرف"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:115
+#: src/routes/_authenticated/$projectId_.settings.tsx:119
 msgid "Server"
 msgstr "سرور"
 
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:279
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:305
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:270
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:296
 msgid "Server error"
 msgstr "سرور کی خرابی"
 
@@ -2789,7 +2527,7 @@ msgstr "سرور کی خرابی"
 msgid "Server rules"
 msgstr "سرور قواعد"
 
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:229
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:220
 msgid "Session expired. Please log in again."
 msgstr "سیشن کی میعاد ختم ہو گئی ہے۔ براہ کرم دوبارہ لاگ اِن کریں۔"
 
@@ -2797,14 +2535,14 @@ msgstr "سیشن کی میعاد ختم ہو گئی ہے۔ براہ کرم دو�
 msgid "Set origin and destination"
 msgstr "ابتدائی مقام اور منزل مقرر کریں"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:132
+#: src/routes/_authenticated/$projectId_.settings.tsx:136
 msgid "Setting access..."
 msgstr "رسائی مقرر کی جا رہی ہے..."
 
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx:119
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx:125
 #: ../../../lib/web/src/components/options-menu.tsx:196
-#: src/routes/_authenticated/$projectId_.settings.tsx:99
+#: src/routes/_authenticated/$projectId_.settings.tsx:103
 #: src/routes/_authenticated/$projectId/index.tsx:173
 msgid "Settings"
 msgstr "سیٹنگز"
@@ -2817,10 +2555,6 @@ msgstr "کلاسز دکھائیں"
 msgid "Show fields"
 msgstr "فیلڈز دکھائیں"
 
-#: ../../../lib/web/src/components/password-input.tsx:27
-msgid "Show password"
-msgstr "پاس ورڈ دکھائیں"
-
 #: ../../../lib/web/src/components/entity/keyboard-shortcuts-help.tsx:33
 msgid "Show this help"
 msgstr "یہ مدد دکھائیں"
@@ -2829,9 +2563,7 @@ msgstr "یہ مدد دکھائیں"
 msgid "Showing {totalShown} of {total}"
 msgstr "{total} میں سے {totalShown} دکھائے جا رہے ہیں"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:239
-#: ../../../lib/web/src/components/config-drawer.tsx:263
-#: ../../../lib/web/src/components/ui/sidebar.tsx:237
+#: ../../../lib/web/src/components/ui/sidebar.tsx:257
 msgid "Sidebar"
 msgstr "سائڈبار"
 
@@ -2849,12 +2581,8 @@ msgstr "سائن آؤٹ کیا جا رہا ہے..."
 msgid "Single line of text only"
 msgstr "صرف ایک سطر پر مشتمل متن"
 
-#: ../../../lib/web/src/components/skip-to-main.tsx:11
-msgid "Skip to Main"
-msgstr "مین پر جائیں"
-
 #: ../../../lib/web/src/lib/preference-utils.ts:101
-#: ../../../lib/web/src/lib/preference-utils.ts:128
+#: ../../../lib/web/src/lib/preference-utils.ts:121
 msgid "Small"
 msgstr "چھوٹا"
 
@@ -2862,7 +2590,7 @@ msgstr "چھوٹا"
 msgid "Sort"
 msgstr "ترتیب دیں"
 
-#: src/features/requests/components/request-panel.tsx:325
+#: src/features/requests/components/request-panel.tsx:334
 msgid "Source"
 msgstr "سورس"
 
@@ -2874,7 +2602,7 @@ msgstr "سورسز"
 msgid "Spacious"
 msgstr "کشادہ"
 
-#: src/routes/$projectId.diff.tsx:121
+#: src/routes/$projectId.diff.tsx:124
 msgid "Split"
 msgstr "تقسیم کریں"
 
@@ -2885,10 +2613,6 @@ msgstr "سکواش اور ضم کریں"
 #: ../../../lib/web/src/components/entity/entity-comment-list.tsx:323
 msgid "Start the discussion by adding the first comment."
 msgstr "پہلا تبصرہ شامل کر کے بحث شروع کریں۔"
-
-#: ../../../lib/web/src/components/coming-soon.tsx:15
-msgid "Stay tuned though!"
-msgstr "البتہ منتظر رہیں!"
 
 #: src/features/objects/components/object-detail-panel.tsx:439
 #: src/features/objects/components/object-detail-panel.tsx:448
@@ -2909,7 +2633,6 @@ msgstr "جواب جمع کریں"
 
 #: ../../../lib/web/src/components/inline-entity-search.tsx:66
 #: ../../../lib/web/src/components/recommended-entities.tsx:58
-#: ../../../lib/web/src/components/search-entity-dialog.tsx:83
 #: ../../../lib/web/src/components/search-entity-page.tsx:74
 #: src/features/projects/components/inline-project-search.tsx:90
 #: src/features/projects/components/recommended-projects.tsx:58
@@ -2917,7 +2640,7 @@ msgid "Subscribe"
 msgstr "سبسکرائب کریں"
 
 #: src/features/projects/components/inline-project-search.tsx:68
-#: src/routes/_authenticated/find.tsx:45
+#: src/routes/_authenticated/find.tsx:44
 msgid "Subscribed"
 msgstr "سبسکرائب ہو گیا"
 
@@ -2928,7 +2651,7 @@ msgstr "{0} سبسکرائب کر لیا"
 
 #: src/features/projects/components/inline-project-search.tsx:67
 #: src/features/projects/components/recommended-projects.tsx:42
-#: src/routes/_authenticated/find.tsx:44
+#: src/routes/_authenticated/find.tsx:43
 msgid "Subscribing..."
 msgstr "سبسکرائب کیا جا رہا ہے..."
 
@@ -2941,16 +2664,10 @@ msgid "Switch to view 1-9"
 msgstr "ویو 1-9 پر سوئچ کریں"
 
 #: ../../../lib/web/src/components/audit-timeline.tsx:107
-#: ../../../lib/web/src/components/config-drawer.tsx:209
-#: ../../../lib/web/src/components/theme-switch.tsx:59
 #: ../../../lib/web/src/lib/preference-utils.ts:16
-#: ../../../lib/web/src/lib/preference-utils.ts:139
+#: ../../../lib/web/src/lib/preference-utils.ts:132
 msgid "System"
 msgstr "سسٹم"
-
-#: ../../../lib/web/src/components/tag-input.tsx:95
-msgid "Tag"
-msgstr "ٹیگ"
 
 #: ../../../lib/web/src/components/post-tags.tsx:76
 msgid "Tag already exists"
@@ -2965,13 +2682,9 @@ msgstr "ٹیگ 50 حروف یا اس سے کم ہونا چاہیے"
 msgid "Tags"
 msgstr "ٹیگز"
 
-#: src/features/requests/components/request-panel.tsx:333
+#: src/features/requests/components/request-panel.tsx:342
 msgid "Target"
 msgstr "ٹارگٹ"
-
-#: ../../../lib/web/src/components/layout/team-switcher.tsx:63
-msgid "Teams/Apps"
-msgstr "ٹیمز/ایپس"
 
 #: ../../../lib/web/src/components/server-documents-footer.tsx:19
 #: ../../../lib/web/src/features/document/document-page.tsx:42
@@ -3003,36 +2716,20 @@ msgstr "مطلوبہ مواد نہیں مل سکا۔"
 msgid "The server returned a web page instead of data."
 msgstr "سرور نے ڈیٹا کے بجائے ایک ویب صفحہ واپس کیا۔"
 
-#: ../../../lib/web/src/features/errors/maintenance-error.tsx:15
-msgid "The site is not available at the moment."
-msgstr "سائٹ اس وقت دستیاب نہیں ہے۔"
-
-#: ../../../lib/web/src/components/config-drawer.tsx:195
-msgid "Theme"
-msgstr "تھیم"
-
-#: ../../../lib/web/src/components/config-drawer.tsx:70
-msgid "Theme Settings"
-msgstr "تھیم سیٹنگز"
-
 #. placeholder {0}: request.target
-#: src/features/requests/components/request-panel.tsx:409
+#: src/features/requests/components/request-panel.tsx:418
 msgid "This merge request has been merged into {0}."
 msgstr "اس ضم کرنے کی درخواست کو {0} میں ضم کیا گیا ہے۔"
 
-#: src/features/requests/components/request-panel.tsx:370
+#: src/features/requests/components/request-panel.tsx:379
 msgid "This merge request is a draft and cannot be merged."
 msgstr "یہ مرج ریکوئسٹ ڈرافٹ ہے اور مرج نہیں کی جا سکتی۔"
 
-#: ../../../lib/web/src/components/coming-soon.tsx:14
-msgid "This page has not been created yet."
-msgstr "یہ صفحہ ابھی تک نہیں بنایا گیا۔"
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:109
+#: src/routes/_authenticated/$projectId_.settings.tsx:113
 msgid "This project could not be loaded right now."
 msgstr "یہ پروجیکٹ ابھی لوڈ نہیں ہو سکا۔"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:107
+#: src/routes/_authenticated/$projectId_.settings.tsx:111
 msgid "This project may have been deleted or you don't have access to it."
 msgstr "یہ پروجیکٹ شاید حذف ہو چکا ہے یا آپ کو اس تک رسائی نہیں ہے۔"
 
@@ -3040,7 +2737,7 @@ msgstr "یہ پروجیکٹ شاید حذف ہو چکا ہے یا آپ کو اس
 msgid "This will merge \"{source}\" into \"{target}\". This action cannot be undone."
 msgstr "یہ \"{source}\" کو \"{target}\" میں ضم کرے گا۔ اس کارروائی کو واپس نہیں لیا جا سکتا۔"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:125
+#: src/routes/_authenticated/$projectId_.settings.tsx:129
 msgid "This will permanently delete \"{projectName}\" and all its objects, comments, and attachments. This action cannot be undone."
 msgstr "یہ \"{projectName}\" اور اس کے تمام آبجیکٹس، تبصرے، اور اٹیچمنٹس کو مستقل طور پر حذف کر دے گا۔ یہ ایکشن واپس نہیں لیا جا سکتا۔"
 
@@ -3059,26 +2756,17 @@ msgid "Thursday"
 msgstr "جمعرات"
 
 #: src/features/editor/components/edit-dialogs.tsx:107
-#: src/features/requests/components/request-panel.tsx:292
+#: src/features/requests/components/request-panel.tsx:301
 msgid "Title"
 msgstr "عنوان"
 
-#: src/features/editor/components/edit-dialogs.tsx:278
+#: src/features/editor/components/edit-dialogs.tsx:281
 msgid "Title field"
 msgstr "عنوان فیلڈ"
 
 #: ../../../lib/web/src/components/travelling-picker.tsx:220
 msgid "To"
 msgstr "تک"
-
-#: ../../../lib/web/src/components/data-table/view-options.tsx:37
-msgid "Toggle columns"
-msgstr "کالم ٹوگل کریں"
-
-#: ../../../lib/web/src/components/layout/right-panel.tsx:233
-#: ../../../lib/web/src/components/layout/right-panel.tsx:236
-msgid "Toggle right panel"
-msgstr "دائیں پینل کو ٹوگل کریں"
 
 #: ../../../lib/web/src/components/layout/nav-group.tsx:365
 #: ../../../lib/web/src/components/layout/nav-group.tsx:372
@@ -3087,20 +2775,15 @@ msgstr "دائیں پینل کو ٹوگل کریں"
 msgid "Toggle section"
 msgstr "سیکشن کھولیں/بند کریں"
 
-#: ../../../lib/web/src/components/ui/sidebar.tsx:317
-#: ../../../lib/web/src/components/ui/sidebar.tsx:320
+#: ../../../lib/web/src/components/ui/sidebar.tsx:337
+#: ../../../lib/web/src/components/ui/sidebar.tsx:340
 msgid "Toggle sidebar"
 msgstr "سائڈبار کو ٹوگل کریں"
 
-#: ../../../lib/web/src/components/ui/sidebar.tsx:332
-#: ../../../lib/web/src/components/ui/sidebar.tsx:335
+#: ../../../lib/web/src/components/ui/sidebar.tsx:352
+#: ../../../lib/web/src/components/ui/sidebar.tsx:355
 msgid "Toggle Sidebar"
 msgstr "سائڈبار ٹوگل کریں"
-
-#: ../../../lib/web/src/components/theme-switch.tsx:37
-#: ../../../lib/web/src/components/theme-switch.tsx:41
-msgid "Toggle theme"
-msgstr "تھیم ٹوگل کریں"
 
 #: ../../../lib/web/src/components/entity/keyboard-shortcuts-help.tsx:26
 msgid "Toggle view options"
@@ -3119,7 +2802,7 @@ msgstr "بہت زیادہ درخواستیں"
 msgid "Top"
 msgstr "اوپر"
 
-#: src/features/editor/components/edit-dialogs.tsx:316
+#: src/features/editor/components/edit-dialogs.tsx:319
 msgid "Top level"
 msgstr "اوپر کی سطح"
 
@@ -3127,14 +2810,12 @@ msgstr "اوپر کی سطح"
 msgid "Travelling"
 msgstr "سفر کر رہے ہیں"
 
-#: ../../../lib/web/src/components/search-entity-dialog.tsx:194
 #: ../../../lib/web/src/components/search-entity-page.tsx:217
 msgid "Try adjusting your search terms"
 msgstr "اپنی تلاش کی اصطلاحات کو ایڈجسٹ کرنے کی کوشش کریں"
 
 #: ../../../lib/web/src/features/errors/general-error.tsx:140
 #: ../../../lib/web/src/features/errors/general-error.tsx:180
-#: ../../../lib/web/src/features/errors/maintenance-error.tsx:19
 msgid "Try again"
 msgstr "دوبارہ کوشش کریں"
 
@@ -3163,7 +2844,7 @@ msgstr "صارفین تلاش کرنے کے لیے ٹائپ کریں"
 msgid "Type to search..."
 msgstr "تلاش کرنے کے لیے ٹائپ کریں..."
 
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:301
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:292
 msgid "Unable to connect to remote server"
 msgstr "دور دراز سرور سے منسلک ہونے سے قاصر"
 
@@ -3172,7 +2853,7 @@ msgstr "دور دراز سرور سے منسلک ہونے سے قاصر"
 msgid "Unable to redirect to login. Please try again."
 msgstr "لاگ ان پر ری ڈائریکٹ کرنے سے قاصر۔ براہ کرم دوبارہ کوشش کریں۔"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:112
+#: ../../../lib/web/src/components/notification-category-button.tsx:114
 msgid "Unassigned"
 msgstr "غیر تفویض شدہ"
 
@@ -3189,7 +2870,7 @@ msgstr "ناقابل رسائی"
 msgid "Unexpected API error"
 msgstr "غیر متوقع API خرابی"
 
-#: src/routes/$projectId.diff.tsx:109
+#: src/routes/$projectId.diff.tsx:112
 msgid "Unified"
 msgstr "متحد"
 
@@ -3224,22 +2905,17 @@ msgstr "ان سبسکرائب کیا جا رہا ہے..."
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:285
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx:103
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx:184
-#: src/features/board/components/board-card.tsx:22
-#: src/features/board/components/board-container.tsx:31
+#: src/features/board/components/board-container.tsx:29
 #: src/features/editor/components/design-preview.tsx:31
 msgid "Untitled"
 msgstr "بے عنوان"
-
-#: ../../../lib/web/src/features/accounts/account-manager.tsx:135
-msgid "Unverified"
-msgstr "غیر تصدیق شدہ"
 
 #: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:57
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:494
 msgid "Updated"
 msgstr "اپ ڈیٹ ہو گیا"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:138
+#: src/routes/_authenticated/$projectId_.settings.tsx:142
 msgid "Updating access..."
 msgstr "رسائی اپ ڈیٹ کی جا رہی ہے..."
 
@@ -3248,7 +2924,7 @@ msgstr "رسائی اپ ڈیٹ کی جا رہی ہے..."
 msgid "Upload"
 msgstr "اپ لوڈ کریں"
 
-#: src/features/projects/components/create-project-dialog.tsx:408
+#: src/features/projects/components/create-project-dialog.tsx:413
 #: src/routes/_authenticated/$projectId/design.tsx:58
 msgid "Upload .json file"
 msgstr ".json فائل اپ لوڈ کریں"
@@ -3263,7 +2939,7 @@ msgstr "اپنی پاس کی استعمال کریں"
 
 #. placeholder {0}: prefix || "project"
 #. placeholder {1}: prefix || "project"
-#: src/features/projects/components/create-project-dialog.tsx:376
+#: src/features/projects/components/create-project-dialog.tsx:381
 msgid "Used for readable IDs like {0}-1, {1}-2"
 msgstr "{0}-1، {1}-2 جیسی پڑھنے کے قابل IDs کے لیے استعمال ہوتا ہے"
 
@@ -3277,16 +2953,7 @@ msgstr "صارف"
 msgid "Verification code"
 msgstr "تصدیقی کوڈ"
 
-#: ../../../lib/web/src/features/accounts/account-manager.tsx:255
-msgid "Verification code sent"
-msgstr "تصدیقی کوڈ بھیج دیا گیا"
-
-#: ../../../lib/web/src/features/accounts/account-manager.tsx:248
-msgid "Verification failed"
-msgstr "تصدیق ناکام"
-
 #: ../../../lib/web/src/components/step-up-dialog.tsx:391
-#: ../../../lib/web/src/features/accounts/account-manager.tsx:172
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:111
 msgid "Verify"
 msgstr "تصدیق کریں"
@@ -3300,20 +2967,12 @@ msgid "Video thumbnail"
 msgstr "ویڈیو تھمب نیل"
 
 #. placeholder {0}: currentMedia.name
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:317
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:315
 msgid "Video viewer: {0}"
 msgstr "ویڈیو ناظر: {0}"
 
-#: ../../../lib/web/src/components/data-table/view-options.tsx:33
-msgid "View"
-msgstr "دیکھیں"
-
-#: ../../../lib/web/src/components/notifications-dropdown.tsx:177
-msgid "View all"
-msgstr "سب دیکھیں"
-
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:205
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:213
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:220
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:228
 msgid "View all notifications"
 msgstr "تمام نوٹیفکیشنز دیکھیں"
 
@@ -3333,7 +2992,7 @@ msgstr "صرف دیکھنا"
 msgid "View options"
 msgstr "آپشنز دیکھیں"
 
-#: src/features/editor/components/design-editor.tsx:457
+#: src/features/editor/components/design-editor.tsx:487
 msgid "Views"
 msgstr "ویوز"
 
@@ -3351,7 +3010,7 @@ msgstr "دیکھا گیا"
 msgid "Watched only"
 msgstr "صرف دیکھا گیا"
 
-#: src/features/projects/components/create-project-dialog.tsx:468
+#: src/features/projects/components/create-project-dialog.tsx:473
 msgid "We have auto-selected the best matching template."
 msgstr "ہم نے بہترین مماثل ٹیمپلیٹ خود بخود منتخب کر لیا ہے۔"
 
@@ -3359,18 +3018,6 @@ msgstr "ہم نے بہترین مماثل ٹیمپلیٹ خود بخود منت�
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:63
 msgid "We sent a verification code to <0>{0}</0>. Enter the code below to verify your email address."
 msgstr "ہم نے <0>{0}</0> پر ایک تصدیقی کوڈ بھیجا ہے۔ اپنا ای میل پتہ تصدیق کرنے کے لیے نیچے کوڈ درج کریں۔"
-
-#: ../../../lib/web/src/features/errors/maintenance-error.tsx:16
-msgid "We'll be back online shortly."
-msgstr "ہم جلد ہی واپس آن لائن ہوں گے۔"
-
-#: ../../../lib/web/src/components/notifications-dropdown.tsx:197
-msgid "We'll notify you when something important happens."
-msgstr "جب کچھ اہم ہوگا تو ہم آپ کو مطلع کریں گے۔"
-
-#: ../../../lib/web/src/features/errors/maintenance-error.tsx:13
-msgid "Website is under maintenance!"
-msgstr "ویب سائٹ مرمت کے تحت ہے!"
 
 #: ../../../lib/web/src/lib/preference-utils.ts:56
 msgid "Wednesday"
@@ -3384,17 +3031,9 @@ msgstr "آپ کو اس حصے تک رسائی حاصل نہیں ہے۔"
 msgid "You don't have access to this project."
 msgstr "آپ کو اس پراجیکٹ تک رسائی نہیں ہے۔"
 
-#: ../../../lib/web/src/features/errors/forbidden.tsx:18
-msgid "You don't have necessary permission <0/>to view this resource."
-msgstr "اس وسیلے کو دیکھنے کے لیے <0/>آپ کے پاس ضروری اجازت نہیں ہے۔"
-
 #: src/features/projects/pages/projects-list-page.tsx:36
 msgid "You have no projects yet."
 msgstr "آپ کے ابھی کوئی پروجیکٹس نہیں ہیں۔"
-
-#: ../../../lib/web/src/components/notifications-dropdown.tsx:193
-msgid "You're all caught up!"
-msgstr "آپ نے سب دیکھ لیا!"
 
 #: ../../../lib/web/src/components/restore-banner.tsx:100
 msgid "Your account was moved here from {source}. Until you delete it there, messages and notifications may reach both servers, some of your content keeps being served from the old server, and followers may take a few minutes to find you here."
@@ -3404,7 +3043,7 @@ msgstr "آپ کا اکاؤنٹ {source} سے یہاں منتقل کر دیا گ�
 msgid "Your attachments will be lost."
 msgstr "آپ کے منسلکات ضائع ہو جائیں گے۔"
 
-#: src/features/projects/components/create-project-dialog.tsx:464
+#: src/features/projects/components/create-project-dialog.tsx:469
 msgid "Your backup contains objects of type:"
 msgstr "آپ کے بیک اپ میں اس قسم کے آبجیکٹس موجود ہیں:"
 

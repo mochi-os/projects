@@ -14,7 +14,7 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. js-lingui-explicit-id
-#: ../../../lib/web/src/lib/error-normalizer.ts:225
+#: ../../../lib/web/src/lib/error-normalizer.ts:215
 msgid "Please check your internet connection and try again."
 msgstr "Jọ̀wọ́ ṣàyẹ̀wò ìsopọ̀ íntánẹ́ẹ̀tì rẹ kí o sì gbìyànjú lẹ́ẹ̀kan sí i."
 
@@ -35,7 +35,7 @@ msgstr "(fẹ̀ jáde)"
 msgid "(from {0})"
 msgstr "(láti {0})"
 
-#: src/features/editor/components/edit-dialogs.tsx:327
+#: src/features/editor/components/edit-dialogs.tsx:330
 msgid "(itself)"
 msgstr "(fúnra rẹ̀)"
 
@@ -48,11 +48,6 @@ msgstr "[kò sí]"
 msgid "{0, plural, one {# conflicting file} other {# conflicting files}}"
 msgstr "{0, plural, one {# fáìlì tó tako} other {# fáìlì tó tako}}"
 
-#. placeholder {0}: selectedValues.size
-#: ../../../lib/web/src/components/data-table/faceted-filter.tsx:66
-msgid "{0, plural, one {# selected} other {# selected}}"
-msgstr "{0, plural, one {# yan} other {# yan}}"
-
 #. placeholder {0}: String(name)
 #: src/routes/_authenticated/$projectId/design.tsx:46
 msgid "{0} - Design"
@@ -64,18 +59,13 @@ msgid "{0} behind"
 msgstr "{0} léhìn"
 
 #. placeholder {0}: files.length
-#: src/features/requests/components/diff-stats.tsx:68
-#: src/features/requests/components/diff-viewer.tsx:421
+#: src/features/requests/components/diff-stats.tsx:74
+#: src/features/requests/components/diff-viewer.tsx:419
 msgid "{0} files changed"
 msgstr "{0} fáìlì yípadà"
 
-#. placeholder {0}: item.label
-#: ../../../lib/web/src/components/config-drawer.tsx:160
-msgid "{0} option preview"
-msgstr "Àyẹ̀wò àṣàyàn {0}"
-
 #. placeholder {0}: String(name)
-#: src/routes/_authenticated/$projectId_.settings.tsx:105
+#: src/routes/_authenticated/$projectId_.settings.tsx:109
 msgid "{0} settings"
 msgstr "Àwọn ìṣètò {0}"
 
@@ -106,22 +96,6 @@ msgstr "Orúkọ {entityLabel} nílò"
 #: ../../../lib/web/src/components/game/game-draw-offer-banner.tsx:29
 msgid "{opponentName} offered a draw"
 msgstr "{opponentName} fún ní ìdábọ̀"
-
-#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:203
-msgid "{selectedCount, plural, one {{entityName} selected} other {{manyName} selected}}"
-msgstr "{selectedCount, plural, one {{entityName} tí a yàn} other {{manyName} tí a yàn}}"
-
-#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:45
-msgid "{selectedCount, plural, one {# {entityName} selected. Bulk actions toolbar is available.} other {# {manyName} selected. Bulk actions toolbar is available.}}"
-msgstr "{selectedCount, plural, one {# {entityName} tí a yàn. Àkàwé ìṣe púpọ̀ wà.} other {# {manyName} tí a yàn. Àkàwé ìṣe púpọ̀ wà.}}"
-
-#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:195
-msgid "{selectedCount, plural, one {# selected} other {# selected}}"
-msgstr "{selectedCount, plural, one {# tí a yàn} other {# tí a yàn}}"
-
-#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:142
-msgid "{selectedCount, plural, one {Bulk actions for # selected {entityName}} other {Bulk actions for # selected {manyName}}}"
-msgstr "{selectedCount, plural, one {Àwọn ìṣe púpọ̀ fún {entityName} # tí a yàn} other {Àwọn ìṣe púpọ̀ fún {manyName} # tí a yàn}}"
 
 #: ../../../lib/web/src/components/attachment-composer.tsx:248
 #: ../../../lib/web/src/components/ui/upload-progress.tsx:52
@@ -170,7 +144,7 @@ msgstr "Pípé (ọjọ́ àti àkókò)"
 msgid "Accept"
 msgstr "Gbà"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:100
+#: src/routes/_authenticated/$projectId_.settings.tsx:104
 msgid "Access"
 msgstr "Ìwọlé"
 
@@ -178,54 +152,38 @@ msgstr "Ìwọlé"
 msgid "Access denied"
 msgstr "A kọ̀ ìwọlé"
 
-#: ../../../lib/web/src/features/errors/forbidden.tsx:16
-msgid "Access Forbidden"
-msgstr "Ìwọlé Léèwọ̀"
-
 #: ../../../lib/web/src/features/access/access-list.tsx:197
 msgid "Access level"
 msgstr "Ìpele ìwọlé"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:139
+#: src/routes/_authenticated/$projectId_.settings.tsx:143
 msgid "Access level updated"
 msgstr "A ti ṣe àtúnyẹ̀wò ìpele ìwọlé"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:130
+#: src/routes/_authenticated/$projectId_.settings.tsx:134
 msgid "Access management"
 msgstr "Ìṣàkóso Ìwọlé"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:136
+#: src/routes/_authenticated/$projectId_.settings.tsx:140
 msgid "Access removed"
 msgstr "A ti yọ ìwọlé kúrò"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:133
+#: src/routes/_authenticated/$projectId_.settings.tsx:137
 msgid "Access set for {subjectName}"
 msgstr "A ti ṣètò ìwọlé fún {subjectName}"
-
-#: ../../../lib/web/src/features/accounts/account-manager.tsx:216
-msgid "Account added"
-msgstr "A ti fi àkáǹtì kún"
-
-#: ../../../lib/web/src/features/accounts/account-manager.tsx:232
-msgid "Account removed"
-msgstr "A ti yọ àkáǹtì kúrò"
 
 #: ../../../lib/web/src/features/accounts/account-add.tsx:139
 msgid "Account type"
 msgstr "Irú àkáǹtì"
 
-#: ../../../lib/web/src/features/accounts/account-manager.tsx:242
-msgid "Account verified"
-msgstr "A ti fọwọ́sí àkáǹtì"
-
 #: src/features/objects/components/object-detail-panel.tsx:398
 msgid "Activity"
 msgstr "Ìgbòkègbodò"
 
-#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:712
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:720
 #: ../../../lib/web/src/features/access/access-dialog.tsx:332
 #: ../../../lib/web/src/features/accounts/account-add.tsx:209
-#: src/features/requests/components/request-panel.tsx:104
+#: src/features/requests/components/request-panel.tsx:113
 msgid "Add"
 msgstr "Fi kún"
 
@@ -246,25 +204,20 @@ msgid "Add access"
 msgstr "Fi ìwọlé kún"
 
 #: ../../../lib/web/src/features/accounts/account-add.tsx:132
-#: ../../../lib/web/src/features/accounts/account-manager.tsx:288
 msgid "Add account"
 msgstr "Fi àkáǹtì kún"
-
-#: ../../../lib/web/src/features/accounts/account-manager.tsx:297
-msgid "Add an account to receive notifications and use services."
-msgstr "Fi àkáǹtì kún láti gba àwọn ìfitónilétí àti láti lo àwọn iṣẹ́."
 
 #: ../../../lib/web/src/components/attachment-composer.tsx:291
 msgid "Add caption"
 msgstr "Fi àlàyé kún"
 
-#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:682
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:690
 msgid "Add checklist item"
 msgstr "Fi ohun ìmọ́ ìṣàyẹ̀wò kún"
 
-#: src/features/editor/components/design-editor.tsx:511
-#: src/features/editor/components/edit-dialogs.tsx:220
-#: src/features/editor/components/edit-dialogs.tsx:431
+#: src/features/editor/components/design-editor.tsx:541
+#: src/features/editor/components/edit-dialogs.tsx:223
+#: src/features/editor/components/edit-dialogs.tsx:434
 msgid "Add class"
 msgstr "Fi kíláàsì kún"
 
@@ -274,21 +227,17 @@ msgstr "Fi ọ̀wọ́n kún"
 
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:105
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:233
-#: src/features/editor/components/edit-dialogs.tsx:426
+#: src/features/editor/components/edit-dialogs.tsx:429
 msgid "Add field"
 msgstr "Fi pápá kún"
 
-#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:700
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:708
 msgid "Add item..."
 msgstr "Fi ohun kún..."
 
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx:320
 msgid "Add link"
 msgstr "Fi ọ̀nà kún"
-
-#: ../../../lib/web/src/features/accounts/account-picker.tsx:102
-msgid "Add new account"
-msgstr "Fi àkáǹtì tuntun kún"
 
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:215
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:220
@@ -298,18 +247,13 @@ msgstr "Fi àkáǹtì tuntun kún"
 msgid "Add option"
 msgstr "Fi àṣàyàn kún"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:131
+#: src/routes/_authenticated/$projectId_.settings.tsx:135
 msgid "Add rule"
 msgstr "Fi ofin kun"
 
 #: ../../../lib/web/src/components/post-tags.tsx:137
-#: ../../../lib/web/src/components/tag-input.tsx:40
 msgid "Add tag..."
 msgstr "Fi tag kún..."
-
-#: ../../../lib/web/src/components/layout/team-switcher.tsx:83
-msgid "Add team/app"
-msgstr "Fi ẹgbẹ́/app kún"
 
 #: ../../../lib/web/src/features/accounts/account-add.tsx:175
 msgid "Add to existing notifications"
@@ -319,7 +263,7 @@ msgstr "Fi sí àwọn ìfitónilétí tó wà"
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:513
 #: ../../../lib/web/src/components/view-tabs.tsx:87
 #: ../../../lib/web/src/components/view-tabs.tsx:93
-#: src/features/editor/components/design-editor.tsx:462
+#: src/features/editor/components/design-editor.tsx:492
 msgid "Add view"
 msgstr "Fi ìran kún"
 
@@ -327,17 +271,9 @@ msgstr "Fi ìran kún"
 msgid "Adding..."
 msgstr "Ó ń fi kún..."
 
-#: ../../../lib/web/src/components/config-drawer.tsx:72
-msgid "Adjust the appearance and layout to suit your preferences."
-msgstr "Ṣàtúnṣe ìrísí àti ìtò láti bá ìfẹ́ rẹ mu."
-
 #: ../../../lib/web/src/components/ui/sort-selector.tsx:41
 msgid "AI"
 msgstr "AI"
-
-#: ../../../lib/web/src/components/notifications-dropdown.tsx:163
-msgid "All"
-msgstr "Gbogbo"
 
 #: src/components/layout/projects-layout.tsx:35
 msgid "All projects"
@@ -348,11 +284,11 @@ msgstr "Gbogbo àwọn iṣẹ́ àkànṣe"
 msgid "Allow anyone to search for {0}"
 msgstr "Gba ẹnikẹ́ni láàyè láti wá {0}"
 
-#: src/features/projects/components/create-project-dialog.tsx:382
+#: src/features/projects/components/create-project-dialog.tsx:387
 msgid "Allow anyone to search for project"
 msgstr "Jẹ́ kí ẹnikẹ́ni wá iṣẹ́ àkànṣe"
 
-#: src/features/editor/components/edit-dialogs.tsx:346
+#: src/features/editor/components/edit-dialogs.tsx:349
 msgid "Allow merge requests"
 msgstr "Jẹ́ kí àwọn ìbéèrè merge"
 
@@ -364,7 +300,7 @@ msgstr "Jẹ́ kí a tò nípa"
 msgid "An error occurred"
 msgstr "Àṣìṣe kan wáyé"
 
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:275
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:266
 msgid "An unexpected error occurred"
 msgstr "Àṣìṣe àìròtẹ́lẹ̀ kan wáyé"
 
@@ -373,11 +309,11 @@ msgid "Android push"
 msgstr "Android push"
 
 #: ../../../lib/web/src/features/access/access-list.tsx:45
-#: ../../../lib/web/src/features/access/types.ts:42
+#: ../../../lib/web/src/features/access/types.ts:36
 msgid "Anyone"
 msgstr "Ẹnikẹ́ni"
 
-#: ../../../lib/web/src/features/access/types.ts:41
+#: ../../../lib/web/src/features/access/types.ts:35
 msgid "Anyone who is logged in"
 msgstr "Ẹnikẹ́ni tó ti wọlé"
 
@@ -402,7 +338,7 @@ msgstr "Ṣé o dájú pé o fẹ́ pa ọ̀wọ́n \"{name}\" rẹ́? A kò lè
 msgid "Are you sure you want to delete this comment? This will also delete all replies."
 msgstr "Ṣé o dájú pé o fẹ́ pa àlàyé yìí rẹ́? Èyí yóò tún pa gbogbo ìdáhùn rẹ́."
 
-#: src/features/requests/components/request-panel.tsx:132
+#: src/features/requests/components/request-panel.tsx:141
 msgid "Are you sure you want to delete this merge request?"
 msgstr "Ṣé o dájú pé o fẹ́ pa ìbéèrè merge yìí rẹ́?"
 
@@ -413,10 +349,6 @@ msgstr "Ṣé o dájú pé o fẹ́ jáde? Wàá nílò láti wọlé lẹ́ẹ�
 #: src/features/projects/pages/projects-list-page.tsx:40
 msgid "Are you sure you want to unsubscribe from this project?"
 msgstr "Ṣé o dájú pé o fẹ́ yọ orúkọ rẹ kúrò nínú iṣẹ́ àkànṣe yìí?"
-
-#: ../../../lib/web/src/components/data-table/column-header.tsx:59
-msgid "Asc"
-msgstr "Àsc"
 
 #: ../../../lib/web/src/components/ui/sort-direction-button.tsx:27
 msgid "Ascending"
@@ -431,7 +363,7 @@ msgid "Attach reply files"
 msgstr "So àwọn fáìlì ìdáhùn pọ̀"
 
 #: ../../../lib/web/src/features/access/access-list.tsx:46
-#: ../../../lib/web/src/features/access/types.ts:41
+#: ../../../lib/web/src/features/access/types.ts:35
 msgid "Authenticated users"
 msgstr "Àwọn olùmúlò tí a fọwọ́sí"
 
@@ -452,17 +384,16 @@ msgid "Avatar for {name}"
 msgstr "Àwòrán fún {name}"
 
 #: ../../../lib/web/src/components/place-picker.tsx:156
-#: src/features/projects/components/create-project-dialog.tsx:537
+#: src/features/projects/components/create-project-dialog.tsx:546
 msgid "Back"
 msgstr "Padà"
 
-#: ../../../lib/web/src/features/errors/forbidden.tsx:28
 #: ../../../lib/web/src/features/errors/not-found-error.tsx:28
 #: ../../../lib/web/src/features/errors/unauthorized-error.tsx:28
 msgid "Back to home"
 msgstr "Pada si ile"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:101
+#: src/routes/_authenticated/$projectId_.settings.tsx:105
 #: src/routes/_authenticated/$projectId/design.tsx:47
 msgid "Back to project"
 msgstr "Padà sí iṣẹ́ àkànṣe"
@@ -476,7 +407,7 @@ msgstr "Padà sí àwọn iṣẹ́ àkànṣe"
 msgid "Banner"
 msgstr "Banner"
 
-#: src/features/requests/components/diff-viewer.tsx:449
+#: src/features/requests/components/diff-viewer.tsx:447
 msgid "Binary file not shown"
 msgstr "Fáìlì binary kò hàn"
 
@@ -485,8 +416,8 @@ msgstr "Fáìlì binary kò hàn"
 msgid "Blocked by"
 msgstr "Dídènà nípasẹ̀"
 
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:227
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:237
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:242
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:252
 msgid "Blocked navigation to untrusted link"
 msgstr "A dí ìrìnnà sí ọ̀nà tí a kò gbẹ́kẹ̀lé"
 
@@ -515,7 +446,7 @@ msgstr "Àwọn ìfitónilétí browser"
 msgid "Built-in templates"
 msgstr "Àwọn template abínibí"
 
-#: src/features/editor/components/edit-dialogs.tsx:309
+#: src/features/editor/components/edit-dialogs.tsx:312
 msgid "Can be child of"
 msgstr "Ó lè jẹ́ ọmọ ti"
 
@@ -533,7 +464,7 @@ msgstr "Ó lè jẹ́ ọmọ ti"
 #: ../../../lib/web/src/features/access/access-list.tsx:268
 #: ../../../lib/web/src/features/accounts/account-add.tsx:201
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:91
-#: src/features/projects/components/create-project-dialog.tsx:448
+#: src/features/projects/components/create-project-dialog.tsx:453
 #: src/routes/_authenticated/$projectId/design.tsx:61
 #: src/routes/_authenticated/$projectId/index.tsx:143
 msgid "Cancel"
@@ -556,18 +487,14 @@ msgstr "Kò lè dàpọ̀ lọ́nà àdáṣe"
 msgid "Caption"
 msgstr "Àlàyé"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:97
+#: ../../../lib/web/src/components/notification-category-button.tsx:99
 msgid "Category for these notifications"
 msgstr "Ẹ̀ka fún àwọn ìfitónilétí wọ̀nyí"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:78
-#: ../../../lib/web/src/components/notification-category-button.tsx:89
+#: ../../../lib/web/src/components/notification-category-button.tsx:80
+#: ../../../lib/web/src/components/notification-category-button.tsx:91
 msgid "Change notification category"
 msgstr "Yí ẹ̀ka ìfitónilétí padà"
-
-#: ../../../lib/web/src/components/notifications-dropdown.tsx:198
-msgid "Check \"All\" to see your past notifications."
-msgstr "Yan \"Gbogbo\" láti rí àwọn ìfitónilétí rẹ tẹ́lẹ̀."
 
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:137
 msgid "Checkbox"
@@ -585,32 +512,16 @@ msgstr "Àkọsílẹ̀ àyẹ̀wò"
 msgid "Choose a game from the sidebar or start a new one."
 msgstr "Yan eré kan láti sidebar tàbí bẹ̀rẹ̀ ọ̀kan tuntun."
 
-#: src/features/projects/components/create-project-dialog.tsx:329
+#: src/features/projects/components/create-project-dialog.tsx:334
 msgid "Choose a template"
 msgstr "Yan àwòṣe"
-
-#: ../../../lib/web/src/components/config-drawer.tsx:329
-msgid "Choose between default expanded, compact icon-only, or full layout mode"
-msgstr "Yan láàrin èyí tó fẹ̀ aláìpé, kékeré àmì-nìkan, tàbí ìtò kíkún"
-
-#: ../../../lib/web/src/components/config-drawer.tsx:271
-msgid "Choose between inset, floating, or standard sidebar layout"
-msgstr "Yan láàrin ìtò sidebar inset, lílúwẹ̀ẹ́, tàbí ìpilẹ̀"
-
-#: ../../../lib/web/src/components/config-drawer.tsx:372
-msgid "Choose between left-to-right or right-to-left site direction"
-msgstr "Yan láàrin ìṣíkiri ojú-òpó láti òsì sí ọ̀tún tàbí láti ọ̀tún sí òsì"
-
-#: ../../../lib/web/src/components/config-drawer.tsx:227
-msgid "Choose between system preference, light mode, or dark mode"
-msgstr "Yan láàrin ìfẹ́ system, ọ̀nà ìmọ́lẹ̀, tàbí ọ̀nà òkùnkùn"
 
 #: ../../../lib/web/src/components/language-picker.tsx:264
 #: ../../../lib/web/src/components/language-picker.tsx:271
 msgid "Choose language"
 msgstr "Yan èdè"
 
-#: src/features/editor/components/design-editor.tsx:506
+#: src/features/editor/components/design-editor.tsx:536
 msgid "Classes"
 msgstr "Àwọn kíláàsì"
 
@@ -627,29 +538,15 @@ msgstr "Pa rẹ́"
 msgid "Clear all"
 msgstr "Pa gbogbo rẹ̀ rẹ́"
 
-#: ../../../lib/web/src/components/data-table/faceted-filter.tsx:144
-msgid "Clear filters"
-msgstr "Pa àwọn ásẹ̀ rẹ́"
-
 #: ../../../lib/web/src/components/search-input.tsx:26
 msgid "Clear search"
 msgstr "Pa àwárí rẹ́"
 
-#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:170
-#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:174
-msgid "Clear selection"
-msgstr "Pa ìyàn rẹ́"
-
-#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:171
-#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:178
-msgid "Clear selection (Escape)"
-msgstr "Pa ìyàn rẹ́ (Escape)"
-
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:501
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:506
 #: ../../../lib/web/src/components/ui/dialog.tsx:78
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:470
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:473
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:468
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:471
 #: ../../../lib/web/src/components/ui/sheet.tsx:79
 msgid "Close"
 msgstr "Tì"
@@ -658,8 +555,8 @@ msgstr "Tì"
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:113
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:263
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:267
-#: src/features/editor/components/edit-dialogs.tsx:225
-#: src/features/editor/components/edit-dialogs.tsx:229
+#: src/features/editor/components/edit-dialogs.tsx:228
+#: src/features/editor/components/edit-dialogs.tsx:232
 msgid "Close dialog"
 msgstr "Ti òrò sísọ"
 
@@ -668,8 +565,8 @@ msgstr "Ti òrò sísọ"
 msgid "Close navigation"
 msgstr "Ti ìṣíkiri"
 
-#: ../../../lib/web/src/components/layout/right-panel.tsx:265
-#: ../../../lib/web/src/components/layout/right-panel.tsx:268
+#: ../../../lib/web/src/components/layout/right-panel.tsx:234
+#: ../../../lib/web/src/components/layout/right-panel.tsx:237
 msgid "Close panel"
 msgstr "Ti panẹli"
 
@@ -709,10 +606,6 @@ msgstr "Àwọn ọ̀wọ́n ṣe àwùjọ nípa"
 msgid "Comfortable"
 msgstr "Itunu"
 
-#: ../../../lib/web/src/components/coming-soon.tsx:12
-msgid "Coming Soon!"
-msgstr "Yóò Dé Láìpẹ́!"
-
 #: ../../../lib/web/src/components/ui/command.tsx:34
 msgid "Command Palette"
 msgstr "Àpótí àṣẹ"
@@ -726,8 +619,8 @@ msgstr "Awọn iṣe asọye"
 msgid "Comment and view"
 msgstr "Ṣàlàyé àti wo"
 
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:433
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:445
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:431
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:443
 msgid "Comments"
 msgstr "Àwọn àlàyé"
 
@@ -736,12 +629,11 @@ msgstr "Àwọn àlàyé"
 msgid "Comments ({0})"
 msgstr "Àwọn ọ̀rọ̀ ({0})"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:316
 #: ../../../lib/web/src/lib/preference-utils.ts:90
 msgid "Compact"
 msgstr "Kékeré"
 
-#: src/features/editor/components/edit-dialogs.tsx:221
+#: src/features/editor/components/edit-dialogs.tsx:224
 msgid "Configure class settings"
 msgstr "Ṣètò ètò kíláàsì"
 
@@ -761,10 +653,6 @@ msgstr "Fọwọ́sí"
 #: ../../../lib/web/src/lib/chat-ui.ts:18
 msgid "Connected"
 msgstr "Tí a so pọ̀"
-
-#: ../../../lib/web/src/features/accounts/account-manager.tsx:191
-msgid "Connected accounts"
-msgstr "Àwọn àkáǹtì tí a so pọ̀"
 
 #: ../../../lib/web/src/lib/chat-ui.ts:21
 msgid "Connecting..."
@@ -802,11 +690,33 @@ msgstr "A ti ṣe àdàkọ sí clipboard"
 msgid "Copy"
 msgstr "Ṣe àdàkọ"
 
+#: src/routes/$projectId.diff.tsx:73
+msgid "Could not change the view style"
+msgstr ""
+
+#: src/features/requests/components/branch-select.tsx:76
+msgid "Could not load branches"
+msgstr "Kò lè ṣí àwọn branch lọ̀"
+
+#: src/features/requests/components/repository-select.tsx:64
+msgid "Could not load repositories"
+msgstr ""
+
+#: src/features/projects/components/create-project-dialog.tsx:79
+#: src/features/projects/components/create-project-dialog.tsx:482
+#: src/routes/_authenticated/$projectId/design.tsx:102
+msgid "Could not load templates"
+msgstr ""
+
+#: src/features/requests/components/diff-stats.tsx:59
+msgid "Could not load the diff"
+msgstr ""
+
 #: ../../../lib/web/src/features/document/document-page.tsx:82
 msgid "Could not load this document. Please try again later."
 msgstr "Kò lè kó ìwé yìí. Jọ̀wọ́ gbìyànjú lẹ́ẹ̀kan sí i."
 
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:113
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:128
 msgid "Couldn't load notifications"
 msgstr "Kò lè ṣe àwọn ìfitọ́nilétí"
 
@@ -839,7 +749,7 @@ msgstr "Ṣẹ̀dá {0}"
 msgid "Create a new item in this project"
 msgstr "Dá ohun tuntun nínú iṣẹ́ àkànṣe yìí"
 
-#: src/features/projects/components/create-project-dialog.tsx:331
+#: src/features/projects/components/create-project-dialog.tsx:336
 #: src/features/projects/pages/projects-list-page.tsx:37
 msgid "Create a new project"
 msgstr "Dá iṣẹ́ àkànṣe tuntun"
@@ -850,10 +760,10 @@ msgid "Create new item"
 msgstr "Dá ohun tuntun"
 
 #: src/components/layout/projects-layout.tsx:37
-#: src/features/projects/components/create-project-dialog.tsx:319
-#: src/features/projects/components/create-project-dialog.tsx:329
-#: src/features/projects/components/create-project-dialog.tsx:452
-#: src/features/projects/components/create-project-dialog.tsx:540
+#: src/features/projects/components/create-project-dialog.tsx:324
+#: src/features/projects/components/create-project-dialog.tsx:334
+#: src/features/projects/components/create-project-dialog.tsx:457
+#: src/features/projects/components/create-project-dialog.tsx:549
 msgid "Create project"
 msgstr "Dá iṣẹ́ àkànṣe"
 
@@ -866,14 +776,14 @@ msgstr "Ṣẹ̀dá, ṣàtúnṣe, sọ̀rọ̀, kí o sì wò"
 msgid "Created"
 msgstr "Tí a dá"
 
-#: src/features/projects/components/create-project-dialog.tsx:127
+#: src/features/projects/components/create-project-dialog.tsx:132
 msgid "Creating project..."
 msgstr "Ń dá iṣẹ́ àkànṣe..."
 
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:656
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:258
-#: src/features/projects/components/create-project-dialog.tsx:452
-#: src/features/projects/components/create-project-dialog.tsx:540
+#: src/features/projects/components/create-project-dialog.tsx:457
+#: src/features/projects/components/create-project-dialog.tsx:549
 msgid "Creating..."
 msgstr "Ó ń dá..."
 
@@ -885,26 +795,19 @@ msgstr "Ipò lọ́wọ́lọ́wọ́"
 msgid "Custom"
 msgstr "Àṣà"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:219
-#: ../../../lib/web/src/components/theme-switch.tsx:52
 #: ../../../lib/web/src/lib/preference-utils.ts:15
 msgid "Dark"
 msgstr "Òkùnkùn"
 
-#: ../../../lib/web/src/components/profile-dropdown.tsx:87
-#: ../../../lib/web/src/components/profile-dropdown.tsx:123
-msgid "Dark mode"
-msgstr "Ọ̀nà òkùnkùn"
-
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:259
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:250
 msgid "Data conflict"
 msgstr "Ìtakora dátà"
 
 #. placeholder {0}: imported.data?.objects ?? 0
 #. placeholder {1}: imported.data?.comments ?? 0
 #. placeholder {2}: imported.data?.links ?? 0
-#: src/features/projects/components/create-project-dialog.tsx:146
-#: src/features/projects/components/create-project-dialog.tsx:176
+#: src/features/projects/components/create-project-dialog.tsx:151
+#: src/features/projects/components/create-project-dialog.tsx:181
 msgid "Data imported ({0, plural, one {# object} other {# objects}}, {1, plural, one {# comment} other {# comments}}, {2, plural, one {# link} other {# links}})"
 msgstr "Ti gbé dátà wọlé ({0, plural, other {# nǹkan}}, {1, plural, other {# ọ̀rọ̀ ìdásí}}, {2, plural, other {# ìjápọ̀}})"
 
@@ -915,10 +818,6 @@ msgstr "Ọjọ́"
 #: ../../../lib/web/src/components/game/game-draw-offer-banner.tsx:41
 msgid "Decline"
 msgstr "Kọ̀"
-
-#: ../../../lib/web/src/components/config-drawer.tsx:311
-msgid "Default"
-msgstr "Àìpé"
 
 #: ../../../lib/web/src/features/accounts/account-add.tsx:185
 msgid "Default AI account"
@@ -938,8 +837,8 @@ msgstr "Ìtò àìpé"
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:252
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:314
 #: src/features/objects/components/object-detail-panel.tsx:643
-#: src/features/requests/components/request-panel.tsx:133
-#: src/routes/_authenticated/$projectId_.settings.tsx:120
+#: src/features/requests/components/request-panel.tsx:142
+#: src/routes/_authenticated/$projectId_.settings.tsx:124
 msgid "Delete"
 msgstr "Pa rẹ́"
 
@@ -947,7 +846,7 @@ msgstr "Pa rẹ́"
 msgid "Delete attachment"
 msgstr "Pa ìsomọ́ rẹ́"
 
-#: src/features/editor/components/edit-dialogs.tsx:246
+#: src/features/editor/components/edit-dialogs.tsx:249
 msgid "Delete class"
 msgstr "Pa kíláàsì rẹ́"
 
@@ -969,13 +868,13 @@ msgstr "Pa pápá rẹ́"
 msgid "Delete item"
 msgstr "Pa ohun rẹ́"
 
-#: src/features/requests/components/request-panel.tsx:131
-#: src/features/requests/components/request-panel.tsx:394
-#: src/features/requests/components/request-panel.tsx:399
-#: src/features/requests/components/request-panel.tsx:419
-#: src/features/requests/components/request-panel.tsx:424
-#: src/features/requests/components/request-panel.tsx:441
-#: src/features/requests/components/request-panel.tsx:446
+#: src/features/requests/components/request-panel.tsx:140
+#: src/features/requests/components/request-panel.tsx:403
+#: src/features/requests/components/request-panel.tsx:408
+#: src/features/requests/components/request-panel.tsx:428
+#: src/features/requests/components/request-panel.tsx:433
+#: src/features/requests/components/request-panel.tsx:450
+#: src/features/requests/components/request-panel.tsx:455
 msgid "Delete merge request"
 msgstr "Pa ìbéèrè merge rẹ́"
 
@@ -989,12 +888,12 @@ msgstr "Pa àṣàyàn rẹ́"
 msgid "Delete option {0}"
 msgstr "Pa àṣàyàn {0} rẹ́"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:119
-#: src/routes/_authenticated/$projectId_.settings.tsx:122
+#: src/routes/_authenticated/$projectId_.settings.tsx:123
+#: src/routes/_authenticated/$projectId_.settings.tsx:126
 msgid "Delete project"
 msgstr "Pa iṣẹ́ àkànṣe rẹ́"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:121
+#: src/routes/_authenticated/$projectId_.settings.tsx:125
 msgid "Delete project?"
 msgstr "Pa iṣẹ́ àkànṣe rẹ́?"
 
@@ -1006,21 +905,17 @@ msgstr "Pa ìran rẹ́"
 msgid "Delete your account on the old server"
 msgstr "Pa akonti rẹ rẹ lori olupin atijọ"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:127
+#: src/routes/_authenticated/$projectId_.settings.tsx:131
 msgid "Deleting project..."
 msgstr "Ń pa iṣẹ́ àkànṣe rẹ́..."
-
-#: ../../../lib/web/src/components/data-table/column-header.tsx:63
-msgid "Desc"
-msgstr "Desc"
 
 #: ../../../lib/web/src/components/ui/sort-direction-button.tsx:27
 msgid "Descending"
 msgstr "Sọkalẹ̀"
 
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:83
-#: src/features/requests/components/request-panel.tsx:306
-#: src/routes/_authenticated/$projectId_.settings.tsx:112
+#: src/features/requests/components/request-panel.tsx:315
+#: src/routes/_authenticated/$projectId_.settings.tsx:116
 msgid "Description"
 msgstr "Àpèjúwe"
 
@@ -1030,7 +925,7 @@ msgstr "Àpèjúwe"
 msgid "Design"
 msgstr "Àpẹẹrẹ"
 
-#: src/features/projects/components/create-project-dialog.tsx:177
+#: src/features/projects/components/create-project-dialog.tsx:182
 #: src/routes/_authenticated/$projectId/design.tsx:54
 msgid "Design imported"
 msgstr "A ti kó àpẹẹrẹ wọlé"
@@ -1054,17 +949,13 @@ msgstr "Pánẹ́ẹ̀lì Àwọn Ẹ̀kúnrẹ́rẹ́"
 msgid "Detect from web browser"
 msgstr "Ṣàwárí láti web browser"
 
-#: src/features/requests/components/diff-stats.tsx:86
+#: src/features/requests/components/diff-stats.tsx:92
 msgid "Diff"
 msgstr "Diff"
 
 #: src/routes/$projectId.diff.tsx:41
 msgid "Diff: {source} → {target}"
 msgstr "Ìyàtọ̀: {source} → {target}"
-
-#: ../../../lib/web/src/components/config-drawer.tsx:341
-msgid "Direction"
-msgstr "Ìtọ́sọ́nà"
 
 #: ../../../lib/web/src/components/person-picker.tsx:214
 msgid "Directory"
@@ -1092,13 +983,13 @@ msgstr "Mú kúrò"
 msgid "Dismiss board hint"
 msgstr "Mú ìtọ́ka pátákó kúrò"
 
-#: ../../../lib/web/src/components/ui/sidebar.tsx:238
+#: ../../../lib/web/src/components/ui/sidebar.tsx:258
 msgid "Displays the mobile sidebar."
 msgstr "Ó ń fi sidebar fóònù hàn."
 
 #: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:305
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:518
-#: src/features/editor/components/edit-dialogs.tsx:436
+#: src/features/editor/components/edit-dialogs.tsx:439
 #: src/features/objects/components/object-detail-panel.tsx:472
 msgid "Done"
 msgstr "Ti parí"
@@ -1108,8 +999,8 @@ msgid "Double click on a column to add content"
 msgstr "Tẹ̀ ní ẹ̀ẹ̀mejì lórí kọ́lọ́mù láti fi àkóónú kún"
 
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:239
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:454
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:464
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:452
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:462
 msgid "Download"
 msgstr "Gbà sílẹ̀"
 
@@ -1117,7 +1008,7 @@ msgstr "Gbà sílẹ̀"
 msgid "Download backup first"
 msgstr "Gbà backup sílẹ̀ ní àkọ́kọ́"
 
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:100
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:98
 msgid "Download failed"
 msgstr "Ìgbasílẹ̀ kùnà"
 
@@ -1126,8 +1017,8 @@ msgstr "Ìgbasílẹ̀ kùnà"
 msgid "Downloaded {filename}"
 msgstr "Tí a gbà sílẹ̀ {filename}"
 
-#: src/features/requests/components/request-panel.tsx:272
-#: src/features/requests/components/request-panel.tsx:344
+#: src/features/requests/components/request-panel.tsx:281
+#: src/features/requests/components/request-panel.tsx:353
 msgid "Draft"
 msgstr "Àkọsílẹ̀ àkọ́kọ́"
 
@@ -1139,7 +1030,7 @@ msgstr "Wọ́ àwọn kọ́lọ́mù láti tún wọ́n tò"
 msgid "Duplicates"
 msgstr "Ẹ̀dà"
 
-#: ../../../lib/web/src/lib/preference-utils.ts:141
+#: ../../../lib/web/src/lib/preference-utils.ts:134
 msgid "Dyslexia-friendly"
 msgstr "Ẹ̀dá lóàfin fún àìmoọ̀rọ̀"
 
@@ -1156,7 +1047,7 @@ msgstr "Ṣàtúnṣe {label}"
 msgid "Edit caption"
 msgstr "Ṣàtúnṣe àlàyé"
 
-#: src/features/editor/components/edit-dialogs.tsx:220
+#: src/features/editor/components/edit-dialogs.tsx:223
 msgid "Edit class"
 msgstr "Ṣàtúnṣe class"
 
@@ -1202,7 +1093,7 @@ msgstr "Tẹ koodu láti inú ímeèlì rẹ"
 msgid "Enter your authenticator code"
 msgstr "Tẹ kóòdù authenticator rẹ"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:113
+#: src/routes/_authenticated/$projectId_.settings.tsx:117
 msgid "Entity ID"
 msgstr "ID Ẹ̀ka"
 
@@ -1233,17 +1124,9 @@ msgstr "Mú àpẹrẹ jáde"
 msgid "External URL"
 msgstr "URL òde"
 
-#: ../../../lib/web/src/lib/preference-utils.ts:131
+#: ../../../lib/web/src/lib/preference-utils.ts:124
 msgid "Extra large"
 msgstr "Tóbi gan"
-
-#: ../../../lib/web/src/features/accounts/account-manager.tsx:225
-msgid "Failed to add account"
-msgstr "Kò lè fi àkántì kún"
-
-#: ../../../lib/web/src/components/tag-input.tsx:39
-msgid "Failed to add tag"
-msgstr "Kò lè fi tag kún"
 
 #: src/features/requests/components/merge-status.tsx:48
 msgid "Failed to check merge status"
@@ -1258,7 +1141,8 @@ msgstr "Kò lè dà"
 msgid "Failed to create class"
 msgstr "Kò lè dá class"
 
-#: src/features/editor/components/design-editor.tsx:601
+#: src/features/editor/components/design-editor.tsx:166
+#: src/features/editor/components/design-editor.tsx:631
 msgid "Failed to create field"
 msgstr "Kò lè dá field"
 
@@ -1268,15 +1152,20 @@ msgstr "Kò lè dá field"
 msgid "Failed to create link"
 msgstr "Kò lè dá ìjápọ̀"
 
-#: src/features/editor/components/design-editor.tsx:621
+#: src/features/requests/components/request-panel.tsx:59
+msgid "Failed to create merge request"
+msgstr ""
+
+#: src/features/editor/components/design-editor.tsx:238
+#: src/features/editor/components/design-editor.tsx:651
 msgid "Failed to create option"
 msgstr "Kò lè dá àṣàyàn"
 
-#: src/features/projects/components/create-project-dialog.tsx:129
+#: src/features/projects/components/create-project-dialog.tsx:134
 msgid "Failed to create project"
 msgstr "Kò lè dá iṣẹ́"
 
-#: src/features/editor/components/design-editor.tsx:289
+#: src/features/editor/components/design-editor.tsx:316
 msgid "Failed to create view"
 msgstr "Kò lè dá wíwò"
 
@@ -1288,19 +1177,35 @@ msgstr "Kò lè parẹ́"
 msgid "Failed to delete attachment"
 msgstr "Kò lè pa àfikún rẹ́"
 
+#: src/features/editor/components/design-editor.tsx:137
+msgid "Failed to delete class"
+msgstr ""
+
 #: ../../../lib/web/src/components/entity/entity-comment-list.tsx:191
 msgid "Failed to delete comment"
 msgstr "Kò lè pa ọ̀rọ̀-ìṣàlàyé rẹ́"
+
+#: src/features/editor/components/design-editor.tsx:209
+msgid "Failed to delete field"
+msgstr ""
 
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx:159
 msgid "Failed to delete link"
 msgstr "Kò lè pa ìjápọ̀ rẹ́"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:129
+#: src/features/requests/components/request-panel.tsx:85
+msgid "Failed to delete merge request"
+msgstr ""
+
+#: src/features/editor/components/design-editor.tsx:276
+msgid "Failed to delete option"
+msgstr ""
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:133
 msgid "Failed to delete project"
 msgstr "Kò lè pa iṣẹ́ rẹ́"
 
-#: src/features/editor/components/design-editor.tsx:341
+#: src/features/editor/components/design-editor.tsx:371
 msgid "Failed to delete view"
 msgstr "Kò lè pa wíwò rẹ́"
 
@@ -1316,8 +1221,8 @@ msgstr "Kò lè mú àpẹrẹ jáde"
 msgid "Failed to get RSS token"
 msgstr "Kò lè rí token RSS"
 
-#: src/features/projects/components/create-project-dialog.tsx:147
-#: src/features/projects/components/create-project-dialog.tsx:178
+#: src/features/projects/components/create-project-dialog.tsx:152
+#: src/features/projects/components/create-project-dialog.tsx:183
 msgid "Failed to import data"
 msgstr "Kò ṣeé ṣe láti gbé dátà wọlé"
 
@@ -1333,7 +1238,7 @@ msgstr "Kò lè ṣílọ̀"
 msgid "Failed to load history"
 msgstr "Kò lè ṣí ìtàn lọ̀"
 
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:340
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:338
 msgid "Failed to load image"
 msgstr "Kò ṣeé gbé àwòrán wọlé"
 
@@ -1361,7 +1266,7 @@ msgstr "Kò lè ṣí àwọn iṣẹ́ lọ̀"
 msgid "Failed to load recommended projects"
 msgstr "Kíkó àwọn iṣẹ́ àkànṣe tí a dábàá kùnà"
 
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:340
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:338
 msgid "Failed to load video"
 msgstr "Kò ṣeé gbé fídíò wọlé"
 
@@ -1377,24 +1282,20 @@ msgstr "Ìkùnà láti gbé"
 msgid "Failed to post comment"
 msgstr "Kò lè fi ọ̀rọ̀-ìṣàlàyé ránṣẹ́"
 
-#: src/features/projects/components/create-project-dialog.tsx:256
+#: src/features/projects/components/create-project-dialog.tsx:261
 #: src/routes/_authenticated/$projectId/design.tsx:60
 msgid "Failed to read file"
 msgstr "Kò lè ka fáìlì"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:137
+#: src/routes/_authenticated/$projectId_.settings.tsx:141
 msgid "Failed to remove access"
 msgstr "Kò lè mú àyè kúrò"
 
-#: ../../../lib/web/src/features/accounts/account-manager.tsx:234
-msgid "Failed to remove account"
-msgstr "Kò lè mú àkántì kúrò"
-
-#: src/features/editor/components/design-editor.tsx:200
+#: src/features/editor/components/design-editor.tsx:218
 msgid "Failed to reorder fields"
 msgstr "Kò lè tún àwọn field tò"
 
-#: src/features/editor/components/design-editor.tsx:350
+#: src/features/editor/components/design-editor.tsx:380
 msgid "Failed to reorder views"
 msgstr "Kò lè tún àwọn wíwò tò"
 
@@ -1410,17 +1311,13 @@ msgstr "Kò lè fi pamọ́"
 msgid "Failed to search projects"
 msgstr "Ìwádìí àwọn iṣẹ́ àkànṣe kùnà"
 
-#: ../../../lib/web/src/features/accounts/account-manager.tsx:257
-msgid "Failed to send verification code"
-msgstr "Kò lè firanṣẹ́ kóòdù ìjẹ́rìí"
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:134
+#: src/routes/_authenticated/$projectId_.settings.tsx:138
 msgid "Failed to set access level"
 msgstr "Kò lè gbé ìpele àyè kalẹ̀"
 
 #: src/features/projects/components/inline-project-search.tsx:69
 #: src/features/projects/components/recommended-projects.tsx:44
-#: src/routes/_authenticated/find.tsx:46
+#: src/routes/_authenticated/find.tsx:45
 msgid "Failed to subscribe"
 msgstr "Kò lè ṣe alábàápín"
 
@@ -1429,21 +1326,41 @@ msgstr "Kò lè ṣe alábàápín"
 msgid "Failed to unsubscribe"
 msgstr "Kò lè yọ alábàápín"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:140
+#: src/routes/_authenticated/$projectId_.settings.tsx:144
 msgid "Failed to update access level"
 msgstr "Kò lè mú ìpele àyè dòde"
+
+#: src/features/editor/components/design-editor.tsx:122
+msgid "Failed to update class"
+msgstr ""
 
 #: ../../../lib/web/src/components/entity/entity-comment-list.tsx:174
 msgid "Failed to update comment"
 msgstr "Kò lè mú ọ̀rọ̀-ìṣàlàyé dòde"
 
-#: src/features/editor/components/design-editor.tsx:182
+#: src/features/editor/components/design-editor.tsx:197
 msgid "Failed to update field"
 msgstr "Kò lè mú field dòde"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:118
+#: src/features/editor/components/design-editor.tsx:147
+msgid "Failed to update hierarchy"
+msgstr ""
+
+#: src/features/requests/components/request-panel.tsx:71
+msgid "Failed to update merge request"
+msgstr ""
+
+#: src/features/editor/components/design-editor.tsx:257
+msgid "Failed to update option"
+msgstr ""
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:122
 msgid "Failed to update project"
 msgstr "Kò lè mú iṣẹ́ dòde"
+
+#: src/features/editor/components/design-editor.tsx:360
+msgid "Failed to update view"
+msgstr ""
 
 #: src/features/objects/components/object-detail-panel.tsx:209
 msgid "Failed to update watching"
@@ -1453,7 +1370,7 @@ msgstr "Ìkùnà láti ṣàtúnṣe ìṣọ́"
 msgid "Failed to upload attachment"
 msgstr "Kò lè gbé àfikún sókè"
 
-#: src/features/editor/components/edit-dialogs.tsx:352
+#: src/features/editor/components/edit-dialogs.tsx:355
 msgid "Fields"
 msgstr "Àwọn field"
 
@@ -1463,16 +1380,12 @@ msgstr "Àwọn field"
 msgid "Files"
 msgstr "Àwọn fáìlì"
 
-#: ../../../lib/web/src/components/data-table/toolbar.tsx:30
-msgid "Filter..."
-msgstr "Ṣàyẹ̀wò..."
-
 #: src/components/layout/projects-layout.tsx:36
-#: src/routes/_authenticated/find.tsx:41
+#: src/routes/_authenticated/find.tsx:40
 msgid "Find projects"
 msgstr "Wa àwọn iṣẹ́"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:114
+#: src/routes/_authenticated/$projectId_.settings.tsx:118
 msgid "Fingerprint"
 msgstr "Àmì-ìka"
 
@@ -1487,10 +1400,6 @@ msgstr "Àwọn àsíá"
 #: ../../../lib/web/src/lib/preference-utils.ts:111
 msgid "Flat"
 msgstr "Pẹ̀tẹ́lẹ̀"
-
-#: ../../../lib/web/src/components/config-drawer.tsx:258
-msgid "Floating"
-msgstr "Léfòfò"
 
 #: ../../../lib/web/src/lib/preference-utils.ts:58
 msgid "Friday"
@@ -1511,41 +1420,15 @@ msgstr "Láti inú fáìlì"
 #: ../../../lib/web/src/lib/preference-utils.ts:89
 #: ../../../lib/web/src/lib/preference-utils.ts:99
 #: ../../../lib/web/src/lib/preference-utils.ts:110
-#: ../../../lib/web/src/lib/preference-utils.ts:119
-#: ../../../lib/web/src/lib/preference-utils.ts:127
-#: ../../../lib/web/src/lib/preference-utils.ts:138
+#: ../../../lib/web/src/lib/preference-utils.ts:120
+#: ../../../lib/web/src/lib/preference-utils.ts:131
 msgid "From theme"
 msgstr "Lát'ọ̀dọ̀ Theme"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:321
-msgid "Full layout"
-msgstr "Àtòjọ kíkún"
-
-#: ../../../lib/web/src/features/errors/forbidden.tsx:26
 #: ../../../lib/web/src/features/errors/not-found-error.tsx:26
 #: ../../../lib/web/src/features/errors/unauthorized-error.tsx:26
 msgid "Go back"
 msgstr "Padà"
-
-#: ../../../lib/web/src/components/data-table/pagination.tsx:82
-msgid "Go to first page"
-msgstr "Lọ sí ojú-ewé àkọ́kọ́"
-
-#: ../../../lib/web/src/components/data-table/pagination.tsx:128
-msgid "Go to last page"
-msgstr "Lọ sí ojú-ewé ìkẹyìn"
-
-#: ../../../lib/web/src/components/data-table/pagination.tsx:119
-msgid "Go to next page"
-msgstr "Lọ sí ojú-ewé tí ó tẹ̀le"
-
-#: ../../../lib/web/src/components/data-table/pagination.tsx:106
-msgid "Go to page {pageNumber}"
-msgstr "Lọ sí ojú-ìwé {pageNumber}"
-
-#: ../../../lib/web/src/components/data-table/pagination.tsx:91
-msgid "Go to previous page"
-msgstr "Lọ sí ojú-ewé tí ó ṣáájú"
 
 #: ../../../lib/web/src/features/access/access-dialog.tsx:162
 msgid "Group"
@@ -1559,14 +1442,6 @@ msgstr "Ṣàkójọ nípa"
 #: ../../../lib/web/src/features/access/access-list.tsx:68
 msgid "Group: {0}"
 msgstr "Ẹgbẹ́: {0}"
-
-#: ../../../lib/web/src/components/data-table/column-header.tsx:70
-msgid "Hide"
-msgstr "Fi pamọ́"
-
-#: ../../../lib/web/src/components/password-input.tsx:27
-msgid "Hide password"
-msgstr "Fi ọ̀rọ̀ aṣínà pamọ́"
 
 #: ../../../lib/web/src/components/audit-timeline.tsx:61
 msgid "History"
@@ -1584,16 +1459,16 @@ msgid "Hot"
 msgstr "Gbígbóná"
 
 #: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:152
-#: src/features/editor/components/edit-dialogs.tsx:269
+#: src/features/editor/components/edit-dialogs.tsx:272
 msgid "ID"
 msgstr "ID"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:110
+#: src/routes/_authenticated/$projectId_.settings.tsx:114
 msgid "Identity"
 msgstr "Ìdánimọ̀"
 
 #. placeholder {0}: currentMedia.name
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:318
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:316
 msgid "Image viewer: {0}"
 msgstr "Ẹ̀rọ ìwo àwòrán: {0}"
 
@@ -1606,16 +1481,16 @@ msgstr "Imperial"
 msgid "Import design"
 msgstr "Mú àpẹrẹ wọlé"
 
-#: src/features/projects/components/create-project-dialog.tsx:392
+#: src/features/projects/components/create-project-dialog.tsx:397
 msgid "Import from backup (optional)"
 msgstr "Gbé wọlé láti backup (àṣàyàn)"
 
-#: src/features/projects/components/create-project-dialog.tsx:144
-#: src/features/projects/components/create-project-dialog.tsx:173
+#: src/features/projects/components/create-project-dialog.tsx:149
+#: src/features/projects/components/create-project-dialog.tsx:178
 msgid "Importing data..."
 msgstr "Ń gbé dátà wọlé..."
 
-#: ../../../lib/web/src/features/access/types.ts:42
+#: ../../../lib/web/src/features/access/types.ts:36
 msgid "Including anonymous users"
 msgstr "Pẹ̀lú àwọn olùmúlò aláìlórúkọ"
 
@@ -1627,30 +1502,18 @@ msgstr "Àwòrán lẹ́tà àkọ́kọ́"
 msgid "Initials avatar for {name}"
 msgstr "Àwòrán lẹ́tà àkọ́kọ́ fún {name}"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:253
-msgid "Inset"
-msgstr "Inú"
-
 #: ../../../lib/web/src/components/ui/sort-selector.tsx:42
 msgid "Interests"
 msgstr "Àwọn ìfẹ́"
 
-#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:545
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:550
 msgid "Invalid date"
 msgstr "Ọjọ́ aláìdára"
 
-#: src/features/projects/components/create-project-dialog.tsx:251
+#: src/features/projects/components/create-project-dialog.tsx:256
 #: src/routes/_authenticated/$projectId/design.tsx:59
 msgid "Invalid JSON file"
 msgstr "Fáìlì JSON aláìdára"
-
-#: ../../../lib/web/src/components/tag-input.tsx:38
-msgid "Invalid tag: letters, numbers, spaces, hyphens, and slashes only (max 50 chars)"
-msgstr "Àmì àìtọ́: lẹ́tà, nọ́ńbà, àyè, ìlà àsopọ̀ àti ìlà ìyà nìkan (àsẹ́kù lẹ́tà 50)"
-
-#: ../../../lib/web/src/features/accounts/account-manager.tsx:245
-msgid "Invalid verification code"
-msgstr "Kóòdù ìjẹ́rìí aláìdára"
 
 #: ../../../lib/web/src/features/errors/not-found-error.tsx:18
 msgid "It seems like the page you're looking for <0/>does not exist or might have been removed."
@@ -1669,30 +1532,18 @@ msgid "Keyboard shortcuts"
 msgstr "Àwọn ọ̀nà kúkurú kọ́kọ́rọ́"
 
 #: ../../../lib/web/src/lib/preference-utils.ts:103
-#: ../../../lib/web/src/lib/preference-utils.ts:130
+#: ../../../lib/web/src/lib/preference-utils.ts:123
 msgid "Large"
 msgstr "Tóbi"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:287
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:306
 msgid "Layout"
 msgstr "Àtòjọ"
-
-#: ../../../lib/web/src/components/learn-more.tsx:33
-#: ../../../lib/web/src/components/learn-more.tsx:38
-msgid "Learn more"
-msgstr "Kọ́ síwájú"
-
-#: ../../../lib/web/src/components/config-drawer.tsx:355
-msgid "Left to Right"
-msgstr "Òsì sí Ọ̀tún"
 
 #: ../../../lib/web/src/components/post-tags.tsx:72
 msgid "Letters, numbers, spaces, and hyphens only"
 msgstr "Àwọn lẹ́tà, nọ́mbà, àyè, àti òpó nìkan"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:214
-#: ../../../lib/web/src/components/theme-switch.tsx:45
 #: ../../../lib/web/src/lib/preference-utils.ts:14
 msgid "Light"
 msgstr "Ìmọ́lẹ̀"
@@ -1730,7 +1581,7 @@ msgstr "Ń ṣí ohun"
 msgid "Loading item details"
 msgstr "Ń ṣí àwọn àlàyé ohun"
 
-#: src/features/projects/components/create-project-dialog.tsx:473
+#: src/features/projects/components/create-project-dialog.tsx:478
 msgid "Loading templates..."
 msgstr "Ń ṣí àwọn àwòṣe..."
 
@@ -1740,8 +1591,6 @@ msgstr "Ń ṣí àwọn àwòṣe..."
 msgid "Loading..."
 msgstr "Ń ṣí..."
 
-#: ../../../lib/web/src/components/profile-dropdown.tsx:69
-#: ../../../lib/web/src/components/profile-dropdown.tsx:98
 #: ../../../lib/web/src/components/sign-out-dialog.tsx:26
 #: ../../../lib/web/src/components/sign-out-dialog.tsx:28
 msgid "Log out"
@@ -1759,21 +1608,16 @@ msgstr "Ti jáde ní àṣeyọrí"
 msgid "Logging out…"
 msgstr "Ń jáde…"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:125
+#: ../../../lib/web/src/components/notification-category-button.tsx:127
 msgid "Manage categories"
 msgstr "Ṣàkóso àwọn ẹ̀ka"
-
-#: ../../../lib/web/src/features/accounts/account-manager.tsx:192
-msgid "Manage your connected accounts for notifications and services."
-msgstr "Ṣàkóso àwọn àkáǹtì rẹ tí a ti sopọ̀ fún ìfitónilétí àti iṣẹ́."
 
 #: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:52
 msgid "Manual"
 msgstr "Ìwé ìtọ́nisọ́nà"
 
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:192
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:199
-#: ../../../lib/web/src/components/notifications-dropdown.tsx:224
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:207
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:214
 msgid "Mark all as read"
 msgstr "Sàmì sí gbogbo gẹ́gẹ́ bí kíkà"
 
@@ -1805,7 +1649,7 @@ msgstr "Dàpọ̀ {objectReadable}: {objectTitle}"
 msgid "Merge commit"
 msgstr "Commit àdàpọ̀"
 
-#: src/features/requests/components/request-panel.tsx:93
+#: src/features/requests/components/request-panel.tsx:102
 msgid "Merge requests"
 msgstr "Àwọn ìbéèrè ìpapọ̀"
 
@@ -1813,7 +1657,7 @@ msgstr "Àwọn ìbéèrè ìpapọ̀"
 msgid "Merge requests ({requestCount})"
 msgstr "Ìbéèrè àdàpọ̀ ({requestCount})"
 
-#: src/features/requests/components/request-panel.tsx:275
+#: src/features/requests/components/request-panel.tsx:284
 msgid "Merged"
 msgstr "Ti papọ̀"
 
@@ -1837,7 +1681,7 @@ msgstr "Òṣùwọ̀n"
 msgid "Minimum length"
 msgstr "Gígùn tí ó kéré jùlọ"
 
-#: src/routes/$projectId.diff.tsx:80
+#: src/routes/$projectId.diff.tsx:83
 msgid "Missing repo, source, or target parameters"
 msgstr "Ó pàdánù àwọn ìpèsè repo, orísun, tàbí àfojúsùn"
 
@@ -1858,7 +1702,7 @@ msgstr "Ọjọ́ Ajé"
 msgid "More options"
 msgstr "Awọn aṣayan diẹ sii"
 
-#: src/features/projects/components/create-project-dialog.tsx:347
+#: src/features/projects/components/create-project-dialog.tsx:352
 msgid "My project"
 msgstr "Project mi"
 
@@ -1867,9 +1711,9 @@ msgstr "Project mi"
 #: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:142
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:125
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:293
-#: src/features/editor/components/edit-dialogs.tsx:255
-#: src/features/projects/components/create-project-dialog.tsx:337
-#: src/routes/_authenticated/$projectId_.settings.tsx:111
+#: src/features/editor/components/edit-dialogs.tsx:258
+#: src/features/projects/components/create-project-dialog.tsx:342
+#: src/routes/_authenticated/$projectId_.settings.tsx:115
 msgid "Name"
 msgstr "Orúkọ"
 
@@ -1881,7 +1725,7 @@ msgstr "Orúkọ kò lè ní àwọn lẹ́tà < tàbí >"
 msgid "Name cannot contain angle brackets, backslash, semicolon, quotes or backticks"
 msgstr "Orúkọ kò lè ní àwọn àkámọ́ igun, ìlà ẹ̀yìn, kọ́mà-àmì, àmì ọ̀rọ̀ tàbí àmì ẹ̀yìn"
 
-#: src/features/projects/components/create-project-dialog.tsx:97
+#: src/features/projects/components/create-project-dialog.tsx:102
 msgid "Name is required"
 msgstr "A nílò orúkọ"
 
@@ -1891,7 +1735,7 @@ msgid "Name must be 1000 characters or less"
 msgstr "Orúkọ gbọ́dọ̀ jẹ́ lẹ́tà 1000 tàbí kéré"
 
 #: ../../../lib/web/src/features/errors/general-error.tsx:53
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:322
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:313
 msgid "Network error"
 msgstr "Àṣìṣe nẹ́tíwọ́kì"
 
@@ -1911,12 +1755,12 @@ msgstr "{className} tuntun"
 msgid "New game"
 msgstr "Eré tuntun"
 
-#: src/features/projects/components/create-project-dialog.tsx:454
+#: src/features/projects/components/create-project-dialog.tsx:459
 msgid "Next"
 msgstr "Tó kàn"
 
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:527
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:532
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:525
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:530
 msgid "Next image"
 msgstr "Àwòrán tó kàn"
 
@@ -1936,19 +1780,19 @@ msgstr "A kò ṣètò àwọn òfin àyè kankan. Fi àwọn òfin kún láti �
 msgid "No activity yet"
 msgstr "Kò sí iṣẹ́ síbẹ̀"
 
-#: src/features/requests/components/branch-select.tsx:76
+#: src/features/requests/components/branch-select.tsx:81
 msgid "No branches found"
 msgstr "A kò rí branch kankan"
 
-#: src/features/requests/components/diff-stats.tsx:59
+#: src/features/requests/components/diff-stats.tsx:65
 msgid "No changes detected"
 msgstr "A kò rí àyípadà kankan"
 
-#: src/features/requests/components/diff-viewer.tsx:404
+#: src/features/requests/components/diff-viewer.tsx:402
 msgid "No changes to display"
 msgstr "Kò sí àyípadà láti fihàn"
 
-#: src/routes/$projectId.diff.tsx:157
+#: src/routes/$projectId.diff.tsx:160
 msgid "No changes were found for the selected comparison."
 msgstr "A kò rí àyípadà kankan fún ìfiwéra tí a yàn."
 
@@ -1956,11 +1800,7 @@ msgstr "A kò rí àyípadà kankan fún ìfiwéra tí a yàn."
 msgid "No comments yet"
 msgstr "Kò sí àlàyé síbẹ̀"
 
-#: ../../../lib/web/src/features/accounts/account-manager.tsx:295
-msgid "No connected accounts"
-msgstr "Kò sí ìròyìn tó sopọ̀"
-
-#: src/routes/$projectId.diff.tsx:156
+#: src/routes/$projectId.diff.tsx:159
 msgid "No diff available"
 msgstr "Kò sí diff tó wà"
 
@@ -1980,15 +1820,11 @@ msgstr "A kò lè dá oríṣi item kankan sílẹ̀ síbẹ̀. Dá àwọn item
 msgid "No matching objects"
 msgstr "Kò sí object tó bámu"
 
-#: src/features/requests/components/request-panel.tsx:110
+#: src/features/requests/components/request-panel.tsx:119
 msgid "No merge requests"
 msgstr "Kò sí ìbéèrè ìpapọ̀"
 
-#: ../../../lib/web/src/components/notifications-dropdown.tsx:193
-msgid "No notifications yet"
-msgstr "Kò sí ìfitónilétí síbẹ̀"
-
-#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:336
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:341
 #: ../../../lib/web/src/components/person-picker.tsx:84
 msgid "No people found"
 msgstr "A kò rí ènìyàn kankan"
@@ -1997,27 +1833,21 @@ msgstr "A kò rí ènìyàn kankan"
 msgid "No places found"
 msgstr "A kò rí ibikíbi"
 
-#: ../../../lib/web/src/components/profile-dropdown.tsx:58
-msgid "No profile"
-msgstr "Kò sí profile"
-
 #: src/features/projects/components/inline-project-search.tsx:88
-#: src/routes/_authenticated/find.tsx:43
+#: src/routes/_authenticated/find.tsx:42
 msgid "No projects found"
 msgstr "A kò rí project kankan"
 
-#: src/features/requests/components/repository-select.tsx:64
+#: src/features/requests/components/repository-select.tsx:69
 msgid "No repositories available"
 msgstr "Kò sí repo tó wà"
 
 #: ../../../lib/web/src/components/inline-entity-search.tsx:64
-#: ../../../lib/web/src/components/search-entity-dialog.tsx:82
 #: ../../../lib/web/src/components/search-entity-page.tsx:73
 msgid "No results found"
 msgstr "Kò sí àbájáde"
 
 #: ../../../lib/web/src/components/command-menu.tsx:55
-#: ../../../lib/web/src/components/data-table/faceted-filter.tsx:94
 msgid "No results found."
 msgstr "A kò rí àbájáde kankan."
 
@@ -2031,11 +1861,11 @@ msgstr "Kò sí ipò"
 msgid "No time zone found."
 msgstr "A kò rí àgbègbè àkókò kankan."
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:104
+#: ../../../lib/web/src/components/notification-category-button.tsx:106
 msgid "No topic record yet — try again after the next notification."
 msgstr "Kò sí àkọsílẹ̀ kókó síbẹ̀ — gbìyànjú lẹ́ẹ̀kan síi lẹ́yìn ìfìtọ́nisí tó kàn."
 
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:124
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:139
 msgid "No unread notifications"
 msgstr "Kò sí ìfìtọ́nisí tí a kò kà"
 
@@ -2060,20 +1890,19 @@ msgstr "Kò sí ìwò"
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:491
 #: ../../../lib/web/src/components/person-picker.tsx:350
 #: ../../../lib/web/src/lib/preference-utils.ts:100
-#: ../../../lib/web/src/lib/preference-utils.ts:120
-#: src/features/editor/components/edit-dialogs.tsx:293
 #: src/features/editor/components/edit-dialogs.tsx:296
+#: src/features/editor/components/edit-dialogs.tsx:299
 #: src/features/objects/components/object-detail-panel.tsx:537
 #: src/features/objects/components/object-detail-panel.tsx:550
 #: src/features/objects/components/object-detail-panel.tsx:555
 msgid "None"
 msgstr "Kòsí"
 
-#: ../../../lib/web/src/lib/preference-utils.ts:129
+#: ../../../lib/web/src/lib/preference-utils.ts:122
 msgid "Normal"
 msgstr "Déédéé"
 
-#: src/features/requests/components/request-panel.tsx:248
+#: src/features/requests/components/request-panel.tsx:257
 msgid "Not configured"
 msgstr "Kò tíì ṣètò"
 
@@ -2090,16 +1919,8 @@ msgstr "A kò ṣètò"
 msgid "Nothing found"
 msgstr "A kò rí ohunkóhun"
 
-#: ../../../lib/web/src/components/notifications-dropdown.tsx:136
-#: ../../../lib/web/src/components/notifications-dropdown.tsx:150
-#: ../../../lib/web/src/components/notifications-dropdown.tsx:236
-#: ../../../lib/web/src/components/notifications-dropdown.tsx:257
-#: ../../../lib/web/src/components/notifications-dropdown.tsx:261
-msgid "Notifications"
-msgstr "Àwọn ìfìtọ́nisí"
-
 #. placeholder {0}: unread.length
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:185
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:200
 msgid "Notifications: {0}"
 msgstr "Àwọn ìfitónilétí: {0}"
 
@@ -2117,7 +1938,7 @@ msgstr "Ṣíṣí"
 msgid "Oops! Page Not Found!"
 msgstr "Aàá! A Kò Rí Ojú-ìwé!"
 
-#: src/features/requests/components/request-panel.tsx:278
+#: src/features/requests/components/request-panel.tsx:287
 msgctxt "state"
 msgid "Open"
 msgstr "Ṣíṣí"
@@ -2127,18 +1948,13 @@ msgstr "Ṣíṣí"
 msgid "Open {0}"
 msgstr "Ṣí {0}"
 
-#: ../../../lib/web/src/features/accounts/account-manager.tsx:156
-#: ../../../lib/web/src/features/accounts/account-manager.tsx:166
-msgid "Open account actions"
-msgstr "Ṣí àwọn iṣẹ́ ìròyìn"
-
 #: ../../../lib/web/src/components/layout/nav-group.tsx:199
 #: ../../../lib/web/src/components/layout/nav-group.tsx:204
 msgid "Open actions"
 msgstr "Ṣí àwọn ìṣe"
 
-#: src/features/editor/components/edit-dialogs.tsx:236
-#: src/features/editor/components/edit-dialogs.tsx:241
+#: src/features/editor/components/edit-dialogs.tsx:239
+#: src/features/editor/components/edit-dialogs.tsx:244
 msgid "Open class actions"
 msgstr "Ṣí àwọn iṣẹ́ kíláàsì"
 
@@ -2155,11 +1971,6 @@ msgstr "Ṣí ìtòlẹ́sẹẹsẹ"
 msgid "Open navigation"
 msgstr "Ṣí ìṣàkóso"
 
-#: ../../../lib/web/src/components/layout/top-nav.tsx:38
-#: ../../../lib/web/src/components/layout/top-nav.tsx:44
-msgid "Open navigation menu"
-msgstr "Ṣí ìtòlẹ́sẹẹsẹ ìṣàkóso"
-
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:105
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:111
 msgid "Open option actions"
@@ -2172,11 +1983,6 @@ msgstr "Ṣí àwọn iṣẹ́ ojú-ìwé"
 #: ../../../lib/web/src/components/entity/keyboard-shortcuts-help.tsx:30
 msgid "Open selected card"
 msgstr "Ṣí káàdì tó yàn"
-
-#: ../../../lib/web/src/components/config-drawer.tsx:58
-#: ../../../lib/web/src/components/config-drawer.tsx:66
-msgid "Open theme settings"
-msgstr "Ṣí àwọn ètò àkórí"
 
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:274
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:279
@@ -2206,11 +2012,6 @@ msgstr "Mìíràn"
 msgid "Owner"
 msgstr "Onílé"
 
-#: ../../../lib/web/src/components/data-table/pagination.tsx:43
-#: ../../../lib/web/src/components/data-table/pagination.tsx:71
-msgid "Page {currentPage} of {totalPages}"
-msgstr "Ojú-ìwé {currentPage} nínú {totalPages}"
-
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:530
 #: src/features/objects/components/object-detail-panel.tsx:533
 msgid "Parent"
@@ -2232,17 +2033,13 @@ msgstr "Àwọn passkey"
 msgid "Pattern (regex)"
 msgstr "Àpẹẹrẹ (regex)"
 
-#: ../../../lib/web/src/components/date-picker.tsx:20
-msgid "Pick a date"
-msgstr "Yan ọjọ́"
-
 #: src/routes/_authenticated/$projectId/index.tsx:138
 msgid "Please add one or more classes to the project design."
 msgstr "Jọ̀wọ́ fi kíláàsì kan tàbí jù bẹ́ẹ̀ lọ kún àpẹrẹ project."
 
 #: ../../../lib/web/src/components/comment-composer.tsx:89
 #: ../../../lib/web/src/features/errors/general-error.tsx:54
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:323
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:314
 msgid "Please check your internet connection and try again."
 msgstr "Jọ̀wọ́ ṣàyẹ̀wò ìsopọ̀ íntánẹ́ẹ̀tì rẹ kí o sì gbìyànjú lẹ́ẹ̀kan sí i."
 
@@ -2250,7 +2047,7 @@ msgstr "Jọ̀wọ́ ṣàyẹ̀wò ìsopọ̀ íntánẹ́ẹ̀tì rẹ kí o s
 msgid "Please log in with the appropriate credentials <0/> to access this resource."
 msgstr "Jọ̀wọ́ wọlé pẹ̀lú àwọn ẹ̀rí tó yẹ <0/> láti wọlé sí ohun àmúlò yìí."
 
-#: src/features/projects/components/create-project-dialog.tsx:113
+#: src/features/projects/components/create-project-dialog.tsx:118
 msgid "Please select a template"
 msgstr "Jọ̀wọ́ yan template kan"
 
@@ -2270,21 +2067,21 @@ msgstr "Àwọn ìfìránṣẹ́"
 msgid "Posts and comments"
 msgstr "Àwọn ìfìránṣẹ́ àti àlàyé"
 
-#: src/features/projects/components/create-project-dialog.tsx:359
+#: src/features/projects/components/create-project-dialog.tsx:364
 #: src/routes/_authenticated/$projectId_.settings.tsx:85
 msgid "Prefix"
 msgstr "Ọ̀rọ̀ ìbẹ̀rẹ̀"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:91
-msgid "Prefix can only contain letters, numbers, and hyphens"
-msgstr "Ọ̀rọ̀ ìbẹ̀rẹ̀ lè ní lẹ́tà, nọ́mbà, àti hyphen nìkan"
+#: src/routes/_authenticated/$projectId_.settings.tsx:95
+msgid "Prefix can only contain lowercase letters, numbers, and hyphens"
+msgstr ""
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:93
-msgid "Prefix must be 10 characters or less"
-msgstr "Ọ̀rọ̀ ìbẹ̀rẹ̀ gbọ́dọ̀ jẹ́ àmì 10 tàbí kéré sí i"
+#: src/routes/_authenticated/$projectId_.settings.tsx:97
+msgid "Prefix must be 20 characters or less"
+msgstr ""
 
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:511
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:516
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:509
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:514
 msgid "Previous image"
 msgstr "Àwòrán tó kọjá"
 
@@ -2297,10 +2094,6 @@ msgstr "Aṣírí"
 msgid "Processing…"
 msgstr "Ń ṣiṣẹ́ lé e…"
 
-#: ../../../lib/web/src/components/profile-dropdown.tsx:114
-msgid "Profile"
-msgstr "Profile"
-
 #: src/routes/_authenticated/$projectId/$objectId.tsx:62
 #: src/routes/_authenticated/$projectId/index.tsx:82
 msgid "Project"
@@ -2310,11 +2103,11 @@ msgstr "Iṣẹ́"
 msgid "Project actions"
 msgstr "Àwọn ìṣe iṣẹ́ àkànṣe"
 
-#: src/features/projects/components/create-project-dialog.tsx:128
+#: src/features/projects/components/create-project-dialog.tsx:133
 msgid "Project created"
 msgstr "A ti dá project"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:128
+#: src/routes/_authenticated/$projectId_.settings.tsx:132
 msgid "Project deleted"
 msgstr "A ti pa project rẹ́"
 
@@ -2330,19 +2123,19 @@ msgstr "Àwọn ọmọ ẹgbẹ́ iṣẹ́"
 msgid "Project name is required"
 msgstr "A nílò orúkọ iṣẹ́"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:106
+#: src/routes/_authenticated/$projectId_.settings.tsx:110
 msgid "Project not found"
 msgstr "A kò rí project"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:105
+#: src/routes/_authenticated/$projectId_.settings.tsx:109
 msgid "Project settings"
 msgstr "Ìṣètò iṣẹ́"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:108
+#: src/routes/_authenticated/$projectId_.settings.tsx:112
 msgid "Project unavailable"
 msgstr "Project kò sí"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:117
+#: src/routes/_authenticated/$projectId_.settings.tsx:121
 msgid "Project updated"
 msgstr "A ti dojú project ìwọ́n"
 
@@ -2383,7 +2176,6 @@ msgstr "Ó ti múrasílẹ̀ láti dàpọ̀"
 msgid "Rebase and merge"
 msgstr "Rebase àti dàpọ̀"
 
-#: ../../../lib/web/src/components/search-entity-dialog.tsx:220
 #: ../../../lib/web/src/components/search-entity-page.tsx:243
 msgid "Recommended"
 msgstr "Tí a dábàá"
@@ -2421,8 +2213,7 @@ msgstr "Pẹ̀lú ìbáṣepọ̀ nínú wákàtí 24, bí ó ṣíkù absolute"
 #: ../../../lib/web/src/components/attachment-composer.tsx:330
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:190
 #: ../../../lib/web/src/features/access/access-list.tsx:270
-#: ../../../lib/web/src/features/accounts/account-manager.tsx:180
-#: src/features/projects/components/create-project-dialog.tsx:434
+#: src/features/projects/components/create-project-dialog.tsx:439
 msgid "Remove"
 msgstr "Yọ kúrò"
 
@@ -2447,8 +2238,8 @@ msgid "Remove access?"
 msgstr "Yọ àyè kúrò?"
 
 #. placeholder {0}: field.name || field.id
-#: src/features/editor/components/edit-dialogs.tsx:394
-#: src/features/editor/components/edit-dialogs.tsx:399
+#: src/features/editor/components/edit-dialogs.tsx:397
+#: src/features/editor/components/edit-dialogs.tsx:402
 msgid "Remove field {0}"
 msgstr "Yọ field {0} kúrò"
 
@@ -2457,7 +2248,7 @@ msgstr "Yọ field {0} kúrò"
 msgid "Remove interest"
 msgstr "Yọ ìfẹ́ kúrò"
 
-#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:666
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:674
 msgid "Remove item"
 msgstr "Yọ item kúrò"
 
@@ -2466,7 +2257,7 @@ msgstr "Yọ item kúrò"
 msgid "Remove link"
 msgstr "Yọ ọ̀nà ìjápọ̀ kúrò"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:135
+#: src/routes/_authenticated/$projectId_.settings.tsx:139
 msgid "Removing access..."
 msgstr "Ń yọ ààyè kúrò..."
 
@@ -2505,7 +2296,7 @@ msgstr "Dáhùn"
 msgid "Reply to {0}..."
 msgstr "Dáhùn {0}..."
 
-#: src/features/editor/components/edit-dialogs.tsx:334
+#: src/features/editor/components/edit-dialogs.tsx:337
 msgid "Requests"
 msgstr "Àwọn ìbéèrè"
 
@@ -2516,20 +2307,6 @@ msgstr "Pọn dandan"
 #: ../../../lib/web/src/components/step-up-dialog.tsx:370
 msgid "Resend email"
 msgstr "Tún ìmélì náà ránṣẹ́"
-
-#: ../../../lib/web/src/components/config-drawer.tsx:87
-#: ../../../lib/web/src/components/data-table/toolbar.tsx:82
-msgid "Reset"
-msgstr "Pa padà"
-
-#: ../../../lib/web/src/components/config-drawer.tsx:122
-#: ../../../lib/web/src/components/config-drawer.tsx:127
-msgid "Reset {title}"
-msgstr "Tún {title} ṣe"
-
-#: ../../../lib/web/src/components/config-drawer.tsx:85
-msgid "Reset all settings to default values"
-msgstr "Pa gbogbo ètò padà sí àwọn iye àbùdá"
 
 #: src/features/requests/components/conflict-list.tsx:40
 msgid "Resolve these conflicts manually before merging."
@@ -2555,10 +2332,6 @@ msgstr "Fagilé ìwọlé"
 msgid "Revoke RSS access?"
 msgstr "Fagilé àǹfààní RSS?"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:362
-msgid "Right to Left"
-msgstr "Ọ̀tún sí Òsì"
-
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:150
 #: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:168
 msgid "Rows"
@@ -2567,10 +2340,6 @@ msgstr "Àwọn ila"
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:373
 msgid "Rows group by"
 msgstr "Àwọn ila kójọ nípa"
-
-#: ../../../lib/web/src/components/data-table/pagination.tsx:65
-msgid "Rows per page"
-msgstr "Àwọn ila fún ojú-ìwé kọ̀ọ̀kan"
 
 #: ../../../lib/web/src/components/options-menu.tsx:131
 msgid "RSS access revoked"
@@ -2597,7 +2366,7 @@ msgstr "Ọjọ́ Àbámẹ́ta"
 msgid "Save"
 msgstr "Fi pamọ́"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:116
+#: src/routes/_authenticated/$projectId_.settings.tsx:120
 msgid "Saving..."
 msgstr "Ń fi pamọ́..."
 
@@ -2608,7 +2377,7 @@ msgstr "Ń fi pamọ́..."
 msgid "Search"
 msgstr "Wá"
 
-#: src/routes/_authenticated/find.tsx:42
+#: src/routes/_authenticated/find.tsx:41
 msgid "Search by name, ID, fingerprint, or URL..."
 msgstr "Wá nípa orúkọ, ID, fingerprint, tàbí URL..."
 
@@ -2656,12 +2425,10 @@ msgstr "Wá, ṣọ́, kí o sì ṣètò ìwòye yìí."
 #: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:255
 #: ../../../lib/web/src/components/inline-entity-search.tsx:63
 #: ../../../lib/web/src/components/person-picker.tsx:324
-#: ../../../lib/web/src/components/search-entity-dialog.tsx:81
 #: ../../../lib/web/src/components/search-entity-page.tsx:72
 msgid "Search..."
 msgstr "Wá..."
 
-#: ../../../lib/web/src/components/search-entity-dialog.tsx:178
 #: ../../../lib/web/src/components/search-entity-page.tsx:201
 #: ../../../lib/web/src/features/access/access-dialog.tsx:202
 msgid "Searching..."
@@ -2670,11 +2437,6 @@ msgstr "Ń wá..."
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:141
 msgid "Select"
 msgstr "Yan"
-
-#. placeholder {0}: item.label.toLowerCase()
-#: ../../../lib/web/src/components/config-drawer.tsx:149
-msgid "Select {0}"
-msgstr "Yan {0}"
 
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:356
 msgid "Select a field"
@@ -2692,10 +2454,6 @@ msgstr "Yan user, ẹgbẹ́, tàbí òfin míì láti fún ní ààyè."
 msgid "Select access rule"
 msgstr "Yan òfin ààyè"
 
-#: ../../../lib/web/src/features/accounts/account-picker.tsx:34
-msgid "Select account"
-msgstr "Yan àkáǹtì"
-
 #: ../../../lib/web/src/features/accounts/account-add.tsx:142
 msgid "Select account type"
 msgstr "Yan irú account"
@@ -2707,10 +2465,6 @@ msgstr "Yan branch"
 #: ../../../lib/web/src/features/access/access-dialog.tsx:231
 msgid "Select group"
 msgstr "Yan ẹgbẹ́"
-
-#: ../../../lib/web/src/components/config-drawer.tsx:305
-msgid "Select layout style"
-msgstr "Yan irú ìṣètò"
 
 #: ../../../lib/web/src/components/place-picker.tsx:49
 msgid "Select location"
@@ -2732,26 +2486,10 @@ msgstr "Yan káàdì tó wà ṣáájú"
 msgid "Select repository"
 msgstr "Yan repository"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:247
-msgid "Select sidebar style"
-msgstr "Yan irú sidebar"
-
-#: ../../../lib/web/src/components/config-drawer.tsx:349
-msgid "Select site direction"
-msgstr "Yan ìtọ́sọ́nà síìtì"
-
-#: ../../../lib/web/src/components/config-drawer.tsx:203
-msgid "Select theme preference"
-msgstr "Yan àfẹ́nilọ́kàn theme"
-
-#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:252
-#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:335
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:257
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:340
 msgid "Select..."
 msgstr "Yan..."
-
-#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:209
-msgid "selected"
-msgstr "tí a yàn"
 
 #. placeholder {0}: getSelectedName()
 #: ../../../lib/web/src/features/access/access-dialog.tsx:309
@@ -2771,16 +2509,16 @@ msgstr "Fi ímeèlì ránṣẹ́"
 msgid "Send message"
 msgstr "Fi ìránṣẹ́ ránṣẹ́"
 
-#: ../../../lib/web/src/lib/preference-utils.ts:140
+#: ../../../lib/web/src/lib/preference-utils.ts:133
 msgid "Serif"
 msgstr "Serif"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:115
+#: src/routes/_authenticated/$projectId_.settings.tsx:119
 msgid "Server"
 msgstr "Server"
 
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:279
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:305
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:270
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:296
 msgid "Server error"
 msgstr "Àṣìṣe sáfà"
 
@@ -2789,7 +2527,7 @@ msgstr "Àṣìṣe sáfà"
 msgid "Server rules"
 msgstr "Àwọn òfin sáfà"
 
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:229
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:220
 msgid "Session expired. Please log in again."
 msgstr "Sáà náà ti parí. Jọ̀wọ́ tún wọlé lẹ́ẹ̀kansí."
 
@@ -2797,14 +2535,14 @@ msgstr "Sáà náà ti parí. Jọ̀wọ́ tún wọlé lẹ́ẹ̀kansí."
 msgid "Set origin and destination"
 msgstr "Ṣètò ibi tí o ti wá àti ibi tí o ń lọ"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:132
+#: src/routes/_authenticated/$projectId_.settings.tsx:136
 msgid "Setting access..."
 msgstr "Ń ṣètò ààyè..."
 
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx:119
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx:125
 #: ../../../lib/web/src/components/options-menu.tsx:196
-#: src/routes/_authenticated/$projectId_.settings.tsx:99
+#: src/routes/_authenticated/$projectId_.settings.tsx:103
 #: src/routes/_authenticated/$projectId/index.tsx:173
 msgid "Settings"
 msgstr "Àwọn ìṣètò"
@@ -2817,10 +2555,6 @@ msgstr "Fi àwọn classes hàn"
 msgid "Show fields"
 msgstr "Fi àwọn aaye hàn"
 
-#: ../../../lib/web/src/components/password-input.tsx:27
-msgid "Show password"
-msgstr "Fi ọ̀rọ̀ aṣínà hàn"
-
 #: ../../../lib/web/src/components/entity/keyboard-shortcuts-help.tsx:33
 msgid "Show this help"
 msgstr "Fi ìrànlọ́wọ́ yìí hàn"
@@ -2829,9 +2563,7 @@ msgstr "Fi ìrànlọ́wọ́ yìí hàn"
 msgid "Showing {totalShown} of {total}"
 msgstr "Ń fi {totalShown} hàn nínú {total}"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:239
-#: ../../../lib/web/src/components/config-drawer.tsx:263
-#: ../../../lib/web/src/components/ui/sidebar.tsx:237
+#: ../../../lib/web/src/components/ui/sidebar.tsx:257
 msgid "Sidebar"
 msgstr "Sidebar"
 
@@ -2849,12 +2581,8 @@ msgstr "Ń jáde..."
 msgid "Single line of text only"
 msgstr "Ila ọ̀rọ̀ kan ṣoṣo"
 
-#: ../../../lib/web/src/components/skip-to-main.tsx:11
-msgid "Skip to Main"
-msgstr "Fò sí Olórí"
-
 #: ../../../lib/web/src/lib/preference-utils.ts:101
-#: ../../../lib/web/src/lib/preference-utils.ts:128
+#: ../../../lib/web/src/lib/preference-utils.ts:121
 msgid "Small"
 msgstr "Kékeré"
 
@@ -2862,7 +2590,7 @@ msgstr "Kékeré"
 msgid "Sort"
 msgstr "Ṣètò"
 
-#: src/features/requests/components/request-panel.tsx:325
+#: src/features/requests/components/request-panel.tsx:334
 msgid "Source"
 msgstr "Orísun"
 
@@ -2874,7 +2602,7 @@ msgstr "Àwọn orísun"
 msgid "Spacious"
 msgstr "Àáyè"
 
-#: src/routes/$projectId.diff.tsx:121
+#: src/routes/$projectId.diff.tsx:124
 msgid "Split"
 msgstr "Pínyà"
 
@@ -2885,10 +2613,6 @@ msgstr "Squash àti dàpọ̀"
 #: ../../../lib/web/src/components/entity/entity-comment-list.tsx:323
 msgid "Start the discussion by adding the first comment."
 msgstr "Bẹ̀rẹ̀ ìjíròrò nípa fífi àsọyé àkọ́kọ́ kún."
-
-#: ../../../lib/web/src/components/coming-soon.tsx:15
-msgid "Stay tuned though!"
-msgstr "Ṣùgbọ́n dúró tì wá!"
 
 #: src/features/objects/components/object-detail-panel.tsx:439
 #: src/features/objects/components/object-detail-panel.tsx:448
@@ -2909,7 +2633,6 @@ msgstr "Fi ìdáhùn sí ilẹ̀"
 
 #: ../../../lib/web/src/components/inline-entity-search.tsx:66
 #: ../../../lib/web/src/components/recommended-entities.tsx:58
-#: ../../../lib/web/src/components/search-entity-dialog.tsx:83
 #: ../../../lib/web/src/components/search-entity-page.tsx:74
 #: src/features/projects/components/inline-project-search.tsx:90
 #: src/features/projects/components/recommended-projects.tsx:58
@@ -2917,7 +2640,7 @@ msgid "Subscribe"
 msgstr "Forúkọsílẹ̀"
 
 #: src/features/projects/components/inline-project-search.tsx:68
-#: src/routes/_authenticated/find.tsx:45
+#: src/routes/_authenticated/find.tsx:44
 msgid "Subscribed"
 msgstr "Ti forúkọsílẹ̀"
 
@@ -2928,7 +2651,7 @@ msgstr "Ti forúkọsílẹ̀ sí {0}"
 
 #: src/features/projects/components/inline-project-search.tsx:67
 #: src/features/projects/components/recommended-projects.tsx:42
-#: src/routes/_authenticated/find.tsx:44
+#: src/routes/_authenticated/find.tsx:43
 msgid "Subscribing..."
 msgstr "Ń forúkọsílẹ̀..."
 
@@ -2941,16 +2664,10 @@ msgid "Switch to view 1-9"
 msgstr "Yí padà sí ìwòye 1-9"
 
 #: ../../../lib/web/src/components/audit-timeline.tsx:107
-#: ../../../lib/web/src/components/config-drawer.tsx:209
-#: ../../../lib/web/src/components/theme-switch.tsx:59
 #: ../../../lib/web/src/lib/preference-utils.ts:16
-#: ../../../lib/web/src/lib/preference-utils.ts:139
+#: ../../../lib/web/src/lib/preference-utils.ts:132
 msgid "System"
 msgstr "System"
-
-#: ../../../lib/web/src/components/tag-input.tsx:95
-msgid "Tag"
-msgstr "Tag"
 
 #: ../../../lib/web/src/components/post-tags.tsx:76
 msgid "Tag already exists"
@@ -2965,13 +2682,9 @@ msgstr "Àmì gbọ́dọ̀ jẹ́ àwọn lẹ́tà 50 tàbí kéré sí"
 msgid "Tags"
 msgstr "Àwọn tag"
 
-#: src/features/requests/components/request-panel.tsx:333
+#: src/features/requests/components/request-panel.tsx:342
 msgid "Target"
 msgstr "Ibi àfojúsùn"
-
-#: ../../../lib/web/src/components/layout/team-switcher.tsx:63
-msgid "Teams/Apps"
-msgstr "Àwọn ẹgbẹ́/Apps"
 
 #: ../../../lib/web/src/components/server-documents-footer.tsx:19
 #: ../../../lib/web/src/features/document/document-page.tsx:42
@@ -3003,36 +2716,20 @@ msgstr "A kò rí àkóónú tí o béèrè fún."
 msgid "The server returned a web page instead of data."
 msgstr "Olupin naa da oju-ìwé wẹ́ẹ̀bù padà dípò data."
 
-#: ../../../lib/web/src/features/errors/maintenance-error.tsx:15
-msgid "The site is not available at the moment."
-msgstr "Ojúlé náà kò sí ní àkókò yìí."
-
-#: ../../../lib/web/src/components/config-drawer.tsx:195
-msgid "Theme"
-msgstr "Theme"
-
-#: ../../../lib/web/src/components/config-drawer.tsx:70
-msgid "Theme Settings"
-msgstr "Àwọn ìṣètò Theme"
-
 #. placeholder {0}: request.target
-#: src/features/requests/components/request-panel.tsx:409
+#: src/features/requests/components/request-panel.tsx:418
 msgid "This merge request has been merged into {0}."
 msgstr "A ti dàpọ̀ ìbéèrè àdàpọ̀ yìí mọ́ {0}."
 
-#: src/features/requests/components/request-panel.tsx:370
+#: src/features/requests/components/request-panel.tsx:379
 msgid "This merge request is a draft and cannot be merged."
 msgstr "Merge request yìí jẹ́ draft a kò sì lè ṣe merge rẹ̀."
 
-#: ../../../lib/web/src/components/coming-soon.tsx:14
-msgid "This page has not been created yet."
-msgstr "A kò tí ì ṣẹ̀dá ojú-ìwé yìí."
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:109
+#: src/routes/_authenticated/$projectId_.settings.tsx:113
 msgid "This project could not be loaded right now."
 msgstr "A kò lè ṣílọ̀ project yìí ní báyìí."
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:107
+#: src/routes/_authenticated/$projectId_.settings.tsx:111
 msgid "This project may have been deleted or you don't have access to it."
 msgstr "A lè ti pa project yìí rẹ́ tàbí ìwọ kò ní ààyè sí i."
 
@@ -3040,7 +2737,7 @@ msgstr "A lè ti pa project yìí rẹ́ tàbí ìwọ kò ní ààyè sí i."
 msgid "This will merge \"{source}\" into \"{target}\". This action cannot be undone."
 msgstr "Èyí yóò dàpọ̀ \"{source}\" mọ́ \"{target}\". Iṣẹ́ yìí kò lè padà sẹ́yìn."
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:125
+#: src/routes/_authenticated/$projectId_.settings.tsx:129
 msgid "This will permanently delete \"{projectName}\" and all its objects, comments, and attachments. This action cannot be undone."
 msgstr "Èyí yóò pa \"{projectName}\" àti gbogbo àwọn nǹkan, àsọyé, àti attachments rẹ̀ rẹ́ títí láé. A kò lè yí ìṣe yìí padà."
 
@@ -3059,26 +2756,17 @@ msgid "Thursday"
 msgstr "Ọjọ́bọ̀"
 
 #: src/features/editor/components/edit-dialogs.tsx:107
-#: src/features/requests/components/request-panel.tsx:292
+#: src/features/requests/components/request-panel.tsx:301
 msgid "Title"
 msgstr "Àkọlé"
 
-#: src/features/editor/components/edit-dialogs.tsx:278
+#: src/features/editor/components/edit-dialogs.tsx:281
 msgid "Title field"
 msgstr "Aaye àkọlé"
 
 #: ../../../lib/web/src/components/travelling-picker.tsx:220
 msgid "To"
 msgstr "Sí"
-
-#: ../../../lib/web/src/components/data-table/view-options.tsx:37
-msgid "Toggle columns"
-msgstr "Yí àwọn ọwọ́n"
-
-#: ../../../lib/web/src/components/layout/right-panel.tsx:233
-#: ../../../lib/web/src/components/layout/right-panel.tsx:236
-msgid "Toggle right panel"
-msgstr "Yí panẹli ọ̀tún padà"
 
 #: ../../../lib/web/src/components/layout/nav-group.tsx:365
 #: ../../../lib/web/src/components/layout/nav-group.tsx:372
@@ -3087,20 +2775,15 @@ msgstr "Yí panẹli ọ̀tún padà"
 msgid "Toggle section"
 msgstr "Ṣí/pa apá"
 
-#: ../../../lib/web/src/components/ui/sidebar.tsx:317
-#: ../../../lib/web/src/components/ui/sidebar.tsx:320
+#: ../../../lib/web/src/components/ui/sidebar.tsx:337
+#: ../../../lib/web/src/components/ui/sidebar.tsx:340
 msgid "Toggle sidebar"
 msgstr "Yí ẹ̀gbẹ́ padà"
 
-#: ../../../lib/web/src/components/ui/sidebar.tsx:332
-#: ../../../lib/web/src/components/ui/sidebar.tsx:335
+#: ../../../lib/web/src/components/ui/sidebar.tsx:352
+#: ../../../lib/web/src/components/ui/sidebar.tsx:355
 msgid "Toggle Sidebar"
 msgstr "Yí Sidebar"
-
-#: ../../../lib/web/src/components/theme-switch.tsx:37
-#: ../../../lib/web/src/components/theme-switch.tsx:41
-msgid "Toggle theme"
-msgstr "Yí theme"
 
 #: ../../../lib/web/src/components/entity/keyboard-shortcuts-help.tsx:26
 msgid "Toggle view options"
@@ -3119,7 +2802,7 @@ msgstr "Àwọn ìbéèrè ti pọ̀ jù"
 msgid "Top"
 msgstr "Òkè"
 
-#: src/features/editor/components/edit-dialogs.tsx:316
+#: src/features/editor/components/edit-dialogs.tsx:319
 msgid "Top level"
 msgstr "Ipele òkè"
 
@@ -3127,14 +2810,12 @@ msgstr "Ipele òkè"
 msgid "Travelling"
 msgstr "Ń rìn"
 
-#: ../../../lib/web/src/components/search-entity-dialog.tsx:194
 #: ../../../lib/web/src/components/search-entity-page.tsx:217
 msgid "Try adjusting your search terms"
 msgstr "Gbìyànjú láti ṣàtúnṣe àwọn ọ̀rọ̀ ìwákiri rẹ"
 
 #: ../../../lib/web/src/features/errors/general-error.tsx:140
 #: ../../../lib/web/src/features/errors/general-error.tsx:180
-#: ../../../lib/web/src/features/errors/maintenance-error.tsx:19
 msgid "Try again"
 msgstr "Gbìyànjú lẹ́ẹ̀kan sí i"
 
@@ -3163,7 +2844,7 @@ msgstr "Tẹ láti wá àwọn user"
 msgid "Type to search..."
 msgstr "Tẹ láti wá..."
 
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:301
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:292
 msgid "Unable to connect to remote server"
 msgstr "Kò lè sopọ̀ mọ́ sáfà jíjìnnà"
 
@@ -3172,7 +2853,7 @@ msgstr "Kò lè sopọ̀ mọ́ sáfà jíjìnnà"
 msgid "Unable to redirect to login. Please try again."
 msgstr "A kò lè darí sí ojú-ìwé wíwọlé. Jọ̀wọ́ gbìyànjú lẹ́ẹ̀kan sí i."
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:112
+#: ../../../lib/web/src/components/notification-category-button.tsx:114
 msgid "Unassigned"
 msgstr "Aláìyàn"
 
@@ -3189,7 +2870,7 @@ msgstr "Kò sí"
 msgid "Unexpected API error"
 msgstr "Àṣìṣe API tí a kò retí"
 
-#: src/routes/$projectId.diff.tsx:109
+#: src/routes/$projectId.diff.tsx:112
 msgid "Unified"
 msgstr "Iṣọkan"
 
@@ -3224,22 +2905,17 @@ msgstr "Ń yọ ìforúkọsílẹ̀ kúrò..."
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:285
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx:103
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx:184
-#: src/features/board/components/board-card.tsx:22
-#: src/features/board/components/board-container.tsx:31
+#: src/features/board/components/board-container.tsx:29
 #: src/features/editor/components/design-preview.tsx:31
 msgid "Untitled"
 msgstr "Aláìlórúkọ"
-
-#: ../../../lib/web/src/features/accounts/account-manager.tsx:135
-msgid "Unverified"
-msgstr "Kò tíì jẹ́rìí sí"
 
 #: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:57
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:494
 msgid "Updated"
 msgstr "Ti ṣe imudojúìwọ̀n"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:138
+#: src/routes/_authenticated/$projectId_.settings.tsx:142
 msgid "Updating access..."
 msgstr "Ń ṣe àfikún ààyè..."
 
@@ -3248,7 +2924,7 @@ msgstr "Ń ṣe àfikún ààyè..."
 msgid "Upload"
 msgstr "Gbé jáde"
 
-#: src/features/projects/components/create-project-dialog.tsx:408
+#: src/features/projects/components/create-project-dialog.tsx:413
 #: src/routes/_authenticated/$projectId/design.tsx:58
 msgid "Upload .json file"
 msgstr "Gbé fáìlì .json jáde"
@@ -3263,7 +2939,7 @@ msgstr "Lo passkey rẹ"
 
 #. placeholder {0}: prefix || "project"
 #. placeholder {1}: prefix || "project"
-#: src/features/projects/components/create-project-dialog.tsx:376
+#: src/features/projects/components/create-project-dialog.tsx:381
 msgid "Used for readable IDs like {0}-1, {1}-2"
 msgstr "Wúlò fún IDs tí a lè ka bíi {0}-1, {1}-2"
 
@@ -3277,16 +2953,7 @@ msgstr "User"
 msgid "Verification code"
 msgstr "Kóòdù ìjẹ́rìísí"
 
-#: ../../../lib/web/src/features/accounts/account-manager.tsx:255
-msgid "Verification code sent"
-msgstr "Kóòdù ìjẹ́rìísí ti ránṣẹ́"
-
-#: ../../../lib/web/src/features/accounts/account-manager.tsx:248
-msgid "Verification failed"
-msgstr "Ìjẹ́rìísí kùnà"
-
 #: ../../../lib/web/src/components/step-up-dialog.tsx:391
-#: ../../../lib/web/src/features/accounts/account-manager.tsx:172
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:111
 msgid "Verify"
 msgstr "Jẹ́rìí sí"
@@ -3300,20 +2967,12 @@ msgid "Video thumbnail"
 msgstr "Àwòrán kékeré fídíò"
 
 #. placeholder {0}: currentMedia.name
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:317
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:315
 msgid "Video viewer: {0}"
 msgstr "Ẹ̀rọ ìwo fídíò: {0}"
 
-#: ../../../lib/web/src/components/data-table/view-options.tsx:33
-msgid "View"
-msgstr "Wo"
-
-#: ../../../lib/web/src/components/notifications-dropdown.tsx:177
-msgid "View all"
-msgstr "Wo gbogbo"
-
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:205
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:213
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:220
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:228
 msgid "View all notifications"
 msgstr "Wo gbogbo àwọn ìfitónilétí"
 
@@ -3333,7 +2992,7 @@ msgstr "Wíwò nìkan"
 msgid "View options"
 msgstr "Àwọn àyàn ìwòye"
 
-#: src/features/editor/components/design-editor.tsx:457
+#: src/features/editor/components/design-editor.tsx:487
 msgid "Views"
 msgstr "Àwọn ìwòye"
 
@@ -3351,7 +3010,7 @@ msgstr "Ti ṣọ́"
 msgid "Watched only"
 msgstr "Ti ṣọ́ nìkan"
 
-#: src/features/projects/components/create-project-dialog.tsx:468
+#: src/features/projects/components/create-project-dialog.tsx:473
 msgid "We have auto-selected the best matching template."
 msgstr "A ti yan template tó bá a mu jùlọ láìfọwọ́yí."
 
@@ -3359,18 +3018,6 @@ msgstr "A ti yan template tó bá a mu jùlọ láìfọwọ́yí."
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:63
 msgid "We sent a verification code to <0>{0}</0>. Enter the code below to verify your email address."
 msgstr "A rán kóòdù ìjẹ́rìísí sí <0>{0}</0>. Tẹ kóòdù náà sí ìsàlẹ̀ láti fọwọ́sí àdírẹ́sì ímeèlì rẹ."
-
-#: ../../../lib/web/src/features/errors/maintenance-error.tsx:16
-msgid "We'll be back online shortly."
-msgstr "A ó padà sí lójú-ọ̀nà láìpẹ́."
-
-#: ../../../lib/web/src/components/notifications-dropdown.tsx:197
-msgid "We'll notify you when something important happens."
-msgstr "A ó sọ fún ọ nígbà tí ohun pàtàkì bá ṣẹlẹ̀."
-
-#: ../../../lib/web/src/features/errors/maintenance-error.tsx:13
-msgid "Website is under maintenance!"
-msgstr "Síìtì wà lábẹ́ ìtọ́jú!"
 
 #: ../../../lib/web/src/lib/preference-utils.ts:56
 msgid "Wednesday"
@@ -3384,17 +3031,9 @@ msgstr "O kò ní ààyè sí abala yìí."
 msgid "You don't have access to this project."
 msgstr "O kò ní ìwọlé sí iṣẹ́ àkànṣe yìí."
 
-#: ../../../lib/web/src/features/errors/forbidden.tsx:18
-msgid "You don't have necessary permission <0/>to view this resource."
-msgstr "O kò ní àṣẹ tó yẹ <0/>láti wo ohun àmúlò yìí."
-
 #: src/features/projects/pages/projects-list-page.tsx:36
 msgid "You have no projects yet."
 msgstr "O kò ní projects kankan síbẹ̀."
-
-#: ../../../lib/web/src/components/notifications-dropdown.tsx:193
-msgid "You're all caught up!"
-msgstr "O ti rí gbogbo rẹ̀!"
 
 #: ../../../lib/web/src/components/restore-banner.tsx:100
 msgid "Your account was moved here from {source}. Until you delete it there, messages and notifications may reach both servers, some of your content keeps being served from the old server, and followers may take a few minutes to find you here."
@@ -3404,7 +3043,7 @@ msgstr "A gbe akonti rẹ wá ibi lati {source}. Titi iwọ o fi pa rẹ nibẹ,
 msgid "Your attachments will be lost."
 msgstr "Àwọn fáìlì àsomọ́ rẹ yóò sọnù."
 
-#: src/features/projects/components/create-project-dialog.tsx:464
+#: src/features/projects/components/create-project-dialog.tsx:469
 msgid "Your backup contains objects of type:"
 msgstr "Backup rẹ ní àwọn nǹkan tí irú wọn jẹ́:"
 

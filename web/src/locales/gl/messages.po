@@ -14,7 +14,7 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. js-lingui-explicit-id
-#: ../../../lib/web/src/lib/error-normalizer.ts:225
+#: ../../../lib/web/src/lib/error-normalizer.ts:215
 msgid "Please check your internet connection and try again."
 msgstr "Comproba a túa conexión a internet e téntao de novo."
 
@@ -35,7 +35,7 @@ msgstr "(expandir)"
 msgid "(from {0})"
 msgstr "(de {0})"
 
-#: src/features/editor/components/edit-dialogs.tsx:327
+#: src/features/editor/components/edit-dialogs.tsx:330
 msgid "(itself)"
 msgstr "(el mesmo)"
 
@@ -48,11 +48,6 @@ msgstr "[non establecido]"
 msgid "{0, plural, one {# conflicting file} other {# conflicting files}}"
 msgstr "{0, plural, one {# ficheiro en conflito} other {# ficheiros en conflito}}"
 
-#. placeholder {0}: selectedValues.size
-#: ../../../lib/web/src/components/data-table/faceted-filter.tsx:66
-msgid "{0, plural, one {# selected} other {# selected}}"
-msgstr "{0, plural, one {# seleccionado} other {# seleccionados}}"
-
 #. placeholder {0}: String(name)
 #: src/routes/_authenticated/$projectId/design.tsx:46
 msgid "{0} - Design"
@@ -64,18 +59,13 @@ msgid "{0} behind"
 msgstr "{0} atrás"
 
 #. placeholder {0}: files.length
-#: src/features/requests/components/diff-stats.tsx:68
-#: src/features/requests/components/diff-viewer.tsx:421
+#: src/features/requests/components/diff-stats.tsx:74
+#: src/features/requests/components/diff-viewer.tsx:419
 msgid "{0} files changed"
 msgstr "{0} ficheiros cambiados"
 
-#. placeholder {0}: item.label
-#: ../../../lib/web/src/components/config-drawer.tsx:160
-msgid "{0} option preview"
-msgstr "Vista previa da opción {0}"
-
 #. placeholder {0}: String(name)
-#: src/routes/_authenticated/$projectId_.settings.tsx:105
+#: src/routes/_authenticated/$projectId_.settings.tsx:109
 msgid "{0} settings"
 msgstr "Axustes de {0}"
 
@@ -106,22 +96,6 @@ msgstr "O nome de {entityLabel} é obrigatorio"
 #: ../../../lib/web/src/components/game/game-draw-offer-banner.tsx:29
 msgid "{opponentName} offered a draw"
 msgstr "{opponentName} ofreceu un empate"
-
-#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:203
-msgid "{selectedCount, plural, one {{entityName} selected} other {{manyName} selected}}"
-msgstr "{selectedCount, plural, one {{entityName} seleccionado} other {{manyName} seleccionados}}"
-
-#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:45
-msgid "{selectedCount, plural, one {# {entityName} selected. Bulk actions toolbar is available.} other {# {manyName} selected. Bulk actions toolbar is available.}}"
-msgstr "{selectedCount, plural, one {# {entityName} seleccionado. A barra de accións masivas está dispoñible.} other {# {manyName} seleccionados. A barra de accións masivas está dispoñible.}}"
-
-#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:195
-msgid "{selectedCount, plural, one {# selected} other {# selected}}"
-msgstr "{selectedCount, plural, one {# seleccionados} other {# seleccionados}}"
-
-#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:142
-msgid "{selectedCount, plural, one {Bulk actions for # selected {entityName}} other {Bulk actions for # selected {manyName}}}"
-msgstr "{selectedCount, plural, one {Accións masivas para # {entityName} seleccionado} other {Accións masivas para # {manyName} seleccionados}}"
 
 #: ../../../lib/web/src/components/attachment-composer.tsx:248
 #: ../../../lib/web/src/components/ui/upload-progress.tsx:52
@@ -170,7 +144,7 @@ msgstr "Absoluto (data e hora)"
 msgid "Accept"
 msgstr "Aceptar"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:100
+#: src/routes/_authenticated/$projectId_.settings.tsx:104
 msgid "Access"
 msgstr "Acceso"
 
@@ -178,54 +152,38 @@ msgstr "Acceso"
 msgid "Access denied"
 msgstr "Acceso denegado"
 
-#: ../../../lib/web/src/features/errors/forbidden.tsx:16
-msgid "Access Forbidden"
-msgstr "Acceso prohibido"
-
 #: ../../../lib/web/src/features/access/access-list.tsx:197
 msgid "Access level"
 msgstr "Nivel de acceso"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:139
+#: src/routes/_authenticated/$projectId_.settings.tsx:143
 msgid "Access level updated"
 msgstr "Nivel de acceso actualizado"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:130
+#: src/routes/_authenticated/$projectId_.settings.tsx:134
 msgid "Access management"
 msgstr "Xestión de acceso"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:136
+#: src/routes/_authenticated/$projectId_.settings.tsx:140
 msgid "Access removed"
 msgstr "Acceso eliminado"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:133
+#: src/routes/_authenticated/$projectId_.settings.tsx:137
 msgid "Access set for {subjectName}"
 msgstr "Acceso establecido para {subjectName}"
-
-#: ../../../lib/web/src/features/accounts/account-manager.tsx:216
-msgid "Account added"
-msgstr "Conta engadida"
-
-#: ../../../lib/web/src/features/accounts/account-manager.tsx:232
-msgid "Account removed"
-msgstr "Conta eliminada"
 
 #: ../../../lib/web/src/features/accounts/account-add.tsx:139
 msgid "Account type"
 msgstr "Tipo de conta"
 
-#: ../../../lib/web/src/features/accounts/account-manager.tsx:242
-msgid "Account verified"
-msgstr "Conta verificada"
-
 #: src/features/objects/components/object-detail-panel.tsx:398
 msgid "Activity"
 msgstr "Actividade"
 
-#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:712
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:720
 #: ../../../lib/web/src/features/access/access-dialog.tsx:332
 #: ../../../lib/web/src/features/accounts/account-add.tsx:209
-#: src/features/requests/components/request-panel.tsx:104
+#: src/features/requests/components/request-panel.tsx:113
 msgid "Add"
 msgstr "Engadir"
 
@@ -246,25 +204,20 @@ msgid "Add access"
 msgstr "Engadir acceso"
 
 #: ../../../lib/web/src/features/accounts/account-add.tsx:132
-#: ../../../lib/web/src/features/accounts/account-manager.tsx:288
 msgid "Add account"
 msgstr "Engadir conta"
-
-#: ../../../lib/web/src/features/accounts/account-manager.tsx:297
-msgid "Add an account to receive notifications and use services."
-msgstr "Engade unha conta para recibir notificacións e usar servizos."
 
 #: ../../../lib/web/src/components/attachment-composer.tsx:291
 msgid "Add caption"
 msgstr "Engadir lenda"
 
-#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:682
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:690
 msgid "Add checklist item"
 msgstr "Engadir elemento da lista"
 
-#: src/features/editor/components/design-editor.tsx:511
-#: src/features/editor/components/edit-dialogs.tsx:220
-#: src/features/editor/components/edit-dialogs.tsx:431
+#: src/features/editor/components/design-editor.tsx:541
+#: src/features/editor/components/edit-dialogs.tsx:223
+#: src/features/editor/components/edit-dialogs.tsx:434
 msgid "Add class"
 msgstr "Engadir clase"
 
@@ -274,21 +227,17 @@ msgstr "Engadir columna"
 
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:105
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:233
-#: src/features/editor/components/edit-dialogs.tsx:426
+#: src/features/editor/components/edit-dialogs.tsx:429
 msgid "Add field"
 msgstr "Engadir campo"
 
-#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:700
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:708
 msgid "Add item..."
 msgstr "Engadir elemento..."
 
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx:320
 msgid "Add link"
 msgstr "Engadir ligazón"
-
-#: ../../../lib/web/src/features/accounts/account-picker.tsx:102
-msgid "Add new account"
-msgstr "Engadir nova conta"
 
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:215
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:220
@@ -298,18 +247,13 @@ msgstr "Engadir nova conta"
 msgid "Add option"
 msgstr "Engadir opción"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:131
+#: src/routes/_authenticated/$projectId_.settings.tsx:135
 msgid "Add rule"
 msgstr "Engadir regra"
 
 #: ../../../lib/web/src/components/post-tags.tsx:137
-#: ../../../lib/web/src/components/tag-input.tsx:40
 msgid "Add tag..."
 msgstr "Engadir etiqueta..."
-
-#: ../../../lib/web/src/components/layout/team-switcher.tsx:83
-msgid "Add team/app"
-msgstr "Engadir equipo/aplicación"
 
 #: ../../../lib/web/src/features/accounts/account-add.tsx:175
 msgid "Add to existing notifications"
@@ -319,7 +263,7 @@ msgstr "Engadir ás notificacións existentes"
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:513
 #: ../../../lib/web/src/components/view-tabs.tsx:87
 #: ../../../lib/web/src/components/view-tabs.tsx:93
-#: src/features/editor/components/design-editor.tsx:462
+#: src/features/editor/components/design-editor.tsx:492
 msgid "Add view"
 msgstr "Engadir vista"
 
@@ -327,17 +271,9 @@ msgstr "Engadir vista"
 msgid "Adding..."
 msgstr "Engadindo..."
 
-#: ../../../lib/web/src/components/config-drawer.tsx:72
-msgid "Adjust the appearance and layout to suit your preferences."
-msgstr "Axusta a aparencia e o deseño á túa preferencia."
-
 #: ../../../lib/web/src/components/ui/sort-selector.tsx:41
 msgid "AI"
 msgstr "IA"
-
-#: ../../../lib/web/src/components/notifications-dropdown.tsx:163
-msgid "All"
-msgstr "Todos"
 
 #: src/components/layout/projects-layout.tsx:35
 msgid "All projects"
@@ -348,11 +284,11 @@ msgstr "Todos os proxectos"
 msgid "Allow anyone to search for {0}"
 msgstr "Permitir que calquera busque {0}"
 
-#: src/features/projects/components/create-project-dialog.tsx:382
+#: src/features/projects/components/create-project-dialog.tsx:387
 msgid "Allow anyone to search for project"
 msgstr "Permitir que calquera busque o proxecto"
 
-#: src/features/editor/components/edit-dialogs.tsx:346
+#: src/features/editor/components/edit-dialogs.tsx:349
 msgid "Allow merge requests"
 msgstr "Permitir solicitudes de fusión"
 
@@ -364,7 +300,7 @@ msgstr "Permitir ordenar por"
 msgid "An error occurred"
 msgstr "Produciuse un erro"
 
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:275
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:266
 msgid "An unexpected error occurred"
 msgstr "Produciuse un erro inesperado"
 
@@ -373,11 +309,11 @@ msgid "Android push"
 msgstr "Push de Android"
 
 #: ../../../lib/web/src/features/access/access-list.tsx:45
-#: ../../../lib/web/src/features/access/types.ts:42
+#: ../../../lib/web/src/features/access/types.ts:36
 msgid "Anyone"
 msgstr "Calquera"
 
-#: ../../../lib/web/src/features/access/types.ts:41
+#: ../../../lib/web/src/features/access/types.ts:35
 msgid "Anyone who is logged in"
 msgstr "Calquera que iniciase sesión"
 
@@ -402,7 +338,7 @@ msgstr "Seguro que queres eliminar a columna \"{name}\"? Isto non se pode desfac
 msgid "Are you sure you want to delete this comment? This will also delete all replies."
 msgstr "Seguro que queres eliminar este comentario? Isto tamén eliminará todas as respostas."
 
-#: src/features/requests/components/request-panel.tsx:132
+#: src/features/requests/components/request-panel.tsx:141
 msgid "Are you sure you want to delete this merge request?"
 msgstr "Seguro que queres eliminar esta solicitude de fusión?"
 
@@ -413,10 +349,6 @@ msgstr "Seguro que queres pechar a sesión? Terás que iniciar sesión de novo p
 #: src/features/projects/pages/projects-list-page.tsx:40
 msgid "Are you sure you want to unsubscribe from this project?"
 msgstr "Seguro que queres cancelar a subscrición a este proxecto?"
-
-#: ../../../lib/web/src/components/data-table/column-header.tsx:59
-msgid "Asc"
-msgstr "Asc"
 
 #: ../../../lib/web/src/components/ui/sort-direction-button.tsx:27
 msgid "Ascending"
@@ -431,7 +363,7 @@ msgid "Attach reply files"
 msgstr "Anexar ficheiros da resposta"
 
 #: ../../../lib/web/src/features/access/access-list.tsx:46
-#: ../../../lib/web/src/features/access/types.ts:41
+#: ../../../lib/web/src/features/access/types.ts:35
 msgid "Authenticated users"
 msgstr "Usuarios autenticados"
 
@@ -452,17 +384,16 @@ msgid "Avatar for {name}"
 msgstr "Avatar de {name}"
 
 #: ../../../lib/web/src/components/place-picker.tsx:156
-#: src/features/projects/components/create-project-dialog.tsx:537
+#: src/features/projects/components/create-project-dialog.tsx:546
 msgid "Back"
 msgstr "Atrás"
 
-#: ../../../lib/web/src/features/errors/forbidden.tsx:28
 #: ../../../lib/web/src/features/errors/not-found-error.tsx:28
 #: ../../../lib/web/src/features/errors/unauthorized-error.tsx:28
 msgid "Back to home"
 msgstr "Volver ao inicio"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:101
+#: src/routes/_authenticated/$projectId_.settings.tsx:105
 #: src/routes/_authenticated/$projectId/design.tsx:47
 msgid "Back to project"
 msgstr "Volver ao proxecto"
@@ -476,7 +407,7 @@ msgstr "Volver aos proxectos"
 msgid "Banner"
 msgstr "Báner"
 
-#: src/features/requests/components/diff-viewer.tsx:449
+#: src/features/requests/components/diff-viewer.tsx:447
 msgid "Binary file not shown"
 msgstr "O ficheiro binario non se mostra"
 
@@ -485,8 +416,8 @@ msgstr "O ficheiro binario non se mostra"
 msgid "Blocked by"
 msgstr "Bloqueado por"
 
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:227
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:237
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:242
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:252
 msgid "Blocked navigation to untrusted link"
 msgstr "Navegación bloqueada a unha ligazón non fiable"
 
@@ -515,7 +446,7 @@ msgstr "Notificacións do navegador"
 msgid "Built-in templates"
 msgstr "Modelos integrados"
 
-#: src/features/editor/components/edit-dialogs.tsx:309
+#: src/features/editor/components/edit-dialogs.tsx:312
 msgid "Can be child of"
 msgstr "Pode ser fillo de"
 
@@ -533,7 +464,7 @@ msgstr "Pode ser fillo de"
 #: ../../../lib/web/src/features/access/access-list.tsx:268
 #: ../../../lib/web/src/features/accounts/account-add.tsx:201
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:91
-#: src/features/projects/components/create-project-dialog.tsx:448
+#: src/features/projects/components/create-project-dialog.tsx:453
 #: src/routes/_authenticated/$projectId/design.tsx:61
 #: src/routes/_authenticated/$projectId/index.tsx:143
 msgid "Cancel"
@@ -556,18 +487,14 @@ msgstr "Non se pode fusionar automaticamente"
 msgid "Caption"
 msgstr "Lenda"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:97
+#: ../../../lib/web/src/components/notification-category-button.tsx:99
 msgid "Category for these notifications"
 msgstr "Categoría destas notificacións"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:78
-#: ../../../lib/web/src/components/notification-category-button.tsx:89
+#: ../../../lib/web/src/components/notification-category-button.tsx:80
+#: ../../../lib/web/src/components/notification-category-button.tsx:91
 msgid "Change notification category"
 msgstr "Cambiar categoría de notificación"
-
-#: ../../../lib/web/src/components/notifications-dropdown.tsx:198
-msgid "Check \"All\" to see your past notifications."
-msgstr "Marca «Todo» para ver as túas notificacións anteriores."
 
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:137
 msgid "Checkbox"
@@ -585,32 +512,16 @@ msgstr "Lista de comprobación"
 msgid "Choose a game from the sidebar or start a new one."
 msgstr "Escolle unha partida da barra lateral ou inicia unha nova."
 
-#: src/features/projects/components/create-project-dialog.tsx:329
+#: src/features/projects/components/create-project-dialog.tsx:334
 msgid "Choose a template"
 msgstr "Escolle un modelo"
-
-#: ../../../lib/web/src/components/config-drawer.tsx:329
-msgid "Choose between default expanded, compact icon-only, or full layout mode"
-msgstr "Escolle entre modo predeterminado expandido, compacto só con iconas, ou modo de deseño completo"
-
-#: ../../../lib/web/src/components/config-drawer.tsx:271
-msgid "Choose between inset, floating, or standard sidebar layout"
-msgstr "Escolle entre barra lateral inserida, flotante ou estándar"
-
-#: ../../../lib/web/src/components/config-drawer.tsx:372
-msgid "Choose between left-to-right or right-to-left site direction"
-msgstr "Escolle entre dirección do sitio de esquerda a dereita ou de dereita a esquerda"
-
-#: ../../../lib/web/src/components/config-drawer.tsx:227
-msgid "Choose between system preference, light mode, or dark mode"
-msgstr "Escolle entre preferencia do sistema, modo claro ou modo escuro"
 
 #: ../../../lib/web/src/components/language-picker.tsx:264
 #: ../../../lib/web/src/components/language-picker.tsx:271
 msgid "Choose language"
 msgstr "Escoller idioma"
 
-#: src/features/editor/components/design-editor.tsx:506
+#: src/features/editor/components/design-editor.tsx:536
 msgid "Classes"
 msgstr "Clases"
 
@@ -627,29 +538,15 @@ msgstr "Borrar"
 msgid "Clear all"
 msgstr "Borrar todo"
 
-#: ../../../lib/web/src/components/data-table/faceted-filter.tsx:144
-msgid "Clear filters"
-msgstr "Borrar filtros"
-
 #: ../../../lib/web/src/components/search-input.tsx:26
 msgid "Clear search"
 msgstr "Borrar busca"
 
-#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:170
-#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:174
-msgid "Clear selection"
-msgstr "Borrar selección"
-
-#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:171
-#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:178
-msgid "Clear selection (Escape)"
-msgstr "Borrar selección (Escape)"
-
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:501
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:506
 #: ../../../lib/web/src/components/ui/dialog.tsx:78
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:470
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:473
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:468
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:471
 #: ../../../lib/web/src/components/ui/sheet.tsx:79
 msgid "Close"
 msgstr "Pechar"
@@ -658,8 +555,8 @@ msgstr "Pechar"
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:113
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:263
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:267
-#: src/features/editor/components/edit-dialogs.tsx:225
-#: src/features/editor/components/edit-dialogs.tsx:229
+#: src/features/editor/components/edit-dialogs.tsx:228
+#: src/features/editor/components/edit-dialogs.tsx:232
 msgid "Close dialog"
 msgstr "Pechar diálogo"
 
@@ -668,8 +565,8 @@ msgstr "Pechar diálogo"
 msgid "Close navigation"
 msgstr "Pechar navegación"
 
-#: ../../../lib/web/src/components/layout/right-panel.tsx:265
-#: ../../../lib/web/src/components/layout/right-panel.tsx:268
+#: ../../../lib/web/src/components/layout/right-panel.tsx:234
+#: ../../../lib/web/src/components/layout/right-panel.tsx:237
 msgid "Close panel"
 msgstr "Pechar o panel"
 
@@ -709,10 +606,6 @@ msgstr "As columnas agrúpanse por"
 msgid "Comfortable"
 msgstr "Cómodo"
 
-#: ../../../lib/web/src/components/coming-soon.tsx:12
-msgid "Coming Soon!"
-msgstr "Próximamente!"
-
 #: ../../../lib/web/src/components/ui/command.tsx:34
 msgid "Command Palette"
 msgstr "Paleta de comandos"
@@ -726,8 +619,8 @@ msgstr "Accións do comentario"
 msgid "Comment and view"
 msgstr "Comentar e ver"
 
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:433
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:445
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:431
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:443
 msgid "Comments"
 msgstr "Comentarios"
 
@@ -736,12 +629,11 @@ msgstr "Comentarios"
 msgid "Comments ({0})"
 msgstr "Comentarios ({0})"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:316
 #: ../../../lib/web/src/lib/preference-utils.ts:90
 msgid "Compact"
 msgstr "Compacto"
 
-#: src/features/editor/components/edit-dialogs.tsx:221
+#: src/features/editor/components/edit-dialogs.tsx:224
 msgid "Configure class settings"
 msgstr "Configurar axustes da clase"
 
@@ -761,10 +653,6 @@ msgstr "Confirmar"
 #: ../../../lib/web/src/lib/chat-ui.ts:18
 msgid "Connected"
 msgstr "Conectado"
-
-#: ../../../lib/web/src/features/accounts/account-manager.tsx:191
-msgid "Connected accounts"
-msgstr "Contas conectadas"
 
 #: ../../../lib/web/src/lib/chat-ui.ts:21
 msgid "Connecting..."
@@ -802,11 +690,33 @@ msgstr "Copiado ao portapapeis"
 msgid "Copy"
 msgstr "Copiar"
 
+#: src/routes/$projectId.diff.tsx:73
+msgid "Could not change the view style"
+msgstr ""
+
+#: src/features/requests/components/branch-select.tsx:76
+msgid "Could not load branches"
+msgstr "Non se puideron cargar as ramas"
+
+#: src/features/requests/components/repository-select.tsx:64
+msgid "Could not load repositories"
+msgstr ""
+
+#: src/features/projects/components/create-project-dialog.tsx:79
+#: src/features/projects/components/create-project-dialog.tsx:482
+#: src/routes/_authenticated/$projectId/design.tsx:102
+msgid "Could not load templates"
+msgstr ""
+
+#: src/features/requests/components/diff-stats.tsx:59
+msgid "Could not load the diff"
+msgstr ""
+
 #: ../../../lib/web/src/features/document/document-page.tsx:82
 msgid "Could not load this document. Please try again later."
 msgstr "Non se puido cargar este documento. Téntao máis tarde."
 
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:113
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:128
 msgid "Couldn't load notifications"
 msgstr "Non se puideron cargar as notificacións"
 
@@ -839,7 +749,7 @@ msgstr "Crear {0}"
 msgid "Create a new item in this project"
 msgstr "Crear un novo elemento neste proxecto"
 
-#: src/features/projects/components/create-project-dialog.tsx:331
+#: src/features/projects/components/create-project-dialog.tsx:336
 #: src/features/projects/pages/projects-list-page.tsx:37
 msgid "Create a new project"
 msgstr "Crear un novo proxecto"
@@ -850,10 +760,10 @@ msgid "Create new item"
 msgstr "Crear novo elemento"
 
 #: src/components/layout/projects-layout.tsx:37
-#: src/features/projects/components/create-project-dialog.tsx:319
-#: src/features/projects/components/create-project-dialog.tsx:329
-#: src/features/projects/components/create-project-dialog.tsx:452
-#: src/features/projects/components/create-project-dialog.tsx:540
+#: src/features/projects/components/create-project-dialog.tsx:324
+#: src/features/projects/components/create-project-dialog.tsx:334
+#: src/features/projects/components/create-project-dialog.tsx:457
+#: src/features/projects/components/create-project-dialog.tsx:549
 msgid "Create project"
 msgstr "Crear proxecto"
 
@@ -866,14 +776,14 @@ msgstr "Crear, editar, comentar e ver"
 msgid "Created"
 msgstr "Creado"
 
-#: src/features/projects/components/create-project-dialog.tsx:127
+#: src/features/projects/components/create-project-dialog.tsx:132
 msgid "Creating project..."
 msgstr "Creando o proxecto..."
 
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:656
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:258
-#: src/features/projects/components/create-project-dialog.tsx:452
-#: src/features/projects/components/create-project-dialog.tsx:540
+#: src/features/projects/components/create-project-dialog.tsx:457
+#: src/features/projects/components/create-project-dialog.tsx:549
 msgid "Creating..."
 msgstr "Creando..."
 
@@ -885,26 +795,19 @@ msgstr "Localización actual"
 msgid "Custom"
 msgstr "Personalizado"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:219
-#: ../../../lib/web/src/components/theme-switch.tsx:52
 #: ../../../lib/web/src/lib/preference-utils.ts:15
 msgid "Dark"
 msgstr "Escuro"
 
-#: ../../../lib/web/src/components/profile-dropdown.tsx:87
-#: ../../../lib/web/src/components/profile-dropdown.tsx:123
-msgid "Dark mode"
-msgstr "Modo escuro"
-
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:259
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:250
 msgid "Data conflict"
 msgstr "Conflito de datos"
 
 #. placeholder {0}: imported.data?.objects ?? 0
 #. placeholder {1}: imported.data?.comments ?? 0
 #. placeholder {2}: imported.data?.links ?? 0
-#: src/features/projects/components/create-project-dialog.tsx:146
-#: src/features/projects/components/create-project-dialog.tsx:176
+#: src/features/projects/components/create-project-dialog.tsx:151
+#: src/features/projects/components/create-project-dialog.tsx:181
 msgid "Data imported ({0, plural, one {# object} other {# objects}}, {1, plural, one {# comment} other {# comments}}, {2, plural, one {# link} other {# links}})"
 msgstr "Datos importados ({0, plural, one {# obxecto} other {# obxectos}}, {1, plural, one {# comentario} other {# comentarios}}, {2, plural, one {# ligazón} other {# ligazóns}})"
 
@@ -915,10 +818,6 @@ msgstr "Data"
 #: ../../../lib/web/src/components/game/game-draw-offer-banner.tsx:41
 msgid "Decline"
 msgstr "Rexeitar"
-
-#: ../../../lib/web/src/components/config-drawer.tsx:311
-msgid "Default"
-msgstr "Predeterminado"
 
 #: ../../../lib/web/src/features/accounts/account-add.tsx:185
 msgid "Default AI account"
@@ -938,8 +837,8 @@ msgstr "Orde predeterminada"
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:252
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:314
 #: src/features/objects/components/object-detail-panel.tsx:643
-#: src/features/requests/components/request-panel.tsx:133
-#: src/routes/_authenticated/$projectId_.settings.tsx:120
+#: src/features/requests/components/request-panel.tsx:142
+#: src/routes/_authenticated/$projectId_.settings.tsx:124
 msgid "Delete"
 msgstr "Eliminar"
 
@@ -947,7 +846,7 @@ msgstr "Eliminar"
 msgid "Delete attachment"
 msgstr "Eliminar anexo"
 
-#: src/features/editor/components/edit-dialogs.tsx:246
+#: src/features/editor/components/edit-dialogs.tsx:249
 msgid "Delete class"
 msgstr "Eliminar clase"
 
@@ -969,13 +868,13 @@ msgstr "Eliminar campo"
 msgid "Delete item"
 msgstr "Eliminar elemento"
 
-#: src/features/requests/components/request-panel.tsx:131
-#: src/features/requests/components/request-panel.tsx:394
-#: src/features/requests/components/request-panel.tsx:399
-#: src/features/requests/components/request-panel.tsx:419
-#: src/features/requests/components/request-panel.tsx:424
-#: src/features/requests/components/request-panel.tsx:441
-#: src/features/requests/components/request-panel.tsx:446
+#: src/features/requests/components/request-panel.tsx:140
+#: src/features/requests/components/request-panel.tsx:403
+#: src/features/requests/components/request-panel.tsx:408
+#: src/features/requests/components/request-panel.tsx:428
+#: src/features/requests/components/request-panel.tsx:433
+#: src/features/requests/components/request-panel.tsx:450
+#: src/features/requests/components/request-panel.tsx:455
 msgid "Delete merge request"
 msgstr "Eliminar solicitude de fusión"
 
@@ -989,12 +888,12 @@ msgstr "Eliminar opción"
 msgid "Delete option {0}"
 msgstr "Eliminar opción {0}"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:119
-#: src/routes/_authenticated/$projectId_.settings.tsx:122
+#: src/routes/_authenticated/$projectId_.settings.tsx:123
+#: src/routes/_authenticated/$projectId_.settings.tsx:126
 msgid "Delete project"
 msgstr "Eliminar proxecto"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:121
+#: src/routes/_authenticated/$projectId_.settings.tsx:125
 msgid "Delete project?"
 msgstr "Eliminar proxecto?"
 
@@ -1006,21 +905,17 @@ msgstr "Eliminar vista"
 msgid "Delete your account on the old server"
 msgstr "Elimina a túa conta no servidor antigo"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:127
+#: src/routes/_authenticated/$projectId_.settings.tsx:131
 msgid "Deleting project..."
 msgstr "Eliminando o proxecto..."
-
-#: ../../../lib/web/src/components/data-table/column-header.tsx:63
-msgid "Desc"
-msgstr "Desc"
 
 #: ../../../lib/web/src/components/ui/sort-direction-button.tsx:27
 msgid "Descending"
 msgstr "Descendente"
 
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:83
-#: src/features/requests/components/request-panel.tsx:306
-#: src/routes/_authenticated/$projectId_.settings.tsx:112
+#: src/features/requests/components/request-panel.tsx:315
+#: src/routes/_authenticated/$projectId_.settings.tsx:116
 msgid "Description"
 msgstr "Descrición"
 
@@ -1030,7 +925,7 @@ msgstr "Descrición"
 msgid "Design"
 msgstr "Deseño"
 
-#: src/features/projects/components/create-project-dialog.tsx:177
+#: src/features/projects/components/create-project-dialog.tsx:182
 #: src/routes/_authenticated/$projectId/design.tsx:54
 msgid "Design imported"
 msgstr "Deseño importado"
@@ -1054,17 +949,13 @@ msgstr "Panel de detalles"
 msgid "Detect from web browser"
 msgstr "Detectar do navegador web"
 
-#: src/features/requests/components/diff-stats.tsx:86
+#: src/features/requests/components/diff-stats.tsx:92
 msgid "Diff"
 msgstr "Diff"
 
 #: src/routes/$projectId.diff.tsx:41
 msgid "Diff: {source} → {target}"
 msgstr "Diff: {source} → {target}"
-
-#: ../../../lib/web/src/components/config-drawer.tsx:341
-msgid "Direction"
-msgstr "Dirección"
 
 #: ../../../lib/web/src/components/person-picker.tsx:214
 msgid "Directory"
@@ -1092,13 +983,13 @@ msgstr "Descartar"
 msgid "Dismiss board hint"
 msgstr "Descartar suxestión do taboleiro"
 
-#: ../../../lib/web/src/components/ui/sidebar.tsx:238
+#: ../../../lib/web/src/components/ui/sidebar.tsx:258
 msgid "Displays the mobile sidebar."
 msgstr "Mostra a barra lateral móbil."
 
 #: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:305
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:518
-#: src/features/editor/components/edit-dialogs.tsx:436
+#: src/features/editor/components/edit-dialogs.tsx:439
 #: src/features/objects/components/object-detail-panel.tsx:472
 msgid "Done"
 msgstr "Feito"
@@ -1108,8 +999,8 @@ msgid "Double click on a column to add content"
 msgstr "Fai dobre clic nunha columna para engadir contido"
 
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:239
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:454
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:464
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:452
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:462
 msgid "Download"
 msgstr "Descargar"
 
@@ -1117,7 +1008,7 @@ msgstr "Descargar"
 msgid "Download backup first"
 msgstr "Descargar copia de seguridade primeiro"
 
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:100
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:98
 msgid "Download failed"
 msgstr "Fallou a descarga"
 
@@ -1126,8 +1017,8 @@ msgstr "Fallou a descarga"
 msgid "Downloaded {filename}"
 msgstr "Descargado {filename}"
 
-#: src/features/requests/components/request-panel.tsx:272
-#: src/features/requests/components/request-panel.tsx:344
+#: src/features/requests/components/request-panel.tsx:281
+#: src/features/requests/components/request-panel.tsx:353
 msgid "Draft"
 msgstr "Borrador"
 
@@ -1139,7 +1030,7 @@ msgstr "Arrastra as columnas para reordenalas"
 msgid "Duplicates"
 msgstr "Duplicados"
 
-#: ../../../lib/web/src/lib/preference-utils.ts:141
+#: ../../../lib/web/src/lib/preference-utils.ts:134
 msgid "Dyslexia-friendly"
 msgstr "Apto para dislexia"
 
@@ -1156,7 +1047,7 @@ msgstr "Editar {label}"
 msgid "Edit caption"
 msgstr "Editar a lenda"
 
-#: src/features/editor/components/edit-dialogs.tsx:220
+#: src/features/editor/components/edit-dialogs.tsx:223
 msgid "Edit class"
 msgstr "Editar clase"
 
@@ -1202,7 +1093,7 @@ msgstr "Introduce o código do teu correo"
 msgid "Enter your authenticator code"
 msgstr "Introduce o código do autenticador"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:113
+#: src/routes/_authenticated/$projectId_.settings.tsx:117
 msgid "Entity ID"
 msgstr "ID de entidade"
 
@@ -1233,17 +1124,9 @@ msgstr "Exportar deseño"
 msgid "External URL"
 msgstr "URL externo"
 
-#: ../../../lib/web/src/lib/preference-utils.ts:131
+#: ../../../lib/web/src/lib/preference-utils.ts:124
 msgid "Extra large"
 msgstr "Extra grande"
-
-#: ../../../lib/web/src/features/accounts/account-manager.tsx:225
-msgid "Failed to add account"
-msgstr "Non se puido engadir a conta"
-
-#: ../../../lib/web/src/components/tag-input.tsx:39
-msgid "Failed to add tag"
-msgstr "Non se puido engadir a etiqueta"
 
 #: src/features/requests/components/merge-status.tsx:48
 msgid "Failed to check merge status"
@@ -1258,7 +1141,8 @@ msgstr "Non se puido copiar"
 msgid "Failed to create class"
 msgstr "Non se puido crear a clase"
 
-#: src/features/editor/components/design-editor.tsx:601
+#: src/features/editor/components/design-editor.tsx:166
+#: src/features/editor/components/design-editor.tsx:631
 msgid "Failed to create field"
 msgstr "Non se puido crear o campo"
 
@@ -1268,15 +1152,20 @@ msgstr "Non se puido crear o campo"
 msgid "Failed to create link"
 msgstr "Non se puido crear a ligazón"
 
-#: src/features/editor/components/design-editor.tsx:621
+#: src/features/requests/components/request-panel.tsx:59
+msgid "Failed to create merge request"
+msgstr ""
+
+#: src/features/editor/components/design-editor.tsx:238
+#: src/features/editor/components/design-editor.tsx:651
 msgid "Failed to create option"
 msgstr "Non se puido crear a opción"
 
-#: src/features/projects/components/create-project-dialog.tsx:129
+#: src/features/projects/components/create-project-dialog.tsx:134
 msgid "Failed to create project"
 msgstr "Non se puido crear o proxecto"
 
-#: src/features/editor/components/design-editor.tsx:289
+#: src/features/editor/components/design-editor.tsx:316
 msgid "Failed to create view"
 msgstr "Non se puido crear a vista"
 
@@ -1288,19 +1177,35 @@ msgstr "Non se puido eliminar"
 msgid "Failed to delete attachment"
 msgstr "Non se puido eliminar o anexo"
 
+#: src/features/editor/components/design-editor.tsx:137
+msgid "Failed to delete class"
+msgstr "Non se puido eliminar a clase"
+
 #: ../../../lib/web/src/components/entity/entity-comment-list.tsx:191
 msgid "Failed to delete comment"
 msgstr "Non se puido eliminar o comentario"
+
+#: src/features/editor/components/design-editor.tsx:209
+msgid "Failed to delete field"
+msgstr "Non se puido eliminar o campo"
 
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx:159
 msgid "Failed to delete link"
 msgstr "Non se puido eliminar a ligazón"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:129
+#: src/features/requests/components/request-panel.tsx:85
+msgid "Failed to delete merge request"
+msgstr ""
+
+#: src/features/editor/components/design-editor.tsx:276
+msgid "Failed to delete option"
+msgstr "Non se puido eliminar a opción"
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:133
 msgid "Failed to delete project"
 msgstr "Non se puido eliminar o proxecto"
 
-#: src/features/editor/components/design-editor.tsx:341
+#: src/features/editor/components/design-editor.tsx:371
 msgid "Failed to delete view"
 msgstr "Non se puido eliminar a vista"
 
@@ -1316,8 +1221,8 @@ msgstr "Non se puido exportar o deseño"
 msgid "Failed to get RSS token"
 msgstr "Non se puido obter o token RSS"
 
-#: src/features/projects/components/create-project-dialog.tsx:147
-#: src/features/projects/components/create-project-dialog.tsx:178
+#: src/features/projects/components/create-project-dialog.tsx:152
+#: src/features/projects/components/create-project-dialog.tsx:183
 msgid "Failed to import data"
 msgstr "Non se puideron importar os datos"
 
@@ -1333,7 +1238,7 @@ msgstr "Non se puido cargar"
 msgid "Failed to load history"
 msgstr "Non se puido cargar o historial"
 
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:340
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:338
 msgid "Failed to load image"
 msgstr "Non se puido cargar a imaxe"
 
@@ -1361,7 +1266,7 @@ msgstr "Non se puideron cargar os proxectos"
 msgid "Failed to load recommended projects"
 msgstr "Non se puideron cargar os proxectos recomendados"
 
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:340
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:338
 msgid "Failed to load video"
 msgstr "Non se puido cargar o vídeo"
 
@@ -1377,24 +1282,20 @@ msgstr "Non se puido mover"
 msgid "Failed to post comment"
 msgstr "Non se puido publicar o comentario"
 
-#: src/features/projects/components/create-project-dialog.tsx:256
+#: src/features/projects/components/create-project-dialog.tsx:261
 #: src/routes/_authenticated/$projectId/design.tsx:60
 msgid "Failed to read file"
 msgstr "Non se puido ler o ficheiro"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:137
+#: src/routes/_authenticated/$projectId_.settings.tsx:141
 msgid "Failed to remove access"
 msgstr "Non se puido eliminar o acceso"
 
-#: ../../../lib/web/src/features/accounts/account-manager.tsx:234
-msgid "Failed to remove account"
-msgstr "Non se puido eliminar a conta"
-
-#: src/features/editor/components/design-editor.tsx:200
+#: src/features/editor/components/design-editor.tsx:218
 msgid "Failed to reorder fields"
 msgstr "Non se puideron reordenar os campos"
 
-#: src/features/editor/components/design-editor.tsx:350
+#: src/features/editor/components/design-editor.tsx:380
 msgid "Failed to reorder views"
 msgstr "Non se puideron reordenar as vistas"
 
@@ -1410,17 +1311,13 @@ msgstr "Non se puido gardar"
 msgid "Failed to search projects"
 msgstr "Erro ao buscar proxectos"
 
-#: ../../../lib/web/src/features/accounts/account-manager.tsx:257
-msgid "Failed to send verification code"
-msgstr "Non se puido enviar o código de verificación"
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:134
+#: src/routes/_authenticated/$projectId_.settings.tsx:138
 msgid "Failed to set access level"
 msgstr "Non se puido establecer o nivel de acceso"
 
 #: src/features/projects/components/inline-project-search.tsx:69
 #: src/features/projects/components/recommended-projects.tsx:44
-#: src/routes/_authenticated/find.tsx:46
+#: src/routes/_authenticated/find.tsx:45
 msgid "Failed to subscribe"
 msgstr "Non se puido subscribir"
 
@@ -1429,21 +1326,41 @@ msgstr "Non se puido subscribir"
 msgid "Failed to unsubscribe"
 msgstr "Non se puido cancelar a subscrición"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:140
+#: src/routes/_authenticated/$projectId_.settings.tsx:144
 msgid "Failed to update access level"
 msgstr "Non se puido actualizar o nivel de acceso"
+
+#: src/features/editor/components/design-editor.tsx:122
+msgid "Failed to update class"
+msgstr "Non se puido actualizar a clase"
 
 #: ../../../lib/web/src/components/entity/entity-comment-list.tsx:174
 msgid "Failed to update comment"
 msgstr "Non se puido actualizar o comentario"
 
-#: src/features/editor/components/design-editor.tsx:182
+#: src/features/editor/components/design-editor.tsx:197
 msgid "Failed to update field"
 msgstr "Non se puido actualizar o campo"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:118
+#: src/features/editor/components/design-editor.tsx:147
+msgid "Failed to update hierarchy"
+msgstr ""
+
+#: src/features/requests/components/request-panel.tsx:71
+msgid "Failed to update merge request"
+msgstr ""
+
+#: src/features/editor/components/design-editor.tsx:257
+msgid "Failed to update option"
+msgstr "Non se puido actualizar a opción"
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:122
 msgid "Failed to update project"
 msgstr "Non se puido actualizar o proxecto"
+
+#: src/features/editor/components/design-editor.tsx:360
+msgid "Failed to update view"
+msgstr "Non se puido actualizar a vista"
 
 #: src/features/objects/components/object-detail-panel.tsx:209
 msgid "Failed to update watching"
@@ -1453,7 +1370,7 @@ msgstr "Non se puido actualizar o seguimento"
 msgid "Failed to upload attachment"
 msgstr "Non se puido subir o anexo"
 
-#: src/features/editor/components/edit-dialogs.tsx:352
+#: src/features/editor/components/edit-dialogs.tsx:355
 msgid "Fields"
 msgstr "Campos"
 
@@ -1463,16 +1380,12 @@ msgstr "Campos"
 msgid "Files"
 msgstr "Ficheiros"
 
-#: ../../../lib/web/src/components/data-table/toolbar.tsx:30
-msgid "Filter..."
-msgstr "Filtrar..."
-
 #: src/components/layout/projects-layout.tsx:36
-#: src/routes/_authenticated/find.tsx:41
+#: src/routes/_authenticated/find.tsx:40
 msgid "Find projects"
 msgstr "Buscar proxectos"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:114
+#: src/routes/_authenticated/$projectId_.settings.tsx:118
 msgid "Fingerprint"
 msgstr "Pegada"
 
@@ -1487,10 +1400,6 @@ msgstr "Marcas"
 #: ../../../lib/web/src/lib/preference-utils.ts:111
 msgid "Flat"
 msgstr "Plana"
-
-#: ../../../lib/web/src/components/config-drawer.tsx:258
-msgid "Floating"
-msgstr "Flotante"
 
 #: ../../../lib/web/src/lib/preference-utils.ts:58
 msgid "Friday"
@@ -1511,41 +1420,15 @@ msgstr "Desde ficheiro"
 #: ../../../lib/web/src/lib/preference-utils.ts:89
 #: ../../../lib/web/src/lib/preference-utils.ts:99
 #: ../../../lib/web/src/lib/preference-utils.ts:110
-#: ../../../lib/web/src/lib/preference-utils.ts:119
-#: ../../../lib/web/src/lib/preference-utils.ts:127
-#: ../../../lib/web/src/lib/preference-utils.ts:138
+#: ../../../lib/web/src/lib/preference-utils.ts:120
+#: ../../../lib/web/src/lib/preference-utils.ts:131
 msgid "From theme"
 msgstr "Do tema"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:321
-msgid "Full layout"
-msgstr "Deseño completo"
-
-#: ../../../lib/web/src/features/errors/forbidden.tsx:26
 #: ../../../lib/web/src/features/errors/not-found-error.tsx:26
 #: ../../../lib/web/src/features/errors/unauthorized-error.tsx:26
 msgid "Go back"
 msgstr "Volver"
-
-#: ../../../lib/web/src/components/data-table/pagination.tsx:82
-msgid "Go to first page"
-msgstr "Ir á primeira páxina"
-
-#: ../../../lib/web/src/components/data-table/pagination.tsx:128
-msgid "Go to last page"
-msgstr "Ir á última páxina"
-
-#: ../../../lib/web/src/components/data-table/pagination.tsx:119
-msgid "Go to next page"
-msgstr "Ir á páxina seguinte"
-
-#: ../../../lib/web/src/components/data-table/pagination.tsx:106
-msgid "Go to page {pageNumber}"
-msgstr "Ir á páxina {pageNumber}"
-
-#: ../../../lib/web/src/components/data-table/pagination.tsx:91
-msgid "Go to previous page"
-msgstr "Ir á páxina anterior"
 
 #: ../../../lib/web/src/features/access/access-dialog.tsx:162
 msgid "Group"
@@ -1559,14 +1442,6 @@ msgstr "Agrupar por"
 #: ../../../lib/web/src/features/access/access-list.tsx:68
 msgid "Group: {0}"
 msgstr "Grupo: {0}"
-
-#: ../../../lib/web/src/components/data-table/column-header.tsx:70
-msgid "Hide"
-msgstr "Ocultar"
-
-#: ../../../lib/web/src/components/password-input.tsx:27
-msgid "Hide password"
-msgstr "Ocultar o contrasinal"
 
 #: ../../../lib/web/src/components/audit-timeline.tsx:61
 msgid "History"
@@ -1584,16 +1459,16 @@ msgid "Hot"
 msgstr "Popular"
 
 #: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:152
-#: src/features/editor/components/edit-dialogs.tsx:269
+#: src/features/editor/components/edit-dialogs.tsx:272
 msgid "ID"
 msgstr "ID"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:110
+#: src/routes/_authenticated/$projectId_.settings.tsx:114
 msgid "Identity"
 msgstr "Identidade"
 
 #. placeholder {0}: currentMedia.name
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:318
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:316
 msgid "Image viewer: {0}"
 msgstr "Visor de imaxes: {0}"
 
@@ -1606,16 +1481,16 @@ msgstr "Imperial"
 msgid "Import design"
 msgstr "Importar deseño"
 
-#: src/features/projects/components/create-project-dialog.tsx:392
+#: src/features/projects/components/create-project-dialog.tsx:397
 msgid "Import from backup (optional)"
 msgstr "Importar desde copia de seguridade (opcional)"
 
-#: src/features/projects/components/create-project-dialog.tsx:144
-#: src/features/projects/components/create-project-dialog.tsx:173
+#: src/features/projects/components/create-project-dialog.tsx:149
+#: src/features/projects/components/create-project-dialog.tsx:178
 msgid "Importing data..."
 msgstr "Importando datos..."
 
-#: ../../../lib/web/src/features/access/types.ts:42
+#: ../../../lib/web/src/features/access/types.ts:36
 msgid "Including anonymous users"
 msgstr "Incluíndo usuarios anónimos"
 
@@ -1627,30 +1502,18 @@ msgstr "Avatar con iniciais"
 msgid "Initials avatar for {name}"
 msgstr "Avatar con iniciais de {name}"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:253
-msgid "Inset"
-msgstr "Encaixado"
-
 #: ../../../lib/web/src/components/ui/sort-selector.tsx:42
 msgid "Interests"
 msgstr "Intereses"
 
-#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:545
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:550
 msgid "Invalid date"
 msgstr "Data non válida"
 
-#: src/features/projects/components/create-project-dialog.tsx:251
+#: src/features/projects/components/create-project-dialog.tsx:256
 #: src/routes/_authenticated/$projectId/design.tsx:59
 msgid "Invalid JSON file"
 msgstr "Ficheiro JSON non válido"
-
-#: ../../../lib/web/src/components/tag-input.tsx:38
-msgid "Invalid tag: letters, numbers, spaces, hyphens, and slashes only (max 50 chars)"
-msgstr "Etiqueta non válida: só letras, números, espazos, guións e barras (máximo 50 caracteres)"
-
-#: ../../../lib/web/src/features/accounts/account-manager.tsx:245
-msgid "Invalid verification code"
-msgstr "Código de verificación non válido"
 
 #: ../../../lib/web/src/features/errors/not-found-error.tsx:18
 msgid "It seems like the page you're looking for <0/>does not exist or might have been removed."
@@ -1669,30 +1532,18 @@ msgid "Keyboard shortcuts"
 msgstr "Atallos de teclado"
 
 #: ../../../lib/web/src/lib/preference-utils.ts:103
-#: ../../../lib/web/src/lib/preference-utils.ts:130
+#: ../../../lib/web/src/lib/preference-utils.ts:123
 msgid "Large"
 msgstr "Grande"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:287
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:306
 msgid "Layout"
 msgstr "Deseño"
-
-#: ../../../lib/web/src/components/learn-more.tsx:33
-#: ../../../lib/web/src/components/learn-more.tsx:38
-msgid "Learn more"
-msgstr "Máis información"
-
-#: ../../../lib/web/src/components/config-drawer.tsx:355
-msgid "Left to Right"
-msgstr "De esquerda a dereita"
 
 #: ../../../lib/web/src/components/post-tags.tsx:72
 msgid "Letters, numbers, spaces, and hyphens only"
 msgstr "Só letras, números, espazos e guións"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:214
-#: ../../../lib/web/src/components/theme-switch.tsx:45
 #: ../../../lib/web/src/lib/preference-utils.ts:14
 msgid "Light"
 msgstr "Claro"
@@ -1730,7 +1581,7 @@ msgstr "Cargando elemento"
 msgid "Loading item details"
 msgstr "Cargando detalles do elemento"
 
-#: src/features/projects/components/create-project-dialog.tsx:473
+#: src/features/projects/components/create-project-dialog.tsx:478
 msgid "Loading templates..."
 msgstr "Cargando modelos..."
 
@@ -1740,8 +1591,6 @@ msgstr "Cargando modelos..."
 msgid "Loading..."
 msgstr "Cargando..."
 
-#: ../../../lib/web/src/components/profile-dropdown.tsx:69
-#: ../../../lib/web/src/components/profile-dropdown.tsx:98
 #: ../../../lib/web/src/components/sign-out-dialog.tsx:26
 #: ../../../lib/web/src/components/sign-out-dialog.tsx:28
 msgid "Log out"
@@ -1759,21 +1608,16 @@ msgstr "Sesión pechada correctamente"
 msgid "Logging out…"
 msgstr "Pechando sesión…"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:125
+#: ../../../lib/web/src/components/notification-category-button.tsx:127
 msgid "Manage categories"
 msgstr "Xestionar categorías"
-
-#: ../../../lib/web/src/features/accounts/account-manager.tsx:192
-msgid "Manage your connected accounts for notifications and services."
-msgstr "Xestiona as túas contas conectadas para notificacións e servizos."
 
 #: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:52
 msgid "Manual"
 msgstr "Manual"
 
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:192
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:199
-#: ../../../lib/web/src/components/notifications-dropdown.tsx:224
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:207
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:214
 msgid "Mark all as read"
 msgstr "Marcar todas como lidas"
 
@@ -1805,7 +1649,7 @@ msgstr "Fusionar {objectReadable}: {objectTitle}"
 msgid "Merge commit"
 msgstr "Commit de fusión"
 
-#: src/features/requests/components/request-panel.tsx:93
+#: src/features/requests/components/request-panel.tsx:102
 msgid "Merge requests"
 msgstr "Solicitudes de fusión"
 
@@ -1813,7 +1657,7 @@ msgstr "Solicitudes de fusión"
 msgid "Merge requests ({requestCount})"
 msgstr "Solicitudes de fusión ({requestCount})"
 
-#: src/features/requests/components/request-panel.tsx:275
+#: src/features/requests/components/request-panel.tsx:284
 msgid "Merged"
 msgstr "Fusionado"
 
@@ -1837,7 +1681,7 @@ msgstr "Métrico"
 msgid "Minimum length"
 msgstr "Lonxitude mínima"
 
-#: src/routes/$projectId.diff.tsx:80
+#: src/routes/$projectId.diff.tsx:83
 msgid "Missing repo, source, or target parameters"
 msgstr "Faltan parámetros de repositorio, orixe ou destino"
 
@@ -1858,7 +1702,7 @@ msgstr "Luns"
 msgid "More options"
 msgstr "Máis opcións"
 
-#: src/features/projects/components/create-project-dialog.tsx:347
+#: src/features/projects/components/create-project-dialog.tsx:352
 msgid "My project"
 msgstr "O meu proxecto"
 
@@ -1867,9 +1711,9 @@ msgstr "O meu proxecto"
 #: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:142
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:125
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:293
-#: src/features/editor/components/edit-dialogs.tsx:255
-#: src/features/projects/components/create-project-dialog.tsx:337
-#: src/routes/_authenticated/$projectId_.settings.tsx:111
+#: src/features/editor/components/edit-dialogs.tsx:258
+#: src/features/projects/components/create-project-dialog.tsx:342
+#: src/routes/_authenticated/$projectId_.settings.tsx:115
 msgid "Name"
 msgstr "Nome"
 
@@ -1881,7 +1725,7 @@ msgstr "O nome non pode conter os caracteres < ou >"
 msgid "Name cannot contain angle brackets, backslash, semicolon, quotes or backticks"
 msgstr "O nome non pode conter corchetes angulares, barra invertida, punto e coma, comiñas nin comiñas invertidas"
 
-#: src/features/projects/components/create-project-dialog.tsx:97
+#: src/features/projects/components/create-project-dialog.tsx:102
 msgid "Name is required"
 msgstr "O nome é obrigatorio"
 
@@ -1891,7 +1735,7 @@ msgid "Name must be 1000 characters or less"
 msgstr "O nome debe ter 1000 caracteres ou menos"
 
 #: ../../../lib/web/src/features/errors/general-error.tsx:53
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:322
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:313
 msgid "Network error"
 msgstr "Erro de rede"
 
@@ -1911,12 +1755,12 @@ msgstr "Novo {className}"
 msgid "New game"
 msgstr "Novo xogo"
 
-#: src/features/projects/components/create-project-dialog.tsx:454
+#: src/features/projects/components/create-project-dialog.tsx:459
 msgid "Next"
 msgstr "Seguinte"
 
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:527
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:532
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:525
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:530
 msgid "Next image"
 msgstr "Imaxe seguinte"
 
@@ -1936,19 +1780,19 @@ msgstr "Non hai regras de acceso configuradas. Engade regras para controlar quen
 msgid "No activity yet"
 msgstr "Aínda non hai actividade"
 
-#: src/features/requests/components/branch-select.tsx:76
+#: src/features/requests/components/branch-select.tsx:81
 msgid "No branches found"
 msgstr "Non se atoparon ramas"
 
-#: src/features/requests/components/diff-stats.tsx:59
+#: src/features/requests/components/diff-stats.tsx:65
 msgid "No changes detected"
 msgstr "Non se detectaron cambios"
 
-#: src/features/requests/components/diff-viewer.tsx:404
+#: src/features/requests/components/diff-viewer.tsx:402
 msgid "No changes to display"
 msgstr "Non hai cambios para mostrar"
 
-#: src/routes/$projectId.diff.tsx:157
+#: src/routes/$projectId.diff.tsx:160
 msgid "No changes were found for the selected comparison."
 msgstr "Non se atoparon cambios para a comparación seleccionada."
 
@@ -1956,11 +1800,7 @@ msgstr "Non se atoparon cambios para a comparación seleccionada."
 msgid "No comments yet"
 msgstr "Aínda non hai comentarios"
 
-#: ../../../lib/web/src/features/accounts/account-manager.tsx:295
-msgid "No connected accounts"
-msgstr "Non hai contas conectadas"
-
-#: src/routes/$projectId.diff.tsx:156
+#: src/routes/$projectId.diff.tsx:159
 msgid "No diff available"
 msgstr "Non hai diff dispoñible"
 
@@ -1980,15 +1820,11 @@ msgstr "Aínda non se poden crear tipos de elementos. Crea primeiro os elementos
 msgid "No matching objects"
 msgstr "Non hai obxectos coincidentes"
 
-#: src/features/requests/components/request-panel.tsx:110
+#: src/features/requests/components/request-panel.tsx:119
 msgid "No merge requests"
 msgstr "Non hai solicitudes de fusión"
 
-#: ../../../lib/web/src/components/notifications-dropdown.tsx:193
-msgid "No notifications yet"
-msgstr "Aínda non hai notificacións"
-
-#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:336
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:341
 #: ../../../lib/web/src/components/person-picker.tsx:84
 msgid "No people found"
 msgstr "Non se atoparon persoas"
@@ -1997,27 +1833,21 @@ msgstr "Non se atoparon persoas"
 msgid "No places found"
 msgstr "Non se atoparon lugares"
 
-#: ../../../lib/web/src/components/profile-dropdown.tsx:58
-msgid "No profile"
-msgstr "Sen perfil"
-
 #: src/features/projects/components/inline-project-search.tsx:88
-#: src/routes/_authenticated/find.tsx:43
+#: src/routes/_authenticated/find.tsx:42
 msgid "No projects found"
 msgstr "Non se atoparon proxectos"
 
-#: src/features/requests/components/repository-select.tsx:64
+#: src/features/requests/components/repository-select.tsx:69
 msgid "No repositories available"
 msgstr "Non hai repositorios dispoñibles"
 
 #: ../../../lib/web/src/components/inline-entity-search.tsx:64
-#: ../../../lib/web/src/components/search-entity-dialog.tsx:82
 #: ../../../lib/web/src/components/search-entity-page.tsx:73
 msgid "No results found"
 msgstr "Non se atoparon resultados"
 
 #: ../../../lib/web/src/components/command-menu.tsx:55
-#: ../../../lib/web/src/components/data-table/faceted-filter.tsx:94
 msgid "No results found."
 msgstr "Non se atoparon resultados."
 
@@ -2031,11 +1861,11 @@ msgstr "Sen estado"
 msgid "No time zone found."
 msgstr "Non se atopou ningún fuso horario."
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:104
+#: ../../../lib/web/src/components/notification-category-button.tsx:106
 msgid "No topic record yet — try again after the next notification."
 msgstr "Aínda non hai rexistro do tema — proba de novo despois da seguinte notificación."
 
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:124
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:139
 msgid "No unread notifications"
 msgstr "Non hai notificacións sen ler"
 
@@ -2060,20 +1890,19 @@ msgstr "Sen visualizacións"
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:491
 #: ../../../lib/web/src/components/person-picker.tsx:350
 #: ../../../lib/web/src/lib/preference-utils.ts:100
-#: ../../../lib/web/src/lib/preference-utils.ts:120
-#: src/features/editor/components/edit-dialogs.tsx:293
 #: src/features/editor/components/edit-dialogs.tsx:296
+#: src/features/editor/components/edit-dialogs.tsx:299
 #: src/features/objects/components/object-detail-panel.tsx:537
 #: src/features/objects/components/object-detail-panel.tsx:550
 #: src/features/objects/components/object-detail-panel.tsx:555
 msgid "None"
 msgstr "Ningún"
 
-#: ../../../lib/web/src/lib/preference-utils.ts:129
+#: ../../../lib/web/src/lib/preference-utils.ts:122
 msgid "Normal"
 msgstr "Normal"
 
-#: src/features/requests/components/request-panel.tsx:248
+#: src/features/requests/components/request-panel.tsx:257
 msgid "Not configured"
 msgstr "Non configurado"
 
@@ -2090,16 +1919,8 @@ msgstr "Non definido"
 msgid "Nothing found"
 msgstr "Non se atopou nada"
 
-#: ../../../lib/web/src/components/notifications-dropdown.tsx:136
-#: ../../../lib/web/src/components/notifications-dropdown.tsx:150
-#: ../../../lib/web/src/components/notifications-dropdown.tsx:236
-#: ../../../lib/web/src/components/notifications-dropdown.tsx:257
-#: ../../../lib/web/src/components/notifications-dropdown.tsx:261
-msgid "Notifications"
-msgstr "Notificacións"
-
 #. placeholder {0}: unread.length
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:185
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:200
 msgid "Notifications: {0}"
 msgstr "Notificacións: {0}"
 
@@ -2117,7 +1938,7 @@ msgstr "Activado"
 msgid "Oops! Page Not Found!"
 msgstr "Vaites! Páxina non atopada!"
 
-#: src/features/requests/components/request-panel.tsx:278
+#: src/features/requests/components/request-panel.tsx:287
 msgctxt "state"
 msgid "Open"
 msgstr "Aberto"
@@ -2127,18 +1948,13 @@ msgstr "Aberto"
 msgid "Open {0}"
 msgstr "Abrir {0}"
 
-#: ../../../lib/web/src/features/accounts/account-manager.tsx:156
-#: ../../../lib/web/src/features/accounts/account-manager.tsx:166
-msgid "Open account actions"
-msgstr "Abrir accións de conta"
-
 #: ../../../lib/web/src/components/layout/nav-group.tsx:199
 #: ../../../lib/web/src/components/layout/nav-group.tsx:204
 msgid "Open actions"
 msgstr "Abrir accións"
 
-#: src/features/editor/components/edit-dialogs.tsx:236
-#: src/features/editor/components/edit-dialogs.tsx:241
+#: src/features/editor/components/edit-dialogs.tsx:239
+#: src/features/editor/components/edit-dialogs.tsx:244
 msgid "Open class actions"
 msgstr "Abrir accións da clase"
 
@@ -2155,11 +1971,6 @@ msgstr "Abrir menú"
 msgid "Open navigation"
 msgstr "Abrir navegación"
 
-#: ../../../lib/web/src/components/layout/top-nav.tsx:38
-#: ../../../lib/web/src/components/layout/top-nav.tsx:44
-msgid "Open navigation menu"
-msgstr "Abrir menú de navegación"
-
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:105
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:111
 msgid "Open option actions"
@@ -2172,11 +1983,6 @@ msgstr "Abrir accións da páxina"
 #: ../../../lib/web/src/components/entity/keyboard-shortcuts-help.tsx:30
 msgid "Open selected card"
 msgstr "Abrir tarxeta seleccionada"
-
-#: ../../../lib/web/src/components/config-drawer.tsx:58
-#: ../../../lib/web/src/components/config-drawer.tsx:66
-msgid "Open theme settings"
-msgstr "Abrir configuración do tema"
 
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:274
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:279
@@ -2206,11 +2012,6 @@ msgstr "Outro"
 msgid "Owner"
 msgstr "Propietario"
 
-#: ../../../lib/web/src/components/data-table/pagination.tsx:43
-#: ../../../lib/web/src/components/data-table/pagination.tsx:71
-msgid "Page {currentPage} of {totalPages}"
-msgstr "Páxina {currentPage} de {totalPages}"
-
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:530
 #: src/features/objects/components/object-detail-panel.tsx:533
 msgid "Parent"
@@ -2232,17 +2033,13 @@ msgstr "Chaves de acceso"
 msgid "Pattern (regex)"
 msgstr "Patrón (regex)"
 
-#: ../../../lib/web/src/components/date-picker.tsx:20
-msgid "Pick a date"
-msgstr "Escolle unha data"
-
 #: src/routes/_authenticated/$projectId/index.tsx:138
 msgid "Please add one or more classes to the project design."
 msgstr "Engade unha ou máis clases ao deseño do proxecto."
 
 #: ../../../lib/web/src/components/comment-composer.tsx:89
 #: ../../../lib/web/src/features/errors/general-error.tsx:54
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:323
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:314
 msgid "Please check your internet connection and try again."
 msgstr "Comproba a túa conexión a internet e téntao de novo."
 
@@ -2250,7 +2047,7 @@ msgstr "Comproba a túa conexión a internet e téntao de novo."
 msgid "Please log in with the appropriate credentials <0/> to access this resource."
 msgstr "Inicia sesión coas credenciais axeitadas <0/> para acceder a este recurso."
 
-#: src/features/projects/components/create-project-dialog.tsx:113
+#: src/features/projects/components/create-project-dialog.tsx:118
 msgid "Please select a template"
 msgstr "Selecciona un modelo"
 
@@ -2270,21 +2067,21 @@ msgstr "Publicacións"
 msgid "Posts and comments"
 msgstr "Publicacións e comentarios"
 
-#: src/features/projects/components/create-project-dialog.tsx:359
+#: src/features/projects/components/create-project-dialog.tsx:364
 #: src/routes/_authenticated/$projectId_.settings.tsx:85
 msgid "Prefix"
 msgstr "Prefixo"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:91
-msgid "Prefix can only contain letters, numbers, and hyphens"
-msgstr "O prefixo só pode conter letras, números e guións"
+#: src/routes/_authenticated/$projectId_.settings.tsx:95
+msgid "Prefix can only contain lowercase letters, numbers, and hyphens"
+msgstr ""
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:93
-msgid "Prefix must be 10 characters or less"
-msgstr "O prefixo debe ter 10 caracteres ou menos"
+#: src/routes/_authenticated/$projectId_.settings.tsx:97
+msgid "Prefix must be 20 characters or less"
+msgstr ""
 
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:511
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:516
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:509
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:514
 msgid "Previous image"
 msgstr "Imaxe anterior"
 
@@ -2297,10 +2094,6 @@ msgstr "Privacidade"
 msgid "Processing…"
 msgstr "Procesando…"
 
-#: ../../../lib/web/src/components/profile-dropdown.tsx:114
-msgid "Profile"
-msgstr "Perfil"
-
 #: src/routes/_authenticated/$projectId/$objectId.tsx:62
 #: src/routes/_authenticated/$projectId/index.tsx:82
 msgid "Project"
@@ -2310,11 +2103,11 @@ msgstr "Proxecto"
 msgid "Project actions"
 msgstr "Accións do proxecto"
 
-#: src/features/projects/components/create-project-dialog.tsx:128
+#: src/features/projects/components/create-project-dialog.tsx:133
 msgid "Project created"
 msgstr "Proxecto creado"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:128
+#: src/routes/_authenticated/$projectId_.settings.tsx:132
 msgid "Project deleted"
 msgstr "Proxecto eliminado"
 
@@ -2330,19 +2123,19 @@ msgstr "Membros do proxecto"
 msgid "Project name is required"
 msgstr "O nome do proxecto é obrigatorio"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:106
+#: src/routes/_authenticated/$projectId_.settings.tsx:110
 msgid "Project not found"
 msgstr "Proxecto non atopado"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:105
+#: src/routes/_authenticated/$projectId_.settings.tsx:109
 msgid "Project settings"
 msgstr "Configuración do proxecto"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:108
+#: src/routes/_authenticated/$projectId_.settings.tsx:112
 msgid "Project unavailable"
 msgstr "Proxecto non dispoñible"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:117
+#: src/routes/_authenticated/$projectId_.settings.tsx:121
 msgid "Project updated"
 msgstr "Proxecto actualizado"
 
@@ -2383,7 +2176,6 @@ msgstr "Listo para fusionar"
 msgid "Rebase and merge"
 msgstr "Rebase e fusionar"
 
-#: ../../../lib/web/src/components/search-entity-dialog.tsx:220
 #: ../../../lib/web/src/components/search-entity-page.tsx:243
 msgid "Recommended"
 msgstr "Recomendado"
@@ -2421,8 +2213,7 @@ msgstr "Relativo nas últimas 24 horas, se non absoluto"
 #: ../../../lib/web/src/components/attachment-composer.tsx:330
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:190
 #: ../../../lib/web/src/features/access/access-list.tsx:270
-#: ../../../lib/web/src/features/accounts/account-manager.tsx:180
-#: src/features/projects/components/create-project-dialog.tsx:434
+#: src/features/projects/components/create-project-dialog.tsx:439
 msgid "Remove"
 msgstr "Eliminar"
 
@@ -2447,8 +2238,8 @@ msgid "Remove access?"
 msgstr "Eliminar acceso?"
 
 #. placeholder {0}: field.name || field.id
-#: src/features/editor/components/edit-dialogs.tsx:394
-#: src/features/editor/components/edit-dialogs.tsx:399
+#: src/features/editor/components/edit-dialogs.tsx:397
+#: src/features/editor/components/edit-dialogs.tsx:402
 msgid "Remove field {0}"
 msgstr "Eliminar campo {0}"
 
@@ -2457,7 +2248,7 @@ msgstr "Eliminar campo {0}"
 msgid "Remove interest"
 msgstr "Eliminar interese"
 
-#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:666
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:674
 msgid "Remove item"
 msgstr "Eliminar elemento"
 
@@ -2466,7 +2257,7 @@ msgstr "Eliminar elemento"
 msgid "Remove link"
 msgstr "Quitar a ligazón"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:135
+#: src/routes/_authenticated/$projectId_.settings.tsx:139
 msgid "Removing access..."
 msgstr "Eliminando o acceso..."
 
@@ -2505,7 +2296,7 @@ msgstr "Responder"
 msgid "Reply to {0}..."
 msgstr "Responder a {0}..."
 
-#: src/features/editor/components/edit-dialogs.tsx:334
+#: src/features/editor/components/edit-dialogs.tsx:337
 msgid "Requests"
 msgstr "Solicitudes"
 
@@ -2516,20 +2307,6 @@ msgstr "Obrigatorio"
 #: ../../../lib/web/src/components/step-up-dialog.tsx:370
 msgid "Resend email"
 msgstr "Reenviar o correo"
-
-#: ../../../lib/web/src/components/config-drawer.tsx:87
-#: ../../../lib/web/src/components/data-table/toolbar.tsx:82
-msgid "Reset"
-msgstr "Restablecer"
-
-#: ../../../lib/web/src/components/config-drawer.tsx:122
-#: ../../../lib/web/src/components/config-drawer.tsx:127
-msgid "Reset {title}"
-msgstr "Restablecer {title}"
-
-#: ../../../lib/web/src/components/config-drawer.tsx:85
-msgid "Reset all settings to default values"
-msgstr "Restablecer toda a configuración aos valores por defecto"
 
 #: src/features/requests/components/conflict-list.tsx:40
 msgid "Resolve these conflicts manually before merging."
@@ -2555,10 +2332,6 @@ msgstr "Revogar o acceso"
 msgid "Revoke RSS access?"
 msgstr "Revogar o acceso RSS?"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:362
-msgid "Right to Left"
-msgstr "Dereita a esquerda"
-
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:150
 #: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:168
 msgid "Rows"
@@ -2567,10 +2340,6 @@ msgstr "Filas"
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:373
 msgid "Rows group by"
 msgstr "Filas agrupadas por"
-
-#: ../../../lib/web/src/components/data-table/pagination.tsx:65
-msgid "Rows per page"
-msgstr "Filas por páxina"
 
 #: ../../../lib/web/src/components/options-menu.tsx:131
 msgid "RSS access revoked"
@@ -2597,7 +2366,7 @@ msgstr "Sábado"
 msgid "Save"
 msgstr "Gardar"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:116
+#: src/routes/_authenticated/$projectId_.settings.tsx:120
 msgid "Saving..."
 msgstr "Gardando..."
 
@@ -2608,7 +2377,7 @@ msgstr "Gardando..."
 msgid "Search"
 msgstr "Buscar"
 
-#: src/routes/_authenticated/find.tsx:42
+#: src/routes/_authenticated/find.tsx:41
 msgid "Search by name, ID, fingerprint, or URL..."
 msgstr "Buscar por nome, ID, fingerprint ou URL..."
 
@@ -2656,12 +2425,10 @@ msgstr "Busca, observa e ordena esta vista."
 #: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:255
 #: ../../../lib/web/src/components/inline-entity-search.tsx:63
 #: ../../../lib/web/src/components/person-picker.tsx:324
-#: ../../../lib/web/src/components/search-entity-dialog.tsx:81
 #: ../../../lib/web/src/components/search-entity-page.tsx:72
 msgid "Search..."
 msgstr "Buscar..."
 
-#: ../../../lib/web/src/components/search-entity-dialog.tsx:178
 #: ../../../lib/web/src/components/search-entity-page.tsx:201
 #: ../../../lib/web/src/features/access/access-dialog.tsx:202
 msgid "Searching..."
@@ -2670,11 +2437,6 @@ msgstr "Buscando..."
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:141
 msgid "Select"
 msgstr "Seleccionar"
-
-#. placeholder {0}: item.label.toLowerCase()
-#: ../../../lib/web/src/components/config-drawer.tsx:149
-msgid "Select {0}"
-msgstr "Selecciona {0}"
 
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:356
 msgid "Select a field"
@@ -2692,10 +2454,6 @@ msgstr "Selecciona un usuario, grupo ou outra regra para conceder acceso."
 msgid "Select access rule"
 msgstr "Seleccionar regra de acceso"
 
-#: ../../../lib/web/src/features/accounts/account-picker.tsx:34
-msgid "Select account"
-msgstr "Selecciona unha conta"
-
 #: ../../../lib/web/src/features/accounts/account-add.tsx:142
 msgid "Select account type"
 msgstr "Selecciona o tipo de conta"
@@ -2707,10 +2465,6 @@ msgstr "Seleccionar rama"
 #: ../../../lib/web/src/features/access/access-dialog.tsx:231
 msgid "Select group"
 msgstr "Seleccionar grupo"
-
-#: ../../../lib/web/src/components/config-drawer.tsx:305
-msgid "Select layout style"
-msgstr "Seleccionar estilo de disposición"
 
 #: ../../../lib/web/src/components/place-picker.tsx:49
 msgid "Select location"
@@ -2732,26 +2486,10 @@ msgstr "Seleccionar tarxeta anterior"
 msgid "Select repository"
 msgstr "Seleccionar repositorio"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:247
-msgid "Select sidebar style"
-msgstr "Seleccionar estilo da barra lateral"
-
-#: ../../../lib/web/src/components/config-drawer.tsx:349
-msgid "Select site direction"
-msgstr "Seleccionar dirección do sitio"
-
-#: ../../../lib/web/src/components/config-drawer.tsx:203
-msgid "Select theme preference"
-msgstr "Seleccionar preferencia de tema"
-
-#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:252
-#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:335
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:257
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:340
 msgid "Select..."
 msgstr "Seleccionar..."
-
-#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:209
-msgid "selected"
-msgstr "seleccionados"
 
 #. placeholder {0}: getSelectedName()
 #: ../../../lib/web/src/features/access/access-dialog.tsx:309
@@ -2771,16 +2509,16 @@ msgstr "Enviar correo"
 msgid "Send message"
 msgstr "Enviar mensaxe"
 
-#: ../../../lib/web/src/lib/preference-utils.ts:140
+#: ../../../lib/web/src/lib/preference-utils.ts:133
 msgid "Serif"
 msgstr "Serif"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:115
+#: src/routes/_authenticated/$projectId_.settings.tsx:119
 msgid "Server"
 msgstr "Servidor"
 
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:279
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:305
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:270
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:296
 msgid "Server error"
 msgstr "Erro do servidor"
 
@@ -2789,7 +2527,7 @@ msgstr "Erro do servidor"
 msgid "Server rules"
 msgstr "Regras do servidor"
 
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:229
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:220
 msgid "Session expired. Please log in again."
 msgstr "A sesión caducou. Inicia sesión de novo."
 
@@ -2797,14 +2535,14 @@ msgstr "A sesión caducou. Inicia sesión de novo."
 msgid "Set origin and destination"
 msgstr "Establecer orixe e destino"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:132
+#: src/routes/_authenticated/$projectId_.settings.tsx:136
 msgid "Setting access..."
 msgstr "Establecendo o acceso..."
 
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx:119
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx:125
 #: ../../../lib/web/src/components/options-menu.tsx:196
-#: src/routes/_authenticated/$projectId_.settings.tsx:99
+#: src/routes/_authenticated/$projectId_.settings.tsx:103
 #: src/routes/_authenticated/$projectId/index.tsx:173
 msgid "Settings"
 msgstr "Axustes"
@@ -2817,10 +2555,6 @@ msgstr "Mostrar clases"
 msgid "Show fields"
 msgstr "Mostrar campos"
 
-#: ../../../lib/web/src/components/password-input.tsx:27
-msgid "Show password"
-msgstr "Mostrar o contrasinal"
-
 #: ../../../lib/web/src/components/entity/keyboard-shortcuts-help.tsx:33
 msgid "Show this help"
 msgstr "Mostrar esta axuda"
@@ -2829,9 +2563,7 @@ msgstr "Mostrar esta axuda"
 msgid "Showing {totalShown} of {total}"
 msgstr "Mostrando {totalShown} de {total}"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:239
-#: ../../../lib/web/src/components/config-drawer.tsx:263
-#: ../../../lib/web/src/components/ui/sidebar.tsx:237
+#: ../../../lib/web/src/components/ui/sidebar.tsx:257
 msgid "Sidebar"
 msgstr "Barra lateral"
 
@@ -2849,12 +2581,8 @@ msgstr "Pechando sesión..."
 msgid "Single line of text only"
 msgstr "Só unha liña de texto"
 
-#: ../../../lib/web/src/components/skip-to-main.tsx:11
-msgid "Skip to Main"
-msgstr "Saltar ao Principal"
-
 #: ../../../lib/web/src/lib/preference-utils.ts:101
-#: ../../../lib/web/src/lib/preference-utils.ts:128
+#: ../../../lib/web/src/lib/preference-utils.ts:121
 msgid "Small"
 msgstr "Pequeno"
 
@@ -2862,7 +2590,7 @@ msgstr "Pequeno"
 msgid "Sort"
 msgstr "Ordenar"
 
-#: src/features/requests/components/request-panel.tsx:325
+#: src/features/requests/components/request-panel.tsx:334
 msgid "Source"
 msgstr "Orixe"
 
@@ -2874,7 +2602,7 @@ msgstr "Fontes"
 msgid "Spacious"
 msgstr "Espazoso"
 
-#: src/routes/$projectId.diff.tsx:121
+#: src/routes/$projectId.diff.tsx:124
 msgid "Split"
 msgstr "Dividir"
 
@@ -2885,10 +2613,6 @@ msgstr "Aplastar e fusionar"
 #: ../../../lib/web/src/components/entity/entity-comment-list.tsx:323
 msgid "Start the discussion by adding the first comment."
 msgstr "Inicia a discusión engadindo o primeiro comentario."
-
-#: ../../../lib/web/src/components/coming-soon.tsx:15
-msgid "Stay tuned though!"
-msgstr "Estade atentos!"
 
 #: src/features/objects/components/object-detail-panel.tsx:439
 #: src/features/objects/components/object-detail-panel.tsx:448
@@ -2909,7 +2633,6 @@ msgstr "Enviar resposta"
 
 #: ../../../lib/web/src/components/inline-entity-search.tsx:66
 #: ../../../lib/web/src/components/recommended-entities.tsx:58
-#: ../../../lib/web/src/components/search-entity-dialog.tsx:83
 #: ../../../lib/web/src/components/search-entity-page.tsx:74
 #: src/features/projects/components/inline-project-search.tsx:90
 #: src/features/projects/components/recommended-projects.tsx:58
@@ -2917,7 +2640,7 @@ msgid "Subscribe"
 msgstr "Subscribirse"
 
 #: src/features/projects/components/inline-project-search.tsx:68
-#: src/routes/_authenticated/find.tsx:45
+#: src/routes/_authenticated/find.tsx:44
 msgid "Subscribed"
 msgstr "Subscrito"
 
@@ -2928,7 +2651,7 @@ msgstr "Subscrito a {0}"
 
 #: src/features/projects/components/inline-project-search.tsx:67
 #: src/features/projects/components/recommended-projects.tsx:42
-#: src/routes/_authenticated/find.tsx:44
+#: src/routes/_authenticated/find.tsx:43
 msgid "Subscribing..."
 msgstr "Subscribindo..."
 
@@ -2941,16 +2664,10 @@ msgid "Switch to view 1-9"
 msgstr "Cambiar á vista 1-9"
 
 #: ../../../lib/web/src/components/audit-timeline.tsx:107
-#: ../../../lib/web/src/components/config-drawer.tsx:209
-#: ../../../lib/web/src/components/theme-switch.tsx:59
 #: ../../../lib/web/src/lib/preference-utils.ts:16
-#: ../../../lib/web/src/lib/preference-utils.ts:139
+#: ../../../lib/web/src/lib/preference-utils.ts:132
 msgid "System"
 msgstr "Sistema"
-
-#: ../../../lib/web/src/components/tag-input.tsx:95
-msgid "Tag"
-msgstr "Etiqueta"
 
 #: ../../../lib/web/src/components/post-tags.tsx:76
 msgid "Tag already exists"
@@ -2965,13 +2682,9 @@ msgstr "A etiqueta debe ter 50 caracteres ou menos"
 msgid "Tags"
 msgstr "Etiquetas"
 
-#: src/features/requests/components/request-panel.tsx:333
+#: src/features/requests/components/request-panel.tsx:342
 msgid "Target"
 msgstr "Obxectivo"
-
-#: ../../../lib/web/src/components/layout/team-switcher.tsx:63
-msgid "Teams/Apps"
-msgstr "Equipos/Aplicacións"
 
 #: ../../../lib/web/src/components/server-documents-footer.tsx:19
 #: ../../../lib/web/src/features/document/document-page.tsx:42
@@ -3003,36 +2716,20 @@ msgstr "Non se puido atopar o contido solicitado."
 msgid "The server returned a web page instead of data."
 msgstr "O servidor devolveu unha páxina web en lugar de datos."
 
-#: ../../../lib/web/src/features/errors/maintenance-error.tsx:15
-msgid "The site is not available at the moment."
-msgstr "O sitio non está dispoñible neste momento."
-
-#: ../../../lib/web/src/components/config-drawer.tsx:195
-msgid "Theme"
-msgstr "Tema"
-
-#: ../../../lib/web/src/components/config-drawer.tsx:70
-msgid "Theme Settings"
-msgstr "Axustes do tema"
-
 #. placeholder {0}: request.target
-#: src/features/requests/components/request-panel.tsx:409
+#: src/features/requests/components/request-panel.tsx:418
 msgid "This merge request has been merged into {0}."
 msgstr "Esta solicitude de fusión foi fusionada en {0}."
 
-#: src/features/requests/components/request-panel.tsx:370
+#: src/features/requests/components/request-panel.tsx:379
 msgid "This merge request is a draft and cannot be merged."
 msgstr "Esta solicitude de fusión é un borrador e non se pode fusionar."
 
-#: ../../../lib/web/src/components/coming-soon.tsx:14
-msgid "This page has not been created yet."
-msgstr "Esta páxina aínda non se creou."
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:109
+#: src/routes/_authenticated/$projectId_.settings.tsx:113
 msgid "This project could not be loaded right now."
 msgstr "Este proxecto non se puido cargar agora."
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:107
+#: src/routes/_authenticated/$projectId_.settings.tsx:111
 msgid "This project may have been deleted or you don't have access to it."
 msgstr "Este proxecto puido ser eliminado ou non tes acceso a el."
 
@@ -3040,7 +2737,7 @@ msgstr "Este proxecto puido ser eliminado ou non tes acceso a el."
 msgid "This will merge \"{source}\" into \"{target}\". This action cannot be undone."
 msgstr "Isto fusionará \"{source}\" en \"{target}\". Esta acción non se pode desfacer."
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:125
+#: src/routes/_authenticated/$projectId_.settings.tsx:129
 msgid "This will permanently delete \"{projectName}\" and all its objects, comments, and attachments. This action cannot be undone."
 msgstr "Isto eliminará permanentemente \"{projectName}\" e todos os seus obxectos, comentarios e anexos. Esta acción non se pode desfacer."
 
@@ -3059,26 +2756,17 @@ msgid "Thursday"
 msgstr "Xoves"
 
 #: src/features/editor/components/edit-dialogs.tsx:107
-#: src/features/requests/components/request-panel.tsx:292
+#: src/features/requests/components/request-panel.tsx:301
 msgid "Title"
 msgstr "Título"
 
-#: src/features/editor/components/edit-dialogs.tsx:278
+#: src/features/editor/components/edit-dialogs.tsx:281
 msgid "Title field"
 msgstr "Campo de título"
 
 #: ../../../lib/web/src/components/travelling-picker.tsx:220
 msgid "To"
 msgstr "A"
-
-#: ../../../lib/web/src/components/data-table/view-options.tsx:37
-msgid "Toggle columns"
-msgstr "Alternar columnas"
-
-#: ../../../lib/web/src/components/layout/right-panel.tsx:233
-#: ../../../lib/web/src/components/layout/right-panel.tsx:236
-msgid "Toggle right panel"
-msgstr "Alternar o panel dereito"
 
 #: ../../../lib/web/src/components/layout/nav-group.tsx:365
 #: ../../../lib/web/src/components/layout/nav-group.tsx:372
@@ -3087,20 +2775,15 @@ msgstr "Alternar o panel dereito"
 msgid "Toggle section"
 msgstr "Alternar a sección"
 
-#: ../../../lib/web/src/components/ui/sidebar.tsx:317
-#: ../../../lib/web/src/components/ui/sidebar.tsx:320
+#: ../../../lib/web/src/components/ui/sidebar.tsx:337
+#: ../../../lib/web/src/components/ui/sidebar.tsx:340
 msgid "Toggle sidebar"
 msgstr "Alternar a barra lateral"
 
-#: ../../../lib/web/src/components/ui/sidebar.tsx:332
-#: ../../../lib/web/src/components/ui/sidebar.tsx:335
+#: ../../../lib/web/src/components/ui/sidebar.tsx:352
+#: ../../../lib/web/src/components/ui/sidebar.tsx:355
 msgid "Toggle Sidebar"
 msgstr "Alternar Barra Lateral"
-
-#: ../../../lib/web/src/components/theme-switch.tsx:37
-#: ../../../lib/web/src/components/theme-switch.tsx:41
-msgid "Toggle theme"
-msgstr "Alternar tema"
 
 #: ../../../lib/web/src/components/entity/keyboard-shortcuts-help.tsx:26
 msgid "Toggle view options"
@@ -3119,7 +2802,7 @@ msgstr "Demasiadas solicitudes"
 msgid "Top"
 msgstr "Arriba"
 
-#: src/features/editor/components/edit-dialogs.tsx:316
+#: src/features/editor/components/edit-dialogs.tsx:319
 msgid "Top level"
 msgstr "Nivel superior"
 
@@ -3127,14 +2810,12 @@ msgstr "Nivel superior"
 msgid "Travelling"
 msgstr "Viaxando"
 
-#: ../../../lib/web/src/components/search-entity-dialog.tsx:194
 #: ../../../lib/web/src/components/search-entity-page.tsx:217
 msgid "Try adjusting your search terms"
 msgstr "Tenta axustar os teus termos de busca"
 
 #: ../../../lib/web/src/features/errors/general-error.tsx:140
 #: ../../../lib/web/src/features/errors/general-error.tsx:180
-#: ../../../lib/web/src/features/errors/maintenance-error.tsx:19
 msgid "Try again"
 msgstr "Téntao de novo"
 
@@ -3163,7 +2844,7 @@ msgstr "Escribe para buscar usuarios"
 msgid "Type to search..."
 msgstr "Escribe para buscar..."
 
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:301
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:292
 msgid "Unable to connect to remote server"
 msgstr "Non foi posible conectar co servidor remoto"
 
@@ -3172,7 +2853,7 @@ msgstr "Non foi posible conectar co servidor remoto"
 msgid "Unable to redirect to login. Please try again."
 msgstr "Non se pode redirixir ao inicio de sesión. Téntao de novo."
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:112
+#: ../../../lib/web/src/components/notification-category-button.tsx:114
 msgid "Unassigned"
 msgstr "Sen asignar"
 
@@ -3189,7 +2870,7 @@ msgstr "Non dispoñible"
 msgid "Unexpected API error"
 msgstr "Erro inesperado da API"
 
-#: src/routes/$projectId.diff.tsx:109
+#: src/routes/$projectId.diff.tsx:112
 msgid "Unified"
 msgstr "Unificado"
 
@@ -3224,22 +2905,17 @@ msgstr "Cancelando subscrición..."
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:285
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx:103
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx:184
-#: src/features/board/components/board-card.tsx:22
-#: src/features/board/components/board-container.tsx:31
+#: src/features/board/components/board-container.tsx:29
 #: src/features/editor/components/design-preview.tsx:31
 msgid "Untitled"
 msgstr "Sen título"
-
-#: ../../../lib/web/src/features/accounts/account-manager.tsx:135
-msgid "Unverified"
-msgstr "Non verificado"
 
 #: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:57
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:494
 msgid "Updated"
 msgstr "Actualizado"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:138
+#: src/routes/_authenticated/$projectId_.settings.tsx:142
 msgid "Updating access..."
 msgstr "Actualizando o acceso..."
 
@@ -3248,7 +2924,7 @@ msgstr "Actualizando o acceso..."
 msgid "Upload"
 msgstr "Cargar"
 
-#: src/features/projects/components/create-project-dialog.tsx:408
+#: src/features/projects/components/create-project-dialog.tsx:413
 #: src/routes/_authenticated/$projectId/design.tsx:58
 msgid "Upload .json file"
 msgstr "Cargar ficheiro .json"
@@ -3263,7 +2939,7 @@ msgstr "Usa a túa clave de acceso"
 
 #. placeholder {0}: prefix || "project"
 #. placeholder {1}: prefix || "project"
-#: src/features/projects/components/create-project-dialog.tsx:376
+#: src/features/projects/components/create-project-dialog.tsx:381
 msgid "Used for readable IDs like {0}-1, {1}-2"
 msgstr "Usado para IDs lexibles como {0}-1, {1}-2"
 
@@ -3277,16 +2953,7 @@ msgstr "Usuario"
 msgid "Verification code"
 msgstr "Código de verificación"
 
-#: ../../../lib/web/src/features/accounts/account-manager.tsx:255
-msgid "Verification code sent"
-msgstr "Código de verificación enviado"
-
-#: ../../../lib/web/src/features/accounts/account-manager.tsx:248
-msgid "Verification failed"
-msgstr "Verificación fallida"
-
 #: ../../../lib/web/src/components/step-up-dialog.tsx:391
-#: ../../../lib/web/src/features/accounts/account-manager.tsx:172
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:111
 msgid "Verify"
 msgstr "Verificar"
@@ -3300,20 +2967,12 @@ msgid "Video thumbnail"
 msgstr "Miniatura de vídeo"
 
 #. placeholder {0}: currentMedia.name
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:317
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:315
 msgid "Video viewer: {0}"
 msgstr "Visor de vídeos: {0}"
 
-#: ../../../lib/web/src/components/data-table/view-options.tsx:33
-msgid "View"
-msgstr "Ver"
-
-#: ../../../lib/web/src/components/notifications-dropdown.tsx:177
-msgid "View all"
-msgstr "Ver todo"
-
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:205
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:213
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:220
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:228
 msgid "View all notifications"
 msgstr "Ver todas as notificacións"
 
@@ -3333,7 +2992,7 @@ msgstr "Só ver"
 msgid "View options"
 msgstr "Opcións de vista"
 
-#: src/features/editor/components/design-editor.tsx:457
+#: src/features/editor/components/design-editor.tsx:487
 msgid "Views"
 msgstr "Vistas"
 
@@ -3351,7 +3010,7 @@ msgstr "Vixiado"
 msgid "Watched only"
 msgstr "Só vixiados"
 
-#: src/features/projects/components/create-project-dialog.tsx:468
+#: src/features/projects/components/create-project-dialog.tsx:473
 msgid "We have auto-selected the best matching template."
 msgstr "Seleccionamos automaticamente o modelo que mellor coincide."
 
@@ -3359,18 +3018,6 @@ msgstr "Seleccionamos automaticamente o modelo que mellor coincide."
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:63
 msgid "We sent a verification code to <0>{0}</0>. Enter the code below to verify your email address."
 msgstr "Enviamos un código de verificación a <0>{0}</0>. Introduce o código a continuación para verificar o teu enderezo de correo."
-
-#: ../../../lib/web/src/features/errors/maintenance-error.tsx:16
-msgid "We'll be back online shortly."
-msgstr "Volveremos a estar en liña en breve."
-
-#: ../../../lib/web/src/components/notifications-dropdown.tsx:197
-msgid "We'll notify you when something important happens."
-msgstr "Avisarémoste cando ocorra algo importante."
-
-#: ../../../lib/web/src/features/errors/maintenance-error.tsx:13
-msgid "Website is under maintenance!"
-msgstr "O sitio web está en mantemento!"
 
 #: ../../../lib/web/src/lib/preference-utils.ts:56
 msgid "Wednesday"
@@ -3384,17 +3031,9 @@ msgstr "Non tes acceso a esta sección."
 msgid "You don't have access to this project."
 msgstr "Non tes acceso a este proxecto."
 
-#: ../../../lib/web/src/features/errors/forbidden.tsx:18
-msgid "You don't have necessary permission <0/>to view this resource."
-msgstr "Non tes o permiso necesario <0/>para ver este recurso."
-
 #: src/features/projects/pages/projects-list-page.tsx:36
 msgid "You have no projects yet."
 msgstr "Aínda non tes proxectos."
-
-#: ../../../lib/web/src/components/notifications-dropdown.tsx:193
-msgid "You're all caught up!"
-msgstr "Estás ao día!"
 
 #: ../../../lib/web/src/components/restore-banner.tsx:100
 msgid "Your account was moved here from {source}. Until you delete it there, messages and notifications may reach both servers, some of your content keeps being served from the old server, and followers may take a few minutes to find you here."
@@ -3404,7 +3043,7 @@ msgstr "A túa conta foi trasladada aquí desde {source}. Ata que a elimines al�
 msgid "Your attachments will be lost."
 msgstr "Perderanse os anexos."
 
-#: src/features/projects/components/create-project-dialog.tsx:464
+#: src/features/projects/components/create-project-dialog.tsx:469
 msgid "Your backup contains objects of type:"
 msgstr "A túa copia de seguridade contén obxectos de tipo:"
 

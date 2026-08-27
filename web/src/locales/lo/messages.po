@@ -14,7 +14,7 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. js-lingui-explicit-id
-#: ../../../lib/web/src/lib/error-normalizer.ts:225
+#: ../../../lib/web/src/lib/error-normalizer.ts:215
 msgid "Please check your internet connection and try again."
 msgstr "ກະລຸນາກວດສອບການເຊື່ອມຕໍ່ອິນເຕີເນັດຂອງທ່ານ ແລະ ລອງໃໝ່ອີກຄັ້ງ."
 
@@ -35,7 +35,7 @@ msgstr "(ຂະຫຍາຍ)"
 msgid "(from {0})"
 msgstr "(ຈາກ {0})"
 
-#: src/features/editor/components/edit-dialogs.tsx:327
+#: src/features/editor/components/edit-dialogs.tsx:330
 msgid "(itself)"
 msgstr "(ຕົວເອງ)"
 
@@ -48,11 +48,6 @@ msgstr "[ບໍ່ໄດ້ຕັ້ງຄ່າ]"
 msgid "{0, plural, one {# conflicting file} other {# conflicting files}}"
 msgstr "{0, plural, other {# ໄຟລ໌ທີ່ຂັດແຍ້ງ}}"
 
-#. placeholder {0}: selectedValues.size
-#: ../../../lib/web/src/components/data-table/faceted-filter.tsx:66
-msgid "{0, plural, one {# selected} other {# selected}}"
-msgstr "{0, plural, other {# ເລືອກແລ້ວ}}"
-
 #. placeholder {0}: String(name)
 #: src/routes/_authenticated/$projectId/design.tsx:46
 msgid "{0} - Design"
@@ -64,18 +59,13 @@ msgid "{0} behind"
 msgstr "{0} ຫຼ້າຫຼັງ"
 
 #. placeholder {0}: files.length
-#: src/features/requests/components/diff-stats.tsx:68
-#: src/features/requests/components/diff-viewer.tsx:421
+#: src/features/requests/components/diff-stats.tsx:74
+#: src/features/requests/components/diff-viewer.tsx:419
 msgid "{0} files changed"
 msgstr "{0} ໄຟລ໌ປ່ຽນແປງ"
 
-#. placeholder {0}: item.label
-#: ../../../lib/web/src/components/config-drawer.tsx:160
-msgid "{0} option preview"
-msgstr "ຕົວຢ່າງຕົວເລືອກ {0}"
-
 #. placeholder {0}: String(name)
-#: src/routes/_authenticated/$projectId_.settings.tsx:105
+#: src/routes/_authenticated/$projectId_.settings.tsx:109
 msgid "{0} settings"
 msgstr "ການຕັ້ງຄ່າ {0}"
 
@@ -106,22 +96,6 @@ msgstr "ຕ້ອງມີຊື່ {entityLabel}"
 #: ../../../lib/web/src/components/game/game-draw-offer-banner.tsx:29
 msgid "{opponentName} offered a draw"
 msgstr "{opponentName} ສະເໜີສະເໝີ"
-
-#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:203
-msgid "{selectedCount, plural, one {{entityName} selected} other {{manyName} selected}}"
-msgstr "{selectedCount, plural, other {ເລືອກ {manyName} ແລ້ວ}}"
-
-#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:45
-msgid "{selectedCount, plural, one {# {entityName} selected. Bulk actions toolbar is available.} other {# {manyName} selected. Bulk actions toolbar is available.}}"
-msgstr "{selectedCount, plural, other {ເລືອກ # {manyName} ແລ້ວ. ແຖບເຄື່ອງມືການດຳເນີນການເປັນກຸ່ມພ້ອມໃຊ້ງານ.}}"
-
-#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:195
-msgid "{selectedCount, plural, one {# selected} other {# selected}}"
-msgstr "{selectedCount, plural, other {# ເລືອກແລ້ວ}}"
-
-#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:142
-msgid "{selectedCount, plural, one {Bulk actions for # selected {entityName}} other {Bulk actions for # selected {manyName}}}"
-msgstr "{selectedCount, plural, other {ການດຳເນີນການເປັນກຸ່ມສຳລັບ {manyName} # ທີ່ເລືອກ}}"
 
 #: ../../../lib/web/src/components/attachment-composer.tsx:248
 #: ../../../lib/web/src/components/ui/upload-progress.tsx:52
@@ -170,7 +144,7 @@ msgstr "ສົມບູນ (ວັນທີ ແລະ ເວລາ)"
 msgid "Accept"
 msgstr "ຍອມຮັບ"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:100
+#: src/routes/_authenticated/$projectId_.settings.tsx:104
 msgid "Access"
 msgstr "ການເຂົ້າເຖິງ"
 
@@ -178,54 +152,38 @@ msgstr "ການເຂົ້າເຖິງ"
 msgid "Access denied"
 msgstr "ປະຕິເສດການເຂົ້າເຖິງ"
 
-#: ../../../lib/web/src/features/errors/forbidden.tsx:16
-msgid "Access Forbidden"
-msgstr "ການເຂົ້າເຖິງຖືກຫ້າມ"
-
 #: ../../../lib/web/src/features/access/access-list.tsx:197
 msgid "Access level"
 msgstr "ລະດັບການເຂົ້າເຖິງ"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:139
+#: src/routes/_authenticated/$projectId_.settings.tsx:143
 msgid "Access level updated"
 msgstr "ອັບເດດລະດັບການເຂົ້າເຖິງແລ້ວ"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:130
+#: src/routes/_authenticated/$projectId_.settings.tsx:134
 msgid "Access management"
 msgstr "ການຈັດການການເຂົ້າເຖິງ"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:136
+#: src/routes/_authenticated/$projectId_.settings.tsx:140
 msgid "Access removed"
 msgstr "ລົບການເຂົ້າເຖິງແລ້ວ"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:133
+#: src/routes/_authenticated/$projectId_.settings.tsx:137
 msgid "Access set for {subjectName}"
 msgstr "ກຳນົດການເຂົ້າເຖິງສຳລັບ {subjectName}"
-
-#: ../../../lib/web/src/features/accounts/account-manager.tsx:216
-msgid "Account added"
-msgstr "ເພີ່ມບັນຊີແລ້ວ"
-
-#: ../../../lib/web/src/features/accounts/account-manager.tsx:232
-msgid "Account removed"
-msgstr "ລົບບັນຊີແລ້ວ"
 
 #: ../../../lib/web/src/features/accounts/account-add.tsx:139
 msgid "Account type"
 msgstr "ປະເພດບັນຊີ"
 
-#: ../../../lib/web/src/features/accounts/account-manager.tsx:242
-msgid "Account verified"
-msgstr "ບັນຊີຢືນຢັນແລ້ວ"
-
 #: src/features/objects/components/object-detail-panel.tsx:398
 msgid "Activity"
 msgstr "ກິດຈະກຳ"
 
-#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:712
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:720
 #: ../../../lib/web/src/features/access/access-dialog.tsx:332
 #: ../../../lib/web/src/features/accounts/account-add.tsx:209
-#: src/features/requests/components/request-panel.tsx:104
+#: src/features/requests/components/request-panel.tsx:113
 msgid "Add"
 msgstr "ເພີ່ມ"
 
@@ -246,25 +204,20 @@ msgid "Add access"
 msgstr "ເພີ່ມການເຂົ້າເຖິງ"
 
 #: ../../../lib/web/src/features/accounts/account-add.tsx:132
-#: ../../../lib/web/src/features/accounts/account-manager.tsx:288
 msgid "Add account"
 msgstr "ເພີ່ມບັນຊີ"
-
-#: ../../../lib/web/src/features/accounts/account-manager.tsx:297
-msgid "Add an account to receive notifications and use services."
-msgstr "ເພີ່ມບັນຊີເພື່ອຮັບການແຈ້ງເຕືອນ ແລະ ໃຊ້ບໍລິການ."
 
 #: ../../../lib/web/src/components/attachment-composer.tsx:291
 msgid "Add caption"
 msgstr "ເພີ່ມຄຳບັນຍາຍ"
 
-#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:682
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:690
 msgid "Add checklist item"
 msgstr "ເພີ່ມລາຍການກວດສອບ"
 
-#: src/features/editor/components/design-editor.tsx:511
-#: src/features/editor/components/edit-dialogs.tsx:220
-#: src/features/editor/components/edit-dialogs.tsx:431
+#: src/features/editor/components/design-editor.tsx:541
+#: src/features/editor/components/edit-dialogs.tsx:223
+#: src/features/editor/components/edit-dialogs.tsx:434
 msgid "Add class"
 msgstr "ເພີ່ມຄລາສ"
 
@@ -274,21 +227,17 @@ msgstr "ເພີ່ມຖັນ"
 
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:105
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:233
-#: src/features/editor/components/edit-dialogs.tsx:426
+#: src/features/editor/components/edit-dialogs.tsx:429
 msgid "Add field"
 msgstr "ເພີ່ມຊ່ອງຂໍ້ມູນ"
 
-#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:700
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:708
 msgid "Add item..."
 msgstr "ເພີ່ມລາຍການ..."
 
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx:320
 msgid "Add link"
 msgstr "ເພີ່ມລິ້ງ"
-
-#: ../../../lib/web/src/features/accounts/account-picker.tsx:102
-msgid "Add new account"
-msgstr "ເພີ່ມບັນຊີໃໝ່"
 
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:215
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:220
@@ -298,18 +247,13 @@ msgstr "ເພີ່ມບັນຊີໃໝ່"
 msgid "Add option"
 msgstr "ເພີ່ມຕົວເລືອກ"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:131
+#: src/routes/_authenticated/$projectId_.settings.tsx:135
 msgid "Add rule"
 msgstr "ເພີ່ມກົດ"
 
 #: ../../../lib/web/src/components/post-tags.tsx:137
-#: ../../../lib/web/src/components/tag-input.tsx:40
 msgid "Add tag..."
 msgstr "ເພີ່ມແທັກ..."
-
-#: ../../../lib/web/src/components/layout/team-switcher.tsx:83
-msgid "Add team/app"
-msgstr "ເພີ່ມທີມ/ແອັບ"
 
 #: ../../../lib/web/src/features/accounts/account-add.tsx:175
 msgid "Add to existing notifications"
@@ -319,7 +263,7 @@ msgstr "ເພີ່ມໃສ່ການແຈ້ງເຕືອນທີ່ມ
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:513
 #: ../../../lib/web/src/components/view-tabs.tsx:87
 #: ../../../lib/web/src/components/view-tabs.tsx:93
-#: src/features/editor/components/design-editor.tsx:462
+#: src/features/editor/components/design-editor.tsx:492
 msgid "Add view"
 msgstr "ເພີ່ມມຸມມອງ"
 
@@ -327,17 +271,9 @@ msgstr "ເພີ່ມມຸມມອງ"
 msgid "Adding..."
 msgstr "ກຳລັງເພີ່ມ..."
 
-#: ../../../lib/web/src/components/config-drawer.tsx:72
-msgid "Adjust the appearance and layout to suit your preferences."
-msgstr "ປັບຮູບລັກສະນະ ແລະ ໂຄງສ້າງໃຫ້ເໝາະກັບຄວາມມັກຂອງທ່ານ."
-
 #: ../../../lib/web/src/components/ui/sort-selector.tsx:41
 msgid "AI"
 msgstr "AI"
-
-#: ../../../lib/web/src/components/notifications-dropdown.tsx:163
-msgid "All"
-msgstr "ທັງໝົດ"
 
 #: src/components/layout/projects-layout.tsx:35
 msgid "All projects"
@@ -348,11 +284,11 @@ msgstr "ໂຄງການທັງໝົດ"
 msgid "Allow anyone to search for {0}"
 msgstr "ອະນຸຍາດໃຫ້ໃຜກໍໄດ້ຄົ້ນຫາ {0}"
 
-#: src/features/projects/components/create-project-dialog.tsx:382
+#: src/features/projects/components/create-project-dialog.tsx:387
 msgid "Allow anyone to search for project"
 msgstr "ອະນຸຍາດໃຫ້ໃຜກໍຕາມຊອກຫາໂຄງການ"
 
-#: src/features/editor/components/edit-dialogs.tsx:346
+#: src/features/editor/components/edit-dialogs.tsx:349
 msgid "Allow merge requests"
 msgstr "ອະນຸຍາດການລວມ"
 
@@ -364,7 +300,7 @@ msgstr "ອະນຸຍາດການຈັດລຽງຕາມ"
 msgid "An error occurred"
 msgstr "ເກີດຂໍ້ຜິດພາດ"
 
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:275
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:266
 msgid "An unexpected error occurred"
 msgstr "ເກີດຂໍ້ຜິດພາດທີ່ບໍ່ຄາດຄິດ"
 
@@ -373,11 +309,11 @@ msgid "Android push"
 msgstr "ການແຈ້ງເຕືອນ Android"
 
 #: ../../../lib/web/src/features/access/access-list.tsx:45
-#: ../../../lib/web/src/features/access/types.ts:42
+#: ../../../lib/web/src/features/access/types.ts:36
 msgid "Anyone"
 msgstr "ໃຜກໍໄດ້"
 
-#: ../../../lib/web/src/features/access/types.ts:41
+#: ../../../lib/web/src/features/access/types.ts:35
 msgid "Anyone who is logged in"
 msgstr "ໃຜກໍໄດ້ທີ່ເຂົ້າສູ່ລະບົບ"
 
@@ -402,7 +338,7 @@ msgstr "ທ່ານແນ່ໃຈບໍວ່າຕ້ອງການລົບ
 msgid "Are you sure you want to delete this comment? This will also delete all replies."
 msgstr "ທ່ານແນ່ໃຈບໍວ່າຕ້ອງການລົບຄຳເຫັນນີ້? ນີ້ຈະລົບການຕອບກັບທັງໝົດດ້ວຍ."
 
-#: src/features/requests/components/request-panel.tsx:132
+#: src/features/requests/components/request-panel.tsx:141
 msgid "Are you sure you want to delete this merge request?"
 msgstr "ທ່ານແນ່ໃຈບໍວ່າຕ້ອງການລົບຄຳຮ້ອງລວມນີ້?"
 
@@ -413,10 +349,6 @@ msgstr "ທ່ານແນ່ໃຈບໍວ່າຕ້ອງການອອກ
 #: src/features/projects/pages/projects-list-page.tsx:40
 msgid "Are you sure you want to unsubscribe from this project?"
 msgstr "ທ່ານແນ່ໃຈບໍວ່າຕ້ອງການຍົກເລີກການສະໝັກສະມາຊິກຈາກໂຄງການນີ້?"
-
-#: ../../../lib/web/src/components/data-table/column-header.tsx:59
-msgid "Asc"
-msgstr "ໜ້ອຍຫາໃຫຍ່"
 
 #: ../../../lib/web/src/components/ui/sort-direction-button.tsx:27
 msgid "Ascending"
@@ -431,7 +363,7 @@ msgid "Attach reply files"
 msgstr "ແນບໄຟລ໌ຕອບກັບ"
 
 #: ../../../lib/web/src/features/access/access-list.tsx:46
-#: ../../../lib/web/src/features/access/types.ts:41
+#: ../../../lib/web/src/features/access/types.ts:35
 msgid "Authenticated users"
 msgstr "ຜູ້ໃຊ້ທີ່ຢືນຢັນແລ້ວ"
 
@@ -452,17 +384,16 @@ msgid "Avatar for {name}"
 msgstr "ອະວາຕາສຳລັບ {name}"
 
 #: ../../../lib/web/src/components/place-picker.tsx:156
-#: src/features/projects/components/create-project-dialog.tsx:537
+#: src/features/projects/components/create-project-dialog.tsx:546
 msgid "Back"
 msgstr "ກັບຄືນ"
 
-#: ../../../lib/web/src/features/errors/forbidden.tsx:28
 #: ../../../lib/web/src/features/errors/not-found-error.tsx:28
 #: ../../../lib/web/src/features/errors/unauthorized-error.tsx:28
 msgid "Back to home"
 msgstr "ກັບໄປໜ້າຫຼັກ"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:101
+#: src/routes/_authenticated/$projectId_.settings.tsx:105
 #: src/routes/_authenticated/$projectId/design.tsx:47
 msgid "Back to project"
 msgstr "ກັບຄືນຫາໂຄງການ"
@@ -476,7 +407,7 @@ msgstr "ກັບຄືນຫາໂຄງການ"
 msgid "Banner"
 msgstr "ປ້າຍ"
 
-#: src/features/requests/components/diff-viewer.tsx:449
+#: src/features/requests/components/diff-viewer.tsx:447
 msgid "Binary file not shown"
 msgstr "ບໍ່ສະແດງໄຟລ໌ຖານສອງ"
 
@@ -485,8 +416,8 @@ msgstr "ບໍ່ສະແດງໄຟລ໌ຖານສອງ"
 msgid "Blocked by"
 msgstr "ຖືກບລັອກໂດຍ"
 
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:227
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:237
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:242
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:252
 msgid "Blocked navigation to untrusted link"
 msgstr "ບລັອກການນຳທາງໄປຫາລິ້ງທີ່ບໍ່ເຊື່ອຖື"
 
@@ -515,7 +446,7 @@ msgstr "ການແຈ້ງເຕືອນຕົວທ່ອງເວັບ"
 msgid "Built-in templates"
 msgstr "ແມ່ແບບໃນຕົວ"
 
-#: src/features/editor/components/edit-dialogs.tsx:309
+#: src/features/editor/components/edit-dialogs.tsx:312
 msgid "Can be child of"
 msgstr "ສາມາດເປັນລູກຂອງ"
 
@@ -533,7 +464,7 @@ msgstr "ສາມາດເປັນລູກຂອງ"
 #: ../../../lib/web/src/features/access/access-list.tsx:268
 #: ../../../lib/web/src/features/accounts/account-add.tsx:201
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:91
-#: src/features/projects/components/create-project-dialog.tsx:448
+#: src/features/projects/components/create-project-dialog.tsx:453
 #: src/routes/_authenticated/$projectId/design.tsx:61
 #: src/routes/_authenticated/$projectId/index.tsx:143
 msgid "Cancel"
@@ -556,18 +487,14 @@ msgstr "ບໍ່ສາມາດລວມອັດຕະໂນມັດໄດ້
 msgid "Caption"
 msgstr "ຄຳບັນຍາຍ"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:97
+#: ../../../lib/web/src/components/notification-category-button.tsx:99
 msgid "Category for these notifications"
 msgstr "ໝວດໝູ່ສຳລັບການແຈ້ງເຕືອນເຫຼົ່ານີ້"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:78
-#: ../../../lib/web/src/components/notification-category-button.tsx:89
+#: ../../../lib/web/src/components/notification-category-button.tsx:80
+#: ../../../lib/web/src/components/notification-category-button.tsx:91
 msgid "Change notification category"
 msgstr "ປ່ຽນໝວດໝູ່ການແຈ້ງເຕືອນ"
-
-#: ../../../lib/web/src/components/notifications-dropdown.tsx:198
-msgid "Check \"All\" to see your past notifications."
-msgstr "ເລືອກ \"ທັງໝົດ\" ເພື່ອເບິ່ງການແຈ້ງເຕືອນທີ່ຜ່ານມາ."
 
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:137
 msgid "Checkbox"
@@ -585,32 +512,16 @@ msgstr "ລາຍການກວດສອບ"
 msgid "Choose a game from the sidebar or start a new one."
 msgstr "ເລືອກເກມຈາກແຖບຂ້າງ ຫຼື ເລີ່ມຕົ້ນອັນໃໝ່."
 
-#: src/features/projects/components/create-project-dialog.tsx:329
+#: src/features/projects/components/create-project-dialog.tsx:334
 msgid "Choose a template"
 msgstr "ເລືອກແມ່ແບບ"
-
-#: ../../../lib/web/src/components/config-drawer.tsx:329
-msgid "Choose between default expanded, compact icon-only, or full layout mode"
-msgstr "ເລືອກລະຫວ່າງຂະຫຍາຍຄ່າເລີ່ມຕົ້ນ, ໄອຄອນຫຍໍ້ເທົ່ານັ້ນ, ຫຼື ໂໝດໂຄງສ້າງເຕັມ"
-
-#: ../../../lib/web/src/components/config-drawer.tsx:271
-msgid "Choose between inset, floating, or standard sidebar layout"
-msgstr "ເລືອກລະຫວ່າງໂຄງສ້າງແຖບຂ້າງແບບ inset, ລອຍ, ຫຼື ມາດຕະຖານ"
-
-#: ../../../lib/web/src/components/config-drawer.tsx:372
-msgid "Choose between left-to-right or right-to-left site direction"
-msgstr "ເລືອກລະຫວ່າງທິດທາງເວັບໄຊຈາກຊ້າຍຫາຂວາ ຫຼື ຂວາຫາຊ້າຍ"
-
-#: ../../../lib/web/src/components/config-drawer.tsx:227
-msgid "Choose between system preference, light mode, or dark mode"
-msgstr "ເລືອກລະຫວ່າງຄ່າເລີ່ມຕົ້ນຂອງລະບົບ, ໂໝດສະຫວ່າງ, ຫຼື ໂໝດມືດ"
 
 #: ../../../lib/web/src/components/language-picker.tsx:264
 #: ../../../lib/web/src/components/language-picker.tsx:271
 msgid "Choose language"
 msgstr "ເລືອກພາສາ"
 
-#: src/features/editor/components/design-editor.tsx:506
+#: src/features/editor/components/design-editor.tsx:536
 msgid "Classes"
 msgstr "ຄລາສ"
 
@@ -627,29 +538,15 @@ msgstr "ລ້າງ"
 msgid "Clear all"
 msgstr "ລ້າງທັງໝົດ"
 
-#: ../../../lib/web/src/components/data-table/faceted-filter.tsx:144
-msgid "Clear filters"
-msgstr "ລ້າງຕົວກອງ"
-
 #: ../../../lib/web/src/components/search-input.tsx:26
 msgid "Clear search"
 msgstr "ລ້າງການຄົ້ນຫາ"
 
-#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:170
-#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:174
-msgid "Clear selection"
-msgstr "ລ້າງການເລືອກ"
-
-#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:171
-#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:178
-msgid "Clear selection (Escape)"
-msgstr "ລ້າງການເລືອກ (Escape)"
-
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:501
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:506
 #: ../../../lib/web/src/components/ui/dialog.tsx:78
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:470
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:473
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:468
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:471
 #: ../../../lib/web/src/components/ui/sheet.tsx:79
 msgid "Close"
 msgstr "ປິດ"
@@ -658,8 +555,8 @@ msgstr "ປິດ"
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:113
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:263
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:267
-#: src/features/editor/components/edit-dialogs.tsx:225
-#: src/features/editor/components/edit-dialogs.tsx:229
+#: src/features/editor/components/edit-dialogs.tsx:228
+#: src/features/editor/components/edit-dialogs.tsx:232
 msgid "Close dialog"
 msgstr "ປິດໂຕ້ຕອບ"
 
@@ -668,8 +565,8 @@ msgstr "ປິດໂຕ້ຕອບ"
 msgid "Close navigation"
 msgstr "ປິດການນຳທາງ"
 
-#: ../../../lib/web/src/components/layout/right-panel.tsx:265
-#: ../../../lib/web/src/components/layout/right-panel.tsx:268
+#: ../../../lib/web/src/components/layout/right-panel.tsx:234
+#: ../../../lib/web/src/components/layout/right-panel.tsx:237
 msgid "Close panel"
 msgstr "ປິດແຜງ"
 
@@ -709,10 +606,6 @@ msgstr "ຖັນຈັດກຸ່ມຕາມ"
 msgid "Comfortable"
 msgstr "ສະບາຍ"
 
-#: ../../../lib/web/src/components/coming-soon.tsx:12
-msgid "Coming Soon!"
-msgstr "ຈະມາໃນໄວໆນີ້!"
-
 #: ../../../lib/web/src/components/ui/command.tsx:34
 msgid "Command Palette"
 msgstr "ແຜງຄຳສັ່ງ"
@@ -726,8 +619,8 @@ msgstr "ການກະທຳຄຳເຫັນ"
 msgid "Comment and view"
 msgstr "ຄຳເຫັນ ແລະ ເບິ່ງ"
 
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:433
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:445
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:431
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:443
 msgid "Comments"
 msgstr "ຄຳເຫັນ"
 
@@ -736,12 +629,11 @@ msgstr "ຄຳເຫັນ"
 msgid "Comments ({0})"
 msgstr "ຄຳເຫັນ ({0})"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:316
 #: ../../../lib/web/src/lib/preference-utils.ts:90
 msgid "Compact"
 msgstr "ຫຍໍ້"
 
-#: src/features/editor/components/edit-dialogs.tsx:221
+#: src/features/editor/components/edit-dialogs.tsx:224
 msgid "Configure class settings"
 msgstr "ກຳນົດຄ່າການຕັ້ງຄ່າຄລາສ"
 
@@ -761,10 +653,6 @@ msgstr "ຢືນຢັນ"
 #: ../../../lib/web/src/lib/chat-ui.ts:18
 msgid "Connected"
 msgstr "ເຊື່ອມຕໍ່ແລ້ວ"
-
-#: ../../../lib/web/src/features/accounts/account-manager.tsx:191
-msgid "Connected accounts"
-msgstr "ບັນຊີທີ່ເຊື່ອມຕໍ່"
 
 #: ../../../lib/web/src/lib/chat-ui.ts:21
 msgid "Connecting..."
@@ -802,11 +690,33 @@ msgstr "ສຳເນົາໄປຄລິບບອດແລ້ວ"
 msgid "Copy"
 msgstr "ສຳເນົາ"
 
+#: src/routes/$projectId.diff.tsx:73
+msgid "Could not change the view style"
+msgstr ""
+
+#: src/features/requests/components/branch-select.tsx:76
+msgid "Could not load branches"
+msgstr "ໂຫຼດສາຂາລົ້ມເຫຼວ"
+
+#: src/features/requests/components/repository-select.tsx:64
+msgid "Could not load repositories"
+msgstr ""
+
+#: src/features/projects/components/create-project-dialog.tsx:79
+#: src/features/projects/components/create-project-dialog.tsx:482
+#: src/routes/_authenticated/$projectId/design.tsx:102
+msgid "Could not load templates"
+msgstr ""
+
+#: src/features/requests/components/diff-stats.tsx:59
+msgid "Could not load the diff"
+msgstr ""
+
 #: ../../../lib/web/src/features/document/document-page.tsx:82
 msgid "Could not load this document. Please try again later."
 msgstr "ບໍ່ສາມາດໂຫລດເອກະສານນີ້ໄດ້. ກະລຸນາລອງອີກຄັ້ງໃນພາຍຫຼັງ."
 
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:113
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:128
 msgid "Couldn't load notifications"
 msgstr "ບໍ່ສາມາດໂຫຼດການແຈ້ງເຕືອນໄດ້"
 
@@ -839,7 +749,7 @@ msgstr "ສ້າງ {0}"
 msgid "Create a new item in this project"
 msgstr "ສ້າງລາຍການໃໝ່ໃນໂຄງການນີ້"
 
-#: src/features/projects/components/create-project-dialog.tsx:331
+#: src/features/projects/components/create-project-dialog.tsx:336
 #: src/features/projects/pages/projects-list-page.tsx:37
 msgid "Create a new project"
 msgstr "ສ້າງໂຄງການໃໝ່"
@@ -850,10 +760,10 @@ msgid "Create new item"
 msgstr "ສ້າງລາຍການໃໝ່"
 
 #: src/components/layout/projects-layout.tsx:37
-#: src/features/projects/components/create-project-dialog.tsx:319
-#: src/features/projects/components/create-project-dialog.tsx:329
-#: src/features/projects/components/create-project-dialog.tsx:452
-#: src/features/projects/components/create-project-dialog.tsx:540
+#: src/features/projects/components/create-project-dialog.tsx:324
+#: src/features/projects/components/create-project-dialog.tsx:334
+#: src/features/projects/components/create-project-dialog.tsx:457
+#: src/features/projects/components/create-project-dialog.tsx:549
 msgid "Create project"
 msgstr "ສ້າງໂຄງການ"
 
@@ -866,14 +776,14 @@ msgstr "ສ້າງ, ແກ້ໄຂ, ໃຫ້ຄຳເຫັນ ແລະ ເ
 msgid "Created"
 msgstr "ສ້າງແລ້ວ"
 
-#: src/features/projects/components/create-project-dialog.tsx:127
+#: src/features/projects/components/create-project-dialog.tsx:132
 msgid "Creating project..."
 msgstr "ກຳລັງສ້າງໂຄງການ..."
 
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:656
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:258
-#: src/features/projects/components/create-project-dialog.tsx:452
-#: src/features/projects/components/create-project-dialog.tsx:540
+#: src/features/projects/components/create-project-dialog.tsx:457
+#: src/features/projects/components/create-project-dialog.tsx:549
 msgid "Creating..."
 msgstr "ກຳລັງສ້າງ..."
 
@@ -885,26 +795,19 @@ msgstr "ຕຳແໜ່ງປັດຈຸບັນ"
 msgid "Custom"
 msgstr "ກຳນົດເອງ"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:219
-#: ../../../lib/web/src/components/theme-switch.tsx:52
 #: ../../../lib/web/src/lib/preference-utils.ts:15
 msgid "Dark"
 msgstr "ມືດ"
 
-#: ../../../lib/web/src/components/profile-dropdown.tsx:87
-#: ../../../lib/web/src/components/profile-dropdown.tsx:123
-msgid "Dark mode"
-msgstr "ໂໝດມືດ"
-
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:259
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:250
 msgid "Data conflict"
 msgstr "ຂໍ້ມູນຂັດແຍ່ງກັນ"
 
 #. placeholder {0}: imported.data?.objects ?? 0
 #. placeholder {1}: imported.data?.comments ?? 0
 #. placeholder {2}: imported.data?.links ?? 0
-#: src/features/projects/components/create-project-dialog.tsx:146
-#: src/features/projects/components/create-project-dialog.tsx:176
+#: src/features/projects/components/create-project-dialog.tsx:151
+#: src/features/projects/components/create-project-dialog.tsx:181
 msgid "Data imported ({0, plural, one {# object} other {# objects}}, {1, plural, one {# comment} other {# comments}}, {2, plural, one {# link} other {# links}})"
 msgstr "ນຳເຂົ້າຂໍ້ມູນແລ້ວ ({0, plural, other {# ອອບເຈັກ}}, {1, plural, other {# ຄຳເຫັນ}}, {2, plural, other {# ລິ້ງ}})"
 
@@ -915,10 +818,6 @@ msgstr "ວັນທີ"
 #: ../../../lib/web/src/components/game/game-draw-offer-banner.tsx:41
 msgid "Decline"
 msgstr "ປະຕິເສດ"
-
-#: ../../../lib/web/src/components/config-drawer.tsx:311
-msgid "Default"
-msgstr "ຄ່າເລີ່ມຕົ້ນ"
 
 #: ../../../lib/web/src/features/accounts/account-add.tsx:185
 msgid "Default AI account"
@@ -938,8 +837,8 @@ msgstr "ການຈັດລຽງເລີ່ມຕົ້ນ"
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:252
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:314
 #: src/features/objects/components/object-detail-panel.tsx:643
-#: src/features/requests/components/request-panel.tsx:133
-#: src/routes/_authenticated/$projectId_.settings.tsx:120
+#: src/features/requests/components/request-panel.tsx:142
+#: src/routes/_authenticated/$projectId_.settings.tsx:124
 msgid "Delete"
 msgstr "ລົບ"
 
@@ -947,7 +846,7 @@ msgstr "ລົບ"
 msgid "Delete attachment"
 msgstr "ລົບໄຟລ໌ແນບ"
 
-#: src/features/editor/components/edit-dialogs.tsx:246
+#: src/features/editor/components/edit-dialogs.tsx:249
 msgid "Delete class"
 msgstr "ລົບຄລາສ"
 
@@ -969,13 +868,13 @@ msgstr "ລົບຊ່ອງຂໍ້ມູນ"
 msgid "Delete item"
 msgstr "ລົບລາຍການ"
 
-#: src/features/requests/components/request-panel.tsx:131
-#: src/features/requests/components/request-panel.tsx:394
-#: src/features/requests/components/request-panel.tsx:399
-#: src/features/requests/components/request-panel.tsx:419
-#: src/features/requests/components/request-panel.tsx:424
-#: src/features/requests/components/request-panel.tsx:441
-#: src/features/requests/components/request-panel.tsx:446
+#: src/features/requests/components/request-panel.tsx:140
+#: src/features/requests/components/request-panel.tsx:403
+#: src/features/requests/components/request-panel.tsx:408
+#: src/features/requests/components/request-panel.tsx:428
+#: src/features/requests/components/request-panel.tsx:433
+#: src/features/requests/components/request-panel.tsx:450
+#: src/features/requests/components/request-panel.tsx:455
 msgid "Delete merge request"
 msgstr "ລົບຄຳຮ້ອງລວມ"
 
@@ -989,12 +888,12 @@ msgstr "ລົບຕົວເລືອກ"
 msgid "Delete option {0}"
 msgstr "ລົບຕົວເລືອກ {0}"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:119
-#: src/routes/_authenticated/$projectId_.settings.tsx:122
+#: src/routes/_authenticated/$projectId_.settings.tsx:123
+#: src/routes/_authenticated/$projectId_.settings.tsx:126
 msgid "Delete project"
 msgstr "ລົບໂຄງການ"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:121
+#: src/routes/_authenticated/$projectId_.settings.tsx:125
 msgid "Delete project?"
 msgstr "ລົບໂຄງການບໍ?"
 
@@ -1006,21 +905,17 @@ msgstr "ລົບມຸມມອງ"
 msgid "Delete your account on the old server"
 msgstr "ລຶບບັນຊີຂອງທ່ານໃນເຊີຟເວີເກົ່າ"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:127
+#: src/routes/_authenticated/$projectId_.settings.tsx:131
 msgid "Deleting project..."
 msgstr "ກຳລັງລຶບໂຄງການ..."
-
-#: ../../../lib/web/src/components/data-table/column-header.tsx:63
-msgid "Desc"
-msgstr "ຫຼາຍຫາໜ້ອຍ"
 
 #: ../../../lib/web/src/components/ui/sort-direction-button.tsx:27
 msgid "Descending"
 msgstr "ຈາກຫຼາຍຫາໜ້ອຍ"
 
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:83
-#: src/features/requests/components/request-panel.tsx:306
-#: src/routes/_authenticated/$projectId_.settings.tsx:112
+#: src/features/requests/components/request-panel.tsx:315
+#: src/routes/_authenticated/$projectId_.settings.tsx:116
 msgid "Description"
 msgstr "ລາຍລະອຽດ"
 
@@ -1030,7 +925,7 @@ msgstr "ລາຍລະອຽດ"
 msgid "Design"
 msgstr "ການອອກແບບ"
 
-#: src/features/projects/components/create-project-dialog.tsx:177
+#: src/features/projects/components/create-project-dialog.tsx:182
 #: src/routes/_authenticated/$projectId/design.tsx:54
 msgid "Design imported"
 msgstr "ນຳເຂົ້າການອອກແບບແລ້ວ"
@@ -1054,17 +949,13 @@ msgstr "ແຜງລາຍລະອຽດ"
 msgid "Detect from web browser"
 msgstr "ກວດຫາຈາກຕົວທ່ອງເວັບ"
 
-#: src/features/requests/components/diff-stats.tsx:86
+#: src/features/requests/components/diff-stats.tsx:92
 msgid "Diff"
 msgstr "Diff"
 
 #: src/routes/$projectId.diff.tsx:41
 msgid "Diff: {source} → {target}"
 msgstr "Diff: {source} → {target}"
-
-#: ../../../lib/web/src/components/config-drawer.tsx:341
-msgid "Direction"
-msgstr "ທິດທາງ"
 
 #: ../../../lib/web/src/components/person-picker.tsx:214
 msgid "Directory"
@@ -1092,13 +983,13 @@ msgstr "ປິດ"
 msgid "Dismiss board hint"
 msgstr "ປິດຄຳແນະນຳກະດານ"
 
-#: ../../../lib/web/src/components/ui/sidebar.tsx:238
+#: ../../../lib/web/src/components/ui/sidebar.tsx:258
 msgid "Displays the mobile sidebar."
 msgstr "ສະແດງແຖບຂ້າງມືຖື."
 
 #: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:305
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:518
-#: src/features/editor/components/edit-dialogs.tsx:436
+#: src/features/editor/components/edit-dialogs.tsx:439
 #: src/features/objects/components/object-detail-panel.tsx:472
 msgid "Done"
 msgstr "ສຳເລັດແລ້ວ"
@@ -1108,8 +999,8 @@ msgid "Double click on a column to add content"
 msgstr "ຄລິກສອງເທື່ອທີ່ຖັນເພື່ອເພີ່ມເນື້ອໃນ"
 
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:239
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:454
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:464
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:452
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:462
 msgid "Download"
 msgstr "ດາວໂຫຼດ"
 
@@ -1117,7 +1008,7 @@ msgstr "ດາວໂຫຼດ"
 msgid "Download backup first"
 msgstr "ດາວໂຫຼດສຳຮອງຂໍ້ມູນກ່ອນ"
 
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:100
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:98
 msgid "Download failed"
 msgstr "ດາວໂຫຼດບໍ່ສຳເລັດ"
 
@@ -1126,8 +1017,8 @@ msgstr "ດາວໂຫຼດບໍ່ສຳເລັດ"
 msgid "Downloaded {filename}"
 msgstr "ດາວໂຫຼດ {filename} ແລ້ວ"
 
-#: src/features/requests/components/request-panel.tsx:272
-#: src/features/requests/components/request-panel.tsx:344
+#: src/features/requests/components/request-panel.tsx:281
+#: src/features/requests/components/request-panel.tsx:353
 msgid "Draft"
 msgstr "ສະບັບຮ່າງ"
 
@@ -1139,7 +1030,7 @@ msgstr "ລາກຖັນເພື່ອຈັດລຽງຄືນໃໝ່"
 msgid "Duplicates"
 msgstr "ຊ້ຳກັນ"
 
-#: ../../../lib/web/src/lib/preference-utils.ts:141
+#: ../../../lib/web/src/lib/preference-utils.ts:134
 msgid "Dyslexia-friendly"
 msgstr "ເຫມາະສຳລັບໂລກອ່ານບໍ່ອອກ"
 
@@ -1156,7 +1047,7 @@ msgstr "ແກ້ໄຂ {label}"
 msgid "Edit caption"
 msgstr "ແກ້ໄຂຄຳບັນຍາຍ"
 
-#: src/features/editor/components/edit-dialogs.tsx:220
+#: src/features/editor/components/edit-dialogs.tsx:223
 msgid "Edit class"
 msgstr "ແກ້ໄຂຫ້ອງຮຽນ"
 
@@ -1202,7 +1093,7 @@ msgstr "ປ້ອນລະຫັດຈາກອີເມວຂອງທ່ານ
 msgid "Enter your authenticator code"
 msgstr "ໃສ່ລະຫັດ authenticator ຂອງທ່ານ"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:113
+#: src/routes/_authenticated/$projectId_.settings.tsx:117
 msgid "Entity ID"
 msgstr "ID ຂອງເອັນຕິຕີ້"
 
@@ -1233,17 +1124,9 @@ msgstr "ສົ່ງອອກການອອກແບບ"
 msgid "External URL"
 msgstr "URL ພາຍນອກ"
 
-#: ../../../lib/web/src/lib/preference-utils.ts:131
+#: ../../../lib/web/src/lib/preference-utils.ts:124
 msgid "Extra large"
 msgstr "ໃຫຍ່ພິເສດ"
-
-#: ../../../lib/web/src/features/accounts/account-manager.tsx:225
-msgid "Failed to add account"
-msgstr "ເພີ່ມບັນຊີລົ້ມເຫຼວ"
-
-#: ../../../lib/web/src/components/tag-input.tsx:39
-msgid "Failed to add tag"
-msgstr "ເພີ່ມແທັກລົ້ມເຫຼວ"
 
 #: src/features/requests/components/merge-status.tsx:48
 msgid "Failed to check merge status"
@@ -1258,7 +1141,8 @@ msgstr "ສຳເນົາລົ້ມເຫຼວ"
 msgid "Failed to create class"
 msgstr "ສ້າງຫ້ອງຮຽນລົ້ມເຫຼວ"
 
-#: src/features/editor/components/design-editor.tsx:601
+#: src/features/editor/components/design-editor.tsx:166
+#: src/features/editor/components/design-editor.tsx:631
 msgid "Failed to create field"
 msgstr "ສ້າງຊ່ອງລົ້ມເຫຼວ"
 
@@ -1268,15 +1152,20 @@ msgstr "ສ້າງຊ່ອງລົ້ມເຫຼວ"
 msgid "Failed to create link"
 msgstr "ສ້າງລິ້ງລົ້ມເຫຼວ"
 
-#: src/features/editor/components/design-editor.tsx:621
+#: src/features/requests/components/request-panel.tsx:59
+msgid "Failed to create merge request"
+msgstr ""
+
+#: src/features/editor/components/design-editor.tsx:238
+#: src/features/editor/components/design-editor.tsx:651
 msgid "Failed to create option"
 msgstr "ສ້າງຕົວເລືອກລົ້ມເຫຼວ"
 
-#: src/features/projects/components/create-project-dialog.tsx:129
+#: src/features/projects/components/create-project-dialog.tsx:134
 msgid "Failed to create project"
 msgstr "ສ້າງໂປຣເຈັກລົ້ມເຫຼວ"
 
-#: src/features/editor/components/design-editor.tsx:289
+#: src/features/editor/components/design-editor.tsx:316
 msgid "Failed to create view"
 msgstr "ສ້າງມຸມມອງລົ້ມເຫຼວ"
 
@@ -1288,19 +1177,35 @@ msgstr "ລຶບລົ້ມເຫຼວ"
 msgid "Failed to delete attachment"
 msgstr "ລຶບໄຟລ໌ແນບລົ້ມເຫຼວ"
 
+#: src/features/editor/components/design-editor.tsx:137
+msgid "Failed to delete class"
+msgstr "ລຶບຫ້ອງຮຽນລົ້ມເຫຼວ"
+
 #: ../../../lib/web/src/components/entity/entity-comment-list.tsx:191
 msgid "Failed to delete comment"
 msgstr "ລຶບຄຳເຫັນລົ້ມເຫຼວ"
+
+#: src/features/editor/components/design-editor.tsx:209
+msgid "Failed to delete field"
+msgstr "ລຶບຊ່ອງລົ້ມເຫຼວ"
 
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx:159
 msgid "Failed to delete link"
 msgstr "ລຶບລິ້ງລົ້ມເຫຼວ"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:129
+#: src/features/requests/components/request-panel.tsx:85
+msgid "Failed to delete merge request"
+msgstr ""
+
+#: src/features/editor/components/design-editor.tsx:276
+msgid "Failed to delete option"
+msgstr "ລຶບຕົວເລືອກລົ້ມເຫຼວ"
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:133
 msgid "Failed to delete project"
 msgstr "ລຶບໂປຣເຈັກລົ້ມເຫຼວ"
 
-#: src/features/editor/components/design-editor.tsx:341
+#: src/features/editor/components/design-editor.tsx:371
 msgid "Failed to delete view"
 msgstr "ລຶບມຸມມອງລົ້ມເຫຼວ"
 
@@ -1316,8 +1221,8 @@ msgstr "ສົ່ງອອກການອອກແບບລົ້ມເຫຼວ
 msgid "Failed to get RSS token"
 msgstr "ໄດ້ຮັບໂທເຄັນ RSS ລົ້ມເຫຼວ"
 
-#: src/features/projects/components/create-project-dialog.tsx:147
-#: src/features/projects/components/create-project-dialog.tsx:178
+#: src/features/projects/components/create-project-dialog.tsx:152
+#: src/features/projects/components/create-project-dialog.tsx:183
 msgid "Failed to import data"
 msgstr "ນຳເຂົ້າຂໍ້ມູນບໍ່ສຳເລັດ"
 
@@ -1333,7 +1238,7 @@ msgstr "ໂຫຼດລົ້ມເຫຼວ"
 msgid "Failed to load history"
 msgstr "ໂຫຼດປະຫວັດລົ້ມເຫຼວ"
 
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:340
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:338
 msgid "Failed to load image"
 msgstr "ໂຫຼດຮູບພາບບໍ່ສຳເລັດ"
 
@@ -1361,7 +1266,7 @@ msgstr "ໂຫຼດໂປຣເຈັກລົ້ມເຫຼວ"
 msgid "Failed to load recommended projects"
 msgstr "ໂຫຼດໂຄງການທີ່ແນະນຳບໍ່ສຳເລັດ"
 
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:340
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:338
 msgid "Failed to load video"
 msgstr "ໂຫຼດວິດີໂອບໍ່ສຳເລັດ"
 
@@ -1377,24 +1282,20 @@ msgstr "ຍ້າຍບໍ່ສຳເລັດ"
 msgid "Failed to post comment"
 msgstr "ໂພສຄຳເຫັນລົ້ມເຫຼວ"
 
-#: src/features/projects/components/create-project-dialog.tsx:256
+#: src/features/projects/components/create-project-dialog.tsx:261
 #: src/routes/_authenticated/$projectId/design.tsx:60
 msgid "Failed to read file"
 msgstr "ອ່ານໄຟລ໌ລົ້ມເຫຼວ"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:137
+#: src/routes/_authenticated/$projectId_.settings.tsx:141
 msgid "Failed to remove access"
 msgstr "ຍ້າຍສິດການເຂົ້າເຖິງລົ້ມເຫຼວ"
 
-#: ../../../lib/web/src/features/accounts/account-manager.tsx:234
-msgid "Failed to remove account"
-msgstr "ຍ້າຍບັນຊີລົ້ມເຫຼວ"
-
-#: src/features/editor/components/design-editor.tsx:200
+#: src/features/editor/components/design-editor.tsx:218
 msgid "Failed to reorder fields"
 msgstr "ຈັດລຽງຊ່ອງຄືນໃໝ່ລົ້ມເຫຼວ"
 
-#: src/features/editor/components/design-editor.tsx:350
+#: src/features/editor/components/design-editor.tsx:380
 msgid "Failed to reorder views"
 msgstr "ຈັດລຽງມຸມມອງຄືນໃໝ່ລົ້ມເຫຼວ"
 
@@ -1410,17 +1311,13 @@ msgstr "ບັນທຶກລົ້ມເຫຼວ"
 msgid "Failed to search projects"
 msgstr "ຄົ້ນຫາໂຄງການບໍ່ສຳເລັດ"
 
-#: ../../../lib/web/src/features/accounts/account-manager.tsx:257
-msgid "Failed to send verification code"
-msgstr "ສົ່ງລະຫັດຢືນຢັນລົ້ມເຫຼວ"
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:134
+#: src/routes/_authenticated/$projectId_.settings.tsx:138
 msgid "Failed to set access level"
 msgstr "ຕັ້ງລະດັບການເຂົ້າເຖິງລົ້ມເຫຼວ"
 
 #: src/features/projects/components/inline-project-search.tsx:69
 #: src/features/projects/components/recommended-projects.tsx:44
-#: src/routes/_authenticated/find.tsx:46
+#: src/routes/_authenticated/find.tsx:45
 msgid "Failed to subscribe"
 msgstr "ສະໝັກລົ້ມເຫຼວ"
 
@@ -1429,21 +1326,41 @@ msgstr "ສະໝັກລົ້ມເຫຼວ"
 msgid "Failed to unsubscribe"
 msgstr "ຍົກເລີກການສະໝັກລົ້ມເຫຼວ"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:140
+#: src/routes/_authenticated/$projectId_.settings.tsx:144
 msgid "Failed to update access level"
 msgstr "ອັບເດດລະດັບການເຂົ້າເຖິງລົ້ມເຫຼວ"
+
+#: src/features/editor/components/design-editor.tsx:122
+msgid "Failed to update class"
+msgstr "ອັບເດດຫ້ອງຮຽນລົ້ມເຫຼວ"
 
 #: ../../../lib/web/src/components/entity/entity-comment-list.tsx:174
 msgid "Failed to update comment"
 msgstr "ອັບເດດຄຳເຫັນລົ້ມເຫຼວ"
 
-#: src/features/editor/components/design-editor.tsx:182
+#: src/features/editor/components/design-editor.tsx:197
 msgid "Failed to update field"
 msgstr "ອັບເດດຊ່ອງລົ້ມເຫຼວ"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:118
+#: src/features/editor/components/design-editor.tsx:147
+msgid "Failed to update hierarchy"
+msgstr ""
+
+#: src/features/requests/components/request-panel.tsx:71
+msgid "Failed to update merge request"
+msgstr ""
+
+#: src/features/editor/components/design-editor.tsx:257
+msgid "Failed to update option"
+msgstr "ອັບເດດຕົວເລືອກລົ້ມເຫຼວ"
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:122
 msgid "Failed to update project"
 msgstr "ອັບເດດໂປຣເຈັກລົ້ມເຫຼວ"
+
+#: src/features/editor/components/design-editor.tsx:360
+msgid "Failed to update view"
+msgstr "ອັບເດດມຸມມອງລົ້ມເຫຼວ"
 
 #: src/features/objects/components/object-detail-panel.tsx:209
 msgid "Failed to update watching"
@@ -1453,7 +1370,7 @@ msgstr "ອັບເດດການຕິດຕາມບໍ່ສຳເລັດ
 msgid "Failed to upload attachment"
 msgstr "ອັບໂຫຼດໄຟລ໌ແນບລົ້ມເຫຼວ"
 
-#: src/features/editor/components/edit-dialogs.tsx:352
+#: src/features/editor/components/edit-dialogs.tsx:355
 msgid "Fields"
 msgstr "ຊ່ອງ"
 
@@ -1463,16 +1380,12 @@ msgstr "ຊ່ອງ"
 msgid "Files"
 msgstr "ໄຟລ໌"
 
-#: ../../../lib/web/src/components/data-table/toolbar.tsx:30
-msgid "Filter..."
-msgstr "ກັ່ນຕອງ..."
-
 #: src/components/layout/projects-layout.tsx:36
-#: src/routes/_authenticated/find.tsx:41
+#: src/routes/_authenticated/find.tsx:40
 msgid "Find projects"
 msgstr "ຄົ້ນຫາໂປຣເຈັກ"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:114
+#: src/routes/_authenticated/$projectId_.settings.tsx:118
 msgid "Fingerprint"
 msgstr "ລາຍນິ້ວມື"
 
@@ -1487,10 +1400,6 @@ msgstr "ທຸງ"
 #: ../../../lib/web/src/lib/preference-utils.ts:111
 msgid "Flat"
 msgstr "ຮາບພຽງ"
-
-#: ../../../lib/web/src/components/config-drawer.tsx:258
-msgid "Floating"
-msgstr "ລອຍຕົວ"
 
 #: ../../../lib/web/src/lib/preference-utils.ts:58
 msgid "Friday"
@@ -1511,41 +1420,15 @@ msgstr "ຈາກໄຟລ໌"
 #: ../../../lib/web/src/lib/preference-utils.ts:89
 #: ../../../lib/web/src/lib/preference-utils.ts:99
 #: ../../../lib/web/src/lib/preference-utils.ts:110
-#: ../../../lib/web/src/lib/preference-utils.ts:119
-#: ../../../lib/web/src/lib/preference-utils.ts:127
-#: ../../../lib/web/src/lib/preference-utils.ts:138
+#: ../../../lib/web/src/lib/preference-utils.ts:120
+#: ../../../lib/web/src/lib/preference-utils.ts:131
 msgid "From theme"
 msgstr "ຈາກຮູບແບບ"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:321
-msgid "Full layout"
-msgstr "ຮູບແບບເຕັມ"
-
-#: ../../../lib/web/src/features/errors/forbidden.tsx:26
 #: ../../../lib/web/src/features/errors/not-found-error.tsx:26
 #: ../../../lib/web/src/features/errors/unauthorized-error.tsx:26
 msgid "Go back"
 msgstr "ກັບໄປ"
-
-#: ../../../lib/web/src/components/data-table/pagination.tsx:82
-msgid "Go to first page"
-msgstr "ໄປໜ້າທຳອິດ"
-
-#: ../../../lib/web/src/components/data-table/pagination.tsx:128
-msgid "Go to last page"
-msgstr "ໄປໜ້າສຸດທ້າຍ"
-
-#: ../../../lib/web/src/components/data-table/pagination.tsx:119
-msgid "Go to next page"
-msgstr "ໄປໜ້າຖັດໄປ"
-
-#: ../../../lib/web/src/components/data-table/pagination.tsx:106
-msgid "Go to page {pageNumber}"
-msgstr "ໄປຫາໜ້າ {pageNumber}"
-
-#: ../../../lib/web/src/components/data-table/pagination.tsx:91
-msgid "Go to previous page"
-msgstr "ໄປໜ້າກ່ອນໜ້າ"
 
 #: ../../../lib/web/src/features/access/access-dialog.tsx:162
 msgid "Group"
@@ -1559,14 +1442,6 @@ msgstr "ຈັດກຸ່ມຕາມ"
 #: ../../../lib/web/src/features/access/access-list.tsx:68
 msgid "Group: {0}"
 msgstr "ກຸ່ມ: {0}"
-
-#: ../../../lib/web/src/components/data-table/column-header.tsx:70
-msgid "Hide"
-msgstr "ເຊື່ອງ"
-
-#: ../../../lib/web/src/components/password-input.tsx:27
-msgid "Hide password"
-msgstr "ເຊື່ອງລະຫັດຜ່ານ"
 
 #: ../../../lib/web/src/components/audit-timeline.tsx:61
 msgid "History"
@@ -1584,16 +1459,16 @@ msgid "Hot"
 msgstr "ມາແຮງ"
 
 #: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:152
-#: src/features/editor/components/edit-dialogs.tsx:269
+#: src/features/editor/components/edit-dialogs.tsx:272
 msgid "ID"
 msgstr "ID"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:110
+#: src/routes/_authenticated/$projectId_.settings.tsx:114
 msgid "Identity"
 msgstr "ຕົວຕົນ"
 
 #. placeholder {0}: currentMedia.name
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:318
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:316
 msgid "Image viewer: {0}"
 msgstr "ຕົວເບິ່ງຮູບພາບ: {0}"
 
@@ -1606,16 +1481,16 @@ msgstr "Imperial"
 msgid "Import design"
 msgstr "ນຳເຂົ້າການອອກແບບ"
 
-#: src/features/projects/components/create-project-dialog.tsx:392
+#: src/features/projects/components/create-project-dialog.tsx:397
 msgid "Import from backup (optional)"
 msgstr "ນຳເຂົ້າຈາກສຳຮອງຂໍ້ມູນ (ບໍ່ບັງຄັບ)"
 
-#: src/features/projects/components/create-project-dialog.tsx:144
-#: src/features/projects/components/create-project-dialog.tsx:173
+#: src/features/projects/components/create-project-dialog.tsx:149
+#: src/features/projects/components/create-project-dialog.tsx:178
 msgid "Importing data..."
 msgstr "ກຳລັງນຳເຂົ້າຂໍ້ມູນ..."
 
-#: ../../../lib/web/src/features/access/types.ts:42
+#: ../../../lib/web/src/features/access/types.ts:36
 msgid "Including anonymous users"
 msgstr "ລວມທັງຜູ້ໃຊ້ນິລະນາມ"
 
@@ -1627,30 +1502,18 @@ msgstr "ອະວາຕາຕົວອັກສອນຫຍໍ້"
 msgid "Initials avatar for {name}"
 msgstr "ອະວາຕາຕົວອັກສອນຫຍໍ້ສຳລັບ {name}"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:253
-msgid "Inset"
-msgstr "ປະທັບໃນ"
-
 #: ../../../lib/web/src/components/ui/sort-selector.tsx:42
 msgid "Interests"
 msgstr "ຄວາມສົນໃຈ"
 
-#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:545
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:550
 msgid "Invalid date"
 msgstr "ວັນທີ່ບໍ່ຖືກຕ້ອງ"
 
-#: src/features/projects/components/create-project-dialog.tsx:251
+#: src/features/projects/components/create-project-dialog.tsx:256
 #: src/routes/_authenticated/$projectId/design.tsx:59
 msgid "Invalid JSON file"
 msgstr "ໄຟລ໌ JSON ບໍ່ຖືກຕ້ອງ"
-
-#: ../../../lib/web/src/components/tag-input.tsx:38
-msgid "Invalid tag: letters, numbers, spaces, hyphens, and slashes only (max 50 chars)"
-msgstr "ແທັກບໍ່ຖືກຕ້ອງ: ໄດ້ແຕ່ຕົວອັກສອນ, ຕົວເລກ, ຍະຫວ່າງ, ຂີດກາງ ແລະ ຂີດທັບ (ສູງສຸດ 50 ຕົວອັກສອນ)"
-
-#: ../../../lib/web/src/features/accounts/account-manager.tsx:245
-msgid "Invalid verification code"
-msgstr "ລະຫັດຢືນຢັນບໍ່ຖືກຕ້ອງ"
 
 #: ../../../lib/web/src/features/errors/not-found-error.tsx:18
 msgid "It seems like the page you're looking for <0/>does not exist or might have been removed."
@@ -1669,30 +1532,18 @@ msgid "Keyboard shortcuts"
 msgstr "ປຸ່ມລັດແປ້ນພິມ"
 
 #: ../../../lib/web/src/lib/preference-utils.ts:103
-#: ../../../lib/web/src/lib/preference-utils.ts:130
+#: ../../../lib/web/src/lib/preference-utils.ts:123
 msgid "Large"
 msgstr "ໃຫຍ່"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:287
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:306
 msgid "Layout"
 msgstr "ຮູບແບບ"
-
-#: ../../../lib/web/src/components/learn-more.tsx:33
-#: ../../../lib/web/src/components/learn-more.tsx:38
-msgid "Learn more"
-msgstr "ຮຽນຮູ້ເພີ່ມເຕີມ"
-
-#: ../../../lib/web/src/components/config-drawer.tsx:355
-msgid "Left to Right"
-msgstr "ຊ້າຍຫາຂວາ"
 
 #: ../../../lib/web/src/components/post-tags.tsx:72
 msgid "Letters, numbers, spaces, and hyphens only"
 msgstr "ສະເພາະຕົວອັກສອນ ຕົວເລກ ຍະຫວ່າງ ແລະ ຂີດກາງ"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:214
-#: ../../../lib/web/src/components/theme-switch.tsx:45
 #: ../../../lib/web/src/lib/preference-utils.ts:14
 msgid "Light"
 msgstr "ສະຫວ່າງ"
@@ -1730,7 +1581,7 @@ msgstr "ກຳລັງໂຫຼດລາຍການ"
 msgid "Loading item details"
 msgstr "ກຳລັງໂຫຼດລາຍລະອຽດລາຍການ"
 
-#: src/features/projects/components/create-project-dialog.tsx:473
+#: src/features/projects/components/create-project-dialog.tsx:478
 msgid "Loading templates..."
 msgstr "ກຳລັງໂຫຼດແມ່ແບບ..."
 
@@ -1740,8 +1591,6 @@ msgstr "ກຳລັງໂຫຼດແມ່ແບບ..."
 msgid "Loading..."
 msgstr "ກຳລັງໂຫຼດ..."
 
-#: ../../../lib/web/src/components/profile-dropdown.tsx:69
-#: ../../../lib/web/src/components/profile-dropdown.tsx:98
 #: ../../../lib/web/src/components/sign-out-dialog.tsx:26
 #: ../../../lib/web/src/components/sign-out-dialog.tsx:28
 msgid "Log out"
@@ -1759,21 +1608,16 @@ msgstr "ອອກຈາກລະບົບສຳເລັດແລ້ວ"
 msgid "Logging out…"
 msgstr "ກຳລັງອອກຈາກລະບົບ…"
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:125
+#: ../../../lib/web/src/components/notification-category-button.tsx:127
 msgid "Manage categories"
 msgstr "ຈັດການໝວດໝູ່"
-
-#: ../../../lib/web/src/features/accounts/account-manager.tsx:192
-msgid "Manage your connected accounts for notifications and services."
-msgstr "ຈັດການບັນຊີທີ່ເຊື່ອມຕໍ່ຂອງທ່ານສຳລັບການແຈ້ງເຕືອນ ແລະ ບໍລິການ."
 
 #: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:52
 msgid "Manual"
 msgstr "ດ້ວຍຕົນເອງ"
 
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:192
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:199
-#: ../../../lib/web/src/components/notifications-dropdown.tsx:224
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:207
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:214
 msgid "Mark all as read"
 msgstr "ໝາຍທັງໝົດເປັນອ່ານແລ້ວ"
 
@@ -1805,7 +1649,7 @@ msgstr "ລວມ {objectReadable}: {objectTitle}"
 msgid "Merge commit"
 msgstr "Merge commit"
 
-#: src/features/requests/components/request-panel.tsx:93
+#: src/features/requests/components/request-panel.tsx:102
 msgid "Merge requests"
 msgstr "ຄຳຮ້ອງຂໍລວມ"
 
@@ -1813,7 +1657,7 @@ msgstr "ຄຳຮ້ອງຂໍລວມ"
 msgid "Merge requests ({requestCount})"
 msgstr "ຄຳຮ້ອງຂໍລວມ ({requestCount})"
 
-#: src/features/requests/components/request-panel.tsx:275
+#: src/features/requests/components/request-panel.tsx:284
 msgid "Merged"
 msgstr "ລວມແລ້ວ"
 
@@ -1837,7 +1681,7 @@ msgstr "Metric"
 msgid "Minimum length"
 msgstr "ຄວາມຍາວຕ່ຳສຸດ"
 
-#: src/routes/$projectId.diff.tsx:80
+#: src/routes/$projectId.diff.tsx:83
 msgid "Missing repo, source, or target parameters"
 msgstr "ບໍ່ມີ repo, source, ຫຼື target ພາຣາມິເຕີ"
 
@@ -1858,7 +1702,7 @@ msgstr "ວັນຈັນ"
 msgid "More options"
 msgstr "ຕົວເລືອກເພີ່ມເຕີມ"
 
-#: src/features/projects/components/create-project-dialog.tsx:347
+#: src/features/projects/components/create-project-dialog.tsx:352
 msgid "My project"
 msgstr "ໂຄງການຂອງຂ້ອຍ"
 
@@ -1867,9 +1711,9 @@ msgstr "ໂຄງການຂອງຂ້ອຍ"
 #: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:142
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:125
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:293
-#: src/features/editor/components/edit-dialogs.tsx:255
-#: src/features/projects/components/create-project-dialog.tsx:337
-#: src/routes/_authenticated/$projectId_.settings.tsx:111
+#: src/features/editor/components/edit-dialogs.tsx:258
+#: src/features/projects/components/create-project-dialog.tsx:342
+#: src/routes/_authenticated/$projectId_.settings.tsx:115
 msgid "Name"
 msgstr "ຊື່"
 
@@ -1881,7 +1725,7 @@ msgstr "ຊື່ບໍ່ສາມາດມີຕົວອັກສອນ < ຫ
 msgid "Name cannot contain angle brackets, backslash, semicolon, quotes or backticks"
 msgstr "ຊື່ບໍ່ສາມາດມີວົງເລັບແຫຼມ, ແບັກສະແລດ, ເຄື່ອງໝາຍຈຸດຄ້ຳ, ເຄື່ອງໝາຍຄຳເວົ້າ ຫຼື ແບັກຕິກ"
 
-#: src/features/projects/components/create-project-dialog.tsx:97
+#: src/features/projects/components/create-project-dialog.tsx:102
 msgid "Name is required"
 msgstr "ຕ້ອງການຊື່"
 
@@ -1891,7 +1735,7 @@ msgid "Name must be 1000 characters or less"
 msgstr "ຊື່ຕ້ອງມີ 1000 ຕົວອັກສອນຫຼືໜ້ອຍກວ່າ"
 
 #: ../../../lib/web/src/features/errors/general-error.tsx:53
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:322
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:313
 msgid "Network error"
 msgstr "ຂໍ້ຜິດພາດເຄືອຂ່າຍ"
 
@@ -1911,12 +1755,12 @@ msgstr "{className} ໃໝ່"
 msgid "New game"
 msgstr "ເກມໃໝ່"
 
-#: src/features/projects/components/create-project-dialog.tsx:454
+#: src/features/projects/components/create-project-dialog.tsx:459
 msgid "Next"
 msgstr "ຕໍ່ໄປ"
 
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:527
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:532
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:525
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:530
 msgid "Next image"
 msgstr "ຮູບຕໍ່ໄປ"
 
@@ -1936,19 +1780,19 @@ msgstr "ບໍ່ມີກົດການເຂົ້າເຖິງທີ່ຕ
 msgid "No activity yet"
 msgstr "ຍັງບໍ່ມີກິດຈະກຳ"
 
-#: src/features/requests/components/branch-select.tsx:76
+#: src/features/requests/components/branch-select.tsx:81
 msgid "No branches found"
 msgstr "ບໍ່ພົບສາຂາ"
 
-#: src/features/requests/components/diff-stats.tsx:59
+#: src/features/requests/components/diff-stats.tsx:65
 msgid "No changes detected"
 msgstr "ບໍ່ພົບການປ່ຽນແປງ"
 
-#: src/features/requests/components/diff-viewer.tsx:404
+#: src/features/requests/components/diff-viewer.tsx:402
 msgid "No changes to display"
 msgstr "ບໍ່ມີການປ່ຽນແປງທີ່ຈະສະແດງ"
 
-#: src/routes/$projectId.diff.tsx:157
+#: src/routes/$projectId.diff.tsx:160
 msgid "No changes were found for the selected comparison."
 msgstr "ບໍ່ພົບການປ່ຽນແປງສຳລັບການປຽບທຽບທີ່ເລືອກ."
 
@@ -1956,11 +1800,7 @@ msgstr "ບໍ່ພົບການປ່ຽນແປງສຳລັບການ
 msgid "No comments yet"
 msgstr "ຍັງບໍ່ມີຄຳເຫັນ"
 
-#: ../../../lib/web/src/features/accounts/account-manager.tsx:295
-msgid "No connected accounts"
-msgstr "ບໍ່ມີບັນຊີທີ່ເຊື່ອມຕໍ່"
-
-#: src/routes/$projectId.diff.tsx:156
+#: src/routes/$projectId.diff.tsx:159
 msgid "No diff available"
 msgstr "ບໍ່ມີ diff"
 
@@ -1980,15 +1820,11 @@ msgstr "ຍັງບໍ່ສາມາດສ້າງປະເພດລາຍກ
 msgid "No matching objects"
 msgstr "ບໍ່ມີວັດຖຸທີ່ກົງກັນ"
 
-#: src/features/requests/components/request-panel.tsx:110
+#: src/features/requests/components/request-panel.tsx:119
 msgid "No merge requests"
 msgstr "ບໍ່ມີຄຳຮ້ອງຂໍລວມ"
 
-#: ../../../lib/web/src/components/notifications-dropdown.tsx:193
-msgid "No notifications yet"
-msgstr "ຍັງບໍ່ມີການແຈ້ງເຕືອນ"
-
-#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:336
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:341
 #: ../../../lib/web/src/components/person-picker.tsx:84
 msgid "No people found"
 msgstr "ບໍ່ພົບຄົນ"
@@ -1997,27 +1833,21 @@ msgstr "ບໍ່ພົບຄົນ"
 msgid "No places found"
 msgstr "ບໍ່ພົບສະຖານທີ່"
 
-#: ../../../lib/web/src/components/profile-dropdown.tsx:58
-msgid "No profile"
-msgstr "ບໍ່ມີໂປຣໄຟລ໌"
-
 #: src/features/projects/components/inline-project-search.tsx:88
-#: src/routes/_authenticated/find.tsx:43
+#: src/routes/_authenticated/find.tsx:42
 msgid "No projects found"
 msgstr "ບໍ່ພົບໂຄງການ"
 
-#: src/features/requests/components/repository-select.tsx:64
+#: src/features/requests/components/repository-select.tsx:69
 msgid "No repositories available"
 msgstr "ບໍ່ມີ repository ທີ່ມີຢູ່"
 
 #: ../../../lib/web/src/components/inline-entity-search.tsx:64
-#: ../../../lib/web/src/components/search-entity-dialog.tsx:82
 #: ../../../lib/web/src/components/search-entity-page.tsx:73
 msgid "No results found"
 msgstr "ບໍ່ພົບຜົນລັບ"
 
 #: ../../../lib/web/src/components/command-menu.tsx:55
-#: ../../../lib/web/src/components/data-table/faceted-filter.tsx:94
 msgid "No results found."
 msgstr "ບໍ່ພົບຜົນ."
 
@@ -2031,11 +1861,11 @@ msgstr "ບໍ່ມີສະຖານະ"
 msgid "No time zone found."
 msgstr "ບໍ່ພົບເຂດເວລາ."
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:104
+#: ../../../lib/web/src/components/notification-category-button.tsx:106
 msgid "No topic record yet — try again after the next notification."
 msgstr "ຍັງບໍ່ມີບັນທຶກຫົວຂໍ້ — ລອງໃໝ່ຫຼັງຈາກການແຈ້ງເຕືອນຄັ້ງຕໍ່ໄປ."
 
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:124
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:139
 msgid "No unread notifications"
 msgstr "ບໍ່ມີການແຈ້ງເຕືອນທີ່ບໍ່ໄດ້ອ່ານ"
 
@@ -2060,20 +1890,19 @@ msgstr "ບໍ່ມີການເບິ່ງ"
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:491
 #: ../../../lib/web/src/components/person-picker.tsx:350
 #: ../../../lib/web/src/lib/preference-utils.ts:100
-#: ../../../lib/web/src/lib/preference-utils.ts:120
-#: src/features/editor/components/edit-dialogs.tsx:293
 #: src/features/editor/components/edit-dialogs.tsx:296
+#: src/features/editor/components/edit-dialogs.tsx:299
 #: src/features/objects/components/object-detail-panel.tsx:537
 #: src/features/objects/components/object-detail-panel.tsx:550
 #: src/features/objects/components/object-detail-panel.tsx:555
 msgid "None"
 msgstr "ບໍ່ມີ"
 
-#: ../../../lib/web/src/lib/preference-utils.ts:129
+#: ../../../lib/web/src/lib/preference-utils.ts:122
 msgid "Normal"
 msgstr "ປົກກະຕິ"
 
-#: src/features/requests/components/request-panel.tsx:248
+#: src/features/requests/components/request-panel.tsx:257
 msgid "Not configured"
 msgstr "ບໍ່ໄດ້ຕັ້ງຄ່າ"
 
@@ -2090,16 +1919,8 @@ msgstr "ບໍ່ໄດ້ຕັ້ງຄ່າ"
 msgid "Nothing found"
 msgstr "ບໍ່ພົບຫຍັງ"
 
-#: ../../../lib/web/src/components/notifications-dropdown.tsx:136
-#: ../../../lib/web/src/components/notifications-dropdown.tsx:150
-#: ../../../lib/web/src/components/notifications-dropdown.tsx:236
-#: ../../../lib/web/src/components/notifications-dropdown.tsx:257
-#: ../../../lib/web/src/components/notifications-dropdown.tsx:261
-msgid "Notifications"
-msgstr "ການແຈ້ງເຕືອນ"
-
 #. placeholder {0}: unread.length
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:185
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:200
 msgid "Notifications: {0}"
 msgstr "ການແຈ້ງເຕືອນ: {0}"
 
@@ -2117,7 +1938,7 @@ msgstr "ເປີດ"
 msgid "Oops! Page Not Found!"
 msgstr "ອຸບຍ! ບໍ່ພົບໜ້າ!"
 
-#: src/features/requests/components/request-panel.tsx:278
+#: src/features/requests/components/request-panel.tsx:287
 msgctxt "state"
 msgid "Open"
 msgstr "ເປີດ"
@@ -2127,18 +1948,13 @@ msgstr "ເປີດ"
 msgid "Open {0}"
 msgstr "ເປີດ {0}"
 
-#: ../../../lib/web/src/features/accounts/account-manager.tsx:156
-#: ../../../lib/web/src/features/accounts/account-manager.tsx:166
-msgid "Open account actions"
-msgstr "ເປີດການກະທຳບັນຊີ"
-
 #: ../../../lib/web/src/components/layout/nav-group.tsx:199
 #: ../../../lib/web/src/components/layout/nav-group.tsx:204
 msgid "Open actions"
 msgstr "ເປີດການກະທຳ"
 
-#: src/features/editor/components/edit-dialogs.tsx:236
-#: src/features/editor/components/edit-dialogs.tsx:241
+#: src/features/editor/components/edit-dialogs.tsx:239
+#: src/features/editor/components/edit-dialogs.tsx:244
 msgid "Open class actions"
 msgstr "ເປີດການກະທຳຄລາສ"
 
@@ -2155,11 +1971,6 @@ msgstr "ເປີດເມນູ"
 msgid "Open navigation"
 msgstr "ເປີດການນຳທາງ"
 
-#: ../../../lib/web/src/components/layout/top-nav.tsx:38
-#: ../../../lib/web/src/components/layout/top-nav.tsx:44
-msgid "Open navigation menu"
-msgstr "ເປີດເມນູການນຳທາງ"
-
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:105
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:111
 msgid "Open option actions"
@@ -2172,11 +1983,6 @@ msgstr "ເປີດການກະທຳໜ້າ"
 #: ../../../lib/web/src/components/entity/keyboard-shortcuts-help.tsx:30
 msgid "Open selected card"
 msgstr "ເປີດກາດທີ່ເລືອກ"
-
-#: ../../../lib/web/src/components/config-drawer.tsx:58
-#: ../../../lib/web/src/components/config-drawer.tsx:66
-msgid "Open theme settings"
-msgstr "ເປີດການຕັ້ງຄ່າທີມ"
 
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:274
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:279
@@ -2206,11 +2012,6 @@ msgstr "ອື່ນໆ"
 msgid "Owner"
 msgstr "ເຈົ້າຂອງ"
 
-#: ../../../lib/web/src/components/data-table/pagination.tsx:43
-#: ../../../lib/web/src/components/data-table/pagination.tsx:71
-msgid "Page {currentPage} of {totalPages}"
-msgstr "ໜ້າ {currentPage} ຈາກ {totalPages}"
-
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:530
 #: src/features/objects/components/object-detail-panel.tsx:533
 msgid "Parent"
@@ -2232,17 +2033,13 @@ msgstr "ກະແຈຜ່ານ"
 msgid "Pattern (regex)"
 msgstr "ຮູບແບບ (regex)"
 
-#: ../../../lib/web/src/components/date-picker.tsx:20
-msgid "Pick a date"
-msgstr "ເລືອກວັນທີ"
-
 #: src/routes/_authenticated/$projectId/index.tsx:138
 msgid "Please add one or more classes to the project design."
 msgstr "ກະລຸນາເພີ່ມຄລາສໜຶ່ງຫຼືຫຼາຍຄລາສໃສ່ການອອກແບບໂຄງການ."
 
 #: ../../../lib/web/src/components/comment-composer.tsx:89
 #: ../../../lib/web/src/features/errors/general-error.tsx:54
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:323
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:314
 msgid "Please check your internet connection and try again."
 msgstr "ກະລຸນາກວດສອບການເຊື່ອມຕໍ່ອິນເຕີເນັດຂອງທ່ານ ແລະ ລອງໃໝ່ອີກຄັ້ງ."
 
@@ -2250,7 +2047,7 @@ msgstr "ກະລຸນາກວດສອບການເຊື່ອມຕໍ່
 msgid "Please log in with the appropriate credentials <0/> to access this resource."
 msgstr "ກະລຸນາເຂົ້າສູ່ລະບົບດ້ວຍຂໍ້ມູນປະຈຳຕົວທີ່ເໝາະສົມ <0/> ເພື່ອເຂົ້າເຖິງຊັບພະຍາກອນນີ້."
 
-#: src/features/projects/components/create-project-dialog.tsx:113
+#: src/features/projects/components/create-project-dialog.tsx:118
 msgid "Please select a template"
 msgstr "ກະລຸນາເລືອກແມ່ແບບ"
 
@@ -2270,21 +2067,21 @@ msgstr "ໂພສ"
 msgid "Posts and comments"
 msgstr "ໂພສແລະຄຳເຫັນ"
 
-#: src/features/projects/components/create-project-dialog.tsx:359
+#: src/features/projects/components/create-project-dialog.tsx:364
 #: src/routes/_authenticated/$projectId_.settings.tsx:85
 msgid "Prefix"
 msgstr "ຄຳນຳໜ້າ"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:91
-msgid "Prefix can only contain letters, numbers, and hyphens"
-msgstr "ຄຳນຳໜ້າສາມາດມີໄດ້ສະເພາະໂຕອັກສອນ, ຕົວເລກ, ແລະ ຂີດກາງເທົ່ານັ້ນ"
+#: src/routes/_authenticated/$projectId_.settings.tsx:95
+msgid "Prefix can only contain lowercase letters, numbers, and hyphens"
+msgstr ""
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:93
-msgid "Prefix must be 10 characters or less"
-msgstr "ຄຳນຳໜ້າຕ້ອງມີ 10 ຕົວອັກສອນ ຫຼື ໜ້ອຍກວ່າ"
+#: src/routes/_authenticated/$projectId_.settings.tsx:97
+msgid "Prefix must be 20 characters or less"
+msgstr ""
 
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:511
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:516
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:509
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:514
 msgid "Previous image"
 msgstr "ຮູບກ່ອນໜ້າ"
 
@@ -2297,10 +2094,6 @@ msgstr "ຄວາມເປັນສ່ວນຕົວ"
 msgid "Processing…"
 msgstr "ກຳລັງປະມວນຜົນ…"
 
-#: ../../../lib/web/src/components/profile-dropdown.tsx:114
-msgid "Profile"
-msgstr "ໂປຣໄຟລ໌"
-
 #: src/routes/_authenticated/$projectId/$objectId.tsx:62
 #: src/routes/_authenticated/$projectId/index.tsx:82
 msgid "Project"
@@ -2310,11 +2103,11 @@ msgstr "ໂຄງການ"
 msgid "Project actions"
 msgstr "ການກະທຳໂຄງການ"
 
-#: src/features/projects/components/create-project-dialog.tsx:128
+#: src/features/projects/components/create-project-dialog.tsx:133
 msgid "Project created"
 msgstr "ສ້າງໂຄງການແລ້ວ"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:128
+#: src/routes/_authenticated/$projectId_.settings.tsx:132
 msgid "Project deleted"
 msgstr "ລຶບໂຄງການແລ້ວ"
 
@@ -2330,19 +2123,19 @@ msgstr "ສະມາຊິກໂຄງການ"
 msgid "Project name is required"
 msgstr "ຕ້ອງການຊື່ໂຄງການ"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:106
+#: src/routes/_authenticated/$projectId_.settings.tsx:110
 msgid "Project not found"
 msgstr "ບໍ່ພົບໂຄງການ"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:105
+#: src/routes/_authenticated/$projectId_.settings.tsx:109
 msgid "Project settings"
 msgstr "ການຕັ້ງຄ່າໂຄງການ"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:108
+#: src/routes/_authenticated/$projectId_.settings.tsx:112
 msgid "Project unavailable"
 msgstr "ໂຄງການບໍ່ມີ"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:117
+#: src/routes/_authenticated/$projectId_.settings.tsx:121
 msgid "Project updated"
 msgstr "ອັບເດດໂຄງການແລ້ວ"
 
@@ -2383,7 +2176,6 @@ msgstr "ພ້ອມລວມ"
 msgid "Rebase and merge"
 msgstr "Rebase ແລະລວມ"
 
-#: ../../../lib/web/src/components/search-entity-dialog.tsx:220
 #: ../../../lib/web/src/components/search-entity-page.tsx:243
 msgid "Recommended"
 msgstr "ແນະນຳ"
@@ -2421,8 +2213,7 @@ msgstr "ສຳພັດພາຍໃນ 24 ຊົ່ວໂມງ, ຖ້າບໍ
 #: ../../../lib/web/src/components/attachment-composer.tsx:330
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:190
 #: ../../../lib/web/src/features/access/access-list.tsx:270
-#: ../../../lib/web/src/features/accounts/account-manager.tsx:180
-#: src/features/projects/components/create-project-dialog.tsx:434
+#: src/features/projects/components/create-project-dialog.tsx:439
 msgid "Remove"
 msgstr "ລຶບອອກ"
 
@@ -2447,8 +2238,8 @@ msgid "Remove access?"
 msgstr "ລຶບການເຂົ້າເຖິງ?"
 
 #. placeholder {0}: field.name || field.id
-#: src/features/editor/components/edit-dialogs.tsx:394
-#: src/features/editor/components/edit-dialogs.tsx:399
+#: src/features/editor/components/edit-dialogs.tsx:397
+#: src/features/editor/components/edit-dialogs.tsx:402
 msgid "Remove field {0}"
 msgstr "ລຶບຊ່ອງ {0}"
 
@@ -2457,7 +2248,7 @@ msgstr "ລຶບຊ່ອງ {0}"
 msgid "Remove interest"
 msgstr "ລຶບຄວາມສົນໃຈ"
 
-#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:666
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:674
 msgid "Remove item"
 msgstr "ລຶບລາຍການ"
 
@@ -2466,7 +2257,7 @@ msgstr "ລຶບລາຍການ"
 msgid "Remove link"
 msgstr "ລຶບລິ້ງ"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:135
+#: src/routes/_authenticated/$projectId_.settings.tsx:139
 msgid "Removing access..."
 msgstr "ກຳລັງລຶບການເຂົ້າເຖິງ..."
 
@@ -2505,7 +2296,7 @@ msgstr "ຕອບ"
 msgid "Reply to {0}..."
 msgstr "ຕອບ {0}..."
 
-#: src/features/editor/components/edit-dialogs.tsx:334
+#: src/features/editor/components/edit-dialogs.tsx:337
 msgid "Requests"
 msgstr "ຄຳຮ້ອງຂໍ"
 
@@ -2516,20 +2307,6 @@ msgstr "ຕ້ອງການ"
 #: ../../../lib/web/src/components/step-up-dialog.tsx:370
 msgid "Resend email"
 msgstr "ສົ່ງອີເມວອີກຄັ້ງ"
-
-#: ../../../lib/web/src/components/config-drawer.tsx:87
-#: ../../../lib/web/src/components/data-table/toolbar.tsx:82
-msgid "Reset"
-msgstr "ຣີເຊັດ"
-
-#: ../../../lib/web/src/components/config-drawer.tsx:122
-#: ../../../lib/web/src/components/config-drawer.tsx:127
-msgid "Reset {title}"
-msgstr "ຣີເຊັດ {title}"
-
-#: ../../../lib/web/src/components/config-drawer.tsx:85
-msgid "Reset all settings to default values"
-msgstr "ຣີເຊັດການຕັ້ງຄ່າທັງໝົດເປັນຄ່າເລີ່ມຕົ້ນ"
 
 #: src/features/requests/components/conflict-list.tsx:40
 msgid "Resolve these conflicts manually before merging."
@@ -2555,10 +2332,6 @@ msgstr "ຖອນການເຂົ້າເຖິງ"
 msgid "Revoke RSS access?"
 msgstr "ຖອນສິດເຂົ້າເຖິງ RSS ບໍ?"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:362
-msgid "Right to Left"
-msgstr "ຂວາໄປຊ້າຍ"
-
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:150
 #: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:168
 msgid "Rows"
@@ -2567,10 +2340,6 @@ msgstr "ແຖວ"
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:373
 msgid "Rows group by"
 msgstr "ແຖວຈັດກຸ່ມຕາມ"
-
-#: ../../../lib/web/src/components/data-table/pagination.tsx:65
-msgid "Rows per page"
-msgstr "ແຖວຕໍ່ໜ້າ"
 
 #: ../../../lib/web/src/components/options-menu.tsx:131
 msgid "RSS access revoked"
@@ -2597,7 +2366,7 @@ msgstr "ວັນເສົາ"
 msgid "Save"
 msgstr "ບັນທຶກ"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:116
+#: src/routes/_authenticated/$projectId_.settings.tsx:120
 msgid "Saving..."
 msgstr "ກຳລັງບັນທຶກ..."
 
@@ -2608,7 +2377,7 @@ msgstr "ກຳລັງບັນທຶກ..."
 msgid "Search"
 msgstr "ຄົ້ນຫາ"
 
-#: src/routes/_authenticated/find.tsx:42
+#: src/routes/_authenticated/find.tsx:41
 msgid "Search by name, ID, fingerprint, or URL..."
 msgstr "ຄົ້ນຫາຕາມຊື່, ID, ລາຍນິ້ວມື, ຫຼື URL..."
 
@@ -2656,12 +2425,10 @@ msgstr "ຄົ້ນຫາ, ເບິ່ງ, ແລະຈັດລຽງມຸ�
 #: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:255
 #: ../../../lib/web/src/components/inline-entity-search.tsx:63
 #: ../../../lib/web/src/components/person-picker.tsx:324
-#: ../../../lib/web/src/components/search-entity-dialog.tsx:81
 #: ../../../lib/web/src/components/search-entity-page.tsx:72
 msgid "Search..."
 msgstr "ຄົ້ນຫາ..."
 
-#: ../../../lib/web/src/components/search-entity-dialog.tsx:178
 #: ../../../lib/web/src/components/search-entity-page.tsx:201
 #: ../../../lib/web/src/features/access/access-dialog.tsx:202
 msgid "Searching..."
@@ -2670,11 +2437,6 @@ msgstr "ກຳລັງຄົ້ນຫາ..."
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:141
 msgid "Select"
 msgstr "ເລືອກ"
-
-#. placeholder {0}: item.label.toLowerCase()
-#: ../../../lib/web/src/components/config-drawer.tsx:149
-msgid "Select {0}"
-msgstr "ເລືອກ {0}"
 
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:356
 msgid "Select a field"
@@ -2692,10 +2454,6 @@ msgstr "ເລືອກຜູ້ໃຊ້, ກຸ່ມ, ຫຼືກົດອ�
 msgid "Select access rule"
 msgstr "ເລືອກກົດການເຂົ້າເຖິງ"
 
-#: ../../../lib/web/src/features/accounts/account-picker.tsx:34
-msgid "Select account"
-msgstr "ເລືອກບັນຊີ"
-
 #: ../../../lib/web/src/features/accounts/account-add.tsx:142
 msgid "Select account type"
 msgstr "ເລືອກປະເພດບັນຊີ"
@@ -2707,10 +2465,6 @@ msgstr "ເລືອກ branch"
 #: ../../../lib/web/src/features/access/access-dialog.tsx:231
 msgid "Select group"
 msgstr "ເລືອກກຸ່ມ"
-
-#: ../../../lib/web/src/components/config-drawer.tsx:305
-msgid "Select layout style"
-msgstr "ເລືອກຮູບແບບການວາງ"
 
 #: ../../../lib/web/src/components/place-picker.tsx:49
 msgid "Select location"
@@ -2732,26 +2486,10 @@ msgstr "ເລືອກບັດກ່ອນໜ້າ"
 msgid "Select repository"
 msgstr "ເລືອກ repository"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:247
-msgid "Select sidebar style"
-msgstr "ເລືອກຮູບແບບແຖບຂ້າງ"
-
-#: ../../../lib/web/src/components/config-drawer.tsx:349
-msgid "Select site direction"
-msgstr "ເລືອກທິດທາງເວັບໄຊ"
-
-#: ../../../lib/web/src/components/config-drawer.tsx:203
-msgid "Select theme preference"
-msgstr "ເລືອກຄວາມຕ້ອງການຮູບແບບ"
-
-#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:252
-#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:335
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:257
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:340
 msgid "Select..."
 msgstr "ເລືອກ..."
-
-#: ../../../lib/web/src/components/data-table/bulk-actions.tsx:209
-msgid "selected"
-msgstr "ເລືອກແລ້ວ"
 
 #. placeholder {0}: getSelectedName()
 #: ../../../lib/web/src/features/access/access-dialog.tsx:309
@@ -2771,16 +2509,16 @@ msgstr "ສົ່ງອີເມວ"
 msgid "Send message"
 msgstr "ສົ່ງຂໍ້ຄວາມ"
 
-#: ../../../lib/web/src/lib/preference-utils.ts:140
+#: ../../../lib/web/src/lib/preference-utils.ts:133
 msgid "Serif"
 msgstr "ເຊຣິບ"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:115
+#: src/routes/_authenticated/$projectId_.settings.tsx:119
 msgid "Server"
 msgstr "ເຊີບເວີ"
 
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:279
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:305
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:270
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:296
 msgid "Server error"
 msgstr "ຂໍ້ຜິດພາດເຊີບເວີ"
 
@@ -2789,7 +2527,7 @@ msgstr "ຂໍ້ຜິດພາດເຊີບເວີ"
 msgid "Server rules"
 msgstr "ກົດລະບຽບເຊີບເວີ"
 
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:229
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:220
 msgid "Session expired. Please log in again."
 msgstr "ເຊສຊັນໝົດອາຍຸແລ້ວ. ກະລຸນາເຂົ້າສູ່ລະບົບອີກຄັ້ງ."
 
@@ -2797,14 +2535,14 @@ msgstr "ເຊສຊັນໝົດອາຍຸແລ້ວ. ກະລຸນາ�
 msgid "Set origin and destination"
 msgstr "ຕັ້ງຕົ້ນທາງແລະປາຍທາງ"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:132
+#: src/routes/_authenticated/$projectId_.settings.tsx:136
 msgid "Setting access..."
 msgstr "ກຳລັງຕັ້ງຄ່າການເຂົ້າເຖິງ..."
 
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx:119
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx:125
 #: ../../../lib/web/src/components/options-menu.tsx:196
-#: src/routes/_authenticated/$projectId_.settings.tsx:99
+#: src/routes/_authenticated/$projectId_.settings.tsx:103
 #: src/routes/_authenticated/$projectId/index.tsx:173
 msgid "Settings"
 msgstr "ການຕັ້ງຄ່າ"
@@ -2817,10 +2555,6 @@ msgstr "ສະແດງ classes"
 msgid "Show fields"
 msgstr "ສະແດງ fields"
 
-#: ../../../lib/web/src/components/password-input.tsx:27
-msgid "Show password"
-msgstr "ສະແດງລະຫັດຜ່ານ"
-
 #: ../../../lib/web/src/components/entity/keyboard-shortcuts-help.tsx:33
 msgid "Show this help"
 msgstr "ສະແດງວິທີໃຊ້ນີ້"
@@ -2829,9 +2563,7 @@ msgstr "ສະແດງວິທີໃຊ້ນີ້"
 msgid "Showing {totalShown} of {total}"
 msgstr "ກຳລັງສະແດງ {totalShown} ຈາກ {total}"
 
-#: ../../../lib/web/src/components/config-drawer.tsx:239
-#: ../../../lib/web/src/components/config-drawer.tsx:263
-#: ../../../lib/web/src/components/ui/sidebar.tsx:237
+#: ../../../lib/web/src/components/ui/sidebar.tsx:257
 msgid "Sidebar"
 msgstr "ແຖບຂ້າງ"
 
@@ -2849,12 +2581,8 @@ msgstr "ກຳລັງອອກຈາກລະບົບ..."
 msgid "Single line of text only"
 msgstr "ບັນທັດດຽວຂອງຂໍ້ຄວາມເທົ່ານັ້ນ"
 
-#: ../../../lib/web/src/components/skip-to-main.tsx:11
-msgid "Skip to Main"
-msgstr "ຂ້າມໄປຫາຫຼັກ"
-
 #: ../../../lib/web/src/lib/preference-utils.ts:101
-#: ../../../lib/web/src/lib/preference-utils.ts:128
+#: ../../../lib/web/src/lib/preference-utils.ts:121
 msgid "Small"
 msgstr "ນ້ອຍ"
 
@@ -2862,7 +2590,7 @@ msgstr "ນ້ອຍ"
 msgid "Sort"
 msgstr "ຈັດລຽງ"
 
-#: src/features/requests/components/request-panel.tsx:325
+#: src/features/requests/components/request-panel.tsx:334
 msgid "Source"
 msgstr "ແຫຼ່ງ"
 
@@ -2874,7 +2602,7 @@ msgstr "ແຫຼ່ງ"
 msgid "Spacious"
 msgstr "ກວ້າງຂວາງ"
 
-#: src/routes/$projectId.diff.tsx:121
+#: src/routes/$projectId.diff.tsx:124
 msgid "Split"
 msgstr "ແຍກ"
 
@@ -2885,10 +2613,6 @@ msgstr "Squash ແລະ merge"
 #: ../../../lib/web/src/components/entity/entity-comment-list.tsx:323
 msgid "Start the discussion by adding the first comment."
 msgstr "ເລີ່ມການສົນທະນາໂດຍການເພີ່ມຄຳເຫັນທຳອິດ."
-
-#: ../../../lib/web/src/components/coming-soon.tsx:15
-msgid "Stay tuned though!"
-msgstr "ຕິດຕາມຕໍ່ໄປ!"
 
 #: src/features/objects/components/object-detail-panel.tsx:439
 #: src/features/objects/components/object-detail-panel.tsx:448
@@ -2909,7 +2633,6 @@ msgstr "ສົ່ງການຕອບກັບ"
 
 #: ../../../lib/web/src/components/inline-entity-search.tsx:66
 #: ../../../lib/web/src/components/recommended-entities.tsx:58
-#: ../../../lib/web/src/components/search-entity-dialog.tsx:83
 #: ../../../lib/web/src/components/search-entity-page.tsx:74
 #: src/features/projects/components/inline-project-search.tsx:90
 #: src/features/projects/components/recommended-projects.tsx:58
@@ -2917,7 +2640,7 @@ msgid "Subscribe"
 msgstr "ສະໝັກສະມາຊິກ"
 
 #: src/features/projects/components/inline-project-search.tsx:68
-#: src/routes/_authenticated/find.tsx:45
+#: src/routes/_authenticated/find.tsx:44
 msgid "Subscribed"
 msgstr "ສະໝັກສະມາຊິກແລ້ວ"
 
@@ -2928,7 +2651,7 @@ msgstr "ສະໝັກສະມາຊິກ {0} ແລ້ວ"
 
 #: src/features/projects/components/inline-project-search.tsx:67
 #: src/features/projects/components/recommended-projects.tsx:42
-#: src/routes/_authenticated/find.tsx:44
+#: src/routes/_authenticated/find.tsx:43
 msgid "Subscribing..."
 msgstr "ກຳລັງສະໝັກສະມາຊິກ..."
 
@@ -2941,16 +2664,10 @@ msgid "Switch to view 1-9"
 msgstr "ສະຫຼັບໄປເບິ່ງ 1-9"
 
 #: ../../../lib/web/src/components/audit-timeline.tsx:107
-#: ../../../lib/web/src/components/config-drawer.tsx:209
-#: ../../../lib/web/src/components/theme-switch.tsx:59
 #: ../../../lib/web/src/lib/preference-utils.ts:16
-#: ../../../lib/web/src/lib/preference-utils.ts:139
+#: ../../../lib/web/src/lib/preference-utils.ts:132
 msgid "System"
 msgstr "ລະບົບ"
-
-#: ../../../lib/web/src/components/tag-input.tsx:95
-msgid "Tag"
-msgstr "Tag"
 
 #: ../../../lib/web/src/components/post-tags.tsx:76
 msgid "Tag already exists"
@@ -2965,13 +2682,9 @@ msgstr "ແທັກຕ້ອງມີບໍ່ເກີນ 50 ຕົວອັ�
 msgid "Tags"
 msgstr "ແທັກ"
 
-#: src/features/requests/components/request-panel.tsx:333
+#: src/features/requests/components/request-panel.tsx:342
 msgid "Target"
 msgstr "ເປົ້າໝາຍ"
-
-#: ../../../lib/web/src/components/layout/team-switcher.tsx:63
-msgid "Teams/Apps"
-msgstr "ທີມ/ແອັບ"
 
 #: ../../../lib/web/src/components/server-documents-footer.tsx:19
 #: ../../../lib/web/src/features/document/document-page.tsx:42
@@ -3003,36 +2716,20 @@ msgstr "ບໍ່ພົບເນື້ອຫາທີ່ຮ້ອງຂໍ."
 msgid "The server returned a web page instead of data."
 msgstr "ເຊີບເວີສົ່ງຄືນໜ້າເວັບແທນຂໍ້ມູນ."
 
-#: ../../../lib/web/src/features/errors/maintenance-error.tsx:15
-msgid "The site is not available at the moment."
-msgstr "ເວັບໄຊທ໌ບໍ່ສາມາດໃຊ້ໄດ້ໃນຂະນະນີ້."
-
-#: ../../../lib/web/src/components/config-drawer.tsx:195
-msgid "Theme"
-msgstr "ຮູບແບບ"
-
-#: ../../../lib/web/src/components/config-drawer.tsx:70
-msgid "Theme Settings"
-msgstr "ການຕັ້ງຄ່າຮູບແບບ"
-
 #. placeholder {0}: request.target
-#: src/features/requests/components/request-panel.tsx:409
+#: src/features/requests/components/request-panel.tsx:418
 msgid "This merge request has been merged into {0}."
 msgstr "ການຮ້ອງຂໍ merge ນີ້ຖືກ merge ເຂົ້າໃນ {0} ແລ້ວ."
 
-#: src/features/requests/components/request-panel.tsx:370
+#: src/features/requests/components/request-panel.tsx:379
 msgid "This merge request is a draft and cannot be merged."
 msgstr "ການຮ້ອງຂໍ merge ນີ້ເປັນສະບັບຮ່າງແລະບໍ່ສາມາດ merge ໄດ້."
 
-#: ../../../lib/web/src/components/coming-soon.tsx:14
-msgid "This page has not been created yet."
-msgstr "ໜ້ານີ້ຍັງບໍ່ໄດ້ຖືກສ້າງຂຶ້ນ."
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:109
+#: src/routes/_authenticated/$projectId_.settings.tsx:113
 msgid "This project could not be loaded right now."
 msgstr "ບໍ່ສາມາດໂຫຼດໂຄງການນີ້ໄດ້ໃນຕອນນີ້."
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:107
+#: src/routes/_authenticated/$projectId_.settings.tsx:111
 msgid "This project may have been deleted or you don't have access to it."
 msgstr "ໂຄງການນີ້ອາດຖືກລົບແລ້ວຫຼືທ່ານບໍ່ມີສິດການເຂົ້າເຖິງ."
 
@@ -3040,7 +2737,7 @@ msgstr "ໂຄງການນີ້ອາດຖືກລົບແລ້ວຫຼ
 msgid "This will merge \"{source}\" into \"{target}\". This action cannot be undone."
 msgstr "ນີ້ຈະ merge \"{source}\" ເຂົ້າໃນ \"{target}\". ການກະທຳນີ້ຄືນບໍ່ໄດ້."
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:125
+#: src/routes/_authenticated/$projectId_.settings.tsx:129
 msgid "This will permanently delete \"{projectName}\" and all its objects, comments, and attachments. This action cannot be undone."
 msgstr "ນີ້ຈະລົບ \"{projectName}\" ແລະວັດຖຸ, ຄຳເຫັນ, ແລະໄຟລ໌ແນບທັງໝົດແບບຖາວອນ. ການກະທຳນີ້ຄືນບໍ່ໄດ້."
 
@@ -3059,26 +2756,17 @@ msgid "Thursday"
 msgstr "ວັນພະຫັດ"
 
 #: src/features/editor/components/edit-dialogs.tsx:107
-#: src/features/requests/components/request-panel.tsx:292
+#: src/features/requests/components/request-panel.tsx:301
 msgid "Title"
 msgstr "ຊື່ເລື່ອງ"
 
-#: src/features/editor/components/edit-dialogs.tsx:278
+#: src/features/editor/components/edit-dialogs.tsx:281
 msgid "Title field"
 msgstr "ຊ່ອງຊື່ເລື່ອງ"
 
 #: ../../../lib/web/src/components/travelling-picker.tsx:220
 msgid "To"
 msgstr "ໄປ"
-
-#: ../../../lib/web/src/components/data-table/view-options.tsx:37
-msgid "Toggle columns"
-msgstr "ສະຫຼັບຖັນ"
-
-#: ../../../lib/web/src/components/layout/right-panel.tsx:233
-#: ../../../lib/web/src/components/layout/right-panel.tsx:236
-msgid "Toggle right panel"
-msgstr "ສະຫຼັບແຜງດ້ານຂວາ"
 
 #: ../../../lib/web/src/components/layout/nav-group.tsx:365
 #: ../../../lib/web/src/components/layout/nav-group.tsx:372
@@ -3087,20 +2775,15 @@ msgstr "ສະຫຼັບແຜງດ້ານຂວາ"
 msgid "Toggle section"
 msgstr "ສະຫຼັບພາກສ່ວນ"
 
-#: ../../../lib/web/src/components/ui/sidebar.tsx:317
-#: ../../../lib/web/src/components/ui/sidebar.tsx:320
+#: ../../../lib/web/src/components/ui/sidebar.tsx:337
+#: ../../../lib/web/src/components/ui/sidebar.tsx:340
 msgid "Toggle sidebar"
 msgstr "ສະຫຼັບແຖບດ້ານຂ້າງ"
 
-#: ../../../lib/web/src/components/ui/sidebar.tsx:332
-#: ../../../lib/web/src/components/ui/sidebar.tsx:335
+#: ../../../lib/web/src/components/ui/sidebar.tsx:352
+#: ../../../lib/web/src/components/ui/sidebar.tsx:355
 msgid "Toggle Sidebar"
 msgstr "ສະຫຼັບແຖບຂ້າງ"
-
-#: ../../../lib/web/src/components/theme-switch.tsx:37
-#: ../../../lib/web/src/components/theme-switch.tsx:41
-msgid "Toggle theme"
-msgstr "ສະຫຼັບຮູບແບບ"
 
 #: ../../../lib/web/src/components/entity/keyboard-shortcuts-help.tsx:26
 msgid "Toggle view options"
@@ -3119,7 +2802,7 @@ msgstr "ມີຄຳຮ້ອງຂໍຫຼາຍເກີນໄປ"
 msgid "Top"
 msgstr "ເທິງ"
 
-#: src/features/editor/components/edit-dialogs.tsx:316
+#: src/features/editor/components/edit-dialogs.tsx:319
 msgid "Top level"
 msgstr "ລະດັບເທິງສຸດ"
 
@@ -3127,14 +2810,12 @@ msgstr "ລະດັບເທິງສຸດ"
 msgid "Travelling"
 msgstr "ການເດີນທາງ"
 
-#: ../../../lib/web/src/components/search-entity-dialog.tsx:194
 #: ../../../lib/web/src/components/search-entity-page.tsx:217
 msgid "Try adjusting your search terms"
 msgstr "ລອງປັບປ່ຽນຄຳຄົ້ນຫາຂອງທ່ານ"
 
 #: ../../../lib/web/src/features/errors/general-error.tsx:140
 #: ../../../lib/web/src/features/errors/general-error.tsx:180
-#: ../../../lib/web/src/features/errors/maintenance-error.tsx:19
 msgid "Try again"
 msgstr "ລອງອີກຄັ້ງ"
 
@@ -3163,7 +2844,7 @@ msgstr "ພິມເພື່ອຄົ້ນຫາຜູ້ໃຊ້"
 msgid "Type to search..."
 msgstr "ພິມເພື່ອຄົ້ນຫາ..."
 
-#: ../../../lib/web/src/lib/api-response-interceptors.ts:301
+#: ../../../lib/web/src/lib/api-response-interceptors.ts:292
 msgid "Unable to connect to remote server"
 msgstr "ບໍ່ສາມາດເຊື່ອມຕໍ່ກັບເຊີບເວີໄລຍະໄກໄດ້"
 
@@ -3172,7 +2853,7 @@ msgstr "ບໍ່ສາມາດເຊື່ອມຕໍ່ກັບເຊີບ
 msgid "Unable to redirect to login. Please try again."
 msgstr "ບໍ່ສາມາດປ່ຽນເສັ້ນທາງໄປຫາການເຂົ້າສູ່ລະບົບ. ກະລຸນາລອງອີກຄັ້ງ."
 
-#: ../../../lib/web/src/components/notification-category-button.tsx:112
+#: ../../../lib/web/src/components/notification-category-button.tsx:114
 msgid "Unassigned"
 msgstr "ບໍ່ໄດ້ມອບໝາຍ"
 
@@ -3189,7 +2870,7 @@ msgstr "ບໍ່ມີໃຫ້ບໍລິການ"
 msgid "Unexpected API error"
 msgstr "ຄວາມຜິດພາດ API ທີ່ບໍ່ຄາດຄິດ"
 
-#: src/routes/$projectId.diff.tsx:109
+#: src/routes/$projectId.diff.tsx:112
 msgid "Unified"
 msgstr "ລວມເປັນໜຶ່ງ"
 
@@ -3224,22 +2905,17 @@ msgstr "ກຳລັງຍົກເລີກການສະໝັກສະມາ
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:285
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx:103
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx:184
-#: src/features/board/components/board-card.tsx:22
-#: src/features/board/components/board-container.tsx:31
+#: src/features/board/components/board-container.tsx:29
 #: src/features/editor/components/design-preview.tsx:31
 msgid "Untitled"
 msgstr "ບໍ່ມີຊື່"
-
-#: ../../../lib/web/src/features/accounts/account-manager.tsx:135
-msgid "Unverified"
-msgstr "ບໍ່ໄດ້ຢືນຢັນ"
 
 #: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:57
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:494
 msgid "Updated"
 msgstr "ອັບເດດແລ້ວ"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:138
+#: src/routes/_authenticated/$projectId_.settings.tsx:142
 msgid "Updating access..."
 msgstr "ກຳລັງອັບເດດການເຂົ້າເຖິງ..."
 
@@ -3248,7 +2924,7 @@ msgstr "ກຳລັງອັບເດດການເຂົ້າເຖິງ...
 msgid "Upload"
 msgstr "ອັບໂຫຼດ"
 
-#: src/features/projects/components/create-project-dialog.tsx:408
+#: src/features/projects/components/create-project-dialog.tsx:413
 #: src/routes/_authenticated/$projectId/design.tsx:58
 msgid "Upload .json file"
 msgstr "ອັບໂຫຼດໄຟລ໌ .json"
@@ -3263,7 +2939,7 @@ msgstr "ໃຊ້ passkey ຂອງທ່ານ"
 
 #. placeholder {0}: prefix || "project"
 #. placeholder {1}: prefix || "project"
-#: src/features/projects/components/create-project-dialog.tsx:376
+#: src/features/projects/components/create-project-dialog.tsx:381
 msgid "Used for readable IDs like {0}-1, {1}-2"
 msgstr "ໃຊ້ສຳລັບ ID ທີ່ອ່ານໄດ້ເຊັ່ນ {0}-1, {1}-2"
 
@@ -3277,16 +2953,7 @@ msgstr "ຜູ້ໃຊ້"
 msgid "Verification code"
 msgstr "ລະຫັດການຢືນຢັນ"
 
-#: ../../../lib/web/src/features/accounts/account-manager.tsx:255
-msgid "Verification code sent"
-msgstr "ລະຫັດການຢືນຢັນຖືກສົ່ງແລ້ວ"
-
-#: ../../../lib/web/src/features/accounts/account-manager.tsx:248
-msgid "Verification failed"
-msgstr "ການຢືນຢັນລົ້ມເຫຼວ"
-
 #: ../../../lib/web/src/components/step-up-dialog.tsx:391
-#: ../../../lib/web/src/features/accounts/account-manager.tsx:172
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:111
 msgid "Verify"
 msgstr "ຢືນຢັນ"
@@ -3300,20 +2967,12 @@ msgid "Video thumbnail"
 msgstr "ຮູບຫຍໍ້ວິດີໂອ"
 
 #. placeholder {0}: currentMedia.name
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:317
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:315
 msgid "Video viewer: {0}"
 msgstr "ຕົວເບິ່ງວິດີໂອ: {0}"
 
-#: ../../../lib/web/src/components/data-table/view-options.tsx:33
-msgid "View"
-msgstr "ເບິ່ງ"
-
-#: ../../../lib/web/src/components/notifications-dropdown.tsx:177
-msgid "View all"
-msgstr "ເບິ່ງທັງໝົດ"
-
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:205
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:213
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:220
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:228
 msgid "View all notifications"
 msgstr "ເບິ່ງການແຈ້ງເຕືອນທັງໝົດ"
 
@@ -3333,7 +2992,7 @@ msgstr "ເບິ່ງເທົ່ານັ້ນ"
 msgid "View options"
 msgstr "ຕົວເລືອກການເບິ່ງ"
 
-#: src/features/editor/components/design-editor.tsx:457
+#: src/features/editor/components/design-editor.tsx:487
 msgid "Views"
 msgstr "ການເບິ່ງ"
 
@@ -3351,7 +3010,7 @@ msgstr "ເບິ່ງແລ້ວ"
 msgid "Watched only"
 msgstr "ເບິ່ງເທົ່ານັ້ນ"
 
-#: src/features/projects/components/create-project-dialog.tsx:468
+#: src/features/projects/components/create-project-dialog.tsx:473
 msgid "We have auto-selected the best matching template."
 msgstr "ພວກເຮົາໄດ້ເລືອກແມ່ແບບທີ່ເໝາະສົມທີ່ສຸດໃຫ້ໂດຍອັດຕະໂນມັດແລ້ວ."
 
@@ -3359,18 +3018,6 @@ msgstr "ພວກເຮົາໄດ້ເລືອກແມ່ແບບທີ່
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:63
 msgid "We sent a verification code to <0>{0}</0>. Enter the code below to verify your email address."
 msgstr "ພວກເຮົາໄດ້ສົ່ງລະຫັດຢືນຢັນໄປທີ່ <0>{0}</0>. ປ້ອນລະຫັດຂ້າງລຸ່ມນີ້ເພື່ອຢືນຢັນທີ່ຢູ່ອີເມວຂອງທ່ານ."
-
-#: ../../../lib/web/src/features/errors/maintenance-error.tsx:16
-msgid "We'll be back online shortly."
-msgstr "ພວກເຮົາຈະກັບມາອອນລາຍໃນບໍ່ຊ້າ."
-
-#: ../../../lib/web/src/components/notifications-dropdown.tsx:197
-msgid "We'll notify you when something important happens."
-msgstr "ພວກເຮົາຈະແຈ້ງທ່ານເມື່ອມີສິ່ງສຳຄັນເກີດຂຶ້ນ."
-
-#: ../../../lib/web/src/features/errors/maintenance-error.tsx:13
-msgid "Website is under maintenance!"
-msgstr "ເວັບໄຊກຳລັງຢູ່ໃນການບຳລຸງຮັກສາ!"
 
 #: ../../../lib/web/src/lib/preference-utils.ts:56
 msgid "Wednesday"
@@ -3384,17 +3031,9 @@ msgstr "ທ່ານບໍ່ມີສິດເຂົ້າເຖິງພາກ
 msgid "You don't have access to this project."
 msgstr "ທ່ານບໍ່ມີສິດເຂົ້າເຖິງໂຄງການນີ້."
 
-#: ../../../lib/web/src/features/errors/forbidden.tsx:18
-msgid "You don't have necessary permission <0/>to view this resource."
-msgstr "ທ່ານບໍ່ມີສິດທີ່ຈຳເປັນ <0/>ໃນການເບິ່ງຊັບພະຍາກອນນີ້."
-
 #: src/features/projects/pages/projects-list-page.tsx:36
 msgid "You have no projects yet."
 msgstr "ທ່ານຍັງບໍ່ມີໂຄງການເທື່ອ."
-
-#: ../../../lib/web/src/components/notifications-dropdown.tsx:193
-msgid "You're all caught up!"
-msgstr "ທ່ານເບິ່ງໝົດແລ້ວ!"
 
 #: ../../../lib/web/src/components/restore-banner.tsx:100
 msgid "Your account was moved here from {source}. Until you delete it there, messages and notifications may reach both servers, some of your content keeps being served from the old server, and followers may take a few minutes to find you here."
@@ -3404,7 +3043,7 @@ msgstr "ບັນຊີຂອງທ່ານໄດ້ຍ້າຍມາທີ່
 msgid "Your attachments will be lost."
 msgstr "ໄຟລ໌ແນບຂອງທ່ານຈະສູນຫາຍ."
 
-#: src/features/projects/components/create-project-dialog.tsx:464
+#: src/features/projects/components/create-project-dialog.tsx:469
 msgid "Your backup contains objects of type:"
 msgstr "ສຳຮອງຂໍ້ມູນຂອງທ່ານມີອອບເຈັກປະເພດ:"
 

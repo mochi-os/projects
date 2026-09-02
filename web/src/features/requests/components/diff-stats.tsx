@@ -5,7 +5,7 @@
 // Mochi Application Interface Exception - see license.txt and license-exception.md.
 
 import { useMemo } from "react";
-import { Trans } from '@lingui/react/macro'
+import { Trans, Plural } from '@lingui/react/macro'
 import { useQuery } from "@tanstack/react-query";
 import { FileCode2, Plus, Minus, Loader2, FileDiff } from "lucide-react";
 import { cn } from "@mochi/web";
@@ -33,8 +33,8 @@ export function DiffStats({ repoId, base, head, diffUrl }: DiffStatsProps) {
     enabled: !!repoId && !!base && !!head,
   });
 
-  const files = useMemo(
-    () => (rawDiff ? parseDiff(rawDiff) : []),
+  const { files, truncated } = useMemo(
+    () => (rawDiff ? parseDiff(rawDiff) : { files: [], truncated: 0 }),
     [rawDiff],
   );
 
@@ -60,7 +60,7 @@ export function DiffStats({ repoId, base, head, diffUrl }: DiffStatsProps) {
     );
   }
 
-  if (files.length === 0) {
+  if (files.length === 0 && truncated === 0) {
     return (
       <div className="text-sm text-muted-foreground"><Trans>No changes detected</Trans></div>
     );
@@ -115,6 +115,11 @@ export function DiffStats({ repoId, base, head, diffUrl }: DiffStatsProps) {
           </div>
         ))}
       </div>
+      {truncated > 0 && (
+        <p className="text-xs text-muted-foreground">
+          <Plural value={truncated} one="# more file not shown" other="# more files not shown" />
+        </p>
+      )}
     </div>
   );
 }

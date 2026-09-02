@@ -5,10 +5,10 @@
 // Mochi Application Interface Exception - see license.txt and license-exception.md.
 
 import { useState, useMemo, type ReactNode } from "react";
-import { Trans } from '@lingui/react/macro'
+import { Trans, Plural } from '@lingui/react/macro'
 import { diffWords } from "diff";
 import { ChevronDown, ChevronRight, FileCode2, Plus, Minus } from "lucide-react";
-import { cn } from "@mochi/web";
+import { cn, useFormat } from "@mochi/web";
 import { parseDiff, type DiffFile, type DiffLine } from "./diff-parser";
 import {
   diffFileStatusBadgeStyles,
@@ -393,10 +393,11 @@ function SplitGroup({
 }
 
 export function DiffViewer({ diff, viewStyle }: DiffViewerProps) {
-  const files = useMemo(() => parseDiff(diff), [diff]);
+  const { files, truncated } = useMemo(() => parseDiff(diff), [diff]);
   const [collapsed, setCollapsed] = useState<Record<string, boolean>>({});
+  const { formatFileSize } = useFormat();
 
-  if (files.length === 0) {
+  if (files.length === 0 && truncated === 0) {
     return (
       <div className="text-sm text-muted-foreground p-8 text-center">
         <Trans>No changes to display</Trans>
@@ -446,6 +447,16 @@ export function DiffViewer({ diff, viewStyle }: DiffViewerProps) {
                 <p className="text-sm text-muted-foreground px-3 py-4">
                   <Trans>Binary file not shown</Trans>
                 </p>
+              ) : file.skipped ? (
+                // Core did not compare the file: it is over the ceiling it
+                // names, so there is nothing to render but the reason.
+                <p className="text-sm text-muted-foreground px-3 py-4">
+                  {file.limit ? (
+                    <Trans>Not compared: larger than {formatFileSize(file.limit)}</Trans>
+                  ) : (
+                    <Trans>Not compared: over the size limit</Trans>
+                  )}
+                </p>
               ) : viewStyle === "split" ? (
                 <SplitView file={file} />
               ) : (
@@ -455,6 +466,11 @@ export function DiffViewer({ diff, viewStyle }: DiffViewerProps) {
           )}
         </div>
       ))}
+      {truncated > 0 && (
+        <p className="text-sm text-muted-foreground px-1">
+          <Plural value={truncated} one="# more file not shown" other="# more files not shown" />
+        </p>
+      )}
     </div>
   );
 }

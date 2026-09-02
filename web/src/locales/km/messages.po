@@ -60,7 +60,7 @@ msgstr "{0} នៅពីក្រោយ"
 
 #. placeholder {0}: files.length
 #: src/features/requests/components/diff-stats.tsx:74
-#: src/features/requests/components/diff-viewer.tsx:419
+#: src/features/requests/components/diff-viewer.tsx:420
 msgid "{0} files changed"
 msgstr "{0} ឯកសារបានផ្លាស់ប្តូរ"
 
@@ -105,6 +105,11 @@ msgstr "{sentLabel} នៃ {totalLabel}"
 #: ../../../lib/web/src/components/entity/entity-board-column.tsx:530
 msgid "{totalCount, plural, one {# item} other {# items}}"
 msgstr "{totalCount, plural, other {# ធាតុ}}"
+
+#: src/features/requests/components/diff-stats.tsx:120
+#: src/features/requests/components/diff-viewer.tsx:471
+msgid "{truncated, plural, one {# more file not shown} other {# more files not shown}}"
+msgstr "{truncated, plural, other {ឯកសារ # ទៀតមិនបានបង្ហាញ}}"
 
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx:158
 msgid "{unreadCount, plural, one {Open menu (# unread notification)} other {Open menu (# unread notifications)}}"
@@ -407,7 +412,7 @@ msgstr "ត្រឡប់ទៅគម្រោង"
 msgid "Banner"
 msgstr "បដា"
 
-#: src/features/requests/components/diff-viewer.tsx:447
+#: src/features/requests/components/diff-viewer.tsx:448
 msgid "Binary file not shown"
 msgstr "ឯកសារ​គោលពីរ​មិន​ត្រូវ​បាន​បង្ហាញ​ទេ"
 
@@ -516,8 +521,8 @@ msgstr "ជ្រើសរើសហ្គេមពីរបារចំហៀង
 msgid "Choose a template"
 msgstr "ជ្រើសរើសគំរូ"
 
-#: ../../../lib/web/src/components/language-picker.tsx:264
-#: ../../../lib/web/src/components/language-picker.tsx:271
+#: ../../../lib/web/src/components/language-picker.tsx:267
+#: ../../../lib/web/src/components/language-picker.tsx:274
 msgid "Choose language"
 msgstr "ជ្រើសរើសភាសា"
 
@@ -791,6 +796,7 @@ msgstr "កំពុងបង្កើត..."
 msgid "Current location"
 msgstr "ទីតាំងបច្ចុប្បន្ន"
 
+#: ../../../lib/web/src/components/ai-prompts-editor.tsx:132
 #: ../../../lib/web/src/components/colour-picker.tsx:265
 msgid "Custom"
 msgstr "ផ្ទាល់ខ្លួន"
@@ -818,6 +824,10 @@ msgstr "កាលបរិច្ឆេទ"
 #: ../../../lib/web/src/components/game/game-draw-offer-banner.tsx:41
 msgid "Decline"
 msgstr "បដិសេធ"
+
+#: ../../../lib/web/src/components/ai-prompts-editor.tsx:129
+msgid "Default"
+msgstr "លំនាំដើម"
 
 #: ../../../lib/web/src/features/accounts/account-add.tsx:185
 msgid "Default AI account"
@@ -938,7 +948,7 @@ msgstr "រចនា បង្កើត កែសម្រួល បញ្ចេ
 msgid "Details Panel"
 msgstr "ផ្ទាំងព័ត៌មានលម្អិត"
 
-#: ../../../lib/web/src/components/language-picker.tsx:240
+#: ../../../lib/web/src/components/language-picker.tsx:243
 #: ../../../lib/web/src/components/timezone-select.tsx:46
 #: ../../../lib/web/src/components/timezone-select.tsx:83
 #: ../../../lib/web/src/lib/preference-utils.ts:23
@@ -1262,6 +1272,10 @@ msgstr "បរាជ័យក្នុងការផ្ទុកការរច
 msgid "Failed to load projects"
 msgstr "បរាជ័យក្នុងការផ្ទុកគម្រោង"
 
+#: ../../../lib/web/src/components/ai-prompts-editor.tsx:213
+msgid "Failed to load prompts"
+msgstr "បរាជ័យក្នុងការផ្ទុកប្រអប់បញ្ចូល"
+
 #: src/features/projects/components/recommended-projects.tsx:57
 msgid "Failed to load recommended projects"
 msgstr "ផ្ទុកគម្រោងដែលបានណែនាំបានបរាជ័យ"
@@ -1299,6 +1313,10 @@ msgstr "បរាជ័យក្នុងការរៀបលំដាប់វ
 msgid "Failed to reorder views"
 msgstr "បរាជ័យក្នុងការរៀបលំដាប់ទិដ្ឋភាពឡើងវិញ"
 
+#: ../../../lib/web/src/components/ai-prompts-editor.tsx:90
+msgid "Failed to reset prompt"
+msgstr "បរាជ័យក្នុងការកំណត់ប្រអប់បញ្ចូលឡើងវិញ"
+
 #: ../../../lib/web/src/components/options-menu.tsx:133
 msgid "Failed to revoke RSS access"
 msgstr "បរាជ័យក្នុងការដកហូតការចូលប្រើ RSS"
@@ -1306,6 +1324,10 @@ msgstr "បរាជ័យក្នុងការដកហូតការចូ
 #: src/features/objects/components/object-detail-panel.tsx:190
 msgid "Failed to save"
 msgstr "បរាជ័យក្នុងការរក្សាទុក"
+
+#: ../../../lib/web/src/components/ai-prompts-editor.tsx:111
+msgid "Failed to save prompt"
+msgstr "បរាជ័យក្នុងការរក្សាទុកប្រអប់បញ្ចូល"
 
 #: src/features/projects/components/inline-project-search.tsx:89
 msgid "Failed to search projects"
@@ -1788,7 +1810,7 @@ msgstr "រកមិនឃើញសាខា"
 msgid "No changes detected"
 msgstr "រកមិនឃើញការផ្លាស់ប្តូរ"
 
-#: src/features/requests/components/diff-viewer.tsx:402
+#: src/features/requests/components/diff-viewer.tsx:403
 msgid "No changes to display"
 msgstr "មិនមានការផ្លាស់ប្តូរដើម្បីបង្ហាញ"
 
@@ -1901,6 +1923,15 @@ msgstr "គ្មាន"
 #: ../../../lib/web/src/lib/preference-utils.ts:122
 msgid "Normal"
 msgstr "ធម្មតា"
+
+#. placeholder {0}: formatFileSize(file.limit)
+#: src/features/requests/components/diff-viewer.tsx:455
+msgid "Not compared: larger than {0}"
+msgstr "មិនបានប្រៀបធៀបទេ៖ ធំជាង {0}"
+
+#: src/features/requests/components/diff-viewer.tsx:457
+msgid "Not compared: over the size limit"
+msgstr "មិនបានប្រៀបធៀបទេ៖ លើសដែនកំណត់ទំហំ"
 
 #: src/features/requests/components/request-panel.tsx:257
 msgid "Not configured"
@@ -2144,6 +2175,10 @@ msgstr "បានធ្វើបច្ចុប្បន្នភាពគម្
 msgid "Projects"
 msgstr "គម្រោង"
 
+#: ../../../lib/web/src/components/ai-prompts-editor.tsx:108
+msgid "Prompt saved"
+msgstr "បានរក្សាទុក prompt"
+
 #: src/features/objects/components/object-detail-panel.tsx:379
 msgid "Properties"
 msgstr "លក្ខណៈសម្បត្តិ"
@@ -2357,6 +2392,7 @@ msgstr "បានចម្លង RSS URL ទៅ clipboard"
 msgid "Saturday"
 msgstr "ថ្ងៃសៅរ៍"
 
+#: ../../../lib/web/src/components/ai-prompts-editor.tsx:156
 #: ../../../lib/web/src/components/attachment-composer.tsx:430
 #: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:231
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:170
@@ -2366,6 +2402,7 @@ msgstr "ថ្ងៃសៅរ៍"
 msgid "Save"
 msgstr "រក្សាទុក"
 
+#: ../../../lib/web/src/components/ai-prompts-editor.tsx:156
 #: src/routes/_authenticated/$projectId_.settings.tsx:120
 msgid "Saving..."
 msgstr "កំពុងរក្សាទុក..."
@@ -2948,6 +2985,10 @@ msgstr "ប្រើសម្រាប់លេខសម្គាល់ដែល
 #: ../../../lib/web/src/features/access/access-dialog.tsx:158
 msgid "User"
 msgstr "អ្នកប្រើប្រាស់"
+
+#: ../../../lib/web/src/components/ai-prompts-editor.tsx:159
+msgid "Variables: {variables}"
+msgstr "អថេរ៖ {variables}"
 
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:73
 msgid "Verification code"

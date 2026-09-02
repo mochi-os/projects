@@ -60,7 +60,7 @@ msgstr "{0} duuba"
 
 #. placeholder {0}: files.length
 #: src/features/requests/components/diff-stats.tsx:74
-#: src/features/requests/components/diff-viewer.tsx:419
+#: src/features/requests/components/diff-viewer.tsx:420
 msgid "{0} files changed"
 msgstr "{0} faayiloleen jijjiiraman"
 
@@ -105,6 +105,11 @@ msgstr "{sentLabel} / {totalLabel}"
 #: ../../../lib/web/src/components/entity/entity-board-column.tsx:530
 msgid "{totalCount, plural, one {# item} other {# items}}"
 msgstr "{totalCount, plural, one {# wanta} other {# wantoota}}"
+
+#: src/features/requests/components/diff-stats.tsx:120
+#: src/features/requests/components/diff-viewer.tsx:471
+msgid "{truncated, plural, one {# more file not shown} other {# more files not shown}}"
+msgstr "{truncated, plural, one {Faayilli dabalataa # hin mul'ifamne} other {Faayiloonni dabalataa # hin mul'ifamne}}"
 
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx:158
 msgid "{unreadCount, plural, one {Open menu (# unread notification)} other {Open menu (# unread notifications)}}"
@@ -407,7 +412,7 @@ msgstr "Gara pirojektootaatti deebi'i"
 msgid "Banner"
 msgstr "Bannerii"
 
-#: src/features/requests/components/diff-viewer.tsx:447
+#: src/features/requests/components/diff-viewer.tsx:448
 msgid "Binary file not shown"
 msgstr "Faayiliin baayinarii hin mul'ifamne"
 
@@ -516,8 +521,8 @@ msgstr "Cinaa keessaa tapha filadhu ykn haaraa eegali."
 msgid "Choose a template"
 msgstr "Galmee filadhu"
 
-#: ../../../lib/web/src/components/language-picker.tsx:264
-#: ../../../lib/web/src/components/language-picker.tsx:271
+#: ../../../lib/web/src/components/language-picker.tsx:267
+#: ../../../lib/web/src/components/language-picker.tsx:274
 msgid "Choose language"
 msgstr "Afaan filadhu"
 
@@ -791,6 +796,7 @@ msgstr "Uumaa jira..."
 msgid "Current location"
 msgstr "Bakka ammaa"
 
+#: ../../../lib/web/src/components/ai-prompts-editor.tsx:132
 #: ../../../lib/web/src/components/colour-picker.tsx:265
 msgid "Custom"
 msgstr "Mataa keetiin"
@@ -818,6 +824,10 @@ msgstr "Guyyaa"
 #: ../../../lib/web/src/components/game/game-draw-offer-banner.tsx:41
 msgid "Decline"
 msgstr "Dhiisi"
+
+#: ../../../lib/web/src/components/ai-prompts-editor.tsx:129
+msgid "Default"
+msgstr "Idilee"
 
 #: ../../../lib/web/src/features/accounts/account-add.tsx:185
 msgid "Default AI account"
@@ -938,7 +948,7 @@ msgstr "Dizaayinii, uumuu, gulaaluu, yaada kennuu fi ilaaluu"
 msgid "Details Panel"
 msgstr "Paanelii Bal'inaan"
 
-#: ../../../lib/web/src/components/language-picker.tsx:240
+#: ../../../lib/web/src/components/language-picker.tsx:243
 #: ../../../lib/web/src/components/timezone-select.tsx:46
 #: ../../../lib/web/src/components/timezone-select.tsx:83
 #: ../../../lib/web/src/lib/preference-utils.ts:23
@@ -1262,6 +1272,10 @@ msgstr "Bocii pirojektii fe'achuu hin dandeenye"
 msgid "Failed to load projects"
 msgstr "Pirojektii fe'achuu hin dandeenye"
 
+#: ../../../lib/web/src/components/ai-prompts-editor.tsx:213
+msgid "Failed to load prompts"
+msgstr "Boorsaawwan fe'achuu hin dandeenye"
+
 #: src/features/projects/components/recommended-projects.tsx:57
 msgid "Failed to load recommended projects"
 msgstr "Pirojektota gorfaman fe'uun hin milkoofne"
@@ -1299,6 +1313,10 @@ msgstr "Iddoo deebi'ee tarreessuu hin dandeenye"
 msgid "Failed to reorder views"
 msgstr "Mul'annoo deebi'ee tarreessuu hin dandeenye"
 
+#: ../../../lib/web/src/components/ai-prompts-editor.tsx:90
+msgid "Failed to reset prompt"
+msgstr "Boorsa deebii idilee taasisuu hin dandeenye"
+
 #: ../../../lib/web/src/components/options-menu.tsx:133
 msgid "Failed to revoke RSS access"
 msgstr "Argama RSS haquun hin milkoofne"
@@ -1306,6 +1324,10 @@ msgstr "Argama RSS haquun hin milkoofne"
 #: src/features/objects/components/object-detail-panel.tsx:190
 msgid "Failed to save"
 msgstr "Olkaa'uu hin dandeenye"
+
+#: ../../../lib/web/src/components/ai-prompts-editor.tsx:111
+msgid "Failed to save prompt"
+msgstr "Boorsa olkaa'uu hin dandeenye"
 
 #: src/features/projects/components/inline-project-search.tsx:89
 msgid "Failed to search projects"
@@ -1788,7 +1810,7 @@ msgstr "Dameen hin argamne"
 msgid "No changes detected"
 msgstr "Jijjiiramni hin argamne"
 
-#: src/features/requests/components/diff-viewer.tsx:402
+#: src/features/requests/components/diff-viewer.tsx:403
 msgid "No changes to display"
 msgstr "Jijjiiramni mul'ifamu hin jiru"
 
@@ -1901,6 +1923,15 @@ msgstr "Tokko illee"
 #: ../../../lib/web/src/lib/preference-utils.ts:122
 msgid "Normal"
 msgstr "Idilee"
+
+#. placeholder {0}: formatFileSize(file.limit)
+#: src/features/requests/components/diff-viewer.tsx:455
+msgid "Not compared: larger than {0}"
+msgstr "Hin madaalamne: {0} caalaa guddaa"
+
+#: src/features/requests/components/diff-viewer.tsx:457
+msgid "Not compared: over the size limit"
+msgstr "Hin madaalamne: daangaa guddinaa caala"
 
 #: src/features/requests/components/request-panel.tsx:257
 msgid "Not configured"
@@ -2144,6 +2175,10 @@ msgstr "Pirojektiin haaromfame"
 msgid "Projects"
 msgstr "Pirojektota"
 
+#: ../../../lib/web/src/components/ai-prompts-editor.tsx:108
+msgid "Prompt saved"
+msgstr "Gaaffii olkaa'ame"
+
 #: src/features/objects/components/object-detail-panel.tsx:379
 msgid "Properties"
 msgstr "Qabeenyaalee"
@@ -2357,6 +2392,7 @@ msgstr "URL RSS kilipboordiitti garagalfame"
 msgid "Saturday"
 msgstr "Sanbata"
 
+#: ../../../lib/web/src/components/ai-prompts-editor.tsx:156
 #: ../../../lib/web/src/components/attachment-composer.tsx:430
 #: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:231
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:170
@@ -2366,6 +2402,7 @@ msgstr "Sanbata"
 msgid "Save"
 msgstr "Olkaa'i"
 
+#: ../../../lib/web/src/components/ai-prompts-editor.tsx:156
 #: src/routes/_authenticated/$projectId_.settings.tsx:120
 msgid "Saving..."
 msgstr "Olkaa'aa jira..."
@@ -2948,6 +2985,10 @@ msgstr "ID dubbifamuuf fayyadame kan akka {0}-1, {1}-2"
 #: ../../../lib/web/src/features/access/access-dialog.tsx:158
 msgid "User"
 msgstr "Fayyadamaa"
+
+#: ../../../lib/web/src/components/ai-prompts-editor.tsx:159
+msgid "Variables: {variables}"
+msgstr "Jijjiirraa: {variables}"
 
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:73
 msgid "Verification code"

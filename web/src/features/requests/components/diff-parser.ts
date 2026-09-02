@@ -12,6 +12,16 @@ export interface DiffFile {
   deletions: number;
   /** Binary files carry no hunks — the viewer shows a placeholder instead. */
   isBinary: boolean;
+  /** Core lists a file over its compare ceiling with a note instead of hunks. */
+  skipped: boolean;
+  /** The ceiling in bytes, when the file was skipped. */
+  limit?: number;
+}
+
+export interface ParsedDiff {
+  files: DiffFile[];
+  /** Files core left out after its file or size cap; 0 when the diff is complete. */
+  truncated: number;
 }
 
 interface DiffHunk {
@@ -27,9 +37,18 @@ export interface DiffLine {
 }
 
 // Parse raw unified diff text into structured file sections
-export function parseDiff(raw: string): DiffFile[] {
+export function parseDiff(raw: string): ParsedDiff {
   const files: DiffFile[] = [];
-  const fileSections = raw.split(/^diff --git /m).filter(Boolean);
+
+  // Core ends a capped diff with "# diff truncated: N more files". It sits
+  // after the last section, where a hunk is still open, so take it out before
+  // the sections are split or it would be read as a context line.
+  let truncated = 0;
+  const text = raw.replace(/^# diff truncated: (\d+) more files\n?/m, (_, count: string) => {
+    truncated = parseInt(count, 10);
+    return "";
+  });
+  const fileSections = text.split(/^diff --git /m).filter(Boolean);
 
   for (const section of fileSections) {
     const lines = section.split("\n");
@@ -54,6 +73,11 @@ export function parseDiff(raw: string): DiffFile[] {
     // A binary file is encoded as a header plus a single "Binary files … differ"
     // line and no hunks at all, so it cannot be recognised by its hunks.
     const isBinary = lines.some((l) => l.startsWith("Binary files "));
+
+    // A file over the compare ceiling is a header plus "# not compared: over
+    // the N byte limit" and no hunks, in place of the comparison.
+    const skip = lines.find((l) => l.startsWith("# not compared"));
+    const limit = skip?.match(/over the (\d+) byte limit/)?.[1];
 
     // Parse hunks
     const hunks: DiffHunk[] = [];
@@ -111,7 +135,7 @@ export function parseDiff(raw: string): DiffFile[] {
     // Keep any section that names a file. Gating on hunks alone silently
     // dropped binary files, so adding an image to a merge request listed
     // nothing — and a binary-only change rendered "No changes to display".
-    if (hunks.length > 0 || (isBinary && newPath)) {
+    if (hunks.length > 0 || ((isBinary || skip) && newPath)) {
       files.push({
         path: newPath,
         oldPath: oldPath !== newPath ? oldPath : undefined,
@@ -120,9 +144,11 @@ export function parseDiff(raw: string): DiffFile[] {
         additions,
         deletions,
         isBinary,
+        skipped: !!skip,
+        limit: limit ? parseInt(limit, 10) : undefined,
       });
     }
   }
 
-  return files;
+  return { files, truncated };
 }

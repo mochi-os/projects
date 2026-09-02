@@ -60,7 +60,7 @@ msgstr "{0} indietro"
 
 #. placeholder {0}: files.length
 #: src/features/requests/components/diff-stats.tsx:74
-#: src/features/requests/components/diff-viewer.tsx:419
+#: src/features/requests/components/diff-viewer.tsx:420
 msgid "{0} files changed"
 msgstr "{0} file modificati"
 
@@ -105,6 +105,11 @@ msgstr "{sentLabel} di {totalLabel}"
 #: ../../../lib/web/src/components/entity/entity-board-column.tsx:530
 msgid "{totalCount, plural, one {# item} other {# items}}"
 msgstr "{totalCount, plural, one {# elemento} other {# elementi}}"
+
+#: src/features/requests/components/diff-stats.tsx:120
+#: src/features/requests/components/diff-viewer.tsx:471
+msgid "{truncated, plural, one {# more file not shown} other {# more files not shown}}"
+msgstr "{truncated, plural, one {# altro file non mostrato} other {# altri file non mostrati}}"
 
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx:158
 msgid "{unreadCount, plural, one {Open menu (# unread notification)} other {Open menu (# unread notifications)}}"
@@ -407,7 +412,7 @@ msgstr "Torna ai progetti"
 msgid "Banner"
 msgstr "Banner"
 
-#: src/features/requests/components/diff-viewer.tsx:447
+#: src/features/requests/components/diff-viewer.tsx:448
 msgid "Binary file not shown"
 msgstr "File binario non mostrato"
 
@@ -516,8 +521,8 @@ msgstr "Scegli una partita dalla barra laterale o avviane una nuova."
 msgid "Choose a template"
 msgstr "Scegli un modello"
 
-#: ../../../lib/web/src/components/language-picker.tsx:264
-#: ../../../lib/web/src/components/language-picker.tsx:271
+#: ../../../lib/web/src/components/language-picker.tsx:267
+#: ../../../lib/web/src/components/language-picker.tsx:274
 msgid "Choose language"
 msgstr "Scegli la lingua"
 
@@ -791,6 +796,7 @@ msgstr "Creazione in corso..."
 msgid "Current location"
 msgstr "Posizione attuale"
 
+#: ../../../lib/web/src/components/ai-prompts-editor.tsx:132
 #: ../../../lib/web/src/components/colour-picker.tsx:265
 msgid "Custom"
 msgstr "Personalizzato"
@@ -818,6 +824,10 @@ msgstr "Data"
 #: ../../../lib/web/src/components/game/game-draw-offer-banner.tsx:41
 msgid "Decline"
 msgstr "Rifiuta"
+
+#: ../../../lib/web/src/components/ai-prompts-editor.tsx:129
+msgid "Default"
+msgstr "Predefinito"
 
 #: ../../../lib/web/src/features/accounts/account-add.tsx:185
 msgid "Default AI account"
@@ -938,7 +948,7 @@ msgstr "Progetta, crea, modifica, commenta e visualizza"
 msgid "Details Panel"
 msgstr "Pannello dei dettagli"
 
-#: ../../../lib/web/src/components/language-picker.tsx:240
+#: ../../../lib/web/src/components/language-picker.tsx:243
 #: ../../../lib/web/src/components/timezone-select.tsx:46
 #: ../../../lib/web/src/components/timezone-select.tsx:83
 #: ../../../lib/web/src/lib/preference-utils.ts:23
@@ -1262,6 +1272,10 @@ msgstr "Impossibile caricare la progettazione del progetto"
 msgid "Failed to load projects"
 msgstr "Impossibile caricare i progetti"
 
+#: ../../../lib/web/src/components/ai-prompts-editor.tsx:213
+msgid "Failed to load prompts"
+msgstr "Impossibile caricare i prompt"
+
 #: src/features/projects/components/recommended-projects.tsx:57
 msgid "Failed to load recommended projects"
 msgstr "Caricamento dei progetti consigliati non riuscito"
@@ -1299,6 +1313,10 @@ msgstr "Impossibile riordinare i campi"
 msgid "Failed to reorder views"
 msgstr "Impossibile riordinare le viste"
 
+#: ../../../lib/web/src/components/ai-prompts-editor.tsx:90
+msgid "Failed to reset prompt"
+msgstr "Impossibile reimpostare il prompt"
+
 #: ../../../lib/web/src/components/options-menu.tsx:133
 msgid "Failed to revoke RSS access"
 msgstr "Impossibile revocare l'accesso RSS"
@@ -1306,6 +1324,10 @@ msgstr "Impossibile revocare l'accesso RSS"
 #: src/features/objects/components/object-detail-panel.tsx:190
 msgid "Failed to save"
 msgstr "Impossibile salvare"
+
+#: ../../../lib/web/src/components/ai-prompts-editor.tsx:111
+msgid "Failed to save prompt"
+msgstr "Impossibile salvare il prompt"
 
 #: src/features/projects/components/inline-project-search.tsx:89
 msgid "Failed to search projects"
@@ -1788,7 +1810,7 @@ msgstr "Nessun branch trovato"
 msgid "No changes detected"
 msgstr "Nessuna modifica rilevata"
 
-#: src/features/requests/components/diff-viewer.tsx:402
+#: src/features/requests/components/diff-viewer.tsx:403
 msgid "No changes to display"
 msgstr "Nessuna modifica da visualizzare"
 
@@ -1901,6 +1923,15 @@ msgstr "Nessuno"
 #: ../../../lib/web/src/lib/preference-utils.ts:122
 msgid "Normal"
 msgstr "Normale"
+
+#. placeholder {0}: formatFileSize(file.limit)
+#: src/features/requests/components/diff-viewer.tsx:455
+msgid "Not compared: larger than {0}"
+msgstr "Non confrontato: più grande di {0}"
+
+#: src/features/requests/components/diff-viewer.tsx:457
+msgid "Not compared: over the size limit"
+msgstr "Non confrontato: oltre il limite di dimensione"
 
 #: src/features/requests/components/request-panel.tsx:257
 msgid "Not configured"
@@ -2144,6 +2175,10 @@ msgstr "Progetto aggiornato"
 msgid "Projects"
 msgstr "Progetti"
 
+#: ../../../lib/web/src/components/ai-prompts-editor.tsx:108
+msgid "Prompt saved"
+msgstr "Prompt salvato"
+
 #: src/features/objects/components/object-detail-panel.tsx:379
 msgid "Properties"
 msgstr "Proprietà"
@@ -2357,6 +2392,7 @@ msgstr "URL RSS copiato negli appunti"
 msgid "Saturday"
 msgstr "Sabato"
 
+#: ../../../lib/web/src/components/ai-prompts-editor.tsx:156
 #: ../../../lib/web/src/components/attachment-composer.tsx:430
 #: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:231
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:170
@@ -2366,6 +2402,7 @@ msgstr "Sabato"
 msgid "Save"
 msgstr "Salva"
 
+#: ../../../lib/web/src/components/ai-prompts-editor.tsx:156
 #: src/routes/_authenticated/$projectId_.settings.tsx:120
 msgid "Saving..."
 msgstr "Salvataggio in corso..."
@@ -2948,6 +2985,10 @@ msgstr "Utilizzato per ID leggibili come {0}-1, {1}-2"
 #: ../../../lib/web/src/features/access/access-dialog.tsx:158
 msgid "User"
 msgstr "Utente"
+
+#: ../../../lib/web/src/components/ai-prompts-editor.tsx:159
+msgid "Variables: {variables}"
+msgstr "Variabili: {variables}"
 
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:73
 msgid "Verification code"

@@ -60,7 +60,7 @@ msgstr "{0} bak"
 
 #. placeholder {0}: files.length
 #: src/features/requests/components/diff-stats.tsx:74
-#: src/features/requests/components/diff-viewer.tsx:419
+#: src/features/requests/components/diff-viewer.tsx:420
 msgid "{0} files changed"
 msgstr "{0} filer endra"
 
@@ -105,6 +105,11 @@ msgstr "{sentLabel} av {totalLabel}"
 #: ../../../lib/web/src/components/entity/entity-board-column.tsx:530
 msgid "{totalCount, plural, one {# item} other {# items}}"
 msgstr "{totalCount, plural, one {# element} other {# element}}"
+
+#: src/features/requests/components/diff-stats.tsx:120
+#: src/features/requests/components/diff-viewer.tsx:471
+msgid "{truncated, plural, one {# more file not shown} other {# more files not shown}}"
+msgstr "{truncated, plural, one {# fil til vert ikkje vist} other {# filer til vert ikkje viste}}"
 
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx:158
 msgid "{unreadCount, plural, one {Open menu (# unread notification)} other {Open menu (# unread notifications)}}"
@@ -407,7 +412,7 @@ msgstr "Tilbake til prosjekt"
 msgid "Banner"
 msgstr "Banner"
 
-#: src/features/requests/components/diff-viewer.tsx:447
+#: src/features/requests/components/diff-viewer.tsx:448
 msgid "Binary file not shown"
 msgstr "Binærfila blir ikkje vist"
 
@@ -516,8 +521,8 @@ msgstr "Vel eit spel frå sidestolpen eller start eit nytt."
 msgid "Choose a template"
 msgstr "Vel ein mal"
 
-#: ../../../lib/web/src/components/language-picker.tsx:264
-#: ../../../lib/web/src/components/language-picker.tsx:271
+#: ../../../lib/web/src/components/language-picker.tsx:267
+#: ../../../lib/web/src/components/language-picker.tsx:274
 msgid "Choose language"
 msgstr "Vel språk"
 
@@ -791,6 +796,7 @@ msgstr "Opprettar..."
 msgid "Current location"
 msgstr "Noverande posisjon"
 
+#: ../../../lib/web/src/components/ai-prompts-editor.tsx:132
 #: ../../../lib/web/src/components/colour-picker.tsx:265
 msgid "Custom"
 msgstr "Tilpassa"
@@ -818,6 +824,10 @@ msgstr "Dato"
 #: ../../../lib/web/src/components/game/game-draw-offer-banner.tsx:41
 msgid "Decline"
 msgstr "Avslå"
+
+#: ../../../lib/web/src/components/ai-prompts-editor.tsx:129
+msgid "Default"
+msgstr "Standard"
 
 #: ../../../lib/web/src/features/accounts/account-add.tsx:185
 msgid "Default AI account"
@@ -938,7 +948,7 @@ msgstr "Utforme, opprette, redigere, kommentere og sjå"
 msgid "Details Panel"
 msgstr "Detaljpanel"
 
-#: ../../../lib/web/src/components/language-picker.tsx:240
+#: ../../../lib/web/src/components/language-picker.tsx:243
 #: ../../../lib/web/src/components/timezone-select.tsx:46
 #: ../../../lib/web/src/components/timezone-select.tsx:83
 #: ../../../lib/web/src/lib/preference-utils.ts:23
@@ -1262,6 +1272,10 @@ msgstr "Klarte ikkje lasta prosjektdesign"
 msgid "Failed to load projects"
 msgstr "Klarte ikkje lasta prosjekt"
 
+#: ../../../lib/web/src/components/ai-prompts-editor.tsx:213
+msgid "Failed to load prompts"
+msgstr "Klarte ikkje lasta forespurnader"
+
 #: src/features/projects/components/recommended-projects.tsx:57
 msgid "Failed to load recommended projects"
 msgstr "Kunne ikkje laste tilrådde prosjekt"
@@ -1299,6 +1313,10 @@ msgstr "Klarte ikkje sortera felt på nytt"
 msgid "Failed to reorder views"
 msgstr "Klarte ikkje sortera visingar på nytt"
 
+#: ../../../lib/web/src/components/ai-prompts-editor.tsx:90
+msgid "Failed to reset prompt"
+msgstr "Klarte ikkje nullstilla forespurnad"
+
 #: ../../../lib/web/src/components/options-menu.tsx:133
 msgid "Failed to revoke RSS access"
 msgstr "Klarte ikkje trekkje tilbake RSS-tilgang"
@@ -1306,6 +1324,10 @@ msgstr "Klarte ikkje trekkje tilbake RSS-tilgang"
 #: src/features/objects/components/object-detail-panel.tsx:190
 msgid "Failed to save"
 msgstr "Klarte ikkje lagra"
+
+#: ../../../lib/web/src/components/ai-prompts-editor.tsx:111
+msgid "Failed to save prompt"
+msgstr "Klarte ikkje lagra forespurnad"
 
 #: src/features/projects/components/inline-project-search.tsx:89
 msgid "Failed to search projects"
@@ -1788,7 +1810,7 @@ msgstr "Ingen greiner funne"
 msgid "No changes detected"
 msgstr "Ingen endringar oppdaga"
 
-#: src/features/requests/components/diff-viewer.tsx:402
+#: src/features/requests/components/diff-viewer.tsx:403
 msgid "No changes to display"
 msgstr "Ingen endringar å visa"
 
@@ -1901,6 +1923,15 @@ msgstr "Ingen"
 #: ../../../lib/web/src/lib/preference-utils.ts:122
 msgid "Normal"
 msgstr "Normal"
+
+#. placeholder {0}: formatFileSize(file.limit)
+#: src/features/requests/components/diff-viewer.tsx:455
+msgid "Not compared: larger than {0}"
+msgstr "Ikkje samanlikna: større enn {0}"
+
+#: src/features/requests/components/diff-viewer.tsx:457
+msgid "Not compared: over the size limit"
+msgstr "Ikkje samanlikna: over storleiksgrensa"
 
 #: src/features/requests/components/request-panel.tsx:257
 msgid "Not configured"
@@ -2144,6 +2175,10 @@ msgstr "Prosjekt oppdatert"
 msgid "Projects"
 msgstr "Prosjekt"
 
+#: ../../../lib/web/src/components/ai-prompts-editor.tsx:108
+msgid "Prompt saved"
+msgstr "Leiarmelding lagra"
+
 #: src/features/objects/components/object-detail-panel.tsx:379
 msgid "Properties"
 msgstr "Eigenskapar"
@@ -2357,6 +2392,7 @@ msgstr "RSS-URL kopiert til utklippstavla"
 msgid "Saturday"
 msgstr "Laurdag"
 
+#: ../../../lib/web/src/components/ai-prompts-editor.tsx:156
 #: ../../../lib/web/src/components/attachment-composer.tsx:430
 #: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:231
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:170
@@ -2366,6 +2402,7 @@ msgstr "Laurdag"
 msgid "Save"
 msgstr "Lagre"
 
+#: ../../../lib/web/src/components/ai-prompts-editor.tsx:156
 #: src/routes/_authenticated/$projectId_.settings.tsx:120
 msgid "Saving..."
 msgstr "Lagrar..."
@@ -2948,6 +2985,10 @@ msgstr "Brukt for lesbare ID-ar som {0}-1, {1}-2"
 #: ../../../lib/web/src/features/access/access-dialog.tsx:158
 msgid "User"
 msgstr "Brukar"
+
+#: ../../../lib/web/src/components/ai-prompts-editor.tsx:159
+msgid "Variables: {variables}"
+msgstr "Variablar: {variables}"
 
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:73
 msgid "Verification code"

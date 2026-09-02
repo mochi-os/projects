@@ -46,6 +46,18 @@ describe("DiffStats", () => {
     vi.clearAllMocks();
   });
 
+  it("says how many files core cut from a capped diff", async () => {
+    vi.mocked(projectsApi.getDiff).mockResolvedValue({
+      data: makeDiff([{ path: "a.ts", lines: ["-x", "+y"] }]) + "# diff truncated: 5 more files\n",
+    } as never);
+    render(<DiffStats repoId="repo1" base="main" head="feature" />);
+    await waitFor(() => {
+      expect(screen.getByText("5 more files not shown")).toBeInTheDocument();
+    });
+    expect(screen.getByText("1 files changed")).toBeInTheDocument();
+    expect(screen.queryByText(/diff truncated/)).not.toBeInTheDocument();
+  });
+
   it("should return null when repoId is empty", () => {
     const { container } = render(
       <DiffStats repoId="" base="main" head="feature" />,

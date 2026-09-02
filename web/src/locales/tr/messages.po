@@ -60,7 +60,7 @@ msgstr "{0} geride"
 
 #. placeholder {0}: files.length
 #: src/features/requests/components/diff-stats.tsx:74
-#: src/features/requests/components/diff-viewer.tsx:419
+#: src/features/requests/components/diff-viewer.tsx:420
 msgid "{0} files changed"
 msgstr "{0} dosya değişti"
 
@@ -105,6 +105,11 @@ msgstr "{sentLabel} / {totalLabel}"
 #: ../../../lib/web/src/components/entity/entity-board-column.tsx:530
 msgid "{totalCount, plural, one {# item} other {# items}}"
 msgstr "{totalCount, plural, one {# öğe} other {# öğe}}"
+
+#: src/features/requests/components/diff-stats.tsx:120
+#: src/features/requests/components/diff-viewer.tsx:471
+msgid "{truncated, plural, one {# more file not shown} other {# more files not shown}}"
+msgstr "{truncated, plural, one {# dosya daha gösterilmiyor} other {# dosya daha gösterilmiyor}}"
 
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx:158
 msgid "{unreadCount, plural, one {Open menu (# unread notification)} other {Open menu (# unread notifications)}}"
@@ -407,7 +412,7 @@ msgstr "Projelere dön"
 msgid "Banner"
 msgstr "Afiş"
 
-#: src/features/requests/components/diff-viewer.tsx:447
+#: src/features/requests/components/diff-viewer.tsx:448
 msgid "Binary file not shown"
 msgstr "İkili dosya gösterilmiyor"
 
@@ -516,8 +521,8 @@ msgstr "Kenar çubuğundan bir oyun seçin veya yenisini başlatın."
 msgid "Choose a template"
 msgstr "Bir şablon seçin"
 
-#: ../../../lib/web/src/components/language-picker.tsx:264
-#: ../../../lib/web/src/components/language-picker.tsx:271
+#: ../../../lib/web/src/components/language-picker.tsx:267
+#: ../../../lib/web/src/components/language-picker.tsx:274
 msgid "Choose language"
 msgstr "Dil seçin"
 
@@ -791,6 +796,7 @@ msgstr "Oluşturuluyor..."
 msgid "Current location"
 msgstr "Mevcut konum"
 
+#: ../../../lib/web/src/components/ai-prompts-editor.tsx:132
 #: ../../../lib/web/src/components/colour-picker.tsx:265
 msgid "Custom"
 msgstr "Özel"
@@ -818,6 +824,10 @@ msgstr "Tarih"
 #: ../../../lib/web/src/components/game/game-draw-offer-banner.tsx:41
 msgid "Decline"
 msgstr "Reddet"
+
+#: ../../../lib/web/src/components/ai-prompts-editor.tsx:129
+msgid "Default"
+msgstr "Varsayılan"
 
 #: ../../../lib/web/src/features/accounts/account-add.tsx:185
 msgid "Default AI account"
@@ -938,7 +948,7 @@ msgstr "Tasarlama, oluşturma, düzenleme, yorum yapma ve görüntüleme"
 msgid "Details Panel"
 msgstr "Ayrıntılar paneli"
 
-#: ../../../lib/web/src/components/language-picker.tsx:240
+#: ../../../lib/web/src/components/language-picker.tsx:243
 #: ../../../lib/web/src/components/timezone-select.tsx:46
 #: ../../../lib/web/src/components/timezone-select.tsx:83
 #: ../../../lib/web/src/lib/preference-utils.ts:23
@@ -1262,6 +1272,10 @@ msgstr "Proje tasarımı yüklenemedi"
 msgid "Failed to load projects"
 msgstr "Projeler yüklenemedi"
 
+#: ../../../lib/web/src/components/ai-prompts-editor.tsx:213
+msgid "Failed to load prompts"
+msgstr "Komutlar yüklenemedi"
+
 #: src/features/projects/components/recommended-projects.tsx:57
 msgid "Failed to load recommended projects"
 msgstr "Önerilen projeler yüklenemedi"
@@ -1299,6 +1313,10 @@ msgstr "Alanlar yeniden sıralanamadı"
 msgid "Failed to reorder views"
 msgstr "Görünümler yeniden sıralanamadı"
 
+#: ../../../lib/web/src/components/ai-prompts-editor.tsx:90
+msgid "Failed to reset prompt"
+msgstr "Komut sıfırlanamadı"
+
 #: ../../../lib/web/src/components/options-menu.tsx:133
 msgid "Failed to revoke RSS access"
 msgstr "RSS erişimi iptal edilemedi"
@@ -1306,6 +1324,10 @@ msgstr "RSS erişimi iptal edilemedi"
 #: src/features/objects/components/object-detail-panel.tsx:190
 msgid "Failed to save"
 msgstr "Kaydedilemedi"
+
+#: ../../../lib/web/src/components/ai-prompts-editor.tsx:111
+msgid "Failed to save prompt"
+msgstr "Komut kaydedilemedi"
 
 #: src/features/projects/components/inline-project-search.tsx:89
 msgid "Failed to search projects"
@@ -1788,7 +1810,7 @@ msgstr "Branch bulunamadı"
 msgid "No changes detected"
 msgstr "Değişiklik algılanmadı"
 
-#: src/features/requests/components/diff-viewer.tsx:402
+#: src/features/requests/components/diff-viewer.tsx:403
 msgid "No changes to display"
 msgstr "Görüntülenecek değişiklik yok"
 
@@ -1901,6 +1923,15 @@ msgstr "Yok"
 #: ../../../lib/web/src/lib/preference-utils.ts:122
 msgid "Normal"
 msgstr "Normal"
+
+#. placeholder {0}: formatFileSize(file.limit)
+#: src/features/requests/components/diff-viewer.tsx:455
+msgid "Not compared: larger than {0}"
+msgstr "Karşılaştırılmadı: {0} boyutundan büyük"
+
+#: src/features/requests/components/diff-viewer.tsx:457
+msgid "Not compared: over the size limit"
+msgstr "Karşılaştırılmadı: boyut sınırının üzerinde"
 
 #: src/features/requests/components/request-panel.tsx:257
 msgid "Not configured"
@@ -2144,6 +2175,10 @@ msgstr "Proje güncellendi"
 msgid "Projects"
 msgstr "Projeler"
 
+#: ../../../lib/web/src/components/ai-prompts-editor.tsx:108
+msgid "Prompt saved"
+msgstr "İstem kaydedildi"
+
 #: src/features/objects/components/object-detail-panel.tsx:379
 msgid "Properties"
 msgstr "Özellikler"
@@ -2357,6 +2392,7 @@ msgstr "RSS URL'si panoya kopyalandı"
 msgid "Saturday"
 msgstr "Cumartesi"
 
+#: ../../../lib/web/src/components/ai-prompts-editor.tsx:156
 #: ../../../lib/web/src/components/attachment-composer.tsx:430
 #: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:231
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:170
@@ -2366,6 +2402,7 @@ msgstr "Cumartesi"
 msgid "Save"
 msgstr "Kaydet"
 
+#: ../../../lib/web/src/components/ai-prompts-editor.tsx:156
 #: src/routes/_authenticated/$projectId_.settings.tsx:120
 msgid "Saving..."
 msgstr "Kaydediliyor..."
@@ -2948,6 +2985,10 @@ msgstr "{0}-1, {1}-2 gibi okunabilir kimlikler için kullanılır"
 #: ../../../lib/web/src/features/access/access-dialog.tsx:158
 msgid "User"
 msgstr "Kullanıcı"
+
+#: ../../../lib/web/src/components/ai-prompts-editor.tsx:159
+msgid "Variables: {variables}"
+msgstr "Değişkenler: {variables}"
 
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:73
 msgid "Verification code"

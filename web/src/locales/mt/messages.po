@@ -60,7 +60,7 @@ msgstr "{0} lura"
 
 #. placeholder {0}: files.length
 #: src/features/requests/components/diff-stats.tsx:74
-#: src/features/requests/components/diff-viewer.tsx:419
+#: src/features/requests/components/diff-viewer.tsx:420
 msgid "{0} files changed"
 msgstr "{0} fajls inbidlu"
 
@@ -105,6 +105,11 @@ msgstr "{sentLabel} minn {totalLabel}"
 #: ../../../lib/web/src/components/entity/entity-board-column.tsx:530
 msgid "{totalCount, plural, one {# item} other {# items}}"
 msgstr "{totalCount, plural, one {# oġġett} few {# oġġetti} many {# oġġetti} other {# oġġetti}}"
+
+#: src/features/requests/components/diff-stats.tsx:120
+#: src/features/requests/components/diff-viewer.tsx:471
+msgid "{truncated, plural, one {# more file not shown} other {# more files not shown}}"
+msgstr "{truncated, plural, one {# fajl ieħor mhux muri} few {# fajls oħra mhux murija} many {# fajls oħra mhux murija} other {# fajls oħra mhux murija}}"
 
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx:158
 msgid "{unreadCount, plural, one {Open menu (# unread notification)} other {Open menu (# unread notifications)}}"
@@ -407,7 +412,7 @@ msgstr "Lura għall-proġetti"
 msgid "Banner"
 msgstr "Banner"
 
-#: src/features/requests/components/diff-viewer.tsx:447
+#: src/features/requests/components/diff-viewer.tsx:448
 msgid "Binary file not shown"
 msgstr "Il-fajl binarju mhux muri"
 
@@ -516,8 +521,8 @@ msgstr "Agħżel logħba mill-barra tal-ġenb jew ibda waħda ġdida."
 msgid "Choose a template"
 msgstr "Agħżel mudell"
 
-#: ../../../lib/web/src/components/language-picker.tsx:264
-#: ../../../lib/web/src/components/language-picker.tsx:271
+#: ../../../lib/web/src/components/language-picker.tsx:267
+#: ../../../lib/web/src/components/language-picker.tsx:274
 msgid "Choose language"
 msgstr "Agħżel lingwa"
 
@@ -791,6 +796,7 @@ msgstr "Qed joħloq..."
 msgid "Current location"
 msgstr "Post attwali"
 
+#: ../../../lib/web/src/components/ai-prompts-editor.tsx:132
 #: ../../../lib/web/src/components/colour-picker.tsx:265
 msgid "Custom"
 msgstr "Personalizzat"
@@ -818,6 +824,10 @@ msgstr "Data"
 #: ../../../lib/web/src/components/game/game-draw-offer-banner.tsx:41
 msgid "Decline"
 msgstr "Irrifjuta"
+
+#: ../../../lib/web/src/components/ai-prompts-editor.tsx:129
+msgid "Default"
+msgstr "Prestabbilit"
 
 #: ../../../lib/web/src/features/accounts/account-add.tsx:185
 msgid "Default AI account"
@@ -938,7 +948,7 @@ msgstr "Iddisinja, oħloq, editja, ikkummenta u ara"
 msgid "Details Panel"
 msgstr "Pannell tad-Dettalji"
 
-#: ../../../lib/web/src/components/language-picker.tsx:240
+#: ../../../lib/web/src/components/language-picker.tsx:243
 #: ../../../lib/web/src/components/timezone-select.tsx:46
 #: ../../../lib/web/src/components/timezone-select.tsx:83
 #: ../../../lib/web/src/lib/preference-utils.ts:23
@@ -1262,6 +1272,10 @@ msgstr "Ma rnexxiex jitgħabba d-disinn tal-proġett"
 msgid "Failed to load projects"
 msgstr "Ma rnexxiex jitgħabbew il-proġetti"
 
+#: ../../../lib/web/src/components/ai-prompts-editor.tsx:213
+msgid "Failed to load prompts"
+msgstr "Ma rnexxiex jitgħabbew il-prompts"
+
 #: src/features/projects/components/recommended-projects.tsx:57
 msgid "Failed to load recommended projects"
 msgstr "It-tagħbija tal-proġetti rakkomandati falliet"
@@ -1299,6 +1313,10 @@ msgstr "Ma rnexxiex jerġgħu jiġu rranġati l-kampijiet"
 msgid "Failed to reorder views"
 msgstr "Ma rnexxiex jerġgħu jiġu rranġati l-veduti"
 
+#: ../../../lib/web/src/components/ai-prompts-editor.tsx:90
+msgid "Failed to reset prompt"
+msgstr "Ma rnexxiex jiġi reset il-prompt"
+
 #: ../../../lib/web/src/components/options-menu.tsx:133
 msgid "Failed to revoke RSS access"
 msgstr "Ma rnexxiex jiġi rrevokat l-aċċess RSS"
@@ -1306,6 +1324,10 @@ msgstr "Ma rnexxiex jiġi rrevokat l-aċċess RSS"
 #: src/features/objects/components/object-detail-panel.tsx:190
 msgid "Failed to save"
 msgstr "Ma rnexxiex jiġi ssejvjat"
+
+#: ../../../lib/web/src/components/ai-prompts-editor.tsx:111
+msgid "Failed to save prompt"
+msgstr "Ma rnexxiex jiġi ssejvjat il-prompt"
 
 #: src/features/projects/components/inline-project-search.tsx:89
 msgid "Failed to search projects"
@@ -1788,7 +1810,7 @@ msgstr "Ma nstabu l-ebda fergħat"
 msgid "No changes detected"
 msgstr "L-ebda bidliet ma ġew skoperti"
 
-#: src/features/requests/components/diff-viewer.tsx:402
+#: src/features/requests/components/diff-viewer.tsx:403
 msgid "No changes to display"
 msgstr "L-ebda bidliet x'juru"
 
@@ -1901,6 +1923,15 @@ msgstr "Xejn"
 #: ../../../lib/web/src/lib/preference-utils.ts:122
 msgid "Normal"
 msgstr "Normali"
+
+#. placeholder {0}: formatFileSize(file.limit)
+#: src/features/requests/components/diff-viewer.tsx:455
+msgid "Not compared: larger than {0}"
+msgstr "Mhux imqabbel: akbar minn {0}"
+
+#: src/features/requests/components/diff-viewer.tsx:457
+msgid "Not compared: over the size limit"
+msgstr "Mhux imqabbel: jaqbeż il-limitu tad-daqs"
 
 #: src/features/requests/components/request-panel.tsx:257
 msgid "Not configured"
@@ -2144,6 +2175,10 @@ msgstr "Proġett aġġornat"
 msgid "Projects"
 msgstr "Proġetti"
 
+#: ../../../lib/web/src/components/ai-prompts-editor.tsx:108
+msgid "Prompt saved"
+msgstr "Prompt issejvjat"
+
 #: src/features/objects/components/object-detail-panel.tsx:379
 msgid "Properties"
 msgstr "Proprjetajiet"
@@ -2357,6 +2392,7 @@ msgstr "URL ta' RSS ikkupjat fil-clipboard"
 msgid "Saturday"
 msgstr "Is-Sibt"
 
+#: ../../../lib/web/src/components/ai-prompts-editor.tsx:156
 #: ../../../lib/web/src/components/attachment-composer.tsx:430
 #: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:231
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:170
@@ -2366,6 +2402,7 @@ msgstr "Is-Sibt"
 msgid "Save"
 msgstr "Issejvja"
 
+#: ../../../lib/web/src/components/ai-prompts-editor.tsx:156
 #: src/routes/_authenticated/$projectId_.settings.tsx:120
 msgid "Saving..."
 msgstr "Qed jiġi ssejvjat..."
@@ -2948,6 +2985,10 @@ msgstr "Użat għal IDs li jistgħu jinqraw bħal {0}-1, {1}-2"
 #: ../../../lib/web/src/features/access/access-dialog.tsx:158
 msgid "User"
 msgstr "Utent"
+
+#: ../../../lib/web/src/components/ai-prompts-editor.tsx:159
+msgid "Variables: {variables}"
+msgstr "Varjabbli: {variables}"
 
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:73
 msgid "Verification code"

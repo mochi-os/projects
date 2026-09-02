@@ -18,17 +18,18 @@ import {
   extractStatus,
   getErrorMessage,
   toast,
+  EntityObjectDetailPanel,
+  type EntityObjectDetailTab,
 } from "@mochi/web";
-import { FolderKanban, Settings, Settings2 } from "lucide-react";
+import { FolderKanban, GitMerge, Settings, Settings2 } from "lucide-react";
 import projectsApi from "@/api/projects";
 import type { ProjectDetails, ProjectObject } from "@/types";
 import { useProjectsStore } from "@/stores/projects-store";
 import { BoardContainer } from "@/features/board/components";
 import { TreeView } from "@/features/tree";
-import {
-  CreateObjectDialog,
-  ObjectDetailPanel,
-} from "@/features/objects/components";
+import { CreateObjectDialog } from "@/features/objects/components";
+import { RequestPanel } from "@/features/requests";
+import { canWrite } from "@/lib/access";
 import { ViewOptionsBar } from "@/components/view-options-bar";
 
 interface SearchParams {
@@ -183,11 +184,45 @@ export function ProjectPageContent({ project, projectId, search, initialObjectId
         <CreateObjectDialog projectId={projectId} project={project} {...props} />
       )}
       renderDetailPanel={({ objectId, onClose }) => (
-        <ObjectDetailPanel
-          projectId={projectId}
+        <EntityObjectDetailPanel
+          containerId={projectId}
           objectId={objectId}
-          project={project}
+          design={project}
           access={project.project.access}
+          api={projectsApi}
+          prefix={project.project.prefix}
+          extraTabs={(detail) => {
+            // Only classes that opted into merge requests get the tab. The
+            // flag lives on the class, so it is read off the object's own.
+            const cls = project.classes.find(
+              (c) => c.id === detail.object.class,
+            );
+            if (!cls?.requests?.includes("merge")) return [];
+            const requests = detail.requests ?? [];
+            // Destructured, not `requests.length`: lingui names a placeholder
+            // after the identifier it sees, so a member expression extracts as
+            // `Merge requests ({0})` and drops every existing translation.
+            const requestCount = requests.length;
+            const tab: EntityObjectDetailTab = {
+              id: "requests",
+              label: t`Merge requests (${requestCount})`,
+              icon: <GitMerge className="size-4" />,
+              content: (
+                <RequestPanel
+                  projectId={projectId}
+                  objectId={detail.object.id}
+                  requests={requests}
+                  objectTitle={
+                    (cls.title ? detail.values[cls.title] : "") ||
+                    detail.object.readable
+                  }
+                  objectReadable={detail.object.readable}
+                  readOnly={!canWrite(project.project.access)}
+                />
+              ),
+            };
+            return [tab];
+          }}
           onClose={onClose}
         />
       )}

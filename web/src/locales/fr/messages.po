@@ -18,7 +18,7 @@ msgstr ""
 msgid "Please check your internet connection and try again."
 msgstr "Veuillez vérifier votre connexion Internet et réessayer."
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:301
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:295
 msgid " or "
 msgstr " ou "
 
@@ -176,7 +176,7 @@ msgstr "Accès défini pour {subjectName}"
 msgid "Account type"
 msgstr "Type de compte"
 
-#: src/features/objects/components/object-detail-panel.tsx:398
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:405
 msgid "Activity"
 msgstr "Activité"
 
@@ -221,7 +221,7 @@ msgstr "Ajouter un élément"
 msgid "Add class"
 msgstr "Ajouter une classe"
 
-#: src/routes/_authenticated/$projectId/index.tsx:140
+#: src/routes/_authenticated/$projectId/index.tsx:141
 msgid "Add column"
 msgstr "Ajouter une colonne"
 
@@ -235,7 +235,7 @@ msgstr "Ajouter un champ"
 msgid "Add item..."
 msgstr "Ajouter un élément…"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:320
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:314
 msgid "Add link"
 msgstr "Ajouter un lien"
 
@@ -326,7 +326,7 @@ msgstr "Tout ce qui est abonné à ce flux cessera de le recevoir. Vous pourrez 
 msgid "Are you sure you want to delete \"{0}\"?"
 msgstr "Voulez-vous vraiment supprimer « {0} » ?"
 
-#: src/features/objects/components/object-detail-panel.tsx:642
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:652
 msgid "Are you sure you want to delete \"{title}\"? This action cannot be undone."
 msgstr "Voulez-vous vraiment supprimer « {title} » ? Cette action est irréversible."
 
@@ -399,20 +399,29 @@ msgid "Back to project"
 msgstr "Retour au projet"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:64
-#: src/routes/_authenticated/$projectId/index.tsx:84
+#: src/routes/_authenticated/$projectId/index.tsx:85
 msgid "Back to projects"
 msgstr "Retour aux projets"
 
+#: ../../../lib/web/src/components/banner-section.tsx:80
 #: ../../../lib/web/src/components/entity-banner.tsx:17
 msgid "Banner"
 msgstr "Bannière"
+
+#: ../../../lib/web/src/components/banner-section.tsx:69
+msgid "Banner removed"
+msgstr ""
+
+#: ../../../lib/web/src/components/banner-section.tsx:69
+msgid "Banner updated"
+msgstr ""
 
 #: src/features/requests/components/diff-viewer.tsx:447
 msgid "Binary file not shown"
 msgstr "Fichier binaire non affiché"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:68
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:215
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:72
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:209
 msgid "Blocked by"
 msgstr "Bloqué par"
 
@@ -421,7 +430,7 @@ msgstr "Bloqué par"
 msgid "Blocked navigation to untrusted link"
 msgstr "Navigation vers un lien non fiable bloquée"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:66
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:70
 msgid "Blocks"
 msgstr "Bloque"
 
@@ -466,7 +475,7 @@ msgstr "Peut être enfant de"
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:91
 #: src/features/projects/components/create-project-dialog.tsx:453
 #: src/routes/_authenticated/$projectId/design.tsx:61
-#: src/routes/_authenticated/$projectId/index.tsx:143
+#: src/routes/_authenticated/$projectId/index.tsx:144
 msgid "Cancel"
 msgstr "Annuler"
 
@@ -516,8 +525,8 @@ msgstr "Choisissez une partie dans la barre latérale ou commencez-en une nouvel
 msgid "Choose a template"
 msgstr "Choisir un modèle"
 
-#: ../../../lib/web/src/components/language-picker.tsx:264
-#: ../../../lib/web/src/components/language-picker.tsx:271
+#: ../../../lib/web/src/components/language-picker.tsx:267
+#: ../../../lib/web/src/components/language-picker.tsx:274
 msgid "Choose language"
 msgstr "Choisir la langue"
 
@@ -525,6 +534,7 @@ msgstr "Choisir la langue"
 msgid "Classes"
 msgstr "Classes"
 
+#: ../../../lib/web/src/components/banner-section.tsx:111
 #: ../../../lib/web/src/components/colour-picker.tsx:274
 #: ../../../lib/web/src/components/colour-picker.tsx:355
 #: ../../../lib/web/src/components/travelling-picker.tsx:164
@@ -542,8 +552,8 @@ msgstr "Tout effacer"
 msgid "Clear search"
 msgstr "Effacer la recherche"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:501
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:506
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:495
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:500
 #: ../../../lib/web/src/components/ui/dialog.tsx:78
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:468
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:471
@@ -625,7 +635,7 @@ msgid "Comments"
 msgstr "Commentaires"
 
 #. placeholder {0}: data.comment_count || 0
-#: src/features/objects/components/object-detail-panel.tsx:384
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:401
 msgid "Comments ({0})"
 msgstr "Commentaires ({0})"
 
@@ -734,8 +744,8 @@ msgstr "Impossible de vérifier avec ce compte. Veuillez réessayer."
 
 #: ../../../lib/web/src/components/entity/entity-board-column.tsx:550
 #: ../../../lib/web/src/components/entity/entity-board-column.tsx:689
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:491
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:656
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:485
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:650
 #: ../../../lib/web/src/components/entity/entity-tree-view.tsx:675
 msgid "Create"
 msgstr "Créer"
@@ -780,7 +790,7 @@ msgstr "Créé"
 msgid "Creating project..."
 msgstr "Création du projet..."
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:656
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:650
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:258
 #: src/features/projects/components/create-project-dialog.tsx:457
 #: src/features/projects/components/create-project-dialog.tsx:549
@@ -791,6 +801,7 @@ msgstr "Création..."
 msgid "Current location"
 msgstr "Position actuelle"
 
+#: ../../../lib/web/src/components/ai-prompts-editor.tsx:132
 #: ../../../lib/web/src/components/colour-picker.tsx:265
 msgid "Custom"
 msgstr "Personnalisé"
@@ -819,6 +830,10 @@ msgstr "Date"
 msgid "Decline"
 msgstr "Refuser"
 
+#: ../../../lib/web/src/components/ai-prompts-editor.tsx:129
+msgid "Default"
+msgstr ""
+
 #: ../../../lib/web/src/features/accounts/account-add.tsx:185
 msgid "Default AI account"
 msgstr "Compte IA par défaut"
@@ -836,7 +851,7 @@ msgstr "Tri par défaut"
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:203
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:252
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:314
-#: src/features/objects/components/object-detail-panel.tsx:643
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:653
 #: src/features/requests/components/request-panel.tsx:142
 #: src/routes/_authenticated/$projectId_.settings.tsx:124
 msgid "Delete"
@@ -862,9 +877,9 @@ msgstr "Supprimer le commentaire"
 msgid "Delete field"
 msgstr "Supprimer le champ"
 
-#: src/features/objects/components/object-detail-panel.tsx:458
-#: src/features/objects/components/object-detail-panel.tsx:463
-#: src/features/objects/components/object-detail-panel.tsx:641
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:470
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:475
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:651
 msgid "Delete item"
 msgstr "Supprimer l'élément"
 
@@ -921,7 +936,7 @@ msgstr "Description"
 
 #: src/routes/_authenticated/$projectId/design.tsx:43
 #: src/routes/_authenticated/$projectId/design.tsx:46
-#: src/routes/_authenticated/$projectId/index.tsx:165
+#: src/routes/_authenticated/$projectId/index.tsx:166
 msgid "Design"
 msgstr "Conception"
 
@@ -938,7 +953,7 @@ msgstr "Concevoir, créer, modifier, commenter et consulter"
 msgid "Details Panel"
 msgstr "Panneau des détails"
 
-#: ../../../lib/web/src/components/language-picker.tsx:240
+#: ../../../lib/web/src/components/language-picker.tsx:243
 #: ../../../lib/web/src/components/timezone-select.tsx:46
 #: ../../../lib/web/src/components/timezone-select.tsx:83
 #: ../../../lib/web/src/lib/preference-utils.ts:23
@@ -979,7 +994,7 @@ msgstr "Déconnecté"
 msgid "Dismiss"
 msgstr "Ignorer"
 
-#: src/routes/_authenticated/$projectId/index.tsx:146
+#: src/routes/_authenticated/$projectId/index.tsx:147
 msgid "Dismiss board hint"
 msgstr "Ignorer l'astuce du tableau"
 
@@ -988,13 +1003,13 @@ msgid "Displays the mobile sidebar."
 msgstr "Affiche la barre latérale mobile."
 
 #: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:305
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:479
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:518
 #: src/features/editor/components/edit-dialogs.tsx:439
-#: src/features/objects/components/object-detail-panel.tsx:472
 msgid "Done"
 msgstr "Terminé"
 
-#: src/routes/_authenticated/$projectId/index.tsx:145
+#: src/routes/_authenticated/$projectId/index.tsx:146
 msgid "Double click on a column to add content"
 msgstr "Double-cliquez sur une colonne pour ajouter du contenu"
 
@@ -1013,7 +1028,7 @@ msgid "Download failed"
 msgstr "Échec du téléchargement"
 
 #: src/routes/_authenticated/$projectId/design.tsx:52
-#: src/routes/_authenticated/$projectId/index.tsx:149
+#: src/routes/_authenticated/$projectId/index.tsx:150
 msgid "Downloaded {filename}"
 msgstr "{filename} téléchargé"
 
@@ -1022,11 +1037,11 @@ msgstr "{filename} téléchargé"
 msgid "Draft"
 msgstr "Brouillon"
 
-#: src/routes/_authenticated/$projectId/index.tsx:142
+#: src/routes/_authenticated/$projectId/index.tsx:143
 msgid "Drag columns to re-order them"
 msgstr "Faites glisser les colonnes pour les réorganiser"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:67
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:71
 msgid "Duplicates"
 msgstr "Duplique"
 
@@ -1085,6 +1100,10 @@ msgstr "E-mail"
 msgid "Email code"
 msgstr "Code par e-mail"
 
+#: ../../../lib/web/src/components/banner-section.tsx:88
+msgid "Enter banner text (markdown supported)..."
+msgstr ""
+
 #: ../../../lib/web/src/components/step-up-dialog.tsx:302
 msgid "Enter the code from your email"
 msgstr "Saisissez le code reçu par e-mail"
@@ -1097,7 +1116,7 @@ msgstr "Saisissez le code de votre application d'authentification"
 msgid "Entity ID"
 msgstr "ID d'entité"
 
-#: src/features/objects/components/object-detail-panel.tsx:335
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:371
 msgid "Error"
 msgstr "Erreur"
 
@@ -1112,7 +1131,7 @@ msgstr "Développer"
 msgid "Expand sidebar"
 msgstr "Développer la barre latérale"
 
-#: src/routes/_authenticated/$projectId/index.tsx:147
+#: src/routes/_authenticated/$projectId/index.tsx:148
 msgid "Export data"
 msgstr "Exporter les données"
 
@@ -1146,9 +1165,9 @@ msgstr "Échec de la création de la classe"
 msgid "Failed to create field"
 msgstr "Échec de la création du champ"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:137
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:131
 #: ../../../lib/web/src/components/options-menu.tsx:98
-#: src/routes/_authenticated/$projectId/index.tsx:153
+#: src/routes/_authenticated/$projectId/index.tsx:154
 msgid "Failed to create link"
 msgstr "Échec de la création du lien"
 
@@ -1169,7 +1188,7 @@ msgstr "Échec de la création du projet"
 msgid "Failed to create view"
 msgstr "Échec de la création de la vue"
 
-#: src/features/objects/components/object-detail-panel.tsx:226
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:293
 msgid "Failed to delete"
 msgstr "Échec de la suppression"
 
@@ -1189,7 +1208,7 @@ msgstr "Échec de la suppression du commentaire"
 msgid "Failed to delete field"
 msgstr "Échec de la suppression du champ"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:159
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:153
 msgid "Failed to delete link"
 msgstr "Échec de la suppression du lien"
 
@@ -1209,7 +1228,7 @@ msgstr "Échec de la suppression du projet"
 msgid "Failed to delete view"
 msgstr "Échec de la suppression de la vue"
 
-#: src/routes/_authenticated/$projectId/index.tsx:150
+#: src/routes/_authenticated/$projectId/index.tsx:151
 msgid "Failed to export data"
 msgstr "Échec de l'exportation des données"
 
@@ -1242,15 +1261,15 @@ msgstr "Échec du chargement de l'historique"
 msgid "Failed to load image"
 msgstr "Échec du chargement de l'image"
 
-#: src/features/objects/components/object-detail-panel.tsx:336
-#: src/features/objects/components/object-detail-panel.tsx:339
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:372
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:375
 msgid "Failed to load item"
 msgstr "Échec du chargement de l'élément"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:41
 #: src/routes/_authenticated/$projectId/$objectId.tsx:65
-#: src/routes/_authenticated/$projectId/index.tsx:61
-#: src/routes/_authenticated/$projectId/index.tsx:85
+#: src/routes/_authenticated/$projectId/index.tsx:62
+#: src/routes/_authenticated/$projectId/index.tsx:86
 msgid "Failed to load project"
 msgstr "Échec du chargement du projet"
 
@@ -1274,7 +1293,7 @@ msgstr "Échec du chargement de la vidéo"
 msgid "Failed to merge"
 msgstr "Échec de la fusion"
 
-#: src/features/objects/components/object-detail-panel.tsx:246
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:307
 msgid "Failed to move"
 msgstr "Échec du déplacement"
 
@@ -1299,13 +1318,21 @@ msgstr "Échec de la réorganisation des champs"
 msgid "Failed to reorder views"
 msgstr "Échec de la réorganisation des vues"
 
+#: ../../../lib/web/src/components/ai-prompts-editor.tsx:90
+msgid "Failed to reset prompt"
+msgstr ""
+
 #: ../../../lib/web/src/components/options-menu.tsx:133
 msgid "Failed to revoke RSS access"
 msgstr "Échec de la révocation de l'accès RSS"
 
-#: src/features/objects/components/object-detail-panel.tsx:190
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:263
 msgid "Failed to save"
 msgstr "Échec de l'enregistrement"
+
+#: ../../../lib/web/src/components/ai-prompts-editor.tsx:111
+msgid "Failed to save prompt"
+msgstr ""
 
 #: src/features/projects/components/inline-project-search.tsx:89
 msgid "Failed to search projects"
@@ -1322,13 +1349,17 @@ msgid "Failed to subscribe"
 msgstr "Échec de l'abonnement"
 
 #: src/features/projects/pages/projects-list-page.tsx:43
-#: src/routes/_authenticated/$projectId/index.tsx:159
+#: src/routes/_authenticated/$projectId/index.tsx:160
 msgid "Failed to unsubscribe"
 msgstr "Échec du désabonnement"
 
 #: src/routes/_authenticated/$projectId_.settings.tsx:144
 msgid "Failed to update access level"
 msgstr "Échec de la mise à jour du niveau d'accès"
+
+#: ../../../lib/web/src/components/banner-section.tsx:71
+msgid "Failed to update banner"
+msgstr ""
 
 #: src/features/editor/components/design-editor.tsx:122
 msgid "Failed to update class"
@@ -1362,7 +1393,7 @@ msgstr "Échec de la mise à jour du projet"
 msgid "Failed to update view"
 msgstr "Échec de la mise à jour de la vue"
 
-#: src/features/objects/components/object-detail-panel.tsx:209
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:278
 msgid "Failed to update watching"
 msgstr "Échec de la mise à jour du suivi"
 
@@ -1374,7 +1405,7 @@ msgstr "Échec du téléversement de la pièce jointe"
 msgid "Fields"
 msgstr "Champs"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:589
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:583
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:155
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:175
 msgid "Files"
@@ -1519,7 +1550,7 @@ msgstr "Fichier JSON invalide"
 msgid "It seems like the page you're looking for <0/>does not exist or might have been removed."
 msgstr "Il semble que la page que vous recherchez <0/>n'existe pas ou a été supprimée."
 
-#: src/features/objects/components/object-detail-panel.tsx:416
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:425
 msgid "Item details"
 msgstr "Détails de l'élément"
 
@@ -1549,11 +1580,11 @@ msgid "Light"
 msgstr "Clair"
 
 #: ../../../lib/web/src/components/options-menu.tsx:190
-#: src/routes/_authenticated/$projectId/index.tsx:151
+#: src/routes/_authenticated/$projectId/index.tsx:152
 msgid "Link"
 msgstr "Lien"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:279
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:273
 msgid "Links"
 msgstr "Liens"
 
@@ -1573,11 +1604,11 @@ msgstr "Chargement du contenu…"
 msgid "Loading diff..."
 msgstr "Chargement du diff..."
 
-#: src/features/objects/components/object-detail-panel.tsx:316
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:355
 msgid "Loading item"
 msgstr "Chargement de l'élément"
 
-#: src/features/objects/components/object-detail-panel.tsx:317
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:356
 msgid "Loading item details"
 msgstr "Chargement des détails de l'élément"
 
@@ -1587,7 +1618,7 @@ msgstr "Chargement des modèles..."
 
 #: ../../../lib/web/src/components/ui/load-more.tsx:35
 #: ../../../lib/web/src/features/document/document-page.tsx:88
-#: src/routes/_authenticated/$projectId/index.tsx:148
+#: src/routes/_authenticated/$projectId/index.tsx:149
 msgid "Loading..."
 msgstr "Chargement..."
 
@@ -1653,7 +1684,7 @@ msgstr "Merge commit"
 msgid "Merge requests"
 msgstr "Demandes de fusion"
 
-#: src/features/objects/components/object-detail-panel.tsx:391
+#: src/routes/_authenticated/$projectId/index.tsx:208
 msgid "Merge requests ({requestCount})"
 msgstr "Merge requests ({requestCount})"
 
@@ -1739,14 +1770,14 @@ msgstr "Le nom doit comporter 1000 caractères ou moins"
 msgid "Network error"
 msgstr "Erreur réseau"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:476
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:470
 #: ../../../lib/web/src/components/ui/sort-selector.tsx:43
-#: src/routes/_authenticated/$projectId/index.tsx:130
-#: src/routes/_authenticated/$projectId/index.tsx:134
+#: src/routes/_authenticated/$projectId/index.tsx:131
+#: src/routes/_authenticated/$projectId/index.tsx:135
 msgid "New"
 msgstr "Nouveau"
 
-#: src/routes/_authenticated/$projectId/index.tsx:136
+#: src/routes/_authenticated/$projectId/index.tsx:137
 msgid "New {className}"
 msgstr "Nouveau {className}"
 
@@ -1764,7 +1795,7 @@ msgstr "Suivant"
 msgid "Next image"
 msgstr "Image suivante"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:555
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:549
 msgid "No {parentClassNames} to add to"
 msgstr "Aucun {parentClassNames} auquel ajouter"
 
@@ -1812,11 +1843,11 @@ msgstr "Aucune partie pour le moment"
 msgid "No groups available"
 msgstr "Aucun groupe disponible"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:522
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:516
 msgid "No item types can be created yet. Create the required parent items first."
 msgstr "Aucun type d'élément ne peut encore être créé. Créez d'abord les éléments parents requis."
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:360
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:354
 msgid "No matching objects"
 msgstr "Aucun objet correspondant"
 
@@ -1878,9 +1909,13 @@ msgid "No views"
 msgstr "Aucune vue"
 
 #: ../../../lib/web/src/components/colour-picker.tsx:349
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:538
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:541
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:545
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:532
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:535
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:539
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:540
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:553
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:554
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:558
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:359
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:382
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:385
@@ -1892,9 +1927,6 @@ msgstr "Aucune vue"
 #: ../../../lib/web/src/lib/preference-utils.ts:100
 #: src/features/editor/components/edit-dialogs.tsx:296
 #: src/features/editor/components/edit-dialogs.tsx:299
-#: src/features/objects/components/object-detail-panel.tsx:537
-#: src/features/objects/components/object-detail-panel.tsx:550
-#: src/features/objects/components/object-detail-panel.tsx:555
 msgid "None"
 msgstr "Aucun"
 
@@ -1976,7 +2008,7 @@ msgstr "Ouvrir la navigation"
 msgid "Open option actions"
 msgstr "Ouvrir les actions de l'option"
 
-#: src/routes/_authenticated/$projectId/index.tsx:129
+#: src/routes/_authenticated/$projectId/index.tsx:130
 msgid "Open page actions"
 msgstr "Ouvrir les actions de la page"
 
@@ -2012,8 +2044,8 @@ msgstr "Autre"
 msgid "Owner"
 msgstr "Propriétaire"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:530
-#: src/features/objects/components/object-detail-panel.tsx:533
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:524
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:536
 msgid "Parent"
 msgstr "Parent"
 
@@ -2033,7 +2065,7 @@ msgstr "Clés d'accès"
 msgid "Pattern (regex)"
 msgstr "Motif (regex)"
 
-#: src/routes/_authenticated/$projectId/index.tsx:138
+#: src/routes/_authenticated/$projectId/index.tsx:139
 msgid "Please add one or more classes to the project design."
 msgstr "Ajoutez d'abord une ou plusieurs classes au design du projet."
 
@@ -2095,7 +2127,7 @@ msgid "Processing…"
 msgstr "Traitement…"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:62
-#: src/routes/_authenticated/$projectId/index.tsx:82
+#: src/routes/_authenticated/$projectId/index.tsx:83
 msgid "Project"
 msgstr "Projet"
 
@@ -2111,7 +2143,7 @@ msgstr "Projet créé"
 msgid "Project deleted"
 msgstr "Projet supprimé"
 
-#: src/routes/_authenticated/$projectId/index.tsx:152
+#: src/routes/_authenticated/$projectId/index.tsx:153
 msgid "Project link"
 msgstr "Lien du projet"
 
@@ -2144,7 +2176,11 @@ msgstr "Projet mis à jour"
 msgid "Projects"
 msgstr "Projets"
 
-#: src/features/objects/components/object-detail-panel.tsx:379
+#: ../../../lib/web/src/components/ai-prompts-editor.tsx:108
+msgid "Prompt saved"
+msgstr ""
+
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:398
 msgid "Properties"
 msgstr "Propriétés"
 
@@ -2160,7 +2196,7 @@ msgstr "Surélevé"
 msgid "Re-link your accounts on this server"
 msgstr "Relinkez vos comptes sur ce serveur"
 
-#: src/routes/_authenticated/$projectId/index.tsx:141
+#: src/routes/_authenticated/$projectId/index.tsx:142
 msgid "Re-order columns"
 msgstr "Réorganiser les colonnes"
 
@@ -2197,7 +2233,7 @@ msgstr "Redirection vers la connexion."
 msgid "Reduce interest"
 msgstr "Réduire l'intérêt"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:65
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:69
 msgid "Relates"
 msgstr "Se rapporte à"
 
@@ -2252,8 +2288,8 @@ msgstr "Supprimer l'intérêt"
 msgid "Remove item"
 msgstr "Supprimer l'élément"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:304
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:309
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:298
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:303
 msgid "Remove link"
 msgstr "Supprimer le lien"
 
@@ -2357,15 +2393,18 @@ msgstr "URL RSS copiée dans le presse-papiers"
 msgid "Saturday"
 msgstr "Samedi"
 
+#: ../../../lib/web/src/components/ai-prompts-editor.tsx:156
 #: ../../../lib/web/src/components/attachment-composer.tsx:430
+#: ../../../lib/web/src/components/banner-section.tsx:99
 #: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:231
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:170
 #: ../../../lib/web/src/components/ui/editable-field-row.tsx:122
 #: ../../../lib/web/src/components/ui/secret-field.tsx:79
-#: src/routes/_authenticated/$projectId/index.tsx:144
+#: src/routes/_authenticated/$projectId/index.tsx:145
 msgid "Save"
 msgstr "Enregistrer"
 
+#: ../../../lib/web/src/components/ai-prompts-editor.tsx:156
 #: src/routes/_authenticated/$projectId_.settings.tsx:120
 msgid "Saving..."
 msgstr "Enregistrement…"
@@ -2405,7 +2444,7 @@ msgstr "Rechercher une origine…"
 msgid "Search for projects..."
 msgstr "Rechercher des projets…"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:337
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:331
 msgid "Search objects..."
 msgstr "Rechercher des objets…"
 
@@ -2543,7 +2582,7 @@ msgstr "Définition de l'accès..."
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx:125
 #: ../../../lib/web/src/components/options-menu.tsx:196
 #: src/routes/_authenticated/$projectId_.settings.tsx:103
-#: src/routes/_authenticated/$projectId/index.tsx:173
+#: src/routes/_authenticated/$projectId/index.tsx:174
 msgid "Settings"
 msgstr "Paramètres"
 
@@ -2614,8 +2653,8 @@ msgstr "Squash et fusionner"
 msgid "Start the discussion by adding the first comment."
 msgstr "Lancez la discussion en ajoutant le premier commentaire."
 
-#: src/features/objects/components/object-detail-panel.tsx:439
-#: src/features/objects/components/object-detail-panel.tsx:448
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:455
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:460
 msgid "Stop watching"
 msgstr "Arrêter de suivre"
 
@@ -2742,7 +2781,7 @@ msgid "This will permanently delete \"{projectName}\" and all its objects, comme
 msgstr "Ceci supprimera définitivement « {projectName} » et tous ses objets, commentaires et pièces jointes. Cette action est irréversible."
 
 #. placeholder {0}: project.project.name
-#: src/routes/_authenticated/$projectId/index.tsx:156
+#: src/routes/_authenticated/$projectId/index.tsx:157
 msgid "This will remove \"{0}\" from your sidebar and stop updates for this project."
 msgstr "Ceci retirera « {0} » de votre barre latérale et arrêtera les mises à jour pour ce projet."
 
@@ -2884,27 +2923,26 @@ msgstr "Inconnu"
 
 #: ../../../lib/web/src/components/options-menu.tsx:211
 #: src/features/projects/pages/projects-list-page.tsx:39
-#: src/routes/_authenticated/$projectId/index.tsx:154
+#: src/routes/_authenticated/$projectId/index.tsx:155
 msgid "Unsubscribe"
 msgstr "Se désabonner"
 
-#: src/routes/_authenticated/$projectId/index.tsx:155
+#: src/routes/_authenticated/$projectId/index.tsx:156
 msgid "Unsubscribe from project?"
 msgstr "Se désabonner du projet ?"
 
 #: src/features/projects/pages/projects-list-page.tsx:42
-#: src/routes/_authenticated/$projectId/index.tsx:158
+#: src/routes/_authenticated/$projectId/index.tsx:159
 msgid "Unsubscribed"
 msgstr "Désabonné"
 
 #: src/features/projects/pages/projects-list-page.tsx:41
-#: src/routes/_authenticated/$projectId/index.tsx:157
+#: src/routes/_authenticated/$projectId/index.tsx:158
 msgid "Unsubscribing..."
 msgstr "Désabonnement..."
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:285
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:103
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:184
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:178
+#: ../../../lib/web/src/lib/entity-title.ts:36
 #: src/features/board/components/board-container.tsx:29
 #: src/features/editor/components/design-preview.tsx:31
 msgid "Untitled"
@@ -2919,7 +2957,7 @@ msgstr "Mis à jour"
 msgid "Updating access..."
 msgstr "Mise à jour de l'accès..."
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:639
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:633
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:301
 msgid "Upload"
 msgstr "Téléverser"
@@ -2949,6 +2987,10 @@ msgstr "Utilisé pour des IDs lisibles comme {0}-1, {1}-2"
 msgid "User"
 msgstr "Utilisateur"
 
+#: ../../../lib/web/src/components/ai-prompts-editor.tsx:159
+msgid "Variables: {variables}"
+msgstr ""
+
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:73
 msgid "Verification code"
 msgstr "Code de vérification"
@@ -2976,7 +3018,7 @@ msgstr "Lecteur vidéo : {0}"
 msgid "View all notifications"
 msgstr "Voir toutes les notifications"
 
-#: src/features/objects/components/object-detail-panel.tsx:417
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:426
 msgid "View and edit item details"
 msgstr "Voir et modifier les détails de l'élément"
 
@@ -2988,7 +3030,7 @@ msgstr "Contrôles de la vue"
 msgid "View only"
 msgstr "Lecture seule"
 
-#: src/routes/_authenticated/$projectId/index.tsx:139
+#: src/routes/_authenticated/$projectId/index.tsx:140
 msgid "View options"
 msgstr "Options d'affichage"
 
@@ -2996,8 +3038,8 @@ msgstr "Options d'affichage"
 msgid "Views"
 msgstr "Vues"
 
-#: src/features/objects/components/object-detail-panel.tsx:439
-#: src/features/objects/components/object-detail-panel.tsx:448
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:455
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:460
 msgid "Watch"
 msgstr "Suivre"
 
@@ -3027,7 +3069,7 @@ msgstr "Mercredi"
 msgid "You do not have access to this section."
 msgstr "Vous n'avez pas accès à cette section."
 
-#: src/routes/_authenticated/$projectId/index.tsx:52
+#: src/routes/_authenticated/$projectId/index.tsx:53
 msgid "You don't have access to this project."
 msgstr "Vous n'avez pas accès à ce projet."
 

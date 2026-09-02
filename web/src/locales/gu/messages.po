@@ -18,7 +18,7 @@ msgstr ""
 msgid "Please check your internet connection and try again."
 msgstr "કૃપા કરી તમારું ઇન્ટરનેટ કનેક્શન તપાસો અને ફરી પ્રયાસ કરો."
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:301
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:295
 msgid " or "
 msgstr " અથવા "
 
@@ -176,7 +176,7 @@ msgstr "{subjectName} માટે ઍક્સેસ સેટ કર્યુ�
 msgid "Account type"
 msgstr "ખાતાનો પ્રકાર"
 
-#: src/features/objects/components/object-detail-panel.tsx:398
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:405
 msgid "Activity"
 msgstr "પ્રવૃત્તિ"
 
@@ -221,7 +221,7 @@ msgstr "ચેકલિસ્ટ આઇટમ ઉમેરો"
 msgid "Add class"
 msgstr "ક્લાસ ઉમેરો"
 
-#: src/routes/_authenticated/$projectId/index.tsx:140
+#: src/routes/_authenticated/$projectId/index.tsx:141
 msgid "Add column"
 msgstr "કૉલમ ઉમેરો"
 
@@ -235,7 +235,7 @@ msgstr "ફીલ્ડ ઉમેરો"
 msgid "Add item..."
 msgstr "આઇટમ ઉમેરો..."
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:320
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:314
 msgid "Add link"
 msgstr "લિંક ઉમેરો"
 
@@ -326,7 +326,7 @@ msgstr "આ ફીડ પર સબ્સ્ક્રાઇબ થયેલુ�
 msgid "Are you sure you want to delete \"{0}\"?"
 msgstr "શું તમે ખરેખર \"{0}\" કાઢી નાખવા માંગો છો?"
 
-#: src/features/objects/components/object-detail-panel.tsx:642
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:652
 msgid "Are you sure you want to delete \"{title}\"? This action cannot be undone."
 msgstr "શું તમે ખરેખર \"{title}\" કાઢી નાખવા માંગો છો? આ ક્રિયા પૂર્વવત્ કરી શકાતી નથી."
 
@@ -399,20 +399,29 @@ msgid "Back to project"
 msgstr "પ્રોજેક્ટ પર પાછા"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:64
-#: src/routes/_authenticated/$projectId/index.tsx:84
+#: src/routes/_authenticated/$projectId/index.tsx:85
 msgid "Back to projects"
 msgstr "પ્રોજેક્ટ પર પાછા"
 
+#: ../../../lib/web/src/components/banner-section.tsx:80
 #: ../../../lib/web/src/components/entity-banner.tsx:17
 msgid "Banner"
 msgstr "બૅનર"
+
+#: ../../../lib/web/src/components/banner-section.tsx:69
+msgid "Banner removed"
+msgstr ""
+
+#: ../../../lib/web/src/components/banner-section.tsx:69
+msgid "Banner updated"
+msgstr ""
 
 #: src/features/requests/components/diff-viewer.tsx:447
 msgid "Binary file not shown"
 msgstr "બાઈનરી ફાઇલ બતાવેલ નથી"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:68
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:215
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:72
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:209
 msgid "Blocked by"
 msgstr "દ્વારા અવરોધિત"
 
@@ -421,7 +430,7 @@ msgstr "દ્વારા અવરોધિત"
 msgid "Blocked navigation to untrusted link"
 msgstr "વિશ્વાસપાત્ર નથી તેવી લિંક પર નેવિગેશન અવરોધિત કર્યું"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:66
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:70
 msgid "Blocks"
 msgstr "અવરોધે છે"
 
@@ -466,7 +475,7 @@ msgstr "આનું સંતાન બની શકે"
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:91
 #: src/features/projects/components/create-project-dialog.tsx:453
 #: src/routes/_authenticated/$projectId/design.tsx:61
-#: src/routes/_authenticated/$projectId/index.tsx:143
+#: src/routes/_authenticated/$projectId/index.tsx:144
 msgid "Cancel"
 msgstr "રદ કરો"
 
@@ -516,8 +525,8 @@ msgstr "સાઇડબારમાંથી રમત પસંદ કરો �
 msgid "Choose a template"
 msgstr "ટેમ્પલેટ પસંદ કરો"
 
-#: ../../../lib/web/src/components/language-picker.tsx:264
-#: ../../../lib/web/src/components/language-picker.tsx:271
+#: ../../../lib/web/src/components/language-picker.tsx:267
+#: ../../../lib/web/src/components/language-picker.tsx:274
 msgid "Choose language"
 msgstr "ભાષા પસંદ કરો"
 
@@ -525,6 +534,7 @@ msgstr "ભાષા પસંદ કરો"
 msgid "Classes"
 msgstr "ક્લાસ"
 
+#: ../../../lib/web/src/components/banner-section.tsx:111
 #: ../../../lib/web/src/components/colour-picker.tsx:274
 #: ../../../lib/web/src/components/colour-picker.tsx:355
 #: ../../../lib/web/src/components/travelling-picker.tsx:164
@@ -542,8 +552,8 @@ msgstr "બધું સાફ કરો"
 msgid "Clear search"
 msgstr "શોધ સાફ કરો"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:501
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:506
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:495
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:500
 #: ../../../lib/web/src/components/ui/dialog.tsx:78
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:468
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:471
@@ -625,7 +635,7 @@ msgid "Comments"
 msgstr "ટિપ્પણીઓ"
 
 #. placeholder {0}: data.comment_count || 0
-#: src/features/objects/components/object-detail-panel.tsx:384
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:401
 msgid "Comments ({0})"
 msgstr "ટિપ્પણીઓ ({0})"
 
@@ -734,8 +744,8 @@ msgstr "તે ખાતા વડે ચકાસણી કરી શકાઈ 
 
 #: ../../../lib/web/src/components/entity/entity-board-column.tsx:550
 #: ../../../lib/web/src/components/entity/entity-board-column.tsx:689
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:491
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:656
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:485
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:650
 #: ../../../lib/web/src/components/entity/entity-tree-view.tsx:675
 msgid "Create"
 msgstr "બનાવો"
@@ -780,7 +790,7 @@ msgstr "બનાવ્યું"
 msgid "Creating project..."
 msgstr "પ્રોજેક્ટ બનાવી રહ્યું છે..."
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:656
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:650
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:258
 #: src/features/projects/components/create-project-dialog.tsx:457
 #: src/features/projects/components/create-project-dialog.tsx:549
@@ -791,6 +801,7 @@ msgstr "બનાવી રહ્યું છે..."
 msgid "Current location"
 msgstr "વર્તમાન સ્થાન"
 
+#: ../../../lib/web/src/components/ai-prompts-editor.tsx:132
 #: ../../../lib/web/src/components/colour-picker.tsx:265
 msgid "Custom"
 msgstr "કસ્ટમ"
@@ -819,6 +830,10 @@ msgstr "તારીખ"
 msgid "Decline"
 msgstr "નકારો"
 
+#: ../../../lib/web/src/components/ai-prompts-editor.tsx:129
+msgid "Default"
+msgstr ""
+
 #: ../../../lib/web/src/features/accounts/account-add.tsx:185
 msgid "Default AI account"
 msgstr "ડિફૉલ્ટ AI ખાતું"
@@ -836,7 +851,7 @@ msgstr "ડિફૉલ્ટ સૉર્ટ"
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:203
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:252
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:314
-#: src/features/objects/components/object-detail-panel.tsx:643
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:653
 #: src/features/requests/components/request-panel.tsx:142
 #: src/routes/_authenticated/$projectId_.settings.tsx:124
 msgid "Delete"
@@ -862,9 +877,9 @@ msgstr "ટિપ્પણી કાઢી નાખો"
 msgid "Delete field"
 msgstr "ફીલ્ડ કાઢી નાખો"
 
-#: src/features/objects/components/object-detail-panel.tsx:458
-#: src/features/objects/components/object-detail-panel.tsx:463
-#: src/features/objects/components/object-detail-panel.tsx:641
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:470
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:475
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:651
 msgid "Delete item"
 msgstr "આઇટમ કાઢી નાખો"
 
@@ -921,7 +936,7 @@ msgstr "વર્ણન"
 
 #: src/routes/_authenticated/$projectId/design.tsx:43
 #: src/routes/_authenticated/$projectId/design.tsx:46
-#: src/routes/_authenticated/$projectId/index.tsx:165
+#: src/routes/_authenticated/$projectId/index.tsx:166
 msgid "Design"
 msgstr "ડિઝાઇન"
 
@@ -938,7 +953,7 @@ msgstr "ડિઝાઇન કરો, બનાવો, સંપાદિત ક
 msgid "Details Panel"
 msgstr "વિગતો પૅનલ"
 
-#: ../../../lib/web/src/components/language-picker.tsx:240
+#: ../../../lib/web/src/components/language-picker.tsx:243
 #: ../../../lib/web/src/components/timezone-select.tsx:46
 #: ../../../lib/web/src/components/timezone-select.tsx:83
 #: ../../../lib/web/src/lib/preference-utils.ts:23
@@ -979,7 +994,7 @@ msgstr "ડિસ્કનેક્ટેડ"
 msgid "Dismiss"
 msgstr "રદ કરો"
 
-#: src/routes/_authenticated/$projectId/index.tsx:146
+#: src/routes/_authenticated/$projectId/index.tsx:147
 msgid "Dismiss board hint"
 msgstr "બોર્ડ સંકેત રદ કરો"
 
@@ -988,13 +1003,13 @@ msgid "Displays the mobile sidebar."
 msgstr "મોબાઇલ સાઇડબાર દર્શાવે છે."
 
 #: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:305
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:479
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:518
 #: src/features/editor/components/edit-dialogs.tsx:439
-#: src/features/objects/components/object-detail-panel.tsx:472
 msgid "Done"
 msgstr "થઈ ગયું"
 
-#: src/routes/_authenticated/$projectId/index.tsx:145
+#: src/routes/_authenticated/$projectId/index.tsx:146
 msgid "Double click on a column to add content"
 msgstr "કૉલમમાં સામગ્રી ઉમેરવા માટે ડબલ ક્લિક કરો"
 
@@ -1013,7 +1028,7 @@ msgid "Download failed"
 msgstr "ડાઉનલોડ નિષ્ફળ"
 
 #: src/routes/_authenticated/$projectId/design.tsx:52
-#: src/routes/_authenticated/$projectId/index.tsx:149
+#: src/routes/_authenticated/$projectId/index.tsx:150
 msgid "Downloaded {filename}"
 msgstr "{filename} ડાઉનલોડ કર્યું"
 
@@ -1022,11 +1037,11 @@ msgstr "{filename} ડાઉનલોડ કર્યું"
 msgid "Draft"
 msgstr "ડ્રાફ્ટ"
 
-#: src/routes/_authenticated/$projectId/index.tsx:142
+#: src/routes/_authenticated/$projectId/index.tsx:143
 msgid "Drag columns to re-order them"
 msgstr "કૉલમ્સ ફરીથી ગોઠવવા માટે ખેંચો"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:67
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:71
 msgid "Duplicates"
 msgstr "ડુપ્લિકેટ"
 
@@ -1085,6 +1100,10 @@ msgstr "ઇમેઇલ"
 msgid "Email code"
 msgstr "ઇમેઇલ કોડ"
 
+#: ../../../lib/web/src/components/banner-section.tsx:88
+msgid "Enter banner text (markdown supported)..."
+msgstr ""
+
 #: ../../../lib/web/src/components/step-up-dialog.tsx:302
 msgid "Enter the code from your email"
 msgstr "તમારા ઈમેલમાંથી કોડ દાખલ કરો"
@@ -1097,7 +1116,7 @@ msgstr "તમારો ઑથેન્ટિકેટર કોડ દાખલ
 msgid "Entity ID"
 msgstr "એન્ટિટી ID"
 
-#: src/features/objects/components/object-detail-panel.tsx:335
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:371
 msgid "Error"
 msgstr "ભૂલ"
 
@@ -1112,7 +1131,7 @@ msgstr "વિસ્તારો"
 msgid "Expand sidebar"
 msgstr "સાઇડબાર વિસ્તૃત કરો"
 
-#: src/routes/_authenticated/$projectId/index.tsx:147
+#: src/routes/_authenticated/$projectId/index.tsx:148
 msgid "Export data"
 msgstr "ડેટા એક્સપોર્ટ કરો"
 
@@ -1146,9 +1165,9 @@ msgstr "ક્લાસ બનાવવામાં નિષ્ફળ"
 msgid "Failed to create field"
 msgstr "ફીલ્ડ બનાવવામાં નિષ્ફળ"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:137
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:131
 #: ../../../lib/web/src/components/options-menu.tsx:98
-#: src/routes/_authenticated/$projectId/index.tsx:153
+#: src/routes/_authenticated/$projectId/index.tsx:154
 msgid "Failed to create link"
 msgstr "લિંક બનાવવામાં નિષ્ફળ"
 
@@ -1169,7 +1188,7 @@ msgstr "પ્રોજેક્ટ બનાવવામાં નિષ્ફ�
 msgid "Failed to create view"
 msgstr "વ્યૂ બનાવવામાં નિષ્ફળ"
 
-#: src/features/objects/components/object-detail-panel.tsx:226
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:293
 msgid "Failed to delete"
 msgstr "કાઢી નાખવામાં નિષ્ફળ"
 
@@ -1189,7 +1208,7 @@ msgstr "કમેન્ટ કાઢી નાખવામાં નિષ્ફ
 msgid "Failed to delete field"
 msgstr "ફીલ્ડ કાઢી નાખવામાં નિષ્ફળ"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:159
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:153
 msgid "Failed to delete link"
 msgstr "લિંક કાઢી નાખવામાં નિષ્ફળ"
 
@@ -1209,7 +1228,7 @@ msgstr "પ્રોજેક્ટ કાઢી નાખવામાં નિ
 msgid "Failed to delete view"
 msgstr "વ્યૂ કાઢી નાખવામાં નિષ્ફળ"
 
-#: src/routes/_authenticated/$projectId/index.tsx:150
+#: src/routes/_authenticated/$projectId/index.tsx:151
 msgid "Failed to export data"
 msgstr "ડેટા એક્સપોર્ટ કરવામાં નિષ્ફળ"
 
@@ -1242,15 +1261,15 @@ msgstr "ઇતિહાસ લોડ કરવામાં નિષ્ફળ"
 msgid "Failed to load image"
 msgstr "છબી લોડ કરવામાં નિષ્ફળ"
 
-#: src/features/objects/components/object-detail-panel.tsx:336
-#: src/features/objects/components/object-detail-panel.tsx:339
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:372
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:375
 msgid "Failed to load item"
 msgstr "આઇટમ લોડ કરવામાં નિષ્ફળ"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:41
 #: src/routes/_authenticated/$projectId/$objectId.tsx:65
-#: src/routes/_authenticated/$projectId/index.tsx:61
-#: src/routes/_authenticated/$projectId/index.tsx:85
+#: src/routes/_authenticated/$projectId/index.tsx:62
+#: src/routes/_authenticated/$projectId/index.tsx:86
 msgid "Failed to load project"
 msgstr "પ્રોજેક્ટ લોડ કરવામાં નિષ્ફળ"
 
@@ -1274,7 +1293,7 @@ msgstr "વિડિઓ લોડ કરવામાં નિષ્ફળ"
 msgid "Failed to merge"
 msgstr "મર્જ કરવામાં નિષ્ફળ"
 
-#: src/features/objects/components/object-detail-panel.tsx:246
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:307
 msgid "Failed to move"
 msgstr "ખસેડવામાં નિષ્ફળ"
 
@@ -1299,13 +1318,21 @@ msgstr "ફીલ્ડ્સ ફરી ગોઠવવામાં નિષ્
 msgid "Failed to reorder views"
 msgstr "વ્યૂઝ ફરી ગોઠવવામાં નિષ્ફળ"
 
+#: ../../../lib/web/src/components/ai-prompts-editor.tsx:90
+msgid "Failed to reset prompt"
+msgstr ""
+
 #: ../../../lib/web/src/components/options-menu.tsx:133
 msgid "Failed to revoke RSS access"
 msgstr "RSS ઍક્સેસ રદ કરવામાં નિષ્ફળ"
 
-#: src/features/objects/components/object-detail-panel.tsx:190
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:263
 msgid "Failed to save"
 msgstr "સેવ કરવામાં નિષ્ફળ"
+
+#: ../../../lib/web/src/components/ai-prompts-editor.tsx:111
+msgid "Failed to save prompt"
+msgstr ""
 
 #: src/features/projects/components/inline-project-search.tsx:89
 msgid "Failed to search projects"
@@ -1322,13 +1349,17 @@ msgid "Failed to subscribe"
 msgstr "સબ્સ્ક્રાઇબ કરવામાં નિષ્ફળ"
 
 #: src/features/projects/pages/projects-list-page.tsx:43
-#: src/routes/_authenticated/$projectId/index.tsx:159
+#: src/routes/_authenticated/$projectId/index.tsx:160
 msgid "Failed to unsubscribe"
 msgstr "અનસબ્સ્ક્રાઇબ કરવામાં નિષ્ફળ"
 
 #: src/routes/_authenticated/$projectId_.settings.tsx:144
 msgid "Failed to update access level"
 msgstr "ઍક્સેસ લેવલ અપડેટ કરવામાં નિષ્ફળ"
+
+#: ../../../lib/web/src/components/banner-section.tsx:71
+msgid "Failed to update banner"
+msgstr ""
 
 #: src/features/editor/components/design-editor.tsx:122
 msgid "Failed to update class"
@@ -1362,7 +1393,7 @@ msgstr "પ્રોજેક્ટ અપડેટ કરવામાં નિ
 msgid "Failed to update view"
 msgstr "વ્યૂ અપડેટ કરવામાં નિષ્ફળ"
 
-#: src/features/objects/components/object-detail-panel.tsx:209
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:278
 msgid "Failed to update watching"
 msgstr "નિરીક્ષણ અપડેટ કરવામાં નિષ્ફળ"
 
@@ -1374,7 +1405,7 @@ msgstr "એટેચમેન્ટ અપલોડ કરવામાં નિ
 msgid "Fields"
 msgstr "ફીલ્ડ્સ"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:589
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:583
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:155
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:175
 msgid "Files"
@@ -1519,7 +1550,7 @@ msgstr "અમાન્ય JSON ફાઇલ"
 msgid "It seems like the page you're looking for <0/>does not exist or might have been removed."
 msgstr "એવું લાગે છે કે તમે જે પૃષ્ઠ શોધી રહ્યા છો <0/>તે અસ્તિત્વમાં નથી અથવા દૂર કરવામાં આવ્યું છે."
 
-#: src/features/objects/components/object-detail-panel.tsx:416
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:425
 msgid "Item details"
 msgstr "આઇટમ વિગતો"
 
@@ -1549,11 +1580,11 @@ msgid "Light"
 msgstr "લાઇટ"
 
 #: ../../../lib/web/src/components/options-menu.tsx:190
-#: src/routes/_authenticated/$projectId/index.tsx:151
+#: src/routes/_authenticated/$projectId/index.tsx:152
 msgid "Link"
 msgstr "લિંક"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:279
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:273
 msgid "Links"
 msgstr "લિંક્સ"
 
@@ -1573,11 +1604,11 @@ msgstr "સામગ્રી લોડ થઈ રહી છે…"
 msgid "Loading diff..."
 msgstr "ડિફ લોડ થઈ રહ્યું છે..."
 
-#: src/features/objects/components/object-detail-panel.tsx:316
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:355
 msgid "Loading item"
 msgstr "આઇટમ લોડ થઈ રહી છે"
 
-#: src/features/objects/components/object-detail-panel.tsx:317
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:356
 msgid "Loading item details"
 msgstr "આઇટમ વિગતો લોડ થઈ રહી છે"
 
@@ -1587,7 +1618,7 @@ msgstr "ટેમ્પ્લેટ્સ લોડ થઈ રહ્યા છ�
 
 #: ../../../lib/web/src/components/ui/load-more.tsx:35
 #: ../../../lib/web/src/features/document/document-page.tsx:88
-#: src/routes/_authenticated/$projectId/index.tsx:148
+#: src/routes/_authenticated/$projectId/index.tsx:149
 msgid "Loading..."
 msgstr "લોડ થઈ રહ્યું છે..."
 
@@ -1653,7 +1684,7 @@ msgstr "મર્જ કમિટ"
 msgid "Merge requests"
 msgstr "મર્જ વિનંતીઓ"
 
-#: src/features/objects/components/object-detail-panel.tsx:391
+#: src/routes/_authenticated/$projectId/index.tsx:208
 msgid "Merge requests ({requestCount})"
 msgstr "મર્જ વિનંતીઓ ({requestCount})"
 
@@ -1739,14 +1770,14 @@ msgstr "નામ 1000 અક્ષરો અથવા તેથી ઓછું
 msgid "Network error"
 msgstr "નેટવર્ક ભૂલ"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:476
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:470
 #: ../../../lib/web/src/components/ui/sort-selector.tsx:43
-#: src/routes/_authenticated/$projectId/index.tsx:130
-#: src/routes/_authenticated/$projectId/index.tsx:134
+#: src/routes/_authenticated/$projectId/index.tsx:131
+#: src/routes/_authenticated/$projectId/index.tsx:135
 msgid "New"
 msgstr "નવું"
 
-#: src/routes/_authenticated/$projectId/index.tsx:136
+#: src/routes/_authenticated/$projectId/index.tsx:137
 msgid "New {className}"
 msgstr "નવું {className}"
 
@@ -1764,7 +1795,7 @@ msgstr "આગળ"
 msgid "Next image"
 msgstr "આગળની છબી"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:555
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:549
 msgid "No {parentClassNames} to add to"
 msgstr "ઉમેરવા માટે કોઈ {parentClassNames} નથી"
 
@@ -1812,11 +1843,11 @@ msgstr "હજુ સુધી કોઈ ગેમ્સ નથી"
 msgid "No groups available"
 msgstr "કોઈ ગ્રૂપ્સ ઉપલબ્ધ નથી"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:522
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:516
 msgid "No item types can be created yet. Create the required parent items first."
 msgstr "હજુ સુધી કોઈ આઇટમ પ્રકારો બનાવી શકાતા નથી. પહેલા જરૂરી પેરન્ટ આઇટમ્સ બનાવો."
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:360
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:354
 msgid "No matching objects"
 msgstr "કોઈ મેળ ખાતી ઑબ્જેક્ટ્સ નથી"
 
@@ -1878,9 +1909,13 @@ msgid "No views"
 msgstr "કોઈ વ્યૂ નથી"
 
 #: ../../../lib/web/src/components/colour-picker.tsx:349
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:538
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:541
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:545
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:532
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:535
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:539
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:540
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:553
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:554
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:558
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:359
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:382
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:385
@@ -1892,9 +1927,6 @@ msgstr "કોઈ વ્યૂ નથી"
 #: ../../../lib/web/src/lib/preference-utils.ts:100
 #: src/features/editor/components/edit-dialogs.tsx:296
 #: src/features/editor/components/edit-dialogs.tsx:299
-#: src/features/objects/components/object-detail-panel.tsx:537
-#: src/features/objects/components/object-detail-panel.tsx:550
-#: src/features/objects/components/object-detail-panel.tsx:555
 msgid "None"
 msgstr "કોઈ નહીં"
 
@@ -1976,7 +2008,7 @@ msgstr "નેવિગેશન ખોલો"
 msgid "Open option actions"
 msgstr "વિકલ્પ ક્રિયાઓ ખોલો"
 
-#: src/routes/_authenticated/$projectId/index.tsx:129
+#: src/routes/_authenticated/$projectId/index.tsx:130
 msgid "Open page actions"
 msgstr "પેજ ક્રિયાઓ ખોલો"
 
@@ -2012,8 +2044,8 @@ msgstr "અન્ય"
 msgid "Owner"
 msgstr "માલિક"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:530
-#: src/features/objects/components/object-detail-panel.tsx:533
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:524
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:536
 msgid "Parent"
 msgstr "પેરન્ટ"
 
@@ -2033,7 +2065,7 @@ msgstr "પાસકીઝ"
 msgid "Pattern (regex)"
 msgstr "પૅટર્ન (regex)"
 
-#: src/routes/_authenticated/$projectId/index.tsx:138
+#: src/routes/_authenticated/$projectId/index.tsx:139
 msgid "Please add one or more classes to the project design."
 msgstr "કૃપા કરીને પ્રોજેક્ટ ડિઝાઇનમાં એક અથવા વધુ ક્લાસ ઉમેરો."
 
@@ -2095,7 +2127,7 @@ msgid "Processing…"
 msgstr "પ્રક્રિયા થઈ રહી છે…"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:62
-#: src/routes/_authenticated/$projectId/index.tsx:82
+#: src/routes/_authenticated/$projectId/index.tsx:83
 msgid "Project"
 msgstr "પ્રોજેક્ટ"
 
@@ -2111,7 +2143,7 @@ msgstr "પ્રોજેક્ટ બનાવ્યો"
 msgid "Project deleted"
 msgstr "પ્રોજેક્ટ ડિલીટ થયો"
 
-#: src/routes/_authenticated/$projectId/index.tsx:152
+#: src/routes/_authenticated/$projectId/index.tsx:153
 msgid "Project link"
 msgstr "પ્રોજેક્ટ લિંક"
 
@@ -2144,7 +2176,11 @@ msgstr "પ્રોજેક્ટ અપડેટ થયો"
 msgid "Projects"
 msgstr "પ્રોજેક્ટ્સ"
 
-#: src/features/objects/components/object-detail-panel.tsx:379
+#: ../../../lib/web/src/components/ai-prompts-editor.tsx:108
+msgid "Prompt saved"
+msgstr ""
+
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:398
 msgid "Properties"
 msgstr "ગુણધર્મો"
 
@@ -2160,7 +2196,7 @@ msgstr "ઊંચું"
 msgid "Re-link your accounts on this server"
 msgstr "આ સર્વર પર તમારા ખાતાઓ ફરીથી જોડો"
 
-#: src/routes/_authenticated/$projectId/index.tsx:141
+#: src/routes/_authenticated/$projectId/index.tsx:142
 msgid "Re-order columns"
 msgstr "કૉલમ્સ ફરીથી ગોઠવો"
 
@@ -2197,7 +2233,7 @@ msgstr "લોગિન પર રિડાયરેક્ટ થઈ રહ્�
 msgid "Reduce interest"
 msgstr "રસ ઘટાડો"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:65
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:69
 msgid "Relates"
 msgstr "સંબંધિત"
 
@@ -2252,8 +2288,8 @@ msgstr "રસ દૂર કરો"
 msgid "Remove item"
 msgstr "આઇટમ દૂર કરો"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:304
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:309
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:298
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:303
 msgid "Remove link"
 msgstr "લિંક દૂર કરો"
 
@@ -2357,15 +2393,18 @@ msgstr "RSS URL ક્લિપબોર્ડ પર કૉપિ થઈ"
 msgid "Saturday"
 msgstr "શનિવાર"
 
+#: ../../../lib/web/src/components/ai-prompts-editor.tsx:156
 #: ../../../lib/web/src/components/attachment-composer.tsx:430
+#: ../../../lib/web/src/components/banner-section.tsx:99
 #: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:231
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:170
 #: ../../../lib/web/src/components/ui/editable-field-row.tsx:122
 #: ../../../lib/web/src/components/ui/secret-field.tsx:79
-#: src/routes/_authenticated/$projectId/index.tsx:144
+#: src/routes/_authenticated/$projectId/index.tsx:145
 msgid "Save"
 msgstr "સાચવો"
 
+#: ../../../lib/web/src/components/ai-prompts-editor.tsx:156
 #: src/routes/_authenticated/$projectId_.settings.tsx:120
 msgid "Saving..."
 msgstr "સાચવી રહ્યું છે..."
@@ -2405,7 +2444,7 @@ msgstr "મૂળ માટે શોધો..."
 msgid "Search for projects..."
 msgstr "પ્રોજેક્ટ્સ માટે શોધો..."
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:337
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:331
 msgid "Search objects..."
 msgstr "ઑબ્જેક્ટ્સ શોધો..."
 
@@ -2543,7 +2582,7 @@ msgstr "ઍક્સેસ સેટ કરી રહ્યું છે..."
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx:125
 #: ../../../lib/web/src/components/options-menu.tsx:196
 #: src/routes/_authenticated/$projectId_.settings.tsx:103
-#: src/routes/_authenticated/$projectId/index.tsx:173
+#: src/routes/_authenticated/$projectId/index.tsx:174
 msgid "Settings"
 msgstr "સેટિંગ્સ"
 
@@ -2614,8 +2653,8 @@ msgstr "સ્કવોશ અને મર્જ"
 msgid "Start the discussion by adding the first comment."
 msgstr "પ્રથમ ટિપ્પણી ઉમેરીને ચર્ચા શરૂ કરો."
 
-#: src/features/objects/components/object-detail-panel.tsx:439
-#: src/features/objects/components/object-detail-panel.tsx:448
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:455
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:460
 msgid "Stop watching"
 msgstr "જોવાનું બંધ કરો"
 
@@ -2742,7 +2781,7 @@ msgid "This will permanently delete \"{projectName}\" and all its objects, comme
 msgstr "આ \"{projectName}\" અને તેના તમામ ઑબ્જેક્ટ્સ, ટિપ્પણીઓ અને જોડાણોને કાયમ માટે કાઢી નાખશે. આ ક્રિયા પૂર્વવત્ કરી શકાતી નથી."
 
 #. placeholder {0}: project.project.name
-#: src/routes/_authenticated/$projectId/index.tsx:156
+#: src/routes/_authenticated/$projectId/index.tsx:157
 msgid "This will remove \"{0}\" from your sidebar and stop updates for this project."
 msgstr "આ તમારા સાઇડબારમાંથી \"{0}\" દૂર કરશે અને આ પ્રોજેક્ટ માટે અપડેટ્સ બંધ કરશે."
 
@@ -2884,27 +2923,26 @@ msgstr "અજાણ્યું"
 
 #: ../../../lib/web/src/components/options-menu.tsx:211
 #: src/features/projects/pages/projects-list-page.tsx:39
-#: src/routes/_authenticated/$projectId/index.tsx:154
+#: src/routes/_authenticated/$projectId/index.tsx:155
 msgid "Unsubscribe"
 msgstr "અનસબ્સ્ક્રાઇબ કરો"
 
-#: src/routes/_authenticated/$projectId/index.tsx:155
+#: src/routes/_authenticated/$projectId/index.tsx:156
 msgid "Unsubscribe from project?"
 msgstr "પ્રોજેક્ટ માંથી અનસબ્સ્ક્રાઇબ કરવું છે?"
 
 #: src/features/projects/pages/projects-list-page.tsx:42
-#: src/routes/_authenticated/$projectId/index.tsx:158
+#: src/routes/_authenticated/$projectId/index.tsx:159
 msgid "Unsubscribed"
 msgstr "અનસબ્સ્ક્રાઇબ કર્યું"
 
 #: src/features/projects/pages/projects-list-page.tsx:41
-#: src/routes/_authenticated/$projectId/index.tsx:157
+#: src/routes/_authenticated/$projectId/index.tsx:158
 msgid "Unsubscribing..."
 msgstr "અનસબ્સ્ક્રાઇબ કરી રહ્યું છે..."
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:285
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:103
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:184
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:178
+#: ../../../lib/web/src/lib/entity-title.ts:36
 #: src/features/board/components/board-container.tsx:29
 #: src/features/editor/components/design-preview.tsx:31
 msgid "Untitled"
@@ -2919,7 +2957,7 @@ msgstr "અપડેટ કર્યું"
 msgid "Updating access..."
 msgstr "ઍક્સેસ અપડેટ કરી રહ્યું છે..."
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:639
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:633
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:301
 msgid "Upload"
 msgstr "અપલોડ કરો"
@@ -2949,6 +2987,10 @@ msgstr "{0}-1, {1}-2 જેવા વાંચી શકાય તેવા IDs 
 msgid "User"
 msgstr "વપરાશકર્તા"
 
+#: ../../../lib/web/src/components/ai-prompts-editor.tsx:159
+msgid "Variables: {variables}"
+msgstr ""
+
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:73
 msgid "Verification code"
 msgstr "ચકાસણી કોડ"
@@ -2976,7 +3018,7 @@ msgstr "વિડિઓ દર્શક: {0}"
 msgid "View all notifications"
 msgstr "બધી સૂચનાઓ જુઓ"
 
-#: src/features/objects/components/object-detail-panel.tsx:417
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:426
 msgid "View and edit item details"
 msgstr "આઇટમ વિગતો જુઓ અને સંપાદિત કરો"
 
@@ -2988,7 +3030,7 @@ msgstr "નિયંત્રણો જુઓ"
 msgid "View only"
 msgstr "ફક્ત જુઓ"
 
-#: src/routes/_authenticated/$projectId/index.tsx:139
+#: src/routes/_authenticated/$projectId/index.tsx:140
 msgid "View options"
 msgstr "વ્યૂ વિકલ્પો"
 
@@ -2996,8 +3038,8 @@ msgstr "વ્યૂ વિકલ્પો"
 msgid "Views"
 msgstr "વ્યૂ"
 
-#: src/features/objects/components/object-detail-panel.tsx:439
-#: src/features/objects/components/object-detail-panel.tsx:448
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:455
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:460
 msgid "Watch"
 msgstr "જુઓ"
 
@@ -3027,7 +3069,7 @@ msgstr "બુધવાર"
 msgid "You do not have access to this section."
 msgstr "તમારી પાસે આ વિભાગની ઍક્સેસ નથી."
 
-#: src/routes/_authenticated/$projectId/index.tsx:52
+#: src/routes/_authenticated/$projectId/index.tsx:53
 msgid "You don't have access to this project."
 msgstr "તમારી પાસે આ પ્રોજેક્ટ માટે ઍક્સેસ નથી."
 

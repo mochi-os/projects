@@ -18,7 +18,7 @@ msgstr ""
 msgid "Please check your internet connection and try again."
 msgstr "សូមពិនិត្យការតភ្ជាប់អ៊ីនធឺណិតរបស់អ្នក រួចព្យាយាមម្តងទៀត។"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:301
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:295
 msgid " or "
 msgstr " ឬ "
 
@@ -176,7 +176,7 @@ msgstr "បានកំណត់ការចូលប្រើសម្រាប
 msgid "Account type"
 msgstr "ប្រភេទគណនី"
 
-#: src/features/objects/components/object-detail-panel.tsx:398
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:405
 msgid "Activity"
 msgstr "សកម្មភាព"
 
@@ -221,7 +221,7 @@ msgstr "បន្ថែមធាតុបញ្ជី"
 msgid "Add class"
 msgstr "បន្ថែមថ្នាក់"
 
-#: src/routes/_authenticated/$projectId/index.tsx:140
+#: src/routes/_authenticated/$projectId/index.tsx:141
 msgid "Add column"
 msgstr "បន្ថែមជួរឈរ"
 
@@ -235,7 +235,7 @@ msgstr "បន្ថែមប្រអប់"
 msgid "Add item..."
 msgstr "បន្ថែមធាតុ..."
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:320
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:314
 msgid "Add link"
 msgstr "បន្ថែមតំណ"
 
@@ -326,7 +326,7 @@ msgstr "អ្វីៗដែលបានជាវព័ត៌មាននេះ
 msgid "Are you sure you want to delete \"{0}\"?"
 msgstr "តើអ្នកប្រាកដថាចង់លុប \"{0}\" មែនទេ?"
 
-#: src/features/objects/components/object-detail-panel.tsx:642
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:652
 msgid "Are you sure you want to delete \"{title}\"? This action cannot be undone."
 msgstr "តើអ្នកប្រាកដថាចង់លុប \"{title}\" មែនទេ? សកម្មភាពនេះមិនអាចបញ្ច្រាសបានទេ។"
 
@@ -399,20 +399,29 @@ msgid "Back to project"
 msgstr "ត្រឡប់ទៅគម្រោង"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:64
-#: src/routes/_authenticated/$projectId/index.tsx:84
+#: src/routes/_authenticated/$projectId/index.tsx:85
 msgid "Back to projects"
 msgstr "ត្រឡប់ទៅគម្រោង"
 
+#: ../../../lib/web/src/components/banner-section.tsx:80
 #: ../../../lib/web/src/components/entity-banner.tsx:17
 msgid "Banner"
 msgstr "បដា"
+
+#: ../../../lib/web/src/components/banner-section.tsx:69
+msgid "Banner removed"
+msgstr ""
+
+#: ../../../lib/web/src/components/banner-section.tsx:69
+msgid "Banner updated"
+msgstr ""
 
 #: src/features/requests/components/diff-viewer.tsx:447
 msgid "Binary file not shown"
 msgstr "ឯកសារ​គោលពីរ​មិន​ត្រូវ​បាន​បង្ហាញ​ទេ"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:68
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:215
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:72
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:209
 msgid "Blocked by"
 msgstr "ត្រូវបានរារាំងដោយ"
 
@@ -421,7 +430,7 @@ msgstr "ត្រូវបានរារាំងដោយ"
 msgid "Blocked navigation to untrusted link"
 msgstr "បានរារាំងការរុករកទៅតំណមិនគួរឱ្យទុកចិត្ត"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:66
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:70
 msgid "Blocks"
 msgstr "ប្លុក"
 
@@ -466,7 +475,7 @@ msgstr "អាចជាកូននៃ"
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:91
 #: src/features/projects/components/create-project-dialog.tsx:453
 #: src/routes/_authenticated/$projectId/design.tsx:61
-#: src/routes/_authenticated/$projectId/index.tsx:143
+#: src/routes/_authenticated/$projectId/index.tsx:144
 msgid "Cancel"
 msgstr "បោះបង់"
 
@@ -516,8 +525,8 @@ msgstr "ជ្រើសរើសហ្គេមពីរបារចំហៀង
 msgid "Choose a template"
 msgstr "ជ្រើសរើសគំរូ"
 
-#: ../../../lib/web/src/components/language-picker.tsx:264
-#: ../../../lib/web/src/components/language-picker.tsx:271
+#: ../../../lib/web/src/components/language-picker.tsx:267
+#: ../../../lib/web/src/components/language-picker.tsx:274
 msgid "Choose language"
 msgstr "ជ្រើសរើសភាសា"
 
@@ -525,6 +534,7 @@ msgstr "ជ្រើសរើសភាសា"
 msgid "Classes"
 msgstr "ថ្នាក់"
 
+#: ../../../lib/web/src/components/banner-section.tsx:111
 #: ../../../lib/web/src/components/colour-picker.tsx:274
 #: ../../../lib/web/src/components/colour-picker.tsx:355
 #: ../../../lib/web/src/components/travelling-picker.tsx:164
@@ -542,8 +552,8 @@ msgstr "សម្អាតទាំងអស់"
 msgid "Clear search"
 msgstr "សម្អាតការស្វែងរក"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:501
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:506
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:495
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:500
 #: ../../../lib/web/src/components/ui/dialog.tsx:78
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:468
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:471
@@ -625,7 +635,7 @@ msgid "Comments"
 msgstr "មតិយោបល់"
 
 #. placeholder {0}: data.comment_count || 0
-#: src/features/objects/components/object-detail-panel.tsx:384
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:401
 msgid "Comments ({0})"
 msgstr "មតិយោបល់ ({0})"
 
@@ -734,8 +744,8 @@ msgstr "មិនអាចផ្ទៀងផ្ទាត់ជាមួយគណ
 
 #: ../../../lib/web/src/components/entity/entity-board-column.tsx:550
 #: ../../../lib/web/src/components/entity/entity-board-column.tsx:689
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:491
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:656
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:485
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:650
 #: ../../../lib/web/src/components/entity/entity-tree-view.tsx:675
 msgid "Create"
 msgstr "បង្កើត"
@@ -780,7 +790,7 @@ msgstr "បានបង្កើត"
 msgid "Creating project..."
 msgstr "កំពុងបង្កើតគម្រោង..."
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:656
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:650
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:258
 #: src/features/projects/components/create-project-dialog.tsx:457
 #: src/features/projects/components/create-project-dialog.tsx:549
@@ -791,6 +801,7 @@ msgstr "កំពុងបង្កើត..."
 msgid "Current location"
 msgstr "ទីតាំងបច្ចុប្បន្ន"
 
+#: ../../../lib/web/src/components/ai-prompts-editor.tsx:132
 #: ../../../lib/web/src/components/colour-picker.tsx:265
 msgid "Custom"
 msgstr "ផ្ទាល់ខ្លួន"
@@ -819,6 +830,10 @@ msgstr "កាលបរិច្ឆេទ"
 msgid "Decline"
 msgstr "បដិសេធ"
 
+#: ../../../lib/web/src/components/ai-prompts-editor.tsx:129
+msgid "Default"
+msgstr ""
+
 #: ../../../lib/web/src/features/accounts/account-add.tsx:185
 msgid "Default AI account"
 msgstr "គណនី AI លំនាំដើម"
@@ -836,7 +851,7 @@ msgstr "ការតម្រៀបលំនាំដើម"
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:203
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:252
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:314
-#: src/features/objects/components/object-detail-panel.tsx:643
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:653
 #: src/features/requests/components/request-panel.tsx:142
 #: src/routes/_authenticated/$projectId_.settings.tsx:124
 msgid "Delete"
@@ -862,9 +877,9 @@ msgstr "លុបមតិយោបល់"
 msgid "Delete field"
 msgstr "លុបប្រអប់"
 
-#: src/features/objects/components/object-detail-panel.tsx:458
-#: src/features/objects/components/object-detail-panel.tsx:463
-#: src/features/objects/components/object-detail-panel.tsx:641
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:470
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:475
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:651
 msgid "Delete item"
 msgstr "លុបធាតុ"
 
@@ -921,7 +936,7 @@ msgstr "ការពិពណ៌នា"
 
 #: src/routes/_authenticated/$projectId/design.tsx:43
 #: src/routes/_authenticated/$projectId/design.tsx:46
-#: src/routes/_authenticated/$projectId/index.tsx:165
+#: src/routes/_authenticated/$projectId/index.tsx:166
 msgid "Design"
 msgstr "រចនា"
 
@@ -938,7 +953,7 @@ msgstr "រចនា បង្កើត កែសម្រួល បញ្ចេ
 msgid "Details Panel"
 msgstr "ផ្ទាំងព័ត៌មានលម្អិត"
 
-#: ../../../lib/web/src/components/language-picker.tsx:240
+#: ../../../lib/web/src/components/language-picker.tsx:243
 #: ../../../lib/web/src/components/timezone-select.tsx:46
 #: ../../../lib/web/src/components/timezone-select.tsx:83
 #: ../../../lib/web/src/lib/preference-utils.ts:23
@@ -979,7 +994,7 @@ msgstr "បានផ្ដាច់"
 msgid "Dismiss"
 msgstr "បិទ"
 
-#: src/routes/_authenticated/$projectId/index.tsx:146
+#: src/routes/_authenticated/$projectId/index.tsx:147
 msgid "Dismiss board hint"
 msgstr "បិទគន្លឹះក្តារ"
 
@@ -988,13 +1003,13 @@ msgid "Displays the mobile sidebar."
 msgstr "បង្ហាញរបារចំហៀងទូរស័ព្ទ។"
 
 #: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:305
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:479
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:518
 #: src/features/editor/components/edit-dialogs.tsx:439
-#: src/features/objects/components/object-detail-panel.tsx:472
 msgid "Done"
 msgstr "រួចរាល់"
 
-#: src/routes/_authenticated/$projectId/index.tsx:145
+#: src/routes/_authenticated/$projectId/index.tsx:146
 msgid "Double click on a column to add content"
 msgstr "ចុចពីរដងលើជួរឈរដើម្បីបន្ថែមមាតិកា"
 
@@ -1013,7 +1028,7 @@ msgid "Download failed"
 msgstr "ការទាញយកបានបរាជ័យ"
 
 #: src/routes/_authenticated/$projectId/design.tsx:52
-#: src/routes/_authenticated/$projectId/index.tsx:149
+#: src/routes/_authenticated/$projectId/index.tsx:150
 msgid "Downloaded {filename}"
 msgstr "បានទាញយក {filename}"
 
@@ -1022,11 +1037,11 @@ msgstr "បានទាញយក {filename}"
 msgid "Draft"
 msgstr "សេចក្ដីព្រាង"
 
-#: src/routes/_authenticated/$projectId/index.tsx:142
+#: src/routes/_authenticated/$projectId/index.tsx:143
 msgid "Drag columns to re-order them"
 msgstr "អូសជួរឈរដើម្បីរៀបលំដាប់ឡើងវិញ"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:67
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:71
 msgid "Duplicates"
 msgstr "ស្ទួន"
 
@@ -1085,6 +1100,10 @@ msgstr "អ៊ីមែល"
 msgid "Email code"
 msgstr "កូដអ៊ីមែល"
 
+#: ../../../lib/web/src/components/banner-section.tsx:88
+msgid "Enter banner text (markdown supported)..."
+msgstr ""
+
 #: ../../../lib/web/src/components/step-up-dialog.tsx:302
 msgid "Enter the code from your email"
 msgstr "បញ្ចូលកូដពីអ៊ីមែលរបស់អ្នក"
@@ -1097,7 +1116,7 @@ msgstr "បញ្ចូលកូដ authenticator របស់អ្នក"
 msgid "Entity ID"
 msgstr "លេខសម្គាល់អង្គភាព"
 
-#: src/features/objects/components/object-detail-panel.tsx:335
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:371
 msgid "Error"
 msgstr "កំហុស"
 
@@ -1112,7 +1131,7 @@ msgstr "ពង្រីក"
 msgid "Expand sidebar"
 msgstr "ពង្រីករបារចំហៀង"
 
-#: src/routes/_authenticated/$projectId/index.tsx:147
+#: src/routes/_authenticated/$projectId/index.tsx:148
 msgid "Export data"
 msgstr "នាំចេញទិន្នន័យ"
 
@@ -1146,9 +1165,9 @@ msgstr "បរាជ័យក្នុងការបង្កើតថ្នា
 msgid "Failed to create field"
 msgstr "បរាជ័យក្នុងការបង្កើតវាល"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:137
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:131
 #: ../../../lib/web/src/components/options-menu.tsx:98
-#: src/routes/_authenticated/$projectId/index.tsx:153
+#: src/routes/_authenticated/$projectId/index.tsx:154
 msgid "Failed to create link"
 msgstr "បរាជ័យក្នុងការបង្កើតតំណ"
 
@@ -1169,7 +1188,7 @@ msgstr "បរាជ័យក្នុងការបង្កើតគម្រ
 msgid "Failed to create view"
 msgstr "បរាជ័យក្នុងការបង្កើតទិដ្ឋភាព"
 
-#: src/features/objects/components/object-detail-panel.tsx:226
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:293
 msgid "Failed to delete"
 msgstr "បរាជ័យក្នុងការលុប"
 
@@ -1189,7 +1208,7 @@ msgstr "បរាជ័យក្នុងការលុបមតិយោបល
 msgid "Failed to delete field"
 msgstr "បរាជ័យក្នុងការលុបវាល"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:159
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:153
 msgid "Failed to delete link"
 msgstr "បរាជ័យក្នុងការលុបតំណ"
 
@@ -1209,7 +1228,7 @@ msgstr "បរាជ័យក្នុងការលុបគម្រោង"
 msgid "Failed to delete view"
 msgstr "បរាជ័យក្នុងការលុបទិដ្ឋភាព"
 
-#: src/routes/_authenticated/$projectId/index.tsx:150
+#: src/routes/_authenticated/$projectId/index.tsx:151
 msgid "Failed to export data"
 msgstr "បរាជ័យក្នុងការនាំចេញទិន្នន័យ"
 
@@ -1242,15 +1261,15 @@ msgstr "បរាជ័យក្នុងការផ្ទុកប្រវត
 msgid "Failed to load image"
 msgstr "បរាជ័យក្នុងការផ្ទុករូបភាព"
 
-#: src/features/objects/components/object-detail-panel.tsx:336
-#: src/features/objects/components/object-detail-panel.tsx:339
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:372
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:375
 msgid "Failed to load item"
 msgstr "បរាជ័យក្នុងការផ្ទុកធាតុ"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:41
 #: src/routes/_authenticated/$projectId/$objectId.tsx:65
-#: src/routes/_authenticated/$projectId/index.tsx:61
-#: src/routes/_authenticated/$projectId/index.tsx:85
+#: src/routes/_authenticated/$projectId/index.tsx:62
+#: src/routes/_authenticated/$projectId/index.tsx:86
 msgid "Failed to load project"
 msgstr "បរាជ័យក្នុងការផ្ទុកគម្រោង"
 
@@ -1274,7 +1293,7 @@ msgstr "បរាជ័យក្នុងការផ្ទុកវីដេអ
 msgid "Failed to merge"
 msgstr "បរាជ័យក្នុងការបញ្ចូល"
 
-#: src/features/objects/components/object-detail-panel.tsx:246
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:307
 msgid "Failed to move"
 msgstr "ការផ្លាស់ទីបានបរាជ័យ"
 
@@ -1299,13 +1318,21 @@ msgstr "បរាជ័យក្នុងការរៀបលំដាប់វ
 msgid "Failed to reorder views"
 msgstr "បរាជ័យក្នុងការរៀបលំដាប់ទិដ្ឋភាពឡើងវិញ"
 
+#: ../../../lib/web/src/components/ai-prompts-editor.tsx:90
+msgid "Failed to reset prompt"
+msgstr ""
+
 #: ../../../lib/web/src/components/options-menu.tsx:133
 msgid "Failed to revoke RSS access"
 msgstr "បរាជ័យក្នុងការដកហូតការចូលប្រើ RSS"
 
-#: src/features/objects/components/object-detail-panel.tsx:190
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:263
 msgid "Failed to save"
 msgstr "បរាជ័យក្នុងការរក្សាទុក"
+
+#: ../../../lib/web/src/components/ai-prompts-editor.tsx:111
+msgid "Failed to save prompt"
+msgstr ""
 
 #: src/features/projects/components/inline-project-search.tsx:89
 msgid "Failed to search projects"
@@ -1322,13 +1349,17 @@ msgid "Failed to subscribe"
 msgstr "បរាជ័យក្នុងការជាវ"
 
 #: src/features/projects/pages/projects-list-page.tsx:43
-#: src/routes/_authenticated/$projectId/index.tsx:159
+#: src/routes/_authenticated/$projectId/index.tsx:160
 msgid "Failed to unsubscribe"
 msgstr "បរាជ័យក្នុងការបោះបង់ការជាវ"
 
 #: src/routes/_authenticated/$projectId_.settings.tsx:144
 msgid "Failed to update access level"
 msgstr "បរាជ័យក្នុងការធ្វើបច្ចុប្បន្នភាពកម្រិតចូលដំណើរការ"
+
+#: ../../../lib/web/src/components/banner-section.tsx:71
+msgid "Failed to update banner"
+msgstr ""
 
 #: src/features/editor/components/design-editor.tsx:122
 msgid "Failed to update class"
@@ -1362,7 +1393,7 @@ msgstr "បរាជ័យក្នុងការធ្វើបច្ចុប
 msgid "Failed to update view"
 msgstr "បរាជ័យក្នុងការធ្វើបច្ចុប្បន្នភាពទិដ្ឋភាព"
 
-#: src/features/objects/components/object-detail-panel.tsx:209
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:278
 msgid "Failed to update watching"
 msgstr "ការធ្វើបច្ចុប្បន្នភាពការតាមដានបានបរាជ័យ"
 
@@ -1374,7 +1405,7 @@ msgstr "បរាជ័យក្នុងការផ្ទុកឡើងឯក
 msgid "Fields"
 msgstr "វាល"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:589
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:583
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:155
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:175
 msgid "Files"
@@ -1519,7 +1550,7 @@ msgstr "ឯកសារ JSON មិនត្រឹមត្រូវ"
 msgid "It seems like the page you're looking for <0/>does not exist or might have been removed."
 msgstr "ហាក់ដូចជាទំព័រដែលអ្នកកំពុងស្វែងរក <0/>មិនមាន ឬត្រូវបានលុបចេញ។"
 
-#: src/features/objects/components/object-detail-panel.tsx:416
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:425
 msgid "Item details"
 msgstr "ព័ត៌មានលម្អិតធាតុ"
 
@@ -1549,11 +1580,11 @@ msgid "Light"
 msgstr "ភ្លឺ"
 
 #: ../../../lib/web/src/components/options-menu.tsx:190
-#: src/routes/_authenticated/$projectId/index.tsx:151
+#: src/routes/_authenticated/$projectId/index.tsx:152
 msgid "Link"
 msgstr "តំណ"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:279
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:273
 msgid "Links"
 msgstr "តំណ"
 
@@ -1573,11 +1604,11 @@ msgstr "កំពុងផ្ទុកមាតិកា…"
 msgid "Loading diff..."
 msgstr "កំពុងផ្ទុក diff..."
 
-#: src/features/objects/components/object-detail-panel.tsx:316
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:355
 msgid "Loading item"
 msgstr "កំពុងផ្ទុកធាតុ"
 
-#: src/features/objects/components/object-detail-panel.tsx:317
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:356
 msgid "Loading item details"
 msgstr "កំពុងផ្ទុកព័ត៌មានលម្អិតធាតុ"
 
@@ -1587,7 +1618,7 @@ msgstr "កំពុងផ្ទុកគំរូ..."
 
 #: ../../../lib/web/src/components/ui/load-more.tsx:35
 #: ../../../lib/web/src/features/document/document-page.tsx:88
-#: src/routes/_authenticated/$projectId/index.tsx:148
+#: src/routes/_authenticated/$projectId/index.tsx:149
 msgid "Loading..."
 msgstr "កំពុងផ្ទុក..."
 
@@ -1653,7 +1684,7 @@ msgstr "បញ្ចូល commit"
 msgid "Merge requests"
 msgstr "សំណើបញ្ចូល"
 
-#: src/features/objects/components/object-detail-panel.tsx:391
+#: src/routes/_authenticated/$projectId/index.tsx:208
 msgid "Merge requests ({requestCount})"
 msgstr "សំណើបញ្ចូល ({requestCount})"
 
@@ -1739,14 +1770,14 @@ msgstr "ឈ្មោះត្រូវតែមាន 1000 តួអក្សរ
 msgid "Network error"
 msgstr "កំហុសបណ្តាញ"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:476
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:470
 #: ../../../lib/web/src/components/ui/sort-selector.tsx:43
-#: src/routes/_authenticated/$projectId/index.tsx:130
-#: src/routes/_authenticated/$projectId/index.tsx:134
+#: src/routes/_authenticated/$projectId/index.tsx:131
+#: src/routes/_authenticated/$projectId/index.tsx:135
 msgid "New"
 msgstr "ថ្មី"
 
-#: src/routes/_authenticated/$projectId/index.tsx:136
+#: src/routes/_authenticated/$projectId/index.tsx:137
 msgid "New {className}"
 msgstr "{className} ថ្មី"
 
@@ -1764,7 +1795,7 @@ msgstr "បន្ទាប់"
 msgid "Next image"
 msgstr "រូបភាពបន្ទាប់"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:555
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:549
 msgid "No {parentClassNames} to add to"
 msgstr "មិនមាន {parentClassNames} ដើម្បីបន្ថែមទៅ"
 
@@ -1812,11 +1843,11 @@ msgstr "មិនទាន់មានហ្គេម"
 msgid "No groups available"
 msgstr "មិនមានក្រុម"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:522
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:516
 msgid "No item types can be created yet. Create the required parent items first."
 msgstr "មិនអាចបង្កើតប្រភេទធាតុបានទេ។ បង្កើតធាតុមេដែលត្រូវការជាមុនសិន។"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:360
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:354
 msgid "No matching objects"
 msgstr "មិនមានវត្ថុដែលត្រូវនឹង"
 
@@ -1878,9 +1909,13 @@ msgid "No views"
 msgstr "មិនមានការមើល"
 
 #: ../../../lib/web/src/components/colour-picker.tsx:349
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:538
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:541
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:545
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:532
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:535
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:539
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:540
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:553
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:554
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:558
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:359
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:382
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:385
@@ -1892,9 +1927,6 @@ msgstr "មិនមានការមើល"
 #: ../../../lib/web/src/lib/preference-utils.ts:100
 #: src/features/editor/components/edit-dialogs.tsx:296
 #: src/features/editor/components/edit-dialogs.tsx:299
-#: src/features/objects/components/object-detail-panel.tsx:537
-#: src/features/objects/components/object-detail-panel.tsx:550
-#: src/features/objects/components/object-detail-panel.tsx:555
 msgid "None"
 msgstr "គ្មាន"
 
@@ -1976,7 +2008,7 @@ msgstr "បើកការរុករក"
 msgid "Open option actions"
 msgstr "បើកសកម្មភាពជម្រើស"
 
-#: src/routes/_authenticated/$projectId/index.tsx:129
+#: src/routes/_authenticated/$projectId/index.tsx:130
 msgid "Open page actions"
 msgstr "បើកសកម្មភាពទំព័រ"
 
@@ -2012,8 +2044,8 @@ msgstr "ផ្សេងទៀត"
 msgid "Owner"
 msgstr "ម្ចាស់"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:530
-#: src/features/objects/components/object-detail-panel.tsx:533
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:524
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:536
 msgid "Parent"
 msgstr "មេ"
 
@@ -2033,7 +2065,7 @@ msgstr "កូនសោចូល"
 msgid "Pattern (regex)"
 msgstr "លំនាំ (regex)"
 
-#: src/routes/_authenticated/$projectId/index.tsx:138
+#: src/routes/_authenticated/$projectId/index.tsx:139
 msgid "Please add one or more classes to the project design."
 msgstr "សូមបន្ថែមថ្នាក់មួយ ឬច្រើនទៅការរចនាគម្រោង។"
 
@@ -2095,7 +2127,7 @@ msgid "Processing…"
 msgstr "កំពុងដំណើរការ…"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:62
-#: src/routes/_authenticated/$projectId/index.tsx:82
+#: src/routes/_authenticated/$projectId/index.tsx:83
 msgid "Project"
 msgstr "គម្រោង"
 
@@ -2111,7 +2143,7 @@ msgstr "បានបង្កើតគម្រោង"
 msgid "Project deleted"
 msgstr "បានលុបគម្រោង"
 
-#: src/routes/_authenticated/$projectId/index.tsx:152
+#: src/routes/_authenticated/$projectId/index.tsx:153
 msgid "Project link"
 msgstr "តំណគម្រោង"
 
@@ -2144,7 +2176,11 @@ msgstr "បានធ្វើបច្ចុប្បន្នភាពគម្
 msgid "Projects"
 msgstr "គម្រោង"
 
-#: src/features/objects/components/object-detail-panel.tsx:379
+#: ../../../lib/web/src/components/ai-prompts-editor.tsx:108
+msgid "Prompt saved"
+msgstr ""
+
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:398
 msgid "Properties"
 msgstr "លក្ខណៈសម្បត្តិ"
 
@@ -2160,7 +2196,7 @@ msgstr "លើកឡើង"
 msgid "Re-link your accounts on this server"
 msgstr "ភ្ជាប់គណនីរបស់អ្នកឡើងវិញនៅម៉ាស៊ីនមេនេះ"
 
-#: src/routes/_authenticated/$projectId/index.tsx:141
+#: src/routes/_authenticated/$projectId/index.tsx:142
 msgid "Re-order columns"
 msgstr "តម្រៀបជួរឈរឡើងវិញ"
 
@@ -2197,7 +2233,7 @@ msgstr "កំពុងបញ្ជូនបន្តទៅការចូល។
 msgid "Reduce interest"
 msgstr "កាត់បន្ថយចំណាប់អារម្មណ៍"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:65
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:69
 msgid "Relates"
 msgstr "ទាក់ទង"
 
@@ -2252,8 +2288,8 @@ msgstr "យកចំណាប់អារម្មណ៍ចេញ"
 msgid "Remove item"
 msgstr "យកធាតុចេញ"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:304
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:309
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:298
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:303
 msgid "Remove link"
 msgstr "លុបតំណ"
 
@@ -2357,15 +2393,18 @@ msgstr "បានចម្លង RSS URL ទៅ clipboard"
 msgid "Saturday"
 msgstr "ថ្ងៃសៅរ៍"
 
+#: ../../../lib/web/src/components/ai-prompts-editor.tsx:156
 #: ../../../lib/web/src/components/attachment-composer.tsx:430
+#: ../../../lib/web/src/components/banner-section.tsx:99
 #: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:231
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:170
 #: ../../../lib/web/src/components/ui/editable-field-row.tsx:122
 #: ../../../lib/web/src/components/ui/secret-field.tsx:79
-#: src/routes/_authenticated/$projectId/index.tsx:144
+#: src/routes/_authenticated/$projectId/index.tsx:145
 msgid "Save"
 msgstr "រក្សាទុក"
 
+#: ../../../lib/web/src/components/ai-prompts-editor.tsx:156
 #: src/routes/_authenticated/$projectId_.settings.tsx:120
 msgid "Saving..."
 msgstr "កំពុងរក្សាទុក..."
@@ -2405,7 +2444,7 @@ msgstr "ស្វែងរកប្រភពដើម..."
 msgid "Search for projects..."
 msgstr "ស្វែងរកគម្រោង..."
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:337
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:331
 msgid "Search objects..."
 msgstr "ស្វែងរកវត្ថុ..."
 
@@ -2543,7 +2582,7 @@ msgstr "កំពុងកំណត់ការចូលប្រើ..."
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx:125
 #: ../../../lib/web/src/components/options-menu.tsx:196
 #: src/routes/_authenticated/$projectId_.settings.tsx:103
-#: src/routes/_authenticated/$projectId/index.tsx:173
+#: src/routes/_authenticated/$projectId/index.tsx:174
 msgid "Settings"
 msgstr "ការកំណត់"
 
@@ -2614,8 +2653,8 @@ msgstr "Squash និងបញ្ចូលគ្នា"
 msgid "Start the discussion by adding the first comment."
 msgstr "ចាប់ផ្តើមការពិភាក្សាដោយបន្ថែមមតិយោបល់ដំបូង។"
 
-#: src/features/objects/components/object-detail-panel.tsx:439
-#: src/features/objects/components/object-detail-panel.tsx:448
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:455
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:460
 msgid "Stop watching"
 msgstr "បញ្ឈប់ការតាមដាន"
 
@@ -2742,7 +2781,7 @@ msgid "This will permanently delete \"{projectName}\" and all its objects, comme
 msgstr "នេះនឹងលុប \"{projectName}\" និងវត្ថុ មតិយោបល់ និងឯកសារភ្ជាប់ទាំងអស់របស់វាជាអចិន្ត្រៃយ៍។ សកម្មភាពនេះមិនអាចមិនធ្វើវិញបានទេ។"
 
 #. placeholder {0}: project.project.name
-#: src/routes/_authenticated/$projectId/index.tsx:156
+#: src/routes/_authenticated/$projectId/index.tsx:157
 msgid "This will remove \"{0}\" from your sidebar and stop updates for this project."
 msgstr "នេះនឹងដក \"{0}\" ចេញពីរបារចំហៀងរបស់អ្នក ហើយឈប់ការធ្វើបច្ចុប្បន្នភាពសម្រាប់គម្រោងនេះ។"
 
@@ -2884,27 +2923,26 @@ msgstr "មិនស្គាល់"
 
 #: ../../../lib/web/src/components/options-menu.tsx:211
 #: src/features/projects/pages/projects-list-page.tsx:39
-#: src/routes/_authenticated/$projectId/index.tsx:154
+#: src/routes/_authenticated/$projectId/index.tsx:155
 msgid "Unsubscribe"
 msgstr "ឈប់ជាវ"
 
-#: src/routes/_authenticated/$projectId/index.tsx:155
+#: src/routes/_authenticated/$projectId/index.tsx:156
 msgid "Unsubscribe from project?"
 msgstr "ឈប់ជាវពីគម្រោង?"
 
 #: src/features/projects/pages/projects-list-page.tsx:42
-#: src/routes/_authenticated/$projectId/index.tsx:158
+#: src/routes/_authenticated/$projectId/index.tsx:159
 msgid "Unsubscribed"
 msgstr "បានឈប់ជាវ"
 
 #: src/features/projects/pages/projects-list-page.tsx:41
-#: src/routes/_authenticated/$projectId/index.tsx:157
+#: src/routes/_authenticated/$projectId/index.tsx:158
 msgid "Unsubscribing..."
 msgstr "កំពុងឈប់ជាវ..."
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:285
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:103
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:184
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:178
+#: ../../../lib/web/src/lib/entity-title.ts:36
 #: src/features/board/components/board-container.tsx:29
 #: src/features/editor/components/design-preview.tsx:31
 msgid "Untitled"
@@ -2919,7 +2957,7 @@ msgstr "បានធ្វើបច្ចុប្បន្នភាព"
 msgid "Updating access..."
 msgstr "កំពុងធ្វើបច្ចុប្បន្នភាពការចូលប្រើ..."
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:639
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:633
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:301
 msgid "Upload"
 msgstr "បង្ហោះ"
@@ -2949,6 +2987,10 @@ msgstr "ប្រើសម្រាប់លេខសម្គាល់ដែល
 msgid "User"
 msgstr "អ្នកប្រើប្រាស់"
 
+#: ../../../lib/web/src/components/ai-prompts-editor.tsx:159
+msgid "Variables: {variables}"
+msgstr ""
+
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:73
 msgid "Verification code"
 msgstr "កូដផ្ទៀងផ្ទាត់"
@@ -2976,7 +3018,7 @@ msgstr "កម្មវិធីមើលវីដេអូ៖ {0}"
 msgid "View all notifications"
 msgstr "មើលការជូនដំណឹងទាំងអស់"
 
-#: src/features/objects/components/object-detail-panel.tsx:417
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:426
 msgid "View and edit item details"
 msgstr "មើល និងកែសម្រួលព័ត៌មានលម្អិតធាតុ"
 
@@ -2988,7 +3030,7 @@ msgstr "ការគ្រប់គ្រងទិដ្ឋភាព"
 msgid "View only"
 msgstr "មើលតែប៉ុណ្ណោះ"
 
-#: src/routes/_authenticated/$projectId/index.tsx:139
+#: src/routes/_authenticated/$projectId/index.tsx:140
 msgid "View options"
 msgstr "ជម្រើសទិដ្ឋភាព"
 
@@ -2996,8 +3038,8 @@ msgstr "ជម្រើសទិដ្ឋភាព"
 msgid "Views"
 msgstr "ទិដ្ឋភាព"
 
-#: src/features/objects/components/object-detail-panel.tsx:439
-#: src/features/objects/components/object-detail-panel.tsx:448
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:455
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:460
 msgid "Watch"
 msgstr "មើល"
 
@@ -3027,7 +3069,7 @@ msgstr "ថ្ងៃពុធ"
 msgid "You do not have access to this section."
 msgstr "អ្នកមិនមានសិទ្ធិចូលប្រើផ្នែកនេះទេ។"
 
-#: src/routes/_authenticated/$projectId/index.tsx:52
+#: src/routes/_authenticated/$projectId/index.tsx:53
 msgid "You don't have access to this project."
 msgstr "អ្នកមិនមានសិទ្ធិចូលប្រើគម្រោងនេះទេ។"
 

@@ -18,7 +18,7 @@ msgstr ""
 msgid "Please check your internet connection and try again."
 msgstr "تکایە پەیوەندی ئینتەرنێتەکەت بپشکنە و دووبارە هەوڵ بدەرەوە."
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:301
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:295
 msgid " or "
 msgstr " یان "
 
@@ -176,7 +176,7 @@ msgstr "دەستڕاگەیشتن دانرا بۆ {subjectName}"
 msgid "Account type"
 msgstr "جۆری هەژمار"
 
-#: src/features/objects/components/object-detail-panel.tsx:398
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:405
 msgid "Activity"
 msgstr "چالاکی"
 
@@ -221,7 +221,7 @@ msgstr "زیادکردنی بڕگەی لیستی پشکنین"
 msgid "Add class"
 msgstr "زیادکردنی پۆل"
 
-#: src/routes/_authenticated/$projectId/index.tsx:140
+#: src/routes/_authenticated/$projectId/index.tsx:141
 msgid "Add column"
 msgstr "زیادکردنی ستوون"
 
@@ -235,7 +235,7 @@ msgstr "زیادکردنی خانە"
 msgid "Add item..."
 msgstr "بڕگە زیاد بکە..."
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:320
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:314
 msgid "Add link"
 msgstr "زیادکردنی بەستەر"
 
@@ -326,7 +326,7 @@ msgstr "هەر شتێک بەم لێدوانە بەشداری کردبێت وەر
 msgid "Are you sure you want to delete \"{0}\"?"
 msgstr "ئایا دڵنیایت لە سڕینەوەی \"{0}\"؟"
 
-#: src/features/objects/components/object-detail-panel.tsx:642
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:652
 msgid "Are you sure you want to delete \"{title}\"? This action cannot be undone."
 msgstr "ئایا دڵنیایت لە سڕینەوەی \"{title}\"؟ ئەم کردارە ناگەڕێتەوە."
 
@@ -399,20 +399,29 @@ msgid "Back to project"
 msgstr "گەڕانەوە بۆ پڕۆژە"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:64
-#: src/routes/_authenticated/$projectId/index.tsx:84
+#: src/routes/_authenticated/$projectId/index.tsx:85
 msgid "Back to projects"
 msgstr "گەڕانەوە بۆ پڕۆژەکان"
 
+#: ../../../lib/web/src/components/banner-section.tsx:80
 #: ../../../lib/web/src/components/entity-banner.tsx:17
 msgid "Banner"
 msgstr "بانەر"
+
+#: ../../../lib/web/src/components/banner-section.tsx:69
+msgid "Banner removed"
+msgstr ""
+
+#: ../../../lib/web/src/components/banner-section.tsx:69
+msgid "Banner updated"
+msgstr ""
 
 #: src/features/requests/components/diff-viewer.tsx:447
 msgid "Binary file not shown"
 msgstr "فایلی دووانەیی پیشان نەدراوە"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:68
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:215
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:72
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:209
 msgid "Blocked by"
 msgstr "بلۆککرا لەلایەن"
 
@@ -421,7 +430,7 @@ msgstr "بلۆککرا لەلایەن"
 msgid "Blocked navigation to untrusted link"
 msgstr "ڕێگەنەدرا بە چوون بۆ بەستەری نامتمانە"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:66
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:70
 msgid "Blocks"
 msgstr "بلۆکەکان"
 
@@ -466,7 +475,7 @@ msgstr "دەتوانێت منداڵ بێت بۆ"
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:91
 #: src/features/projects/components/create-project-dialog.tsx:453
 #: src/routes/_authenticated/$projectId/design.tsx:61
-#: src/routes/_authenticated/$projectId/index.tsx:143
+#: src/routes/_authenticated/$projectId/index.tsx:144
 msgid "Cancel"
 msgstr "هەڵوەشاندنەوە"
 
@@ -516,8 +525,8 @@ msgstr "یارییەک هەڵبژێرە لە لاتەنیشت یان نوێیە�
 msgid "Choose a template"
 msgstr "قاڵبێک هەڵبژێرە"
 
-#: ../../../lib/web/src/components/language-picker.tsx:264
-#: ../../../lib/web/src/components/language-picker.tsx:271
+#: ../../../lib/web/src/components/language-picker.tsx:267
+#: ../../../lib/web/src/components/language-picker.tsx:274
 msgid "Choose language"
 msgstr "زمان هەڵبژێرە"
 
@@ -525,6 +534,7 @@ msgstr "زمان هەڵبژێرە"
 msgid "Classes"
 msgstr "پۆلەکان"
 
+#: ../../../lib/web/src/components/banner-section.tsx:111
 #: ../../../lib/web/src/components/colour-picker.tsx:274
 #: ../../../lib/web/src/components/colour-picker.tsx:355
 #: ../../../lib/web/src/components/travelling-picker.tsx:164
@@ -542,8 +552,8 @@ msgstr "پاککردنەوەی هەموو"
 msgid "Clear search"
 msgstr "پاککردنەوەی گەڕان"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:501
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:506
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:495
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:500
 #: ../../../lib/web/src/components/ui/dialog.tsx:78
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:468
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:471
@@ -625,7 +635,7 @@ msgid "Comments"
 msgstr "لێدوانەکان"
 
 #. placeholder {0}: data.comment_count || 0
-#: src/features/objects/components/object-detail-panel.tsx:384
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:401
 msgid "Comments ({0})"
 msgstr "لێدوانەکان ({0})"
 
@@ -734,8 +744,8 @@ msgstr "نەتوانرا بەو هەژمارە پشتڕاست بکرێتەوە. 
 
 #: ../../../lib/web/src/components/entity/entity-board-column.tsx:550
 #: ../../../lib/web/src/components/entity/entity-board-column.tsx:689
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:491
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:656
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:485
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:650
 #: ../../../lib/web/src/components/entity/entity-tree-view.tsx:675
 msgid "Create"
 msgstr "دروستکردن"
@@ -780,7 +790,7 @@ msgstr "دروستکرا"
 msgid "Creating project..."
 msgstr "دروستکردنی پڕۆژە..."
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:656
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:650
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:258
 #: src/features/projects/components/create-project-dialog.tsx:457
 #: src/features/projects/components/create-project-dialog.tsx:549
@@ -791,6 +801,7 @@ msgstr "دروستکردن..."
 msgid "Current location"
 msgstr "شوێنی ئێستا"
 
+#: ../../../lib/web/src/components/ai-prompts-editor.tsx:132
 #: ../../../lib/web/src/components/colour-picker.tsx:265
 msgid "Custom"
 msgstr "تایبەت"
@@ -819,6 +830,10 @@ msgstr "بەروار"
 msgid "Decline"
 msgstr "ڕەتکردنەوە"
 
+#: ../../../lib/web/src/components/ai-prompts-editor.tsx:129
+msgid "Default"
+msgstr ""
+
 #: ../../../lib/web/src/features/accounts/account-add.tsx:185
 msgid "Default AI account"
 msgstr "هەژماری بنەڕەتی AI"
@@ -836,7 +851,7 @@ msgstr "ڕیزکردنی بنەڕەت"
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:203
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:252
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:314
-#: src/features/objects/components/object-detail-panel.tsx:643
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:653
 #: src/features/requests/components/request-panel.tsx:142
 #: src/routes/_authenticated/$projectId_.settings.tsx:124
 msgid "Delete"
@@ -862,9 +877,9 @@ msgstr "سڕینەوەی لێدوان"
 msgid "Delete field"
 msgstr "سڕینەوەی خانە"
 
-#: src/features/objects/components/object-detail-panel.tsx:458
-#: src/features/objects/components/object-detail-panel.tsx:463
-#: src/features/objects/components/object-detail-panel.tsx:641
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:470
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:475
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:651
 msgid "Delete item"
 msgstr "سڕینەوەی بڕگە"
 
@@ -921,7 +936,7 @@ msgstr "وەسف"
 
 #: src/routes/_authenticated/$projectId/design.tsx:43
 #: src/routes/_authenticated/$projectId/design.tsx:46
-#: src/routes/_authenticated/$projectId/index.tsx:165
+#: src/routes/_authenticated/$projectId/index.tsx:166
 msgid "Design"
 msgstr "دیزاین"
 
@@ -938,7 +953,7 @@ msgstr "دیزاین، دروستکردن، دەستکاری، لێدوان، و
 msgid "Details Panel"
 msgstr "پانێلی وردەکاری"
 
-#: ../../../lib/web/src/components/language-picker.tsx:240
+#: ../../../lib/web/src/components/language-picker.tsx:243
 #: ../../../lib/web/src/components/timezone-select.tsx:46
 #: ../../../lib/web/src/components/timezone-select.tsx:83
 #: ../../../lib/web/src/lib/preference-utils.ts:23
@@ -979,7 +994,7 @@ msgstr "پەیوەست نییە"
 msgid "Dismiss"
 msgstr "لابردن"
 
-#: src/routes/_authenticated/$projectId/index.tsx:146
+#: src/routes/_authenticated/$projectId/index.tsx:147
 msgid "Dismiss board hint"
 msgstr "لابردنی هاندانی تەختە"
 
@@ -988,13 +1003,13 @@ msgid "Displays the mobile sidebar."
 msgstr "لاتەنیشتی مۆبایل پیشان دەدات."
 
 #: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:305
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:479
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:518
 #: src/features/editor/components/edit-dialogs.tsx:439
-#: src/features/objects/components/object-detail-panel.tsx:472
 msgid "Done"
 msgstr "تەواوبوو"
 
-#: src/routes/_authenticated/$projectId/index.tsx:145
+#: src/routes/_authenticated/$projectId/index.tsx:146
 msgid "Double click on a column to add content"
 msgstr "بۆ زیادکردنی ناوەڕۆک دوو جار کلیک لەسەر ستوونێک بکە"
 
@@ -1013,7 +1028,7 @@ msgid "Download failed"
 msgstr "داگرتن سەرکەوتوو نەبوو"
 
 #: src/routes/_authenticated/$projectId/design.tsx:52
-#: src/routes/_authenticated/$projectId/index.tsx:149
+#: src/routes/_authenticated/$projectId/index.tsx:150
 msgid "Downloaded {filename}"
 msgstr "{filename} داگیرا"
 
@@ -1022,11 +1037,11 @@ msgstr "{filename} داگیرا"
 msgid "Draft"
 msgstr "ڕەشنووس"
 
-#: src/routes/_authenticated/$projectId/index.tsx:142
+#: src/routes/_authenticated/$projectId/index.tsx:143
 msgid "Drag columns to re-order them"
 msgstr "ستوونەکان ڕابکێشە بۆ ڕێکخستنەوەیان"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:67
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:71
 msgid "Duplicates"
 msgstr "دووبارەکان"
 
@@ -1085,6 +1100,10 @@ msgstr "ئیمەیڵ"
 msgid "Email code"
 msgstr "کۆدی ئیمەیڵ"
 
+#: ../../../lib/web/src/components/banner-section.tsx:88
+msgid "Enter banner text (markdown supported)..."
+msgstr ""
+
 #: ../../../lib/web/src/components/step-up-dialog.tsx:302
 msgid "Enter the code from your email"
 msgstr "ئەو کۆدە بنووسە کە لە ئیمەیڵەکەتدا هاتووە"
@@ -1097,7 +1116,7 @@ msgstr "کۆدی ڕاستاندنەکەت بنووسە"
 msgid "Entity ID"
 msgstr "ناسنامەی ئەنتیتی"
 
-#: src/features/objects/components/object-detail-panel.tsx:335
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:371
 msgid "Error"
 msgstr "هەڵە"
 
@@ -1112,7 +1131,7 @@ msgstr "فراوانکردن"
 msgid "Expand sidebar"
 msgstr "فراوانکردنی لاتەنیشت"
 
-#: src/routes/_authenticated/$projectId/index.tsx:147
+#: src/routes/_authenticated/$projectId/index.tsx:148
 msgid "Export data"
 msgstr "هەناردەکردنی داتا"
 
@@ -1146,9 +1165,9 @@ msgstr "دروستکردنی پۆل سەرکەوتوو نەبوو"
 msgid "Failed to create field"
 msgstr "دروستکردنی خانە سەرکەوتوو نەبوو"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:137
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:131
 #: ../../../lib/web/src/components/options-menu.tsx:98
-#: src/routes/_authenticated/$projectId/index.tsx:153
+#: src/routes/_authenticated/$projectId/index.tsx:154
 msgid "Failed to create link"
 msgstr "دروستکردنی بەستەر سەرکەوتوو نەبوو"
 
@@ -1169,7 +1188,7 @@ msgstr "دروستکردنی پڕۆژە سەرکەوتوو نەبوو"
 msgid "Failed to create view"
 msgstr "دروستکردنی بینین سەرکەوتوو نەبوو"
 
-#: src/features/objects/components/object-detail-panel.tsx:226
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:293
 msgid "Failed to delete"
 msgstr "سڕینەوە سەرکەوتوو نەبوو"
 
@@ -1189,7 +1208,7 @@ msgstr "سڕینەوەی بۆچوون سەرکەوتوو نەبوو"
 msgid "Failed to delete field"
 msgstr "سڕینەوەی خانە سەرکەوتوو نەبوو"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:159
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:153
 msgid "Failed to delete link"
 msgstr "سڕینەوەی بەستەر سەرکەوتوو نەبوو"
 
@@ -1209,7 +1228,7 @@ msgstr "سڕینەوەی پڕۆژە سەرکەوتوو نەبوو"
 msgid "Failed to delete view"
 msgstr "سڕینەوەی بینین سەرکەوتوو نەبوو"
 
-#: src/routes/_authenticated/$projectId/index.tsx:150
+#: src/routes/_authenticated/$projectId/index.tsx:151
 msgid "Failed to export data"
 msgstr "هەناردەکردنی داتا سەرکەوتوو نەبوو"
 
@@ -1242,15 +1261,15 @@ msgstr "بارکردنی مێژوو سەرکەوتوو نەبوو"
 msgid "Failed to load image"
 msgstr "وێنەکە بار نەکرا"
 
-#: src/features/objects/components/object-detail-panel.tsx:336
-#: src/features/objects/components/object-detail-panel.tsx:339
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:372
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:375
 msgid "Failed to load item"
 msgstr "بارکردنی بڕگە سەرکەوتوو نەبوو"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:41
 #: src/routes/_authenticated/$projectId/$objectId.tsx:65
-#: src/routes/_authenticated/$projectId/index.tsx:61
-#: src/routes/_authenticated/$projectId/index.tsx:85
+#: src/routes/_authenticated/$projectId/index.tsx:62
+#: src/routes/_authenticated/$projectId/index.tsx:86
 msgid "Failed to load project"
 msgstr "بارکردنی پڕۆژە سەرکەوتوو نەبوو"
 
@@ -1274,7 +1293,7 @@ msgstr "ڤیدیۆکە بار نەکرا"
 msgid "Failed to merge"
 msgstr "Merge سەرکەوتوو نەبوو"
 
-#: src/features/objects/components/object-detail-panel.tsx:246
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:307
 msgid "Failed to move"
 msgstr "گواستنەوە سەرکەوتوو نەبوو"
 
@@ -1299,13 +1318,21 @@ msgstr "ڕێکخستنەوەی خانەکان سەرکەوتوو نەبوو"
 msgid "Failed to reorder views"
 msgstr "ڕێکخستنەوەی بینینەکان سەرکەوتوو نەبوو"
 
+#: ../../../lib/web/src/components/ai-prompts-editor.tsx:90
+msgid "Failed to reset prompt"
+msgstr ""
+
 #: ../../../lib/web/src/components/options-menu.tsx:133
 msgid "Failed to revoke RSS access"
 msgstr "ڕەتکردنەوەی دەستپێگەیشتنی RSS سەرکەوتوو نەبوو"
 
-#: src/features/objects/components/object-detail-panel.tsx:190
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:263
 msgid "Failed to save"
 msgstr "پاشەکەوتکردن سەرکەوتوو نەبوو"
+
+#: ../../../lib/web/src/components/ai-prompts-editor.tsx:111
+msgid "Failed to save prompt"
+msgstr ""
 
 #: src/features/projects/components/inline-project-search.tsx:89
 msgid "Failed to search projects"
@@ -1322,13 +1349,17 @@ msgid "Failed to subscribe"
 msgstr "بەشداریبوون سەرکەوتوو نەبوو"
 
 #: src/features/projects/pages/projects-list-page.tsx:43
-#: src/routes/_authenticated/$projectId/index.tsx:159
+#: src/routes/_authenticated/$projectId/index.tsx:160
 msgid "Failed to unsubscribe"
 msgstr "وازهێنان لە بەشداریبوون سەرکەوتوو نەبوو"
 
 #: src/routes/_authenticated/$projectId_.settings.tsx:144
 msgid "Failed to update access level"
 msgstr "نوێکردنەوەی ئاستی گەیشتن سەرکەوتوو نەبوو"
+
+#: ../../../lib/web/src/components/banner-section.tsx:71
+msgid "Failed to update banner"
+msgstr ""
 
 #: src/features/editor/components/design-editor.tsx:122
 msgid "Failed to update class"
@@ -1362,7 +1393,7 @@ msgstr "نوێکردنەوەی پڕۆژە سەرکەوتوو نەبوو"
 msgid "Failed to update view"
 msgstr "نوێکردنەوەی بینین سەرکەوتوو نەبوو"
 
-#: src/features/objects/components/object-detail-panel.tsx:209
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:278
 msgid "Failed to update watching"
 msgstr "نوێکردنەوەی چاودێری سەرکەوتوو نەبوو"
 
@@ -1374,7 +1405,7 @@ msgstr "بارکردنی هاوپێچ سەرکەوتوو نەبوو"
 msgid "Fields"
 msgstr "خانەکان"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:589
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:583
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:155
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:175
 msgid "Files"
@@ -1519,7 +1550,7 @@ msgstr "فایلی JSON نادروست"
 msgid "It seems like the page you're looking for <0/>does not exist or might have been removed."
 msgstr "وا دیارە ئەو پەڕەیەی بەدوایدا دەگەڕێیت <0/>بوونی نییە یان سڕاوەتەوە."
 
-#: src/features/objects/components/object-detail-panel.tsx:416
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:425
 msgid "Item details"
 msgstr "وردەکارییەکانی بڕگە"
 
@@ -1549,11 +1580,11 @@ msgid "Light"
 msgstr "ڕووناک"
 
 #: ../../../lib/web/src/components/options-menu.tsx:190
-#: src/routes/_authenticated/$projectId/index.tsx:151
+#: src/routes/_authenticated/$projectId/index.tsx:152
 msgid "Link"
 msgstr "بەستەر"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:279
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:273
 msgid "Links"
 msgstr "بەستەرەکان"
 
@@ -1573,11 +1604,11 @@ msgstr "ناوەڕۆک باردەکرێت…"
 msgid "Loading diff..."
 msgstr "diff بار دەکرێت..."
 
-#: src/features/objects/components/object-detail-panel.tsx:316
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:355
 msgid "Loading item"
 msgstr "بڕگە بار دەکرێت"
 
-#: src/features/objects/components/object-detail-panel.tsx:317
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:356
 msgid "Loading item details"
 msgstr "وردەکارییەکانی بڕگە بار دەکرێن"
 
@@ -1587,7 +1618,7 @@ msgstr "تێمپلێیتەکان بار دەکرێن..."
 
 #: ../../../lib/web/src/components/ui/load-more.tsx:35
 #: ../../../lib/web/src/features/document/document-page.tsx:88
-#: src/routes/_authenticated/$projectId/index.tsx:148
+#: src/routes/_authenticated/$projectId/index.tsx:149
 msgid "Loading..."
 msgstr "بار دەکرێت..."
 
@@ -1653,7 +1684,7 @@ msgstr "Commit ـی Merge"
 msgid "Merge requests"
 msgstr "داواکارییەکانی Merge"
 
-#: src/features/objects/components/object-detail-panel.tsx:391
+#: src/routes/_authenticated/$projectId/index.tsx:208
 msgid "Merge requests ({requestCount})"
 msgstr "داواکارییەکانی Merge ({requestCount})"
 
@@ -1739,14 +1770,14 @@ msgstr "ناو دەبێت ١٠٠٠ نووسە یان کەمتر بێت"
 msgid "Network error"
 msgstr "هەڵەی تۆڕ"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:476
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:470
 #: ../../../lib/web/src/components/ui/sort-selector.tsx:43
-#: src/routes/_authenticated/$projectId/index.tsx:130
-#: src/routes/_authenticated/$projectId/index.tsx:134
+#: src/routes/_authenticated/$projectId/index.tsx:131
+#: src/routes/_authenticated/$projectId/index.tsx:135
 msgid "New"
 msgstr "نوێ"
 
-#: src/routes/_authenticated/$projectId/index.tsx:136
+#: src/routes/_authenticated/$projectId/index.tsx:137
 msgid "New {className}"
 msgstr "{className}ی نوێ"
 
@@ -1764,7 +1795,7 @@ msgstr "دواتر"
 msgid "Next image"
 msgstr "وێنەی دواتر"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:555
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:549
 msgid "No {parentClassNames} to add to"
 msgstr "هیچ {parentClassNames} نییە بۆ زیادکردن بۆی"
 
@@ -1812,11 +1843,11 @@ msgstr "هێشتا هیچ یارییەک نییە"
 msgid "No groups available"
 msgstr "هیچ گرووپێک بەردەست نییە"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:522
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:516
 msgid "No item types can be created yet. Create the required parent items first."
 msgstr "هێشتا هیچ جۆرە بڕگەیەک ناتوانرێت دروست بکرێت. سەرەتا بڕگە باوانە پێویستەکان دروست بکە."
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:360
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:354
 msgid "No matching objects"
 msgstr "هیچ تەنێکی هاوسەنگ نییە"
 
@@ -1878,9 +1909,13 @@ msgid "No views"
 msgstr "هیچ بینینێک نییە"
 
 #: ../../../lib/web/src/components/colour-picker.tsx:349
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:538
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:541
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:545
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:532
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:535
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:539
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:540
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:553
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:554
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:558
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:359
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:382
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:385
@@ -1892,9 +1927,6 @@ msgstr "هیچ بینینێک نییە"
 #: ../../../lib/web/src/lib/preference-utils.ts:100
 #: src/features/editor/components/edit-dialogs.tsx:296
 #: src/features/editor/components/edit-dialogs.tsx:299
-#: src/features/objects/components/object-detail-panel.tsx:537
-#: src/features/objects/components/object-detail-panel.tsx:550
-#: src/features/objects/components/object-detail-panel.tsx:555
 msgid "None"
 msgstr "هیچ"
 
@@ -1976,7 +2008,7 @@ msgstr "کردنەوەی ڕێدۆزی"
 msgid "Open option actions"
 msgstr "کردنەوەی کردارەکانی هەڵبژاردە"
 
-#: src/routes/_authenticated/$projectId/index.tsx:129
+#: src/routes/_authenticated/$projectId/index.tsx:130
 msgid "Open page actions"
 msgstr "کردنەوەی کردارەکانی پەڕە"
 
@@ -2012,8 +2044,8 @@ msgstr "هیتر"
 msgid "Owner"
 msgstr "خاوەن"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:530
-#: src/features/objects/components/object-detail-panel.tsx:533
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:524
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:536
 msgid "Parent"
 msgstr "باوان"
 
@@ -2033,7 +2065,7 @@ msgstr "پاسکییەکان"
 msgid "Pattern (regex)"
 msgstr "نموونە (regex)"
 
-#: src/routes/_authenticated/$projectId/index.tsx:138
+#: src/routes/_authenticated/$projectId/index.tsx:139
 msgid "Please add one or more classes to the project design."
 msgstr "تکایە یەک یان زیاتر پۆل زیاد بکە بۆ دیزاینی پڕۆژە."
 
@@ -2095,7 +2127,7 @@ msgid "Processing…"
 msgstr "پرۆسەکردن…"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:62
-#: src/routes/_authenticated/$projectId/index.tsx:82
+#: src/routes/_authenticated/$projectId/index.tsx:83
 msgid "Project"
 msgstr "پڕۆژە"
 
@@ -2111,7 +2143,7 @@ msgstr "پڕۆژە دروستکرا"
 msgid "Project deleted"
 msgstr "پڕۆژە سڕایەوە"
 
-#: src/routes/_authenticated/$projectId/index.tsx:152
+#: src/routes/_authenticated/$projectId/index.tsx:153
 msgid "Project link"
 msgstr "بەستەری پڕۆژە"
 
@@ -2144,7 +2176,11 @@ msgstr "پڕۆژە نوێ کرایەوە"
 msgid "Projects"
 msgstr "پڕۆژەکان"
 
-#: src/features/objects/components/object-detail-panel.tsx:379
+#: ../../../lib/web/src/components/ai-prompts-editor.tsx:108
+msgid "Prompt saved"
+msgstr ""
+
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:398
 msgid "Properties"
 msgstr "تایبەتمەندییەکان"
 
@@ -2160,7 +2196,7 @@ msgstr "بەرز"
 msgid "Re-link your accounts on this server"
 msgstr "هەژمارەکانت لەم سێرڤەرەدا دووبارە بەستەوە"
 
-#: src/routes/_authenticated/$projectId/index.tsx:141
+#: src/routes/_authenticated/$projectId/index.tsx:142
 msgid "Re-order columns"
 msgstr "ڕیزکردنەوەی ستوونەکان"
 
@@ -2197,7 +2233,7 @@ msgstr "ڕەوانەکردنەوە بۆ چونەژوورەوە."
 msgid "Reduce interest"
 msgstr "کەمکردنەوەی بەرژەوەندی"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:65
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:69
 msgid "Relates"
 msgstr "پەیوەندیدارە"
 
@@ -2252,8 +2288,8 @@ msgstr "لابردنی بەرژەوەندی"
 msgid "Remove item"
 msgstr "لابردنی بڕگە"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:304
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:309
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:298
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:303
 msgid "Remove link"
 msgstr "بەستەر بسڕەوە"
 
@@ -2357,15 +2393,18 @@ msgstr "URLی RSS لەبەر کرایەوە بۆ کلیپ بۆرد"
 msgid "Saturday"
 msgstr "شەممە"
 
+#: ../../../lib/web/src/components/ai-prompts-editor.tsx:156
 #: ../../../lib/web/src/components/attachment-composer.tsx:430
+#: ../../../lib/web/src/components/banner-section.tsx:99
 #: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:231
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:170
 #: ../../../lib/web/src/components/ui/editable-field-row.tsx:122
 #: ../../../lib/web/src/components/ui/secret-field.tsx:79
-#: src/routes/_authenticated/$projectId/index.tsx:144
+#: src/routes/_authenticated/$projectId/index.tsx:145
 msgid "Save"
 msgstr "پاشەکەوتکردن"
 
+#: ../../../lib/web/src/components/ai-prompts-editor.tsx:156
 #: src/routes/_authenticated/$projectId_.settings.tsx:120
 msgid "Saving..."
 msgstr "پاشەکەوتکردن..."
@@ -2405,7 +2444,7 @@ msgstr "گەڕان بۆ سەرچاوە..."
 msgid "Search for projects..."
 msgstr "گەڕان بۆ پڕۆژەکان..."
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:337
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:331
 msgid "Search objects..."
 msgstr "گەڕانی تەنەکان..."
 
@@ -2543,7 +2582,7 @@ msgstr "دانانی دەستپێگەیشتن..."
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx:125
 #: ../../../lib/web/src/components/options-menu.tsx:196
 #: src/routes/_authenticated/$projectId_.settings.tsx:103
-#: src/routes/_authenticated/$projectId/index.tsx:173
+#: src/routes/_authenticated/$projectId/index.tsx:174
 msgid "Settings"
 msgstr "ڕێکخستنەکان"
 
@@ -2614,8 +2653,8 @@ msgstr "پاڵەپەستۆ و تێکەڵکردن"
 msgid "Start the discussion by adding the first comment."
 msgstr "بە زیادکردنی یەکەم لێدوان گفتوگۆ دەستپێبکە."
 
-#: src/features/objects/components/object-detail-panel.tsx:439
-#: src/features/objects/components/object-detail-panel.tsx:448
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:455
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:460
 msgid "Stop watching"
 msgstr "وازبهێنە لە چاودێری"
 
@@ -2742,7 +2781,7 @@ msgid "This will permanently delete \"{projectName}\" and all its objects, comme
 msgstr "ئەمە \"{projectName}\" و هەموو بابەتەکان، لێدوانەکان، و هاوپێچەکانی بە هەمیشەیی دەسڕێتەوە. ئەم کردارە ناتوانرێت بگەڕێنرێتەوە."
 
 #. placeholder {0}: project.project.name
-#: src/routes/_authenticated/$projectId/index.tsx:156
+#: src/routes/_authenticated/$projectId/index.tsx:157
 msgid "This will remove \"{0}\" from your sidebar and stop updates for this project."
 msgstr "ئەمە \"{0}\" لە لاتەنیشتەکەت لادەبات و نوێکارییەکانی ئەم پڕۆژەیە ڕادەگرێت."
 
@@ -2884,27 +2923,26 @@ msgstr "نەناسراو"
 
 #: ../../../lib/web/src/components/options-menu.tsx:211
 #: src/features/projects/pages/projects-list-page.tsx:39
-#: src/routes/_authenticated/$projectId/index.tsx:154
+#: src/routes/_authenticated/$projectId/index.tsx:155
 msgid "Unsubscribe"
 msgstr "بەشداری هەڵبوەشێنەوە"
 
-#: src/routes/_authenticated/$projectId/index.tsx:155
+#: src/routes/_authenticated/$projectId/index.tsx:156
 msgid "Unsubscribe from project?"
 msgstr "بەشداری لە پڕۆژە هەڵبوەشێنەوە؟"
 
 #: src/features/projects/pages/projects-list-page.tsx:42
-#: src/routes/_authenticated/$projectId/index.tsx:158
+#: src/routes/_authenticated/$projectId/index.tsx:159
 msgid "Unsubscribed"
 msgstr "بەشداری هەڵوەشایەوە"
 
 #: src/features/projects/pages/projects-list-page.tsx:41
-#: src/routes/_authenticated/$projectId/index.tsx:157
+#: src/routes/_authenticated/$projectId/index.tsx:158
 msgid "Unsubscribing..."
 msgstr "هەڵوەشاندنەوەی بەشداری..."
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:285
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:103
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:184
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:178
+#: ../../../lib/web/src/lib/entity-title.ts:36
 #: src/features/board/components/board-container.tsx:29
 #: src/features/editor/components/design-preview.tsx:31
 msgid "Untitled"
@@ -2919,7 +2957,7 @@ msgstr "نوێکرایەوە"
 msgid "Updating access..."
 msgstr "نوێکردنەوەی دەستپێگەیشتن..."
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:639
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:633
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:301
 msgid "Upload"
 msgstr "بارکردن"
@@ -2949,6 +2987,10 @@ msgstr "بەکارهاتوو بۆ ID-ی خوێندنەوەکراو وەک {0}-1�
 msgid "User"
 msgstr "بەکارهێنەر"
 
+#: ../../../lib/web/src/components/ai-prompts-editor.tsx:159
+msgid "Variables: {variables}"
+msgstr ""
+
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:73
 msgid "Verification code"
 msgstr "کۆدی پشتڕاستکردنەوە"
@@ -2976,7 +3018,7 @@ msgstr "بینەری ڤیدیۆ: {0}"
 msgid "View all notifications"
 msgstr "هەموو ئاگادارکردنەوەکان ببینە"
 
-#: src/features/objects/components/object-detail-panel.tsx:417
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:426
 msgid "View and edit item details"
 msgstr "وردەکارییەکانی بابەت ببینە و دەستکاری بکە"
 
@@ -2988,7 +3030,7 @@ msgstr "کۆنترۆڵەکانی بینین"
 msgid "View only"
 msgstr "تەنها بینین"
 
-#: src/routes/_authenticated/$projectId/index.tsx:139
+#: src/routes/_authenticated/$projectId/index.tsx:140
 msgid "View options"
 msgstr "بژاردەکانی بینین"
 
@@ -2996,8 +3038,8 @@ msgstr "بژاردەکانی بینین"
 msgid "Views"
 msgstr "بینینەکان"
 
-#: src/features/objects/components/object-detail-panel.tsx:439
-#: src/features/objects/components/object-detail-panel.tsx:448
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:455
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:460
 msgid "Watch"
 msgstr "چاودێری"
 
@@ -3027,7 +3069,7 @@ msgstr "چوارشەممە"
 msgid "You do not have access to this section."
 msgstr "دەستپێگەیشتنت بەم بەشە نییە."
 
-#: src/routes/_authenticated/$projectId/index.tsx:52
+#: src/routes/_authenticated/$projectId/index.tsx:53
 msgid "You don't have access to this project."
 msgstr "دەستڕاگەیشتنت بەم پڕۆژەیە نییە."
 

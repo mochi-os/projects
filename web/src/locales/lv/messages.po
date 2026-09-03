@@ -14,19 +14,15 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. js-lingui-explicit-id
-#: ../../../lib/web/src/lib/error-normalizer.ts:215
+#: ../../../lib/web/src/lib/error-normalizer.ts:219
 msgid "Please check your internet connection and try again."
 msgstr "Lūdzu, pārbaudiet interneta savienojumu un mēģiniet vēlreiz."
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:301
-msgid " or "
-msgstr " vai "
-
-#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:190
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:189
 msgid "(edited)"
 msgstr "(rediģēts)"
 
-#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:174
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:173
 msgid "(expand)"
 msgstr "(izvērst)"
 
@@ -48,6 +44,16 @@ msgstr "[nav iestatīts]"
 msgid "{0, plural, one {# conflicting file} other {# conflicting files}}"
 msgstr "{0, plural, zero {# konfliktējošu failu} one {# konfliktējošs fails} other {# konfliktējoši faili}}"
 
+#. placeholder {0}: displayInfo.count
+#: ../../../lib/web/src/components/person-picker.tsx:259
+msgid "{0, plural, one {# selected} other {# selected}}"
+msgstr "{0, plural, zero {# atlasīti} one {# atlasīts} other {# atlasīti}}"
+
+#. placeholder {0}: countDeepChildren(object.id)
+#: ../../../lib/web/src/components/entity/entity-board-card.tsx:421
+msgid "{0, plural, one {+# nested} other {+# nested}}"
+msgstr "{0, plural, zero {+# ligzdoti} one {+# ligzdots} other {+# ligzdoti}}"
+
 #. placeholder {0}: String(name)
 #: src/routes/_authenticated/$projectId/design.tsx:46
 msgid "{0} - Design"
@@ -65,7 +71,7 @@ msgid "{0} files changed"
 msgstr "{0} faili mainīti"
 
 #. placeholder {0}: String(name)
-#: src/routes/_authenticated/$projectId_.settings.tsx:109
+#: src/routes/_authenticated/$projectId_.settings.tsx:107
 msgid "{0} settings"
 msgstr "{0} iestatījumi"
 
@@ -85,13 +91,9 @@ msgstr "{count, plural, one {#min} other {#min}}"
 msgid "{count, plural, one {#w} other {#w}}"
 msgstr "{count, plural, one {#ned} other {#ned}}"
 
-#: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:174
+#: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:176
 msgid "{entityLabel} name"
 msgstr "{entityLabel} nosaukums"
-
-#: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:99
-msgid "{entityLabel} name is required"
-msgstr "{entityLabel} nosaukums ir obligāts"
 
 #: ../../../lib/web/src/components/game/game-draw-offer-banner.tsx:29
 msgid "{opponentName} offered a draw"
@@ -102,9 +104,13 @@ msgstr "{opponentName} piedāvāja neizšķirtu"
 msgid "{sentLabel} of {totalLabel}"
 msgstr "{sentLabel} no {totalLabel}"
 
-#: ../../../lib/web/src/components/entity/entity-board-column.tsx:530
+#: ../../../lib/web/src/components/entity/entity-board-column.tsx:531
 msgid "{totalCount, plural, one {# item} other {# items}}"
 msgstr "{totalCount, plural, zero {# vienumu} one {# vienums} other {# vienumi}}"
+
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:170
+msgid "{totalDescendants, plural, one {# reply} other {+# more replies}}"
+msgstr "{totalDescendants, plural, zero {# atbilžu} one {# atbilde} other {+# vēl atbildes}}"
 
 #: src/features/requests/components/diff-stats.tsx:120
 #: src/features/requests/components/diff-viewer.tsx:471
@@ -119,19 +125,6 @@ msgstr "{unreadCount, plural, zero {Atvērt izvēlni (# neizlasītu paziņojumu)
 #: src/features/requests/components/merge-status.tsx:76
 msgid "+{0} ahead"
 msgstr "+{0} priekšā"
-
-#. placeholder {0}: countDeepChildren(object.id)
-#: ../../../lib/web/src/components/entity/entity-board-card.tsx:418
-msgid "+{0} nested"
-msgstr "+{0} ligzdoti"
-
-#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:171
-msgid "+{totalDescendants} more replies"
-msgstr "+{totalDescendants} vēl atbildes"
-
-#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:170
-msgid "1 reply"
-msgstr "1 atbilde"
 
 #: ../../../lib/web/src/lib/preference-utils.ts:37
 msgid "12 hours"
@@ -149,11 +142,12 @@ msgstr "Absolūts (datums un laiks)"
 msgid "Accept"
 msgstr "Pieņemt"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:104
+#: src/routes/_authenticated/$projectId_.settings.tsx:102
 msgid "Access"
 msgstr "Piekļuve"
 
-#: ../../../lib/web/src/features/errors/general-error.tsx:60
+#: ../../../lib/web/src/features/errors/access-denied-error.tsx:16
+#: ../../../lib/web/src/features/errors/general-error.tsx:58
 msgid "Access denied"
 msgstr "Piekļuve liegta"
 
@@ -161,19 +155,19 @@ msgstr "Piekļuve liegta"
 msgid "Access level"
 msgstr "Piekļuves līmenis"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:143
+#: src/routes/_authenticated/$projectId_.settings.tsx:141
 msgid "Access level updated"
 msgstr "Piekļuves līmenis atjaunināts"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:134
+#: src/routes/_authenticated/$projectId_.settings.tsx:132
 msgid "Access management"
 msgstr "Piekļuves pārvaldība"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:140
+#: src/routes/_authenticated/$projectId_.settings.tsx:138
 msgid "Access removed"
 msgstr "Piekļuve noņemta"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:137
+#: src/routes/_authenticated/$projectId_.settings.tsx:135
 msgid "Access set for {subjectName}"
 msgstr "Piekļuve iestatīta lietotājam {subjectName}"
 
@@ -181,18 +175,18 @@ msgstr "Piekļuve iestatīta lietotājam {subjectName}"
 msgid "Account type"
 msgstr "Konta veids"
 
-#: src/features/objects/components/object-detail-panel.tsx:398
+#: src/features/objects/components/object-detail-panel.tsx:407
 msgid "Activity"
 msgstr "Aktivitāte"
 
-#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:720
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:758
 #: ../../../lib/web/src/features/access/access-dialog.tsx:332
 #: ../../../lib/web/src/features/accounts/account-add.tsx:209
 #: src/features/requests/components/request-panel.tsx:113
 msgid "Add"
 msgstr "Pievienot"
 
-#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:312
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:314
 msgid "Add a comment..."
 msgstr "Pievieno komentāru..."
 
@@ -200,7 +194,7 @@ msgstr "Pievieno komentāru..."
 msgid "Add a new account"
 msgstr "Pievienot jaunu kontu"
 
-#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:106
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:110
 msgid "Add a new field to this class"
 msgstr "Pievienot jaunu lauku šai klasei"
 
@@ -216,7 +210,7 @@ msgstr "Pievienot kontu"
 msgid "Add caption"
 msgstr "Pievienot parakstu"
 
-#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:690
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:728
 msgid "Add checklist item"
 msgstr "Pievienot kontrolsaraksta vienumu"
 
@@ -226,17 +220,17 @@ msgstr "Pievienot kontrolsaraksta vienumu"
 msgid "Add class"
 msgstr "Pievienot klasi"
 
-#: src/routes/_authenticated/$projectId/index.tsx:140
+#: src/routes/_authenticated/$projectId/index.tsx:139
 msgid "Add column"
 msgstr "Pievienot kolonnu"
 
-#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:105
-#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:233
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:109
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:235
 #: src/features/editor/components/edit-dialogs.tsx:429
 msgid "Add field"
 msgstr "Pievienot lauku"
 
-#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:708
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:746
 msgid "Add item..."
 msgstr "Pievienot vienumu..."
 
@@ -244,19 +238,19 @@ msgstr "Pievienot vienumu..."
 msgid "Add link"
 msgstr "Pievienot saiti"
 
-#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:215
-#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:220
-#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:291
-#: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:91
-#: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:191
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:217
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:222
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:295
+#: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:92
+#: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:193
 msgid "Add option"
 msgstr "Pievienot opciju"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:135
+#: src/routes/_authenticated/$projectId_.settings.tsx:133
 msgid "Add rule"
 msgstr "Pievienot noteikumu"
 
-#: ../../../lib/web/src/components/post-tags.tsx:137
+#: ../../../lib/web/src/components/post-tags.tsx:138
 msgid "Add tag..."
 msgstr "Pievienot tagu..."
 
@@ -264,8 +258,8 @@ msgstr "Pievienot tagu..."
 msgid "Add to existing notifications"
 msgstr "Pievienot esošajiem paziņojumiem"
 
-#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:258
-#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:513
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:261
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:518
 #: ../../../lib/web/src/components/view-tabs.tsx:87
 #: ../../../lib/web/src/components/view-tabs.tsx:93
 #: src/features/editor/components/design-editor.tsx:492
@@ -280,14 +274,13 @@ msgstr "Pievieno..."
 msgid "AI"
 msgstr "AI"
 
-#: src/components/layout/projects-layout.tsx:35
+#: src/components/layout/projects-layout.tsx:34
 msgid "All projects"
 msgstr "Visi projekti"
 
-#. placeholder {0}: entityLabel.toLowerCase()
-#: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:85
-msgid "Allow anyone to search for {0}"
-msgstr "Atļaut ikvienam meklēt {0}"
+#: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:87
+msgid "Allow anyone to search for {entityLabel}"
+msgstr "Atļaut ikvienam meklēt: {entityLabel}"
 
 #: src/features/projects/components/create-project-dialog.tsx:387
 msgid "Allow anyone to search for project"
@@ -297,7 +290,7 @@ msgstr "Ļaut jebkuram meklēt projektu"
 msgid "Allow merge requests"
 msgstr "Atļaut sapludināšanas pieprasījumus"
 
-#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:225
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:229
 msgid "Allow sort by"
 msgstr "Atļaut kārtot pēc"
 
@@ -306,6 +299,7 @@ msgid "An error occurred"
 msgstr "Radās kļūda"
 
 #: ../../../lib/web/src/lib/api-response-interceptors.ts:266
+#: ../../../lib/web/src/lib/error-normalizer.ts:11
 msgid "An unexpected error occurred"
 msgstr "Radās negaidīta kļūda"
 
@@ -327,15 +321,15 @@ msgid "Anything subscribed to this feed will stop receiving it. You can copy a n
 msgstr "Viss, kas ir abonējis šo plūsmu, pārstās to saņemt. Pēc tam varēsiet kopēt jaunu URL."
 
 #. placeholder {0}: deleteTarget?.name
-#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:313
+#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:316
 msgid "Are you sure you want to delete \"{0}\"?"
 msgstr "Vai tiešām vēlies dzēst \"{0}\"?"
 
-#: src/features/objects/components/object-detail-panel.tsx:642
+#: src/features/objects/components/object-detail-panel.tsx:653
 msgid "Are you sure you want to delete \"{title}\"? This action cannot be undone."
 msgstr "Vai tiešām vēlies dzēst \"{title}\"? Šo darbību nevar atsaukt."
 
-#: ../../../lib/web/src/components/entity/entity-board-column.tsx:629
+#: ../../../lib/web/src/components/entity/entity-board-column.tsx:631
 msgid "Are you sure you want to delete the \"{name}\" column? This cannot be undone."
 msgstr "Vai tiešām vēlies dzēst kolonnu \"{name}\"? To nevar atsaukt."
 
@@ -359,11 +353,11 @@ msgstr "Vai tiešām vēlies atteikties no šī projekta abonēšanas?"
 msgid "Ascending"
 msgstr "Augošā secībā"
 
-#: ../../../lib/web/src/components/comment-composer.tsx:427
+#: ../../../lib/web/src/components/comment-composer.tsx:430
 msgid "Attach comment files"
 msgstr "Pievienot komentāra failus"
 
-#: ../../../lib/web/src/components/comment-composer.tsx:426
+#: ../../../lib/web/src/components/comment-composer.tsx:429
 msgid "Attach reply files"
 msgstr "Pievienot atbildes failus"
 
@@ -372,7 +366,7 @@ msgstr "Pievienot atbildes failus"
 msgid "Authenticated users"
 msgstr "Autentificēti lietotāji"
 
-#: ../../../lib/web/src/components/step-up-dialog.tsx:318
+#: ../../../lib/web/src/components/step-up-dialog.tsx:306
 msgid "Authenticator code"
 msgstr "Authenticator kods"
 
@@ -380,25 +374,25 @@ msgstr "Authenticator kods"
 msgid "Available keyboard shortcuts"
 msgstr "Pieejamie tastatūras īsceļi"
 
-#: ../../../lib/web/src/components/entity-avatar.tsx:99
+#: ../../../lib/web/src/components/entity-avatar.tsx:98
 msgid "Avatar"
 msgstr "Avatars"
 
-#: ../../../lib/web/src/components/entity-avatar.tsx:99
+#: ../../../lib/web/src/components/entity-avatar.tsx:98
 msgid "Avatar for {name}"
 msgstr "{name} avatars"
 
-#: ../../../lib/web/src/components/place-picker.tsx:156
+#: ../../../lib/web/src/components/place-picker.tsx:142
 #: src/features/projects/components/create-project-dialog.tsx:546
 msgid "Back"
 msgstr "Atpakaļ"
 
+#: ../../../lib/web/src/features/errors/access-denied-error.tsx:27
 #: ../../../lib/web/src/features/errors/not-found-error.tsx:28
-#: ../../../lib/web/src/features/errors/unauthorized-error.tsx:28
 msgid "Back to home"
 msgstr "Atpakaļ uz sākumu"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:105
+#: src/routes/_authenticated/$projectId_.settings.tsx:103
 #: src/routes/_authenticated/$projectId/design.tsx:47
 msgid "Back to project"
 msgstr "Atpakaļ uz projektu"
@@ -421,8 +415,8 @@ msgstr "Binārais fails netiek rādīts"
 msgid "Blocked by"
 msgstr "Bloķēja"
 
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:242
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:252
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:238
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:248
 msgid "Blocked navigation to untrusted link"
 msgstr "Navigācija uz neuzticamu saiti bloķēta"
 
@@ -430,16 +424,16 @@ msgstr "Navigācija uz neuzticamu saiti bloķēta"
 msgid "Blocks"
 msgstr "Bloki"
 
-#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:312
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:315
 msgid "Board"
 msgstr "Galds"
 
-#: ../../../lib/web/src/components/post-tags.tsx:180
-#: ../../../lib/web/src/components/post-tags.tsx:192
+#: ../../../lib/web/src/components/post-tags.tsx:194
+#: ../../../lib/web/src/components/post-tags.tsx:206
 msgid "Boost interest"
 msgstr "Veicināt interesi"
 
-#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:399
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:402
 msgid "Border colour"
 msgstr "Apmales krāsa"
 
@@ -456,30 +450,30 @@ msgid "Can be child of"
 msgstr "Var būt apakšobjekts:"
 
 #: ../../../lib/web/src/components/attachment-composer.tsx:426
-#: ../../../lib/web/src/components/entity/entity-board-column.tsx:614
+#: ../../../lib/web/src/components/entity/entity-board-column.tsx:616
 #: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:211
-#: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:166
-#: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:183
+#: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:168
+#: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:185
 #: ../../../lib/web/src/components/responsive-confirm-dialog.tsx:67
-#: ../../../lib/web/src/components/step-up-dialog.tsx:366
-#: ../../../lib/web/src/components/travelling-picker.tsx:308
-#: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:249
-#: ../../../lib/web/src/components/ui/editable-field-row.tsx:132
+#: ../../../lib/web/src/components/step-up-dialog.tsx:354
+#: ../../../lib/web/src/components/travelling-picker.tsx:288
+#: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:251
+#: ../../../lib/web/src/components/ui/editable-field-row.tsx:136
 #: ../../../lib/web/src/features/access/access-dialog.tsx:328
 #: ../../../lib/web/src/features/access/access-list.tsx:268
 #: ../../../lib/web/src/features/accounts/account-add.tsx:201
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:91
 #: src/features/projects/components/create-project-dialog.tsx:453
 #: src/routes/_authenticated/$projectId/design.tsx:61
-#: src/routes/_authenticated/$projectId/index.tsx:143
+#: src/routes/_authenticated/$projectId/index.tsx:142
 msgid "Cancel"
 msgstr "Atcelt"
 
-#: ../../../lib/web/src/components/comment-composer.tsx:427
+#: ../../../lib/web/src/components/comment-composer.tsx:430
 msgid "Cancel comment"
 msgstr "Atcelt komentāru"
 
-#: ../../../lib/web/src/components/comment-composer.tsx:426
+#: ../../../lib/web/src/components/comment-composer.tsx:429
 msgid "Cancel reply"
 msgstr "Atcelt atbildi"
 
@@ -501,7 +495,15 @@ msgstr "Šo paziņojumu kategorija"
 msgid "Change notification category"
 msgstr "Mainīt paziņojuma kategoriju"
 
-#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:137
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx:62
+msgid "Changed"
+msgstr "Mainīts"
+
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx:62
+msgid "Changed {field}"
+msgstr "Mainīts {field}"
+
+#: ../../../lib/web/src/hooks/use-field-type-labels.ts:12
 msgid "Checkbox"
 msgstr "Izvēles rūtiņa"
 
@@ -509,7 +511,7 @@ msgstr "Izvēles rūtiņa"
 msgid "Checking merge status..."
 msgstr "Pārbauda sapludināšanas statusu..."
 
-#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:138
+#: ../../../lib/web/src/hooks/use-field-type-labels.ts:13
 msgid "Checklist"
 msgstr "Kontrolsaraksts"
 
@@ -532,10 +534,10 @@ msgstr "Klases"
 
 #: ../../../lib/web/src/components/colour-picker.tsx:274
 #: ../../../lib/web/src/components/colour-picker.tsx:355
-#: ../../../lib/web/src/components/travelling-picker.tsx:164
-#: ../../../lib/web/src/components/travelling-picker.tsx:170
-#: ../../../lib/web/src/components/travelling-picker.tsx:231
-#: ../../../lib/web/src/components/travelling-picker.tsx:237
+#: ../../../lib/web/src/components/travelling-picker.tsx:145
+#: ../../../lib/web/src/components/travelling-picker.tsx:151
+#: ../../../lib/web/src/components/travelling-picker.tsx:212
+#: ../../../lib/web/src/components/travelling-picker.tsx:218
 msgid "Clear"
 msgstr "Notīrīt"
 
@@ -547,19 +549,19 @@ msgstr "Notīrīt visu"
 msgid "Clear search"
 msgstr "Notīrīt meklēšanu"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:501
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:506
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:523
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:528
 #: ../../../lib/web/src/components/ui/dialog.tsx:78
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:468
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:471
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:480
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:483
 #: ../../../lib/web/src/components/ui/sheet.tsx:79
 msgid "Close"
 msgstr "Aizvērt"
 
-#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:109
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:113
-#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:263
-#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:267
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:117
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:266
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:270
 #: src/features/editor/components/edit-dialogs.tsx:228
 #: src/features/editor/components/edit-dialogs.tsx:232
 msgid "Close dialog"
@@ -594,16 +596,16 @@ msgstr "Sakļaut"
 msgid "Collapse sidebar"
 msgstr "Sakļaut sānu joslu"
 
-#: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:146
+#: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:148
 msgid "Colour"
 msgstr "Krāsa"
 
-#: ../../../lib/web/src/components/entity/entity-board-column.tsx:539
-#: ../../../lib/web/src/components/entity/entity-board-column.tsx:544
+#: ../../../lib/web/src/components/entity/entity-board-column.tsx:540
+#: ../../../lib/web/src/components/entity/entity-board-column.tsx:545
 msgid "Column actions"
 msgstr "Kolonnas darbības"
 
-#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:347
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:350
 msgid "Columns group by"
 msgstr "Kolonnas grupē pēc"
 
@@ -620,17 +622,17 @@ msgstr "Komandu palete"
 msgid "Comment actions"
 msgstr "Komentāra darbības"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:53
+#: src/routes/_authenticated/$projectId_.settings.tsx:51
 msgid "Comment and view"
 msgstr "Komentēt un skatīt"
 
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:431
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:443
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:455
 msgid "Comments"
 msgstr "Komentāri"
 
 #. placeholder {0}: data.comment_count || 0
-#: src/features/objects/components/object-detail-panel.tsx:384
+#: src/features/objects/components/object-detail-panel.tsx:393
 msgid "Comments ({0})"
 msgstr "Komentāri ({0})"
 
@@ -642,16 +644,16 @@ msgstr "Kompakts"
 msgid "Configure class settings"
 msgstr "Konfigurē klases iestatījumus"
 
-#: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:94
+#: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:95
 msgid "Configure option settings"
 msgstr "Konfigurē opciju iestatījumus"
 
-#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:259
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:262
 msgid "Configure view settings"
 msgstr "Konfigurē skata iestatījumus"
 
-#: ../../../lib/web/src/components/place-picker.tsx:160
-#: ../../../lib/web/src/components/travelling-picker.tsx:316
+#: ../../../lib/web/src/components/place-picker.tsx:146
+#: ../../../lib/web/src/components/travelling-picker.tsx:296
 msgid "Confirm"
 msgstr "Apstiprināt"
 
@@ -667,7 +669,7 @@ msgstr "Notiek savienošana..."
 msgid "Content not found."
 msgstr "Saturs nav atrasts."
 
-#: ../../../lib/web/src/lib/query-client.ts:78
+#: ../../../lib/web/src/lib/query-client.ts:73
 msgid "Content not modified"
 msgstr "Saturs nav mainīts"
 
@@ -679,7 +681,7 @@ msgstr "Konteksta informācija un detaļas."
 msgid "Continue"
 msgstr "Turpināt"
 
-#: ../../../lib/web/src/components/step-up-dialog.tsx:355
+#: ../../../lib/web/src/components/step-up-dialog.tsx:343
 msgid "Continue with {label}"
 msgstr "Turpināt ar {label}"
 
@@ -721,34 +723,33 @@ msgstr "Neizdevās ielādēt diff"
 msgid "Could not load this document. Please try again later."
 msgstr "Nevarēja ielādēt šo dokumentu. Lūdzu, mēģini vēlāk vēlreiz."
 
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:128
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:124
 msgid "Couldn't load notifications"
 msgstr "Neizdevās ielādēt paziņojumus"
 
-#: ../../../lib/web/src/components/step-up-dialog.tsx:182
+#: ../../../lib/web/src/components/step-up-dialog.tsx:170
 msgid "Couldn't send the code. Please try again."
 msgstr "Neizdevās nosūtīt kodu. Lūdzu, mēģiniet vēlreiz."
 
-#: ../../../lib/web/src/components/step-up-dialog.tsx:136
+#: ../../../lib/web/src/components/step-up-dialog.tsx:124
 msgid "Couldn't start re-authentication. Please try again."
 msgstr "Neizdevās sākt atkārtotu autentifikāciju. Lūdzu, mēģiniet vēlreiz."
 
-#: ../../../lib/web/src/components/step-up-dialog.tsx:224
+#: ../../../lib/web/src/components/step-up-dialog.tsx:212
 msgid "Couldn't verify with that account. Please try again."
 msgstr "Neizdevās verificēt ar šo kontu. Lūdzu, mēģiniet vēlreiz."
 
-#: ../../../lib/web/src/components/entity/entity-board-column.tsx:550
-#: ../../../lib/web/src/components/entity/entity-board-column.tsx:689
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:491
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:656
-#: ../../../lib/web/src/components/entity/entity-tree-view.tsx:675
+#: ../../../lib/web/src/components/entity/entity-board-column.tsx:551
+#: ../../../lib/web/src/components/entity/entity-board-column.tsx:691
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:513
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:682
+#: ../../../lib/web/src/components/entity/entity-tree-view.tsx:672
 msgid "Create"
 msgstr "Izveidot"
 
-#. placeholder {0}: entityLabel.toLowerCase()
-#: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:144
-msgid "Create {0}"
-msgstr "Izveidot {0}"
+#: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:146
+msgid "Create {entityLabel}"
+msgstr "Izveidot {entityLabel}"
 
 #: src/features/objects/components/create-object-dialog.tsx:45
 msgid "Create a new item in this project"
@@ -764,7 +765,7 @@ msgstr "Izveidot jaunu projektu"
 msgid "Create new item"
 msgstr "Izveidot jaunu vienumu"
 
-#: src/components/layout/projects-layout.tsx:37
+#: src/components/layout/projects-layout.tsx:36
 #: src/features/projects/components/create-project-dialog.tsx:324
 #: src/features/projects/components/create-project-dialog.tsx:334
 #: src/features/projects/components/create-project-dialog.tsx:457
@@ -772,27 +773,32 @@ msgstr "Izveidot jaunu vienumu"
 msgid "Create project"
 msgstr "Izveidot projektu"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:52
+#: src/routes/_authenticated/$projectId_.settings.tsx:50
 msgid "Create, edit, comment, and view"
 msgstr "Izveidot, rediģēt, komentēt un skatīt"
 
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx:54
 #: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:56
-#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:492
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:495
 msgid "Created"
 msgstr "Izveidots"
+
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx:54
+msgid "Created {field}"
+msgstr "Izveidots {field}"
 
 #: src/features/projects/components/create-project-dialog.tsx:132
 msgid "Creating project..."
 msgstr "Veido projektu..."
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:656
-#: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:258
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:682
+#: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:260
 #: src/features/projects/components/create-project-dialog.tsx:457
 #: src/features/projects/components/create-project-dialog.tsx:549
 msgid "Creating..."
 msgstr "Izveido..."
 
-#: ../../../lib/web/src/components/map-view.tsx:217
+#: ../../../lib/web/src/components/map-view.tsx:249
 msgid "Current location"
 msgstr "Pašreizējā atrašanās vieta"
 
@@ -817,7 +823,7 @@ msgstr "Datu konflikts"
 msgid "Data imported ({0, plural, one {# object} other {# objects}}, {1, plural, one {# comment} other {# comments}}, {2, plural, one {# link} other {# links}})"
 msgstr "Dati importēti ({0, plural, zero {# objektu} one {# objekts} other {# objekti}}, {1, plural, zero {# komentāru} one {# komentārs} other {# komentāri}}, {2, plural, zero {# saišu} one {# saite} other {# saites}})"
 
-#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:139
+#: ../../../lib/web/src/hooks/use-field-type-labels.ts:14
 msgid "Date"
 msgstr "Datums"
 
@@ -833,26 +839,26 @@ msgstr "Noklusētais"
 msgid "Default AI account"
 msgstr "Noklusētais AI konts"
 
-#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:479
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:482
 msgid "Default sort"
 msgstr "Noklusētā kārtošana"
 
-#: ../../../lib/web/src/components/entity/entity-board-column.tsx:569
-#: ../../../lib/web/src/components/entity/entity-board-column.tsx:630
+#: ../../../lib/web/src/components/entity/entity-board-column.tsx:570
+#: ../../../lib/web/src/components/entity/entity-board-column.tsx:632
 #: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:280
 #: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:323
 #: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:353
-#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:198
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:203
-#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:252
-#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:314
-#: src/features/objects/components/object-detail-panel.tsx:643
+#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:208
+#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:255
+#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:317
+#: src/features/objects/components/object-detail-panel.tsx:654
 #: src/features/requests/components/request-panel.tsx:142
-#: src/routes/_authenticated/$projectId_.settings.tsx:124
+#: src/routes/_authenticated/$projectId_.settings.tsx:122
 msgid "Delete"
 msgstr "Dzēst"
 
-#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:312
+#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:315
 msgid "Delete attachment"
 msgstr "Dzēst pielikumu"
 
@@ -860,7 +866,7 @@ msgstr "Dzēst pielikumu"
 msgid "Delete class"
 msgstr "Dzēst klasi"
 
-#: ../../../lib/web/src/components/entity/entity-board-column.tsx:628
+#: ../../../lib/web/src/components/entity/entity-board-column.tsx:630
 msgid "Delete column"
 msgstr "Dzēst kolonnu"
 
@@ -868,13 +874,13 @@ msgstr "Dzēst kolonnu"
 msgid "Delete comment"
 msgstr "Dzēst komentāru"
 
-#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:300
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:304
 msgid "Delete field"
 msgstr "Dzēst lauku"
 
-#: src/features/objects/components/object-detail-panel.tsx:458
-#: src/features/objects/components/object-detail-panel.tsx:463
-#: src/features/objects/components/object-detail-panel.tsx:641
+#: src/features/objects/components/object-detail-panel.tsx:467
+#: src/features/objects/components/object-detail-panel.tsx:472
+#: src/features/objects/components/object-detail-panel.tsx:652
 msgid "Delete item"
 msgstr "Dzēst vienumu"
 
@@ -888,34 +894,42 @@ msgstr "Dzēst vienumu"
 msgid "Delete merge request"
 msgstr "Dzēst sapludināšanas pieprasījumu"
 
-#: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:116
+#: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:117
 msgid "Delete option"
 msgstr "Dzēst opciju"
 
 #. placeholder {0}: opt.name
-#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:278
-#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:283
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:282
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:287
 msgid "Delete option {0}"
 msgstr "Dzēst opciju {0}"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:123
-#: src/routes/_authenticated/$projectId_.settings.tsx:126
+#: src/routes/_authenticated/$projectId_.settings.tsx:121
+#: src/routes/_authenticated/$projectId_.settings.tsx:124
 msgid "Delete project"
 msgstr "Dzēst projektu"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:125
+#: src/routes/_authenticated/$projectId_.settings.tsx:123
 msgid "Delete project?"
 msgstr "Dzēst projektu?"
 
-#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:284
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:287
 msgid "Delete view"
 msgstr "Dzēst skatu"
 
-#: ../../../lib/web/src/components/restore-banner.tsx:109
+#: ../../../lib/web/src/components/restore-banner.tsx:95
 msgid "Delete your account on the old server"
 msgstr "Dzēsiet savu kontu vecajā serverī"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:131
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx:58
+msgid "Deleted"
+msgstr "Dzēsts"
+
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx:58
+msgid "Deleted {field}"
+msgstr "Dzēsts {field}"
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:129
 msgid "Deleting project..."
 msgstr "Dzēš projektu..."
 
@@ -923,15 +937,15 @@ msgstr "Dzēš projektu..."
 msgid "Descending"
 msgstr "Dilstošā secībā"
 
-#: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:83
+#: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:85
 #: src/features/requests/components/request-panel.tsx:315
-#: src/routes/_authenticated/$projectId_.settings.tsx:116
+#: src/routes/_authenticated/$projectId_.settings.tsx:114
 msgid "Description"
 msgstr "Apraksts"
 
 #: src/routes/_authenticated/$projectId/design.tsx:43
 #: src/routes/_authenticated/$projectId/design.tsx:46
-#: src/routes/_authenticated/$projectId/index.tsx:165
+#: src/routes/_authenticated/$projectId/index.tsx:169
 msgid "Design"
 msgstr "Dizains"
 
@@ -940,7 +954,7 @@ msgstr "Dizains"
 msgid "Design imported"
 msgstr "Dizains importēts"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:51
+#: src/routes/_authenticated/$projectId_.settings.tsx:49
 msgid "Design, create, edit, comment, and view"
 msgstr "Veidot, izveidot, rediģēt, komentēt un skatīt"
 
@@ -967,7 +981,7 @@ msgstr "Diff"
 msgid "Diff: {source} → {target}"
 msgstr "Diff: {source} → {target}"
 
-#: ../../../lib/web/src/components/person-picker.tsx:214
+#: ../../../lib/web/src/components/person-picker.tsx:192
 msgid "Directory"
 msgstr "Katalogs"
 
@@ -984,12 +998,12 @@ msgstr "Atmest melnrakstu?"
 msgid "Disconnected"
 msgstr "Atvienots"
 
-#: ../../../lib/web/src/components/restore-banner.tsx:88
-#: ../../../lib/web/src/components/restore-banner.tsx:94
+#: ../../../lib/web/src/components/restore-banner.tsx:74
+#: ../../../lib/web/src/components/restore-banner.tsx:80
 msgid "Dismiss"
 msgstr "Aizvērt"
 
-#: src/routes/_authenticated/$projectId/index.tsx:146
+#: src/routes/_authenticated/$projectId/index.tsx:145
 msgid "Dismiss board hint"
 msgstr "Aizvērt galda padomu"
 
@@ -997,20 +1011,24 @@ msgstr "Aizvērt galda padomu"
 msgid "Displays the mobile sidebar."
 msgstr "Parāda mobilo sānu joslu."
 
-#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:305
-#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:518
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:111
+msgid "Does not match the required pattern"
+msgstr "Neatbilst prasītajam šablonam"
+
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:309
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:523
 #: src/features/editor/components/edit-dialogs.tsx:439
-#: src/features/objects/components/object-detail-panel.tsx:472
+#: src/features/objects/components/object-detail-panel.tsx:481
 msgid "Done"
 msgstr "Pabeigts"
 
-#: src/routes/_authenticated/$projectId/index.tsx:145
+#: src/routes/_authenticated/$projectId/index.tsx:144
 msgid "Double click on a column to add content"
 msgstr "Veiciet dubultklikšķi uz kolonnas, lai pievienotu saturu"
 
-#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:239
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:452
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:462
+#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:243
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:464
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:474
 msgid "Download"
 msgstr "Lejupielādēt"
 
@@ -1018,12 +1036,13 @@ msgstr "Lejupielādēt"
 msgid "Download backup first"
 msgstr "Vispirms lejupielādējiet rezerves kopiju"
 
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:98
+#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:149
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:100
 msgid "Download failed"
 msgstr "Lejupielāde neizdevās"
 
 #: src/routes/_authenticated/$projectId/design.tsx:52
-#: src/routes/_authenticated/$projectId/index.tsx:149
+#: src/routes/_authenticated/$projectId/index.tsx:148
 msgid "Downloaded {filename}"
 msgstr "Lejupielādēts {filename}"
 
@@ -1032,7 +1051,7 @@ msgstr "Lejupielādēts {filename}"
 msgid "Draft"
 msgstr "Melnraksts"
 
-#: src/routes/_authenticated/$projectId/index.tsx:142
+#: src/routes/_authenticated/$projectId/index.tsx:141
 msgid "Drag columns to re-order them"
 msgstr "Velciet kolonnas, lai mainītu to secību"
 
@@ -1049,7 +1068,7 @@ msgstr "Disleksijai draudzīgs"
 msgid "Edit"
 msgstr "Rediģēt"
 
-#: ../../../lib/web/src/components/ui/editable-field-row.tsx:154
+#: ../../../lib/web/src/components/ui/editable-field-row.tsx:158
 msgid "Edit {label}"
 msgstr "Rediģēt {label}"
 
@@ -1061,21 +1080,21 @@ msgstr "Rediģēt parakstu"
 msgid "Edit class"
 msgstr "Rediģēt klasi"
 
-#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:137
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:140
 msgid "Edit field"
 msgstr "Rediģēt lauku"
 
-#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:138
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:141
 msgid "Edit field settings"
 msgstr "Rediģēt lauka iestatījumus"
 
-#: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:91
+#: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:92
 msgid "Edit option"
 msgstr "Rediģēt opciju"
 
 #. placeholder {0}: opt.name
-#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:263
-#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:268
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:267
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:272
 msgid "Edit option {0}"
 msgstr "Rediģēt opciju {0}"
 
@@ -1083,7 +1102,7 @@ msgstr "Rediģēt opciju {0}"
 msgid "Edit selected card"
 msgstr "Rediģēt atlasīto karti"
 
-#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:258
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:261
 msgid "Edit view"
 msgstr "Rediģēt skatu"
 
@@ -1091,23 +1110,23 @@ msgstr "Rediģēt skatu"
 msgid "Email"
 msgstr "E-pasts"
 
-#: ../../../lib/web/src/components/step-up-dialog.tsx:292
+#: ../../../lib/web/src/components/step-up-dialog.tsx:280
 msgid "Email code"
 msgstr "E-pasta kods"
 
-#: ../../../lib/web/src/components/step-up-dialog.tsx:302
+#: ../../../lib/web/src/components/step-up-dialog.tsx:290
 msgid "Enter the code from your email"
 msgstr "Ievadiet kodu no sava e-pasta"
 
-#: ../../../lib/web/src/components/step-up-dialog.tsx:327
+#: ../../../lib/web/src/components/step-up-dialog.tsx:315
 msgid "Enter your authenticator code"
 msgstr "Ievadiet autentifikatora kodu"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:117
+#: src/routes/_authenticated/$projectId_.settings.tsx:115
 msgid "Entity ID"
 msgstr "Entītijas ID"
 
-#: src/features/objects/components/object-detail-panel.tsx:335
+#: src/features/objects/components/object-detail-panel.tsx:344
 msgid "Error"
 msgstr "Kļūda"
 
@@ -1122,7 +1141,7 @@ msgstr "Izvērst"
 msgid "Expand sidebar"
 msgstr "Izvērst sānjoslu"
 
-#: src/routes/_authenticated/$projectId/index.tsx:147
+#: src/routes/_authenticated/$projectId/index.tsx:146
 msgid "Export data"
 msgstr "Eksportēt datus"
 
@@ -1138,6 +1157,14 @@ msgstr "Ārējs URL"
 msgid "Extra large"
 msgstr "Ļoti liels"
 
+#: ../../../lib/web/src/hooks/use-accounts.ts:213
+msgid "Failed to add account"
+msgstr "Neizdevās pievienot kontu"
+
+#: src/routes/_authenticated/$projectId/index.tsx:154
+msgid "Failed to add column"
+msgstr "Neizdevās pievienot kolonnu"
+
 #: src/features/requests/components/merge-status.tsx:48
 msgid "Failed to check merge status"
 msgstr "Neizdevās pārbaudīt apvienošanas statusu"
@@ -1152,13 +1179,13 @@ msgid "Failed to create class"
 msgstr "Neizdevās izveidot klasi"
 
 #: src/features/editor/components/design-editor.tsx:166
-#: src/features/editor/components/design-editor.tsx:631
+#: src/features/editor/components/design-editor.tsx:632
 msgid "Failed to create field"
 msgstr "Neizdevās izveidot lauku"
 
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx:137
 #: ../../../lib/web/src/components/options-menu.tsx:98
-#: src/routes/_authenticated/$projectId/index.tsx:153
+#: src/routes/_authenticated/$projectId/index.tsx:152
 msgid "Failed to create link"
 msgstr "Neizdevās izveidot saiti"
 
@@ -1167,7 +1194,7 @@ msgid "Failed to create merge request"
 msgstr "Neizdevās izveidot sapludināšanas pieprasījumu"
 
 #: src/features/editor/components/design-editor.tsx:238
-#: src/features/editor/components/design-editor.tsx:651
+#: src/features/editor/components/design-editor.tsx:652
 msgid "Failed to create option"
 msgstr "Neizdevās izveidot opciju"
 
@@ -1179,7 +1206,7 @@ msgstr "Neizdevās izveidot projektu"
 msgid "Failed to create view"
 msgstr "Neizdevās izveidot skatu"
 
-#: src/features/objects/components/object-detail-panel.tsx:226
+#: src/features/objects/components/object-detail-panel.tsx:235
 msgid "Failed to delete"
 msgstr "Neizdevās dzēst"
 
@@ -1191,7 +1218,11 @@ msgstr "Neizdevās dzēst pielikumu"
 msgid "Failed to delete class"
 msgstr "Neizdevās dzēst klasi"
 
-#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:191
+#: src/routes/_authenticated/$projectId/index.tsx:156
+msgid "Failed to delete column"
+msgstr "Neizdevās dzēst kolonnu"
+
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:192
 msgid "Failed to delete comment"
 msgstr "Neizdevās dzēst komentāru"
 
@@ -1211,7 +1242,7 @@ msgstr "Neizdevās dzēst sapludināšanas pieprasījumu"
 msgid "Failed to delete option"
 msgstr "Neizdevās dzēst opciju"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:133
+#: src/routes/_authenticated/$projectId_.settings.tsx:131
 msgid "Failed to delete project"
 msgstr "Neizdevās dzēst projektu"
 
@@ -1219,7 +1250,7 @@ msgstr "Neizdevās dzēst projektu"
 msgid "Failed to delete view"
 msgstr "Neizdevās dzēst skatu"
 
-#: src/routes/_authenticated/$projectId/index.tsx:150
+#: src/routes/_authenticated/$projectId/index.tsx:149
 msgid "Failed to export data"
 msgstr "Neizdevās eksportēt datus"
 
@@ -1248,12 +1279,12 @@ msgstr "Neizdevās ielādēt"
 msgid "Failed to load history"
 msgstr "Neizdevās ielādēt vēsturi"
 
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:338
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:350
 msgid "Failed to load image"
 msgstr "Neizdevās ielādēt attēlu"
 
-#: src/features/objects/components/object-detail-panel.tsx:336
-#: src/features/objects/components/object-detail-panel.tsx:339
+#: src/features/objects/components/object-detail-panel.tsx:345
+#: src/features/objects/components/object-detail-panel.tsx:348
 msgid "Failed to load item"
 msgstr "Neizdevās ielādēt vienumu"
 
@@ -1280,7 +1311,7 @@ msgstr "Neizdevās ielādēt uzvednes"
 msgid "Failed to load recommended projects"
 msgstr "Neizdevās ielādēt ieteiktos projektus"
 
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:338
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:350
 msgid "Failed to load video"
 msgstr "Neizdevās ielādēt video"
 
@@ -1288,22 +1319,31 @@ msgstr "Neizdevās ielādēt video"
 msgid "Failed to merge"
 msgstr "Neizdevās apvienot"
 
-#: src/features/objects/components/object-detail-panel.tsx:246
+#: src/features/objects/components/object-detail-panel.tsx:255
+#: src/routes/_authenticated/$projectId/index.tsx:153
 msgid "Failed to move"
 msgstr "Neizdevās pārvietot"
 
-#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:154
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:155
 msgid "Failed to post comment"
 msgstr "Neizdevās publicēt komentāru"
+
+#: src/routes/_authenticated/$projectId/index.tsx:157
+msgid "Failed to re-order columns"
+msgstr "Neizdevās pārkārtot kolonnas"
 
 #: src/features/projects/components/create-project-dialog.tsx:261
 #: src/routes/_authenticated/$projectId/design.tsx:60
 msgid "Failed to read file"
 msgstr "Neizdevās nolasīt failu"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:141
+#: src/routes/_authenticated/$projectId_.settings.tsx:139
 msgid "Failed to remove access"
 msgstr "Neizdevās noņemt piekļuvi"
+
+#: src/routes/_authenticated/$projectId/index.tsx:155
+msgid "Failed to rename column"
+msgstr "Neizdevās pārdēvēt kolonnu"
 
 #: src/features/editor/components/design-editor.tsx:218
 msgid "Failed to reorder fields"
@@ -1321,7 +1361,7 @@ msgstr "Neizdevās atiestatīt uzvedni"
 msgid "Failed to revoke RSS access"
 msgstr "Neizdevās atsaukt RSS piekļuvi"
 
-#: src/features/objects/components/object-detail-panel.tsx:190
+#: src/features/objects/components/object-detail-panel.tsx:199
 msgid "Failed to save"
 msgstr "Neizdevās saglabāt"
 
@@ -1333,7 +1373,7 @@ msgstr "Neizdevās saglabāt uzvedni"
 msgid "Failed to search projects"
 msgstr "Neizdevās meklēt projektus"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:138
+#: src/routes/_authenticated/$projectId_.settings.tsx:136
 msgid "Failed to set access level"
 msgstr "Neizdevās iestatīt piekļuves līmeni"
 
@@ -1344,11 +1384,11 @@ msgid "Failed to subscribe"
 msgstr "Neizdevās abonēt"
 
 #: src/features/projects/pages/projects-list-page.tsx:43
-#: src/routes/_authenticated/$projectId/index.tsx:159
+#: src/routes/_authenticated/$projectId/index.tsx:163
 msgid "Failed to unsubscribe"
 msgstr "Neizdevās atteikties no abonementa"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:144
+#: src/routes/_authenticated/$projectId_.settings.tsx:142
 msgid "Failed to update access level"
 msgstr "Neizdevās atjaunināt piekļuves līmeni"
 
@@ -1356,7 +1396,7 @@ msgstr "Neizdevās atjaunināt piekļuves līmeni"
 msgid "Failed to update class"
 msgstr "Neizdevās atjaunināt klasi"
 
-#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:174
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:175
 msgid "Failed to update comment"
 msgstr "Neizdevās atjaunināt komentāru"
 
@@ -1376,7 +1416,7 @@ msgstr "Neizdevās atjaunināt sapludināšanas pieprasījumu"
 msgid "Failed to update option"
 msgstr "Neizdevās atjaunināt opciju"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:122
+#: src/routes/_authenticated/$projectId_.settings.tsx:120
 msgid "Failed to update project"
 msgstr "Neizdevās atjaunināt projektu"
 
@@ -1384,7 +1424,7 @@ msgstr "Neizdevās atjaunināt projektu"
 msgid "Failed to update view"
 msgstr "Neizdevās atjaunināt skatu"
 
-#: src/features/objects/components/object-detail-panel.tsx:209
+#: src/features/objects/components/object-detail-panel.tsx:218
 msgid "Failed to update watching"
 msgstr "Neizdevās atjaunināt novērošanu"
 
@@ -1396,26 +1436,26 @@ msgstr "Neizdevās augšupielādēt pielikumu"
 msgid "Fields"
 msgstr "Lauki"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:589
-#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:155
-#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:175
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:611
+#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:160
+#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:180
 msgid "Files"
 msgstr "Faili"
 
-#: src/components/layout/projects-layout.tsx:36
+#: src/components/layout/projects-layout.tsx:35
 #: src/routes/_authenticated/find.tsx:40
 msgid "Find projects"
 msgstr "Atrast projektus"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:118
+#: src/routes/_authenticated/$projectId_.settings.tsx:116
 msgid "Fingerprint"
 msgstr "Pirkstu nospiedums"
 
-#: ../../../lib/web/src/components/restore-banner.tsx:97
+#: ../../../lib/web/src/components/restore-banner.tsx:83
 msgid "Finish moving your account"
 msgstr "Pabeidziet konta pārvietošanu"
 
-#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:221
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:225
 msgid "Flags"
 msgstr "Karogi"
 
@@ -1427,11 +1467,11 @@ msgstr "Plakana"
 msgid "Friday"
 msgstr "Piektdiena"
 
-#: ../../../lib/web/src/components/person-picker.tsx:207
+#: ../../../lib/web/src/components/person-picker.tsx:185
 msgid "Friends"
 msgstr "Draugi"
 
-#: ../../../lib/web/src/components/travelling-picker.tsx:153
+#: ../../../lib/web/src/components/travelling-picker.tsx:134
 msgid "From"
 msgstr "No"
 
@@ -1447,8 +1487,8 @@ msgstr "No faila"
 msgid "From theme"
 msgstr "No motīva"
 
+#: ../../../lib/web/src/features/errors/access-denied-error.tsx:25
 #: ../../../lib/web/src/features/errors/not-found-error.tsx:26
-#: ../../../lib/web/src/features/errors/unauthorized-error.tsx:26
 msgid "Go back"
 msgstr "Atpakaļ"
 
@@ -1456,7 +1496,7 @@ msgstr "Atpakaļ"
 msgid "Group"
 msgstr "Grupa"
 
-#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:347
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:350
 msgid "Group by"
 msgstr "Grupēt pēc"
 
@@ -1471,8 +1511,8 @@ msgstr "Vēsture"
 
 #: ../../../lib/web/src/components/layout/app-sidebar.tsx:90
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx:185
-#: ../../../lib/web/src/components/layout/top-bar.tsx:71
-#: ../../../lib/web/src/components/layout/top-bar.tsx:100
+#: ../../../lib/web/src/components/layout/top-bar.tsx:86
+#: ../../../lib/web/src/components/layout/top-bar.tsx:115
 msgid "Home"
 msgstr "Sākums"
 
@@ -1480,17 +1520,17 @@ msgstr "Sākums"
 msgid "Hot"
 msgstr "Aktuāli"
 
-#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:152
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:156
 #: src/features/editor/components/edit-dialogs.tsx:272
 msgid "ID"
 msgstr "ID"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:114
+#: src/routes/_authenticated/$projectId_.settings.tsx:112
 msgid "Identity"
 msgstr "Identitāte"
 
 #. placeholder {0}: currentMedia.name
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:316
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:328
 msgid "Image viewer: {0}"
 msgstr "Attēlu skatītājs: {0}"
 
@@ -1524,11 +1564,15 @@ msgstr "Iniciāļu avatars"
 msgid "Initials avatar for {name}"
 msgstr "{name} iniciāļu avatars"
 
+#: ../../../lib/web/src/components/post-tags.tsx:168
+msgid "Interest {weight}"
+msgstr "Interese {weight}"
+
 #: ../../../lib/web/src/components/ui/sort-selector.tsx:42
 msgid "Interests"
 msgstr "Intereses"
 
-#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:550
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:591
 msgid "Invalid date"
 msgstr "Nederīgs datums"
 
@@ -1541,7 +1585,7 @@ msgstr "Nederīgs JSON fails"
 msgid "It seems like the page you're looking for <0/>does not exist or might have been removed."
 msgstr "Šķiet, ka meklētā lapa <0/>neeksistē vai ir noņemta."
 
-#: src/features/objects/components/object-detail-panel.tsx:416
+#: src/features/objects/components/object-detail-panel.tsx:425
 msgid "Item details"
 msgstr "Vienuma informācija"
 
@@ -1558,20 +1602,20 @@ msgstr "Tastatūras saīsnes"
 msgid "Large"
 msgstr "Liels"
 
-#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:306
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:309
 msgid "Layout"
 msgstr "Izkārtojums"
 
-#: ../../../lib/web/src/components/post-tags.tsx:72
-msgid "Letters, numbers, spaces, and hyphens only"
-msgstr "Tikai burti, cipari, atstarpes un defises"
+#: ../../../lib/web/src/components/post-tags.tsx:73
+msgid "Letters, numbers, spaces, hyphens, and slashes only"
+msgstr "Tikai burti, cipari, atstarpes, defises un slīpsvītras"
 
 #: ../../../lib/web/src/lib/preference-utils.ts:14
 msgid "Light"
 msgstr "Gaišs"
 
 #: ../../../lib/web/src/components/options-menu.tsx:190
-#: src/routes/_authenticated/$projectId/index.tsx:151
+#: src/routes/_authenticated/$projectId/index.tsx:150
 msgid "Link"
 msgstr "Saite"
 
@@ -1579,11 +1623,11 @@ msgstr "Saite"
 msgid "Links"
 msgstr "Saites"
 
-#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:318
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:321
 msgid "List"
 msgstr "Saraksts"
 
-#: ../../../lib/web/src/components/ui/load-more.tsx:35
+#: ../../../lib/web/src/components/ui/load-more.tsx:39
 msgid "Load more"
 msgstr "Ielādēt vairāk"
 
@@ -1595,11 +1639,11 @@ msgstr "Notiek satura ielāde…"
 msgid "Loading diff..."
 msgstr "Ielādē izmaiņas..."
 
-#: src/features/objects/components/object-detail-panel.tsx:316
+#: src/features/objects/components/object-detail-panel.tsx:325
 msgid "Loading item"
 msgstr "Ielādē vienumu"
 
-#: src/features/objects/components/object-detail-panel.tsx:317
+#: src/features/objects/components/object-detail-panel.tsx:326
 msgid "Loading item details"
 msgstr "Ielādē vienuma informāciju"
 
@@ -1607,9 +1651,9 @@ msgstr "Ielādē vienuma informāciju"
 msgid "Loading templates..."
 msgstr "Ielādē veidnes..."
 
-#: ../../../lib/web/src/components/ui/load-more.tsx:35
+#: ../../../lib/web/src/components/ui/load-more.tsx:39
 #: ../../../lib/web/src/features/document/document-page.tsx:88
-#: src/routes/_authenticated/$projectId/index.tsx:148
+#: src/routes/_authenticated/$projectId/index.tsx:147
 msgid "Loading..."
 msgstr "Ielādē..."
 
@@ -1638,12 +1682,12 @@ msgstr "Pārvaldīt kategorijas"
 msgid "Manual"
 msgstr "Manuāls"
 
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:207
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:214
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:203
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:210
 msgid "Mark all as read"
 msgstr "Atzīmēt visus kā lasītus"
 
-#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:198
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:202
 msgid "Maximum length"
 msgstr "Maks. garums"
 
@@ -1654,6 +1698,10 @@ msgstr "MCP serveris"
 #: ../../../lib/web/src/lib/preference-utils.ts:102
 msgid "Medium"
 msgstr "Vidējs"
+
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:377
+msgid "Members"
+msgstr "Dalībnieki"
 
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx:200
 msgid "Menu"
@@ -1675,7 +1723,7 @@ msgstr "Apvienot revīziju"
 msgid "Merge requests"
 msgstr "Apvienošanas pieprasījumi"
 
-#: src/features/objects/components/object-detail-panel.tsx:391
+#: src/features/objects/components/object-detail-panel.tsx:400
 msgid "Merge requests ({requestCount})"
 msgstr "Apvienošanas pieprasījumi ({requestCount})"
 
@@ -1699,7 +1747,7 @@ msgstr "Ziņojums"
 msgid "Metric"
 msgstr "Metrisks"
 
-#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:187
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:191
 msgid "Minimum length"
 msgstr "Min. garums"
 
@@ -1724,51 +1772,57 @@ msgstr "Pirmdiena"
 msgid "More options"
 msgstr "Vairāk opciju"
 
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx:60
+msgid "Moved"
+msgstr "Pārvietots"
+
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx:60
+msgid "Moved {field}"
+msgstr "Pārvietots {field}"
+
 #: src/features/projects/components/create-project-dialog.tsx:352
 msgid "My project"
 msgstr "Mans projekts"
 
-#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:118
-#: ../../../lib/web/src/components/entity/entity-board-column.tsx:600
-#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:142
-#: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:125
-#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:293
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:122
+#: ../../../lib/web/src/components/entity/entity-board-column.tsx:601
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:145
+#: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:126
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:296
 #: src/features/editor/components/edit-dialogs.tsx:258
 #: src/features/projects/components/create-project-dialog.tsx:342
-#: src/routes/_authenticated/$projectId_.settings.tsx:115
+#: src/routes/_authenticated/$projectId_.settings.tsx:113
 msgid "Name"
 msgstr "Nosaukums"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:78
+#: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:104
+#: src/routes/_authenticated/$projectId_.settings.tsx:76
 msgid "Name cannot contain < or > characters"
 msgstr "Nosaukums nedrīkst saturēt rakstzīmes < vai >"
 
-#: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:102
-msgid "Name cannot contain angle brackets, backslash, semicolon, quotes or backticks"
-msgstr "Nosaukumā nedrīkst būt leņķa iekavas, apgrieztā slīpsvītra, semikols, pēdiņas vai atgriezeniskās pēdiņas"
-
+#: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:101
 #: src/features/projects/components/create-project-dialog.tsx:102
 msgid "Name is required"
 msgstr "Nosaukums ir obligāts"
 
-#: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:100
-#: src/routes/_authenticated/$projectId_.settings.tsx:76
+#: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:102
+#: src/routes/_authenticated/$projectId_.settings.tsx:74
 msgid "Name must be 1000 characters or less"
 msgstr "Nosaukums nedrīkst pārsniegt 1000 rakstzīmes"
 
-#: ../../../lib/web/src/features/errors/general-error.tsx:53
+#: ../../../lib/web/src/features/errors/general-error.tsx:51
 #: ../../../lib/web/src/lib/api-response-interceptors.ts:313
 msgid "Network error"
 msgstr "Tīkla kļūda"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:476
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:498
 #: ../../../lib/web/src/components/ui/sort-selector.tsx:43
-#: src/routes/_authenticated/$projectId/index.tsx:130
-#: src/routes/_authenticated/$projectId/index.tsx:134
+#: src/routes/_authenticated/$projectId/index.tsx:129
+#: src/routes/_authenticated/$projectId/index.tsx:133
 msgid "New"
 msgstr "Jauns"
 
-#: src/routes/_authenticated/$projectId/index.tsx:136
+#: src/routes/_authenticated/$projectId/index.tsx:135
 msgid "New {className}"
 msgstr "Jauns {className}"
 
@@ -1781,16 +1835,16 @@ msgstr "Jauna spēle"
 msgid "Next"
 msgstr "Tālāk"
 
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:525
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:530
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:537
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:542
 msgid "Next image"
 msgstr "Nākamais attēls"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:555
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:577
 msgid "No {parentClassNames} to add to"
 msgstr "Nav {parentClassNames}, kam pievienot"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:55
+#: src/routes/_authenticated/$projectId_.settings.tsx:53
 msgid "No access"
 msgstr "Nav piekļuves"
 
@@ -1798,7 +1852,7 @@ msgstr "Nav piekļuves"
 msgid "No access rules configured. Add rules to control who can access this resource."
 msgstr "Piekļuves noteikumi nav konfigurēti. Pievienojiet noteikumus, lai kontrolētu, kam ir piekļuve šim resursam."
 
-#: ../../../lib/web/src/components/entity/entity-activity-list.tsx:65
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx:74
 msgid "No activity yet"
 msgstr "Vēl nav aktivitātes"
 
@@ -1818,7 +1872,7 @@ msgstr "Nav izmaiņu, ko parādīt"
 msgid "No changes were found for the selected comparison."
 msgstr "Atlasītajam salīdzinājumam izmaiņas netika atrastas."
 
-#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:322
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:324
 msgid "No comments yet"
 msgstr "Vēl nav komentāru"
 
@@ -1834,7 +1888,7 @@ msgstr "Vēl nav spēļu"
 msgid "No groups available"
 msgstr "Nav pieejamu grupu"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:522
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:544
 msgid "No item types can be created yet. Create the required parent items first."
 msgstr "Vēl nevar izveidot vienumu tipus. Vispirms izveidojiet nepieciešamos vecākvienumus."
 
@@ -1846,12 +1900,12 @@ msgstr "Nav atbilstošu objektu"
 msgid "No merge requests"
 msgstr "Nav merge pieprasījumu"
 
-#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:341
-#: ../../../lib/web/src/components/person-picker.tsx:84
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:382
+#: ../../../lib/web/src/components/person-picker.tsx:71
 msgid "No people found"
 msgstr "Cilvēki nav atrasti"
 
-#: ../../../lib/web/src/components/place-picker.tsx:133
+#: ../../../lib/web/src/components/place-picker.tsx:120
 msgid "No places found"
 msgstr "Vietas nav atrastas"
 
@@ -1864,18 +1918,18 @@ msgstr "Projekti nav atrasti"
 msgid "No repositories available"
 msgstr "Nav pieejamu repozitoriju"
 
-#: ../../../lib/web/src/components/inline-entity-search.tsx:64
+#: ../../../lib/web/src/components/inline-entity-search.tsx:65
 #: ../../../lib/web/src/components/search-entity-page.tsx:73
 msgid "No results found"
 msgstr "Rezultāti nav atrasti"
 
-#: ../../../lib/web/src/components/command-menu.tsx:55
+#: ../../../lib/web/src/components/command-menu.tsx:57
 msgid "No results found."
 msgstr "Rezultāti nav atrasti."
 
 #: ../../../lib/web/src/components/entity/entity-board-container.tsx:824
 #: ../../../lib/web/src/components/entity/entity-board-container.tsx:869
-#: ../../../lib/web/src/components/entity/entity-tree-view.tsx:339
+#: ../../../lib/web/src/components/entity/entity-tree-view.tsx:336
 msgid "No status"
 msgstr "Nav statusa"
 
@@ -1887,7 +1941,7 @@ msgstr "Laika josla nav atrasta."
 msgid "No topic record yet — try again after the next notification."
 msgstr "Vēl nav tēmas ieraksta — mēģiniet vēlreiz pēc nākamā paziņojuma."
 
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:139
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:135
 msgid "No unread notifications"
 msgstr "Nav nelasītu paziņojumu"
 
@@ -1900,23 +1954,23 @@ msgid "No views"
 msgstr "Nav skatījumu"
 
 #: ../../../lib/web/src/components/colour-picker.tsx:349
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:538
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:541
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:545
-#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:359
-#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:382
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:560
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:563
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:567
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:362
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:385
-#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:412
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:388
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:415
-#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:488
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:418
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:491
-#: ../../../lib/web/src/components/person-picker.tsx:350
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:494
+#: ../../../lib/web/src/components/person-picker.tsx:328
 #: ../../../lib/web/src/lib/preference-utils.ts:100
 #: src/features/editor/components/edit-dialogs.tsx:296
 #: src/features/editor/components/edit-dialogs.tsx:299
-#: src/features/objects/components/object-detail-panel.tsx:537
-#: src/features/objects/components/object-detail-panel.tsx:550
-#: src/features/objects/components/object-detail-panel.tsx:555
+#: src/features/objects/components/object-detail-panel.tsx:547
+#: src/features/objects/components/object-detail-panel.tsx:560
+#: src/features/objects/components/object-detail-panel.tsx:565
 msgid "None"
 msgstr "Nav"
 
@@ -1938,26 +1992,26 @@ msgid "Not configured"
 msgstr "Nav konfigurēts"
 
 #: ../../../lib/web/src/components/attachment-image.tsx:50
-#: ../../../lib/web/src/features/errors/general-error.tsx:67
+#: ../../../lib/web/src/features/errors/general-error.tsx:65
 msgid "Not found"
 msgstr "Nav atrasts"
 
-#: ../../../lib/web/src/components/ui/editable-field-row.tsx:146
+#: ../../../lib/web/src/components/ui/editable-field-row.tsx:150
 msgid "Not set"
 msgstr "Nav iestatīts"
 
-#: ../../../lib/web/src/components/entity/entity-tree-view.tsx:671
+#: ../../../lib/web/src/components/entity/entity-tree-view.tsx:668
 msgid "Nothing found"
 msgstr "Nekas nav atrasts"
 
 #. placeholder {0}: unread.length
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:200
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:196
 msgid "Notifications: {0}"
 msgstr "Paziņojumi: {0}"
 
-#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:140
 #: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:54
-#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:493
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:497
+#: ../../../lib/web/src/hooks/use-field-type-labels.ts:15
 msgid "Number"
 msgstr "Numurs"
 
@@ -1979,8 +2033,8 @@ msgstr "Atvērts"
 msgid "Open {0}"
 msgstr "Atvērt {0}"
 
-#: ../../../lib/web/src/components/layout/nav-group.tsx:199
-#: ../../../lib/web/src/components/layout/nav-group.tsx:204
+#: ../../../lib/web/src/components/layout/nav-group.tsx:227
+#: ../../../lib/web/src/components/layout/nav-group.tsx:232
 msgid "Open actions"
 msgstr "Atvērt darbības"
 
@@ -1997,17 +2051,17 @@ msgstr "Atvērt dizaina darbības"
 msgid "Open menu"
 msgstr "Atvērt izvēlni"
 
-#: ../../../lib/web/src/components/layout/top-bar.tsx:63
-#: ../../../lib/web/src/components/layout/top-bar.tsx:68
+#: ../../../lib/web/src/components/layout/top-bar.tsx:78
+#: ../../../lib/web/src/components/layout/top-bar.tsx:83
 msgid "Open navigation"
 msgstr "Atvērt navigāciju"
 
-#: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:105
-#: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:111
+#: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:106
+#: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:112
 msgid "Open option actions"
 msgstr "Atvērt iespēju darbības"
 
-#: src/routes/_authenticated/$projectId/index.tsx:129
+#: src/routes/_authenticated/$projectId/index.tsx:128
 msgid "Open page actions"
 msgstr "Atvērt lapas darbības"
 
@@ -2015,8 +2069,8 @@ msgstr "Atvērt lapas darbības"
 msgid "Open selected card"
 msgstr "Atvērt atlasīto karti"
 
-#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:274
-#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:279
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:277
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:282
 msgid "Open view actions"
 msgstr "Atvērt skata darbības"
 
@@ -2025,13 +2079,13 @@ msgstr "Atvērt skata darbības"
 msgid "Open view controls"
 msgstr "Atvērt skata vadības elementus"
 
-#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:200
-#: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:155
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:202
+#: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:157
 msgid "Option name"
 msgstr "Iespējas nosaukums"
 
-#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:168
-#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:240
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:170
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:244
 msgid "Options"
 msgstr "Iespējas"
 
@@ -2043,50 +2097,50 @@ msgstr "Cits"
 msgid "Owner"
 msgstr "Īpašnieks"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:530
-#: src/features/objects/components/object-detail-panel.tsx:533
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:552
+#: src/features/objects/components/object-detail-panel.tsx:543
 msgid "Parent"
 msgstr "Vecāks"
 
-#: ../../../lib/web/src/components/step-up-dialog.tsx:337
+#: ../../../lib/web/src/components/step-up-dialog.tsx:325
 msgid "Passkey"
 msgstr "Piekļuves atslēga"
 
-#: ../../../lib/web/src/components/step-up-dialog.tsx:207
+#: ../../../lib/web/src/components/step-up-dialog.tsx:195
 msgid "Passkey verification failed. Please try again."
 msgstr "Piekļuves atslēgas pārbaude neizdevās. Lūdzu, mēģiniet vēlreiz."
 
-#: ../../../lib/web/src/components/restore-banner.tsx:146
+#: ../../../lib/web/src/components/restore-banner.tsx:132
 msgid "Passkeys"
 msgstr "Piekļuves atslēgas"
 
-#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:209
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:213
 msgid "Pattern (regex)"
 msgstr "Šablons (regex)"
 
-#: src/routes/_authenticated/$projectId/index.tsx:138
+#: ../../../lib/web/src/components/person-picker.tsx:178
+msgid "People"
+msgstr "Cilvēki"
+
+#: src/routes/_authenticated/$projectId/index.tsx:137
 msgid "Please add one or more classes to the project design."
 msgstr "Lūdzu, pievienojiet vienu vai vairākas klases projekta dizainam."
 
 #: ../../../lib/web/src/components/comment-composer.tsx:89
-#: ../../../lib/web/src/features/errors/general-error.tsx:54
+#: ../../../lib/web/src/features/errors/general-error.tsx:52
 #: ../../../lib/web/src/lib/api-response-interceptors.ts:314
 msgid "Please check your internet connection and try again."
 msgstr "Lūdzu, pārbaudiet interneta savienojumu un mēģiniet vēlreiz."
-
-#: ../../../lib/web/src/features/errors/unauthorized-error.tsx:18
-msgid "Please log in with the appropriate credentials <0/> to access this resource."
-msgstr "Lūdzu, piesakieties ar atbilstošiem akreditācijas datiem, <0/> lai piekļūtu šim resursam."
 
 #: src/features/projects/components/create-project-dialog.tsx:118
 msgid "Please select a template"
 msgstr "Lūdzu, atlasiet veidni"
 
-#: ../../../lib/web/src/features/errors/general-error.tsx:83
+#: ../../../lib/web/src/features/errors/general-error.tsx:81
 msgid "Please try again."
 msgstr "Mēģini vēlreiz."
 
-#: ../../../lib/web/src/features/errors/general-error.tsx:75
+#: ../../../lib/web/src/features/errors/general-error.tsx:73
 msgid "Please wait a moment and try again."
 msgstr "Lūdzu, uzgaidiet brīdi un mēģiniet vēlreiz."
 
@@ -2099,20 +2153,20 @@ msgid "Posts and comments"
 msgstr "Ieraksti un komentāri"
 
 #: src/features/projects/components/create-project-dialog.tsx:364
-#: src/routes/_authenticated/$projectId_.settings.tsx:85
+#: src/routes/_authenticated/$projectId_.settings.tsx:83
 msgid "Prefix"
 msgstr "Prefikss"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:95
+#: src/routes/_authenticated/$projectId_.settings.tsx:93
 msgid "Prefix can only contain lowercase letters, numbers, and hyphens"
 msgstr "Prefiksā drīkst būt tikai mazie burti, cipari un defises"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:97
+#: src/routes/_authenticated/$projectId_.settings.tsx:95
 msgid "Prefix must be 20 characters or less"
 msgstr "Prefiksā drīkst būt ne vairāk kā 20 rakstzīmes"
 
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:509
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:514
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:521
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:526
 msgid "Previous image"
 msgstr "Iepriekšējais attēls"
 
@@ -2138,39 +2192,35 @@ msgstr "Projekta darbības"
 msgid "Project created"
 msgstr "Projekts izveidots"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:132
+#: src/routes/_authenticated/$projectId_.settings.tsx:130
 msgid "Project deleted"
 msgstr "Projekts izdzēsts"
 
-#: src/routes/_authenticated/$projectId/index.tsx:152
+#: src/routes/_authenticated/$projectId/index.tsx:151
 msgid "Project link"
 msgstr "Projekta saite"
 
-#: ../../../lib/web/src/components/person-picker.tsx:200
-msgid "Project members"
-msgstr "Projekta dalībnieki"
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:75
+#: src/routes/_authenticated/$projectId_.settings.tsx:73
 msgid "Project name is required"
 msgstr "Projekta nosaukums ir obligāts"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:110
+#: src/routes/_authenticated/$projectId_.settings.tsx:108
 msgid "Project not found"
 msgstr "Projekts nav atrasts"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:109
+#: src/routes/_authenticated/$projectId_.settings.tsx:107
 msgid "Project settings"
 msgstr "Projekta iestatījumi"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:112
+#: src/routes/_authenticated/$projectId_.settings.tsx:110
 msgid "Project unavailable"
 msgstr "Projekts nav pieejams"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:121
+#: src/routes/_authenticated/$projectId_.settings.tsx:119
 msgid "Project updated"
 msgstr "Projekts atjaunināts"
 
-#: src/components/layout/projects-layout.tsx:34
+#: src/components/layout/projects-layout.tsx:33
 #: src/features/projects/pages/projects-list-page.tsx:35
 msgid "Projects"
 msgstr "Projekti"
@@ -2179,7 +2229,7 @@ msgstr "Projekti"
 msgid "Prompt saved"
 msgstr "Pamudinājums saglabāts"
 
-#: src/features/objects/components/object-detail-panel.tsx:379
+#: src/features/objects/components/object-detail-panel.tsx:388
 msgid "Properties"
 msgstr "Īpašības"
 
@@ -2191,15 +2241,15 @@ msgstr "Push paziņojums"
 msgid "Raised"
 msgstr "Izcelts"
 
-#: ../../../lib/web/src/components/restore-banner.tsx:118
+#: ../../../lib/web/src/components/restore-banner.tsx:104
 msgid "Re-link your accounts on this server"
 msgstr "Atkārtoti saistiet savus kontus šajā serverī"
 
-#: src/routes/_authenticated/$projectId/index.tsx:141
+#: src/routes/_authenticated/$projectId/index.tsx:140
 msgid "Re-order columns"
 msgstr "Pārkārtot kolonnas"
 
-#: ../../../lib/web/src/components/restore-banner.tsx:140
+#: ../../../lib/web/src/components/restore-banner.tsx:126
 msgid "Re-register your passkeys on this server"
 msgstr "Atkārtoti reģistrējiet savas piekļuves atslēgas šajā serverī"
 
@@ -2223,12 +2273,12 @@ msgstr "Ieteiktie projekti"
 msgid "Reconnecting ({retries})..."
 msgstr "Notiek atkārtota savienošana ({retries})..."
 
-#: ../../../lib/web/src/components/layout/authenticated-layout.tsx:136
+#: ../../../lib/web/src/components/layout/authenticated-layout.tsx:135
 msgid "Redirecting to login."
 msgstr "Pāradresē uz pieteikšanos."
 
-#: ../../../lib/web/src/components/post-tags.tsx:200
-#: ../../../lib/web/src/components/post-tags.tsx:212
+#: ../../../lib/web/src/components/post-tags.tsx:214
+#: ../../../lib/web/src/components/post-tags.tsx:226
 msgid "Reduce interest"
 msgstr "Samazināt interesi"
 
@@ -2244,9 +2294,17 @@ msgstr "Relatīvs (5m, 3h, 2d)"
 msgid "Relative within 24 hours, else absolute"
 msgstr "Relatīvs 24 stundu laikā, citādi absolūts"
 
+#: ../../../lib/web/src/components/post-tags.tsx:166
+msgid "Relevance {relevance}"
+msgstr "Atbilstība {relevance}"
+
+#: ../../../lib/web/src/components/post-tags.tsx:164
+msgid "Relevance {relevance}, interest {weight}"
+msgstr "Atbilstība {relevance}, interese {weight}"
+
 #: ../../../lib/web/src/components/attachment-composer.tsx:285
 #: ../../../lib/web/src/components/attachment-composer.tsx:330
-#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:190
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:192
 #: ../../../lib/web/src/features/access/access-list.tsx:270
 #: src/features/projects/components/create-project-dialog.tsx:439
 msgid "Remove"
@@ -2278,12 +2336,12 @@ msgstr "Noņemt piekļuvi?"
 msgid "Remove field {0}"
 msgstr "Noņemt lauku {0}"
 
-#: ../../../lib/web/src/components/post-tags.tsx:220
-#: ../../../lib/web/src/components/post-tags.tsx:232
+#: ../../../lib/web/src/components/post-tags.tsx:234
+#: ../../../lib/web/src/components/post-tags.tsx:246
 msgid "Remove interest"
 msgstr "Noņemt interesi"
 
-#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:674
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:712
 msgid "Remove item"
 msgstr "Noņemt vienumu"
 
@@ -2292,20 +2350,20 @@ msgstr "Noņemt vienumu"
 msgid "Remove link"
 msgstr "Noņemt saiti"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:139
+#: src/routes/_authenticated/$projectId_.settings.tsx:137
 msgid "Removing access..."
 msgstr "Noņem piekļuvi..."
 
-#: ../../../lib/web/src/components/entity/entity-board-column.tsx:561
-#: ../../../lib/web/src/components/entity/entity-board-column.tsx:618
+#: ../../../lib/web/src/components/entity/entity-board-column.tsx:562
+#: ../../../lib/web/src/components/entity/entity-board-column.tsx:620
 msgid "Rename"
 msgstr "Pārdēvēt"
 
-#: ../../../lib/web/src/components/entity/entity-board-column.tsx:596
+#: ../../../lib/web/src/components/entity/entity-board-column.tsx:597
 msgid "Rename column"
 msgstr "Pārdēvēt kolonnu"
 
-#: ../../../lib/web/src/components/entity/entity-board-column.tsx:597
+#: ../../../lib/web/src/components/entity/entity-board-column.tsx:598
 msgid "Rename this board column"
 msgstr "Pārdēvēt šo dēļa kolonnu"
 
@@ -2335,11 +2393,11 @@ msgstr "Atbildēt {0}..."
 msgid "Requests"
 msgstr "Pieprasījumi"
 
-#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:224
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:228
 msgid "Required"
 msgstr "Obligāts"
 
-#: ../../../lib/web/src/components/step-up-dialog.tsx:370
+#: ../../../lib/web/src/components/step-up-dialog.tsx:358
 msgid "Resend email"
 msgstr "Sūtīt e-pastu vēlreiz"
 
@@ -2351,7 +2409,7 @@ msgstr "Atrisiniet šos konfliktus manuāli pirms apvienošanas."
 msgid "Retry"
 msgstr "Mēģināt vēlreiz"
 
-#: src/components/layout/projects-layout.tsx:38
+#: src/components/layout/projects-layout.tsx:37
 msgid "Retry projects load"
 msgstr "Mēģināt vēlreiz ielādēt projektus"
 
@@ -2367,12 +2425,12 @@ msgstr "Atsaukt piekļuvi"
 msgid "Revoke RSS access?"
 msgstr "Vai atsaukt RSS piekļuvi?"
 
-#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:150
-#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:168
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:152
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:172
 msgid "Rows"
 msgstr "Rindas"
 
-#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:373
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:376
 msgid "Rows group by"
 msgstr "Rindu grupēšana pēc"
 
@@ -2395,22 +2453,22 @@ msgstr "Sestdiena"
 #: ../../../lib/web/src/components/ai-prompts-editor.tsx:156
 #: ../../../lib/web/src/components/attachment-composer.tsx:430
 #: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:231
-#: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:170
-#: ../../../lib/web/src/components/ui/editable-field-row.tsx:122
+#: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:172
+#: ../../../lib/web/src/components/ui/editable-field-row.tsx:126
 #: ../../../lib/web/src/components/ui/secret-field.tsx:79
-#: src/routes/_authenticated/$projectId/index.tsx:144
+#: src/routes/_authenticated/$projectId/index.tsx:143
 msgid "Save"
 msgstr "Saglabāt"
 
 #: ../../../lib/web/src/components/ai-prompts-editor.tsx:156
-#: src/routes/_authenticated/$projectId_.settings.tsx:120
+#: src/routes/_authenticated/$projectId_.settings.tsx:118
 msgid "Saving..."
 msgstr "Saglabā..."
 
 #: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:175
 #: ../../../lib/web/src/components/filter-bar.tsx:32
 #: ../../../lib/web/src/components/header-search.tsx:22
-#: ../../../lib/web/src/components/search.tsx:18
+#: ../../../lib/web/src/components/search.tsx:17
 msgid "Search"
 msgstr "Meklēt"
 
@@ -2422,19 +2480,19 @@ msgstr "Meklēt pēc nosaukuma, ID, pirkstu nospieduma vai URL..."
 msgid "Search for a command to run..."
 msgstr "Meklēt izpildāmu komandu..."
 
-#: ../../../lib/web/src/components/place-picker.tsx:86
+#: ../../../lib/web/src/components/place-picker.tsx:73
 msgid "Search for a place"
 msgstr "Meklēt vietu"
 
-#: ../../../lib/web/src/components/place-picker.tsx:50
+#: ../../../lib/web/src/components/place-picker.tsx:37
 msgid "Search for a place..."
 msgstr "Meklēt vietu..."
 
-#: ../../../lib/web/src/components/travelling-picker.tsx:250
+#: ../../../lib/web/src/components/travelling-picker.tsx:231
 msgid "Search for destination..."
 msgstr "Meklēt galamērķi..."
 
-#: ../../../lib/web/src/components/travelling-picker.tsx:183
+#: ../../../lib/web/src/components/travelling-picker.tsx:164
 msgid "Search for origin..."
 msgstr "Meklēt izcelsmi..."
 
@@ -2460,8 +2518,8 @@ msgstr "Meklējiet, skatieties un kārtojiet šo skatu."
 
 #: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:179
 #: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:255
-#: ../../../lib/web/src/components/inline-entity-search.tsx:63
-#: ../../../lib/web/src/components/person-picker.tsx:324
+#: ../../../lib/web/src/components/inline-entity-search.tsx:64
+#: ../../../lib/web/src/components/person-picker.tsx:302
 #: ../../../lib/web/src/components/search-entity-page.tsx:72
 msgid "Search..."
 msgstr "Meklēt..."
@@ -2471,11 +2529,11 @@ msgstr "Meklēt..."
 msgid "Searching..."
 msgstr "Meklē..."
 
-#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:141
+#: ../../../lib/web/src/hooks/use-field-type-labels.ts:16
 msgid "Select"
 msgstr "Atlasīt"
 
-#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:356
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:359
 msgid "Select a field"
 msgstr "Atlasīt lauku"
 
@@ -2503,7 +2561,7 @@ msgstr "Izvēlieties zaru"
 msgid "Select group"
 msgstr "Izvēlieties grupu"
 
-#: ../../../lib/web/src/components/place-picker.tsx:49
+#: ../../../lib/web/src/components/place-picker.tsx:36
 msgid "Select location"
 msgstr "Izvēlieties atrašanās vietu"
 
@@ -2511,7 +2569,7 @@ msgstr "Izvēlieties atrašanās vietu"
 msgid "Select next card"
 msgstr "Izvēlieties nākamo karti"
 
-#: ../../../lib/web/src/components/person-picker.tsx:83
+#: ../../../lib/web/src/components/person-picker.tsx:70
 msgid "Select person..."
 msgstr "Atlasiet personu..."
 
@@ -2523,8 +2581,8 @@ msgstr "Izvēlieties iepriekšējo karti"
 msgid "Select repository"
 msgstr "Izvēlieties repozitoriju"
 
-#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:257
-#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:340
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:289
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:381
 msgid "Select..."
 msgstr "Izvēlieties..."
 
@@ -2537,7 +2595,7 @@ msgstr "Izvēlēts: <0>{0}</0>"
 msgid "Send again"
 msgstr "Sūtīt vēlreiz"
 
-#: ../../../lib/web/src/components/step-up-dialog.tsx:310
+#: ../../../lib/web/src/components/step-up-dialog.tsx:298
 msgid "Send email"
 msgstr "Sūtīt e-pastu"
 
@@ -2550,7 +2608,7 @@ msgstr "Sūtīt ziņu"
 msgid "Serif"
 msgstr "Serifs"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:119
+#: src/routes/_authenticated/$projectId_.settings.tsx:117
 msgid "Server"
 msgstr "Serveris"
 
@@ -2568,27 +2626,27 @@ msgstr "Servera noteikumi"
 msgid "Session expired. Please log in again."
 msgstr "Sesija ir beigusies. Lūdzu, piesakieties vēlreiz."
 
-#: ../../../lib/web/src/components/travelling-picker.tsx:147
+#: ../../../lib/web/src/components/travelling-picker.tsx:128
 msgid "Set origin and destination"
 msgstr "Iestatīt sākuma un galapunktu"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:136
+#: src/routes/_authenticated/$projectId_.settings.tsx:134
 msgid "Setting access..."
 msgstr "Iestata piekļuvi..."
 
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx:119
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx:125
 #: ../../../lib/web/src/components/options-menu.tsx:196
-#: src/routes/_authenticated/$projectId_.settings.tsx:103
-#: src/routes/_authenticated/$projectId/index.tsx:173
+#: src/routes/_authenticated/$projectId_.settings.tsx:101
+#: src/routes/_authenticated/$projectId/index.tsx:177
 msgid "Settings"
 msgstr "Iestatījumi"
 
-#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:327
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:330
 msgid "Show classes"
 msgstr "Rādīt klases"
 
-#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:428
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:431
 msgid "Show fields"
 msgstr "Rādīt laukus"
 
@@ -2596,7 +2654,7 @@ msgstr "Rādīt laukus"
 msgid "Show this help"
 msgstr "Rādīt šo palīdzību"
 
-#: ../../../lib/web/src/components/ui/load-more.tsx:39
+#: ../../../lib/web/src/components/ui/load-more.tsx:43
 msgid "Showing {totalShown} of {total}"
 msgstr "Tiek rādīti {totalShown} no {total}"
 
@@ -2604,17 +2662,21 @@ msgstr "Tiek rādīti {totalShown} no {total}"
 msgid "Sidebar"
 msgstr "Sānu josla"
 
+#: ../../../lib/web/src/features/errors/access-denied-error.tsx:18
+msgid "Sign in with an account that has access <0/> to this resource."
+msgstr "Piesakieties ar kontu, kuram ir piekļuve <0/> šim resursam."
+
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx:131
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx:137
 msgid "Sign out"
 msgstr "Atteikties"
 
-#: ../../../lib/web/src/components/layout/authenticated-layout.tsx:134
+#: ../../../lib/web/src/components/layout/authenticated-layout.tsx:133
 msgid "Signing out..."
 msgstr "Notiek izrakstīšanās..."
 
-#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:161
-#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:179
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:163
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:183
 msgid "Single line of text only"
 msgstr "Tikai viena teksta rinda"
 
@@ -2647,12 +2709,12 @@ msgstr "Sadalīt"
 msgid "Squash and merge"
 msgstr "Squash un apvienot"
 
-#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:323
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:325
 msgid "Start the discussion by adding the first comment."
 msgstr "Sāciet diskusiju, pievienojot pirmo komentāru."
 
-#: src/features/objects/components/object-detail-panel.tsx:439
 #: src/features/objects/components/object-detail-panel.tsx:448
+#: src/features/objects/components/object-detail-panel.tsx:457
 msgid "Stop watching"
 msgstr "Pārtraukt skatīšanos"
 
@@ -2660,16 +2722,16 @@ msgstr "Pārtraukt skatīšanos"
 msgid "Subject"
 msgstr "Tēma"
 
-#: ../../../lib/web/src/components/comment-composer.tsx:427
+#: ../../../lib/web/src/components/comment-composer.tsx:430
 msgid "Submit comment"
 msgstr "Iesniegt komentāru"
 
-#: ../../../lib/web/src/components/comment-composer.tsx:426
+#: ../../../lib/web/src/components/comment-composer.tsx:429
 msgid "Submit reply"
 msgstr "Iesniegt atbildi"
 
-#: ../../../lib/web/src/components/inline-entity-search.tsx:66
-#: ../../../lib/web/src/components/recommended-entities.tsx:58
+#: ../../../lib/web/src/components/inline-entity-search.tsx:67
+#: ../../../lib/web/src/components/recommended-entities.tsx:59
 #: ../../../lib/web/src/components/search-entity-page.tsx:74
 #: src/features/projects/components/inline-project-search.tsx:90
 #: src/features/projects/components/recommended-projects.tsx:58
@@ -2706,16 +2768,16 @@ msgstr "Pārslēgt uz skatu 1-9"
 msgid "System"
 msgstr "Sistēma"
 
-#: ../../../lib/web/src/components/post-tags.tsx:76
+#: ../../../lib/web/src/components/post-tags.tsx:77
 msgid "Tag already exists"
 msgstr "Tags jau eksistē"
 
-#: ../../../lib/web/src/components/post-tags.tsx:68
+#: ../../../lib/web/src/components/post-tags.tsx:69
 msgid "Tag must be 50 characters or less"
 msgstr "Birkā drīkst būt ne vairāk kā 50 rakstzīmes"
 
-#: ../../../lib/web/src/components/post-tags.tsx:101
-#: ../../../lib/web/src/components/post-tags.tsx:115
+#: ../../../lib/web/src/components/post-tags.tsx:102
+#: ../../../lib/web/src/components/post-tags.tsx:116
 msgid "Tags"
 msgstr "Tagi"
 
@@ -2728,11 +2790,11 @@ msgstr "Mērķis"
 msgid "Terms and conditions"
 msgstr "Lietošanas nosacījumi"
 
-#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:142
+#: ../../../lib/web/src/hooks/use-field-type-labels.ts:17
 msgid "Text"
 msgstr "Teksts"
 
-#: ../../../lib/web/src/components/step-up-dialog.tsx:193
+#: ../../../lib/web/src/components/step-up-dialog.tsx:181
 msgid "That code is incorrect or has expired."
 msgstr "Šis kods ir nepareizs vai tā derīguma termiņš ir beidzies."
 
@@ -2745,7 +2807,7 @@ msgstr "Neizdevās nosūtīt. Faili var būt pārāk lieli, vai savienojums pār
 msgid "That was too large to upload. Remove or shrink files and try again."
 msgstr "Pārāk liels, lai augšupielādētu. Noņemiet vai samaziniet failus un mēģiniet vēlreiz."
 
-#: ../../../lib/web/src/features/errors/general-error.tsx:68
+#: ../../../lib/web/src/features/errors/general-error.tsx:66
 msgid "The requested content could not be found."
 msgstr "Pieprasīto saturu neizdevās atrast."
 
@@ -2762,11 +2824,11 @@ msgstr "Šis apvienošanas pieprasījums ir apvienots ar {0}."
 msgid "This merge request is a draft and cannot be merged."
 msgstr "Šis apvienošanas pieprasījums ir melnraksts un to nevar apvienot."
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:113
+#: src/routes/_authenticated/$projectId_.settings.tsx:111
 msgid "This project could not be loaded right now."
 msgstr "Šo projektu šobrīd nevar ielādēt."
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:111
+#: src/routes/_authenticated/$projectId_.settings.tsx:109
 msgid "This project may have been deleted or you don't have access to it."
 msgstr "Šis projekts, iespējams, ir izdzēsts vai jums nav piekļuves."
 
@@ -2774,12 +2836,12 @@ msgstr "Šis projekts, iespējams, ir izdzēsts vai jums nav piekļuves."
 msgid "This will merge \"{source}\" into \"{target}\". This action cannot be undone."
 msgstr "Tas apvienos \"{source}\" ar \"{target}\". Šo darbību nevar atsaukt."
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:129
+#: src/routes/_authenticated/$projectId_.settings.tsx:127
 msgid "This will permanently delete \"{projectName}\" and all its objects, comments, and attachments. This action cannot be undone."
 msgstr "Tas neatgriezeniski izdzēsīs \"{projectName}\" un visus tā objektus, komentārus un pielikumus. Šo darbību nevar atsaukt."
 
 #. placeholder {0}: project.project.name
-#: src/routes/_authenticated/$projectId/index.tsx:156
+#: src/routes/_authenticated/$projectId/index.tsx:160
 msgid "This will remove \"{0}\" from your sidebar and stop updates for this project."
 msgstr "Tas noņems \"{0}\" no jūsu sānu joslas un apturēs šī projekta atjauninājumus."
 
@@ -2801,26 +2863,23 @@ msgstr "Virsraksts"
 msgid "Title field"
 msgstr "Virsraksta lauks"
 
-#: ../../../lib/web/src/components/travelling-picker.tsx:220
+#: ../../../lib/web/src/components/travelling-picker.tsx:201
 msgid "To"
 msgstr "Uz"
 
-#: ../../../lib/web/src/components/layout/nav-group.tsx:365
-#: ../../../lib/web/src/components/layout/nav-group.tsx:372
-#: ../../../lib/web/src/components/layout/nav-group.tsx:490
-#: ../../../lib/web/src/components/layout/nav-group.tsx:497
+#: ../../../lib/web/src/components/layout/nav-group.tsx:393
+#: ../../../lib/web/src/components/layout/nav-group.tsx:400
+#: ../../../lib/web/src/components/layout/nav-group.tsx:522
+#: ../../../lib/web/src/components/layout/nav-group.tsx:529
 msgid "Toggle section"
 msgstr "Pārslēgt sadaļu"
 
 #: ../../../lib/web/src/components/ui/sidebar.tsx:337
 #: ../../../lib/web/src/components/ui/sidebar.tsx:340
-msgid "Toggle sidebar"
-msgstr "Pārslēgt sānjoslu"
-
 #: ../../../lib/web/src/components/ui/sidebar.tsx:352
 #: ../../../lib/web/src/components/ui/sidebar.tsx:355
-msgid "Toggle Sidebar"
-msgstr "Pārslēgt sānu joslu"
+msgid "Toggle sidebar"
+msgstr "Pārslēgt sānjoslu"
 
 #: ../../../lib/web/src/components/entity/keyboard-shortcuts-help.tsx:26
 msgid "Toggle view options"
@@ -2831,7 +2890,7 @@ msgstr "Pārslēgt skata opcijas"
 msgid "Toggle watched filter"
 msgstr "Pārslēgt skatīšanās filtru"
 
-#: ../../../lib/web/src/features/errors/general-error.tsx:74
+#: ../../../lib/web/src/features/errors/general-error.tsx:72
 msgid "Too many requests"
 msgstr "Pārāk daudz pieprasījumu"
 
@@ -2843,7 +2902,7 @@ msgstr "Augšā"
 msgid "Top level"
 msgstr "Augšējais līmenis"
 
-#: ../../../lib/web/src/components/travelling-picker.tsx:145
+#: ../../../lib/web/src/components/travelling-picker.tsx:126
 msgid "Travelling"
 msgstr "Ceļojums"
 
@@ -2851,8 +2910,8 @@ msgstr "Ceļojums"
 msgid "Try adjusting your search terms"
 msgstr "Mēģiniet pielāgot meklēšanas vārdus"
 
-#: ../../../lib/web/src/features/errors/general-error.tsx:140
-#: ../../../lib/web/src/features/errors/general-error.tsx:180
+#: ../../../lib/web/src/features/errors/general-error.tsx:138
+#: ../../../lib/web/src/features/errors/general-error.tsx:178
 msgid "Try again"
 msgstr "Mēģināt vēlreiz"
 
@@ -2860,12 +2919,12 @@ msgstr "Mēģināt vēlreiz"
 msgid "Tuesday"
 msgstr "Otrdiena"
 
-#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:130
-#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:162
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:134
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:166
 msgid "Type"
 msgstr "Tips"
 
-#: ../../../lib/web/src/components/command-menu.tsx:52
+#: ../../../lib/web/src/components/command-menu.tsx:54
 msgid "Type a command or search..."
 msgstr "Ierakstiet komandu vai meklējiet..."
 
@@ -2885,8 +2944,8 @@ msgstr "Ierakstiet, lai meklētu..."
 msgid "Unable to connect to remote server"
 msgstr "Neizdevās izveidot savienojumu ar attālo serveri"
 
-#: ../../../lib/web/src/lib/auth-manager.ts:92
-#: ../../../lib/web/src/lib/auth-manager.ts:104
+#: ../../../lib/web/src/lib/auth-manager.ts:89
+#: ../../../lib/web/src/lib/auth-manager.ts:101
 msgid "Unable to redirect to login. Please try again."
 msgstr "Nevar pāradresēt uz pieteikšanos. Lūdzu, mēģiniet vēlreiz."
 
@@ -2894,16 +2953,12 @@ msgstr "Nevar pāradresēt uz pieteikšanos. Lūdzu, mēģiniet vēlreiz."
 msgid "Unassigned"
 msgstr "Nepiešķirts"
 
-#: ../../../lib/web/src/features/errors/unauthorized-error.tsx:16
-msgid "Unauthorized Access"
-msgstr "Nesankcionēta piekļuve"
-
 #: ../../../lib/web/src/components/attachment-image.tsx:50
 msgid "Unavailable"
 msgstr "Nav pieejams"
 
 #: ../../../lib/web/src/lib/request.ts:133
-#: ../../../lib/web/src/lib/request.ts:206
+#: ../../../lib/web/src/lib/request.ts:209
 msgid "Unexpected API error"
 msgstr "Negaidīta API kļūda"
 
@@ -2915,31 +2970,36 @@ msgstr "Vienots"
 msgid "United States"
 msgstr "Amerikas Savienotās Valstis"
 
+#: ../../../lib/web/src/components/audit-timeline.tsx:103
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:167
+#: ../../../lib/web/src/components/tree-row.tsx:219
+#: ../../../lib/web/src/components/tree-row.tsx:373
+#: ../../../lib/web/src/components/tree-table-header.tsx:70
 #: ../../../lib/web/src/features/accounts/types.ts:29
 msgid "Unknown"
 msgstr "Nezināms"
 
 #: ../../../lib/web/src/components/options-menu.tsx:211
 #: src/features/projects/pages/projects-list-page.tsx:39
-#: src/routes/_authenticated/$projectId/index.tsx:154
+#: src/routes/_authenticated/$projectId/index.tsx:158
 msgid "Unsubscribe"
 msgstr "Atrakstīties"
 
-#: src/routes/_authenticated/$projectId/index.tsx:155
+#: src/routes/_authenticated/$projectId/index.tsx:159
 msgid "Unsubscribe from project?"
 msgstr "Atrakstīties no projekta?"
 
 #: src/features/projects/pages/projects-list-page.tsx:42
-#: src/routes/_authenticated/$projectId/index.tsx:158
+#: src/routes/_authenticated/$projectId/index.tsx:162
 msgid "Unsubscribed"
 msgstr "Atrakstīts"
 
 #: src/features/projects/pages/projects-list-page.tsx:41
-#: src/routes/_authenticated/$projectId/index.tsx:157
+#: src/routes/_authenticated/$projectId/index.tsx:161
 msgid "Unsubscribing..."
 msgstr "Notiek atrakstīšanās..."
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:285
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:299
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx:103
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx:184
 #: src/features/board/components/board-container.tsx:29
@@ -2947,17 +3007,22 @@ msgstr "Notiek atrakstīšanās..."
 msgid "Untitled"
 msgstr "Bez nosaukuma"
 
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx:56
 #: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:57
-#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:494
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:499
 msgid "Updated"
 msgstr "Atjaunināts"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:142
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx:56
+msgid "Updated {field}"
+msgstr "Atjaunināts {field}"
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:140
 msgid "Updating access..."
 msgstr "Atjaunina piekļuvi..."
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:639
-#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:301
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:661
+#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:304
 msgid "Upload"
 msgstr "Augšupielādēt"
 
@@ -2970,7 +3035,7 @@ msgstr "Augšupielādēt .json failu"
 msgid "Upload progress"
 msgstr "Augšupielādes norise"
 
-#: ../../../lib/web/src/components/step-up-dialog.tsx:341
+#: ../../../lib/web/src/components/step-up-dialog.tsx:329
 msgid "Use your passkey"
 msgstr "Izmantojiet savu piekļuves atslēgu"
 
@@ -2980,9 +3045,9 @@ msgstr "Izmantojiet savu piekļuves atslēgu"
 msgid "Used for readable IDs like {0}-1, {1}-2"
 msgstr "Izmanto lasāmiem ID, piemēram, {0}-1, {1}-2"
 
-#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:143
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx:112
 #: ../../../lib/web/src/features/access/access-dialog.tsx:158
+#: ../../../lib/web/src/hooks/use-field-type-labels.ts:18
 msgid "User"
 msgstr "Lietotājs"
 
@@ -2994,7 +3059,7 @@ msgstr "Mainīgie: {variables}"
 msgid "Verification code"
 msgstr "Verifikācijas kods"
 
-#: ../../../lib/web/src/components/step-up-dialog.tsx:391
+#: ../../../lib/web/src/components/step-up-dialog.tsx:379
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:111
 msgid "Verify"
 msgstr "Verificēt"
@@ -3003,21 +3068,21 @@ msgstr "Verificēt"
 msgid "Verify email address"
 msgstr "Verificēt e-pasta adresi"
 
-#: ../../../lib/web/src/components/attachment-gallery.tsx:95
+#: ../../../lib/web/src/components/attachment-gallery.tsx:96
 msgid "Video thumbnail"
 msgstr "Video sīktēls"
 
 #. placeholder {0}: currentMedia.name
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:315
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:327
 msgid "Video viewer: {0}"
 msgstr "Video skatītājs: {0}"
 
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:220
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:228
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:216
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:224
 msgid "View all notifications"
 msgstr "Skatīt visus paziņojumus"
 
-#: src/features/objects/components/object-detail-panel.tsx:417
+#: src/features/objects/components/object-detail-panel.tsx:426
 msgid "View and edit item details"
 msgstr "Skatīt un rediģēt vienuma detaļas"
 
@@ -3025,11 +3090,11 @@ msgstr "Skatīt un rediģēt vienuma detaļas"
 msgid "View controls"
 msgstr "Skata vadīklas"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:54
+#: src/routes/_authenticated/$projectId_.settings.tsx:52
 msgid "View only"
 msgstr "Tikai skatīt"
 
-#: src/routes/_authenticated/$projectId/index.tsx:139
+#: src/routes/_authenticated/$projectId/index.tsx:138
 msgid "View options"
 msgstr "Skata opcijas"
 
@@ -3037,8 +3102,8 @@ msgstr "Skata opcijas"
 msgid "Views"
 msgstr "Skatījumi"
 
-#: src/features/objects/components/object-detail-panel.tsx:439
 #: src/features/objects/components/object-detail-panel.tsx:448
+#: src/features/objects/components/object-detail-panel.tsx:457
 msgid "Watch"
 msgstr "Skatīties"
 
@@ -3064,7 +3129,7 @@ msgstr "Nosūtījām verifikācijas kodu uz <0>{0}</0>. Ievadiet kodu zemāk, la
 msgid "Wednesday"
 msgstr "Trešdiena"
 
-#: ../../../lib/web/src/features/errors/general-error.tsx:61
+#: ../../../lib/web/src/features/errors/general-error.tsx:59
 msgid "You do not have access to this section."
 msgstr "Jums nav piekļuves šai sadaļai."
 
@@ -3076,7 +3141,7 @@ msgstr "Jums nav piekļuves šim projektam."
 msgid "You have no projects yet."
 msgstr "Jums vēl nav neviena projekta."
 
-#: ../../../lib/web/src/components/restore-banner.tsx:100
+#: ../../../lib/web/src/components/restore-banner.tsx:86
 msgid "Your account was moved here from {source}. Until you delete it there, messages and notifications may reach both servers, some of your content keeps being served from the old server, and followers may take a few minutes to find you here."
 msgstr "Jūsu konts tika pārvietots šeit no {source}. Kamēr to tur nedzēšat, ziņojumi un paziņojumi var sasniegt abus serverus, daļa jūsu satura joprojām tiek apkalpota no vecā servera un sekotājiem var paiet dažas minūtes, lai atrastu jūs šeit."
 

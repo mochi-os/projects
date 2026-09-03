@@ -14,19 +14,15 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. js-lingui-explicit-id
-#: ../../../lib/web/src/lib/error-normalizer.ts:215
+#: ../../../lib/web/src/lib/error-normalizer.ts:219
 msgid "Please check your internet connection and try again."
 msgstr "Tanpri tcheke koneksyon entènèt ou epi eseye ankò."
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:301
-msgid " or "
-msgstr " oswa "
-
-#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:190
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:189
 msgid "(edited)"
 msgstr "(edite)"
 
-#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:174
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:173
 msgid "(expand)"
 msgstr "(elaji)"
 
@@ -48,6 +44,16 @@ msgstr "[pa mete]"
 msgid "{0, plural, one {# conflicting file} other {# conflicting files}}"
 msgstr "{0, plural, other {# fichye ki an konfli}}"
 
+#. placeholder {0}: displayInfo.count
+#: ../../../lib/web/src/components/person-picker.tsx:259
+msgid "{0, plural, one {# selected} other {# selected}}"
+msgstr "{0, plural, other {# chwazi}}"
+
+#. placeholder {0}: countDeepChildren(object.id)
+#: ../../../lib/web/src/components/entity/entity-board-card.tsx:421
+msgid "{0, plural, one {+# nested} other {+# nested}}"
+msgstr "{0, plural, one {+# anndan} other {+# anndan}}"
+
 #. placeholder {0}: String(name)
 #: src/routes/_authenticated/$projectId/design.tsx:46
 msgid "{0} - Design"
@@ -65,7 +71,7 @@ msgid "{0} files changed"
 msgstr "{0} fichye chanje"
 
 #. placeholder {0}: String(name)
-#: src/routes/_authenticated/$projectId_.settings.tsx:109
+#: src/routes/_authenticated/$projectId_.settings.tsx:107
 msgid "{0} settings"
 msgstr "Paramèt {0}"
 
@@ -85,13 +91,9 @@ msgstr "{count, plural, one {#min} other {#min}}"
 msgid "{count, plural, one {#w} other {#w}}"
 msgstr "{count, plural, one {#sem} other {#sem}}"
 
-#: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:174
+#: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:176
 msgid "{entityLabel} name"
 msgstr "Non {entityLabel}"
-
-#: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:99
-msgid "{entityLabel} name is required"
-msgstr "Non {entityLabel} obligatwa"
 
 #: ../../../lib/web/src/components/game/game-draw-offer-banner.tsx:29
 msgid "{opponentName} offered a draw"
@@ -102,9 +104,13 @@ msgstr "{opponentName} ofri yon egal"
 msgid "{sentLabel} of {totalLabel}"
 msgstr "{sentLabel} sou {totalLabel}"
 
-#: ../../../lib/web/src/components/entity/entity-board-column.tsx:530
+#: ../../../lib/web/src/components/entity/entity-board-column.tsx:531
 msgid "{totalCount, plural, one {# item} other {# items}}"
 msgstr "{totalCount, plural, other {# atik}}"
+
+#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:170
+msgid "{totalDescendants, plural, one {# reply} other {+# more replies}}"
+msgstr "{totalDescendants, plural, other {+# plis repons}}"
 
 #: src/features/requests/components/diff-stats.tsx:120
 #: src/features/requests/components/diff-viewer.tsx:471
@@ -119,19 +125,6 @@ msgstr "{unreadCount, plural, other {Louvri meni (# notifikasyon ki poko li)}}"
 #: src/features/requests/components/merge-status.tsx:76
 msgid "+{0} ahead"
 msgstr "+{0} devan"
-
-#. placeholder {0}: countDeepChildren(object.id)
-#: ../../../lib/web/src/components/entity/entity-board-card.tsx:418
-msgid "+{0} nested"
-msgstr "+{0} anpile"
-
-#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:171
-msgid "+{totalDescendants} more replies"
-msgstr "+{totalDescendants} lòt repons"
-
-#: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:170
-msgid "1 reply"
-msgstr "1 repons"
 
 #: ../../../lib/web/src/lib/preference-utils.ts:37
 msgid "12 hours"
@@ -149,11 +142,12 @@ msgstr "Absoli (dat ak lè)"
 msgid "Accept"
 msgstr "Aksepte"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:104
+#: src/routes/_authenticated/$projectId_.settings.tsx:102
 msgid "Access"
 msgstr "Aksè"
 
-#: ../../../lib/web/src/features/errors/general-error.tsx:60
+#: ../../../lib/web/src/features/errors/access-denied-error.tsx:16
+#: ../../../lib/web/src/features/errors/general-error.tsx:58
 msgid "Access denied"
 msgstr "Aksè refize"
 
@@ -161,19 +155,19 @@ msgstr "Aksè refize"
 msgid "Access level"
 msgstr "Nivo aksè"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:143
+#: src/routes/_authenticated/$projectId_.settings.tsx:141
 msgid "Access level updated"
 msgstr "Nivo aksè mete ajou"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:134
+#: src/routes/_authenticated/$projectId_.settings.tsx:132
 msgid "Access management"
 msgstr "Jesyon Aksè"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:140
+#: src/routes/_authenticated/$projectId_.settings.tsx:138
 msgid "Access removed"
 msgstr "Aksè retire"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:137
+#: src/routes/_authenticated/$projectId_.settings.tsx:135
 msgid "Access set for {subjectName}"
 msgstr "Aksè defini pou {subjectName}"
 
@@ -181,18 +175,18 @@ msgstr "Aksè defini pou {subjectName}"
 msgid "Account type"
 msgstr "Tip kont"
 
-#: src/features/objects/components/object-detail-panel.tsx:398
+#: src/features/objects/components/object-detail-panel.tsx:407
 msgid "Activity"
 msgstr "Aktivite"
 
-#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:720
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:758
 #: ../../../lib/web/src/features/access/access-dialog.tsx:332
 #: ../../../lib/web/src/features/accounts/account-add.tsx:209
 #: src/features/requests/components/request-panel.tsx:113
 msgid "Add"
 msgstr "Ajoute"
 
-#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:312
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:314
 msgid "Add a comment..."
 msgstr "Ajoute yon kòmantè..."
 
@@ -200,7 +194,7 @@ msgstr "Ajoute yon kòmantè..."
 msgid "Add a new account"
 msgstr "Ajoute yon nouvo kont"
 
-#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:106
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:110
 msgid "Add a new field to this class"
 msgstr "Ajoute yon nouvo chan nan klas sa a"
 
@@ -216,7 +210,7 @@ msgstr "Ajoute kont"
 msgid "Add caption"
 msgstr "Ajoute lejand"
 
-#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:690
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:728
 msgid "Add checklist item"
 msgstr "Ajoute eleman lis verifikasyon"
 
@@ -226,17 +220,17 @@ msgstr "Ajoute eleman lis verifikasyon"
 msgid "Add class"
 msgstr "Ajoute klas"
 
-#: src/routes/_authenticated/$projectId/index.tsx:140
+#: src/routes/_authenticated/$projectId/index.tsx:139
 msgid "Add column"
 msgstr "Ajoute kolòn"
 
-#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:105
-#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:233
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:109
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:235
 #: src/features/editor/components/edit-dialogs.tsx:429
 msgid "Add field"
 msgstr "Ajoute chan"
 
-#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:708
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:746
 msgid "Add item..."
 msgstr "Ajoute eleman..."
 
@@ -244,19 +238,19 @@ msgstr "Ajoute eleman..."
 msgid "Add link"
 msgstr "Ajoute lyen"
 
-#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:215
-#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:220
-#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:291
-#: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:91
-#: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:191
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:217
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:222
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:295
+#: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:92
+#: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:193
 msgid "Add option"
 msgstr "Ajoute opsyon"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:135
+#: src/routes/_authenticated/$projectId_.settings.tsx:133
 msgid "Add rule"
 msgstr "Ajoute yon règ"
 
-#: ../../../lib/web/src/components/post-tags.tsx:137
+#: ../../../lib/web/src/components/post-tags.tsx:138
 msgid "Add tag..."
 msgstr "Ajoute etikèt..."
 
@@ -264,8 +258,8 @@ msgstr "Ajoute etikèt..."
 msgid "Add to existing notifications"
 msgstr "Ajoute nan notifikasyon ki egziste"
 
-#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:258
-#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:513
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:261
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:518
 #: ../../../lib/web/src/components/view-tabs.tsx:87
 #: ../../../lib/web/src/components/view-tabs.tsx:93
 #: src/features/editor/components/design-editor.tsx:492
@@ -280,14 +274,13 @@ msgstr "Ap ajoute..."
 msgid "AI"
 msgstr "AI"
 
-#: src/components/layout/projects-layout.tsx:35
+#: src/components/layout/projects-layout.tsx:34
 msgid "All projects"
 msgstr "Tout pwojè"
 
-#. placeholder {0}: entityLabel.toLowerCase()
-#: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:85
-msgid "Allow anyone to search for {0}"
-msgstr "Pèmèt nenpòt moun chèche {0}"
+#: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:87
+msgid "Allow anyone to search for {entityLabel}"
+msgstr "Pèmèt tout moun chèche {entityLabel}"
 
 #: src/features/projects/components/create-project-dialog.tsx:387
 msgid "Allow anyone to search for project"
@@ -297,7 +290,7 @@ msgstr "Pèmèt nenpòt moun chèche pwojè"
 msgid "Allow merge requests"
 msgstr "Pèmèt demand merge"
 
-#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:225
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:229
 msgid "Allow sort by"
 msgstr "Pèmèt klasman pa"
 
@@ -306,6 +299,7 @@ msgid "An error occurred"
 msgstr "Yon erè te rive"
 
 #: ../../../lib/web/src/lib/api-response-interceptors.ts:266
+#: ../../../lib/web/src/lib/error-normalizer.ts:11
 msgid "An unexpected error occurred"
 msgstr "Yon erè inatandi te rive"
 
@@ -327,15 +321,15 @@ msgid "Anything subscribed to this feed will stop receiving it. You can copy a n
 msgstr "Tout sa ki abòne nan fil sa a ap sispann resevwa l. Ou ka kopye yon nouvo URL apre."
 
 #. placeholder {0}: deleteTarget?.name
-#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:313
+#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:316
 msgid "Are you sure you want to delete \"{0}\"?"
 msgstr "Èske ou sèten ou vle efase \"{0}\"?"
 
-#: src/features/objects/components/object-detail-panel.tsx:642
+#: src/features/objects/components/object-detail-panel.tsx:653
 msgid "Are you sure you want to delete \"{title}\"? This action cannot be undone."
 msgstr "Èske ou sèten ou vle efase \"{title}\"? Aksyon sa a pa ka anile."
 
-#: ../../../lib/web/src/components/entity/entity-board-column.tsx:629
+#: ../../../lib/web/src/components/entity/entity-board-column.tsx:631
 msgid "Are you sure you want to delete the \"{name}\" column? This cannot be undone."
 msgstr "Èske ou sèten ou vle efase kolòn \"{name}\" la? Sa a pa ka anile."
 
@@ -359,11 +353,11 @@ msgstr "Èske ou sèten ou vle dezabòne nan pwojè sa a?"
 msgid "Ascending"
 msgstr "Monte"
 
-#: ../../../lib/web/src/components/comment-composer.tsx:427
+#: ../../../lib/web/src/components/comment-composer.tsx:430
 msgid "Attach comment files"
 msgstr "Tache fichye kòmantè"
 
-#: ../../../lib/web/src/components/comment-composer.tsx:426
+#: ../../../lib/web/src/components/comment-composer.tsx:429
 msgid "Attach reply files"
 msgstr "Tache fichye repons"
 
@@ -372,7 +366,7 @@ msgstr "Tache fichye repons"
 msgid "Authenticated users"
 msgstr "Itilizatè ki otantifye"
 
-#: ../../../lib/web/src/components/step-up-dialog.tsx:318
+#: ../../../lib/web/src/components/step-up-dialog.tsx:306
 msgid "Authenticator code"
 msgstr "Kòd otantifikatè"
 
@@ -380,25 +374,25 @@ msgstr "Kòd otantifikatè"
 msgid "Available keyboard shortcuts"
 msgstr "Rakousi klavye disponib"
 
-#: ../../../lib/web/src/components/entity-avatar.tsx:99
+#: ../../../lib/web/src/components/entity-avatar.tsx:98
 msgid "Avatar"
 msgstr "Avata"
 
-#: ../../../lib/web/src/components/entity-avatar.tsx:99
+#: ../../../lib/web/src/components/entity-avatar.tsx:98
 msgid "Avatar for {name}"
 msgstr "Avata pou {name}"
 
-#: ../../../lib/web/src/components/place-picker.tsx:156
+#: ../../../lib/web/src/components/place-picker.tsx:142
 #: src/features/projects/components/create-project-dialog.tsx:546
 msgid "Back"
 msgstr "Retounen"
 
+#: ../../../lib/web/src/features/errors/access-denied-error.tsx:27
 #: ../../../lib/web/src/features/errors/not-found-error.tsx:28
-#: ../../../lib/web/src/features/errors/unauthorized-error.tsx:28
 msgid "Back to home"
 msgstr "Tounen lakay"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:105
+#: src/routes/_authenticated/$projectId_.settings.tsx:103
 #: src/routes/_authenticated/$projectId/design.tsx:47
 msgid "Back to project"
 msgstr "Retounen nan pwojè"
@@ -421,8 +415,8 @@ msgstr "Fichye binè a pa parèt"
 msgid "Blocked by"
 msgstr "Bloke pa"
 
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:242
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:252
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:238
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:248
 msgid "Blocked navigation to untrusted link"
 msgstr "Navigasyon bloke nan lyen pa fyab"
 
@@ -430,16 +424,16 @@ msgstr "Navigasyon bloke nan lyen pa fyab"
 msgid "Blocks"
 msgstr "Blòk"
 
-#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:312
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:315
 msgid "Board"
 msgstr "Tablo"
 
-#: ../../../lib/web/src/components/post-tags.tsx:180
-#: ../../../lib/web/src/components/post-tags.tsx:192
+#: ../../../lib/web/src/components/post-tags.tsx:194
+#: ../../../lib/web/src/components/post-tags.tsx:206
 msgid "Boost interest"
 msgstr "Ogmante enterè"
 
-#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:399
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:402
 msgid "Border colour"
 msgstr "Koulè bòdi"
 
@@ -456,30 +450,30 @@ msgid "Can be child of"
 msgstr "Ka pitit"
 
 #: ../../../lib/web/src/components/attachment-composer.tsx:426
-#: ../../../lib/web/src/components/entity/entity-board-column.tsx:614
+#: ../../../lib/web/src/components/entity/entity-board-column.tsx:616
 #: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:211
-#: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:166
-#: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:183
+#: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:168
+#: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:185
 #: ../../../lib/web/src/components/responsive-confirm-dialog.tsx:67
-#: ../../../lib/web/src/components/step-up-dialog.tsx:366
-#: ../../../lib/web/src/components/travelling-picker.tsx:308
-#: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:249
-#: ../../../lib/web/src/components/ui/editable-field-row.tsx:132
+#: ../../../lib/web/src/components/step-up-dialog.tsx:354
+#: ../../../lib/web/src/components/travelling-picker.tsx:288
+#: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:251
+#: ../../../lib/web/src/components/ui/editable-field-row.tsx:136
 #: ../../../lib/web/src/features/access/access-dialog.tsx:328
 #: ../../../lib/web/src/features/access/access-list.tsx:268
 #: ../../../lib/web/src/features/accounts/account-add.tsx:201
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:91
 #: src/features/projects/components/create-project-dialog.tsx:453
 #: src/routes/_authenticated/$projectId/design.tsx:61
-#: src/routes/_authenticated/$projectId/index.tsx:143
+#: src/routes/_authenticated/$projectId/index.tsx:142
 msgid "Cancel"
 msgstr "Anile"
 
-#: ../../../lib/web/src/components/comment-composer.tsx:427
+#: ../../../lib/web/src/components/comment-composer.tsx:430
 msgid "Cancel comment"
 msgstr "Anile kòmantè"
 
-#: ../../../lib/web/src/components/comment-composer.tsx:426
+#: ../../../lib/web/src/components/comment-composer.tsx:429
 msgid "Cancel reply"
 msgstr "Anile repons"
 
@@ -501,7 +495,15 @@ msgstr "Kategori pou notifikasyon sa yo"
 msgid "Change notification category"
 msgstr "Chanje kategori notifikasyon"
 
-#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:137
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx:62
+msgid "Changed"
+msgstr "Chanje"
+
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx:62
+msgid "Changed {field}"
+msgstr "{field} chanje"
+
+#: ../../../lib/web/src/hooks/use-field-type-labels.ts:12
 msgid "Checkbox"
 msgstr "Kaz"
 
@@ -509,7 +511,7 @@ msgstr "Kaz"
 msgid "Checking merge status..."
 msgstr "Ap tcheke estati merge..."
 
-#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:138
+#: ../../../lib/web/src/hooks/use-field-type-labels.ts:13
 msgid "Checklist"
 msgstr "Lis verifikasyon"
 
@@ -532,10 +534,10 @@ msgstr "Klas yo"
 
 #: ../../../lib/web/src/components/colour-picker.tsx:274
 #: ../../../lib/web/src/components/colour-picker.tsx:355
-#: ../../../lib/web/src/components/travelling-picker.tsx:164
-#: ../../../lib/web/src/components/travelling-picker.tsx:170
-#: ../../../lib/web/src/components/travelling-picker.tsx:231
-#: ../../../lib/web/src/components/travelling-picker.tsx:237
+#: ../../../lib/web/src/components/travelling-picker.tsx:145
+#: ../../../lib/web/src/components/travelling-picker.tsx:151
+#: ../../../lib/web/src/components/travelling-picker.tsx:212
+#: ../../../lib/web/src/components/travelling-picker.tsx:218
 msgid "Clear"
 msgstr "Efase"
 
@@ -547,19 +549,19 @@ msgstr "Efase tout"
 msgid "Clear search"
 msgstr "Efase rechèch"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:501
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:506
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:523
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:528
 #: ../../../lib/web/src/components/ui/dialog.tsx:78
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:468
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:471
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:480
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:483
 #: ../../../lib/web/src/components/ui/sheet.tsx:79
 msgid "Close"
 msgstr "Fèmen"
 
-#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:109
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:113
-#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:263
-#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:267
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:117
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:266
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:270
 #: src/features/editor/components/edit-dialogs.tsx:228
 #: src/features/editor/components/edit-dialogs.tsx:232
 msgid "Close dialog"
@@ -594,16 +596,16 @@ msgstr "Pliye"
 msgid "Collapse sidebar"
 msgstr "Fèmen ba kote"
 
-#: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:146
+#: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:148
 msgid "Colour"
 msgstr "Koulè"
 
-#: ../../../lib/web/src/components/entity/entity-board-column.tsx:539
-#: ../../../lib/web/src/components/entity/entity-board-column.tsx:544
+#: ../../../lib/web/src/components/entity/entity-board-column.tsx:540
+#: ../../../lib/web/src/components/entity/entity-board-column.tsx:545
 msgid "Column actions"
 msgstr "Aksyon kolòn"
 
-#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:347
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:350
 msgid "Columns group by"
 msgstr "Kolòn gwoupe pa"
 
@@ -620,17 +622,17 @@ msgstr "Palèt kòmand"
 msgid "Comment actions"
 msgstr "Aksyon kòmantè"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:53
+#: src/routes/_authenticated/$projectId_.settings.tsx:51
 msgid "Comment and view"
 msgstr "Kòmante ak gade"
 
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:431
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:443
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:455
 msgid "Comments"
 msgstr "Kòmantè"
 
 #. placeholder {0}: data.comment_count || 0
-#: src/features/objects/components/object-detail-panel.tsx:384
+#: src/features/objects/components/object-detail-panel.tsx:393
 msgid "Comments ({0})"
 msgstr "Kòmantè ({0})"
 
@@ -642,16 +644,16 @@ msgstr "Konpak"
 msgid "Configure class settings"
 msgstr "Konfigire paramèt klas"
 
-#: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:94
+#: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:95
 msgid "Configure option settings"
 msgstr "Konfigire paramèt opsyon"
 
-#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:259
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:262
 msgid "Configure view settings"
 msgstr "Konfigire paramèt vi"
 
-#: ../../../lib/web/src/components/place-picker.tsx:160
-#: ../../../lib/web/src/components/travelling-picker.tsx:316
+#: ../../../lib/web/src/components/place-picker.tsx:146
+#: ../../../lib/web/src/components/travelling-picker.tsx:296
 msgid "Confirm"
 msgstr "Konfime"
 
@@ -667,7 +669,7 @@ msgstr "Konekte..."
 msgid "Content not found."
 msgstr "Kontni pa jwenn."
 
-#: ../../../lib/web/src/lib/query-client.ts:78
+#: ../../../lib/web/src/lib/query-client.ts:73
 msgid "Content not modified"
 msgstr "Kontni pa modifye"
 
@@ -679,7 +681,7 @@ msgstr "Enfòmasyon ak detay kontèks."
 msgid "Continue"
 msgstr "Kontinye"
 
-#: ../../../lib/web/src/components/step-up-dialog.tsx:355
+#: ../../../lib/web/src/components/step-up-dialog.tsx:343
 msgid "Continue with {label}"
 msgstr "Kontinye ak {label}"
 
@@ -721,34 +723,33 @@ msgstr "Echwe pou chaje diff la"
 msgid "Could not load this document. Please try again later."
 msgstr "Pa t kapab chaje dokiman sa a. Tanpri eseye ankò pita."
 
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:128
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:124
 msgid "Couldn't load notifications"
 msgstr "Pa t kapab chaje notifikasyon yo"
 
-#: ../../../lib/web/src/components/step-up-dialog.tsx:182
+#: ../../../lib/web/src/components/step-up-dialog.tsx:170
 msgid "Couldn't send the code. Please try again."
 msgstr "Nou pa t kapab voye kòd la. Tanpri eseye ankò."
 
-#: ../../../lib/web/src/components/step-up-dialog.tsx:136
+#: ../../../lib/web/src/components/step-up-dialog.tsx:124
 msgid "Couldn't start re-authentication. Please try again."
 msgstr "Nou pa t kapab kòmanse re-otantifikasyon an. Tanpri eseye ankò."
 
-#: ../../../lib/web/src/components/step-up-dialog.tsx:224
+#: ../../../lib/web/src/components/step-up-dialog.tsx:212
 msgid "Couldn't verify with that account. Please try again."
 msgstr "Nou pa t kapab verifye ak kont sa a. Tanpri eseye ankò."
 
-#: ../../../lib/web/src/components/entity/entity-board-column.tsx:550
-#: ../../../lib/web/src/components/entity/entity-board-column.tsx:689
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:491
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:656
-#: ../../../lib/web/src/components/entity/entity-tree-view.tsx:675
+#: ../../../lib/web/src/components/entity/entity-board-column.tsx:551
+#: ../../../lib/web/src/components/entity/entity-board-column.tsx:691
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:513
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:682
+#: ../../../lib/web/src/components/entity/entity-tree-view.tsx:672
 msgid "Create"
 msgstr "Kreye"
 
-#. placeholder {0}: entityLabel.toLowerCase()
-#: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:144
-msgid "Create {0}"
-msgstr "Kreye {0}"
+#: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:146
+msgid "Create {entityLabel}"
+msgstr "Kreye {entityLabel}"
 
 #: src/features/objects/components/create-object-dialog.tsx:45
 msgid "Create a new item in this project"
@@ -764,7 +765,7 @@ msgstr "Kreye yon nouvo pwojè"
 msgid "Create new item"
 msgstr "Kreye nouvo eleman"
 
-#: src/components/layout/projects-layout.tsx:37
+#: src/components/layout/projects-layout.tsx:36
 #: src/features/projects/components/create-project-dialog.tsx:324
 #: src/features/projects/components/create-project-dialog.tsx:334
 #: src/features/projects/components/create-project-dialog.tsx:457
@@ -772,27 +773,32 @@ msgstr "Kreye nouvo eleman"
 msgid "Create project"
 msgstr "Kreye pwojè"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:52
+#: src/routes/_authenticated/$projectId_.settings.tsx:50
 msgid "Create, edit, comment, and view"
 msgstr "Kreye, modifye, kòmante, epi gade"
 
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx:54
 #: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:56
-#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:492
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:495
 msgid "Created"
 msgstr "Kreye"
+
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx:54
+msgid "Created {field}"
+msgstr "{field} kreye"
 
 #: src/features/projects/components/create-project-dialog.tsx:132
 msgid "Creating project..."
 msgstr "Ap kreye pwojè..."
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:656
-#: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:258
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:682
+#: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:260
 #: src/features/projects/components/create-project-dialog.tsx:457
 #: src/features/projects/components/create-project-dialog.tsx:549
 msgid "Creating..."
 msgstr "Ap kreye..."
 
-#: ../../../lib/web/src/components/map-view.tsx:217
+#: ../../../lib/web/src/components/map-view.tsx:249
 msgid "Current location"
 msgstr "Kote ou ye kounye a"
 
@@ -817,7 +823,7 @@ msgstr "Konfli done"
 msgid "Data imported ({0, plural, one {# object} other {# objects}}, {1, plural, one {# comment} other {# comments}}, {2, plural, one {# link} other {# links}})"
 msgstr "Done enpòte ({0, plural, one {# objè} other {# objè}}, {1, plural, one {# kòmantè} other {# kòmantè}}, {2, plural, one {# lyen} other {# lyen}})"
 
-#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:139
+#: ../../../lib/web/src/hooks/use-field-type-labels.ts:14
 msgid "Date"
 msgstr "Dat"
 
@@ -833,26 +839,26 @@ msgstr "Defo"
 msgid "Default AI account"
 msgstr "Kont AI defo"
 
-#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:479
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:482
 msgid "Default sort"
 msgstr "Klasman defo"
 
-#: ../../../lib/web/src/components/entity/entity-board-column.tsx:569
-#: ../../../lib/web/src/components/entity/entity-board-column.tsx:630
+#: ../../../lib/web/src/components/entity/entity-board-column.tsx:570
+#: ../../../lib/web/src/components/entity/entity-board-column.tsx:632
 #: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:280
 #: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:323
 #: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:353
-#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:198
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:203
-#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:252
-#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:314
-#: src/features/objects/components/object-detail-panel.tsx:643
+#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:208
+#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:255
+#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:317
+#: src/features/objects/components/object-detail-panel.tsx:654
 #: src/features/requests/components/request-panel.tsx:142
-#: src/routes/_authenticated/$projectId_.settings.tsx:124
+#: src/routes/_authenticated/$projectId_.settings.tsx:122
 msgid "Delete"
 msgstr "Efase"
 
-#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:312
+#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:315
 msgid "Delete attachment"
 msgstr "Efase atachman"
 
@@ -860,7 +866,7 @@ msgstr "Efase atachman"
 msgid "Delete class"
 msgstr "Efase klas"
 
-#: ../../../lib/web/src/components/entity/entity-board-column.tsx:628
+#: ../../../lib/web/src/components/entity/entity-board-column.tsx:630
 msgid "Delete column"
 msgstr "Efase kolòn"
 
@@ -868,13 +874,13 @@ msgstr "Efase kolòn"
 msgid "Delete comment"
 msgstr "Efase kòmantè"
 
-#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:300
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:304
 msgid "Delete field"
 msgstr "Efase chan"
 
-#: src/features/objects/components/object-detail-panel.tsx:458
-#: src/features/objects/components/object-detail-panel.tsx:463
-#: src/features/objects/components/object-detail-panel.tsx:641
+#: src/features/objects/components/object-detail-panel.tsx:467
+#: src/features/objects/components/object-detail-panel.tsx:472
+#: src/features/objects/components/object-detail-panel.tsx:652
 msgid "Delete item"
 msgstr "Efase eleman"
 
@@ -888,34 +894,42 @@ msgstr "Efase eleman"
 msgid "Delete merge request"
 msgstr "Efase demand merge"
 
-#: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:116
+#: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:117
 msgid "Delete option"
 msgstr "Efase opsyon"
 
 #. placeholder {0}: opt.name
-#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:278
-#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:283
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:282
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:287
 msgid "Delete option {0}"
 msgstr "Efase opsyon {0}"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:123
-#: src/routes/_authenticated/$projectId_.settings.tsx:126
+#: src/routes/_authenticated/$projectId_.settings.tsx:121
+#: src/routes/_authenticated/$projectId_.settings.tsx:124
 msgid "Delete project"
 msgstr "Efase pwojè"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:125
+#: src/routes/_authenticated/$projectId_.settings.tsx:123
 msgid "Delete project?"
 msgstr "Efase pwojè?"
 
-#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:284
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:287
 msgid "Delete view"
 msgstr "Efase vi"
 
-#: ../../../lib/web/src/components/restore-banner.tsx:109
+#: ../../../lib/web/src/components/restore-banner.tsx:95
 msgid "Delete your account on the old server"
 msgstr "Efase kont ou sou ansyen sèvè a"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:131
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx:58
+msgid "Deleted"
+msgstr "Efase"
+
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx:58
+msgid "Deleted {field}"
+msgstr "{field} efase"
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:129
 msgid "Deleting project..."
 msgstr "Ap efase pwojè..."
 
@@ -923,15 +937,15 @@ msgstr "Ap efase pwojè..."
 msgid "Descending"
 msgstr "Desann"
 
-#: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:83
+#: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:85
 #: src/features/requests/components/request-panel.tsx:315
-#: src/routes/_authenticated/$projectId_.settings.tsx:116
+#: src/routes/_authenticated/$projectId_.settings.tsx:114
 msgid "Description"
 msgstr "Deskripsyon"
 
 #: src/routes/_authenticated/$projectId/design.tsx:43
 #: src/routes/_authenticated/$projectId/design.tsx:46
-#: src/routes/_authenticated/$projectId/index.tsx:165
+#: src/routes/_authenticated/$projectId/index.tsx:169
 msgid "Design"
 msgstr "Konsepsyon"
 
@@ -940,7 +954,7 @@ msgstr "Konsepsyon"
 msgid "Design imported"
 msgstr "Konsepsyon enpòte"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:51
+#: src/routes/_authenticated/$projectId_.settings.tsx:49
 msgid "Design, create, edit, comment, and view"
 msgstr "Konsevwa, kreye, modifye, kòmante, epi gade"
 
@@ -967,7 +981,7 @@ msgstr "Diff"
 msgid "Diff: {source} → {target}"
 msgstr "Diff: {source} → {target}"
 
-#: ../../../lib/web/src/components/person-picker.tsx:214
+#: ../../../lib/web/src/components/person-picker.tsx:192
 msgid "Directory"
 msgstr "Anyè"
 
@@ -984,12 +998,12 @@ msgstr "Jete bouyon an?"
 msgid "Disconnected"
 msgstr "Dekonekte"
 
-#: ../../../lib/web/src/components/restore-banner.tsx:88
-#: ../../../lib/web/src/components/restore-banner.tsx:94
+#: ../../../lib/web/src/components/restore-banner.tsx:74
+#: ../../../lib/web/src/components/restore-banner.tsx:80
 msgid "Dismiss"
 msgstr "Rejte"
 
-#: src/routes/_authenticated/$projectId/index.tsx:146
+#: src/routes/_authenticated/$projectId/index.tsx:145
 msgid "Dismiss board hint"
 msgstr "Rejte konsèy tablo"
 
@@ -997,20 +1011,24 @@ msgstr "Rejte konsèy tablo"
 msgid "Displays the mobile sidebar."
 msgstr "Afiche ba kote mobil la."
 
-#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:305
-#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:518
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:111
+msgid "Does not match the required pattern"
+msgstr "Li pa koresponn ak modèl ki mande a"
+
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:309
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:523
 #: src/features/editor/components/edit-dialogs.tsx:439
-#: src/features/objects/components/object-detail-panel.tsx:472
+#: src/features/objects/components/object-detail-panel.tsx:481
 msgid "Done"
 msgstr "Fini"
 
-#: src/routes/_authenticated/$projectId/index.tsx:145
+#: src/routes/_authenticated/$projectId/index.tsx:144
 msgid "Double click on a column to add content"
 msgstr "Klike de fwa sou yon kolòn pou ajoute kontni"
 
-#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:239
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:452
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:462
+#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:243
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:464
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:474
 msgid "Download"
 msgstr "Telechaje"
 
@@ -1018,12 +1036,13 @@ msgstr "Telechaje"
 msgid "Download backup first"
 msgstr "Telechaje backup la avan"
 
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:98
+#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:149
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:100
 msgid "Download failed"
 msgstr "Telechajman an echwe"
 
 #: src/routes/_authenticated/$projectId/design.tsx:52
-#: src/routes/_authenticated/$projectId/index.tsx:149
+#: src/routes/_authenticated/$projectId/index.tsx:148
 msgid "Downloaded {filename}"
 msgstr "Telechaje {filename}"
 
@@ -1032,7 +1051,7 @@ msgstr "Telechaje {filename}"
 msgid "Draft"
 msgstr "Bouyon"
 
-#: src/routes/_authenticated/$projectId/index.tsx:142
+#: src/routes/_authenticated/$projectId/index.tsx:141
 msgid "Drag columns to re-order them"
 msgstr "Trennen kolòn yo pou reòganize yo"
 
@@ -1049,7 +1068,7 @@ msgstr "Adapte pou disleksi"
 msgid "Edit"
 msgstr "Modifye"
 
-#: ../../../lib/web/src/components/ui/editable-field-row.tsx:154
+#: ../../../lib/web/src/components/ui/editable-field-row.tsx:158
 msgid "Edit {label}"
 msgstr "Modifye {label}"
 
@@ -1061,21 +1080,21 @@ msgstr "Modifye lejand"
 msgid "Edit class"
 msgstr "Modifye klas"
 
-#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:137
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:140
 msgid "Edit field"
 msgstr "Modifye chan"
 
-#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:138
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:141
 msgid "Edit field settings"
 msgstr "Modifye paramèt chan"
 
-#: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:91
+#: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:92
 msgid "Edit option"
 msgstr "Modifye opsyon"
 
 #. placeholder {0}: opt.name
-#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:263
-#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:268
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:267
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:272
 msgid "Edit option {0}"
 msgstr "Modifye opsyon {0}"
 
@@ -1083,7 +1102,7 @@ msgstr "Modifye opsyon {0}"
 msgid "Edit selected card"
 msgstr "Modifye kat ki seleksyone a"
 
-#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:258
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:261
 msgid "Edit view"
 msgstr "Modifye vi"
 
@@ -1091,23 +1110,23 @@ msgstr "Modifye vi"
 msgid "Email"
 msgstr "Imèl"
 
-#: ../../../lib/web/src/components/step-up-dialog.tsx:292
+#: ../../../lib/web/src/components/step-up-dialog.tsx:280
 msgid "Email code"
 msgstr "Kòd imèl"
 
-#: ../../../lib/web/src/components/step-up-dialog.tsx:302
+#: ../../../lib/web/src/components/step-up-dialog.tsx:290
 msgid "Enter the code from your email"
 msgstr "Antre kòd la ki nan imel ou"
 
-#: ../../../lib/web/src/components/step-up-dialog.tsx:327
+#: ../../../lib/web/src/components/step-up-dialog.tsx:315
 msgid "Enter your authenticator code"
 msgstr "Antre kòd otantifikatè ou"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:117
+#: src/routes/_authenticated/$projectId_.settings.tsx:115
 msgid "Entity ID"
 msgstr "ID Antite"
 
-#: src/features/objects/components/object-detail-panel.tsx:335
+#: src/features/objects/components/object-detail-panel.tsx:344
 msgid "Error"
 msgstr "Erè"
 
@@ -1122,7 +1141,7 @@ msgstr "Elaji"
 msgid "Expand sidebar"
 msgstr "Elaji ba kote"
 
-#: src/routes/_authenticated/$projectId/index.tsx:147
+#: src/routes/_authenticated/$projectId/index.tsx:146
 msgid "Export data"
 msgstr "Ekspòte done"
 
@@ -1138,6 +1157,14 @@ msgstr "URL Ekstèn"
 msgid "Extra large"
 msgstr "Trè gwo"
 
+#: ../../../lib/web/src/hooks/use-accounts.ts:213
+msgid "Failed to add account"
+msgstr "Echwe pou ajoute kont"
+
+#: src/routes/_authenticated/$projectId/index.tsx:154
+msgid "Failed to add column"
+msgstr "Echèk pou ajoute kolòn nan"
+
 #: src/features/requests/components/merge-status.tsx:48
 msgid "Failed to check merge status"
 msgstr "Echwe pou tcheke estati merge"
@@ -1152,13 +1179,13 @@ msgid "Failed to create class"
 msgstr "Echwe pou kreye klas"
 
 #: src/features/editor/components/design-editor.tsx:166
-#: src/features/editor/components/design-editor.tsx:631
+#: src/features/editor/components/design-editor.tsx:632
 msgid "Failed to create field"
 msgstr "Echwe pou kreye chan"
 
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx:137
 #: ../../../lib/web/src/components/options-menu.tsx:98
-#: src/routes/_authenticated/$projectId/index.tsx:153
+#: src/routes/_authenticated/$projectId/index.tsx:152
 msgid "Failed to create link"
 msgstr "Echwe pou kreye lyen"
 
@@ -1167,7 +1194,7 @@ msgid "Failed to create merge request"
 msgstr "Echwe pou kreye demand merge"
 
 #: src/features/editor/components/design-editor.tsx:238
-#: src/features/editor/components/design-editor.tsx:651
+#: src/features/editor/components/design-editor.tsx:652
 msgid "Failed to create option"
 msgstr "Echwe pou kreye opsyon"
 
@@ -1179,7 +1206,7 @@ msgstr "Echwe pou kreye pwojè"
 msgid "Failed to create view"
 msgstr "Echwe pou kreye vi"
 
-#: src/features/objects/components/object-detail-panel.tsx:226
+#: src/features/objects/components/object-detail-panel.tsx:235
 msgid "Failed to delete"
 msgstr "Echwe pou efase"
 
@@ -1191,7 +1218,11 @@ msgstr "Echwe pou efase atachman"
 msgid "Failed to delete class"
 msgstr "Echwe pou efase klas"
 
-#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:191
+#: src/routes/_authenticated/$projectId/index.tsx:156
+msgid "Failed to delete column"
+msgstr "Echèk pou efase kolòn nan"
+
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:192
 msgid "Failed to delete comment"
 msgstr "Echwe pou efase kòmantè"
 
@@ -1211,7 +1242,7 @@ msgstr "Echwe pou efase demand merge"
 msgid "Failed to delete option"
 msgstr "Echwe pou efase opsyon"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:133
+#: src/routes/_authenticated/$projectId_.settings.tsx:131
 msgid "Failed to delete project"
 msgstr "Echwe pou efase pwojè"
 
@@ -1219,7 +1250,7 @@ msgstr "Echwe pou efase pwojè"
 msgid "Failed to delete view"
 msgstr "Echwe pou efase vi"
 
-#: src/routes/_authenticated/$projectId/index.tsx:150
+#: src/routes/_authenticated/$projectId/index.tsx:149
 msgid "Failed to export data"
 msgstr "Ekspòtasyon done yo echwe"
 
@@ -1248,12 +1279,12 @@ msgstr "Echwe pou chaje"
 msgid "Failed to load history"
 msgstr "Echwe pou chaje istwa"
 
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:338
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:350
 msgid "Failed to load image"
 msgstr "Echèk chajman imaj la"
 
-#: src/features/objects/components/object-detail-panel.tsx:336
-#: src/features/objects/components/object-detail-panel.tsx:339
+#: src/features/objects/components/object-detail-panel.tsx:345
+#: src/features/objects/components/object-detail-panel.tsx:348
 msgid "Failed to load item"
 msgstr "Echwe pou chaje atik"
 
@@ -1280,7 +1311,7 @@ msgstr "Echwe pou chaje prompt yo"
 msgid "Failed to load recommended projects"
 msgstr "Chajman pwojè yo rekòmande yo echwe"
 
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:338
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:350
 msgid "Failed to load video"
 msgstr "Echèk chajman videyo a"
 
@@ -1288,22 +1319,31 @@ msgstr "Echèk chajman videyo a"
 msgid "Failed to merge"
 msgstr "Echwe pou merge"
 
-#: src/features/objects/components/object-detail-panel.tsx:246
+#: src/features/objects/components/object-detail-panel.tsx:255
+#: src/routes/_authenticated/$projectId/index.tsx:153
 msgid "Failed to move"
 msgstr "Echèk deplasman"
 
-#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:154
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:155
 msgid "Failed to post comment"
 msgstr "Echwe pou poste kòmantè"
+
+#: src/routes/_authenticated/$projectId/index.tsx:157
+msgid "Failed to re-order columns"
+msgstr "Echèk pou reòdone kolòn yo"
 
 #: src/features/projects/components/create-project-dialog.tsx:261
 #: src/routes/_authenticated/$projectId/design.tsx:60
 msgid "Failed to read file"
 msgstr "Echwe pou li fichye"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:141
+#: src/routes/_authenticated/$projectId_.settings.tsx:139
 msgid "Failed to remove access"
 msgstr "Echwe pou retire aksè"
+
+#: src/routes/_authenticated/$projectId/index.tsx:155
+msgid "Failed to rename column"
+msgstr "Echèk pou chanje non kolòn nan"
 
 #: src/features/editor/components/design-editor.tsx:218
 msgid "Failed to reorder fields"
@@ -1321,7 +1361,7 @@ msgstr "Echwe pou reset prompt"
 msgid "Failed to revoke RSS access"
 msgstr "Echwe pou revoke aksè RSS"
 
-#: src/features/objects/components/object-detail-panel.tsx:190
+#: src/features/objects/components/object-detail-panel.tsx:199
 msgid "Failed to save"
 msgstr "Echwe pou sove"
 
@@ -1333,7 +1373,7 @@ msgstr "Echwe pou sove prompt"
 msgid "Failed to search projects"
 msgstr "Rechèch pwojè yo echwe"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:138
+#: src/routes/_authenticated/$projectId_.settings.tsx:136
 msgid "Failed to set access level"
 msgstr "Echwe pou mete nivo aksè"
 
@@ -1344,11 +1384,11 @@ msgid "Failed to subscribe"
 msgstr "Echwe pou abòne"
 
 #: src/features/projects/pages/projects-list-page.tsx:43
-#: src/routes/_authenticated/$projectId/index.tsx:159
+#: src/routes/_authenticated/$projectId/index.tsx:163
 msgid "Failed to unsubscribe"
 msgstr "Echwe pou dezabòne"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:144
+#: src/routes/_authenticated/$projectId_.settings.tsx:142
 msgid "Failed to update access level"
 msgstr "Echwe pou mete ajou nivo aksè"
 
@@ -1356,7 +1396,7 @@ msgstr "Echwe pou mete ajou nivo aksè"
 msgid "Failed to update class"
 msgstr "Echwe pou mete ajou klas"
 
-#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:174
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:175
 msgid "Failed to update comment"
 msgstr "Echwe pou mete ajou kòmantè"
 
@@ -1376,7 +1416,7 @@ msgstr "Echwe pou mete demand merge ajou"
 msgid "Failed to update option"
 msgstr "Echwe pou mete ajou opsyon"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:122
+#: src/routes/_authenticated/$projectId_.settings.tsx:120
 msgid "Failed to update project"
 msgstr "Echwe pou mete ajou pwojè"
 
@@ -1384,7 +1424,7 @@ msgstr "Echwe pou mete ajou pwojè"
 msgid "Failed to update view"
 msgstr "Echwe pou mete ajou vi"
 
-#: src/features/objects/components/object-detail-panel.tsx:209
+#: src/features/objects/components/object-detail-panel.tsx:218
 msgid "Failed to update watching"
 msgstr "Echèk mizajou siveyans"
 
@@ -1396,26 +1436,26 @@ msgstr "Echwe pou telechaje atachman"
 msgid "Fields"
 msgstr "Chan"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:589
-#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:155
-#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:175
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:611
+#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:160
+#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:180
 msgid "Files"
 msgstr "Fichye"
 
-#: src/components/layout/projects-layout.tsx:36
+#: src/components/layout/projects-layout.tsx:35
 #: src/routes/_authenticated/find.tsx:40
 msgid "Find projects"
 msgstr "Jwenn pwojè"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:118
+#: src/routes/_authenticated/$projectId_.settings.tsx:116
 msgid "Fingerprint"
 msgstr "Anprent dijital"
 
-#: ../../../lib/web/src/components/restore-banner.tsx:97
+#: ../../../lib/web/src/components/restore-banner.tsx:83
 msgid "Finish moving your account"
 msgstr "Fini deplase kont ou"
 
-#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:221
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:225
 msgid "Flags"
 msgstr "Drapo"
 
@@ -1427,11 +1467,11 @@ msgstr "Plat"
 msgid "Friday"
 msgstr "Vandredi"
 
-#: ../../../lib/web/src/components/person-picker.tsx:207
+#: ../../../lib/web/src/components/person-picker.tsx:185
 msgid "Friends"
 msgstr "Zanmi"
 
-#: ../../../lib/web/src/components/travelling-picker.tsx:153
+#: ../../../lib/web/src/components/travelling-picker.tsx:134
 msgid "From"
 msgstr "Soti nan"
 
@@ -1447,8 +1487,8 @@ msgstr "Soti nan fichye"
 msgid "From theme"
 msgstr "Soti nan tèm"
 
+#: ../../../lib/web/src/features/errors/access-denied-error.tsx:25
 #: ../../../lib/web/src/features/errors/not-found-error.tsx:26
-#: ../../../lib/web/src/features/errors/unauthorized-error.tsx:26
 msgid "Go back"
 msgstr "Retounen"
 
@@ -1456,7 +1496,7 @@ msgstr "Retounen"
 msgid "Group"
 msgstr "Gwoup"
 
-#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:347
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:350
 msgid "Group by"
 msgstr "Gwoupe pa"
 
@@ -1471,8 +1511,8 @@ msgstr "Istwa"
 
 #: ../../../lib/web/src/components/layout/app-sidebar.tsx:90
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx:185
-#: ../../../lib/web/src/components/layout/top-bar.tsx:71
-#: ../../../lib/web/src/components/layout/top-bar.tsx:100
+#: ../../../lib/web/src/components/layout/top-bar.tsx:86
+#: ../../../lib/web/src/components/layout/top-bar.tsx:115
 msgid "Home"
 msgstr "Akèy"
 
@@ -1480,17 +1520,17 @@ msgstr "Akèy"
 msgid "Hot"
 msgstr "Cho"
 
-#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:152
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:156
 #: src/features/editor/components/edit-dialogs.tsx:272
 msgid "ID"
 msgstr "ID"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:114
+#: src/routes/_authenticated/$projectId_.settings.tsx:112
 msgid "Identity"
 msgstr "Idantite"
 
 #. placeholder {0}: currentMedia.name
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:316
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:328
 msgid "Image viewer: {0}"
 msgstr "Vizyonè imaj: {0}"
 
@@ -1524,11 +1564,15 @@ msgstr "Avata ak inisyal"
 msgid "Initials avatar for {name}"
 msgstr "Avata ak inisyal pou {name}"
 
+#: ../../../lib/web/src/components/post-tags.tsx:168
+msgid "Interest {weight}"
+msgstr "Enterè {weight}"
+
 #: ../../../lib/web/src/components/ui/sort-selector.tsx:42
 msgid "Interests"
 msgstr "Enterè"
 
-#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:550
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:591
 msgid "Invalid date"
 msgstr "Dat envalid"
 
@@ -1541,7 +1585,7 @@ msgstr "Fichye JSON envalid"
 msgid "It seems like the page you're looking for <0/>does not exist or might have been removed."
 msgstr "Sanble paj w ap chèche a <0/>pa egziste oswa yo retire l."
 
-#: src/features/objects/components/object-detail-panel.tsx:416
+#: src/features/objects/components/object-detail-panel.tsx:425
 msgid "Item details"
 msgstr "Detay atik"
 
@@ -1558,20 +1602,20 @@ msgstr "Rakousi klavye"
 msgid "Large"
 msgstr "Gwo"
 
-#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:306
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:309
 msgid "Layout"
 msgstr "Layout"
 
-#: ../../../lib/web/src/components/post-tags.tsx:72
-msgid "Letters, numbers, spaces, and hyphens only"
-msgstr "Sèlman lèt, chif, espas ak tirè"
+#: ../../../lib/web/src/components/post-tags.tsx:73
+msgid "Letters, numbers, spaces, hyphens, and slashes only"
+msgstr "Sèlman lèt, chif, espas, tirè ak bar oblik"
 
 #: ../../../lib/web/src/lib/preference-utils.ts:14
 msgid "Light"
 msgstr "Klè"
 
 #: ../../../lib/web/src/components/options-menu.tsx:190
-#: src/routes/_authenticated/$projectId/index.tsx:151
+#: src/routes/_authenticated/$projectId/index.tsx:150
 msgid "Link"
 msgstr "Lyen"
 
@@ -1579,11 +1623,11 @@ msgstr "Lyen"
 msgid "Links"
 msgstr "Lyen"
 
-#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:318
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:321
 msgid "List"
 msgstr "Lis"
 
-#: ../../../lib/web/src/components/ui/load-more.tsx:35
+#: ../../../lib/web/src/components/ui/load-more.tsx:39
 msgid "Load more"
 msgstr "Chaje plis"
 
@@ -1595,11 +1639,11 @@ msgstr "Y ap chaje kontni…"
 msgid "Loading diff..."
 msgstr "Ap chaje diff..."
 
-#: src/features/objects/components/object-detail-panel.tsx:316
+#: src/features/objects/components/object-detail-panel.tsx:325
 msgid "Loading item"
 msgstr "Ap chaje atik"
 
-#: src/features/objects/components/object-detail-panel.tsx:317
+#: src/features/objects/components/object-detail-panel.tsx:326
 msgid "Loading item details"
 msgstr "Ap chaje detay atik"
 
@@ -1607,9 +1651,9 @@ msgstr "Ap chaje detay atik"
 msgid "Loading templates..."
 msgstr "Ap chaje template..."
 
-#: ../../../lib/web/src/components/ui/load-more.tsx:35
+#: ../../../lib/web/src/components/ui/load-more.tsx:39
 #: ../../../lib/web/src/features/document/document-page.tsx:88
-#: src/routes/_authenticated/$projectId/index.tsx:148
+#: src/routes/_authenticated/$projectId/index.tsx:147
 msgid "Loading..."
 msgstr "Ap chaje..."
 
@@ -1638,12 +1682,12 @@ msgstr "Jere kategori yo"
 msgid "Manual"
 msgstr "Manyèl"
 
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:207
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:214
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:203
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:210
 msgid "Mark all as read"
 msgstr "Make tout kòm li"
 
-#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:198
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:202
 msgid "Maximum length"
 msgstr "Longè maksimòm"
 
@@ -1654,6 +1698,10 @@ msgstr "Sèvè MCP"
 #: ../../../lib/web/src/lib/preference-utils.ts:102
 msgid "Medium"
 msgstr "Mwayen"
+
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:377
+msgid "Members"
+msgstr "Manm"
 
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx:200
 msgid "Menu"
@@ -1675,7 +1723,7 @@ msgstr "Commit Merge"
 msgid "Merge requests"
 msgstr "Demand Merge"
 
-#: src/features/objects/components/object-detail-panel.tsx:391
+#: src/features/objects/components/object-detail-panel.tsx:400
 msgid "Merge requests ({requestCount})"
 msgstr "Demand Merge ({requestCount})"
 
@@ -1699,7 +1747,7 @@ msgstr "Mesaj"
 msgid "Metric"
 msgstr "Metrik"
 
-#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:187
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:191
 msgid "Minimum length"
 msgstr "Longè minimòm"
 
@@ -1724,51 +1772,57 @@ msgstr "Lendi"
 msgid "More options"
 msgstr "Plis opsyon"
 
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx:60
+msgid "Moved"
+msgstr "Deplase"
+
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx:60
+msgid "Moved {field}"
+msgstr "{field} deplase"
+
 #: src/features/projects/components/create-project-dialog.tsx:352
 msgid "My project"
 msgstr "Pwojè mwen"
 
-#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:118
-#: ../../../lib/web/src/components/entity/entity-board-column.tsx:600
-#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:142
-#: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:125
-#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:293
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:122
+#: ../../../lib/web/src/components/entity/entity-board-column.tsx:601
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:145
+#: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:126
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:296
 #: src/features/editor/components/edit-dialogs.tsx:258
 #: src/features/projects/components/create-project-dialog.tsx:342
-#: src/routes/_authenticated/$projectId_.settings.tsx:115
+#: src/routes/_authenticated/$projectId_.settings.tsx:113
 msgid "Name"
 msgstr "Non"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:78
+#: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:104
+#: src/routes/_authenticated/$projectId_.settings.tsx:76
 msgid "Name cannot contain < or > characters"
 msgstr "Non pa ka gen karaktè < oswa >"
 
-#: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:102
-msgid "Name cannot contain angle brackets, backslash, semicolon, quotes or backticks"
-msgstr "Non an pa ka gen kwochè ang, bak slach, pwen vigil, gimè oswa backtick"
-
+#: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:101
 #: src/features/projects/components/create-project-dialog.tsx:102
 msgid "Name is required"
 msgstr "Non obligatwa"
 
-#: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:100
-#: src/routes/_authenticated/$projectId_.settings.tsx:76
+#: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:102
+#: src/routes/_authenticated/$projectId_.settings.tsx:74
 msgid "Name must be 1000 characters or less"
 msgstr "Non dwe gen 1000 karaktè oswa mwens"
 
-#: ../../../lib/web/src/features/errors/general-error.tsx:53
+#: ../../../lib/web/src/features/errors/general-error.tsx:51
 #: ../../../lib/web/src/lib/api-response-interceptors.ts:313
 msgid "Network error"
 msgstr "Erè rezo"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:476
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:498
 #: ../../../lib/web/src/components/ui/sort-selector.tsx:43
-#: src/routes/_authenticated/$projectId/index.tsx:130
-#: src/routes/_authenticated/$projectId/index.tsx:134
+#: src/routes/_authenticated/$projectId/index.tsx:129
+#: src/routes/_authenticated/$projectId/index.tsx:133
 msgid "New"
 msgstr "Nouvo"
 
-#: src/routes/_authenticated/$projectId/index.tsx:136
+#: src/routes/_authenticated/$projectId/index.tsx:135
 msgid "New {className}"
 msgstr "Nouvo {className}"
 
@@ -1781,16 +1835,16 @@ msgstr "Nouvo jwèt"
 msgid "Next"
 msgstr "Pwochen"
 
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:525
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:530
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:537
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:542
 msgid "Next image"
 msgstr "Pwochen imaj"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:555
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:577
 msgid "No {parentClassNames} to add to"
 msgstr "Pa gen {parentClassNames} pou ajoute"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:55
+#: src/routes/_authenticated/$projectId_.settings.tsx:53
 msgid "No access"
 msgstr "Pa gen aksè"
 
@@ -1798,7 +1852,7 @@ msgstr "Pa gen aksè"
 msgid "No access rules configured. Add rules to control who can access this resource."
 msgstr "Pa gen règ aksè konfigire. Ajoute règ pou kontwole kiyès ki ka jwenn aksè nan resous sa a."
 
-#: ../../../lib/web/src/components/entity/entity-activity-list.tsx:65
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx:74
 msgid "No activity yet"
 msgstr "Poko gen aktivite"
 
@@ -1818,7 +1872,7 @@ msgstr "Pa gen chanjman pou afiche"
 msgid "No changes were found for the selected comparison."
 msgstr "Pa gen chanjman ki te jwenn pou konparezon ki chwazi a."
 
-#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:322
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:324
 msgid "No comments yet"
 msgstr "Poko gen kòmantè"
 
@@ -1834,7 +1888,7 @@ msgstr "Poko gen jwèt"
 msgid "No groups available"
 msgstr "Pa gen gwoup disponib"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:522
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:544
 msgid "No item types can be created yet. Create the required parent items first."
 msgstr "Okenn kalite atik pa ka kreye ankò. Kreye atik paran ki nesesè yo dabò."
 
@@ -1846,12 +1900,12 @@ msgstr "Pa gen objè ki koresponn"
 msgid "No merge requests"
 msgstr "Pa gen demand merge"
 
-#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:341
-#: ../../../lib/web/src/components/person-picker.tsx:84
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:382
+#: ../../../lib/web/src/components/person-picker.tsx:71
 msgid "No people found"
 msgstr "Pa gen moun ki jwenn"
 
-#: ../../../lib/web/src/components/place-picker.tsx:133
+#: ../../../lib/web/src/components/place-picker.tsx:120
 msgid "No places found"
 msgstr "Pa gen kote ki jwenn"
 
@@ -1864,18 +1918,18 @@ msgstr "Pa gen pwojè ki jwenn"
 msgid "No repositories available"
 msgstr "Pa gen depo disponib"
 
-#: ../../../lib/web/src/components/inline-entity-search.tsx:64
+#: ../../../lib/web/src/components/inline-entity-search.tsx:65
 #: ../../../lib/web/src/components/search-entity-page.tsx:73
 msgid "No results found"
 msgstr "Pa jwenn okenn rezilta"
 
-#: ../../../lib/web/src/components/command-menu.tsx:55
+#: ../../../lib/web/src/components/command-menu.tsx:57
 msgid "No results found."
 msgstr "Pa gen rezilta ki jwenn."
 
 #: ../../../lib/web/src/components/entity/entity-board-container.tsx:824
 #: ../../../lib/web/src/components/entity/entity-board-container.tsx:869
-#: ../../../lib/web/src/components/entity/entity-tree-view.tsx:339
+#: ../../../lib/web/src/components/entity/entity-tree-view.tsx:336
 msgid "No status"
 msgstr "Pa gen estati"
 
@@ -1887,7 +1941,7 @@ msgstr "Pa gen zòn lè ki jwenn."
 msgid "No topic record yet — try again after the next notification."
 msgstr "Poko gen anrejistreman sijè — eseye ankò apre pwochèn notifikasyon an."
 
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:139
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:135
 msgid "No unread notifications"
 msgstr "Pa gen notifikasyon ki pa li"
 
@@ -1900,23 +1954,23 @@ msgid "No views"
 msgstr "Pa gen vi"
 
 #: ../../../lib/web/src/components/colour-picker.tsx:349
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:538
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:541
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:545
-#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:359
-#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:382
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:560
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:563
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:567
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:362
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:385
-#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:412
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:388
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:415
-#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:488
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:418
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:491
-#: ../../../lib/web/src/components/person-picker.tsx:350
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:494
+#: ../../../lib/web/src/components/person-picker.tsx:328
 #: ../../../lib/web/src/lib/preference-utils.ts:100
 #: src/features/editor/components/edit-dialogs.tsx:296
 #: src/features/editor/components/edit-dialogs.tsx:299
-#: src/features/objects/components/object-detail-panel.tsx:537
-#: src/features/objects/components/object-detail-panel.tsx:550
-#: src/features/objects/components/object-detail-panel.tsx:555
+#: src/features/objects/components/object-detail-panel.tsx:547
+#: src/features/objects/components/object-detail-panel.tsx:560
+#: src/features/objects/components/object-detail-panel.tsx:565
 msgid "None"
 msgstr "Okenn"
 
@@ -1938,26 +1992,26 @@ msgid "Not configured"
 msgstr "Pa konfigire"
 
 #: ../../../lib/web/src/components/attachment-image.tsx:50
-#: ../../../lib/web/src/features/errors/general-error.tsx:67
+#: ../../../lib/web/src/features/errors/general-error.tsx:65
 msgid "Not found"
 msgstr "Pa jwenn"
 
-#: ../../../lib/web/src/components/ui/editable-field-row.tsx:146
+#: ../../../lib/web/src/components/ui/editable-field-row.tsx:150
 msgid "Not set"
 msgstr "Pa defini"
 
-#: ../../../lib/web/src/components/entity/entity-tree-view.tsx:671
+#: ../../../lib/web/src/components/entity/entity-tree-view.tsx:668
 msgid "Nothing found"
 msgstr "Pa gen anyen ki jwenn"
 
 #. placeholder {0}: unread.length
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:200
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:196
 msgid "Notifications: {0}"
 msgstr "Notifikasyon: {0}"
 
-#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:140
 #: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:54
-#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:493
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:497
+#: ../../../lib/web/src/hooks/use-field-type-labels.ts:15
 msgid "Number"
 msgstr "Nimewo"
 
@@ -1979,8 +2033,8 @@ msgstr "Ouvè"
 msgid "Open {0}"
 msgstr "Ouvri {0}"
 
-#: ../../../lib/web/src/components/layout/nav-group.tsx:199
-#: ../../../lib/web/src/components/layout/nav-group.tsx:204
+#: ../../../lib/web/src/components/layout/nav-group.tsx:227
+#: ../../../lib/web/src/components/layout/nav-group.tsx:232
 msgid "Open actions"
 msgstr "Ouvri aksyon yo"
 
@@ -1997,17 +2051,17 @@ msgstr "Ouvri aksyon konsepsyon yo"
 msgid "Open menu"
 msgstr "Ouvri meni"
 
-#: ../../../lib/web/src/components/layout/top-bar.tsx:63
-#: ../../../lib/web/src/components/layout/top-bar.tsx:68
+#: ../../../lib/web/src/components/layout/top-bar.tsx:78
+#: ../../../lib/web/src/components/layout/top-bar.tsx:83
 msgid "Open navigation"
 msgstr "Ouvri navigasyon"
 
-#: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:105
-#: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:111
+#: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:106
+#: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:112
 msgid "Open option actions"
 msgstr "Ouvri aksyon opsyon yo"
 
-#: src/routes/_authenticated/$projectId/index.tsx:129
+#: src/routes/_authenticated/$projectId/index.tsx:128
 msgid "Open page actions"
 msgstr "Ouvri aksyon paj yo"
 
@@ -2015,8 +2069,8 @@ msgstr "Ouvri aksyon paj yo"
 msgid "Open selected card"
 msgstr "Ouvri kat ki chwazi"
 
-#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:274
-#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:279
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:277
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:282
 msgid "Open view actions"
 msgstr "Ouvri aksyon vi yo"
 
@@ -2025,13 +2079,13 @@ msgstr "Ouvri aksyon vi yo"
 msgid "Open view controls"
 msgstr "Ouvri kontwòl vi"
 
-#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:200
-#: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:155
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:202
+#: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:157
 msgid "Option name"
 msgstr "Non opsyon"
 
-#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:168
-#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:240
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:170
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:244
 msgid "Options"
 msgstr "Opsyon"
 
@@ -2043,50 +2097,50 @@ msgstr "Lòt"
 msgid "Owner"
 msgstr "Pwopriyetè"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:530
-#: src/features/objects/components/object-detail-panel.tsx:533
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:552
+#: src/features/objects/components/object-detail-panel.tsx:543
 msgid "Parent"
 msgstr "Paran"
 
-#: ../../../lib/web/src/components/step-up-dialog.tsx:337
+#: ../../../lib/web/src/components/step-up-dialog.tsx:325
 msgid "Passkey"
 msgstr "Passkey"
 
-#: ../../../lib/web/src/components/step-up-dialog.tsx:207
+#: ../../../lib/web/src/components/step-up-dialog.tsx:195
 msgid "Passkey verification failed. Please try again."
 msgstr "Verifikasyon passkey la echwe. Tanpri eseye ankò."
 
-#: ../../../lib/web/src/components/restore-banner.tsx:146
+#: ../../../lib/web/src/components/restore-banner.tsx:132
 msgid "Passkeys"
 msgstr "Paskey"
 
-#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:209
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:213
 msgid "Pattern (regex)"
 msgstr "Modèl (regex)"
 
-#: src/routes/_authenticated/$projectId/index.tsx:138
+#: ../../../lib/web/src/components/person-picker.tsx:178
+msgid "People"
+msgstr "Moun"
+
+#: src/routes/_authenticated/$projectId/index.tsx:137
 msgid "Please add one or more classes to the project design."
 msgstr "Tanpri ajoute youn oswa plizyè klas nan konsepsyon pwojè a."
 
 #: ../../../lib/web/src/components/comment-composer.tsx:89
-#: ../../../lib/web/src/features/errors/general-error.tsx:54
+#: ../../../lib/web/src/features/errors/general-error.tsx:52
 #: ../../../lib/web/src/lib/api-response-interceptors.ts:314
 msgid "Please check your internet connection and try again."
 msgstr "Tanpri tcheke koneksyon entènèt ou epi eseye ankò."
-
-#: ../../../lib/web/src/features/errors/unauthorized-error.tsx:18
-msgid "Please log in with the appropriate credentials <0/> to access this resource."
-msgstr "Tanpri konekte ak bon idantifyan yo <0/> pou w jwenn aksè nan resous sa a."
 
 #: src/features/projects/components/create-project-dialog.tsx:118
 msgid "Please select a template"
 msgstr "Tanpri chwazi yon modèl"
 
-#: ../../../lib/web/src/features/errors/general-error.tsx:83
+#: ../../../lib/web/src/features/errors/general-error.tsx:81
 msgid "Please try again."
 msgstr "Tanpri, eseye ankò."
 
-#: ../../../lib/web/src/features/errors/general-error.tsx:75
+#: ../../../lib/web/src/features/errors/general-error.tsx:73
 msgid "Please wait a moment and try again."
 msgstr "Tanpri tann yon ti moman epi eseye ankò."
 
@@ -2099,20 +2153,20 @@ msgid "Posts and comments"
 msgstr "Pòs ak kòmantè"
 
 #: src/features/projects/components/create-project-dialog.tsx:364
-#: src/routes/_authenticated/$projectId_.settings.tsx:85
+#: src/routes/_authenticated/$projectId_.settings.tsx:83
 msgid "Prefix"
 msgstr "Prefiks"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:95
+#: src/routes/_authenticated/$projectId_.settings.tsx:93
 msgid "Prefix can only contain lowercase letters, numbers, and hyphens"
 msgstr "Prefiks la ka gen sèlman lèt minuskil, chif ak tirè"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:97
+#: src/routes/_authenticated/$projectId_.settings.tsx:95
 msgid "Prefix must be 20 characters or less"
 msgstr "Prefiks la dwe gen 20 karaktè oswa mwens"
 
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:509
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:514
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:521
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:526
 msgid "Previous image"
 msgstr "Imaj anvan"
 
@@ -2138,39 +2192,35 @@ msgstr "Aksyon pwojè"
 msgid "Project created"
 msgstr "Pwojè kreye"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:132
+#: src/routes/_authenticated/$projectId_.settings.tsx:130
 msgid "Project deleted"
 msgstr "Pwojè efase"
 
-#: src/routes/_authenticated/$projectId/index.tsx:152
+#: src/routes/_authenticated/$projectId/index.tsx:151
 msgid "Project link"
 msgstr "Lyen pwojè"
 
-#: ../../../lib/web/src/components/person-picker.tsx:200
-msgid "Project members"
-msgstr "Manm pwojè a"
-
-#: src/routes/_authenticated/$projectId_.settings.tsx:75
+#: src/routes/_authenticated/$projectId_.settings.tsx:73
 msgid "Project name is required"
 msgstr "Non pwojè obligatwa"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:110
+#: src/routes/_authenticated/$projectId_.settings.tsx:108
 msgid "Project not found"
 msgstr "Pwojè pa jwenn"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:109
+#: src/routes/_authenticated/$projectId_.settings.tsx:107
 msgid "Project settings"
 msgstr "Paramèt pwojè"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:112
+#: src/routes/_authenticated/$projectId_.settings.tsx:110
 msgid "Project unavailable"
 msgstr "Pwojè pa disponib"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:121
+#: src/routes/_authenticated/$projectId_.settings.tsx:119
 msgid "Project updated"
 msgstr "Pwojè mete ajou"
 
-#: src/components/layout/projects-layout.tsx:34
+#: src/components/layout/projects-layout.tsx:33
 #: src/features/projects/pages/projects-list-page.tsx:35
 msgid "Projects"
 msgstr "Pwojè yo"
@@ -2179,7 +2229,7 @@ msgstr "Pwojè yo"
 msgid "Prompt saved"
 msgstr "Prompt sove"
 
-#: src/features/objects/components/object-detail-panel.tsx:379
+#: src/features/objects/components/object-detail-panel.tsx:388
 msgid "Properties"
 msgstr "Pwopriyete"
 
@@ -2191,15 +2241,15 @@ msgstr "Notifikasyon push"
 msgid "Raised"
 msgstr "Leve"
 
-#: ../../../lib/web/src/components/restore-banner.tsx:118
+#: ../../../lib/web/src/components/restore-banner.tsx:104
 msgid "Re-link your accounts on this server"
 msgstr "Konekte kont ou yo ankò sou sèvè sa a"
 
-#: src/routes/_authenticated/$projectId/index.tsx:141
+#: src/routes/_authenticated/$projectId/index.tsx:140
 msgid "Re-order columns"
 msgstr "Reòganize kolòn yo"
 
-#: ../../../lib/web/src/components/restore-banner.tsx:140
+#: ../../../lib/web/src/components/restore-banner.tsx:126
 msgid "Re-register your passkeys on this server"
 msgstr "Re-enskri paskey ou yo sou sèvè sa a"
 
@@ -2223,12 +2273,12 @@ msgstr "Pwojè rekòmande"
 msgid "Reconnecting ({retries})..."
 msgstr "Rekoneksyon ({retries})..."
 
-#: ../../../lib/web/src/components/layout/authenticated-layout.tsx:136
+#: ../../../lib/web/src/components/layout/authenticated-layout.tsx:135
 msgid "Redirecting to login."
 msgstr "Ap redirije nan koneksyon."
 
-#: ../../../lib/web/src/components/post-tags.tsx:200
-#: ../../../lib/web/src/components/post-tags.tsx:212
+#: ../../../lib/web/src/components/post-tags.tsx:214
+#: ../../../lib/web/src/components/post-tags.tsx:226
 msgid "Reduce interest"
 msgstr "Diminye enterè"
 
@@ -2244,9 +2294,17 @@ msgstr "Relatif (5m, 3h, 2d)"
 msgid "Relative within 24 hours, else absolute"
 msgstr "Relatif nan 24 èdtan, sinon absoli"
 
+#: ../../../lib/web/src/components/post-tags.tsx:166
+msgid "Relevance {relevance}"
+msgstr "Enpòtans {relevance}"
+
+#: ../../../lib/web/src/components/post-tags.tsx:164
+msgid "Relevance {relevance}, interest {weight}"
+msgstr "Enpòtans {relevance}, enterè {weight}"
+
 #: ../../../lib/web/src/components/attachment-composer.tsx:285
 #: ../../../lib/web/src/components/attachment-composer.tsx:330
-#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:190
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:192
 #: ../../../lib/web/src/features/access/access-list.tsx:270
 #: src/features/projects/components/create-project-dialog.tsx:439
 msgid "Remove"
@@ -2278,12 +2336,12 @@ msgstr "Retire aksè?"
 msgid "Remove field {0}"
 msgstr "Retire jaden {0}"
 
-#: ../../../lib/web/src/components/post-tags.tsx:220
-#: ../../../lib/web/src/components/post-tags.tsx:232
+#: ../../../lib/web/src/components/post-tags.tsx:234
+#: ../../../lib/web/src/components/post-tags.tsx:246
 msgid "Remove interest"
 msgstr "Retire enterè"
 
-#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:674
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:712
 msgid "Remove item"
 msgstr "Retire atik"
 
@@ -2292,20 +2350,20 @@ msgstr "Retire atik"
 msgid "Remove link"
 msgstr "Retire lyen"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:139
+#: src/routes/_authenticated/$projectId_.settings.tsx:137
 msgid "Removing access..."
 msgstr "Ap retire aksè..."
 
-#: ../../../lib/web/src/components/entity/entity-board-column.tsx:561
-#: ../../../lib/web/src/components/entity/entity-board-column.tsx:618
+#: ../../../lib/web/src/components/entity/entity-board-column.tsx:562
+#: ../../../lib/web/src/components/entity/entity-board-column.tsx:620
 msgid "Rename"
 msgstr "Rebatize"
 
-#: ../../../lib/web/src/components/entity/entity-board-column.tsx:596
+#: ../../../lib/web/src/components/entity/entity-board-column.tsx:597
 msgid "Rename column"
 msgstr "Rebatize kolòn"
 
-#: ../../../lib/web/src/components/entity/entity-board-column.tsx:597
+#: ../../../lib/web/src/components/entity/entity-board-column.tsx:598
 msgid "Rename this board column"
 msgstr "Rebatize kolòn tablo sa a"
 
@@ -2335,11 +2393,11 @@ msgstr "Reponn {0}..."
 msgid "Requests"
 msgstr "Demand"
 
-#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:224
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:228
 msgid "Required"
 msgstr "Obligatwa"
 
-#: ../../../lib/web/src/components/step-up-dialog.tsx:370
+#: ../../../lib/web/src/components/step-up-dialog.tsx:358
 msgid "Resend email"
 msgstr "Voye imèl la ankò"
 
@@ -2351,7 +2409,7 @@ msgstr "Rezoud konfli sa yo manyèlman anvan merge."
 msgid "Retry"
 msgstr "Eseye ankò"
 
-#: src/components/layout/projects-layout.tsx:38
+#: src/components/layout/projects-layout.tsx:37
 msgid "Retry projects load"
 msgstr "Eseye ankò chaje pwojè"
 
@@ -2367,12 +2425,12 @@ msgstr "Revoke aksè"
 msgid "Revoke RSS access?"
 msgstr "Revoke aksè RSS la?"
 
-#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:150
-#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:168
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:152
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:172
 msgid "Rows"
 msgstr "Ranje"
 
-#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:373
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:376
 msgid "Rows group by"
 msgstr "Ranje gwoupe pa"
 
@@ -2395,22 +2453,22 @@ msgstr "Samdi"
 #: ../../../lib/web/src/components/ai-prompts-editor.tsx:156
 #: ../../../lib/web/src/components/attachment-composer.tsx:430
 #: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:231
-#: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:170
-#: ../../../lib/web/src/components/ui/editable-field-row.tsx:122
+#: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:172
+#: ../../../lib/web/src/components/ui/editable-field-row.tsx:126
 #: ../../../lib/web/src/components/ui/secret-field.tsx:79
-#: src/routes/_authenticated/$projectId/index.tsx:144
+#: src/routes/_authenticated/$projectId/index.tsx:143
 msgid "Save"
 msgstr "Sove"
 
 #: ../../../lib/web/src/components/ai-prompts-editor.tsx:156
-#: src/routes/_authenticated/$projectId_.settings.tsx:120
+#: src/routes/_authenticated/$projectId_.settings.tsx:118
 msgid "Saving..."
 msgstr "Ap sove..."
 
 #: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:175
 #: ../../../lib/web/src/components/filter-bar.tsx:32
 #: ../../../lib/web/src/components/header-search.tsx:22
-#: ../../../lib/web/src/components/search.tsx:18
+#: ../../../lib/web/src/components/search.tsx:17
 msgid "Search"
 msgstr "Chèche"
 
@@ -2422,19 +2480,19 @@ msgstr "Chèche pa non, ID, fingerprint, oswa URL..."
 msgid "Search for a command to run..."
 msgstr "Chèche yon kòmand pou egzekite..."
 
-#: ../../../lib/web/src/components/place-picker.tsx:86
+#: ../../../lib/web/src/components/place-picker.tsx:73
 msgid "Search for a place"
 msgstr "Chèche yon kote"
 
-#: ../../../lib/web/src/components/place-picker.tsx:50
+#: ../../../lib/web/src/components/place-picker.tsx:37
 msgid "Search for a place..."
 msgstr "Chèche yon kote..."
 
-#: ../../../lib/web/src/components/travelling-picker.tsx:250
+#: ../../../lib/web/src/components/travelling-picker.tsx:231
 msgid "Search for destination..."
 msgstr "Chèche pou destinasyon..."
 
-#: ../../../lib/web/src/components/travelling-picker.tsx:183
+#: ../../../lib/web/src/components/travelling-picker.tsx:164
 msgid "Search for origin..."
 msgstr "Chèche pou orijin..."
 
@@ -2460,8 +2518,8 @@ msgstr "Chèche, gade, ak triye vi sa a."
 
 #: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:179
 #: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:255
-#: ../../../lib/web/src/components/inline-entity-search.tsx:63
-#: ../../../lib/web/src/components/person-picker.tsx:324
+#: ../../../lib/web/src/components/inline-entity-search.tsx:64
+#: ../../../lib/web/src/components/person-picker.tsx:302
 #: ../../../lib/web/src/components/search-entity-page.tsx:72
 msgid "Search..."
 msgstr "Chèche..."
@@ -2471,11 +2529,11 @@ msgstr "Chèche..."
 msgid "Searching..."
 msgstr "Ap chèche..."
 
-#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:141
+#: ../../../lib/web/src/hooks/use-field-type-labels.ts:16
 msgid "Select"
 msgstr "Chwazi"
 
-#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:356
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:359
 msgid "Select a field"
 msgstr "Chwazi yon jaden"
 
@@ -2503,7 +2561,7 @@ msgstr "Chwazi branch"
 msgid "Select group"
 msgstr "Chwazi gwoup"
 
-#: ../../../lib/web/src/components/place-picker.tsx:49
+#: ../../../lib/web/src/components/place-picker.tsx:36
 msgid "Select location"
 msgstr "Chwazi kote"
 
@@ -2511,7 +2569,7 @@ msgstr "Chwazi kote"
 msgid "Select next card"
 msgstr "Chwazi pwochen kat la"
 
-#: ../../../lib/web/src/components/person-picker.tsx:83
+#: ../../../lib/web/src/components/person-picker.tsx:70
 msgid "Select person..."
 msgstr "Chwazi yon moun..."
 
@@ -2523,8 +2581,8 @@ msgstr "Chwazi kat anvan an"
 msgid "Select repository"
 msgstr "Chwazi depo"
 
-#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:257
-#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:340
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:289
+#: ../../../lib/web/src/components/entity/entity-field-editor.tsx:381
 msgid "Select..."
 msgstr "Chwazi..."
 
@@ -2537,7 +2595,7 @@ msgstr "Chwazi: <0>{0}</0>"
 msgid "Send again"
 msgstr "Voye ankò"
 
-#: ../../../lib/web/src/components/step-up-dialog.tsx:310
+#: ../../../lib/web/src/components/step-up-dialog.tsx:298
 msgid "Send email"
 msgstr "Voye imèl"
 
@@ -2550,7 +2608,7 @@ msgstr "Voye mesaj"
 msgid "Serif"
 msgstr "Serif"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:119
+#: src/routes/_authenticated/$projectId_.settings.tsx:117
 msgid "Server"
 msgstr "Sèvè"
 
@@ -2568,27 +2626,27 @@ msgstr "Règ sèvè"
 msgid "Session expired. Please log in again."
 msgstr "Sesyon an ekspire. Tanpri konekte ankò."
 
-#: ../../../lib/web/src/components/travelling-picker.tsx:147
+#: ../../../lib/web/src/components/travelling-picker.tsx:128
 msgid "Set origin and destination"
 msgstr "Mete orijin ak destinasyon"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:136
+#: src/routes/_authenticated/$projectId_.settings.tsx:134
 msgid "Setting access..."
 msgstr "Ap defini aksè..."
 
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx:119
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx:125
 #: ../../../lib/web/src/components/options-menu.tsx:196
-#: src/routes/_authenticated/$projectId_.settings.tsx:103
-#: src/routes/_authenticated/$projectId/index.tsx:173
+#: src/routes/_authenticated/$projectId_.settings.tsx:101
+#: src/routes/_authenticated/$projectId/index.tsx:177
 msgid "Settings"
 msgstr "Paramèt"
 
-#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:327
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:330
 msgid "Show classes"
 msgstr "Montre klas yo"
 
-#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:428
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:431
 msgid "Show fields"
 msgstr "Montre chan yo"
 
@@ -2596,7 +2654,7 @@ msgstr "Montre chan yo"
 msgid "Show this help"
 msgstr "Montre èd sa"
 
-#: ../../../lib/web/src/components/ui/load-more.tsx:39
+#: ../../../lib/web/src/components/ui/load-more.tsx:43
 msgid "Showing {totalShown} of {total}"
 msgstr "Ap montre {totalShown} nan {total}"
 
@@ -2604,17 +2662,21 @@ msgstr "Ap montre {totalShown} nan {total}"
 msgid "Sidebar"
 msgstr "Sidebar"
 
+#: ../../../lib/web/src/features/errors/access-denied-error.tsx:18
+msgid "Sign in with an account that has access <0/> to this resource."
+msgstr "Konekte ak yon kont ki gen aksè <0/> a resous sa a."
+
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx:131
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx:137
 msgid "Sign out"
 msgstr "Dekonekte"
 
-#: ../../../lib/web/src/components/layout/authenticated-layout.tsx:134
+#: ../../../lib/web/src/components/layout/authenticated-layout.tsx:133
 msgid "Signing out..."
 msgstr "Ap dekonekte..."
 
-#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:161
-#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:179
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:163
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:183
 msgid "Single line of text only"
 msgstr "Yon sèl liy tèks sèlman"
 
@@ -2647,12 +2709,12 @@ msgstr "Divize"
 msgid "Squash and merge"
 msgstr "Squash epi mèj"
 
-#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:323
+#: ../../../lib/web/src/components/entity/entity-comment-list.tsx:325
 msgid "Start the discussion by adding the first comment."
 msgstr "Kòmanse diskisyon an pa ajoute premye kòmantè a."
 
-#: src/features/objects/components/object-detail-panel.tsx:439
 #: src/features/objects/components/object-detail-panel.tsx:448
+#: src/features/objects/components/object-detail-panel.tsx:457
 msgid "Stop watching"
 msgstr "Sispann gade"
 
@@ -2660,16 +2722,16 @@ msgstr "Sispann gade"
 msgid "Subject"
 msgstr "Sijè"
 
-#: ../../../lib/web/src/components/comment-composer.tsx:427
+#: ../../../lib/web/src/components/comment-composer.tsx:430
 msgid "Submit comment"
 msgstr "Soumèt kòmantè"
 
-#: ../../../lib/web/src/components/comment-composer.tsx:426
+#: ../../../lib/web/src/components/comment-composer.tsx:429
 msgid "Submit reply"
 msgstr "Soumèt repons"
 
-#: ../../../lib/web/src/components/inline-entity-search.tsx:66
-#: ../../../lib/web/src/components/recommended-entities.tsx:58
+#: ../../../lib/web/src/components/inline-entity-search.tsx:67
+#: ../../../lib/web/src/components/recommended-entities.tsx:59
 #: ../../../lib/web/src/components/search-entity-page.tsx:74
 #: src/features/projects/components/inline-project-search.tsx:90
 #: src/features/projects/components/recommended-projects.tsx:58
@@ -2706,16 +2768,16 @@ msgstr "Chanje pou wè 1-9"
 msgid "System"
 msgstr "Sistèm"
 
-#: ../../../lib/web/src/components/post-tags.tsx:76
+#: ../../../lib/web/src/components/post-tags.tsx:77
 msgid "Tag already exists"
 msgstr "Tag deja egziste"
 
-#: ../../../lib/web/src/components/post-tags.tsx:68
+#: ../../../lib/web/src/components/post-tags.tsx:69
 msgid "Tag must be 50 characters or less"
 msgstr "Etikèt la dwe gen 50 karaktè oswa mwens"
 
-#: ../../../lib/web/src/components/post-tags.tsx:101
-#: ../../../lib/web/src/components/post-tags.tsx:115
+#: ../../../lib/web/src/components/post-tags.tsx:102
+#: ../../../lib/web/src/components/post-tags.tsx:116
 msgid "Tags"
 msgstr "Tag yo"
 
@@ -2728,11 +2790,11 @@ msgstr "Sib"
 msgid "Terms and conditions"
 msgstr "Kondisyon"
 
-#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:142
+#: ../../../lib/web/src/hooks/use-field-type-labels.ts:17
 msgid "Text"
 msgstr "Tèks"
 
-#: ../../../lib/web/src/components/step-up-dialog.tsx:193
+#: ../../../lib/web/src/components/step-up-dialog.tsx:181
 msgid "That code is incorrect or has expired."
 msgstr "Kòd sa a pa kòrèk oswa li ekspire."
 
@@ -2745,7 +2807,7 @@ msgstr "Li pa t ka voye. Fichye yo ka twò gwo, oswa koneksyon ou an echwe. Esey
 msgid "That was too large to upload. Remove or shrink files and try again."
 msgstr "Li te twò gwo pou telechaje. Retire oswa redui fichye yo epi eseye ankò."
 
-#: ../../../lib/web/src/features/errors/general-error.tsx:68
+#: ../../../lib/web/src/features/errors/general-error.tsx:66
 msgid "The requested content could not be found."
 msgstr "Nou pa t ka jwenn kontni ou te mande a."
 
@@ -2762,11 +2824,11 @@ msgstr "Demand mèj sa fizyone nan {0}."
 msgid "This merge request is a draft and cannot be merged."
 msgstr "Demand mèj sa se yon bouyon e li pa ka mèje."
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:113
+#: src/routes/_authenticated/$projectId_.settings.tsx:111
 msgid "This project could not be loaded right now."
 msgstr "Pwojè sa pa ka chaje kounye a."
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:111
+#: src/routes/_authenticated/$projectId_.settings.tsx:109
 msgid "This project may have been deleted or you don't have access to it."
 msgstr "Pwojè sa ka efase oswa ou pa gen aksè ladan l."
 
@@ -2774,12 +2836,12 @@ msgstr "Pwojè sa ka efase oswa ou pa gen aksè ladan l."
 msgid "This will merge \"{source}\" into \"{target}\". This action cannot be undone."
 msgstr "Sa pral mèj \"{source}\" nan \"{target}\". Aksyon sa pa ka anile."
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:129
+#: src/routes/_authenticated/$projectId_.settings.tsx:127
 msgid "This will permanently delete \"{projectName}\" and all its objects, comments, and attachments. This action cannot be undone."
 msgstr "Sa pral efase \"{projectName}\" pèmanan ak tout objè, kòmantè, ak atachman li yo. Aksyon sa pa ka anile."
 
 #. placeholder {0}: project.project.name
-#: src/routes/_authenticated/$projectId/index.tsx:156
+#: src/routes/_authenticated/$projectId/index.tsx:160
 msgid "This will remove \"{0}\" from your sidebar and stop updates for this project."
 msgstr "Sa pral retire \"{0}\" nan sidebar w epi sispann mizajou pou pwojè sa."
 
@@ -2801,26 +2863,23 @@ msgstr "Tit"
 msgid "Title field"
 msgstr "Chan tit"
 
-#: ../../../lib/web/src/components/travelling-picker.tsx:220
+#: ../../../lib/web/src/components/travelling-picker.tsx:201
 msgid "To"
 msgstr "Pou"
 
-#: ../../../lib/web/src/components/layout/nav-group.tsx:365
-#: ../../../lib/web/src/components/layout/nav-group.tsx:372
-#: ../../../lib/web/src/components/layout/nav-group.tsx:490
-#: ../../../lib/web/src/components/layout/nav-group.tsx:497
+#: ../../../lib/web/src/components/layout/nav-group.tsx:393
+#: ../../../lib/web/src/components/layout/nav-group.tsx:400
+#: ../../../lib/web/src/components/layout/nav-group.tsx:522
+#: ../../../lib/web/src/components/layout/nav-group.tsx:529
 msgid "Toggle section"
 msgstr "Chanje seksyon"
 
 #: ../../../lib/web/src/components/ui/sidebar.tsx:337
 #: ../../../lib/web/src/components/ui/sidebar.tsx:340
-msgid "Toggle sidebar"
-msgstr "Chanje ba sou kote"
-
 #: ../../../lib/web/src/components/ui/sidebar.tsx:352
 #: ../../../lib/web/src/components/ui/sidebar.tsx:355
-msgid "Toggle Sidebar"
-msgstr "Aktive Sidebar"
+msgid "Toggle sidebar"
+msgstr "Chanje ba sou kote"
 
 #: ../../../lib/web/src/components/entity/keyboard-shortcuts-help.tsx:26
 msgid "Toggle view options"
@@ -2831,7 +2890,7 @@ msgstr "Aktive opsyon vi"
 msgid "Toggle watched filter"
 msgstr "Aktive filtè gade"
 
-#: ../../../lib/web/src/features/errors/general-error.tsx:74
+#: ../../../lib/web/src/features/errors/general-error.tsx:72
 msgid "Too many requests"
 msgstr "Twòp demann"
 
@@ -2843,7 +2902,7 @@ msgstr "Anwo"
 msgid "Top level"
 msgstr "Nivo anwo"
 
-#: ../../../lib/web/src/components/travelling-picker.tsx:145
+#: ../../../lib/web/src/components/travelling-picker.tsx:126
 msgid "Travelling"
 msgstr "Vwayaje"
 
@@ -2851,8 +2910,8 @@ msgstr "Vwayaje"
 msgid "Try adjusting your search terms"
 msgstr "Eseye ajiste tèm rechèch ou"
 
-#: ../../../lib/web/src/features/errors/general-error.tsx:140
-#: ../../../lib/web/src/features/errors/general-error.tsx:180
+#: ../../../lib/web/src/features/errors/general-error.tsx:138
+#: ../../../lib/web/src/features/errors/general-error.tsx:178
 msgid "Try again"
 msgstr "Eseye ankò"
 
@@ -2860,12 +2919,12 @@ msgstr "Eseye ankò"
 msgid "Tuesday"
 msgstr "Madi"
 
-#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:130
-#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:162
+#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:134
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:166
 msgid "Type"
 msgstr "Tip"
 
-#: ../../../lib/web/src/components/command-menu.tsx:52
+#: ../../../lib/web/src/components/command-menu.tsx:54
 msgid "Type a command or search..."
 msgstr "Tape yon kòmand oswa rechèch..."
 
@@ -2885,8 +2944,8 @@ msgstr "Tape pou chèche..."
 msgid "Unable to connect to remote server"
 msgstr "Pa kapab konekte ak sèvè aleka a"
 
-#: ../../../lib/web/src/lib/auth-manager.ts:92
-#: ../../../lib/web/src/lib/auth-manager.ts:104
+#: ../../../lib/web/src/lib/auth-manager.ts:89
+#: ../../../lib/web/src/lib/auth-manager.ts:101
 msgid "Unable to redirect to login. Please try again."
 msgstr "Pa ka redireksyone pou login. Tanpri eseye ankò."
 
@@ -2894,16 +2953,12 @@ msgstr "Pa ka redireksyone pou login. Tanpri eseye ankò."
 msgid "Unassigned"
 msgstr "Pa asiyen"
 
-#: ../../../lib/web/src/features/errors/unauthorized-error.tsx:16
-msgid "Unauthorized Access"
-msgstr "Aksè Pa Otorize"
-
 #: ../../../lib/web/src/components/attachment-image.tsx:50
 msgid "Unavailable"
 msgstr "Pa disponib"
 
 #: ../../../lib/web/src/lib/request.ts:133
-#: ../../../lib/web/src/lib/request.ts:206
+#: ../../../lib/web/src/lib/request.ts:209
 msgid "Unexpected API error"
 msgstr "Erè API inatandi"
 
@@ -2915,31 +2970,36 @@ msgstr "Inifye"
 msgid "United States"
 msgstr "Etazini"
 
+#: ../../../lib/web/src/components/audit-timeline.tsx:103
+#: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:167
+#: ../../../lib/web/src/components/tree-row.tsx:219
+#: ../../../lib/web/src/components/tree-row.tsx:373
+#: ../../../lib/web/src/components/tree-table-header.tsx:70
 #: ../../../lib/web/src/features/accounts/types.ts:29
 msgid "Unknown"
 msgstr "Enkoni"
 
 #: ../../../lib/web/src/components/options-menu.tsx:211
 #: src/features/projects/pages/projects-list-page.tsx:39
-#: src/routes/_authenticated/$projectId/index.tsx:154
+#: src/routes/_authenticated/$projectId/index.tsx:158
 msgid "Unsubscribe"
 msgstr "Dezabòne"
 
-#: src/routes/_authenticated/$projectId/index.tsx:155
+#: src/routes/_authenticated/$projectId/index.tsx:159
 msgid "Unsubscribe from project?"
 msgstr "Dezabòne nan pwojè?"
 
 #: src/features/projects/pages/projects-list-page.tsx:42
-#: src/routes/_authenticated/$projectId/index.tsx:158
+#: src/routes/_authenticated/$projectId/index.tsx:162
 msgid "Unsubscribed"
 msgstr "Dezabòne"
 
 #: src/features/projects/pages/projects-list-page.tsx:41
-#: src/routes/_authenticated/$projectId/index.tsx:157
+#: src/routes/_authenticated/$projectId/index.tsx:161
 msgid "Unsubscribing..."
 msgstr "Ap dezabòne..."
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:285
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:299
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx:103
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx:184
 #: src/features/board/components/board-container.tsx:29
@@ -2947,17 +3007,22 @@ msgstr "Ap dezabòne..."
 msgid "Untitled"
 msgstr "San tit"
 
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx:56
 #: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:57
-#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:494
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:499
 msgid "Updated"
 msgstr "Mete ajou"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:142
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx:56
+msgid "Updated {field}"
+msgstr "{field} mete ajou"
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:140
 msgid "Updating access..."
 msgstr "Ap mete aksè ajou..."
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:639
-#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:301
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:661
+#: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:304
 msgid "Upload"
 msgstr "Telechaje"
 
@@ -2970,7 +3035,7 @@ msgstr "Telechaje fichye .json"
 msgid "Upload progress"
 msgstr "Pwogrè chajman an"
 
-#: ../../../lib/web/src/components/step-up-dialog.tsx:341
+#: ../../../lib/web/src/components/step-up-dialog.tsx:329
 msgid "Use your passkey"
 msgstr "Sèvi ak passkey ou"
 
@@ -2980,9 +3045,9 @@ msgstr "Sèvi ak passkey ou"
 msgid "Used for readable IDs like {0}-1, {1}-2"
 msgstr "Itilize pou ID lizib tankou {0}-1, {1}-2"
 
-#: ../../../lib/web/src/components/entity/add-field-dialog.tsx:143
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx:112
 #: ../../../lib/web/src/features/access/access-dialog.tsx:158
+#: ../../../lib/web/src/hooks/use-field-type-labels.ts:18
 msgid "User"
 msgstr "Itilizatè"
 
@@ -2994,7 +3059,7 @@ msgstr "Varyab: {variables}"
 msgid "Verification code"
 msgstr "Kòd verifikasyon"
 
-#: ../../../lib/web/src/components/step-up-dialog.tsx:391
+#: ../../../lib/web/src/components/step-up-dialog.tsx:379
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:111
 msgid "Verify"
 msgstr "Verifye"
@@ -3003,21 +3068,21 @@ msgstr "Verifye"
 msgid "Verify email address"
 msgstr "Verifye adrès imèl"
 
-#: ../../../lib/web/src/components/attachment-gallery.tsx:95
+#: ../../../lib/web/src/components/attachment-gallery.tsx:96
 msgid "Video thumbnail"
 msgstr "Imaj videyo"
 
 #. placeholder {0}: currentMedia.name
-#: ../../../lib/web/src/components/ui/image-lightbox.tsx:315
+#: ../../../lib/web/src/components/ui/image-lightbox.tsx:327
 msgid "Video viewer: {0}"
 msgstr "Vizyonè videyo: {0}"
 
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:220
-#: ../../../lib/web/src/components/layout/notification-menu.tsx:228
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:216
+#: ../../../lib/web/src/components/layout/notification-menu.tsx:224
 msgid "View all notifications"
 msgstr "Wè tout notifikasyon"
 
-#: src/features/objects/components/object-detail-panel.tsx:417
+#: src/features/objects/components/object-detail-panel.tsx:426
 msgid "View and edit item details"
 msgstr "Wè epi modifye detay atik"
 
@@ -3025,11 +3090,11 @@ msgstr "Wè epi modifye detay atik"
 msgid "View controls"
 msgstr "Kontwòl vi"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:54
+#: src/routes/_authenticated/$projectId_.settings.tsx:52
 msgid "View only"
 msgstr "Wè sèlman"
 
-#: src/routes/_authenticated/$projectId/index.tsx:139
+#: src/routes/_authenticated/$projectId/index.tsx:138
 msgid "View options"
 msgstr "Opsyon vi"
 
@@ -3037,8 +3102,8 @@ msgstr "Opsyon vi"
 msgid "Views"
 msgstr "Vi"
 
-#: src/features/objects/components/object-detail-panel.tsx:439
 #: src/features/objects/components/object-detail-panel.tsx:448
+#: src/features/objects/components/object-detail-panel.tsx:457
 msgid "Watch"
 msgstr "Gade"
 
@@ -3064,7 +3129,7 @@ msgstr "Nou voye yon kòd verifikasyon nan <0>{0}</0>. Antre kòd la anba a pou 
 msgid "Wednesday"
 msgstr "Mèkredi"
 
-#: ../../../lib/web/src/features/errors/general-error.tsx:61
+#: ../../../lib/web/src/features/errors/general-error.tsx:59
 msgid "You do not have access to this section."
 msgstr "Ou pa gen aksè nan seksyon sa a."
 
@@ -3076,7 +3141,7 @@ msgstr "Ou pa gen aksè a pwojè sa a."
 msgid "You have no projects yet."
 msgstr "Ou poko gen okenn pwojè."
 
-#: ../../../lib/web/src/components/restore-banner.tsx:100
+#: ../../../lib/web/src/components/restore-banner.tsx:86
 msgid "Your account was moved here from {source}. Until you delete it there, messages and notifications may reach both servers, some of your content keeps being served from the old server, and followers may take a few minutes to find you here."
 msgstr "Kont ou te deplase isit la depi {source}. Jiskaske ou efase li la, mesaj ak notifikasyon yo ka rive sou de sèvè yo, yon pati nan kontni ou ap kontinye sèvi depi ansyen sèvè a, epi moun k ap swiv ou yo ka pran kèk minit pou jwenn ou isit la."
 

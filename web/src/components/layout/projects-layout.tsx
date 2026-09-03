@@ -29,7 +29,6 @@ function ProjectsLayoutInner() {
       icon={FolderKanban}
       onCreate={openCreateDialog}
       viewUrl={APP_ROUTES.PROJECTS.VIEW}
-      usePageHeaderForMobileNav
       labels={{
         group: t`Projects`,
         all: t`All projects`,

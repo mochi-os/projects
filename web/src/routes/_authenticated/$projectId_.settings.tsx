@@ -16,14 +16,12 @@ import {
   EntitySettingsPage,
   type AccessLevel,
   type EntitySettingsTab,
+  DISALLOWED_NAME_CHARS,
 } from "@mochi/web";
 import { FolderKanban } from "lucide-react";
 import projectsApi from "@/api/projects";
 import type { ProjectDetails } from "@/types";
 import { useProjectsStore } from "@/stores/projects-store";
-
-// Characters disallowed in project names (matches backend validation)
-const DISALLOWED_NAME_CHARS = /[<>\r\n]/;
 
 type SettingsSearch = {
   tab?: EntitySettingsTab;

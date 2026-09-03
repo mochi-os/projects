@@ -124,7 +124,6 @@ export function ProjectPageContent({ project, projectId, search, initialObjectId
       backupSlug="projects"
       refreshSidebar={refreshSidebar}
       onLeave={() => void navigate({ to: "/" })}
-      showSidebarTrigger
       labels={{
         pageActions: t`Open page actions`,
         createShort: t`New`,
@@ -151,6 +150,11 @@ export function ProjectPageContent({ project, projectId, search, initialObjectId
         shareAction: t`Link`,
         shareTitle: t`Project link`,
         shareFailed: t`Failed to create link`,
+        moveFailed: t`Failed to move`,
+        columnCreateFailed: t`Failed to add column`,
+        columnRenameFailed: t`Failed to rename column`,
+        columnDeleteFailed: t`Failed to delete column`,
+        columnReorderFailed: t`Failed to re-order columns`,
         unsubscribe: t`Unsubscribe`,
         unsubscribeTitle: t`Unsubscribe from project?`,
         unsubscribeDescription: t`This will remove "${project.project.name}" from your sidebar and stop updates for this project.`,

@@ -575,6 +575,7 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
 
       {/* Add view (create mode) */}
       <ViewSheet
+        numbered
         open={addViewOpen}
         onOpenChange={setAddViewOpen}
         mode="create"
@@ -657,6 +658,7 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
 
       {/* Edit view */}
       <ViewSheet
+        numbered
         open={editViewOpen}
         onOpenChange={setEditViewOpen}
         view={editingView}

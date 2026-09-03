@@ -60,7 +60,7 @@ msgstr "{0} پوئتي"
 
 #. placeholder {0}: files.length
 #: src/features/requests/components/diff-stats.tsx:74
-#: src/features/requests/components/diff-viewer.tsx:419
+#: src/features/requests/components/diff-viewer.tsx:420
 msgid "{0} files changed"
 msgstr "{0} فائلون تبديل ٿيون"
 
@@ -105,6 +105,11 @@ msgstr "{totalLabel} مان {sentLabel}"
 #: ../../../lib/web/src/components/entity/entity-board-column.tsx:530
 msgid "{totalCount, plural, one {# item} other {# items}}"
 msgstr "{totalCount, plural, one {# شيءِ} other {# شيون}}"
+
+#: src/features/requests/components/diff-stats.tsx:120
+#: src/features/requests/components/diff-viewer.tsx:471
+msgid "{truncated, plural, one {# more file not shown} other {# more files not shown}}"
+msgstr "{truncated, plural, one {# وڌيڪ فائل نه ڏيکاري وئي} other {# وڌيڪ فائلون نه ڏيکاريون ويون}}"
 
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx:158
 msgid "{unreadCount, plural, one {Open menu (# unread notification)} other {Open menu (# unread notifications)}}"
@@ -416,7 +421,7 @@ msgstr ""
 msgid "Banner updated"
 msgstr ""
 
-#: src/features/requests/components/diff-viewer.tsx:447
+#: src/features/requests/components/diff-viewer.tsx:448
 msgid "Binary file not shown"
 msgstr "بائنري فائل نه ڏيکاري وئي"
 
@@ -832,7 +837,7 @@ msgstr "رد ڪريو"
 
 #: ../../../lib/web/src/components/ai-prompts-editor.tsx:129
 msgid "Default"
-msgstr ""
+msgstr "ڊفالٽ"
 
 #: ../../../lib/web/src/features/accounts/account-add.tsx:185
 msgid "Default AI account"
@@ -1281,6 +1286,10 @@ msgstr "پروجيڪٽ ڊيزائن لوڊ ڪرڻ ۾ ناڪام"
 msgid "Failed to load projects"
 msgstr "پروجيڪٽَ لوڊ ڪرڻ ۾ ناڪام"
 
+#: ../../../lib/web/src/components/ai-prompts-editor.tsx:213
+msgid "Failed to load prompts"
+msgstr "پرامپٽ لوڊ ڪرڻ ۾ ناڪام"
+
 #: src/features/projects/components/recommended-projects.tsx:57
 msgid "Failed to load recommended projects"
 msgstr "تجويز ڪيل پروجيڪٽ لوڊ ڪرڻ ۾ ناڪامي"
@@ -1320,7 +1329,7 @@ msgstr "ڏيکن کي ٻيهر ترتيب ڏيڻ ۾ ناڪام"
 
 #: ../../../lib/web/src/components/ai-prompts-editor.tsx:90
 msgid "Failed to reset prompt"
-msgstr ""
+msgstr "پرامپٽ ري سيٽ ڪرڻ ۾ ناڪام"
 
 #: ../../../lib/web/src/components/options-menu.tsx:133
 msgid "Failed to revoke RSS access"
@@ -1332,7 +1341,7 @@ msgstr "محفوظ ڪرڻ ۾ ناڪام"
 
 #: ../../../lib/web/src/components/ai-prompts-editor.tsx:111
 msgid "Failed to save prompt"
-msgstr ""
+msgstr "پرامپٽ محفوظ ڪرڻ ۾ ناڪام"
 
 #: src/features/projects/components/inline-project-search.tsx:89
 msgid "Failed to search projects"
@@ -1819,7 +1828,7 @@ msgstr "ڪا برانچ نه ملي"
 msgid "No changes detected"
 msgstr "ڪا تبديلي نه ملي"
 
-#: src/features/requests/components/diff-viewer.tsx:402
+#: src/features/requests/components/diff-viewer.tsx:403
 msgid "No changes to display"
 msgstr "ڏيکارڻ لاءِ ڪا تبديلي نه آهي"
 
@@ -1933,6 +1942,15 @@ msgstr "ڪا به نه"
 #: ../../../lib/web/src/lib/preference-utils.ts:122
 msgid "Normal"
 msgstr "عام"
+
+#. placeholder {0}: formatFileSize(file.limit)
+#: src/features/requests/components/diff-viewer.tsx:455
+msgid "Not compared: larger than {0}"
+msgstr "ڀيٽ نه ڪئي وئي: {0} کان وڏي"
+
+#: src/features/requests/components/diff-viewer.tsx:457
+msgid "Not compared: over the size limit"
+msgstr "ڀيٽ نه ڪئي وئي: سائيز جي حد کان وڌيڪ"
 
 #: src/features/requests/components/request-panel.tsx:257
 msgid "Not configured"
@@ -2178,7 +2196,7 @@ msgstr "پروجيڪٽ"
 
 #: ../../../lib/web/src/components/ai-prompts-editor.tsx:108
 msgid "Prompt saved"
-msgstr ""
+msgstr "پرامپٽ محفوظ ٿيو"
 
 #: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:406
 msgid "Properties"
@@ -2989,7 +3007,7 @@ msgstr "صارف"
 
 #: ../../../lib/web/src/components/ai-prompts-editor.tsx:159
 msgid "Variables: {variables}"
-msgstr ""
+msgstr "متغير: {variables}"
 
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:73
 msgid "Verification code"

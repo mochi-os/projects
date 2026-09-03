@@ -60,7 +60,7 @@ msgstr "{0} lura"
 
 #. placeholder {0}: files.length
 #: src/features/requests/components/diff-stats.tsx:74
-#: src/features/requests/components/diff-viewer.tsx:419
+#: src/features/requests/components/diff-viewer.tsx:420
 msgid "{0} files changed"
 msgstr "{0} fajls inbidlu"
 
@@ -105,6 +105,11 @@ msgstr "{sentLabel} minn {totalLabel}"
 #: ../../../lib/web/src/components/entity/entity-board-column.tsx:530
 msgid "{totalCount, plural, one {# item} other {# items}}"
 msgstr "{totalCount, plural, one {# oġġett} few {# oġġetti} many {# oġġetti} other {# oġġetti}}"
+
+#: src/features/requests/components/diff-stats.tsx:120
+#: src/features/requests/components/diff-viewer.tsx:471
+msgid "{truncated, plural, one {# more file not shown} other {# more files not shown}}"
+msgstr "{truncated, plural, one {# fajl ieħor mhux muri} few {# fajls oħra mhux murija} many {# fajls oħra mhux murija} other {# fajls oħra mhux murija}}"
 
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx:158
 msgid "{unreadCount, plural, one {Open menu (# unread notification)} other {Open menu (# unread notifications)}}"
@@ -416,7 +421,7 @@ msgstr ""
 msgid "Banner updated"
 msgstr ""
 
-#: src/features/requests/components/diff-viewer.tsx:447
+#: src/features/requests/components/diff-viewer.tsx:448
 msgid "Binary file not shown"
 msgstr "Il-fajl binarju mhux muri"
 
@@ -832,7 +837,7 @@ msgstr "Irrifjuta"
 
 #: ../../../lib/web/src/components/ai-prompts-editor.tsx:129
 msgid "Default"
-msgstr ""
+msgstr "Prestabbilit"
 
 #: ../../../lib/web/src/features/accounts/account-add.tsx:185
 msgid "Default AI account"
@@ -1281,6 +1286,10 @@ msgstr "Ma rnexxiex jitgħabba d-disinn tal-proġett"
 msgid "Failed to load projects"
 msgstr "Ma rnexxiex jitgħabbew il-proġetti"
 
+#: ../../../lib/web/src/components/ai-prompts-editor.tsx:213
+msgid "Failed to load prompts"
+msgstr "Ma rnexxiex jitgħabbew il-prompts"
+
 #: src/features/projects/components/recommended-projects.tsx:57
 msgid "Failed to load recommended projects"
 msgstr "It-tagħbija tal-proġetti rakkomandati falliet"
@@ -1320,7 +1329,7 @@ msgstr "Ma rnexxiex jerġgħu jiġu rranġati l-veduti"
 
 #: ../../../lib/web/src/components/ai-prompts-editor.tsx:90
 msgid "Failed to reset prompt"
-msgstr ""
+msgstr "Ma rnexxiex jiġi reset il-prompt"
 
 #: ../../../lib/web/src/components/options-menu.tsx:133
 msgid "Failed to revoke RSS access"
@@ -1332,7 +1341,7 @@ msgstr "Ma rnexxiex jiġi ssejvjat"
 
 #: ../../../lib/web/src/components/ai-prompts-editor.tsx:111
 msgid "Failed to save prompt"
-msgstr ""
+msgstr "Ma rnexxiex jiġi ssejvjat il-prompt"
 
 #: src/features/projects/components/inline-project-search.tsx:89
 msgid "Failed to search projects"
@@ -1819,7 +1828,7 @@ msgstr "Ma nstabu l-ebda fergħat"
 msgid "No changes detected"
 msgstr "L-ebda bidliet ma ġew skoperti"
 
-#: src/features/requests/components/diff-viewer.tsx:402
+#: src/features/requests/components/diff-viewer.tsx:403
 msgid "No changes to display"
 msgstr "L-ebda bidliet x'juru"
 
@@ -1933,6 +1942,15 @@ msgstr "Xejn"
 #: ../../../lib/web/src/lib/preference-utils.ts:122
 msgid "Normal"
 msgstr "Normali"
+
+#. placeholder {0}: formatFileSize(file.limit)
+#: src/features/requests/components/diff-viewer.tsx:455
+msgid "Not compared: larger than {0}"
+msgstr "Mhux imqabbel: akbar minn {0}"
+
+#: src/features/requests/components/diff-viewer.tsx:457
+msgid "Not compared: over the size limit"
+msgstr "Mhux imqabbel: jaqbeż il-limitu tad-daqs"
 
 #: src/features/requests/components/request-panel.tsx:257
 msgid "Not configured"
@@ -2178,7 +2196,7 @@ msgstr "Proġetti"
 
 #: ../../../lib/web/src/components/ai-prompts-editor.tsx:108
 msgid "Prompt saved"
-msgstr ""
+msgstr "Prompt issejvjat"
 
 #: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:406
 msgid "Properties"
@@ -2989,7 +3007,7 @@ msgstr "Utent"
 
 #: ../../../lib/web/src/components/ai-prompts-editor.tsx:159
 msgid "Variables: {variables}"
-msgstr ""
+msgstr "Varjabbli: {variables}"
 
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:73
 msgid "Verification code"

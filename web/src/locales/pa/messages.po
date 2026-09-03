@@ -60,7 +60,7 @@ msgstr "{0} ਪਿੱਛੇ"
 
 #. placeholder {0}: files.length
 #: src/features/requests/components/diff-stats.tsx:74
-#: src/features/requests/components/diff-viewer.tsx:419
+#: src/features/requests/components/diff-viewer.tsx:420
 msgid "{0} files changed"
 msgstr "{0} ਫਾਈਲਾਂ ਬਦਲੀਆਂ"
 
@@ -105,6 +105,11 @@ msgstr "{totalLabel} ਵਿੱਚੋਂ {sentLabel}"
 #: ../../../lib/web/src/components/entity/entity-board-column.tsx:530
 msgid "{totalCount, plural, one {# item} other {# items}}"
 msgstr "{totalCount, plural, one {# ਆਈਟਮ} other {# ਆਈਟਮਾਂ}}"
+
+#: src/features/requests/components/diff-stats.tsx:120
+#: src/features/requests/components/diff-viewer.tsx:471
+msgid "{truncated, plural, one {# more file not shown} other {# more files not shown}}"
+msgstr "{truncated, plural, one {# ਹੋਰ ਫ਼ਾਈਲ ਨਹੀਂ ਦਿਖਾਈ ਗਈ} other {# ਹੋਰ ਫ਼ਾਈਲਾਂ ਨਹੀਂ ਦਿਖਾਈਆਂ ਗਈਆਂ}}"
 
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx:158
 msgid "{unreadCount, plural, one {Open menu (# unread notification)} other {Open menu (# unread notifications)}}"
@@ -416,7 +421,7 @@ msgstr ""
 msgid "Banner updated"
 msgstr ""
 
-#: src/features/requests/components/diff-viewer.tsx:447
+#: src/features/requests/components/diff-viewer.tsx:448
 msgid "Binary file not shown"
 msgstr "ਬਾਈਨਰੀ ਫਾਈਲ ਨਹੀਂ ਦਿਖਾਈ ਗਈ"
 
@@ -832,7 +837,7 @@ msgstr "ਅਸਵੀਕਾਰ ਕਰੋ"
 
 #: ../../../lib/web/src/components/ai-prompts-editor.tsx:129
 msgid "Default"
-msgstr ""
+msgstr "ਡਿਫਾਲਟ"
 
 #: ../../../lib/web/src/features/accounts/account-add.tsx:185
 msgid "Default AI account"
@@ -1281,6 +1286,10 @@ msgstr "ਪ੍ਰੋਜੈਕਟ ਡਿਜ਼ਾਇਨ ਲੋਡ ਕਰਨ ਵ�
 msgid "Failed to load projects"
 msgstr "ਪ੍ਰੋਜੈਕਟ ਲੋਡ ਕਰਨ ਵਿੱਚ ਅਸਫਲ"
 
+#: ../../../lib/web/src/components/ai-prompts-editor.tsx:213
+msgid "Failed to load prompts"
+msgstr "ਪ੍ਰੋਮਪਟ ਲੋਡ ਕਰਨ ਵਿੱਚ ਅਸਫਲ"
+
 #: src/features/projects/components/recommended-projects.tsx:57
 msgid "Failed to load recommended projects"
 msgstr "ਸਿਫ਼ਾਰਸ਼ੀ ਪ੍ਰੋਜੈਕਟ ਲੋਡ ਕਰਨਾ ਅਸਫਲ ਰਿਹਾ"
@@ -1320,7 +1329,7 @@ msgstr "ਵਿਊ ਮੁੜ ਕ੍ਰਮਬੱਧ ਕਰਨ ਵਿੱਚ ਅਸ�
 
 #: ../../../lib/web/src/components/ai-prompts-editor.tsx:90
 msgid "Failed to reset prompt"
-msgstr ""
+msgstr "ਪ੍ਰੋਮਪਟ ਰੀਸੈੱਟ ਕਰਨ ਵਿੱਚ ਅਸਫਲ"
 
 #: ../../../lib/web/src/components/options-menu.tsx:133
 msgid "Failed to revoke RSS access"
@@ -1332,7 +1341,7 @@ msgstr "ਸੁਰੱਖਿਅਤ ਕਰਨ ਵਿੱਚ ਅਸਫਲ"
 
 #: ../../../lib/web/src/components/ai-prompts-editor.tsx:111
 msgid "Failed to save prompt"
-msgstr ""
+msgstr "ਪ੍ਰੋਮਪਟ ਸੁਰੱਖਿਅਤ ਕਰਨ ਵਿੱਚ ਅਸਫਲ"
 
 #: src/features/projects/components/inline-project-search.tsx:89
 msgid "Failed to search projects"
@@ -1819,7 +1828,7 @@ msgstr "ਕੋਈ ਬ੍ਰਾਂਚ ਨਹੀਂ ਮਿਲੀ"
 msgid "No changes detected"
 msgstr "ਕੋਈ ਬਦਲਾਅ ਨਹੀਂ ਮਿਲਿਆ"
 
-#: src/features/requests/components/diff-viewer.tsx:402
+#: src/features/requests/components/diff-viewer.tsx:403
 msgid "No changes to display"
 msgstr "ਦਿਖਾਉਣ ਲਈ ਕੋਈ ਬਦਲਾਅ ਨਹੀਂ"
 
@@ -1933,6 +1942,15 @@ msgstr "ਕੋਈ ਨਹੀਂ"
 #: ../../../lib/web/src/lib/preference-utils.ts:122
 msgid "Normal"
 msgstr "ਸਧਾਰਨ"
+
+#. placeholder {0}: formatFileSize(file.limit)
+#: src/features/requests/components/diff-viewer.tsx:455
+msgid "Not compared: larger than {0}"
+msgstr "ਤੁਲਨਾ ਨਹੀਂ ਕੀਤੀ ਗਈ: {0} ਤੋਂ ਵੱਡੀ"
+
+#: src/features/requests/components/diff-viewer.tsx:457
+msgid "Not compared: over the size limit"
+msgstr "ਤੁਲਨਾ ਨਹੀਂ ਕੀਤੀ ਗਈ: ਆਕਾਰ ਸੀਮਾ ਤੋਂ ਵੱਧ"
 
 #: src/features/requests/components/request-panel.tsx:257
 msgid "Not configured"
@@ -2178,7 +2196,7 @@ msgstr "ਪ੍ਰੋਜੈਕਟ"
 
 #: ../../../lib/web/src/components/ai-prompts-editor.tsx:108
 msgid "Prompt saved"
-msgstr ""
+msgstr "ਪ੍ਰਾਂਪਟ ਸੇਵ ਹੋ ਗਿਆ"
 
 #: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:406
 msgid "Properties"
@@ -2989,7 +3007,7 @@ msgstr "ਉਪਭੋਗਤਾ"
 
 #: ../../../lib/web/src/components/ai-prompts-editor.tsx:159
 msgid "Variables: {variables}"
-msgstr ""
+msgstr "ਵੇਰੀਏਬਲ: {variables}"
 
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:73
 msgid "Verification code"

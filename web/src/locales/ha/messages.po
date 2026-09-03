@@ -60,7 +60,7 @@ msgstr "{0} a baya"
 
 #. placeholder {0}: files.length
 #: src/features/requests/components/diff-stats.tsx:74
-#: src/features/requests/components/diff-viewer.tsx:419
+#: src/features/requests/components/diff-viewer.tsx:420
 msgid "{0} files changed"
 msgstr "An canza fayiloli {0}"
 
@@ -105,6 +105,11 @@ msgstr "{sentLabel} cikin {totalLabel}"
 #: ../../../lib/web/src/components/entity/entity-board-column.tsx:530
 msgid "{totalCount, plural, one {# item} other {# items}}"
 msgstr "{totalCount, plural, one {abu #} other {abubuwa #}}"
+
+#: src/features/requests/components/diff-stats.tsx:120
+#: src/features/requests/components/diff-viewer.tsx:471
+msgid "{truncated, plural, one {# more file not shown} other {# more files not shown}}"
+msgstr "{truncated, plural, one {Ba a nuna ƙarin fayil # ba} other {Ba a nuna ƙarin fayiloli # ba}}"
 
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx:158
 msgid "{unreadCount, plural, one {Open menu (# unread notification)} other {Open menu (# unread notifications)}}"
@@ -416,7 +421,7 @@ msgstr ""
 msgid "Banner updated"
 msgstr ""
 
-#: src/features/requests/components/diff-viewer.tsx:447
+#: src/features/requests/components/diff-viewer.tsx:448
 msgid "Binary file not shown"
 msgstr "Ba a nuna fayil ɗin binary ba"
 
@@ -832,7 +837,7 @@ msgstr "Ƙi"
 
 #: ../../../lib/web/src/components/ai-prompts-editor.tsx:129
 msgid "Default"
-msgstr ""
+msgstr "Tsoho"
 
 #: ../../../lib/web/src/features/accounts/account-add.tsx:185
 msgid "Default AI account"
@@ -1281,6 +1286,10 @@ msgstr "An gaza loading project design"
 msgid "Failed to load projects"
 msgstr "An gaza loading projects"
 
+#: ../../../lib/web/src/components/ai-prompts-editor.tsx:213
+msgid "Failed to load prompts"
+msgstr "An gaza loading prompts"
+
 #: src/features/projects/components/recommended-projects.tsx:57
 msgid "Failed to load recommended projects"
 msgstr "An kasa loda ayyukan da aka ba da shawara"
@@ -1320,7 +1329,7 @@ msgstr "An gaza sake tsara views"
 
 #: ../../../lib/web/src/components/ai-prompts-editor.tsx:90
 msgid "Failed to reset prompt"
-msgstr ""
+msgstr "An gaza sake saita prompt"
 
 #: ../../../lib/web/src/components/options-menu.tsx:133
 msgid "Failed to revoke RSS access"
@@ -1332,7 +1341,7 @@ msgstr "An gaza ajiyewa"
 
 #: ../../../lib/web/src/components/ai-prompts-editor.tsx:111
 msgid "Failed to save prompt"
-msgstr ""
+msgstr "An gaza ajiye prompt"
 
 #: src/features/projects/components/inline-project-search.tsx:89
 msgid "Failed to search projects"
@@ -1819,7 +1828,7 @@ msgstr "Babu branches da aka samu"
 msgid "No changes detected"
 msgstr "Ba a gano canje-canje ba"
 
-#: src/features/requests/components/diff-viewer.tsx:402
+#: src/features/requests/components/diff-viewer.tsx:403
 msgid "No changes to display"
 msgstr "Babu canje-canje don nunawa"
 
@@ -1933,6 +1942,15 @@ msgstr "Babu"
 #: ../../../lib/web/src/lib/preference-utils.ts:122
 msgid "Normal"
 msgstr "Na al'ada"
+
+#. placeholder {0}: formatFileSize(file.limit)
+#: src/features/requests/components/diff-viewer.tsx:455
+msgid "Not compared: larger than {0}"
+msgstr "Ba a kwatanta ba: ya fi {0} girma"
+
+#: src/features/requests/components/diff-viewer.tsx:457
+msgid "Not compared: over the size limit"
+msgstr "Ba a kwatanta ba: ya wuce iyakar girma"
 
 #: src/features/requests/components/request-panel.tsx:257
 msgid "Not configured"
@@ -2178,7 +2196,7 @@ msgstr "Projects"
 
 #: ../../../lib/web/src/components/ai-prompts-editor.tsx:108
 msgid "Prompt saved"
-msgstr ""
+msgstr "An adana prompt"
 
 #: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:406
 msgid "Properties"
@@ -2989,7 +3007,7 @@ msgstr "Mai amfani"
 
 #: ../../../lib/web/src/components/ai-prompts-editor.tsx:159
 msgid "Variables: {variables}"
-msgstr ""
+msgstr "Masu canzawa: {variables}"
 
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:73
 msgid "Verification code"

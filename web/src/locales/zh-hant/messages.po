@@ -60,7 +60,7 @@ msgstr "{0} 個落後"
 
 #. placeholder {0}: files.length
 #: src/features/requests/components/diff-stats.tsx:74
-#: src/features/requests/components/diff-viewer.tsx:419
+#: src/features/requests/components/diff-viewer.tsx:420
 msgid "{0} files changed"
 msgstr "{0} 個檔案已變更"
 
@@ -105,6 +105,11 @@ msgstr "{sentLabel} / {totalLabel}"
 #: ../../../lib/web/src/components/entity/entity-board-column.tsx:530
 msgid "{totalCount, plural, one {# item} other {# items}}"
 msgstr "{totalCount, plural, one {# 項} other {# 項}}"
+
+#: src/features/requests/components/diff-stats.tsx:120
+#: src/features/requests/components/diff-viewer.tsx:471
+msgid "{truncated, plural, one {# more file not shown} other {# more files not shown}}"
+msgstr "{truncated, plural, one {另有 # 個檔案未顯示} other {另有 # 個檔案未顯示}}"
 
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx:158
 msgid "{unreadCount, plural, one {Open menu (# unread notification)} other {Open menu (# unread notifications)}}"
@@ -416,7 +421,7 @@ msgstr ""
 msgid "Banner updated"
 msgstr ""
 
-#: src/features/requests/components/diff-viewer.tsx:447
+#: src/features/requests/components/diff-viewer.tsx:448
 msgid "Binary file not shown"
 msgstr "未顯示二進位檔案"
 
@@ -832,7 +837,7 @@ msgstr "拒絕"
 
 #: ../../../lib/web/src/components/ai-prompts-editor.tsx:129
 msgid "Default"
-msgstr ""
+msgstr "預設"
 
 #: ../../../lib/web/src/features/accounts/account-add.tsx:185
 msgid "Default AI account"
@@ -1281,6 +1286,10 @@ msgstr "載入專案設計失敗"
 msgid "Failed to load projects"
 msgstr "載入專案失敗"
 
+#: ../../../lib/web/src/components/ai-prompts-editor.tsx:213
+msgid "Failed to load prompts"
+msgstr "載入提示失敗"
+
 #: src/features/projects/components/recommended-projects.tsx:57
 msgid "Failed to load recommended projects"
 msgstr "載入推薦專案失敗"
@@ -1320,7 +1329,7 @@ msgstr "重新排序檢視失敗"
 
 #: ../../../lib/web/src/components/ai-prompts-editor.tsx:90
 msgid "Failed to reset prompt"
-msgstr ""
+msgstr "重設提示失敗"
 
 #: ../../../lib/web/src/components/options-menu.tsx:133
 msgid "Failed to revoke RSS access"
@@ -1332,7 +1341,7 @@ msgstr "儲存失敗"
 
 #: ../../../lib/web/src/components/ai-prompts-editor.tsx:111
 msgid "Failed to save prompt"
-msgstr ""
+msgstr "儲存提示失敗"
 
 #: src/features/projects/components/inline-project-search.tsx:89
 msgid "Failed to search projects"
@@ -1819,7 +1828,7 @@ msgstr "找不到分支"
 msgid "No changes detected"
 msgstr "未偵測到變更"
 
-#: src/features/requests/components/diff-viewer.tsx:402
+#: src/features/requests/components/diff-viewer.tsx:403
 msgid "No changes to display"
 msgstr "無變更可顯示"
 
@@ -1933,6 +1942,15 @@ msgstr "無"
 #: ../../../lib/web/src/lib/preference-utils.ts:122
 msgid "Normal"
 msgstr "標準"
+
+#. placeholder {0}: formatFileSize(file.limit)
+#: src/features/requests/components/diff-viewer.tsx:455
+msgid "Not compared: larger than {0}"
+msgstr "未比較：大於 {0}"
+
+#: src/features/requests/components/diff-viewer.tsx:457
+msgid "Not compared: over the size limit"
+msgstr "未比較：超過大小限制"
 
 #: src/features/requests/components/request-panel.tsx:257
 msgid "Not configured"
@@ -2178,7 +2196,7 @@ msgstr "專案"
 
 #: ../../../lib/web/src/components/ai-prompts-editor.tsx:108
 msgid "Prompt saved"
-msgstr ""
+msgstr "已儲存提示"
 
 #: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:406
 msgid "Properties"
@@ -2989,7 +3007,7 @@ msgstr "使用者"
 
 #: ../../../lib/web/src/components/ai-prompts-editor.tsx:159
 msgid "Variables: {variables}"
-msgstr ""
+msgstr "變數:{variables}"
 
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:73
 msgid "Verification code"

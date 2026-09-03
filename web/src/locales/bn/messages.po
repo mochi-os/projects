@@ -60,7 +60,7 @@ msgstr "{0} পিছনে"
 
 #. placeholder {0}: files.length
 #: src/features/requests/components/diff-stats.tsx:74
-#: src/features/requests/components/diff-viewer.tsx:419
+#: src/features/requests/components/diff-viewer.tsx:420
 msgid "{0} files changed"
 msgstr "{0}টি ফাইল পরিবর্তিত"
 
@@ -105,6 +105,11 @@ msgstr "{totalLabel}-এর মধ্যে {sentLabel}"
 #: ../../../lib/web/src/components/entity/entity-board-column.tsx:530
 msgid "{totalCount, plural, one {# item} other {# items}}"
 msgstr "{totalCount, plural, one {# আইটেম} other {# আইটেম}}"
+
+#: src/features/requests/components/diff-stats.tsx:120
+#: src/features/requests/components/diff-viewer.tsx:471
+msgid "{truncated, plural, one {# more file not shown} other {# more files not shown}}"
+msgstr "{truncated, plural, one {আরও #টি ফাইল দেখানো হয়নি} other {আরও #টি ফাইল দেখানো হয়নি}}"
 
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx:158
 msgid "{unreadCount, plural, one {Open menu (# unread notification)} other {Open menu (# unread notifications)}}"
@@ -416,7 +421,7 @@ msgstr ""
 msgid "Banner updated"
 msgstr ""
 
-#: src/features/requests/components/diff-viewer.tsx:447
+#: src/features/requests/components/diff-viewer.tsx:448
 msgid "Binary file not shown"
 msgstr "বাইনারি ফাইল দেখানো হয়নি"
 
@@ -832,7 +837,7 @@ msgstr "প্রত্যাখ্যান করুন"
 
 #: ../../../lib/web/src/components/ai-prompts-editor.tsx:129
 msgid "Default"
-msgstr ""
+msgstr "ডিফল্ট"
 
 #: ../../../lib/web/src/features/accounts/account-add.tsx:185
 msgid "Default AI account"
@@ -1281,6 +1286,10 @@ msgstr "প্রকল্প ডিজাইন লোড করতে ব্�
 msgid "Failed to load projects"
 msgstr "প্রকল্পসমূহ লোড করতে ব্যর্থ"
 
+#: ../../../lib/web/src/components/ai-prompts-editor.tsx:213
+msgid "Failed to load prompts"
+msgstr "প্রম্পট লোড করতে ব্যর্থ"
+
 #: src/features/projects/components/recommended-projects.tsx:57
 msgid "Failed to load recommended projects"
 msgstr "প্রস্তাবিত প্রকল্প লোড করা যায়নি"
@@ -1320,7 +1329,7 @@ msgstr "ভিউসমূহ পুনর্বিন্যাস করতে 
 
 #: ../../../lib/web/src/components/ai-prompts-editor.tsx:90
 msgid "Failed to reset prompt"
-msgstr ""
+msgstr "প্রম্পট রিসেট করতে ব্যর্থ"
 
 #: ../../../lib/web/src/components/options-menu.tsx:133
 msgid "Failed to revoke RSS access"
@@ -1332,7 +1341,7 @@ msgstr "সংরক্ষণ করতে ব্যর্থ"
 
 #: ../../../lib/web/src/components/ai-prompts-editor.tsx:111
 msgid "Failed to save prompt"
-msgstr ""
+msgstr "প্রম্পট সংরক্ষণ করতে ব্যর্থ"
 
 #: src/features/projects/components/inline-project-search.tsx:89
 msgid "Failed to search projects"
@@ -1819,7 +1828,7 @@ msgstr "কোনো ব্রাঞ্চ পাওয়া যায়নি
 msgid "No changes detected"
 msgstr "কোনো পরিবর্তন শনাক্ত করা যায়নি"
 
-#: src/features/requests/components/diff-viewer.tsx:402
+#: src/features/requests/components/diff-viewer.tsx:403
 msgid "No changes to display"
 msgstr "প্রদর্শন করার মতো কোনো পরিবর্তন নেই"
 
@@ -1933,6 +1942,15 @@ msgstr "কোনোটি নয়"
 #: ../../../lib/web/src/lib/preference-utils.ts:122
 msgid "Normal"
 msgstr "সাধারণ"
+
+#. placeholder {0}: formatFileSize(file.limit)
+#: src/features/requests/components/diff-viewer.tsx:455
+msgid "Not compared: larger than {0}"
+msgstr "তুলনা করা হয়নি: {0}-এর চেয়ে বড়"
+
+#: src/features/requests/components/diff-viewer.tsx:457
+msgid "Not compared: over the size limit"
+msgstr "তুলনা করা হয়নি: আকারের সীমার বেশি"
 
 #: src/features/requests/components/request-panel.tsx:257
 msgid "Not configured"
@@ -2178,7 +2196,7 @@ msgstr "প্রকল্প"
 
 #: ../../../lib/web/src/components/ai-prompts-editor.tsx:108
 msgid "Prompt saved"
-msgstr ""
+msgstr "প্রম্পট সংরক্ষণ করা হয়েছে"
 
 #: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:406
 msgid "Properties"
@@ -2989,7 +3007,7 @@ msgstr "ব্যবহারকারী"
 
 #: ../../../lib/web/src/components/ai-prompts-editor.tsx:159
 msgid "Variables: {variables}"
-msgstr ""
+msgstr "ভেরিয়েবল: {variables}"
 
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:73
 msgid "Verification code"

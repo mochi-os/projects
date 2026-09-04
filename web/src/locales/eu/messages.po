@@ -45,7 +45,7 @@ msgid "{0, plural, one {# conflicting file} other {# conflicting files}}"
 msgstr "{0, plural, one {gatazkan dagoen fitxategi #} other {gatazkan dauden # fitxategi}}"
 
 #. placeholder {0}: displayInfo.count
-#: ../../../lib/web/src/components/person-picker.tsx:259
+#: ../../../lib/web/src/components/person-picker.tsx:260
 msgid "{0, plural, one {# selected} other {# selected}}"
 msgstr "{0, plural, one {# hautatuta} other {# hautatuta}}"
 
@@ -75,19 +75,19 @@ msgstr "{0} fitxategi aldatuta"
 msgid "{0} settings"
 msgstr "{0} ezarpenak"
 
-#: ../../../lib/web/src/lib/locale-format.ts:176
+#: ../../../lib/web/src/lib/locale-format.ts:191
 msgid "{count, plural, one {#d} other {#d}}"
 msgstr "{count, plural, one {#eg} other {#eg}}"
 
-#: ../../../lib/web/src/lib/locale-format.ts:172
+#: ../../../lib/web/src/lib/locale-format.ts:187
 msgid "{count, plural, one {#h} other {#h}}"
 msgstr "{count, plural, one {#or} other {#or}}"
 
-#: ../../../lib/web/src/lib/locale-format.ts:168
+#: ../../../lib/web/src/lib/locale-format.ts:183
 msgid "{count, plural, one {#m} other {#m}}"
 msgstr "{count, plural, one {#min} other {#min}}"
 
-#: ../../../lib/web/src/lib/locale-format.ts:180
+#: ../../../lib/web/src/lib/locale-format.ts:195
 msgid "{count, plural, one {#w} other {#w}}"
 msgstr "{count, plural, one {#ast} other {#ast}}"
 
@@ -133,6 +133,10 @@ msgstr "12 ordu"
 #: ../../../lib/web/src/lib/preference-utils.ts:36
 msgid "24 hours"
 msgstr "24 ordu"
+
+#: ../../../lib/web/src/lib/shell-errors.ts:35
+msgid "A recording is already in progress."
+msgstr "Grabazio bat abian da dagoeneko."
 
 #: ../../../lib/web/src/lib/preference-utils.ts:46
 msgid "Absolute (date and time)"
@@ -445,6 +449,14 @@ msgstr "Nabigatzaile jakinarazpenak"
 msgid "Built-in templates"
 msgstr "Barneko txantiloiak"
 
+#: ../../../lib/web/src/lib/shell-errors.ts:48
+msgid "Camera permission denied"
+msgstr "Kamera baimena ukatu da"
+
+#: ../../../lib/web/src/lib/shell-errors.ts:56
+msgid "Camera unavailable"
+msgstr "Kamera ez dago erabilgarri"
+
 #: src/features/editor/components/edit-dialogs.tsx:312
 msgid "Can be child of"
 msgstr "Honen seme-alaba izan daiteke"
@@ -476,6 +488,12 @@ msgstr "Utzi iruzkina"
 #: ../../../lib/web/src/components/comment-composer.tsx:429
 msgid "Cancel reply"
 msgstr "Utzi erantzuna"
+
+#: ../../../lib/web/src/lib/shell-errors.ts:24
+#: ../../../lib/web/src/lib/shell-errors.ts:37
+#: ../../../lib/web/src/lib/shell-errors.ts:52
+msgid "Cancelled"
+msgstr "Bertan behera utzia"
 
 #: src/features/requests/components/merge-status.tsx:71
 msgid "Cannot merge automatically"
@@ -917,7 +935,7 @@ msgstr "Ezabatu proiektua?"
 msgid "Delete view"
 msgstr "Ezabatu ikuspegia"
 
-#: ../../../lib/web/src/components/restore-banner.tsx:95
+#: ../../../lib/web/src/components/restore-banner.tsx:101
 msgid "Delete your account on the old server"
 msgstr "Ezabatu zure kontua zerbitzari zaharrean"
 
@@ -981,7 +999,7 @@ msgstr "Aldea"
 msgid "Diff: {source} → {target}"
 msgstr "Aldea: {source} → {target}"
 
-#: ../../../lib/web/src/components/person-picker.tsx:192
+#: ../../../lib/web/src/components/person-picker.tsx:193
 msgid "Directory"
 msgstr "Direktorioa"
 
@@ -998,8 +1016,8 @@ msgstr "Zirriborroa baztertu?"
 msgid "Disconnected"
 msgstr "Deskonektatuta"
 
-#: ../../../lib/web/src/components/restore-banner.tsx:74
 #: ../../../lib/web/src/components/restore-banner.tsx:80
+#: ../../../lib/web/src/components/restore-banner.tsx:86
 msgid "Dismiss"
 msgstr "Baztertu"
 
@@ -1451,7 +1469,7 @@ msgstr "Aurkitu proiektuak"
 msgid "Fingerprint"
 msgstr "Hatz-marka"
 
-#: ../../../lib/web/src/components/restore-banner.tsx:83
+#: ../../../lib/web/src/components/restore-banner.tsx:89
 msgid "Finish moving your account"
 msgstr "Amaitu kontuaren mugiketa"
 
@@ -1467,7 +1485,7 @@ msgstr "Laua"
 msgid "Friday"
 msgstr "Ostirala"
 
-#: ../../../lib/web/src/components/person-picker.tsx:185
+#: ../../../lib/web/src/components/person-picker.tsx:186
 msgid "Friends"
 msgstr "Lagunak"
 
@@ -1589,7 +1607,7 @@ msgstr "Bilatzen ari zaren orria <0/>ez dela existitzen edo kendu egin dela diru
 msgid "Item details"
 msgstr "Elementuaren xehetasunak"
 
-#: ../../../lib/web/src/lib/locale-format.ts:165
+#: ../../../lib/web/src/lib/locale-format.ts:180
 msgid "Just now"
 msgstr "Oraintxe"
 
@@ -1746,6 +1764,10 @@ msgstr "Mezua"
 #: ../../../lib/web/src/lib/preference-utils.ts:80
 msgid "Metric"
 msgstr "Metrikoa"
+
+#: ../../../lib/web/src/lib/shell-errors.ts:31
+msgid "Microphone permission denied"
+msgstr "Mikrofonoaren baimena ukatu da"
 
 #: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:191
 msgid "Minimum length"
@@ -1964,7 +1986,7 @@ msgstr "Ikuspegirik ez"
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:418
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:491
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:494
-#: ../../../lib/web/src/components/person-picker.tsx:328
+#: ../../../lib/web/src/components/person-picker.tsx:329
 #: ../../../lib/web/src/lib/preference-utils.ts:100
 #: src/features/editor/components/edit-dialogs.tsx:296
 #: src/features/editor/components/edit-dialogs.tsx:299
@@ -2107,18 +2129,23 @@ msgid "Passkey"
 msgstr "Passkey-a"
 
 #: ../../../lib/web/src/components/step-up-dialog.tsx:195
+#: ../../../lib/web/src/lib/shell-errors.ts:26
 msgid "Passkey verification failed. Please try again."
 msgstr "Sarbide-gakoaren egiaztapenak huts egin du. Saiatu berriro."
 
-#: ../../../lib/web/src/components/restore-banner.tsx:132
+#: ../../../lib/web/src/components/restore-banner.tsx:138
 msgid "Passkeys"
 msgstr "Passkey-ak"
+
+#: ../../../lib/web/src/lib/shell-errors.ts:19
+msgid "Passkeys are not available in this browser"
+msgstr "Passkey-ak ez daude erabilgarri nabigatzaile honetan"
 
 #: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:213
 msgid "Pattern (regex)"
 msgstr "Eredua (regex)"
 
-#: ../../../lib/web/src/components/person-picker.tsx:178
+#: ../../../lib/web/src/components/person-picker.tsx:179
 msgid "People"
 msgstr "Jendea"
 
@@ -2241,7 +2268,7 @@ msgstr "Push jakinarazpena"
 msgid "Raised"
 msgstr "Goratua"
 
-#: ../../../lib/web/src/components/restore-banner.tsx:104
+#: ../../../lib/web/src/components/restore-banner.tsx:110
 msgid "Re-link your accounts on this server"
 msgstr "Berriro lotu zure kontuak zerbitzari honetan"
 
@@ -2249,7 +2276,7 @@ msgstr "Berriro lotu zure kontuak zerbitzari honetan"
 msgid "Re-order columns"
 msgstr "Berrordenatu zutabeak"
 
-#: ../../../lib/web/src/components/restore-banner.tsx:126
+#: ../../../lib/web/src/components/restore-banner.tsx:132
 msgid "Re-register your passkeys on this server"
 msgstr "Erregistratu berriro zure sarbide-gakoak zerbitzari honetan"
 
@@ -2272,6 +2299,14 @@ msgstr "Gomendatutako proiektuak"
 #: ../../../lib/web/src/lib/chat-ui.ts:21
 msgid "Reconnecting ({retries})..."
 msgstr "Berriz konektatzen ({retries})..."
+
+#: ../../../lib/web/src/lib/shell-errors.ts:43
+msgid "Recording failed. Please try again."
+msgstr "Grabazioak huts egin du. Saiatu berriro."
+
+#: ../../../lib/web/src/lib/shell-errors.ts:39
+msgid "Recording produced no audio"
+msgstr "Grabazioak ez du audiorik"
 
 #: ../../../lib/web/src/components/layout/authenticated-layout.tsx:135
 msgid "Redirecting to login."
@@ -2519,7 +2554,7 @@ msgstr "Bilatu, ikusi eta sailkatu ikuspegi hau."
 #: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:179
 #: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:255
 #: ../../../lib/web/src/components/inline-entity-search.tsx:64
-#: ../../../lib/web/src/components/person-picker.tsx:302
+#: ../../../lib/web/src/components/person-picker.tsx:303
 #: ../../../lib/web/src/components/search-entity-page.tsx:72
 msgid "Search..."
 msgstr "Bilatu..."
@@ -2807,6 +2842,22 @@ msgstr "Ezin izan da bidali. Fitxategiak handiegiak izan daitezke, edo konexioak
 msgid "That was too large to upload. Remove or shrink files and try again."
 msgstr "Handiegia zen igotzeko. Kendu edo txikitu fitxategiak eta saiatu berriro."
 
+#: ../../../lib/web/src/lib/shell-errors.ts:50
+msgid "The camera is already in use"
+msgstr "Kamera dagoeneko erabiltzen ari da"
+
+#: ../../../lib/web/src/lib/shell-errors.ts:54
+msgid "The camera request was not answered"
+msgstr "Kamera eskaerak ez du erantzunik jaso"
+
+#: ../../../lib/web/src/lib/shell-errors.ts:41
+msgid "The microphone request was not answered"
+msgstr "Mikrofono eskaerak ez du erantzunik jaso"
+
+#: ../../../lib/web/src/lib/shell-errors.ts:21
+msgid "The passkey request was not answered"
+msgstr "Passkey eskaerak ez du erantzunik jaso"
+
 #: ../../../lib/web/src/features/errors/general-error.tsx:66
 msgid "The requested content could not be found."
 msgstr "Eskatutako edukia ezin izan da aurkitu."
@@ -2814,6 +2865,10 @@ msgstr "Eskatutako edukia ezin izan da aurkitu."
 #: ../../../lib/web/src/lib/api-response-interceptors.ts:152
 msgid "The server returned a web page instead of data."
 msgstr "Zerbitzariak web-orri bat itzuli du datuen ordez."
+
+#: ../../../lib/web/src/lib/shell-errors.ts:17
+msgid "This app is not allowed to use your passkey. Allow it in Settings, under Permissions."
+msgstr "Aplikazio honek ez du baimenik zure passkey-a erabiltzeko. Baimendu Ezarpenetan, Baimenak atalean."
 
 #. placeholder {0}: request.target
 #: src/features/requests/components/request-panel.tsx:418
@@ -3102,6 +3157,10 @@ msgstr "Ikuspegi-aukerak"
 msgid "Views"
 msgstr "Ikuspegiak"
 
+#: ../../../lib/web/src/lib/shell-errors.ts:33
+msgid "Voice recording is not supported in this browser"
+msgstr "Nabigatzaile honek ez du ahots-grabazioa onartzen"
+
 #: src/features/objects/components/object-detail-panel.tsx:448
 #: src/features/objects/components/object-detail-panel.tsx:457
 msgid "Watch"
@@ -3141,7 +3200,7 @@ msgstr "Ez duzu proiektu honetarako sarbiderik."
 msgid "You have no projects yet."
 msgstr "Oraindik ez duzu proiekturik."
 
-#: ../../../lib/web/src/components/restore-banner.tsx:86
+#: ../../../lib/web/src/components/restore-banner.tsx:92
 msgid "Your account was moved here from {source}. Until you delete it there, messages and notifications may reach both servers, some of your content keeps being served from the old server, and followers may take a few minutes to find you here."
 msgstr "Zure kontua {source}-etik hona mugitu da. Han ezabatu arte, mezuak eta jakinarazpenak bi zerbitzarietara irits daitezke, zure edukiaren zati bat zerbitzari zaharretik ematen jarraitzen du, eta jarraitzaileek minutu batzuk behar izan ditzakete zu hemen aurkitzeko."
 

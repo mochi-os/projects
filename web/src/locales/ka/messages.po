@@ -45,7 +45,7 @@ msgid "{0, plural, one {# conflicting file} other {# conflicting files}}"
 msgstr "{0, plural, other {# კონფლიქტური ფაილი}}"
 
 #. placeholder {0}: displayInfo.count
-#: ../../../lib/web/src/components/person-picker.tsx:259
+#: ../../../lib/web/src/components/person-picker.tsx:260
 msgid "{0, plural, one {# selected} other {# selected}}"
 msgstr "{0, plural, other {# გაყიდვა}}"
 
@@ -75,19 +75,19 @@ msgstr "{0} კომიტი"
 msgid "{0} settings"
 msgstr "{0}-ის პარამეტრები"
 
-#: ../../../lib/web/src/lib/locale-format.ts:176
+#: ../../../lib/web/src/lib/locale-format.ts:191
 msgid "{count, plural, one {#d} other {#d}}"
 msgstr "{count, plural, one {#დღ} other {#დღ}}"
 
-#: ../../../lib/web/src/lib/locale-format.ts:172
+#: ../../../lib/web/src/lib/locale-format.ts:187
 msgid "{count, plural, one {#h} other {#h}}"
 msgstr "{count, plural, one {#სთ} other {#სთ}}"
 
-#: ../../../lib/web/src/lib/locale-format.ts:168
+#: ../../../lib/web/src/lib/locale-format.ts:183
 msgid "{count, plural, one {#m} other {#m}}"
 msgstr "{count, plural, one {#წთ} other {#წთ}}"
 
-#: ../../../lib/web/src/lib/locale-format.ts:180
+#: ../../../lib/web/src/lib/locale-format.ts:195
 msgid "{count, plural, one {#w} other {#w}}"
 msgstr "{count, plural, one {#კვ} other {#კვ}}"
 
@@ -133,6 +133,10 @@ msgstr "12 საათი"
 #: ../../../lib/web/src/lib/preference-utils.ts:36
 msgid "24 hours"
 msgstr "24 საათი"
+
+#: ../../../lib/web/src/lib/shell-errors.ts:35
+msgid "A recording is already in progress."
+msgstr "ჩაწერა უკვე მიმდინარეობს."
 
 #: ../../../lib/web/src/lib/preference-utils.ts:46
 msgid "Absolute (date and time)"
@@ -445,6 +449,14 @@ msgstr "ბრაუზერის შეტყობინებები"
 msgid "Built-in templates"
 msgstr "ჩაშენებული შაბლონები"
 
+#: ../../../lib/web/src/lib/shell-errors.ts:48
+msgid "Camera permission denied"
+msgstr "კამერის უფლება უარყოფილია"
+
+#: ../../../lib/web/src/lib/shell-errors.ts:56
+msgid "Camera unavailable"
+msgstr "კამერა მიუწვდომელია"
+
 #: src/features/editor/components/edit-dialogs.tsx:312
 msgid "Can be child of"
 msgstr "შეიძლება იყოს შვილი"
@@ -476,6 +488,12 @@ msgstr "კომენტარის გაუქმება"
 #: ../../../lib/web/src/components/comment-composer.tsx:429
 msgid "Cancel reply"
 msgstr "პასუხის გაუქმება"
+
+#: ../../../lib/web/src/lib/shell-errors.ts:24
+#: ../../../lib/web/src/lib/shell-errors.ts:37
+#: ../../../lib/web/src/lib/shell-errors.ts:52
+msgid "Cancelled"
+msgstr "გაუქმდა"
 
 #: src/features/requests/components/merge-status.tsx:71
 msgid "Cannot merge automatically"
@@ -917,7 +935,7 @@ msgstr "პროექტის წაშლა?"
 msgid "Delete view"
 msgstr "ხედის წაშლა"
 
-#: ../../../lib/web/src/components/restore-banner.tsx:95
+#: ../../../lib/web/src/components/restore-banner.tsx:101
 msgid "Delete your account on the old server"
 msgstr "წაშალეთ თქვენი ანგარიში ძველ სერვერზე"
 
@@ -981,7 +999,7 @@ msgstr "Diff"
 msgid "Diff: {source} → {target}"
 msgstr "Diff: {source} → {target}"
 
-#: ../../../lib/web/src/components/person-picker.tsx:192
+#: ../../../lib/web/src/components/person-picker.tsx:193
 msgid "Directory"
 msgstr "კატალოგი"
 
@@ -998,8 +1016,8 @@ msgstr "გავაუქმოთ მონახაზი?"
 msgid "Disconnected"
 msgstr "გათიშულია"
 
-#: ../../../lib/web/src/components/restore-banner.tsx:74
 #: ../../../lib/web/src/components/restore-banner.tsx:80
+#: ../../../lib/web/src/components/restore-banner.tsx:86
 msgid "Dismiss"
 msgstr "უარყოფა"
 
@@ -1451,7 +1469,7 @@ msgstr "პროექტების ძიება"
 msgid "Fingerprint"
 msgstr "ანაბეჭდი"
 
-#: ../../../lib/web/src/components/restore-banner.tsx:83
+#: ../../../lib/web/src/components/restore-banner.tsx:89
 msgid "Finish moving your account"
 msgstr "დაასრულეთ ანგარიშის გადატანა"
 
@@ -1467,7 +1485,7 @@ msgstr "ბრტყელი"
 msgid "Friday"
 msgstr "პარასკევი"
 
-#: ../../../lib/web/src/components/person-picker.tsx:185
+#: ../../../lib/web/src/components/person-picker.tsx:186
 msgid "Friends"
 msgstr "მეგობრები"
 
@@ -1589,7 +1607,7 @@ msgstr "როგორც ჩანს, გვერდი, რომელს�
 msgid "Item details"
 msgstr "ელემენტის დეტალები"
 
-#: ../../../lib/web/src/lib/locale-format.ts:165
+#: ../../../lib/web/src/lib/locale-format.ts:180
 msgid "Just now"
 msgstr "ახლახან"
 
@@ -1746,6 +1764,10 @@ msgstr "შეტყობინება"
 #: ../../../lib/web/src/lib/preference-utils.ts:80
 msgid "Metric"
 msgstr "მეტრიკული"
+
+#: ../../../lib/web/src/lib/shell-errors.ts:31
+msgid "Microphone permission denied"
+msgstr "მიკროფონის ნებართვა უარყოფილია"
 
 #: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:191
 msgid "Minimum length"
@@ -1964,7 +1986,7 @@ msgstr "ნახვები არ არის"
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:418
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:491
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:494
-#: ../../../lib/web/src/components/person-picker.tsx:328
+#: ../../../lib/web/src/components/person-picker.tsx:329
 #: ../../../lib/web/src/lib/preference-utils.ts:100
 #: src/features/editor/components/edit-dialogs.tsx:296
 #: src/features/editor/components/edit-dialogs.tsx:299
@@ -2107,18 +2129,23 @@ msgid "Passkey"
 msgstr "Passkey"
 
 #: ../../../lib/web/src/components/step-up-dialog.tsx:195
+#: ../../../lib/web/src/lib/shell-errors.ts:26
 msgid "Passkey verification failed. Please try again."
 msgstr "passkey-ის გადამოწმება ვერ მოხერხდა. გთხოვთ, სცადოთ ხელახლა."
 
-#: ../../../lib/web/src/components/restore-banner.tsx:132
+#: ../../../lib/web/src/components/restore-banner.tsx:138
 msgid "Passkeys"
 msgstr "Passkey-ები"
+
+#: ../../../lib/web/src/lib/shell-errors.ts:19
+msgid "Passkeys are not available in this browser"
+msgstr "Passkey-ები ამ ბრაუზერში მიუწვდომელია"
 
 #: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:213
 msgid "Pattern (regex)"
 msgstr "შაბლონი (regex)"
 
-#: ../../../lib/web/src/components/person-picker.tsx:178
+#: ../../../lib/web/src/components/person-picker.tsx:179
 msgid "People"
 msgstr "ხალხი"
 
@@ -2241,7 +2268,7 @@ msgstr "Push შეტყობინება"
 msgid "Raised"
 msgstr "აწეული"
 
-#: ../../../lib/web/src/components/restore-banner.tsx:104
+#: ../../../lib/web/src/components/restore-banner.tsx:110
 msgid "Re-link your accounts on this server"
 msgstr "ხელახლა დააკავშირეთ თქვენი ანგარიშები ამ სერვერზე"
 
@@ -2249,7 +2276,7 @@ msgstr "ხელახლა დააკავშირეთ თქვენ�
 msgid "Re-order columns"
 msgstr "სვეტების გადაწყობა"
 
-#: ../../../lib/web/src/components/restore-banner.tsx:126
+#: ../../../lib/web/src/components/restore-banner.tsx:132
 msgid "Re-register your passkeys on this server"
 msgstr "ხელახლა დაარეგისტრირეთ თქვენი წვდომის გასაღებები ამ სერვერზე"
 
@@ -2272,6 +2299,14 @@ msgstr "რეკომენდებული პროექტები"
 #: ../../../lib/web/src/lib/chat-ui.ts:21
 msgid "Reconnecting ({retries})..."
 msgstr "ხელახლა დაკავშირება ({retries})..."
+
+#: ../../../lib/web/src/lib/shell-errors.ts:43
+msgid "Recording failed. Please try again."
+msgstr "ჩაწერა ვერ მოხერხდა. სცადეთ ხელახლა."
+
+#: ../../../lib/web/src/lib/shell-errors.ts:39
+msgid "Recording produced no audio"
+msgstr "ჩანაწერი ხმას არ შეიცავს"
 
 #: ../../../lib/web/src/components/layout/authenticated-layout.tsx:135
 msgid "Redirecting to login."
@@ -2519,7 +2554,7 @@ msgstr "ძიება, თვალთვალი და დახარი�
 #: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:179
 #: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:255
 #: ../../../lib/web/src/components/inline-entity-search.tsx:64
-#: ../../../lib/web/src/components/person-picker.tsx:302
+#: ../../../lib/web/src/components/person-picker.tsx:303
 #: ../../../lib/web/src/components/search-entity-page.tsx:72
 msgid "Search..."
 msgstr "ძიება..."
@@ -2807,6 +2842,22 @@ msgstr "გაგზავნა ვერ მოხერხდა. ფაი�
 msgid "That was too large to upload. Remove or shrink files and try again."
 msgstr "ატვირთვისთვის ზედმეტად დიდი იყო. წაშალეთ ან შეამცირეთ ფაილები და ხელახლა სცადეთ."
 
+#: ../../../lib/web/src/lib/shell-errors.ts:50
+msgid "The camera is already in use"
+msgstr "კამერა უკვე გამოიყენება"
+
+#: ../../../lib/web/src/lib/shell-errors.ts:54
+msgid "The camera request was not answered"
+msgstr "კამერის მოთხოვნას პასუხი არ მოჰყვა"
+
+#: ../../../lib/web/src/lib/shell-errors.ts:41
+msgid "The microphone request was not answered"
+msgstr "მიკროფონის მოთხოვნას პასუხი არ მოჰყვა"
+
+#: ../../../lib/web/src/lib/shell-errors.ts:21
+msgid "The passkey request was not answered"
+msgstr "Passkey-ის მოთხოვნას პასუხი არ მოჰყვა"
+
 #: ../../../lib/web/src/features/errors/general-error.tsx:66
 msgid "The requested content could not be found."
 msgstr "მოთხოვნილი კონტენტი ვერ მოიძებნა."
@@ -2814,6 +2865,10 @@ msgstr "მოთხოვნილი კონტენტი ვერ მო
 #: ../../../lib/web/src/lib/api-response-interceptors.ts:152
 msgid "The server returned a web page instead of data."
 msgstr "სერვერმა მონაცემების ნაცვლად ვებგვერდი დააბრუნა."
+
+#: ../../../lib/web/src/lib/shell-errors.ts:17
+msgid "This app is not allowed to use your passkey. Allow it in Settings, under Permissions."
+msgstr "ამ აპლიკაციას თქვენი passkey-ის გამოყენების უფლება არ აქვს. დაუშვით პარამეტრებში, უფლებების განყოფილებაში."
 
 #. placeholder {0}: request.target
 #: src/features/requests/components/request-panel.tsx:418
@@ -3102,6 +3157,10 @@ msgstr "მხოლოდ ნახვა"
 msgid "Views"
 msgstr "ნახვები"
 
+#: ../../../lib/web/src/lib/shell-errors.ts:33
+msgid "Voice recording is not supported in this browser"
+msgstr "ხმის ჩაწერა ამ ბრაუზერში მხარდაჭერილი არ არის"
+
 #: src/features/objects/components/object-detail-panel.tsx:448
 #: src/features/objects/components/object-detail-panel.tsx:457
 msgid "Watch"
@@ -3141,7 +3200,7 @@ msgstr "თქვენ არ გაქვთ წვდომა ამ პრ�
 msgid "You have no projects yet."
 msgstr "ჯერ არ გაქვთ ფორუმები."
 
-#: ../../../lib/web/src/components/restore-banner.tsx:86
+#: ../../../lib/web/src/components/restore-banner.tsx:92
 msgid "Your account was moved here from {source}. Until you delete it there, messages and notifications may reach both servers, some of your content keeps being served from the old server, and followers may take a few minutes to find you here."
 msgstr "თქვენი ანგარიში გადმოტანილია {source}-დან. სანამ იქ წაშლით, შეტყობინებები და ნოტიფიკაციები შეიძლება ორივე სერვერს მიაღწიოს, თქვენი კონტენტის ნაწილი კვლავ ძველი სერვერიდან ხელმისაწვდომია, ხოლო მიმდევრებს შეიძლება რამდენიმე წუთი დასჭირდეთ თქვენი პოვნისთვის."
 

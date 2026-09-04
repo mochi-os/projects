@@ -45,7 +45,7 @@ msgid "{0, plural, one {# conflicting file} other {# conflicting files}}"
 msgstr "{0, plural, one {# հակասող ֆայլ} other {# հակասող ֆայլ}}"
 
 #. placeholder {0}: displayInfo.count
-#: ../../../lib/web/src/components/person-picker.tsx:259
+#: ../../../lib/web/src/components/person-picker.tsx:260
 msgid "{0, plural, one {# selected} other {# selected}}"
 msgstr "{0, plural, one {# ընտրված} other {# ընտրված}}"
 
@@ -75,19 +75,19 @@ msgstr "{0} ֆայլեր փոխվեցին"
 msgid "{0} settings"
 msgstr "{0} կարգավորումներ"
 
-#: ../../../lib/web/src/lib/locale-format.ts:176
+#: ../../../lib/web/src/lib/locale-format.ts:191
 msgid "{count, plural, one {#d} other {#d}}"
 msgstr "{count, plural, one {#օր} other {#օր}}"
 
-#: ../../../lib/web/src/lib/locale-format.ts:172
+#: ../../../lib/web/src/lib/locale-format.ts:187
 msgid "{count, plural, one {#h} other {#h}}"
 msgstr "{count, plural, one {#ժ} other {#ժ}}"
 
-#: ../../../lib/web/src/lib/locale-format.ts:168
+#: ../../../lib/web/src/lib/locale-format.ts:183
 msgid "{count, plural, one {#m} other {#m}}"
 msgstr "{count, plural, one {#ր} other {#ր}}"
 
-#: ../../../lib/web/src/lib/locale-format.ts:180
+#: ../../../lib/web/src/lib/locale-format.ts:195
 msgid "{count, plural, one {#w} other {#w}}"
 msgstr "{count, plural, one {#շաբ} other {#շաբ}}"
 
@@ -133,6 +133,10 @@ msgstr "12 ժամ"
 #: ../../../lib/web/src/lib/preference-utils.ts:36
 msgid "24 hours"
 msgstr "24 ժամ"
+
+#: ../../../lib/web/src/lib/shell-errors.ts:35
+msgid "A recording is already in progress."
+msgstr "Ձայնագրումն արդեն ընթացքի մեջ է։"
 
 #: ../../../lib/web/src/lib/preference-utils.ts:46
 msgid "Absolute (date and time)"
@@ -445,6 +449,14 @@ msgstr "Բրաուզերի ծանուցումներ"
 msgid "Built-in templates"
 msgstr "Ներկառուցված ձևանմուշներ"
 
+#: ../../../lib/web/src/lib/shell-errors.ts:48
+msgid "Camera permission denied"
+msgstr "Տեսախցիկի թույլտվությունը մերժվեց"
+
+#: ../../../lib/web/src/lib/shell-errors.ts:56
+msgid "Camera unavailable"
+msgstr "Տեսախցիկը հասանելի չէ"
+
 #: src/features/editor/components/edit-dialogs.tsx:312
 msgid "Can be child of"
 msgstr "Կարող է լինել ենթակա"
@@ -476,6 +488,12 @@ msgstr "Չեղարկել մեկնաբանությունը"
 #: ../../../lib/web/src/components/comment-composer.tsx:429
 msgid "Cancel reply"
 msgstr "Չեղարկել պատասխանը"
+
+#: ../../../lib/web/src/lib/shell-errors.ts:24
+#: ../../../lib/web/src/lib/shell-errors.ts:37
+#: ../../../lib/web/src/lib/shell-errors.ts:52
+msgid "Cancelled"
+msgstr "Չեղարկված"
 
 #: src/features/requests/components/merge-status.tsx:71
 msgid "Cannot merge automatically"
@@ -917,7 +935,7 @@ msgstr "Ջնջե՞լ նախագիծը։"
 msgid "Delete view"
 msgstr "Ջնջել տեսքը"
 
-#: ../../../lib/web/src/components/restore-banner.tsx:95
+#: ../../../lib/web/src/components/restore-banner.tsx:101
 msgid "Delete your account on the old server"
 msgstr "Ջնջեք ձեր հաշիվը հին սերվերում"
 
@@ -981,7 +999,7 @@ msgstr "Diff"
 msgid "Diff: {source} → {target}"
 msgstr "Diff՝ {source} → {target}"
 
-#: ../../../lib/web/src/components/person-picker.tsx:192
+#: ../../../lib/web/src/components/person-picker.tsx:193
 msgid "Directory"
 msgstr "Տեղեկագիրք"
 
@@ -998,8 +1016,8 @@ msgstr "Հրաժարվե՞լ սևագրից։"
 msgid "Disconnected"
 msgstr "Անջատված"
 
-#: ../../../lib/web/src/components/restore-banner.tsx:74
 #: ../../../lib/web/src/components/restore-banner.tsx:80
+#: ../../../lib/web/src/components/restore-banner.tsx:86
 msgid "Dismiss"
 msgstr "Հեռացնել"
 
@@ -1451,7 +1469,7 @@ msgstr "Գտնել նախագծեր"
 msgid "Fingerprint"
 msgstr "Մատնահետք"
 
-#: ../../../lib/web/src/components/restore-banner.tsx:83
+#: ../../../lib/web/src/components/restore-banner.tsx:89
 msgid "Finish moving your account"
 msgstr "Ավարտեք ձեր հաշվի տեղափոխությունը"
 
@@ -1467,7 +1485,7 @@ msgstr "Հարթ"
 msgid "Friday"
 msgstr "Ուրբաթ"
 
-#: ../../../lib/web/src/components/person-picker.tsx:185
+#: ../../../lib/web/src/components/person-picker.tsx:186
 msgid "Friends"
 msgstr "Ընկերներ"
 
@@ -1589,7 +1607,7 @@ msgstr "Կարծես թե ձեր փնտրած էջը <0/>գոյություն չ
 msgid "Item details"
 msgstr "Տարրի մանրամասներ"
 
-#: ../../../lib/web/src/lib/locale-format.ts:165
+#: ../../../lib/web/src/lib/locale-format.ts:180
 msgid "Just now"
 msgstr "Հենց հիմա"
 
@@ -1746,6 +1764,10 @@ msgstr "Հաղորդագրություն"
 #: ../../../lib/web/src/lib/preference-utils.ts:80
 msgid "Metric"
 msgstr "Մետրական"
+
+#: ../../../lib/web/src/lib/shell-errors.ts:31
+msgid "Microphone permission denied"
+msgstr "Խոսափողի թույլտվությունը մերժված է"
 
 #: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:191
 msgid "Minimum length"
@@ -1964,7 +1986,7 @@ msgstr "Դիտումներ չկան"
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:418
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:491
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:494
-#: ../../../lib/web/src/components/person-picker.tsx:328
+#: ../../../lib/web/src/components/person-picker.tsx:329
 #: ../../../lib/web/src/lib/preference-utils.ts:100
 #: src/features/editor/components/edit-dialogs.tsx:296
 #: src/features/editor/components/edit-dialogs.tsx:299
@@ -2107,18 +2129,23 @@ msgid "Passkey"
 msgstr "Անցաբանալի"
 
 #: ../../../lib/web/src/components/step-up-dialog.tsx:195
+#: ../../../lib/web/src/lib/shell-errors.ts:26
 msgid "Passkey verification failed. Please try again."
 msgstr "Անցաբանալու ստուգումը ձախողվեց։ Խնդրում ենք նորից փորձել։"
 
-#: ../../../lib/web/src/components/restore-banner.tsx:132
+#: ../../../lib/web/src/components/restore-banner.tsx:138
 msgid "Passkeys"
 msgstr "Անցաբանալիներ"
+
+#: ../../../lib/web/src/lib/shell-errors.ts:19
+msgid "Passkeys are not available in this browser"
+msgstr "Անցաբանալիները հասանելի չեն այս դիտարկիչում"
 
 #: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:213
 msgid "Pattern (regex)"
 msgstr "Ձևանմուշ (regex)"
 
-#: ../../../lib/web/src/components/person-picker.tsx:178
+#: ../../../lib/web/src/components/person-picker.tsx:179
 msgid "People"
 msgstr "Մարդիկ"
 
@@ -2241,7 +2268,7 @@ msgstr "Push ծանուցում"
 msgid "Raised"
 msgstr "Բարձրացված"
 
-#: ../../../lib/web/src/components/restore-banner.tsx:104
+#: ../../../lib/web/src/components/restore-banner.tsx:110
 msgid "Re-link your accounts on this server"
 msgstr "Նորից կապեք ձեր հաշիվները այս սերվերում"
 
@@ -2249,7 +2276,7 @@ msgstr "Նորից կապեք ձեր հաշիվները այս սերվերու�
 msgid "Re-order columns"
 msgstr "Վերադասավորել սյունակները"
 
-#: ../../../lib/web/src/components/restore-banner.tsx:126
+#: ../../../lib/web/src/components/restore-banner.tsx:132
 msgid "Re-register your passkeys on this server"
 msgstr "Կրկին գրանցեք ձեր անցաբառերը այս սերվերում"
 
@@ -2272,6 +2299,14 @@ msgstr "Առաջարկվող նախագծեր"
 #: ../../../lib/web/src/lib/chat-ui.ts:21
 msgid "Reconnecting ({retries})..."
 msgstr "Վերամիացում ({retries})..."
+
+#: ../../../lib/web/src/lib/shell-errors.ts:43
+msgid "Recording failed. Please try again."
+msgstr "Ձայնագրումը ձախողվեց։ Կրկին փորձեք։"
+
+#: ../../../lib/web/src/lib/shell-errors.ts:39
+msgid "Recording produced no audio"
+msgstr "Ձայնագրությունը ձայն չի պարունակում"
 
 #: ../../../lib/web/src/components/layout/authenticated-layout.tsx:135
 msgid "Redirecting to login."
@@ -2519,7 +2554,7 @@ msgstr "Որոնել, դիտել և տեսակավորել այս տեսքը։"
 #: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:179
 #: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx:255
 #: ../../../lib/web/src/components/inline-entity-search.tsx:64
-#: ../../../lib/web/src/components/person-picker.tsx:302
+#: ../../../lib/web/src/components/person-picker.tsx:303
 #: ../../../lib/web/src/components/search-entity-page.tsx:72
 msgid "Search..."
 msgstr "Որոնում..."
@@ -2807,6 +2842,22 @@ msgstr "Չհաջողվեց ուղարկել։ Ֆայլերը կարող են չ�
 msgid "That was too large to upload. Remove or shrink files and try again."
 msgstr "Չափազանց մեծ էր վերբեռնելու համար։ Հեռացրեք կամ փոքրացրեք ֆայլերը և կրկին փորձեք։"
 
+#: ../../../lib/web/src/lib/shell-errors.ts:50
+msgid "The camera is already in use"
+msgstr "Տեսախցիկն արդեն օգտագործվում է"
+
+#: ../../../lib/web/src/lib/shell-errors.ts:54
+msgid "The camera request was not answered"
+msgstr "Տեսախցիկի հարցումը չպատասխանվեց"
+
+#: ../../../lib/web/src/lib/shell-errors.ts:41
+msgid "The microphone request was not answered"
+msgstr "Խոսափողի հարցումը չպատասխանվեց"
+
+#: ../../../lib/web/src/lib/shell-errors.ts:21
+msgid "The passkey request was not answered"
+msgstr "Անցաբանալու հարցումը չպատասխանվեց"
+
 #: ../../../lib/web/src/features/errors/general-error.tsx:66
 msgid "The requested content could not be found."
 msgstr "Հնարավոր չեղավ գտնել պահանջված բովանդակությունը։"
@@ -2814,6 +2865,10 @@ msgstr "Հնարավոր չեղավ գտնել պահանջված բովանդա
 #: ../../../lib/web/src/lib/api-response-interceptors.ts:152
 msgid "The server returned a web page instead of data."
 msgstr "Սերվերը տվյալների փոխարեն վերադարձրեց վեբ էջ։"
+
+#: ../../../lib/web/src/lib/shell-errors.ts:17
+msgid "This app is not allowed to use your passkey. Allow it in Settings, under Permissions."
+msgstr "Այս հավելվածին թույլատրված չէ օգտագործել ձեր անցաբանալին։ Թույլատրեք այն Կարգավորումներում՝ Թույլտվություններ բաժնում։"
 
 #. placeholder {0}: request.target
 #: src/features/requests/components/request-panel.tsx:418
@@ -3102,6 +3157,10 @@ msgstr "Դիտել տարբերակները"
 msgid "Views"
 msgstr "Դիտումներ"
 
+#: ../../../lib/web/src/lib/shell-errors.ts:33
+msgid "Voice recording is not supported in this browser"
+msgstr "Ձայնագրումն այս դիտարկիչում չի աջակցվում"
+
 #: src/features/objects/components/object-detail-panel.tsx:448
 #: src/features/objects/components/object-detail-panel.tsx:457
 msgid "Watch"
@@ -3141,7 +3200,7 @@ msgstr "Դու այս նախագծին հասանելիություն չունե
 msgid "You have no projects yet."
 msgstr "Դուք դեռ չունեք նախագծեր:"
 
-#: ../../../lib/web/src/components/restore-banner.tsx:86
+#: ../../../lib/web/src/components/restore-banner.tsx:92
 msgid "Your account was moved here from {source}. Until you delete it there, messages and notifications may reach both servers, some of your content keeps being served from the old server, and followers may take a few minutes to find you here."
 msgstr "Ձեր հաշիվը տեղափոխվել է այստեղ {source}-ից: Մինչ այն ջնջեք այնտեղ, հաղորդագրություններն ու ծանուցումները կարող են հասնել երկու սերվերներին, ձեր որոշ բովանդակություն դեռ մատուցվում է հին սերվերից, և հետևորդները կարող են մի քանի րոպե պահանջել ձեզ գտնելու համար:"
 

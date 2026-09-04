@@ -179,7 +179,7 @@ msgstr "{subjectName} لاءِ رسائي مقرر ڪئي وئي"
 msgid "Account type"
 msgstr "اڪائونٽ جو قسم"
 
-#: src/features/objects/components/object-detail-panel.tsx:407
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:415
 msgid "Activity"
 msgstr "سرگرمي"
 
@@ -224,7 +224,7 @@ msgstr "چيڪ لسٽ شيءِ شامل ڪريو"
 msgid "Add class"
 msgstr "ڪلاس شامل ڪريو"
 
-#: src/routes/_authenticated/$projectId/index.tsx:139
+#: src/routes/_authenticated/$projectId/index.tsx:140
 msgid "Add column"
 msgstr "ڪالم شامل ڪريو"
 
@@ -238,7 +238,7 @@ msgstr "فيلڊ شامل ڪريو"
 msgid "Add item..."
 msgstr "شيءِ شامل ڪريو..."
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:320
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:314
 msgid "Add link"
 msgstr "لنڪ شامل ڪريو"
 
@@ -329,7 +329,7 @@ msgstr "هن فيڊ جي رڪنيت وٺندڙ سڀ ڪجهه ان کي حاصل 
 msgid "Are you sure you want to delete \"{0}\"?"
 msgstr "ڇا توهان پڪ سان \"{0}\" ختم ڪرڻ چاهيو ٿا؟"
 
-#: src/features/objects/components/object-detail-panel.tsx:653
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:671
 msgid "Are you sure you want to delete \"{title}\"? This action cannot be undone."
 msgstr "ڇا توهان پڪ سان \"{title}\" ختم ڪرڻ چاهيو ٿا؟ هي عمل واپس نه ٿو ٿي سگهي."
 
@@ -348,6 +348,14 @@ msgstr "ڇا توهان پڪ سان هي merge درخواست ختم ڪرڻ چا
 #: ../../../lib/web/src/components/sign-out-dialog.tsx:27
 msgid "Are you sure you want to log out? You will need to log in again to access your account."
 msgstr "ڇا توهان پڪ سان لاگ آئوٽ ڪرڻ چاهيو ٿا؟ پنهنجي اڪائونٽ تائين رسائي لاءِ توهان کي ٻيهر لاگ ان ڪرڻو پوندو."
+
+#: ../../../lib/web/src/components/game/game-end-dialogs.tsx:39
+msgid "Are you sure you want to resign?"
+msgstr "ڇا توهان پڪ سان دستبردار ٿيڻ چاهيو ٿا؟"
+
+#: ../../../lib/web/src/components/game/game-end-dialogs.tsx:38
+msgid "Are you sure you want to resign? {opponentName} will win the game."
+msgstr "ڇا توهان پڪ سان دستبردار ٿيڻ چاهيو ٿا؟ {opponentName} راند کٽيندو."
 
 #: src/features/projects/pages/projects-list-page.tsx:40
 msgid "Are you sure you want to unsubscribe from this project?"
@@ -402,20 +410,29 @@ msgid "Back to project"
 msgstr "پروجيڪٽ ڏانهن واپس"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:64
-#: src/routes/_authenticated/$projectId/index.tsx:84
+#: src/routes/_authenticated/$projectId/index.tsx:85
 msgid "Back to projects"
 msgstr "پروجيڪٽن ڏانهن واپس"
 
+#: ../../../lib/web/src/components/banner-section.tsx:80
 #: ../../../lib/web/src/components/entity-banner.tsx:17
 msgid "Banner"
 msgstr "بينر"
+
+#: ../../../lib/web/src/components/banner-section.tsx:69
+msgid "Banner removed"
+msgstr "بينر هٽايو ويو"
+
+#: ../../../lib/web/src/components/banner-section.tsx:69
+msgid "Banner updated"
+msgstr "بينر اپڊيٽ ٿيو"
 
 #: src/features/requests/components/diff-viewer.tsx:448
 msgid "Binary file not shown"
 msgstr "بائنري فائل نه ڏيکاري وئي"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:68
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:215
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:72
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:209
 msgid "Blocked by"
 msgstr "بلاڪ ڪندڙ"
 
@@ -424,7 +441,7 @@ msgstr "بلاڪ ڪندڙ"
 msgid "Blocked navigation to untrusted link"
 msgstr "غير قابل اعتماد لنڪ ڏانهن ناقابل اعتماد ناقابل تشريح روڪي"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:66
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:70
 msgid "Blocks"
 msgstr "بلاڪ"
 
@@ -477,7 +494,7 @@ msgstr "جي اولاد ٿي سگهي ٿو"
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:91
 #: src/features/projects/components/create-project-dialog.tsx:453
 #: src/routes/_authenticated/$projectId/design.tsx:61
-#: src/routes/_authenticated/$projectId/index.tsx:142
+#: src/routes/_authenticated/$projectId/index.tsx:143
 msgid "Cancel"
 msgstr "منسوخ ڪريو"
 
@@ -550,6 +567,7 @@ msgstr "ٻولي چونڊيو"
 msgid "Classes"
 msgstr "ڪلاس"
 
+#: ../../../lib/web/src/components/banner-section.tsx:111
 #: ../../../lib/web/src/components/colour-picker.tsx:274
 #: ../../../lib/web/src/components/colour-picker.tsx:355
 #: ../../../lib/web/src/components/travelling-picker.tsx:145
@@ -567,8 +585,8 @@ msgstr "سڀ صاف ڪريو"
 msgid "Clear search"
 msgstr "ڳولا صاف ڪريو"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:523
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:528
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:517
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:522
 #: ../../../lib/web/src/components/ui/dialog.tsx:78
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:480
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:483
@@ -650,7 +668,7 @@ msgid "Comments"
 msgstr "تبصرا"
 
 #. placeholder {0}: data.comment_count || 0
-#: src/features/objects/components/object-detail-panel.tsx:393
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:411
 msgid "Comments ({0})"
 msgstr "تبصرا ({0})"
 
@@ -759,8 +777,8 @@ msgstr "ان اڪائونٽ سان تصديق نه ٿي سگهي. مهرباني
 
 #: ../../../lib/web/src/components/entity/entity-board-column.tsx:551
 #: ../../../lib/web/src/components/entity/entity-board-column.tsx:691
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:513
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:682
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:507
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:676
 #: ../../../lib/web/src/components/entity/entity-tree-view.tsx:672
 msgid "Create"
 msgstr "ٺاهيو"
@@ -809,7 +827,7 @@ msgstr "{field} ٺاهيو ويو"
 msgid "Creating project..."
 msgstr "پروجيڪٽ ٺهي رهيو آهي..."
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:682
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:676
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:260
 #: src/features/projects/components/create-project-dialog.tsx:457
 #: src/features/projects/components/create-project-dialog.tsx:549
@@ -870,7 +888,8 @@ msgstr "ڊفالٽ ترتيب"
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:208
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:255
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:317
-#: src/features/objects/components/object-detail-panel.tsx:654
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:672
+#: ../../../lib/web/src/components/game/game-end-dialogs.tsx:78
 #: src/features/requests/components/request-panel.tsx:142
 #: src/routes/_authenticated/$projectId_.settings.tsx:122
 msgid "Delete"
@@ -896,9 +915,13 @@ msgstr "تبصرو ختم ڪريو"
 msgid "Delete field"
 msgstr "فيلڊ ختم ڪريو"
 
-#: src/features/objects/components/object-detail-panel.tsx:467
-#: src/features/objects/components/object-detail-panel.tsx:472
-#: src/features/objects/components/object-detail-panel.tsx:652
+#: ../../../lib/web/src/components/game/game-end-dialogs.tsx:69
+msgid "Delete game?"
+msgstr "گيم ختم ڪجي؟"
+
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:486
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:491
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:670
 msgid "Delete item"
 msgstr "شيءِ ختم ڪريو"
 
@@ -951,6 +974,10 @@ msgstr "{field} ختم ڪيو ويو"
 msgid "Deleting project..."
 msgstr "پروجيڪٽ ڊهي رهيو آهي..."
 
+#: ../../../lib/web/src/components/game/game-end-dialogs.tsx:75
+msgid "Deleting..."
+msgstr "ختم ڪري رهيو آهي..."
+
 #: ../../../lib/web/src/components/ui/sort-direction-button.tsx:27
 msgid "Descending"
 msgstr "وڌيڪ کان گهٽ"
@@ -963,7 +990,7 @@ msgstr "تفصيل"
 
 #: src/routes/_authenticated/$projectId/design.tsx:43
 #: src/routes/_authenticated/$projectId/design.tsx:46
-#: src/routes/_authenticated/$projectId/index.tsx:169
+#: src/routes/_authenticated/$projectId/index.tsx:170
 msgid "Design"
 msgstr "ڊزائن"
 
@@ -1021,7 +1048,7 @@ msgstr "ڳنڍيل ناهي"
 msgid "Dismiss"
 msgstr "رد ڪريو"
 
-#: src/routes/_authenticated/$projectId/index.tsx:145
+#: src/routes/_authenticated/$projectId/index.tsx:146
 msgid "Dismiss board hint"
 msgstr "بورڊ جو اشارو رد ڪريو"
 
@@ -1034,13 +1061,13 @@ msgid "Does not match the required pattern"
 msgstr "گهربل نموني سان ميل نٿو کائي"
 
 #: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:309
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:495
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:523
 #: src/features/editor/components/edit-dialogs.tsx:439
-#: src/features/objects/components/object-detail-panel.tsx:481
 msgid "Done"
 msgstr "مڪمل"
 
-#: src/routes/_authenticated/$projectId/index.tsx:144
+#: src/routes/_authenticated/$projectId/index.tsx:145
 msgid "Double click on a column to add content"
 msgstr "مواد شامل ڪرڻ لاءِ ڪالم تي ڊبل ڪلڪ ڪريو"
 
@@ -1060,7 +1087,7 @@ msgid "Download failed"
 msgstr "ڊائون لوڊ ناڪام ٿيو"
 
 #: src/routes/_authenticated/$projectId/design.tsx:52
-#: src/routes/_authenticated/$projectId/index.tsx:148
+#: src/routes/_authenticated/$projectId/index.tsx:149
 msgid "Downloaded {filename}"
 msgstr "{filename} ڊائون لوڊ ٿيو"
 
@@ -1069,11 +1096,11 @@ msgstr "{filename} ڊائون لوڊ ٿيو"
 msgid "Draft"
 msgstr "مسودو"
 
-#: src/routes/_authenticated/$projectId/index.tsx:141
+#: src/routes/_authenticated/$projectId/index.tsx:142
 msgid "Drag columns to re-order them"
 msgstr "ڪالمن کي ٻيهر ترتيب ڏيڻ لاءِ ڇڪيو"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:67
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:71
 msgid "Duplicates"
 msgstr "ڊپليڪيٽ"
 
@@ -1132,6 +1159,10 @@ msgstr "اي ميل"
 msgid "Email code"
 msgstr "اي ميل ڪوڊ"
 
+#: ../../../lib/web/src/components/banner-section.tsx:88
+msgid "Enter banner text (markdown supported)..."
+msgstr "بينر متن داخل ڪريو (markdown سپورٽ ٿيل)..."
+
 #: ../../../lib/web/src/components/step-up-dialog.tsx:290
 msgid "Enter the code from your email"
 msgstr "پنھنجي اِيميل مان ڪوڊ داخل ڪريو"
@@ -1144,7 +1175,7 @@ msgstr "پنهنجو تصديق ڪندڙ ڪوڊ داخل ڪريو"
 msgid "Entity ID"
 msgstr "اينٽٽي ID"
 
-#: src/features/objects/components/object-detail-panel.tsx:344
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:381
 msgid "Error"
 msgstr "خرابي"
 
@@ -1159,7 +1190,7 @@ msgstr "پکيڙيو"
 msgid "Expand sidebar"
 msgstr "سائڊبار وڌايو"
 
-#: src/routes/_authenticated/$projectId/index.tsx:146
+#: src/routes/_authenticated/$projectId/index.tsx:147
 msgid "Export data"
 msgstr "ڊيٽا برآمد ڪريو"
 
@@ -1179,7 +1210,7 @@ msgstr "تمام وڏو"
 msgid "Failed to add account"
 msgstr "اڪائونٽ شامل ڪرڻ ۾ ناڪام"
 
-#: src/routes/_authenticated/$projectId/index.tsx:154
+#: src/routes/_authenticated/$projectId/index.tsx:155
 msgid "Failed to add column"
 msgstr "ڪالم شامل ڪرڻ ۾ ناڪامي"
 
@@ -1201,9 +1232,9 @@ msgstr "ڪلاس ٺاهڻ ۾ ناڪام"
 msgid "Failed to create field"
 msgstr "فيلڊ ٺاهڻ ۾ ناڪام"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:137
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:131
 #: ../../../lib/web/src/components/options-menu.tsx:98
-#: src/routes/_authenticated/$projectId/index.tsx:152
+#: src/routes/_authenticated/$projectId/index.tsx:153
 msgid "Failed to create link"
 msgstr "لنڪ ٺاهڻ ۾ ناڪام"
 
@@ -1224,7 +1255,7 @@ msgstr "پروجيڪٽ ٺاهڻ ۾ ناڪام"
 msgid "Failed to create view"
 msgstr "ڏيک ٺاهڻ ۾ ناڪام"
 
-#: src/features/objects/components/object-detail-panel.tsx:235
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:303
 msgid "Failed to delete"
 msgstr "ختم ڪرڻ ۾ ناڪام"
 
@@ -1236,7 +1267,7 @@ msgstr "ضميمو ختم ڪرڻ ۾ ناڪام"
 msgid "Failed to delete class"
 msgstr "ڪلاس ختم ڪرڻ ۾ ناڪام"
 
-#: src/routes/_authenticated/$projectId/index.tsx:156
+#: src/routes/_authenticated/$projectId/index.tsx:157
 msgid "Failed to delete column"
 msgstr "ڪالم ختم ڪرڻ ۾ ناڪامي"
 
@@ -1248,7 +1279,7 @@ msgstr "تبصرو ختم ڪرڻ ۾ ناڪام"
 msgid "Failed to delete field"
 msgstr "فيلڊ ختم ڪرڻ ۾ ناڪام"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:159
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:153
 msgid "Failed to delete link"
 msgstr "لنڪ ختم ڪرڻ ۾ ناڪام"
 
@@ -1268,7 +1299,7 @@ msgstr "پروجيڪٽ ختم ڪرڻ ۾ ناڪام"
 msgid "Failed to delete view"
 msgstr "ڏيک ختم ڪرڻ ۾ ناڪام"
 
-#: src/routes/_authenticated/$projectId/index.tsx:149
+#: src/routes/_authenticated/$projectId/index.tsx:150
 msgid "Failed to export data"
 msgstr "ڊيٽا برآمد نه ٿي سگهي"
 
@@ -1301,15 +1332,15 @@ msgstr "تاريخ لوڊ ڪرڻ ۾ ناڪام"
 msgid "Failed to load image"
 msgstr "تصوير لوڊ ٿي نه سگهيو"
 
-#: src/features/objects/components/object-detail-panel.tsx:345
-#: src/features/objects/components/object-detail-panel.tsx:348
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:382
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:385
 msgid "Failed to load item"
 msgstr "شيءِ لوڊ ڪرڻ ۾ ناڪام"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:41
 #: src/routes/_authenticated/$projectId/$objectId.tsx:65
-#: src/routes/_authenticated/$projectId/index.tsx:61
-#: src/routes/_authenticated/$projectId/index.tsx:85
+#: src/routes/_authenticated/$projectId/index.tsx:62
+#: src/routes/_authenticated/$projectId/index.tsx:86
 msgid "Failed to load project"
 msgstr "پروجيڪٽ لوڊ ڪرڻ ۾ ناڪام"
 
@@ -1337,8 +1368,8 @@ msgstr "وڊيو لوڊ ٿي نه سگهيو"
 msgid "Failed to merge"
 msgstr "merge ڪرڻ ۾ ناڪام"
 
-#: src/features/objects/components/object-detail-panel.tsx:255
-#: src/routes/_authenticated/$projectId/index.tsx:153
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:317
+#: src/routes/_authenticated/$projectId/index.tsx:154
 msgid "Failed to move"
 msgstr "منتقل ڪرڻ ۾ ناڪام"
 
@@ -1346,7 +1377,7 @@ msgstr "منتقل ڪرڻ ۾ ناڪام"
 msgid "Failed to post comment"
 msgstr "تبصرو پوسٽ ڪرڻ ۾ ناڪام"
 
-#: src/routes/_authenticated/$projectId/index.tsx:157
+#: src/routes/_authenticated/$projectId/index.tsx:158
 msgid "Failed to re-order columns"
 msgstr "ڪالمن جي ترتيب مٽائڻ ۾ ناڪامي"
 
@@ -1359,7 +1390,7 @@ msgstr "فائل پڙهڻ ۾ ناڪام"
 msgid "Failed to remove access"
 msgstr "رسائي هٽائڻ ۾ ناڪام"
 
-#: src/routes/_authenticated/$projectId/index.tsx:155
+#: src/routes/_authenticated/$projectId/index.tsx:156
 msgid "Failed to rename column"
 msgstr "ڪالم جو نالو مٽائڻ ۾ ناڪامي"
 
@@ -1379,7 +1410,7 @@ msgstr "پرامپٽ ري سيٽ ڪرڻ ۾ ناڪام"
 msgid "Failed to revoke RSS access"
 msgstr "RSS رسائي واپس وٺڻ ۾ ناڪام"
 
-#: src/features/objects/components/object-detail-panel.tsx:199
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:273
 msgid "Failed to save"
 msgstr "محفوظ ڪرڻ ۾ ناڪام"
 
@@ -1402,13 +1433,17 @@ msgid "Failed to subscribe"
 msgstr "سبسڪرائيب ڪرڻ ۾ ناڪام"
 
 #: src/features/projects/pages/projects-list-page.tsx:43
-#: src/routes/_authenticated/$projectId/index.tsx:163
+#: src/routes/_authenticated/$projectId/index.tsx:164
 msgid "Failed to unsubscribe"
 msgstr "ان سبسڪرائيب ڪرڻ ۾ ناڪام"
 
 #: src/routes/_authenticated/$projectId_.settings.tsx:142
 msgid "Failed to update access level"
 msgstr "رسائي جي سطح اپڊيٽ ڪرڻ ۾ ناڪام"
+
+#: ../../../lib/web/src/components/banner-section.tsx:71
+msgid "Failed to update banner"
+msgstr "بينر اپڊيٽ ڪرڻ ۾ ناڪام"
 
 #: src/features/editor/components/design-editor.tsx:122
 msgid "Failed to update class"
@@ -1442,7 +1477,7 @@ msgstr "پروجيڪٽ اپڊيٽ ڪرڻ ۾ ناڪام"
 msgid "Failed to update view"
 msgstr "ڏيک اپڊيٽ ڪرڻ ۾ ناڪام"
 
-#: src/features/objects/components/object-detail-panel.tsx:218
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:288
 msgid "Failed to update watching"
 msgstr "نگراني اپڊيٽ ڪرڻ ۾ ناڪام"
 
@@ -1454,7 +1489,7 @@ msgstr "ضميمو اپ لوڊ ڪرڻ ۾ ناڪام"
 msgid "Fields"
 msgstr "فيلڊز"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:611
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:605
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:160
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:180
 msgid "Files"
@@ -1603,7 +1638,7 @@ msgstr "غلط JSON فائل"
 msgid "It seems like the page you're looking for <0/>does not exist or might have been removed."
 msgstr "لڳي ٿو ته جيڪو صفحو توھان ڳولي رھيا آھيو <0/>اھو موجود ناھي يا ھٽايو ويو آھي."
 
-#: src/features/objects/components/object-detail-panel.tsx:425
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:441
 msgid "Item details"
 msgstr "شيءِ جا تفصيل"
 
@@ -1633,11 +1668,11 @@ msgid "Light"
 msgstr "روشن"
 
 #: ../../../lib/web/src/components/options-menu.tsx:190
-#: src/routes/_authenticated/$projectId/index.tsx:150
+#: src/routes/_authenticated/$projectId/index.tsx:151
 msgid "Link"
 msgstr "لنڪ"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:279
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:273
 msgid "Links"
 msgstr "لنڪس"
 
@@ -1657,11 +1692,11 @@ msgstr "مواد لوڊ ٿي رهيو آهي…"
 msgid "Loading diff..."
 msgstr "ڊف لوڊ ٿي رهيو آهي..."
 
-#: src/features/objects/components/object-detail-panel.tsx:325
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:365
 msgid "Loading item"
 msgstr "شيءِ لوڊ ٿي رهي آهي"
 
-#: src/features/objects/components/object-detail-panel.tsx:326
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:366
 msgid "Loading item details"
 msgstr "شيءِ جا تفصيل لوڊ ٿي رهيا آهن"
 
@@ -1671,7 +1706,7 @@ msgstr "ٽيمپليٽ لوڊ ٿي رهيا آهن..."
 
 #: ../../../lib/web/src/components/ui/load-more.tsx:39
 #: ../../../lib/web/src/features/document/document-page.tsx:88
-#: src/routes/_authenticated/$projectId/index.tsx:147
+#: src/routes/_authenticated/$projectId/index.tsx:148
 msgid "Loading..."
 msgstr "لوڊ ٿي رهيو آهي..."
 
@@ -1741,7 +1776,7 @@ msgstr "merge ڪميٽ"
 msgid "Merge requests"
 msgstr "merge درخواستون"
 
-#: src/features/objects/components/object-detail-panel.tsx:400
+#: src/routes/_authenticated/$projectId/index.tsx:212
 msgid "Merge requests ({requestCount})"
 msgstr "merge درخواستون ({requestCount})"
 
@@ -1837,14 +1872,14 @@ msgstr "نالو 1000 اکرن يا گهٽ هجڻ گهرجي"
 msgid "Network error"
 msgstr "نيٽ ورڪ جي خرابي"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:498
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:492
 #: ../../../lib/web/src/components/ui/sort-selector.tsx:43
-#: src/routes/_authenticated/$projectId/index.tsx:129
-#: src/routes/_authenticated/$projectId/index.tsx:133
+#: src/routes/_authenticated/$projectId/index.tsx:130
+#: src/routes/_authenticated/$projectId/index.tsx:134
 msgid "New"
 msgstr "نئون"
 
-#: src/routes/_authenticated/$projectId/index.tsx:135
+#: src/routes/_authenticated/$projectId/index.tsx:136
 msgid "New {className}"
 msgstr "نئون {className}"
 
@@ -1862,7 +1897,7 @@ msgstr "اڳيون"
 msgid "Next image"
 msgstr "اڳيون تصوير"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:577
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:571
 msgid "No {parentClassNames} to add to"
 msgstr "شامل ڪرڻ لاءِ ڪي {parentClassNames} نه آهن"
 
@@ -1910,11 +1945,11 @@ msgstr "اڃا ڪا گيم نه آهي"
 msgid "No groups available"
 msgstr "ڪو گروپ دستياب ناهي"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:544
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:538
 msgid "No item types can be created yet. Create the required parent items first."
 msgstr "اڃا ڪي شيون قسم ٺاهي نٿا سگهجن. پهريائين گهربل والدين شيون ٺاهيو."
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:360
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:354
 msgid "No matching objects"
 msgstr "ڪا ملندڙ شيون نه آهن"
 
@@ -1976,9 +2011,13 @@ msgid "No views"
 msgstr "ڪا ڏيک نه آهي"
 
 #: ../../../lib/web/src/components/colour-picker.tsx:349
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:560
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:563
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:567
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:554
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:557
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:561
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:557
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:570
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:571
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:575
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:362
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:385
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:388
@@ -1990,9 +2029,6 @@ msgstr "ڪا ڏيک نه آهي"
 #: ../../../lib/web/src/lib/preference-utils.ts:100
 #: src/features/editor/components/edit-dialogs.tsx:296
 #: src/features/editor/components/edit-dialogs.tsx:299
-#: src/features/objects/components/object-detail-panel.tsx:547
-#: src/features/objects/components/object-detail-panel.tsx:560
-#: src/features/objects/components/object-detail-panel.tsx:565
 msgid "None"
 msgstr "ڪا به نه"
 
@@ -2083,7 +2119,7 @@ msgstr "نيويگيشن کوليو"
 msgid "Open option actions"
 msgstr "اختيار ڪارناما کوليو"
 
-#: src/routes/_authenticated/$projectId/index.tsx:128
+#: src/routes/_authenticated/$projectId/index.tsx:129
 msgid "Open page actions"
 msgstr "صفحو ڪارناما کوليو"
 
@@ -2119,8 +2155,9 @@ msgstr "ٻيو"
 msgid "Owner"
 msgstr "مالڪ"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:552
-#: src/features/objects/components/object-detail-panel.tsx:543
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:546
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:553
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:569
 msgid "Parent"
 msgstr "والدين"
 
@@ -2149,7 +2186,7 @@ msgstr "نمونو (regex)"
 msgid "People"
 msgstr "ماڻهو"
 
-#: src/routes/_authenticated/$projectId/index.tsx:137
+#: src/routes/_authenticated/$projectId/index.tsx:138
 msgid "Please add one or more classes to the project design."
 msgstr "مهرباني ڪري پروجيڪٽ ڊيزائن ۾ هڪ يا وڌيڪ ڪلاس شامل ڪريو."
 
@@ -2207,7 +2244,7 @@ msgid "Processing…"
 msgstr "پروسيس ٿي رهيو آهي…"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:62
-#: src/routes/_authenticated/$projectId/index.tsx:82
+#: src/routes/_authenticated/$projectId/index.tsx:83
 msgid "Project"
 msgstr "پروجيڪٽ"
 
@@ -2223,7 +2260,7 @@ msgstr "پروجيڪٽ ٺاهيو ويو"
 msgid "Project deleted"
 msgstr "پروجيڪٽ حذف ٿيو"
 
-#: src/routes/_authenticated/$projectId/index.tsx:151
+#: src/routes/_authenticated/$projectId/index.tsx:152
 msgid "Project link"
 msgstr "پروجيڪٽ لنڪ"
 
@@ -2256,7 +2293,7 @@ msgstr "پروجيڪٽ"
 msgid "Prompt saved"
 msgstr "پرامپٽ محفوظ ٿيو"
 
-#: src/features/objects/components/object-detail-panel.tsx:388
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:408
 msgid "Properties"
 msgstr "خاصيتون"
 
@@ -2272,7 +2309,7 @@ msgstr "مٿي ٿيل"
 msgid "Re-link your accounts on this server"
 msgstr "هن سرور تي پنهنجا اڪائونٽ ٻيهر ڳنڍيو"
 
-#: src/routes/_authenticated/$projectId/index.tsx:140
+#: src/routes/_authenticated/$projectId/index.tsx:141
 msgid "Re-order columns"
 msgstr "ڪالم ٻيهر ترتيب ڏيو"
 
@@ -2317,7 +2354,7 @@ msgstr "لاگ ان ڏانهن ريڊائريڪٽ ٿي رهيو آهي."
 msgid "Reduce interest"
 msgstr "دلچسپي گهٽايو"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:65
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:69
 msgid "Relates"
 msgstr "تعلق رکي ٿو"
 
@@ -2380,8 +2417,8 @@ msgstr "دلچسپي هٽايو"
 msgid "Remove item"
 msgstr "شيءِ هٽايو"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:304
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:309
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:298
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:303
 msgid "Remove link"
 msgstr "لنڪ هٽايو"
 
@@ -2436,6 +2473,18 @@ msgstr "گهربل"
 msgid "Resend email"
 msgstr "اي ميل ٻيهر موڪليو"
 
+#: ../../../lib/web/src/components/game/game-end-dialogs.tsx:48
+msgid "Resign"
+msgstr "هار مڃيو"
+
+#: ../../../lib/web/src/components/game/game-end-dialogs.tsx:35
+msgid "Resign game?"
+msgstr "گيم هار مڃجي؟"
+
+#: ../../../lib/web/src/components/game/game-end-dialogs.tsx:45
+msgid "Resigning..."
+msgstr "هار مڃي رهيو آهي..."
+
 #: src/features/requests/components/conflict-list.tsx:40
 msgid "Resolve these conflicts manually before merging."
 msgstr "merge ڪرڻ کان پهريان هنن تڪرارن کي دستي طور تي حل ڪريو."
@@ -2487,11 +2536,12 @@ msgstr "ڇنڇر"
 
 #: ../../../lib/web/src/components/ai-prompts-editor.tsx:156
 #: ../../../lib/web/src/components/attachment-composer.tsx:430
+#: ../../../lib/web/src/components/banner-section.tsx:99
 #: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:231
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:172
 #: ../../../lib/web/src/components/ui/editable-field-row.tsx:126
 #: ../../../lib/web/src/components/ui/secret-field.tsx:79
-#: src/routes/_authenticated/$projectId/index.tsx:143
+#: src/routes/_authenticated/$projectId/index.tsx:144
 msgid "Save"
 msgstr "محفوظ ڪريو"
 
@@ -2535,7 +2585,7 @@ msgstr "اصل ڳوليو..."
 msgid "Search for projects..."
 msgstr "پروجيڪٽ ڳوليو..."
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:337
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:331
 msgid "Search objects..."
 msgstr "اعتراض ڳوليو..."
 
@@ -2673,7 +2723,7 @@ msgstr "رسائي مقرر ٿي رهي آهي..."
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx:125
 #: ../../../lib/web/src/components/options-menu.tsx:196
 #: src/routes/_authenticated/$projectId_.settings.tsx:101
-#: src/routes/_authenticated/$projectId/index.tsx:177
+#: src/routes/_authenticated/$projectId/index.tsx:178
 msgid "Settings"
 msgstr "سيٽنگون"
 
@@ -2748,8 +2798,8 @@ msgstr "اسڪواش ۽ ضم ڪريو"
 msgid "Start the discussion by adding the first comment."
 msgstr "پهريون تبصرو شامل ڪري بحث شروع ڪريو."
 
-#: src/features/objects/components/object-detail-panel.tsx:448
-#: src/features/objects/components/object-detail-panel.tsx:457
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:471
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:476
 msgid "Stop watching"
 msgstr "ڏسڻ بند ڪريو"
 
@@ -2879,6 +2929,10 @@ msgstr "ھي ضم درخواست {0} ۾ ضم ڪئي وئي آھي."
 msgid "This merge request is a draft and cannot be merged."
 msgstr "ھي ضم درخواست ھڪ ڊرافٽ آھي ۽ ضم نه ٿي سگھي."
 
+#: ../../../lib/web/src/components/game/game-end-dialogs.tsx:70
+msgid "This permanently deletes the game and its chat. This cannot be undone."
+msgstr "هي عمل گيم ۽ ان جي چيٽ کي مستقل طور ختم ڪندو. هي عمل واپس نه ٿي سگهندو."
+
 #: src/routes/_authenticated/$projectId_.settings.tsx:111
 msgid "This project could not be loaded right now."
 msgstr "ھي پروجيڪٽ ھاڻي لوڊ نه ٿي سگھيو."
@@ -2896,7 +2950,7 @@ msgid "This will permanently delete \"{projectName}\" and all its objects, comme
 msgstr "ھي \"{projectName}\" ۽ ان جا سڀ آبجيڪٽ، تبصرا ۽ منسلڪات مستقل طور تي حذف ڪندو. ھي عمل واپس نه ٿو ٿي سگھي."
 
 #. placeholder {0}: project.project.name
-#: src/routes/_authenticated/$projectId/index.tsx:160
+#: src/routes/_authenticated/$projectId/index.tsx:161
 msgid "This will remove \"{0}\" from your sidebar and stop updates for this project."
 msgstr "ھي \"{0}\" کي توھان جي سائيڊبار مان ھٽائيندو ۽ ھن پروجيڪٽ لاءِ اپڊيٽون روڪيندو."
 
@@ -3036,27 +3090,26 @@ msgstr "اڻڄاتل"
 
 #: ../../../lib/web/src/components/options-menu.tsx:211
 #: src/features/projects/pages/projects-list-page.tsx:39
-#: src/routes/_authenticated/$projectId/index.tsx:158
+#: src/routes/_authenticated/$projectId/index.tsx:159
 msgid "Unsubscribe"
 msgstr "ان سبسڪرائب ڪريو"
 
-#: src/routes/_authenticated/$projectId/index.tsx:159
+#: src/routes/_authenticated/$projectId/index.tsx:160
 msgid "Unsubscribe from project?"
 msgstr "پروجيڪٽ کان ان سبسڪرائب ڪريو؟"
 
 #: src/features/projects/pages/projects-list-page.tsx:42
-#: src/routes/_authenticated/$projectId/index.tsx:162
+#: src/routes/_authenticated/$projectId/index.tsx:163
 msgid "Unsubscribed"
 msgstr "ان سبسڪرائبڊ"
 
 #: src/features/projects/pages/projects-list-page.tsx:41
-#: src/routes/_authenticated/$projectId/index.tsx:161
+#: src/routes/_authenticated/$projectId/index.tsx:162
 msgid "Unsubscribing..."
 msgstr "ان سبسڪرائب ٿي رهيو آھي..."
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:299
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:103
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:184
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:178
+#: ../../../lib/web/src/lib/entity-title.ts:40
 #: src/features/board/components/board-container.tsx:29
 #: src/features/editor/components/design-preview.tsx:31
 msgid "Untitled"
@@ -3076,7 +3129,7 @@ msgstr "{field} اپڊيٽ ٿيو"
 msgid "Updating access..."
 msgstr "رسائي اپڊيٽ ٿي رهي آهي..."
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:661
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:655
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:304
 msgid "Upload"
 msgstr "اپ لوڊ ڪريو"
@@ -3137,7 +3190,7 @@ msgstr "وڊيو ڏسڻ وارو: {0}"
 msgid "View all notifications"
 msgstr "سڀ اطلاع ڏسو"
 
-#: src/features/objects/components/object-detail-panel.tsx:426
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:442
 msgid "View and edit item details"
 msgstr "شيء جا تفصيل ڏسو ۽ ايڊٽ ڪريو"
 
@@ -3149,7 +3202,7 @@ msgstr "ڏيک ڪنٽرول"
 msgid "View only"
 msgstr "صرف ڏسڻ"
 
-#: src/routes/_authenticated/$projectId/index.tsx:138
+#: src/routes/_authenticated/$projectId/index.tsx:139
 msgid "View options"
 msgstr "ڏيک اختيار"
 
@@ -3161,8 +3214,8 @@ msgstr "ڏيک"
 msgid "Voice recording is not supported in this browser"
 msgstr "هن برائوزر ۾ آواز جي رڪارڊنگ جي سهولت ناهي"
 
-#: src/features/objects/components/object-detail-panel.tsx:448
-#: src/features/objects/components/object-detail-panel.tsx:457
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:471
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:476
 msgid "Watch"
 msgstr "ڏسو"
 
@@ -3192,7 +3245,7 @@ msgstr "اربع"
 msgid "You do not have access to this section."
 msgstr "توهان کي هن حصي تائين رسائي ناهي."
 
-#: src/routes/_authenticated/$projectId/index.tsx:52
+#: src/routes/_authenticated/$projectId/index.tsx:53
 msgid "You don't have access to this project."
 msgstr "توهان کي هن منصوبي تائين رسائي ناهي."
 

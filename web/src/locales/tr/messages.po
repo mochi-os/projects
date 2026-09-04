@@ -179,7 +179,7 @@ msgstr "{subjectName} için erişim ayarlandı"
 msgid "Account type"
 msgstr "Hesap türü"
 
-#: src/features/objects/components/object-detail-panel.tsx:407
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:415
 msgid "Activity"
 msgstr "Etkinlik"
 
@@ -224,7 +224,7 @@ msgstr "Kontrol listesi öğesi ekle"
 msgid "Add class"
 msgstr "Sınıf ekle"
 
-#: src/routes/_authenticated/$projectId/index.tsx:139
+#: src/routes/_authenticated/$projectId/index.tsx:140
 msgid "Add column"
 msgstr "Sütun ekle"
 
@@ -238,7 +238,7 @@ msgstr "Alan ekle"
 msgid "Add item..."
 msgstr "Öğe ekle..."
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:320
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:314
 msgid "Add link"
 msgstr "Bağlantı ekle"
 
@@ -329,7 +329,7 @@ msgstr "Bu akışa abone olan her şey almayı durduracak. Sonrasında yeni bir 
 msgid "Are you sure you want to delete \"{0}\"?"
 msgstr "\"{0}\" öğesini silmek istediğinizden emin misiniz?"
 
-#: src/features/objects/components/object-detail-panel.tsx:653
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:671
 msgid "Are you sure you want to delete \"{title}\"? This action cannot be undone."
 msgstr "\"{title}\" öğesini silmek istediğinizden emin misiniz? Bu işlem geri alınamaz."
 
@@ -348,6 +348,14 @@ msgstr "Bu merge request'i silmek istediğinizden emin misiniz?"
 #: ../../../lib/web/src/components/sign-out-dialog.tsx:27
 msgid "Are you sure you want to log out? You will need to log in again to access your account."
 msgstr "Çıkış yapmak istediğinizden emin misiniz? Hesabınıza erişmek için tekrar giriş yapmanız gerekecek."
+
+#: ../../../lib/web/src/components/game/game-end-dialogs.tsx:39
+msgid "Are you sure you want to resign?"
+msgstr "Çekilmek istediğinizden emin misiniz?"
+
+#: ../../../lib/web/src/components/game/game-end-dialogs.tsx:38
+msgid "Are you sure you want to resign? {opponentName} will win the game."
+msgstr "Çekilmek istediğinizden emin misiniz? {opponentName} oyunu kazanacak."
 
 #: src/features/projects/pages/projects-list-page.tsx:40
 msgid "Are you sure you want to unsubscribe from this project?"
@@ -402,20 +410,29 @@ msgid "Back to project"
 msgstr "Projeye dön"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:64
-#: src/routes/_authenticated/$projectId/index.tsx:84
+#: src/routes/_authenticated/$projectId/index.tsx:85
 msgid "Back to projects"
 msgstr "Projelere dön"
 
+#: ../../../lib/web/src/components/banner-section.tsx:80
 #: ../../../lib/web/src/components/entity-banner.tsx:17
 msgid "Banner"
 msgstr "Afiş"
+
+#: ../../../lib/web/src/components/banner-section.tsx:69
+msgid "Banner removed"
+msgstr "Banner kaldırıldı"
+
+#: ../../../lib/web/src/components/banner-section.tsx:69
+msgid "Banner updated"
+msgstr "Banner güncellendi"
 
 #: src/features/requests/components/diff-viewer.tsx:448
 msgid "Binary file not shown"
 msgstr "İkili dosya gösterilmiyor"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:68
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:215
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:72
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:209
 msgid "Blocked by"
 msgstr "Engelleyen"
 
@@ -424,7 +441,7 @@ msgstr "Engelleyen"
 msgid "Blocked navigation to untrusted link"
 msgstr "Güvenilmeyen bağlantıya gezinme engellendi"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:66
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:70
 msgid "Blocks"
 msgstr "Bloklar"
 
@@ -477,7 +494,7 @@ msgstr "Şunun alt öğesi olabilir"
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:91
 #: src/features/projects/components/create-project-dialog.tsx:453
 #: src/routes/_authenticated/$projectId/design.tsx:61
-#: src/routes/_authenticated/$projectId/index.tsx:142
+#: src/routes/_authenticated/$projectId/index.tsx:143
 msgid "Cancel"
 msgstr "İptal"
 
@@ -550,6 +567,7 @@ msgstr "Dil seçin"
 msgid "Classes"
 msgstr "Sınıflar"
 
+#: ../../../lib/web/src/components/banner-section.tsx:111
 #: ../../../lib/web/src/components/colour-picker.tsx:274
 #: ../../../lib/web/src/components/colour-picker.tsx:355
 #: ../../../lib/web/src/components/travelling-picker.tsx:145
@@ -567,8 +585,8 @@ msgstr "Tümünü temizle"
 msgid "Clear search"
 msgstr "Aramayı temizle"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:523
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:528
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:517
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:522
 #: ../../../lib/web/src/components/ui/dialog.tsx:78
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:480
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:483
@@ -650,7 +668,7 @@ msgid "Comments"
 msgstr "Yorumlar"
 
 #. placeholder {0}: data.comment_count || 0
-#: src/features/objects/components/object-detail-panel.tsx:393
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:411
 msgid "Comments ({0})"
 msgstr "Yorumlar ({0})"
 
@@ -759,8 +777,8 @@ msgstr "Bu hesapla doğrulama yapılamadı. Lütfen tekrar deneyin."
 
 #: ../../../lib/web/src/components/entity/entity-board-column.tsx:551
 #: ../../../lib/web/src/components/entity/entity-board-column.tsx:691
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:513
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:682
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:507
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:676
 #: ../../../lib/web/src/components/entity/entity-tree-view.tsx:672
 msgid "Create"
 msgstr "Oluştur"
@@ -809,7 +827,7 @@ msgstr "{field} oluşturuldu"
 msgid "Creating project..."
 msgstr "Proje oluşturuluyor..."
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:682
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:676
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:260
 #: src/features/projects/components/create-project-dialog.tsx:457
 #: src/features/projects/components/create-project-dialog.tsx:549
@@ -870,7 +888,8 @@ msgstr "Varsayılan sıralama"
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:208
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:255
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:317
-#: src/features/objects/components/object-detail-panel.tsx:654
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:672
+#: ../../../lib/web/src/components/game/game-end-dialogs.tsx:78
 #: src/features/requests/components/request-panel.tsx:142
 #: src/routes/_authenticated/$projectId_.settings.tsx:122
 msgid "Delete"
@@ -896,9 +915,13 @@ msgstr "Yorumu sil"
 msgid "Delete field"
 msgstr "Alanı sil"
 
-#: src/features/objects/components/object-detail-panel.tsx:467
-#: src/features/objects/components/object-detail-panel.tsx:472
-#: src/features/objects/components/object-detail-panel.tsx:652
+#: ../../../lib/web/src/components/game/game-end-dialogs.tsx:69
+msgid "Delete game?"
+msgstr "Oyun silinsin mi?"
+
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:486
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:491
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:670
 msgid "Delete item"
 msgstr "Öğeyi sil"
 
@@ -951,6 +974,10 @@ msgstr "{field} silindi"
 msgid "Deleting project..."
 msgstr "Proje siliniyor..."
 
+#: ../../../lib/web/src/components/game/game-end-dialogs.tsx:75
+msgid "Deleting..."
+msgstr "Siliniyor..."
+
 #: ../../../lib/web/src/components/ui/sort-direction-button.tsx:27
 msgid "Descending"
 msgstr "Azalan"
@@ -963,7 +990,7 @@ msgstr "Açıklama"
 
 #: src/routes/_authenticated/$projectId/design.tsx:43
 #: src/routes/_authenticated/$projectId/design.tsx:46
-#: src/routes/_authenticated/$projectId/index.tsx:169
+#: src/routes/_authenticated/$projectId/index.tsx:170
 msgid "Design"
 msgstr "Tasarım"
 
@@ -1021,7 +1048,7 @@ msgstr "Bağlantı kesildi"
 msgid "Dismiss"
 msgstr "Kapat"
 
-#: src/routes/_authenticated/$projectId/index.tsx:145
+#: src/routes/_authenticated/$projectId/index.tsx:146
 msgid "Dismiss board hint"
 msgstr "Tahta ipucunu kapat"
 
@@ -1034,13 +1061,13 @@ msgid "Does not match the required pattern"
 msgstr "Gerekli kalıpla eşleşmiyor"
 
 #: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:309
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:495
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:523
 #: src/features/editor/components/edit-dialogs.tsx:439
-#: src/features/objects/components/object-detail-panel.tsx:481
 msgid "Done"
 msgstr "Tamamlandı"
 
-#: src/routes/_authenticated/$projectId/index.tsx:144
+#: src/routes/_authenticated/$projectId/index.tsx:145
 msgid "Double click on a column to add content"
 msgstr "İçerik eklemek için sütuna çift tıklayın"
 
@@ -1060,7 +1087,7 @@ msgid "Download failed"
 msgstr "İndirme başarısız oldu"
 
 #: src/routes/_authenticated/$projectId/design.tsx:52
-#: src/routes/_authenticated/$projectId/index.tsx:148
+#: src/routes/_authenticated/$projectId/index.tsx:149
 msgid "Downloaded {filename}"
 msgstr "{filename} indirildi"
 
@@ -1069,11 +1096,11 @@ msgstr "{filename} indirildi"
 msgid "Draft"
 msgstr "Taslak"
 
-#: src/routes/_authenticated/$projectId/index.tsx:141
+#: src/routes/_authenticated/$projectId/index.tsx:142
 msgid "Drag columns to re-order them"
 msgstr "Yeniden sıralamak için sütunları sürükleyin"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:67
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:71
 msgid "Duplicates"
 msgstr "Yinelenenler"
 
@@ -1132,6 +1159,10 @@ msgstr "E-posta"
 msgid "Email code"
 msgstr "E-posta kodu"
 
+#: ../../../lib/web/src/components/banner-section.tsx:88
+msgid "Enter banner text (markdown supported)..."
+msgstr "Afiş metnini girin (markdown destekli)..."
+
 #: ../../../lib/web/src/components/step-up-dialog.tsx:290
 msgid "Enter the code from your email"
 msgstr "E-postanızdaki kodu girin"
@@ -1144,7 +1175,7 @@ msgstr "Kimlik doğrulayıcı kodunuzu girin"
 msgid "Entity ID"
 msgstr "Varlık kimliği"
 
-#: src/features/objects/components/object-detail-panel.tsx:344
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:381
 msgid "Error"
 msgstr "Hata"
 
@@ -1159,7 +1190,7 @@ msgstr "Genişlet"
 msgid "Expand sidebar"
 msgstr "Kenar çubuğunu genişlet"
 
-#: src/routes/_authenticated/$projectId/index.tsx:146
+#: src/routes/_authenticated/$projectId/index.tsx:147
 msgid "Export data"
 msgstr "Verileri dışa aktar"
 
@@ -1179,7 +1210,7 @@ msgstr "Çok büyük"
 msgid "Failed to add account"
 msgstr "Hesap eklenemedi"
 
-#: src/routes/_authenticated/$projectId/index.tsx:154
+#: src/routes/_authenticated/$projectId/index.tsx:155
 msgid "Failed to add column"
 msgstr "Sütun eklenemedi"
 
@@ -1201,9 +1232,9 @@ msgstr "Sınıf oluşturulamadı"
 msgid "Failed to create field"
 msgstr "Alan oluşturulamadı"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:137
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:131
 #: ../../../lib/web/src/components/options-menu.tsx:98
-#: src/routes/_authenticated/$projectId/index.tsx:152
+#: src/routes/_authenticated/$projectId/index.tsx:153
 msgid "Failed to create link"
 msgstr "Bağlantı oluşturulamadı"
 
@@ -1224,7 +1255,7 @@ msgstr "Proje oluşturulamadı"
 msgid "Failed to create view"
 msgstr "Görünüm oluşturulamadı"
 
-#: src/features/objects/components/object-detail-panel.tsx:235
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:303
 msgid "Failed to delete"
 msgstr "Silinemedi"
 
@@ -1236,7 +1267,7 @@ msgstr "Ek silinemedi"
 msgid "Failed to delete class"
 msgstr "Sınıf silinemedi"
 
-#: src/routes/_authenticated/$projectId/index.tsx:156
+#: src/routes/_authenticated/$projectId/index.tsx:157
 msgid "Failed to delete column"
 msgstr "Sütun silinemedi"
 
@@ -1248,7 +1279,7 @@ msgstr "Yorum silinemedi"
 msgid "Failed to delete field"
 msgstr "Alan silinemedi"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:159
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:153
 msgid "Failed to delete link"
 msgstr "Bağlantı silinemedi"
 
@@ -1268,7 +1299,7 @@ msgstr "Proje silinemedi"
 msgid "Failed to delete view"
 msgstr "Görünüm silinemedi"
 
-#: src/routes/_authenticated/$projectId/index.tsx:149
+#: src/routes/_authenticated/$projectId/index.tsx:150
 msgid "Failed to export data"
 msgstr "Veriler dışa aktarılamadı"
 
@@ -1301,15 +1332,15 @@ msgstr "Geçmiş yüklenemedi"
 msgid "Failed to load image"
 msgstr "Görsel yüklenemedi"
 
-#: src/features/objects/components/object-detail-panel.tsx:345
-#: src/features/objects/components/object-detail-panel.tsx:348
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:382
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:385
 msgid "Failed to load item"
 msgstr "Öğe yüklenemedi"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:41
 #: src/routes/_authenticated/$projectId/$objectId.tsx:65
-#: src/routes/_authenticated/$projectId/index.tsx:61
-#: src/routes/_authenticated/$projectId/index.tsx:85
+#: src/routes/_authenticated/$projectId/index.tsx:62
+#: src/routes/_authenticated/$projectId/index.tsx:86
 msgid "Failed to load project"
 msgstr "Proje yüklenemedi"
 
@@ -1337,8 +1368,8 @@ msgstr "Video yüklenemedi"
 msgid "Failed to merge"
 msgstr "Birleştirilemedi"
 
-#: src/features/objects/components/object-detail-panel.tsx:255
-#: src/routes/_authenticated/$projectId/index.tsx:153
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:317
+#: src/routes/_authenticated/$projectId/index.tsx:154
 msgid "Failed to move"
 msgstr "Taşınamadı"
 
@@ -1346,7 +1377,7 @@ msgstr "Taşınamadı"
 msgid "Failed to post comment"
 msgstr "Yorum gönderilemedi"
 
-#: src/routes/_authenticated/$projectId/index.tsx:157
+#: src/routes/_authenticated/$projectId/index.tsx:158
 msgid "Failed to re-order columns"
 msgstr "Sütunlar yeniden sıralanamadı"
 
@@ -1359,7 +1390,7 @@ msgstr "Dosya okunamadı"
 msgid "Failed to remove access"
 msgstr "Erişim kaldırılamadı"
 
-#: src/routes/_authenticated/$projectId/index.tsx:155
+#: src/routes/_authenticated/$projectId/index.tsx:156
 msgid "Failed to rename column"
 msgstr "Sütun yeniden adlandırılamadı"
 
@@ -1379,7 +1410,7 @@ msgstr "Komut sıfırlanamadı"
 msgid "Failed to revoke RSS access"
 msgstr "RSS erişimi iptal edilemedi"
 
-#: src/features/objects/components/object-detail-panel.tsx:199
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:273
 msgid "Failed to save"
 msgstr "Kaydedilemedi"
 
@@ -1402,13 +1433,17 @@ msgid "Failed to subscribe"
 msgstr "Abone olunamadı"
 
 #: src/features/projects/pages/projects-list-page.tsx:43
-#: src/routes/_authenticated/$projectId/index.tsx:163
+#: src/routes/_authenticated/$projectId/index.tsx:164
 msgid "Failed to unsubscribe"
 msgstr "Abonelikten çıkılamadı"
 
 #: src/routes/_authenticated/$projectId_.settings.tsx:142
 msgid "Failed to update access level"
 msgstr "Erişim düzeyi güncellenemedi"
+
+#: ../../../lib/web/src/components/banner-section.tsx:71
+msgid "Failed to update banner"
+msgstr "Afiş güncellenemedi"
 
 #: src/features/editor/components/design-editor.tsx:122
 msgid "Failed to update class"
@@ -1442,7 +1477,7 @@ msgstr "Proje güncellenemedi"
 msgid "Failed to update view"
 msgstr "Görünüm güncellenemedi"
 
-#: src/features/objects/components/object-detail-panel.tsx:218
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:288
 msgid "Failed to update watching"
 msgstr "İzleme güncellenemedi"
 
@@ -1454,7 +1489,7 @@ msgstr "Ek yüklenemedi"
 msgid "Fields"
 msgstr "Alanlar"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:611
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:605
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:160
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:180
 msgid "Files"
@@ -1603,7 +1638,7 @@ msgstr "Geçersiz JSON dosyası"
 msgid "It seems like the page you're looking for <0/>does not exist or might have been removed."
 msgstr "Aradığınız sayfa <0/>mevcut değil veya kaldırılmış görünüyor."
 
-#: src/features/objects/components/object-detail-panel.tsx:425
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:441
 msgid "Item details"
 msgstr "Öğe ayrıntıları"
 
@@ -1633,11 +1668,11 @@ msgid "Light"
 msgstr "Açık"
 
 #: ../../../lib/web/src/components/options-menu.tsx:190
-#: src/routes/_authenticated/$projectId/index.tsx:150
+#: src/routes/_authenticated/$projectId/index.tsx:151
 msgid "Link"
 msgstr "Bağlantı"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:279
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:273
 msgid "Links"
 msgstr "Bağlantılar"
 
@@ -1657,11 +1692,11 @@ msgstr "İçerik yükleniyor…"
 msgid "Loading diff..."
 msgstr "Fark yükleniyor..."
 
-#: src/features/objects/components/object-detail-panel.tsx:325
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:365
 msgid "Loading item"
 msgstr "Öğe yükleniyor"
 
-#: src/features/objects/components/object-detail-panel.tsx:326
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:366
 msgid "Loading item details"
 msgstr "Öğe ayrıntıları yükleniyor"
 
@@ -1671,7 +1706,7 @@ msgstr "Şablonlar yükleniyor..."
 
 #: ../../../lib/web/src/components/ui/load-more.tsx:39
 #: ../../../lib/web/src/features/document/document-page.tsx:88
-#: src/routes/_authenticated/$projectId/index.tsx:147
+#: src/routes/_authenticated/$projectId/index.tsx:148
 msgid "Loading..."
 msgstr "Yükleniyor..."
 
@@ -1741,7 +1776,7 @@ msgstr "Birleştirme commit'i"
 msgid "Merge requests"
 msgstr "Birleştirme istekleri"
 
-#: src/features/objects/components/object-detail-panel.tsx:400
+#: src/routes/_authenticated/$projectId/index.tsx:212
 msgid "Merge requests ({requestCount})"
 msgstr "Birleştirme istekleri ({requestCount})"
 
@@ -1837,14 +1872,14 @@ msgstr "Ad 1000 karakter veya daha az olmalı"
 msgid "Network error"
 msgstr "Ağ hatası"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:498
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:492
 #: ../../../lib/web/src/components/ui/sort-selector.tsx:43
-#: src/routes/_authenticated/$projectId/index.tsx:129
-#: src/routes/_authenticated/$projectId/index.tsx:133
+#: src/routes/_authenticated/$projectId/index.tsx:130
+#: src/routes/_authenticated/$projectId/index.tsx:134
 msgid "New"
 msgstr "Yeni"
 
-#: src/routes/_authenticated/$projectId/index.tsx:135
+#: src/routes/_authenticated/$projectId/index.tsx:136
 msgid "New {className}"
 msgstr "Yeni {className}"
 
@@ -1862,7 +1897,7 @@ msgstr "İleri"
 msgid "Next image"
 msgstr "Sonraki görsel"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:577
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:571
 msgid "No {parentClassNames} to add to"
 msgstr "Eklenecek {parentClassNames} yok"
 
@@ -1910,11 +1945,11 @@ msgstr "Henüz oyun yok"
 msgid "No groups available"
 msgstr "Grup yok"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:544
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:538
 msgid "No item types can be created yet. Create the required parent items first."
 msgstr "Henüz oluşturulabilecek öge türü yok. Önce gerekli üst ögeleri oluşturun."
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:360
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:354
 msgid "No matching objects"
 msgstr "Eşleşen nesne yok"
 
@@ -1976,9 +2011,13 @@ msgid "No views"
 msgstr "Görüntüleme yok"
 
 #: ../../../lib/web/src/components/colour-picker.tsx:349
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:560
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:563
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:567
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:554
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:557
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:561
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:557
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:570
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:571
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:575
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:362
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:385
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:388
@@ -1990,9 +2029,6 @@ msgstr "Görüntüleme yok"
 #: ../../../lib/web/src/lib/preference-utils.ts:100
 #: src/features/editor/components/edit-dialogs.tsx:296
 #: src/features/editor/components/edit-dialogs.tsx:299
-#: src/features/objects/components/object-detail-panel.tsx:547
-#: src/features/objects/components/object-detail-panel.tsx:560
-#: src/features/objects/components/object-detail-panel.tsx:565
 msgid "None"
 msgstr "Yok"
 
@@ -2083,7 +2119,7 @@ msgstr "Gezinmeyi aç"
 msgid "Open option actions"
 msgstr "Seçenek eylemlerini aç"
 
-#: src/routes/_authenticated/$projectId/index.tsx:128
+#: src/routes/_authenticated/$projectId/index.tsx:129
 msgid "Open page actions"
 msgstr "Sayfa eylemlerini aç"
 
@@ -2119,8 +2155,9 @@ msgstr "Diğer"
 msgid "Owner"
 msgstr "Sahip"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:552
-#: src/features/objects/components/object-detail-panel.tsx:543
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:546
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:553
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:569
 msgid "Parent"
 msgstr "Üst"
 
@@ -2149,7 +2186,7 @@ msgstr "Desen (regex)"
 msgid "People"
 msgstr "Kişiler"
 
-#: src/routes/_authenticated/$projectId/index.tsx:137
+#: src/routes/_authenticated/$projectId/index.tsx:138
 msgid "Please add one or more classes to the project design."
 msgstr "Lütfen proje tasarımına bir veya daha fazla sınıf ekleyin."
 
@@ -2207,7 +2244,7 @@ msgid "Processing…"
 msgstr "İşleniyor…"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:62
-#: src/routes/_authenticated/$projectId/index.tsx:82
+#: src/routes/_authenticated/$projectId/index.tsx:83
 msgid "Project"
 msgstr "Proje"
 
@@ -2223,7 +2260,7 @@ msgstr "Proje oluşturuldu"
 msgid "Project deleted"
 msgstr "Proje silindi"
 
-#: src/routes/_authenticated/$projectId/index.tsx:151
+#: src/routes/_authenticated/$projectId/index.tsx:152
 msgid "Project link"
 msgstr "Proje bağlantısı"
 
@@ -2256,7 +2293,7 @@ msgstr "Projeler"
 msgid "Prompt saved"
 msgstr "İstem kaydedildi"
 
-#: src/features/objects/components/object-detail-panel.tsx:388
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:408
 msgid "Properties"
 msgstr "Özellikler"
 
@@ -2272,7 +2309,7 @@ msgstr "Yükseltilmiş"
 msgid "Re-link your accounts on this server"
 msgstr "Hesaplarınızı bu sunucuda yeniden bağlayın"
 
-#: src/routes/_authenticated/$projectId/index.tsx:140
+#: src/routes/_authenticated/$projectId/index.tsx:141
 msgid "Re-order columns"
 msgstr "Sütunları yeniden sırala"
 
@@ -2317,7 +2354,7 @@ msgstr "Girişe yönlendiriliyor."
 msgid "Reduce interest"
 msgstr "İlgiyi azalt"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:65
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:69
 msgid "Relates"
 msgstr "İlişkili"
 
@@ -2380,8 +2417,8 @@ msgstr "İlgiyi kaldır"
 msgid "Remove item"
 msgstr "Ögeyi kaldır"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:304
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:309
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:298
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:303
 msgid "Remove link"
 msgstr "Bağlantıyı kaldır"
 
@@ -2436,6 +2473,18 @@ msgstr "Gerekli"
 msgid "Resend email"
 msgstr "E-postayı yeniden gönder"
 
+#: ../../../lib/web/src/components/game/game-end-dialogs.tsx:48
+msgid "Resign"
+msgstr "Çekil"
+
+#: ../../../lib/web/src/components/game/game-end-dialogs.tsx:35
+msgid "Resign game?"
+msgstr "Oyundan çekilsin mi?"
+
+#: ../../../lib/web/src/components/game/game-end-dialogs.tsx:45
+msgid "Resigning..."
+msgstr "Çekiliyor..."
+
 #: src/features/requests/components/conflict-list.tsx:40
 msgid "Resolve these conflicts manually before merging."
 msgstr "Merge'den önce bu çakışmaları elle çözün."
@@ -2487,11 +2536,12 @@ msgstr "Cumartesi"
 
 #: ../../../lib/web/src/components/ai-prompts-editor.tsx:156
 #: ../../../lib/web/src/components/attachment-composer.tsx:430
+#: ../../../lib/web/src/components/banner-section.tsx:99
 #: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:231
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:172
 #: ../../../lib/web/src/components/ui/editable-field-row.tsx:126
 #: ../../../lib/web/src/components/ui/secret-field.tsx:79
-#: src/routes/_authenticated/$projectId/index.tsx:143
+#: src/routes/_authenticated/$projectId/index.tsx:144
 msgid "Save"
 msgstr "Kaydet"
 
@@ -2535,7 +2585,7 @@ msgstr "Kaynak ara..."
 msgid "Search for projects..."
 msgstr "Proje ara..."
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:337
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:331
 msgid "Search objects..."
 msgstr "Nesnelerde ara..."
 
@@ -2673,7 +2723,7 @@ msgstr "Erişim ayarlanıyor..."
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx:125
 #: ../../../lib/web/src/components/options-menu.tsx:196
 #: src/routes/_authenticated/$projectId_.settings.tsx:101
-#: src/routes/_authenticated/$projectId/index.tsx:177
+#: src/routes/_authenticated/$projectId/index.tsx:178
 msgid "Settings"
 msgstr "Ayarlar"
 
@@ -2748,8 +2798,8 @@ msgstr "Squash ve merge et"
 msgid "Start the discussion by adding the first comment."
 msgstr "İlk yorumu ekleyerek tartışmayı başlat."
 
-#: src/features/objects/components/object-detail-panel.tsx:448
-#: src/features/objects/components/object-detail-panel.tsx:457
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:471
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:476
 msgid "Stop watching"
 msgstr "İzlemeyi bırak"
 
@@ -2879,6 +2929,10 @@ msgstr "Bu merge request {0} içine merge edildi."
 msgid "This merge request is a draft and cannot be merged."
 msgstr "Bu merge request bir taslak ve merge edilemez."
 
+#: ../../../lib/web/src/components/game/game-end-dialogs.tsx:70
+msgid "This permanently deletes the game and its chat. This cannot be undone."
+msgstr "Bu işlem oyunu ve sohbetini kalıcı olarak siler. Bu işlem geri alınamaz."
+
 #: src/routes/_authenticated/$projectId_.settings.tsx:111
 msgid "This project could not be loaded right now."
 msgstr "Bu proje şu anda yüklenemedi."
@@ -2896,7 +2950,7 @@ msgid "This will permanently delete \"{projectName}\" and all its objects, comme
 msgstr "Bu işlem \"{projectName}\" ve tüm nesnelerini, yorumlarını ve eklerini kalıcı olarak silecek. Bu işlem geri alınamaz."
 
 #. placeholder {0}: project.project.name
-#: src/routes/_authenticated/$projectId/index.tsx:160
+#: src/routes/_authenticated/$projectId/index.tsx:161
 msgid "This will remove \"{0}\" from your sidebar and stop updates for this project."
 msgstr "Bu işlem \"{0}\" öğesini kenar çubuğundan kaldıracak ve bu proje için güncellemeleri durduracak."
 
@@ -3036,27 +3090,26 @@ msgstr "Bilinmiyor"
 
 #: ../../../lib/web/src/components/options-menu.tsx:211
 #: src/features/projects/pages/projects-list-page.tsx:39
-#: src/routes/_authenticated/$projectId/index.tsx:158
+#: src/routes/_authenticated/$projectId/index.tsx:159
 msgid "Unsubscribe"
 msgstr "Aboneliği iptal et"
 
-#: src/routes/_authenticated/$projectId/index.tsx:159
+#: src/routes/_authenticated/$projectId/index.tsx:160
 msgid "Unsubscribe from project?"
 msgstr "Proje aboneliği iptal edilsin mi?"
 
 #: src/features/projects/pages/projects-list-page.tsx:42
-#: src/routes/_authenticated/$projectId/index.tsx:162
+#: src/routes/_authenticated/$projectId/index.tsx:163
 msgid "Unsubscribed"
 msgstr "Abonelik iptal edildi"
 
 #: src/features/projects/pages/projects-list-page.tsx:41
-#: src/routes/_authenticated/$projectId/index.tsx:161
+#: src/routes/_authenticated/$projectId/index.tsx:162
 msgid "Unsubscribing..."
 msgstr "Abonelik iptal ediliyor..."
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:299
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:103
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:184
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:178
+#: ../../../lib/web/src/lib/entity-title.ts:40
 #: src/features/board/components/board-container.tsx:29
 #: src/features/editor/components/design-preview.tsx:31
 msgid "Untitled"
@@ -3076,7 +3129,7 @@ msgstr "{field} güncellendi"
 msgid "Updating access..."
 msgstr "Erişim güncelleniyor..."
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:661
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:655
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:304
 msgid "Upload"
 msgstr "Yükle"
@@ -3137,7 +3190,7 @@ msgstr "Video görüntüleyici: {0}"
 msgid "View all notifications"
 msgstr "Tüm bildirimleri görüntüle"
 
-#: src/features/objects/components/object-detail-panel.tsx:426
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:442
 msgid "View and edit item details"
 msgstr "Öğe detaylarını görüntüle ve düzenle"
 
@@ -3149,7 +3202,7 @@ msgstr "Kontrolleri görüntüle"
 msgid "View only"
 msgstr "Yalnızca görüntüleme"
 
-#: src/routes/_authenticated/$projectId/index.tsx:138
+#: src/routes/_authenticated/$projectId/index.tsx:139
 msgid "View options"
 msgstr "Görünüm seçenekleri"
 
@@ -3161,8 +3214,8 @@ msgstr "Görünümler"
 msgid "Voice recording is not supported in this browser"
 msgstr "Ses kaydı bu tarayıcıda desteklenmiyor"
 
-#: src/features/objects/components/object-detail-panel.tsx:448
-#: src/features/objects/components/object-detail-panel.tsx:457
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:471
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:476
 msgid "Watch"
 msgstr "İzle"
 
@@ -3192,7 +3245,7 @@ msgstr "Çarşamba"
 msgid "You do not have access to this section."
 msgstr "Bu bölüme erişiminiz yok."
 
-#: src/routes/_authenticated/$projectId/index.tsx:52
+#: src/routes/_authenticated/$projectId/index.tsx:53
 msgid "You don't have access to this project."
 msgstr "Bu projeye erişiminiz yok."
 

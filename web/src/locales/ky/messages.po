@@ -179,7 +179,7 @@ msgstr "{subjectName} үчүн жетки коюлду"
 msgid "Account type"
 msgstr "Аккаунт түрү"
 
-#: src/features/objects/components/object-detail-panel.tsx:407
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:415
 msgid "Activity"
 msgstr "Активдүүлүк"
 
@@ -224,7 +224,7 @@ msgstr "Текшерүү тизмесине кошуу"
 msgid "Add class"
 msgstr "Класс кошуу"
 
-#: src/routes/_authenticated/$projectId/index.tsx:139
+#: src/routes/_authenticated/$projectId/index.tsx:140
 msgid "Add column"
 msgstr "Тилке кошуу"
 
@@ -238,7 +238,7 @@ msgstr "Талаа кошуу"
 msgid "Add item..."
 msgstr "Нерсе кошуу..."
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:320
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:314
 msgid "Add link"
 msgstr "Шилтеме кошуу"
 
@@ -329,7 +329,7 @@ msgstr "Бул тасмага жазылган нерселердин баары
 msgid "Are you sure you want to delete \"{0}\"?"
 msgstr "\"{0}\" жок кылууну каалайсызбы?"
 
-#: src/features/objects/components/object-detail-panel.tsx:653
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:671
 msgid "Are you sure you want to delete \"{title}\"? This action cannot be undone."
 msgstr "\"{title}\" жок кылууну каалайсызбы? Бул аракетти артка кайтаруу мүмкүн эмес."
 
@@ -348,6 +348,14 @@ msgstr "Бул merge сурамын жок кылууну каалайсызбы
 #: ../../../lib/web/src/components/sign-out-dialog.tsx:27
 msgid "Are you sure you want to log out? You will need to log in again to access your account."
 msgstr "Чыгууну каалайсызбы? Аккаунтуңузга кайра кирүү керек болот."
+
+#: ../../../lib/web/src/components/game/game-end-dialogs.tsx:39
+msgid "Are you sure you want to resign?"
+msgstr "Багынууну каалайсызбы?"
+
+#: ../../../lib/web/src/components/game/game-end-dialogs.tsx:38
+msgid "Are you sure you want to resign? {opponentName} will win the game."
+msgstr "Багынууну каалайсызбы? Оюнду {opponentName} утат."
 
 #: src/features/projects/pages/projects-list-page.tsx:40
 msgid "Are you sure you want to unsubscribe from this project?"
@@ -402,20 +410,29 @@ msgid "Back to project"
 msgstr "Долбоорго кайтуу"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:64
-#: src/routes/_authenticated/$projectId/index.tsx:84
+#: src/routes/_authenticated/$projectId/index.tsx:85
 msgid "Back to projects"
 msgstr "Долбоорлорго кайтуу"
 
+#: ../../../lib/web/src/components/banner-section.tsx:80
 #: ../../../lib/web/src/components/entity-banner.tsx:17
 msgid "Banner"
 msgstr "Баннер"
+
+#: ../../../lib/web/src/components/banner-section.tsx:69
+msgid "Banner removed"
+msgstr "Баннер алынып салынды"
+
+#: ../../../lib/web/src/components/banner-section.tsx:69
+msgid "Banner updated"
+msgstr "Баннер жаңыланды"
 
 #: src/features/requests/components/diff-viewer.tsx:448
 msgid "Binary file not shown"
 msgstr "Экилик файл көрсөтүлбөйт"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:68
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:215
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:72
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:209
 msgid "Blocked by"
 msgstr "Тарабынан бөгөттөлгөн"
 
@@ -424,7 +441,7 @@ msgstr "Тарабынан бөгөттөлгөн"
 msgid "Blocked navigation to untrusted link"
 msgstr "Ишенимсиз шилтемеге өтүү бөгөттөлдү"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:66
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:70
 msgid "Blocks"
 msgstr "Блоктор"
 
@@ -477,7 +494,7 @@ msgstr "Балдары боло алат"
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:91
 #: src/features/projects/components/create-project-dialog.tsx:453
 #: src/routes/_authenticated/$projectId/design.tsx:61
-#: src/routes/_authenticated/$projectId/index.tsx:142
+#: src/routes/_authenticated/$projectId/index.tsx:143
 msgid "Cancel"
 msgstr "Жокко чыгаруу"
 
@@ -550,6 +567,7 @@ msgstr "Тилди тандоо"
 msgid "Classes"
 msgstr "Класстар"
 
+#: ../../../lib/web/src/components/banner-section.tsx:111
 #: ../../../lib/web/src/components/colour-picker.tsx:274
 #: ../../../lib/web/src/components/colour-picker.tsx:355
 #: ../../../lib/web/src/components/travelling-picker.tsx:145
@@ -567,8 +585,8 @@ msgstr "Баарын тазалоо"
 msgid "Clear search"
 msgstr "Издөөнү тазалоо"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:523
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:528
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:517
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:522
 #: ../../../lib/web/src/components/ui/dialog.tsx:78
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:480
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:483
@@ -650,7 +668,7 @@ msgid "Comments"
 msgstr "Комментарийлер"
 
 #. placeholder {0}: data.comment_count || 0
-#: src/features/objects/components/object-detail-panel.tsx:393
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:411
 msgid "Comments ({0})"
 msgstr "Комментарийлер ({0})"
 
@@ -759,8 +777,8 @@ msgstr "Бул каттоо эсеби менен текшерүү мүмкүн 
 
 #: ../../../lib/web/src/components/entity/entity-board-column.tsx:551
 #: ../../../lib/web/src/components/entity/entity-board-column.tsx:691
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:513
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:682
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:507
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:676
 #: ../../../lib/web/src/components/entity/entity-tree-view.tsx:672
 msgid "Create"
 msgstr "Түзүү"
@@ -809,7 +827,7 @@ msgstr "{field} түзүлдү"
 msgid "Creating project..."
 msgstr "Долбоор түзүлүүдө..."
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:682
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:676
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:260
 #: src/features/projects/components/create-project-dialog.tsx:457
 #: src/features/projects/components/create-project-dialog.tsx:549
@@ -870,7 +888,8 @@ msgstr "Демейки иргөө"
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:208
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:255
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:317
-#: src/features/objects/components/object-detail-panel.tsx:654
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:672
+#: ../../../lib/web/src/components/game/game-end-dialogs.tsx:78
 #: src/features/requests/components/request-panel.tsx:142
 #: src/routes/_authenticated/$projectId_.settings.tsx:122
 msgid "Delete"
@@ -896,9 +915,13 @@ msgstr "Комментарийди жок кылуу"
 msgid "Delete field"
 msgstr "Талааны жок кылуу"
 
-#: src/features/objects/components/object-detail-panel.tsx:467
-#: src/features/objects/components/object-detail-panel.tsx:472
-#: src/features/objects/components/object-detail-panel.tsx:652
+#: ../../../lib/web/src/components/game/game-end-dialogs.tsx:69
+msgid "Delete game?"
+msgstr "Оюн жок кылынсынбы?"
+
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:486
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:491
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:670
 msgid "Delete item"
 msgstr "Нерсени жок кылуу"
 
@@ -951,6 +974,10 @@ msgstr "{field} өчүрүлдү"
 msgid "Deleting project..."
 msgstr "Долбоор өчүрүлүүдө..."
 
+#: ../../../lib/web/src/components/game/game-end-dialogs.tsx:75
+msgid "Deleting..."
+msgstr "Жок кылынууда..."
+
 #: ../../../lib/web/src/components/ui/sort-direction-button.tsx:27
 msgid "Descending"
 msgstr "Кемүү тартибинде"
@@ -963,7 +990,7 @@ msgstr "Сүрөттөмө"
 
 #: src/routes/_authenticated/$projectId/design.tsx:43
 #: src/routes/_authenticated/$projectId/design.tsx:46
-#: src/routes/_authenticated/$projectId/index.tsx:169
+#: src/routes/_authenticated/$projectId/index.tsx:170
 msgid "Design"
 msgstr "Дизайн"
 
@@ -1021,7 +1048,7 @@ msgstr "Ажыратылды"
 msgid "Dismiss"
 msgstr "Четке кагуу"
 
-#: src/routes/_authenticated/$projectId/index.tsx:145
+#: src/routes/_authenticated/$projectId/index.tsx:146
 msgid "Dismiss board hint"
 msgstr "Тактай кеңешин четке кагуу"
 
@@ -1034,13 +1061,13 @@ msgid "Does not match the required pattern"
 msgstr "Талап кылынган үлгүгө дал келбейт"
 
 #: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:309
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:495
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:523
 #: src/features/editor/components/edit-dialogs.tsx:439
-#: src/features/objects/components/object-detail-panel.tsx:481
 msgid "Done"
 msgstr "Бүттү"
 
-#: src/routes/_authenticated/$projectId/index.tsx:144
+#: src/routes/_authenticated/$projectId/index.tsx:145
 msgid "Double click on a column to add content"
 msgstr "Мазмун кошуу үчүн тилкеге эки жолу басыңыз"
 
@@ -1060,7 +1087,7 @@ msgid "Download failed"
 msgstr "Жүктөп алуу ишке ашкан жок"
 
 #: src/routes/_authenticated/$projectId/design.tsx:52
-#: src/routes/_authenticated/$projectId/index.tsx:148
+#: src/routes/_authenticated/$projectId/index.tsx:149
 msgid "Downloaded {filename}"
 msgstr "{filename} жүктөлдү"
 
@@ -1069,11 +1096,11 @@ msgstr "{filename} жүктөлдү"
 msgid "Draft"
 msgstr "Долбоор"
 
-#: src/routes/_authenticated/$projectId/index.tsx:141
+#: src/routes/_authenticated/$projectId/index.tsx:142
 msgid "Drag columns to re-order them"
 msgstr "Тилкелерди иретин өзгөртүү үчүн сүйрөңүз"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:67
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:71
 msgid "Duplicates"
 msgstr "Кайталоолор"
 
@@ -1132,6 +1159,10 @@ msgstr "Электрондук почта"
 msgid "Email code"
 msgstr "Электрондук почта коду"
 
+#: ../../../lib/web/src/components/banner-section.tsx:88
+msgid "Enter banner text (markdown supported)..."
+msgstr "Баннер текстин киргизиңиз (markdown колдоого алынат)..."
+
 #: ../../../lib/web/src/components/step-up-dialog.tsx:290
 msgid "Enter the code from your email"
 msgstr "Электрондук почтаңыздагы кодду киргизиңиз"
@@ -1144,7 +1175,7 @@ msgstr "Authenticator кодун киргизиңиз"
 msgid "Entity ID"
 msgstr "Субъект ID"
 
-#: src/features/objects/components/object-detail-panel.tsx:344
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:381
 msgid "Error"
 msgstr "Ката"
 
@@ -1159,7 +1190,7 @@ msgstr "Жайып көрсөтүү"
 msgid "Expand sidebar"
 msgstr "Каптал тилкесин жайылтуу"
 
-#: src/routes/_authenticated/$projectId/index.tsx:146
+#: src/routes/_authenticated/$projectId/index.tsx:147
 msgid "Export data"
 msgstr "Маалыматтарды экспорттоо"
 
@@ -1179,7 +1210,7 @@ msgstr "Өтө чоң"
 msgid "Failed to add account"
 msgstr "Эсеп кошуу ишке ашкан жок"
 
-#: src/routes/_authenticated/$projectId/index.tsx:154
+#: src/routes/_authenticated/$projectId/index.tsx:155
 msgid "Failed to add column"
 msgstr "Мамычаны кошуу мүмкүн болгон жок"
 
@@ -1201,9 +1232,9 @@ msgstr "Класс түзүү ишке ашкан жок"
 msgid "Failed to create field"
 msgstr "Талаа түзүү ишке ашкан жок"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:137
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:131
 #: ../../../lib/web/src/components/options-menu.tsx:98
-#: src/routes/_authenticated/$projectId/index.tsx:152
+#: src/routes/_authenticated/$projectId/index.tsx:153
 msgid "Failed to create link"
 msgstr "Шилтеме түзүү ишке ашкан жок"
 
@@ -1224,7 +1255,7 @@ msgstr "Долбоор түзүү ишке ашкан жок"
 msgid "Failed to create view"
 msgstr "Көрүнүш түзүү ишке ашкан жок"
 
-#: src/features/objects/components/object-detail-panel.tsx:235
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:303
 msgid "Failed to delete"
 msgstr "Өчүрүү ишке ашкан жок"
 
@@ -1236,7 +1267,7 @@ msgstr "Тиркемени өчүрүү ишке ашкан жок"
 msgid "Failed to delete class"
 msgstr "Классду өчүрүү ишке ашкан жок"
 
-#: src/routes/_authenticated/$projectId/index.tsx:156
+#: src/routes/_authenticated/$projectId/index.tsx:157
 msgid "Failed to delete column"
 msgstr "Мамычаны өчүрүү мүмкүн болгон жок"
 
@@ -1248,7 +1279,7 @@ msgstr "Комментарийди өчүрүү ишке ашкан жок"
 msgid "Failed to delete field"
 msgstr "Талааду өчүрүү ишке ашкан жок"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:159
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:153
 msgid "Failed to delete link"
 msgstr "Шилтемени өчүрүү ишке ашкан жок"
 
@@ -1268,7 +1299,7 @@ msgstr "Долбоорду өчүрүү ишке ашкан жок"
 msgid "Failed to delete view"
 msgstr "Көрүнүштү өчүрүү ишке ашкан жок"
 
-#: src/routes/_authenticated/$projectId/index.tsx:149
+#: src/routes/_authenticated/$projectId/index.tsx:150
 msgid "Failed to export data"
 msgstr "Маалыматтарды экспорттоо ишке ашкан жок"
 
@@ -1301,15 +1332,15 @@ msgstr "Тарыхты жүктөө ишке ашкан жок"
 msgid "Failed to load image"
 msgstr "Сүрөттү жүктөө мүмкүн болбоду"
 
-#: src/features/objects/components/object-detail-panel.tsx:345
-#: src/features/objects/components/object-detail-panel.tsx:348
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:382
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:385
 msgid "Failed to load item"
 msgstr "Нерсени жүктөө ишке ашкан жок"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:41
 #: src/routes/_authenticated/$projectId/$objectId.tsx:65
-#: src/routes/_authenticated/$projectId/index.tsx:61
-#: src/routes/_authenticated/$projectId/index.tsx:85
+#: src/routes/_authenticated/$projectId/index.tsx:62
+#: src/routes/_authenticated/$projectId/index.tsx:86
 msgid "Failed to load project"
 msgstr "Долбоорду жүктөө ишке ашкан жок"
 
@@ -1337,8 +1368,8 @@ msgstr "Видеону жүктөө мүмкүн болбоду"
 msgid "Failed to merge"
 msgstr "Бириктирүү ишке ашкан жок"
 
-#: src/features/objects/components/object-detail-panel.tsx:255
-#: src/routes/_authenticated/$projectId/index.tsx:153
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:317
+#: src/routes/_authenticated/$projectId/index.tsx:154
 msgid "Failed to move"
 msgstr "Жылдыруу ишке ашкан жок"
 
@@ -1346,7 +1377,7 @@ msgstr "Жылдыруу ишке ашкан жок"
 msgid "Failed to post comment"
 msgstr "Комментарий жазуу ишке ашкан жок"
 
-#: src/routes/_authenticated/$projectId/index.tsx:157
+#: src/routes/_authenticated/$projectId/index.tsx:158
 msgid "Failed to re-order columns"
 msgstr "Мамычалардын иретин өзгөртүү мүмкүн болгон жок"
 
@@ -1359,7 +1390,7 @@ msgstr "Файлды окуу ишке ашкан жок"
 msgid "Failed to remove access"
 msgstr "Жетишүүнү алып салуу ишке ашкан жок"
 
-#: src/routes/_authenticated/$projectId/index.tsx:155
+#: src/routes/_authenticated/$projectId/index.tsx:156
 msgid "Failed to rename column"
 msgstr "Мамычанын атын өзгөртүү мүмкүн болгон жок"
 
@@ -1379,7 +1410,7 @@ msgstr "Сурамжылоону баштапкы абалга кайтаруу 
 msgid "Failed to revoke RSS access"
 msgstr "RSS мүмкүнчүлүгүн кайтарып алуу ишке ашкан жок"
 
-#: src/features/objects/components/object-detail-panel.tsx:199
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:273
 msgid "Failed to save"
 msgstr "Сактоо ишке ашкан жок"
 
@@ -1402,13 +1433,17 @@ msgid "Failed to subscribe"
 msgstr "Жазылуу ишке ашкан жок"
 
 #: src/features/projects/pages/projects-list-page.tsx:43
-#: src/routes/_authenticated/$projectId/index.tsx:163
+#: src/routes/_authenticated/$projectId/index.tsx:164
 msgid "Failed to unsubscribe"
 msgstr "Жазылуудан чыгуу ишке ашкан жок"
 
 #: src/routes/_authenticated/$projectId_.settings.tsx:142
 msgid "Failed to update access level"
 msgstr "Жетишүү деңгээлин жаңылоо ишке ашкан жок"
+
+#: ../../../lib/web/src/components/banner-section.tsx:71
+msgid "Failed to update banner"
+msgstr "Баннерди жаңылоо ишке ашкан жок"
 
 #: src/features/editor/components/design-editor.tsx:122
 msgid "Failed to update class"
@@ -1442,7 +1477,7 @@ msgstr "Долбоорду жаңылоо ишке ашкан жок"
 msgid "Failed to update view"
 msgstr "Көрүнүшду жаңылоо ишке ашкан жок"
 
-#: src/features/objects/components/object-detail-panel.tsx:218
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:288
 msgid "Failed to update watching"
 msgstr "Байкоону жаңыртуу ишке ашкан жок"
 
@@ -1454,7 +1489,7 @@ msgstr "Тиркемени жүктөө ишке ашкан жок"
 msgid "Fields"
 msgstr "Талаалар"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:611
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:605
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:160
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:180
 msgid "Files"
@@ -1603,7 +1638,7 @@ msgstr "Жараксыз JSON файл"
 msgid "It seems like the page you're looking for <0/>does not exist or might have been removed."
 msgstr "Сиз издеген бет <0/>жок же өчүрүлгөн окшойт."
 
-#: src/features/objects/components/object-detail-panel.tsx:425
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:441
 msgid "Item details"
 msgstr "Нерсе чоо-жайы"
 
@@ -1633,11 +1668,11 @@ msgid "Light"
 msgstr "Жарык"
 
 #: ../../../lib/web/src/components/options-menu.tsx:190
-#: src/routes/_authenticated/$projectId/index.tsx:150
+#: src/routes/_authenticated/$projectId/index.tsx:151
 msgid "Link"
 msgstr "Шилтеме"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:279
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:273
 msgid "Links"
 msgstr "Шилтемелер"
 
@@ -1657,11 +1692,11 @@ msgstr "Мазмун жүктөлүүдө…"
 msgid "Loading diff..."
 msgstr "Айырмачылык жүктөлүүдө..."
 
-#: src/features/objects/components/object-detail-panel.tsx:325
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:365
 msgid "Loading item"
 msgstr "Нерсе жүктөлүүдө"
 
-#: src/features/objects/components/object-detail-panel.tsx:326
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:366
 msgid "Loading item details"
 msgstr "Нерсе чоо-жайы жүктөлүүдө"
 
@@ -1671,7 +1706,7 @@ msgstr "Шаблондор жүктөлүүдө..."
 
 #: ../../../lib/web/src/components/ui/load-more.tsx:39
 #: ../../../lib/web/src/features/document/document-page.tsx:88
-#: src/routes/_authenticated/$projectId/index.tsx:147
+#: src/routes/_authenticated/$projectId/index.tsx:148
 msgid "Loading..."
 msgstr "Жүктөлүүдө..."
 
@@ -1741,7 +1776,7 @@ msgstr "Бириктирүү коммити"
 msgid "Merge requests"
 msgstr "Бириктирүү сурамдары"
 
-#: src/features/objects/components/object-detail-panel.tsx:400
+#: src/routes/_authenticated/$projectId/index.tsx:212
 msgid "Merge requests ({requestCount})"
 msgstr "Бириктирүү сурамдары ({requestCount})"
 
@@ -1837,14 +1872,14 @@ msgstr "Аты 1000 символдон ашпашы керек"
 msgid "Network error"
 msgstr "Тармак катасы"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:498
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:492
 #: ../../../lib/web/src/components/ui/sort-selector.tsx:43
-#: src/routes/_authenticated/$projectId/index.tsx:129
-#: src/routes/_authenticated/$projectId/index.tsx:133
+#: src/routes/_authenticated/$projectId/index.tsx:130
+#: src/routes/_authenticated/$projectId/index.tsx:134
 msgid "New"
 msgstr "Жаңы"
 
-#: src/routes/_authenticated/$projectId/index.tsx:135
+#: src/routes/_authenticated/$projectId/index.tsx:136
 msgid "New {className}"
 msgstr "Жаңы {className}"
 
@@ -1862,7 +1897,7 @@ msgstr "Кийинки"
 msgid "Next image"
 msgstr "Кийинки сүрөт"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:577
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:571
 msgid "No {parentClassNames} to add to"
 msgstr "{parentClassNames} кошуу үчүн жок"
 
@@ -1910,11 +1945,11 @@ msgstr "Оюндар азырынча жок"
 msgid "No groups available"
 msgstr "Топтор жеткиликсиз"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:544
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:538
 msgid "No item types can be created yet. Create the required parent items first."
 msgstr "Азырынча эч кандай нерсе түрлөрүн түзүүгө болбойт. Адегенде керектүү ата-эне нерселерди түзүңүз."
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:360
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:354
 msgid "No matching objects"
 msgstr "Дал келген объекттер жок"
 
@@ -1976,9 +2011,13 @@ msgid "No views"
 msgstr "Көрүүлөр жок"
 
 #: ../../../lib/web/src/components/colour-picker.tsx:349
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:560
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:563
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:567
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:554
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:557
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:561
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:557
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:570
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:571
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:575
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:362
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:385
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:388
@@ -1990,9 +2029,6 @@ msgstr "Көрүүлөр жок"
 #: ../../../lib/web/src/lib/preference-utils.ts:100
 #: src/features/editor/components/edit-dialogs.tsx:296
 #: src/features/editor/components/edit-dialogs.tsx:299
-#: src/features/objects/components/object-detail-panel.tsx:547
-#: src/features/objects/components/object-detail-panel.tsx:560
-#: src/features/objects/components/object-detail-panel.tsx:565
 msgid "None"
 msgstr "Эч кимиси"
 
@@ -2083,7 +2119,7 @@ msgstr "Навигацияны ачуу"
 msgid "Open option actions"
 msgstr "Параметр аракеттерин ачуу"
 
-#: src/routes/_authenticated/$projectId/index.tsx:128
+#: src/routes/_authenticated/$projectId/index.tsx:129
 msgid "Open page actions"
 msgstr "Барак аракеттерин ачуу"
 
@@ -2119,8 +2155,9 @@ msgstr "Башка"
 msgid "Owner"
 msgstr "Ээси"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:552
-#: src/features/objects/components/object-detail-panel.tsx:543
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:546
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:553
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:569
 msgid "Parent"
 msgstr "Ата-эне"
 
@@ -2149,7 +2186,7 @@ msgstr "Үлгү (regex)"
 msgid "People"
 msgstr "Адамдар"
 
-#: src/routes/_authenticated/$projectId/index.tsx:137
+#: src/routes/_authenticated/$projectId/index.tsx:138
 msgid "Please add one or more classes to the project design."
 msgstr "Долбоор дизайнына бир же бир нече класс кошуңуз."
 
@@ -2207,7 +2244,7 @@ msgid "Processing…"
 msgstr "Иштетилүүдө…"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:62
-#: src/routes/_authenticated/$projectId/index.tsx:82
+#: src/routes/_authenticated/$projectId/index.tsx:83
 msgid "Project"
 msgstr "Долбоор"
 
@@ -2223,7 +2260,7 @@ msgstr "Долбоор түзүлдү"
 msgid "Project deleted"
 msgstr "Долбоор өчүрүлдү"
 
-#: src/routes/_authenticated/$projectId/index.tsx:151
+#: src/routes/_authenticated/$projectId/index.tsx:152
 msgid "Project link"
 msgstr "Долбоор шилтемеси"
 
@@ -2256,7 +2293,7 @@ msgstr "Долбоорлор"
 msgid "Prompt saved"
 msgstr "Prompt сакталды"
 
-#: src/features/objects/components/object-detail-panel.tsx:388
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:408
 msgid "Properties"
 msgstr "Касиеттер"
 
@@ -2272,7 +2309,7 @@ msgstr "Көтөрүлгөн"
 msgid "Re-link your accounts on this server"
 msgstr "Бул серверде аккаунттарыңызды кайра байлаңыз"
 
-#: src/routes/_authenticated/$projectId/index.tsx:140
+#: src/routes/_authenticated/$projectId/index.tsx:141
 msgid "Re-order columns"
 msgstr "Тилкелерди кайра иргөө"
 
@@ -2317,7 +2354,7 @@ msgstr "Кирүүгө кайра багытталууда."
 msgid "Reduce interest"
 msgstr "Кызыгууну азайтуу"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:65
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:69
 msgid "Relates"
 msgstr "Тиешелүү"
 
@@ -2380,8 +2417,8 @@ msgstr "Кызыгууну алуу"
 msgid "Remove item"
 msgstr "Нерсени алуу"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:304
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:309
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:298
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:303
 msgid "Remove link"
 msgstr "Шилтемени өчүрүү"
 
@@ -2436,6 +2473,18 @@ msgstr "Талап кылынат"
 msgid "Resend email"
 msgstr "Катты кайра жөнөтүү"
 
+#: ../../../lib/web/src/components/game/game-end-dialogs.tsx:48
+msgid "Resign"
+msgstr "Баш тартуу"
+
+#: ../../../lib/web/src/components/game/game-end-dialogs.tsx:35
+msgid "Resign game?"
+msgstr "Оюндан баш тартасызбы?"
+
+#: ../../../lib/web/src/components/game/game-end-dialogs.tsx:45
+msgid "Resigning..."
+msgstr "Баш тартылууда..."
+
 #: src/features/requests/components/conflict-list.tsx:40
 msgid "Resolve these conflicts manually before merging."
 msgstr "Бириктирүүдөн мурун бул конфликттерди кол менен чечиңиз."
@@ -2487,11 +2536,12 @@ msgstr "Ишемби"
 
 #: ../../../lib/web/src/components/ai-prompts-editor.tsx:156
 #: ../../../lib/web/src/components/attachment-composer.tsx:430
+#: ../../../lib/web/src/components/banner-section.tsx:99
 #: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:231
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:172
 #: ../../../lib/web/src/components/ui/editable-field-row.tsx:126
 #: ../../../lib/web/src/components/ui/secret-field.tsx:79
-#: src/routes/_authenticated/$projectId/index.tsx:143
+#: src/routes/_authenticated/$projectId/index.tsx:144
 msgid "Save"
 msgstr "Сактоо"
 
@@ -2535,7 +2585,7 @@ msgstr "Башталышты издөө..."
 msgid "Search for projects..."
 msgstr "Долбоорлорду издөө..."
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:337
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:331
 msgid "Search objects..."
 msgstr "Объекттерди издөө..."
 
@@ -2673,7 +2723,7 @@ msgstr "Уруксат орнотулууда..."
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx:125
 #: ../../../lib/web/src/components/options-menu.tsx:196
 #: src/routes/_authenticated/$projectId_.settings.tsx:101
-#: src/routes/_authenticated/$projectId/index.tsx:177
+#: src/routes/_authenticated/$projectId/index.tsx:178
 msgid "Settings"
 msgstr "Жөндөөлөр"
 
@@ -2748,8 +2798,8 @@ msgstr "Кыскартуу жана бириктирүү"
 msgid "Start the discussion by adding the first comment."
 msgstr "Биринчи комментарий жазып, талкууну баштаңыз."
 
-#: src/features/objects/components/object-detail-panel.tsx:448
-#: src/features/objects/components/object-detail-panel.tsx:457
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:471
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:476
 msgid "Stop watching"
 msgstr "Көрүүнү токтотуу"
 
@@ -2879,6 +2929,10 @@ msgstr "Бул бириктирүү суроо-талабы {0} ичине би�
 msgid "This merge request is a draft and cannot be merged."
 msgstr "Бул бириктирүү суроо-талабы долбоор болуп саналат жана бириктирилбейт."
 
+#: ../../../lib/web/src/components/game/game-end-dialogs.tsx:70
+msgid "This permanently deletes the game and its chat. This cannot be undone."
+msgstr "Бул оюн менен анын чатын биротоло жок кылат. Бул аракетти артка кайтарууга болбойт."
+
 #: src/routes/_authenticated/$projectId_.settings.tsx:111
 msgid "This project could not be loaded right now."
 msgstr "Бул долбоор азыр жүктөлбөдү."
@@ -2896,7 +2950,7 @@ msgid "This will permanently delete \"{projectName}\" and all its objects, comme
 msgstr "Бул \"{projectName}\" жана анын бардык объектилерин, комментарийлерин жана тиркемелерин биротоло өчүрөт. Бул аракет жокко чыгарылбайт."
 
 #. placeholder {0}: project.project.name
-#: src/routes/_authenticated/$projectId/index.tsx:160
+#: src/routes/_authenticated/$projectId/index.tsx:161
 msgid "This will remove \"{0}\" from your sidebar and stop updates for this project."
 msgstr "Бул каптал панелден \"{0}\" дегенди алып салат жана бул долбоор үчүн жаңылыктарды токтотот."
 
@@ -3036,27 +3090,26 @@ msgstr "Белгисиз"
 
 #: ../../../lib/web/src/components/options-menu.tsx:211
 #: src/features/projects/pages/projects-list-page.tsx:39
-#: src/routes/_authenticated/$projectId/index.tsx:158
+#: src/routes/_authenticated/$projectId/index.tsx:159
 msgid "Unsubscribe"
 msgstr "Жазылуудан баш тартуу"
 
-#: src/routes/_authenticated/$projectId/index.tsx:159
+#: src/routes/_authenticated/$projectId/index.tsx:160
 msgid "Unsubscribe from project?"
 msgstr "Долбоордон жазылуудан баш тартасызбы?"
 
 #: src/features/projects/pages/projects-list-page.tsx:42
-#: src/routes/_authenticated/$projectId/index.tsx:162
+#: src/routes/_authenticated/$projectId/index.tsx:163
 msgid "Unsubscribed"
 msgstr "Жазылуудан баш тартылды"
 
 #: src/features/projects/pages/projects-list-page.tsx:41
-#: src/routes/_authenticated/$projectId/index.tsx:161
+#: src/routes/_authenticated/$projectId/index.tsx:162
 msgid "Unsubscribing..."
 msgstr "Жазылуудан баш тартылууда..."
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:299
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:103
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:184
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:178
+#: ../../../lib/web/src/lib/entity-title.ts:40
 #: src/features/board/components/board-container.tsx:29
 #: src/features/editor/components/design-preview.tsx:31
 msgid "Untitled"
@@ -3076,7 +3129,7 @@ msgstr "{field} жаңыртылды"
 msgid "Updating access..."
 msgstr "Уруксат жаңыртылууда..."
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:661
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:655
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:304
 msgid "Upload"
 msgstr "Жүктөө"
@@ -3137,7 +3190,7 @@ msgstr "Видео көрсөткүч: {0}"
 msgid "View all notifications"
 msgstr "Бардык эскертүүлөрдү көрүү"
 
-#: src/features/objects/components/object-detail-panel.tsx:426
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:442
 msgid "View and edit item details"
 msgstr "Объекттин чоо-жайын көрүү жана түзөтүү"
 
@@ -3149,7 +3202,7 @@ msgstr "Көрүү башкаруусу"
 msgid "View only"
 msgstr "Көрүү гана"
 
-#: src/routes/_authenticated/$projectId/index.tsx:138
+#: src/routes/_authenticated/$projectId/index.tsx:139
 msgid "View options"
 msgstr "Көрүү опциялары"
 
@@ -3161,8 +3214,8 @@ msgstr "Көрүүлөр"
 msgid "Voice recording is not supported in this browser"
 msgstr "Үн жазуу бул браузерде колдоого алынбайт"
 
-#: src/features/objects/components/object-detail-panel.tsx:448
-#: src/features/objects/components/object-detail-panel.tsx:457
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:471
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:476
 msgid "Watch"
 msgstr "Көрүү"
 
@@ -3192,7 +3245,7 @@ msgstr "Шаршемби"
 msgid "You do not have access to this section."
 msgstr "Сизде бул бөлүмгө кирүү мүмкүнчүлүгү жок."
 
-#: src/routes/_authenticated/$projectId/index.tsx:52
+#: src/routes/_authenticated/$projectId/index.tsx:53
 msgid "You don't have access to this project."
 msgstr "Бул долбоорго кирүү мүмкүнчүлүгүңүз жок."
 

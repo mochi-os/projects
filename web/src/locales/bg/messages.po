@@ -179,7 +179,7 @@ msgstr "Достъпът е зададен за {subjectName}"
 msgid "Account type"
 msgstr "Тип акаунт"
 
-#: src/features/objects/components/object-detail-panel.tsx:407
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:415
 msgid "Activity"
 msgstr "Активност"
 
@@ -224,7 +224,7 @@ msgstr "Добави елемент от списъка"
 msgid "Add class"
 msgstr "Добави клас"
 
-#: src/routes/_authenticated/$projectId/index.tsx:139
+#: src/routes/_authenticated/$projectId/index.tsx:140
 msgid "Add column"
 msgstr "Добави колона"
 
@@ -238,7 +238,7 @@ msgstr "Добави поле"
 msgid "Add item..."
 msgstr "Добави елемент..."
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:320
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:314
 msgid "Add link"
 msgstr "Добави връзка"
 
@@ -329,7 +329,7 @@ msgstr "Всичко, абонирано за този канал, ще спре
 msgid "Are you sure you want to delete \"{0}\"?"
 msgstr "Сигурни ли сте, че искате да изтриете \"{0}\"?"
 
-#: src/features/objects/components/object-detail-panel.tsx:653
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:671
 msgid "Are you sure you want to delete \"{title}\"? This action cannot be undone."
 msgstr "Сигурни ли сте, че искате да изтриете \"{title}\"? Това действие не може да бъде отменено."
 
@@ -348,6 +348,14 @@ msgstr "Сигурни ли сте, че искате да изтриете та
 #: ../../../lib/web/src/components/sign-out-dialog.tsx:27
 msgid "Are you sure you want to log out? You will need to log in again to access your account."
 msgstr "Сигурни ли сте, че искате да излезете? Ще трябва да влезете отново, за да достъпите акаунта си."
+
+#: ../../../lib/web/src/components/game/game-end-dialogs.tsx:39
+msgid "Are you sure you want to resign?"
+msgstr "Сигурни ли сте, че искате да се откажете?"
+
+#: ../../../lib/web/src/components/game/game-end-dialogs.tsx:38
+msgid "Are you sure you want to resign? {opponentName} will win the game."
+msgstr "Сигурни ли сте, че искате да се откажете? {opponentName} ще спечели играта."
 
 #: src/features/projects/pages/projects-list-page.tsx:40
 msgid "Are you sure you want to unsubscribe from this project?"
@@ -402,20 +410,29 @@ msgid "Back to project"
 msgstr "Обратно към проекта"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:64
-#: src/routes/_authenticated/$projectId/index.tsx:84
+#: src/routes/_authenticated/$projectId/index.tsx:85
 msgid "Back to projects"
 msgstr "Обратно към проектите"
 
+#: ../../../lib/web/src/components/banner-section.tsx:80
 #: ../../../lib/web/src/components/entity-banner.tsx:17
 msgid "Banner"
 msgstr "Банер"
+
+#: ../../../lib/web/src/components/banner-section.tsx:69
+msgid "Banner removed"
+msgstr "Банерът е премахнат"
+
+#: ../../../lib/web/src/components/banner-section.tsx:69
+msgid "Banner updated"
+msgstr "Банерът е обновен"
 
 #: src/features/requests/components/diff-viewer.tsx:448
 msgid "Binary file not shown"
 msgstr "Двоичният файл не се показва"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:68
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:215
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:72
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:209
 msgid "Blocked by"
 msgstr "Блокирано от"
 
@@ -424,7 +441,7 @@ msgstr "Блокирано от"
 msgid "Blocked navigation to untrusted link"
 msgstr "Блокирана навигация към ненадеждна връзка"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:66
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:70
 msgid "Blocks"
 msgstr "Блокове"
 
@@ -477,7 +494,7 @@ msgstr "Може да бъде дъщерен на"
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:91
 #: src/features/projects/components/create-project-dialog.tsx:453
 #: src/routes/_authenticated/$projectId/design.tsx:61
-#: src/routes/_authenticated/$projectId/index.tsx:142
+#: src/routes/_authenticated/$projectId/index.tsx:143
 msgid "Cancel"
 msgstr "Отказ"
 
@@ -550,6 +567,7 @@ msgstr "Изберете език"
 msgid "Classes"
 msgstr "Класове"
 
+#: ../../../lib/web/src/components/banner-section.tsx:111
 #: ../../../lib/web/src/components/colour-picker.tsx:274
 #: ../../../lib/web/src/components/colour-picker.tsx:355
 #: ../../../lib/web/src/components/travelling-picker.tsx:145
@@ -567,8 +585,8 @@ msgstr "Изчисти всички"
 msgid "Clear search"
 msgstr "Изчисти търсенето"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:523
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:528
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:517
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:522
 #: ../../../lib/web/src/components/ui/dialog.tsx:78
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:480
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:483
@@ -650,7 +668,7 @@ msgid "Comments"
 msgstr "Коментари"
 
 #. placeholder {0}: data.comment_count || 0
-#: src/features/objects/components/object-detail-panel.tsx:393
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:411
 msgid "Comments ({0})"
 msgstr "Коментари ({0})"
 
@@ -759,8 +777,8 @@ msgstr "Потвърждаването с този акаунт не бе усп
 
 #: ../../../lib/web/src/components/entity/entity-board-column.tsx:551
 #: ../../../lib/web/src/components/entity/entity-board-column.tsx:691
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:513
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:682
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:507
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:676
 #: ../../../lib/web/src/components/entity/entity-tree-view.tsx:672
 msgid "Create"
 msgstr "Създай"
@@ -809,7 +827,7 @@ msgstr "Създадено {field}"
 msgid "Creating project..."
 msgstr "Създаване на проект..."
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:682
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:676
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:260
 #: src/features/projects/components/create-project-dialog.tsx:457
 #: src/features/projects/components/create-project-dialog.tsx:549
@@ -870,7 +888,8 @@ msgstr "Сортиране по подразбиране"
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:208
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:255
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:317
-#: src/features/objects/components/object-detail-panel.tsx:654
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:672
+#: ../../../lib/web/src/components/game/game-end-dialogs.tsx:78
 #: src/features/requests/components/request-panel.tsx:142
 #: src/routes/_authenticated/$projectId_.settings.tsx:122
 msgid "Delete"
@@ -896,9 +915,13 @@ msgstr "Изтрий коментара"
 msgid "Delete field"
 msgstr "Изтрий полето"
 
-#: src/features/objects/components/object-detail-panel.tsx:467
-#: src/features/objects/components/object-detail-panel.tsx:472
-#: src/features/objects/components/object-detail-panel.tsx:652
+#: ../../../lib/web/src/components/game/game-end-dialogs.tsx:69
+msgid "Delete game?"
+msgstr "Да се изтрие ли играта?"
+
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:486
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:491
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:670
 msgid "Delete item"
 msgstr "Изтрий елемента"
 
@@ -951,6 +974,10 @@ msgstr "Изтрито {field}"
 msgid "Deleting project..."
 msgstr "Изтриване на проект..."
 
+#: ../../../lib/web/src/components/game/game-end-dialogs.tsx:75
+msgid "Deleting..."
+msgstr "Изтриване..."
+
 #: ../../../lib/web/src/components/ui/sort-direction-button.tsx:27
 msgid "Descending"
 msgstr "Низходящ"
@@ -963,7 +990,7 @@ msgstr "Описание"
 
 #: src/routes/_authenticated/$projectId/design.tsx:43
 #: src/routes/_authenticated/$projectId/design.tsx:46
-#: src/routes/_authenticated/$projectId/index.tsx:169
+#: src/routes/_authenticated/$projectId/index.tsx:170
 msgid "Design"
 msgstr "Дизайн"
 
@@ -1021,7 +1048,7 @@ msgstr "Несвързано"
 msgid "Dismiss"
 msgstr "Отхвърли"
 
-#: src/routes/_authenticated/$projectId/index.tsx:145
+#: src/routes/_authenticated/$projectId/index.tsx:146
 msgid "Dismiss board hint"
 msgstr "Отхвърли подсказката за дъската"
 
@@ -1034,13 +1061,13 @@ msgid "Does not match the required pattern"
 msgstr "Не съответства на изисквания шаблон"
 
 #: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:309
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:495
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:523
 #: src/features/editor/components/edit-dialogs.tsx:439
-#: src/features/objects/components/object-detail-panel.tsx:481
 msgid "Done"
 msgstr "Готово"
 
-#: src/routes/_authenticated/$projectId/index.tsx:144
+#: src/routes/_authenticated/$projectId/index.tsx:145
 msgid "Double click on a column to add content"
 msgstr "Кликнете двукратно върху колона, за да добавите съдържание"
 
@@ -1060,7 +1087,7 @@ msgid "Download failed"
 msgstr "Изтеглянето е неуспешно"
 
 #: src/routes/_authenticated/$projectId/design.tsx:52
-#: src/routes/_authenticated/$projectId/index.tsx:148
+#: src/routes/_authenticated/$projectId/index.tsx:149
 msgid "Downloaded {filename}"
 msgstr "Изтеглен {filename}"
 
@@ -1069,11 +1096,11 @@ msgstr "Изтеглен {filename}"
 msgid "Draft"
 msgstr "Чернова"
 
-#: src/routes/_authenticated/$projectId/index.tsx:141
+#: src/routes/_authenticated/$projectId/index.tsx:142
 msgid "Drag columns to re-order them"
 msgstr "Плъзнете колоните, за да ги пренаредите"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:67
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:71
 msgid "Duplicates"
 msgstr "Дубликати"
 
@@ -1132,6 +1159,10 @@ msgstr "Имейл"
 msgid "Email code"
 msgstr "Имейл код"
 
+#: ../../../lib/web/src/components/banner-section.tsx:88
+msgid "Enter banner text (markdown supported)..."
+msgstr "Въведете текст на банера (поддържа се markdown)..."
+
 #: ../../../lib/web/src/components/step-up-dialog.tsx:290
 msgid "Enter the code from your email"
 msgstr "Въведете кода от имейла си"
@@ -1144,7 +1175,7 @@ msgstr "Въведете кода от приложението за удост�
 msgid "Entity ID"
 msgstr "ID на обект"
 
-#: src/features/objects/components/object-detail-panel.tsx:344
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:381
 msgid "Error"
 msgstr "Грешка"
 
@@ -1159,7 +1190,7 @@ msgstr "Разгъване"
 msgid "Expand sidebar"
 msgstr "Разгъване на страничната лента"
 
-#: src/routes/_authenticated/$projectId/index.tsx:146
+#: src/routes/_authenticated/$projectId/index.tsx:147
 msgid "Export data"
 msgstr "Експортиране на данни"
 
@@ -1179,7 +1210,7 @@ msgstr "Много голям"
 msgid "Failed to add account"
 msgstr "Неуспешно добавяне на акаунт"
 
-#: src/routes/_authenticated/$projectId/index.tsx:154
+#: src/routes/_authenticated/$projectId/index.tsx:155
 msgid "Failed to add column"
 msgstr "Колоната не беше добавена"
 
@@ -1201,9 +1232,9 @@ msgstr "Неуспешно създаване на клас"
 msgid "Failed to create field"
 msgstr "Неуспешно създаване на поле"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:137
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:131
 #: ../../../lib/web/src/components/options-menu.tsx:98
-#: src/routes/_authenticated/$projectId/index.tsx:152
+#: src/routes/_authenticated/$projectId/index.tsx:153
 msgid "Failed to create link"
 msgstr "Неуспешно създаване на връзка"
 
@@ -1224,7 +1255,7 @@ msgstr "Неуспешно създаване на проект"
 msgid "Failed to create view"
 msgstr "Неуспешно създаване на изглед"
 
-#: src/features/objects/components/object-detail-panel.tsx:235
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:303
 msgid "Failed to delete"
 msgstr "Неуспешно изтриване"
 
@@ -1236,7 +1267,7 @@ msgstr "Неуспешно изтриване на прикачен файл"
 msgid "Failed to delete class"
 msgstr "Неуспешно изтриване на клас"
 
-#: src/routes/_authenticated/$projectId/index.tsx:156
+#: src/routes/_authenticated/$projectId/index.tsx:157
 msgid "Failed to delete column"
 msgstr "Колоната не беше изтрита"
 
@@ -1248,7 +1279,7 @@ msgstr "Неуспешно изтриване на коментар"
 msgid "Failed to delete field"
 msgstr "Неуспешно изтриване на поле"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:159
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:153
 msgid "Failed to delete link"
 msgstr "Неуспешно изтриване на връзка"
 
@@ -1268,7 +1299,7 @@ msgstr "Неуспешно изтриване на проект"
 msgid "Failed to delete view"
 msgstr "Неуспешно изтриване на изглед"
 
-#: src/routes/_authenticated/$projectId/index.tsx:149
+#: src/routes/_authenticated/$projectId/index.tsx:150
 msgid "Failed to export data"
 msgstr "Неуспешно експортиране на данните"
 
@@ -1301,15 +1332,15 @@ msgstr "Неуспешно зареждане на история"
 msgid "Failed to load image"
 msgstr "Изображението не можа да се зареди"
 
-#: src/features/objects/components/object-detail-panel.tsx:345
-#: src/features/objects/components/object-detail-panel.tsx:348
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:382
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:385
 msgid "Failed to load item"
 msgstr "Неуспешно зареждане на елемент"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:41
 #: src/routes/_authenticated/$projectId/$objectId.tsx:65
-#: src/routes/_authenticated/$projectId/index.tsx:61
-#: src/routes/_authenticated/$projectId/index.tsx:85
+#: src/routes/_authenticated/$projectId/index.tsx:62
+#: src/routes/_authenticated/$projectId/index.tsx:86
 msgid "Failed to load project"
 msgstr "Неуспешно зареждане на проект"
 
@@ -1337,8 +1368,8 @@ msgstr "Видеото не можа да се зареди"
 msgid "Failed to merge"
 msgstr "Неуспешно сливане"
 
-#: src/features/objects/components/object-detail-panel.tsx:255
-#: src/routes/_authenticated/$projectId/index.tsx:153
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:317
+#: src/routes/_authenticated/$projectId/index.tsx:154
 msgid "Failed to move"
 msgstr "Неуспешно преместване"
 
@@ -1346,7 +1377,7 @@ msgstr "Неуспешно преместване"
 msgid "Failed to post comment"
 msgstr "Неуспешно публикуване на коментар"
 
-#: src/routes/_authenticated/$projectId/index.tsx:157
+#: src/routes/_authenticated/$projectId/index.tsx:158
 msgid "Failed to re-order columns"
 msgstr "Колоните не бяха преподредени"
 
@@ -1359,7 +1390,7 @@ msgstr "Неуспешно четене на файл"
 msgid "Failed to remove access"
 msgstr "Неуспешно премахване на достъп"
 
-#: src/routes/_authenticated/$projectId/index.tsx:155
+#: src/routes/_authenticated/$projectId/index.tsx:156
 msgid "Failed to rename column"
 msgstr "Колоната не беше преименувана"
 
@@ -1379,7 +1410,7 @@ msgstr "Неуспешно нулиране на подсказката"
 msgid "Failed to revoke RSS access"
 msgstr "Неуспешно отменяне на достъпа до RSS"
 
-#: src/features/objects/components/object-detail-panel.tsx:199
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:273
 msgid "Failed to save"
 msgstr "Неуспешно записване"
 
@@ -1402,13 +1433,17 @@ msgid "Failed to subscribe"
 msgstr "Неуспешно абониране"
 
 #: src/features/projects/pages/projects-list-page.tsx:43
-#: src/routes/_authenticated/$projectId/index.tsx:163
+#: src/routes/_authenticated/$projectId/index.tsx:164
 msgid "Failed to unsubscribe"
 msgstr "Неуспешно отписване"
 
 #: src/routes/_authenticated/$projectId_.settings.tsx:142
 msgid "Failed to update access level"
 msgstr "Неуспешна актуализация на ниво на достъп"
+
+#: ../../../lib/web/src/components/banner-section.tsx:71
+msgid "Failed to update banner"
+msgstr "Неуспешна актуализация на банер"
 
 #: src/features/editor/components/design-editor.tsx:122
 msgid "Failed to update class"
@@ -1442,7 +1477,7 @@ msgstr "Неуспешна актуализация на проект"
 msgid "Failed to update view"
 msgstr "Неуспешна актуализация на изглед"
 
-#: src/features/objects/components/object-detail-panel.tsx:218
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:288
 msgid "Failed to update watching"
 msgstr "Неуспешно обновяване на следенето"
 
@@ -1454,7 +1489,7 @@ msgstr "Неуспешно качване на прикачен файл"
 msgid "Fields"
 msgstr "Полета"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:611
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:605
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:160
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:180
 msgid "Files"
@@ -1603,7 +1638,7 @@ msgstr "Невалиден JSON файл"
 msgid "It seems like the page you're looking for <0/>does not exist or might have been removed."
 msgstr "Изглежда, че страницата, която търсите, <0/>не съществува или е премахната."
 
-#: src/features/objects/components/object-detail-panel.tsx:425
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:441
 msgid "Item details"
 msgstr "Подробности за елемента"
 
@@ -1633,11 +1668,11 @@ msgid "Light"
 msgstr "Светъл"
 
 #: ../../../lib/web/src/components/options-menu.tsx:190
-#: src/routes/_authenticated/$projectId/index.tsx:150
+#: src/routes/_authenticated/$projectId/index.tsx:151
 msgid "Link"
 msgstr "Връзка"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:279
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:273
 msgid "Links"
 msgstr "Връзки"
 
@@ -1657,11 +1692,11 @@ msgstr "Зареждане на съдържанието…"
 msgid "Loading diff..."
 msgstr "Зареждане на разлика..."
 
-#: src/features/objects/components/object-detail-panel.tsx:325
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:365
 msgid "Loading item"
 msgstr "Зареждане на елемент"
 
-#: src/features/objects/components/object-detail-panel.tsx:326
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:366
 msgid "Loading item details"
 msgstr "Зареждане на детайли за елемент"
 
@@ -1671,7 +1706,7 @@ msgstr "Зареждане на шаблони..."
 
 #: ../../../lib/web/src/components/ui/load-more.tsx:39
 #: ../../../lib/web/src/features/document/document-page.tsx:88
-#: src/routes/_authenticated/$projectId/index.tsx:147
+#: src/routes/_authenticated/$projectId/index.tsx:148
 msgid "Loading..."
 msgstr "Зареждане..."
 
@@ -1741,7 +1776,7 @@ msgstr "Merge commit"
 msgid "Merge requests"
 msgstr "Заявки за сливане"
 
-#: src/features/objects/components/object-detail-panel.tsx:400
+#: src/routes/_authenticated/$projectId/index.tsx:212
 msgid "Merge requests ({requestCount})"
 msgstr "Заявки за сливане ({requestCount})"
 
@@ -1837,14 +1872,14 @@ msgstr "Името трябва да е до 1000 символа"
 msgid "Network error"
 msgstr "Мрежова грешка"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:498
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:492
 #: ../../../lib/web/src/components/ui/sort-selector.tsx:43
-#: src/routes/_authenticated/$projectId/index.tsx:129
-#: src/routes/_authenticated/$projectId/index.tsx:133
+#: src/routes/_authenticated/$projectId/index.tsx:130
+#: src/routes/_authenticated/$projectId/index.tsx:134
 msgid "New"
 msgstr "Ново"
 
-#: src/routes/_authenticated/$projectId/index.tsx:135
+#: src/routes/_authenticated/$projectId/index.tsx:136
 msgid "New {className}"
 msgstr "Ново {className}"
 
@@ -1862,7 +1897,7 @@ msgstr "Напред"
 msgid "Next image"
 msgstr "Следващо изображение"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:577
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:571
 msgid "No {parentClassNames} to add to"
 msgstr "Няма {parentClassNames} за добавяне"
 
@@ -1910,11 +1945,11 @@ msgstr "Все още няма игри"
 msgid "No groups available"
 msgstr "Няма налични групи"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:544
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:538
 msgid "No item types can be created yet. Create the required parent items first."
 msgstr "Все още не може да се създават типове елементи. Първо създайте необходимите родителски елементи."
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:360
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:354
 msgid "No matching objects"
 msgstr "Няма съвпадащи обекти"
 
@@ -1976,9 +2011,13 @@ msgid "No views"
 msgstr "Няма прегледи"
 
 #: ../../../lib/web/src/components/colour-picker.tsx:349
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:560
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:563
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:567
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:554
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:557
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:561
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:557
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:570
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:571
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:575
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:362
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:385
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:388
@@ -1990,9 +2029,6 @@ msgstr "Няма прегледи"
 #: ../../../lib/web/src/lib/preference-utils.ts:100
 #: src/features/editor/components/edit-dialogs.tsx:296
 #: src/features/editor/components/edit-dialogs.tsx:299
-#: src/features/objects/components/object-detail-panel.tsx:547
-#: src/features/objects/components/object-detail-panel.tsx:560
-#: src/features/objects/components/object-detail-panel.tsx:565
 msgid "None"
 msgstr "Няма"
 
@@ -2083,7 +2119,7 @@ msgstr "Отвори навигацията"
 msgid "Open option actions"
 msgstr "Отвори действия за опцията"
 
-#: src/routes/_authenticated/$projectId/index.tsx:128
+#: src/routes/_authenticated/$projectId/index.tsx:129
 msgid "Open page actions"
 msgstr "Отвори действия за страницата"
 
@@ -2119,8 +2155,9 @@ msgstr "Друго"
 msgid "Owner"
 msgstr "Собственик"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:552
-#: src/features/objects/components/object-detail-panel.tsx:543
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:546
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:553
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:569
 msgid "Parent"
 msgstr "Родител"
 
@@ -2149,7 +2186,7 @@ msgstr "Шаблон (регулярен израз)"
 msgid "People"
 msgstr "Хора"
 
-#: src/routes/_authenticated/$projectId/index.tsx:137
+#: src/routes/_authenticated/$projectId/index.tsx:138
 msgid "Please add one or more classes to the project design."
 msgstr "Моля, добавете един или повече класове в дизайна на проекта."
 
@@ -2207,7 +2244,7 @@ msgid "Processing…"
 msgstr "Обработва се…"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:62
-#: src/routes/_authenticated/$projectId/index.tsx:82
+#: src/routes/_authenticated/$projectId/index.tsx:83
 msgid "Project"
 msgstr "Проект"
 
@@ -2223,7 +2260,7 @@ msgstr "Проектът е създаден"
 msgid "Project deleted"
 msgstr "Проектът е изтрит"
 
-#: src/routes/_authenticated/$projectId/index.tsx:151
+#: src/routes/_authenticated/$projectId/index.tsx:152
 msgid "Project link"
 msgstr "Връзка към проекта"
 
@@ -2256,7 +2293,7 @@ msgstr "Проекти"
 msgid "Prompt saved"
 msgstr "Промптът е запазен"
 
-#: src/features/objects/components/object-detail-panel.tsx:388
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:408
 msgid "Properties"
 msgstr "Свойства"
 
@@ -2272,7 +2309,7 @@ msgstr "Повдигнат"
 msgid "Re-link your accounts on this server"
 msgstr "Свържете отново профилите си на този сървър"
 
-#: src/routes/_authenticated/$projectId/index.tsx:140
+#: src/routes/_authenticated/$projectId/index.tsx:141
 msgid "Re-order columns"
 msgstr "Пренареди колоните"
 
@@ -2317,7 +2354,7 @@ msgstr "Пренасочване към вход."
 msgid "Reduce interest"
 msgstr "Намали лихвата"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:65
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:69
 msgid "Relates"
 msgstr "Свързано"
 
@@ -2380,8 +2417,8 @@ msgstr "Премахни интерес"
 msgid "Remove item"
 msgstr "Премахни елемент"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:304
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:309
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:298
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:303
 msgid "Remove link"
 msgstr "Премахване на връзката"
 
@@ -2436,6 +2473,18 @@ msgstr "Задължително"
 msgid "Resend email"
 msgstr "Изпрати имейла отново"
 
+#: ../../../lib/web/src/components/game/game-end-dialogs.tsx:48
+msgid "Resign"
+msgstr "Предай се"
+
+#: ../../../lib/web/src/components/game/game-end-dialogs.tsx:35
+msgid "Resign game?"
+msgstr "Да се предадеш ли в играта?"
+
+#: ../../../lib/web/src/components/game/game-end-dialogs.tsx:45
+msgid "Resigning..."
+msgstr "Предава се..."
+
 #: src/features/requests/components/conflict-list.tsx:40
 msgid "Resolve these conflicts manually before merging."
 msgstr "Разрешете тези конфликти ръчно преди merge."
@@ -2487,11 +2536,12 @@ msgstr "Събота"
 
 #: ../../../lib/web/src/components/ai-prompts-editor.tsx:156
 #: ../../../lib/web/src/components/attachment-composer.tsx:430
+#: ../../../lib/web/src/components/banner-section.tsx:99
 #: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:231
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:172
 #: ../../../lib/web/src/components/ui/editable-field-row.tsx:126
 #: ../../../lib/web/src/components/ui/secret-field.tsx:79
-#: src/routes/_authenticated/$projectId/index.tsx:143
+#: src/routes/_authenticated/$projectId/index.tsx:144
 msgid "Save"
 msgstr "Запази"
 
@@ -2535,7 +2585,7 @@ msgstr "Търси произход..."
 msgid "Search for projects..."
 msgstr "Търси проекти..."
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:337
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:331
 msgid "Search objects..."
 msgstr "Търси обекти..."
 
@@ -2673,7 +2723,7 @@ msgstr "Задаване на достъп..."
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx:125
 #: ../../../lib/web/src/components/options-menu.tsx:196
 #: src/routes/_authenticated/$projectId_.settings.tsx:101
-#: src/routes/_authenticated/$projectId/index.tsx:177
+#: src/routes/_authenticated/$projectId/index.tsx:178
 msgid "Settings"
 msgstr "Настройки"
 
@@ -2748,8 +2798,8 @@ msgstr "Squash и сливане"
 msgid "Start the discussion by adding the first comment."
 msgstr "Започнете дискусията, като добавите първия коментар."
 
-#: src/features/objects/components/object-detail-panel.tsx:448
-#: src/features/objects/components/object-detail-panel.tsx:457
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:471
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:476
 msgid "Stop watching"
 msgstr "Спри да следиш"
 
@@ -2879,6 +2929,10 @@ msgstr "Тази заявка за сливане е слята с {0}."
 msgid "This merge request is a draft and cannot be merged."
 msgstr "Тази заявка за сливане е чернова и не може да бъде слята."
 
+#: ../../../lib/web/src/components/game/game-end-dialogs.tsx:70
+msgid "This permanently deletes the game and its chat. This cannot be undone."
+msgstr "Това ще изтрие завинаги играта и нейния чат. Това действие не може да бъде отменено."
+
 #: src/routes/_authenticated/$projectId_.settings.tsx:111
 msgid "This project could not be loaded right now."
 msgstr "Този проект не може да бъде зареден в момента."
@@ -2896,7 +2950,7 @@ msgid "This will permanently delete \"{projectName}\" and all its objects, comme
 msgstr "Това ще изтрие окончателно „{projectName}“ и всичките му обекти, коментари и прикачени файлове. Това действие не може да бъде отменено."
 
 #. placeholder {0}: project.project.name
-#: src/routes/_authenticated/$projectId/index.tsx:160
+#: src/routes/_authenticated/$projectId/index.tsx:161
 msgid "This will remove \"{0}\" from your sidebar and stop updates for this project."
 msgstr "Това ще премахне „{0}“ от страничната ви лента и ще спре обновленията за този проект."
 
@@ -3036,27 +3090,26 @@ msgstr "Неизвестно"
 
 #: ../../../lib/web/src/components/options-menu.tsx:211
 #: src/features/projects/pages/projects-list-page.tsx:39
-#: src/routes/_authenticated/$projectId/index.tsx:158
+#: src/routes/_authenticated/$projectId/index.tsx:159
 msgid "Unsubscribe"
 msgstr "Отпиши се"
 
-#: src/routes/_authenticated/$projectId/index.tsx:159
+#: src/routes/_authenticated/$projectId/index.tsx:160
 msgid "Unsubscribe from project?"
 msgstr "Отписване от проект?"
 
 #: src/features/projects/pages/projects-list-page.tsx:42
-#: src/routes/_authenticated/$projectId/index.tsx:162
+#: src/routes/_authenticated/$projectId/index.tsx:163
 msgid "Unsubscribed"
 msgstr "Отписан"
 
 #: src/features/projects/pages/projects-list-page.tsx:41
-#: src/routes/_authenticated/$projectId/index.tsx:161
+#: src/routes/_authenticated/$projectId/index.tsx:162
 msgid "Unsubscribing..."
 msgstr "Отписване..."
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:299
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:103
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:184
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:178
+#: ../../../lib/web/src/lib/entity-title.ts:40
 #: src/features/board/components/board-container.tsx:29
 #: src/features/editor/components/design-preview.tsx:31
 msgid "Untitled"
@@ -3076,7 +3129,7 @@ msgstr "Обновено {field}"
 msgid "Updating access..."
 msgstr "Обновяване на достъп..."
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:661
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:655
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:304
 msgid "Upload"
 msgstr "Качи"
@@ -3137,7 +3190,7 @@ msgstr "Преглед на видео: {0}"
 msgid "View all notifications"
 msgstr "Виж всички известия"
 
-#: src/features/objects/components/object-detail-panel.tsx:426
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:442
 msgid "View and edit item details"
 msgstr "Преглед и редакция на детайлите за елемента"
 
@@ -3149,7 +3202,7 @@ msgstr "Контроли за изглед"
 msgid "View only"
 msgstr "Само за преглед"
 
-#: src/routes/_authenticated/$projectId/index.tsx:138
+#: src/routes/_authenticated/$projectId/index.tsx:139
 msgid "View options"
 msgstr "Опции за изглед"
 
@@ -3161,8 +3214,8 @@ msgstr "Прегледи"
 msgid "Voice recording is not supported in this browser"
 msgstr "Гласовият запис не се поддържа в този браузър"
 
-#: src/features/objects/components/object-detail-panel.tsx:448
-#: src/features/objects/components/object-detail-panel.tsx:457
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:471
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:476
 msgid "Watch"
 msgstr "Наблюдавай"
 
@@ -3192,7 +3245,7 @@ msgstr "Сряда"
 msgid "You do not have access to this section."
 msgstr "Нямате достъп до този раздел."
 
-#: src/routes/_authenticated/$projectId/index.tsx:52
+#: src/routes/_authenticated/$projectId/index.tsx:53
 msgid "You don't have access to this project."
 msgstr "Нямате достъп до този проект."
 

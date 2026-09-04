@@ -179,7 +179,7 @@ msgstr "Hozzáférés beállítva: {subjectName}"
 msgid "Account type"
 msgstr "Fióktípus"
 
-#: src/features/objects/components/object-detail-panel.tsx:407
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:415
 msgid "Activity"
 msgstr "Tevékenység"
 
@@ -224,7 +224,7 @@ msgstr "Ellenőrzőlista-elem hozzáadása"
 msgid "Add class"
 msgstr "Osztály hozzáadása"
 
-#: src/routes/_authenticated/$projectId/index.tsx:139
+#: src/routes/_authenticated/$projectId/index.tsx:140
 msgid "Add column"
 msgstr "Oszlop hozzáadása"
 
@@ -238,7 +238,7 @@ msgstr "Mező hozzáadása"
 msgid "Add item..."
 msgstr "Elem hozzáadása..."
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:320
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:314
 msgid "Add link"
 msgstr "Hivatkozás hozzáadása"
 
@@ -329,7 +329,7 @@ msgstr "Minden, ami feliratkozott erre a hírcsatornára, nem kapja meg többé.
 msgid "Are you sure you want to delete \"{0}\"?"
 msgstr "Biztosan törli a következőt: „{0}”?"
 
-#: src/features/objects/components/object-detail-panel.tsx:653
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:671
 msgid "Are you sure you want to delete \"{title}\"? This action cannot be undone."
 msgstr "Biztosan törli a következőt: „{title}”? Ez a művelet nem vonható vissza."
 
@@ -348,6 +348,14 @@ msgstr "Biztosan törli ezt az egyesítési kérést?"
 #: ../../../lib/web/src/components/sign-out-dialog.tsx:27
 msgid "Are you sure you want to log out? You will need to log in again to access your account."
 msgstr "Biztosan kijelentkezik? A fiók eléréséhez újra be kell jelentkeznie."
+
+#: ../../../lib/web/src/components/game/game-end-dialogs.tsx:39
+msgid "Are you sure you want to resign?"
+msgstr "Biztos, hogy feladod a játszmát?"
+
+#: ../../../lib/web/src/components/game/game-end-dialogs.tsx:38
+msgid "Are you sure you want to resign? {opponentName} will win the game."
+msgstr "Biztosan feladja? {opponentName} fog nyerni."
 
 #: src/features/projects/pages/projects-list-page.tsx:40
 msgid "Are you sure you want to unsubscribe from this project?"
@@ -402,20 +410,29 @@ msgid "Back to project"
 msgstr "Vissza a projekthez"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:64
-#: src/routes/_authenticated/$projectId/index.tsx:84
+#: src/routes/_authenticated/$projectId/index.tsx:85
 msgid "Back to projects"
 msgstr "Vissza a projektekhez"
 
+#: ../../../lib/web/src/components/banner-section.tsx:80
 #: ../../../lib/web/src/components/entity-banner.tsx:17
 msgid "Banner"
 msgstr "Fejléckép"
+
+#: ../../../lib/web/src/components/banner-section.tsx:69
+msgid "Banner removed"
+msgstr "Banner eltávolítva"
+
+#: ../../../lib/web/src/components/banner-section.tsx:69
+msgid "Banner updated"
+msgstr "Banner frissítve"
 
 #: src/features/requests/components/diff-viewer.tsx:448
 msgid "Binary file not shown"
 msgstr "A bináris fájl nem jelenik meg"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:68
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:215
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:72
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:209
 msgid "Blocked by"
 msgstr "Blokkolja"
 
@@ -424,7 +441,7 @@ msgstr "Blokkolja"
 msgid "Blocked navigation to untrusted link"
 msgstr "Megbízhatatlan hivatkozásra való navigáció letiltva"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:66
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:70
 msgid "Blocks"
 msgstr "Blokkolja"
 
@@ -477,7 +494,7 @@ msgstr "Lehet gyermeke ennek"
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:91
 #: src/features/projects/components/create-project-dialog.tsx:453
 #: src/routes/_authenticated/$projectId/design.tsx:61
-#: src/routes/_authenticated/$projectId/index.tsx:142
+#: src/routes/_authenticated/$projectId/index.tsx:143
 msgid "Cancel"
 msgstr "Mégse"
 
@@ -550,6 +567,7 @@ msgstr "Nyelv kiválasztása"
 msgid "Classes"
 msgstr "Osztályok"
 
+#: ../../../lib/web/src/components/banner-section.tsx:111
 #: ../../../lib/web/src/components/colour-picker.tsx:274
 #: ../../../lib/web/src/components/colour-picker.tsx:355
 #: ../../../lib/web/src/components/travelling-picker.tsx:145
@@ -567,8 +585,8 @@ msgstr "Összes törlése"
 msgid "Clear search"
 msgstr "Keresés törlése"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:523
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:528
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:517
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:522
 #: ../../../lib/web/src/components/ui/dialog.tsx:78
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:480
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:483
@@ -650,7 +668,7 @@ msgid "Comments"
 msgstr "Megjegyzések"
 
 #. placeholder {0}: data.comment_count || 0
-#: src/features/objects/components/object-detail-panel.tsx:393
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:411
 msgid "Comments ({0})"
 msgstr "Megjegyzések ({0})"
 
@@ -759,8 +777,8 @@ msgstr "Nem sikerült ellenőrizni azzal a fiókkal. Kérjük, próbálja újra.
 
 #: ../../../lib/web/src/components/entity/entity-board-column.tsx:551
 #: ../../../lib/web/src/components/entity/entity-board-column.tsx:691
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:513
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:682
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:507
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:676
 #: ../../../lib/web/src/components/entity/entity-tree-view.tsx:672
 msgid "Create"
 msgstr "Létrehozás"
@@ -809,7 +827,7 @@ msgstr "{field} létrehozva"
 msgid "Creating project..."
 msgstr "Projekt létrehozása..."
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:682
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:676
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:260
 #: src/features/projects/components/create-project-dialog.tsx:457
 #: src/features/projects/components/create-project-dialog.tsx:549
@@ -870,7 +888,8 @@ msgstr "Alapértelmezett rendezés"
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:208
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:255
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:317
-#: src/features/objects/components/object-detail-panel.tsx:654
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:672
+#: ../../../lib/web/src/components/game/game-end-dialogs.tsx:78
 #: src/features/requests/components/request-panel.tsx:142
 #: src/routes/_authenticated/$projectId_.settings.tsx:122
 msgid "Delete"
@@ -896,9 +915,13 @@ msgstr "Megjegyzés törlése"
 msgid "Delete field"
 msgstr "Mező törlése"
 
-#: src/features/objects/components/object-detail-panel.tsx:467
-#: src/features/objects/components/object-detail-panel.tsx:472
-#: src/features/objects/components/object-detail-panel.tsx:652
+#: ../../../lib/web/src/components/game/game-end-dialogs.tsx:69
+msgid "Delete game?"
+msgstr "Törli a játékot?"
+
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:486
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:491
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:670
 msgid "Delete item"
 msgstr "Elem törlése"
 
@@ -951,6 +974,10 @@ msgstr "{field} törölve"
 msgid "Deleting project..."
 msgstr "Projekt törlése..."
 
+#: ../../../lib/web/src/components/game/game-end-dialogs.tsx:75
+msgid "Deleting..."
+msgstr "Törlés..."
+
 #: ../../../lib/web/src/components/ui/sort-direction-button.tsx:27
 msgid "Descending"
 msgstr "Csökkenő"
@@ -963,7 +990,7 @@ msgstr "Leírás"
 
 #: src/routes/_authenticated/$projectId/design.tsx:43
 #: src/routes/_authenticated/$projectId/design.tsx:46
-#: src/routes/_authenticated/$projectId/index.tsx:169
+#: src/routes/_authenticated/$projectId/index.tsx:170
 msgid "Design"
 msgstr "Tervezés"
 
@@ -1021,7 +1048,7 @@ msgstr "Leválasztva"
 msgid "Dismiss"
 msgstr "Elvetés"
 
-#: src/routes/_authenticated/$projectId/index.tsx:145
+#: src/routes/_authenticated/$projectId/index.tsx:146
 msgid "Dismiss board hint"
 msgstr "Tábla tipp elvetése"
 
@@ -1034,13 +1061,13 @@ msgid "Does not match the required pattern"
 msgstr "Nem felel meg a megadott mintának"
 
 #: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:309
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:495
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:523
 #: src/features/editor/components/edit-dialogs.tsx:439
-#: src/features/objects/components/object-detail-panel.tsx:481
 msgid "Done"
 msgstr "Kész"
 
-#: src/routes/_authenticated/$projectId/index.tsx:144
+#: src/routes/_authenticated/$projectId/index.tsx:145
 msgid "Double click on a column to add content"
 msgstr "Kattintson duplán egy oszlopra a tartalom hozzáadásához"
 
@@ -1060,7 +1087,7 @@ msgid "Download failed"
 msgstr "A letöltés sikertelen"
 
 #: src/routes/_authenticated/$projectId/design.tsx:52
-#: src/routes/_authenticated/$projectId/index.tsx:148
+#: src/routes/_authenticated/$projectId/index.tsx:149
 msgid "Downloaded {filename}"
 msgstr "Letöltve: {filename}"
 
@@ -1069,11 +1096,11 @@ msgstr "Letöltve: {filename}"
 msgid "Draft"
 msgstr "Vázlat"
 
-#: src/routes/_authenticated/$projectId/index.tsx:141
+#: src/routes/_authenticated/$projectId/index.tsx:142
 msgid "Drag columns to re-order them"
 msgstr "Húzza az oszlopokat az átrendezésükhöz"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:67
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:71
 msgid "Duplicates"
 msgstr "Duplikálja"
 
@@ -1132,6 +1159,10 @@ msgstr "E-mail"
 msgid "Email code"
 msgstr "E-mail kód"
 
+#: ../../../lib/web/src/components/banner-section.tsx:88
+msgid "Enter banner text (markdown supported)..."
+msgstr "Adja meg a banner szövegét (markdown támogatott)..."
+
 #: ../../../lib/web/src/components/step-up-dialog.tsx:290
 msgid "Enter the code from your email"
 msgstr "Adja meg az e-mailben kapott kódot"
@@ -1144,7 +1175,7 @@ msgstr "Adja meg a hitelesítő kódját"
 msgid "Entity ID"
 msgstr "Entitás azonosító"
 
-#: src/features/objects/components/object-detail-panel.tsx:344
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:381
 msgid "Error"
 msgstr "Hiba"
 
@@ -1159,7 +1190,7 @@ msgstr "Kibontás"
 msgid "Expand sidebar"
 msgstr "Oldalsáv kibontása"
 
-#: src/routes/_authenticated/$projectId/index.tsx:146
+#: src/routes/_authenticated/$projectId/index.tsx:147
 msgid "Export data"
 msgstr "Adatok exportálása"
 
@@ -1179,7 +1210,7 @@ msgstr "Extra nagy"
 msgid "Failed to add account"
 msgstr "Nem sikerült hozzáadni a fiókot"
 
-#: src/routes/_authenticated/$projectId/index.tsx:154
+#: src/routes/_authenticated/$projectId/index.tsx:155
 msgid "Failed to add column"
 msgstr "Nem sikerült hozzáadni az oszlopot"
 
@@ -1201,9 +1232,9 @@ msgstr "Nem sikerült létrehozni az osztályt"
 msgid "Failed to create field"
 msgstr "Nem sikerült létrehozni a mezőt"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:137
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:131
 #: ../../../lib/web/src/components/options-menu.tsx:98
-#: src/routes/_authenticated/$projectId/index.tsx:152
+#: src/routes/_authenticated/$projectId/index.tsx:153
 msgid "Failed to create link"
 msgstr "Nem sikerült létrehozni a hivatkozást"
 
@@ -1224,7 +1255,7 @@ msgstr "Nem sikerült létrehozni a projektet"
 msgid "Failed to create view"
 msgstr "Nem sikerült létrehozni a nézetet"
 
-#: src/features/objects/components/object-detail-panel.tsx:235
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:303
 msgid "Failed to delete"
 msgstr "Nem sikerült törölni"
 
@@ -1236,7 +1267,7 @@ msgstr "Nem sikerült törölni a mellékletet"
 msgid "Failed to delete class"
 msgstr "Nem sikerült törölni az osztályt"
 
-#: src/routes/_authenticated/$projectId/index.tsx:156
+#: src/routes/_authenticated/$projectId/index.tsx:157
 msgid "Failed to delete column"
 msgstr "Nem sikerült törölni az oszlopot"
 
@@ -1248,7 +1279,7 @@ msgstr "Nem sikerült törölni a hozzászólást"
 msgid "Failed to delete field"
 msgstr "Nem sikerült törölni a mezőt"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:159
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:153
 msgid "Failed to delete link"
 msgstr "Nem sikerült törölni a hivatkozást"
 
@@ -1268,7 +1299,7 @@ msgstr "Nem sikerült törölni a projektet"
 msgid "Failed to delete view"
 msgstr "Nem sikerült törölni a nézetet"
 
-#: src/routes/_authenticated/$projectId/index.tsx:149
+#: src/routes/_authenticated/$projectId/index.tsx:150
 msgid "Failed to export data"
 msgstr "Az adatok exportálása nem sikerült"
 
@@ -1301,15 +1332,15 @@ msgstr "Nem sikerült betölteni az előzményeket"
 msgid "Failed to load image"
 msgstr "A kép betöltése sikertelen"
 
-#: src/features/objects/components/object-detail-panel.tsx:345
-#: src/features/objects/components/object-detail-panel.tsx:348
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:382
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:385
 msgid "Failed to load item"
 msgstr "Nem sikerült betölteni az elemet"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:41
 #: src/routes/_authenticated/$projectId/$objectId.tsx:65
-#: src/routes/_authenticated/$projectId/index.tsx:61
-#: src/routes/_authenticated/$projectId/index.tsx:85
+#: src/routes/_authenticated/$projectId/index.tsx:62
+#: src/routes/_authenticated/$projectId/index.tsx:86
 msgid "Failed to load project"
 msgstr "Nem sikerült betölteni a projektet"
 
@@ -1337,8 +1368,8 @@ msgstr "A videó betöltése sikertelen"
 msgid "Failed to merge"
 msgstr "Nem sikerült egyesíteni"
 
-#: src/features/objects/components/object-detail-panel.tsx:255
-#: src/routes/_authenticated/$projectId/index.tsx:153
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:317
+#: src/routes/_authenticated/$projectId/index.tsx:154
 msgid "Failed to move"
 msgstr "Az áthelyezés sikertelen"
 
@@ -1346,7 +1377,7 @@ msgstr "Az áthelyezés sikertelen"
 msgid "Failed to post comment"
 msgstr "Nem sikerült közzétenni a hozzászólást"
 
-#: src/routes/_authenticated/$projectId/index.tsx:157
+#: src/routes/_authenticated/$projectId/index.tsx:158
 msgid "Failed to re-order columns"
 msgstr "Nem sikerült átrendezni az oszlopokat"
 
@@ -1359,7 +1390,7 @@ msgstr "Nem sikerült olvasni a fájlt"
 msgid "Failed to remove access"
 msgstr "Nem sikerült eltávolítani a hozzáférést"
 
-#: src/routes/_authenticated/$projectId/index.tsx:155
+#: src/routes/_authenticated/$projectId/index.tsx:156
 msgid "Failed to rename column"
 msgstr "Nem sikerült átnevezni az oszlopot"
 
@@ -1379,7 +1410,7 @@ msgstr "Nem sikerült visszaállítani az utasítást"
 msgid "Failed to revoke RSS access"
 msgstr "Az RSS-hozzáférés visszavonása sikertelen"
 
-#: src/features/objects/components/object-detail-panel.tsx:199
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:273
 msgid "Failed to save"
 msgstr "Nem sikerült menteni"
 
@@ -1402,13 +1433,17 @@ msgid "Failed to subscribe"
 msgstr "Nem sikerült feliratkozni"
 
 #: src/features/projects/pages/projects-list-page.tsx:43
-#: src/routes/_authenticated/$projectId/index.tsx:163
+#: src/routes/_authenticated/$projectId/index.tsx:164
 msgid "Failed to unsubscribe"
 msgstr "Nem sikerült leiratkozni"
 
 #: src/routes/_authenticated/$projectId_.settings.tsx:142
 msgid "Failed to update access level"
 msgstr "Nem sikerült frissíteni a hozzáférési szintet"
+
+#: ../../../lib/web/src/components/banner-section.tsx:71
+msgid "Failed to update banner"
+msgstr "Nem sikerült frissíteni a bannert"
 
 #: src/features/editor/components/design-editor.tsx:122
 msgid "Failed to update class"
@@ -1442,7 +1477,7 @@ msgstr "Nem sikerült frissíteni a projektet"
 msgid "Failed to update view"
 msgstr "Nem sikerült frissíteni a nézetet"
 
-#: src/features/objects/components/object-detail-panel.tsx:218
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:288
 msgid "Failed to update watching"
 msgstr "A követés frissítése sikertelen"
 
@@ -1454,7 +1489,7 @@ msgstr "Nem sikerült feltölteni a mellékletet"
 msgid "Fields"
 msgstr "Mezők"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:611
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:605
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:160
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:180
 msgid "Files"
@@ -1603,7 +1638,7 @@ msgstr "Érvénytelen JSON fájl"
 msgid "It seems like the page you're looking for <0/>does not exist or might have been removed."
 msgstr "Úgy tűnik, a keresett oldal <0/>nem létezik, vagy eltávolították."
 
-#: src/features/objects/components/object-detail-panel.tsx:425
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:441
 msgid "Item details"
 msgstr "Elem részletei"
 
@@ -1633,11 +1668,11 @@ msgid "Light"
 msgstr "Világos"
 
 #: ../../../lib/web/src/components/options-menu.tsx:190
-#: src/routes/_authenticated/$projectId/index.tsx:150
+#: src/routes/_authenticated/$projectId/index.tsx:151
 msgid "Link"
 msgstr "Hivatkozás"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:279
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:273
 msgid "Links"
 msgstr "Hivatkozások"
 
@@ -1657,11 +1692,11 @@ msgstr "Tartalom betöltése…"
 msgid "Loading diff..."
 msgstr "Eltérés betöltése..."
 
-#: src/features/objects/components/object-detail-panel.tsx:325
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:365
 msgid "Loading item"
 msgstr "Elem betöltése"
 
-#: src/features/objects/components/object-detail-panel.tsx:326
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:366
 msgid "Loading item details"
 msgstr "Elem részleteinek betöltése"
 
@@ -1671,7 +1706,7 @@ msgstr "Sablonok betöltése..."
 
 #: ../../../lib/web/src/components/ui/load-more.tsx:39
 #: ../../../lib/web/src/features/document/document-page.tsx:88
-#: src/routes/_authenticated/$projectId/index.tsx:147
+#: src/routes/_authenticated/$projectId/index.tsx:148
 msgid "Loading..."
 msgstr "Betöltés..."
 
@@ -1741,7 +1776,7 @@ msgstr "Egyesítő commit"
 msgid "Merge requests"
 msgstr "Egyesítési kérések"
 
-#: src/features/objects/components/object-detail-panel.tsx:400
+#: src/routes/_authenticated/$projectId/index.tsx:212
 msgid "Merge requests ({requestCount})"
 msgstr "Egyesítési kérések ({requestCount})"
 
@@ -1837,14 +1872,14 @@ msgstr "A név legfeljebb 1000 karakter lehet"
 msgid "Network error"
 msgstr "Hálózati hiba"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:498
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:492
 #: ../../../lib/web/src/components/ui/sort-selector.tsx:43
-#: src/routes/_authenticated/$projectId/index.tsx:129
-#: src/routes/_authenticated/$projectId/index.tsx:133
+#: src/routes/_authenticated/$projectId/index.tsx:130
+#: src/routes/_authenticated/$projectId/index.tsx:134
 msgid "New"
 msgstr "Új"
 
-#: src/routes/_authenticated/$projectId/index.tsx:135
+#: src/routes/_authenticated/$projectId/index.tsx:136
 msgid "New {className}"
 msgstr "Új {className}"
 
@@ -1862,7 +1897,7 @@ msgstr "Következő"
 msgid "Next image"
 msgstr "Következő kép"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:577
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:571
 msgid "No {parentClassNames} to add to"
 msgstr "Nincs {parentClassNames}, amelyhez hozzáadható"
 
@@ -1910,11 +1945,11 @@ msgstr "Még nincsenek játékok"
 msgid "No groups available"
 msgstr "Nincsenek elérhető csoportok"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:544
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:538
 msgid "No item types can be created yet. Create the required parent items first."
 msgstr "Egyetlen elemtípus sem hozható még létre. Először hozza létre a szükséges szülőelemeket."
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:360
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:354
 msgid "No matching objects"
 msgstr "Nincs egyező objektum"
 
@@ -1976,9 +2011,13 @@ msgid "No views"
 msgstr "Nincsenek nézetek"
 
 #: ../../../lib/web/src/components/colour-picker.tsx:349
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:560
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:563
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:567
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:554
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:557
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:561
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:557
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:570
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:571
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:575
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:362
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:385
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:388
@@ -1990,9 +2029,6 @@ msgstr "Nincsenek nézetek"
 #: ../../../lib/web/src/lib/preference-utils.ts:100
 #: src/features/editor/components/edit-dialogs.tsx:296
 #: src/features/editor/components/edit-dialogs.tsx:299
-#: src/features/objects/components/object-detail-panel.tsx:547
-#: src/features/objects/components/object-detail-panel.tsx:560
-#: src/features/objects/components/object-detail-panel.tsx:565
 msgid "None"
 msgstr "Nincs"
 
@@ -2083,7 +2119,7 @@ msgstr "Navigáció megnyitása"
 msgid "Open option actions"
 msgstr "Opcióműveletek megnyitása"
 
-#: src/routes/_authenticated/$projectId/index.tsx:128
+#: src/routes/_authenticated/$projectId/index.tsx:129
 msgid "Open page actions"
 msgstr "Oldalműveletek megnyitása"
 
@@ -2119,8 +2155,9 @@ msgstr "Egyéb"
 msgid "Owner"
 msgstr "Tulajdonos"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:552
-#: src/features/objects/components/object-detail-panel.tsx:543
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:546
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:553
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:569
 msgid "Parent"
 msgstr "Szülő"
 
@@ -2149,7 +2186,7 @@ msgstr "Minta (regex)"
 msgid "People"
 msgstr "Személyek"
 
-#: src/routes/_authenticated/$projectId/index.tsx:137
+#: src/routes/_authenticated/$projectId/index.tsx:138
 msgid "Please add one or more classes to the project design."
 msgstr "Adjon hozzá egy vagy több osztályt a projekttervezéshez."
 
@@ -2207,7 +2244,7 @@ msgid "Processing…"
 msgstr "Feldolgozás…"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:62
-#: src/routes/_authenticated/$projectId/index.tsx:82
+#: src/routes/_authenticated/$projectId/index.tsx:83
 msgid "Project"
 msgstr "Projekt"
 
@@ -2223,7 +2260,7 @@ msgstr "Projekt létrehozva"
 msgid "Project deleted"
 msgstr "Projekt törölve"
 
-#: src/routes/_authenticated/$projectId/index.tsx:151
+#: src/routes/_authenticated/$projectId/index.tsx:152
 msgid "Project link"
 msgstr "Projekthivatkozás"
 
@@ -2256,7 +2293,7 @@ msgstr "Projektek"
 msgid "Prompt saved"
 msgstr "Prompt mentve"
 
-#: src/features/objects/components/object-detail-panel.tsx:388
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:408
 msgid "Properties"
 msgstr "Tulajdonságok"
 
@@ -2272,7 +2309,7 @@ msgstr "Kiemelt"
 msgid "Re-link your accounts on this server"
 msgstr "Kapcsolja újra össze fiókjait ezen a szerveren"
 
-#: src/routes/_authenticated/$projectId/index.tsx:140
+#: src/routes/_authenticated/$projectId/index.tsx:141
 msgid "Re-order columns"
 msgstr "Oszlopok újrarendezése"
 
@@ -2317,7 +2354,7 @@ msgstr "Átirányítás a bejelentkezéshez."
 msgid "Reduce interest"
 msgstr "Érdeklődés csökkentése"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:65
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:69
 msgid "Relates"
 msgstr "Kapcsolódik"
 
@@ -2380,8 +2417,8 @@ msgstr "Érdeklődés eltávolítása"
 msgid "Remove item"
 msgstr "Elem eltávolítása"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:304
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:309
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:298
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:303
 msgid "Remove link"
 msgstr "Hivatkozás eltávolítása"
 
@@ -2436,6 +2473,18 @@ msgstr "Kötelező"
 msgid "Resend email"
 msgstr "E-mail újraküldése"
 
+#: ../../../lib/web/src/components/game/game-end-dialogs.tsx:48
+msgid "Resign"
+msgstr "Feladás"
+
+#: ../../../lib/web/src/components/game/game-end-dialogs.tsx:35
+msgid "Resign game?"
+msgstr "Feladja a játékot?"
+
+#: ../../../lib/web/src/components/game/game-end-dialogs.tsx:45
+msgid "Resigning..."
+msgstr "Feladás..."
+
 #: src/features/requests/components/conflict-list.tsx:40
 msgid "Resolve these conflicts manually before merging."
 msgstr "Oldja fel ezeket az ütközéseket kézzel az egyesítés előtt."
@@ -2487,11 +2536,12 @@ msgstr "Szombat"
 
 #: ../../../lib/web/src/components/ai-prompts-editor.tsx:156
 #: ../../../lib/web/src/components/attachment-composer.tsx:430
+#: ../../../lib/web/src/components/banner-section.tsx:99
 #: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:231
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:172
 #: ../../../lib/web/src/components/ui/editable-field-row.tsx:126
 #: ../../../lib/web/src/components/ui/secret-field.tsx:79
-#: src/routes/_authenticated/$projectId/index.tsx:143
+#: src/routes/_authenticated/$projectId/index.tsx:144
 msgid "Save"
 msgstr "Mentés"
 
@@ -2535,7 +2585,7 @@ msgstr "Kiindulási pont keresése..."
 msgid "Search for projects..."
 msgstr "Projektek keresése..."
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:337
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:331
 msgid "Search objects..."
 msgstr "Objektumok keresése..."
 
@@ -2673,7 +2723,7 @@ msgstr "Hozzáférés beállítása..."
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx:125
 #: ../../../lib/web/src/components/options-menu.tsx:196
 #: src/routes/_authenticated/$projectId_.settings.tsx:101
-#: src/routes/_authenticated/$projectId/index.tsx:177
+#: src/routes/_authenticated/$projectId/index.tsx:178
 msgid "Settings"
 msgstr "Beállítások"
 
@@ -2748,8 +2798,8 @@ msgstr "Squash és egyesítés"
 msgid "Start the discussion by adding the first comment."
 msgstr "Indítsa el a beszélgetést az első hozzászólás hozzáadásával."
 
-#: src/features/objects/components/object-detail-panel.tsx:448
-#: src/features/objects/components/object-detail-panel.tsx:457
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:471
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:476
 msgid "Stop watching"
 msgstr "Figyelés leállítása"
 
@@ -2879,6 +2929,10 @@ msgstr "Ez az egyesítési kérés egyesítve lett ide: {0}."
 msgid "This merge request is a draft and cannot be merged."
 msgstr "Ez az egyesítési kérés vázlat, és nem egyesíthető."
 
+#: ../../../lib/web/src/components/game/game-end-dialogs.tsx:70
+msgid "This permanently deletes the game and its chat. This cannot be undone."
+msgstr "Ez véglegesen törli a játékot és a hozzá tartozó csevegést. Ez a művelet nem vonható vissza."
+
 #: src/routes/_authenticated/$projectId_.settings.tsx:111
 msgid "This project could not be loaded right now."
 msgstr "Ez a projekt jelenleg nem tölthető be."
@@ -2896,7 +2950,7 @@ msgid "This will permanently delete \"{projectName}\" and all its objects, comme
 msgstr "Ez véglegesen törli a következőt: „{projectName}”, és annak összes objektumát, hozzászólását és mellékletét. Ez a művelet nem vonható vissza."
 
 #. placeholder {0}: project.project.name
-#: src/routes/_authenticated/$projectId/index.tsx:160
+#: src/routes/_authenticated/$projectId/index.tsx:161
 msgid "This will remove \"{0}\" from your sidebar and stop updates for this project."
 msgstr "Ez eltávolítja a következőt: „{0}” az oldalsávjáról, és leállítja a frissítéseket ehhez a projekthez."
 
@@ -3036,27 +3090,26 @@ msgstr "Ismeretlen"
 
 #: ../../../lib/web/src/components/options-menu.tsx:211
 #: src/features/projects/pages/projects-list-page.tsx:39
-#: src/routes/_authenticated/$projectId/index.tsx:158
+#: src/routes/_authenticated/$projectId/index.tsx:159
 msgid "Unsubscribe"
 msgstr "Leiratkozás"
 
-#: src/routes/_authenticated/$projectId/index.tsx:159
+#: src/routes/_authenticated/$projectId/index.tsx:160
 msgid "Unsubscribe from project?"
 msgstr "Leiratkozik a projektről?"
 
 #: src/features/projects/pages/projects-list-page.tsx:42
-#: src/routes/_authenticated/$projectId/index.tsx:162
+#: src/routes/_authenticated/$projectId/index.tsx:163
 msgid "Unsubscribed"
 msgstr "Leiratkozva"
 
 #: src/features/projects/pages/projects-list-page.tsx:41
-#: src/routes/_authenticated/$projectId/index.tsx:161
+#: src/routes/_authenticated/$projectId/index.tsx:162
 msgid "Unsubscribing..."
 msgstr "Leiratkozás..."
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:299
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:103
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:184
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:178
+#: ../../../lib/web/src/lib/entity-title.ts:40
 #: src/features/board/components/board-container.tsx:29
 #: src/features/editor/components/design-preview.tsx:31
 msgid "Untitled"
@@ -3076,7 +3129,7 @@ msgstr "{field} frissítve"
 msgid "Updating access..."
 msgstr "Hozzáférés frissítése..."
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:661
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:655
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:304
 msgid "Upload"
 msgstr "Feltöltés"
@@ -3137,7 +3190,7 @@ msgstr "Videónézegető: {0}"
 msgid "View all notifications"
 msgstr "Összes értesítés megtekintése"
 
-#: src/features/objects/components/object-detail-panel.tsx:426
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:442
 msgid "View and edit item details"
 msgstr "Tétel adatainak megtekintése és szerkesztése"
 
@@ -3149,7 +3202,7 @@ msgstr "Vezérlők megtekintése"
 msgid "View only"
 msgstr "Csak megtekintés"
 
-#: src/routes/_authenticated/$projectId/index.tsx:138
+#: src/routes/_authenticated/$projectId/index.tsx:139
 msgid "View options"
 msgstr "Megtekintési beállítások"
 
@@ -3161,8 +3214,8 @@ msgstr "Megtekintések"
 msgid "Voice recording is not supported in this browser"
 msgstr "A hangfelvétel nem támogatott ebben a böngészőben"
 
-#: src/features/objects/components/object-detail-panel.tsx:448
-#: src/features/objects/components/object-detail-panel.tsx:457
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:471
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:476
 msgid "Watch"
 msgstr "Figyelés"
 
@@ -3192,7 +3245,7 @@ msgstr "Szerda"
 msgid "You do not have access to this section."
 msgstr "Nincs hozzáférése ehhez a részhez."
 
-#: src/routes/_authenticated/$projectId/index.tsx:52
+#: src/routes/_authenticated/$projectId/index.tsx:53
 msgid "You don't have access to this project."
 msgstr "Nincs hozzáférésed ehhez a projekthez."
 

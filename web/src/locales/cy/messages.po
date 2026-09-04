@@ -179,7 +179,7 @@ msgstr "Mynediad wedi'i osod ar gyfer {subjectName}"
 msgid "Account type"
 msgstr "Math o gyfrif"
 
-#: src/features/objects/components/object-detail-panel.tsx:407
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:415
 msgid "Activity"
 msgstr "Gweithgaredd"
 
@@ -224,7 +224,7 @@ msgstr "Ychwanegu eitem rhestr wirio"
 msgid "Add class"
 msgstr "Ychwanegu dosbarth"
 
-#: src/routes/_authenticated/$projectId/index.tsx:139
+#: src/routes/_authenticated/$projectId/index.tsx:140
 msgid "Add column"
 msgstr "Ychwanegu colofn"
 
@@ -238,7 +238,7 @@ msgstr "Ychwanegu maes"
 msgid "Add item..."
 msgstr "Ychwanegu eitem..."
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:320
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:314
 msgid "Add link"
 msgstr "Ychwanegu dolen"
 
@@ -329,7 +329,7 @@ msgstr "Bydd unrhyw beth sydd wedi tanysgrifio i'r porthiant hwn yn peidio â'i 
 msgid "Are you sure you want to delete \"{0}\"?"
 msgstr "Ydych chi'n siŵr eich bod am ddileu \"{0}\"?"
 
-#: src/features/objects/components/object-detail-panel.tsx:653
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:671
 msgid "Are you sure you want to delete \"{title}\"? This action cannot be undone."
 msgstr "Ydych chi'n siŵr eich bod am ddileu \"{title}\"? Ni ellir dadwneud y weithred hon."
 
@@ -348,6 +348,14 @@ msgstr "Ydych chi'n siŵr eich bod am ddileu'r cais cyfuno hwn?"
 #: ../../../lib/web/src/components/sign-out-dialog.tsx:27
 msgid "Are you sure you want to log out? You will need to log in again to access your account."
 msgstr "Ydych chi'n siŵr eich bod am allgofnodi? Bydd angen i chi fewngofnodi eto i gael at eich cyfrif."
+
+#: ../../../lib/web/src/components/game/game-end-dialogs.tsx:39
+msgid "Are you sure you want to resign?"
+msgstr "Ydych chi'n siŵr eich bod am ymddiswyddo?"
+
+#: ../../../lib/web/src/components/game/game-end-dialogs.tsx:38
+msgid "Are you sure you want to resign? {opponentName} will win the game."
+msgstr "Ydych chi'n siŵr eich bod am ymddiswyddo? Bydd {opponentName} yn ennill y gêm."
 
 #: src/features/projects/pages/projects-list-page.tsx:40
 msgid "Are you sure you want to unsubscribe from this project?"
@@ -402,20 +410,29 @@ msgid "Back to project"
 msgstr "Yn ôl i'r prosiect"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:64
-#: src/routes/_authenticated/$projectId/index.tsx:84
+#: src/routes/_authenticated/$projectId/index.tsx:85
 msgid "Back to projects"
 msgstr "Yn ôl i'r prosiectau"
 
+#: ../../../lib/web/src/components/banner-section.tsx:80
 #: ../../../lib/web/src/components/entity-banner.tsx:17
 msgid "Banner"
 msgstr "Baner"
+
+#: ../../../lib/web/src/components/banner-section.tsx:69
+msgid "Banner removed"
+msgstr "Baner wedi'i thynnu"
+
+#: ../../../lib/web/src/components/banner-section.tsx:69
+msgid "Banner updated"
+msgstr "Baner wedi'i diweddaru"
 
 #: src/features/requests/components/diff-viewer.tsx:448
 msgid "Binary file not shown"
 msgstr "Ni ddangosir y ffeil ddeuaidd"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:68
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:215
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:72
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:209
 msgid "Blocked by"
 msgstr "Wedi'i flocio gan"
 
@@ -424,7 +441,7 @@ msgstr "Wedi'i flocio gan"
 msgid "Blocked navigation to untrusted link"
 msgstr "Llywio at ddolen heb ymddiriedaeth wedi'i blocio"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:66
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:70
 msgid "Blocks"
 msgstr "Blociau"
 
@@ -477,7 +494,7 @@ msgstr "Gall fod yn blentyn i"
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:91
 #: src/features/projects/components/create-project-dialog.tsx:453
 #: src/routes/_authenticated/$projectId/design.tsx:61
-#: src/routes/_authenticated/$projectId/index.tsx:142
+#: src/routes/_authenticated/$projectId/index.tsx:143
 msgid "Cancel"
 msgstr "Canslo"
 
@@ -550,6 +567,7 @@ msgstr "Dewiswch iaith"
 msgid "Classes"
 msgstr "Dosbarthiadau"
 
+#: ../../../lib/web/src/components/banner-section.tsx:111
 #: ../../../lib/web/src/components/colour-picker.tsx:274
 #: ../../../lib/web/src/components/colour-picker.tsx:355
 #: ../../../lib/web/src/components/travelling-picker.tsx:145
@@ -567,8 +585,8 @@ msgstr "Clirio popeth"
 msgid "Clear search"
 msgstr "Clirio chwiliad"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:523
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:528
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:517
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:522
 #: ../../../lib/web/src/components/ui/dialog.tsx:78
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:480
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:483
@@ -650,7 +668,7 @@ msgid "Comments"
 msgstr "Sylwadau"
 
 #. placeholder {0}: data.comment_count || 0
-#: src/features/objects/components/object-detail-panel.tsx:393
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:411
 msgid "Comments ({0})"
 msgstr "Sylwadau ({0})"
 
@@ -759,8 +777,8 @@ msgstr "Methwyd dilysu gyda'r cyfrif hwnnw. Rhowch gynnig arall arni."
 
 #: ../../../lib/web/src/components/entity/entity-board-column.tsx:551
 #: ../../../lib/web/src/components/entity/entity-board-column.tsx:691
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:513
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:682
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:507
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:676
 #: ../../../lib/web/src/components/entity/entity-tree-view.tsx:672
 msgid "Create"
 msgstr "Creu"
@@ -809,7 +827,7 @@ msgstr "Crëwyd {field}"
 msgid "Creating project..."
 msgstr "Yn creu prosiect..."
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:682
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:676
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:260
 #: src/features/projects/components/create-project-dialog.tsx:457
 #: src/features/projects/components/create-project-dialog.tsx:549
@@ -870,7 +888,8 @@ msgstr "Trefnu diofyn"
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:208
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:255
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:317
-#: src/features/objects/components/object-detail-panel.tsx:654
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:672
+#: ../../../lib/web/src/components/game/game-end-dialogs.tsx:78
 #: src/features/requests/components/request-panel.tsx:142
 #: src/routes/_authenticated/$projectId_.settings.tsx:122
 msgid "Delete"
@@ -896,9 +915,13 @@ msgstr "Dileu sylw"
 msgid "Delete field"
 msgstr "Dileu maes"
 
-#: src/features/objects/components/object-detail-panel.tsx:467
-#: src/features/objects/components/object-detail-panel.tsx:472
-#: src/features/objects/components/object-detail-panel.tsx:652
+#: ../../../lib/web/src/components/game/game-end-dialogs.tsx:69
+msgid "Delete game?"
+msgstr "Dileu'r gêm?"
+
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:486
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:491
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:670
 msgid "Delete item"
 msgstr "Dileu eitem"
 
@@ -951,6 +974,10 @@ msgstr "Dilëwyd {field}"
 msgid "Deleting project..."
 msgstr "Yn dileu prosiect..."
 
+#: ../../../lib/web/src/components/game/game-end-dialogs.tsx:75
+msgid "Deleting..."
+msgstr "Yn dileu..."
+
 #: ../../../lib/web/src/components/ui/sort-direction-button.tsx:27
 msgid "Descending"
 msgstr "Disgynnol"
@@ -963,7 +990,7 @@ msgstr "Disgrifiad"
 
 #: src/routes/_authenticated/$projectId/design.tsx:43
 #: src/routes/_authenticated/$projectId/design.tsx:46
-#: src/routes/_authenticated/$projectId/index.tsx:169
+#: src/routes/_authenticated/$projectId/index.tsx:170
 msgid "Design"
 msgstr "Dyluniad"
 
@@ -1021,7 +1048,7 @@ msgstr "Wedi datgysylltu"
 msgid "Dismiss"
 msgstr "Diystyru"
 
-#: src/routes/_authenticated/$projectId/index.tsx:145
+#: src/routes/_authenticated/$projectId/index.tsx:146
 msgid "Dismiss board hint"
 msgstr "Diystyru awgrym bwrdd"
 
@@ -1034,13 +1061,13 @@ msgid "Does not match the required pattern"
 msgstr "Nid yw'n cyfateb i'r patrwm gofynnol"
 
 #: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:309
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:495
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:523
 #: src/features/editor/components/edit-dialogs.tsx:439
-#: src/features/objects/components/object-detail-panel.tsx:481
 msgid "Done"
 msgstr "Wedi gorffen"
 
-#: src/routes/_authenticated/$projectId/index.tsx:144
+#: src/routes/_authenticated/$projectId/index.tsx:145
 msgid "Double click on a column to add content"
 msgstr "Cliciwch ddwywaith ar golofn i ychwanegu cynnwys"
 
@@ -1060,7 +1087,7 @@ msgid "Download failed"
 msgstr "Methwyd â lawrlwytho"
 
 #: src/routes/_authenticated/$projectId/design.tsx:52
-#: src/routes/_authenticated/$projectId/index.tsx:148
+#: src/routes/_authenticated/$projectId/index.tsx:149
 msgid "Downloaded {filename}"
 msgstr "Lawrlwythwyd {filename}"
 
@@ -1069,11 +1096,11 @@ msgstr "Lawrlwythwyd {filename}"
 msgid "Draft"
 msgstr "Drafft"
 
-#: src/routes/_authenticated/$projectId/index.tsx:141
+#: src/routes/_authenticated/$projectId/index.tsx:142
 msgid "Drag columns to re-order them"
 msgstr "Llusgwch golofnau i'w hailosod"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:67
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:71
 msgid "Duplicates"
 msgstr "Dyblygion"
 
@@ -1132,6 +1159,10 @@ msgstr "E-bost"
 msgid "Email code"
 msgstr "Cod e-bost"
 
+#: ../../../lib/web/src/components/banner-section.tsx:88
+msgid "Enter banner text (markdown supported)..."
+msgstr "Rhowch destun y faner (cefnogir markdown)..."
+
 #: ../../../lib/web/src/components/step-up-dialog.tsx:290
 msgid "Enter the code from your email"
 msgstr "Rhowch y cod o'ch e-bost"
@@ -1144,7 +1175,7 @@ msgstr "Rhowch god eich ap dilysu"
 msgid "Entity ID"
 msgstr "ID endid"
 
-#: src/features/objects/components/object-detail-panel.tsx:344
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:381
 msgid "Error"
 msgstr "Gwall"
 
@@ -1159,7 +1190,7 @@ msgstr "Ehangu"
 msgid "Expand sidebar"
 msgstr "Ehangu'r bar ochr"
 
-#: src/routes/_authenticated/$projectId/index.tsx:146
+#: src/routes/_authenticated/$projectId/index.tsx:147
 msgid "Export data"
 msgstr "Allforio data"
 
@@ -1179,7 +1210,7 @@ msgstr "Ychwanegol o fawr"
 msgid "Failed to add account"
 msgstr "Methwyd ychwanegu cyfrif"
 
-#: src/routes/_authenticated/$projectId/index.tsx:154
+#: src/routes/_authenticated/$projectId/index.tsx:155
 msgid "Failed to add column"
 msgstr "Methwyd ychwanegu colofn"
 
@@ -1201,9 +1232,9 @@ msgstr "Methwyd creu dosbarth"
 msgid "Failed to create field"
 msgstr "Methwyd creu maes"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:137
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:131
 #: ../../../lib/web/src/components/options-menu.tsx:98
-#: src/routes/_authenticated/$projectId/index.tsx:152
+#: src/routes/_authenticated/$projectId/index.tsx:153
 msgid "Failed to create link"
 msgstr "Methwyd creu dolen"
 
@@ -1224,7 +1255,7 @@ msgstr "Methwyd creu prosiect"
 msgid "Failed to create view"
 msgstr "Methwyd creu golwg"
 
-#: src/features/objects/components/object-detail-panel.tsx:235
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:303
 msgid "Failed to delete"
 msgstr "Methwyd dileu"
 
@@ -1236,7 +1267,7 @@ msgstr "Methwyd dileu'r atodiad"
 msgid "Failed to delete class"
 msgstr "Methwyd dileu'r dosbarth"
 
-#: src/routes/_authenticated/$projectId/index.tsx:156
+#: src/routes/_authenticated/$projectId/index.tsx:157
 msgid "Failed to delete column"
 msgstr "Methwyd dileu colofn"
 
@@ -1248,7 +1279,7 @@ msgstr "Methwyd dileu'r sylw"
 msgid "Failed to delete field"
 msgstr "Methwyd dileu'r maes"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:159
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:153
 msgid "Failed to delete link"
 msgstr "Methwyd dileu'r ddolen"
 
@@ -1268,7 +1299,7 @@ msgstr "Methwyd dileu'r prosiect"
 msgid "Failed to delete view"
 msgstr "Methwyd dileu'r olwg"
 
-#: src/routes/_authenticated/$projectId/index.tsx:149
+#: src/routes/_authenticated/$projectId/index.tsx:150
 msgid "Failed to export data"
 msgstr "Methwyd ag allforio'r data"
 
@@ -1301,15 +1332,15 @@ msgstr "Methwyd llwytho hanes"
 msgid "Failed to load image"
 msgstr "Methwyd llwytho'r ddelwedd"
 
-#: src/features/objects/components/object-detail-panel.tsx:345
-#: src/features/objects/components/object-detail-panel.tsx:348
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:382
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:385
 msgid "Failed to load item"
 msgstr "Methwyd llwytho'r eitem"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:41
 #: src/routes/_authenticated/$projectId/$objectId.tsx:65
-#: src/routes/_authenticated/$projectId/index.tsx:61
-#: src/routes/_authenticated/$projectId/index.tsx:85
+#: src/routes/_authenticated/$projectId/index.tsx:62
+#: src/routes/_authenticated/$projectId/index.tsx:86
 msgid "Failed to load project"
 msgstr "Methwyd llwytho'r prosiect"
 
@@ -1337,8 +1368,8 @@ msgstr "Methwyd llwytho'r fideo"
 msgid "Failed to merge"
 msgstr "Methwyd cyfuno"
 
-#: src/features/objects/components/object-detail-panel.tsx:255
-#: src/routes/_authenticated/$projectId/index.tsx:153
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:317
+#: src/routes/_authenticated/$projectId/index.tsx:154
 msgid "Failed to move"
 msgstr "Methwyd symud"
 
@@ -1346,7 +1377,7 @@ msgstr "Methwyd symud"
 msgid "Failed to post comment"
 msgstr "Methwyd postio sylw"
 
-#: src/routes/_authenticated/$projectId/index.tsx:157
+#: src/routes/_authenticated/$projectId/index.tsx:158
 msgid "Failed to re-order columns"
 msgstr "Methwyd aildrefnu'r colofnau"
 
@@ -1359,7 +1390,7 @@ msgstr "Methwyd darllen y ffeil"
 msgid "Failed to remove access"
 msgstr "Methwyd dileu mynediad"
 
-#: src/routes/_authenticated/$projectId/index.tsx:155
+#: src/routes/_authenticated/$projectId/index.tsx:156
 msgid "Failed to rename column"
 msgstr "Methwyd ailenwi colofn"
 
@@ -1379,7 +1410,7 @@ msgstr "Methwyd ailosod yr anogiad"
 msgid "Failed to revoke RSS access"
 msgstr "Methwyd â dirymu mynediad RSS"
 
-#: src/features/objects/components/object-detail-panel.tsx:199
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:273
 msgid "Failed to save"
 msgstr "Methwyd cadw"
 
@@ -1402,13 +1433,17 @@ msgid "Failed to subscribe"
 msgstr "Methwyd tanysgrifio"
 
 #: src/features/projects/pages/projects-list-page.tsx:43
-#: src/routes/_authenticated/$projectId/index.tsx:163
+#: src/routes/_authenticated/$projectId/index.tsx:164
 msgid "Failed to unsubscribe"
 msgstr "Methwyd dad-danysgrifio"
 
 #: src/routes/_authenticated/$projectId_.settings.tsx:142
 msgid "Failed to update access level"
 msgstr "Methwyd diweddaru lefel mynediad"
+
+#: ../../../lib/web/src/components/banner-section.tsx:71
+msgid "Failed to update banner"
+msgstr "Methwyd diweddaru'r faner"
 
 #: src/features/editor/components/design-editor.tsx:122
 msgid "Failed to update class"
@@ -1442,7 +1477,7 @@ msgstr "Methwyd diweddaru'r prosiect"
 msgid "Failed to update view"
 msgstr "Methwyd diweddaru'r golwg"
 
-#: src/features/objects/components/object-detail-panel.tsx:218
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:288
 msgid "Failed to update watching"
 msgstr "Methwyd diweddaru gwylio"
 
@@ -1454,7 +1489,7 @@ msgstr "Methwyd llwytho'r atodiad"
 msgid "Fields"
 msgstr "Meysydd"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:611
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:605
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:160
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:180
 msgid "Files"
@@ -1603,7 +1638,7 @@ msgstr "Ffeil JSON annilys"
 msgid "It seems like the page you're looking for <0/>does not exist or might have been removed."
 msgstr "Mae'n ymddangos nad yw'r dudalen rydych yn chwilio amdani <0/>yn bodoli neu ei bod wedi'i thynnu."
 
-#: src/features/objects/components/object-detail-panel.tsx:425
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:441
 msgid "Item details"
 msgstr "Manylion yr eitem"
 
@@ -1633,11 +1668,11 @@ msgid "Light"
 msgstr "Golau"
 
 #: ../../../lib/web/src/components/options-menu.tsx:190
-#: src/routes/_authenticated/$projectId/index.tsx:150
+#: src/routes/_authenticated/$projectId/index.tsx:151
 msgid "Link"
 msgstr "Dolen"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:279
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:273
 msgid "Links"
 msgstr "Dolenni"
 
@@ -1657,11 +1692,11 @@ msgstr "Yn llwytho cynnwys…"
 msgid "Loading diff..."
 msgstr "Yn llwytho diff..."
 
-#: src/features/objects/components/object-detail-panel.tsx:325
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:365
 msgid "Loading item"
 msgstr "Yn llwytho eitem"
 
-#: src/features/objects/components/object-detail-panel.tsx:326
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:366
 msgid "Loading item details"
 msgstr "Yn llwytho manylion yr eitem"
 
@@ -1671,7 +1706,7 @@ msgstr "Yn llwytho templedi..."
 
 #: ../../../lib/web/src/components/ui/load-more.tsx:39
 #: ../../../lib/web/src/features/document/document-page.tsx:88
-#: src/routes/_authenticated/$projectId/index.tsx:147
+#: src/routes/_authenticated/$projectId/index.tsx:148
 msgid "Loading..."
 msgstr "Yn llwytho..."
 
@@ -1741,7 +1776,7 @@ msgstr "Cyfuno ymrwymiad"
 msgid "Merge requests"
 msgstr "Ceisiadau cyfuno"
 
-#: src/features/objects/components/object-detail-panel.tsx:400
+#: src/routes/_authenticated/$projectId/index.tsx:212
 msgid "Merge requests ({requestCount})"
 msgstr "Ceisiadau cyfuno ({requestCount})"
 
@@ -1837,14 +1872,14 @@ msgstr "Rhaid i'r enw fod yn 1000 o nodau neu lai"
 msgid "Network error"
 msgstr "Gwall rhwydwaith"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:498
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:492
 #: ../../../lib/web/src/components/ui/sort-selector.tsx:43
-#: src/routes/_authenticated/$projectId/index.tsx:129
-#: src/routes/_authenticated/$projectId/index.tsx:133
+#: src/routes/_authenticated/$projectId/index.tsx:130
+#: src/routes/_authenticated/$projectId/index.tsx:134
 msgid "New"
 msgstr "Newydd"
 
-#: src/routes/_authenticated/$projectId/index.tsx:135
+#: src/routes/_authenticated/$projectId/index.tsx:136
 msgid "New {className}"
 msgstr "{className} newydd"
 
@@ -1862,7 +1897,7 @@ msgstr "Nesaf"
 msgid "Next image"
 msgstr "Delwedd nesaf"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:577
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:571
 msgid "No {parentClassNames} to add to"
 msgstr "Dim {parentClassNames} i ychwanegu atynt"
 
@@ -1910,11 +1945,11 @@ msgstr "Dim gemau eto"
 msgid "No groups available"
 msgstr "Dim grwpiau ar gael"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:544
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:538
 msgid "No item types can be created yet. Create the required parent items first."
 msgstr "Ni ellir creu unrhyw fathau o eitemau eto. Crëwch yr eitemau rhiant gofynnol yn gyntaf."
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:360
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:354
 msgid "No matching objects"
 msgstr "Dim gwrthrychau cyfatebol"
 
@@ -1976,9 +2011,13 @@ msgid "No views"
 msgstr "Dim golygiadau"
 
 #: ../../../lib/web/src/components/colour-picker.tsx:349
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:560
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:563
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:567
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:554
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:557
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:561
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:557
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:570
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:571
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:575
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:362
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:385
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:388
@@ -1990,9 +2029,6 @@ msgstr "Dim golygiadau"
 #: ../../../lib/web/src/lib/preference-utils.ts:100
 #: src/features/editor/components/edit-dialogs.tsx:296
 #: src/features/editor/components/edit-dialogs.tsx:299
-#: src/features/objects/components/object-detail-panel.tsx:547
-#: src/features/objects/components/object-detail-panel.tsx:560
-#: src/features/objects/components/object-detail-panel.tsx:565
 msgid "None"
 msgstr "Dim"
 
@@ -2083,7 +2119,7 @@ msgstr "Agor llywio"
 msgid "Open option actions"
 msgstr "Agor camau gweithredu opsiwn"
 
-#: src/routes/_authenticated/$projectId/index.tsx:128
+#: src/routes/_authenticated/$projectId/index.tsx:129
 msgid "Open page actions"
 msgstr "Agor camau gweithredu tudalen"
 
@@ -2119,8 +2155,9 @@ msgstr "Arall"
 msgid "Owner"
 msgstr "Perchennog"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:552
-#: src/features/objects/components/object-detail-panel.tsx:543
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:546
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:553
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:569
 msgid "Parent"
 msgstr "Rhiant"
 
@@ -2149,7 +2186,7 @@ msgstr "Patrwm (regex)"
 msgid "People"
 msgstr "Pobl"
 
-#: src/routes/_authenticated/$projectId/index.tsx:137
+#: src/routes/_authenticated/$projectId/index.tsx:138
 msgid "Please add one or more classes to the project design."
 msgstr "Ychwanegwch un neu fwy o ddosbarthiadau at ddyluniad y prosiect."
 
@@ -2207,7 +2244,7 @@ msgid "Processing…"
 msgstr "Wrthi'n prosesu…"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:62
-#: src/routes/_authenticated/$projectId/index.tsx:82
+#: src/routes/_authenticated/$projectId/index.tsx:83
 msgid "Project"
 msgstr "Prosiect"
 
@@ -2223,7 +2260,7 @@ msgstr "Prosiect wedi'i greu"
 msgid "Project deleted"
 msgstr "Prosiect wedi'i ddileu"
 
-#: src/routes/_authenticated/$projectId/index.tsx:151
+#: src/routes/_authenticated/$projectId/index.tsx:152
 msgid "Project link"
 msgstr "Dolen y prosiect"
 
@@ -2256,7 +2293,7 @@ msgstr "Prosiectau"
 msgid "Prompt saved"
 msgstr "Anogiad wedi'i gadw"
 
-#: src/features/objects/components/object-detail-panel.tsx:388
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:408
 msgid "Properties"
 msgstr "Priodweddau"
 
@@ -2272,7 +2309,7 @@ msgstr "Wedi codi"
 msgid "Re-link your accounts on this server"
 msgstr "Ail-gysylltwch eich cyfrifon ar y gweinydd hwn"
 
-#: src/routes/_authenticated/$projectId/index.tsx:140
+#: src/routes/_authenticated/$projectId/index.tsx:141
 msgid "Re-order columns"
 msgstr "Aildrefnu colofnau"
 
@@ -2317,7 +2354,7 @@ msgstr "Yn ailgyfeirio i'r mewngofnodi."
 msgid "Reduce interest"
 msgstr "Lleihau diddordeb"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:65
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:69
 msgid "Relates"
 msgstr "Yn ymwneud"
 
@@ -2380,8 +2417,8 @@ msgstr "Tynnu diddordeb"
 msgid "Remove item"
 msgstr "Tynnu eitem"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:304
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:309
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:298
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:303
 msgid "Remove link"
 msgstr "Tynnu dolen"
 
@@ -2436,6 +2473,18 @@ msgstr "Gofynnol"
 msgid "Resend email"
 msgstr "Ailanfon yr e-bost"
 
+#: ../../../lib/web/src/components/game/game-end-dialogs.tsx:48
+msgid "Resign"
+msgstr "Ymddiswyddo"
+
+#: ../../../lib/web/src/components/game/game-end-dialogs.tsx:35
+msgid "Resign game?"
+msgstr "Ymddiswyddo o'r gêm?"
+
+#: ../../../lib/web/src/components/game/game-end-dialogs.tsx:45
+msgid "Resigning..."
+msgstr "Yn ymddiswyddo..."
+
 #: src/features/requests/components/conflict-list.tsx:40
 msgid "Resolve these conflicts manually before merging."
 msgstr "Datryswch yr anghydfodau hyn â llaw cyn cyfuno."
@@ -2487,11 +2536,12 @@ msgstr "Dydd Sadwrn"
 
 #: ../../../lib/web/src/components/ai-prompts-editor.tsx:156
 #: ../../../lib/web/src/components/attachment-composer.tsx:430
+#: ../../../lib/web/src/components/banner-section.tsx:99
 #: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:231
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:172
 #: ../../../lib/web/src/components/ui/editable-field-row.tsx:126
 #: ../../../lib/web/src/components/ui/secret-field.tsx:79
-#: src/routes/_authenticated/$projectId/index.tsx:143
+#: src/routes/_authenticated/$projectId/index.tsx:144
 msgid "Save"
 msgstr "Cadw"
 
@@ -2535,7 +2585,7 @@ msgstr "Chwilio am darddiad..."
 msgid "Search for projects..."
 msgstr "Chwilio am brosiectau..."
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:337
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:331
 msgid "Search objects..."
 msgstr "Chwilio gwrthrychau..."
 
@@ -2673,7 +2723,7 @@ msgstr "Yn gosod mynediad..."
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx:125
 #: ../../../lib/web/src/components/options-menu.tsx:196
 #: src/routes/_authenticated/$projectId_.settings.tsx:101
-#: src/routes/_authenticated/$projectId/index.tsx:177
+#: src/routes/_authenticated/$projectId/index.tsx:178
 msgid "Settings"
 msgstr "Gosodiadau"
 
@@ -2748,8 +2798,8 @@ msgstr "Gwasgu ac uno"
 msgid "Start the discussion by adding the first comment."
 msgstr "Cychwynnwch y drafodaeth drwy ychwanegu'r sylw cyntaf."
 
-#: src/features/objects/components/object-detail-panel.tsx:448
-#: src/features/objects/components/object-detail-panel.tsx:457
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:471
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:476
 msgid "Stop watching"
 msgstr "Stopio gwylio"
 
@@ -2879,6 +2929,10 @@ msgstr "Mae'r cais uno hwn wedi'i uno i mewn i {0}."
 msgid "This merge request is a draft and cannot be merged."
 msgstr "Mae'r cais uno hwn yn ddrafft ac ni ellir ei uno."
 
+#: ../../../lib/web/src/components/game/game-end-dialogs.tsx:70
+msgid "This permanently deletes the game and its chat. This cannot be undone."
+msgstr "Bydd hyn yn dileu'r gêm a'i sgwrs yn barhaol. Ni ellir dadwneud hyn."
+
 #: src/routes/_authenticated/$projectId_.settings.tsx:111
 msgid "This project could not be loaded right now."
 msgstr "Ni ellid llwytho'r prosiect hwn ar hyn o bryd."
@@ -2896,7 +2950,7 @@ msgid "This will permanently delete \"{projectName}\" and all its objects, comme
 msgstr "Bydd hyn yn dileu \"{projectName}\" a'i holl wrthrychau, sylwadau ac atodiadau yn barhaol. Ni ellir dadwneud y weithred hon."
 
 #. placeholder {0}: project.project.name
-#: src/routes/_authenticated/$projectId/index.tsx:160
+#: src/routes/_authenticated/$projectId/index.tsx:161
 msgid "This will remove \"{0}\" from your sidebar and stop updates for this project."
 msgstr "Bydd hyn yn tynnu \"{0}\" o'ch bar ochr ac yn stopio diweddariadau ar gyfer y prosiect hwn."
 
@@ -3036,27 +3090,26 @@ msgstr "Anhysbys"
 
 #: ../../../lib/web/src/components/options-menu.tsx:211
 #: src/features/projects/pages/projects-list-page.tsx:39
-#: src/routes/_authenticated/$projectId/index.tsx:158
+#: src/routes/_authenticated/$projectId/index.tsx:159
 msgid "Unsubscribe"
 msgstr "Dad-danysgrifio"
 
-#: src/routes/_authenticated/$projectId/index.tsx:159
+#: src/routes/_authenticated/$projectId/index.tsx:160
 msgid "Unsubscribe from project?"
 msgstr "Dad-danysgrifio o brosiect?"
 
 #: src/features/projects/pages/projects-list-page.tsx:42
-#: src/routes/_authenticated/$projectId/index.tsx:162
+#: src/routes/_authenticated/$projectId/index.tsx:163
 msgid "Unsubscribed"
 msgstr "Wedi dad-danysgrifio"
 
 #: src/features/projects/pages/projects-list-page.tsx:41
-#: src/routes/_authenticated/$projectId/index.tsx:161
+#: src/routes/_authenticated/$projectId/index.tsx:162
 msgid "Unsubscribing..."
 msgstr "Yn dad-danysgrifio..."
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:299
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:103
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:184
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:178
+#: ../../../lib/web/src/lib/entity-title.ts:40
 #: src/features/board/components/board-container.tsx:29
 #: src/features/editor/components/design-preview.tsx:31
 msgid "Untitled"
@@ -3076,7 +3129,7 @@ msgstr "Diweddarwyd {field}"
 msgid "Updating access..."
 msgstr "Yn diweddaru mynediad..."
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:661
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:655
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:304
 msgid "Upload"
 msgstr "Llwytho i fyny"
@@ -3137,7 +3190,7 @@ msgstr "Gwyliwr fideo: {0}"
 msgid "View all notifications"
 msgstr "Gweld pob hysbysiad"
 
-#: src/features/objects/components/object-detail-panel.tsx:426
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:442
 msgid "View and edit item details"
 msgstr "Gweld a golygu manylion eitem"
 
@@ -3149,7 +3202,7 @@ msgstr "Rheolaethau golwg"
 msgid "View only"
 msgstr "Gweld yn unig"
 
-#: src/routes/_authenticated/$projectId/index.tsx:138
+#: src/routes/_authenticated/$projectId/index.tsx:139
 msgid "View options"
 msgstr "Opsiynau golwg"
 
@@ -3161,8 +3214,8 @@ msgstr "Golygfeydd"
 msgid "Voice recording is not supported in this browser"
 msgstr "Nid yw recordio llais yn cael ei gefnogi yn y porwr hwn"
 
-#: src/features/objects/components/object-detail-panel.tsx:448
-#: src/features/objects/components/object-detail-panel.tsx:457
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:471
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:476
 msgid "Watch"
 msgstr "Gwylio"
 
@@ -3192,7 +3245,7 @@ msgstr "Dydd Mercher"
 msgid "You do not have access to this section."
 msgstr "Nid oes gennych fynediad i'r adran hon."
 
-#: src/routes/_authenticated/$projectId/index.tsx:52
+#: src/routes/_authenticated/$projectId/index.tsx:53
 msgid "You don't have access to this project."
 msgstr "Nid oes gennych fynediad i'r prosiect hwn."
 

@@ -179,7 +179,7 @@ msgstr "تم تعيين الوصول لـ {subjectName}"
 msgid "Account type"
 msgstr "نوع الحساب"
 
-#: src/features/objects/components/object-detail-panel.tsx:407
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:415
 msgid "Activity"
 msgstr "النشاط"
 
@@ -224,7 +224,7 @@ msgstr "إضافة عنصر إلى قائمة المهام"
 msgid "Add class"
 msgstr "إضافة فئة"
 
-#: src/routes/_authenticated/$projectId/index.tsx:139
+#: src/routes/_authenticated/$projectId/index.tsx:140
 msgid "Add column"
 msgstr "إضافة عمود"
 
@@ -238,7 +238,7 @@ msgstr "إضافة حقل"
 msgid "Add item..."
 msgstr "إضافة عنصر..."
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:320
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:314
 msgid "Add link"
 msgstr "إضافة رابط"
 
@@ -329,7 +329,7 @@ msgstr "سيتوقف أي شيء مشترك في هذه التغذية عن تل
 msgid "Are you sure you want to delete \"{0}\"?"
 msgstr "هل أنت متأكد من حذف \"{0}\"؟"
 
-#: src/features/objects/components/object-detail-panel.tsx:653
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:671
 msgid "Are you sure you want to delete \"{title}\"? This action cannot be undone."
 msgstr "هل أنت متأكد من حذف \"{title}\"؟ لا يمكن التراجع عن هذا الإجراء."
 
@@ -348,6 +348,14 @@ msgstr "هل أنت متأكد من حذف طلب الدمج هذا؟"
 #: ../../../lib/web/src/components/sign-out-dialog.tsx:27
 msgid "Are you sure you want to log out? You will need to log in again to access your account."
 msgstr "هل أنت متأكد من تسجيل الخروج؟ ستحتاج إلى تسجيل الدخول مرة أخرى للوصول إلى حسابك."
+
+#: ../../../lib/web/src/components/game/game-end-dialogs.tsx:39
+msgid "Are you sure you want to resign?"
+msgstr "هل أنت متأكد من رغبتك في الانسحاب؟"
+
+#: ../../../lib/web/src/components/game/game-end-dialogs.tsx:38
+msgid "Are you sure you want to resign? {opponentName} will win the game."
+msgstr "هل أنت متأكد أنك تريد الاستسلام؟ سيفوز {opponentName} باللعبة."
 
 #: src/features/projects/pages/projects-list-page.tsx:40
 msgid "Are you sure you want to unsubscribe from this project?"
@@ -402,20 +410,29 @@ msgid "Back to project"
 msgstr "العودة إلى المشروع"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:64
-#: src/routes/_authenticated/$projectId/index.tsx:84
+#: src/routes/_authenticated/$projectId/index.tsx:85
 msgid "Back to projects"
 msgstr "العودة إلى المشاريع"
 
+#: ../../../lib/web/src/components/banner-section.tsx:80
 #: ../../../lib/web/src/components/entity-banner.tsx:17
 msgid "Banner"
 msgstr "اللافتة"
+
+#: ../../../lib/web/src/components/banner-section.tsx:69
+msgid "Banner removed"
+msgstr "تمت إزالة البانر"
+
+#: ../../../lib/web/src/components/banner-section.tsx:69
+msgid "Banner updated"
+msgstr "تم تحديث البانر"
 
 #: src/features/requests/components/diff-viewer.tsx:448
 msgid "Binary file not shown"
 msgstr "الملف الثنائي غير معروض"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:68
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:215
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:72
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:209
 msgid "Blocked by"
 msgstr "محظور بواسطة"
 
@@ -424,7 +441,7 @@ msgstr "محظور بواسطة"
 msgid "Blocked navigation to untrusted link"
 msgstr "تم حظر الانتقال إلى رابط غير موثوق"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:66
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:70
 msgid "Blocks"
 msgstr "يحظر"
 
@@ -477,7 +494,7 @@ msgstr "يمكن أن يكون فرعًا من"
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:91
 #: src/features/projects/components/create-project-dialog.tsx:453
 #: src/routes/_authenticated/$projectId/design.tsx:61
-#: src/routes/_authenticated/$projectId/index.tsx:142
+#: src/routes/_authenticated/$projectId/index.tsx:143
 msgid "Cancel"
 msgstr "إلغاء"
 
@@ -550,6 +567,7 @@ msgstr "اختر اللغة"
 msgid "Classes"
 msgstr "الفئات"
 
+#: ../../../lib/web/src/components/banner-section.tsx:111
 #: ../../../lib/web/src/components/colour-picker.tsx:274
 #: ../../../lib/web/src/components/colour-picker.tsx:355
 #: ../../../lib/web/src/components/travelling-picker.tsx:145
@@ -567,8 +585,8 @@ msgstr "مسح الكل"
 msgid "Clear search"
 msgstr "مسح البحث"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:523
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:528
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:517
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:522
 #: ../../../lib/web/src/components/ui/dialog.tsx:78
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:480
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:483
@@ -650,7 +668,7 @@ msgid "Comments"
 msgstr "التعليقات"
 
 #. placeholder {0}: data.comment_count || 0
-#: src/features/objects/components/object-detail-panel.tsx:393
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:411
 msgid "Comments ({0})"
 msgstr "التعليقات ({0})"
 
@@ -759,8 +777,8 @@ msgstr "تعذّر التحقق باستخدام هذا الحساب. يرجى �
 
 #: ../../../lib/web/src/components/entity/entity-board-column.tsx:551
 #: ../../../lib/web/src/components/entity/entity-board-column.tsx:691
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:513
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:682
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:507
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:676
 #: ../../../lib/web/src/components/entity/entity-tree-view.tsx:672
 msgid "Create"
 msgstr "إنشاء"
@@ -809,7 +827,7 @@ msgstr "تم إنشاء {field}"
 msgid "Creating project..."
 msgstr "جارٍ إنشاء المشروع..."
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:682
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:676
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:260
 #: src/features/projects/components/create-project-dialog.tsx:457
 #: src/features/projects/components/create-project-dialog.tsx:549
@@ -870,7 +888,8 @@ msgstr "الترتيب الافتراضي"
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:208
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:255
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:317
-#: src/features/objects/components/object-detail-panel.tsx:654
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:672
+#: ../../../lib/web/src/components/game/game-end-dialogs.tsx:78
 #: src/features/requests/components/request-panel.tsx:142
 #: src/routes/_authenticated/$projectId_.settings.tsx:122
 msgid "Delete"
@@ -896,9 +915,13 @@ msgstr "حذف التعليق"
 msgid "Delete field"
 msgstr "حذف الحقل"
 
-#: src/features/objects/components/object-detail-panel.tsx:467
-#: src/features/objects/components/object-detail-panel.tsx:472
-#: src/features/objects/components/object-detail-panel.tsx:652
+#: ../../../lib/web/src/components/game/game-end-dialogs.tsx:69
+msgid "Delete game?"
+msgstr "حذف اللعبة؟"
+
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:486
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:491
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:670
 msgid "Delete item"
 msgstr "حذف العنصر"
 
@@ -951,6 +974,10 @@ msgstr "تم حذف {field}"
 msgid "Deleting project..."
 msgstr "جارٍ حذف المشروع..."
 
+#: ../../../lib/web/src/components/game/game-end-dialogs.tsx:75
+msgid "Deleting..."
+msgstr "جارٍ الحذف..."
+
 #: ../../../lib/web/src/components/ui/sort-direction-button.tsx:27
 msgid "Descending"
 msgstr "تنازلي"
@@ -963,7 +990,7 @@ msgstr "الوصف"
 
 #: src/routes/_authenticated/$projectId/design.tsx:43
 #: src/routes/_authenticated/$projectId/design.tsx:46
-#: src/routes/_authenticated/$projectId/index.tsx:169
+#: src/routes/_authenticated/$projectId/index.tsx:170
 msgid "Design"
 msgstr "التصميم"
 
@@ -1021,7 +1048,7 @@ msgstr "غير متصل"
 msgid "Dismiss"
 msgstr "تجاهل"
 
-#: src/routes/_authenticated/$projectId/index.tsx:145
+#: src/routes/_authenticated/$projectId/index.tsx:146
 msgid "Dismiss board hint"
 msgstr "تجاهل تلميح اللوحة"
 
@@ -1034,13 +1061,13 @@ msgid "Does not match the required pattern"
 msgstr "لا يطابق النمط المطلوب"
 
 #: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:309
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:495
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:523
 #: src/features/editor/components/edit-dialogs.tsx:439
-#: src/features/objects/components/object-detail-panel.tsx:481
 msgid "Done"
 msgstr "منتهٍ"
 
-#: src/routes/_authenticated/$projectId/index.tsx:144
+#: src/routes/_authenticated/$projectId/index.tsx:145
 msgid "Double click on a column to add content"
 msgstr "انقر مرتين على عمود لإضافة محتوى"
 
@@ -1060,7 +1087,7 @@ msgid "Download failed"
 msgstr "فشل التنزيل"
 
 #: src/routes/_authenticated/$projectId/design.tsx:52
-#: src/routes/_authenticated/$projectId/index.tsx:148
+#: src/routes/_authenticated/$projectId/index.tsx:149
 msgid "Downloaded {filename}"
 msgstr "تم تنزيل {filename}"
 
@@ -1069,11 +1096,11 @@ msgstr "تم تنزيل {filename}"
 msgid "Draft"
 msgstr "مسودة"
 
-#: src/routes/_authenticated/$projectId/index.tsx:141
+#: src/routes/_authenticated/$projectId/index.tsx:142
 msgid "Drag columns to re-order them"
 msgstr "اسحب الأعمدة لإعادة ترتيبها"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:67
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:71
 msgid "Duplicates"
 msgstr "يكرر"
 
@@ -1132,6 +1159,10 @@ msgstr "بريد إلكتروني"
 msgid "Email code"
 msgstr "رمز البريد الإلكتروني"
 
+#: ../../../lib/web/src/components/banner-section.tsx:88
+msgid "Enter banner text (markdown supported)..."
+msgstr "أدخل نص الشعار (Markdown مدعوم)..."
+
 #: ../../../lib/web/src/components/step-up-dialog.tsx:290
 msgid "Enter the code from your email"
 msgstr "أدخل الرمز من بريدك الإلكتروني"
@@ -1144,7 +1175,7 @@ msgstr "أدخل رمز تطبيق المصادقة"
 msgid "Entity ID"
 msgstr "معرّف الكيان"
 
-#: src/features/objects/components/object-detail-panel.tsx:344
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:381
 msgid "Error"
 msgstr "خطأ"
 
@@ -1159,7 +1190,7 @@ msgstr "توسيع"
 msgid "Expand sidebar"
 msgstr "توسيع الشريط الجانبي"
 
-#: src/routes/_authenticated/$projectId/index.tsx:146
+#: src/routes/_authenticated/$projectId/index.tsx:147
 msgid "Export data"
 msgstr "تصدير البيانات"
 
@@ -1179,7 +1210,7 @@ msgstr "كبير جداً"
 msgid "Failed to add account"
 msgstr "فشل إضافة الحساب"
 
-#: src/routes/_authenticated/$projectId/index.tsx:154
+#: src/routes/_authenticated/$projectId/index.tsx:155
 msgid "Failed to add column"
 msgstr "تعذّرت إضافة العمود"
 
@@ -1201,9 +1232,9 @@ msgstr "فشل إنشاء الفئة"
 msgid "Failed to create field"
 msgstr "فشل إنشاء الحقل"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:137
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:131
 #: ../../../lib/web/src/components/options-menu.tsx:98
-#: src/routes/_authenticated/$projectId/index.tsx:152
+#: src/routes/_authenticated/$projectId/index.tsx:153
 msgid "Failed to create link"
 msgstr "فشل إنشاء الرابط"
 
@@ -1224,7 +1255,7 @@ msgstr "فشل إنشاء المشروع"
 msgid "Failed to create view"
 msgstr "فشل إنشاء العرض"
 
-#: src/features/objects/components/object-detail-panel.tsx:235
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:303
 msgid "Failed to delete"
 msgstr "فشل الحذف"
 
@@ -1236,7 +1267,7 @@ msgstr "فشل حذف المرفق"
 msgid "Failed to delete class"
 msgstr "فشل حذف الفئة"
 
-#: src/routes/_authenticated/$projectId/index.tsx:156
+#: src/routes/_authenticated/$projectId/index.tsx:157
 msgid "Failed to delete column"
 msgstr "تعذّر حذف العمود"
 
@@ -1248,7 +1279,7 @@ msgstr "فشل حذف التعليق"
 msgid "Failed to delete field"
 msgstr "فشل حذف الحقل"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:159
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:153
 msgid "Failed to delete link"
 msgstr "فشل حذف الرابط"
 
@@ -1268,7 +1299,7 @@ msgstr "فشل حذف المشروع"
 msgid "Failed to delete view"
 msgstr "فشل حذف العرض"
 
-#: src/routes/_authenticated/$projectId/index.tsx:149
+#: src/routes/_authenticated/$projectId/index.tsx:150
 msgid "Failed to export data"
 msgstr "فشل تصدير البيانات"
 
@@ -1301,15 +1332,15 @@ msgstr "فشل تحميل السجل"
 msgid "Failed to load image"
 msgstr "تعذّر تحميل الصورة"
 
-#: src/features/objects/components/object-detail-panel.tsx:345
-#: src/features/objects/components/object-detail-panel.tsx:348
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:382
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:385
 msgid "Failed to load item"
 msgstr "فشل تحميل العنصر"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:41
 #: src/routes/_authenticated/$projectId/$objectId.tsx:65
-#: src/routes/_authenticated/$projectId/index.tsx:61
-#: src/routes/_authenticated/$projectId/index.tsx:85
+#: src/routes/_authenticated/$projectId/index.tsx:62
+#: src/routes/_authenticated/$projectId/index.tsx:86
 msgid "Failed to load project"
 msgstr "فشل تحميل المشروع"
 
@@ -1337,8 +1368,8 @@ msgstr "تعذّر تحميل الفيديو"
 msgid "Failed to merge"
 msgstr "فشل الدمج"
 
-#: src/features/objects/components/object-detail-panel.tsx:255
-#: src/routes/_authenticated/$projectId/index.tsx:153
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:317
+#: src/routes/_authenticated/$projectId/index.tsx:154
 msgid "Failed to move"
 msgstr "فشل النقل"
 
@@ -1346,7 +1377,7 @@ msgstr "فشل النقل"
 msgid "Failed to post comment"
 msgstr "فشل نشر التعليق"
 
-#: src/routes/_authenticated/$projectId/index.tsx:157
+#: src/routes/_authenticated/$projectId/index.tsx:158
 msgid "Failed to re-order columns"
 msgstr "تعذّرت إعادة ترتيب الأعمدة"
 
@@ -1359,7 +1390,7 @@ msgstr "فشل قراءة الملف"
 msgid "Failed to remove access"
 msgstr "فشل إزالة الوصول"
 
-#: src/routes/_authenticated/$projectId/index.tsx:155
+#: src/routes/_authenticated/$projectId/index.tsx:156
 msgid "Failed to rename column"
 msgstr "تعذّرت إعادة تسمية العمود"
 
@@ -1379,7 +1410,7 @@ msgstr "فشل إعادة تعيين المطالبة"
 msgid "Failed to revoke RSS access"
 msgstr "فشل إلغاء وصول RSS"
 
-#: src/features/objects/components/object-detail-panel.tsx:199
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:273
 msgid "Failed to save"
 msgstr "فشل الحفظ"
 
@@ -1402,13 +1433,17 @@ msgid "Failed to subscribe"
 msgstr "فشل الاشتراك"
 
 #: src/features/projects/pages/projects-list-page.tsx:43
-#: src/routes/_authenticated/$projectId/index.tsx:163
+#: src/routes/_authenticated/$projectId/index.tsx:164
 msgid "Failed to unsubscribe"
 msgstr "فشل إلغاء الاشتراك"
 
 #: src/routes/_authenticated/$projectId_.settings.tsx:142
 msgid "Failed to update access level"
 msgstr "فشل تحديث مستوى الوصول"
+
+#: ../../../lib/web/src/components/banner-section.tsx:71
+msgid "Failed to update banner"
+msgstr "فشل تحديث الشعار"
 
 #: src/features/editor/components/design-editor.tsx:122
 msgid "Failed to update class"
@@ -1442,7 +1477,7 @@ msgstr "فشل تحديث المشروع"
 msgid "Failed to update view"
 msgstr "فشل تحديث العرض"
 
-#: src/features/objects/components/object-detail-panel.tsx:218
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:288
 msgid "Failed to update watching"
 msgstr "فشل تحديث المتابعة"
 
@@ -1454,7 +1489,7 @@ msgstr "فشل رفع المرفق"
 msgid "Fields"
 msgstr "الحقول"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:611
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:605
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:160
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:180
 msgid "Files"
@@ -1603,7 +1638,7 @@ msgstr "ملف JSON غير صالح"
 msgid "It seems like the page you're looking for <0/>does not exist or might have been removed."
 msgstr "يبدو أن الصفحة التي تبحث عنها <0/>غير موجودة أو ربما تمت إزالتها."
 
-#: src/features/objects/components/object-detail-panel.tsx:425
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:441
 msgid "Item details"
 msgstr "تفاصيل العنصر"
 
@@ -1633,11 +1668,11 @@ msgid "Light"
 msgstr "فاتح"
 
 #: ../../../lib/web/src/components/options-menu.tsx:190
-#: src/routes/_authenticated/$projectId/index.tsx:150
+#: src/routes/_authenticated/$projectId/index.tsx:151
 msgid "Link"
 msgstr "رابط"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:279
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:273
 msgid "Links"
 msgstr "الروابط"
 
@@ -1657,11 +1692,11 @@ msgstr "جارٍ تحميل المحتوى…"
 msgid "Loading diff..."
 msgstr "جارٍ تحميل الاختلاف..."
 
-#: src/features/objects/components/object-detail-panel.tsx:325
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:365
 msgid "Loading item"
 msgstr "جارٍ تحميل العنصر"
 
-#: src/features/objects/components/object-detail-panel.tsx:326
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:366
 msgid "Loading item details"
 msgstr "جارٍ تحميل تفاصيل العنصر"
 
@@ -1671,7 +1706,7 @@ msgstr "جارٍ تحميل القوالب..."
 
 #: ../../../lib/web/src/components/ui/load-more.tsx:39
 #: ../../../lib/web/src/features/document/document-page.tsx:88
-#: src/routes/_authenticated/$projectId/index.tsx:147
+#: src/routes/_authenticated/$projectId/index.tsx:148
 msgid "Loading..."
 msgstr "جارٍ التحميل..."
 
@@ -1741,7 +1776,7 @@ msgstr "إيداع الدمج"
 msgid "Merge requests"
 msgstr "طلبات الدمج"
 
-#: src/features/objects/components/object-detail-panel.tsx:400
+#: src/routes/_authenticated/$projectId/index.tsx:212
 msgid "Merge requests ({requestCount})"
 msgstr "طلبات الدمج ({requestCount})"
 
@@ -1837,14 +1872,14 @@ msgstr "يجب ألا يتجاوز الاسم 1000 حرف"
 msgid "Network error"
 msgstr "خطأ في الشبكة"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:498
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:492
 #: ../../../lib/web/src/components/ui/sort-selector.tsx:43
-#: src/routes/_authenticated/$projectId/index.tsx:129
-#: src/routes/_authenticated/$projectId/index.tsx:133
+#: src/routes/_authenticated/$projectId/index.tsx:130
+#: src/routes/_authenticated/$projectId/index.tsx:134
 msgid "New"
 msgstr "جديد"
 
-#: src/routes/_authenticated/$projectId/index.tsx:135
+#: src/routes/_authenticated/$projectId/index.tsx:136
 msgid "New {className}"
 msgstr "{className} جديد"
 
@@ -1862,7 +1897,7 @@ msgstr "التالي"
 msgid "Next image"
 msgstr "الصورة التالية"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:577
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:571
 msgid "No {parentClassNames} to add to"
 msgstr "لا يوجد {parentClassNames} للإضافة إليه"
 
@@ -1910,11 +1945,11 @@ msgstr "لا توجد ألعاب بعد"
 msgid "No groups available"
 msgstr "لا توجد مجموعات متاحة"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:544
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:538
 msgid "No item types can be created yet. Create the required parent items first."
 msgstr "لا يمكن إنشاء أنواع عناصر بعد. أنشئ العناصر الأصلية المطلوبة أولاً."
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:360
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:354
 msgid "No matching objects"
 msgstr "لا توجد كائنات مطابقة"
 
@@ -1976,9 +2011,13 @@ msgid "No views"
 msgstr "لا توجد عروض"
 
 #: ../../../lib/web/src/components/colour-picker.tsx:349
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:560
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:563
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:567
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:554
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:557
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:561
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:557
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:570
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:571
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:575
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:362
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:385
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:388
@@ -1990,9 +2029,6 @@ msgstr "لا توجد عروض"
 #: ../../../lib/web/src/lib/preference-utils.ts:100
 #: src/features/editor/components/edit-dialogs.tsx:296
 #: src/features/editor/components/edit-dialogs.tsx:299
-#: src/features/objects/components/object-detail-panel.tsx:547
-#: src/features/objects/components/object-detail-panel.tsx:560
-#: src/features/objects/components/object-detail-panel.tsx:565
 msgid "None"
 msgstr "لا شيء"
 
@@ -2083,7 +2119,7 @@ msgstr "فتح التنقل"
 msgid "Open option actions"
 msgstr "فتح إجراءات الخيار"
 
-#: src/routes/_authenticated/$projectId/index.tsx:128
+#: src/routes/_authenticated/$projectId/index.tsx:129
 msgid "Open page actions"
 msgstr "فتح إجراءات الصفحة"
 
@@ -2119,8 +2155,9 @@ msgstr "أخرى"
 msgid "Owner"
 msgstr "المالك"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:552
-#: src/features/objects/components/object-detail-panel.tsx:543
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:546
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:553
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:569
 msgid "Parent"
 msgstr "الأصل"
 
@@ -2149,7 +2186,7 @@ msgstr "النمط (تعبير منتظم)"
 msgid "People"
 msgstr "الأشخاص"
 
-#: src/routes/_authenticated/$projectId/index.tsx:137
+#: src/routes/_authenticated/$projectId/index.tsx:138
 msgid "Please add one or more classes to the project design."
 msgstr "يرجى إضافة فئة واحدة أو أكثر إلى تصميم المشروع."
 
@@ -2207,7 +2244,7 @@ msgid "Processing…"
 msgstr "جارٍ المعالجة…"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:62
-#: src/routes/_authenticated/$projectId/index.tsx:82
+#: src/routes/_authenticated/$projectId/index.tsx:83
 msgid "Project"
 msgstr "مشروع"
 
@@ -2223,7 +2260,7 @@ msgstr "تم إنشاء المشروع"
 msgid "Project deleted"
 msgstr "تم حذف المشروع"
 
-#: src/routes/_authenticated/$projectId/index.tsx:151
+#: src/routes/_authenticated/$projectId/index.tsx:152
 msgid "Project link"
 msgstr "رابط المشروع"
 
@@ -2256,7 +2293,7 @@ msgstr "المشاريع"
 msgid "Prompt saved"
 msgstr "تم حفظ الموجه"
 
-#: src/features/objects/components/object-detail-panel.tsx:388
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:408
 msgid "Properties"
 msgstr "الخصائص"
 
@@ -2272,7 +2309,7 @@ msgstr "بارز"
 msgid "Re-link your accounts on this server"
 msgstr "أعد ربط حساباتك بهذا الخادم"
 
-#: src/routes/_authenticated/$projectId/index.tsx:140
+#: src/routes/_authenticated/$projectId/index.tsx:141
 msgid "Re-order columns"
 msgstr "إعادة ترتيب الأعمدة"
 
@@ -2317,7 +2354,7 @@ msgstr "جاري إعادة التوجيه إلى تسجيل الدخول."
 msgid "Reduce interest"
 msgstr "تقليل الاهتمام"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:65
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:69
 msgid "Relates"
 msgstr "متعلق بـ"
 
@@ -2380,8 +2417,8 @@ msgstr "إزالة الاهتمام"
 msgid "Remove item"
 msgstr "إزالة العنصر"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:304
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:309
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:298
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:303
 msgid "Remove link"
 msgstr "إزالة الرابط"
 
@@ -2436,6 +2473,18 @@ msgstr "مطلوب"
 msgid "Resend email"
 msgstr "إعادة إرسال البريد الإلكتروني"
 
+#: ../../../lib/web/src/components/game/game-end-dialogs.tsx:48
+msgid "Resign"
+msgstr "الاستسلام"
+
+#: ../../../lib/web/src/components/game/game-end-dialogs.tsx:35
+msgid "Resign game?"
+msgstr "الاستسلام في اللعبة؟"
+
+#: ../../../lib/web/src/components/game/game-end-dialogs.tsx:45
+msgid "Resigning..."
+msgstr "جاري الاستسلام..."
+
 #: src/features/requests/components/conflict-list.tsx:40
 msgid "Resolve these conflicts manually before merging."
 msgstr "قم بحل هذه التعارضات يدويًا قبل الدمج."
@@ -2487,11 +2536,12 @@ msgstr "السبت"
 
 #: ../../../lib/web/src/components/ai-prompts-editor.tsx:156
 #: ../../../lib/web/src/components/attachment-composer.tsx:430
+#: ../../../lib/web/src/components/banner-section.tsx:99
 #: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:231
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:172
 #: ../../../lib/web/src/components/ui/editable-field-row.tsx:126
 #: ../../../lib/web/src/components/ui/secret-field.tsx:79
-#: src/routes/_authenticated/$projectId/index.tsx:143
+#: src/routes/_authenticated/$projectId/index.tsx:144
 msgid "Save"
 msgstr "حفظ"
 
@@ -2535,7 +2585,7 @@ msgstr "البحث عن منشأ..."
 msgid "Search for projects..."
 msgstr "البحث عن مشاريع..."
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:337
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:331
 msgid "Search objects..."
 msgstr "البحث عن عناصر..."
 
@@ -2673,7 +2723,7 @@ msgstr "جارٍ ضبط الوصول..."
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx:125
 #: ../../../lib/web/src/components/options-menu.tsx:196
 #: src/routes/_authenticated/$projectId_.settings.tsx:101
-#: src/routes/_authenticated/$projectId/index.tsx:177
+#: src/routes/_authenticated/$projectId/index.tsx:178
 msgid "Settings"
 msgstr "الإعدادات"
 
@@ -2748,8 +2798,8 @@ msgstr "دمج وضغط"
 msgid "Start the discussion by adding the first comment."
 msgstr "ابدأ النقاش بإضافة التعليق الأول."
 
-#: src/features/objects/components/object-detail-panel.tsx:448
-#: src/features/objects/components/object-detail-panel.tsx:457
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:471
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:476
 msgid "Stop watching"
 msgstr "إيقاف المتابعة"
 
@@ -2879,6 +2929,10 @@ msgstr "تم دمج طلب الدمج هذا في {0}."
 msgid "This merge request is a draft and cannot be merged."
 msgstr "طلب الدمج هذا مسودة ولا يمكن دمجه."
 
+#: ../../../lib/web/src/components/game/game-end-dialogs.tsx:70
+msgid "This permanently deletes the game and its chat. This cannot be undone."
+msgstr "سيؤدي هذا إلى حذف اللعبة ومحادثتها نهائيًا. لا يمكن التراجع عن هذا الإجراء."
+
 #: src/routes/_authenticated/$projectId_.settings.tsx:111
 msgid "This project could not be loaded right now."
 msgstr "تعذر تحميل هذا المشروع في هذا الوقت."
@@ -2896,7 +2950,7 @@ msgid "This will permanently delete \"{projectName}\" and all its objects, comme
 msgstr "سيؤدي هذا إلى حذف \"{projectName}\" وجميع كائناته وتعليقاته ومرفقاته بشكل دائم. لا يمكن التراجع عن هذا الإجراء."
 
 #. placeholder {0}: project.project.name
-#: src/routes/_authenticated/$projectId/index.tsx:160
+#: src/routes/_authenticated/$projectId/index.tsx:161
 msgid "This will remove \"{0}\" from your sidebar and stop updates for this project."
 msgstr "سيؤدي هذا إلى إزالة \"{0}\" من الشريط الجانبي وإيقاف التحديثات لهذا المشروع."
 
@@ -3036,27 +3090,26 @@ msgstr "غير معروف"
 
 #: ../../../lib/web/src/components/options-menu.tsx:211
 #: src/features/projects/pages/projects-list-page.tsx:39
-#: src/routes/_authenticated/$projectId/index.tsx:158
+#: src/routes/_authenticated/$projectId/index.tsx:159
 msgid "Unsubscribe"
 msgstr "إلغاء الاشتراك"
 
-#: src/routes/_authenticated/$projectId/index.tsx:159
+#: src/routes/_authenticated/$projectId/index.tsx:160
 msgid "Unsubscribe from project?"
 msgstr "إلغاء الاشتراك من المشروع؟"
 
 #: src/features/projects/pages/projects-list-page.tsx:42
-#: src/routes/_authenticated/$projectId/index.tsx:162
+#: src/routes/_authenticated/$projectId/index.tsx:163
 msgid "Unsubscribed"
 msgstr "تم إلغاء الاشتراك"
 
 #: src/features/projects/pages/projects-list-page.tsx:41
-#: src/routes/_authenticated/$projectId/index.tsx:161
+#: src/routes/_authenticated/$projectId/index.tsx:162
 msgid "Unsubscribing..."
 msgstr "جاري إلغاء الاشتراك..."
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:299
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:103
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:184
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:178
+#: ../../../lib/web/src/lib/entity-title.ts:40
 #: src/features/board/components/board-container.tsx:29
 #: src/features/editor/components/design-preview.tsx:31
 msgid "Untitled"
@@ -3076,7 +3129,7 @@ msgstr "تم تحديث {field}"
 msgid "Updating access..."
 msgstr "جارٍ تحديث الوصول..."
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:661
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:655
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:304
 msgid "Upload"
 msgstr "رفع"
@@ -3137,7 +3190,7 @@ msgstr "عارض الفيديو: {0}"
 msgid "View all notifications"
 msgstr "عرض جميع الإشعارات"
 
-#: src/features/objects/components/object-detail-panel.tsx:426
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:442
 msgid "View and edit item details"
 msgstr "عرض وتعديل تفاصيل العنصر"
 
@@ -3149,7 +3202,7 @@ msgstr "عناصر تحكم العرض"
 msgid "View only"
 msgstr "عرض فقط"
 
-#: src/routes/_authenticated/$projectId/index.tsx:138
+#: src/routes/_authenticated/$projectId/index.tsx:139
 msgid "View options"
 msgstr "خيارات العرض"
 
@@ -3161,8 +3214,8 @@ msgstr "المشاهدات"
 msgid "Voice recording is not supported in this browser"
 msgstr "التسجيل الصوتي غير مدعوم في هذا المتصفح"
 
-#: src/features/objects/components/object-detail-panel.tsx:448
-#: src/features/objects/components/object-detail-panel.tsx:457
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:471
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:476
 msgid "Watch"
 msgstr "متابعة"
 
@@ -3192,7 +3245,7 @@ msgstr "الأربعاء"
 msgid "You do not have access to this section."
 msgstr "ليس لديك صلاحية الوصول إلى هذا القسم."
 
-#: src/routes/_authenticated/$projectId/index.tsx:52
+#: src/routes/_authenticated/$projectId/index.tsx:53
 msgid "You don't have access to this project."
 msgstr "ليس لديك صلاحية الوصول إلى هذا المشروع."
 

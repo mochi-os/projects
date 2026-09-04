@@ -179,7 +179,7 @@ msgstr "Sarbidea ezarria {subjectName}-rentzat"
 msgid "Account type"
 msgstr "Kontu mota"
 
-#: src/features/objects/components/object-detail-panel.tsx:407
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:415
 msgid "Activity"
 msgstr "Jarduera"
 
@@ -224,7 +224,7 @@ msgstr "Gehitu egiaztapen-zerrendako elementua"
 msgid "Add class"
 msgstr "Gehitu klasea"
 
-#: src/routes/_authenticated/$projectId/index.tsx:139
+#: src/routes/_authenticated/$projectId/index.tsx:140
 msgid "Add column"
 msgstr "Gehitu zutabea"
 
@@ -238,7 +238,7 @@ msgstr "Gehitu eremua"
 msgid "Add item..."
 msgstr "Gehitu elementua..."
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:320
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:314
 msgid "Add link"
 msgstr "Gehitu esteka"
 
@@ -329,7 +329,7 @@ msgstr "Jario honetara harpidetutako guztiak jasotzeari utziko dio. Ondoren URL 
 msgid "Are you sure you want to delete \"{0}\"?"
 msgstr "Ziur al zaude \"{0}\" ezabatu nahi duzula?"
 
-#: src/features/objects/components/object-detail-panel.tsx:653
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:671
 msgid "Are you sure you want to delete \"{title}\"? This action cannot be undone."
 msgstr "Ziur al zaude \"{title}\" ezabatu nahi duzula? Ekintza hau ezin da desegin."
 
@@ -348,6 +348,14 @@ msgstr "Ziur al zaude fusio eskaera hau ezabatu nahi duzula?"
 #: ../../../lib/web/src/components/sign-out-dialog.tsx:27
 msgid "Are you sure you want to log out? You will need to log in again to access your account."
 msgstr "Ziur al zaude saioa amaitu nahi duzula? Berriro hasi beharko duzu saioa zure kontura sartzeko."
+
+#: ../../../lib/web/src/components/game/game-end-dialogs.tsx:39
+msgid "Are you sure you want to resign?"
+msgstr "Ziur al zaude amore eman nahi duzula?"
+
+#: ../../../lib/web/src/components/game/game-end-dialogs.tsx:38
+msgid "Are you sure you want to resign? {opponentName} will win the game."
+msgstr "Ziur al zaude amore eman nahi duzula? {opponentName}-(e)k irabaziko du jokoa."
 
 #: src/features/projects/pages/projects-list-page.tsx:40
 msgid "Are you sure you want to unsubscribe from this project?"
@@ -402,20 +410,29 @@ msgid "Back to project"
 msgstr "Itzuli proiektura"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:64
-#: src/routes/_authenticated/$projectId/index.tsx:84
+#: src/routes/_authenticated/$projectId/index.tsx:85
 msgid "Back to projects"
 msgstr "Itzuli proiektuetara"
 
+#: ../../../lib/web/src/components/banner-section.tsx:80
 #: ../../../lib/web/src/components/entity-banner.tsx:17
 msgid "Banner"
 msgstr "Iragarki-banda"
+
+#: ../../../lib/web/src/components/banner-section.tsx:69
+msgid "Banner removed"
+msgstr "Iragarki-banda kendu da"
+
+#: ../../../lib/web/src/components/banner-section.tsx:69
+msgid "Banner updated"
+msgstr "Iragarki-banda eguneratu da"
 
 #: src/features/requests/components/diff-viewer.tsx:448
 msgid "Binary file not shown"
 msgstr "Fitxategi bitarra ez da erakusten"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:68
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:215
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:72
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:209
 msgid "Blocked by"
 msgstr "Blokeatzailea"
 
@@ -424,7 +441,7 @@ msgstr "Blokeatzailea"
 msgid "Blocked navigation to untrusted link"
 msgstr "Konfiantzazkoa ez den estekarako nabigazioa blokeatu da"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:66
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:70
 msgid "Blocks"
 msgstr "Blokeak"
 
@@ -477,7 +494,7 @@ msgstr "Honen seme-alaba izan daiteke"
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:91
 #: src/features/projects/components/create-project-dialog.tsx:453
 #: src/routes/_authenticated/$projectId/design.tsx:61
-#: src/routes/_authenticated/$projectId/index.tsx:142
+#: src/routes/_authenticated/$projectId/index.tsx:143
 msgid "Cancel"
 msgstr "Utzi"
 
@@ -550,6 +567,7 @@ msgstr "Aukeratu hizkuntza"
 msgid "Classes"
 msgstr "Klaseak"
 
+#: ../../../lib/web/src/components/banner-section.tsx:111
 #: ../../../lib/web/src/components/colour-picker.tsx:274
 #: ../../../lib/web/src/components/colour-picker.tsx:355
 #: ../../../lib/web/src/components/travelling-picker.tsx:145
@@ -567,8 +585,8 @@ msgstr "Garbitu dena"
 msgid "Clear search"
 msgstr "Garbitu bilaketa"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:523
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:528
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:517
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:522
 #: ../../../lib/web/src/components/ui/dialog.tsx:78
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:480
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:483
@@ -650,7 +668,7 @@ msgid "Comments"
 msgstr "Iruzkinak"
 
 #. placeholder {0}: data.comment_count || 0
-#: src/features/objects/components/object-detail-panel.tsx:393
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:411
 msgid "Comments ({0})"
 msgstr "Iruzkinak ({0})"
 
@@ -759,8 +777,8 @@ msgstr "Ezin izan da kontu horrekin egiaztatu. Saiatu berriro."
 
 #: ../../../lib/web/src/components/entity/entity-board-column.tsx:551
 #: ../../../lib/web/src/components/entity/entity-board-column.tsx:691
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:513
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:682
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:507
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:676
 #: ../../../lib/web/src/components/entity/entity-tree-view.tsx:672
 msgid "Create"
 msgstr "Sortu"
@@ -809,7 +827,7 @@ msgstr "{field} sortu da"
 msgid "Creating project..."
 msgstr "Proiektua sortzen..."
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:682
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:676
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:260
 #: src/features/projects/components/create-project-dialog.tsx:457
 #: src/features/projects/components/create-project-dialog.tsx:549
@@ -870,7 +888,8 @@ msgstr "Lehenetsitako ordena"
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:208
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:255
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:317
-#: src/features/objects/components/object-detail-panel.tsx:654
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:672
+#: ../../../lib/web/src/components/game/game-end-dialogs.tsx:78
 #: src/features/requests/components/request-panel.tsx:142
 #: src/routes/_authenticated/$projectId_.settings.tsx:122
 msgid "Delete"
@@ -896,9 +915,13 @@ msgstr "Ezabatu iruzkina"
 msgid "Delete field"
 msgstr "Ezabatu eremua"
 
-#: src/features/objects/components/object-detail-panel.tsx:467
-#: src/features/objects/components/object-detail-panel.tsx:472
-#: src/features/objects/components/object-detail-panel.tsx:652
+#: ../../../lib/web/src/components/game/game-end-dialogs.tsx:69
+msgid "Delete game?"
+msgstr "Jokoa ezabatu?"
+
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:486
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:491
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:670
 msgid "Delete item"
 msgstr "Ezabatu elementua"
 
@@ -951,6 +974,10 @@ msgstr "{field} ezabatu da"
 msgid "Deleting project..."
 msgstr "Proiektua ezabatzen..."
 
+#: ../../../lib/web/src/components/game/game-end-dialogs.tsx:75
+msgid "Deleting..."
+msgstr "Ezabatzen..."
+
 #: ../../../lib/web/src/components/ui/sort-direction-button.tsx:27
 msgid "Descending"
 msgstr "Beherakorra"
@@ -963,7 +990,7 @@ msgstr "Deskribapena"
 
 #: src/routes/_authenticated/$projectId/design.tsx:43
 #: src/routes/_authenticated/$projectId/design.tsx:46
-#: src/routes/_authenticated/$projectId/index.tsx:169
+#: src/routes/_authenticated/$projectId/index.tsx:170
 msgid "Design"
 msgstr "Diseinua"
 
@@ -1021,7 +1048,7 @@ msgstr "Deskonektatuta"
 msgid "Dismiss"
 msgstr "Baztertu"
 
-#: src/routes/_authenticated/$projectId/index.tsx:145
+#: src/routes/_authenticated/$projectId/index.tsx:146
 msgid "Dismiss board hint"
 msgstr "Baztertu taularen iradokizuna"
 
@@ -1034,13 +1061,13 @@ msgid "Does not match the required pattern"
 msgstr "Ez dator bat beharrezko ereduarekin"
 
 #: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:309
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:495
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:523
 #: src/features/editor/components/edit-dialogs.tsx:439
-#: src/features/objects/components/object-detail-panel.tsx:481
 msgid "Done"
 msgstr "Eginda"
 
-#: src/routes/_authenticated/$projectId/index.tsx:144
+#: src/routes/_authenticated/$projectId/index.tsx:145
 msgid "Double click on a column to add content"
 msgstr "Klik bikoitza zutabean edukia gehitzeko"
 
@@ -1060,7 +1087,7 @@ msgid "Download failed"
 msgstr "Deskargak huts egin du"
 
 #: src/routes/_authenticated/$projectId/design.tsx:52
-#: src/routes/_authenticated/$projectId/index.tsx:148
+#: src/routes/_authenticated/$projectId/index.tsx:149
 msgid "Downloaded {filename}"
 msgstr "{filename} deskargatuta"
 
@@ -1069,11 +1096,11 @@ msgstr "{filename} deskargatuta"
 msgid "Draft"
 msgstr "Zirriborroa"
 
-#: src/routes/_authenticated/$projectId/index.tsx:141
+#: src/routes/_authenticated/$projectId/index.tsx:142
 msgid "Drag columns to re-order them"
 msgstr "Arrastatu zutabeak ordena aldatzeko"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:67
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:71
 msgid "Duplicates"
 msgstr "Bikoiztuak"
 
@@ -1132,6 +1159,10 @@ msgstr "Posta elektronikoa"
 msgid "Email code"
 msgstr "Posta elektronikoko kodea"
 
+#: ../../../lib/web/src/components/banner-section.tsx:88
+msgid "Enter banner text (markdown supported)..."
+msgstr "Sartu iragarki-testua (markdown onartzen da)..."
+
 #: ../../../lib/web/src/components/step-up-dialog.tsx:290
 msgid "Enter the code from your email"
 msgstr "Sartu zure mezu elektronikoko kodea"
@@ -1144,7 +1175,7 @@ msgstr "Sartu zure autentifikazio-aplikazioaren kodea"
 msgid "Entity ID"
 msgstr "Entitate IDa"
 
-#: src/features/objects/components/object-detail-panel.tsx:344
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:381
 msgid "Error"
 msgstr "Errorea"
 
@@ -1159,7 +1190,7 @@ msgstr "Zabaldu"
 msgid "Expand sidebar"
 msgstr "Zabaldu alboko barra"
 
-#: src/routes/_authenticated/$projectId/index.tsx:146
+#: src/routes/_authenticated/$projectId/index.tsx:147
 msgid "Export data"
 msgstr "Esportatu datuak"
 
@@ -1179,7 +1210,7 @@ msgstr "Oso handia"
 msgid "Failed to add account"
 msgstr "Ezin izan da kontua gehitu"
 
-#: src/routes/_authenticated/$projectId/index.tsx:154
+#: src/routes/_authenticated/$projectId/index.tsx:155
 msgid "Failed to add column"
 msgstr "Ezin izan da zutabea gehitu"
 
@@ -1201,9 +1232,9 @@ msgstr "Ezin izan da klasea sortu"
 msgid "Failed to create field"
 msgstr "Ezin izan da eremua sortu"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:137
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:131
 #: ../../../lib/web/src/components/options-menu.tsx:98
-#: src/routes/_authenticated/$projectId/index.tsx:152
+#: src/routes/_authenticated/$projectId/index.tsx:153
 msgid "Failed to create link"
 msgstr "Ezin izan da esteka sortu"
 
@@ -1224,7 +1255,7 @@ msgstr "Ezin izan da proiektua sortu"
 msgid "Failed to create view"
 msgstr "Ezin izan da ikuspegia sortu"
 
-#: src/features/objects/components/object-detail-panel.tsx:235
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:303
 msgid "Failed to delete"
 msgstr "Ezin izan da ezabatu"
 
@@ -1236,7 +1267,7 @@ msgstr "Ezin izan da eranskina ezabatu"
 msgid "Failed to delete class"
 msgstr "Ezin izan da klasea ezabatu"
 
-#: src/routes/_authenticated/$projectId/index.tsx:156
+#: src/routes/_authenticated/$projectId/index.tsx:157
 msgid "Failed to delete column"
 msgstr "Ezin izan da zutabea ezabatu"
 
@@ -1248,7 +1279,7 @@ msgstr "Ezin izan da iruzkina ezabatu"
 msgid "Failed to delete field"
 msgstr "Ezin izan da eremua ezabatu"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:159
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:153
 msgid "Failed to delete link"
 msgstr "Ezin izan da esteka ezabatu"
 
@@ -1268,7 +1299,7 @@ msgstr "Ezin izan da proiektua ezabatu"
 msgid "Failed to delete view"
 msgstr "Ezin izan da ikuspegia ezabatu"
 
-#: src/routes/_authenticated/$projectId/index.tsx:149
+#: src/routes/_authenticated/$projectId/index.tsx:150
 msgid "Failed to export data"
 msgstr "Ezin izan dira datuak esportatu"
 
@@ -1301,15 +1332,15 @@ msgstr "Ezin izan da historia kargatu"
 msgid "Failed to load image"
 msgstr "Ezin izan da irudia kargatu"
 
-#: src/features/objects/components/object-detail-panel.tsx:345
-#: src/features/objects/components/object-detail-panel.tsx:348
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:382
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:385
 msgid "Failed to load item"
 msgstr "Ezin izan da elementua kargatu"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:41
 #: src/routes/_authenticated/$projectId/$objectId.tsx:65
-#: src/routes/_authenticated/$projectId/index.tsx:61
-#: src/routes/_authenticated/$projectId/index.tsx:85
+#: src/routes/_authenticated/$projectId/index.tsx:62
+#: src/routes/_authenticated/$projectId/index.tsx:86
 msgid "Failed to load project"
 msgstr "Ezin izan da proiektua kargatu"
 
@@ -1337,8 +1368,8 @@ msgstr "Ezin izan da bideoa kargatu"
 msgid "Failed to merge"
 msgstr "Ezin izan da bateratu"
 
-#: src/features/objects/components/object-detail-panel.tsx:255
-#: src/routes/_authenticated/$projectId/index.tsx:153
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:317
+#: src/routes/_authenticated/$projectId/index.tsx:154
 msgid "Failed to move"
 msgstr "Ezin izan da mugitu"
 
@@ -1346,7 +1377,7 @@ msgstr "Ezin izan da mugitu"
 msgid "Failed to post comment"
 msgstr "Ezin izan da iruzkina argitaratu"
 
-#: src/routes/_authenticated/$projectId/index.tsx:157
+#: src/routes/_authenticated/$projectId/index.tsx:158
 msgid "Failed to re-order columns"
 msgstr "Ezin izan dira zutabeak berrantolatu"
 
@@ -1359,7 +1390,7 @@ msgstr "Ezin izan da fitxategia irakurri"
 msgid "Failed to remove access"
 msgstr "Ezin izan da sarbidea kendu"
 
-#: src/routes/_authenticated/$projectId/index.tsx:155
+#: src/routes/_authenticated/$projectId/index.tsx:156
 msgid "Failed to rename column"
 msgstr "Ezin izan da zutabea berrizendatu"
 
@@ -1379,7 +1410,7 @@ msgstr "Ezin izan da galdera berrezarri"
 msgid "Failed to revoke RSS access"
 msgstr "Ezin izan da RSS sarbidea ezeztatu"
 
-#: src/features/objects/components/object-detail-panel.tsx:199
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:273
 msgid "Failed to save"
 msgstr "Ezin izan da gorde"
 
@@ -1402,13 +1433,17 @@ msgid "Failed to subscribe"
 msgstr "Ezin izan da harpidetu"
 
 #: src/features/projects/pages/projects-list-page.tsx:43
-#: src/routes/_authenticated/$projectId/index.tsx:163
+#: src/routes/_authenticated/$projectId/index.tsx:164
 msgid "Failed to unsubscribe"
 msgstr "Ezin izan da harpidetza utzi"
 
 #: src/routes/_authenticated/$projectId_.settings.tsx:142
 msgid "Failed to update access level"
 msgstr "Ezin izan da sarbide-maila eguneratu"
+
+#: ../../../lib/web/src/components/banner-section.tsx:71
+msgid "Failed to update banner"
+msgstr "Ezin izan da iragarkia eguneratu"
 
 #: src/features/editor/components/design-editor.tsx:122
 msgid "Failed to update class"
@@ -1442,7 +1477,7 @@ msgstr "Ezin izan da proiektua eguneratu"
 msgid "Failed to update view"
 msgstr "Ezin izan da ikuspegia eguneratu"
 
-#: src/features/objects/components/object-detail-panel.tsx:218
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:288
 msgid "Failed to update watching"
 msgstr "Ezin izan da jarraipena eguneratu"
 
@@ -1454,7 +1489,7 @@ msgstr "Ezin izan da eranskina igo"
 msgid "Fields"
 msgstr "Eremuak"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:611
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:605
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:160
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:180
 msgid "Files"
@@ -1603,7 +1638,7 @@ msgstr "JSON fitxategi baliogabea"
 msgid "It seems like the page you're looking for <0/>does not exist or might have been removed."
 msgstr "Bilatzen ari zaren orria <0/>ez dela existitzen edo kendu egin dela dirudi."
 
-#: src/features/objects/components/object-detail-panel.tsx:425
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:441
 msgid "Item details"
 msgstr "Elementuaren xehetasunak"
 
@@ -1633,11 +1668,11 @@ msgid "Light"
 msgstr "Argia"
 
 #: ../../../lib/web/src/components/options-menu.tsx:190
-#: src/routes/_authenticated/$projectId/index.tsx:150
+#: src/routes/_authenticated/$projectId/index.tsx:151
 msgid "Link"
 msgstr "Esteka"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:279
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:273
 msgid "Links"
 msgstr "Estekak"
 
@@ -1657,11 +1692,11 @@ msgstr "Edukia kargatzen…"
 msgid "Loading diff..."
 msgstr "Aldaketak kargatzen..."
 
-#: src/features/objects/components/object-detail-panel.tsx:325
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:365
 msgid "Loading item"
 msgstr "Elementua kargatzen"
 
-#: src/features/objects/components/object-detail-panel.tsx:326
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:366
 msgid "Loading item details"
 msgstr "Elementuaren xehetasunak kargatzen"
 
@@ -1671,7 +1706,7 @@ msgstr "Txantiloiak kargatzen..."
 
 #: ../../../lib/web/src/components/ui/load-more.tsx:39
 #: ../../../lib/web/src/features/document/document-page.tsx:88
-#: src/routes/_authenticated/$projectId/index.tsx:147
+#: src/routes/_authenticated/$projectId/index.tsx:148
 msgid "Loading..."
 msgstr "Kargatzen..."
 
@@ -1741,7 +1776,7 @@ msgstr "Bateratze-egikaritzapena"
 msgid "Merge requests"
 msgstr "Bateratze-eskaerak"
 
-#: src/features/objects/components/object-detail-panel.tsx:400
+#: src/routes/_authenticated/$projectId/index.tsx:212
 msgid "Merge requests ({requestCount})"
 msgstr "Bateratze-eskaerak ({requestCount})"
 
@@ -1837,14 +1872,14 @@ msgstr "Izenak 1000 karaktere edo gutxiago izan behar ditu"
 msgid "Network error"
 msgstr "Sareko errorea"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:498
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:492
 #: ../../../lib/web/src/components/ui/sort-selector.tsx:43
-#: src/routes/_authenticated/$projectId/index.tsx:129
-#: src/routes/_authenticated/$projectId/index.tsx:133
+#: src/routes/_authenticated/$projectId/index.tsx:130
+#: src/routes/_authenticated/$projectId/index.tsx:134
 msgid "New"
 msgstr "Berria"
 
-#: src/routes/_authenticated/$projectId/index.tsx:135
+#: src/routes/_authenticated/$projectId/index.tsx:136
 msgid "New {className}"
 msgstr "{className} berria"
 
@@ -1862,7 +1897,7 @@ msgstr "Hurrengoa"
 msgid "Next image"
 msgstr "Hurrengo irudia"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:577
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:571
 msgid "No {parentClassNames} to add to"
 msgstr "Ez dago {parentClassNames} gehitzeko"
 
@@ -1910,11 +1945,11 @@ msgstr "Oraindik jokorik ez"
 msgid "No groups available"
 msgstr "Ez dago talde erabilgarririk"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:544
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:538
 msgid "No item types can be created yet. Create the required parent items first."
 msgstr "Oraindik ezin da elementu motarik sortu. Sortu lehenik beharrezko elementu gurasoak."
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:360
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:354
 msgid "No matching objects"
 msgstr "Bat datorren objekturik ez"
 
@@ -1976,9 +2011,13 @@ msgid "No views"
 msgstr "Ikuspegirik ez"
 
 #: ../../../lib/web/src/components/colour-picker.tsx:349
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:560
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:563
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:567
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:554
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:557
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:561
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:557
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:570
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:571
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:575
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:362
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:385
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:388
@@ -1990,9 +2029,6 @@ msgstr "Ikuspegirik ez"
 #: ../../../lib/web/src/lib/preference-utils.ts:100
 #: src/features/editor/components/edit-dialogs.tsx:296
 #: src/features/editor/components/edit-dialogs.tsx:299
-#: src/features/objects/components/object-detail-panel.tsx:547
-#: src/features/objects/components/object-detail-panel.tsx:560
-#: src/features/objects/components/object-detail-panel.tsx:565
 msgid "None"
 msgstr "Bat ere ez"
 
@@ -2083,7 +2119,7 @@ msgstr "Ireki nabigazioa"
 msgid "Open option actions"
 msgstr "Ireki aukera-ekintzak"
 
-#: src/routes/_authenticated/$projectId/index.tsx:128
+#: src/routes/_authenticated/$projectId/index.tsx:129
 msgid "Open page actions"
 msgstr "Ireki orri-ekintzak"
 
@@ -2119,8 +2155,9 @@ msgstr "Bestelakoa"
 msgid "Owner"
 msgstr "Jabea"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:552
-#: src/features/objects/components/object-detail-panel.tsx:543
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:546
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:553
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:569
 msgid "Parent"
 msgstr "Gurasoa"
 
@@ -2149,7 +2186,7 @@ msgstr "Eredua (regex)"
 msgid "People"
 msgstr "Jendea"
 
-#: src/routes/_authenticated/$projectId/index.tsx:137
+#: src/routes/_authenticated/$projectId/index.tsx:138
 msgid "Please add one or more classes to the project design."
 msgstr "Mesedez gehitu klase bat edo gehiago proiektuaren diseinura."
 
@@ -2207,7 +2244,7 @@ msgid "Processing…"
 msgstr "Prozesatzen…"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:62
-#: src/routes/_authenticated/$projectId/index.tsx:82
+#: src/routes/_authenticated/$projectId/index.tsx:83
 msgid "Project"
 msgstr "Proiektua"
 
@@ -2223,7 +2260,7 @@ msgstr "Proiektua sortu da"
 msgid "Project deleted"
 msgstr "Proiektua ezabatu da"
 
-#: src/routes/_authenticated/$projectId/index.tsx:151
+#: src/routes/_authenticated/$projectId/index.tsx:152
 msgid "Project link"
 msgstr "Proiektuaren esteka"
 
@@ -2256,7 +2293,7 @@ msgstr "Proiektuak"
 msgid "Prompt saved"
 msgstr "Galdera-aukera gorde da"
 
-#: src/features/objects/components/object-detail-panel.tsx:388
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:408
 msgid "Properties"
 msgstr "Propietateak"
 
@@ -2272,7 +2309,7 @@ msgstr "Goratua"
 msgid "Re-link your accounts on this server"
 msgstr "Berriro lotu zure kontuak zerbitzari honetan"
 
-#: src/routes/_authenticated/$projectId/index.tsx:140
+#: src/routes/_authenticated/$projectId/index.tsx:141
 msgid "Re-order columns"
 msgstr "Berrordenatu zutabeak"
 
@@ -2317,7 +2354,7 @@ msgstr "Saio-hasierara birbideratzen."
 msgid "Reduce interest"
 msgstr "Murriztu interesa"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:65
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:69
 msgid "Relates"
 msgstr "Erlazionatuta dago"
 
@@ -2380,8 +2417,8 @@ msgstr "Kendu interesa"
 msgid "Remove item"
 msgstr "Kendu elementua"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:304
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:309
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:298
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:303
 msgid "Remove link"
 msgstr "Kendu esteka"
 
@@ -2436,6 +2473,18 @@ msgstr "Beharrezkoa"
 msgid "Resend email"
 msgstr "Bidali mezua berriro"
 
+#: ../../../lib/web/src/components/game/game-end-dialogs.tsx:48
+msgid "Resign"
+msgstr "Amore eman"
+
+#: ../../../lib/web/src/components/game/game-end-dialogs.tsx:35
+msgid "Resign game?"
+msgstr "Jokoan amore eman?"
+
+#: ../../../lib/web/src/components/game/game-end-dialogs.tsx:45
+msgid "Resigning..."
+msgstr "Amore ematen..."
+
 #: src/features/requests/components/conflict-list.tsx:40
 msgid "Resolve these conflicts manually before merging."
 msgstr "Konpondu gatazka hauek eskuz bateratu aurretik."
@@ -2487,11 +2536,12 @@ msgstr "Larunbata"
 
 #: ../../../lib/web/src/components/ai-prompts-editor.tsx:156
 #: ../../../lib/web/src/components/attachment-composer.tsx:430
+#: ../../../lib/web/src/components/banner-section.tsx:99
 #: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:231
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:172
 #: ../../../lib/web/src/components/ui/editable-field-row.tsx:126
 #: ../../../lib/web/src/components/ui/secret-field.tsx:79
-#: src/routes/_authenticated/$projectId/index.tsx:143
+#: src/routes/_authenticated/$projectId/index.tsx:144
 msgid "Save"
 msgstr "Gorde"
 
@@ -2535,7 +2585,7 @@ msgstr "Bilatu jatorria..."
 msgid "Search for projects..."
 msgstr "Bilatu proiektuak..."
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:337
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:331
 msgid "Search objects..."
 msgstr "Bilatu objektuak..."
 
@@ -2673,7 +2723,7 @@ msgstr "Sarbidea ezartzen..."
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx:125
 #: ../../../lib/web/src/components/options-menu.tsx:196
 #: src/routes/_authenticated/$projectId_.settings.tsx:101
-#: src/routes/_authenticated/$projectId/index.tsx:177
+#: src/routes/_authenticated/$projectId/index.tsx:178
 msgid "Settings"
 msgstr "Ezarpenak"
 
@@ -2748,8 +2798,8 @@ msgstr "Squash eta merge"
 msgid "Start the discussion by adding the first comment."
 msgstr "Hasi eztabaida lehen iruzkina gehituz."
 
-#: src/features/objects/components/object-detail-panel.tsx:448
-#: src/features/objects/components/object-detail-panel.tsx:457
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:471
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:476
 msgid "Stop watching"
 msgstr "Utzi ikusten"
 
@@ -2879,6 +2929,10 @@ msgstr "Bateratze-eskaera hau {0}-(e)n bateratu da."
 msgid "This merge request is a draft and cannot be merged."
 msgstr "Bateratze-eskaera hau zirriborroa da eta ezin da bateratu."
 
+#: ../../../lib/web/src/components/game/game-end-dialogs.tsx:70
+msgid "This permanently deletes the game and its chat. This cannot be undone."
+msgstr "Honek jokoa eta bere txata betiko ezabatuko ditu. Ekintza hau ezin da desegin."
+
 #: src/routes/_authenticated/$projectId_.settings.tsx:111
 msgid "This project could not be loaded right now."
 msgstr "Proiektu hau ezin da orain kargatu."
@@ -2896,7 +2950,7 @@ msgid "This will permanently delete \"{projectName}\" and all its objects, comme
 msgstr "Honek \"{projectName}\" eta bere objektu, iruzkin eta eranskin guztiak betiko ezabatuko ditu. Ekintza hau ezin da desegin."
 
 #. placeholder {0}: project.project.name
-#: src/routes/_authenticated/$projectId/index.tsx:160
+#: src/routes/_authenticated/$projectId/index.tsx:161
 msgid "This will remove \"{0}\" from your sidebar and stop updates for this project."
 msgstr "Honek \"{0}\" zure alboko barratik kenduko du eta proiektu honentzako eguneraketak gelditu egingo dira."
 
@@ -3036,27 +3090,26 @@ msgstr "Ezezaguna"
 
 #: ../../../lib/web/src/components/options-menu.tsx:211
 #: src/features/projects/pages/projects-list-page.tsx:39
-#: src/routes/_authenticated/$projectId/index.tsx:158
+#: src/routes/_authenticated/$projectId/index.tsx:159
 msgid "Unsubscribe"
 msgstr "Harpidetza kendu"
 
-#: src/routes/_authenticated/$projectId/index.tsx:159
+#: src/routes/_authenticated/$projectId/index.tsx:160
 msgid "Unsubscribe from project?"
 msgstr "Proiektutik harpidetza kendu?"
 
 #: src/features/projects/pages/projects-list-page.tsx:42
-#: src/routes/_authenticated/$projectId/index.tsx:162
+#: src/routes/_authenticated/$projectId/index.tsx:163
 msgid "Unsubscribed"
 msgstr "Harpidetza kenduta"
 
 #: src/features/projects/pages/projects-list-page.tsx:41
-#: src/routes/_authenticated/$projectId/index.tsx:161
+#: src/routes/_authenticated/$projectId/index.tsx:162
 msgid "Unsubscribing..."
 msgstr "Harpidetza kentzen..."
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:299
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:103
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:184
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:178
+#: ../../../lib/web/src/lib/entity-title.ts:40
 #: src/features/board/components/board-container.tsx:29
 #: src/features/editor/components/design-preview.tsx:31
 msgid "Untitled"
@@ -3076,7 +3129,7 @@ msgstr "{field} eguneratu da"
 msgid "Updating access..."
 msgstr "Sarbidea eguneratzen..."
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:661
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:655
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:304
 msgid "Upload"
 msgstr "Igo"
@@ -3137,7 +3190,7 @@ msgstr "Bideo-ikustailea: {0}"
 msgid "View all notifications"
 msgstr "Ikusi jakinarazpen guztiak"
 
-#: src/features/objects/components/object-detail-panel.tsx:426
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:442
 msgid "View and edit item details"
 msgstr "Ikusi eta editatu elementuaren xehetasunak"
 
@@ -3149,7 +3202,7 @@ msgstr "Ikuspegi-kontrolak"
 msgid "View only"
 msgstr "Ikusi soilik"
 
-#: src/routes/_authenticated/$projectId/index.tsx:138
+#: src/routes/_authenticated/$projectId/index.tsx:139
 msgid "View options"
 msgstr "Ikuspegi-aukerak"
 
@@ -3161,8 +3214,8 @@ msgstr "Ikuspegiak"
 msgid "Voice recording is not supported in this browser"
 msgstr "Nabigatzaile honek ez du ahots-grabazioa onartzen"
 
-#: src/features/objects/components/object-detail-panel.tsx:448
-#: src/features/objects/components/object-detail-panel.tsx:457
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:471
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:476
 msgid "Watch"
 msgstr "Ikusi"
 
@@ -3192,7 +3245,7 @@ msgstr "Asteazkena"
 msgid "You do not have access to this section."
 msgstr "Ez duzu atal honetarako sarbiderik."
 
-#: src/routes/_authenticated/$projectId/index.tsx:52
+#: src/routes/_authenticated/$projectId/index.tsx:53
 msgid "You don't have access to this project."
 msgstr "Ez duzu proiektu honetarako sarbiderik."
 

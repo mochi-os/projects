@@ -179,7 +179,7 @@ msgstr "Přístup nastaven pro {subjectName}"
 msgid "Account type"
 msgstr "Typ účtu"
 
-#: src/features/objects/components/object-detail-panel.tsx:407
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:415
 msgid "Activity"
 msgstr "Aktivita"
 
@@ -224,7 +224,7 @@ msgstr "Přidat položku checklistu"
 msgid "Add class"
 msgstr "Přidat třídu"
 
-#: src/routes/_authenticated/$projectId/index.tsx:139
+#: src/routes/_authenticated/$projectId/index.tsx:140
 msgid "Add column"
 msgstr "Přidat sloupec"
 
@@ -238,7 +238,7 @@ msgstr "Přidat pole"
 msgid "Add item..."
 msgstr "Přidat položku..."
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:320
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:314
 msgid "Add link"
 msgstr "Přidat odkaz"
 
@@ -329,7 +329,7 @@ msgstr "Vše, co je k tomuto kanálu přihlášeno, jej přestane dostávat. Pot
 msgid "Are you sure you want to delete \"{0}\"?"
 msgstr "Opravdu chcete smazat „{0}“?"
 
-#: src/features/objects/components/object-detail-panel.tsx:653
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:671
 msgid "Are you sure you want to delete \"{title}\"? This action cannot be undone."
 msgstr "Opravdu chcete smazat „{title}“? Tuto akci nelze vrátit zpět."
 
@@ -348,6 +348,14 @@ msgstr "Opravdu chcete smazat tento merge request?"
 #: ../../../lib/web/src/components/sign-out-dialog.tsx:27
 msgid "Are you sure you want to log out? You will need to log in again to access your account."
 msgstr "Opravdu se chcete odhlásit? Pro přístup ke svému účtu se budete muset znovu přihlásit."
+
+#: ../../../lib/web/src/components/game/game-end-dialogs.tsx:39
+msgid "Are you sure you want to resign?"
+msgstr "Opravdu chcete vzdát hru?"
+
+#: ../../../lib/web/src/components/game/game-end-dialogs.tsx:38
+msgid "Are you sure you want to resign? {opponentName} will win the game."
+msgstr "Opravdu se chcete vzdát? {opponentName} vyhraje hru."
 
 #: src/features/projects/pages/projects-list-page.tsx:40
 msgid "Are you sure you want to unsubscribe from this project?"
@@ -402,20 +410,29 @@ msgid "Back to project"
 msgstr "Zpět na projekt"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:64
-#: src/routes/_authenticated/$projectId/index.tsx:84
+#: src/routes/_authenticated/$projectId/index.tsx:85
 msgid "Back to projects"
 msgstr "Zpět na projekty"
 
+#: ../../../lib/web/src/components/banner-section.tsx:80
 #: ../../../lib/web/src/components/entity-banner.tsx:17
 msgid "Banner"
 msgstr "Banner"
+
+#: ../../../lib/web/src/components/banner-section.tsx:69
+msgid "Banner removed"
+msgstr "Banner odstraněn"
+
+#: ../../../lib/web/src/components/banner-section.tsx:69
+msgid "Banner updated"
+msgstr "Banner aktualizován"
 
 #: src/features/requests/components/diff-viewer.tsx:448
 msgid "Binary file not shown"
 msgstr "Binární soubor se nezobrazuje"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:68
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:215
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:72
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:209
 msgid "Blocked by"
 msgstr "Blokováno"
 
@@ -424,7 +441,7 @@ msgstr "Blokováno"
 msgid "Blocked navigation to untrusted link"
 msgstr "Navigace na nedůvěryhodný odkaz zablokována"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:66
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:70
 msgid "Blocks"
 msgstr "Blokuje"
 
@@ -477,7 +494,7 @@ msgstr "Může být potomkem"
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:91
 #: src/features/projects/components/create-project-dialog.tsx:453
 #: src/routes/_authenticated/$projectId/design.tsx:61
-#: src/routes/_authenticated/$projectId/index.tsx:142
+#: src/routes/_authenticated/$projectId/index.tsx:143
 msgid "Cancel"
 msgstr "Zrušit"
 
@@ -550,6 +567,7 @@ msgstr "Vyberte jazyk"
 msgid "Classes"
 msgstr "Třídy"
 
+#: ../../../lib/web/src/components/banner-section.tsx:111
 #: ../../../lib/web/src/components/colour-picker.tsx:274
 #: ../../../lib/web/src/components/colour-picker.tsx:355
 #: ../../../lib/web/src/components/travelling-picker.tsx:145
@@ -567,8 +585,8 @@ msgstr "Vymazat vše"
 msgid "Clear search"
 msgstr "Vymazat hledání"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:523
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:528
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:517
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:522
 #: ../../../lib/web/src/components/ui/dialog.tsx:78
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:480
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:483
@@ -650,7 +668,7 @@ msgid "Comments"
 msgstr "Komentáře"
 
 #. placeholder {0}: data.comment_count || 0
-#: src/features/objects/components/object-detail-panel.tsx:393
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:411
 msgid "Comments ({0})"
 msgstr "Komentáře ({0})"
 
@@ -759,8 +777,8 @@ msgstr "S tímto účtem se nepodařilo ověřit. Zkuste to prosím znovu."
 
 #: ../../../lib/web/src/components/entity/entity-board-column.tsx:551
 #: ../../../lib/web/src/components/entity/entity-board-column.tsx:691
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:513
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:682
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:507
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:676
 #: ../../../lib/web/src/components/entity/entity-tree-view.tsx:672
 msgid "Create"
 msgstr "Vytvořit"
@@ -809,7 +827,7 @@ msgstr "Vytvořeno {field}"
 msgid "Creating project..."
 msgstr "Vytváření projektu..."
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:682
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:676
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:260
 #: src/features/projects/components/create-project-dialog.tsx:457
 #: src/features/projects/components/create-project-dialog.tsx:549
@@ -870,7 +888,8 @@ msgstr "Výchozí řazení"
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:208
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:255
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:317
-#: src/features/objects/components/object-detail-panel.tsx:654
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:672
+#: ../../../lib/web/src/components/game/game-end-dialogs.tsx:78
 #: src/features/requests/components/request-panel.tsx:142
 #: src/routes/_authenticated/$projectId_.settings.tsx:122
 msgid "Delete"
@@ -896,9 +915,13 @@ msgstr "Smazat komentář"
 msgid "Delete field"
 msgstr "Smazat pole"
 
-#: src/features/objects/components/object-detail-panel.tsx:467
-#: src/features/objects/components/object-detail-panel.tsx:472
-#: src/features/objects/components/object-detail-panel.tsx:652
+#: ../../../lib/web/src/components/game/game-end-dialogs.tsx:69
+msgid "Delete game?"
+msgstr "Smazat hru?"
+
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:486
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:491
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:670
 msgid "Delete item"
 msgstr "Smazat položku"
 
@@ -951,6 +974,10 @@ msgstr "Smazáno {field}"
 msgid "Deleting project..."
 msgstr "Mazání projektu..."
 
+#: ../../../lib/web/src/components/game/game-end-dialogs.tsx:75
+msgid "Deleting..."
+msgstr "Mazání..."
+
 #: ../../../lib/web/src/components/ui/sort-direction-button.tsx:27
 msgid "Descending"
 msgstr "Sestupně"
@@ -963,7 +990,7 @@ msgstr "Popis"
 
 #: src/routes/_authenticated/$projectId/design.tsx:43
 #: src/routes/_authenticated/$projectId/design.tsx:46
-#: src/routes/_authenticated/$projectId/index.tsx:169
+#: src/routes/_authenticated/$projectId/index.tsx:170
 msgid "Design"
 msgstr "Design"
 
@@ -1021,7 +1048,7 @@ msgstr "Odpojeno"
 msgid "Dismiss"
 msgstr "Zavřít"
 
-#: src/routes/_authenticated/$projectId/index.tsx:145
+#: src/routes/_authenticated/$projectId/index.tsx:146
 msgid "Dismiss board hint"
 msgstr "Zavřít nápovědu desky"
 
@@ -1034,13 +1061,13 @@ msgid "Does not match the required pattern"
 msgstr "Neodpovídá požadovanému vzoru"
 
 #: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:309
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:495
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:523
 #: src/features/editor/components/edit-dialogs.tsx:439
-#: src/features/objects/components/object-detail-panel.tsx:481
 msgid "Done"
 msgstr "Hotovo"
 
-#: src/routes/_authenticated/$projectId/index.tsx:144
+#: src/routes/_authenticated/$projectId/index.tsx:145
 msgid "Double click on a column to add content"
 msgstr "Dvakrát klikněte na sloupec pro přidání obsahu"
 
@@ -1060,7 +1087,7 @@ msgid "Download failed"
 msgstr "Stahování se nezdařilo"
 
 #: src/routes/_authenticated/$projectId/design.tsx:52
-#: src/routes/_authenticated/$projectId/index.tsx:148
+#: src/routes/_authenticated/$projectId/index.tsx:149
 msgid "Downloaded {filename}"
 msgstr "Staženo: {filename}"
 
@@ -1069,11 +1096,11 @@ msgstr "Staženo: {filename}"
 msgid "Draft"
 msgstr "Koncept"
 
-#: src/routes/_authenticated/$projectId/index.tsx:141
+#: src/routes/_authenticated/$projectId/index.tsx:142
 msgid "Drag columns to re-order them"
 msgstr "Přetažením sloupců změňte jejich pořadí"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:67
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:71
 msgid "Duplicates"
 msgstr "Duplikuje"
 
@@ -1132,6 +1159,10 @@ msgstr "E-mail"
 msgid "Email code"
 msgstr "E-mailový kód"
 
+#: ../../../lib/web/src/components/banner-section.tsx:88
+msgid "Enter banner text (markdown supported)..."
+msgstr "Zadejte text banneru (podporuje markdown)..."
+
 #: ../../../lib/web/src/components/step-up-dialog.tsx:290
 msgid "Enter the code from your email"
 msgstr "Zadejte kód z vašeho e-mailu"
@@ -1144,7 +1175,7 @@ msgstr "Zadejte kód z autentizační aplikace"
 msgid "Entity ID"
 msgstr "ID entity"
 
-#: src/features/objects/components/object-detail-panel.tsx:344
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:381
 msgid "Error"
 msgstr "Chyba"
 
@@ -1159,7 +1190,7 @@ msgstr "Rozbalit"
 msgid "Expand sidebar"
 msgstr "Rozbalit postranní panel"
 
-#: src/routes/_authenticated/$projectId/index.tsx:146
+#: src/routes/_authenticated/$projectId/index.tsx:147
 msgid "Export data"
 msgstr "Exportovat data"
 
@@ -1179,7 +1210,7 @@ msgstr "Velmi velké"
 msgid "Failed to add account"
 msgstr "Nepodařilo se přidat účet"
 
-#: src/routes/_authenticated/$projectId/index.tsx:154
+#: src/routes/_authenticated/$projectId/index.tsx:155
 msgid "Failed to add column"
 msgstr "Nepodařilo se přidat sloupec"
 
@@ -1201,9 +1232,9 @@ msgstr "Nepodařilo se vytvořit třídu"
 msgid "Failed to create field"
 msgstr "Nepodařilo se vytvořit pole"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:137
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:131
 #: ../../../lib/web/src/components/options-menu.tsx:98
-#: src/routes/_authenticated/$projectId/index.tsx:152
+#: src/routes/_authenticated/$projectId/index.tsx:153
 msgid "Failed to create link"
 msgstr "Nepodařilo se vytvořit odkaz"
 
@@ -1224,7 +1255,7 @@ msgstr "Nepodařilo se vytvořit projekt"
 msgid "Failed to create view"
 msgstr "Nepodařilo se vytvořit pohled"
 
-#: src/features/objects/components/object-detail-panel.tsx:235
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:303
 msgid "Failed to delete"
 msgstr "Nepodařilo se smazat"
 
@@ -1236,7 +1267,7 @@ msgstr "Nepodařilo se smazat přílohu"
 msgid "Failed to delete class"
 msgstr "Nepodařilo se smazat třídu"
 
-#: src/routes/_authenticated/$projectId/index.tsx:156
+#: src/routes/_authenticated/$projectId/index.tsx:157
 msgid "Failed to delete column"
 msgstr "Nepodařilo se smazat sloupec"
 
@@ -1248,7 +1279,7 @@ msgstr "Nepodařilo se smazat komentář"
 msgid "Failed to delete field"
 msgstr "Nepodařilo se smazat pole"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:159
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:153
 msgid "Failed to delete link"
 msgstr "Nepodařilo se smazat odkaz"
 
@@ -1268,7 +1299,7 @@ msgstr "Nepodařilo se smazat projekt"
 msgid "Failed to delete view"
 msgstr "Nepodařilo se smazat pohled"
 
-#: src/routes/_authenticated/$projectId/index.tsx:149
+#: src/routes/_authenticated/$projectId/index.tsx:150
 msgid "Failed to export data"
 msgstr "Export dat se nezdařil"
 
@@ -1301,15 +1332,15 @@ msgstr "Nepodařilo se načíst historii"
 msgid "Failed to load image"
 msgstr "Obrázek se nepodařilo načíst"
 
-#: src/features/objects/components/object-detail-panel.tsx:345
-#: src/features/objects/components/object-detail-panel.tsx:348
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:382
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:385
 msgid "Failed to load item"
 msgstr "Nepodařilo se načíst položku"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:41
 #: src/routes/_authenticated/$projectId/$objectId.tsx:65
-#: src/routes/_authenticated/$projectId/index.tsx:61
-#: src/routes/_authenticated/$projectId/index.tsx:85
+#: src/routes/_authenticated/$projectId/index.tsx:62
+#: src/routes/_authenticated/$projectId/index.tsx:86
 msgid "Failed to load project"
 msgstr "Nepodařilo se načíst projekt"
 
@@ -1337,8 +1368,8 @@ msgstr "Video se nepodařilo načíst"
 msgid "Failed to merge"
 msgstr "Nepodařilo se sloučit"
 
-#: src/features/objects/components/object-detail-panel.tsx:255
-#: src/routes/_authenticated/$projectId/index.tsx:153
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:317
+#: src/routes/_authenticated/$projectId/index.tsx:154
 msgid "Failed to move"
 msgstr "Přesunutí se nezdařilo"
 
@@ -1346,7 +1377,7 @@ msgstr "Přesunutí se nezdařilo"
 msgid "Failed to post comment"
 msgstr "Nepodařilo se odeslat komentář"
 
-#: src/routes/_authenticated/$projectId/index.tsx:157
+#: src/routes/_authenticated/$projectId/index.tsx:158
 msgid "Failed to re-order columns"
 msgstr "Nepodařilo se změnit pořadí sloupců"
 
@@ -1359,7 +1390,7 @@ msgstr "Nepodařilo se přečíst soubor"
 msgid "Failed to remove access"
 msgstr "Nepodařilo se odebrat přístup"
 
-#: src/routes/_authenticated/$projectId/index.tsx:155
+#: src/routes/_authenticated/$projectId/index.tsx:156
 msgid "Failed to rename column"
 msgstr "Nepodařilo se přejmenovat sloupec"
 
@@ -1379,7 +1410,7 @@ msgstr "Nepodařilo se obnovit prompt"
 msgid "Failed to revoke RSS access"
 msgstr "Zrušení přístupu RSS se nezdařilo"
 
-#: src/features/objects/components/object-detail-panel.tsx:199
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:273
 msgid "Failed to save"
 msgstr "Nepodařilo se uložit"
 
@@ -1402,13 +1433,17 @@ msgid "Failed to subscribe"
 msgstr "Nepodařilo se přihlásit k odběru"
 
 #: src/features/projects/pages/projects-list-page.tsx:43
-#: src/routes/_authenticated/$projectId/index.tsx:163
+#: src/routes/_authenticated/$projectId/index.tsx:164
 msgid "Failed to unsubscribe"
 msgstr "Nepodařilo se odhlásit z odběru"
 
 #: src/routes/_authenticated/$projectId_.settings.tsx:142
 msgid "Failed to update access level"
 msgstr "Nepodařilo se aktualizovat úroveň přístupu"
+
+#: ../../../lib/web/src/components/banner-section.tsx:71
+msgid "Failed to update banner"
+msgstr "Nepodařilo se aktualizovat banner"
 
 #: src/features/editor/components/design-editor.tsx:122
 msgid "Failed to update class"
@@ -1442,7 +1477,7 @@ msgstr "Nepodařilo se aktualizovat projekt"
 msgid "Failed to update view"
 msgstr "Nepodařilo se aktualizovat pohled"
 
-#: src/features/objects/components/object-detail-panel.tsx:218
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:288
 msgid "Failed to update watching"
 msgstr "Sledování se nepodařilo aktualizovat"
 
@@ -1454,7 +1489,7 @@ msgstr "Nepodařilo se nahrát přílohu"
 msgid "Fields"
 msgstr "Pole"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:611
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:605
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:160
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:180
 msgid "Files"
@@ -1603,7 +1638,7 @@ msgstr "Neplatný JSON soubor"
 msgid "It seems like the page you're looking for <0/>does not exist or might have been removed."
 msgstr "Zdá se, že stránka, kterou hledáte, <0/>neexistuje nebo byla odebrána."
 
-#: src/features/objects/components/object-detail-panel.tsx:425
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:441
 msgid "Item details"
 msgstr "Podrobnosti položky"
 
@@ -1633,11 +1668,11 @@ msgid "Light"
 msgstr "Světlý"
 
 #: ../../../lib/web/src/components/options-menu.tsx:190
-#: src/routes/_authenticated/$projectId/index.tsx:150
+#: src/routes/_authenticated/$projectId/index.tsx:151
 msgid "Link"
 msgstr "Odkaz"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:279
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:273
 msgid "Links"
 msgstr "Odkazy"
 
@@ -1657,11 +1692,11 @@ msgstr "Načítání obsahu…"
 msgid "Loading diff..."
 msgstr "Načítám rozdíl..."
 
-#: src/features/objects/components/object-detail-panel.tsx:325
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:365
 msgid "Loading item"
 msgstr "Načítám položku"
 
-#: src/features/objects/components/object-detail-panel.tsx:326
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:366
 msgid "Loading item details"
 msgstr "Načítám podrobnosti položky"
 
@@ -1671,7 +1706,7 @@ msgstr "Načítám šablony..."
 
 #: ../../../lib/web/src/components/ui/load-more.tsx:39
 #: ../../../lib/web/src/features/document/document-page.tsx:88
-#: src/routes/_authenticated/$projectId/index.tsx:147
+#: src/routes/_authenticated/$projectId/index.tsx:148
 msgid "Loading..."
 msgstr "Načítám..."
 
@@ -1741,7 +1776,7 @@ msgstr "Slučovací commit"
 msgid "Merge requests"
 msgstr "Žádosti o sloučení"
 
-#: src/features/objects/components/object-detail-panel.tsx:400
+#: src/routes/_authenticated/$projectId/index.tsx:212
 msgid "Merge requests ({requestCount})"
 msgstr "Žádosti o sloučení ({requestCount})"
 
@@ -1837,14 +1872,14 @@ msgstr "Název smí mít nejvýše 1000 znaků"
 msgid "Network error"
 msgstr "Chyba sítě"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:498
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:492
 #: ../../../lib/web/src/components/ui/sort-selector.tsx:43
-#: src/routes/_authenticated/$projectId/index.tsx:129
-#: src/routes/_authenticated/$projectId/index.tsx:133
+#: src/routes/_authenticated/$projectId/index.tsx:130
+#: src/routes/_authenticated/$projectId/index.tsx:134
 msgid "New"
 msgstr "Nové"
 
-#: src/routes/_authenticated/$projectId/index.tsx:135
+#: src/routes/_authenticated/$projectId/index.tsx:136
 msgid "New {className}"
 msgstr "Nový {className}"
 
@@ -1862,7 +1897,7 @@ msgstr "Další"
 msgid "Next image"
 msgstr "Další obrázek"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:577
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:571
 msgid "No {parentClassNames} to add to"
 msgstr "Žádné {parentClassNames} pro přidání"
 
@@ -1910,11 +1945,11 @@ msgstr "Zatím žádné hry"
 msgid "No groups available"
 msgstr "Žádné skupiny k dispozici"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:544
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:538
 msgid "No item types can be created yet. Create the required parent items first."
 msgstr "Zatím nelze vytvořit žádné typy položek. Nejprve vytvořte potřebné nadřazené položky."
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:360
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:354
 msgid "No matching objects"
 msgstr "Žádné odpovídající objekty"
 
@@ -1976,9 +2011,13 @@ msgid "No views"
 msgstr "Žádná zobrazení"
 
 #: ../../../lib/web/src/components/colour-picker.tsx:349
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:560
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:563
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:567
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:554
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:557
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:561
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:557
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:570
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:571
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:575
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:362
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:385
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:388
@@ -1990,9 +2029,6 @@ msgstr "Žádná zobrazení"
 #: ../../../lib/web/src/lib/preference-utils.ts:100
 #: src/features/editor/components/edit-dialogs.tsx:296
 #: src/features/editor/components/edit-dialogs.tsx:299
-#: src/features/objects/components/object-detail-panel.tsx:547
-#: src/features/objects/components/object-detail-panel.tsx:560
-#: src/features/objects/components/object-detail-panel.tsx:565
 msgid "None"
 msgstr "Žádné"
 
@@ -2083,7 +2119,7 @@ msgstr "Otevřít navigaci"
 msgid "Open option actions"
 msgstr "Otevřít akce možnosti"
 
-#: src/routes/_authenticated/$projectId/index.tsx:128
+#: src/routes/_authenticated/$projectId/index.tsx:129
 msgid "Open page actions"
 msgstr "Otevřít akce stránky"
 
@@ -2119,8 +2155,9 @@ msgstr "Ostatní"
 msgid "Owner"
 msgstr "Vlastník"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:552
-#: src/features/objects/components/object-detail-panel.tsx:543
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:546
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:553
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:569
 msgid "Parent"
 msgstr "Rodič"
 
@@ -2149,7 +2186,7 @@ msgstr "Vzor (regex)"
 msgid "People"
 msgstr "Lidé"
 
-#: src/routes/_authenticated/$projectId/index.tsx:137
+#: src/routes/_authenticated/$projectId/index.tsx:138
 msgid "Please add one or more classes to the project design."
 msgstr "Přidejte do designu projektu jednu nebo více tříd."
 
@@ -2207,7 +2244,7 @@ msgid "Processing…"
 msgstr "Zpracovává se…"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:62
-#: src/routes/_authenticated/$projectId/index.tsx:82
+#: src/routes/_authenticated/$projectId/index.tsx:83
 msgid "Project"
 msgstr "Projekt"
 
@@ -2223,7 +2260,7 @@ msgstr "Projekt vytvořen"
 msgid "Project deleted"
 msgstr "Projekt smazán"
 
-#: src/routes/_authenticated/$projectId/index.tsx:151
+#: src/routes/_authenticated/$projectId/index.tsx:152
 msgid "Project link"
 msgstr "Odkaz na projekt"
 
@@ -2256,7 +2293,7 @@ msgstr "Projekty"
 msgid "Prompt saved"
 msgstr "Prompt uložen"
 
-#: src/features/objects/components/object-detail-panel.tsx:388
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:408
 msgid "Properties"
 msgstr "Vlastnosti"
 
@@ -2272,7 +2309,7 @@ msgstr "Vyvýšený"
 msgid "Re-link your accounts on this server"
 msgstr "Znovu propojit účty na tomto serveru"
 
-#: src/routes/_authenticated/$projectId/index.tsx:140
+#: src/routes/_authenticated/$projectId/index.tsx:141
 msgid "Re-order columns"
 msgstr "Změnit pořadí sloupců"
 
@@ -2317,7 +2354,7 @@ msgstr "Přesměrování na přihlášení."
 msgid "Reduce interest"
 msgstr "Snížit zájem"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:65
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:69
 msgid "Relates"
 msgstr "Souvisí s"
 
@@ -2380,8 +2417,8 @@ msgstr "Odebrat zájem"
 msgid "Remove item"
 msgstr "Odebrat položku"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:304
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:309
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:298
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:303
 msgid "Remove link"
 msgstr "Odebrat odkaz"
 
@@ -2436,6 +2473,18 @@ msgstr "Povinné"
 msgid "Resend email"
 msgstr "Odeslat e-mail znovu"
 
+#: ../../../lib/web/src/components/game/game-end-dialogs.tsx:48
+msgid "Resign"
+msgstr "Vzdát"
+
+#: ../../../lib/web/src/components/game/game-end-dialogs.tsx:35
+msgid "Resign game?"
+msgstr "Vzdát hru?"
+
+#: ../../../lib/web/src/components/game/game-end-dialogs.tsx:45
+msgid "Resigning..."
+msgstr "Vzdávání…"
+
 #: src/features/requests/components/conflict-list.tsx:40
 msgid "Resolve these conflicts manually before merging."
 msgstr "Před sloučením vyřešte tyto konflikty ručně."
@@ -2487,11 +2536,12 @@ msgstr "Sobota"
 
 #: ../../../lib/web/src/components/ai-prompts-editor.tsx:156
 #: ../../../lib/web/src/components/attachment-composer.tsx:430
+#: ../../../lib/web/src/components/banner-section.tsx:99
 #: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:231
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:172
 #: ../../../lib/web/src/components/ui/editable-field-row.tsx:126
 #: ../../../lib/web/src/components/ui/secret-field.tsx:79
-#: src/routes/_authenticated/$projectId/index.tsx:143
+#: src/routes/_authenticated/$projectId/index.tsx:144
 msgid "Save"
 msgstr "Uložit"
 
@@ -2535,7 +2585,7 @@ msgstr "Hledat výchozí bod..."
 msgid "Search for projects..."
 msgstr "Hledat projekty..."
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:337
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:331
 msgid "Search objects..."
 msgstr "Hledat objekty..."
 
@@ -2673,7 +2723,7 @@ msgstr "Nastavování přístupu..."
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx:125
 #: ../../../lib/web/src/components/options-menu.tsx:196
 #: src/routes/_authenticated/$projectId_.settings.tsx:101
-#: src/routes/_authenticated/$projectId/index.tsx:177
+#: src/routes/_authenticated/$projectId/index.tsx:178
 msgid "Settings"
 msgstr "Nastavení"
 
@@ -2748,8 +2798,8 @@ msgstr "Squash a sloučit"
 msgid "Start the discussion by adding the first comment."
 msgstr "Začněte diskusi přidáním prvního komentáře."
 
-#: src/features/objects/components/object-detail-panel.tsx:448
-#: src/features/objects/components/object-detail-panel.tsx:457
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:471
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:476
 msgid "Stop watching"
 msgstr "Přestat sledovat"
 
@@ -2879,6 +2929,10 @@ msgstr "Tato žádost o sloučení byla sloučena do {0}."
 msgid "This merge request is a draft and cannot be merged."
 msgstr "Tato žádost o sloučení je konceptem a nelze ji sloučit."
 
+#: ../../../lib/web/src/components/game/game-end-dialogs.tsx:70
+msgid "This permanently deletes the game and its chat. This cannot be undone."
+msgstr "Tímto trvale smažete hru a její chat. Tuto akci nelze vzít zpět."
+
 #: src/routes/_authenticated/$projectId_.settings.tsx:111
 msgid "This project could not be loaded right now."
 msgstr "Tento projekt nyní nelze načíst."
@@ -2896,7 +2950,7 @@ msgid "This will permanently delete \"{projectName}\" and all its objects, comme
 msgstr "Tímto trvale smažete „{projectName}“ a všechny její objekty, komentáře a přílohy. Tuto akci nelze vrátit zpět."
 
 #. placeholder {0}: project.project.name
-#: src/routes/_authenticated/$projectId/index.tsx:160
+#: src/routes/_authenticated/$projectId/index.tsx:161
 msgid "This will remove \"{0}\" from your sidebar and stop updates for this project."
 msgstr "Tímto odstraníte „{0}“ z postranního panelu a zastavíte aktualizace tohoto projektu."
 
@@ -3036,27 +3090,26 @@ msgstr "Neznámý"
 
 #: ../../../lib/web/src/components/options-menu.tsx:211
 #: src/features/projects/pages/projects-list-page.tsx:39
-#: src/routes/_authenticated/$projectId/index.tsx:158
+#: src/routes/_authenticated/$projectId/index.tsx:159
 msgid "Unsubscribe"
 msgstr "Zrušit odběr"
 
-#: src/routes/_authenticated/$projectId/index.tsx:159
+#: src/routes/_authenticated/$projectId/index.tsx:160
 msgid "Unsubscribe from project?"
 msgstr "Zrušit odběr projektu?"
 
 #: src/features/projects/pages/projects-list-page.tsx:42
-#: src/routes/_authenticated/$projectId/index.tsx:162
+#: src/routes/_authenticated/$projectId/index.tsx:163
 msgid "Unsubscribed"
 msgstr "Odběr zrušen"
 
 #: src/features/projects/pages/projects-list-page.tsx:41
-#: src/routes/_authenticated/$projectId/index.tsx:161
+#: src/routes/_authenticated/$projectId/index.tsx:162
 msgid "Unsubscribing..."
 msgstr "Ruší se odběr..."
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:299
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:103
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:184
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:178
+#: ../../../lib/web/src/lib/entity-title.ts:40
 #: src/features/board/components/board-container.tsx:29
 #: src/features/editor/components/design-preview.tsx:31
 msgid "Untitled"
@@ -3076,7 +3129,7 @@ msgstr "Aktualizováno {field}"
 msgid "Updating access..."
 msgstr "Aktualizace přístupu..."
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:661
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:655
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:304
 msgid "Upload"
 msgstr "Nahrát"
@@ -3137,7 +3190,7 @@ msgstr "Přehrávač videa: {0}"
 msgid "View all notifications"
 msgstr "Zobrazit všechna oznámení"
 
-#: src/features/objects/components/object-detail-panel.tsx:426
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:442
 msgid "View and edit item details"
 msgstr "Zobrazit a upravit detaily položky"
 
@@ -3149,7 +3202,7 @@ msgstr "Zobrazit ovládací prvky"
 msgid "View only"
 msgstr "Pouze pro čtení"
 
-#: src/routes/_authenticated/$projectId/index.tsx:138
+#: src/routes/_authenticated/$projectId/index.tsx:139
 msgid "View options"
 msgstr "Možnosti zobrazení"
 
@@ -3161,8 +3214,8 @@ msgstr "Zobrazení"
 msgid "Voice recording is not supported in this browser"
 msgstr "Nahrávání hlasu není v tomto prohlížeči podporováno"
 
-#: src/features/objects/components/object-detail-panel.tsx:448
-#: src/features/objects/components/object-detail-panel.tsx:457
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:471
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:476
 msgid "Watch"
 msgstr "Sledovat"
 
@@ -3192,7 +3245,7 @@ msgstr "Středa"
 msgid "You do not have access to this section."
 msgstr "K této sekci nemáte přístup."
 
-#: src/routes/_authenticated/$projectId/index.tsx:52
+#: src/routes/_authenticated/$projectId/index.tsx:53
 msgid "You don't have access to this project."
 msgstr "K tomuto projektu nemáte přístup."
 

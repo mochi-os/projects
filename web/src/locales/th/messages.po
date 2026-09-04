@@ -179,7 +179,7 @@ msgstr "ตั้งค่าการเข้าถึงสำหรับ{su
 msgid "Account type"
 msgstr "ประเภทบัญชี"
 
-#: src/features/objects/components/object-detail-panel.tsx:407
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:415
 msgid "Activity"
 msgstr "กิจกรรม"
 
@@ -224,7 +224,7 @@ msgstr "เพิ่มรายการเช็คลิสต์"
 msgid "Add class"
 msgstr "เพิ่มคลาส"
 
-#: src/routes/_authenticated/$projectId/index.tsx:139
+#: src/routes/_authenticated/$projectId/index.tsx:140
 msgid "Add column"
 msgstr "เพิ่มคอลัมน์"
 
@@ -238,7 +238,7 @@ msgstr "เพิ่มฟิลด์"
 msgid "Add item..."
 msgstr "เพิ่มรายการ..."
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:320
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:314
 msgid "Add link"
 msgstr "เพิ่มลิงก์"
 
@@ -329,7 +329,7 @@ msgstr "ทุกอย่างที่สมัครรับฟีดนี
 msgid "Are you sure you want to delete \"{0}\"?"
 msgstr "คุณแน่ใจหรือไม่ว่าต้องการลบ\"{0}\"?"
 
-#: src/features/objects/components/object-detail-panel.tsx:653
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:671
 msgid "Are you sure you want to delete \"{title}\"? This action cannot be undone."
 msgstr "คุณแน่ใจหรือไม่ว่าต้องการลบ\"{title}\"? การกระทำนี้ไม่สามารถยกเลิกได้"
 
@@ -348,6 +348,14 @@ msgstr "คุณแน่ใจหรือไม่ว่าต้องกา
 #: ../../../lib/web/src/components/sign-out-dialog.tsx:27
 msgid "Are you sure you want to log out? You will need to log in again to access your account."
 msgstr "คุณแน่ใจหรือไม่ว่าต้องการออกจากระบบ? คุณจะต้องเข้าสู่ระบบอีกครั้งเพื่อเข้าถึงบัญชีของคุณ"
+
+#: ../../../lib/web/src/components/game/game-end-dialogs.tsx:39
+msgid "Are you sure you want to resign?"
+msgstr "แน่ใจว่าต้องการยอมแพ้?"
+
+#: ../../../lib/web/src/components/game/game-end-dialogs.tsx:38
+msgid "Are you sure you want to resign? {opponentName} will win the game."
+msgstr "คุณแน่ใจหรือไม่ว่าต้องการยอมแพ้? {opponentName} จะชนะเกม"
 
 #: src/features/projects/pages/projects-list-page.tsx:40
 msgid "Are you sure you want to unsubscribe from this project?"
@@ -402,20 +410,29 @@ msgid "Back to project"
 msgstr "กลับไปยังโครงการ"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:64
-#: src/routes/_authenticated/$projectId/index.tsx:84
+#: src/routes/_authenticated/$projectId/index.tsx:85
 msgid "Back to projects"
 msgstr "กลับไปยังโครงการ"
 
+#: ../../../lib/web/src/components/banner-section.tsx:80
 #: ../../../lib/web/src/components/entity-banner.tsx:17
 msgid "Banner"
 msgstr "แบนเนอร์"
+
+#: ../../../lib/web/src/components/banner-section.tsx:69
+msgid "Banner removed"
+msgstr "ลบแบนเนอร์แล้ว"
+
+#: ../../../lib/web/src/components/banner-section.tsx:69
+msgid "Banner updated"
+msgstr "อัปเดตแบนเนอร์แล้ว"
 
 #: src/features/requests/components/diff-viewer.tsx:448
 msgid "Binary file not shown"
 msgstr "ไม่แสดงไฟล์ไบนารี"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:68
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:215
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:72
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:209
 msgid "Blocked by"
 msgstr "ถูกบล็อกโดย"
 
@@ -424,7 +441,7 @@ msgstr "ถูกบล็อกโดย"
 msgid "Blocked navigation to untrusted link"
 msgstr "บล็อกการนำทางไปยังลิงก์ที่ไม่น่าเชื่อถือ"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:66
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:70
 msgid "Blocks"
 msgstr "บล็อก"
 
@@ -477,7 +494,7 @@ msgstr "สามารถเป็นลูกของ"
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:91
 #: src/features/projects/components/create-project-dialog.tsx:453
 #: src/routes/_authenticated/$projectId/design.tsx:61
-#: src/routes/_authenticated/$projectId/index.tsx:142
+#: src/routes/_authenticated/$projectId/index.tsx:143
 msgid "Cancel"
 msgstr "ยกเลิก"
 
@@ -550,6 +567,7 @@ msgstr "เลือกภาษา"
 msgid "Classes"
 msgstr "คลาส"
 
+#: ../../../lib/web/src/components/banner-section.tsx:111
 #: ../../../lib/web/src/components/colour-picker.tsx:274
 #: ../../../lib/web/src/components/colour-picker.tsx:355
 #: ../../../lib/web/src/components/travelling-picker.tsx:145
@@ -567,8 +585,8 @@ msgstr "ล้างทั้งหมด"
 msgid "Clear search"
 msgstr "ล้างการค้นหา"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:523
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:528
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:517
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:522
 #: ../../../lib/web/src/components/ui/dialog.tsx:78
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:480
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx:483
@@ -650,7 +668,7 @@ msgid "Comments"
 msgstr "ความคิดเห็น"
 
 #. placeholder {0}: data.comment_count || 0
-#: src/features/objects/components/object-detail-panel.tsx:393
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:411
 msgid "Comments ({0})"
 msgstr "ความคิดเห็น ({0})"
 
@@ -759,8 +777,8 @@ msgstr "ไม่สามารถยืนยันด้วยบัญชี
 
 #: ../../../lib/web/src/components/entity/entity-board-column.tsx:551
 #: ../../../lib/web/src/components/entity/entity-board-column.tsx:691
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:513
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:682
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:507
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:676
 #: ../../../lib/web/src/components/entity/entity-tree-view.tsx:672
 msgid "Create"
 msgstr "สร้าง"
@@ -809,7 +827,7 @@ msgstr "สร้าง {field}"
 msgid "Creating project..."
 msgstr "กำลังสร้างโปรเจกต์..."
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:682
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:676
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:260
 #: src/features/projects/components/create-project-dialog.tsx:457
 #: src/features/projects/components/create-project-dialog.tsx:549
@@ -870,7 +888,8 @@ msgstr "การเรียงลำดับเริ่มต้น"
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:208
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:255
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:317
-#: src/features/objects/components/object-detail-panel.tsx:654
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:672
+#: ../../../lib/web/src/components/game/game-end-dialogs.tsx:78
 #: src/features/requests/components/request-panel.tsx:142
 #: src/routes/_authenticated/$projectId_.settings.tsx:122
 msgid "Delete"
@@ -896,9 +915,13 @@ msgstr "ลบความคิดเห็น"
 msgid "Delete field"
 msgstr "ลบฟิลด์"
 
-#: src/features/objects/components/object-detail-panel.tsx:467
-#: src/features/objects/components/object-detail-panel.tsx:472
-#: src/features/objects/components/object-detail-panel.tsx:652
+#: ../../../lib/web/src/components/game/game-end-dialogs.tsx:69
+msgid "Delete game?"
+msgstr "ลบเกม?"
+
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:486
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:491
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:670
 msgid "Delete item"
 msgstr "ลบรายการ"
 
@@ -951,6 +974,10 @@ msgstr "ลบ {field}"
 msgid "Deleting project..."
 msgstr "กำลังลบโปรเจกต์..."
 
+#: ../../../lib/web/src/components/game/game-end-dialogs.tsx:75
+msgid "Deleting..."
+msgstr "กำลังลบ..."
+
 #: ../../../lib/web/src/components/ui/sort-direction-button.tsx:27
 msgid "Descending"
 msgstr "จากมากไปน้อย"
@@ -963,7 +990,7 @@ msgstr "คำอธิบาย"
 
 #: src/routes/_authenticated/$projectId/design.tsx:43
 #: src/routes/_authenticated/$projectId/design.tsx:46
-#: src/routes/_authenticated/$projectId/index.tsx:169
+#: src/routes/_authenticated/$projectId/index.tsx:170
 msgid "Design"
 msgstr "ออกแบบ"
 
@@ -1021,7 +1048,7 @@ msgstr "ตัดการเชื่อมต่อแล้ว"
 msgid "Dismiss"
 msgstr "ปิด"
 
-#: src/routes/_authenticated/$projectId/index.tsx:145
+#: src/routes/_authenticated/$projectId/index.tsx:146
 msgid "Dismiss board hint"
 msgstr "ปิดคำแนะนำกระดาน"
 
@@ -1034,13 +1061,13 @@ msgid "Does not match the required pattern"
 msgstr "ไม่ตรงกับรูปแบบที่กำหนด"
 
 #: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:309
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:495
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:523
 #: src/features/editor/components/edit-dialogs.tsx:439
-#: src/features/objects/components/object-detail-panel.tsx:481
 msgid "Done"
 msgstr "เสร็จสิ้น"
 
-#: src/routes/_authenticated/$projectId/index.tsx:144
+#: src/routes/_authenticated/$projectId/index.tsx:145
 msgid "Double click on a column to add content"
 msgstr "ดับเบิลคลิกบนคอลัมน์เพื่อเพิ่มเนื้อหา"
 
@@ -1060,7 +1087,7 @@ msgid "Download failed"
 msgstr "ดาวน์โหลดไม่สำเร็จ"
 
 #: src/routes/_authenticated/$projectId/design.tsx:52
-#: src/routes/_authenticated/$projectId/index.tsx:148
+#: src/routes/_authenticated/$projectId/index.tsx:149
 msgid "Downloaded {filename}"
 msgstr "ดาวน์โหลด{filename}แล้ว"
 
@@ -1069,11 +1096,11 @@ msgstr "ดาวน์โหลด{filename}แล้ว"
 msgid "Draft"
 msgstr "ฉบับร่าง"
 
-#: src/routes/_authenticated/$projectId/index.tsx:141
+#: src/routes/_authenticated/$projectId/index.tsx:142
 msgid "Drag columns to re-order them"
 msgstr "ลากคอลัมน์เพื่อเรียงลำดับใหม่"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:67
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:71
 msgid "Duplicates"
 msgstr "ทำซ้ำ"
 
@@ -1132,6 +1159,10 @@ msgstr "อีเมล"
 msgid "Email code"
 msgstr "รหัสอีเมล"
 
+#: ../../../lib/web/src/components/banner-section.tsx:88
+msgid "Enter banner text (markdown supported)..."
+msgstr "ป้อนข้อความแบนเนอร์ (รองรับ markdown)..."
+
 #: ../../../lib/web/src/components/step-up-dialog.tsx:290
 msgid "Enter the code from your email"
 msgstr "ป้อนรหัสจากอีเมลของคุณ"
@@ -1144,7 +1175,7 @@ msgstr "ป้อนรหัสจากแอปยืนยันตัวต
 msgid "Entity ID"
 msgstr "Entity ID"
 
-#: src/features/objects/components/object-detail-panel.tsx:344
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:381
 msgid "Error"
 msgstr "ข้อผิดพลาด"
 
@@ -1159,7 +1190,7 @@ msgstr "ขยาย"
 msgid "Expand sidebar"
 msgstr "ขยายแถบด้านข้าง"
 
-#: src/routes/_authenticated/$projectId/index.tsx:146
+#: src/routes/_authenticated/$projectId/index.tsx:147
 msgid "Export data"
 msgstr "ส่งออกข้อมูล"
 
@@ -1179,7 +1210,7 @@ msgstr "ใหญ่พิเศษ"
 msgid "Failed to add account"
 msgstr "ไม่สามารถเพิ่มบัญชีได้"
 
-#: src/routes/_authenticated/$projectId/index.tsx:154
+#: src/routes/_authenticated/$projectId/index.tsx:155
 msgid "Failed to add column"
 msgstr "เพิ่มคอลัมน์ไม่สำเร็จ"
 
@@ -1201,9 +1232,9 @@ msgstr "ไม่สามารถสร้างคลาสได้"
 msgid "Failed to create field"
 msgstr "ไม่สามารถสร้างฟิลด์ได้"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:137
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:131
 #: ../../../lib/web/src/components/options-menu.tsx:98
-#: src/routes/_authenticated/$projectId/index.tsx:152
+#: src/routes/_authenticated/$projectId/index.tsx:153
 msgid "Failed to create link"
 msgstr "ไม่สามารถสร้างลิงก์ได้"
 
@@ -1224,7 +1255,7 @@ msgstr "ไม่สามารถสร้างโปรเจกต์ได
 msgid "Failed to create view"
 msgstr "ไม่สามารถสร้างมุมมองได้"
 
-#: src/features/objects/components/object-detail-panel.tsx:235
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:303
 msgid "Failed to delete"
 msgstr "ไม่สามารถลบได้"
 
@@ -1236,7 +1267,7 @@ msgstr "ไม่สามารถลบไฟล์แนบได้"
 msgid "Failed to delete class"
 msgstr "ไม่สามารถลบคลาสได้"
 
-#: src/routes/_authenticated/$projectId/index.tsx:156
+#: src/routes/_authenticated/$projectId/index.tsx:157
 msgid "Failed to delete column"
 msgstr "ลบคอลัมน์ไม่สำเร็จ"
 
@@ -1248,7 +1279,7 @@ msgstr "ไม่สามารถลบความคิดเห็นได
 msgid "Failed to delete field"
 msgstr "ไม่สามารถลบฟิลด์ได้"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:159
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:153
 msgid "Failed to delete link"
 msgstr "ไม่สามารถลบลิงก์ได้"
 
@@ -1268,7 +1299,7 @@ msgstr "ไม่สามารถลบโปรเจกต์ได้"
 msgid "Failed to delete view"
 msgstr "ไม่สามารถลบมุมมองได้"
 
-#: src/routes/_authenticated/$projectId/index.tsx:149
+#: src/routes/_authenticated/$projectId/index.tsx:150
 msgid "Failed to export data"
 msgstr "ส่งออกข้อมูลไม่สำเร็จ"
 
@@ -1301,15 +1332,15 @@ msgstr "ไม่สามารถโหลดประวัติได้"
 msgid "Failed to load image"
 msgstr "โหลดรูปภาพไม่สำเร็จ"
 
-#: src/features/objects/components/object-detail-panel.tsx:345
-#: src/features/objects/components/object-detail-panel.tsx:348
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:382
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:385
 msgid "Failed to load item"
 msgstr "ไม่สามารถโหลดรายการได้"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:41
 #: src/routes/_authenticated/$projectId/$objectId.tsx:65
-#: src/routes/_authenticated/$projectId/index.tsx:61
-#: src/routes/_authenticated/$projectId/index.tsx:85
+#: src/routes/_authenticated/$projectId/index.tsx:62
+#: src/routes/_authenticated/$projectId/index.tsx:86
 msgid "Failed to load project"
 msgstr "ไม่สามารถโหลดโปรเจกต์ได้"
 
@@ -1337,8 +1368,8 @@ msgstr "โหลดวิดีโอไม่สำเร็จ"
 msgid "Failed to merge"
 msgstr "ไม่สามารถ merge ได้"
 
-#: src/features/objects/components/object-detail-panel.tsx:255
-#: src/routes/_authenticated/$projectId/index.tsx:153
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:317
+#: src/routes/_authenticated/$projectId/index.tsx:154
 msgid "Failed to move"
 msgstr "ย้ายไม่สำเร็จ"
 
@@ -1346,7 +1377,7 @@ msgstr "ย้ายไม่สำเร็จ"
 msgid "Failed to post comment"
 msgstr "ไม่สามารถโพสต์ความคิดเห็นได้"
 
-#: src/routes/_authenticated/$projectId/index.tsx:157
+#: src/routes/_authenticated/$projectId/index.tsx:158
 msgid "Failed to re-order columns"
 msgstr "จัดลำดับคอลัมน์ใหม่ไม่สำเร็จ"
 
@@ -1359,7 +1390,7 @@ msgstr "ไม่สามารถอ่านไฟล์ได้"
 msgid "Failed to remove access"
 msgstr "ไม่สามารถเอาการเข้าถึงออกได้"
 
-#: src/routes/_authenticated/$projectId/index.tsx:155
+#: src/routes/_authenticated/$projectId/index.tsx:156
 msgid "Failed to rename column"
 msgstr "เปลี่ยนชื่อคอลัมน์ไม่สำเร็จ"
 
@@ -1379,7 +1410,7 @@ msgstr "ไม่สามารถรีเซ็ต prompt ได้"
 msgid "Failed to revoke RSS access"
 msgstr "ไม่สามารถเพิกถอนการเข้าถึง RSS ได้"
 
-#: src/features/objects/components/object-detail-panel.tsx:199
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:273
 msgid "Failed to save"
 msgstr "ไม่สามารถบันทึกได้"
 
@@ -1402,13 +1433,17 @@ msgid "Failed to subscribe"
 msgstr "ไม่สามารถสมัครติดตามได้"
 
 #: src/features/projects/pages/projects-list-page.tsx:43
-#: src/routes/_authenticated/$projectId/index.tsx:163
+#: src/routes/_authenticated/$projectId/index.tsx:164
 msgid "Failed to unsubscribe"
 msgstr "ไม่สามารถยกเลิกการติดตามได้"
 
 #: src/routes/_authenticated/$projectId_.settings.tsx:142
 msgid "Failed to update access level"
 msgstr "ไม่สามารถอัปเดตระดับการเข้าถึงได้"
+
+#: ../../../lib/web/src/components/banner-section.tsx:71
+msgid "Failed to update banner"
+msgstr "ไม่สามารถอัปเดตแบนเนอร์ได้"
 
 #: src/features/editor/components/design-editor.tsx:122
 msgid "Failed to update class"
@@ -1442,7 +1477,7 @@ msgstr "ไม่สามารถอัปเดตโปรเจกต์ไ
 msgid "Failed to update view"
 msgstr "ไม่สามารถอัปเดตมุมมองได้"
 
-#: src/features/objects/components/object-detail-panel.tsx:218
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:288
 msgid "Failed to update watching"
 msgstr "อัปเดตการติดตามไม่สำเร็จ"
 
@@ -1454,7 +1489,7 @@ msgstr "ไม่สามารถอัปโหลดไฟล์แนบไ
 msgid "Fields"
 msgstr "ฟิลด์"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:611
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:605
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:160
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:180
 msgid "Files"
@@ -1603,7 +1638,7 @@ msgstr "ไฟล์ JSON ไม่ถูกต้อง"
 msgid "It seems like the page you're looking for <0/>does not exist or might have been removed."
 msgstr "ดูเหมือนว่าหน้าที่คุณกำลังมองหา <0/>ไม่มีอยู่หรืออาจถูกลบไปแล้ว"
 
-#: src/features/objects/components/object-detail-panel.tsx:425
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:441
 msgid "Item details"
 msgstr "รายละเอียดรายการ"
 
@@ -1633,11 +1668,11 @@ msgid "Light"
 msgstr "สว่าง"
 
 #: ../../../lib/web/src/components/options-menu.tsx:190
-#: src/routes/_authenticated/$projectId/index.tsx:150
+#: src/routes/_authenticated/$projectId/index.tsx:151
 msgid "Link"
 msgstr "ลิงก์"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:279
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:273
 msgid "Links"
 msgstr "ลิงก์"
 
@@ -1657,11 +1692,11 @@ msgstr "กำลังโหลดเนื้อหา…"
 msgid "Loading diff..."
 msgstr "กำลังโหลด diff..."
 
-#: src/features/objects/components/object-detail-panel.tsx:325
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:365
 msgid "Loading item"
 msgstr "กำลังโหลดรายการ"
 
-#: src/features/objects/components/object-detail-panel.tsx:326
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:366
 msgid "Loading item details"
 msgstr "กำลังโหลดรายละเอียดรายการ"
 
@@ -1671,7 +1706,7 @@ msgstr "กำลังโหลด templates..."
 
 #: ../../../lib/web/src/components/ui/load-more.tsx:39
 #: ../../../lib/web/src/features/document/document-page.tsx:88
-#: src/routes/_authenticated/$projectId/index.tsx:147
+#: src/routes/_authenticated/$projectId/index.tsx:148
 msgid "Loading..."
 msgstr "กำลังโหลด..."
 
@@ -1741,7 +1776,7 @@ msgstr "Merge commit"
 msgid "Merge requests"
 msgstr "คำขอผสาน"
 
-#: src/features/objects/components/object-detail-panel.tsx:400
+#: src/routes/_authenticated/$projectId/index.tsx:212
 msgid "Merge requests ({requestCount})"
 msgstr "คำขอรวม ({requestCount})"
 
@@ -1837,14 +1872,14 @@ msgstr "ชื่อต้องไม่เกิน 1000 ตัวอักษ
 msgid "Network error"
 msgstr "ข้อผิดพลาดของเครือข่าย"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:498
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:492
 #: ../../../lib/web/src/components/ui/sort-selector.tsx:43
-#: src/routes/_authenticated/$projectId/index.tsx:129
-#: src/routes/_authenticated/$projectId/index.tsx:133
+#: src/routes/_authenticated/$projectId/index.tsx:130
+#: src/routes/_authenticated/$projectId/index.tsx:134
 msgid "New"
 msgstr "ใหม่"
 
-#: src/routes/_authenticated/$projectId/index.tsx:135
+#: src/routes/_authenticated/$projectId/index.tsx:136
 msgid "New {className}"
 msgstr "{className} ใหม่"
 
@@ -1862,7 +1897,7 @@ msgstr "ถัดไป"
 msgid "Next image"
 msgstr "รูปถัดไป"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:577
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:571
 msgid "No {parentClassNames} to add to"
 msgstr "ไม่มี {parentClassNames} ให้เพิ่ม"
 
@@ -1910,11 +1945,11 @@ msgstr "ยังไม่มีเกม"
 msgid "No groups available"
 msgstr "ไม่มีกลุ่มที่ใช้งานได้"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:544
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:538
 msgid "No item types can be created yet. Create the required parent items first."
 msgstr "ยังไม่สามารถสร้างประเภทรายการได้ กรุณาสร้างรายการแม่ที่จำเป็นก่อน"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:360
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:354
 msgid "No matching objects"
 msgstr "ไม่มีออบเจกต์ที่ตรงกัน"
 
@@ -1976,9 +2011,13 @@ msgid "No views"
 msgstr "ไม่มีการเข้าชม"
 
 #: ../../../lib/web/src/components/colour-picker.tsx:349
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:560
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:563
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:567
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:554
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:557
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:561
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:557
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:570
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:571
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:575
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:362
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:385
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:388
@@ -1990,9 +2029,6 @@ msgstr "ไม่มีการเข้าชม"
 #: ../../../lib/web/src/lib/preference-utils.ts:100
 #: src/features/editor/components/edit-dialogs.tsx:296
 #: src/features/editor/components/edit-dialogs.tsx:299
-#: src/features/objects/components/object-detail-panel.tsx:547
-#: src/features/objects/components/object-detail-panel.tsx:560
-#: src/features/objects/components/object-detail-panel.tsx:565
 msgid "None"
 msgstr "ไม่มี"
 
@@ -2083,7 +2119,7 @@ msgstr "เปิดการนำทาง"
 msgid "Open option actions"
 msgstr "เปิดการดำเนินการของตัวเลือก"
 
-#: src/routes/_authenticated/$projectId/index.tsx:128
+#: src/routes/_authenticated/$projectId/index.tsx:129
 msgid "Open page actions"
 msgstr "เปิดการดำเนินการของหน้า"
 
@@ -2119,8 +2155,9 @@ msgstr "อื่น ๆ"
 msgid "Owner"
 msgstr "เจ้าของ"
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:552
-#: src/features/objects/components/object-detail-panel.tsx:543
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:546
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:553
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:569
 msgid "Parent"
 msgstr "แม่"
 
@@ -2149,7 +2186,7 @@ msgstr "รูปแบบ (regex)"
 msgid "People"
 msgstr "ผู้คน"
 
-#: src/routes/_authenticated/$projectId/index.tsx:137
+#: src/routes/_authenticated/$projectId/index.tsx:138
 msgid "Please add one or more classes to the project design."
 msgstr "กรุณาเพิ่มคลาสอย่างน้อยหนึ่งคลาสในดีไซน์โปรเจกต์"
 
@@ -2207,7 +2244,7 @@ msgid "Processing…"
 msgstr "กำลังประมวลผล…"
 
 #: src/routes/_authenticated/$projectId/$objectId.tsx:62
-#: src/routes/_authenticated/$projectId/index.tsx:82
+#: src/routes/_authenticated/$projectId/index.tsx:83
 msgid "Project"
 msgstr "โปรเจกต์"
 
@@ -2223,7 +2260,7 @@ msgstr "สร้างโปรเจกต์แล้ว"
 msgid "Project deleted"
 msgstr "ลบโปรเจกต์แล้ว"
 
-#: src/routes/_authenticated/$projectId/index.tsx:151
+#: src/routes/_authenticated/$projectId/index.tsx:152
 msgid "Project link"
 msgstr "ลิงก์โปรเจ็กต์"
 
@@ -2256,7 +2293,7 @@ msgstr "โปรเจกต์"
 msgid "Prompt saved"
 msgstr "บันทึก prompt แล้ว"
 
-#: src/features/objects/components/object-detail-panel.tsx:388
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:408
 msgid "Properties"
 msgstr "คุณสมบัติ"
 
@@ -2272,7 +2309,7 @@ msgstr "ยกขึ้น"
 msgid "Re-link your accounts on this server"
 msgstr "เชื่อมโยงบัญชีของคุณใหม่บนเซิร์ฟเวอร์นี้"
 
-#: src/routes/_authenticated/$projectId/index.tsx:140
+#: src/routes/_authenticated/$projectId/index.tsx:141
 msgid "Re-order columns"
 msgstr "จัดลำดับคอลัมน์ใหม่"
 
@@ -2317,7 +2354,7 @@ msgstr "กำลังเปลี่ยนเส้นทางไปยัง
 msgid "Reduce interest"
 msgstr "ลดความสนใจ"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:65
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:69
 msgid "Relates"
 msgstr "เกี่ยวข้อง"
 
@@ -2380,8 +2417,8 @@ msgstr "ลบความสนใจ"
 msgid "Remove item"
 msgstr "ลบรายการ"
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:304
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:309
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:298
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:303
 msgid "Remove link"
 msgstr "ลบลิงก์"
 
@@ -2436,6 +2473,18 @@ msgstr "จำเป็น"
 msgid "Resend email"
 msgstr "ส่งอีเมลอีกครั้ง"
 
+#: ../../../lib/web/src/components/game/game-end-dialogs.tsx:48
+msgid "Resign"
+msgstr "ยอมแพ้"
+
+#: ../../../lib/web/src/components/game/game-end-dialogs.tsx:35
+msgid "Resign game?"
+msgstr "ยอมแพ้เกม?"
+
+#: ../../../lib/web/src/components/game/game-end-dialogs.tsx:45
+msgid "Resigning..."
+msgstr "กำลังยอมแพ้..."
+
 #: src/features/requests/components/conflict-list.tsx:40
 msgid "Resolve these conflicts manually before merging."
 msgstr "แก้ไขข้อขัดแย้งเหล่านี้ด้วยตนเองก่อนผสาน"
@@ -2487,11 +2536,12 @@ msgstr "วันเสาร์"
 
 #: ../../../lib/web/src/components/ai-prompts-editor.tsx:156
 #: ../../../lib/web/src/components/attachment-composer.tsx:430
+#: ../../../lib/web/src/components/banner-section.tsx:99
 #: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:231
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:172
 #: ../../../lib/web/src/components/ui/editable-field-row.tsx:126
 #: ../../../lib/web/src/components/ui/secret-field.tsx:79
-#: src/routes/_authenticated/$projectId/index.tsx:143
+#: src/routes/_authenticated/$projectId/index.tsx:144
 msgid "Save"
 msgstr "บันทึก"
 
@@ -2535,7 +2585,7 @@ msgstr "ค้นหาต้นทาง..."
 msgid "Search for projects..."
 msgstr "ค้นหาโปรเจกต์..."
 
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:337
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:331
 msgid "Search objects..."
 msgstr "ค้นหาออบเจ็กต์..."
 
@@ -2673,7 +2723,7 @@ msgstr "กำลังตั้งค่าสิทธิ์การเข้
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx:125
 #: ../../../lib/web/src/components/options-menu.tsx:196
 #: src/routes/_authenticated/$projectId_.settings.tsx:101
-#: src/routes/_authenticated/$projectId/index.tsx:177
+#: src/routes/_authenticated/$projectId/index.tsx:178
 msgid "Settings"
 msgstr "การตั้งค่า"
 
@@ -2748,8 +2798,8 @@ msgstr "Squash และรวม"
 msgid "Start the discussion by adding the first comment."
 msgstr "เริ่มการสนทนาโดยเพิ่มความคิดเห็นแรก"
 
-#: src/features/objects/components/object-detail-panel.tsx:448
-#: src/features/objects/components/object-detail-panel.tsx:457
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:471
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:476
 msgid "Stop watching"
 msgstr "หยุดติดตาม"
 
@@ -2879,6 +2929,10 @@ msgstr "คำขอรวมนี้ได้รวมเข้ากับ {0
 msgid "This merge request is a draft and cannot be merged."
 msgstr "คำขอผสานนี้เป็นแบบร่างและไม่สามารถผสานได้"
 
+#: ../../../lib/web/src/components/game/game-end-dialogs.tsx:70
+msgid "This permanently deletes the game and its chat. This cannot be undone."
+msgstr "การดำเนินการนี้จะลบเกมและแชทของเกมอย่างถาวร ไม่สามารถยกเลิกการดำเนินการนี้ได้"
+
 #: src/routes/_authenticated/$projectId_.settings.tsx:111
 msgid "This project could not be loaded right now."
 msgstr "ไม่สามารถโหลดโปรเจกต์นี้ได้ในขณะนี้"
@@ -2896,7 +2950,7 @@ msgid "This will permanently delete \"{projectName}\" and all its objects, comme
 msgstr "การกระทำนี้จะลบ \"{projectName}\" และออบเจ็กต์ ความคิดเห็น และไฟล์แนบทั้งหมดอย่างถาวร ไม่สามารถย้อนกลับได้"
 
 #. placeholder {0}: project.project.name
-#: src/routes/_authenticated/$projectId/index.tsx:160
+#: src/routes/_authenticated/$projectId/index.tsx:161
 msgid "This will remove \"{0}\" from your sidebar and stop updates for this project."
 msgstr "การกระทำนี้จะลบ \"{0}\" ออกจากแถบด้านข้างของคุณและหยุดการอัปเดตของโปรเจกต์นี้"
 
@@ -3036,27 +3090,26 @@ msgstr "ไม่ทราบ"
 
 #: ../../../lib/web/src/components/options-menu.tsx:211
 #: src/features/projects/pages/projects-list-page.tsx:39
-#: src/routes/_authenticated/$projectId/index.tsx:158
+#: src/routes/_authenticated/$projectId/index.tsx:159
 msgid "Unsubscribe"
 msgstr "ยกเลิกการติดตาม"
 
-#: src/routes/_authenticated/$projectId/index.tsx:159
+#: src/routes/_authenticated/$projectId/index.tsx:160
 msgid "Unsubscribe from project?"
 msgstr "ยกเลิกการติดตามโปรเจกต์?"
 
 #: src/features/projects/pages/projects-list-page.tsx:42
-#: src/routes/_authenticated/$projectId/index.tsx:162
+#: src/routes/_authenticated/$projectId/index.tsx:163
 msgid "Unsubscribed"
 msgstr "ยกเลิกการติดตามแล้ว"
 
 #: src/features/projects/pages/projects-list-page.tsx:41
-#: src/routes/_authenticated/$projectId/index.tsx:161
+#: src/routes/_authenticated/$projectId/index.tsx:162
 msgid "Unsubscribing..."
 msgstr "กำลังยกเลิกการติดตาม..."
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:299
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:103
-#: ../../../lib/web/src/components/entity/entity-object-links.tsx:184
+#: ../../../lib/web/src/components/entity/entity-object-links.tsx:178
+#: ../../../lib/web/src/lib/entity-title.ts:40
 #: src/features/board/components/board-container.tsx:29
 #: src/features/editor/components/design-preview.tsx:31
 msgid "Untitled"
@@ -3076,7 +3129,7 @@ msgstr "อัปเดต {field}"
 msgid "Updating access..."
 msgstr "กำลังอัปเดตสิทธิ์การเข้าถึง..."
 
-#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:661
+#: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:655
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:304
 msgid "Upload"
 msgstr "อัปโหลด"
@@ -3137,7 +3190,7 @@ msgstr "โปรแกรมดูวิดีโอ: {0}"
 msgid "View all notifications"
 msgstr "ดูการแจ้งเตือนทั้งหมด"
 
-#: src/features/objects/components/object-detail-panel.tsx:426
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:442
 msgid "View and edit item details"
 msgstr "ดูและแก้ไขรายละเอียดรายการ"
 
@@ -3149,7 +3202,7 @@ msgstr "ตัวควบคุมมุมมอง"
 msgid "View only"
 msgstr "ดูอย่างเดียว"
 
-#: src/routes/_authenticated/$projectId/index.tsx:138
+#: src/routes/_authenticated/$projectId/index.tsx:139
 msgid "View options"
 msgstr "ตัวเลือกการดู"
 
@@ -3161,8 +3214,8 @@ msgstr "การดู"
 msgid "Voice recording is not supported in this browser"
 msgstr "เบราว์เซอร์นี้ไม่รองรับการบันทึกเสียง"
 
-#: src/features/objects/components/object-detail-panel.tsx:448
-#: src/features/objects/components/object-detail-panel.tsx:457
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:471
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:476
 msgid "Watch"
 msgstr "ติดตาม"
 
@@ -3192,7 +3245,7 @@ msgstr "วันพุธ"
 msgid "You do not have access to this section."
 msgstr "คุณไม่มีสิทธิ์เข้าถึงส่วนนี้"
 
-#: src/routes/_authenticated/$projectId/index.tsx:52
+#: src/routes/_authenticated/$projectId/index.tsx:53
 msgid "You don't have access to this project."
 msgstr "คุณไม่มีสิทธิ์เข้าถึงโปรเจกต์นี้"
 

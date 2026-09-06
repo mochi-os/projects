@@ -11,11 +11,10 @@
 import { createFileRoute, Navigate, useNavigate } from "@tanstack/react-router";
 import { Trans, useLingui } from '@lingui/react/macro'
 import { useQuery } from "@tanstack/react-query";
-import { EntityDesignPage, type EntityDesignImport } from "@mochi/web";
+import { EntityDesignPage, type EntityDesignImport, canDesign } from "@mochi/web";
 import projectsApi from "@/api/projects";
 import type { ProjectDetails, ProjectTemplate } from "@/types";
-import { canDesign } from "@/lib/access";
-import { DesignEditor } from "@/features/editor";
+import { DesignEditor } from "@/features/editor/components/design-editor";
 
 export const Route = createFileRoute("/_authenticated/$projectId/design")({
   component: DesignPage,

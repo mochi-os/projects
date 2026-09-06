@@ -18,6 +18,10 @@ msgstr ""
 msgid "Please check your internet connection and try again."
 msgstr "Ehechami nde internet conexión ha eha'ã jey."
 
+#: src/features/requests/components/branch-select.tsx:69
+msgid "(current)"
+msgstr "(ko'ãnga)"
+
 #: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:189
 msgid "(edited)"
 msgstr "(oñembojeguáva)"
@@ -44,6 +48,12 @@ msgstr "[noñemoĩva]"
 msgid "{0, plural, one {# conflicting file} other {# conflicting files}}"
 msgstr "{0, plural, one {# marandu joavy} other {# marandu joavy}}"
 
+#. placeholder {0}: files.length
+#: src/features/requests/components/diff-stats.tsx:79
+#: src/features/requests/components/diff-viewer.tsx:420
+msgid "{0, plural, one {# file changed} other {# files changed}}"
+msgstr "{0, plural, one {# archivo oñemoambue} other {# archivo oñemoambue}}"
+
 #. placeholder {0}: displayInfo.count
 #: ../../../lib/web/src/components/person-picker.tsx:260
 msgid "{0, plural, one {# selected} other {# selected}}"
@@ -55,23 +65,17 @@ msgid "{0, plural, one {+# nested} other {+# nested}}"
 msgstr "{0, plural, one {+# ipypegua} other {+# ipypegua}}"
 
 #. placeholder {0}: String(name)
-#: src/routes/_authenticated/$projectId/design.tsx:46
+#: src/routes/_authenticated/$projectId/design.tsx:45
 msgid "{0} - Design"
 msgstr "{0} - Diseño"
 
 #. placeholder {0}: data.behind
-#: src/features/requests/components/merge-status.tsx:77
+#: src/features/requests/components/merge-status.tsx:88
 msgid "{0} behind"
 msgstr "{0} hapykuépe"
 
-#. placeholder {0}: files.length
-#: src/features/requests/components/diff-stats.tsx:74
-#: src/features/requests/components/diff-viewer.tsx:420
-msgid "{0} files changed"
-msgstr "{0} archivos oñemoambue"
-
 #. placeholder {0}: String(name)
-#: src/routes/_authenticated/$projectId_.settings.tsx:107
+#: src/routes/_authenticated/$projectId_.settings.tsx:110
 msgid "{0} settings"
 msgstr "{0} ñemboheko"
 
@@ -112,7 +116,7 @@ msgstr "{totalCount, plural, one {# mba'e} other {# mba'e}}"
 msgid "{totalDescendants, plural, one {# reply} other {+# more replies}}"
 msgstr "{totalDescendants, plural, one {# ñembohovái} other {+# ñembohovái ambue}}"
 
-#: src/features/requests/components/diff-stats.tsx:120
+#: src/features/requests/components/diff-stats.tsx:125
 #: src/features/requests/components/diff-viewer.tsx:471
 msgid "{truncated, plural, one {# more file not shown} other {# more files not shown}}"
 msgstr "{truncated, plural, one {# marandurenda ambue nojehechaukái} other {# marandurenda ambue nojehechaukái}}"
@@ -122,7 +126,7 @@ msgid "{unreadCount, plural, one {Open menu (# unread notification)} other {Open
 msgstr "{unreadCount, plural, one {Embojuruja menu (# marandu ojeleeʼỹva)} other {Embojuruja menu (# marandu ojeleeʼỹva)}}"
 
 #. placeholder {0}: data.ahead
-#: src/features/requests/components/merge-status.tsx:76
+#: src/features/requests/components/merge-status.tsx:87
 msgid "+{0} ahead"
 msgstr "+{0} tenonde"
 
@@ -146,7 +150,7 @@ msgstr "Sa'ipýpe (ára ha aravo)"
 msgid "Accept"
 msgstr "Hekoite"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:102
+#: src/routes/_authenticated/$projectId_.settings.tsx:105
 msgid "Access"
 msgstr "Jeike"
 
@@ -159,19 +163,19 @@ msgstr "Jeike noñemoneĩri"
 msgid "Access level"
 msgstr "Jeike rupa"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:141
+#: src/routes/_authenticated/$projectId_.settings.tsx:144
 msgid "Access level updated"
 msgstr "Jeike rupa oñembojeguáma"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:132
+#: src/routes/_authenticated/$projectId_.settings.tsx:135
 msgid "Access management"
 msgstr "Jeike Sãmbyhy"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:138
+#: src/routes/_authenticated/$projectId_.settings.tsx:141
 msgid "Access removed"
 msgstr "Jeike oñehundi"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:135
+#: src/routes/_authenticated/$projectId_.settings.tsx:138
 msgid "Access set for {subjectName}"
 msgstr "Jeike oñemoĩ {subjectName}-pe"
 
@@ -179,14 +183,14 @@ msgstr "Jeike oñemoĩ {subjectName}-pe"
 msgid "Account type"
 msgstr "Tetãygua peteĩchagua"
 
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:415
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:423
 msgid "Activity"
 msgstr "Tembiaporã"
 
 #: ../../../lib/web/src/components/entity/entity-field-editor.tsx:758
 #: ../../../lib/web/src/features/access/access-dialog.tsx:332
 #: ../../../lib/web/src/features/accounts/account-add.tsx:209
-#: src/features/requests/components/request-panel.tsx:113
+#: src/features/requests/components/request-panel.tsx:111
 msgid "Add"
 msgstr "Embojuaju"
 
@@ -218,7 +222,7 @@ msgstr "Embojoapy ñemyesakã"
 msgid "Add checklist item"
 msgstr "Embojuaju checklist mba'e"
 
-#: src/features/editor/components/design-editor.tsx:541
+#: src/features/editor/components/design-editor.tsx:529
 #: src/features/editor/components/edit-dialogs.tsx:223
 #: src/features/editor/components/edit-dialogs.tsx:434
 msgid "Add class"
@@ -250,7 +254,7 @@ msgstr "Embojuaju link"
 msgid "Add option"
 msgstr "Embojuaju opción"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:133
+#: src/routes/_authenticated/$projectId_.settings.tsx:136
 msgid "Add rule"
 msgstr "Embojuruja peteĩ tembiapouka"
 
@@ -266,7 +270,7 @@ msgstr "Embojuaju ñe'ẽmondo oĩvape"
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:518
 #: ../../../lib/web/src/components/view-tabs.tsx:87
 #: ../../../lib/web/src/components/view-tabs.tsx:93
-#: src/features/editor/components/design-editor.tsx:492
+#: src/features/editor/components/design-editor.tsx:480
 msgid "Add view"
 msgstr "Embojuaju view"
 
@@ -286,7 +290,7 @@ msgstr "Opaite tembiaporã"
 msgid "Allow anyone to search for {entityLabel}"
 msgstr "Emoneĩ opavavépe oheka {entityLabel}"
 
-#: src/features/projects/components/create-project-dialog.tsx:387
+#: src/features/projects/components/create-project-dialog.tsx:400
 msgid "Allow anyone to search for project"
 msgstr "Eipysyrõ opavavépe oheka tembiaporã"
 
@@ -329,7 +333,7 @@ msgstr "Opa mba'e osuscribíva ko feed-pe ndohupytyvéima. Upéi ikatu embokopia
 msgid "Are you sure you want to delete \"{0}\"?"
 msgstr "Añetehápe ehundise \"{0}\"?"
 
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:671
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:679
 msgid "Are you sure you want to delete \"{title}\"? This action cannot be undone."
 msgstr "Añetehápe ehundise \"{title}\"? Ko tembiapo ndojeapojeýiva."
 
@@ -341,7 +345,7 @@ msgstr "Añetehápe ehundise \"{name}\" columna? Ko ndojeapojeýiva."
 msgid "Are you sure you want to delete this comment? This will also delete all replies."
 msgstr "Añetehápe ehundise ko comentario? Ehundíta avei opa mbohovái."
 
-#: src/features/requests/components/request-panel.tsx:141
+#: src/features/requests/components/request-panel.tsx:139
 msgid "Are you sure you want to delete this merge request?"
 msgstr "Añetehápe ehundise ko merge jerure?"
 
@@ -395,7 +399,7 @@ msgid "Avatar for {name}"
 msgstr "{name} avatar"
 
 #: ../../../lib/web/src/components/place-picker.tsx:142
-#: src/features/projects/components/create-project-dialog.tsx:546
+#: src/features/projects/components/create-project-dialog.tsx:558
 msgid "Back"
 msgstr "Tapykuépe"
 
@@ -404,26 +408,26 @@ msgstr "Tapykuépe"
 msgid "Back to home"
 msgstr "Eju jey ógape"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:103
-#: src/routes/_authenticated/$projectId/design.tsx:47
+#: src/routes/_authenticated/$projectId_.settings.tsx:106
+#: src/routes/_authenticated/$projectId/design.tsx:46
 msgid "Back to project"
 msgstr "Tapykuépe tembiaporã"
 
-#: src/routes/_authenticated/$projectId/$objectId.tsx:64
+#: src/routes/_authenticated/$projectId/$objectId.tsx:71
 #: src/routes/_authenticated/$projectId/index.tsx:85
 msgid "Back to projects"
 msgstr "Tapykuépe tembiaporãnguéra"
 
-#: ../../../lib/web/src/components/banner-section.tsx:80
+#: ../../../lib/web/src/components/banner-section.tsx:91
 #: ../../../lib/web/src/components/entity-banner.tsx:17
 msgid "Banner"
 msgstr "Banner"
 
-#: ../../../lib/web/src/components/banner-section.tsx:69
+#: ../../../lib/web/src/components/banner-section.tsx:73
 msgid "Banner removed"
 msgstr "Banner oñehundi"
 
-#: ../../../lib/web/src/components/banner-section.tsx:69
+#: ../../../lib/web/src/components/banner-section.tsx:73
 msgid "Banner updated"
 msgstr "Banner oñembojeguáma"
 
@@ -462,7 +466,7 @@ msgstr "Borde sa'y"
 msgid "Browser notifications"
 msgstr "Browser ñe'ẽmondokuéra"
 
-#: src/routes/_authenticated/$projectId/design.tsx:100
+#: src/routes/_authenticated/$projectId/design.tsx:99
 msgid "Built-in templates"
 msgstr "Templates ipype guára"
 
@@ -492,8 +496,8 @@ msgstr "Ikatu ta'ýra"
 #: ../../../lib/web/src/features/access/access-list.tsx:268
 #: ../../../lib/web/src/features/accounts/account-add.tsx:201
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:91
-#: src/features/projects/components/create-project-dialog.tsx:453
-#: src/routes/_authenticated/$projectId/design.tsx:61
+#: src/features/projects/components/create-project-dialog.tsx:466
+#: src/routes/_authenticated/$projectId/design.tsx:60
 #: src/routes/_authenticated/$projectId/index.tsx:143
 msgid "Cancel"
 msgstr "Heja"
@@ -512,7 +516,7 @@ msgstr "Heja mbohovái"
 msgid "Cancelled"
 msgstr "Oñehéja"
 
-#: src/features/requests/components/merge-status.tsx:71
+#: src/features/requests/components/merge-status.tsx:82
 msgid "Cannot merge automatically"
 msgstr "Ndaikatúi merge automátikope"
 
@@ -554,7 +558,7 @@ msgstr "Checklist"
 msgid "Choose a game from the sidebar or start a new one."
 msgstr "Eiporavo peteĩ ñembosarái sidebar-gui térã eñepyrũ peteĩ pyahu."
 
-#: src/features/projects/components/create-project-dialog.tsx:334
+#: src/features/projects/components/create-project-dialog.tsx:345
 msgid "Choose a template"
 msgstr "Eiporavo peteĩ template"
 
@@ -563,11 +567,11 @@ msgstr "Eiporavo peteĩ template"
 msgid "Choose language"
 msgstr "Eiporavo ñe'ẽ"
 
-#: src/features/editor/components/design-editor.tsx:536
+#: src/features/editor/components/design-editor.tsx:524
 msgid "Classes"
 msgstr "Classes"
 
-#: ../../../lib/web/src/components/banner-section.tsx:111
+#: ../../../lib/web/src/components/banner-section.tsx:123
 #: ../../../lib/web/src/components/colour-picker.tsx:274
 #: ../../../lib/web/src/components/colour-picker.tsx:355
 #: ../../../lib/web/src/components/travelling-picker.tsx:145
@@ -668,7 +672,7 @@ msgid "Comments"
 msgstr "Comentariokuéra"
 
 #. placeholder {0}: data.comment_count || 0
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:411
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:419
 msgid "Comments ({0})"
 msgstr "Comentariokuéra ({0})"
 
@@ -746,12 +750,12 @@ msgid "Could not load repositories"
 msgstr "Ndaikatúi oñembogue repositorios"
 
 #: src/features/projects/components/create-project-dialog.tsx:79
-#: src/features/projects/components/create-project-dialog.tsx:482
-#: src/routes/_authenticated/$projectId/design.tsx:102
+#: src/features/projects/components/create-project-dialog.tsx:495
+#: src/routes/_authenticated/$projectId/design.tsx:101
 msgid "Could not load templates"
 msgstr "Ndaikatúi oñembogue templates"
 
-#: src/features/requests/components/diff-stats.tsx:59
+#: src/features/requests/components/diff-stats.tsx:64
 msgid "Could not load the diff"
 msgstr "Ndaikatúi oñembogue diff"
 
@@ -791,7 +795,7 @@ msgstr "Ejapo {entityLabel}"
 msgid "Create a new item in this project"
 msgstr "Embojeguáva peteĩ mba'e pyahu ko tembiaporã-pe"
 
-#: src/features/projects/components/create-project-dialog.tsx:336
+#: src/features/projects/components/create-project-dialog.tsx:347
 #: src/features/projects/pages/projects-list-page.tsx:37
 msgid "Create a new project"
 msgstr "Embojeguáva peteĩ tembiaporã pyahu"
@@ -802,10 +806,10 @@ msgid "Create new item"
 msgstr "Embojeguáva mba'e pyahu"
 
 #: src/components/layout/projects-layout.tsx:36
-#: src/features/projects/components/create-project-dialog.tsx:324
-#: src/features/projects/components/create-project-dialog.tsx:334
-#: src/features/projects/components/create-project-dialog.tsx:457
-#: src/features/projects/components/create-project-dialog.tsx:549
+#: src/features/projects/components/create-project-dialog.tsx:335
+#: src/features/projects/components/create-project-dialog.tsx:345
+#: src/features/projects/components/create-project-dialog.tsx:470
+#: src/features/projects/components/create-project-dialog.tsx:561
 msgid "Create project"
 msgstr "Embojeguáva tembiaporã"
 
@@ -823,14 +827,14 @@ msgstr "Oñembojeguáma"
 msgid "Created {field}"
 msgstr "{field} ojejapo"
 
-#: src/features/projects/components/create-project-dialog.tsx:132
+#: src/features/projects/components/create-project-dialog.tsx:145
 msgid "Creating project..."
 msgstr "Ojejapohína tembiapo..."
 
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:676
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:260
-#: src/features/projects/components/create-project-dialog.tsx:457
-#: src/features/projects/components/create-project-dialog.tsx:549
+#: src/features/projects/components/create-project-dialog.tsx:470
+#: src/features/projects/components/create-project-dialog.tsx:561
 msgid "Creating..."
 msgstr "Embojeguávahína..."
 
@@ -854,8 +858,8 @@ msgstr "Mba'ekuaarã joavy"
 #. placeholder {0}: imported.data?.objects ?? 0
 #. placeholder {1}: imported.data?.comments ?? 0
 #. placeholder {2}: imported.data?.links ?? 0
-#: src/features/projects/components/create-project-dialog.tsx:151
-#: src/features/projects/components/create-project-dialog.tsx:181
+#: src/features/projects/components/create-project-dialog.tsx:164
+#: src/features/projects/components/create-project-dialog.tsx:194
 msgid "Data imported ({0, plural, one {# object} other {# objects}}, {1, plural, one {# comment} other {# comments}}, {2, plural, one {# link} other {# links}})"
 msgstr "Datos oñembojuaju ({0, plural, one {# mba'e} other {# mba'e}}, {1, plural, one {# comentario} other {# comentario}}, {2, plural, one {# ñeꞌẽ} other {# ñeꞌẽ}})"
 
@@ -888,10 +892,10 @@ msgstr "Default sort"
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:208
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:255
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:317
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:672
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:680
 #: ../../../lib/web/src/components/game/game-end-dialogs.tsx:78
-#: src/features/requests/components/request-panel.tsx:142
-#: src/routes/_authenticated/$projectId_.settings.tsx:122
+#: src/features/requests/components/request-panel.tsx:140
+#: src/routes/_authenticated/$projectId_.settings.tsx:125
 msgid "Delete"
 msgstr "Hundi"
 
@@ -919,19 +923,19 @@ msgstr "Hundi campo"
 msgid "Delete game?"
 msgstr "Ehundi ñembosarái?"
 
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:486
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:491
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:670
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:494
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:499
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:678
 msgid "Delete item"
 msgstr "Hundi mba'e"
 
-#: src/features/requests/components/request-panel.tsx:140
-#: src/features/requests/components/request-panel.tsx:403
-#: src/features/requests/components/request-panel.tsx:408
-#: src/features/requests/components/request-panel.tsx:428
-#: src/features/requests/components/request-panel.tsx:433
-#: src/features/requests/components/request-panel.tsx:450
-#: src/features/requests/components/request-panel.tsx:455
+#: src/features/requests/components/request-panel.tsx:138
+#: src/features/requests/components/request-panel.tsx:401
+#: src/features/requests/components/request-panel.tsx:406
+#: src/features/requests/components/request-panel.tsx:426
+#: src/features/requests/components/request-panel.tsx:431
+#: src/features/requests/components/request-panel.tsx:448
+#: src/features/requests/components/request-panel.tsx:453
 msgid "Delete merge request"
 msgstr "Hundi merge jerure"
 
@@ -945,12 +949,12 @@ msgstr "Hundi opción"
 msgid "Delete option {0}"
 msgstr "Hundi opción {0}"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:121
 #: src/routes/_authenticated/$projectId_.settings.tsx:124
+#: src/routes/_authenticated/$projectId_.settings.tsx:127
 msgid "Delete project"
 msgstr "Hundi tembiaporã"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:123
+#: src/routes/_authenticated/$projectId_.settings.tsx:126
 msgid "Delete project?"
 msgstr "Hundi tembiaporã?"
 
@@ -970,7 +974,7 @@ msgstr "Oñemboguete"
 msgid "Deleted {field}"
 msgstr "{field} oñemboguete"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:129
+#: src/routes/_authenticated/$projectId_.settings.tsx:132
 msgid "Deleting project..."
 msgstr "Ojejukahína tembiapo..."
 
@@ -983,19 +987,19 @@ msgid "Descending"
 msgstr "Oguejýva"
 
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:85
-#: src/features/requests/components/request-panel.tsx:315
-#: src/routes/_authenticated/$projectId_.settings.tsx:114
+#: src/features/requests/components/request-panel.tsx:313
+#: src/routes/_authenticated/$projectId_.settings.tsx:117
 msgid "Description"
 msgstr "Mbohekoha"
 
-#: src/routes/_authenticated/$projectId/design.tsx:43
-#: src/routes/_authenticated/$projectId/design.tsx:46
+#: src/routes/_authenticated/$projectId/design.tsx:42
+#: src/routes/_authenticated/$projectId/design.tsx:45
 #: src/routes/_authenticated/$projectId/index.tsx:170
 msgid "Design"
 msgstr "Diseño"
 
-#: src/features/projects/components/create-project-dialog.tsx:182
-#: src/routes/_authenticated/$projectId/design.tsx:54
+#: src/features/projects/components/create-project-dialog.tsx:195
+#: src/routes/_authenticated/$projectId/design.tsx:53
 msgid "Design imported"
 msgstr "Diseño oñembojuaju"
 
@@ -1018,7 +1022,7 @@ msgstr "Detalle Panel"
 msgid "Detect from web browser"
 msgstr "Heka web browser-gui"
 
-#: src/features/requests/components/diff-stats.tsx:92
+#: src/features/requests/components/diff-stats.tsx:97
 msgid "Diff"
 msgstr "Diff"
 
@@ -1061,7 +1065,7 @@ msgid "Does not match the required pattern"
 msgstr "Ndojojái pe ta'ãnga ojejeruréva ndive"
 
 #: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:309
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:495
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:503
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:523
 #: src/features/editor/components/edit-dialogs.tsx:439
 msgid "Done"
@@ -1077,7 +1081,7 @@ msgstr "Eikutu mokõi jey peteĩ columna-pe emoĩ haguã contenido"
 msgid "Download"
 msgstr "Emboguejy"
 
-#: src/routes/_authenticated/$projectId/design.tsx:75
+#: src/routes/_authenticated/$projectId/design.tsx:74
 msgid "Download backup first"
 msgstr "Emboguejy raẽ respaldo"
 
@@ -1086,13 +1090,13 @@ msgstr "Emboguejy raẽ respaldo"
 msgid "Download failed"
 msgstr "Ndaikatúi oñemboguejy"
 
-#: src/routes/_authenticated/$projectId/design.tsx:52
+#: src/routes/_authenticated/$projectId/design.tsx:51
 #: src/routes/_authenticated/$projectId/index.tsx:149
 msgid "Downloaded {filename}"
 msgstr "Oñemboguejy {filename}"
 
-#: src/features/requests/components/request-panel.tsx:281
-#: src/features/requests/components/request-panel.tsx:353
+#: src/features/requests/components/request-panel.tsx:279
+#: src/features/requests/components/request-panel.tsx:351
 msgid "Draft"
 msgstr "Borrador"
 
@@ -1159,7 +1163,7 @@ msgstr "Email"
 msgid "Email code"
 msgstr "Código email"
 
-#: ../../../lib/web/src/components/banner-section.tsx:88
+#: ../../../lib/web/src/components/banner-section.tsx:99
 msgid "Enter banner text (markdown supported)..."
 msgstr "Emoinge banner moñe'ẽ (markdown ojepuru)..."
 
@@ -1171,11 +1175,11 @@ msgstr "Emoinge code ne email-pegua"
 msgid "Enter your authenticator code"
 msgstr "Emoinge nde código autenticador rehegua"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:115
+#: src/routes/_authenticated/$projectId_.settings.tsx:118
 msgid "Entity ID"
 msgstr "Entidad ID"
 
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:381
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:389
 msgid "Error"
 msgstr "Jejavy"
 
@@ -1194,7 +1198,7 @@ msgstr "Embotuicha sidebar"
 msgid "Export data"
 msgstr "Esẽ datos"
 
-#: src/routes/_authenticated/$projectId/design.tsx:50
+#: src/routes/_authenticated/$projectId/design.tsx:49
 msgid "Export design"
 msgstr "Esẽ diseño"
 
@@ -1223,12 +1227,12 @@ msgstr "Ndaikatúi oñehecha merge tekoasa"
 msgid "Failed to copy"
 msgstr "Ndaikatúi oñemonguatia"
 
-#: src/features/editor/components/design-editor.tsx:113
+#: src/features/editor/components/design-editor.tsx:111
 msgid "Failed to create class"
 msgstr "Ndaikatúi oñembojuaju clase"
 
-#: src/features/editor/components/design-editor.tsx:166
-#: src/features/editor/components/design-editor.tsx:632
+#: src/features/editor/components/design-editor.tsx:164
+#: src/features/editor/components/design-editor.tsx:620
 msgid "Failed to create field"
 msgstr "Ndaikatúi oñembojuaju campo"
 
@@ -1238,20 +1242,20 @@ msgstr "Ndaikatúi oñembojuaju campo"
 msgid "Failed to create link"
 msgstr "Ndaikatúi oñembojuaju link"
 
-#: src/features/requests/components/request-panel.tsx:59
+#: src/features/requests/components/request-panel.tsx:57
 msgid "Failed to create merge request"
 msgstr "Ndaikatúi ojejapo merge jerure"
 
-#: src/features/editor/components/design-editor.tsx:238
-#: src/features/editor/components/design-editor.tsx:652
+#: src/features/editor/components/design-editor.tsx:236
+#: src/features/editor/components/design-editor.tsx:640
 msgid "Failed to create option"
 msgstr "Ndaikatúi oñembojuaju opción"
 
-#: src/features/projects/components/create-project-dialog.tsx:134
+#: src/features/projects/components/create-project-dialog.tsx:147
 msgid "Failed to create project"
 msgstr "Ndaikatúi oñembojuaju proyecto"
 
-#: src/features/editor/components/design-editor.tsx:316
+#: src/features/editor/components/design-editor.tsx:314
 msgid "Failed to create view"
 msgstr "Ndaikatúi oñembojuaju vista"
 
@@ -1263,7 +1267,7 @@ msgstr "Ndaikatúi ojejuka"
 msgid "Failed to delete attachment"
 msgstr "Ndaikatúi ojejuka archivo"
 
-#: src/features/editor/components/design-editor.tsx:137
+#: src/features/editor/components/design-editor.tsx:135
 msgid "Failed to delete class"
 msgstr "Ndaikatúi ojejuka clase"
 
@@ -1275,7 +1279,7 @@ msgstr "Ndaikatúi oñemboguete columna"
 msgid "Failed to delete comment"
 msgstr "Ndaikatúi ojejuka comentario"
 
-#: src/features/editor/components/design-editor.tsx:209
+#: src/features/editor/components/design-editor.tsx:207
 msgid "Failed to delete field"
 msgstr "Ndaikatúi ojejuka campo"
 
@@ -1283,19 +1287,19 @@ msgstr "Ndaikatúi ojejuka campo"
 msgid "Failed to delete link"
 msgstr "Ndaikatúi ojejuka link"
 
-#: src/features/requests/components/request-panel.tsx:85
+#: src/features/requests/components/request-panel.tsx:83
 msgid "Failed to delete merge request"
 msgstr "Ndaikatúi ojejuka merge jerure"
 
-#: src/features/editor/components/design-editor.tsx:276
+#: src/features/editor/components/design-editor.tsx:274
 msgid "Failed to delete option"
 msgstr "Ndaikatúi ojejuka opción"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:131
+#: src/routes/_authenticated/$projectId_.settings.tsx:134
 msgid "Failed to delete project"
 msgstr "Ndaikatúi ojejuka proyecto"
 
-#: src/features/editor/components/design-editor.tsx:371
+#: src/features/editor/components/design-editor.tsx:359
 msgid "Failed to delete view"
 msgstr "Ndaikatúi ojejuka vista"
 
@@ -1303,7 +1307,7 @@ msgstr "Ndaikatúi ojejuka vista"
 msgid "Failed to export data"
 msgstr "Ndaikatúi oñesẽ datos"
 
-#: src/routes/_authenticated/$projectId/design.tsx:53
+#: src/routes/_authenticated/$projectId/design.tsx:52
 msgid "Failed to export design"
 msgstr "Ndaikatúi oñesẽ diseño"
 
@@ -1311,12 +1315,12 @@ msgstr "Ndaikatúi oñesẽ diseño"
 msgid "Failed to get RSS token"
 msgstr "Ndaikatúi oguenohẽ RSS token"
 
-#: src/features/projects/components/create-project-dialog.tsx:152
-#: src/features/projects/components/create-project-dialog.tsx:183
+#: src/features/projects/components/create-project-dialog.tsx:165
+#: src/features/projects/components/create-project-dialog.tsx:196
 msgid "Failed to import data"
 msgstr "Ndaikatúi oñembojuaju datos"
 
-#: src/routes/_authenticated/$projectId/design.tsx:55
+#: src/routes/_authenticated/$projectId/design.tsx:54
 msgid "Failed to import design"
 msgstr "Ndaikatúi oñembojuaju diseño"
 
@@ -1324,7 +1328,11 @@ msgstr "Ndaikatúi oñembojuaju diseño"
 msgid "Failed to load"
 msgstr "Ndaikatúi oñembogue"
 
-#: ../../../lib/web/src/components/audit-timeline.tsx:68
+#: ../../../lib/web/src/components/banner-section.tsx:85
+msgid "Failed to load banner"
+msgstr "Ndaikatúi omyanyhẽ banner"
+
+#: ../../../lib/web/src/components/audit-timeline.tsx:70
 msgid "Failed to load history"
 msgstr "Ndaikatúi oñembogue tembiasakue"
 
@@ -1332,19 +1340,19 @@ msgstr "Ndaikatúi oñembogue tembiasakue"
 msgid "Failed to load image"
 msgstr "Ndaikatúi omyanyhẽ ta'anga"
 
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:382
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:385
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:390
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:393
 msgid "Failed to load item"
 msgstr "Ndaikatúi oñembogue artículo"
 
-#: src/routes/_authenticated/$projectId/$objectId.tsx:41
-#: src/routes/_authenticated/$projectId/$objectId.tsx:65
+#: src/routes/_authenticated/$projectId/$objectId.tsx:48
+#: src/routes/_authenticated/$projectId/$objectId.tsx:72
 #: src/routes/_authenticated/$projectId/index.tsx:62
 #: src/routes/_authenticated/$projectId/index.tsx:86
 msgid "Failed to load project"
 msgstr "Ndaikatúi oñembogue proyecto"
 
-#: src/routes/_authenticated/$projectId/design.tsx:48
+#: src/routes/_authenticated/$projectId/design.tsx:47
 msgid "Failed to load project design"
 msgstr "Ndaikatúi oñembogue proyecto diseño"
 
@@ -1381,12 +1389,12 @@ msgstr "Ndaikatúi oñemonde comentario"
 msgid "Failed to re-order columns"
 msgstr "Ndaikatúi oñemohenda jey columna kuéra"
 
-#: src/features/projects/components/create-project-dialog.tsx:261
-#: src/routes/_authenticated/$projectId/design.tsx:60
+#: src/features/projects/components/create-project-dialog.tsx:272
+#: src/routes/_authenticated/$projectId/design.tsx:59
 msgid "Failed to read file"
 msgstr "Ndaikatúi oñemoñe'ẽ archivo"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:139
+#: src/routes/_authenticated/$projectId_.settings.tsx:142
 msgid "Failed to remove access"
 msgstr "Ndaikatúi oñembogue acceso"
 
@@ -1394,11 +1402,11 @@ msgstr "Ndaikatúi oñembogue acceso"
 msgid "Failed to rename column"
 msgstr "Ndaikatúi oñemoambue columna réra"
 
-#: src/features/editor/components/design-editor.tsx:218
+#: src/features/editor/components/design-editor.tsx:216
 msgid "Failed to reorder fields"
 msgstr "Ndaikatúi oñemyatyrõ campokuéra"
 
-#: src/features/editor/components/design-editor.tsx:380
+#: src/features/editor/components/design-editor.tsx:368
 msgid "Failed to reorder views"
 msgstr "Ndaikatúi oñemyatyrõ vistas"
 
@@ -1418,15 +1426,15 @@ msgstr "Ndaikatúi oñongatu"
 msgid "Failed to save prompt"
 msgstr "Ndaikatúi oñongatu prompt"
 
-#: src/features/projects/components/inline-project-search.tsx:89
+#: src/features/projects/components/inline-project-search.tsx:86
 msgid "Failed to search projects"
 msgstr "Ndaikatúi ojeheka proyecto"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:136
+#: src/routes/_authenticated/$projectId_.settings.tsx:139
 msgid "Failed to set access level"
 msgstr "Ndaikatúi oñemboheko acceso jeporavo"
 
-#: src/features/projects/components/inline-project-search.tsx:69
+#: src/features/projects/components/inline-project-search.tsx:67
 #: src/features/projects/components/recommended-projects.tsx:44
 #: src/routes/_authenticated/find.tsx:45
 msgid "Failed to subscribe"
@@ -1437,15 +1445,15 @@ msgstr "Ndaikatúi oñesuscribi"
 msgid "Failed to unsubscribe"
 msgstr "Ndaikatúi oñesuscribi'ỹ"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:142
+#: src/routes/_authenticated/$projectId_.settings.tsx:145
 msgid "Failed to update access level"
 msgstr "Ndaikatúi oñembohera'ã pyahu acceso jeporavo"
 
-#: ../../../lib/web/src/components/banner-section.tsx:71
+#: ../../../lib/web/src/components/banner-section.tsx:75
 msgid "Failed to update banner"
 msgstr "Ndaikatúi oñembohera'ã pyahu banner"
 
-#: src/features/editor/components/design-editor.tsx:122
+#: src/features/editor/components/design-editor.tsx:120
 msgid "Failed to update class"
 msgstr "Ndaikatúi oñembohera'ã pyahu clase"
 
@@ -1453,27 +1461,27 @@ msgstr "Ndaikatúi oñembohera'ã pyahu clase"
 msgid "Failed to update comment"
 msgstr "Ndaikatúi oñembohera'ã pyahu comentario"
 
-#: src/features/editor/components/design-editor.tsx:197
+#: src/features/editor/components/design-editor.tsx:195
 msgid "Failed to update field"
 msgstr "Ndaikatúi oñembohera'ã pyahu campo"
 
-#: src/features/editor/components/design-editor.tsx:147
+#: src/features/editor/components/design-editor.tsx:145
 msgid "Failed to update hierarchy"
 msgstr "Ndaikatúi oñembopyahu jerarquía"
 
-#: src/features/requests/components/request-panel.tsx:71
+#: src/features/requests/components/request-panel.tsx:69
 msgid "Failed to update merge request"
 msgstr "Ndaikatúi oñembopyahu merge jerure"
 
-#: src/features/editor/components/design-editor.tsx:257
+#: src/features/editor/components/design-editor.tsx:255
 msgid "Failed to update option"
 msgstr "Ndaikatúi oñembohera'ã pyahu opción"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:120
+#: src/routes/_authenticated/$projectId_.settings.tsx:123
 msgid "Failed to update project"
 msgstr "Ndaikatúi oñembohera'ã pyahu proyecto"
 
-#: src/features/editor/components/design-editor.tsx:360
+#: src/features/editor/components/design-editor.tsx:348
 msgid "Failed to update view"
 msgstr "Ndaikatúi oñembohera'ã pyahu vista"
 
@@ -1500,7 +1508,7 @@ msgstr "Archivos"
 msgid "Find projects"
 msgstr "Eheka proyectos"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:116
+#: src/routes/_authenticated/$projectId_.settings.tsx:119
 msgid "Fingerprint"
 msgstr "Fingerprint"
 
@@ -1528,7 +1536,7 @@ msgstr "Iru"
 msgid "From"
 msgstr "Oguõva"
 
-#: src/routes/_authenticated/$projectId/design.tsx:57
+#: src/routes/_authenticated/$projectId/design.tsx:56
 msgid "From file"
 msgstr "Archivo-gui"
 
@@ -1558,7 +1566,7 @@ msgstr "Embyaty rupive"
 msgid "Group: {0}"
 msgstr "Aty: {0}"
 
-#: ../../../lib/web/src/components/audit-timeline.tsx:61
+#: ../../../lib/web/src/components/audit-timeline.tsx:63
 msgid "History"
 msgstr "Tembiasakue"
 
@@ -1578,7 +1586,7 @@ msgstr "Akúva"
 msgid "ID"
 msgstr "ID"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:112
+#: src/routes/_authenticated/$projectId_.settings.tsx:115
 msgid "Identity"
 msgstr "Identidad"
 
@@ -1591,17 +1599,17 @@ msgstr "Ta'anga jehecha: {0}"
 msgid "Imperial"
 msgstr "Imperial"
 
-#: src/routes/_authenticated/$projectId/design.tsx:51
-#: src/routes/_authenticated/$projectId/design.tsx:56
+#: src/routes/_authenticated/$projectId/design.tsx:50
+#: src/routes/_authenticated/$projectId/design.tsx:55
 msgid "Import design"
 msgstr "Embojuaju diseño"
 
-#: src/features/projects/components/create-project-dialog.tsx:397
+#: src/features/projects/components/create-project-dialog.tsx:410
 msgid "Import from backup (optional)"
 msgstr "Embojuaju respaldo-gui (opcional)"
 
-#: src/features/projects/components/create-project-dialog.tsx:149
-#: src/features/projects/components/create-project-dialog.tsx:178
+#: src/features/projects/components/create-project-dialog.tsx:162
+#: src/features/projects/components/create-project-dialog.tsx:191
 msgid "Importing data..."
 msgstr "Oñembojuaju datos..."
 
@@ -1629,8 +1637,8 @@ msgstr "Oikotevevakuéra"
 msgid "Invalid date"
 msgstr "Arange ndoikóiva"
 
-#: src/features/projects/components/create-project-dialog.tsx:256
-#: src/routes/_authenticated/$projectId/design.tsx:59
+#: src/features/projects/components/create-project-dialog.tsx:267
+#: src/routes/_authenticated/$projectId/design.tsx:58
 msgid "Invalid JSON file"
 msgstr "Archivo JSON ndoikóiva"
 
@@ -1638,7 +1646,7 @@ msgstr "Archivo JSON ndoikóiva"
 msgid "It seems like the page you're looking for <0/>does not exist or might have been removed."
 msgstr "Ojehecha pe kuatiarogue rehekáva <0/>ndaipóri térã oñemboguéma."
 
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:441
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:449
 msgid "Item details"
 msgstr "Artículo detalles"
 
@@ -1688,19 +1696,19 @@ msgstr "Embojuaju hetave"
 msgid "Loading content…"
 msgstr "Contenido henyhẽhína…"
 
-#: src/features/requests/components/diff-stats.tsx:52
+#: src/features/requests/components/diff-stats.tsx:57
 msgid "Loading diff..."
 msgstr "Ojembogue diff..."
 
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:365
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:373
 msgid "Loading item"
 msgstr "Ojembogue artículo"
 
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:366
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:374
 msgid "Loading item details"
 msgstr "Ojembogue artículo detalles"
 
-#: src/features/projects/components/create-project-dialog.tsx:478
+#: src/features/projects/components/create-project-dialog.tsx:491
 msgid "Loading templates..."
 msgstr "Ojembogue templates..."
 
@@ -1772,7 +1780,7 @@ msgstr "Merge {objectReadable}: {objectTitle}"
 msgid "Merge commit"
 msgstr "Merge commit"
 
-#: src/features/requests/components/request-panel.tsx:102
+#: src/features/requests/components/request-panel.tsx:100
 msgid "Merge requests"
 msgstr "Merge pedidos"
 
@@ -1780,7 +1788,7 @@ msgstr "Merge pedidos"
 msgid "Merge requests ({requestCount})"
 msgstr "Merge pedidos ({requestCount})"
 
-#: src/features/requests/components/request-panel.tsx:284
+#: src/features/requests/components/request-panel.tsx:282
 msgid "Merged"
 msgstr "Merge"
 
@@ -1837,7 +1845,7 @@ msgstr "Oñemongu'e"
 msgid "Moved {field}"
 msgstr "{field} oñemongu'e"
 
-#: src/features/projects/components/create-project-dialog.tsx:352
+#: src/features/projects/components/create-project-dialog.tsx:363
 msgid "My project"
 msgstr "Che mba'apo"
 
@@ -1847,22 +1855,24 @@ msgstr "Che mba'apo"
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:126
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:296
 #: src/features/editor/components/edit-dialogs.tsx:258
-#: src/features/projects/components/create-project-dialog.tsx:342
-#: src/routes/_authenticated/$projectId_.settings.tsx:113
+#: src/features/projects/components/create-project-dialog.tsx:353
+#: src/routes/_authenticated/$projectId_.settings.tsx:116
 msgid "Name"
 msgstr "Téra"
 
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:104
+#: src/features/projects/components/create-project-dialog.tsx:114
 #: src/routes/_authenticated/$projectId_.settings.tsx:76
 msgid "Name cannot contain < or > characters"
 msgstr "Téra ndaikatúi oguereko < térã > tai'ã"
 
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:101
-#: src/features/projects/components/create-project-dialog.tsx:102
+#: src/features/projects/components/create-project-dialog.tsx:105
 msgid "Name is required"
 msgstr "Téra oñeikotevẽ"
 
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:102
+#: src/features/projects/components/create-project-dialog.tsx:110
 #: src/routes/_authenticated/$projectId_.settings.tsx:74
 msgid "Name must be 1000 characters or less"
 msgstr "Téra ojejapo va'erã 1000 tai'ã térã sa'ive ndive"
@@ -1888,7 +1898,7 @@ msgstr "{className} pyahu"
 msgid "New game"
 msgstr "Ñembosarái pyahu"
 
-#: src/features/projects/components/create-project-dialog.tsx:459
+#: src/features/projects/components/create-project-dialog.tsx:472
 msgid "Next"
 msgstr "Tenondeve"
 
@@ -1917,7 +1927,7 @@ msgstr "Ndaipóri tembiapo gueteri"
 msgid "No branches found"
 msgstr "Ndojejuhúi rakã"
 
-#: src/features/requests/components/diff-stats.tsx:65
+#: src/features/requests/components/diff-stats.tsx:70
 msgid "No changes detected"
 msgstr "Ndojejuhúi mba'eve iñambuéva"
 
@@ -1925,7 +1935,7 @@ msgstr "Ndojejuhúi mba'eve iñambuéva"
 msgid "No changes to display"
 msgstr "Ndaipóri ñemoambue ojechauka haguã"
 
-#: src/routes/$projectId.diff.tsx:160
+#: src/routes/$projectId.diff.tsx:162
 msgid "No changes were found for the selected comparison."
 msgstr "Ndojejuhúi ñemoambue jeha'ã ojeporavóva rehegua."
 
@@ -1933,7 +1943,7 @@ msgstr "Ndojejuhúi ñemoambue jeha'ã ojeporavóva rehegua."
 msgid "No comments yet"
 msgstr "Ndaipóri comentario gueteri"
 
-#: src/routes/$projectId.diff.tsx:159
+#: src/routes/$projectId.diff.tsx:161
 msgid "No diff available"
 msgstr "Ndaipóri diff oĩva"
 
@@ -1953,7 +1963,7 @@ msgstr "Ndaikatúi oñemoheñói item peteĩchagua. Emoheñói raẽ peteĩchagu
 msgid "No matching objects"
 msgstr "Ndaipóri mba'e ojuajúva"
 
-#: src/features/requests/components/request-panel.tsx:119
+#: src/features/requests/components/request-panel.tsx:117
 msgid "No merge requests"
 msgstr "Ndaipóri merge requests"
 
@@ -1966,7 +1976,7 @@ msgstr "Ndojejuhúi tapichakuéra"
 msgid "No places found"
 msgstr "Ndojejuhúi tenda"
 
-#: src/features/projects/components/inline-project-search.tsx:88
+#: src/features/projects/components/inline-project-search.tsx:85
 #: src/routes/_authenticated/find.tsx:42
 msgid "No projects found"
 msgstr "Ndojejuhúi mba'apo"
@@ -2014,10 +2024,10 @@ msgstr "Ndaipóri jehecha"
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:554
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:557
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:561
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:557
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:570
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:571
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:575
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:565
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:578
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:579
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:583
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:362
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:385
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:388
@@ -2045,7 +2055,7 @@ msgstr "Ndojeikuaái ojoehe: {0} rasa"
 msgid "Not compared: over the size limit"
 msgstr "Ndojeikuaái ojoehe: ohasa tuichakue rehegua"
 
-#: src/features/requests/components/request-panel.tsx:257
+#: src/features/requests/components/request-panel.tsx:255
 msgid "Not configured"
 msgstr "Ndoñembosako'íri"
 
@@ -2081,7 +2091,7 @@ msgstr "Myendy"
 msgid "Oops! Page Not Found!"
 msgstr "Hetia'epa! ¡Kuatiarogue ndojejuhúi!"
 
-#: src/features/requests/components/request-panel.tsx:287
+#: src/features/requests/components/request-panel.tsx:285
 msgctxt "state"
 msgid "Open"
 msgstr "Ijurujáva"
@@ -2101,7 +2111,7 @@ msgstr "Eipe'a tembiaporã"
 msgid "Open class actions"
 msgstr "Eipe'a clase tembiapo"
 
-#: src/routes/_authenticated/$projectId/design.tsx:49
+#: src/routes/_authenticated/$projectId/design.tsx:48
 msgid "Open design actions"
 msgstr "Eipe'a diseño tembiapo"
 
@@ -2156,8 +2166,8 @@ msgid "Owner"
 msgstr "Mburuvicha"
 
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:546
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:553
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:569
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:561
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:577
 msgid "Parent"
 msgstr "Sy/ru"
 
@@ -2196,7 +2206,7 @@ msgstr "Embojuajumi peteĩ térã hetave clases mba'apo diseñope."
 msgid "Please check your internet connection and try again."
 msgstr "Ehechami nde internet conexión ha eha'ã jey."
 
-#: src/features/projects/components/create-project-dialog.tsx:118
+#: src/features/projects/components/create-project-dialog.tsx:131
 msgid "Please select a template"
 msgstr "Eporavo template"
 
@@ -2216,16 +2226,20 @@ msgstr "Marandu"
 msgid "Posts and comments"
 msgstr "Marandu ha comentarios"
 
-#: src/features/projects/components/create-project-dialog.tsx:364
+#: src/features/projects/components/create-project-dialog.tsx:376
 #: src/routes/_authenticated/$projectId_.settings.tsx:83
 msgid "Prefix"
 msgstr "Prefijo"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:93
+#: src/routes/_authenticated/$projectId_.settings.tsx:96
 msgid "Prefix can only contain lowercase letters, numbers, and hyphens"
 msgstr "Prefijo ikatu oguereko añoite tai michĩva, papapy ha guión"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:95
+#: src/routes/_authenticated/$projectId_.settings.tsx:94
+msgid "Prefix is required"
+msgstr "Tekotevẽ ñepyrũmby"
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:98
 msgid "Prefix must be 20 characters or less"
 msgstr "Prefijo oguereko va'erã 20 tai térã sa'ive"
 
@@ -2243,7 +2257,7 @@ msgstr "Privacidad"
 msgid "Processing…"
 msgstr "Oñemba'apo hína…"
 
-#: src/routes/_authenticated/$projectId/$objectId.tsx:62
+#: src/routes/_authenticated/$projectId/$objectId.tsx:69
 #: src/routes/_authenticated/$projectId/index.tsx:83
 msgid "Project"
 msgstr "Mba'apo"
@@ -2252,11 +2266,11 @@ msgstr "Mba'apo"
 msgid "Project actions"
 msgstr "Tembiapo rembiapo"
 
-#: src/features/projects/components/create-project-dialog.tsx:133
+#: src/features/projects/components/create-project-dialog.tsx:146
 msgid "Project created"
 msgstr "Mba'apo oñemoheñói"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:130
+#: src/routes/_authenticated/$projectId_.settings.tsx:133
 msgid "Project deleted"
 msgstr "Mba'apo oñembogue"
 
@@ -2268,19 +2282,19 @@ msgstr "Mba'apo ñeꞌẽ"
 msgid "Project name is required"
 msgstr "Mba'apo réra oñeikotevẽ"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:108
+#: src/routes/_authenticated/$projectId_.settings.tsx:111
 msgid "Project not found"
 msgstr "Mba'apo ndojejuhúi"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:107
+#: src/routes/_authenticated/$projectId_.settings.tsx:110
 msgid "Project settings"
 msgstr "Mba'apo ñembosako'i"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:110
+#: src/routes/_authenticated/$projectId_.settings.tsx:113
 msgid "Project unavailable"
 msgstr "Mba'apo ndaikatúi"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:119
+#: src/routes/_authenticated/$projectId_.settings.tsx:122
 msgid "Project updated"
 msgstr "Mba'apo oñembohekopyahu"
 
@@ -2293,7 +2307,7 @@ msgstr "Mba'apokuéra"
 msgid "Prompt saved"
 msgstr "Prompt oñeñongatu"
 
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:408
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:416
 msgid "Properties"
 msgstr "Mba'éichagua"
 
@@ -2317,7 +2331,7 @@ msgstr "Embojere columnas"
 msgid "Re-register your passkeys on this server"
 msgstr "Emoinge jey nde passkeys ko servidor-pe"
 
-#: src/features/requests/components/merge-status.tsx:71
+#: src/features/requests/components/merge-status.tsx:82
 msgid "Ready to merge"
 msgstr "Oĩma merge haguã"
 
@@ -2378,7 +2392,7 @@ msgstr "Relevancia {relevance}, temimbota {weight}"
 #: ../../../lib/web/src/components/attachment-composer.tsx:330
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:192
 #: ../../../lib/web/src/features/access/access-list.tsx:270
-#: src/features/projects/components/create-project-dialog.tsx:439
+#: src/features/projects/components/create-project-dialog.tsx:452
 msgid "Remove"
 msgstr "Embogue"
 
@@ -2422,7 +2436,7 @@ msgstr "Embogue mba'e"
 msgid "Remove link"
 msgstr "Emboguepa juajuha"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:137
+#: src/routes/_authenticated/$projectId_.settings.tsx:140
 msgid "Removing access..."
 msgstr "Oguenohẽhína jeike..."
 
@@ -2439,15 +2453,15 @@ msgstr "Embohera jey columna"
 msgid "Rename this board column"
 msgstr "Embohera jey ko board columna"
 
-#: src/routes/_authenticated/$projectId/design.tsx:73
+#: src/routes/_authenticated/$projectId/design.tsx:72
 msgid "Replace design"
 msgstr "Embyepyru diseño"
 
-#: src/routes/_authenticated/$projectId/design.tsx:62
+#: src/routes/_authenticated/$projectId/design.tsx:61
 msgid "Replace design?"
 msgstr "Embyepyru diseño?"
 
-#: src/routes/_authenticated/$projectId/design.tsx:74
+#: src/routes/_authenticated/$projectId/design.tsx:73
 msgid "Replacing..."
 msgstr "Oñembyepyrúhína..."
 
@@ -2536,7 +2550,7 @@ msgstr "Saturday"
 
 #: ../../../lib/web/src/components/ai-prompts-editor.tsx:156
 #: ../../../lib/web/src/components/attachment-composer.tsx:430
-#: ../../../lib/web/src/components/banner-section.tsx:99
+#: ../../../lib/web/src/components/banner-section.tsx:111
 #: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:231
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:172
 #: ../../../lib/web/src/components/ui/editable-field-row.tsx:126
@@ -2546,7 +2560,7 @@ msgid "Save"
 msgstr "Ñongatu"
 
 #: ../../../lib/web/src/components/ai-prompts-editor.tsx:156
-#: src/routes/_authenticated/$projectId_.settings.tsx:118
+#: src/routes/_authenticated/$projectId_.settings.tsx:121
 msgid "Saving..."
 msgstr "Oñeñongatuhína..."
 
@@ -2581,7 +2595,7 @@ msgstr "Eheka tenda destino..."
 msgid "Search for origin..."
 msgstr "Eheka tenda origen..."
 
-#: src/features/projects/components/inline-project-search.tsx:87
+#: src/features/projects/components/inline-project-search.tsx:84
 msgid "Search for projects..."
 msgstr "Eheka mba'apokuéra..."
 
@@ -2693,7 +2707,7 @@ msgstr "Emondo marandu"
 msgid "Serif"
 msgstr "Serif"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:117
+#: src/routes/_authenticated/$projectId_.settings.tsx:120
 msgid "Server"
 msgstr "Mohendaha"
 
@@ -2715,14 +2729,14 @@ msgstr "Pe tembiapo opáma. Eñepyrũ jey tembiapo."
 msgid "Set origin and destination"
 msgstr "Emoĩ ñepyrũmby ha ohohaguã"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:134
+#: src/routes/_authenticated/$projectId_.settings.tsx:137
 msgid "Setting access..."
 msgstr "Oñemohendahína jeike..."
 
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx:119
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx:125
 #: ../../../lib/web/src/components/options-menu.tsx:196
-#: src/routes/_authenticated/$projectId_.settings.tsx:101
+#: src/routes/_authenticated/$projectId_.settings.tsx:104
 #: src/routes/_authenticated/$projectId/index.tsx:178
 msgid "Settings"
 msgstr "Ñemboheko"
@@ -2774,7 +2788,7 @@ msgstr "Michĩ"
 msgid "Sort"
 msgstr "Embojo'a"
 
-#: src/features/requests/components/request-panel.tsx:334
+#: src/features/requests/components/request-panel.tsx:332
 msgid "Source"
 msgstr "Pyendarã"
 
@@ -2798,8 +2812,8 @@ msgstr "Embojuaju ha ejuaju"
 msgid "Start the discussion by adding the first comment."
 msgstr "Eñepyrũ ñomongeta embojuaju peteĩha ñe'ẽmbyre."
 
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:471
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:476
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:479
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:484
 msgid "Stop watching"
 msgstr "Ñehapykuere'ỹ"
 
@@ -2818,12 +2832,12 @@ msgstr "Emondo ñembohovái"
 #: ../../../lib/web/src/components/inline-entity-search.tsx:67
 #: ../../../lib/web/src/components/recommended-entities.tsx:59
 #: ../../../lib/web/src/components/search-entity-page.tsx:74
-#: src/features/projects/components/inline-project-search.tsx:90
+#: src/features/projects/components/inline-project-search.tsx:87
 #: src/features/projects/components/recommended-projects.tsx:58
 msgid "Subscribe"
 msgstr "Eñemboaty"
 
-#: src/features/projects/components/inline-project-search.tsx:68
+#: src/features/projects/components/inline-project-search.tsx:66
 #: src/routes/_authenticated/find.tsx:44
 msgid "Subscribed"
 msgstr "Mboatypyre"
@@ -2833,7 +2847,7 @@ msgstr "Mboatypyre"
 msgid "Subscribed to {0}"
 msgstr "Oñemboatyma {0}"
 
-#: src/features/projects/components/inline-project-search.tsx:67
+#: src/features/projects/components/inline-project-search.tsx:65
 #: src/features/projects/components/recommended-projects.tsx:42
 #: src/routes/_authenticated/find.tsx:43
 msgid "Subscribing..."
@@ -2847,7 +2861,7 @@ msgstr "Arateĩ"
 msgid "Switch to view 1-9"
 msgstr "Eike vista 1-9"
 
-#: ../../../lib/web/src/components/audit-timeline.tsx:107
+#: ../../../lib/web/src/components/audit-timeline.tsx:109
 #: ../../../lib/web/src/lib/preference-utils.ts:16
 #: ../../../lib/web/src/lib/preference-utils.ts:132
 msgid "System"
@@ -2866,7 +2880,7 @@ msgstr "Etiqueta oguereko va'erã 50 tai térã sa'ive"
 msgid "Tags"
 msgstr "Tagskuéra"
 
-#: src/features/requests/components/request-panel.tsx:342
+#: src/features/requests/components/request-panel.tsx:340
 msgid "Target"
 msgstr "Apoukapy"
 
@@ -2921,11 +2935,11 @@ msgid "This app is not allowed to use your passkey. Allow it in Settings, under 
 msgstr "Ko aplicación ndaikatúi oiporu nde passkey. Emoneĩ Ajustes-pe, Permisos guýpe."
 
 #. placeholder {0}: request.target
-#: src/features/requests/components/request-panel.tsx:418
+#: src/features/requests/components/request-panel.tsx:416
 msgid "This merge request has been merged into {0}."
 msgstr "Ko merge request ojepoíma {0}-pe."
 
-#: src/features/requests/components/request-panel.tsx:379
+#: src/features/requests/components/request-panel.tsx:377
 msgid "This merge request is a draft and cannot be merged."
 msgstr "Ko merge request ha'e borrador ha ndaikatúi ojepoi."
 
@@ -2933,11 +2947,11 @@ msgstr "Ko merge request ha'e borrador ha ndaikatúi ojepoi."
 msgid "This permanently deletes the game and its chat. This cannot be undone."
 msgstr "Kóva ohundíta opa árape g̃uarã ñembosarái ha ijoayhuháicha. Ndaikatuvéima ojejapo jey."
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:111
+#: src/routes/_authenticated/$projectId_.settings.tsx:114
 msgid "This project could not be loaded right now."
 msgstr "Ko proyecto ndaikatúi oñehenoi ko'ág̃a."
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:109
+#: src/routes/_authenticated/$projectId_.settings.tsx:112
 msgid "This project may have been deleted or you don't have access to it."
 msgstr "Ko proyecto ikatu oñembogue térã ndereguerekói permiso."
 
@@ -2945,7 +2959,7 @@ msgstr "Ko proyecto ikatu oñembogue térã ndereguerekói permiso."
 msgid "This will merge \"{source}\" into \"{target}\". This action cannot be undone."
 msgstr "Kóva oguerojuajúta \"{source}\" \"{target}\"-pe. Kóva ndaikatúi oñembojevy."
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:127
+#: src/routes/_authenticated/$projectId_.settings.tsx:130
 msgid "This will permanently delete \"{projectName}\" and all its objects, comments, and attachments. This action cannot be undone."
 msgstr "Kóva oguéta tapiarã \"{projectName}\" ha opa imba'éva, ñemoñe'ẽ ha aty. Kóva ndaikatúi oñembojevy."
 
@@ -2955,7 +2969,7 @@ msgid "This will remove \"{0}\" from your sidebar and stop updates for this proj
 msgstr "Kóva oguéta \"{0}\" ne sidebargui ha opyta marandu pyahu ko proyecto-gui."
 
 #. placeholder {0}: String(label)
-#: src/routes/_authenticated/$projectId/design.tsx:66
+#: src/routes/_authenticated/$projectId/design.tsx:65
 msgid "This will replace the current design with <0>{0}</0>. All existing classes, fields, options, and views will be deleted. Existing objects will not be deleted but may no longer appear in views."
 msgstr "Kóva oñembojere ko'ág̃a diseño <0>{0}</0>-re. Opa class, field, opción ha vista oĩva ko'ág̃a oguéta. Mba'ekuéra oĩva ndaguemo'ãi ha katu ikatu noñehechái vista-pe."
 
@@ -2964,7 +2978,7 @@ msgid "Thursday"
 msgstr "Yvateára"
 
 #: src/features/editor/components/edit-dialogs.tsx:107
-#: src/features/requests/components/request-panel.tsx:301
+#: src/features/requests/components/request-panel.tsx:299
 msgid "Title"
 msgstr "Téra"
 
@@ -3079,7 +3093,7 @@ msgstr "Ojeguerojua"
 msgid "United States"
 msgstr "Estados Unidos"
 
-#: ../../../lib/web/src/components/audit-timeline.tsx:103
+#: ../../../lib/web/src/components/audit-timeline.tsx:105
 #: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:167
 #: ../../../lib/web/src/components/tree-row.tsx:219
 #: ../../../lib/web/src/components/tree-row.tsx:373
@@ -3125,7 +3139,7 @@ msgstr "Hekopyahúpyre"
 msgid "Updated {field}"
 msgstr "{field} oñembohekopyahu"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:140
+#: src/routes/_authenticated/$projectId_.settings.tsx:143
 msgid "Updating access..."
 msgstr "Oñembopyahuhína jeike..."
 
@@ -3134,10 +3148,13 @@ msgstr "Oñembopyahuhína jeike..."
 msgid "Upload"
 msgstr "Ehupi"
 
-#: src/features/projects/components/create-project-dialog.tsx:413
-#: src/routes/_authenticated/$projectId/design.tsx:58
+#: src/routes/_authenticated/$projectId/design.tsx:57
 msgid "Upload .json file"
 msgstr "Ehupi .json archivo"
+
+#: src/features/projects/components/create-project-dialog.tsx:426
+msgid "Upload backup file"
+msgstr "Ehupi respaldo archivo"
 
 #: ../../../lib/web/src/components/ui/upload-progress.tsx:34
 msgid "Upload progress"
@@ -3149,7 +3166,7 @@ msgstr "Eipuru nde passkey"
 
 #. placeholder {0}: prefix || "project"
 #. placeholder {1}: prefix || "project"
-#: src/features/projects/components/create-project-dialog.tsx:381
+#: src/features/projects/components/create-project-dialog.tsx:394
 msgid "Used for readable IDs like {0}-1, {1}-2"
 msgstr "Oiporu ID jeleeha pe g̃uarã, techapyrã {0}-1, {1}-2"
 
@@ -3190,7 +3207,7 @@ msgstr "Video jehecha: {0}"
 msgid "View all notifications"
 msgstr "Ehecha opa marandu"
 
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:442
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:450
 msgid "View and edit item details"
 msgstr "Ehecha ha embogua mba'e marandu"
 
@@ -3206,7 +3223,7 @@ msgstr "Ehecha mante"
 msgid "View options"
 msgstr "Ehecha poravopyrã"
 
-#: src/features/editor/components/design-editor.tsx:487
+#: src/features/editor/components/design-editor.tsx:475
 msgid "Views"
 msgstr "Jehecha"
 
@@ -3214,8 +3231,8 @@ msgstr "Jehecha"
 msgid "Voice recording is not supported in this browser"
 msgstr "Ko navegador ndoipytyvõi ñe'ẽ grabación"
 
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:471
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:476
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:479
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:484
 msgid "Watch"
 msgstr "Ehecha"
 
@@ -3228,7 +3245,7 @@ msgstr "Ojehechapyre"
 msgid "Watched only"
 msgstr "Ojehechapyre mante"
 
-#: src/features/projects/components/create-project-dialog.tsx:473
+#: src/features/projects/components/create-project-dialog.tsx:486
 msgid "We have auto-selected the best matching template."
 msgstr "Oñeporavo ijehegui template ojojáva porãvéva."
 
@@ -3245,6 +3262,7 @@ msgstr "Mba'embohopapa"
 msgid "You do not have access to this section."
 msgstr "Ndereguerekói jeike ko vorépe."
 
+#: src/routes/_authenticated/$projectId/$objectId.tsx:38
 #: src/routes/_authenticated/$projectId/index.tsx:53
 msgid "You don't have access to this project."
 msgstr "Nderejeikéi ko proyécto-pe."
@@ -3261,7 +3279,7 @@ msgstr "Nde cuenta oiko ko'ápe {source} guive. Peve reipe'a upépe, marandu ha 
 msgid "Your attachments will be lost."
 msgstr "Ne archivo mbojoapypyre okañýta."
 
-#: src/features/projects/components/create-project-dialog.tsx:469
+#: src/features/projects/components/create-project-dialog.tsx:482
 msgid "Your backup contains objects of type:"
 msgstr "Ne respaldo oguereko mba'e ko'ãichagua:"
 

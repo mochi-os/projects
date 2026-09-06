@@ -42,7 +42,6 @@ export function RequestPanel({
   readOnly,
 }: RequestPanelProps) {
   const [expandedId, setExpandedId] = useState<string | null>(null);
-  const [adding, setAdding] = useState(false);
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const queryClient = useQueryClient();
 
@@ -52,7 +51,6 @@ export function RequestPanel({
     },
     onSuccess: (response) => {
       queryClient.invalidateQueries({ queryKey: ["object", projectId, objectId] });
-      setAdding(false);
       setExpandedId(response.data.id);
     },
     onError: (error) => {
@@ -115,7 +113,7 @@ export function RequestPanel({
         )}
       </div>
 
-      {requests.length === 0 && !adding && (
+      {requests.length === 0 && (
         <p className="text-sm text-muted-foreground"><Trans>No merge requests</Trans></p>
       )}
 
@@ -208,7 +206,7 @@ function RequestItem({
     enabled: expanded && !!request.repository && !!request.source && !!request.target && !isMerged,
   });
 
-  const canMerge = mergeCheck?.can_merge ?? false;
+  const canMerge = mergeCheck?.mergeable ?? false;
   const conflicts = mergeCheck?.conflicts ?? [];
 
   const handleRepoChange = (value: string) => {
@@ -328,7 +326,7 @@ function RequestItem({
 
             <div className="grid grid-cols-[1fr_auto_1fr] items-end gap-2">
               <BranchSelect
-                repoId={request.repository}
+                repositoryId={request.repository}
                 value={request.source}
                 onChange={handleSourceChange}
                 placeholder={t`Source`}
@@ -336,7 +334,7 @@ function RequestItem({
               />
               <ArrowRight className="size-4 text-muted-foreground mb-2.5 rtl:rotate-180" />
               <BranchSelect
-                repoId={request.repository}
+                repositoryId={request.repository}
                 value={request.target}
                 onChange={handleTargetChange}
                 placeholder={t`Target`}
@@ -360,7 +358,7 @@ function RequestItem({
               {!isMerged && (
                 <>
                   <MergeStatus
-                    repoId={request.repository}
+                    repositoryId={request.repository}
                     source={request.source}
                     target={request.target}
                   />
@@ -368,7 +366,7 @@ function RequestItem({
                   {conflicts.length > 0 && <ConflictList conflicts={conflicts} />}
 
                   <DiffStats
-                    repoId={request.repository}
+                    repositoryId={request.repository}
                     base={request.target}
                     head={request.source}
                     diffUrl={diffUrl(getAppPath(), projectId, request)}
@@ -382,7 +380,7 @@ function RequestItem({
 
                   <div className="flex items-center gap-2">
                     <MergeButton
-                      repoId={request.repository}
+                      repositoryId={request.repository}
                       source={request.source}
                       target={request.target}
                       canMerge={canMerge && !isDraft}

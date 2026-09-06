@@ -17,22 +17,27 @@ import {
 } from "./request-status-styles";
 
 interface DiffStatsProps {
-  repoId: string;
+  repositoryId: string;
   base: string;
   head: string;
   diffUrl?: string;
 }
 
-export function DiffStats({ repoId, base, head, diffUrl }: DiffStatsProps) {
-  const { data: rawDiff, isLoading, isError } = useQuery({
-    queryKey: ["diff", repoId, base, head],
+export function DiffStats({ repositoryId, base, head, diffUrl }: DiffStatsProps) {
+  const { data: diffData, isLoading, isError } = useQuery({
+    queryKey: ["diff", repositoryId, base, head],
     queryFn: async () => {
-      const response = await projectsApi.getDiff(repoId, base, head);
+      const response = await projectsApi.getDiff(repositoryId, base, head);
       return response.data;
     },
-    enabled: !!repoId && !!base && !!head,
+    enabled: !!repositoryId && !!base && !!head,
   });
 
+  // The action answers {diff: null, error} when the repositories service is
+  // unavailable. Parsing that object threw inside the memo and took the whole
+  // object panel down with it.
+  const rawDiff = typeof diffData === "string" ? diffData : "";
+  const unavailable = diffData && typeof diffData !== "string" ? diffData.error : null;
   const { files, truncated } = useMemo(
     () => (rawDiff ? parseDiff(rawDiff) : { files: [], truncated: 0 }),
     [rawDiff],
@@ -41,7 +46,7 @@ export function DiffStats({ repoId, base, head, diffUrl }: DiffStatsProps) {
   const additions = files.reduce((sum, f) => sum + f.additions, 0);
   const deletions = files.reduce((sum, f) => sum + f.deletions, 0);
 
-  if (!repoId || !base || !head) {
+  if (!repositoryId || !base || !head) {
     return null;
   }
 
@@ -54,9 +59,9 @@ export function DiffStats({ repoId, base, head, diffUrl }: DiffStatsProps) {
     );
   }
 
-  if (isError) {
+  if (isError || unavailable) {
     return (
-      <div className="text-sm text-destructive"><Trans>Could not load the diff</Trans></div>
+      <div className="text-sm text-destructive">{unavailable ?? <Trans>Could not load the diff</Trans>}</div>
     );
   }
 
@@ -71,7 +76,7 @@ export function DiffStats({ repoId, base, head, diffUrl }: DiffStatsProps) {
       <div className="flex items-center gap-4 text-sm">
         <span className="flex items-center gap-1">
           <FileCode2 className="size-4 text-muted-foreground" />
-          <Trans>{files.length} files changed</Trans>
+          <Plural value={files.length} one="# file changed" other="# files changed" />
         </span>
         <span className={cn("flex items-center gap-1", requestStatusTextStyles.added)}>
           <Plus className="size-3" />

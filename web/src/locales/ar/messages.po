@@ -18,6 +18,10 @@ msgstr ""
 msgid "Please check your internet connection and try again."
 msgstr "يرجى التحقق من اتصالك بالإنترنت والمحاولة مرة أخرى."
 
+#: src/features/requests/components/branch-select.tsx:69
+msgid "(current)"
+msgstr "(الحالية)"
+
 #: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:189
 msgid "(edited)"
 msgstr "(تم التعديل)"
@@ -44,6 +48,12 @@ msgstr "[غير محدد]"
 msgid "{0, plural, one {# conflicting file} other {# conflicting files}}"
 msgstr "{0, plural, zero {لا ملفات متعارضة} one {ملف متعارض واحد} two {ملفان متعارضان} few {# ملفات متعارضة} many {# ملفًا متعارضًا} other {# ملف متعارض}}"
 
+#. placeholder {0}: files.length
+#: src/features/requests/components/diff-stats.tsx:79
+#: src/features/requests/components/diff-viewer.tsx:420
+msgid "{0, plural, one {# file changed} other {# files changed}}"
+msgstr "{0, plural, zero {لم يتغير أي ملف} one {تغير ملف واحد} two {تغير ملفان} few {تغيرت # ملفات} many {تغير # ملفًا} other {تغير # ملف}}"
+
 #. placeholder {0}: displayInfo.count
 #: ../../../lib/web/src/components/person-picker.tsx:260
 msgid "{0, plural, one {# selected} other {# selected}}"
@@ -55,23 +65,17 @@ msgid "{0, plural, one {+# nested} other {+# nested}}"
 msgstr "{0, plural, zero {+# متداخل} one {+# متداخل} two {+# متداخلان} few {+# متداخلة} many {+# متداخلًا} other {+# متداخل}}"
 
 #. placeholder {0}: String(name)
-#: src/routes/_authenticated/$projectId/design.tsx:46
+#: src/routes/_authenticated/$projectId/design.tsx:45
 msgid "{0} - Design"
 msgstr "{0} - التصميم"
 
 #. placeholder {0}: data.behind
-#: src/features/requests/components/merge-status.tsx:77
+#: src/features/requests/components/merge-status.tsx:88
 msgid "{0} behind"
 msgstr "{0} خلف"
 
-#. placeholder {0}: files.length
-#: src/features/requests/components/diff-stats.tsx:74
-#: src/features/requests/components/diff-viewer.tsx:420
-msgid "{0} files changed"
-msgstr "تم تغيير {0} ملفات"
-
 #. placeholder {0}: String(name)
-#: src/routes/_authenticated/$projectId_.settings.tsx:107
+#: src/routes/_authenticated/$projectId_.settings.tsx:110
 msgid "{0} settings"
 msgstr "إعدادات {0}"
 
@@ -112,7 +116,7 @@ msgstr "{totalCount, plural, zero {لا عناصر} one {عنصر واحد} two 
 msgid "{totalDescendants, plural, one {# reply} other {+# more replies}}"
 msgstr "{totalDescendants, plural, zero {+# ردود إضافية} one {رد واحد} two {+# ردود إضافية} few {+# ردود إضافية} many {+# ردود إضافية} other {+# ردود إضافية}}"
 
-#: src/features/requests/components/diff-stats.tsx:120
+#: src/features/requests/components/diff-stats.tsx:125
 #: src/features/requests/components/diff-viewer.tsx:471
 msgid "{truncated, plural, one {# more file not shown} other {# more files not shown}}"
 msgstr "{truncated, plural, zero {لا ملفات إضافية غير معروضة} one {ملف إضافي واحد غير معروض} two {ملفان إضافيان غير معروضين} few {# ملفات إضافية غير معروضة} many {# ملفًا إضافيًا غير معروض} other {# ملف إضافي غير معروض}}"
@@ -122,7 +126,7 @@ msgid "{unreadCount, plural, one {Open menu (# unread notification)} other {Open
 msgstr "{unreadCount, plural, zero {فتح القائمة (لا إشعارات غير مقروءة)} one {فتح القائمة (إشعار واحد غير مقروء)} two {فتح القائمة (إشعاران غير مقروءين)} few {فتح القائمة (# إشعارات غير مقروءة)} many {فتح القائمة (# إشعارًا غير مقروء)} other {فتح القائمة (# إشعار غير مقروء)}}"
 
 #. placeholder {0}: data.ahead
-#: src/features/requests/components/merge-status.tsx:76
+#: src/features/requests/components/merge-status.tsx:87
 msgid "+{0} ahead"
 msgstr "+{0} متقدم"
 
@@ -146,7 +150,7 @@ msgstr "مطلق (تاريخ ووقت)"
 msgid "Accept"
 msgstr "قبول"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:102
+#: src/routes/_authenticated/$projectId_.settings.tsx:105
 msgid "Access"
 msgstr "الوصول"
 
@@ -159,19 +163,19 @@ msgstr "تم رفض الوصول"
 msgid "Access level"
 msgstr "مستوى الوصول"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:141
+#: src/routes/_authenticated/$projectId_.settings.tsx:144
 msgid "Access level updated"
 msgstr "تم تحديث مستوى الوصول"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:132
+#: src/routes/_authenticated/$projectId_.settings.tsx:135
 msgid "Access management"
 msgstr "إدارة الوصول"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:138
+#: src/routes/_authenticated/$projectId_.settings.tsx:141
 msgid "Access removed"
 msgstr "تمت إزالة الوصول"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:135
+#: src/routes/_authenticated/$projectId_.settings.tsx:138
 msgid "Access set for {subjectName}"
 msgstr "تم تعيين الوصول لـ {subjectName}"
 
@@ -179,14 +183,14 @@ msgstr "تم تعيين الوصول لـ {subjectName}"
 msgid "Account type"
 msgstr "نوع الحساب"
 
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:415
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:423
 msgid "Activity"
 msgstr "النشاط"
 
 #: ../../../lib/web/src/components/entity/entity-field-editor.tsx:758
 #: ../../../lib/web/src/features/access/access-dialog.tsx:332
 #: ../../../lib/web/src/features/accounts/account-add.tsx:209
-#: src/features/requests/components/request-panel.tsx:113
+#: src/features/requests/components/request-panel.tsx:111
 msgid "Add"
 msgstr "إضافة"
 
@@ -218,7 +222,7 @@ msgstr "إضافة تسمية توضيحية"
 msgid "Add checklist item"
 msgstr "إضافة عنصر إلى قائمة المهام"
 
-#: src/features/editor/components/design-editor.tsx:541
+#: src/features/editor/components/design-editor.tsx:529
 #: src/features/editor/components/edit-dialogs.tsx:223
 #: src/features/editor/components/edit-dialogs.tsx:434
 msgid "Add class"
@@ -250,7 +254,7 @@ msgstr "إضافة رابط"
 msgid "Add option"
 msgstr "إضافة خيار"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:133
+#: src/routes/_authenticated/$projectId_.settings.tsx:136
 msgid "Add rule"
 msgstr "إضافة قاعدة"
 
@@ -266,7 +270,7 @@ msgstr "إضافة إلى الإشعارات الحالية"
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:518
 #: ../../../lib/web/src/components/view-tabs.tsx:87
 #: ../../../lib/web/src/components/view-tabs.tsx:93
-#: src/features/editor/components/design-editor.tsx:492
+#: src/features/editor/components/design-editor.tsx:480
 msgid "Add view"
 msgstr "إضافة عرض"
 
@@ -286,7 +290,7 @@ msgstr "جميع المشاريع"
 msgid "Allow anyone to search for {entityLabel}"
 msgstr "السماح لأي شخص بالبحث عن {entityLabel}"
 
-#: src/features/projects/components/create-project-dialog.tsx:387
+#: src/features/projects/components/create-project-dialog.tsx:400
 msgid "Allow anyone to search for project"
 msgstr "السماح لأي شخص بالبحث عن المشروع"
 
@@ -329,7 +333,7 @@ msgstr "سيتوقف أي شيء مشترك في هذه التغذية عن تل
 msgid "Are you sure you want to delete \"{0}\"?"
 msgstr "هل أنت متأكد من حذف \"{0}\"؟"
 
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:671
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:679
 msgid "Are you sure you want to delete \"{title}\"? This action cannot be undone."
 msgstr "هل أنت متأكد من حذف \"{title}\"؟ لا يمكن التراجع عن هذا الإجراء."
 
@@ -341,7 +345,7 @@ msgstr "هل أنت متأكد من حذف العمود \"{name}\"؟ لا يمك
 msgid "Are you sure you want to delete this comment? This will also delete all replies."
 msgstr "هل أنت متأكد من حذف هذا التعليق؟ سيؤدي ذلك أيضًا إلى حذف جميع الردود."
 
-#: src/features/requests/components/request-panel.tsx:141
+#: src/features/requests/components/request-panel.tsx:139
 msgid "Are you sure you want to delete this merge request?"
 msgstr "هل أنت متأكد من حذف طلب الدمج هذا؟"
 
@@ -395,7 +399,7 @@ msgid "Avatar for {name}"
 msgstr "صورة {name} الرمزية"
 
 #: ../../../lib/web/src/components/place-picker.tsx:142
-#: src/features/projects/components/create-project-dialog.tsx:546
+#: src/features/projects/components/create-project-dialog.tsx:558
 msgid "Back"
 msgstr "رجوع"
 
@@ -404,26 +408,26 @@ msgstr "رجوع"
 msgid "Back to home"
 msgstr "العودة إلى الرئيسية"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:103
-#: src/routes/_authenticated/$projectId/design.tsx:47
+#: src/routes/_authenticated/$projectId_.settings.tsx:106
+#: src/routes/_authenticated/$projectId/design.tsx:46
 msgid "Back to project"
 msgstr "العودة إلى المشروع"
 
-#: src/routes/_authenticated/$projectId/$objectId.tsx:64
+#: src/routes/_authenticated/$projectId/$objectId.tsx:71
 #: src/routes/_authenticated/$projectId/index.tsx:85
 msgid "Back to projects"
 msgstr "العودة إلى المشاريع"
 
-#: ../../../lib/web/src/components/banner-section.tsx:80
+#: ../../../lib/web/src/components/banner-section.tsx:91
 #: ../../../lib/web/src/components/entity-banner.tsx:17
 msgid "Banner"
 msgstr "اللافتة"
 
-#: ../../../lib/web/src/components/banner-section.tsx:69
+#: ../../../lib/web/src/components/banner-section.tsx:73
 msgid "Banner removed"
 msgstr "تمت إزالة البانر"
 
-#: ../../../lib/web/src/components/banner-section.tsx:69
+#: ../../../lib/web/src/components/banner-section.tsx:73
 msgid "Banner updated"
 msgstr "تم تحديث البانر"
 
@@ -462,7 +466,7 @@ msgstr "لون الحدود"
 msgid "Browser notifications"
 msgstr "إشعارات المتصفح"
 
-#: src/routes/_authenticated/$projectId/design.tsx:100
+#: src/routes/_authenticated/$projectId/design.tsx:99
 msgid "Built-in templates"
 msgstr "القوالب المدمجة"
 
@@ -492,8 +496,8 @@ msgstr "يمكن أن يكون فرعًا من"
 #: ../../../lib/web/src/features/access/access-list.tsx:268
 #: ../../../lib/web/src/features/accounts/account-add.tsx:201
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:91
-#: src/features/projects/components/create-project-dialog.tsx:453
-#: src/routes/_authenticated/$projectId/design.tsx:61
+#: src/features/projects/components/create-project-dialog.tsx:466
+#: src/routes/_authenticated/$projectId/design.tsx:60
 #: src/routes/_authenticated/$projectId/index.tsx:143
 msgid "Cancel"
 msgstr "إلغاء"
@@ -512,7 +516,7 @@ msgstr "إلغاء الرد"
 msgid "Cancelled"
 msgstr "ملغى"
 
-#: src/features/requests/components/merge-status.tsx:71
+#: src/features/requests/components/merge-status.tsx:82
 msgid "Cannot merge automatically"
 msgstr "لا يمكن الدمج تلقائياً"
 
@@ -554,7 +558,7 @@ msgstr "قائمة المهام"
 msgid "Choose a game from the sidebar or start a new one."
 msgstr "اختر لعبة من الشريط الجانبي أو ابدأ لعبة جديدة."
 
-#: src/features/projects/components/create-project-dialog.tsx:334
+#: src/features/projects/components/create-project-dialog.tsx:345
 msgid "Choose a template"
 msgstr "اختر قالباً"
 
@@ -563,11 +567,11 @@ msgstr "اختر قالباً"
 msgid "Choose language"
 msgstr "اختر اللغة"
 
-#: src/features/editor/components/design-editor.tsx:536
+#: src/features/editor/components/design-editor.tsx:524
 msgid "Classes"
 msgstr "الفئات"
 
-#: ../../../lib/web/src/components/banner-section.tsx:111
+#: ../../../lib/web/src/components/banner-section.tsx:123
 #: ../../../lib/web/src/components/colour-picker.tsx:274
 #: ../../../lib/web/src/components/colour-picker.tsx:355
 #: ../../../lib/web/src/components/travelling-picker.tsx:145
@@ -668,7 +672,7 @@ msgid "Comments"
 msgstr "التعليقات"
 
 #. placeholder {0}: data.comment_count || 0
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:411
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:419
 msgid "Comments ({0})"
 msgstr "التعليقات ({0})"
 
@@ -746,12 +750,12 @@ msgid "Could not load repositories"
 msgstr "فشل تحميل المستودعات"
 
 #: src/features/projects/components/create-project-dialog.tsx:79
-#: src/features/projects/components/create-project-dialog.tsx:482
-#: src/routes/_authenticated/$projectId/design.tsx:102
+#: src/features/projects/components/create-project-dialog.tsx:495
+#: src/routes/_authenticated/$projectId/design.tsx:101
 msgid "Could not load templates"
 msgstr "فشل تحميل القوالب"
 
-#: src/features/requests/components/diff-stats.tsx:59
+#: src/features/requests/components/diff-stats.tsx:64
 msgid "Could not load the diff"
 msgstr "فشل تحميل الاختلاف"
 
@@ -791,7 +795,7 @@ msgstr "إنشاء {entityLabel}"
 msgid "Create a new item in this project"
 msgstr "إنشاء عنصر جديد في هذا المشروع"
 
-#: src/features/projects/components/create-project-dialog.tsx:336
+#: src/features/projects/components/create-project-dialog.tsx:347
 #: src/features/projects/pages/projects-list-page.tsx:37
 msgid "Create a new project"
 msgstr "إنشاء مشروع جديد"
@@ -802,10 +806,10 @@ msgid "Create new item"
 msgstr "إنشاء عنصر جديد"
 
 #: src/components/layout/projects-layout.tsx:36
-#: src/features/projects/components/create-project-dialog.tsx:324
-#: src/features/projects/components/create-project-dialog.tsx:334
-#: src/features/projects/components/create-project-dialog.tsx:457
-#: src/features/projects/components/create-project-dialog.tsx:549
+#: src/features/projects/components/create-project-dialog.tsx:335
+#: src/features/projects/components/create-project-dialog.tsx:345
+#: src/features/projects/components/create-project-dialog.tsx:470
+#: src/features/projects/components/create-project-dialog.tsx:561
 msgid "Create project"
 msgstr "إنشاء مشروع"
 
@@ -823,14 +827,14 @@ msgstr "تم الإنشاء"
 msgid "Created {field}"
 msgstr "تم إنشاء {field}"
 
-#: src/features/projects/components/create-project-dialog.tsx:132
+#: src/features/projects/components/create-project-dialog.tsx:145
 msgid "Creating project..."
 msgstr "جارٍ إنشاء المشروع..."
 
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:676
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:260
-#: src/features/projects/components/create-project-dialog.tsx:457
-#: src/features/projects/components/create-project-dialog.tsx:549
+#: src/features/projects/components/create-project-dialog.tsx:470
+#: src/features/projects/components/create-project-dialog.tsx:561
 msgid "Creating..."
 msgstr "جارٍ الإنشاء..."
 
@@ -854,8 +858,8 @@ msgstr "تعارض في البيانات"
 #. placeholder {0}: imported.data?.objects ?? 0
 #. placeholder {1}: imported.data?.comments ?? 0
 #. placeholder {2}: imported.data?.links ?? 0
-#: src/features/projects/components/create-project-dialog.tsx:151
-#: src/features/projects/components/create-project-dialog.tsx:181
+#: src/features/projects/components/create-project-dialog.tsx:164
+#: src/features/projects/components/create-project-dialog.tsx:194
 msgid "Data imported ({0, plural, one {# object} other {# objects}}, {1, plural, one {# comment} other {# comments}}, {2, plural, one {# link} other {# links}})"
 msgstr "تم استيراد البيانات ({0, plural, zero {# كائن} one {كائن واحد} two {كائنان} few {# كائنات} many {# كائنًا} other {# كائن}}، {1, plural, zero {# تعليق} one {تعليق واحد} two {تعليقان} few {# تعليقات} many {# تعليقًا} other {# تعليق}}، {2, plural, zero {# رابط} one {رابط واحد} two {رابطان} few {# روابط} many {# رابطًا} other {# رابط}})"
 
@@ -888,10 +892,10 @@ msgstr "الترتيب الافتراضي"
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:208
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:255
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:317
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:672
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:680
 #: ../../../lib/web/src/components/game/game-end-dialogs.tsx:78
-#: src/features/requests/components/request-panel.tsx:142
-#: src/routes/_authenticated/$projectId_.settings.tsx:122
+#: src/features/requests/components/request-panel.tsx:140
+#: src/routes/_authenticated/$projectId_.settings.tsx:125
 msgid "Delete"
 msgstr "حذف"
 
@@ -919,19 +923,19 @@ msgstr "حذف الحقل"
 msgid "Delete game?"
 msgstr "حذف اللعبة؟"
 
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:486
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:491
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:670
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:494
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:499
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:678
 msgid "Delete item"
 msgstr "حذف العنصر"
 
-#: src/features/requests/components/request-panel.tsx:140
-#: src/features/requests/components/request-panel.tsx:403
-#: src/features/requests/components/request-panel.tsx:408
-#: src/features/requests/components/request-panel.tsx:428
-#: src/features/requests/components/request-panel.tsx:433
-#: src/features/requests/components/request-panel.tsx:450
-#: src/features/requests/components/request-panel.tsx:455
+#: src/features/requests/components/request-panel.tsx:138
+#: src/features/requests/components/request-panel.tsx:401
+#: src/features/requests/components/request-panel.tsx:406
+#: src/features/requests/components/request-panel.tsx:426
+#: src/features/requests/components/request-panel.tsx:431
+#: src/features/requests/components/request-panel.tsx:448
+#: src/features/requests/components/request-panel.tsx:453
 msgid "Delete merge request"
 msgstr "حذف طلب الدمج"
 
@@ -945,12 +949,12 @@ msgstr "حذف الخيار"
 msgid "Delete option {0}"
 msgstr "حذف الخيار {0}"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:121
 #: src/routes/_authenticated/$projectId_.settings.tsx:124
+#: src/routes/_authenticated/$projectId_.settings.tsx:127
 msgid "Delete project"
 msgstr "حذف المشروع"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:123
+#: src/routes/_authenticated/$projectId_.settings.tsx:126
 msgid "Delete project?"
 msgstr "حذف المشروع؟"
 
@@ -970,7 +974,7 @@ msgstr "تم الحذف"
 msgid "Deleted {field}"
 msgstr "تم حذف {field}"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:129
+#: src/routes/_authenticated/$projectId_.settings.tsx:132
 msgid "Deleting project..."
 msgstr "جارٍ حذف المشروع..."
 
@@ -983,19 +987,19 @@ msgid "Descending"
 msgstr "تنازلي"
 
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:85
-#: src/features/requests/components/request-panel.tsx:315
-#: src/routes/_authenticated/$projectId_.settings.tsx:114
+#: src/features/requests/components/request-panel.tsx:313
+#: src/routes/_authenticated/$projectId_.settings.tsx:117
 msgid "Description"
 msgstr "الوصف"
 
-#: src/routes/_authenticated/$projectId/design.tsx:43
-#: src/routes/_authenticated/$projectId/design.tsx:46
+#: src/routes/_authenticated/$projectId/design.tsx:42
+#: src/routes/_authenticated/$projectId/design.tsx:45
 #: src/routes/_authenticated/$projectId/index.tsx:170
 msgid "Design"
 msgstr "التصميم"
 
-#: src/features/projects/components/create-project-dialog.tsx:182
-#: src/routes/_authenticated/$projectId/design.tsx:54
+#: src/features/projects/components/create-project-dialog.tsx:195
+#: src/routes/_authenticated/$projectId/design.tsx:53
 msgid "Design imported"
 msgstr "تم استيراد التصميم"
 
@@ -1018,7 +1022,7 @@ msgstr "لوحة التفاصيل"
 msgid "Detect from web browser"
 msgstr "اكتشاف من متصفح الويب"
 
-#: src/features/requests/components/diff-stats.tsx:92
+#: src/features/requests/components/diff-stats.tsx:97
 msgid "Diff"
 msgstr "الاختلاف"
 
@@ -1061,7 +1065,7 @@ msgid "Does not match the required pattern"
 msgstr "لا يطابق النمط المطلوب"
 
 #: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:309
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:495
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:503
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:523
 #: src/features/editor/components/edit-dialogs.tsx:439
 msgid "Done"
@@ -1077,7 +1081,7 @@ msgstr "انقر مرتين على عمود لإضافة محتوى"
 msgid "Download"
 msgstr "تنزيل"
 
-#: src/routes/_authenticated/$projectId/design.tsx:75
+#: src/routes/_authenticated/$projectId/design.tsx:74
 msgid "Download backup first"
 msgstr "نزّل النسخة الاحتياطية أولاً"
 
@@ -1086,13 +1090,13 @@ msgstr "نزّل النسخة الاحتياطية أولاً"
 msgid "Download failed"
 msgstr "فشل التنزيل"
 
-#: src/routes/_authenticated/$projectId/design.tsx:52
+#: src/routes/_authenticated/$projectId/design.tsx:51
 #: src/routes/_authenticated/$projectId/index.tsx:149
 msgid "Downloaded {filename}"
 msgstr "تم تنزيل {filename}"
 
-#: src/features/requests/components/request-panel.tsx:281
-#: src/features/requests/components/request-panel.tsx:353
+#: src/features/requests/components/request-panel.tsx:279
+#: src/features/requests/components/request-panel.tsx:351
 msgid "Draft"
 msgstr "مسودة"
 
@@ -1159,7 +1163,7 @@ msgstr "بريد إلكتروني"
 msgid "Email code"
 msgstr "رمز البريد الإلكتروني"
 
-#: ../../../lib/web/src/components/banner-section.tsx:88
+#: ../../../lib/web/src/components/banner-section.tsx:99
 msgid "Enter banner text (markdown supported)..."
 msgstr "أدخل نص الشعار (Markdown مدعوم)..."
 
@@ -1171,11 +1175,11 @@ msgstr "أدخل الرمز من بريدك الإلكتروني"
 msgid "Enter your authenticator code"
 msgstr "أدخل رمز تطبيق المصادقة"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:115
+#: src/routes/_authenticated/$projectId_.settings.tsx:118
 msgid "Entity ID"
 msgstr "معرّف الكيان"
 
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:381
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:389
 msgid "Error"
 msgstr "خطأ"
 
@@ -1194,7 +1198,7 @@ msgstr "توسيع الشريط الجانبي"
 msgid "Export data"
 msgstr "تصدير البيانات"
 
-#: src/routes/_authenticated/$projectId/design.tsx:50
+#: src/routes/_authenticated/$projectId/design.tsx:49
 msgid "Export design"
 msgstr "تصدير التصميم"
 
@@ -1223,12 +1227,12 @@ msgstr "فشل التحقق من حالة الدمج"
 msgid "Failed to copy"
 msgstr "فشل النسخ"
 
-#: src/features/editor/components/design-editor.tsx:113
+#: src/features/editor/components/design-editor.tsx:111
 msgid "Failed to create class"
 msgstr "فشل إنشاء الفئة"
 
-#: src/features/editor/components/design-editor.tsx:166
-#: src/features/editor/components/design-editor.tsx:632
+#: src/features/editor/components/design-editor.tsx:164
+#: src/features/editor/components/design-editor.tsx:620
 msgid "Failed to create field"
 msgstr "فشل إنشاء الحقل"
 
@@ -1238,20 +1242,20 @@ msgstr "فشل إنشاء الحقل"
 msgid "Failed to create link"
 msgstr "فشل إنشاء الرابط"
 
-#: src/features/requests/components/request-panel.tsx:59
+#: src/features/requests/components/request-panel.tsx:57
 msgid "Failed to create merge request"
 msgstr "فشل إنشاء طلب الدمج"
 
-#: src/features/editor/components/design-editor.tsx:238
-#: src/features/editor/components/design-editor.tsx:652
+#: src/features/editor/components/design-editor.tsx:236
+#: src/features/editor/components/design-editor.tsx:640
 msgid "Failed to create option"
 msgstr "فشل إنشاء الخيار"
 
-#: src/features/projects/components/create-project-dialog.tsx:134
+#: src/features/projects/components/create-project-dialog.tsx:147
 msgid "Failed to create project"
 msgstr "فشل إنشاء المشروع"
 
-#: src/features/editor/components/design-editor.tsx:316
+#: src/features/editor/components/design-editor.tsx:314
 msgid "Failed to create view"
 msgstr "فشل إنشاء العرض"
 
@@ -1263,7 +1267,7 @@ msgstr "فشل الحذف"
 msgid "Failed to delete attachment"
 msgstr "فشل حذف المرفق"
 
-#: src/features/editor/components/design-editor.tsx:137
+#: src/features/editor/components/design-editor.tsx:135
 msgid "Failed to delete class"
 msgstr "فشل حذف الفئة"
 
@@ -1275,7 +1279,7 @@ msgstr "تعذّر حذف العمود"
 msgid "Failed to delete comment"
 msgstr "فشل حذف التعليق"
 
-#: src/features/editor/components/design-editor.tsx:209
+#: src/features/editor/components/design-editor.tsx:207
 msgid "Failed to delete field"
 msgstr "فشل حذف الحقل"
 
@@ -1283,19 +1287,19 @@ msgstr "فشل حذف الحقل"
 msgid "Failed to delete link"
 msgstr "فشل حذف الرابط"
 
-#: src/features/requests/components/request-panel.tsx:85
+#: src/features/requests/components/request-panel.tsx:83
 msgid "Failed to delete merge request"
 msgstr "فشل حذف طلب الدمج"
 
-#: src/features/editor/components/design-editor.tsx:276
+#: src/features/editor/components/design-editor.tsx:274
 msgid "Failed to delete option"
 msgstr "فشل حذف الخيار"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:131
+#: src/routes/_authenticated/$projectId_.settings.tsx:134
 msgid "Failed to delete project"
 msgstr "فشل حذف المشروع"
 
-#: src/features/editor/components/design-editor.tsx:371
+#: src/features/editor/components/design-editor.tsx:359
 msgid "Failed to delete view"
 msgstr "فشل حذف العرض"
 
@@ -1303,7 +1307,7 @@ msgstr "فشل حذف العرض"
 msgid "Failed to export data"
 msgstr "فشل تصدير البيانات"
 
-#: src/routes/_authenticated/$projectId/design.tsx:53
+#: src/routes/_authenticated/$projectId/design.tsx:52
 msgid "Failed to export design"
 msgstr "فشل تصدير التصميم"
 
@@ -1311,12 +1315,12 @@ msgstr "فشل تصدير التصميم"
 msgid "Failed to get RSS token"
 msgstr "فشل الحصول على رمز RSS"
 
-#: src/features/projects/components/create-project-dialog.tsx:152
-#: src/features/projects/components/create-project-dialog.tsx:183
+#: src/features/projects/components/create-project-dialog.tsx:165
+#: src/features/projects/components/create-project-dialog.tsx:196
 msgid "Failed to import data"
 msgstr "فشل استيراد البيانات"
 
-#: src/routes/_authenticated/$projectId/design.tsx:55
+#: src/routes/_authenticated/$projectId/design.tsx:54
 msgid "Failed to import design"
 msgstr "فشل استيراد التصميم"
 
@@ -1324,7 +1328,11 @@ msgstr "فشل استيراد التصميم"
 msgid "Failed to load"
 msgstr "فشل التحميل"
 
-#: ../../../lib/web/src/components/audit-timeline.tsx:68
+#: ../../../lib/web/src/components/banner-section.tsx:85
+msgid "Failed to load banner"
+msgstr "تعذّر تحميل اللافتة"
+
+#: ../../../lib/web/src/components/audit-timeline.tsx:70
 msgid "Failed to load history"
 msgstr "فشل تحميل السجل"
 
@@ -1332,19 +1340,19 @@ msgstr "فشل تحميل السجل"
 msgid "Failed to load image"
 msgstr "تعذّر تحميل الصورة"
 
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:382
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:385
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:390
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:393
 msgid "Failed to load item"
 msgstr "فشل تحميل العنصر"
 
-#: src/routes/_authenticated/$projectId/$objectId.tsx:41
-#: src/routes/_authenticated/$projectId/$objectId.tsx:65
+#: src/routes/_authenticated/$projectId/$objectId.tsx:48
+#: src/routes/_authenticated/$projectId/$objectId.tsx:72
 #: src/routes/_authenticated/$projectId/index.tsx:62
 #: src/routes/_authenticated/$projectId/index.tsx:86
 msgid "Failed to load project"
 msgstr "فشل تحميل المشروع"
 
-#: src/routes/_authenticated/$projectId/design.tsx:48
+#: src/routes/_authenticated/$projectId/design.tsx:47
 msgid "Failed to load project design"
 msgstr "فشل تحميل تصميم المشروع"
 
@@ -1381,12 +1389,12 @@ msgstr "فشل نشر التعليق"
 msgid "Failed to re-order columns"
 msgstr "تعذّرت إعادة ترتيب الأعمدة"
 
-#: src/features/projects/components/create-project-dialog.tsx:261
-#: src/routes/_authenticated/$projectId/design.tsx:60
+#: src/features/projects/components/create-project-dialog.tsx:272
+#: src/routes/_authenticated/$projectId/design.tsx:59
 msgid "Failed to read file"
 msgstr "فشل قراءة الملف"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:139
+#: src/routes/_authenticated/$projectId_.settings.tsx:142
 msgid "Failed to remove access"
 msgstr "فشل إزالة الوصول"
 
@@ -1394,11 +1402,11 @@ msgstr "فشل إزالة الوصول"
 msgid "Failed to rename column"
 msgstr "تعذّرت إعادة تسمية العمود"
 
-#: src/features/editor/components/design-editor.tsx:218
+#: src/features/editor/components/design-editor.tsx:216
 msgid "Failed to reorder fields"
 msgstr "فشل إعادة ترتيب الحقول"
 
-#: src/features/editor/components/design-editor.tsx:380
+#: src/features/editor/components/design-editor.tsx:368
 msgid "Failed to reorder views"
 msgstr "فشل إعادة ترتيب العروض"
 
@@ -1418,15 +1426,15 @@ msgstr "فشل الحفظ"
 msgid "Failed to save prompt"
 msgstr "فشل حفظ المطالبة"
 
-#: src/features/projects/components/inline-project-search.tsx:89
+#: src/features/projects/components/inline-project-search.tsx:86
 msgid "Failed to search projects"
 msgstr "فشل البحث في المشاريع"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:136
+#: src/routes/_authenticated/$projectId_.settings.tsx:139
 msgid "Failed to set access level"
 msgstr "فشل تعيين مستوى الوصول"
 
-#: src/features/projects/components/inline-project-search.tsx:69
+#: src/features/projects/components/inline-project-search.tsx:67
 #: src/features/projects/components/recommended-projects.tsx:44
 #: src/routes/_authenticated/find.tsx:45
 msgid "Failed to subscribe"
@@ -1437,15 +1445,15 @@ msgstr "فشل الاشتراك"
 msgid "Failed to unsubscribe"
 msgstr "فشل إلغاء الاشتراك"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:142
+#: src/routes/_authenticated/$projectId_.settings.tsx:145
 msgid "Failed to update access level"
 msgstr "فشل تحديث مستوى الوصول"
 
-#: ../../../lib/web/src/components/banner-section.tsx:71
+#: ../../../lib/web/src/components/banner-section.tsx:75
 msgid "Failed to update banner"
 msgstr "فشل تحديث الشعار"
 
-#: src/features/editor/components/design-editor.tsx:122
+#: src/features/editor/components/design-editor.tsx:120
 msgid "Failed to update class"
 msgstr "فشل تحديث الفئة"
 
@@ -1453,27 +1461,27 @@ msgstr "فشل تحديث الفئة"
 msgid "Failed to update comment"
 msgstr "فشل تحديث التعليق"
 
-#: src/features/editor/components/design-editor.tsx:197
+#: src/features/editor/components/design-editor.tsx:195
 msgid "Failed to update field"
 msgstr "فشل تحديث الحقل"
 
-#: src/features/editor/components/design-editor.tsx:147
+#: src/features/editor/components/design-editor.tsx:145
 msgid "Failed to update hierarchy"
 msgstr "فشل تحديث التسلسل الهرمي"
 
-#: src/features/requests/components/request-panel.tsx:71
+#: src/features/requests/components/request-panel.tsx:69
 msgid "Failed to update merge request"
 msgstr "فشل تحديث طلب الدمج"
 
-#: src/features/editor/components/design-editor.tsx:257
+#: src/features/editor/components/design-editor.tsx:255
 msgid "Failed to update option"
 msgstr "فشل تحديث الخيار"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:120
+#: src/routes/_authenticated/$projectId_.settings.tsx:123
 msgid "Failed to update project"
 msgstr "فشل تحديث المشروع"
 
-#: src/features/editor/components/design-editor.tsx:360
+#: src/features/editor/components/design-editor.tsx:348
 msgid "Failed to update view"
 msgstr "فشل تحديث العرض"
 
@@ -1500,7 +1508,7 @@ msgstr "الملفات"
 msgid "Find projects"
 msgstr "البحث عن المشاريع"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:116
+#: src/routes/_authenticated/$projectId_.settings.tsx:119
 msgid "Fingerprint"
 msgstr "البصمة"
 
@@ -1528,7 +1536,7 @@ msgstr "الأصدقاء"
 msgid "From"
 msgstr "من"
 
-#: src/routes/_authenticated/$projectId/design.tsx:57
+#: src/routes/_authenticated/$projectId/design.tsx:56
 msgid "From file"
 msgstr "من ملف"
 
@@ -1558,7 +1566,7 @@ msgstr "تجميع حسب"
 msgid "Group: {0}"
 msgstr "المجموعة: {0}"
 
-#: ../../../lib/web/src/components/audit-timeline.tsx:61
+#: ../../../lib/web/src/components/audit-timeline.tsx:63
 msgid "History"
 msgstr "السجل"
 
@@ -1578,7 +1586,7 @@ msgstr "رائج"
 msgid "ID"
 msgstr "المعرّف"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:112
+#: src/routes/_authenticated/$projectId_.settings.tsx:115
 msgid "Identity"
 msgstr "الهوية"
 
@@ -1591,17 +1599,17 @@ msgstr "عارض الصور: {0}"
 msgid "Imperial"
 msgstr "إمبراطوري"
 
-#: src/routes/_authenticated/$projectId/design.tsx:51
-#: src/routes/_authenticated/$projectId/design.tsx:56
+#: src/routes/_authenticated/$projectId/design.tsx:50
+#: src/routes/_authenticated/$projectId/design.tsx:55
 msgid "Import design"
 msgstr "استيراد التصميم"
 
-#: src/features/projects/components/create-project-dialog.tsx:397
+#: src/features/projects/components/create-project-dialog.tsx:410
 msgid "Import from backup (optional)"
 msgstr "استيراد من نسخة احتياطية (اختياري)"
 
-#: src/features/projects/components/create-project-dialog.tsx:149
-#: src/features/projects/components/create-project-dialog.tsx:178
+#: src/features/projects/components/create-project-dialog.tsx:162
+#: src/features/projects/components/create-project-dialog.tsx:191
 msgid "Importing data..."
 msgstr "جارٍ استيراد البيانات..."
 
@@ -1629,8 +1637,8 @@ msgstr "الاهتمامات"
 msgid "Invalid date"
 msgstr "تاريخ غير صالح"
 
-#: src/features/projects/components/create-project-dialog.tsx:256
-#: src/routes/_authenticated/$projectId/design.tsx:59
+#: src/features/projects/components/create-project-dialog.tsx:267
+#: src/routes/_authenticated/$projectId/design.tsx:58
 msgid "Invalid JSON file"
 msgstr "ملف JSON غير صالح"
 
@@ -1638,7 +1646,7 @@ msgstr "ملف JSON غير صالح"
 msgid "It seems like the page you're looking for <0/>does not exist or might have been removed."
 msgstr "يبدو أن الصفحة التي تبحث عنها <0/>غير موجودة أو ربما تمت إزالتها."
 
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:441
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:449
 msgid "Item details"
 msgstr "تفاصيل العنصر"
 
@@ -1688,19 +1696,19 @@ msgstr "تحميل المزيد"
 msgid "Loading content…"
 msgstr "جارٍ تحميل المحتوى…"
 
-#: src/features/requests/components/diff-stats.tsx:52
+#: src/features/requests/components/diff-stats.tsx:57
 msgid "Loading diff..."
 msgstr "جارٍ تحميل الاختلاف..."
 
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:365
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:373
 msgid "Loading item"
 msgstr "جارٍ تحميل العنصر"
 
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:366
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:374
 msgid "Loading item details"
 msgstr "جارٍ تحميل تفاصيل العنصر"
 
-#: src/features/projects/components/create-project-dialog.tsx:478
+#: src/features/projects/components/create-project-dialog.tsx:491
 msgid "Loading templates..."
 msgstr "جارٍ تحميل القوالب..."
 
@@ -1772,7 +1780,7 @@ msgstr "دمج {objectReadable}: {objectTitle}"
 msgid "Merge commit"
 msgstr "إيداع الدمج"
 
-#: src/features/requests/components/request-panel.tsx:102
+#: src/features/requests/components/request-panel.tsx:100
 msgid "Merge requests"
 msgstr "طلبات الدمج"
 
@@ -1780,7 +1788,7 @@ msgstr "طلبات الدمج"
 msgid "Merge requests ({requestCount})"
 msgstr "طلبات الدمج ({requestCount})"
 
-#: src/features/requests/components/request-panel.tsx:284
+#: src/features/requests/components/request-panel.tsx:282
 msgid "Merged"
 msgstr "تم الدمج"
 
@@ -1837,7 +1845,7 @@ msgstr "تم النقل"
 msgid "Moved {field}"
 msgstr "تم نقل {field}"
 
-#: src/features/projects/components/create-project-dialog.tsx:352
+#: src/features/projects/components/create-project-dialog.tsx:363
 msgid "My project"
 msgstr "مشروعي"
 
@@ -1847,22 +1855,24 @@ msgstr "مشروعي"
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:126
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:296
 #: src/features/editor/components/edit-dialogs.tsx:258
-#: src/features/projects/components/create-project-dialog.tsx:342
-#: src/routes/_authenticated/$projectId_.settings.tsx:113
+#: src/features/projects/components/create-project-dialog.tsx:353
+#: src/routes/_authenticated/$projectId_.settings.tsx:116
 msgid "Name"
 msgstr "الاسم"
 
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:104
+#: src/features/projects/components/create-project-dialog.tsx:114
 #: src/routes/_authenticated/$projectId_.settings.tsx:76
 msgid "Name cannot contain < or > characters"
 msgstr "لا يمكن أن يحتوي الاسم على حرفي < أو >"
 
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:101
-#: src/features/projects/components/create-project-dialog.tsx:102
+#: src/features/projects/components/create-project-dialog.tsx:105
 msgid "Name is required"
 msgstr "الاسم مطلوب"
 
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:102
+#: src/features/projects/components/create-project-dialog.tsx:110
 #: src/routes/_authenticated/$projectId_.settings.tsx:74
 msgid "Name must be 1000 characters or less"
 msgstr "يجب ألا يتجاوز الاسم 1000 حرف"
@@ -1888,7 +1898,7 @@ msgstr "{className} جديد"
 msgid "New game"
 msgstr "لعبة جديدة"
 
-#: src/features/projects/components/create-project-dialog.tsx:459
+#: src/features/projects/components/create-project-dialog.tsx:472
 msgid "Next"
 msgstr "التالي"
 
@@ -1917,7 +1927,7 @@ msgstr "لا يوجد نشاط بعد"
 msgid "No branches found"
 msgstr "لم يتم العثور على فروع"
 
-#: src/features/requests/components/diff-stats.tsx:65
+#: src/features/requests/components/diff-stats.tsx:70
 msgid "No changes detected"
 msgstr "لم يتم اكتشاف تغييرات"
 
@@ -1925,7 +1935,7 @@ msgstr "لم يتم اكتشاف تغييرات"
 msgid "No changes to display"
 msgstr "لا توجد تغييرات للعرض"
 
-#: src/routes/$projectId.diff.tsx:160
+#: src/routes/$projectId.diff.tsx:162
 msgid "No changes were found for the selected comparison."
 msgstr "لم يتم العثور على تغييرات للمقارنة المحددة."
 
@@ -1933,7 +1943,7 @@ msgstr "لم يتم العثور على تغييرات للمقارنة المح
 msgid "No comments yet"
 msgstr "لا توجد تعليقات بعد"
 
-#: src/routes/$projectId.diff.tsx:159
+#: src/routes/$projectId.diff.tsx:161
 msgid "No diff available"
 msgstr "لا يوجد فرق متاح"
 
@@ -1953,7 +1963,7 @@ msgstr "لا يمكن إنشاء أنواع عناصر بعد. أنشئ العن
 msgid "No matching objects"
 msgstr "لا توجد كائنات مطابقة"
 
-#: src/features/requests/components/request-panel.tsx:119
+#: src/features/requests/components/request-panel.tsx:117
 msgid "No merge requests"
 msgstr "لا توجد طلبات دمج"
 
@@ -1966,7 +1976,7 @@ msgstr "لم يتم العثور على أشخاص"
 msgid "No places found"
 msgstr "لم يتم العثور على أماكن"
 
-#: src/features/projects/components/inline-project-search.tsx:88
+#: src/features/projects/components/inline-project-search.tsx:85
 #: src/routes/_authenticated/find.tsx:42
 msgid "No projects found"
 msgstr "لم يتم العثور على مشاريع"
@@ -2014,10 +2024,10 @@ msgstr "لا توجد عروض"
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:554
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:557
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:561
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:557
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:570
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:571
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:575
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:565
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:578
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:579
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:583
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:362
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:385
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:388
@@ -2045,7 +2055,7 @@ msgstr "لم تتم المقارنة: أكبر من {0}"
 msgid "Not compared: over the size limit"
 msgstr "لم تتم المقارنة: يتجاوز حد الحجم"
 
-#: src/features/requests/components/request-panel.tsx:257
+#: src/features/requests/components/request-panel.tsx:255
 msgid "Not configured"
 msgstr "غير مُهيأ"
 
@@ -2081,7 +2091,7 @@ msgstr "مفعّل"
 msgid "Oops! Page Not Found!"
 msgstr "عذراً! الصفحة غير موجودة!"
 
-#: src/features/requests/components/request-panel.tsx:287
+#: src/features/requests/components/request-panel.tsx:285
 msgctxt "state"
 msgid "Open"
 msgstr "مفتوح"
@@ -2101,7 +2111,7 @@ msgstr "فتح الإجراءات"
 msgid "Open class actions"
 msgstr "فتح إجراءات الفئة"
 
-#: src/routes/_authenticated/$projectId/design.tsx:49
+#: src/routes/_authenticated/$projectId/design.tsx:48
 msgid "Open design actions"
 msgstr "فتح إجراءات التصميم"
 
@@ -2156,8 +2166,8 @@ msgid "Owner"
 msgstr "المالك"
 
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:546
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:553
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:569
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:561
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:577
 msgid "Parent"
 msgstr "الأصل"
 
@@ -2196,7 +2206,7 @@ msgstr "يرجى إضافة فئة واحدة أو أكثر إلى تصميم ا
 msgid "Please check your internet connection and try again."
 msgstr "يرجى التحقق من اتصالك بالإنترنت والمحاولة مرة أخرى."
 
-#: src/features/projects/components/create-project-dialog.tsx:118
+#: src/features/projects/components/create-project-dialog.tsx:131
 msgid "Please select a template"
 msgstr "يرجى تحديد قالب"
 
@@ -2216,16 +2226,20 @@ msgstr "المنشورات"
 msgid "Posts and comments"
 msgstr "المنشورات والتعليقات"
 
-#: src/features/projects/components/create-project-dialog.tsx:364
+#: src/features/projects/components/create-project-dialog.tsx:376
 #: src/routes/_authenticated/$projectId_.settings.tsx:83
 msgid "Prefix"
 msgstr "البادئة"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:93
+#: src/routes/_authenticated/$projectId_.settings.tsx:96
 msgid "Prefix can only contain lowercase letters, numbers, and hyphens"
 msgstr "يمكن أن تحتوي البادئة على أحرف صغيرة وأرقام وشرطات فقط"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:95
+#: src/routes/_authenticated/$projectId_.settings.tsx:94
+msgid "Prefix is required"
+msgstr "البادئة مطلوبة"
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:98
 msgid "Prefix must be 20 characters or less"
 msgstr "يجب ألا تزيد البادئة عن 20 حرفًا"
 
@@ -2243,7 +2257,7 @@ msgstr "الخصوصية"
 msgid "Processing…"
 msgstr "جارٍ المعالجة…"
 
-#: src/routes/_authenticated/$projectId/$objectId.tsx:62
+#: src/routes/_authenticated/$projectId/$objectId.tsx:69
 #: src/routes/_authenticated/$projectId/index.tsx:83
 msgid "Project"
 msgstr "مشروع"
@@ -2252,11 +2266,11 @@ msgstr "مشروع"
 msgid "Project actions"
 msgstr "إجراءات المشروع"
 
-#: src/features/projects/components/create-project-dialog.tsx:133
+#: src/features/projects/components/create-project-dialog.tsx:146
 msgid "Project created"
 msgstr "تم إنشاء المشروع"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:130
+#: src/routes/_authenticated/$projectId_.settings.tsx:133
 msgid "Project deleted"
 msgstr "تم حذف المشروع"
 
@@ -2268,19 +2282,19 @@ msgstr "رابط المشروع"
 msgid "Project name is required"
 msgstr "اسم المشروع مطلوب"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:108
+#: src/routes/_authenticated/$projectId_.settings.tsx:111
 msgid "Project not found"
 msgstr "المشروع غير موجود"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:107
+#: src/routes/_authenticated/$projectId_.settings.tsx:110
 msgid "Project settings"
 msgstr "إعدادات المشروع"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:110
+#: src/routes/_authenticated/$projectId_.settings.tsx:113
 msgid "Project unavailable"
 msgstr "المشروع غير متاح"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:119
+#: src/routes/_authenticated/$projectId_.settings.tsx:122
 msgid "Project updated"
 msgstr "تم تحديث المشروع"
 
@@ -2293,7 +2307,7 @@ msgstr "المشاريع"
 msgid "Prompt saved"
 msgstr "تم حفظ الموجه"
 
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:408
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:416
 msgid "Properties"
 msgstr "الخصائص"
 
@@ -2317,7 +2331,7 @@ msgstr "إعادة ترتيب الأعمدة"
 msgid "Re-register your passkeys on this server"
 msgstr "أعد تسجيل مفاتيح المرور على هذا الخادم"
 
-#: src/features/requests/components/merge-status.tsx:71
+#: src/features/requests/components/merge-status.tsx:82
 msgid "Ready to merge"
 msgstr "جاهز للدمج"
 
@@ -2378,7 +2392,7 @@ msgstr "الصلة {relevance}، الاهتمام {weight}"
 #: ../../../lib/web/src/components/attachment-composer.tsx:330
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:192
 #: ../../../lib/web/src/features/access/access-list.tsx:270
-#: src/features/projects/components/create-project-dialog.tsx:439
+#: src/features/projects/components/create-project-dialog.tsx:452
 msgid "Remove"
 msgstr "إزالة"
 
@@ -2422,7 +2436,7 @@ msgstr "إزالة العنصر"
 msgid "Remove link"
 msgstr "إزالة الرابط"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:137
+#: src/routes/_authenticated/$projectId_.settings.tsx:140
 msgid "Removing access..."
 msgstr "جارٍ إزالة الوصول..."
 
@@ -2439,15 +2453,15 @@ msgstr "إعادة تسمية العمود"
 msgid "Rename this board column"
 msgstr "إعادة تسمية عمود اللوحة هذا"
 
-#: src/routes/_authenticated/$projectId/design.tsx:73
+#: src/routes/_authenticated/$projectId/design.tsx:72
 msgid "Replace design"
 msgstr "استبدال التصميم"
 
-#: src/routes/_authenticated/$projectId/design.tsx:62
+#: src/routes/_authenticated/$projectId/design.tsx:61
 msgid "Replace design?"
 msgstr "استبدال التصميم؟"
 
-#: src/routes/_authenticated/$projectId/design.tsx:74
+#: src/routes/_authenticated/$projectId/design.tsx:73
 msgid "Replacing..."
 msgstr "جاري الاستبدال..."
 
@@ -2536,7 +2550,7 @@ msgstr "السبت"
 
 #: ../../../lib/web/src/components/ai-prompts-editor.tsx:156
 #: ../../../lib/web/src/components/attachment-composer.tsx:430
-#: ../../../lib/web/src/components/banner-section.tsx:99
+#: ../../../lib/web/src/components/banner-section.tsx:111
 #: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:231
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:172
 #: ../../../lib/web/src/components/ui/editable-field-row.tsx:126
@@ -2546,7 +2560,7 @@ msgid "Save"
 msgstr "حفظ"
 
 #: ../../../lib/web/src/components/ai-prompts-editor.tsx:156
-#: src/routes/_authenticated/$projectId_.settings.tsx:118
+#: src/routes/_authenticated/$projectId_.settings.tsx:121
 msgid "Saving..."
 msgstr "جاري الحفظ..."
 
@@ -2581,7 +2595,7 @@ msgstr "البحث عن وجهة..."
 msgid "Search for origin..."
 msgstr "البحث عن منشأ..."
 
-#: src/features/projects/components/inline-project-search.tsx:87
+#: src/features/projects/components/inline-project-search.tsx:84
 msgid "Search for projects..."
 msgstr "البحث عن مشاريع..."
 
@@ -2693,7 +2707,7 @@ msgstr "إرسال رسالة"
 msgid "Serif"
 msgstr "سيريف"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:117
+#: src/routes/_authenticated/$projectId_.settings.tsx:120
 msgid "Server"
 msgstr "الخادم"
 
@@ -2715,14 +2729,14 @@ msgstr "انتهت صلاحية الجلسة. يرجى تسجيل الدخول �
 msgid "Set origin and destination"
 msgstr "تعيين المنشأ والوجهة"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:134
+#: src/routes/_authenticated/$projectId_.settings.tsx:137
 msgid "Setting access..."
 msgstr "جارٍ ضبط الوصول..."
 
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx:119
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx:125
 #: ../../../lib/web/src/components/options-menu.tsx:196
-#: src/routes/_authenticated/$projectId_.settings.tsx:101
+#: src/routes/_authenticated/$projectId_.settings.tsx:104
 #: src/routes/_authenticated/$projectId/index.tsx:178
 msgid "Settings"
 msgstr "الإعدادات"
@@ -2774,7 +2788,7 @@ msgstr "صغير"
 msgid "Sort"
 msgstr "ترتيب"
 
-#: src/features/requests/components/request-panel.tsx:334
+#: src/features/requests/components/request-panel.tsx:332
 msgid "Source"
 msgstr "المصدر"
 
@@ -2798,8 +2812,8 @@ msgstr "دمج وضغط"
 msgid "Start the discussion by adding the first comment."
 msgstr "ابدأ النقاش بإضافة التعليق الأول."
 
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:471
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:476
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:479
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:484
 msgid "Stop watching"
 msgstr "إيقاف المتابعة"
 
@@ -2818,12 +2832,12 @@ msgstr "إرسال رد"
 #: ../../../lib/web/src/components/inline-entity-search.tsx:67
 #: ../../../lib/web/src/components/recommended-entities.tsx:59
 #: ../../../lib/web/src/components/search-entity-page.tsx:74
-#: src/features/projects/components/inline-project-search.tsx:90
+#: src/features/projects/components/inline-project-search.tsx:87
 #: src/features/projects/components/recommended-projects.tsx:58
 msgid "Subscribe"
 msgstr "اشتراك"
 
-#: src/features/projects/components/inline-project-search.tsx:68
+#: src/features/projects/components/inline-project-search.tsx:66
 #: src/routes/_authenticated/find.tsx:44
 msgid "Subscribed"
 msgstr "مشترك"
@@ -2833,7 +2847,7 @@ msgstr "مشترك"
 msgid "Subscribed to {0}"
 msgstr "مشترك في {0}"
 
-#: src/features/projects/components/inline-project-search.tsx:67
+#: src/features/projects/components/inline-project-search.tsx:65
 #: src/features/projects/components/recommended-projects.tsx:42
 #: src/routes/_authenticated/find.tsx:43
 msgid "Subscribing..."
@@ -2847,7 +2861,7 @@ msgstr "الأحد"
 msgid "Switch to view 1-9"
 msgstr "التبديل إلى العرض 1-9"
 
-#: ../../../lib/web/src/components/audit-timeline.tsx:107
+#: ../../../lib/web/src/components/audit-timeline.tsx:109
 #: ../../../lib/web/src/lib/preference-utils.ts:16
 #: ../../../lib/web/src/lib/preference-utils.ts:132
 msgid "System"
@@ -2866,7 +2880,7 @@ msgstr "يجب ألا يزيد الوسم عن 50 حرفًا"
 msgid "Tags"
 msgstr "الوسوم"
 
-#: src/features/requests/components/request-panel.tsx:342
+#: src/features/requests/components/request-panel.tsx:340
 msgid "Target"
 msgstr "الهدف"
 
@@ -2921,11 +2935,11 @@ msgid "This app is not allowed to use your passkey. Allow it in Settings, under 
 msgstr "لا يُسمح لهذا التطبيق باستخدام مفتاح المرور الخاص بك. اسمح له في الإعدادات، ضمن الأذونات."
 
 #. placeholder {0}: request.target
-#: src/features/requests/components/request-panel.tsx:418
+#: src/features/requests/components/request-panel.tsx:416
 msgid "This merge request has been merged into {0}."
 msgstr "تم دمج طلب الدمج هذا في {0}."
 
-#: src/features/requests/components/request-panel.tsx:379
+#: src/features/requests/components/request-panel.tsx:377
 msgid "This merge request is a draft and cannot be merged."
 msgstr "طلب الدمج هذا مسودة ولا يمكن دمجه."
 
@@ -2933,11 +2947,11 @@ msgstr "طلب الدمج هذا مسودة ولا يمكن دمجه."
 msgid "This permanently deletes the game and its chat. This cannot be undone."
 msgstr "سيؤدي هذا إلى حذف اللعبة ومحادثتها نهائيًا. لا يمكن التراجع عن هذا الإجراء."
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:111
+#: src/routes/_authenticated/$projectId_.settings.tsx:114
 msgid "This project could not be loaded right now."
 msgstr "تعذر تحميل هذا المشروع في هذا الوقت."
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:109
+#: src/routes/_authenticated/$projectId_.settings.tsx:112
 msgid "This project may have been deleted or you don't have access to it."
 msgstr "قد يكون هذا المشروع قد حُذف أو ليس لديك حق الوصول إليه."
 
@@ -2945,7 +2959,7 @@ msgstr "قد يكون هذا المشروع قد حُذف أو ليس لديك �
 msgid "This will merge \"{source}\" into \"{target}\". This action cannot be undone."
 msgstr "سيؤدي هذا إلى دمج \"{source}\" في \"{target}\". لا يمكن التراجع عن هذا الإجراء."
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:127
+#: src/routes/_authenticated/$projectId_.settings.tsx:130
 msgid "This will permanently delete \"{projectName}\" and all its objects, comments, and attachments. This action cannot be undone."
 msgstr "سيؤدي هذا إلى حذف \"{projectName}\" وجميع كائناته وتعليقاته ومرفقاته بشكل دائم. لا يمكن التراجع عن هذا الإجراء."
 
@@ -2955,7 +2969,7 @@ msgid "This will remove \"{0}\" from your sidebar and stop updates for this proj
 msgstr "سيؤدي هذا إلى إزالة \"{0}\" من الشريط الجانبي وإيقاف التحديثات لهذا المشروع."
 
 #. placeholder {0}: String(label)
-#: src/routes/_authenticated/$projectId/design.tsx:66
+#: src/routes/_authenticated/$projectId/design.tsx:65
 msgid "This will replace the current design with <0>{0}</0>. All existing classes, fields, options, and views will be deleted. Existing objects will not be deleted but may no longer appear in views."
 msgstr "سيؤدي هذا إلى استبدال التصميم الحالي بـ<0>{0}</0>. سيتم حذف جميع الفئات والحقول والخيارات وطرق العرض الموجودة. لن يتم حذف الكائنات الموجودة ولكنها قد لا تظهر في طرق العرض."
 
@@ -2964,7 +2978,7 @@ msgid "Thursday"
 msgstr "الخميس"
 
 #: src/features/editor/components/edit-dialogs.tsx:107
-#: src/features/requests/components/request-panel.tsx:301
+#: src/features/requests/components/request-panel.tsx:299
 msgid "Title"
 msgstr "العنوان"
 
@@ -3079,7 +3093,7 @@ msgstr "موحد"
 msgid "United States"
 msgstr "الولايات المتحدة"
 
-#: ../../../lib/web/src/components/audit-timeline.tsx:103
+#: ../../../lib/web/src/components/audit-timeline.tsx:105
 #: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:167
 #: ../../../lib/web/src/components/tree-row.tsx:219
 #: ../../../lib/web/src/components/tree-row.tsx:373
@@ -3125,7 +3139,7 @@ msgstr "تم التحديث"
 msgid "Updated {field}"
 msgstr "تم تحديث {field}"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:140
+#: src/routes/_authenticated/$projectId_.settings.tsx:143
 msgid "Updating access..."
 msgstr "جارٍ تحديث الوصول..."
 
@@ -3134,10 +3148,13 @@ msgstr "جارٍ تحديث الوصول..."
 msgid "Upload"
 msgstr "رفع"
 
-#: src/features/projects/components/create-project-dialog.tsx:413
-#: src/routes/_authenticated/$projectId/design.tsx:58
+#: src/routes/_authenticated/$projectId/design.tsx:57
 msgid "Upload .json file"
 msgstr "رفع ملف .json"
+
+#: src/features/projects/components/create-project-dialog.tsx:426
+msgid "Upload backup file"
+msgstr "رفع ملف النسخة الاحتياطية"
 
 #: ../../../lib/web/src/components/ui/upload-progress.tsx:34
 msgid "Upload progress"
@@ -3149,7 +3166,7 @@ msgstr "استخدم مفتاح المرور الخاص بك"
 
 #. placeholder {0}: prefix || "project"
 #. placeholder {1}: prefix || "project"
-#: src/features/projects/components/create-project-dialog.tsx:381
+#: src/features/projects/components/create-project-dialog.tsx:394
 msgid "Used for readable IDs like {0}-1, {1}-2"
 msgstr "يُستخدم للمعرّفات القابلة للقراءة مثل {0}-1، {1}-2"
 
@@ -3190,7 +3207,7 @@ msgstr "عارض الفيديو: {0}"
 msgid "View all notifications"
 msgstr "عرض جميع الإشعارات"
 
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:442
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:450
 msgid "View and edit item details"
 msgstr "عرض وتعديل تفاصيل العنصر"
 
@@ -3206,7 +3223,7 @@ msgstr "عرض فقط"
 msgid "View options"
 msgstr "خيارات العرض"
 
-#: src/features/editor/components/design-editor.tsx:487
+#: src/features/editor/components/design-editor.tsx:475
 msgid "Views"
 msgstr "المشاهدات"
 
@@ -3214,8 +3231,8 @@ msgstr "المشاهدات"
 msgid "Voice recording is not supported in this browser"
 msgstr "التسجيل الصوتي غير مدعوم في هذا المتصفح"
 
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:471
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:476
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:479
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:484
 msgid "Watch"
 msgstr "متابعة"
 
@@ -3228,7 +3245,7 @@ msgstr "مراقَب"
 msgid "Watched only"
 msgstr "المراقَب فقط"
 
-#: src/features/projects/components/create-project-dialog.tsx:473
+#: src/features/projects/components/create-project-dialog.tsx:486
 msgid "We have auto-selected the best matching template."
 msgstr "لقد اخترنا تلقائياً القالب الأنسب."
 
@@ -3245,6 +3262,7 @@ msgstr "الأربعاء"
 msgid "You do not have access to this section."
 msgstr "ليس لديك صلاحية الوصول إلى هذا القسم."
 
+#: src/routes/_authenticated/$projectId/$objectId.tsx:38
 #: src/routes/_authenticated/$projectId/index.tsx:53
 msgid "You don't have access to this project."
 msgstr "ليس لديك صلاحية الوصول إلى هذا المشروع."
@@ -3261,7 +3279,7 @@ msgstr "تم نقل حسابك إلى هنا من {source}. حتى تحذفه م
 msgid "Your attachments will be lost."
 msgstr "سيتم فقدان مرفقاتك."
 
-#: src/features/projects/components/create-project-dialog.tsx:469
+#: src/features/projects/components/create-project-dialog.tsx:482
 msgid "Your backup contains objects of type:"
 msgstr "تحتوي نسختك الاحتياطية على كائنات من النوع:"
 

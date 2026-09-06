@@ -15,7 +15,7 @@ import { requestStatusTextStyles } from "./request-status-styles";
 type MergeMethod = "merge" | "squash" | "rebase";
 
 interface MergeButtonProps {
-  repoId: string;
+  repositoryId: string;
   source: string;
   target: string;
   canMerge: boolean;
@@ -27,7 +27,7 @@ interface MergeButtonProps {
 }
 
 export function MergeButton({
-  repoId,
+  repositoryId,
   source,
   target,
   canMerge,
@@ -44,7 +44,7 @@ export function MergeButton({
   const mergeMutation = useMutation({
     mutationFn: async () => {
       const message = t`Merge ${objectReadable}: ${objectTitle}`;
-      const response = await projectsApi.merge(repoId, source, target, message, projectId, method);
+      const response = await projectsApi.merge(repositoryId, source, target, message, projectId, method);
       return response.data;
     },
     onSuccess: () => {

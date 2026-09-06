@@ -14,7 +14,7 @@ describe("diffUrl", () => {
     // routeTree.gen.ts routes the page at /$projectId/diff. Without the
     // project the path matches /$projectId with projectId "diff".
     expect(diffUrl("/projects", "p1", request)).toBe(
-      "/projects/p1/diff?repo=r1&source=feature&target=main",
+      "/projects/p1/diff?repository=r1&source=feature&target=main",
     );
   });
 
@@ -30,12 +30,12 @@ describe("diffUrl", () => {
         source: "feature/a&b",
         target: "release/1.0",
       }),
-    ).toBe("/projects/p1/diff?repo=r%201&source=feature%2Fa%26b&target=release%2F1.0");
+    ).toBe("/projects/p1/diff?repository=r%201&source=feature%2Fa%26b&target=release%2F1.0");
   });
 
   it("keeps working under a non-root app path", () => {
     expect(diffUrl("/9fL2xQm4T", "p1", request)).toBe(
-      "/9fL2xQm4T/p1/diff?repo=r1&source=feature&target=main",
+      "/9fL2xQm4T/p1/diff?repository=r1&source=feature&target=main",
     );
   });
 });

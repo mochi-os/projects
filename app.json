@@ -16,7 +16,7 @@
 	"require": {"version": {"minimum": "0.4.231"}},
 
 	"database": {
-		"schema": 5,
+		"schema": 6,
 		"file": "projects.db",
 		"create": {"function": "database_create"},
 		"upgrade": {"function": "database_upgrade"},
@@ -50,7 +50,7 @@
 		":project/diff": {"file": "web/dist/index.html"},
 		":project/:object": {"file": "web/dist/index.html"},
 		":project/-/share": {"function": "action_share"},
-		":project/-/info": {"function": "action_project_get"},
+		":project/-/information": {"function": "action_project_get"},
 		":project/-/update": {"function": "action_project_update"},
 		":project/-/delete": {"function": "action_project_delete"},
 		":project/-/resync": {"function": "action_project_resync"},
@@ -140,10 +140,10 @@
 		"-/groups": {"function": "action_groups"},
 
 		"-/repositories": {"function": "action_repositories_list"},
-		"-/repositories/:repo/branches": {"function": "action_repositories_branches"},
-		"-/repositories/:repo/merge/check": {"function": "action_repositories_merge_check"},
-		"-/repositories/:repo/diff": {"function": "action_repositories_diff"},
-		"-/repositories/:repo/merge": {"function": "action_repositories_merge"}
+		"-/repositories/:repository/branches": {"function": "action_repositories_branches"},
+		"-/repositories/:repository/merge/check": {"function": "action_repositories_merge_check"},
+		"-/repositories/:repository/diff": {"function": "action_repositories_diff"},
+		"-/repositories/:repository/merge": {"function": "action_repositories_merge"}
 	},
 
 	"errors": {
@@ -153,13 +153,14 @@
 	},
 
 	"events": {
-		"info": {"function": "event_info"},
+		"information": {"function": "event_information"},
 		"schema": {"function": "event_schema"},
 		"subscribe": {"function": "event_subscribe"},
 		"unsubscribe": {"function": "event_unsubscribe"},
 		"deleted": {"function": "event_deleted"},
 		"access/revoke": {"function": "event_access_revoke"},
 		"sync/batch": {"function": "event_sync_batch"},
+		"design/replace": {"function": "event_design_replace"},
 		"mention/notify": {"function": "event_mention_notify"},
 
 		"project/update": {"function": "event_project_update"},
@@ -191,7 +192,7 @@
 		"field/update": {"function": "event_field_update"},
 		"field/delete": {"function": "event_field_delete"},
 		"field/reorder": {"function": "event_field_reorder"},
-"view/reorder": {"function": "event_view_reorder"},
+		"view/reorder": {"function": "event_view_reorder"},
 		"option/create": {"function": "event_option_create"},
 		"option/update": {"function": "event_option_update"},
 		"option/delete": {"function": "event_option_delete"},

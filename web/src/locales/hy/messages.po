@@ -18,6 +18,10 @@ msgstr ""
 msgid "Please check your internet connection and try again."
 msgstr "Ստուգեք ձեր ինտերնետ կապը և կրկին փորձեք։"
 
+#: src/features/requests/components/branch-select.tsx:69
+msgid "(current)"
+msgstr "(ընթացիկ)"
+
 #: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:189
 msgid "(edited)"
 msgstr "(խմբագրված)"
@@ -44,6 +48,12 @@ msgstr "[չի սահմանվել]"
 msgid "{0, plural, one {# conflicting file} other {# conflicting files}}"
 msgstr "{0, plural, one {# հակասող ֆայլ} other {# հակասող ֆայլ}}"
 
+#. placeholder {0}: files.length
+#: src/features/requests/components/diff-stats.tsx:79
+#: src/features/requests/components/diff-viewer.tsx:420
+msgid "{0, plural, one {# file changed} other {# files changed}}"
+msgstr "{0, plural, one {# ֆայլ փոխվել է} other {# ֆայլ փոխվել է}}"
+
 #. placeholder {0}: displayInfo.count
 #: ../../../lib/web/src/components/person-picker.tsx:260
 msgid "{0, plural, one {# selected} other {# selected}}"
@@ -55,23 +65,17 @@ msgid "{0, plural, one {+# nested} other {+# nested}}"
 msgstr "{0, plural, one {+# ներդրված} other {+# ներդրված}}"
 
 #. placeholder {0}: String(name)
-#: src/routes/_authenticated/$projectId/design.tsx:46
+#: src/routes/_authenticated/$projectId/design.tsx:45
 msgid "{0} - Design"
 msgstr "{0} - Ձևավորում"
 
 #. placeholder {0}: data.behind
-#: src/features/requests/components/merge-status.tsx:77
+#: src/features/requests/components/merge-status.tsx:88
 msgid "{0} behind"
 msgstr "{0} հետ"
 
-#. placeholder {0}: files.length
-#: src/features/requests/components/diff-stats.tsx:74
-#: src/features/requests/components/diff-viewer.tsx:420
-msgid "{0} files changed"
-msgstr "{0} ֆայլեր փոխվեցին"
-
 #. placeholder {0}: String(name)
-#: src/routes/_authenticated/$projectId_.settings.tsx:107
+#: src/routes/_authenticated/$projectId_.settings.tsx:110
 msgid "{0} settings"
 msgstr "{0} կարգավորումներ"
 
@@ -112,7 +116,7 @@ msgstr "{totalCount, plural, one {# տարր} other {# տարր}}"
 msgid "{totalDescendants, plural, one {# reply} other {+# more replies}}"
 msgstr "{totalDescendants, plural, one {# պատասխան} other {+# ևս պատասխան}}"
 
-#: src/features/requests/components/diff-stats.tsx:120
+#: src/features/requests/components/diff-stats.tsx:125
 #: src/features/requests/components/diff-viewer.tsx:471
 msgid "{truncated, plural, one {# more file not shown} other {# more files not shown}}"
 msgstr "{truncated, plural, one {Եվս # ֆայլ ցուցադրված չէ} other {Եվս # ֆայլ ցուցադրված չեն}}"
@@ -122,7 +126,7 @@ msgid "{unreadCount, plural, one {Open menu (# unread notification)} other {Open
 msgstr "{unreadCount, plural, one {Բացել ընտրացանկը (# չկարդացված ծանուցում)} other {Բացել ընտրացանկը (# չկարդացված ծանուցում)}}"
 
 #. placeholder {0}: data.ahead
-#: src/features/requests/components/merge-status.tsx:76
+#: src/features/requests/components/merge-status.tsx:87
 msgid "+{0} ahead"
 msgstr "+{0} առաջ"
 
@@ -146,7 +150,7 @@ msgstr "Բացարձակ (ամսաթիվ և ժամ)"
 msgid "Accept"
 msgstr "Ընդունել"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:102
+#: src/routes/_authenticated/$projectId_.settings.tsx:105
 msgid "Access"
 msgstr "Մուտք"
 
@@ -159,19 +163,19 @@ msgstr "Մուտքը մերժված է"
 msgid "Access level"
 msgstr "Մուտքի մակարդակ"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:141
+#: src/routes/_authenticated/$projectId_.settings.tsx:144
 msgid "Access level updated"
 msgstr "Մուտքի մակարդակը թարմացված է"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:132
+#: src/routes/_authenticated/$projectId_.settings.tsx:135
 msgid "Access management"
 msgstr "Մուտքի կառավարում"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:138
+#: src/routes/_authenticated/$projectId_.settings.tsx:141
 msgid "Access removed"
 msgstr "Մուտքը հանված է"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:135
+#: src/routes/_authenticated/$projectId_.settings.tsx:138
 msgid "Access set for {subjectName}"
 msgstr "Մուտքը սահմանված է {subjectName}-ի համար"
 
@@ -179,14 +183,14 @@ msgstr "Մուտքը սահմանված է {subjectName}-ի համար"
 msgid "Account type"
 msgstr "Հաշվի տեսակ"
 
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:415
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:423
 msgid "Activity"
 msgstr "Ակտիվություն"
 
 #: ../../../lib/web/src/components/entity/entity-field-editor.tsx:758
 #: ../../../lib/web/src/features/access/access-dialog.tsx:332
 #: ../../../lib/web/src/features/accounts/account-add.tsx:209
-#: src/features/requests/components/request-panel.tsx:113
+#: src/features/requests/components/request-panel.tsx:111
 msgid "Add"
 msgstr "Ավելացնել"
 
@@ -218,7 +222,7 @@ msgstr "Ավելացնել մակագրություն"
 msgid "Add checklist item"
 msgstr "Ավելացնել ստուգաթերթիկի կետ"
 
-#: src/features/editor/components/design-editor.tsx:541
+#: src/features/editor/components/design-editor.tsx:529
 #: src/features/editor/components/edit-dialogs.tsx:223
 #: src/features/editor/components/edit-dialogs.tsx:434
 msgid "Add class"
@@ -250,7 +254,7 @@ msgstr "Ավելացնել հղում"
 msgid "Add option"
 msgstr "Ավելացնել տարբերակ"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:133
+#: src/routes/_authenticated/$projectId_.settings.tsx:136
 msgid "Add rule"
 msgstr "Ավելացնել կանոն"
 
@@ -266,7 +270,7 @@ msgstr "Ավելացնել գոյություն ունեցող ծանուցու�
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:518
 #: ../../../lib/web/src/components/view-tabs.tsx:87
 #: ../../../lib/web/src/components/view-tabs.tsx:93
-#: src/features/editor/components/design-editor.tsx:492
+#: src/features/editor/components/design-editor.tsx:480
 msgid "Add view"
 msgstr "Ավելացնել տեսք"
 
@@ -286,7 +290,7 @@ msgstr "Բոլոր նախագծերը"
 msgid "Allow anyone to search for {entityLabel}"
 msgstr "Թույլատրել բոլորին որոնել {entityLabel}"
 
-#: src/features/projects/components/create-project-dialog.tsx:387
+#: src/features/projects/components/create-project-dialog.tsx:400
 msgid "Allow anyone to search for project"
 msgstr "Թույլատրել բոլորին որոնել նախագիծ"
 
@@ -329,7 +333,7 @@ msgstr "Այս հոսքին բաժանորդագրված ամեն ինչ կդա�
 msgid "Are you sure you want to delete \"{0}\"?"
 msgstr "Վստա՞հ եք, որ ուզում եք ջնջել «{0}»-ը։"
 
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:671
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:679
 msgid "Are you sure you want to delete \"{title}\"? This action cannot be undone."
 msgstr "Վստա՞հ եք, որ ուզում եք ջնջել «{title}»-ը։ Այս գործողությունը հնարավոր չէ հետարկել։"
 
@@ -341,7 +345,7 @@ msgstr "Վստա՞հ եք, որ ուզում եք ջնջել «{name}» սյու
 msgid "Are you sure you want to delete this comment? This will also delete all replies."
 msgstr "Վստա՞հ եք, որ ուզում եք ջնջել այս մեկնաբանությունը։ Սա կջնջի նաև բոլոր պատասխանները։"
 
-#: src/features/requests/components/request-panel.tsx:141
+#: src/features/requests/components/request-panel.tsx:139
 msgid "Are you sure you want to delete this merge request?"
 msgstr "Վստա՞հ եք, որ ուզում եք ջնջել այս միաձուլման հարցումը։"
 
@@ -395,7 +399,7 @@ msgid "Avatar for {name}"
 msgstr "{name}-ի ավատար"
 
 #: ../../../lib/web/src/components/place-picker.tsx:142
-#: src/features/projects/components/create-project-dialog.tsx:546
+#: src/features/projects/components/create-project-dialog.tsx:558
 msgid "Back"
 msgstr "Հետ"
 
@@ -404,26 +408,26 @@ msgstr "Հետ"
 msgid "Back to home"
 msgstr "Վերադառնալ տուն"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:103
-#: src/routes/_authenticated/$projectId/design.tsx:47
+#: src/routes/_authenticated/$projectId_.settings.tsx:106
+#: src/routes/_authenticated/$projectId/design.tsx:46
 msgid "Back to project"
 msgstr "Հետ դեպի նախագիծ"
 
-#: src/routes/_authenticated/$projectId/$objectId.tsx:64
+#: src/routes/_authenticated/$projectId/$objectId.tsx:71
 #: src/routes/_authenticated/$projectId/index.tsx:85
 msgid "Back to projects"
 msgstr "Հետ դեպի նախագծեր"
 
-#: ../../../lib/web/src/components/banner-section.tsx:80
+#: ../../../lib/web/src/components/banner-section.tsx:91
 #: ../../../lib/web/src/components/entity-banner.tsx:17
 msgid "Banner"
 msgstr "Բաններ"
 
-#: ../../../lib/web/src/components/banner-section.tsx:69
+#: ../../../lib/web/src/components/banner-section.tsx:73
 msgid "Banner removed"
 msgstr "Բանները հեռացվեց"
 
-#: ../../../lib/web/src/components/banner-section.tsx:69
+#: ../../../lib/web/src/components/banner-section.tsx:73
 msgid "Banner updated"
 msgstr "Բանները թարմացվեց"
 
@@ -462,7 +466,7 @@ msgstr "Եզրագծի գույն"
 msgid "Browser notifications"
 msgstr "Բրաուզերի ծանուցումներ"
 
-#: src/routes/_authenticated/$projectId/design.tsx:100
+#: src/routes/_authenticated/$projectId/design.tsx:99
 msgid "Built-in templates"
 msgstr "Ներկառուցված ձևանմուշներ"
 
@@ -492,8 +496,8 @@ msgstr "Կարող է լինել ենթակա"
 #: ../../../lib/web/src/features/access/access-list.tsx:268
 #: ../../../lib/web/src/features/accounts/account-add.tsx:201
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:91
-#: src/features/projects/components/create-project-dialog.tsx:453
-#: src/routes/_authenticated/$projectId/design.tsx:61
+#: src/features/projects/components/create-project-dialog.tsx:466
+#: src/routes/_authenticated/$projectId/design.tsx:60
 #: src/routes/_authenticated/$projectId/index.tsx:143
 msgid "Cancel"
 msgstr "Չեղարկել"
@@ -512,7 +516,7 @@ msgstr "Չեղարկել պատասխանը"
 msgid "Cancelled"
 msgstr "Չեղարկված"
 
-#: src/features/requests/components/merge-status.tsx:71
+#: src/features/requests/components/merge-status.tsx:82
 msgid "Cannot merge automatically"
 msgstr "Հնարավոր չէ ավտոմատ միաձուլել"
 
@@ -554,7 +558,7 @@ msgstr "Ստուգաթերթիկ"
 msgid "Choose a game from the sidebar or start a new one."
 msgstr "Ընտրեք խաղ կողագոտուց կամ սկսեք նորը։"
 
-#: src/features/projects/components/create-project-dialog.tsx:334
+#: src/features/projects/components/create-project-dialog.tsx:345
 msgid "Choose a template"
 msgstr "Ընտրեք ձևանմուշ"
 
@@ -563,11 +567,11 @@ msgstr "Ընտրեք ձևանմուշ"
 msgid "Choose language"
 msgstr "Ընտրել լեզուն"
 
-#: src/features/editor/components/design-editor.tsx:536
+#: src/features/editor/components/design-editor.tsx:524
 msgid "Classes"
 msgstr "Դասեր"
 
-#: ../../../lib/web/src/components/banner-section.tsx:111
+#: ../../../lib/web/src/components/banner-section.tsx:123
 #: ../../../lib/web/src/components/colour-picker.tsx:274
 #: ../../../lib/web/src/components/colour-picker.tsx:355
 #: ../../../lib/web/src/components/travelling-picker.tsx:145
@@ -668,7 +672,7 @@ msgid "Comments"
 msgstr "Մեկնաբանություններ"
 
 #. placeholder {0}: data.comment_count || 0
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:411
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:419
 msgid "Comments ({0})"
 msgstr "Մեկնաբանություններ ({0})"
 
@@ -746,12 +750,12 @@ msgid "Could not load repositories"
 msgstr "Չհաջողվեց բեռնել պահոցները"
 
 #: src/features/projects/components/create-project-dialog.tsx:79
-#: src/features/projects/components/create-project-dialog.tsx:482
-#: src/routes/_authenticated/$projectId/design.tsx:102
+#: src/features/projects/components/create-project-dialog.tsx:495
+#: src/routes/_authenticated/$projectId/design.tsx:101
 msgid "Could not load templates"
 msgstr "Չհաջողվեց բեռնել ձևանմուշները"
 
-#: src/features/requests/components/diff-stats.tsx:59
+#: src/features/requests/components/diff-stats.tsx:64
 msgid "Could not load the diff"
 msgstr "Չհաջողվեց բեռնել Diff-ը"
 
@@ -791,7 +795,7 @@ msgstr "Ստեղծել {entityLabel}"
 msgid "Create a new item in this project"
 msgstr "Ստեղծել նոր տարր այս նախագծում"
 
-#: src/features/projects/components/create-project-dialog.tsx:336
+#: src/features/projects/components/create-project-dialog.tsx:347
 #: src/features/projects/pages/projects-list-page.tsx:37
 msgid "Create a new project"
 msgstr "Ստեղծել նոր նախագիծ"
@@ -802,10 +806,10 @@ msgid "Create new item"
 msgstr "Ստեղծել նոր տարր"
 
 #: src/components/layout/projects-layout.tsx:36
-#: src/features/projects/components/create-project-dialog.tsx:324
-#: src/features/projects/components/create-project-dialog.tsx:334
-#: src/features/projects/components/create-project-dialog.tsx:457
-#: src/features/projects/components/create-project-dialog.tsx:549
+#: src/features/projects/components/create-project-dialog.tsx:335
+#: src/features/projects/components/create-project-dialog.tsx:345
+#: src/features/projects/components/create-project-dialog.tsx:470
+#: src/features/projects/components/create-project-dialog.tsx:561
 msgid "Create project"
 msgstr "Ստեղծել նախագիծ"
 
@@ -823,14 +827,14 @@ msgstr "Ստեղծված"
 msgid "Created {field}"
 msgstr "Ստեղծվել է {field}"
 
-#: src/features/projects/components/create-project-dialog.tsx:132
+#: src/features/projects/components/create-project-dialog.tsx:145
 msgid "Creating project..."
 msgstr "Նախագիծը ստեղծվում է..."
 
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:676
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:260
-#: src/features/projects/components/create-project-dialog.tsx:457
-#: src/features/projects/components/create-project-dialog.tsx:549
+#: src/features/projects/components/create-project-dialog.tsx:470
+#: src/features/projects/components/create-project-dialog.tsx:561
 msgid "Creating..."
 msgstr "Ստեղծվում է…"
 
@@ -854,8 +858,8 @@ msgstr "Տվյալների կոնֆլիկտ"
 #. placeholder {0}: imported.data?.objects ?? 0
 #. placeholder {1}: imported.data?.comments ?? 0
 #. placeholder {2}: imported.data?.links ?? 0
-#: src/features/projects/components/create-project-dialog.tsx:151
-#: src/features/projects/components/create-project-dialog.tsx:181
+#: src/features/projects/components/create-project-dialog.tsx:164
+#: src/features/projects/components/create-project-dialog.tsx:194
 msgid "Data imported ({0, plural, one {# object} other {# objects}}, {1, plural, one {# comment} other {# comments}}, {2, plural, one {# link} other {# links}})"
 msgstr "Տվյալները ներմուծվեցին ({0, plural, one {# օբյեկտ} other {# օբյեկտ}}, {1, plural, one {# մեկնաբանություն} other {# մեկնաբանություն}}, {2, plural, one {# կապ} other {# կապ}})"
 
@@ -888,10 +892,10 @@ msgstr "Լռելյայն տեսակավորում"
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:208
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:255
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:317
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:672
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:680
 #: ../../../lib/web/src/components/game/game-end-dialogs.tsx:78
-#: src/features/requests/components/request-panel.tsx:142
-#: src/routes/_authenticated/$projectId_.settings.tsx:122
+#: src/features/requests/components/request-panel.tsx:140
+#: src/routes/_authenticated/$projectId_.settings.tsx:125
 msgid "Delete"
 msgstr "Ջնջել"
 
@@ -919,19 +923,19 @@ msgstr "Ջնջել դաշտը"
 msgid "Delete game?"
 msgstr "Ջնջե՞լ խաղը։"
 
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:486
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:491
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:670
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:494
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:499
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:678
 msgid "Delete item"
 msgstr "Ջնջել կետը"
 
-#: src/features/requests/components/request-panel.tsx:140
-#: src/features/requests/components/request-panel.tsx:403
-#: src/features/requests/components/request-panel.tsx:408
-#: src/features/requests/components/request-panel.tsx:428
-#: src/features/requests/components/request-panel.tsx:433
-#: src/features/requests/components/request-panel.tsx:450
-#: src/features/requests/components/request-panel.tsx:455
+#: src/features/requests/components/request-panel.tsx:138
+#: src/features/requests/components/request-panel.tsx:401
+#: src/features/requests/components/request-panel.tsx:406
+#: src/features/requests/components/request-panel.tsx:426
+#: src/features/requests/components/request-panel.tsx:431
+#: src/features/requests/components/request-panel.tsx:448
+#: src/features/requests/components/request-panel.tsx:453
 msgid "Delete merge request"
 msgstr "Ջնջել միաձուլման հարցումը"
 
@@ -945,12 +949,12 @@ msgstr "Ջնջել տարբերակը"
 msgid "Delete option {0}"
 msgstr "Ջնջել {0} տարբերակը"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:121
 #: src/routes/_authenticated/$projectId_.settings.tsx:124
+#: src/routes/_authenticated/$projectId_.settings.tsx:127
 msgid "Delete project"
 msgstr "Ջնջել նախագիծը"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:123
+#: src/routes/_authenticated/$projectId_.settings.tsx:126
 msgid "Delete project?"
 msgstr "Ջնջե՞լ նախագիծը։"
 
@@ -970,7 +974,7 @@ msgstr "Ջնջվել է"
 msgid "Deleted {field}"
 msgstr "Ջնջվել է {field}"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:129
+#: src/routes/_authenticated/$projectId_.settings.tsx:132
 msgid "Deleting project..."
 msgstr "Նախագիծը ջնջվում է..."
 
@@ -983,19 +987,19 @@ msgid "Descending"
 msgstr "Նվազման կարգով"
 
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:85
-#: src/features/requests/components/request-panel.tsx:315
-#: src/routes/_authenticated/$projectId_.settings.tsx:114
+#: src/features/requests/components/request-panel.tsx:313
+#: src/routes/_authenticated/$projectId_.settings.tsx:117
 msgid "Description"
 msgstr "Նկարագրություն"
 
-#: src/routes/_authenticated/$projectId/design.tsx:43
-#: src/routes/_authenticated/$projectId/design.tsx:46
+#: src/routes/_authenticated/$projectId/design.tsx:42
+#: src/routes/_authenticated/$projectId/design.tsx:45
 #: src/routes/_authenticated/$projectId/index.tsx:170
 msgid "Design"
 msgstr "Դիզայն"
 
-#: src/features/projects/components/create-project-dialog.tsx:182
-#: src/routes/_authenticated/$projectId/design.tsx:54
+#: src/features/projects/components/create-project-dialog.tsx:195
+#: src/routes/_authenticated/$projectId/design.tsx:53
 msgid "Design imported"
 msgstr "Դիզայնը ներմուծված է"
 
@@ -1018,7 +1022,7 @@ msgstr "Մանրամասների վահանակ"
 msgid "Detect from web browser"
 msgstr "Հայտնաբերել վեբ բրաուզերից"
 
-#: src/features/requests/components/diff-stats.tsx:92
+#: src/features/requests/components/diff-stats.tsx:97
 msgid "Diff"
 msgstr "Diff"
 
@@ -1061,7 +1065,7 @@ msgid "Does not match the required pattern"
 msgstr "Չի համապատասխանում պահանջվող ձևանմուշին"
 
 #: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:309
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:495
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:503
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:523
 #: src/features/editor/components/edit-dialogs.tsx:439
 msgid "Done"
@@ -1077,7 +1081,7 @@ msgstr "Կրկնակի սեղմեք սյունակի վրա բովանդակու
 msgid "Download"
 msgstr "Ներբեռնել"
 
-#: src/routes/_authenticated/$projectId/design.tsx:75
+#: src/routes/_authenticated/$projectId/design.tsx:74
 msgid "Download backup first"
 msgstr "Նախ ներբեռնեք պահուստավորումը"
 
@@ -1086,13 +1090,13 @@ msgstr "Նախ ներբեռնեք պահուստավորումը"
 msgid "Download failed"
 msgstr "Ներբեռնումը ձախողվեց"
 
-#: src/routes/_authenticated/$projectId/design.tsx:52
+#: src/routes/_authenticated/$projectId/design.tsx:51
 #: src/routes/_authenticated/$projectId/index.tsx:149
 msgid "Downloaded {filename}"
 msgstr "Ներբեռնված է {filename}"
 
-#: src/features/requests/components/request-panel.tsx:281
-#: src/features/requests/components/request-panel.tsx:353
+#: src/features/requests/components/request-panel.tsx:279
+#: src/features/requests/components/request-panel.tsx:351
 msgid "Draft"
 msgstr "Սևագիր"
 
@@ -1159,7 +1163,7 @@ msgstr "Էլ․ փոստ"
 msgid "Email code"
 msgstr "Էլ․ փոստի կոդ"
 
-#: ../../../lib/web/src/components/banner-section.tsx:88
+#: ../../../lib/web/src/components/banner-section.tsx:99
 msgid "Enter banner text (markdown supported)..."
 msgstr "Մուտքագրեք պաստառի տեքստը (markdown-ը աջակցվում է)..."
 
@@ -1171,11 +1175,11 @@ msgstr "Մուտքագրեք ձեր էլ. փոստից ստացած կոդը"
 msgid "Enter your authenticator code"
 msgstr "Մուտքագրեք ձեր նույնականացուցիչի կոդը"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:115
+#: src/routes/_authenticated/$projectId_.settings.tsx:118
 msgid "Entity ID"
 msgstr "Էնտիտետի ID"
 
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:381
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:389
 msgid "Error"
 msgstr "Սխալ"
 
@@ -1194,7 +1198,7 @@ msgstr "Ընդարձակել կողագոտին"
 msgid "Export data"
 msgstr "Արտահանել տվյալները"
 
-#: src/routes/_authenticated/$projectId/design.tsx:50
+#: src/routes/_authenticated/$projectId/design.tsx:49
 msgid "Export design"
 msgstr "Արտահանել ձևավորումը"
 
@@ -1223,12 +1227,12 @@ msgstr "Չհաջողվեց ստուգել միաձուլման կարգավիճ�
 msgid "Failed to copy"
 msgstr "Չհաջողվեց պատճենել"
 
-#: src/features/editor/components/design-editor.tsx:113
+#: src/features/editor/components/design-editor.tsx:111
 msgid "Failed to create class"
 msgstr "Չհաջողվեց ստեղծել դասը"
 
-#: src/features/editor/components/design-editor.tsx:166
-#: src/features/editor/components/design-editor.tsx:632
+#: src/features/editor/components/design-editor.tsx:164
+#: src/features/editor/components/design-editor.tsx:620
 msgid "Failed to create field"
 msgstr "Չհաջողվեց ստեղծել դաշտը"
 
@@ -1238,20 +1242,20 @@ msgstr "Չհաջողվեց ստեղծել դաշտը"
 msgid "Failed to create link"
 msgstr "Չհաջողվեց ստեղծել հղումը"
 
-#: src/features/requests/components/request-panel.tsx:59
+#: src/features/requests/components/request-panel.tsx:57
 msgid "Failed to create merge request"
 msgstr "Չհաջողվեց ստեղծել միաձուլման հարցումը"
 
-#: src/features/editor/components/design-editor.tsx:238
-#: src/features/editor/components/design-editor.tsx:652
+#: src/features/editor/components/design-editor.tsx:236
+#: src/features/editor/components/design-editor.tsx:640
 msgid "Failed to create option"
 msgstr "Չհաջողվեց ստեղծել տարբերակը"
 
-#: src/features/projects/components/create-project-dialog.tsx:134
+#: src/features/projects/components/create-project-dialog.tsx:147
 msgid "Failed to create project"
 msgstr "Չհաջողվեց ստեղծել նախագիծը"
 
-#: src/features/editor/components/design-editor.tsx:316
+#: src/features/editor/components/design-editor.tsx:314
 msgid "Failed to create view"
 msgstr "Չհաջողվեց ստեղծել տեսքը"
 
@@ -1263,7 +1267,7 @@ msgstr "Չհաջողվեց ջնջել"
 msgid "Failed to delete attachment"
 msgstr "Չհաջողվեց ջնջել կցորդը"
 
-#: src/features/editor/components/design-editor.tsx:137
+#: src/features/editor/components/design-editor.tsx:135
 msgid "Failed to delete class"
 msgstr "Չհաջողվեց ջնջել դասը"
 
@@ -1275,7 +1279,7 @@ msgstr "Չհաջողվեց ջնջել սյունակը"
 msgid "Failed to delete comment"
 msgstr "Չհաջողվեց ջնջել մեկնաբանությունը"
 
-#: src/features/editor/components/design-editor.tsx:209
+#: src/features/editor/components/design-editor.tsx:207
 msgid "Failed to delete field"
 msgstr "Չհաջողվեց ջնջել դաշտը"
 
@@ -1283,19 +1287,19 @@ msgstr "Չհաջողվեց ջնջել դաշտը"
 msgid "Failed to delete link"
 msgstr "Չհաջողվեց ջնջել հղումը"
 
-#: src/features/requests/components/request-panel.tsx:85
+#: src/features/requests/components/request-panel.tsx:83
 msgid "Failed to delete merge request"
 msgstr "Չհաջողվեց ջնջել միաձուլման հարցումը"
 
-#: src/features/editor/components/design-editor.tsx:276
+#: src/features/editor/components/design-editor.tsx:274
 msgid "Failed to delete option"
 msgstr "Չհաջողվեց ջնջել տարբերակը"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:131
+#: src/routes/_authenticated/$projectId_.settings.tsx:134
 msgid "Failed to delete project"
 msgstr "Չհաջողվեց ջնջել նախագիծը"
 
-#: src/features/editor/components/design-editor.tsx:371
+#: src/features/editor/components/design-editor.tsx:359
 msgid "Failed to delete view"
 msgstr "Չհաջողվեց ջնջել տեսքը"
 
@@ -1303,7 +1307,7 @@ msgstr "Չհաջողվեց ջնջել տեսքը"
 msgid "Failed to export data"
 msgstr "Չհաջողվեց արտահանել տվյալները"
 
-#: src/routes/_authenticated/$projectId/design.tsx:53
+#: src/routes/_authenticated/$projectId/design.tsx:52
 msgid "Failed to export design"
 msgstr "Չհաջողվեց արտահանել ձևավորումը"
 
@@ -1311,12 +1315,12 @@ msgstr "Չհաջողվեց արտահանել ձևավորումը"
 msgid "Failed to get RSS token"
 msgstr "Չհաջողվեց ստանալ RSS տոկենը"
 
-#: src/features/projects/components/create-project-dialog.tsx:152
-#: src/features/projects/components/create-project-dialog.tsx:183
+#: src/features/projects/components/create-project-dialog.tsx:165
+#: src/features/projects/components/create-project-dialog.tsx:196
 msgid "Failed to import data"
 msgstr "Չհաջողվեց ներմուծել տվյալները"
 
-#: src/routes/_authenticated/$projectId/design.tsx:55
+#: src/routes/_authenticated/$projectId/design.tsx:54
 msgid "Failed to import design"
 msgstr "Չհաջողվեց ներմուծել ձևավորումը"
 
@@ -1324,7 +1328,11 @@ msgstr "Չհաջողվեց ներմուծել ձևավորումը"
 msgid "Failed to load"
 msgstr "Չհաջողվեց բեռնել"
 
-#: ../../../lib/web/src/components/audit-timeline.tsx:68
+#: ../../../lib/web/src/components/banner-section.tsx:85
+msgid "Failed to load banner"
+msgstr "Չհաջողվեց բեռնել պաստառը"
+
+#: ../../../lib/web/src/components/audit-timeline.tsx:70
 msgid "Failed to load history"
 msgstr "Չհաջողվեց բեռնել պատմությունը"
 
@@ -1332,19 +1340,19 @@ msgstr "Չհաջողվեց բեռնել պատմությունը"
 msgid "Failed to load image"
 msgstr "Չհաջողվեց բեռնել պատկերը"
 
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:382
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:385
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:390
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:393
 msgid "Failed to load item"
 msgstr "Չհաջողվեց բեռնել տարրը"
 
-#: src/routes/_authenticated/$projectId/$objectId.tsx:41
-#: src/routes/_authenticated/$projectId/$objectId.tsx:65
+#: src/routes/_authenticated/$projectId/$objectId.tsx:48
+#: src/routes/_authenticated/$projectId/$objectId.tsx:72
 #: src/routes/_authenticated/$projectId/index.tsx:62
 #: src/routes/_authenticated/$projectId/index.tsx:86
 msgid "Failed to load project"
 msgstr "Չհաջողվեց բեռնել նախագիծը"
 
-#: src/routes/_authenticated/$projectId/design.tsx:48
+#: src/routes/_authenticated/$projectId/design.tsx:47
 msgid "Failed to load project design"
 msgstr "Չհաջողվեց բեռնել նախագծի ձևավորումը"
 
@@ -1381,12 +1389,12 @@ msgstr "Չհաջողվեց հրապարակել մեկնաբանությունը
 msgid "Failed to re-order columns"
 msgstr "Չհաջողվեց վերադասավորել սյունակները"
 
-#: src/features/projects/components/create-project-dialog.tsx:261
-#: src/routes/_authenticated/$projectId/design.tsx:60
+#: src/features/projects/components/create-project-dialog.tsx:272
+#: src/routes/_authenticated/$projectId/design.tsx:59
 msgid "Failed to read file"
 msgstr "Չհաջողվեց կարդալ ֆայլը"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:139
+#: src/routes/_authenticated/$projectId_.settings.tsx:142
 msgid "Failed to remove access"
 msgstr "Չհաջողվեց հեռացնել մուտքը"
 
@@ -1394,11 +1402,11 @@ msgstr "Չհաջողվեց հեռացնել մուտքը"
 msgid "Failed to rename column"
 msgstr "Չհաջողվեց վերանվանել սյունակը"
 
-#: src/features/editor/components/design-editor.tsx:218
+#: src/features/editor/components/design-editor.tsx:216
 msgid "Failed to reorder fields"
 msgstr "Չհաջողվեց վերադասավորել դաշտերը"
 
-#: src/features/editor/components/design-editor.tsx:380
+#: src/features/editor/components/design-editor.tsx:368
 msgid "Failed to reorder views"
 msgstr "Չհաջողվեց վերադասավորել տեսքերը"
 
@@ -1418,15 +1426,15 @@ msgstr "Չհաջողվեց պահպանել"
 msgid "Failed to save prompt"
 msgstr "Չհաջողվեց պահպանել հուշումը"
 
-#: src/features/projects/components/inline-project-search.tsx:89
+#: src/features/projects/components/inline-project-search.tsx:86
 msgid "Failed to search projects"
 msgstr "Նախագծերի որոնումը ձախողվեց"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:136
+#: src/routes/_authenticated/$projectId_.settings.tsx:139
 msgid "Failed to set access level"
 msgstr "Չհաջողվեց սահմանել մուտքի մակարդակը"
 
-#: src/features/projects/components/inline-project-search.tsx:69
+#: src/features/projects/components/inline-project-search.tsx:67
 #: src/features/projects/components/recommended-projects.tsx:44
 #: src/routes/_authenticated/find.tsx:45
 msgid "Failed to subscribe"
@@ -1437,15 +1445,15 @@ msgstr "Չհաջողվեց բաժանորդագրվել"
 msgid "Failed to unsubscribe"
 msgstr "Չհաջողվեց ապաբաժանորդագրվել"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:142
+#: src/routes/_authenticated/$projectId_.settings.tsx:145
 msgid "Failed to update access level"
 msgstr "Չհաջողվեց թարմացնել մուտքի մակարդակը"
 
-#: ../../../lib/web/src/components/banner-section.tsx:71
+#: ../../../lib/web/src/components/banner-section.tsx:75
 msgid "Failed to update banner"
 msgstr "Չհաջողվեց թարմացնել պաստառը"
 
-#: src/features/editor/components/design-editor.tsx:122
+#: src/features/editor/components/design-editor.tsx:120
 msgid "Failed to update class"
 msgstr "Չհաջողվեց թարմացնել դասը"
 
@@ -1453,27 +1461,27 @@ msgstr "Չհաջողվեց թարմացնել դասը"
 msgid "Failed to update comment"
 msgstr "Չհաջողվեց թարմացնել մեկնաբանությունը"
 
-#: src/features/editor/components/design-editor.tsx:197
+#: src/features/editor/components/design-editor.tsx:195
 msgid "Failed to update field"
 msgstr "Չհաջողվեց թարմացնել դաշտը"
 
-#: src/features/editor/components/design-editor.tsx:147
+#: src/features/editor/components/design-editor.tsx:145
 msgid "Failed to update hierarchy"
 msgstr "Չհաջողվեց թարմացնել հիերարխիան"
 
-#: src/features/requests/components/request-panel.tsx:71
+#: src/features/requests/components/request-panel.tsx:69
 msgid "Failed to update merge request"
 msgstr "Չհաջողվեց թարմացնել միաձուլման հարցումը"
 
-#: src/features/editor/components/design-editor.tsx:257
+#: src/features/editor/components/design-editor.tsx:255
 msgid "Failed to update option"
 msgstr "Չհաջողվեց թարմացնել տարբերակը"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:120
+#: src/routes/_authenticated/$projectId_.settings.tsx:123
 msgid "Failed to update project"
 msgstr "Չհաջողվեց թարմացնել նախագիծը"
 
-#: src/features/editor/components/design-editor.tsx:360
+#: src/features/editor/components/design-editor.tsx:348
 msgid "Failed to update view"
 msgstr "Չհաջողվեց թարմացնել տեսքը"
 
@@ -1500,7 +1508,7 @@ msgstr "Ֆայլեր"
 msgid "Find projects"
 msgstr "Գտնել նախագծեր"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:116
+#: src/routes/_authenticated/$projectId_.settings.tsx:119
 msgid "Fingerprint"
 msgstr "Մատնահետք"
 
@@ -1528,7 +1536,7 @@ msgstr "Ընկերներ"
 msgid "From"
 msgstr "Ումից"
 
-#: src/routes/_authenticated/$projectId/design.tsx:57
+#: src/routes/_authenticated/$projectId/design.tsx:56
 msgid "From file"
 msgstr "Ֆայլից"
 
@@ -1558,7 +1566,7 @@ msgstr "Խմբավորել ըստ"
 msgid "Group: {0}"
 msgstr "Խումբ՝ {0}"
 
-#: ../../../lib/web/src/components/audit-timeline.tsx:61
+#: ../../../lib/web/src/components/audit-timeline.tsx:63
 msgid "History"
 msgstr "Պատմություն"
 
@@ -1578,7 +1586,7 @@ msgstr "Թեժ"
 msgid "ID"
 msgstr "ID"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:112
+#: src/routes/_authenticated/$projectId_.settings.tsx:115
 msgid "Identity"
 msgstr "Ինքնություն"
 
@@ -1591,17 +1599,17 @@ msgstr "Պատկերի դիտիչ՝ {0}"
 msgid "Imperial"
 msgstr "Իմպերիալ"
 
-#: src/routes/_authenticated/$projectId/design.tsx:51
-#: src/routes/_authenticated/$projectId/design.tsx:56
+#: src/routes/_authenticated/$projectId/design.tsx:50
+#: src/routes/_authenticated/$projectId/design.tsx:55
 msgid "Import design"
 msgstr "Ներմուծել ձևավորումը"
 
-#: src/features/projects/components/create-project-dialog.tsx:397
+#: src/features/projects/components/create-project-dialog.tsx:410
 msgid "Import from backup (optional)"
 msgstr "Ներմուծում պահուստավորումից (ընտրովի)"
 
-#: src/features/projects/components/create-project-dialog.tsx:149
-#: src/features/projects/components/create-project-dialog.tsx:178
+#: src/features/projects/components/create-project-dialog.tsx:162
+#: src/features/projects/components/create-project-dialog.tsx:191
 msgid "Importing data..."
 msgstr "Տվյալները ներմուծվում են…"
 
@@ -1629,8 +1637,8 @@ msgstr "Հետաքրքրություններ"
 msgid "Invalid date"
 msgstr "Անվավեր ամսաթիվ"
 
-#: src/features/projects/components/create-project-dialog.tsx:256
-#: src/routes/_authenticated/$projectId/design.tsx:59
+#: src/features/projects/components/create-project-dialog.tsx:267
+#: src/routes/_authenticated/$projectId/design.tsx:58
 msgid "Invalid JSON file"
 msgstr "Անվավեր JSON ֆայլ"
 
@@ -1638,7 +1646,7 @@ msgstr "Անվավեր JSON ֆայլ"
 msgid "It seems like the page you're looking for <0/>does not exist or might have been removed."
 msgstr "Կարծես թե ձեր փնտրած էջը <0/>գոյություն չունի կամ հեռացվել է։"
 
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:441
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:449
 msgid "Item details"
 msgstr "Տարրի մանրամասներ"
 
@@ -1688,19 +1696,19 @@ msgstr "Բեռնել ավելին"
 msgid "Loading content…"
 msgstr "Բովանդակությունը բեռնվում է…"
 
-#: src/features/requests/components/diff-stats.tsx:52
+#: src/features/requests/components/diff-stats.tsx:57
 msgid "Loading diff..."
 msgstr "Diff-ը բեռնվում է..."
 
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:365
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:373
 msgid "Loading item"
 msgstr "Տարրը բեռնվում է"
 
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:366
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:374
 msgid "Loading item details"
 msgstr "Տարրի մանրամասները բեռնվում են"
 
-#: src/features/projects/components/create-project-dialog.tsx:478
+#: src/features/projects/components/create-project-dialog.tsx:491
 msgid "Loading templates..."
 msgstr "Ձևանմուշները բեռնվում են..."
 
@@ -1772,7 +1780,7 @@ msgstr "Միաձուլել {objectReadable}՝ {objectTitle}"
 msgid "Merge commit"
 msgstr "Միաձուլման կոմիտ"
 
-#: src/features/requests/components/request-panel.tsx:102
+#: src/features/requests/components/request-panel.tsx:100
 msgid "Merge requests"
 msgstr "Միաձուլման հարցումներ"
 
@@ -1780,7 +1788,7 @@ msgstr "Միաձուլման հարցումներ"
 msgid "Merge requests ({requestCount})"
 msgstr "Միաձուլման հարցումներ ({requestCount})"
 
-#: src/features/requests/components/request-panel.tsx:284
+#: src/features/requests/components/request-panel.tsx:282
 msgid "Merged"
 msgstr "Միաձուլված է"
 
@@ -1837,7 +1845,7 @@ msgstr "Տեղափոխվել է"
 msgid "Moved {field}"
 msgstr "Տեղափոխվել է {field}"
 
-#: src/features/projects/components/create-project-dialog.tsx:352
+#: src/features/projects/components/create-project-dialog.tsx:363
 msgid "My project"
 msgstr "Իմ նախագիծը"
 
@@ -1847,22 +1855,24 @@ msgstr "Իմ նախագիծը"
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:126
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:296
 #: src/features/editor/components/edit-dialogs.tsx:258
-#: src/features/projects/components/create-project-dialog.tsx:342
-#: src/routes/_authenticated/$projectId_.settings.tsx:113
+#: src/features/projects/components/create-project-dialog.tsx:353
+#: src/routes/_authenticated/$projectId_.settings.tsx:116
 msgid "Name"
 msgstr "Անուն"
 
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:104
+#: src/features/projects/components/create-project-dialog.tsx:114
 #: src/routes/_authenticated/$projectId_.settings.tsx:76
 msgid "Name cannot contain < or > characters"
 msgstr "Անունը չի կարող պարունակել < կամ > նիշերը"
 
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:101
-#: src/features/projects/components/create-project-dialog.tsx:102
+#: src/features/projects/components/create-project-dialog.tsx:105
 msgid "Name is required"
 msgstr "Անունը պարտադիր է"
 
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:102
+#: src/features/projects/components/create-project-dialog.tsx:110
 #: src/routes/_authenticated/$projectId_.settings.tsx:74
 msgid "Name must be 1000 characters or less"
 msgstr "Անունը պետք է լինի 1000 նիշից ոչ ավելի"
@@ -1888,7 +1898,7 @@ msgstr "Նոր {className}"
 msgid "New game"
 msgstr "Նոր խաղ"
 
-#: src/features/projects/components/create-project-dialog.tsx:459
+#: src/features/projects/components/create-project-dialog.tsx:472
 msgid "Next"
 msgstr "Հաջորդ"
 
@@ -1917,7 +1927,7 @@ msgstr "Դեռ ակտիվություն չկա"
 msgid "No branches found"
 msgstr "Ճյուղեր չեն գտնվել"
 
-#: src/features/requests/components/diff-stats.tsx:65
+#: src/features/requests/components/diff-stats.tsx:70
 msgid "No changes detected"
 msgstr "Փոփոխություններ չեն հայտնաբերվել"
 
@@ -1925,7 +1935,7 @@ msgstr "Փոփոխություններ չեն հայտնաբերվել"
 msgid "No changes to display"
 msgstr "Ցուցադրելու փոփոխություններ չկան"
 
-#: src/routes/$projectId.diff.tsx:160
+#: src/routes/$projectId.diff.tsx:162
 msgid "No changes were found for the selected comparison."
 msgstr "Ընտրված համեմատության համար փոփոխություններ չեն գտնվել։"
 
@@ -1933,7 +1943,7 @@ msgstr "Ընտրված համեմատության համար փոփոխությ�
 msgid "No comments yet"
 msgstr "Դեռ մեկնաբանություններ չկան"
 
-#: src/routes/$projectId.diff.tsx:159
+#: src/routes/$projectId.diff.tsx:161
 msgid "No diff available"
 msgstr "Diff հասանելի չէ"
 
@@ -1953,7 +1963,7 @@ msgstr "Տարրերի տեսակներ դեռ հնարավոր չէ ստեղծ�
 msgid "No matching objects"
 msgstr "Համապատասխան օբյեկտներ չկան"
 
-#: src/features/requests/components/request-panel.tsx:119
+#: src/features/requests/components/request-panel.tsx:117
 msgid "No merge requests"
 msgstr "Միաձուլման հարցումներ չկան"
 
@@ -1966,7 +1976,7 @@ msgstr "Մարդիկ չեն գտնվել"
 msgid "No places found"
 msgstr "Վայրեր չեն գտնվել"
 
-#: src/features/projects/components/inline-project-search.tsx:88
+#: src/features/projects/components/inline-project-search.tsx:85
 #: src/routes/_authenticated/find.tsx:42
 msgid "No projects found"
 msgstr "Նախագծեր չեն գտնվել"
@@ -2014,10 +2024,10 @@ msgstr "Դիտումներ չկան"
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:554
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:557
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:561
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:557
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:570
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:571
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:575
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:565
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:578
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:579
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:583
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:362
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:385
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:388
@@ -2045,7 +2055,7 @@ msgstr "Չի համեմատվել. ավելի մեծ է, քան {0}"
 msgid "Not compared: over the size limit"
 msgstr "Չի համեմատվել. գերազանցում է չափի սահմանը"
 
-#: src/features/requests/components/request-panel.tsx:257
+#: src/features/requests/components/request-panel.tsx:255
 msgid "Not configured"
 msgstr "Կարգավորված չէ"
 
@@ -2081,7 +2091,7 @@ msgstr "Միացված"
 msgid "Oops! Page Not Found!"
 msgstr "Ուփ։ Էջը չի գտնվել։"
 
-#: src/features/requests/components/request-panel.tsx:287
+#: src/features/requests/components/request-panel.tsx:285
 msgctxt "state"
 msgid "Open"
 msgstr "Բաց"
@@ -2101,7 +2111,7 @@ msgstr "Բացել գործողությունները"
 msgid "Open class actions"
 msgstr "Բացել դասի գործողությունները"
 
-#: src/routes/_authenticated/$projectId/design.tsx:49
+#: src/routes/_authenticated/$projectId/design.tsx:48
 msgid "Open design actions"
 msgstr "Բացել ձևավորման գործողությունները"
 
@@ -2156,8 +2166,8 @@ msgid "Owner"
 msgstr "Սեփականատեր"
 
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:546
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:553
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:569
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:561
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:577
 msgid "Parent"
 msgstr "Ծնող"
 
@@ -2196,7 +2206,7 @@ msgstr "Խնդրում ենք ավելացնել մեկ կամ ավելի դաս
 msgid "Please check your internet connection and try again."
 msgstr "Ստուգեք ձեր ինտերնետ կապը և կրկին փորձեք։"
 
-#: src/features/projects/components/create-project-dialog.tsx:118
+#: src/features/projects/components/create-project-dialog.tsx:131
 msgid "Please select a template"
 msgstr "Խնդրում ենք ընտրել կաղապար"
 
@@ -2216,16 +2226,20 @@ msgstr "Գրառումներ"
 msgid "Posts and comments"
 msgstr "Գրառումներ և մեկնաբանություններ"
 
-#: src/features/projects/components/create-project-dialog.tsx:364
+#: src/features/projects/components/create-project-dialog.tsx:376
 #: src/routes/_authenticated/$projectId_.settings.tsx:83
 msgid "Prefix"
 msgstr "Նախածանց"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:93
+#: src/routes/_authenticated/$projectId_.settings.tsx:96
 msgid "Prefix can only contain lowercase letters, numbers, and hyphens"
 msgstr "Նախածանցը կարող է պարունակել միայն փոքրատառեր, թվեր և գծիկներ"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:95
+#: src/routes/_authenticated/$projectId_.settings.tsx:94
+msgid "Prefix is required"
+msgstr "Նախածանցը պարտադիր է"
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:98
 msgid "Prefix must be 20 characters or less"
 msgstr "Նախածանցը պետք է լինի առավելագույնը 20 նիշ"
 
@@ -2243,7 +2257,7 @@ msgstr "Գաղտնիություն"
 msgid "Processing…"
 msgstr "Մշակվում է…"
 
-#: src/routes/_authenticated/$projectId/$objectId.tsx:62
+#: src/routes/_authenticated/$projectId/$objectId.tsx:69
 #: src/routes/_authenticated/$projectId/index.tsx:83
 msgid "Project"
 msgstr "Նախագիծ"
@@ -2252,11 +2266,11 @@ msgstr "Նախագիծ"
 msgid "Project actions"
 msgstr "Նախագծի գործողություններ"
 
-#: src/features/projects/components/create-project-dialog.tsx:133
+#: src/features/projects/components/create-project-dialog.tsx:146
 msgid "Project created"
 msgstr "Նախագիծը ստեղծվեց"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:130
+#: src/routes/_authenticated/$projectId_.settings.tsx:133
 msgid "Project deleted"
 msgstr "Նախագիծը ջնջվեց"
 
@@ -2268,19 +2282,19 @@ msgstr "Նախագծի հղում"
 msgid "Project name is required"
 msgstr "Նախագծի անունը պարտադիր է"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:108
+#: src/routes/_authenticated/$projectId_.settings.tsx:111
 msgid "Project not found"
 msgstr "Նախագիծը չի գտնվել"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:107
+#: src/routes/_authenticated/$projectId_.settings.tsx:110
 msgid "Project settings"
 msgstr "Նախագծի կարգավորումներ"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:110
+#: src/routes/_authenticated/$projectId_.settings.tsx:113
 msgid "Project unavailable"
 msgstr "Նախագիծը հասանելի չէ"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:119
+#: src/routes/_authenticated/$projectId_.settings.tsx:122
 msgid "Project updated"
 msgstr "Նախագիծը թարմացվեց"
 
@@ -2293,7 +2307,7 @@ msgstr "Նախագծեր"
 msgid "Prompt saved"
 msgstr "Հուշումը պահպանվեց"
 
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:408
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:416
 msgid "Properties"
 msgstr "Հատկություններ"
 
@@ -2317,7 +2331,7 @@ msgstr "Վերադասավորել սյունակները"
 msgid "Re-register your passkeys on this server"
 msgstr "Կրկին գրանցեք ձեր անցաբառերը այս սերվերում"
 
-#: src/features/requests/components/merge-status.tsx:71
+#: src/features/requests/components/merge-status.tsx:82
 msgid "Ready to merge"
 msgstr "Պատրաստ է միաձուլման"
 
@@ -2378,7 +2392,7 @@ msgstr "Համապատասխանություն՝ {relevance}, հետաքրքրո
 #: ../../../lib/web/src/components/attachment-composer.tsx:330
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:192
 #: ../../../lib/web/src/features/access/access-list.tsx:270
-#: src/features/projects/components/create-project-dialog.tsx:439
+#: src/features/projects/components/create-project-dialog.tsx:452
 msgid "Remove"
 msgstr "Հեռացնել"
 
@@ -2422,7 +2436,7 @@ msgstr "Հեռացնել տարրը"
 msgid "Remove link"
 msgstr "Հեռացնել հղումը"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:137
+#: src/routes/_authenticated/$projectId_.settings.tsx:140
 msgid "Removing access..."
 msgstr "Մուտքը հեռացվում է..."
 
@@ -2439,15 +2453,15 @@ msgstr "Վերանվանել սյունակը"
 msgid "Rename this board column"
 msgstr "Վերանվանել այս տախտակի սյունակը"
 
-#: src/routes/_authenticated/$projectId/design.tsx:73
+#: src/routes/_authenticated/$projectId/design.tsx:72
 msgid "Replace design"
 msgstr "Փոխարինել ձևավորումը"
 
-#: src/routes/_authenticated/$projectId/design.tsx:62
+#: src/routes/_authenticated/$projectId/design.tsx:61
 msgid "Replace design?"
 msgstr "Փոխարինե՞լ ձևավորումը։"
 
-#: src/routes/_authenticated/$projectId/design.tsx:74
+#: src/routes/_authenticated/$projectId/design.tsx:73
 msgid "Replacing..."
 msgstr "Փոխարինվում է..."
 
@@ -2536,7 +2550,7 @@ msgstr "Շաբաթ"
 
 #: ../../../lib/web/src/components/ai-prompts-editor.tsx:156
 #: ../../../lib/web/src/components/attachment-composer.tsx:430
-#: ../../../lib/web/src/components/banner-section.tsx:99
+#: ../../../lib/web/src/components/banner-section.tsx:111
 #: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:231
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:172
 #: ../../../lib/web/src/components/ui/editable-field-row.tsx:126
@@ -2546,7 +2560,7 @@ msgid "Save"
 msgstr "Պահպանել"
 
 #: ../../../lib/web/src/components/ai-prompts-editor.tsx:156
-#: src/routes/_authenticated/$projectId_.settings.tsx:118
+#: src/routes/_authenticated/$projectId_.settings.tsx:121
 msgid "Saving..."
 msgstr "Պահպանում..."
 
@@ -2581,7 +2595,7 @@ msgstr "Որոնել ուղղություն..."
 msgid "Search for origin..."
 msgstr "Որոնել ծագում..."
 
-#: src/features/projects/components/inline-project-search.tsx:87
+#: src/features/projects/components/inline-project-search.tsx:84
 msgid "Search for projects..."
 msgstr "Որոնել նախագծեր..."
 
@@ -2693,7 +2707,7 @@ msgstr "Ուղարկել հաղորդագրությունը"
 msgid "Serif"
 msgstr "Սերիֆ"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:117
+#: src/routes/_authenticated/$projectId_.settings.tsx:120
 msgid "Server"
 msgstr "Սերվեր"
 
@@ -2715,14 +2729,14 @@ msgstr "Աշխատաշրջանի ժամկետը սպառվել է։ Խնդրու
 msgid "Set origin and destination"
 msgstr "Սահմանել ծագումը և նպատակակետը"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:134
+#: src/routes/_authenticated/$projectId_.settings.tsx:137
 msgid "Setting access..."
 msgstr "Մուտքը սահմանվում է..."
 
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx:119
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx:125
 #: ../../../lib/web/src/components/options-menu.tsx:196
-#: src/routes/_authenticated/$projectId_.settings.tsx:101
+#: src/routes/_authenticated/$projectId_.settings.tsx:104
 #: src/routes/_authenticated/$projectId/index.tsx:178
 msgid "Settings"
 msgstr "Կարգավորումներ"
@@ -2774,7 +2788,7 @@ msgstr "Փոքր"
 msgid "Sort"
 msgstr "Տեսակավորել"
 
-#: src/features/requests/components/request-panel.tsx:334
+#: src/features/requests/components/request-panel.tsx:332
 msgid "Source"
 msgstr "Աղբյուր"
 
@@ -2798,8 +2812,8 @@ msgstr "Squash և միաձուլել"
 msgid "Start the discussion by adding the first comment."
 msgstr "Սկսեք քննարկումը՝ ավելացնելով առաջին մեկնաբանությունը:"
 
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:471
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:476
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:479
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:484
 msgid "Stop watching"
 msgstr "Դադարեցնել դիտումը"
 
@@ -2818,12 +2832,12 @@ msgstr "Ներկայացնել պատասխանը"
 #: ../../../lib/web/src/components/inline-entity-search.tsx:67
 #: ../../../lib/web/src/components/recommended-entities.tsx:59
 #: ../../../lib/web/src/components/search-entity-page.tsx:74
-#: src/features/projects/components/inline-project-search.tsx:90
+#: src/features/projects/components/inline-project-search.tsx:87
 #: src/features/projects/components/recommended-projects.tsx:58
 msgid "Subscribe"
 msgstr "Բաժանորդագրվել"
 
-#: src/features/projects/components/inline-project-search.tsx:68
+#: src/features/projects/components/inline-project-search.tsx:66
 #: src/routes/_authenticated/find.tsx:44
 msgid "Subscribed"
 msgstr "Բաժանորդագրված"
@@ -2833,7 +2847,7 @@ msgstr "Բաժանորդագրված"
 msgid "Subscribed to {0}"
 msgstr "Բաժանորդագրված է {0}-ին"
 
-#: src/features/projects/components/inline-project-search.tsx:67
+#: src/features/projects/components/inline-project-search.tsx:65
 #: src/features/projects/components/recommended-projects.tsx:42
 #: src/routes/_authenticated/find.tsx:43
 msgid "Subscribing..."
@@ -2847,7 +2861,7 @@ msgstr "Կիրակի"
 msgid "Switch to view 1-9"
 msgstr "Անցնել 1-9 տեսքի"
 
-#: ../../../lib/web/src/components/audit-timeline.tsx:107
+#: ../../../lib/web/src/components/audit-timeline.tsx:109
 #: ../../../lib/web/src/lib/preference-utils.ts:16
 #: ../../../lib/web/src/lib/preference-utils.ts:132
 msgid "System"
@@ -2866,7 +2880,7 @@ msgstr "Պիտակը պետք է լինի առավելագույնը 50 նիշ"
 msgid "Tags"
 msgstr "Թեգեր"
 
-#: src/features/requests/components/request-panel.tsx:342
+#: src/features/requests/components/request-panel.tsx:340
 msgid "Target"
 msgstr "Թիրախ"
 
@@ -2921,11 +2935,11 @@ msgid "This app is not allowed to use your passkey. Allow it in Settings, under 
 msgstr "Այս հավելվածին թույլատրված չէ օգտագործել ձեր անցաբանալին։ Թույլատրեք այն Կարգավորումներում՝ Թույլտվություններ բաժնում։"
 
 #. placeholder {0}: request.target
-#: src/features/requests/components/request-panel.tsx:418
+#: src/features/requests/components/request-panel.tsx:416
 msgid "This merge request has been merged into {0}."
 msgstr "Այս միաձուլման հարցումը միաձուլվել է {0}-ի հետ:"
 
-#: src/features/requests/components/request-panel.tsx:379
+#: src/features/requests/components/request-panel.tsx:377
 msgid "This merge request is a draft and cannot be merged."
 msgstr "Այս միաձուլման հարցումը սևագիր է և չի կարող միաձուլվել:"
 
@@ -2933,11 +2947,11 @@ msgstr "Այս միաձուլման հարցումը սևագիր է և չի կ�
 msgid "This permanently deletes the game and its chat. This cannot be undone."
 msgstr "Սա ընդմիշտ կջնջի խաղը և դրա չաթը։ Այս գործողությունը հնարավոր չէ հետարկել։"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:111
+#: src/routes/_authenticated/$projectId_.settings.tsx:114
 msgid "This project could not be loaded right now."
 msgstr "Այս նախագիծը հնարավոր չէ բեռնել հենց հիմա:"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:109
+#: src/routes/_authenticated/$projectId_.settings.tsx:112
 msgid "This project may have been deleted or you don't have access to it."
 msgstr "Այս նախագիծը կարող է ջնջվել, կամ դուք մուտք չունեք դրան:"
 
@@ -2945,7 +2959,7 @@ msgstr "Այս նախագիծը կարող է ջնջվել, կամ դուք մո
 msgid "This will merge \"{source}\" into \"{target}\". This action cannot be undone."
 msgstr "Սա կմիաձուլի \"{source}\"-ը \"{target}\"-ի մեջ: Այս գործողությունը հնարավոր չէ չեղարկել:"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:127
+#: src/routes/_authenticated/$projectId_.settings.tsx:130
 msgid "This will permanently delete \"{projectName}\" and all its objects, comments, and attachments. This action cannot be undone."
 msgstr "Սա մշտապես կջնջի \"{projectName}\"-ը և նրա բոլոր օբյեկտները, մեկնաբանությունները և կցորդները: Այս գործողությունը հնարավոր չէ չեղարկել:"
 
@@ -2955,7 +2969,7 @@ msgid "This will remove \"{0}\" from your sidebar and stop updates for this proj
 msgstr "Սա կհեռացնի \"{0}\"-ը ձեր կողագոտուց և կդադարեցնի թարմացումներն այս նախագծի համար:"
 
 #. placeholder {0}: String(label)
-#: src/routes/_authenticated/$projectId/design.tsx:66
+#: src/routes/_authenticated/$projectId/design.tsx:65
 msgid "This will replace the current design with <0>{0}</0>. All existing classes, fields, options, and views will be deleted. Existing objects will not be deleted but may no longer appear in views."
 msgstr "Սա կփոխարինի ընթացիկ ձևավորումը <0>{0}</0>-ով: Բոլոր գոյություն ունեցող դասերը, դաշտերը, տարբերակները և տեսարանները կջնջվեն: Գոյություն ունեցող օբյեկտները չեն ջնջվի, բայց կարող են այլևս չհայտնվել տեսարաններում:"
 
@@ -2964,7 +2978,7 @@ msgid "Thursday"
 msgstr "Հինգշաբթի"
 
 #: src/features/editor/components/edit-dialogs.tsx:107
-#: src/features/requests/components/request-panel.tsx:301
+#: src/features/requests/components/request-panel.tsx:299
 msgid "Title"
 msgstr "Վերնագիր"
 
@@ -3079,7 +3093,7 @@ msgstr "Միասնական"
 msgid "United States"
 msgstr "Միացյալ Նահանգներ"
 
-#: ../../../lib/web/src/components/audit-timeline.tsx:103
+#: ../../../lib/web/src/components/audit-timeline.tsx:105
 #: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:167
 #: ../../../lib/web/src/components/tree-row.tsx:219
 #: ../../../lib/web/src/components/tree-row.tsx:373
@@ -3125,7 +3139,7 @@ msgstr "Թարմացված"
 msgid "Updated {field}"
 msgstr "Թարմացվել է {field}"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:140
+#: src/routes/_authenticated/$projectId_.settings.tsx:143
 msgid "Updating access..."
 msgstr "Մուտքը թարմացվում է..."
 
@@ -3134,10 +3148,13 @@ msgstr "Մուտքը թարմացվում է..."
 msgid "Upload"
 msgstr "Վերբեռնել"
 
-#: src/features/projects/components/create-project-dialog.tsx:413
-#: src/routes/_authenticated/$projectId/design.tsx:58
+#: src/routes/_authenticated/$projectId/design.tsx:57
 msgid "Upload .json file"
 msgstr "Վերբեռնել .json ֆայլ"
+
+#: src/features/projects/components/create-project-dialog.tsx:426
+msgid "Upload backup file"
+msgstr "Վերբեռնել պահուստավորման ֆայլը"
 
 #: ../../../lib/web/src/components/ui/upload-progress.tsx:34
 msgid "Upload progress"
@@ -3149,7 +3166,7 @@ msgstr "Օգտագործեք ձեր անցաբանալին"
 
 #. placeholder {0}: prefix || "project"
 #. placeholder {1}: prefix || "project"
-#: src/features/projects/components/create-project-dialog.tsx:381
+#: src/features/projects/components/create-project-dialog.tsx:394
 msgid "Used for readable IDs like {0}-1, {1}-2"
 msgstr "Օգտագործվում է ընթեռնելի ID-ների համար, ինչպես {0}-1, {1}-2"
 
@@ -3190,7 +3207,7 @@ msgstr "Տեսանյութի դիտիչ՝ {0}"
 msgid "View all notifications"
 msgstr "Դիտել բոլոր ծանուցումները"
 
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:442
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:450
 msgid "View and edit item details"
 msgstr "Դիտել և խմբագրել տարրի մանրամասները"
 
@@ -3206,7 +3223,7 @@ msgstr "Միայն դիտել"
 msgid "View options"
 msgstr "Դիտել տարբերակները"
 
-#: src/features/editor/components/design-editor.tsx:487
+#: src/features/editor/components/design-editor.tsx:475
 msgid "Views"
 msgstr "Դիտումներ"
 
@@ -3214,8 +3231,8 @@ msgstr "Դիտումներ"
 msgid "Voice recording is not supported in this browser"
 msgstr "Ձայնագրումն այս դիտարկիչում չի աջակցվում"
 
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:471
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:476
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:479
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:484
 msgid "Watch"
 msgstr "Հետևել"
 
@@ -3228,7 +3245,7 @@ msgstr "Հետևված"
 msgid "Watched only"
 msgstr "Միայն հետևված"
 
-#: src/features/projects/components/create-project-dialog.tsx:473
+#: src/features/projects/components/create-project-dialog.tsx:486
 msgid "We have auto-selected the best matching template."
 msgstr "Մենք ավտոմատ կերպով ընտրել ենք ամենահամապատասխան կաղապարը։"
 
@@ -3245,6 +3262,7 @@ msgstr "Չորեքշաբթի"
 msgid "You do not have access to this section."
 msgstr "Այս բաժինը ձեզ հասանելի չէ։"
 
+#: src/routes/_authenticated/$projectId/$objectId.tsx:38
 #: src/routes/_authenticated/$projectId/index.tsx:53
 msgid "You don't have access to this project."
 msgstr "Դու այս նախագծին հասանելիություն չունես։"
@@ -3261,7 +3279,7 @@ msgstr "Ձեր հաշիվը տեղափոխվել է այստեղ {source}-ից: 
 msgid "Your attachments will be lost."
 msgstr "Ձեր կցորդները կկորչեն։"
 
-#: src/features/projects/components/create-project-dialog.tsx:469
+#: src/features/projects/components/create-project-dialog.tsx:482
 msgid "Your backup contains objects of type:"
 msgstr "Ձեր պահուստավորումը պարունակում է հետևյալ տիպի օբյեկտներ՝"
 

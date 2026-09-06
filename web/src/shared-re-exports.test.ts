@@ -11,10 +11,6 @@
 import { describe, expect, it } from "vitest";
 import * as lib from "@mochi/web";
 import { projectsRequest } from "@/api/request";
-import { AddFieldDialog } from "@/features/editor/components/add-dialogs";
-import { OptionDialog } from "@/features/editor/components/option-dialog";
-import { canComment, canCreate, canDesign, canWrite } from "@/lib/access";
-import { rankBetween, rankCompare } from "@/lib/rank";
 
 describe("bindings onto @mochi/web", () => {
   it("builds this app's request client with the shared factory", () => {
@@ -27,33 +23,5 @@ describe("bindings onto @mochi/web", () => {
     expect(Object.keys(projectsRequest).sort()).toEqual(
       Object.keys(lib.createAppClient({ appName: "projects" })).sort(),
     );
-  });
-
-  it("takes the field dialog from the library", () => {
-    expect(AddFieldDialog).toBeDefined();
-    expect(AddFieldDialog).toBe(lib.AddFieldDialog);
-  });
-
-  it("takes the option dialog from the library, under this app's name", () => {
-    expect(OptionDialog).toBeDefined();
-    expect(OptionDialog).toBe(lib.EntityOptionDialog);
-  });
-
-  it("takes all four permission checks from the library", () => {
-    expect(canComment).toBeDefined();
-    expect(canCreate).toBeDefined();
-    expect(canDesign).toBeDefined();
-    expect(canWrite).toBeDefined();
-    expect(canComment).toBe(lib.canComment);
-    expect(canCreate).toBe(lib.canCreate);
-    expect(canDesign).toBe(lib.canDesign);
-    expect(canWrite).toBe(lib.canWrite);
-  });
-
-  it("takes both rank helpers from the library", () => {
-    expect(rankBetween).toBeDefined();
-    expect(rankCompare).toBeDefined();
-    expect(rankBetween).toBe(lib.rankBetween);
-    expect(rankCompare).toBe(lib.rankCompare);
   });
 });

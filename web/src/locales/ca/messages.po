@@ -18,6 +18,10 @@ msgstr ""
 msgid "Please check your internet connection and try again."
 msgstr "Comproveu la connexió a Internet i torneu-ho a provar."
 
+#: src/features/requests/components/branch-select.tsx:69
+msgid "(current)"
+msgstr "(actual)"
+
 #: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:189
 msgid "(edited)"
 msgstr "(editat)"
@@ -44,6 +48,12 @@ msgstr "[no definit]"
 msgid "{0, plural, one {# conflicting file} other {# conflicting files}}"
 msgstr "{0, plural, one {# fitxer en conflicte} other {# fitxers en conflicte}}"
 
+#. placeholder {0}: files.length
+#: src/features/requests/components/diff-stats.tsx:79
+#: src/features/requests/components/diff-viewer.tsx:420
+msgid "{0, plural, one {# file changed} other {# files changed}}"
+msgstr "{0, plural, one {# fitxer canviat} other {# fitxers canviats}}"
+
 #. placeholder {0}: displayInfo.count
 #: ../../../lib/web/src/components/person-picker.tsx:260
 msgid "{0, plural, one {# selected} other {# selected}}"
@@ -55,23 +65,17 @@ msgid "{0, plural, one {+# nested} other {+# nested}}"
 msgstr "{0, plural, one {+# imbricat} other {+# imbricats}}"
 
 #. placeholder {0}: String(name)
-#: src/routes/_authenticated/$projectId/design.tsx:46
+#: src/routes/_authenticated/$projectId/design.tsx:45
 msgid "{0} - Design"
 msgstr "{0} - Disseny"
 
 #. placeholder {0}: data.behind
-#: src/features/requests/components/merge-status.tsx:77
+#: src/features/requests/components/merge-status.tsx:88
 msgid "{0} behind"
 msgstr "{0} per darrere"
 
-#. placeholder {0}: files.length
-#: src/features/requests/components/diff-stats.tsx:74
-#: src/features/requests/components/diff-viewer.tsx:420
-msgid "{0} files changed"
-msgstr "{0} fitxers canviats"
-
 #. placeholder {0}: String(name)
-#: src/routes/_authenticated/$projectId_.settings.tsx:107
+#: src/routes/_authenticated/$projectId_.settings.tsx:110
 msgid "{0} settings"
 msgstr "Configuració de {0}"
 
@@ -112,7 +116,7 @@ msgstr "{totalCount, plural, one {# element} other {# elements}}"
 msgid "{totalDescendants, plural, one {# reply} other {+# more replies}}"
 msgstr "{totalDescendants, plural, one {# resposta} other {+# respostes més}}"
 
-#: src/features/requests/components/diff-stats.tsx:120
+#: src/features/requests/components/diff-stats.tsx:125
 #: src/features/requests/components/diff-viewer.tsx:471
 msgid "{truncated, plural, one {# more file not shown} other {# more files not shown}}"
 msgstr "{truncated, plural, one {# fitxer més no mostrat} other {# fitxers més no mostrats}}"
@@ -122,7 +126,7 @@ msgid "{unreadCount, plural, one {Open menu (# unread notification)} other {Open
 msgstr "{unreadCount, plural, one {Obre el menú (# notificació no llegida)} other {Obre el menú (# notificacions no llegides)}}"
 
 #. placeholder {0}: data.ahead
-#: src/features/requests/components/merge-status.tsx:76
+#: src/features/requests/components/merge-status.tsx:87
 msgid "+{0} ahead"
 msgstr "+{0} per davant"
 
@@ -146,7 +150,7 @@ msgstr "Absolut (data i hora)"
 msgid "Accept"
 msgstr "Accepta"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:102
+#: src/routes/_authenticated/$projectId_.settings.tsx:105
 msgid "Access"
 msgstr "Accés"
 
@@ -159,19 +163,19 @@ msgstr "Accés denegat"
 msgid "Access level"
 msgstr "Nivell d'accés"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:141
+#: src/routes/_authenticated/$projectId_.settings.tsx:144
 msgid "Access level updated"
 msgstr "Nivell d'accés actualitzat"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:132
+#: src/routes/_authenticated/$projectId_.settings.tsx:135
 msgid "Access management"
 msgstr "Gestió d'accés"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:138
+#: src/routes/_authenticated/$projectId_.settings.tsx:141
 msgid "Access removed"
 msgstr "Accés eliminat"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:135
+#: src/routes/_authenticated/$projectId_.settings.tsx:138
 msgid "Access set for {subjectName}"
 msgstr "Accés establert per a {subjectName}"
 
@@ -179,14 +183,14 @@ msgstr "Accés establert per a {subjectName}"
 msgid "Account type"
 msgstr "Tipus de compte"
 
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:415
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:423
 msgid "Activity"
 msgstr "Activitat"
 
 #: ../../../lib/web/src/components/entity/entity-field-editor.tsx:758
 #: ../../../lib/web/src/features/access/access-dialog.tsx:332
 #: ../../../lib/web/src/features/accounts/account-add.tsx:209
-#: src/features/requests/components/request-panel.tsx:113
+#: src/features/requests/components/request-panel.tsx:111
 msgid "Add"
 msgstr "Afegeix"
 
@@ -218,7 +222,7 @@ msgstr "Afegeix una llegenda"
 msgid "Add checklist item"
 msgstr "Afegeix un element a la llista"
 
-#: src/features/editor/components/design-editor.tsx:541
+#: src/features/editor/components/design-editor.tsx:529
 #: src/features/editor/components/edit-dialogs.tsx:223
 #: src/features/editor/components/edit-dialogs.tsx:434
 msgid "Add class"
@@ -250,7 +254,7 @@ msgstr "Afegeix un enllaç"
 msgid "Add option"
 msgstr "Afegeix una opció"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:133
+#: src/routes/_authenticated/$projectId_.settings.tsx:136
 msgid "Add rule"
 msgstr "Afegeix una regla"
 
@@ -266,7 +270,7 @@ msgstr "Afegeix a les notificacions existents"
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:518
 #: ../../../lib/web/src/components/view-tabs.tsx:87
 #: ../../../lib/web/src/components/view-tabs.tsx:93
-#: src/features/editor/components/design-editor.tsx:492
+#: src/features/editor/components/design-editor.tsx:480
 msgid "Add view"
 msgstr "Afegeix una vista"
 
@@ -286,7 +290,7 @@ msgstr "Tots els projectes"
 msgid "Allow anyone to search for {entityLabel}"
 msgstr "Permet que qualsevol persona cerqui {entityLabel}"
 
-#: src/features/projects/components/create-project-dialog.tsx:387
+#: src/features/projects/components/create-project-dialog.tsx:400
 msgid "Allow anyone to search for project"
 msgstr "Permet que qualsevol cerqui el projecte"
 
@@ -329,7 +333,7 @@ msgstr "Tot allò subscrit a aquest canal deixarà de rebre'l. Després en podre
 msgid "Are you sure you want to delete \"{0}\"?"
 msgstr "Segur que vols suprimir «{0}»?"
 
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:671
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:679
 msgid "Are you sure you want to delete \"{title}\"? This action cannot be undone."
 msgstr "Segur que vols suprimir «{title}»? Aquesta acció no es pot desfer."
 
@@ -341,7 +345,7 @@ msgstr "Segur que vols suprimir la columna «{name}»? Això no es pot desfer."
 msgid "Are you sure you want to delete this comment? This will also delete all replies."
 msgstr "Segur que vols suprimir aquest comentari? També se suprimiran totes les respostes."
 
-#: src/features/requests/components/request-panel.tsx:141
+#: src/features/requests/components/request-panel.tsx:139
 msgid "Are you sure you want to delete this merge request?"
 msgstr "Segur que vols suprimir aquesta sol·licitud de fusió?"
 
@@ -395,7 +399,7 @@ msgid "Avatar for {name}"
 msgstr "Avatar de {name}"
 
 #: ../../../lib/web/src/components/place-picker.tsx:142
-#: src/features/projects/components/create-project-dialog.tsx:546
+#: src/features/projects/components/create-project-dialog.tsx:558
 msgid "Back"
 msgstr "Enrere"
 
@@ -404,26 +408,26 @@ msgstr "Enrere"
 msgid "Back to home"
 msgstr "Torna a l’inici"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:103
-#: src/routes/_authenticated/$projectId/design.tsx:47
+#: src/routes/_authenticated/$projectId_.settings.tsx:106
+#: src/routes/_authenticated/$projectId/design.tsx:46
 msgid "Back to project"
 msgstr "Torna al projecte"
 
-#: src/routes/_authenticated/$projectId/$objectId.tsx:64
+#: src/routes/_authenticated/$projectId/$objectId.tsx:71
 #: src/routes/_authenticated/$projectId/index.tsx:85
 msgid "Back to projects"
 msgstr "Torna als projectes"
 
-#: ../../../lib/web/src/components/banner-section.tsx:80
+#: ../../../lib/web/src/components/banner-section.tsx:91
 #: ../../../lib/web/src/components/entity-banner.tsx:17
 msgid "Banner"
 msgstr "Bàner"
 
-#: ../../../lib/web/src/components/banner-section.tsx:69
+#: ../../../lib/web/src/components/banner-section.tsx:73
 msgid "Banner removed"
 msgstr "Bàner eliminat"
 
-#: ../../../lib/web/src/components/banner-section.tsx:69
+#: ../../../lib/web/src/components/banner-section.tsx:73
 msgid "Banner updated"
 msgstr "Bàner actualitzat"
 
@@ -462,7 +466,7 @@ msgstr "Color de la vora"
 msgid "Browser notifications"
 msgstr "Notificacions del navegador"
 
-#: src/routes/_authenticated/$projectId/design.tsx:100
+#: src/routes/_authenticated/$projectId/design.tsx:99
 msgid "Built-in templates"
 msgstr "Plantilles integrades"
 
@@ -492,8 +496,8 @@ msgstr "Pot ser fill de"
 #: ../../../lib/web/src/features/access/access-list.tsx:268
 #: ../../../lib/web/src/features/accounts/account-add.tsx:201
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:91
-#: src/features/projects/components/create-project-dialog.tsx:453
-#: src/routes/_authenticated/$projectId/design.tsx:61
+#: src/features/projects/components/create-project-dialog.tsx:466
+#: src/routes/_authenticated/$projectId/design.tsx:60
 #: src/routes/_authenticated/$projectId/index.tsx:143
 msgid "Cancel"
 msgstr "Cancel·la"
@@ -512,7 +516,7 @@ msgstr "Cancel·la la resposta"
 msgid "Cancelled"
 msgstr "Cancel·lat"
 
-#: src/features/requests/components/merge-status.tsx:71
+#: src/features/requests/components/merge-status.tsx:82
 msgid "Cannot merge automatically"
 msgstr "No es pot fusionar automàticament"
 
@@ -554,7 +558,7 @@ msgstr "Llista de comprovació"
 msgid "Choose a game from the sidebar or start a new one."
 msgstr "Tria una partida de la barra lateral o inicia'n una de nova."
 
-#: src/features/projects/components/create-project-dialog.tsx:334
+#: src/features/projects/components/create-project-dialog.tsx:345
 msgid "Choose a template"
 msgstr "Tria una plantilla"
 
@@ -563,11 +567,11 @@ msgstr "Tria una plantilla"
 msgid "Choose language"
 msgstr "Tria l'idioma"
 
-#: src/features/editor/components/design-editor.tsx:536
+#: src/features/editor/components/design-editor.tsx:524
 msgid "Classes"
 msgstr "Classes"
 
-#: ../../../lib/web/src/components/banner-section.tsx:111
+#: ../../../lib/web/src/components/banner-section.tsx:123
 #: ../../../lib/web/src/components/colour-picker.tsx:274
 #: ../../../lib/web/src/components/colour-picker.tsx:355
 #: ../../../lib/web/src/components/travelling-picker.tsx:145
@@ -668,7 +672,7 @@ msgid "Comments"
 msgstr "Comentaris"
 
 #. placeholder {0}: data.comment_count || 0
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:411
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:419
 msgid "Comments ({0})"
 msgstr "Comentaris ({0})"
 
@@ -746,12 +750,12 @@ msgid "Could not load repositories"
 msgstr "No s'han pogut carregar els repositoris"
 
 #: src/features/projects/components/create-project-dialog.tsx:79
-#: src/features/projects/components/create-project-dialog.tsx:482
-#: src/routes/_authenticated/$projectId/design.tsx:102
+#: src/features/projects/components/create-project-dialog.tsx:495
+#: src/routes/_authenticated/$projectId/design.tsx:101
 msgid "Could not load templates"
 msgstr "No s'han pogut carregar les plantilles"
 
-#: src/features/requests/components/diff-stats.tsx:59
+#: src/features/requests/components/diff-stats.tsx:64
 msgid "Could not load the diff"
 msgstr "No s'ha pogut carregar el diff"
 
@@ -791,7 +795,7 @@ msgstr "Crea {entityLabel}"
 msgid "Create a new item in this project"
 msgstr "Crea un nou element en aquest projecte"
 
-#: src/features/projects/components/create-project-dialog.tsx:336
+#: src/features/projects/components/create-project-dialog.tsx:347
 #: src/features/projects/pages/projects-list-page.tsx:37
 msgid "Create a new project"
 msgstr "Crea un nou projecte"
@@ -802,10 +806,10 @@ msgid "Create new item"
 msgstr "Crea un element nou"
 
 #: src/components/layout/projects-layout.tsx:36
-#: src/features/projects/components/create-project-dialog.tsx:324
-#: src/features/projects/components/create-project-dialog.tsx:334
-#: src/features/projects/components/create-project-dialog.tsx:457
-#: src/features/projects/components/create-project-dialog.tsx:549
+#: src/features/projects/components/create-project-dialog.tsx:335
+#: src/features/projects/components/create-project-dialog.tsx:345
+#: src/features/projects/components/create-project-dialog.tsx:470
+#: src/features/projects/components/create-project-dialog.tsx:561
 msgid "Create project"
 msgstr "Crea un projecte"
 
@@ -823,14 +827,14 @@ msgstr "Creat"
 msgid "Created {field}"
 msgstr "S'ha creat {field}"
 
-#: src/features/projects/components/create-project-dialog.tsx:132
+#: src/features/projects/components/create-project-dialog.tsx:145
 msgid "Creating project..."
 msgstr "Creant el projecte..."
 
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:676
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:260
-#: src/features/projects/components/create-project-dialog.tsx:457
-#: src/features/projects/components/create-project-dialog.tsx:549
+#: src/features/projects/components/create-project-dialog.tsx:470
+#: src/features/projects/components/create-project-dialog.tsx:561
 msgid "Creating..."
 msgstr "S'està creant..."
 
@@ -854,8 +858,8 @@ msgstr "Conflicte de dades"
 #. placeholder {0}: imported.data?.objects ?? 0
 #. placeholder {1}: imported.data?.comments ?? 0
 #. placeholder {2}: imported.data?.links ?? 0
-#: src/features/projects/components/create-project-dialog.tsx:151
-#: src/features/projects/components/create-project-dialog.tsx:181
+#: src/features/projects/components/create-project-dialog.tsx:164
+#: src/features/projects/components/create-project-dialog.tsx:194
 msgid "Data imported ({0, plural, one {# object} other {# objects}}, {1, plural, one {# comment} other {# comments}}, {2, plural, one {# link} other {# links}})"
 msgstr "S'han importat les dades ({0, plural, one {# objecte} other {# objectes}}, {1, plural, one {# comentari} other {# comentaris}}, {2, plural, one {# enllaç} other {# enllaços}})"
 
@@ -888,10 +892,10 @@ msgstr "Ordre per defecte"
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:208
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:255
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:317
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:672
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:680
 #: ../../../lib/web/src/components/game/game-end-dialogs.tsx:78
-#: src/features/requests/components/request-panel.tsx:142
-#: src/routes/_authenticated/$projectId_.settings.tsx:122
+#: src/features/requests/components/request-panel.tsx:140
+#: src/routes/_authenticated/$projectId_.settings.tsx:125
 msgid "Delete"
 msgstr "Suprimeix"
 
@@ -919,19 +923,19 @@ msgstr "Suprimeix el camp"
 msgid "Delete game?"
 msgstr "Vols suprimir la partida?"
 
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:486
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:491
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:670
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:494
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:499
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:678
 msgid "Delete item"
 msgstr "Suprimeix l'element"
 
-#: src/features/requests/components/request-panel.tsx:140
-#: src/features/requests/components/request-panel.tsx:403
-#: src/features/requests/components/request-panel.tsx:408
-#: src/features/requests/components/request-panel.tsx:428
-#: src/features/requests/components/request-panel.tsx:433
-#: src/features/requests/components/request-panel.tsx:450
-#: src/features/requests/components/request-panel.tsx:455
+#: src/features/requests/components/request-panel.tsx:138
+#: src/features/requests/components/request-panel.tsx:401
+#: src/features/requests/components/request-panel.tsx:406
+#: src/features/requests/components/request-panel.tsx:426
+#: src/features/requests/components/request-panel.tsx:431
+#: src/features/requests/components/request-panel.tsx:448
+#: src/features/requests/components/request-panel.tsx:453
 msgid "Delete merge request"
 msgstr "Suprimeix la sol·licitud de fusió"
 
@@ -945,12 +949,12 @@ msgstr "Suprimeix l'opció"
 msgid "Delete option {0}"
 msgstr "Suprimeix l'opció {0}"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:121
 #: src/routes/_authenticated/$projectId_.settings.tsx:124
+#: src/routes/_authenticated/$projectId_.settings.tsx:127
 msgid "Delete project"
 msgstr "Suprimeix el projecte"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:123
+#: src/routes/_authenticated/$projectId_.settings.tsx:126
 msgid "Delete project?"
 msgstr "Vols suprimir el projecte?"
 
@@ -970,7 +974,7 @@ msgstr "Suprimit"
 msgid "Deleted {field}"
 msgstr "S'ha suprimit {field}"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:129
+#: src/routes/_authenticated/$projectId_.settings.tsx:132
 msgid "Deleting project..."
 msgstr "Suprimint el projecte..."
 
@@ -983,19 +987,19 @@ msgid "Descending"
 msgstr "Descendent"
 
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:85
-#: src/features/requests/components/request-panel.tsx:315
-#: src/routes/_authenticated/$projectId_.settings.tsx:114
+#: src/features/requests/components/request-panel.tsx:313
+#: src/routes/_authenticated/$projectId_.settings.tsx:117
 msgid "Description"
 msgstr "Descripció"
 
-#: src/routes/_authenticated/$projectId/design.tsx:43
-#: src/routes/_authenticated/$projectId/design.tsx:46
+#: src/routes/_authenticated/$projectId/design.tsx:42
+#: src/routes/_authenticated/$projectId/design.tsx:45
 #: src/routes/_authenticated/$projectId/index.tsx:170
 msgid "Design"
 msgstr "Disseny"
 
-#: src/features/projects/components/create-project-dialog.tsx:182
-#: src/routes/_authenticated/$projectId/design.tsx:54
+#: src/features/projects/components/create-project-dialog.tsx:195
+#: src/routes/_authenticated/$projectId/design.tsx:53
 msgid "Design imported"
 msgstr "Disseny importat"
 
@@ -1018,7 +1022,7 @@ msgstr "Panell de detalls"
 msgid "Detect from web browser"
 msgstr "Detecta des del navegador"
 
-#: src/features/requests/components/diff-stats.tsx:92
+#: src/features/requests/components/diff-stats.tsx:97
 msgid "Diff"
 msgstr "Diff"
 
@@ -1061,7 +1065,7 @@ msgid "Does not match the required pattern"
 msgstr "No coincideix amb el patró requerit"
 
 #: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:309
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:495
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:503
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:523
 #: src/features/editor/components/edit-dialogs.tsx:439
 msgid "Done"
@@ -1077,7 +1081,7 @@ msgstr "Fes doble clic en una columna per afegir contingut"
 msgid "Download"
 msgstr "Descarrega"
 
-#: src/routes/_authenticated/$projectId/design.tsx:75
+#: src/routes/_authenticated/$projectId/design.tsx:74
 msgid "Download backup first"
 msgstr "Descarrega primer la còpia de seguretat"
 
@@ -1086,13 +1090,13 @@ msgstr "Descarrega primer la còpia de seguretat"
 msgid "Download failed"
 msgstr "Ha fallat la baixada"
 
-#: src/routes/_authenticated/$projectId/design.tsx:52
+#: src/routes/_authenticated/$projectId/design.tsx:51
 #: src/routes/_authenticated/$projectId/index.tsx:149
 msgid "Downloaded {filename}"
 msgstr "S'ha descarregat {filename}"
 
-#: src/features/requests/components/request-panel.tsx:281
-#: src/features/requests/components/request-panel.tsx:353
+#: src/features/requests/components/request-panel.tsx:279
+#: src/features/requests/components/request-panel.tsx:351
 msgid "Draft"
 msgstr "Esborrany"
 
@@ -1159,7 +1163,7 @@ msgstr "Correu electrònic"
 msgid "Email code"
 msgstr "Codi per correu"
 
-#: ../../../lib/web/src/components/banner-section.tsx:88
+#: ../../../lib/web/src/components/banner-section.tsx:99
 msgid "Enter banner text (markdown supported)..."
 msgstr "Introdueix el text del bàner (admet markdown)..."
 
@@ -1171,11 +1175,11 @@ msgstr "Introduïu el codi del vostre correu electrònic"
 msgid "Enter your authenticator code"
 msgstr "Introduïu el codi de l'autenticador"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:115
+#: src/routes/_authenticated/$projectId_.settings.tsx:118
 msgid "Entity ID"
 msgstr "ID de l'entitat"
 
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:381
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:389
 msgid "Error"
 msgstr "Error"
 
@@ -1194,7 +1198,7 @@ msgstr "Expandeix la barra lateral"
 msgid "Export data"
 msgstr "Exporta les dades"
 
-#: src/routes/_authenticated/$projectId/design.tsx:50
+#: src/routes/_authenticated/$projectId/design.tsx:49
 msgid "Export design"
 msgstr "Exporta el disseny"
 
@@ -1223,12 +1227,12 @@ msgstr "No s'ha pogut comprovar l'estat de la fusió"
 msgid "Failed to copy"
 msgstr "No s'ha pogut copiar"
 
-#: src/features/editor/components/design-editor.tsx:113
+#: src/features/editor/components/design-editor.tsx:111
 msgid "Failed to create class"
 msgstr "No s'ha pogut crear la classe"
 
-#: src/features/editor/components/design-editor.tsx:166
-#: src/features/editor/components/design-editor.tsx:632
+#: src/features/editor/components/design-editor.tsx:164
+#: src/features/editor/components/design-editor.tsx:620
 msgid "Failed to create field"
 msgstr "No s'ha pogut crear el camp"
 
@@ -1238,20 +1242,20 @@ msgstr "No s'ha pogut crear el camp"
 msgid "Failed to create link"
 msgstr "No s'ha pogut crear l'enllaç"
 
-#: src/features/requests/components/request-panel.tsx:59
+#: src/features/requests/components/request-panel.tsx:57
 msgid "Failed to create merge request"
 msgstr "No s'ha pogut crear la sol·licitud de fusió"
 
-#: src/features/editor/components/design-editor.tsx:238
-#: src/features/editor/components/design-editor.tsx:652
+#: src/features/editor/components/design-editor.tsx:236
+#: src/features/editor/components/design-editor.tsx:640
 msgid "Failed to create option"
 msgstr "No s'ha pogut crear l'opció"
 
-#: src/features/projects/components/create-project-dialog.tsx:134
+#: src/features/projects/components/create-project-dialog.tsx:147
 msgid "Failed to create project"
 msgstr "No s'ha pogut crear el projecte"
 
-#: src/features/editor/components/design-editor.tsx:316
+#: src/features/editor/components/design-editor.tsx:314
 msgid "Failed to create view"
 msgstr "No s'ha pogut crear la vista"
 
@@ -1263,7 +1267,7 @@ msgstr "No s'ha pogut suprimir"
 msgid "Failed to delete attachment"
 msgstr "No s'ha pogut suprimir l'adjunt"
 
-#: src/features/editor/components/design-editor.tsx:137
+#: src/features/editor/components/design-editor.tsx:135
 msgid "Failed to delete class"
 msgstr "No s'ha pogut suprimir la classe"
 
@@ -1275,7 +1279,7 @@ msgstr "No s'ha pogut suprimir la columna"
 msgid "Failed to delete comment"
 msgstr "No s'ha pogut suprimir el comentari"
 
-#: src/features/editor/components/design-editor.tsx:209
+#: src/features/editor/components/design-editor.tsx:207
 msgid "Failed to delete field"
 msgstr "No s'ha pogut suprimir el camp"
 
@@ -1283,19 +1287,19 @@ msgstr "No s'ha pogut suprimir el camp"
 msgid "Failed to delete link"
 msgstr "No s'ha pogut suprimir l'enllaç"
 
-#: src/features/requests/components/request-panel.tsx:85
+#: src/features/requests/components/request-panel.tsx:83
 msgid "Failed to delete merge request"
 msgstr "No s'ha pogut suprimir la sol·licitud de fusió"
 
-#: src/features/editor/components/design-editor.tsx:276
+#: src/features/editor/components/design-editor.tsx:274
 msgid "Failed to delete option"
 msgstr "No s'ha pogut suprimir l'opció"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:131
+#: src/routes/_authenticated/$projectId_.settings.tsx:134
 msgid "Failed to delete project"
 msgstr "No s'ha pogut suprimir el projecte"
 
-#: src/features/editor/components/design-editor.tsx:371
+#: src/features/editor/components/design-editor.tsx:359
 msgid "Failed to delete view"
 msgstr "No s'ha pogut suprimir la vista"
 
@@ -1303,7 +1307,7 @@ msgstr "No s'ha pogut suprimir la vista"
 msgid "Failed to export data"
 msgstr "No s'han pogut exportar les dades"
 
-#: src/routes/_authenticated/$projectId/design.tsx:53
+#: src/routes/_authenticated/$projectId/design.tsx:52
 msgid "Failed to export design"
 msgstr "No s'ha pogut exportar el disseny"
 
@@ -1311,12 +1315,12 @@ msgstr "No s'ha pogut exportar el disseny"
 msgid "Failed to get RSS token"
 msgstr "No s'ha pogut obtenir el testimoni RSS"
 
-#: src/features/projects/components/create-project-dialog.tsx:152
-#: src/features/projects/components/create-project-dialog.tsx:183
+#: src/features/projects/components/create-project-dialog.tsx:165
+#: src/features/projects/components/create-project-dialog.tsx:196
 msgid "Failed to import data"
 msgstr "No s'han pogut importar les dades"
 
-#: src/routes/_authenticated/$projectId/design.tsx:55
+#: src/routes/_authenticated/$projectId/design.tsx:54
 msgid "Failed to import design"
 msgstr "No s'ha pogut importar el disseny"
 
@@ -1324,7 +1328,11 @@ msgstr "No s'ha pogut importar el disseny"
 msgid "Failed to load"
 msgstr "No s'ha pogut carregar"
 
-#: ../../../lib/web/src/components/audit-timeline.tsx:68
+#: ../../../lib/web/src/components/banner-section.tsx:85
+msgid "Failed to load banner"
+msgstr "No s'ha pogut carregar el bàner"
+
+#: ../../../lib/web/src/components/audit-timeline.tsx:70
 msgid "Failed to load history"
 msgstr "No s'ha pogut carregar l'historial"
 
@@ -1332,19 +1340,19 @@ msgstr "No s'ha pogut carregar l'historial"
 msgid "Failed to load image"
 msgstr "No s'ha pogut carregar la imatge"
 
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:382
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:385
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:390
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:393
 msgid "Failed to load item"
 msgstr "No s'ha pogut carregar l'element"
 
-#: src/routes/_authenticated/$projectId/$objectId.tsx:41
-#: src/routes/_authenticated/$projectId/$objectId.tsx:65
+#: src/routes/_authenticated/$projectId/$objectId.tsx:48
+#: src/routes/_authenticated/$projectId/$objectId.tsx:72
 #: src/routes/_authenticated/$projectId/index.tsx:62
 #: src/routes/_authenticated/$projectId/index.tsx:86
 msgid "Failed to load project"
 msgstr "No s'ha pogut carregar el projecte"
 
-#: src/routes/_authenticated/$projectId/design.tsx:48
+#: src/routes/_authenticated/$projectId/design.tsx:47
 msgid "Failed to load project design"
 msgstr "No s'ha pogut carregar el disseny del projecte"
 
@@ -1381,12 +1389,12 @@ msgstr "No s'ha pogut publicar el comentari"
 msgid "Failed to re-order columns"
 msgstr "No s'han pogut reordenar les columnes"
 
-#: src/features/projects/components/create-project-dialog.tsx:261
-#: src/routes/_authenticated/$projectId/design.tsx:60
+#: src/features/projects/components/create-project-dialog.tsx:272
+#: src/routes/_authenticated/$projectId/design.tsx:59
 msgid "Failed to read file"
 msgstr "No s'ha pogut llegir el fitxer"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:139
+#: src/routes/_authenticated/$projectId_.settings.tsx:142
 msgid "Failed to remove access"
 msgstr "No s'ha pogut retirar l'accés"
 
@@ -1394,11 +1402,11 @@ msgstr "No s'ha pogut retirar l'accés"
 msgid "Failed to rename column"
 msgstr "No s'ha pogut canviar el nom de la columna"
 
-#: src/features/editor/components/design-editor.tsx:218
+#: src/features/editor/components/design-editor.tsx:216
 msgid "Failed to reorder fields"
 msgstr "No s'han pogut reordenar els camps"
 
-#: src/features/editor/components/design-editor.tsx:380
+#: src/features/editor/components/design-editor.tsx:368
 msgid "Failed to reorder views"
 msgstr "No s'han pogut reordenar les vistes"
 
@@ -1418,15 +1426,15 @@ msgstr "No s'ha pogut desar"
 msgid "Failed to save prompt"
 msgstr "No s'ha pogut desar l'indicador"
 
-#: src/features/projects/components/inline-project-search.tsx:89
+#: src/features/projects/components/inline-project-search.tsx:86
 msgid "Failed to search projects"
 msgstr "No s'han pogut cercar els projectes"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:136
+#: src/routes/_authenticated/$projectId_.settings.tsx:139
 msgid "Failed to set access level"
 msgstr "No s'ha pogut establir el nivell d'accés"
 
-#: src/features/projects/components/inline-project-search.tsx:69
+#: src/features/projects/components/inline-project-search.tsx:67
 #: src/features/projects/components/recommended-projects.tsx:44
 #: src/routes/_authenticated/find.tsx:45
 msgid "Failed to subscribe"
@@ -1437,15 +1445,15 @@ msgstr "No s'ha pogut subscriure"
 msgid "Failed to unsubscribe"
 msgstr "No s'ha pogut cancel·lar la subscripció"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:142
+#: src/routes/_authenticated/$projectId_.settings.tsx:145
 msgid "Failed to update access level"
 msgstr "No s'ha pogut actualitzar el nivell d'accés"
 
-#: ../../../lib/web/src/components/banner-section.tsx:71
+#: ../../../lib/web/src/components/banner-section.tsx:75
 msgid "Failed to update banner"
 msgstr "No s'ha pogut actualitzar el bàner"
 
-#: src/features/editor/components/design-editor.tsx:122
+#: src/features/editor/components/design-editor.tsx:120
 msgid "Failed to update class"
 msgstr "No s'ha pogut actualitzar la classe"
 
@@ -1453,27 +1461,27 @@ msgstr "No s'ha pogut actualitzar la classe"
 msgid "Failed to update comment"
 msgstr "No s'ha pogut actualitzar el comentari"
 
-#: src/features/editor/components/design-editor.tsx:197
+#: src/features/editor/components/design-editor.tsx:195
 msgid "Failed to update field"
 msgstr "No s'ha pogut actualitzar el camp"
 
-#: src/features/editor/components/design-editor.tsx:147
+#: src/features/editor/components/design-editor.tsx:145
 msgid "Failed to update hierarchy"
 msgstr "No s'ha pogut actualitzar la jerarquia"
 
-#: src/features/requests/components/request-panel.tsx:71
+#: src/features/requests/components/request-panel.tsx:69
 msgid "Failed to update merge request"
 msgstr "No s'ha pogut actualitzar la sol·licitud de fusió"
 
-#: src/features/editor/components/design-editor.tsx:257
+#: src/features/editor/components/design-editor.tsx:255
 msgid "Failed to update option"
 msgstr "No s'ha pogut actualitzar l'opció"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:120
+#: src/routes/_authenticated/$projectId_.settings.tsx:123
 msgid "Failed to update project"
 msgstr "No s'ha pogut actualitzar el projecte"
 
-#: src/features/editor/components/design-editor.tsx:360
+#: src/features/editor/components/design-editor.tsx:348
 msgid "Failed to update view"
 msgstr "No s'ha pogut actualitzar la vista"
 
@@ -1500,7 +1508,7 @@ msgstr "Fitxers"
 msgid "Find projects"
 msgstr "Cerca projectes"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:116
+#: src/routes/_authenticated/$projectId_.settings.tsx:119
 msgid "Fingerprint"
 msgstr "Empremta"
 
@@ -1528,7 +1536,7 @@ msgstr "Amics"
 msgid "From"
 msgstr "De"
 
-#: src/routes/_authenticated/$projectId/design.tsx:57
+#: src/routes/_authenticated/$projectId/design.tsx:56
 msgid "From file"
 msgstr "Des d'un fitxer"
 
@@ -1558,7 +1566,7 @@ msgstr "Agrupa per"
 msgid "Group: {0}"
 msgstr "Grup: {0}"
 
-#: ../../../lib/web/src/components/audit-timeline.tsx:61
+#: ../../../lib/web/src/components/audit-timeline.tsx:63
 msgid "History"
 msgstr "Historial"
 
@@ -1578,7 +1586,7 @@ msgstr "Popular"
 msgid "ID"
 msgstr "ID"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:112
+#: src/routes/_authenticated/$projectId_.settings.tsx:115
 msgid "Identity"
 msgstr "Identitat"
 
@@ -1591,17 +1599,17 @@ msgstr "Visor d'imatges: {0}"
 msgid "Imperial"
 msgstr "Imperial"
 
-#: src/routes/_authenticated/$projectId/design.tsx:51
-#: src/routes/_authenticated/$projectId/design.tsx:56
+#: src/routes/_authenticated/$projectId/design.tsx:50
+#: src/routes/_authenticated/$projectId/design.tsx:55
 msgid "Import design"
 msgstr "Importa el disseny"
 
-#: src/features/projects/components/create-project-dialog.tsx:397
+#: src/features/projects/components/create-project-dialog.tsx:410
 msgid "Import from backup (optional)"
 msgstr "Importa des d'una còpia de seguretat (opcional)"
 
-#: src/features/projects/components/create-project-dialog.tsx:149
-#: src/features/projects/components/create-project-dialog.tsx:178
+#: src/features/projects/components/create-project-dialog.tsx:162
+#: src/features/projects/components/create-project-dialog.tsx:191
 msgid "Importing data..."
 msgstr "S'estan important les dades..."
 
@@ -1629,8 +1637,8 @@ msgstr "Interessos"
 msgid "Invalid date"
 msgstr "Data no vàlida"
 
-#: src/features/projects/components/create-project-dialog.tsx:256
-#: src/routes/_authenticated/$projectId/design.tsx:59
+#: src/features/projects/components/create-project-dialog.tsx:267
+#: src/routes/_authenticated/$projectId/design.tsx:58
 msgid "Invalid JSON file"
 msgstr "Fitxer JSON no vàlid"
 
@@ -1638,7 +1646,7 @@ msgstr "Fitxer JSON no vàlid"
 msgid "It seems like the page you're looking for <0/>does not exist or might have been removed."
 msgstr "Sembla que la pàgina que cerqueu <0/>no existeix o s'ha eliminat."
 
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:441
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:449
 msgid "Item details"
 msgstr "Detalls de l'element"
 
@@ -1688,19 +1696,19 @@ msgstr "Carrega'n més"
 msgid "Loading content…"
 msgstr "S'està carregant el contingut…"
 
-#: src/features/requests/components/diff-stats.tsx:52
+#: src/features/requests/components/diff-stats.tsx:57
 msgid "Loading diff..."
 msgstr "S'està carregant la diferència..."
 
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:365
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:373
 msgid "Loading item"
 msgstr "S'està carregant l'element"
 
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:366
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:374
 msgid "Loading item details"
 msgstr "S'estan carregant els detalls de l'element"
 
-#: src/features/projects/components/create-project-dialog.tsx:478
+#: src/features/projects/components/create-project-dialog.tsx:491
 msgid "Loading templates..."
 msgstr "S'estan carregant les plantilles..."
 
@@ -1772,7 +1780,7 @@ msgstr "Fusiona {objectReadable}: {objectTitle}"
 msgid "Merge commit"
 msgstr "Confirmació de fusió"
 
-#: src/features/requests/components/request-panel.tsx:102
+#: src/features/requests/components/request-panel.tsx:100
 msgid "Merge requests"
 msgstr "Sol·licituds de fusió"
 
@@ -1780,7 +1788,7 @@ msgstr "Sol·licituds de fusió"
 msgid "Merge requests ({requestCount})"
 msgstr "Sol·licituds de fusió ({requestCount})"
 
-#: src/features/requests/components/request-panel.tsx:284
+#: src/features/requests/components/request-panel.tsx:282
 msgid "Merged"
 msgstr "Fusionat"
 
@@ -1837,7 +1845,7 @@ msgstr "Mogut"
 msgid "Moved {field}"
 msgstr "S'ha mogut {field}"
 
-#: src/features/projects/components/create-project-dialog.tsx:352
+#: src/features/projects/components/create-project-dialog.tsx:363
 msgid "My project"
 msgstr "El meu projecte"
 
@@ -1847,22 +1855,24 @@ msgstr "El meu projecte"
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:126
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:296
 #: src/features/editor/components/edit-dialogs.tsx:258
-#: src/features/projects/components/create-project-dialog.tsx:342
-#: src/routes/_authenticated/$projectId_.settings.tsx:113
+#: src/features/projects/components/create-project-dialog.tsx:353
+#: src/routes/_authenticated/$projectId_.settings.tsx:116
 msgid "Name"
 msgstr "Nom"
 
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:104
+#: src/features/projects/components/create-project-dialog.tsx:114
 #: src/routes/_authenticated/$projectId_.settings.tsx:76
 msgid "Name cannot contain < or > characters"
 msgstr "El nom no pot contenir els caràcters < o >"
 
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:101
-#: src/features/projects/components/create-project-dialog.tsx:102
+#: src/features/projects/components/create-project-dialog.tsx:105
 msgid "Name is required"
 msgstr "El nom és obligatori"
 
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:102
+#: src/features/projects/components/create-project-dialog.tsx:110
 #: src/routes/_authenticated/$projectId_.settings.tsx:74
 msgid "Name must be 1000 characters or less"
 msgstr "El nom ha de tenir 1000 caràcters o menys"
@@ -1888,7 +1898,7 @@ msgstr "Nou {className}"
 msgid "New game"
 msgstr "Joc nou"
 
-#: src/features/projects/components/create-project-dialog.tsx:459
+#: src/features/projects/components/create-project-dialog.tsx:472
 msgid "Next"
 msgstr "Següent"
 
@@ -1917,7 +1927,7 @@ msgstr "Encara no hi ha activitat"
 msgid "No branches found"
 msgstr "No s'ha trobat cap branca"
 
-#: src/features/requests/components/diff-stats.tsx:65
+#: src/features/requests/components/diff-stats.tsx:70
 msgid "No changes detected"
 msgstr "No s'han detectat canvis"
 
@@ -1925,7 +1935,7 @@ msgstr "No s'han detectat canvis"
 msgid "No changes to display"
 msgstr "Cap canvi per mostrar"
 
-#: src/routes/$projectId.diff.tsx:160
+#: src/routes/$projectId.diff.tsx:162
 msgid "No changes were found for the selected comparison."
 msgstr "No s'han trobat canvis per a la comparació seleccionada."
 
@@ -1933,7 +1943,7 @@ msgstr "No s'han trobat canvis per a la comparació seleccionada."
 msgid "No comments yet"
 msgstr "Encara no hi ha comentaris"
 
-#: src/routes/$projectId.diff.tsx:159
+#: src/routes/$projectId.diff.tsx:161
 msgid "No diff available"
 msgstr "No hi ha cap diff disponible"
 
@@ -1953,7 +1963,7 @@ msgstr "Encara no es pot crear cap tipus d'element. Crea primer els elements par
 msgid "No matching objects"
 msgstr "No hi ha objectes coincidents"
 
-#: src/features/requests/components/request-panel.tsx:119
+#: src/features/requests/components/request-panel.tsx:117
 msgid "No merge requests"
 msgstr "Cap sol·licitud de fusió"
 
@@ -1966,7 +1976,7 @@ msgstr "No s'ha trobat ningú"
 msgid "No places found"
 msgstr "No s'ha trobat cap lloc"
 
-#: src/features/projects/components/inline-project-search.tsx:88
+#: src/features/projects/components/inline-project-search.tsx:85
 #: src/routes/_authenticated/find.tsx:42
 msgid "No projects found"
 msgstr "No s'ha trobat cap projecte"
@@ -2014,10 +2024,10 @@ msgstr "Sense visualitzacions"
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:554
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:557
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:561
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:557
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:570
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:571
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:575
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:565
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:578
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:579
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:583
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:362
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:385
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:388
@@ -2045,7 +2055,7 @@ msgstr "No s'ha comparat: més gran que {0}"
 msgid "Not compared: over the size limit"
 msgstr "No s'ha comparat: supera el límit de mida"
 
-#: src/features/requests/components/request-panel.tsx:257
+#: src/features/requests/components/request-panel.tsx:255
 msgid "Not configured"
 msgstr "No configurat"
 
@@ -2081,7 +2091,7 @@ msgstr "Activat"
 msgid "Oops! Page Not Found!"
 msgstr "Vaja! Pàgina no trobada!"
 
-#: src/features/requests/components/request-panel.tsx:287
+#: src/features/requests/components/request-panel.tsx:285
 msgctxt "state"
 msgid "Open"
 msgstr "Obert"
@@ -2101,7 +2111,7 @@ msgstr "Obre les accions"
 msgid "Open class actions"
 msgstr "Obre les accions de la classe"
 
-#: src/routes/_authenticated/$projectId/design.tsx:49
+#: src/routes/_authenticated/$projectId/design.tsx:48
 msgid "Open design actions"
 msgstr "Obre les accions del disseny"
 
@@ -2156,8 +2166,8 @@ msgid "Owner"
 msgstr "Propietari"
 
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:546
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:553
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:569
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:561
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:577
 msgid "Parent"
 msgstr "Pare"
 
@@ -2196,7 +2206,7 @@ msgstr "Afegeix una o més classes al disseny del projecte."
 msgid "Please check your internet connection and try again."
 msgstr "Comproveu la connexió a Internet i torneu-ho a provar."
 
-#: src/features/projects/components/create-project-dialog.tsx:118
+#: src/features/projects/components/create-project-dialog.tsx:131
 msgid "Please select a template"
 msgstr "Selecciona una plantilla"
 
@@ -2216,16 +2226,20 @@ msgstr "Publicacions"
 msgid "Posts and comments"
 msgstr "Publicacions i comentaris"
 
-#: src/features/projects/components/create-project-dialog.tsx:364
+#: src/features/projects/components/create-project-dialog.tsx:376
 #: src/routes/_authenticated/$projectId_.settings.tsx:83
 msgid "Prefix"
 msgstr "Prefix"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:93
+#: src/routes/_authenticated/$projectId_.settings.tsx:96
 msgid "Prefix can only contain lowercase letters, numbers, and hyphens"
 msgstr "El prefix només pot contenir lletres minúscules, xifres i guions"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:95
+#: src/routes/_authenticated/$projectId_.settings.tsx:94
+msgid "Prefix is required"
+msgstr "El prefix és obligatori"
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:98
 msgid "Prefix must be 20 characters or less"
 msgstr "El prefix ha de tenir 20 caràcters o menys"
 
@@ -2243,7 +2257,7 @@ msgstr "Privadesa"
 msgid "Processing…"
 msgstr "S'està processant…"
 
-#: src/routes/_authenticated/$projectId/$objectId.tsx:62
+#: src/routes/_authenticated/$projectId/$objectId.tsx:69
 #: src/routes/_authenticated/$projectId/index.tsx:83
 msgid "Project"
 msgstr "Projecte"
@@ -2252,11 +2266,11 @@ msgstr "Projecte"
 msgid "Project actions"
 msgstr "Accions del projecte"
 
-#: src/features/projects/components/create-project-dialog.tsx:133
+#: src/features/projects/components/create-project-dialog.tsx:146
 msgid "Project created"
 msgstr "Projecte creat"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:130
+#: src/routes/_authenticated/$projectId_.settings.tsx:133
 msgid "Project deleted"
 msgstr "Projecte suprimit"
 
@@ -2268,19 +2282,19 @@ msgstr "Enllaç del projecte"
 msgid "Project name is required"
 msgstr "El nom del projecte és obligatori"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:108
+#: src/routes/_authenticated/$projectId_.settings.tsx:111
 msgid "Project not found"
 msgstr "Projecte no trobat"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:107
+#: src/routes/_authenticated/$projectId_.settings.tsx:110
 msgid "Project settings"
 msgstr "Configuració del projecte"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:110
+#: src/routes/_authenticated/$projectId_.settings.tsx:113
 msgid "Project unavailable"
 msgstr "Projecte no disponible"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:119
+#: src/routes/_authenticated/$projectId_.settings.tsx:122
 msgid "Project updated"
 msgstr "Projecte actualitzat"
 
@@ -2293,7 +2307,7 @@ msgstr "Projectes"
 msgid "Prompt saved"
 msgstr "Sol·licitud desada"
 
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:408
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:416
 msgid "Properties"
 msgstr "Propietats"
 
@@ -2317,7 +2331,7 @@ msgstr "Reordena les columnes"
 msgid "Re-register your passkeys on this server"
 msgstr "Torna a registrar les teves claus d'accés en aquest servidor"
 
-#: src/features/requests/components/merge-status.tsx:71
+#: src/features/requests/components/merge-status.tsx:82
 msgid "Ready to merge"
 msgstr "Llest per fusionar"
 
@@ -2378,7 +2392,7 @@ msgstr "Rellevància {relevance}, interès {weight}"
 #: ../../../lib/web/src/components/attachment-composer.tsx:330
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:192
 #: ../../../lib/web/src/features/access/access-list.tsx:270
-#: src/features/projects/components/create-project-dialog.tsx:439
+#: src/features/projects/components/create-project-dialog.tsx:452
 msgid "Remove"
 msgstr "Elimina"
 
@@ -2422,7 +2436,7 @@ msgstr "Elimina l'element"
 msgid "Remove link"
 msgstr "Elimina l'enllaç"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:137
+#: src/routes/_authenticated/$projectId_.settings.tsx:140
 msgid "Removing access..."
 msgstr "Eliminant l'accés..."
 
@@ -2439,15 +2453,15 @@ msgstr "Canvia el nom de la columna"
 msgid "Rename this board column"
 msgstr "Canvia el nom d'aquesta columna del tauler"
 
-#: src/routes/_authenticated/$projectId/design.tsx:73
+#: src/routes/_authenticated/$projectId/design.tsx:72
 msgid "Replace design"
 msgstr "Substitueix el disseny"
 
-#: src/routes/_authenticated/$projectId/design.tsx:62
+#: src/routes/_authenticated/$projectId/design.tsx:61
 msgid "Replace design?"
 msgstr "Vols substituir el disseny?"
 
-#: src/routes/_authenticated/$projectId/design.tsx:74
+#: src/routes/_authenticated/$projectId/design.tsx:73
 msgid "Replacing..."
 msgstr "Substituint..."
 
@@ -2536,7 +2550,7 @@ msgstr "Dissabte"
 
 #: ../../../lib/web/src/components/ai-prompts-editor.tsx:156
 #: ../../../lib/web/src/components/attachment-composer.tsx:430
-#: ../../../lib/web/src/components/banner-section.tsx:99
+#: ../../../lib/web/src/components/banner-section.tsx:111
 #: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:231
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:172
 #: ../../../lib/web/src/components/ui/editable-field-row.tsx:126
@@ -2546,7 +2560,7 @@ msgid "Save"
 msgstr "Desa"
 
 #: ../../../lib/web/src/components/ai-prompts-editor.tsx:156
-#: src/routes/_authenticated/$projectId_.settings.tsx:118
+#: src/routes/_authenticated/$projectId_.settings.tsx:121
 msgid "Saving..."
 msgstr "Desant..."
 
@@ -2581,7 +2595,7 @@ msgstr "Cerca destinació..."
 msgid "Search for origin..."
 msgstr "Cerca origen..."
 
-#: src/features/projects/components/inline-project-search.tsx:87
+#: src/features/projects/components/inline-project-search.tsx:84
 msgid "Search for projects..."
 msgstr "Cerca projectes..."
 
@@ -2693,7 +2707,7 @@ msgstr "Envia missatge"
 msgid "Serif"
 msgstr "Serif"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:117
+#: src/routes/_authenticated/$projectId_.settings.tsx:120
 msgid "Server"
 msgstr "Servidor"
 
@@ -2715,14 +2729,14 @@ msgstr "La sessió ha caducat. Torneu a iniciar la sessió."
 msgid "Set origin and destination"
 msgstr "Estableix origen i destinació"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:134
+#: src/routes/_authenticated/$projectId_.settings.tsx:137
 msgid "Setting access..."
 msgstr "Establint l'accés..."
 
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx:119
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx:125
 #: ../../../lib/web/src/components/options-menu.tsx:196
-#: src/routes/_authenticated/$projectId_.settings.tsx:101
+#: src/routes/_authenticated/$projectId_.settings.tsx:104
 #: src/routes/_authenticated/$projectId/index.tsx:178
 msgid "Settings"
 msgstr "Configuració"
@@ -2774,7 +2788,7 @@ msgstr "Petit"
 msgid "Sort"
 msgstr "Ordena"
 
-#: src/features/requests/components/request-panel.tsx:334
+#: src/features/requests/components/request-panel.tsx:332
 msgid "Source"
 msgstr "Origen"
 
@@ -2798,8 +2812,8 @@ msgstr "Aplana i combina"
 msgid "Start the discussion by adding the first comment."
 msgstr "Inicia la discussió afegint el primer comentari."
 
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:471
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:476
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:479
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:484
 msgid "Stop watching"
 msgstr "Deixa de seguir"
 
@@ -2818,12 +2832,12 @@ msgstr "Envia resposta"
 #: ../../../lib/web/src/components/inline-entity-search.tsx:67
 #: ../../../lib/web/src/components/recommended-entities.tsx:59
 #: ../../../lib/web/src/components/search-entity-page.tsx:74
-#: src/features/projects/components/inline-project-search.tsx:90
+#: src/features/projects/components/inline-project-search.tsx:87
 #: src/features/projects/components/recommended-projects.tsx:58
 msgid "Subscribe"
 msgstr "Subscriu-te"
 
-#: src/features/projects/components/inline-project-search.tsx:68
+#: src/features/projects/components/inline-project-search.tsx:66
 #: src/routes/_authenticated/find.tsx:44
 msgid "Subscribed"
 msgstr "Subscrit"
@@ -2833,7 +2847,7 @@ msgstr "Subscrit"
 msgid "Subscribed to {0}"
 msgstr "Subscrit a {0}"
 
-#: src/features/projects/components/inline-project-search.tsx:67
+#: src/features/projects/components/inline-project-search.tsx:65
 #: src/features/projects/components/recommended-projects.tsx:42
 #: src/routes/_authenticated/find.tsx:43
 msgid "Subscribing..."
@@ -2847,7 +2861,7 @@ msgstr "Diumenge"
 msgid "Switch to view 1-9"
 msgstr "Canvia a la vista 1-9"
 
-#: ../../../lib/web/src/components/audit-timeline.tsx:107
+#: ../../../lib/web/src/components/audit-timeline.tsx:109
 #: ../../../lib/web/src/lib/preference-utils.ts:16
 #: ../../../lib/web/src/lib/preference-utils.ts:132
 msgid "System"
@@ -2866,7 +2880,7 @@ msgstr "L'etiqueta ha de tenir 50 caràcters o menys"
 msgid "Tags"
 msgstr "Etiquetes"
 
-#: src/features/requests/components/request-panel.tsx:342
+#: src/features/requests/components/request-panel.tsx:340
 msgid "Target"
 msgstr "Destinació"
 
@@ -2921,11 +2935,11 @@ msgid "This app is not allowed to use your passkey. Allow it in Settings, under 
 msgstr "Aquesta aplicació no té permís per utilitzar la vostra clau d'accés. Permeteu-ho a Configuració, sota Permisos."
 
 #. placeholder {0}: request.target
-#: src/features/requests/components/request-panel.tsx:418
+#: src/features/requests/components/request-panel.tsx:416
 msgid "This merge request has been merged into {0}."
 msgstr "Aquesta sol·licitud de combinació s'ha combinat a {0}."
 
-#: src/features/requests/components/request-panel.tsx:379
+#: src/features/requests/components/request-panel.tsx:377
 msgid "This merge request is a draft and cannot be merged."
 msgstr "Aquesta sol·licitud de combinació és un esborrany i no es pot combinar."
 
@@ -2933,11 +2947,11 @@ msgstr "Aquesta sol·licitud de combinació és un esborrany i no es pot combina
 msgid "This permanently deletes the game and its chat. This cannot be undone."
 msgstr "Això suprimeix permanentment la partida i el seu xat. Aquesta acció no es pot desfer."
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:111
+#: src/routes/_authenticated/$projectId_.settings.tsx:114
 msgid "This project could not be loaded right now."
 msgstr "No s'ha pogut carregar aquest projecte ara mateix."
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:109
+#: src/routes/_authenticated/$projectId_.settings.tsx:112
 msgid "This project may have been deleted or you don't have access to it."
 msgstr "És possible que aquest projecte s'hagi eliminat o que no hi tinguis accés."
 
@@ -2945,7 +2959,7 @@ msgstr "És possible que aquest projecte s'hagi eliminat o que no hi tinguis acc
 msgid "This will merge \"{source}\" into \"{target}\". This action cannot be undone."
 msgstr "Això combinarà \"{source}\" a \"{target}\". Aquesta acció no es pot desfer."
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:127
+#: src/routes/_authenticated/$projectId_.settings.tsx:130
 msgid "This will permanently delete \"{projectName}\" and all its objects, comments, and attachments. This action cannot be undone."
 msgstr "Això eliminarà permanentment \"{projectName}\" i tots els seus objectes, comentaris i adjunts. Aquesta acció no es pot desfer."
 
@@ -2955,7 +2969,7 @@ msgid "This will remove \"{0}\" from your sidebar and stop updates for this proj
 msgstr "Això eliminarà \"{0}\" de la teva barra lateral i aturarà les actualitzacions d'aquest projecte."
 
 #. placeholder {0}: String(label)
-#: src/routes/_authenticated/$projectId/design.tsx:66
+#: src/routes/_authenticated/$projectId/design.tsx:65
 msgid "This will replace the current design with <0>{0}</0>. All existing classes, fields, options, and views will be deleted. Existing objects will not be deleted but may no longer appear in views."
 msgstr "Això substituirà el disseny actual per <0>{0}</0>. Totes les classes, camps, opcions i vistes existents s'eliminaran. Els objectes existents no s'eliminaran però potser ja no apareixeran a les vistes."
 
@@ -2964,7 +2978,7 @@ msgid "Thursday"
 msgstr "Dijous"
 
 #: src/features/editor/components/edit-dialogs.tsx:107
-#: src/features/requests/components/request-panel.tsx:301
+#: src/features/requests/components/request-panel.tsx:299
 msgid "Title"
 msgstr "Títol"
 
@@ -3079,7 +3093,7 @@ msgstr "Unificat"
 msgid "United States"
 msgstr "Estats Units"
 
-#: ../../../lib/web/src/components/audit-timeline.tsx:103
+#: ../../../lib/web/src/components/audit-timeline.tsx:105
 #: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:167
 #: ../../../lib/web/src/components/tree-row.tsx:219
 #: ../../../lib/web/src/components/tree-row.tsx:373
@@ -3125,7 +3139,7 @@ msgstr "Actualitzat"
 msgid "Updated {field}"
 msgstr "S'ha actualitzat {field}"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:140
+#: src/routes/_authenticated/$projectId_.settings.tsx:143
 msgid "Updating access..."
 msgstr "Actualitzant l'accés..."
 
@@ -3134,10 +3148,13 @@ msgstr "Actualitzant l'accés..."
 msgid "Upload"
 msgstr "Puja"
 
-#: src/features/projects/components/create-project-dialog.tsx:413
-#: src/routes/_authenticated/$projectId/design.tsx:58
+#: src/routes/_authenticated/$projectId/design.tsx:57
 msgid "Upload .json file"
 msgstr "Puja un fitxer .json"
+
+#: src/features/projects/components/create-project-dialog.tsx:426
+msgid "Upload backup file"
+msgstr "Puja un fitxer de còpia de seguretat"
 
 #: ../../../lib/web/src/components/ui/upload-progress.tsx:34
 msgid "Upload progress"
@@ -3149,7 +3166,7 @@ msgstr "Utilitzeu la vostra clau d'accés"
 
 #. placeholder {0}: prefix || "project"
 #. placeholder {1}: prefix || "project"
-#: src/features/projects/components/create-project-dialog.tsx:381
+#: src/features/projects/components/create-project-dialog.tsx:394
 msgid "Used for readable IDs like {0}-1, {1}-2"
 msgstr "S'utilitza per a IDs llegibles com ara {0}-1, {1}-2"
 
@@ -3190,7 +3207,7 @@ msgstr "Visor de vídeos: {0}"
 msgid "View all notifications"
 msgstr "Mostra totes les notificacions"
 
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:442
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:450
 msgid "View and edit item details"
 msgstr "Visualitza i edita els detalls de l'element"
 
@@ -3206,7 +3223,7 @@ msgstr "Només visualització"
 msgid "View options"
 msgstr "Opcions de visualització"
 
-#: src/features/editor/components/design-editor.tsx:487
+#: src/features/editor/components/design-editor.tsx:475
 msgid "Views"
 msgstr "Visualitzacions"
 
@@ -3214,8 +3231,8 @@ msgstr "Visualitzacions"
 msgid "Voice recording is not supported in this browser"
 msgstr "L'enregistrament de veu no és compatible amb aquest navegador"
 
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:471
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:476
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:479
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:484
 msgid "Watch"
 msgstr "Segueix"
 
@@ -3228,7 +3245,7 @@ msgstr "Seguit"
 msgid "Watched only"
 msgstr "Només els seguits"
 
-#: src/features/projects/components/create-project-dialog.tsx:473
+#: src/features/projects/components/create-project-dialog.tsx:486
 msgid "We have auto-selected the best matching template."
 msgstr "Hem seleccionat automàticament la plantilla més adequada."
 
@@ -3245,6 +3262,7 @@ msgstr "Dimecres"
 msgid "You do not have access to this section."
 msgstr "No teniu accés a aquesta secció."
 
+#: src/routes/_authenticated/$projectId/$objectId.tsx:38
 #: src/routes/_authenticated/$projectId/index.tsx:53
 msgid "You don't have access to this project."
 msgstr "No tens accés a aquest projecte."
@@ -3261,7 +3279,7 @@ msgstr "El vostre compte s'ha mogut aquí des de {source}. Fins que no l'elimine
 msgid "Your attachments will be lost."
 msgstr "Es perdran els fitxers adjunts."
 
-#: src/features/projects/components/create-project-dialog.tsx:469
+#: src/features/projects/components/create-project-dialog.tsx:482
 msgid "Your backup contains objects of type:"
 msgstr "La còpia de seguretat conté objectes del tipus:"
 

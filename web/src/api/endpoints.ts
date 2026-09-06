@@ -32,11 +32,11 @@ const endpoints = {
 
     // Repository integration endpoints (for merge requests)
     repositories: "-/repositories",
-    repositoryBranches: (repoId: string) => `-/repositories/${repoId}/branches`,
-    repositoryMergeCheck: (repoId: string) =>
-      `-/repositories/${repoId}/merge/check`,
-    repositoryDiff: (repoId: string) => `-/repositories/${repoId}/diff`,
-    repositoryMerge: (repoId: string) => `-/repositories/${repoId}/merge`,
+    repositoryBranches: (repositoryId: string) => `-/repositories/${repositoryId}/branches`,
+    repositoryMergeCheck: (repositoryId: string) =>
+      `-/repositories/${repositoryId}/merge/check`,
+    repositoryDiff: (repositoryId: string) => `-/repositories/${repositoryId}/diff`,
+    repositoryMerge: (repositoryId: string) => `-/repositories/${repositoryId}/merge`,
   },
 } as const;
 

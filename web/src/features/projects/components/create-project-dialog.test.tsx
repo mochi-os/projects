@@ -82,11 +82,37 @@ describe("CreateProjectDialog import selection", () => {
     selectFile(new File(["PK"], "backup.zip", { type: "application/zip" }));
     expect(await screen.findByText("backup.zip")).toBeInTheDocument();
 
-    fireEvent.click(screen.getByRole("button", { name: /next/i }));
-    fireEvent.click(await screen.findByText("Blank"));
+    // An archive restores design and data together, so the template step is
+    // skipped: no Next, and the project is created blank straight from here.
+    expect(screen.queryByRole("button", { name: /next/i })).not.toBeInTheDocument();
     fireEvent.click(screen.getByRole("button", { name: /create project/i }));
 
+    await waitFor(() =>
+      expect(api.create).toHaveBeenCalledWith(expect.objectContaining({ template: "blank" })),
+    );
     // Guards the other direction: the fix must not disarm a live selection.
     await waitFor(() => expect(api.importData).toHaveBeenCalled());
+  });
+
+  it("refuses a second submit while a design-bearing backup is creating", async () => {
+    let release: (value: { data: { id: string; fingerprint: string } }) => void = () => {};
+    api.create.mockImplementationOnce(
+      () => new Promise((resolve) => { release = resolve; }),
+    );
+    render(<CreateProjectDialog open onOpenChange={() => {}} hideTrigger />);
+
+    const name = await screen.findByLabelText(/name/i);
+    fireEvent.change(name, { target: { value: "Twice" } });
+    selectFile(new File(["PK"], "backup.zip", { type: "application/zip" }));
+    expect(await screen.findByText("backup.zip")).toBeInTheDocument();
+
+    // Enter in the name input calls handleNext directly, past the disabled
+    // button; while the first create is in flight it must be a no-op.
+    fireEvent.keyDown(name, { key: "Enter" });
+    await waitFor(() => expect(api.create).toHaveBeenCalledTimes(1));
+    fireEvent.keyDown(name, { key: "Enter" });
+    fireEvent.keyDown(name, { key: "Enter" });
+    expect(api.create).toHaveBeenCalledTimes(1);
+    release({ data: { id: "p1", fingerprint: "fp1" } });
   });
 });

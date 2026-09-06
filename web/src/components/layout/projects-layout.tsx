@@ -7,9 +7,9 @@ import { useLingui } from "@lingui/react/macro";
 import { EntityLayout } from "@mochi/web/components/entity/entity-layout";
 import { FolderKanban } from "lucide-react";
 import { useProjectsStore } from "@/stores/projects-store";
-import { SidebarProvider, useSidebarContext } from "@/context/sidebar-context";
 import { CreateProjectDialog } from "@/features/projects/components/create-project-dialog";
 import { APP_ROUTES } from "@/config/routes";
+import { EntitySidebarProvider, useEntitySidebarContext } from "@mochi/web";
 
 function ProjectsLayoutInner() {
   const { t } = useLingui();
@@ -18,7 +18,7 @@ function ProjectsLayoutInner() {
   const error = useProjectsStore((state) => state.error);
   const refresh = useProjectsStore((state) => state.refresh);
   const { createDialogOpen, openCreateDialog, closeCreateDialog } =
-    useSidebarContext();
+    useEntitySidebarContext();
 
   return (
     <EntityLayout
@@ -50,8 +50,8 @@ function ProjectsLayoutInner() {
 
 export function ProjectsLayout() {
   return (
-    <SidebarProvider>
+    <EntitySidebarProvider>
       <ProjectsLayoutInner />
-    </SidebarProvider>
+    </EntitySidebarProvider>
   );
 }

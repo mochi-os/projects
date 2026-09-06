@@ -20,6 +20,7 @@ import {
   toast,
   EntityObjectDetailPanel,
   type EntityObjectDetailTab,
+  canWrite,
 } from "@mochi/web";
 import { FolderKanban, GitMerge, Settings, Settings2 } from "lucide-react";
 import projectsApi from "@/api/projects";
@@ -28,8 +29,7 @@ import { useProjectsStore } from "@/stores/projects-store";
 import { BoardContainer } from "@/features/board/components";
 import { TreeView } from "@/features/tree";
 import { CreateObjectDialog } from "@/features/objects/components";
-import { RequestPanel } from "@/features/requests";
-import { canWrite } from "@/lib/access";
+import { RequestPanel } from "@/features/requests/components/request-panel";
 import { ViewOptionsBar } from "@/components/view-options-bar";
 
 interface SearchParams {
@@ -98,7 +98,7 @@ function ProjectPage() {
   );
 }
 
-export interface ProjectPageContentProps {
+interface ProjectPageContentProps {
   project: ProjectDetails;
   projectId: string;
   search: SearchParams;

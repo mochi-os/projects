@@ -24,12 +24,10 @@ interface DirectoryEntry extends InlineEntitySearchItem {
 
 interface InlineProjectSearchProps {
   subscribedIds: Set<string>;
-  onRefresh?: () => void;
 }
 
 export function InlineProjectSearch({
   subscribedIds,
-  onRefresh,
 }: InlineProjectSearchProps) {
   const { t } = useLingui();
   const navigate = useNavigate();
@@ -70,7 +68,6 @@ export function InlineProjectSearch({
       },
     );
     void refresh();
-    onRefresh?.();
     void navigate({
       to: "/$projectId",
       params: { projectId: project.fingerprint || project.id },

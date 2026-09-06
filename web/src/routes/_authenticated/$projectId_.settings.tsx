@@ -89,7 +89,10 @@ function ProjectSettingsPage() {
             // the server stores. This row used to accept mixed case and cap at
             // 10, so it both refused valid prefixes and admitted ones the
             // create path cannot make.
-            if (value && !/^[a-z0-9-]+$/.test(value))
+            // The server drops an empty prefix rather than storing it, so
+            // accepting one here saved nothing and said so to nobody.
+            if (!value.trim()) return t`Prefix is required`;
+            if (!/^[a-z0-9-]+$/.test(value))
               return t`Prefix can only contain lowercase letters, numbers, and hyphens`;
             if (value.length > 20)
               return t`Prefix must be 20 characters or less`;

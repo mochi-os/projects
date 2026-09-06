@@ -18,6 +18,10 @@ msgstr ""
 msgid "Please check your internet connection and try again."
 msgstr "Internet aloqangizni tekshiring va qayta urinib ko‘ring."
 
+#: src/features/requests/components/branch-select.tsx:69
+msgid "(current)"
+msgstr "(joriy)"
+
 #: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:189
 msgid "(edited)"
 msgstr "(tahrirlangan)"
@@ -44,6 +48,12 @@ msgstr "[oʻrnatilmagan]"
 msgid "{0, plural, one {# conflicting file} other {# conflicting files}}"
 msgstr "{0, plural, one {# ziddiyatli fayl} other {# ziddiyatli fayl}}"
 
+#. placeholder {0}: files.length
+#: src/features/requests/components/diff-stats.tsx:79
+#: src/features/requests/components/diff-viewer.tsx:420
+msgid "{0, plural, one {# file changed} other {# files changed}}"
+msgstr "{0, plural, one {# fayl o'zgartirildi} other {# fayl o'zgartirildi}}"
+
 #. placeholder {0}: displayInfo.count
 #: ../../../lib/web/src/components/person-picker.tsx:260
 msgid "{0, plural, one {# selected} other {# selected}}"
@@ -55,23 +65,17 @@ msgid "{0, plural, one {+# nested} other {+# nested}}"
 msgstr "{0, plural, one {+# ichki} other {+# ichki}}"
 
 #. placeholder {0}: String(name)
-#: src/routes/_authenticated/$projectId/design.tsx:46
+#: src/routes/_authenticated/$projectId/design.tsx:45
 msgid "{0} - Design"
 msgstr "{0} - Dizayn"
 
 #. placeholder {0}: data.behind
-#: src/features/requests/components/merge-status.tsx:77
+#: src/features/requests/components/merge-status.tsx:88
 msgid "{0} behind"
 msgstr "{0} ortda"
 
-#. placeholder {0}: files.length
-#: src/features/requests/components/diff-stats.tsx:74
-#: src/features/requests/components/diff-viewer.tsx:420
-msgid "{0} files changed"
-msgstr "{0} fayl oʻzgartirildi"
-
 #. placeholder {0}: String(name)
-#: src/routes/_authenticated/$projectId_.settings.tsx:107
+#: src/routes/_authenticated/$projectId_.settings.tsx:110
 msgid "{0} settings"
 msgstr "{0} sozlamalari"
 
@@ -112,7 +116,7 @@ msgstr "{totalCount, plural, one {# element} other {# element}}"
 msgid "{totalDescendants, plural, one {# reply} other {+# more replies}}"
 msgstr "{totalDescendants, plural, one {# javob} other {+# koʻproq javoblar}}"
 
-#: src/features/requests/components/diff-stats.tsx:120
+#: src/features/requests/components/diff-stats.tsx:125
 #: src/features/requests/components/diff-viewer.tsx:471
 msgid "{truncated, plural, one {# more file not shown} other {# more files not shown}}"
 msgstr "{truncated, plural, one {Yana # fayl koʻrsatilmadi} other {Yana # fayl koʻrsatilmadi}}"
@@ -122,7 +126,7 @@ msgid "{unreadCount, plural, one {Open menu (# unread notification)} other {Open
 msgstr "{unreadCount, plural, one {Menyuni ochish (# o'qilmagan bildirishnoma)} other {Menyuni ochish (# o'qilmagan bildirishnoma)}}"
 
 #. placeholder {0}: data.ahead
-#: src/features/requests/components/merge-status.tsx:76
+#: src/features/requests/components/merge-status.tsx:87
 msgid "+{0} ahead"
 msgstr "+{0} oldinda"
 
@@ -146,7 +150,7 @@ msgstr "Aniq (sana va vaqt)"
 msgid "Accept"
 msgstr "Qabul qilish"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:102
+#: src/routes/_authenticated/$projectId_.settings.tsx:105
 msgid "Access"
 msgstr "Kirish"
 
@@ -159,19 +163,19 @@ msgstr "Kirish rad etildi"
 msgid "Access level"
 msgstr "Kirish darajasi"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:141
+#: src/routes/_authenticated/$projectId_.settings.tsx:144
 msgid "Access level updated"
 msgstr "Kirish darajasi yangilandi"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:132
+#: src/routes/_authenticated/$projectId_.settings.tsx:135
 msgid "Access management"
 msgstr "Kirishni boshqarish"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:138
+#: src/routes/_authenticated/$projectId_.settings.tsx:141
 msgid "Access removed"
 msgstr "Kirish olib tashlandi"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:135
+#: src/routes/_authenticated/$projectId_.settings.tsx:138
 msgid "Access set for {subjectName}"
 msgstr "{subjectName} uchun kirish oʻrnatildi"
 
@@ -179,14 +183,14 @@ msgstr "{subjectName} uchun kirish oʻrnatildi"
 msgid "Account type"
 msgstr "Hisob turi"
 
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:415
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:423
 msgid "Activity"
 msgstr "Faollik"
 
 #: ../../../lib/web/src/components/entity/entity-field-editor.tsx:758
 #: ../../../lib/web/src/features/access/access-dialog.tsx:332
 #: ../../../lib/web/src/features/accounts/account-add.tsx:209
-#: src/features/requests/components/request-panel.tsx:113
+#: src/features/requests/components/request-panel.tsx:111
 msgid "Add"
 msgstr "Qoʻshish"
 
@@ -218,7 +222,7 @@ msgstr "Izoh qoʻshish"
 msgid "Add checklist item"
 msgstr "Roʻyxat elementi qoʻshish"
 
-#: src/features/editor/components/design-editor.tsx:541
+#: src/features/editor/components/design-editor.tsx:529
 #: src/features/editor/components/edit-dialogs.tsx:223
 #: src/features/editor/components/edit-dialogs.tsx:434
 msgid "Add class"
@@ -250,7 +254,7 @@ msgstr "Havola qoʻshish"
 msgid "Add option"
 msgstr "Variant qoʻshish"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:133
+#: src/routes/_authenticated/$projectId_.settings.tsx:136
 msgid "Add rule"
 msgstr "Qoida qoʻshish"
 
@@ -266,7 +270,7 @@ msgstr "Mavjud bildirishnomalarga qoʻshish"
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:518
 #: ../../../lib/web/src/components/view-tabs.tsx:87
 #: ../../../lib/web/src/components/view-tabs.tsx:93
-#: src/features/editor/components/design-editor.tsx:492
+#: src/features/editor/components/design-editor.tsx:480
 msgid "Add view"
 msgstr "Koʻrinish qoʻshish"
 
@@ -286,7 +290,7 @@ msgstr "Barcha loyihalar"
 msgid "Allow anyone to search for {entityLabel}"
 msgstr "Hammaga {entityLabel} qidirishga ruxsat berish"
 
-#: src/features/projects/components/create-project-dialog.tsx:387
+#: src/features/projects/components/create-project-dialog.tsx:400
 msgid "Allow anyone to search for project"
 msgstr "Hammaga loyihani qidirishga ruxsat berish"
 
@@ -329,7 +333,7 @@ msgstr "Bu tasmaga obuna boʻlgan hamma narsa uni olishni toʻxtatadi. Keyin yan
 msgid "Are you sure you want to delete \"{0}\"?"
 msgstr "\"{0}\" ni oʻchirmoqchimisiz?"
 
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:671
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:679
 msgid "Are you sure you want to delete \"{title}\"? This action cannot be undone."
 msgstr "\"{title}\" ni oʻchirmoqchimisiz? Bu amalni qaytarib boʻlmaydi."
 
@@ -341,7 +345,7 @@ msgstr "\"{name}\" ustunini oʻchirmoqchimisiz? Buni qaytarib boʻlmaydi."
 msgid "Are you sure you want to delete this comment? This will also delete all replies."
 msgstr "Bu izohni oʻchirmoqchimisiz? Bu barcha javoblarni ham oʻchiradi."
 
-#: src/features/requests/components/request-panel.tsx:141
+#: src/features/requests/components/request-panel.tsx:139
 msgid "Are you sure you want to delete this merge request?"
 msgstr "Bu birlashtirish soʻrovini oʻchirmoqchimisiz?"
 
@@ -395,7 +399,7 @@ msgid "Avatar for {name}"
 msgstr "{name} uchun avatar"
 
 #: ../../../lib/web/src/components/place-picker.tsx:142
-#: src/features/projects/components/create-project-dialog.tsx:546
+#: src/features/projects/components/create-project-dialog.tsx:558
 msgid "Back"
 msgstr "Orqaga"
 
@@ -404,26 +408,26 @@ msgstr "Orqaga"
 msgid "Back to home"
 msgstr "Bosh sahifaga qaytish"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:103
-#: src/routes/_authenticated/$projectId/design.tsx:47
+#: src/routes/_authenticated/$projectId_.settings.tsx:106
+#: src/routes/_authenticated/$projectId/design.tsx:46
 msgid "Back to project"
 msgstr "Loyihaga qaytish"
 
-#: src/routes/_authenticated/$projectId/$objectId.tsx:64
+#: src/routes/_authenticated/$projectId/$objectId.tsx:71
 #: src/routes/_authenticated/$projectId/index.tsx:85
 msgid "Back to projects"
 msgstr "Loyihalarga qaytish"
 
-#: ../../../lib/web/src/components/banner-section.tsx:80
+#: ../../../lib/web/src/components/banner-section.tsx:91
 #: ../../../lib/web/src/components/entity-banner.tsx:17
 msgid "Banner"
 msgstr "Banner"
 
-#: ../../../lib/web/src/components/banner-section.tsx:69
+#: ../../../lib/web/src/components/banner-section.tsx:73
 msgid "Banner removed"
 msgstr "Banner olib tashlandi"
 
-#: ../../../lib/web/src/components/banner-section.tsx:69
+#: ../../../lib/web/src/components/banner-section.tsx:73
 msgid "Banner updated"
 msgstr "Banner yangilandi"
 
@@ -462,7 +466,7 @@ msgstr "Hoshiya rangi"
 msgid "Browser notifications"
 msgstr "Brauzer bildirishnomalari"
 
-#: src/routes/_authenticated/$projectId/design.tsx:100
+#: src/routes/_authenticated/$projectId/design.tsx:99
 msgid "Built-in templates"
 msgstr "Oʻrnatilgan shablonlar"
 
@@ -492,8 +496,8 @@ msgstr "Quyidagi elementining bolasi boʻlishi mumkin"
 #: ../../../lib/web/src/features/access/access-list.tsx:268
 #: ../../../lib/web/src/features/accounts/account-add.tsx:201
 #: ../../../lib/web/src/features/accounts/account-verify.tsx:91
-#: src/features/projects/components/create-project-dialog.tsx:453
-#: src/routes/_authenticated/$projectId/design.tsx:61
+#: src/features/projects/components/create-project-dialog.tsx:466
+#: src/routes/_authenticated/$projectId/design.tsx:60
 #: src/routes/_authenticated/$projectId/index.tsx:143
 msgid "Cancel"
 msgstr "Bekor qilish"
@@ -512,7 +516,7 @@ msgstr "Javobni bekor qilish"
 msgid "Cancelled"
 msgstr "Bekor qilindi"
 
-#: src/features/requests/components/merge-status.tsx:71
+#: src/features/requests/components/merge-status.tsx:82
 msgid "Cannot merge automatically"
 msgstr "Avtomatik birlashtirib boʻlmaydi"
 
@@ -554,7 +558,7 @@ msgstr "Roʻyxat"
 msgid "Choose a game from the sidebar or start a new one."
 msgstr "Yon paneldan oʻyin tanlang yoki yangisini boshlang."
 
-#: src/features/projects/components/create-project-dialog.tsx:334
+#: src/features/projects/components/create-project-dialog.tsx:345
 msgid "Choose a template"
 msgstr "Shablon tanlang"
 
@@ -563,11 +567,11 @@ msgstr "Shablon tanlang"
 msgid "Choose language"
 msgstr "Tilni tanlang"
 
-#: src/features/editor/components/design-editor.tsx:536
+#: src/features/editor/components/design-editor.tsx:524
 msgid "Classes"
 msgstr "Sinflar"
 
-#: ../../../lib/web/src/components/banner-section.tsx:111
+#: ../../../lib/web/src/components/banner-section.tsx:123
 #: ../../../lib/web/src/components/colour-picker.tsx:274
 #: ../../../lib/web/src/components/colour-picker.tsx:355
 #: ../../../lib/web/src/components/travelling-picker.tsx:145
@@ -668,7 +672,7 @@ msgid "Comments"
 msgstr "Izohlar"
 
 #. placeholder {0}: data.comment_count || 0
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:411
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:419
 msgid "Comments ({0})"
 msgstr "Izohlar ({0})"
 
@@ -746,12 +750,12 @@ msgid "Could not load repositories"
 msgstr "Omborlarni yuklab boʻlmadi"
 
 #: src/features/projects/components/create-project-dialog.tsx:79
-#: src/features/projects/components/create-project-dialog.tsx:482
-#: src/routes/_authenticated/$projectId/design.tsx:102
+#: src/features/projects/components/create-project-dialog.tsx:495
+#: src/routes/_authenticated/$projectId/design.tsx:101
 msgid "Could not load templates"
 msgstr "Shablonlarni yuklab boʻlmadi"
 
-#: src/features/requests/components/diff-stats.tsx:59
+#: src/features/requests/components/diff-stats.tsx:64
 msgid "Could not load the diff"
 msgstr "Diffni yuklab boʻlmadi"
 
@@ -791,7 +795,7 @@ msgstr "{entityLabel} yaratish"
 msgid "Create a new item in this project"
 msgstr "Bu loyihada yangi element yaratish"
 
-#: src/features/projects/components/create-project-dialog.tsx:336
+#: src/features/projects/components/create-project-dialog.tsx:347
 #: src/features/projects/pages/projects-list-page.tsx:37
 msgid "Create a new project"
 msgstr "Yangi loyiha yaratish"
@@ -802,10 +806,10 @@ msgid "Create new item"
 msgstr "Yangi element yaratish"
 
 #: src/components/layout/projects-layout.tsx:36
-#: src/features/projects/components/create-project-dialog.tsx:324
-#: src/features/projects/components/create-project-dialog.tsx:334
-#: src/features/projects/components/create-project-dialog.tsx:457
-#: src/features/projects/components/create-project-dialog.tsx:549
+#: src/features/projects/components/create-project-dialog.tsx:335
+#: src/features/projects/components/create-project-dialog.tsx:345
+#: src/features/projects/components/create-project-dialog.tsx:470
+#: src/features/projects/components/create-project-dialog.tsx:561
 msgid "Create project"
 msgstr "Loyiha yaratish"
 
@@ -823,14 +827,14 @@ msgstr "Yaratildi"
 msgid "Created {field}"
 msgstr "{field} yaratildi"
 
-#: src/features/projects/components/create-project-dialog.tsx:132
+#: src/features/projects/components/create-project-dialog.tsx:145
 msgid "Creating project..."
 msgstr "Loyiha yaratilmoqda..."
 
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:676
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:260
-#: src/features/projects/components/create-project-dialog.tsx:457
-#: src/features/projects/components/create-project-dialog.tsx:549
+#: src/features/projects/components/create-project-dialog.tsx:470
+#: src/features/projects/components/create-project-dialog.tsx:561
 msgid "Creating..."
 msgstr "Yaratilmoqda..."
 
@@ -854,8 +858,8 @@ msgstr "Maʼlumotlar ziddiyati"
 #. placeholder {0}: imported.data?.objects ?? 0
 #. placeholder {1}: imported.data?.comments ?? 0
 #. placeholder {2}: imported.data?.links ?? 0
-#: src/features/projects/components/create-project-dialog.tsx:151
-#: src/features/projects/components/create-project-dialog.tsx:181
+#: src/features/projects/components/create-project-dialog.tsx:164
+#: src/features/projects/components/create-project-dialog.tsx:194
 msgid "Data imported ({0, plural, one {# object} other {# objects}}, {1, plural, one {# comment} other {# comments}}, {2, plural, one {# link} other {# links}})"
 msgstr "Maʼlumotlar import qilindi ({0, plural, one {# obyekt} other {# obyekt}}, {1, plural, one {# izoh} other {# izoh}}, {2, plural, one {# havola} other {# havola}})"
 
@@ -888,10 +892,10 @@ msgstr "Standart saralash"
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:208
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:255
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx:317
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:672
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:680
 #: ../../../lib/web/src/components/game/game-end-dialogs.tsx:78
-#: src/features/requests/components/request-panel.tsx:142
-#: src/routes/_authenticated/$projectId_.settings.tsx:122
+#: src/features/requests/components/request-panel.tsx:140
+#: src/routes/_authenticated/$projectId_.settings.tsx:125
 msgid "Delete"
 msgstr "Oʻchirish"
 
@@ -919,19 +923,19 @@ msgstr "Maydonni oʻchirish"
 msgid "Delete game?"
 msgstr "Oʻyin oʻchirilsinmi?"
 
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:486
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:491
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:670
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:494
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:499
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:678
 msgid "Delete item"
 msgstr "Elementni oʻchirish"
 
-#: src/features/requests/components/request-panel.tsx:140
-#: src/features/requests/components/request-panel.tsx:403
-#: src/features/requests/components/request-panel.tsx:408
-#: src/features/requests/components/request-panel.tsx:428
-#: src/features/requests/components/request-panel.tsx:433
-#: src/features/requests/components/request-panel.tsx:450
-#: src/features/requests/components/request-panel.tsx:455
+#: src/features/requests/components/request-panel.tsx:138
+#: src/features/requests/components/request-panel.tsx:401
+#: src/features/requests/components/request-panel.tsx:406
+#: src/features/requests/components/request-panel.tsx:426
+#: src/features/requests/components/request-panel.tsx:431
+#: src/features/requests/components/request-panel.tsx:448
+#: src/features/requests/components/request-panel.tsx:453
 msgid "Delete merge request"
 msgstr "Birlashtirish soʻrovini oʻchirish"
 
@@ -945,12 +949,12 @@ msgstr "Variantni oʻchirish"
 msgid "Delete option {0}"
 msgstr "{0} variantni oʻchirish"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:121
 #: src/routes/_authenticated/$projectId_.settings.tsx:124
+#: src/routes/_authenticated/$projectId_.settings.tsx:127
 msgid "Delete project"
 msgstr "Loyihani oʻchirish"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:123
+#: src/routes/_authenticated/$projectId_.settings.tsx:126
 msgid "Delete project?"
 msgstr "Loyiha oʻchirilsinmi?"
 
@@ -970,7 +974,7 @@ msgstr "Oʻchirildi"
 msgid "Deleted {field}"
 msgstr "{field} oʻchirildi"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:129
+#: src/routes/_authenticated/$projectId_.settings.tsx:132
 msgid "Deleting project..."
 msgstr "Loyiha o'chirilmoqda..."
 
@@ -983,19 +987,19 @@ msgid "Descending"
 msgstr "Kamayish boʻyicha"
 
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:85
-#: src/features/requests/components/request-panel.tsx:315
-#: src/routes/_authenticated/$projectId_.settings.tsx:114
+#: src/features/requests/components/request-panel.tsx:313
+#: src/routes/_authenticated/$projectId_.settings.tsx:117
 msgid "Description"
 msgstr "Tavsif"
 
-#: src/routes/_authenticated/$projectId/design.tsx:43
-#: src/routes/_authenticated/$projectId/design.tsx:46
+#: src/routes/_authenticated/$projectId/design.tsx:42
+#: src/routes/_authenticated/$projectId/design.tsx:45
 #: src/routes/_authenticated/$projectId/index.tsx:170
 msgid "Design"
 msgstr "Dizayn"
 
-#: src/features/projects/components/create-project-dialog.tsx:182
-#: src/routes/_authenticated/$projectId/design.tsx:54
+#: src/features/projects/components/create-project-dialog.tsx:195
+#: src/routes/_authenticated/$projectId/design.tsx:53
 msgid "Design imported"
 msgstr "Dizayn import qilindi"
 
@@ -1018,7 +1022,7 @@ msgstr "Tafsilotlar paneli"
 msgid "Detect from web browser"
 msgstr "Veb-brauzerdan aniqlash"
 
-#: src/features/requests/components/diff-stats.tsx:92
+#: src/features/requests/components/diff-stats.tsx:97
 msgid "Diff"
 msgstr "Diff"
 
@@ -1061,7 +1065,7 @@ msgid "Does not match the required pattern"
 msgstr "Talab qilingan namunaga mos kelmaydi"
 
 #: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:309
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:495
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:503
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:523
 #: src/features/editor/components/edit-dialogs.tsx:439
 msgid "Done"
@@ -1077,7 +1081,7 @@ msgstr "Kontent qoʻshish uchun ustun ustiga ikki marta bosing"
 msgid "Download"
 msgstr "Yuklab olish"
 
-#: src/routes/_authenticated/$projectId/design.tsx:75
+#: src/routes/_authenticated/$projectId/design.tsx:74
 msgid "Download backup first"
 msgstr "Avval zaxira nusxasini yuklab oling"
 
@@ -1086,13 +1090,13 @@ msgstr "Avval zaxira nusxasini yuklab oling"
 msgid "Download failed"
 msgstr "Yuklab olib boʻlmadi"
 
-#: src/routes/_authenticated/$projectId/design.tsx:52
+#: src/routes/_authenticated/$projectId/design.tsx:51
 #: src/routes/_authenticated/$projectId/index.tsx:149
 msgid "Downloaded {filename}"
 msgstr "{filename} yuklab olindi"
 
-#: src/features/requests/components/request-panel.tsx:281
-#: src/features/requests/components/request-panel.tsx:353
+#: src/features/requests/components/request-panel.tsx:279
+#: src/features/requests/components/request-panel.tsx:351
 msgid "Draft"
 msgstr "Qoralama"
 
@@ -1159,7 +1163,7 @@ msgstr "Email"
 msgid "Email code"
 msgstr "Email kodi"
 
-#: ../../../lib/web/src/components/banner-section.tsx:88
+#: ../../../lib/web/src/components/banner-section.tsx:99
 msgid "Enter banner text (markdown supported)..."
 msgstr "Banner matnini kiriting (markdown qoʻllanadi)..."
 
@@ -1171,11 +1175,11 @@ msgstr "Elektron pochtangizdagi kodni kiriting"
 msgid "Enter your authenticator code"
 msgstr "Autentifikator kodingizni kiriting"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:115
+#: src/routes/_authenticated/$projectId_.settings.tsx:118
 msgid "Entity ID"
 msgstr "Obyekt ID"
 
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:381
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:389
 msgid "Error"
 msgstr "Xato"
 
@@ -1194,7 +1198,7 @@ msgstr "Yon panelni kengaytirish"
 msgid "Export data"
 msgstr "Maʼlumotlarni eksport qilish"
 
-#: src/routes/_authenticated/$projectId/design.tsx:50
+#: src/routes/_authenticated/$projectId/design.tsx:49
 msgid "Export design"
 msgstr "Dizaynni eksport qilish"
 
@@ -1223,12 +1227,12 @@ msgstr "Birlashtirish holatini tekshirib boʻlmadi"
 msgid "Failed to copy"
 msgstr "Nusxalab boʻlmadi"
 
-#: src/features/editor/components/design-editor.tsx:113
+#: src/features/editor/components/design-editor.tsx:111
 msgid "Failed to create class"
 msgstr "Sinf yaratib boʻlmadi"
 
-#: src/features/editor/components/design-editor.tsx:166
-#: src/features/editor/components/design-editor.tsx:632
+#: src/features/editor/components/design-editor.tsx:164
+#: src/features/editor/components/design-editor.tsx:620
 msgid "Failed to create field"
 msgstr "Maydon yaratib boʻlmadi"
 
@@ -1238,20 +1242,20 @@ msgstr "Maydon yaratib boʻlmadi"
 msgid "Failed to create link"
 msgstr "Havola yaratib boʻlmadi"
 
-#: src/features/requests/components/request-panel.tsx:59
+#: src/features/requests/components/request-panel.tsx:57
 msgid "Failed to create merge request"
 msgstr "Birlashtirish soʻrovini yaratib boʻlmadi"
 
-#: src/features/editor/components/design-editor.tsx:238
-#: src/features/editor/components/design-editor.tsx:652
+#: src/features/editor/components/design-editor.tsx:236
+#: src/features/editor/components/design-editor.tsx:640
 msgid "Failed to create option"
 msgstr "Variant yaratib boʻlmadi"
 
-#: src/features/projects/components/create-project-dialog.tsx:134
+#: src/features/projects/components/create-project-dialog.tsx:147
 msgid "Failed to create project"
 msgstr "Loyiha yaratib boʻlmadi"
 
-#: src/features/editor/components/design-editor.tsx:316
+#: src/features/editor/components/design-editor.tsx:314
 msgid "Failed to create view"
 msgstr "Koʻrinish yaratib boʻlmadi"
 
@@ -1263,7 +1267,7 @@ msgstr "Oʻchirib boʻlmadi"
 msgid "Failed to delete attachment"
 msgstr "Ilovani oʻchirib boʻlmadi"
 
-#: src/features/editor/components/design-editor.tsx:137
+#: src/features/editor/components/design-editor.tsx:135
 msgid "Failed to delete class"
 msgstr "Sinfni oʻchirib boʻlmadi"
 
@@ -1275,7 +1279,7 @@ msgstr "Ustunni oʻchirib boʻlmadi"
 msgid "Failed to delete comment"
 msgstr "Izohni oʻchirib boʻlmadi"
 
-#: src/features/editor/components/design-editor.tsx:209
+#: src/features/editor/components/design-editor.tsx:207
 msgid "Failed to delete field"
 msgstr "Maydonni oʻchirib boʻlmadi"
 
@@ -1283,19 +1287,19 @@ msgstr "Maydonni oʻchirib boʻlmadi"
 msgid "Failed to delete link"
 msgstr "Havolani oʻchirib boʻlmadi"
 
-#: src/features/requests/components/request-panel.tsx:85
+#: src/features/requests/components/request-panel.tsx:83
 msgid "Failed to delete merge request"
 msgstr "Birlashtirish soʻrovini oʻchirib boʻlmadi"
 
-#: src/features/editor/components/design-editor.tsx:276
+#: src/features/editor/components/design-editor.tsx:274
 msgid "Failed to delete option"
 msgstr "Variantni oʻchirib boʻlmadi"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:131
+#: src/routes/_authenticated/$projectId_.settings.tsx:134
 msgid "Failed to delete project"
 msgstr "Loyihani oʻchirib boʻlmadi"
 
-#: src/features/editor/components/design-editor.tsx:371
+#: src/features/editor/components/design-editor.tsx:359
 msgid "Failed to delete view"
 msgstr "Koʻrinishni oʻchirib boʻlmadi"
 
@@ -1303,7 +1307,7 @@ msgstr "Koʻrinishni oʻchirib boʻlmadi"
 msgid "Failed to export data"
 msgstr "Maʼlumotlarni eksport qilib boʻlmadi"
 
-#: src/routes/_authenticated/$projectId/design.tsx:53
+#: src/routes/_authenticated/$projectId/design.tsx:52
 msgid "Failed to export design"
 msgstr "Dizaynni eksport qilib boʻlmadi"
 
@@ -1311,12 +1315,12 @@ msgstr "Dizaynni eksport qilib boʻlmadi"
 msgid "Failed to get RSS token"
 msgstr "RSS tokenini olib boʻlmadi"
 
-#: src/features/projects/components/create-project-dialog.tsx:152
-#: src/features/projects/components/create-project-dialog.tsx:183
+#: src/features/projects/components/create-project-dialog.tsx:165
+#: src/features/projects/components/create-project-dialog.tsx:196
 msgid "Failed to import data"
 msgstr "Maʼlumotlarni import qilib boʻlmadi"
 
-#: src/routes/_authenticated/$projectId/design.tsx:55
+#: src/routes/_authenticated/$projectId/design.tsx:54
 msgid "Failed to import design"
 msgstr "Dizaynni import qilib boʻlmadi"
 
@@ -1324,7 +1328,11 @@ msgstr "Dizaynni import qilib boʻlmadi"
 msgid "Failed to load"
 msgstr "Yuklab boʻlmadi"
 
-#: ../../../lib/web/src/components/audit-timeline.tsx:68
+#: ../../../lib/web/src/components/banner-section.tsx:85
+msgid "Failed to load banner"
+msgstr "Bannerni yuklab bo'lmadi"
+
+#: ../../../lib/web/src/components/audit-timeline.tsx:70
 msgid "Failed to load history"
 msgstr "Tarixni yuklab boʻlmadi"
 
@@ -1332,19 +1340,19 @@ msgstr "Tarixni yuklab boʻlmadi"
 msgid "Failed to load image"
 msgstr "Rasmni yuklab bo'lmadi"
 
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:382
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:385
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:390
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:393
 msgid "Failed to load item"
 msgstr "Elementni yuklab boʻlmadi"
 
-#: src/routes/_authenticated/$projectId/$objectId.tsx:41
-#: src/routes/_authenticated/$projectId/$objectId.tsx:65
+#: src/routes/_authenticated/$projectId/$objectId.tsx:48
+#: src/routes/_authenticated/$projectId/$objectId.tsx:72
 #: src/routes/_authenticated/$projectId/index.tsx:62
 #: src/routes/_authenticated/$projectId/index.tsx:86
 msgid "Failed to load project"
 msgstr "Loyihani yuklab boʻlmadi"
 
-#: src/routes/_authenticated/$projectId/design.tsx:48
+#: src/routes/_authenticated/$projectId/design.tsx:47
 msgid "Failed to load project design"
 msgstr "Loyiha dizaynini yuklab boʻlmadi"
 
@@ -1381,12 +1389,12 @@ msgstr "Izoh joylashtirib boʻlmadi"
 msgid "Failed to re-order columns"
 msgstr "Ustunlar tartibini oʻzgartirib boʻlmadi"
 
-#: src/features/projects/components/create-project-dialog.tsx:261
-#: src/routes/_authenticated/$projectId/design.tsx:60
+#: src/features/projects/components/create-project-dialog.tsx:272
+#: src/routes/_authenticated/$projectId/design.tsx:59
 msgid "Failed to read file"
 msgstr "Faylni oʻqib boʻlmadi"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:139
+#: src/routes/_authenticated/$projectId_.settings.tsx:142
 msgid "Failed to remove access"
 msgstr "Kirishni olib tashlab boʻlmadi"
 
@@ -1394,11 +1402,11 @@ msgstr "Kirishni olib tashlab boʻlmadi"
 msgid "Failed to rename column"
 msgstr "Ustun nomini oʻzgartirib boʻlmadi"
 
-#: src/features/editor/components/design-editor.tsx:218
+#: src/features/editor/components/design-editor.tsx:216
 msgid "Failed to reorder fields"
 msgstr "Maydonlar tartibini oʻzgartirib boʻlmadi"
 
-#: src/features/editor/components/design-editor.tsx:380
+#: src/features/editor/components/design-editor.tsx:368
 msgid "Failed to reorder views"
 msgstr "Koʻrinishlar tartibini oʻzgartirib boʻlmadi"
 
@@ -1418,15 +1426,15 @@ msgstr "Saqlab boʻlmadi"
 msgid "Failed to save prompt"
 msgstr "Soʻrovni saqlab boʻlmadi"
 
-#: src/features/projects/components/inline-project-search.tsx:89
+#: src/features/projects/components/inline-project-search.tsx:86
 msgid "Failed to search projects"
 msgstr "Loyihalarni qidirish muvaffaqiyatsiz tugadi"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:136
+#: src/routes/_authenticated/$projectId_.settings.tsx:139
 msgid "Failed to set access level"
 msgstr "Kirish darajasini oʻrnatib boʻlmadi"
 
-#: src/features/projects/components/inline-project-search.tsx:69
+#: src/features/projects/components/inline-project-search.tsx:67
 #: src/features/projects/components/recommended-projects.tsx:44
 #: src/routes/_authenticated/find.tsx:45
 msgid "Failed to subscribe"
@@ -1437,15 +1445,15 @@ msgstr "Obuna boʻlib boʻlmadi"
 msgid "Failed to unsubscribe"
 msgstr "Obunani bekor qilib boʻlmadi"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:142
+#: src/routes/_authenticated/$projectId_.settings.tsx:145
 msgid "Failed to update access level"
 msgstr "Kirish darajasini yangilab boʻlmadi"
 
-#: ../../../lib/web/src/components/banner-section.tsx:71
+#: ../../../lib/web/src/components/banner-section.tsx:75
 msgid "Failed to update banner"
 msgstr "Bannerni yangilab boʻlmadi"
 
-#: src/features/editor/components/design-editor.tsx:122
+#: src/features/editor/components/design-editor.tsx:120
 msgid "Failed to update class"
 msgstr "Sinfni yangilab boʻlmadi"
 
@@ -1453,27 +1461,27 @@ msgstr "Sinfni yangilab boʻlmadi"
 msgid "Failed to update comment"
 msgstr "Izohni yangilab boʻlmadi"
 
-#: src/features/editor/components/design-editor.tsx:197
+#: src/features/editor/components/design-editor.tsx:195
 msgid "Failed to update field"
 msgstr "Maydonni yangilab boʻlmadi"
 
-#: src/features/editor/components/design-editor.tsx:147
+#: src/features/editor/components/design-editor.tsx:145
 msgid "Failed to update hierarchy"
 msgstr "Iyerarxiyani yangilab boʻlmadi"
 
-#: src/features/requests/components/request-panel.tsx:71
+#: src/features/requests/components/request-panel.tsx:69
 msgid "Failed to update merge request"
 msgstr "Birlashtirish soʻrovini yangilab boʻlmadi"
 
-#: src/features/editor/components/design-editor.tsx:257
+#: src/features/editor/components/design-editor.tsx:255
 msgid "Failed to update option"
 msgstr "Variantni yangilab boʻlmadi"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:120
+#: src/routes/_authenticated/$projectId_.settings.tsx:123
 msgid "Failed to update project"
 msgstr "Loyihani yangilab boʻlmadi"
 
-#: src/features/editor/components/design-editor.tsx:360
+#: src/features/editor/components/design-editor.tsx:348
 msgid "Failed to update view"
 msgstr "Koʻrinishni yangilab boʻlmadi"
 
@@ -1500,7 +1508,7 @@ msgstr "Fayllar"
 msgid "Find projects"
 msgstr "Loyihalarni topish"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:116
+#: src/routes/_authenticated/$projectId_.settings.tsx:119
 msgid "Fingerprint"
 msgstr "Barmoq izi"
 
@@ -1528,7 +1536,7 @@ msgstr "Doʻstlar"
 msgid "From"
 msgstr "Kimdan"
 
-#: src/routes/_authenticated/$projectId/design.tsx:57
+#: src/routes/_authenticated/$projectId/design.tsx:56
 msgid "From file"
 msgstr "Fayldan"
 
@@ -1558,7 +1566,7 @@ msgstr "Boʻyicha guruhlash"
 msgid "Group: {0}"
 msgstr "Guruh: {0}"
 
-#: ../../../lib/web/src/components/audit-timeline.tsx:61
+#: ../../../lib/web/src/components/audit-timeline.tsx:63
 msgid "History"
 msgstr "Tarix"
 
@@ -1578,7 +1586,7 @@ msgstr "Qaynoq"
 msgid "ID"
 msgstr "ID"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:112
+#: src/routes/_authenticated/$projectId_.settings.tsx:115
 msgid "Identity"
 msgstr "Identifikatsiya"
 
@@ -1591,17 +1599,17 @@ msgstr "Rasm ko'ruvchi: {0}"
 msgid "Imperial"
 msgstr "Imperial"
 
-#: src/routes/_authenticated/$projectId/design.tsx:51
-#: src/routes/_authenticated/$projectId/design.tsx:56
+#: src/routes/_authenticated/$projectId/design.tsx:50
+#: src/routes/_authenticated/$projectId/design.tsx:55
 msgid "Import design"
 msgstr "Dizaynni import qilish"
 
-#: src/features/projects/components/create-project-dialog.tsx:397
+#: src/features/projects/components/create-project-dialog.tsx:410
 msgid "Import from backup (optional)"
 msgstr "Zaxira nusxasidan import (ixtiyoriy)"
 
-#: src/features/projects/components/create-project-dialog.tsx:149
-#: src/features/projects/components/create-project-dialog.tsx:178
+#: src/features/projects/components/create-project-dialog.tsx:162
+#: src/features/projects/components/create-project-dialog.tsx:191
 msgid "Importing data..."
 msgstr "Maʼlumotlar import qilinmoqda..."
 
@@ -1629,8 +1637,8 @@ msgstr "Qiziqishlar"
 msgid "Invalid date"
 msgstr "Notoʻgʻri sana"
 
-#: src/features/projects/components/create-project-dialog.tsx:256
-#: src/routes/_authenticated/$projectId/design.tsx:59
+#: src/features/projects/components/create-project-dialog.tsx:267
+#: src/routes/_authenticated/$projectId/design.tsx:58
 msgid "Invalid JSON file"
 msgstr "Notoʻgʻri JSON fayli"
 
@@ -1638,7 +1646,7 @@ msgstr "Notoʻgʻri JSON fayli"
 msgid "It seems like the page you're looking for <0/>does not exist or might have been removed."
 msgstr "Siz qidirayotgan sahifa <0/>mavjud emas yoki o'chirilgan ko'rinadi."
 
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:441
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:449
 msgid "Item details"
 msgstr "Element tafsilotlari"
 
@@ -1688,19 +1696,19 @@ msgstr "Koʻproq yuklash"
 msgid "Loading content…"
 msgstr "Kontent yuklanmoqda…"
 
-#: src/features/requests/components/diff-stats.tsx:52
+#: src/features/requests/components/diff-stats.tsx:57
 msgid "Loading diff..."
 msgstr "Farq yuklanmoqda..."
 
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:365
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:373
 msgid "Loading item"
 msgstr "Element yuklanmoqda"
 
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:366
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:374
 msgid "Loading item details"
 msgstr "Element tafsilotlari yuklanmoqda"
 
-#: src/features/projects/components/create-project-dialog.tsx:478
+#: src/features/projects/components/create-project-dialog.tsx:491
 msgid "Loading templates..."
 msgstr "Shablonlar yuklanmoqda..."
 
@@ -1772,7 +1780,7 @@ msgstr "{objectReadable} ni birlashtirish: {objectTitle}"
 msgid "Merge commit"
 msgstr "Commit ni birlashtirish"
 
-#: src/features/requests/components/request-panel.tsx:102
+#: src/features/requests/components/request-panel.tsx:100
 msgid "Merge requests"
 msgstr "Birlashtirish soʻrovlari"
 
@@ -1780,7 +1788,7 @@ msgstr "Birlashtirish soʻrovlari"
 msgid "Merge requests ({requestCount})"
 msgstr "Birlashtirish soʻrovlari ({requestCount})"
 
-#: src/features/requests/components/request-panel.tsx:284
+#: src/features/requests/components/request-panel.tsx:282
 msgid "Merged"
 msgstr "Birlashtirildi"
 
@@ -1837,7 +1845,7 @@ msgstr "Koʻchirildi"
 msgid "Moved {field}"
 msgstr "{field} koʻchirildi"
 
-#: src/features/projects/components/create-project-dialog.tsx:352
+#: src/features/projects/components/create-project-dialog.tsx:363
 msgid "My project"
 msgstr "Mening loyiham"
 
@@ -1847,22 +1855,24 @@ msgstr "Mening loyiham"
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:126
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:296
 #: src/features/editor/components/edit-dialogs.tsx:258
-#: src/features/projects/components/create-project-dialog.tsx:342
-#: src/routes/_authenticated/$projectId_.settings.tsx:113
+#: src/features/projects/components/create-project-dialog.tsx:353
+#: src/routes/_authenticated/$projectId_.settings.tsx:116
 msgid "Name"
 msgstr "Nomi"
 
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:104
+#: src/features/projects/components/create-project-dialog.tsx:114
 #: src/routes/_authenticated/$projectId_.settings.tsx:76
 msgid "Name cannot contain < or > characters"
 msgstr "Nom < yoki > belgilarini oʻz ichiga olishi mumkin emas"
 
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:101
-#: src/features/projects/components/create-project-dialog.tsx:102
+#: src/features/projects/components/create-project-dialog.tsx:105
 msgid "Name is required"
 msgstr "Nom kerak"
 
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx:102
+#: src/features/projects/components/create-project-dialog.tsx:110
 #: src/routes/_authenticated/$projectId_.settings.tsx:74
 msgid "Name must be 1000 characters or less"
 msgstr "Nom 1000 ta belgidan oshmasligi kerak"
@@ -1888,7 +1898,7 @@ msgstr "Yangi {className}"
 msgid "New game"
 msgstr "Yangi oʻyin"
 
-#: src/features/projects/components/create-project-dialog.tsx:459
+#: src/features/projects/components/create-project-dialog.tsx:472
 msgid "Next"
 msgstr "Keyingisi"
 
@@ -1917,7 +1927,7 @@ msgstr "Hozircha faollik yoʻq"
 msgid "No branches found"
 msgstr "Shoxchalar topilmadi"
 
-#: src/features/requests/components/diff-stats.tsx:65
+#: src/features/requests/components/diff-stats.tsx:70
 msgid "No changes detected"
 msgstr "Hech qanday oʻzgarish aniqlanmadi"
 
@@ -1925,7 +1935,7 @@ msgstr "Hech qanday oʻzgarish aniqlanmadi"
 msgid "No changes to display"
 msgstr "Koʻrsatish uchun oʻzgarishlar yoʻq"
 
-#: src/routes/$projectId.diff.tsx:160
+#: src/routes/$projectId.diff.tsx:162
 msgid "No changes were found for the selected comparison."
 msgstr "Tanlangan taqqoslash uchun oʻzgarishlar topilmadi."
 
@@ -1933,7 +1943,7 @@ msgstr "Tanlangan taqqoslash uchun oʻzgarishlar topilmadi."
 msgid "No comments yet"
 msgstr "Hozircha izohlar yoʻq"
 
-#: src/routes/$projectId.diff.tsx:159
+#: src/routes/$projectId.diff.tsx:161
 msgid "No diff available"
 msgstr "Diff mavjud emas"
 
@@ -1953,7 +1963,7 @@ msgstr "Hozircha hech qanday element turi yaratib boʻlmaydi. Avval kerakli ota 
 msgid "No matching objects"
 msgstr "Mos obyektlar yoʻq"
 
-#: src/features/requests/components/request-panel.tsx:119
+#: src/features/requests/components/request-panel.tsx:117
 msgid "No merge requests"
 msgstr "Birlashtirish soʻrovlari yoʻq"
 
@@ -1966,7 +1976,7 @@ msgstr "Odamlar topilmadi"
 msgid "No places found"
 msgstr "Joylar topilmadi"
 
-#: src/features/projects/components/inline-project-search.tsx:88
+#: src/features/projects/components/inline-project-search.tsx:85
 #: src/routes/_authenticated/find.tsx:42
 msgid "No projects found"
 msgstr "Loyihalar topilmadi"
@@ -2014,10 +2024,10 @@ msgstr "Koʻrishlar yoʻq"
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:554
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:557
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:561
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:557
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:570
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:571
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:575
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:565
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:578
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:579
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:583
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:362
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:385
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx:388
@@ -2045,7 +2055,7 @@ msgstr "Solishtirilmadi: {0} dan katta"
 msgid "Not compared: over the size limit"
 msgstr "Solishtirilmadi: hajm chegarasidan oshadi"
 
-#: src/features/requests/components/request-panel.tsx:257
+#: src/features/requests/components/request-panel.tsx:255
 msgid "Not configured"
 msgstr "Sozlanmagan"
 
@@ -2081,7 +2091,7 @@ msgstr "Yoniq"
 msgid "Oops! Page Not Found!"
 msgstr "Voy! Sahifa topilmadi!"
 
-#: src/features/requests/components/request-panel.tsx:287
+#: src/features/requests/components/request-panel.tsx:285
 msgctxt "state"
 msgid "Open"
 msgstr "Ochiq"
@@ -2101,7 +2111,7 @@ msgstr "Amallarni ochish"
 msgid "Open class actions"
 msgstr "Sinf amallarini ochish"
 
-#: src/routes/_authenticated/$projectId/design.tsx:49
+#: src/routes/_authenticated/$projectId/design.tsx:48
 msgid "Open design actions"
 msgstr "Dizayn amallarini ochish"
 
@@ -2156,8 +2166,8 @@ msgid "Owner"
 msgstr "Egasi"
 
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx:546
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:553
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:569
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:561
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:577
 msgid "Parent"
 msgstr "Ota"
 
@@ -2196,7 +2206,7 @@ msgstr "Loyiha dizayniga bir yoki bir nechta sinf qoʻshing."
 msgid "Please check your internet connection and try again."
 msgstr "Internet aloqangizni tekshiring va qayta urinib ko‘ring."
 
-#: src/features/projects/components/create-project-dialog.tsx:118
+#: src/features/projects/components/create-project-dialog.tsx:131
 msgid "Please select a template"
 msgstr "Iltimos, shablon tanlang"
 
@@ -2216,16 +2226,20 @@ msgstr "Postlar"
 msgid "Posts and comments"
 msgstr "Postlar va izohlar"
 
-#: src/features/projects/components/create-project-dialog.tsx:364
+#: src/features/projects/components/create-project-dialog.tsx:376
 #: src/routes/_authenticated/$projectId_.settings.tsx:83
 msgid "Prefix"
 msgstr "Prefiks"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:93
+#: src/routes/_authenticated/$projectId_.settings.tsx:96
 msgid "Prefix can only contain lowercase letters, numbers, and hyphens"
 msgstr "Prefiks faqat kichik harflar, raqamlar va chiziqchalardan iborat boʻlishi mumkin"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:95
+#: src/routes/_authenticated/$projectId_.settings.tsx:94
+msgid "Prefix is required"
+msgstr "Prefiks talab qilinadi"
+
+#: src/routes/_authenticated/$projectId_.settings.tsx:98
 msgid "Prefix must be 20 characters or less"
 msgstr "Prefiks 20 ta belgidan oshmasligi kerak"
 
@@ -2243,7 +2257,7 @@ msgstr "Maxfiylik"
 msgid "Processing…"
 msgstr "Qayta ishlanmoqda…"
 
-#: src/routes/_authenticated/$projectId/$objectId.tsx:62
+#: src/routes/_authenticated/$projectId/$objectId.tsx:69
 #: src/routes/_authenticated/$projectId/index.tsx:83
 msgid "Project"
 msgstr "Loyiha"
@@ -2252,11 +2266,11 @@ msgstr "Loyiha"
 msgid "Project actions"
 msgstr "Loyiha amallari"
 
-#: src/features/projects/components/create-project-dialog.tsx:133
+#: src/features/projects/components/create-project-dialog.tsx:146
 msgid "Project created"
 msgstr "Loyiha yaratildi"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:130
+#: src/routes/_authenticated/$projectId_.settings.tsx:133
 msgid "Project deleted"
 msgstr "Loyiha oʻchirildi"
 
@@ -2268,19 +2282,19 @@ msgstr "Loyiha havolasi"
 msgid "Project name is required"
 msgstr "Loyiha nomi kerak"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:108
+#: src/routes/_authenticated/$projectId_.settings.tsx:111
 msgid "Project not found"
 msgstr "Loyiha topilmadi"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:107
+#: src/routes/_authenticated/$projectId_.settings.tsx:110
 msgid "Project settings"
 msgstr "Loyiha sozlamalari"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:110
+#: src/routes/_authenticated/$projectId_.settings.tsx:113
 msgid "Project unavailable"
 msgstr "Loyiha mavjud emas"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:119
+#: src/routes/_authenticated/$projectId_.settings.tsx:122
 msgid "Project updated"
 msgstr "Loyiha yangilandi"
 
@@ -2293,7 +2307,7 @@ msgstr "Loyihalar"
 msgid "Prompt saved"
 msgstr "Soʻrov saqlandi"
 
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:408
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:416
 msgid "Properties"
 msgstr "Xususiyatlar"
 
@@ -2317,7 +2331,7 @@ msgstr "Ustunlarni qayta tartiblash"
 msgid "Re-register your passkeys on this server"
 msgstr "Ushbu serverda kirish kalitlaringizni qayta ro'yxatdan o'tkazing"
 
-#: src/features/requests/components/merge-status.tsx:71
+#: src/features/requests/components/merge-status.tsx:82
 msgid "Ready to merge"
 msgstr "Birlashtirishga tayyor"
 
@@ -2378,7 +2392,7 @@ msgstr "Moslik {relevance}, qiziqish {weight}"
 #: ../../../lib/web/src/components/attachment-composer.tsx:330
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx:192
 #: ../../../lib/web/src/features/access/access-list.tsx:270
-#: src/features/projects/components/create-project-dialog.tsx:439
+#: src/features/projects/components/create-project-dialog.tsx:452
 msgid "Remove"
 msgstr "Olib tashlash"
 
@@ -2422,7 +2436,7 @@ msgstr "Elementni olib tashlash"
 msgid "Remove link"
 msgstr "Havolani olib tashlash"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:137
+#: src/routes/_authenticated/$projectId_.settings.tsx:140
 msgid "Removing access..."
 msgstr "Ruxsat olib tashlanmoqda..."
 
@@ -2439,15 +2453,15 @@ msgstr "Ustun nomini oʻzgartirish"
 msgid "Rename this board column"
 msgstr "Bu doska ustunining nomini oʻzgartirish"
 
-#: src/routes/_authenticated/$projectId/design.tsx:73
+#: src/routes/_authenticated/$projectId/design.tsx:72
 msgid "Replace design"
 msgstr "Dizaynni almashtirish"
 
-#: src/routes/_authenticated/$projectId/design.tsx:62
+#: src/routes/_authenticated/$projectId/design.tsx:61
 msgid "Replace design?"
 msgstr "Dizayn almashtirilsinmi?"
 
-#: src/routes/_authenticated/$projectId/design.tsx:74
+#: src/routes/_authenticated/$projectId/design.tsx:73
 msgid "Replacing..."
 msgstr "Almashtirilmoqda..."
 
@@ -2536,7 +2550,7 @@ msgstr "Shanba"
 
 #: ../../../lib/web/src/components/ai-prompts-editor.tsx:156
 #: ../../../lib/web/src/components/attachment-composer.tsx:430
-#: ../../../lib/web/src/components/banner-section.tsx:99
+#: ../../../lib/web/src/components/banner-section.tsx:111
 #: ../../../lib/web/src/components/entity/entity-comment-thread.tsx:231
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx:172
 #: ../../../lib/web/src/components/ui/editable-field-row.tsx:126
@@ -2546,7 +2560,7 @@ msgid "Save"
 msgstr "Saqlash"
 
 #: ../../../lib/web/src/components/ai-prompts-editor.tsx:156
-#: src/routes/_authenticated/$projectId_.settings.tsx:118
+#: src/routes/_authenticated/$projectId_.settings.tsx:121
 msgid "Saving..."
 msgstr "Saqlanmoqda..."
 
@@ -2581,7 +2595,7 @@ msgstr "Manzil qidirish..."
 msgid "Search for origin..."
 msgstr "Boshlanish nuqtasini qidirish..."
 
-#: src/features/projects/components/inline-project-search.tsx:87
+#: src/features/projects/components/inline-project-search.tsx:84
 msgid "Search for projects..."
 msgstr "Loyihalar qidirish..."
 
@@ -2693,7 +2707,7 @@ msgstr "Xabar yuborish"
 msgid "Serif"
 msgstr "Serif"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:117
+#: src/routes/_authenticated/$projectId_.settings.tsx:120
 msgid "Server"
 msgstr "Server"
 
@@ -2715,14 +2729,14 @@ msgstr "Seans muddati tugadi. Qaytadan tizimga kiring."
 msgid "Set origin and destination"
 msgstr "Boshlang‘ich va manzilni belgilash"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:134
+#: src/routes/_authenticated/$projectId_.settings.tsx:137
 msgid "Setting access..."
 msgstr "Ruxsat o'rnatilmoqda..."
 
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx:119
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx:125
 #: ../../../lib/web/src/components/options-menu.tsx:196
-#: src/routes/_authenticated/$projectId_.settings.tsx:101
+#: src/routes/_authenticated/$projectId_.settings.tsx:104
 #: src/routes/_authenticated/$projectId/index.tsx:178
 msgid "Settings"
 msgstr "Sozlamalar"
@@ -2774,7 +2788,7 @@ msgstr "Kichik"
 msgid "Sort"
 msgstr "Saralash"
 
-#: src/features/requests/components/request-panel.tsx:334
+#: src/features/requests/components/request-panel.tsx:332
 msgid "Source"
 msgstr "Manba"
 
@@ -2798,8 +2812,8 @@ msgstr "Birlashtirish va birlashtirish (squash)"
 msgid "Start the discussion by adding the first comment."
 msgstr "Birinchi izohni qoʻshib muhokamani boshlang."
 
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:471
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:476
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:479
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:484
 msgid "Stop watching"
 msgstr "Kuzatishni toʻxtatish"
 
@@ -2818,12 +2832,12 @@ msgstr "Javob yuborish"
 #: ../../../lib/web/src/components/inline-entity-search.tsx:67
 #: ../../../lib/web/src/components/recommended-entities.tsx:59
 #: ../../../lib/web/src/components/search-entity-page.tsx:74
-#: src/features/projects/components/inline-project-search.tsx:90
+#: src/features/projects/components/inline-project-search.tsx:87
 #: src/features/projects/components/recommended-projects.tsx:58
 msgid "Subscribe"
 msgstr "Obuna boʻlish"
 
-#: src/features/projects/components/inline-project-search.tsx:68
+#: src/features/projects/components/inline-project-search.tsx:66
 #: src/routes/_authenticated/find.tsx:44
 msgid "Subscribed"
 msgstr "Obuna boʻlingan"
@@ -2833,7 +2847,7 @@ msgstr "Obuna boʻlingan"
 msgid "Subscribed to {0}"
 msgstr "{0} ga obuna boʻlindi"
 
-#: src/features/projects/components/inline-project-search.tsx:67
+#: src/features/projects/components/inline-project-search.tsx:65
 #: src/features/projects/components/recommended-projects.tsx:42
 #: src/routes/_authenticated/find.tsx:43
 msgid "Subscribing..."
@@ -2847,7 +2861,7 @@ msgstr "Yakshanba"
 msgid "Switch to view 1-9"
 msgstr "1-9 koʻrinishiga oʻtish"
 
-#: ../../../lib/web/src/components/audit-timeline.tsx:107
+#: ../../../lib/web/src/components/audit-timeline.tsx:109
 #: ../../../lib/web/src/lib/preference-utils.ts:16
 #: ../../../lib/web/src/lib/preference-utils.ts:132
 msgid "System"
@@ -2866,7 +2880,7 @@ msgstr "Teg 50 ta belgidan oshmasligi kerak"
 msgid "Tags"
 msgstr "Teglar"
 
-#: src/features/requests/components/request-panel.tsx:342
+#: src/features/requests/components/request-panel.tsx:340
 msgid "Target"
 msgstr "Maqsad"
 
@@ -2921,11 +2935,11 @@ msgid "This app is not allowed to use your passkey. Allow it in Settings, under 
 msgstr "Bu ilovaga passkey’ingizdan foydalanishga ruxsat berilmagan. Sozlamalardagi Ruxsatlar bo‘limida ruxsat bering."
 
 #. placeholder {0}: request.target
-#: src/features/requests/components/request-panel.tsx:418
+#: src/features/requests/components/request-panel.tsx:416
 msgid "This merge request has been merged into {0}."
 msgstr "Bu birlashtirish soʻrovi {0} ga birlashtirildi."
 
-#: src/features/requests/components/request-panel.tsx:379
+#: src/features/requests/components/request-panel.tsx:377
 msgid "This merge request is a draft and cannot be merged."
 msgstr "Bu birlashtirish soʻrovi qoralama va birlashtirib boʻlmaydi."
 
@@ -2933,11 +2947,11 @@ msgstr "Bu birlashtirish soʻrovi qoralama va birlashtirib boʻlmaydi."
 msgid "This permanently deletes the game and its chat. This cannot be undone."
 msgstr "Bu oʻyin va uning chatini butunlay oʻchirib tashlaydi. Bu amalni bekor qilib boʻlmaydi."
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:111
+#: src/routes/_authenticated/$projectId_.settings.tsx:114
 msgid "This project could not be loaded right now."
 msgstr "Ushbu loyihani hozir yuklab boʻlmaydi."
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:109
+#: src/routes/_authenticated/$projectId_.settings.tsx:112
 msgid "This project may have been deleted or you don't have access to it."
 msgstr "Ushbu loyiha oʻchirilgan boʻlishi mumkin yoki sizda unga kirish ruxsati yoʻq."
 
@@ -2945,7 +2959,7 @@ msgstr "Ushbu loyiha oʻchirilgan boʻlishi mumkin yoki sizda unga kirish ruxsat
 msgid "This will merge \"{source}\" into \"{target}\". This action cannot be undone."
 msgstr "Bu \"{source}\" ni \"{target}\" ga birlashtiradi. Bu amalni bekor qilib boʻlmaydi."
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:127
+#: src/routes/_authenticated/$projectId_.settings.tsx:130
 msgid "This will permanently delete \"{projectName}\" and all its objects, comments, and attachments. This action cannot be undone."
 msgstr "Bu \"{projectName}\" va uning barcha obyektlarini, izohlarini va biriktirmalarini doimiy ravishda oʻchiradi. Bu amalni bekor qilib boʻlmaydi."
 
@@ -2955,7 +2969,7 @@ msgid "This will remove \"{0}\" from your sidebar and stop updates for this proj
 msgstr "Bu \"{0}\" ni yon paneldan olib tashlaydi va ushbu loyiha uchun yangilanishlarni toʻxtatadi."
 
 #. placeholder {0}: String(label)
-#: src/routes/_authenticated/$projectId/design.tsx:66
+#: src/routes/_authenticated/$projectId/design.tsx:65
 msgid "This will replace the current design with <0>{0}</0>. All existing classes, fields, options, and views will be deleted. Existing objects will not be deleted but may no longer appear in views."
 msgstr "Bu joriy dizaynni <0>{0}</0> ga almashtiradi. Barcha mavjud sinflar, maydonlar, variantlar va koʻrinishlar oʻchiriladi. Mavjud obyektlar oʻchirilmaydi, lekin koʻrinishlarda koʻrinmasligi mumkin."
 
@@ -2964,7 +2978,7 @@ msgid "Thursday"
 msgstr "Payshanba"
 
 #: src/features/editor/components/edit-dialogs.tsx:107
-#: src/features/requests/components/request-panel.tsx:301
+#: src/features/requests/components/request-panel.tsx:299
 msgid "Title"
 msgstr "Sarlavha"
 
@@ -3079,7 +3093,7 @@ msgstr "Birlashgan"
 msgid "United States"
 msgstr "Amerika Qoʻshma Shtatlari"
 
-#: ../../../lib/web/src/components/audit-timeline.tsx:103
+#: ../../../lib/web/src/components/audit-timeline.tsx:105
 #: ../../../lib/web/src/components/entity/entity-field-dialog.tsx:167
 #: ../../../lib/web/src/components/tree-row.tsx:219
 #: ../../../lib/web/src/components/tree-row.tsx:373
@@ -3125,7 +3139,7 @@ msgstr "Yangilangan"
 msgid "Updated {field}"
 msgstr "{field} yangilandi"
 
-#: src/routes/_authenticated/$projectId_.settings.tsx:140
+#: src/routes/_authenticated/$projectId_.settings.tsx:143
 msgid "Updating access..."
 msgstr "Ruxsat yangilanmoqda..."
 
@@ -3134,10 +3148,13 @@ msgstr "Ruxsat yangilanmoqda..."
 msgid "Upload"
 msgstr "Yuklash"
 
-#: src/features/projects/components/create-project-dialog.tsx:413
-#: src/routes/_authenticated/$projectId/design.tsx:58
+#: src/routes/_authenticated/$projectId/design.tsx:57
 msgid "Upload .json file"
 msgstr "JSON faylni yuklash"
+
+#: src/features/projects/components/create-project-dialog.tsx:426
+msgid "Upload backup file"
+msgstr "Zaxira nusxa faylini yuklash"
 
 #: ../../../lib/web/src/components/ui/upload-progress.tsx:34
 msgid "Upload progress"
@@ -3149,7 +3166,7 @@ msgstr "Kirish kalitingizdan foydalaning"
 
 #. placeholder {0}: prefix || "project"
 #. placeholder {1}: prefix || "project"
-#: src/features/projects/components/create-project-dialog.tsx:381
+#: src/features/projects/components/create-project-dialog.tsx:394
 msgid "Used for readable IDs like {0}-1, {1}-2"
 msgstr "{0}-1, {1}-2 kabi oʻqilishi mumkin boʻlgan ID lar uchun ishlatiladi"
 
@@ -3190,7 +3207,7 @@ msgstr "Video ko'ruvchi: {0}"
 msgid "View all notifications"
 msgstr "Barcha bildirishnomalarni koʻrish"
 
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:442
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:450
 msgid "View and edit item details"
 msgstr "Element tafsilotlarini koʻrish va tahrirlash"
 
@@ -3206,7 +3223,7 @@ msgstr "Faqat koʻrish"
 msgid "View options"
 msgstr "Koʻrish variantlari"
 
-#: src/features/editor/components/design-editor.tsx:487
+#: src/features/editor/components/design-editor.tsx:475
 msgid "Views"
 msgstr "Koʻrishlar"
 
@@ -3214,8 +3231,8 @@ msgstr "Koʻrishlar"
 msgid "Voice recording is not supported in this browser"
 msgstr "Ovoz yozish bu brauzerda qoʻllab-quvvatlanmaydi"
 
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:471
-#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:476
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:479
+#: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:484
 msgid "Watch"
 msgstr "Kuzatish"
 
@@ -3228,7 +3245,7 @@ msgstr "Kuzatilgan"
 msgid "Watched only"
 msgstr "Faqat kuzatilgan"
 
-#: src/features/projects/components/create-project-dialog.tsx:473
+#: src/features/projects/components/create-project-dialog.tsx:486
 msgid "We have auto-selected the best matching template."
 msgstr "Eng mos shablonni avtomatik tanladik."
 
@@ -3245,6 +3262,7 @@ msgstr "Chorshanba"
 msgid "You do not have access to this section."
 msgstr "Bu boʻlimga kirish huquqingiz yoʻq."
 
+#: src/routes/_authenticated/$projectId/$objectId.tsx:38
 #: src/routes/_authenticated/$projectId/index.tsx:53
 msgid "You don't have access to this project."
 msgstr "Sizda ushbu loyihaga kirish huquqi yo'q."
@@ -3261,7 +3279,7 @@ msgstr "Hisobingiz {source} dan bu yerga ko'chirildi. U yerdan o'chirmaguncha, x
 msgid "Your attachments will be lost."
 msgstr "Biriktirmalaringiz yo‘qoladi."
 
-#: src/features/projects/components/create-project-dialog.tsx:469
+#: src/features/projects/components/create-project-dialog.tsx:482
 msgid "Your backup contains objects of type:"
 msgstr "Zaxira nusxangizda quyidagi turdagi obyektlar bor:"
 

@@ -29,7 +29,7 @@ export const requestStatusTextStyles = {
 
 export const diffFileStatusDotStyles = {
   added: "bg-success",
-  modified: "bg-amber-700 dark:bg-amber-400",
+  modified: "bg-warning",
   deleted: "bg-destructive",
   renamed: "bg-primary",
 } as const;

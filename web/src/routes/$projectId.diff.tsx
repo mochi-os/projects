@@ -13,7 +13,7 @@ import projectsApi from "@/api/projects";
 import { DiffViewer } from "@/features/requests/components/diff-viewer";
 
 interface DiffSearchParams {
-  repo: string;
+  repository: string;
   source: string;
   target: string;
 }
@@ -27,15 +27,15 @@ export const Route = createFileRoute("/$projectId/diff")({
     }
   },
   validateSearch: (search: Record<string, unknown>): DiffSearchParams => ({
-    repo: (search.repo as string) || "",
-    source: (search.source as string) || "",
-    target: (search.target as string) || "",
+    repository: typeof search.repository === "string" ? search.repository : "",
+    source: typeof search.source === "string" ? search.source : "",
+    target: typeof search.target === "string" ? search.target : "",
   }),
 });
 
 function DiffPage() {
   const { t } = useLingui()
-  const { repo, source, target } = Route.useSearch();
+  const { repository, source, target } = Route.useSearch();
   const queryClient = useQueryClient();
 
   usePageTitle(t`Diff: ${source} → ${target}`);
@@ -46,12 +46,12 @@ function DiffPage() {
     error: diffError,
     refetch: refetchDiff,
   } = useQuery({
-    queryKey: ["diff", repo, target, source],
+    queryKey: ["diff", repository, target, source],
     queryFn: async () => {
-      const response = await projectsApi.getDiff(repo, target, source);
+      const response = await projectsApi.getDiff(repository, target, source);
       return response.data;
     },
-    enabled: !!repo && !!source && !!target,
+    enabled: !!repository && !!source && !!target,
   });
 
   const { data: prefData, error: prefError, refetch: refetchPreference } = useQuery({
@@ -79,7 +79,7 @@ function DiffPage() {
     prefMutation.mutate(next);
   };
 
-  if (!repo || !source || !target) {
+  if (!repository || !source || !target) {
     return <GeneralError error={new Error(t`Missing repo, source, or target parameters`)} />;
   }
 
@@ -150,8 +150,10 @@ function DiffPage() {
               }}
             />
           </div>
-        ) : diffData ? (
+        ) : typeof diffData === "string" ? (
           <DiffViewer diff={diffData} viewStyle={viewStyle} />
+        ) : diffData ? (
+          <div className="py-8 text-center text-sm text-destructive">{diffData.error}</div>
         ) : (
           <div className="py-8">
             <EmptyState

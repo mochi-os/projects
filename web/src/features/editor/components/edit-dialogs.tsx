@@ -34,10 +34,10 @@ import {
   Tooltip,
   TooltipTrigger,
   TooltipContent,
+  AddFieldDialog,
 } from "@mochi/web";
 import { Check, GripVertical, Minus, MoreHorizontal, Plus, X } from "lucide-react";
 import type { ProjectField, ProjectClass } from "@/types";
-import { AddFieldDialog } from "./add-dialogs";
 
 export { ViewSheet, EditFieldDialog } from "@mochi/web";
 
@@ -463,5 +463,3 @@ export function ClassSheet({
     </Sheet>
   );
 }
-
-// Edit Field Dialog (keep as dialog since it's nested)

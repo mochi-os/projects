@@ -11,6 +11,7 @@ import {
   EntityLoadError,
   extractStatus,
   getErrorMessage,
+  toast,
 } from "@mochi/web";
 import { FolderKanban } from "lucide-react";
 import projectsApi from "@/api/projects";
@@ -31,7 +32,13 @@ export const Route = createFileRoute("/_authenticated/$projectId/$objectId")({
       return { project: projectResponse.data, loaderError: null };
     } catch (error) {
       const status = extractStatus(error);
-      if (status === 403 || status === 404) {
+      // The URL a notification carries: say why it bounced, as the project
+      // route does, rather than landing on the list with no explanation.
+      if (status === 403) {
+        toast.error(t`You don't have access to this project.`);
+        throw redirect({ to: "/" });
+      }
+      if (status === 404) {
         throw redirect({ to: "/" });
       }
 

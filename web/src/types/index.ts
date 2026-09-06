@@ -25,8 +25,7 @@ export interface Project {
   name: string;
   description: string;
   prefix: string;
-  owner: number;
-  ownername: string;
+  owner: { local: boolean; name: string };
   server: string;
   created: number;
   updated: number;
@@ -114,15 +113,20 @@ export interface BranchListResponse {
 
 export interface MergeCheckResponse {
   data: {
-    can_merge: boolean;
+    mergeable: boolean;
     conflicts: string[];
     ahead: number;
     behind: number;
+    // The action's own answer when the repositories service is unavailable;
+    // mergeable is false then, but not because of the branches.
+    error?: string;
   };
 }
 
 export interface DiffResponse {
-  data: string;
+  // The unified diff, or the action's fallback when the repositories service
+  // is unavailable. Consumers branch on typeof before parsing.
+  data: string | { diff: null; error: string };
 }
 
 export interface MergeResponse {

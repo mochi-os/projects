@@ -54,9 +54,9 @@ export function RepositorySelect({
         </div>
       </SelectTrigger>
       <SelectContent>
-        {repositories.map((repo) => (
-          <SelectItem key={repo.id} value={repo.id}>
-            {repo.name}
+        {repositories.map((repository) => (
+          <SelectItem key={repository.id} value={repository.id}>
+            {repository.name}
           </SelectItem>
         ))}
         {isError && (

@@ -68,7 +68,7 @@ interface ProjectApiShapes extends EntityApiShapes {
     outgoing: ObjectLink[];
     incoming: ObjectLink[];
     watching: boolean;
-    comment_count: number;
+    comments: { count: number };
     requests: RequestData[];
   };
   objectCreated: { id: string; number: number; readable: string };
@@ -136,7 +136,7 @@ const projectsApi = {
   createRequest: async (
     projectId: string,
     objectId: string,
-    data: { type?: string; repository?: string; source?: string; target?: string; title?: string; description?: string; draft?: number },
+    data: { type?: string; repository?: string; source?: string; target?: string; title?: string; description?: string; draft?: string },
   ): Promise<{ data: RequestData }> => {
     return projectsRequest.post(
       endpoints.projects.requestCreate(projectId, objectId),
@@ -193,40 +193,40 @@ const projectsApi = {
 
   // Get branches for a repository
   getRepositoryBranches: async (
-    repoId: string,
+    repositoryId: string,
   ): Promise<BranchListResponse> => {
     return projectsRequest.get<BranchListResponse>(
-      endpoints.projects.repositoryBranches(repoId),
+      endpoints.projects.repositoryBranches(repositoryId),
     );
   },
 
   // Check if branches can be merged
   checkMerge: async (
-    repoId: string,
+    repositoryId: string,
     source: string,
     target: string,
   ): Promise<MergeCheckResponse> => {
     return projectsRequest.post<MergeCheckResponse>(
-      endpoints.projects.repositoryMergeCheck(repoId),
+      endpoints.projects.repositoryMergeCheck(repositoryId),
       { source, target },
     );
   },
 
   // Get diff between branches
   getDiff: async (
-    repoId: string,
+    repositoryId: string,
     base: string,
     head: string,
   ): Promise<DiffResponse> => {
     return projectsRequest.post<DiffResponse>(
-      endpoints.projects.repositoryDiff(repoId),
+      endpoints.projects.repositoryDiff(repositoryId),
       { base, head },
     );
   },
 
   // Perform merge
   merge: async (
-    repoId: string,
+    repositoryId: string,
     source: string,
     target: string,
     message: string,
@@ -234,7 +234,7 @@ const projectsApi = {
     method?: string,
   ): Promise<MergeResponse> => {
     return projectsRequest.post<MergeResponse>(
-      endpoints.projects.repositoryMerge(repoId),
+      endpoints.projects.repositoryMerge(repositoryId),
       { source, target, message, project: projectId, method },
     );
   },

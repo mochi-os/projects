@@ -16,7 +16,7 @@ export function diffUrl(
 ): string {
   return (
     `${appPath}/${projectId}/diff` +
-    `?repo=${encodeURIComponent(request.repository)}` +
+    `?repository=${encodeURIComponent(request.repository)}` +
     `&source=${encodeURIComponent(request.source)}` +
     `&target=${encodeURIComponent(request.target)}`
   );

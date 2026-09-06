@@ -40,7 +40,7 @@ describe("projectsApi", () => {
 
       await projectsApi.get("proj123");
 
-      expect(projectsRequest.get).toHaveBeenCalledWith("proj123/-/info");
+      expect(projectsRequest.get).toHaveBeenCalledWith("proj123/-/information");
     });
 
     it("names the resource `project` when unsubscribing", async () => {
@@ -104,7 +104,7 @@ describe("projectsApi", () => {
   describe("getRepositoryBranches", () => {
     it("should fetch branches for a repository", async () => {
       const mockResponse = {
-        data: { branches: ["main", "develop", "feature/test"] },
+        data: { branches: [{ name: "main", commit: "abc123", current: true }, { name: "develop", commit: "def456", current: false }] },
       };
       vi.mocked(projectsRequest.get).mockResolvedValue(mockResponse);
 
@@ -120,7 +120,7 @@ describe("projectsApi", () => {
   describe("checkMerge", () => {
     it("should check merge compatibility", async () => {
       const mockResponse = {
-        data: { can_merge: true, conflicts: [] },
+        data: { mergeable: true, conflicts: [] },
       };
       vi.mocked(projectsRequest.post).mockResolvedValue(mockResponse);
 
@@ -134,12 +134,12 @@ describe("projectsApi", () => {
         "-/repositories/repo1/merge/check",
         { source: "feature/test", target: "main" },
       );
-      expect(result.data.can_merge).toBe(true);
+      expect(result.data.mergeable).toBe(true);
     });
 
     it("should return conflicts when merge is not possible", async () => {
       const mockResponse = {
-        data: { can_merge: false, conflicts: ["file1.ts", "file2.ts"] },
+        data: { mergeable: false, conflicts: ["file1.ts", "file2.ts"] },
       };
       vi.mocked(projectsRequest.post).mockResolvedValue(mockResponse);
 
@@ -149,7 +149,7 @@ describe("projectsApi", () => {
         "main",
       );
 
-      expect(result.data.can_merge).toBe(false);
+      expect(result.data.mergeable).toBe(false);
       expect(result.data.conflicts).toHaveLength(2);
     });
   });

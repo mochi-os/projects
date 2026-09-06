@@ -50,17 +50,28 @@ describe("DiffStats", () => {
     vi.mocked(projectsApi.getDiff).mockResolvedValue({
       data: makeDiff([{ path: "a.ts", lines: ["-x", "+y"] }]) + "# diff truncated: 5 more files\n",
     } as never);
-    render(<DiffStats repoId="repo1" base="main" head="feature" />);
+    render(<DiffStats repositoryId="repo1" base="main" head="feature" />);
     await waitFor(() => {
       expect(screen.getByText("5 more files not shown")).toBeInTheDocument();
     });
-    expect(screen.getByText("1 files changed")).toBeInTheDocument();
+    expect(screen.getByText("1 file changed")).toBeInTheDocument();
     expect(screen.queryByText(/diff truncated/)).not.toBeInTheDocument();
   });
 
-  it("should return null when repoId is empty", () => {
+  it("renders the service's own error when the repositories app is unavailable", async () => {
+    // The action answers an object, not a diff; parsing it threw inside the
+    // memo and unmounted the whole object panel.
+    vi.mocked(projectsApi.getDiff).mockResolvedValue({
+      data: { diff: null, error: "Repositories service unavailable" },
+    } as never);
+    render(<DiffStats repositoryId="repo1" base="main" head="feature" />);
+    expect(await screen.findByText("Repositories service unavailable")).toBeInTheDocument();
+    expect(screen.queryByText(/files? changed/)).not.toBeInTheDocument();
+  });
+
+  it("should return null when repositoryId is empty", () => {
     const { container } = render(
-      <DiffStats repoId="" base="main" head="feature" />,
+      <DiffStats repositoryId="" base="main" head="feature" />,
     );
 
     expect(container.firstChild).toBeNull();
@@ -68,7 +79,7 @@ describe("DiffStats", () => {
 
   it("should return null when base is empty", () => {
     const { container } = render(
-      <DiffStats repoId="repo1" base="" head="feature" />,
+      <DiffStats repositoryId="repo1" base="" head="feature" />,
     );
 
     expect(container.firstChild).toBeNull();
@@ -76,7 +87,7 @@ describe("DiffStats", () => {
 
   it("should return null when head is empty", () => {
     const { container } = render(
-      <DiffStats repoId="repo1" base="main" head="" />,
+      <DiffStats repositoryId="repo1" base="main" head="" />,
     );
 
     expect(container.firstChild).toBeNull();
@@ -87,7 +98,7 @@ describe("DiffStats", () => {
       () => new Promise(() => {}),
     );
 
-    render(<DiffStats repoId="repo1" base="main" head="feature" />);
+    render(<DiffStats repositoryId="repo1" base="main" head="feature" />);
 
     expect(screen.getByText("Loading diff...")).toBeInTheDocument();
   });
@@ -97,7 +108,7 @@ describe("DiffStats", () => {
       data: "",
     });
 
-    render(<DiffStats repoId="repo1" base="main" head="feature" />);
+    render(<DiffStats repositoryId="repo1" base="main" head="feature" />);
 
     await waitFor(() => {
       expect(screen.getByText("No changes detected")).toBeInTheDocument();
@@ -111,7 +122,7 @@ describe("DiffStats", () => {
     ]);
     vi.mocked(projectsApi.getDiff).mockResolvedValue({ data: diff });
 
-    render(<DiffStats repoId="repo1" base="main" head="feature" />);
+    render(<DiffStats repositoryId="repo1" base="main" head="feature" />);
 
     await waitFor(() => {
       expect(screen.getByText("2 files changed")).toBeInTheDocument();
@@ -127,7 +138,7 @@ describe("DiffStats", () => {
     ]);
     vi.mocked(projectsApi.getDiff).mockResolvedValue({ data: diff });
 
-    render(<DiffStats repoId="repo1" base="main" head="feature" />);
+    render(<DiffStats repositoryId="repo1" base="main" head="feature" />);
 
     await waitFor(() => {
       expect(screen.getByText("3")).toBeInTheDocument(); // additions
@@ -142,7 +153,7 @@ describe("DiffStats", () => {
     ]);
     vi.mocked(projectsApi.getDiff).mockResolvedValue({ data: diff });
 
-    render(<DiffStats repoId="repo1" base="main" head="feature" />);
+    render(<DiffStats repositoryId="repo1" base="main" head="feature" />);
 
     await waitFor(() => {
       expect(screen.getByText("src/utils/helpers.ts")).toBeInTheDocument();
@@ -156,7 +167,7 @@ describe("DiffStats", () => {
     ]);
     vi.mocked(projectsApi.getDiff).mockResolvedValue({ data: diff });
 
-    render(<DiffStats repoId="repo1" base="main" head="feature" />);
+    render(<DiffStats repositoryId="repo1" base="main" head="feature" />);
 
     await waitFor(() => {
       expect(screen.getByText("+2")).toBeInTheDocument();
@@ -169,7 +180,7 @@ describe("DiffStats", () => {
     ]);
     vi.mocked(projectsApi.getDiff).mockResolvedValue({ data: diff });
 
-    render(<DiffStats repoId="repo1" base="main" head="feature" />);
+    render(<DiffStats repositoryId="repo1" base="main" head="feature" />);
 
     await waitFor(() => {
       expect(screen.getByText("-3")).toBeInTheDocument();
@@ -185,7 +196,7 @@ describe("DiffStats", () => {
     ]);
     vi.mocked(projectsApi.getDiff).mockResolvedValue({ data: diff });
 
-    render(<DiffStats repoId="repo1" base="main" head="feature" />);
+    render(<DiffStats repositoryId="repo1" base="main" head="feature" />);
 
     await waitFor(() => {
       expect(screen.getByText("added.ts")).toBeInTheDocument();

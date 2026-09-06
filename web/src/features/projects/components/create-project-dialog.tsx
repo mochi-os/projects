@@ -7,7 +7,7 @@ import { useCallback, useEffect, useRef, useState, useMemo } from "react";
 import { Trans, useLingui } from '@lingui/react/macro'
 import { plural } from '@lingui/core/macro'
 import { useNavigate } from "@tanstack/react-router";
-import { Button, cn, getErrorMessage, Input, Label, naturalCompare, ResponsiveDialog, ResponsiveDialogContent, ResponsiveDialogDescription, ResponsiveDialogFooter, ResponsiveDialogHeader, ResponsiveDialogTitle, ResponsiveDialogTrigger, Switch, toast, toastAction, Attachment, AttachmentMedia, AttachmentContent, AttachmentTitle, AttachmentAction, Tooltip, TooltipContent, TooltipTrigger, UploadProgress, useUploadProgress } from "@mochi/web"
+import { Button, cn, getErrorMessage, Input, Label, naturalCompare, ResponsiveDialog, ResponsiveDialogContent, ResponsiveDialogDescription, ResponsiveDialogFooter, ResponsiveDialogHeader, ResponsiveDialogTitle, ResponsiveDialogTrigger, Switch, toast, toastAction, Attachment, AttachmentMedia, AttachmentContent, AttachmentTitle, AttachmentAction, Tooltip, TooltipContent, TooltipTrigger, UploadProgress, useUploadProgress, DISALLOWED_NAME_CHARS } from "@mochi/web";
 import { ArrowLeft, ArrowRight, Check, File, FolderKanban, LayoutGrid, Plus, Ticket, Upload, Zap, X } from "lucide-react";
 import projectsApi from "@/api/projects";
 import { useProjectsStore } from "@/stores/projects-store";
@@ -98,13 +98,26 @@ export function CreateProjectDialog({
   }, [open, clearImport]);
 
   const handleNext = () => {
+    // Enter in either input calls this while a design-bearing backup is
+    // creating; a second call created a second project.
+    if (isPending) return;
     if (!name.trim()) {
       toast.error(t`Name is required`);
       return;
     }
-    // A backup with an embedded design needs no template choice — create
-    // straight from the file.
-    if (importDesign) {
+    // The rule the settings page and the server apply.
+    if (name.length > 1000) {
+      toast.error(t`Name must be 1000 characters or less`);
+      return;
+    }
+    if (DISALLOWED_NAME_CHARS.test(name)) {
+      toast.error(t`Name cannot contain < or > characters`);
+      return;
+    }
+    // A backup that carries a design - a JSON backup with an embedded design,
+    // or an archive, which restores design and data together - needs no
+    // template choice: create straight from the file.
+    if (importDesign || importArchive) {
       void handleSubmit();
       return;
     }
@@ -114,7 +127,7 @@ export function CreateProjectDialog({
   const handleSubmit = async (e?: React.FormEvent) => {
     e?.preventDefault();
 
-    if (!importDesign && !selectedTemplate) {
+    if (!importDesign && !importArchive && !selectedTemplate) {
       toast.error(t`Please select a template`);
       return;
     }
@@ -125,7 +138,7 @@ export function CreateProjectDialog({
         projectsApi.create({
           name: name.trim(),
           prefix: prefix.trim().toLowerCase() || "project",
-          template: importDesign ? "blank" : selectedTemplate,
+          template: importDesign || importArchive ? "blank" : selectedTemplate,
           privacy: allowSearch ? "public" : "private",
         }),
         {
@@ -215,8 +228,6 @@ export function CreateProjectDialog({
     if (b.id === "blank") return 1;
     return naturalCompare(a.name, b.name);
   });
-
-
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -351,6 +362,7 @@ export function CreateProjectDialog({
                 }}
                 placeholder={t`My project`}
                 autoFocus
+                disabled={isPending}
                 onKeyDown={(e) => {
                   if (e.key === "Enter") {
                     e.preventDefault();
@@ -370,6 +382,7 @@ export function CreateProjectDialog({
                   setPrefix(e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, "").slice(0, 20));
                 }}
                 className="lowercase"
+                disabled={isPending}
                 onKeyDown={(e) => {
                   if (e.key === "Enter") {
                     e.preventDefault();
@@ -410,7 +423,7 @@ export function CreateProjectDialog({
                   onClick={() => fileInputRef.current?.click()}
                 >
                   <Upload className="size-4 me-1.5" />
-                  <Trans>Upload .json file</Trans>
+                  <Trans>Upload backup file</Trans>
                 </Button>
               </div>
               {importFileName && (
@@ -453,7 +466,7 @@ export function CreateProjectDialog({
                 <Trans>Cancel</Trans>
               </Button>
               <Button type="button" onClick={handleNext} disabled={isPending}>
-                {importDesign ? (
+                {importDesign || importArchive ? (
                   isPending ? <Trans>Creating...</Trans> : <><Plus className="me-2 size-4" /><Trans>Create project</Trans></>
                 ) : (
                   <><Trans>Next</Trans><ArrowRight className="ms-2 size-4 rtl:rotate-180" /></>
@@ -533,7 +546,6 @@ export function CreateProjectDialog({
                 </div>
               )}
             </div>
-
 
             <UploadProgress progress={importProgress} className="mt-4" />
             <ResponsiveDialogFooter className="mt-6">

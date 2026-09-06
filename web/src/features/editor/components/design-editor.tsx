@@ -7,14 +7,12 @@
 import { useState, useMemo } from "react";
 import { Trans, useLingui } from '@lingui/react/macro'
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { Button, Label, toast, getErrorMessage } from "@mochi/web";
+import { Button, Label, toast, getErrorMessage, AddFieldDialog, EntityOptionDialog as OptionDialog } from "@mochi/web";
 import { Blocks, GripVertical, Plus } from "lucide-react";
 import projectsApi from "@/api/projects";
 import type { ProjectDetails, ProjectField, ProjectView, FieldOption } from "@/types";
 import { DesignPreview } from "./design-preview";
-import { AddFieldDialog } from "./add-dialogs";
 import { ViewSheet, ClassSheet, EditFieldDialog, type PendingField } from "./edit-dialogs"
-import { OptionDialog } from "./option-dialog";
 interface DesignEditorProps {
   projectId: string;
   project: ProjectDetails;
@@ -327,20 +325,10 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
       updates?: Partial<ProjectView>;
       types?: string[];
     }) => {
-      // Always send all view fields to prevent backend from clearing unmentioned fields
-      // (a.input() returns "" for missing fields, which passes the != None check)
-      const currentView = project.views.find((v) => v.id === viewId);
-      const payload: Record<string, string> = {
-        name: currentView?.name || "",
-        viewtype: currentView?.viewtype || "board",
-        filter: currentView?.filter || "",
-        columns: currentView?.columns || "",
-        rows: currentView?.rows || "",
-        border: currentView?.border || "",
-        fields: currentView?.fields || "",
-        sort: currentView?.sort || "",
-        direction: currentView?.direction || "asc",
-      };
+      // Only what changed: view/update applies the fields it is sent and
+      // leaves the rest, so a full snapshot taken from the last fetched
+      // design raced a still-refetching earlier edit and reverted it.
+      const payload: Record<string, string> = {};
       if (updates) {
         if (updates.name !== undefined) payload.name = updates.name;
         if (updates.viewtype !== undefined) payload.viewtype = updates.viewtype;

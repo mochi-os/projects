@@ -12,23 +12,23 @@ import projectsApi from "@/api/projects";
 import { requestStatusTextStyles } from "./request-status-styles";
 
 interface MergeStatusProps {
-  repoId: string;
+  repositoryId: string;
   source: string;
   target: string;
 }
 
-export function MergeStatus({ repoId, source, target }: MergeStatusProps) {
+export function MergeStatus({ repositoryId, source, target }: MergeStatusProps) {
   const { t } = useLingui();
   const { data, isLoading, error } = useQuery({
-    queryKey: ["merge-check", repoId, source, target],
+    queryKey: ["merge-check", repositoryId, source, target],
     queryFn: async () => {
-      const response = await projectsApi.checkMerge(repoId, source, target);
+      const response = await projectsApi.checkMerge(repositoryId, source, target);
       return response.data;
     },
-    enabled: !!repoId && !!source && !!target,
+    enabled: !!repositoryId && !!source && !!target,
   });
 
-  if (!repoId || !source || !target) {
+  if (!repositoryId || !source || !target) {
     return null;
   }
 
@@ -54,10 +54,21 @@ export function MergeStatus({ repoId, source, target }: MergeStatusProps) {
     return null;
   }
 
+  // The service answered for the repositories app: mergeable is false, but
+  // the branches were never compared, so say what actually happened.
+  if (data.error) {
+    return (
+      <div className="flex items-center gap-2 text-sm text-destructive">
+        <AlertCircle className="size-4" />
+        {data.error}
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-2">
       <div className="flex items-center gap-2 text-sm">
-        {data.can_merge ? (
+        {data.mergeable ? (
           <CheckCircle2 className={cn("size-4 shrink-0", requestStatusTextStyles.successIcon)} />
         ) : (
           <XCircle className="size-4 text-destructive shrink-0" />
@@ -65,10 +76,10 @@ export function MergeStatus({ repoId, source, target }: MergeStatusProps) {
         <span
           className={cn(
             "font-medium",
-            data.can_merge ? requestStatusTextStyles.added : "text-destructive",
+            data.mergeable ? requestStatusTextStyles.added : "text-destructive",
           )}
         >
-          {data.can_merge ? t`Ready to merge` : t`Cannot merge automatically`}
+          {data.mergeable ? t`Ready to merge` : t`Cannot merge automatically`}
         </span>
         {(data.ahead > 0 || data.behind > 0) && (
           <span className="text-xs text-muted-foreground">

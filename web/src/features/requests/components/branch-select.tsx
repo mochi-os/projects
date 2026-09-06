@@ -18,7 +18,7 @@ import { GitBranch } from "lucide-react";
 import projectsApi from "@/api/projects";
 
 interface BranchSelectProps {
-  repoId: string;
+  repositoryId: string;
   value: string;
   onChange: (value: string) => void;
   placeholder?: string;
@@ -26,7 +26,7 @@ interface BranchSelectProps {
 }
 
 export function BranchSelect({
-  repoId,
+  repositoryId,
   value,
   onChange,
   placeholder,
@@ -35,13 +35,13 @@ export function BranchSelect({
   const { t } = useLingui();
   const placeholderText = placeholder ?? t`Select branch`;
   const { data, isLoading, isError } = useQuery({
-    queryKey: ["branches", repoId],
+    queryKey: ["branches", repositoryId],
     queryFn: async () => {
-      if (!repoId) return [];
-      const response = await projectsApi.getRepositoryBranches(repoId);
+      if (!repositoryId) return [];
+      const response = await projectsApi.getRepositoryBranches(repositoryId);
       return response.data.branches;
     },
-    enabled: !!repoId,
+    enabled: !!repositoryId,
   });
 
   const branches = [...(data || [])].sort((a, b) =>
@@ -52,7 +52,7 @@ export function BranchSelect({
     <Select
       value={value}
       onValueChange={onChange}
-      disabled={disabled || isLoading || !repoId}
+      disabled={disabled || isLoading || !repositoryId}
     >
       <SelectTrigger className="w-full">
         <div className="flex items-center gap-2">
@@ -66,17 +66,17 @@ export function BranchSelect({
             <div className="flex items-center gap-2">
               {branch.name}
               {branch.current && (
-                <span className="text-xs text-muted-foreground">(current)</span>
+                <span className="text-xs text-muted-foreground"><Trans>(current)</Trans></span>
               )}
             </div>
           </SelectItem>
         ))}
-        {isError && repoId && (
+        {isError && repositoryId && (
           <div className="px-2 py-1.5 text-sm text-destructive">
             <Trans>Could not load branches</Trans>
           </div>
         )}
-        {branches.length === 0 && repoId && !isLoading && !isError && (
+        {branches.length === 0 && repositoryId && !isLoading && !isError && (
           <div className="px-2 py-1.5 text-sm text-muted-foreground">
             <Trans>No branches found</Trans>
           </div>

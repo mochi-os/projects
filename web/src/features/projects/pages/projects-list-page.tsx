@@ -8,10 +8,10 @@ import { Link } from "@tanstack/react-router";
 import { EntityListPage } from "@mochi/web/components/entity/entity-list-page";
 import { FolderKanban } from "lucide-react";
 import { useProjectsStore } from "@/stores/projects-store";
-import { useSidebarContext } from "@/context/sidebar-context";
 import { InlineProjectSearch } from "../components/inline-project-search";
 import { RecommendedProjects } from "../components/recommended-projects";
 import projectsApi from "@/api/projects";
+import { useEntitySidebarContext } from "@mochi/web";
 
 export function ProjectsListPage() {
   const { t } = useLingui();
@@ -19,7 +19,7 @@ export function ProjectsListPage() {
   const isLoading = useProjectsStore((state) => state.isLoading);
   const error = useProjectsStore((state) => state.error);
   const refresh = useProjectsStore((state) => state.refresh);
-  const { openCreateDialog } = useSidebarContext();
+  const { openCreateDialog } = useEntitySidebarContext();
 
   return (
     <EntityListPage

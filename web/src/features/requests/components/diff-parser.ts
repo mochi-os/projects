@@ -36,9 +36,71 @@ export interface DiffLine {
   newNum?: number;
 }
 
+// Unquote a git-quoted path. Git quotes a path holding a space, a quote, a
+// control character or a non-ASCII byte, as "..." with C escapes and octal
+// bytes, so such a file's header reads `diff --git "a/x" "b/y"`.
+function unquote(path: string): string {
+  if (path.length < 2 || !path.startsWith('"') || !path.endsWith('"')) return path;
+  const inner = path.slice(1, -1);
+  const escapes: Record<string, string> = { n: "\n", t: "\t", r: "\r", a: "\x07", b: "\b", f: "\f", v: "\v" };
+  const encoder = new TextEncoder();
+  const bytes: number[] = [];
+  for (let i = 0; i < inner.length; i++) {
+    const ch = inner[i];
+    if (ch !== "\\") {
+      bytes.push(...encoder.encode(ch));
+      continue;
+    }
+    const next = inner[i + 1] ?? "";
+    if (/[0-7]/.test(next)) {
+      bytes.push(parseInt(inner.slice(i + 1, i + 4), 8));
+      i += 3;
+    } else {
+      bytes.push(...encoder.encode(escapes[next] ?? next));
+      i += 1;
+    }
+  }
+  return new TextDecoder().decode(new Uint8Array(bytes));
+}
+
+// The old and new paths of one file section. The "--- a/x" / "+++ b/y" lines
+// carry them unambiguously, where the header line does not: a path holding
+// " b/" splits the header at the wrong point. A pure rename has no ---/+++
+// lines and names them as "rename from" / "rename to"; the header regex is the
+// last resort. Only lines before the first hunk are read - a removed line that
+// itself begins "-- " would otherwise look like a "---" marker.
+function headerPaths(headerLine: string, lines: string[]): { oldPath: string; newPath: string } {
+  const hunk = lines.findIndex((l) => l.startsWith("@@"));
+  const head = lines.slice(0, hunk === -1 ? lines.length : hunk);
+  const marker = (line: string, prefix: string) => {
+    const value = unquote(line.trim());
+    return value.startsWith(prefix) ? value.slice(prefix.length) : value;
+  };
+  const from = head.find((l) => l.startsWith("--- "));
+  const to = head.find((l) => l.startsWith("+++ "));
+  if (from && to) {
+    const oldPath = from.slice(4).trim() === "/dev/null" ? "" : marker(from.slice(4), "a/");
+    const newPath = to.slice(4).trim() === "/dev/null" ? oldPath : marker(to.slice(4), "b/");
+    return { oldPath: oldPath || newPath, newPath };
+  }
+  const renameFrom = head.find((l) => l.startsWith("rename from "));
+  const renameTo = head.find((l) => l.startsWith("rename to "));
+  if (renameFrom && renameTo) {
+    return { oldPath: unquote(renameFrom.slice(12).trim()), newPath: unquote(renameTo.slice(10).trim()) };
+  }
+  const match = headerLine.match(/^"?a\/(.+?)"? "?b\/(.+?)"?$/);
+  const oldPath = match?.[1] || "";
+  return { oldPath, newPath: match?.[2] || oldPath };
+}
+
 // Parse raw unified diff text into structured file sections
 export function parseDiff(raw: string): ParsedDiff {
   const files: DiffFile[] = [];
+  // The repositories-unavailable answer is an object, not a diff (see
+  // DiffResponse); the consumers branch on it, and this is the backstop.
+  if (typeof (raw as unknown) !== "string") {
+    return { files, truncated: 0 };
+  }
 
   // Core ends a capped diff with "# diff truncated: N more files". It sits
   // after the last section, where a hunk is still open, so take it out before
@@ -54,10 +116,7 @@ export function parseDiff(raw: string): ParsedDiff {
     const lines = section.split("\n");
     const headerLine = lines[0] || "";
 
-    // Extract file paths from "a/path b/path"
-    const pathMatch = headerLine.match(/a\/(.+?) b\/(.+)/);
-    const oldPath = pathMatch?.[1] || "";
-    const newPath = pathMatch?.[2] || oldPath;
+    const { oldPath, newPath } = headerPaths(headerLine, lines);
 
     // Determine status from diff headers
     let status: DiffFile["status"] = "modified";
@@ -135,7 +194,8 @@ export function parseDiff(raw: string): ParsedDiff {
     // Keep any section that names a file. Gating on hunks alone silently
     // dropped binary files, so adding an image to a merge request listed
     // nothing — and a binary-only change rendered "No changes to display".
-    if (hunks.length > 0 || ((isBinary || skip) && newPath)) {
+    // A pure rename has no hunks either, and is still a change.
+    if (hunks.length > 0 || ((isBinary || skip || status === "renamed") && newPath)) {
       files.push({
         path: newPath,
         oldPath: oldPath !== newPath ? oldPath : undefined,

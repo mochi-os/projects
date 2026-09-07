@@ -2124,6 +2124,7 @@ def action_project_update(a):
 			a.error.label(400, "errors.description_too_long")
 			return
 		row_set("projects", "id=?", [project_id], {"description": description, "updated": now})
+		mochi.entity.update(project_id, data=description)
 	if prefix:
 		if len(prefix) > 20:
 			a.error.label(400, "errors.prefix_too_long")
@@ -2340,7 +2341,7 @@ def action_access_list(a):
 		subject = rule.get("subject", "")
 		# Mark owner rules
 		if subject == owner.get("id"):
-			rule["isOwner"] = True
+			rule["owner"] = True
 		# Resolve names for non-special subjects
 		if subject and subject not in ("*", "+") and not subject.startswith("#"):
 			if subject.startswith("@"):
@@ -7116,6 +7117,12 @@ def event_comment_create(e):
 			excerpt = (e.content("content") or "")[:80]
 			notify_watchers(object_id, project_id, local_id, user, name + ": " + excerpt)
 
+# The object a comment belongs to, so a comment push can name it - the
+# detail sheet filters pushes on the object it shows.
+def comment_object(comment_id):
+	row = mochi.db.row("select object from comments where id=?", comment_id)
+	return row["object"] if row else ""
+
 # Comment updated
 def event_comment_update(e):
 	project_id = verify_subscription(e)
@@ -7133,9 +7140,10 @@ def event_comment_update(e):
 	content = e.content("content")
 	if content:
 		comment_set(comment_id, {"content": content, "edited": mochi.time.now()})
+	object_id = comment_object(comment_id)
 	fp = mochi.entity.fingerprint(project_id)
 	if fp:
-		mochi.websocket.write(fp, {"type": "comment/update", "project": project_id, "id": comment_id})
+		mochi.websocket.write(fp, {"type": "comment/update", "project": project_id, "object": object_id, "id": comment_id})
 
 # Comment deleted
 def event_comment_delete(e):
@@ -7145,10 +7153,11 @@ def event_comment_delete(e):
 	comment_id = e.content("id")
 	if not comment_id:
 		return
+	object_id = comment_object(comment_id)
 	delete_comment_tree(comment_id, project_id)
 	fp = mochi.entity.fingerprint(project_id)
 	if fp:
-		mochi.websocket.write(fp, {"type": "comment/delete", "project": project_id, "id": comment_id})
+		mochi.websocket.write(fp, {"type": "comment/delete", "project": project_id, "object": object_id, "id": comment_id})
 
 # Link created
 def event_link_create(e):

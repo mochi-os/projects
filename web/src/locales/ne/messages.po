@@ -54,6 +54,11 @@ msgstr "{0, plural, one {# द्वन्द्वपूर्ण फाइल}
 msgid "{0, plural, one {# file changed} other {# files changed}}"
 msgstr "{0, plural, one {# फाइल परिवर्तन गरियो} other {# फाइलहरू परिवर्तन गरियो}}"
 
+#. placeholder {0}: visible.length
+#: ../../../lib/web/src/components/inline-entity-search.tsx:179
+msgid "{0, plural, one {# result} other {# results}}"
+msgstr "{0, plural, one {# परिणाम} other {# परिणामहरू}}"
+
 #. placeholder {0}: displayInfo.count
 #: ../../../lib/web/src/components/person-picker.tsx:260
 msgid "{0, plural, one {# selected} other {# selected}}"
@@ -369,11 +374,11 @@ msgstr "के तपाईं यो परियोजनाबाट सद�
 msgid "Ascending"
 msgstr "बढ्दो क्रम"
 
-#: ../../../lib/web/src/components/comment-composer.tsx:430
+#: ../../../lib/web/src/components/comment-composer.tsx:438
 msgid "Attach comment files"
 msgstr "टिप्पणी फाइलहरू एट्याच गर्नुहोस्"
 
-#: ../../../lib/web/src/components/comment-composer.tsx:429
+#: ../../../lib/web/src/components/comment-composer.tsx:437
 msgid "Attach reply files"
 msgstr "जवाफ फाइलहरू एट्याच गर्नुहोस्"
 
@@ -502,11 +507,11 @@ msgstr "यसको बच्चा हुन सक्छ"
 msgid "Cancel"
 msgstr "रद्द गर्नुहोस्"
 
-#: ../../../lib/web/src/components/comment-composer.tsx:430
+#: ../../../lib/web/src/components/comment-composer.tsx:438
 msgid "Cancel comment"
 msgstr "टिप्पणी रद्द गर्नुहोस्"
 
-#: ../../../lib/web/src/components/comment-composer.tsx:429
+#: ../../../lib/web/src/components/comment-composer.tsx:437
 msgid "Cancel reply"
 msgstr "जवाफ रद्द गर्नुहोस्"
 
@@ -671,7 +676,7 @@ msgstr "टिप्पणी र हेर्नुहोस्"
 msgid "Comments"
 msgstr "टिप्पणीहरू"
 
-#. placeholder {0}: data.comment_count || 0
+#. placeholder {0}: data.comments.count || 0
 #: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:419
 msgid "Comments ({0})"
 msgstr "टिप्पणीहरू ({0})"
@@ -1034,11 +1039,11 @@ msgstr "भिन्नता: {source} → {target}"
 msgid "Directory"
 msgstr "निर्देशिका"
 
-#: ../../../lib/web/src/components/comment-composer.tsx:311
+#: ../../../lib/web/src/components/comment-composer.tsx:319
 msgid "Discard"
 msgstr "हटाउनुहोस्"
 
-#: ../../../lib/web/src/components/comment-composer.tsx:309
+#: ../../../lib/web/src/components/comment-composer.tsx:317
 msgid "Discard draft?"
 msgstr "मस्यौदा हटाउने?"
 
@@ -2821,11 +2826,11 @@ msgstr "हेर्न रोक्नुहोस्"
 msgid "Subject"
 msgstr "विषय"
 
-#: ../../../lib/web/src/components/comment-composer.tsx:430
+#: ../../../lib/web/src/components/comment-composer.tsx:438
 msgid "Submit comment"
 msgstr "टिप्पणी पेस गर्नुहोस्"
 
-#: ../../../lib/web/src/components/comment-composer.tsx:429
+#: ../../../lib/web/src/components/comment-composer.tsx:437
 msgid "Submit reply"
 msgstr "जवाफ पेस गर्नुहोस्"
 
@@ -3275,7 +3280,7 @@ msgstr "तपाईंको अहिलेसम्म कुनै प्र
 msgid "Your account was moved here from {source}. Until you delete it there, messages and notifications may reach both servers, some of your content keeps being served from the old server, and followers may take a few minutes to find you here."
 msgstr "तपाईंको खाता {source} बाट यहाँ सारिएको छ। त्यहाँ मेटाउनु नभएसम्म, सन्देश र सूचनाहरू दुवै सर्भरमा पुग्न सक्छन्, तपाईंको केही सामग्री पुरानो सर्भरबाट आउन सक्छ, र अनुयायीहरूलाई तपाईंलाई यहाँ भेट्न केही मिनेट लाग्न सक्छ।"
 
-#: ../../../lib/web/src/components/comment-composer.tsx:302
+#: ../../../lib/web/src/components/comment-composer.tsx:310
 msgid "Your attachments will be lost."
 msgstr "तपाईंका संलग्नकहरू हराउनेछन्।"
 
@@ -3283,10 +3288,10 @@ msgstr "तपाईंका संलग्नकहरू हराउने�
 msgid "Your backup contains objects of type:"
 msgstr "तपाईंको ब्याकअपमा यी प्रकारका वस्तुहरू छन्:"
 
-#: ../../../lib/web/src/components/comment-composer.tsx:300
+#: ../../../lib/web/src/components/comment-composer.tsx:308
 msgid "Your text and attachments will be lost."
 msgstr "तपाईंको पाठ र संलग्नकहरू हराउनेछन्।"
 
-#: ../../../lib/web/src/components/comment-composer.tsx:303
+#: ../../../lib/web/src/components/comment-composer.tsx:311
 msgid "Your text will be lost."
 msgstr "तपाईंको पाठ हराउनेछ।"

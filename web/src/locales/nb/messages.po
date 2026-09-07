@@ -54,6 +54,11 @@ msgstr "{0, plural, one {# fil med konflikt} other {# filer med konflikter}}"
 msgid "{0, plural, one {# file changed} other {# files changed}}"
 msgstr "{0, plural, one {# fil endret} other {# filer endret}}"
 
+#. placeholder {0}: visible.length
+#: ../../../lib/web/src/components/inline-entity-search.tsx:179
+msgid "{0, plural, one {# result} other {# results}}"
+msgstr "{0, plural, one {# resultat} other {# resultater}}"
+
 #. placeholder {0}: displayInfo.count
 #: ../../../lib/web/src/components/person-picker.tsx:260
 msgid "{0, plural, one {# selected} other {# selected}}"
@@ -369,11 +374,11 @@ msgstr "Er du sikker på at du vil avslutte abonnementet på dette prosjektet?"
 msgid "Ascending"
 msgstr "Stigende"
 
-#: ../../../lib/web/src/components/comment-composer.tsx:430
+#: ../../../lib/web/src/components/comment-composer.tsx:438
 msgid "Attach comment files"
 msgstr "Legg ved kommentarfiler"
 
-#: ../../../lib/web/src/components/comment-composer.tsx:429
+#: ../../../lib/web/src/components/comment-composer.tsx:437
 msgid "Attach reply files"
 msgstr "Legg ved svarfiler"
 
@@ -502,11 +507,11 @@ msgstr "Kan være underordnet"
 msgid "Cancel"
 msgstr "Avbryt"
 
-#: ../../../lib/web/src/components/comment-composer.tsx:430
+#: ../../../lib/web/src/components/comment-composer.tsx:438
 msgid "Cancel comment"
 msgstr "Avbryt kommentar"
 
-#: ../../../lib/web/src/components/comment-composer.tsx:429
+#: ../../../lib/web/src/components/comment-composer.tsx:437
 msgid "Cancel reply"
 msgstr "Avbryt svar"
 
@@ -671,7 +676,7 @@ msgstr "Kommenter og se"
 msgid "Comments"
 msgstr "Kommentarer"
 
-#. placeholder {0}: data.comment_count || 0
+#. placeholder {0}: data.comments.count || 0
 #: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:419
 msgid "Comments ({0})"
 msgstr "Kommentarer ({0})"
@@ -1034,11 +1039,11 @@ msgstr "Forskjell: {source} → {target}"
 msgid "Directory"
 msgstr "Katalog"
 
-#: ../../../lib/web/src/components/comment-composer.tsx:311
+#: ../../../lib/web/src/components/comment-composer.tsx:319
 msgid "Discard"
 msgstr "Forkast"
 
-#: ../../../lib/web/src/components/comment-composer.tsx:309
+#: ../../../lib/web/src/components/comment-composer.tsx:317
 msgid "Discard draft?"
 msgstr "Forkaste utkastet?"
 
@@ -2821,11 +2826,11 @@ msgstr "Slutt å følge"
 msgid "Subject"
 msgstr "Emne"
 
-#: ../../../lib/web/src/components/comment-composer.tsx:430
+#: ../../../lib/web/src/components/comment-composer.tsx:438
 msgid "Submit comment"
 msgstr "Send inn kommentar"
 
-#: ../../../lib/web/src/components/comment-composer.tsx:429
+#: ../../../lib/web/src/components/comment-composer.tsx:437
 msgid "Submit reply"
 msgstr "Send inn svar"
 
@@ -3275,7 +3280,7 @@ msgstr "Du har ingen prosjekter ennå."
 msgid "Your account was moved here from {source}. Until you delete it there, messages and notifications may reach both servers, some of your content keeps being served from the old server, and followers may take a few minutes to find you here."
 msgstr "Kontoen din ble flyttet hit fra {source}. Inntil du sletter den der, kan meldinger og varsler nå begge serverne, noe av innholdet ditt fortsetter å bli levert fra den gamle serveren, og følgerne dine kan trenge noen minutter på å finne deg her."
 
-#: ../../../lib/web/src/components/comment-composer.tsx:302
+#: ../../../lib/web/src/components/comment-composer.tsx:310
 msgid "Your attachments will be lost."
 msgstr "Vedleggene dine går tapt."
 
@@ -3283,10 +3288,10 @@ msgstr "Vedleggene dine går tapt."
 msgid "Your backup contains objects of type:"
 msgstr "Sikkerhetskopien din inneholder objekter av typen:"
 
-#: ../../../lib/web/src/components/comment-composer.tsx:300
+#: ../../../lib/web/src/components/comment-composer.tsx:308
 msgid "Your text and attachments will be lost."
 msgstr "Teksten og vedleggene dine går tapt."
 
-#: ../../../lib/web/src/components/comment-composer.tsx:303
+#: ../../../lib/web/src/components/comment-composer.tsx:311
 msgid "Your text will be lost."
 msgstr "Teksten din vil gå tapt."

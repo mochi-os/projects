@@ -54,6 +54,11 @@ msgstr "{0, plural, one {# file in conflitto} other {# file in conflitto}}"
 msgid "{0, plural, one {# file changed} other {# files changed}}"
 msgstr "{0, plural, one {# file modificato} other {# file modificati}}"
 
+#. placeholder {0}: visible.length
+#: ../../../lib/web/src/components/inline-entity-search.tsx:179
+msgid "{0, plural, one {# result} other {# results}}"
+msgstr "{0, plural, one {# risultato} other {# risultati}}"
+
 #. placeholder {0}: displayInfo.count
 #: ../../../lib/web/src/components/person-picker.tsx:260
 msgid "{0, plural, one {# selected} other {# selected}}"
@@ -369,11 +374,11 @@ msgstr "Sei sicuro di voler annullare l'iscrizione a questo progetto?"
 msgid "Ascending"
 msgstr "Crescente"
 
-#: ../../../lib/web/src/components/comment-composer.tsx:430
+#: ../../../lib/web/src/components/comment-composer.tsx:438
 msgid "Attach comment files"
 msgstr "Allega file al commento"
 
-#: ../../../lib/web/src/components/comment-composer.tsx:429
+#: ../../../lib/web/src/components/comment-composer.tsx:437
 msgid "Attach reply files"
 msgstr "Allega file alla risposta"
 
@@ -502,11 +507,11 @@ msgstr "Può essere figlio di"
 msgid "Cancel"
 msgstr "Annulla"
 
-#: ../../../lib/web/src/components/comment-composer.tsx:430
+#: ../../../lib/web/src/components/comment-composer.tsx:438
 msgid "Cancel comment"
 msgstr "Annulla commento"
 
-#: ../../../lib/web/src/components/comment-composer.tsx:429
+#: ../../../lib/web/src/components/comment-composer.tsx:437
 msgid "Cancel reply"
 msgstr "Annulla risposta"
 
@@ -671,7 +676,7 @@ msgstr "Commenta e visualizza"
 msgid "Comments"
 msgstr "Commenti"
 
-#. placeholder {0}: data.comment_count || 0
+#. placeholder {0}: data.comments.count || 0
 #: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx:419
 msgid "Comments ({0})"
 msgstr "Commenti ({0})"
@@ -1034,11 +1039,11 @@ msgstr "Differenze: {source} → {target}"
 msgid "Directory"
 msgstr "Directory"
 
-#: ../../../lib/web/src/components/comment-composer.tsx:311
+#: ../../../lib/web/src/components/comment-composer.tsx:319
 msgid "Discard"
 msgstr "Scarta"
 
-#: ../../../lib/web/src/components/comment-composer.tsx:309
+#: ../../../lib/web/src/components/comment-composer.tsx:317
 msgid "Discard draft?"
 msgstr "Scartare la bozza?"
 
@@ -2821,11 +2826,11 @@ msgstr "Smetti di seguire"
 msgid "Subject"
 msgstr "Oggetto"
 
-#: ../../../lib/web/src/components/comment-composer.tsx:430
+#: ../../../lib/web/src/components/comment-composer.tsx:438
 msgid "Submit comment"
 msgstr "Invia commento"
 
-#: ../../../lib/web/src/components/comment-composer.tsx:429
+#: ../../../lib/web/src/components/comment-composer.tsx:437
 msgid "Submit reply"
 msgstr "Invia risposta"
 
@@ -3275,7 +3280,7 @@ msgstr "Non hai ancora alcun progetto."
 msgid "Your account was moved here from {source}. Until you delete it there, messages and notifications may reach both servers, some of your content keeps being served from the old server, and followers may take a few minutes to find you here."
 msgstr "Il tuo account è stato spostato qui da {source}. Finché non lo elimini lì, i messaggi e le notifiche possono raggiungere entrambi i server, parte dei tuoi contenuti continua a essere servita dal vecchio server e i follower potrebbero impiegare qualche minuto per trovarti qui."
 
-#: ../../../lib/web/src/components/comment-composer.tsx:302
+#: ../../../lib/web/src/components/comment-composer.tsx:310
 msgid "Your attachments will be lost."
 msgstr "I tuoi allegati andranno persi."
 
@@ -3283,10 +3288,10 @@ msgstr "I tuoi allegati andranno persi."
 msgid "Your backup contains objects of type:"
 msgstr "Il tuo backup contiene oggetti di tipo:"
 
-#: ../../../lib/web/src/components/comment-composer.tsx:300
+#: ../../../lib/web/src/components/comment-composer.tsx:308
 msgid "Your text and attachments will be lost."
 msgstr "Il tuo testo e i tuoi allegati andranno persi."
 
-#: ../../../lib/web/src/components/comment-composer.tsx:303
+#: ../../../lib/web/src/components/comment-composer.tsx:311
 msgid "Your text will be lost."
 msgstr "Il tuo testo andrà perso."

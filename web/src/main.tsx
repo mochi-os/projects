@@ -10,6 +10,7 @@ import { RouterProvider, createRouter } from "@tanstack/react-router";
 import {
   CommandMenu,
   createQueryClient,
+  GeneralError,
   SearchProvider,
   ThemeProvider,
   getAppBasepath,
@@ -138,12 +139,17 @@ const queryClient = createQueryClient();
 // getAppBasepath keeps the fingerprint out of the basepath (routes carry it as
 // $projectId) and follows a domain route path; createAppHistory is defined only
 // for entity domain routes.
+// A route without its own errorComponent gets no boundary at all, so a crash in
+// the page body climbed to __root and replaced the sidebar along with it. The
+// default gives every route its own boundary, so the error stays in the content
+// pane and the project list, search and settings remain reachable.
 const router = createRouter({
   routeTree,
   context: { queryClient },
   basepath: getAppBasepath(),
   history: createAppHistory(),
   defaultPreload: false,
+  defaultErrorComponent: GeneralError,
 });
 
 // Register the router instance for type safety

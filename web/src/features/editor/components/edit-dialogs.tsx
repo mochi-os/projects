@@ -284,8 +284,11 @@ export function ClassSheet({
                   value={cls.title || NONE_SELECT_VALUE}
                   onValueChange={(value) => {
                     if (onUpdate) {
+                      // The name input commits on blur, which this click fires, so
+                      // the two requests race: send the name as typed, not
+                      // the prop, or the second one restores the old name.
                       onUpdate(
-                        cls.name,
+                        name.trim() || cls.name,
                         undefined,
                         value === NONE_SELECT_VALUE ? "" : value,
                       );

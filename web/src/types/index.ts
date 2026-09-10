@@ -17,7 +17,7 @@ import type {
 } from "@mochi/web";
 
 // Project types
-export type ProjectAccess = EntityAccess;
+type ProjectAccess = EntityAccess;
 
 export interface Project {
   id: string;

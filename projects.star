@@ -9143,10 +9143,8 @@ def _subscribe_to_project(user, project_id, server):
 	if not mochi.text.valid(project_id, "entity"):
 		return {"error": "errors.invalid_project_id", "code": 400}
 
-	existing = mochi.db.row("select id, owner from projects where id=?", project_id)
-	if existing:
-		if existing["owner"] == 1:
-			return {"error": "errors.you_own_this_project", "code": 400}
+	# An existing row is a subscription, or our own project, which needs none.
+	if mochi.db.exists("select id from projects where id=?", project_id):
 		fp = mochi.entity.fingerprint(project_id) or ""
 		return {"fingerprint": fp, "subscribed": True}
 
@@ -9229,32 +9227,40 @@ def _create_project_object(user, project_id, obj_class, title, parent="", values
 	project = get_project(project_id)
 	if not project:
 		return {"error": "errors.project_not_found", "code": 404}
-	if project["owner"] == 1:
-		return {"error": "errors.help_for_remote_project_only", "code": 400}
+	owner = project["owner"] == 1
 
 	title_field_row = mochi.db.row("select title from classes where project=? and id=?", project_id, obj_class)
 	title_field = title_field_row["title"] if title_field_row else ""
 
-	forward_result = _forward_to_owner(user, project_id, "object/create", {
-		"project": project_id, "class": obj_class, "title": title, "parent": parent,
-	})
-	if "error" in forward_result:
-		return {"error": forward_result["error"], "code": forward_result["code"]}
+	if owner:
+		# Our own project: create here through the same helper a forwarded
+		# object/create reaches, under the same write gate.
+		if not check_project_access(user.identity.id, project_id, "write"):
+			return {"error": "errors.access_denied", "code": 403}
+		d = do_object_create(project_id, project, {"class": obj_class, "title": title, "parent": parent}, user.identity.id)
+		if "error" in d:
+			return {"error": d["error"], "code": d.get("code", 500)}
+	else:
+		forward_result = _forward_to_owner(user, project_id, "object/create", {
+			"project": project_id, "class": obj_class, "title": title, "parent": parent,
+		})
+		if "error" in forward_result:
+			return {"error": forward_result["error"], "code": forward_result["code"]}
 
-	d = forward_result.get("data", {})
-	if not d.get("id"):
-		return {"error": "errors.no_object_returned", "code": 502}
+		d = forward_result.get("data", {})
+		if not d.get("id"):
+			return {"error": "errors.no_object_returned", "code": 502}
 
-	now = mochi.time.now()
-	rank = d.get("rank", 0)
-	created = d.get("created") or now
-	updated = d.get("updated") or now
-	if not mochi.db.exists("select 1 from objects where id=?", d["id"]):
-		object_merge({"id": d["id"], "project": project_id, "class": obj_class, "number": d.get("number", 0), "parent": parent, "rank": rank, "created": created, "updated": updated})
-	if title and title_field:
-		value_merge(d["id"], title_field, title)
-	row_set("projects", "id=?", [project_id], {"updated": now})
-	row_merge("watchers", ["object", "user"], {"object": d["id"], "user": user.identity.id, "created": now})
+		now = mochi.time.now()
+		rank = d.get("rank", 0)
+		created = d.get("created") or now
+		updated = d.get("updated") or now
+		if not mochi.db.exists("select 1 from objects where id=?", d["id"]):
+			object_merge({"id": d["id"], "project": project_id, "class": obj_class, "number": d.get("number", 0), "parent": parent, "rank": rank, "created": created, "updated": updated})
+		if title and title_field:
+			value_merge(d["id"], title_field, title)
+		row_set("projects", "id=?", [project_id], {"updated": now})
+		row_merge("watchers", ["object", "user"], {"object": d["id"], "user": user.identity.id, "created": now})
 	# Fill every required enumerated field the caller omitted with its lowest-rank
 	# option, as the SPA create dialog does; otherwise the object lands without a
 	# status and hides from status-grouped views.
@@ -9274,10 +9280,13 @@ def _create_project_object(user, project_id, obj_class, title, parent="", values
 		if first:
 			filled[fid] = first["id"]
 
-	# One forward per field. Failures are non-fatal — the ticket still got
+	# One set per field. Failures are non-fatal — the ticket still got
 	# created; the field stays at its default and the user can adjust it later.
 	for field_id, field_value in filled.items():
 		if not field_value:
+			continue
+		if owner:
+			do_value_set(project_id, project, {"object": d["id"], "field": field_id, "value": field_value}, user.identity.id)
 			continue
 		set_result = _forward_to_owner(user, project_id, "value/set", {
 			"project": project_id, "object": d["id"],
@@ -9306,6 +9315,16 @@ def _create_project_comment(user, project_id, object_id, content):
 
 	user_id = user.identity.id
 	user_name = user.identity.name
+
+	# Our own project: the comment lands through the helper a forwarded
+	# comment/create reaches, which also fans it out to subscribers.
+	project = get_project(project_id)
+	if project and project["owner"] == 1:
+		result = do_comment_create(project_id, project, {"object": object_id, "content": content, "parent": ""}, user_id, user_name)
+		if "error" in result:
+			return {"error": result["error"], "code": result.get("code", 500)}
+		return {"id": result["id"]}
+
 	comment_id = mochi.uid()
 	now = mochi.time.now()
 
@@ -9327,8 +9346,12 @@ def _check_project(user, project_id):
 		return {"error": "errors.invalid_project_id", "code": 400}
 
 	existing = mochi.db.row("select id, owner, server from projects where id=?", project_id)
+	# Our own project: the answer is local, under the write gate event_request
+	# applies to a forwarded create.
 	if existing and existing["owner"] == 1:
-		return {"error": "errors.you_own_this_project", "code": 400}
+		if not check_project_access(user.identity.id, project_id, "write"):
+			return {"error": "errors.access_denied", "code": 403}
+		return {"fingerprint": mochi.entity.fingerprint(project_id) or "", "subscribed": True}
 	subscribed = bool(existing)
 
 	# An unsubscribed caller must resolve the project publicly; a subscriber

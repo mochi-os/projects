@@ -3,7 +3,6 @@
 // This file is part of Mochi, licensed under the GNU AGPL v3 with the
 // Mochi Application Interface Exception - see license.txt and license-exception.md.
 
-/* eslint-disable lingui/no-unlocalized-strings */
 // The shared object/class/field client is tested in @mochi/web
 // (src/lib/entity-api.test.ts); this file covers only what this app adds.
 import { describe, it, expect, vi, beforeEach } from "vitest";

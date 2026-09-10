@@ -3,148 +3,183 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 // This file is part of Mochi, licensed under the GNU AGPL v3 with the
 // Mochi Application Interface Exception - see license.txt and license-exception.md.
-
-import { useState, useMemo } from "react";
+import { useState, useMemo } from 'react'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import type {
+  ProjectDetails,
+  ProjectField,
+  ProjectView,
+  FieldOption,
+} from '@/types'
 import { Trans, useLingui } from '@lingui/react/macro'
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { Button, Label, toast, getErrorMessage, AddFieldDialog, EntityOptionDialog as OptionDialog } from "@mochi/web";
-import { Blocks, GripVertical, Plus } from "lucide-react";
-import projectsApi from "@/api/projects";
-import type { ProjectDetails, ProjectField, ProjectView, FieldOption } from "@/types";
-import { DesignPreview } from "./design-preview";
-import { ViewSheet, ClassSheet, EditFieldDialog, type PendingField } from "./edit-dialogs"
+import {
+  Button,
+  Label,
+  toast,
+  getErrorMessage,
+  AddFieldDialog,
+  EntityOptionDialog as OptionDialog,
+} from '@mochi/web'
+import { Blocks, GripVertical, Plus } from 'lucide-react'
+import projectsApi from '@/api/projects'
+import { DesignPreview } from './design-preview'
+import {
+  ViewSheet,
+  ClassSheet,
+  EditFieldDialog,
+  type PendingField,
+} from './edit-dialogs'
+
 interface DesignEditorProps {
-  projectId: string;
-  project: ProjectDetails;
+  projectId: string
+  project: ProjectDetails
 }
 
 export function DesignEditor({ projectId, project }: DesignEditorProps) {
   const { t } = useLingui()
-  const queryClient = useQueryClient();
+  const queryClient = useQueryClient()
 
   // Fetch objects for preview
   const { data: objectsData } = useQuery({
-    queryKey: ["project-objects", projectId],
+    queryKey: ['project-objects', projectId],
     queryFn: async () => {
-      const response = await projectsApi.listObjects(projectId);
-      return response.data.objects;
+      const response = await projectsApi.listObjects(projectId)
+      return response.data.objects
     },
-  });
-  const objects = objectsData || [];
+  })
+  const objects = objectsData || []
 
   // Selection state
   const [selectedClassId, setSelectedClassId] = useState<string | null>(
-    project.classes[0]?.id || null,
-  );
+    project.classes[0]?.id || null
+  )
 
   // Add dialog state
-  const [addClassOpen, setAddClassOpen] = useState(false);
-  const [addFieldOpen, setAddFieldOpen] = useState(false);
-  const [addOptionOpen, setAddOptionOpen] = useState(false);
-  const [addViewOpen, setAddViewOpen] = useState(false);
+  const [addClassOpen, setAddClassOpen] = useState(false)
+  const [addFieldOpen, setAddFieldOpen] = useState(false)
+  const [addOptionOpen, setAddOptionOpen] = useState(false)
+  const [addViewOpen, setAddViewOpen] = useState(false)
 
   // Edit dialog state
-  const [editViewOpen, setEditViewOpen] = useState(false);
-  const [editClassOpen, setEditClassOpen] = useState(false);
-  const [editFieldOpen, setEditFieldOpen] = useState(false);
-  const [editOptionOpen, setEditOptionOpen] = useState(false);
-  const [editingView, setEditingView] = useState<ProjectView | null>(null);
-  const [editingField, setEditingField] = useState<ProjectField | null>(null);
-  const [editingOption, setEditingOption] = useState<FieldOption | null>(null);
+  const [editViewOpen, setEditViewOpen] = useState(false)
+  const [editClassOpen, setEditClassOpen] = useState(false)
+  const [editFieldOpen, setEditFieldOpen] = useState(false)
+  const [editOptionOpen, setEditOptionOpen] = useState(false)
+  const [editingView, setEditingView] = useState<ProjectView | null>(null)
+  const [editingField, setEditingField] = useState<ProjectField | null>(null)
+  const [editingOption, setEditingOption] = useState<FieldOption | null>(null)
 
   // View drag state
-  const [draggedViewId, setDraggedViewId] = useState<string | null>(null);
+  const [draggedViewId, setDraggedViewId] = useState<string | null>(null)
   const [viewDropIndicator, setViewDropIndicator] = useState<{
-    viewId: string;
-    position: "before" | "after";
-  } | null>(null);
+    viewId: string
+    position: 'before' | 'after'
+  } | null>(null)
 
   // Get current selections
-  const selectedClass = project.classes.find((c) => c.id === selectedClassId);
+  const selectedClass = project.classes.find((c) => c.id === selectedClassId)
   const selectedFields = selectedClassId
     ? project.fields[selectedClassId] || []
-    : [];
+    : []
   const hierarchy = selectedClassId
     ? project.hierarchy[selectedClassId] || []
-    : [];
+    : []
 
   // Get all fields across all classes for view editing
   const allFields = useMemo(() => {
-    const fieldsMap = new Map<string, ProjectField>();
+    const fieldsMap = new Map<string, ProjectField>()
     for (const classId of Object.keys(project.fields)) {
       for (const field of project.fields[classId]) {
         if (!fieldsMap.has(field.id)) {
-          fieldsMap.set(field.id, field);
+          fieldsMap.set(field.id, field)
         }
       }
     }
-    return Array.from(fieldsMap.values());
-  }, [project.fields]);
+    return Array.from(fieldsMap.values())
+  }, [project.fields])
 
   // Keep editingField in sync with refetched project data
   const resolvedEditingField = useMemo(() => {
-    if (!editingField || !selectedClassId) return editingField;
-    const fields = project.fields[selectedClassId] || [];
-    return fields.find((f) => f.id === editingField.id) || editingField;
-  }, [editingField, selectedClassId, project.fields]);
+    if (!editingField || !selectedClassId) return editingField
+    const fields = project.fields[selectedClassId] || []
+    return fields.find((f) => f.id === editingField.id) || editingField
+  }, [editingField, selectedClassId, project.fields])
 
   // Get options for editing field
   const editingFieldOptions =
     selectedClassId && resolvedEditingField
       ? project.options[selectedClassId]?.[resolvedEditingField.id] || []
-      : [];
+      : []
 
   // Invalidate project data
   const invalidateProject = () => {
-    queryClient.invalidateQueries({ queryKey: ["project", projectId] });
-  };
+    queryClient.invalidateQueries({ queryKey: ['project', projectId] })
+  }
 
   // Class mutations
   const createClassMutation = useMutation({
     mutationFn: ({ name, requests }: { name: string; requests?: string }) =>
       projectsApi.createClass(projectId, { name, requests }),
     onSuccess: (data) => {
-      invalidateProject();
-      setSelectedClassId(data.data.id);
+      invalidateProject()
+      setSelectedClassId(data.data.id)
     },
     onError: (error) => {
-      toast.error(getErrorMessage(error, t`Failed to create class`));
+      toast.error(getErrorMessage(error, t`Failed to create class`))
     },
-  });
+  })
 
   const updateClassMutation = useMutation({
-    mutationFn: ({ classId, name, requests, title }: { classId: string; name: string; requests?: string; title?: string }) =>
+    mutationFn: ({
+      classId,
+      name,
+      requests,
+      title,
+    }: {
+      classId: string
+      name: string
+      requests?: string
+      title?: string
+    }) =>
       projectsApi.updateClass(projectId, classId, { name, requests, title }),
     onSuccess: invalidateProject,
     onError: (error) => {
-      toast.error(getErrorMessage(error, t`Failed to update class`));
+      toast.error(getErrorMessage(error, t`Failed to update class`))
     },
-  });
+  })
 
   const deleteClassMutation = useMutation({
-    mutationFn: (classId: string) => projectsApi.deleteClass(projectId, classId),
+    mutationFn: (classId: string) =>
+      projectsApi.deleteClass(projectId, classId),
     onSuccess: (_data, classId) => {
-      invalidateProject();
+      invalidateProject()
       // `project` is the pre-delete prop and the invalidated query has not
       // refetched yet, so [0] is the class that was just removed whenever the
       // first one is the one being deleted.
-      setSelectedClassId(project.classes.filter((c) => c.id !== classId)[0]?.id || null);
-      setEditClassOpen(false);
+      setSelectedClassId(
+        project.classes.filter((c) => c.id !== classId)[0]?.id || null
+      )
+      setEditClassOpen(false)
     },
     onError: (error) => {
-      toast.error(getErrorMessage(error, t`Failed to delete class`));
+      toast.error(getErrorMessage(error, t`Failed to delete class`))
     },
-  });
+  })
 
   // Hierarchy mutation
   const setHierarchyMutation = useMutation({
-    mutationFn: ({ classId, parents }: { classId: string; parents: string[] }) =>
-      projectsApi.setHierarchy(projectId, classId, parents),
+    mutationFn: ({
+      classId,
+      parents,
+    }: {
+      classId: string
+      parents: string[]
+    }) => projectsApi.setHierarchy(projectId, classId, parents),
     onSuccess: invalidateProject,
     onError: (error) => {
-      toast.error(getErrorMessage(error, t`Failed to update hierarchy`));
+      toast.error(getErrorMessage(error, t`Failed to update hierarchy`))
     },
-  });
+  })
 
   // Field mutations
   const createFieldMutation = useMutation({
@@ -154,16 +189,21 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
       fieldtype,
       rows,
     }: {
-      classId: string;
-      name: string;
-      fieldtype: string;
-      rows?: number;
-    }) => projectsApi.createField(projectId, classId, { name, fieldtype, rows: rows?.toString() }),
+      classId: string
+      name: string
+      fieldtype: string
+      rows?: number
+    }) =>
+      projectsApi.createField(projectId, classId, {
+        name,
+        fieldtype,
+        rows: rows?.toString(),
+      }),
     onSuccess: invalidateProject,
     onError: (error) => {
-      toast.error(getErrorMessage(error, t`Failed to create field`));
+      toast.error(getErrorMessage(error, t`Failed to create field`))
     },
-  });
+  })
 
   const updateFieldMutation = useMutation({
     mutationFn: ({
@@ -171,9 +211,9 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
       fieldId,
       updates,
     }: {
-      classId: string;
-      fieldId: string;
-      updates: Partial<ProjectField>;
+      classId: string
+      fieldId: string
+      updates: Partial<ProjectField>
     }) =>
       projectsApi.updateField(projectId, classId, fieldId, {
         id: updates.id,
@@ -187,35 +227,37 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
     onSuccess: (_, variables) => {
       // If the field was renamed, update editingField to point to the new ID
       if (variables.updates.id && variables.updates.id !== variables.fieldId) {
-        setEditingField((prev) => prev ? { ...prev, id: variables.updates.id! } : prev);
+        setEditingField((prev) =>
+          prev ? { ...prev, id: variables.updates.id! } : prev
+        )
       }
-      invalidateProject();
+      invalidateProject()
     },
     onError: (error) => {
-      toast.error(getErrorMessage(error, t`Failed to update field`));
+      toast.error(getErrorMessage(error, t`Failed to update field`))
     },
-  });
+  })
 
   const deleteFieldMutation = useMutation({
     mutationFn: ({ classId, fieldId }: { classId: string; fieldId: string }) =>
       projectsApi.deleteField(projectId, classId, fieldId),
     onSuccess: () => {
-      invalidateProject();
-      setEditFieldOpen(false);
+      invalidateProject()
+      setEditFieldOpen(false)
     },
     onError: (error) => {
-      toast.error(getErrorMessage(error, t`Failed to delete field`));
+      toast.error(getErrorMessage(error, t`Failed to delete field`))
     },
-  });
+  })
 
   const reorderFieldsMutation = useMutation({
     mutationFn: ({ classId, order }: { classId: string; order: string[] }) =>
       projectsApi.reorderFields(projectId, classId, order),
     onSuccess: invalidateProject,
     onError: (error) => {
-      toast.error(getErrorMessage(error, t`Failed to reorder fields`));
+      toast.error(getErrorMessage(error, t`Failed to reorder fields`))
     },
-  });
+  })
 
   // Option mutations
   const createOptionMutation = useMutation({
@@ -225,17 +267,17 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
       name,
       colour,
     }: {
-      classId: string;
-      fieldId: string;
-      name: string;
-      colour: string;
+      classId: string
+      fieldId: string
+      name: string
+      colour: string
     }) =>
       projectsApi.createOption(projectId, classId, fieldId, { name, colour }),
     onSuccess: invalidateProject,
     onError: (error) => {
-      toast.error(getErrorMessage(error, t`Failed to create option`));
+      toast.error(getErrorMessage(error, t`Failed to create option`))
     },
-  });
+  })
 
   const updateOptionMutation = useMutation({
     mutationFn: ({
@@ -244,17 +286,17 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
       optionId,
       updates,
     }: {
-      classId: string;
-      fieldId: string;
-      optionId: string;
-      updates: { name?: string; colour?: string };
+      classId: string
+      fieldId: string
+      optionId: string
+      updates: { name?: string; colour?: string }
     }) =>
       projectsApi.updateOption(projectId, classId, fieldId, optionId, updates),
     onSuccess: invalidateProject,
     onError: (error) => {
-      toast.error(getErrorMessage(error, t`Failed to update option`));
+      toast.error(getErrorMessage(error, t`Failed to update option`))
     },
-  });
+  })
 
   const deleteOptionMutation = useMutation({
     mutationFn: ({
@@ -262,18 +304,18 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
       fieldId,
       optionId,
     }: {
-      classId: string;
-      fieldId: string;
-      optionId: string;
+      classId: string
+      fieldId: string
+      optionId: string
     }) => projectsApi.deleteOption(projectId, classId, fieldId, optionId),
     onSuccess: () => {
-      invalidateProject();
-      setEditOptionOpen(false);
+      invalidateProject()
+      setEditOptionOpen(false)
     },
     onError: (error) => {
-      toast.error(getErrorMessage(error, t`Failed to delete option`));
+      toast.error(getErrorMessage(error, t`Failed to delete option`))
     },
-  });
+  })
 
   // View mutations
   const createViewMutation = useMutation({
@@ -288,20 +330,20 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
       direction,
       classes,
     }: {
-      name: string;
-      viewtype: string;
-      columns?: string;
-      rows?: string;
-      border?: string;
-      fields?: string;
-      sort?: string;
-      direction?: "asc" | "desc";
-      classes?: string;
+      name: string
+      viewtype: string
+      columns?: string
+      rows?: string
+      border?: string
+      fields?: string
+      sort?: string
+      direction?: 'asc' | 'desc'
+      classes?: string
     }) =>
       projectsApi.createView(projectId, {
         name,
-        viewtype: viewtype as "board" | "list",
-        fields: fields || allFields.map((f) => f.id).join(","),
+        viewtype: viewtype as 'board' | 'list',
+        fields: fields || allFields.map((f) => f.id).join(','),
         columns,
         rows,
         border,
@@ -311,9 +353,9 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
       }),
     onSuccess: invalidateProject,
     onError: (error) => {
-      toast.error(getErrorMessage(error, t`Failed to create view`));
+      toast.error(getErrorMessage(error, t`Failed to create view`))
     },
-  });
+  })
 
   const updateViewMutation = useMutation({
     mutationFn: ({
@@ -321,173 +363,194 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
       updates,
       types,
     }: {
-      viewId: string;
-      updates?: Partial<ProjectView>;
-      types?: string[];
+      viewId: string
+      updates?: Partial<ProjectView>
+      types?: string[]
     }) => {
       // Only what changed: view/update applies the fields it is sent and
       // leaves the rest, so a full snapshot taken from the last fetched
       // design raced a still-refetching earlier edit and reverted it.
-      const payload: Record<string, string> = {};
+      const payload: Record<string, string> = {}
       if (updates) {
-        if (updates.name !== undefined) payload.name = updates.name;
-        if (updates.viewtype !== undefined) payload.viewtype = updates.viewtype;
-        if (updates.filter !== undefined) payload.filter = updates.filter;
-        if (updates.columns !== undefined) payload.columns = updates.columns;
-        if (updates.rows !== undefined) payload.rows = updates.rows;
-        if (updates.border !== undefined) payload.border = updates.border;
-        if (updates.fields !== undefined) payload.fields = updates.fields;
-        if (updates.sort !== undefined) payload.sort = updates.sort;
-        if (updates.direction !== undefined) payload.direction = updates.direction;
+        if (updates.name !== undefined) payload.name = updates.name
+        if (updates.viewtype !== undefined) payload.viewtype = updates.viewtype
+        if (updates.filter !== undefined) payload.filter = updates.filter
+        if (updates.columns !== undefined) payload.columns = updates.columns
+        if (updates.rows !== undefined) payload.rows = updates.rows
+        if (updates.border !== undefined) payload.border = updates.border
+        if (updates.fields !== undefined) payload.fields = updates.fields
+        if (updates.sort !== undefined) payload.sort = updates.sort
+        if (updates.direction !== undefined)
+          payload.direction = updates.direction
       }
-      if (types !== undefined) payload.classes = types.length === project.classes.length ? "" : types.join(",");
-      return projectsApi.updateView(projectId, viewId, payload);
+      if (types !== undefined)
+        payload.classes =
+          types.length === project.classes.length ? '' : types.join(',')
+      return projectsApi.updateView(projectId, viewId, payload)
     },
     onSuccess: invalidateProject,
     onError: (error) => {
-      toast.error(getErrorMessage(error, t`Failed to update view`));
+      toast.error(getErrorMessage(error, t`Failed to update view`))
     },
-  });
+  })
 
   const deleteViewMutation = useMutation({
     mutationFn: (viewId: string) => projectsApi.deleteView(projectId, viewId),
     onSuccess: () => {
-      invalidateProject();
-      setEditViewOpen(false);
+      invalidateProject()
+      setEditViewOpen(false)
     },
     onError: (error) => {
-      toast.error(getErrorMessage(error, t`Failed to delete view`));
+      toast.error(getErrorMessage(error, t`Failed to delete view`))
     },
-  });
+  })
 
   const reorderViewsMutation = useMutation({
-    mutationFn: (order: string[]) =>
-      projectsApi.reorderViews(projectId, order),
+    mutationFn: (order: string[]) => projectsApi.reorderViews(projectId, order),
     onSuccess: invalidateProject,
     onError: (error) => {
-      toast.error(getErrorMessage(error, t`Failed to reorder views`));
+      toast.error(getErrorMessage(error, t`Failed to reorder views`))
     },
-  });
+  })
 
   // Handlers
   const handleEditView = (view: ProjectView) => {
-    setEditingView(view);
-    setEditViewOpen(true);
-  };
+    setEditingView(view)
+    setEditViewOpen(true)
+  }
 
   const handleEditField = (field: ProjectField) => {
-    setEditingField(field);
-    setEditFieldOpen(true);
-  };
+    setEditingField(field)
+    setEditFieldOpen(true)
+  }
 
   const handleEditOption = (option: FieldOption) => {
-    setEditingOption(option);
-    setEditOptionOpen(true);
-  };
+    setEditingOption(option)
+    setEditOptionOpen(true)
+  }
 
   // Create class with chained API calls
-  const handleCreateClass = async (name: string, parents: string[], pendingFields: PendingField[], mergeRequests: boolean) => {
-    const result = await createClassMutation.mutateAsync({ name, requests: mergeRequests ? "merge" : undefined });
-    const classId = result.data?.id;
-    if (!classId) return;
+  const handleCreateClass = async (
+    name: string,
+    parents: string[],
+    pendingFields: PendingField[],
+    mergeRequests: boolean
+  ) => {
+    const result = await createClassMutation.mutateAsync({
+      name,
+      requests: mergeRequests ? 'merge' : undefined,
+    })
+    const classId = result.data?.id
+    if (!classId) return
 
     if (parents.length > 0) {
-      await setHierarchyMutation.mutateAsync({ classId, parents });
+      await setHierarchyMutation.mutateAsync({ classId, parents })
     }
 
     // Create each non-title field (title is auto-created by the backend)
     for (const field of pendingFields) {
-      if (field.id === "title") continue;
+      if (field.id === 'title') continue
       const fieldResult = await createFieldMutation.mutateAsync({
         classId,
         name: field.name,
         fieldtype: field.fieldtype,
         rows: field.rows,
-      });
+      })
       // Create options for enumerated fields
-      if (field.fieldtype === "enumerated" && field.options && fieldResult.data) {
+      if (
+        field.fieldtype === 'enumerated' &&
+        field.options &&
+        fieldResult.data
+      ) {
         for (const opt of field.options) {
           await createOptionMutation.mutateAsync({
             classId,
             fieldId: fieldResult.data.id,
             name: opt.name,
             colour: opt.colour,
-          });
+          })
         }
       }
     }
-  };
+  }
 
   // View drag handlers
   const handleViewDragStart = (e: React.DragEvent, viewId: string) => {
-    setDraggedViewId(viewId);
-    e.dataTransfer.effectAllowed = "move";
-    e.dataTransfer.setData("text/plain", viewId);
-  };
+    setDraggedViewId(viewId)
+    e.dataTransfer.effectAllowed = 'move'
+    e.dataTransfer.setData('text/plain', viewId)
+  }
 
   const handleViewDragEnd = () => {
-    setDraggedViewId(null);
-    setViewDropIndicator(null);
-  };
+    setDraggedViewId(null)
+    setViewDropIndicator(null)
+  }
 
   const handleViewDragOver = (e: React.DragEvent, viewId: string) => {
-    e.preventDefault();
-    if (viewId === draggedViewId) return;
-    const rect = e.currentTarget.getBoundingClientRect();
-    const midY = rect.top + rect.height / 2;
-    const position = e.clientY < midY ? "before" : "after";
-    setViewDropIndicator({ viewId, position });
-  };
+    e.preventDefault()
+    if (viewId === draggedViewId) return
+    const rect = e.currentTarget.getBoundingClientRect()
+    const midY = rect.top + rect.height / 2
+    const position = e.clientY < midY ? 'before' : 'after'
+    setViewDropIndicator({ viewId, position })
+  }
 
   const handleViewDragLeave = () => {
-    setViewDropIndicator(null);
-  };
+    setViewDropIndicator(null)
+  }
 
   const handleViewDrop = (e: React.DragEvent, targetViewId: string) => {
-    e.preventDefault();
-    if (!draggedViewId || draggedViewId === targetViewId) return;
+    e.preventDefault()
+    if (!draggedViewId || draggedViewId === targetViewId) return
 
-    const currentOrder = project.views.map((v) => v.id);
-    const draggedIndex = currentOrder.indexOf(draggedViewId);
-    const targetIndex = currentOrder.indexOf(targetViewId);
-    if (draggedIndex === -1 || targetIndex === -1) return;
+    const currentOrder = project.views.map((v) => v.id)
+    const draggedIndex = currentOrder.indexOf(draggedViewId)
+    const targetIndex = currentOrder.indexOf(targetViewId)
+    if (draggedIndex === -1 || targetIndex === -1) return
 
-    const newOrder = [...currentOrder];
-    newOrder.splice(draggedIndex, 1);
-    const insertIndex = viewDropIndicator?.position === "after"
-      ? currentOrder.indexOf(targetViewId) - (draggedIndex < targetIndex ? 1 : 0) + 1
-      : currentOrder.indexOf(targetViewId) - (draggedIndex < targetIndex ? 1 : 0);
-    newOrder.splice(insertIndex, 0, draggedViewId);
+    const newOrder = [...currentOrder]
+    newOrder.splice(draggedIndex, 1)
+    const insertIndex =
+      viewDropIndicator?.position === 'after'
+        ? currentOrder.indexOf(targetViewId) -
+          (draggedIndex < targetIndex ? 1 : 0) +
+          1
+        : currentOrder.indexOf(targetViewId) -
+          (draggedIndex < targetIndex ? 1 : 0)
+    newOrder.splice(insertIndex, 0, draggedViewId)
 
-    reorderViewsMutation.mutate(newOrder);
-    setDraggedViewId(null);
-    setViewDropIndicator(null);
-  };
+    reorderViewsMutation.mutate(newOrder)
+    setDraggedViewId(null)
+    setViewDropIndicator(null)
+  }
 
   return (
-    <div className="flex h-full">
+    <div className='flex h-full'>
       {/* Editor panel (left) */}
-      <div className="w-80 border-e flex flex-col overflow-hidden">
-        <div className="flex-1 overflow-auto p-4 space-y-6">
+      <div className='flex w-80 flex-col overflow-hidden border-e'>
+        <div className='flex-1 space-y-6 overflow-auto p-4'>
           {/* Views Section */}
           <section>
-            <div className="flex items-center justify-between mb-2">
-              <Label className="text-sm font-medium"><Trans>Views</Trans></Label>
+            <div className='mb-2 flex items-center justify-between'>
+              <Label className='text-sm font-medium'>
+                <Trans>Views</Trans>
+              </Label>
               <Button
-                variant="ghost"
-                size="sm"
+                variant='ghost'
+                size='sm'
                 onClick={() => setAddViewOpen(true)}
                 aria-label={t`Add view`}
               >
-                <Plus className="size-4" />
+                <Plus className='size-4' />
               </Button>
             </div>
-            <div className="space-y-1">
+            <div className='space-y-1'>
               {project.views.map((view) => (
                 <div key={view.id}>
-                  {viewDropIndicator?.viewId === view.id && viewDropIndicator.position === "before" && (
-                    <div className="h-0.5 bg-primary mx-3 rounded-full" />
-                  )}
+                  {viewDropIndicator?.viewId === view.id &&
+                    viewDropIndicator.position === 'before' && (
+                      <div className='bg-primary mx-3 h-0.5 rounded-full' />
+                    )}
                   <div
                     draggable
                     onDragStart={(e) => handleViewDragStart(e, view.id)}
@@ -495,64 +558,66 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
                     onDragOver={(e) => handleViewDragOver(e, view.id)}
                     onDragLeave={handleViewDragLeave}
                     onDrop={(e) => handleViewDrop(e, view.id)}
-                    className={`flex items-center gap-2 px-3 py-2 text-sm rounded-md hover:bg-hover transition-colors cursor-grab ${
-                      draggedViewId === view.id ? "opacity-50" : ""
+                    className={`hover:bg-hover flex cursor-grab items-center gap-2 rounded-md px-3 py-2 text-sm transition-colors ${
+                      draggedViewId === view.id ? 'opacity-50' : ''
                     }`}
                   >
-                    <GripVertical className="size-4 text-muted-foreground shrink-0" />
+                    <GripVertical className='text-muted-foreground size-4 shrink-0' />
                     <button
-                      type="button"
+                      type='button'
                       onClick={() => handleEditView(view)}
-                      className="flex-1 text-start"
+                      className='flex-1 text-start'
                     >
-                      <span className="font-medium">{view.name}</span>
+                      <span className='font-medium'>{view.name}</span>
                     </button>
                   </div>
-                  {viewDropIndicator?.viewId === view.id && viewDropIndicator.position === "after" && (
-                    <div className="h-0.5 bg-primary mx-3 rounded-full" />
-                  )}
+                  {viewDropIndicator?.viewId === view.id &&
+                    viewDropIndicator.position === 'after' && (
+                      <div className='bg-primary mx-3 h-0.5 rounded-full' />
+                    )}
                 </div>
               ))}
             </div>
           </section>
 
-          <hr className="border-border" />
+          <hr className='border-border' />
 
           {/* Classes Section */}
           <section>
-            <div className="flex items-center justify-between mb-2">
-              <Label className="text-sm font-medium"><Trans>Classes</Trans></Label>
+            <div className='mb-2 flex items-center justify-between'>
+              <Label className='text-sm font-medium'>
+                <Trans>Classes</Trans>
+              </Label>
               <Button
-                variant="ghost"
-                size="sm"
+                variant='ghost'
+                size='sm'
                 onClick={() => setAddClassOpen(true)}
                 aria-label={t`Add class`}
               >
-                <Plus className="size-4" />
+                <Plus className='size-4' />
               </Button>
             </div>
-            <div className="space-y-1">
+            <div className='space-y-1'>
               {project.classes.map((cls) => (
                 <button
                   key={cls.id}
                   onClick={() => {
-                    setSelectedClassId(cls.id);
-                    setEditClassOpen(true);
+                    setSelectedClassId(cls.id)
+                    setEditClassOpen(true)
                   }}
-                  className="w-full text-start px-3 py-2 text-sm rounded-md transition-colors hover:bg-hover flex items-center gap-2"
+                  className='hover:bg-hover flex w-full items-center gap-2 rounded-md px-3 py-2 text-start text-sm transition-colors'
                 >
-                  <Blocks className="size-4 text-muted-foreground shrink-0" />
+                  <Blocks className='text-muted-foreground size-4 shrink-0' />
                   {cls.name}
                 </button>
               ))}
             </div>
           </section>
-
         </div>
       </div>
 
       {/* Preview panel (right) */}
-      <div className="flex-1 overflow-hidden">
+      <div className='flex-1 overflow-hidden'>
         <DesignPreview
           project={project}
           projectId={projectId}
@@ -566,21 +631,34 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
         numbered
         open={addViewOpen}
         onOpenChange={setAddViewOpen}
-        mode="create"
+        mode='create'
         fields={allFields}
         classes={project.classes}
-        onCreate={async (name, viewtype, columns, rows, selectedFields, sort, direction, selectedClasses, border) => {
+        onCreate={async (
+          name,
+          viewtype,
+          columns,
+          rows,
+          selectedFields,
+          sort,
+          direction,
+          selectedClasses,
+          border
+        ) => {
           await createViewMutation.mutateAsync({
             name,
             viewtype,
             columns: columns || undefined,
             rows: rows || undefined,
             border: border || undefined,
-            fields: selectedFields.join(","),
+            fields: selectedFields.join(','),
             sort: sort || undefined,
-            direction: direction as "asc" | "desc",
-            classes: selectedClasses.length === project.classes.length ? "" : selectedClasses.join(","),
-          });
+            direction: direction as 'asc' | 'desc',
+            classes:
+              selectedClasses.length === project.classes.length
+                ? ''
+                : selectedClasses.join(','),
+          })
         }}
       />
 
@@ -588,7 +666,7 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
       <ClassSheet
         open={addClassOpen}
         onOpenChange={setAddClassOpen}
-        mode="create"
+        mode='create'
         classes={project.classes}
         onCreate={handleCreateClass}
       />
@@ -604,21 +682,21 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
                 name,
                 fieldtype,
                 rows,
-              });
+              })
               // Create options for enumerated fields
-              if (fieldtype === "enumerated" && options && result.data) {
+              if (fieldtype === 'enumerated' && options && result.data) {
                 for (const opt of options) {
                   await createOptionMutation.mutateAsync({
                     classId: selectedClassId,
                     fieldId: result.data.id,
                     name: opt.name,
                     colour: opt.colour,
-                  });
+                  })
                 }
               }
             } catch (error) {
-              toast.error(getErrorMessage(error, t`Failed to create field`));
-              throw error;
+              toast.error(getErrorMessage(error, t`Failed to create field`))
+              throw error
             }
           }
         }}
@@ -635,10 +713,10 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
                 fieldId: editingField.id,
                 name,
                 colour,
-              });
+              })
             } catch (error) {
-              toast.error(getErrorMessage(error, t`Failed to create option`));
-              throw error;
+              toast.error(getErrorMessage(error, t`Failed to create option`))
+              throw error
             }
           }
         }}
@@ -654,17 +732,20 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
         classes={project.classes}
         onUpdate={(updates) => {
           if (editingView) {
-            updateViewMutation.mutate({ viewId: editingView.id, updates });
+            updateViewMutation.mutate({ viewId: editingView.id, updates })
           }
         }}
         onUpdateClasses={(classes) => {
           if (editingView) {
-            updateViewMutation.mutate({ viewId: editingView.id, types: classes });
+            updateViewMutation.mutate({
+              viewId: editingView.id,
+              types: classes,
+            })
           }
         }}
         onDelete={() => {
           if (editingView) {
-            deleteViewMutation.mutate(editingView.id);
+            deleteViewMutation.mutate(editingView.id)
           }
         }}
       />
@@ -679,24 +760,29 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
         fields={selectedFields}
         onUpdate={(name, requests, title) => {
           if (selectedClassId) {
-            updateClassMutation.mutate({ classId: selectedClassId, name, requests, title });
+            updateClassMutation.mutate({
+              classId: selectedClassId,
+              name,
+              requests,
+              title,
+            })
           }
         }}
         onUpdateHierarchy={(parents) => {
           if (selectedClassId) {
-            setHierarchyMutation.mutate({ classId: selectedClassId, parents });
+            setHierarchyMutation.mutate({ classId: selectedClassId, parents })
           }
         }}
         onDelete={() => {
           if (selectedClassId) {
-            deleteClassMutation.mutate(selectedClassId);
+            deleteClassMutation.mutate(selectedClassId)
           }
         }}
         onAddField={() => setAddFieldOpen(true)}
         onEditField={handleEditField}
         onReorderFields={(order) => {
           if (selectedClassId) {
-            reorderFieldsMutation.mutate({ classId: selectedClassId, order });
+            reorderFieldsMutation.mutate({ classId: selectedClassId, order })
           }
         }}
       />
@@ -710,17 +796,19 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
         onUpdate={(updates) => {
           if (selectedClassId && resolvedEditingField) {
             if (updates.id) {
-              return updateFieldMutation.mutateAsync({
-                classId: selectedClassId,
-                fieldId: resolvedEditingField.id,
-                updates,
-              }).then(() => {});
+              return updateFieldMutation
+                .mutateAsync({
+                  classId: selectedClassId,
+                  fieldId: resolvedEditingField.id,
+                  updates,
+                })
+                .then(() => {})
             }
             updateFieldMutation.mutate({
               classId: selectedClassId,
               fieldId: resolvedEditingField.id,
               updates,
-            });
+            })
           }
         }}
         onDelete={() => {
@@ -728,7 +816,7 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
             deleteFieldMutation.mutate({
               classId: selectedClassId,
               fieldId: resolvedEditingField.id,
-            });
+            })
           }
         }}
         onAddOption={() => setAddOptionOpen(true)}
@@ -739,7 +827,7 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
               classId: selectedClassId,
               fieldId: resolvedEditingField.id,
               optionId,
-            });
+            })
           }
         }}
       />
@@ -755,7 +843,7 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
               fieldId: editingField.id,
               optionId: editingOption.id,
               updates,
-            });
+            })
           }
         }}
         onDelete={() => {
@@ -764,10 +852,10 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
               classId: selectedClassId,
               fieldId: editingField.id,
               optionId: editingOption.id,
-            });
+            })
           }
         }}
       />
     </div>
-  );
+  )
 }

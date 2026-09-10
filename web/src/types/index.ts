@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 // This file is part of Mochi, licensed under the GNU AGPL v3 with the
 // Mochi Application Interface Exception - see license.txt and license-exception.md.
-
 // The object model itself is shared with the crm app — see @mochi/web
 // types/entity-object. Only the project container, the request/repository
 // integration and the response envelopes are app-specific and defined here.
@@ -14,125 +13,125 @@ import type {
   EntityObject,
   EntityObjectLink,
   EntityView,
-} from "@mochi/web";
+} from '@mochi/web'
 
 // Project types
-type ProjectAccess = EntityAccess;
+type ProjectAccess = EntityAccess
 
 export interface Project {
-  id: string;
-  fingerprint: string;
-  name: string;
-  description: string;
-  prefix: string;
-  owner: { local: boolean; name: string };
-  server: string;
-  created: number;
-  updated: number;
+  id: string
+  fingerprint: string
+  name: string
+  description: string
+  prefix: string
+  owner: { local: boolean; name: string }
+  server: string
+  created: number
+  updated: number
   // 0 while a freshly-subscribed project's bulk content is still arriving over
   // P2P; 1 once it has landed. The board shows a loading state until then.
-  populated: number;
-  access: ProjectAccess;
+  populated: number
+  access: ProjectAccess
 }
 
 // Projects add per-class request settings; the rest of the class is shared.
 export interface ProjectClass extends EntityClass {
-  requests: string;
+  requests: string
 }
 
-export type ProjectField = EntityField;
-export type FieldOption = EntityFieldOption;
-export type ProjectView = EntityView;
+export type ProjectField = EntityField
+export type FieldOption = EntityFieldOption
+export type ProjectView = EntityView
 
 export interface ProjectTemplate {
-  id: string;
-  name: string;
-  description: string;
-  icon: string;
-  version: number;
-  classes?: { id: string; name: string }[];
+  id: string
+  name: string
+  description: string
+  icon: string
+  version: number
+  classes?: { id: string; name: string }[]
 }
 
 export interface ProjectDetails {
-  project: Project;
-  classes: ProjectClass[];
-  fields: Record<string, ProjectField[]>;
-  options: Record<string, Record<string, FieldOption[]>>;
-  views: ProjectView[];
-  hierarchy: Record<string, string[]>;
+  project: Project
+  classes: ProjectClass[]
+  fields: Record<string, ProjectField[]>
+  options: Record<string, Record<string, FieldOption[]>>
+  views: ProjectView[]
+  hierarchy: Record<string, string[]>
 }
 
 // Object types. Projects issue human-readable identifiers (PROJ-14), so number
 // is always present here even though the shared model leaves it optional.
 export type ProjectObject = EntityObject & {
-  project: string;
-  number: number;
-};
+  project: string
+  number: number
+}
 
-export type ObjectLink = EntityObjectLink;
+export type ObjectLink = EntityObjectLink
 
 export interface RequestData {
-  id: string;
-  object: string;
-  type: string;
-  repository: string;
-  source: string;
-  target: string;
-  status: string;
-  title: string;
-  description: string;
-  draft: number;
-  created: number;
-  updated: number;
+  id: string
+  object: string
+  type: string
+  repository: string
+  source: string
+  target: string
+  status: string
+  title: string
+  description: string
+  draft: number
+  created: number
+  updated: number
 }
 
 interface Repository {
-  id: string;
-  name: string;
-  path: string;
-  url: string;
+  id: string
+  name: string
+  path: string
+  url: string
 }
 
 interface Branch {
-  name: string;
-  commit: string;
-  current: boolean;
+  name: string
+  commit: string
+  current: boolean
 }
 
 export interface RepositoryListResponse {
   data: {
-    repositories: Repository[];
-  };
+    repositories: Repository[]
+  }
 }
 
 export interface BranchListResponse {
   data: {
-    branches: Branch[];
-  };
+    branches: Branch[]
+  }
 }
 
 export interface MergeCheckResponse {
   data: {
-    mergeable: boolean;
-    conflicts: string[];
-    ahead: number;
-    behind: number;
+    mergeable: boolean
+    conflicts: string[]
+    ahead: number
+    behind: number
     // The action's own answer when the repositories service is unavailable;
     // mergeable is false then, but not because of the branches.
-    error?: string;
-  };
+    error?: string
+  }
 }
 
 export interface DiffResponse {
   // The unified diff, or the action's fallback when the repositories service
   // is unavailable. Consumers branch on typeof before parsing.
-  data: string | { diff: null; error: string };
+  data: string | { diff: null; error: string }
 }
 
 export interface MergeResponse {
   data: {
-    success: boolean;
-    commit: string;
-    message: string;
-  };
+    success: boolean
+    commit: string
+    message: string
+  }
 }

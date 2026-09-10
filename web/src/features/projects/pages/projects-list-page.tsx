@@ -2,24 +2,23 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 // This file is part of Mochi, licensed under the GNU AGPL v3 with the
 // Mochi Application Interface Exception - see license.txt and license-exception.md.
-
-import { Trans, useLingui } from "@lingui/react/macro";
-import { Link } from "@tanstack/react-router";
-import { EntityListPage } from "@mochi/web/components/entity/entity-list-page";
-import { FolderKanban } from "lucide-react";
-import { useProjectsStore } from "@/stores/projects-store";
-import { InlineProjectSearch } from "../components/inline-project-search";
-import { RecommendedProjects } from "../components/recommended-projects";
-import projectsApi from "@/api/projects";
-import { useEntitySidebarContext } from "@mochi/web";
+import { Link } from '@tanstack/react-router'
+import { Trans, useLingui } from '@lingui/react/macro'
+import { useEntitySidebarContext } from '@mochi/web'
+import { EntityListPage } from '@mochi/web/components/entity/entity-list-page'
+import { FolderKanban } from 'lucide-react'
+import projectsApi from '@/api/projects'
+import { useProjectsStore } from '@/stores/projects-store'
+import { InlineProjectSearch } from '../components/inline-project-search'
+import { RecommendedProjects } from '../components/recommended-projects'
 
 export function ProjectsListPage() {
-  const { t } = useLingui();
-  const projects = useProjectsStore((state) => state.rows);
-  const isLoading = useProjectsStore((state) => state.isLoading);
-  const error = useProjectsStore((state) => state.error);
-  const refresh = useProjectsStore((state) => state.refresh);
-  const { openCreateDialog } = useEntitySidebarContext();
+  const { t } = useLingui()
+  const projects = useProjectsStore((state) => state.rows)
+  const isLoading = useProjectsStore((state) => state.isLoading)
+  const error = useProjectsStore((state) => state.error)
+  const refresh = useProjectsStore((state) => state.refresh)
+  const { openCreateDialog } = useEntitySidebarContext()
 
   return (
     <EntityListPage
@@ -30,7 +29,7 @@ export function ProjectsListPage() {
       icon={FolderKanban}
       onCreate={openCreateDialog}
       unsubscribe={(projectId) => projectsApi.unsubscribe(projectId)}
-      invalidateKey="projects"
+      invalidateKey='projects'
       labels={{
         title: t`Projects`,
         emptyDescription: t`You have no projects yet.`,
@@ -45,11 +44,11 @@ export function ProjectsListPage() {
       renderLink={(project, className) => (
         <Link
           preload={false}
-          to="/$projectId"
+          to='/$projectId'
           params={{ projectId: project.fingerprint }}
           className={className}
         >
-          <span className="sr-only">
+          <span className='sr-only'>
             <Trans>Open {project.name}</Trans>
           </span>
         </Link>
@@ -64,5 +63,5 @@ export function ProjectsListPage() {
         />
       )}
     />
-  );
+  )
 }

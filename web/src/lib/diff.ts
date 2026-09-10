@@ -12,12 +12,12 @@
 export function diffUrl(
   appPath: string,
   projectId: string,
-  request: { repository: string; source: string; target: string },
+  request: { repository: string; source: string; target: string }
 ): string {
   return (
     `${appPath}/${projectId}/diff` +
     `?repository=${encodeURIComponent(request.repository)}` +
     `&source=${encodeURIComponent(request.source)}` +
     `&target=${encodeURIComponent(request.target)}`
-  );
+  )
 }

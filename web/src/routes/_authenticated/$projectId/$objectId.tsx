@@ -3,76 +3,82 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 // This file is part of Mochi, licensed under the GNU AGPL v3 with the
 // Mochi Application Interface Exception - see license.txt and license-exception.md.
-
-import { createFileRoute, redirect, useNavigate, useRouter } from "@tanstack/react-router";
-import { useLingui } from '@lingui/react/macro'
+import {
+  createFileRoute,
+  redirect,
+  useNavigate,
+  useRouter,
+} from '@tanstack/react-router'
+import type { ProjectDetails } from '@/types'
 import { t } from '@lingui/core/macro'
+import { useLingui } from '@lingui/react/macro'
 import {
   EntityLoadError,
   extractStatus,
   getErrorMessage,
   toast,
-} from "@mochi/web";
-import { FolderKanban } from "lucide-react";
-import projectsApi from "@/api/projects";
-import type { ProjectDetails } from "@/types";
-import { ProjectPageContent } from "./index";
+} from '@mochi/web'
+import { FolderKanban } from 'lucide-react'
+import projectsApi from '@/api/projects'
+import { ProjectPageContent } from './index'
 
 interface SearchParams {
-  view?: string;
+  view?: string
 }
 
-export const Route = createFileRoute("/_authenticated/$projectId/$objectId")({
+export const Route = createFileRoute('/_authenticated/$projectId/$objectId')({
   validateSearch: (search: Record<string, unknown>): SearchParams => ({
-    view: typeof search.view === "string" ? search.view : undefined,
+    view: typeof search.view === 'string' ? search.view : undefined,
   }),
   loader: async ({ params }) => {
     try {
-      const projectResponse = await projectsApi.get(params.projectId);
-      return { project: projectResponse.data, loaderError: null };
+      const projectResponse = await projectsApi.get(params.projectId)
+      return { project: projectResponse.data, loaderError: null }
     } catch (error) {
-      const status = extractStatus(error);
+      const status = extractStatus(error)
       // The URL a notification carries: say why it bounced, as the project
       // route does, rather than landing on the list with no explanation.
       if (status === 403) {
-        toast.error(t`You don't have access to this project.`);
-        throw redirect({ to: "/" });
+        toast.error(t`You don't have access to this project.`)
+        throw redirect({ to: '/' })
       }
       if (status === 404) {
-        throw redirect({ to: "/" });
+        throw redirect({ to: '/' })
       }
 
       return {
         project: null as ProjectDetails | null,
-        loaderError:
-          getErrorMessage(error, t`Failed to load project`),
-      };
+        loaderError: getErrorMessage(error, t`Failed to load project`),
+      }
     }
   },
   component: ObjectPage,
-});
+})
 
 function ObjectPage() {
   const { t } = useLingui()
   const { project, loaderError } = Route.useLoaderData() as {
-    project: ProjectDetails | null;
-    loaderError: string | null;
-  };
-  const params = Route.useParams();
-  const search = Route.useSearch();
-  const navigate = useNavigate();
-  const router = useRouter();
+    project: ProjectDetails | null
+    loaderError: string | null
+  }
+  const params = Route.useParams()
+  const search = Route.useSearch()
+  const navigate = useNavigate()
+  const router = useRouter()
 
   if (!project) {
     return (
       <EntityLoadError
         title={t`Project`}
-        icon={<FolderKanban className="size-4 md:size-5" />}
-        back={{ label: t`Back to projects`, onFallback: () => navigate({ to: "/" }) }}
+        icon={<FolderKanban className='size-4 md:size-5' />}
+        back={{
+          label: t`Back to projects`,
+          onFallback: () => navigate({ to: '/' }),
+        }}
         message={loaderError ?? t`Failed to load project`}
         onRetry={() => void router.invalidate()}
       />
-    );
+    )
   }
 
   return (
@@ -82,5 +88,5 @@ function ObjectPage() {
       search={search}
       initialObjectId={params.objectId}
     />
-  );
+  )
 }

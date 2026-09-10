@@ -3,13 +3,12 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 // This file is part of Mochi, licensed under the GNU AGPL v3 with the
 // Mochi Application Interface Exception - see license.txt and license-exception.md.
-
 // The page body is EntitySettingsPage in @mochi/web, shared with the crm app.
 // What stays here is the route and its tab param, the wording, the name and
 // prefix rules, the access ladder, and the prefix row itself, which only this
 // app has.
-
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from '@tanstack/react-router'
+import type { ProjectDetails } from '@/types'
 import { useLingui } from '@lingui/react/macro'
 import {
   EditableFieldRow,
@@ -17,64 +16,63 @@ import {
   type AccessLevel,
   type EntitySettingsTab,
   DISALLOWED_NAME_CHARS,
-} from "@mochi/web";
-import { FolderKanban } from "lucide-react";
-import projectsApi from "@/api/projects";
-import type { ProjectDetails } from "@/types";
-import { useProjectsStore } from "@/stores/projects-store";
+} from '@mochi/web'
+import { FolderKanban } from 'lucide-react'
+import projectsApi from '@/api/projects'
+import { useProjectsStore } from '@/stores/projects-store'
 
 type SettingsSearch = {
-  tab?: EntitySettingsTab;
-};
+  tab?: EntitySettingsTab
+}
 
-export const Route = createFileRoute("/_authenticated/$projectId_/settings")({
+export const Route = createFileRoute('/_authenticated/$projectId_/settings')({
   validateSearch: (search: Record<string, unknown>): SettingsSearch => ({
     tab:
-      search.tab === "general" || search.tab === "access"
+      search.tab === 'general' || search.tab === 'access'
         ? search.tab
         : undefined,
   }),
   component: ProjectSettingsPage,
-});
+})
 
 function ProjectSettingsPage() {
   const { t } = useLingui()
-  const { projectId } = Route.useParams();
-  const navigate = useNavigate();
-  const navigateSettings = Route.useNavigate();
-  const { tab } = Route.useSearch();
-  const refreshSidebar = useProjectsStore((state) => state.refresh);
+  const { projectId } = Route.useParams()
+  const navigate = useNavigate()
+  const navigateSettings = Route.useNavigate()
+  const { tab } = Route.useSearch()
+  const refreshSidebar = useProjectsStore((state) => state.refresh)
 
   const accessLevels: AccessLevel[] = [
-    { value: "design", label: t`Design, create, edit, comment, and view` },
-    { value: "write", label: t`Create, edit, comment, and view` },
-    { value: "comment", label: t`Comment and view` },
-    { value: "view", label: t`View only` },
-    { value: "none", label: t`No access` },
-  ];
+    { value: 'design', label: t`Design, create, edit, comment, and view` },
+    { value: 'write', label: t`Create, edit, comment, and view` },
+    { value: 'comment', label: t`Comment and view` },
+    { value: 'view', label: t`View only` },
+    { value: 'none', label: t`No access` },
+  ]
 
   return (
-    <EntitySettingsPage<ProjectDetails["project"], ProjectDetails>
+    <EntitySettingsPage<ProjectDetails['project'], ProjectDetails>
       containerId={projectId}
       selectContainer={(details) => details.project}
-      queryKey="project"
-      accessRulesKey="projects"
+      queryKey='project'
+      accessRulesKey='projects'
       api={projectsApi}
       icon={FolderKanban}
       accessLevels={accessLevels}
-      activeTab={tab ?? "general"}
+      activeTab={tab ?? 'general'}
       onTabChange={(newTab) =>
         void navigateSettings({ search: { tab: newTab }, replace: true })
       }
-      onBack={() => void navigate({ to: "/$projectId", params: { projectId } })}
-      onDeleted={() => void navigate({ to: "/" })}
+      onBack={() => void navigate({ to: '/$projectId', params: { projectId } })}
+      onDeleted={() => void navigate({ to: '/' })}
       refreshSidebar={refreshSidebar}
       validateName={(name) => {
-        if (!name.trim()) return t`Project name is required`;
-        if (name.length > 1000) return t`Name must be 1000 characters or less`;
+        if (!name.trim()) return t`Project name is required`
+        if (name.length > 1000) return t`Name must be 1000 characters or less`
         if (DISALLOWED_NAME_CHARS.test(name))
-          return t`Name cannot contain < or > characters`;
-        return null;
+          return t`Name cannot contain < or > characters`
+        return null
       }}
       renderIdentityExtras={({ container, canEdit, onUpdate }) => (
         // The prefix is this app's alone: it is what makes an object readable
@@ -91,12 +89,12 @@ function ProjectSettingsPage() {
             // create path cannot make.
             // The server drops an empty prefix rather than storing it, so
             // accepting one here saved nothing and said so to nobody.
-            if (!value.trim()) return t`Prefix is required`;
+            if (!value.trim()) return t`Prefix is required`
             if (!/^[a-z0-9-]+$/.test(value))
-              return t`Prefix can only contain lowercase letters, numbers, and hyphens`;
+              return t`Prefix can only contain lowercase letters, numbers, and hyphens`
             if (value.length > 20)
-              return t`Prefix must be 20 characters or less`;
-            return null;
+              return t`Prefix must be 20 characters or less`
+            return null
           }}
         />
       )}
@@ -126,8 +124,8 @@ function ProjectSettingsPage() {
         deleteTitle: t`Delete project?`,
         deleteConfirm: t`Delete project`,
         deleteDescription: (name) => {
-          const projectName = name;
-          return t`This will permanently delete "${projectName}" and all its objects, comments, and attachments. This action cannot be undone.`;
+          const projectName = name
+          return t`This will permanently delete "${projectName}" and all its objects, comments, and attachments. This action cannot be undone.`
         },
         deleting: t`Deleting project...`,
         deleted: t`Project deleted`,
@@ -145,5 +143,5 @@ function ProjectSettingsPage() {
         updateAccessFailed: t`Failed to update access level`,
       }}
     />
-  );
+  )
 }

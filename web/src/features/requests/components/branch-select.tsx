@@ -3,8 +3,7 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 // This file is part of Mochi, licensed under the GNU AGPL v3 with the
 // Mochi Application Interface Exception - see license.txt and license-exception.md.
-
-import { useQuery } from "@tanstack/react-query";
+import { useQuery } from '@tanstack/react-query'
 import { Trans, useLingui } from '@lingui/react/macro'
 import {
   naturalCompare,
@@ -13,16 +12,16 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@mochi/web";
-import { GitBranch } from "lucide-react";
-import projectsApi from "@/api/projects";
+} from '@mochi/web'
+import { GitBranch } from 'lucide-react'
+import projectsApi from '@/api/projects'
 
 interface BranchSelectProps {
-  repositoryId: string;
-  value: string;
-  onChange: (value: string) => void;
-  placeholder?: string;
-  disabled?: boolean;
+  repositoryId: string
+  value: string
+  onChange: (value: string) => void
+  placeholder?: string
+  disabled?: boolean
 }
 
 export function BranchSelect({
@@ -32,21 +31,21 @@ export function BranchSelect({
   placeholder,
   disabled,
 }: BranchSelectProps) {
-  const { t } = useLingui();
-  const placeholderText = placeholder ?? t`Select branch`;
+  const { t } = useLingui()
+  const placeholderText = placeholder ?? t`Select branch`
   const { data, isLoading, isError } = useQuery({
-    queryKey: ["branches", repositoryId],
+    queryKey: ['branches', repositoryId],
     queryFn: async () => {
-      if (!repositoryId) return [];
-      const response = await projectsApi.getRepositoryBranches(repositoryId);
-      return response.data.branches;
+      if (!repositoryId) return []
+      const response = await projectsApi.getRepositoryBranches(repositoryId)
+      return response.data.branches
     },
     enabled: !!repositoryId,
-  });
+  })
 
   const branches = [...(data || [])].sort((a, b) =>
-    naturalCompare(a.name, b.name),
-  );
+    naturalCompare(a.name, b.name)
+  )
 
   return (
     <Select
@@ -54,34 +53,36 @@ export function BranchSelect({
       onValueChange={onChange}
       disabled={disabled || isLoading || !repositoryId}
     >
-      <SelectTrigger className="w-full">
-        <div className="flex items-center gap-2">
-          <GitBranch className="size-4 text-muted-foreground" />
+      <SelectTrigger className='w-full'>
+        <div className='flex items-center gap-2'>
+          <GitBranch className='text-muted-foreground size-4' />
           <SelectValue placeholder={placeholderText} />
         </div>
       </SelectTrigger>
       <SelectContent>
         {branches.map((branch) => (
           <SelectItem key={branch.name} value={branch.name}>
-            <div className="flex items-center gap-2">
+            <div className='flex items-center gap-2'>
               {branch.name}
               {branch.current && (
-                <span className="text-xs text-muted-foreground"><Trans>(current)</Trans></span>
+                <span className='text-muted-foreground text-xs'>
+                  <Trans>(current)</Trans>
+                </span>
               )}
             </div>
           </SelectItem>
         ))}
         {isError && repositoryId && (
-          <div className="px-2 py-1.5 text-sm text-destructive">
+          <div className='text-destructive px-2 py-1.5 text-sm'>
             <Trans>Could not load branches</Trans>
           </div>
         )}
         {branches.length === 0 && repositoryId && !isLoading && !isError && (
-          <div className="px-2 py-1.5 text-sm text-muted-foreground">
+          <div className='text-muted-foreground px-2 py-1.5 text-sm'>
             <Trans>No branches found</Trans>
           </div>
         )}
       </SelectContent>
     </Select>
-  );
+  )
 }

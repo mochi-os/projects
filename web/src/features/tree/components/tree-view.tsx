@@ -3,21 +3,18 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 // This file is part of Mochi, licensed under the GNU AGPL v3 with the
 // Mochi Application Interface Exception - see license.txt and license-exception.md.
-
 // Binding for the shared tree view. The project prefix is what enables the ID
 // column, so it is passed even though the shared component treats it as optional.
-
-import { EntityTreeView, type EntityTreeViewProps } from "@mochi/web";
-import type { ProjectDetails, ProjectObject } from "@/types";
-
+import type { ProjectDetails, ProjectObject } from '@/types'
+import { EntityTreeView, type EntityTreeViewProps } from '@mochi/web'
 
 type TreeViewProps = Omit<
   EntityTreeViewProps<ProjectObject>,
-  "design" | "containerId" | "storagePrefix" | "prefix"
+  'design' | 'containerId' | 'storagePrefix' | 'prefix'
 > & {
-  project: ProjectDetails;
-  projectId: string;
-};
+  project: ProjectDetails
+  projectId: string
+}
 
 export function TreeView({ project, ...props }: TreeViewProps) {
   return (
@@ -28,8 +25,8 @@ export function TreeView({ project, ...props }: TreeViewProps) {
       {...props}
       design={project}
       containerId={project.project.id}
-      storagePrefix="projects"
+      storagePrefix='projects'
       prefix={project.project.prefix}
     />
-  );
+  )
 }

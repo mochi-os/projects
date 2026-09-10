@@ -3,31 +3,30 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 // This file is part of Mochi, licensed under the GNU AGPL v3 with the
 // Mochi Application Interface Exception - see license.txt and license-exception.md.
-
-import { Trans } from "@lingui/react/macro";
+import type { ProjectDetails, ProjectObject } from '@/types'
+import { Trans } from '@lingui/react/macro'
 import {
   EntityCreateObjectDialog,
   type EntityCreateObjectDialogProps,
-} from "@mochi/web";
-import projectsApi from "@/api/projects";
-import type { ProjectDetails, ProjectObject } from "@/types";
+} from '@mochi/web'
+import projectsApi from '@/api/projects'
 
 type CreateObjectDialogProps = Omit<
   EntityCreateObjectDialogProps<ProjectObject>,
-  | "containerId"
-  | "recordId"
-  | "design"
-  | "prefix"
-  | "srTitle"
-  | "srDescription"
-  | "buildObject"
-  | "listObjects"
-  | "listPeople"
-  | "createObject"
-  | "setValue"
-  | "uploadAttachments"
-  | "searchUsers"
-> & { projectId: string; project: ProjectDetails };
+  | 'containerId'
+  | 'recordId'
+  | 'design'
+  | 'prefix'
+  | 'srTitle'
+  | 'srDescription'
+  | 'buildObject'
+  | 'listObjects'
+  | 'listPeople'
+  | 'createObject'
+  | 'setValue'
+  | 'uploadAttachments'
+  | 'searchUsers'
+> & { projectId: string; project: ProjectDetails }
 
 export function CreateObjectDialog({
   projectId,
@@ -55,5 +54,5 @@ export function CreateObjectDialog({
       uploadAttachments={projectsApi.uploadAttachments}
       searchUsers={projectsApi.searchUsers}
     />
-  );
+  )
 }

@@ -3,118 +3,171 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 // This file is part of Mochi, licensed under the GNU AGPL v3 with the
 // Mochi Application Interface Exception - see license.txt and license-exception.md.
-
-import { useEffect, useRef, useState } from "react";
-import { Trans } from '@lingui/react/macro'
+import { useEffect, useRef, useState } from 'react'
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
+import type { RequestData } from '@/types'
 import { t } from '@lingui/core/macro'
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { ArrowRight, GitMerge, Plus, Trash2, ChevronDown, ChevronRight } from "lucide-react";
-import { Button, Card, ConfirmDialog, Input, Switch, Textarea, cn, Tooltip, TooltipTrigger, TooltipContent, getAppPath, toast, getErrorMessage } from "@mochi/web";
-import projectsApi from "@/api/projects";
-import { diffUrl } from "@/lib/diff";
-import type { RequestData } from "@/types";
-import { RepositorySelect } from "./repository-select";
-import { BranchSelect } from "./branch-select";
-import { MergeStatus } from "./merge-status";
-import { DiffStats } from "./diff-stats";
-import { ConflictList } from "./conflict-list";
-import { MergeButton } from "./merge-button";
+import { Trans } from '@lingui/react/macro'
+import {
+  Button,
+  Card,
+  ConfirmDialog,
+  Input,
+  Switch,
+  Textarea,
+  cn,
+  Tooltip,
+  TooltipTrigger,
+  TooltipContent,
+  getAppPath,
+  toast,
+  getErrorMessage,
+} from '@mochi/web'
+import {
+  ArrowRight,
+  GitMerge,
+  Plus,
+  Trash2,
+  ChevronDown,
+  ChevronRight,
+} from 'lucide-react'
+import projectsApi from '@/api/projects'
+import { diffUrl } from '@/lib/diff'
+import { BranchSelect } from './branch-select'
+import { ConflictList } from './conflict-list'
+import { DiffStats } from './diff-stats'
+import { MergeButton } from './merge-button'
+import { MergeStatus } from './merge-status'
+import { RepositorySelect } from './repository-select'
 import {
   requestStateBadgeStyles,
   requestStatusTextStyles,
-} from "./request-status-styles";
+} from './request-status-styles'
 
 interface RequestPanelProps {
-  projectId: string;
-  objectId: string;
-  requests: RequestData[];
-  objectTitle?: string;
-  objectReadable?: string;
-  readOnly?: boolean;
+  projectId: string
+  objectId: string
+  requests: RequestData[]
+  objectTitle?: string
+  objectReadable?: string
+  readOnly?: boolean
 }
 
 export function RequestPanel({
   projectId,
   objectId,
   requests,
-  objectTitle = "",
-  objectReadable = "",
+  objectTitle = '',
+  objectReadable = '',
   readOnly,
 }: RequestPanelProps) {
-  const [expandedId, setExpandedId] = useState<string | null>(null);
-  const [deleteId, setDeleteId] = useState<string | null>(null);
-  const queryClient = useQueryClient();
+  const [expandedId, setExpandedId] = useState<string | null>(null)
+  const [deleteId, setDeleteId] = useState<string | null>(null)
+  const queryClient = useQueryClient()
 
   const createMutation = useMutation({
     mutationFn: async () => {
-      return projectsApi.createRequest(projectId, objectId, { type: "merge" });
+      return projectsApi.createRequest(projectId, objectId, { type: 'merge' })
     },
     onSuccess: (response) => {
-      queryClient.invalidateQueries({ queryKey: ["object", projectId, objectId] });
-      setExpandedId(response.data.id);
+      queryClient.invalidateQueries({
+        queryKey: ['object', projectId, objectId],
+      })
+      setExpandedId(response.data.id)
     },
     onError: (error) => {
-      toast.error(getErrorMessage(error, t`Failed to create merge request`));
+      toast.error(getErrorMessage(error, t`Failed to create merge request`))
     },
-  });
+  })
 
   const updateMutation = useMutation({
-    mutationFn: async ({ requestId, data }: { requestId: string; data: { repository?: string; source?: string; target?: string; status?: string; title?: string; description?: string; draft?: string } }) => {
-      return projectsApi.updateRequest(projectId, objectId, requestId, data);
+    mutationFn: async ({
+      requestId,
+      data,
+    }: {
+      requestId: string
+      data: {
+        repository?: string
+        source?: string
+        target?: string
+        status?: string
+        title?: string
+        description?: string
+        draft?: string
+      }
+    }) => {
+      return projectsApi.updateRequest(projectId, objectId, requestId, data)
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["object", projectId, objectId] });
+      queryClient.invalidateQueries({
+        queryKey: ['object', projectId, objectId],
+      })
     },
     onError: (error) => {
-      toast.error(getErrorMessage(error, t`Failed to update merge request`));
+      toast.error(getErrorMessage(error, t`Failed to update merge request`))
     },
-  });
+  })
 
   const deleteMutation = useMutation({
     mutationFn: async (requestId: string) => {
-      return projectsApi.deleteRequest(projectId, objectId, requestId);
+      return projectsApi.deleteRequest(projectId, objectId, requestId)
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["object", projectId, objectId] });
-      setDeleteId(null);
-      setExpandedId(null);
+      queryClient.invalidateQueries({
+        queryKey: ['object', projectId, objectId],
+      })
+      setDeleteId(null)
+      setExpandedId(null)
     },
     onError: (error) => {
-      toast.error(getErrorMessage(error, t`Failed to delete merge request`));
+      toast.error(getErrorMessage(error, t`Failed to delete merge request`))
     },
-  });
+  })
 
   const handleAdd = () => {
-    createMutation.mutate();
-  };
+    createMutation.mutate()
+  }
 
-  const handleUpdate = (requestId: string, data: { repository?: string; source?: string; target?: string; status?: string; title?: string; description?: string; draft?: string }) => {
-    updateMutation.mutate({ requestId, data });
-  };
+  const handleUpdate = (
+    requestId: string,
+    data: {
+      repository?: string
+      source?: string
+      target?: string
+      status?: string
+      title?: string
+      description?: string
+      draft?: string
+    }
+  ) => {
+    updateMutation.mutate({ requestId, data })
+  }
 
   return (
-    <div className="space-y-3">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2 text-sm font-medium">
-          <GitMerge className="size-4" />
+    <div className='space-y-3'>
+      <div className='flex items-center justify-between'>
+        <div className='flex items-center gap-2 text-sm font-medium'>
+          <GitMerge className='size-4' />
           <Trans>Merge requests</Trans>
         </div>
         {!readOnly && (
           <Button
-            variant="outline"
-            size="sm"
-            className="h-7 text-xs"
+            variant='outline'
+            size='sm'
+            className='h-7 text-xs'
             onClick={handleAdd}
             disabled={createMutation.isPending}
           >
-            <Plus className="size-3" />
+            <Plus className='size-3' />
             <Trans>Add</Trans>
           </Button>
         )}
       </div>
 
       {requests.length === 0 && (
-        <p className="text-sm text-muted-foreground"><Trans>No merge requests</Trans></p>
+        <p className='text-muted-foreground text-sm'>
+          <Trans>No merge requests</Trans>
+        </p>
       )}
 
       {requests.map((req) => (
@@ -143,19 +196,27 @@ export function RequestPanel({
         handleConfirm={() => deleteId && deleteMutation.mutate(deleteId)}
       />
     </div>
-  );
+  )
 }
 
 interface RequestItemProps {
-  request: RequestData;
-  expanded: boolean;
-  onToggle: () => void;
-  onUpdate: (data: { repository?: string; source?: string; target?: string; status?: string; title?: string; description?: string; draft?: string }) => void;
-  onDelete: () => void;
-  objectTitle: string;
-  objectReadable: string;
-  projectId: string;
-  readOnly?: boolean;
+  request: RequestData
+  expanded: boolean
+  onToggle: () => void
+  onUpdate: (data: {
+    repository?: string
+    source?: string
+    target?: string
+    status?: string
+    title?: string
+    description?: string
+    draft?: string
+  }) => void
+  onDelete: () => void
+  objectTitle: string
+  objectReadable: string
+  projectId: string
+  readOnly?: boolean
 }
 
 function RequestItem({
@@ -169,153 +230,193 @@ function RequestItem({
   projectId,
   readOnly,
 }: RequestItemProps) {
-  const ref = useRef<HTMLDivElement>(null);
-  const isMerged = request.status === "merged";
-  const isDraft = request.draft === 1;
+  const ref = useRef<HTMLDivElement>(null)
+  const isMerged = request.status === 'merged'
+  const isDraft = request.draft === 1
 
   useEffect(() => {
     if (expanded) {
-      ref.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      ref.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
     }
-  }, [expanded]);
+  }, [expanded])
 
-  const [title, setTitle] = useState(request.title);
-  const [description, setDescription] = useState(request.description);
+  const [title, setTitle] = useState(request.title)
+  const [description, setDescription] = useState(request.description)
 
   // Resync the local copies when the request changes, except while the field
   // has focus, so an update landing mid-edit does not yank the text (same rule
   // as the object field editor).
-  const titleFocusedRef = useRef(false);
-  const descriptionFocusedRef = useRef(false);
+  const titleFocusedRef = useRef(false)
+  const descriptionFocusedRef = useRef(false)
 
   useEffect(() => {
-    if (!titleFocusedRef.current) setTitle(request.title);
-  }, [request.title]);
+    if (!titleFocusedRef.current) setTitle(request.title)
+  }, [request.title])
 
   useEffect(() => {
-    if (!descriptionFocusedRef.current) setDescription(request.description);
-  }, [request.description]);
+    if (!descriptionFocusedRef.current) setDescription(request.description)
+  }, [request.description])
 
   // Fetch merge check when expanded and has all fields
   const { data: mergeCheck } = useQuery({
-    queryKey: ["merge-check", request.repository, request.source, request.target],
+    queryKey: [
+      'merge-check',
+      request.repository,
+      request.source,
+      request.target,
+    ],
     queryFn: async () => {
-      const response = await projectsApi.checkMerge(request.repository, request.source, request.target);
-      return response.data;
+      const response = await projectsApi.checkMerge(
+        request.repository,
+        request.source,
+        request.target
+      )
+      return response.data
     },
-    enabled: expanded && !!request.repository && !!request.source && !!request.target && !isMerged,
-  });
+    enabled:
+      expanded &&
+      !!request.repository &&
+      !!request.source &&
+      !!request.target &&
+      !isMerged,
+  })
 
-  const canMerge = mergeCheck?.mergeable ?? false;
-  const conflicts = mergeCheck?.conflicts ?? [];
+  const canMerge = mergeCheck?.mergeable ?? false
+  const conflicts = mergeCheck?.conflicts ?? []
 
   const handleRepoChange = (value: string) => {
-    onUpdate({ repository: value, source: "", target: "" });
-  };
+    onUpdate({ repository: value, source: '', target: '' })
+  }
 
   const handleSourceChange = (value: string) => {
-    onUpdate({ source: value });
-  };
+    onUpdate({ source: value })
+  }
 
   const handleTargetChange = (value: string) => {
-    onUpdate({ target: value });
-  };
+    onUpdate({ target: value })
+  }
 
   const handleMergeComplete = () => {
-    onUpdate({ status: "merged" });
-  };
+    onUpdate({ status: 'merged' })
+  }
 
   const handleTitleBlur = () => {
-    titleFocusedRef.current = false;
+    titleFocusedRef.current = false
     if (!title.trim()) {
-      setTitle(request.title);
-      return;
+      setTitle(request.title)
+      return
     }
     if (title !== request.title) {
-      onUpdate({ title });
+      onUpdate({ title })
     }
-  };
+  }
 
   const handleDescriptionBlur = () => {
-    descriptionFocusedRef.current = false;
+    descriptionFocusedRef.current = false
     if (description !== request.description) {
-      onUpdate({ description });
+      onUpdate({ description })
     }
-  };
+  }
 
   const handleDraftToggle = () => {
-    onUpdate({ draft: isDraft ? "0" : "1" });
-  };
+    onUpdate({ draft: isDraft ? '0' : '1' })
+  }
 
   // Summary line for collapsed state
   const summary = request.title
     ? request.title
     : request.repository
-      ? `${request.source || "?"} → ${request.target || "?"}`
-      : t`Not configured`;
+      ? `${request.source || '?'} → ${request.target || '?'}`
+      : t`Not configured`
 
   const borderColor = isMerged
-    ? "border-success/40"
+    ? 'border-success/40'
     : request.repository && request.source && request.target
-      ? "border-primary/40"
-      : "border-border";
+      ? 'border-primary/40'
+      : 'border-border'
 
   return (
-    <Card ref={ref} className={cn("overflow-hidden border-2 p-0 py-0 gap-0 shadow-none", borderColor)}>
+    <Card
+      ref={ref}
+      className={cn(
+        'gap-0 overflow-hidden border-2 p-0 py-0 shadow-none',
+        borderColor
+      )}
+    >
       {/* Header row */}
       <button
-        type="button"
+        type='button'
         onClick={onToggle}
-        className="flex items-center gap-2 w-full px-3 py-2 text-sm hover:bg-hover transition-colors text-start"
+        className='hover:bg-hover flex w-full items-center gap-2 px-3 py-2 text-start text-sm transition-colors'
       >
         {expanded ? (
-          <ChevronDown className="size-3.5 shrink-0 text-muted-foreground" />
+          <ChevronDown className='text-muted-foreground size-3.5 shrink-0' />
         ) : (
-          <ChevronRight className="size-3.5 shrink-0 text-muted-foreground rtl:rotate-180" />
+          <ChevronRight className='text-muted-foreground size-3.5 shrink-0 rtl:rotate-180' />
         )}
-        {!expanded && <span className="flex-1 truncate text-muted-foreground">{summary}</span>}
-        {expanded && <span className="flex-1" />}
+        {!expanded && (
+          <span className='text-muted-foreground flex-1 truncate'>
+            {summary}
+          </span>
+        )}
+        {expanded && <span className='flex-1' />}
         {isDraft && !isMerged && (
-          <span className={requestStateBadgeStyles.draft}><Trans>Draft</Trans></span>
+          <span className={requestStateBadgeStyles.draft}>
+            <Trans>Draft</Trans>
+          </span>
         )}
         {isMerged && (
-          <span className={requestStateBadgeStyles.merged}><Trans>Merged</Trans></span>
+          <span className={requestStateBadgeStyles.merged}>
+            <Trans>Merged</Trans>
+          </span>
         )}
-        {!isMerged && !isDraft && request.repository && request.source && request.target && (
-          <span className={requestStateBadgeStyles.open}><Trans context='state'>Open</Trans></span>
-        )}
+        {!isMerged &&
+          !isDraft &&
+          request.repository &&
+          request.source &&
+          request.target && (
+            <span className={requestStateBadgeStyles.open}>
+              <Trans context='state'>Open</Trans>
+            </span>
+          )}
       </button>
 
       {/* Expanded content */}
       {expanded && (
-        <div className="px-3 pb-3 space-y-3 border-t">
-          <div className="space-y-3 pt-3">
+        <div className='space-y-3 border-t px-3 pb-3'>
+          <div className='space-y-3 pt-3'>
             {!readOnly && !isMerged && (
               <Input
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                onFocus={() => { titleFocusedRef.current = true; }}
+                onFocus={() => {
+                  titleFocusedRef.current = true
+                }}
                 onBlur={handleTitleBlur}
                 placeholder={t`Title`}
                 autoFocus={!title}
               />
             )}
             {readOnly && request.title && (
-              <div className="text-sm font-medium">{request.title}</div>
+              <div className='text-sm font-medium'>{request.title}</div>
             )}
 
             {!readOnly && !isMerged && (
               <Textarea
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
-                onFocus={() => { descriptionFocusedRef.current = true; }}
+                onFocus={() => {
+                  descriptionFocusedRef.current = true
+                }}
                 onBlur={handleDescriptionBlur}
                 placeholder={t`Description`}
                 rows={2}
               />
             )}
             {readOnly && request.description && (
-              <div className="text-sm text-muted-foreground whitespace-pre-wrap">{request.description}</div>
+              <div className='text-muted-foreground text-sm whitespace-pre-wrap'>
+                {request.description}
+              </div>
             )}
 
             <RepositorySelect
@@ -324,7 +425,7 @@ function RequestItem({
               disabled={readOnly || isMerged}
             />
 
-            <div className="grid grid-cols-[1fr_auto_1fr] items-end gap-2">
+            <div className='grid grid-cols-[1fr_auto_1fr] items-end gap-2'>
               <BranchSelect
                 repositoryId={request.repository}
                 value={request.source}
@@ -332,7 +433,7 @@ function RequestItem({
                 placeholder={t`Source`}
                 disabled={readOnly || isMerged}
               />
-              <ArrowRight className="size-4 text-muted-foreground mb-2.5 rtl:rotate-180" />
+              <ArrowRight className='text-muted-foreground mb-2.5 size-4 rtl:rotate-180' />
               <BranchSelect
                 repositoryId={request.repository}
                 value={request.target}
@@ -343,18 +444,17 @@ function RequestItem({
             </div>
 
             {!readOnly && !isMerged && (
-              <label className="flex items-center gap-2 text-sm cursor-pointer">
-                <Switch
-                  checked={isDraft}
-                  onCheckedChange={handleDraftToggle}
-                />
-                <span className="text-muted-foreground"><Trans>Draft</Trans></span>
+              <label className='flex cursor-pointer items-center gap-2 text-sm'>
+                <Switch checked={isDraft} onCheckedChange={handleDraftToggle} />
+                <span className='text-muted-foreground'>
+                  <Trans>Draft</Trans>
+                </span>
               </label>
             )}
           </div>
 
           {request.repository && request.source && request.target && (
-            <div className="pt-3 border-t space-y-3">
+            <div className='space-y-3 border-t pt-3'>
               {!isMerged && (
                 <>
                   <MergeStatus
@@ -363,7 +463,9 @@ function RequestItem({
                     target={request.target}
                   />
 
-                  {conflicts.length > 0 && <ConflictList conflicts={conflicts} />}
+                  {conflicts.length > 0 && (
+                    <ConflictList conflicts={conflicts} />
+                  )}
 
                   <DiffStats
                     repositoryId={request.repository}
@@ -373,12 +475,16 @@ function RequestItem({
                   />
 
                   {isDraft && (
-                    <p className={cn("text-sm", requestStatusTextStyles.warning)}>
-                      <Trans>This merge request is a draft and cannot be merged.</Trans>
+                    <p
+                      className={cn('text-sm', requestStatusTextStyles.warning)}
+                    >
+                      <Trans>
+                        This merge request is a draft and cannot be merged.
+                      </Trans>
                     </p>
                   )}
 
-                  <div className="flex items-center gap-2">
+                  <div className='flex items-center gap-2'>
                     <MergeButton
                       repositoryId={request.repository}
                       source={request.source}
@@ -394,13 +500,13 @@ function RequestItem({
                       <Tooltip>
                         <TooltipTrigger asChild>
                           <Button
-                            variant="ghost"
-                            size="icon"
-                            className="h-9 w-9 shrink-0 text-muted-foreground"
+                            variant='ghost'
+                            size='icon'
+                            className='text-muted-foreground h-9 w-9 shrink-0'
                             onClick={onDelete}
                             aria-label={t`Delete merge request`}
                           >
-                            <Trash2 className="size-4" />
+                            <Trash2 className='size-4' />
                           </Button>
                         </TooltipTrigger>
                         <TooltipContent>{t`Delete merge request`}</TooltipContent>
@@ -411,21 +517,23 @@ function RequestItem({
               )}
 
               {isMerged && (
-                <div className="flex items-center justify-between">
-                  <div className="text-sm text-muted-foreground">
-                    <Trans>This merge request has been merged into {request.target}.</Trans>
+                <div className='flex items-center justify-between'>
+                  <div className='text-muted-foreground text-sm'>
+                    <Trans>
+                      This merge request has been merged into {request.target}.
+                    </Trans>
                   </div>
                   {!readOnly && (
                     <Tooltip>
                       <TooltipTrigger asChild>
                         <Button
-                          variant="ghost"
-                          size="icon"
-                          className="h-9 w-9 shrink-0 text-muted-foreground"
+                          variant='ghost'
+                          size='icon'
+                          className='text-muted-foreground h-9 w-9 shrink-0'
                           onClick={onDelete}
                           aria-label={t`Delete merge request`}
                         >
-                          <Trash2 className="size-4" />
+                          <Trash2 className='size-4' />
                         </Button>
                       </TooltipTrigger>
                       <TooltipContent>{t`Delete merge request`}</TooltipContent>
@@ -436,26 +544,27 @@ function RequestItem({
             </div>
           )}
 
-          {!readOnly && !(request.repository && request.source && request.target) && (
-            <div className="flex justify-end">
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="h-9 w-9 shrink-0 text-muted-foreground"
-                    onClick={onDelete}
-                    aria-label={t`Delete merge request`}
-                  >
-                    <Trash2 className="size-4" />
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent>{t`Delete merge request`}</TooltipContent>
-              </Tooltip>
-            </div>
-          )}
+          {!readOnly &&
+            !(request.repository && request.source && request.target) && (
+              <div className='flex justify-end'>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button
+                      variant='ghost'
+                      size='icon'
+                      className='text-muted-foreground h-9 w-9 shrink-0'
+                      onClick={onDelete}
+                      aria-label={t`Delete merge request`}
+                    >
+                      <Trash2 className='size-4' />
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>{t`Delete merge request`}</TooltipContent>
+                </Tooltip>
+              </div>
+            )}
         </div>
       )}
     </Card>
-  );
+  )
 }

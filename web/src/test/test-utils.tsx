@@ -5,4 +5,4 @@
 
 // The render wrapper and every fixture over the shared object model live in
 // @mochi/web — see components/entity/entity-test-utils.
-export * from "@mochi/web/components/entity/entity-test-utils";
+export * from '@mochi/web/components/entity/entity-test-utils'

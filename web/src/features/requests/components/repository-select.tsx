@@ -3,10 +3,9 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 // This file is part of Mochi, licensed under the GNU AGPL v3 with the
 // Mochi Application Interface Exception - see license.txt and license-exception.md.
-
-import { useQuery } from "@tanstack/react-query";
-import { Trans } from '@lingui/react/macro'
+import { useQuery } from '@tanstack/react-query'
 import { t } from '@lingui/core/macro'
+import { Trans } from '@lingui/react/macro'
 import {
   Select,
   SelectContent,
@@ -14,14 +13,14 @@ import {
   SelectTrigger,
   SelectValue,
   naturalCompare,
-} from "@mochi/web";
-import { GitBranch } from "lucide-react";
-import projectsApi from "@/api/projects";
+} from '@mochi/web'
+import { GitBranch } from 'lucide-react'
+import projectsApi from '@/api/projects'
 
 interface RepositorySelectProps {
-  value: string;
-  onChange: (value: string) => void;
-  disabled?: boolean;
+  value: string
+  onChange: (value: string) => void
+  disabled?: boolean
 }
 
 export function RepositorySelect({
@@ -30,16 +29,16 @@ export function RepositorySelect({
   disabled,
 }: RepositorySelectProps) {
   const { data, isLoading, isError } = useQuery({
-    queryKey: ["repositories"],
+    queryKey: ['repositories'],
     queryFn: async () => {
-      const response = await projectsApi.listRepositories();
-      return response.data.repositories;
+      const response = await projectsApi.listRepositories()
+      return response.data.repositories
     },
-  });
+  })
 
   const repositories = [...(data || [])].sort((a, b) =>
-    naturalCompare(a.name, b.name),
-  );
+    naturalCompare(a.name, b.name)
+  )
 
   return (
     <Select
@@ -47,9 +46,9 @@ export function RepositorySelect({
       onValueChange={onChange}
       disabled={disabled || isLoading}
     >
-      <SelectTrigger className="w-full">
-        <div className="flex items-center gap-2">
-          <GitBranch className="size-4 text-muted-foreground" />
+      <SelectTrigger className='w-full'>
+        <div className='flex items-center gap-2'>
+          <GitBranch className='text-muted-foreground size-4' />
           <SelectValue placeholder={t`Select repository`} />
         </div>
       </SelectTrigger>
@@ -60,16 +59,16 @@ export function RepositorySelect({
           </SelectItem>
         ))}
         {isError && (
-          <div className="px-2 py-1.5 text-sm text-destructive">
+          <div className='text-destructive px-2 py-1.5 text-sm'>
             <Trans>Could not load repositories</Trans>
           </div>
         )}
         {repositories.length === 0 && !isLoading && !isError && (
-          <div className="px-2 py-1.5 text-sm text-muted-foreground">
+          <div className='text-muted-foreground px-2 py-1.5 text-sm'>
             <Trans>No repositories available</Trans>
           </div>
         )}
       </SelectContent>
     </Select>
-  );
+  )
 }

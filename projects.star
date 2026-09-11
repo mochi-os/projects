@@ -3169,7 +3169,9 @@ def action_object_move(a):
 
 	# A value with no field would land under the empty field name and cascade
 	# there; every guard above is "if field and ...", so nothing else stops it.
-	if value != None and not field:
+	# An empty value means "keep the current one", and a reorder within a parent
+	# sends exactly that with no field.
+	if value and not field:
 		a.error.label(400, "errors.field_not_found")
 		return
 
@@ -8246,7 +8248,7 @@ def do_object_move(project_id, project, params, user_id):
 	if field and not mochi.db.exists("select 1 from fields where project=? and class=? and id=?", project_id, obj_class, field):
 		return {"error": "errors.field_not_found", "code": 400}
 	# Same as the HTTP twin: a value with no field is not a move.
-	if params.get("value") != None and not field:
+	if params.get("value") and not field:
 		return {"error": "errors.field_not_found", "code": 400}
 	value = params.get("value")
 	if value != None and type(value) != "string":

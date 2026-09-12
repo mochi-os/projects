@@ -33,7 +33,7 @@ import {
 } from 'lucide-react'
 import projectsApi from '@/api/projects'
 import { diffUrl } from '@/lib/diff'
-import { BranchSelect } from './branch-select'
+import { BranchSelect, useBranches } from './branch-select'
 import { ConflictList } from './conflict-list'
 import { DiffStats } from './diff-stats'
 import { MergeButton } from './merge-button'
@@ -283,6 +283,30 @@ function RequestItem({
 
   const canMerge = mergeCheck?.mergeable ?? false
   const conflicts = mergeCheck?.conflicts ?? []
+
+  // Seed the target with the repository's default branch, which is where a
+  // merge request nearly always goes. Once per repository, and never over a
+  // target already chosen: the update round-trips through the server, so the
+  // guard has to hold before request.target comes back changed.
+  const { data: branches } = useBranches(request.repository)
+  const seeded = useRef('')
+
+  useEffect(() => {
+    if (readOnly || isMerged) return
+    if (!request.repository || request.target) return
+    if (seeded.current === request.repository) return
+    const fallback = branches?.find((branch) => branch.default)
+    if (!fallback) return
+    seeded.current = request.repository
+    onUpdate({ target: fallback.name })
+  }, [
+    branches,
+    request.repository,
+    request.target,
+    readOnly,
+    isMerged,
+    onUpdate,
+  ])
 
   const handleRepoChange = (value: string) => {
     onUpdate({ repository: value, source: '', target: '' })

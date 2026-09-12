@@ -94,8 +94,10 @@ interface Repository {
 
 interface Branch {
   name: string
-  commit: string
-  current: boolean
+  sha: string
+  // The repository's default branch, resolved against git rather than the
+  // stored column. Absent from an older repositories release.
+  default?: boolean
 }
 
 export interface RepositoryListResponse {

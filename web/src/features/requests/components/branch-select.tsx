@@ -24,6 +24,20 @@ interface BranchSelectProps {
   disabled?: boolean
 }
 
+// The repository's branches, shared with whoever needs the default one as well
+// as the list.
+export function useBranches(repositoryId: string) {
+  return useQuery({
+    queryKey: ['branches', repositoryId],
+    queryFn: async () => {
+      if (!repositoryId) return []
+      const response = await projectsApi.getRepositoryBranches(repositoryId)
+      return response.data.branches
+    },
+    enabled: !!repositoryId,
+  })
+}
+
 export function BranchSelect({
   repositoryId,
   value,
@@ -33,15 +47,7 @@ export function BranchSelect({
 }: BranchSelectProps) {
   const { t } = useLingui()
   const placeholderText = placeholder ?? t`Select branch`
-  const { data, isLoading, isError } = useQuery({
-    queryKey: ['branches', repositoryId],
-    queryFn: async () => {
-      if (!repositoryId) return []
-      const response = await projectsApi.getRepositoryBranches(repositoryId)
-      return response.data.branches
-    },
-    enabled: !!repositoryId,
-  })
+  const { data, isLoading, isError } = useBranches(repositoryId)
 
   const branches = [...(data || [])].sort((a, b) =>
     naturalCompare(a.name, b.name)
@@ -62,14 +68,7 @@ export function BranchSelect({
       <SelectContent>
         {branches.map((branch) => (
           <SelectItem key={branch.name} value={branch.name}>
-            <div className='flex items-center gap-2'>
-              {branch.name}
-              {branch.current && (
-                <span className='text-muted-foreground text-xs'>
-                  <Trans>(current)</Trans>
-                </span>
-              )}
-            </div>
+            <div className='flex items-center gap-2'>{branch.name}</div>
           </SelectItem>
         ))}
         {isError && repositoryId && (

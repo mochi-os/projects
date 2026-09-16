@@ -554,23 +554,26 @@ export function CreateProjectDialog({
               >
                 <Trans>Cancel</Trans>
               </Button>
-              <Button type='button' onClick={handleNext} disabled={isPending}>
-                {importDesign || importArchive ? (
-                  isPending ? (
-                    <Trans>Creating...</Trans>
-                  ) : (
-                    <>
-                      <Plus className='me-2 size-4' />
-                      <Trans>Create project</Trans>
-                    </>
-                  )
-                ) : (
-                  <>
-                    <Trans>Next</Trans>
+              {importDesign || importArchive ? (
+                <Button
+                  type='button'
+                  onClick={handleNext}
+                  loading={isPending}
+                  icon={<Plus className='me-2 size-4' />}
+                >
+                  <Trans>Create project</Trans>
+                </Button>
+              ) : (
+                <Button
+                  type='button'
+                  onClick={handleNext}
+                  trailingIcon={
                     <ArrowRight className='ms-2 size-4 rtl:rotate-180' />
-                  </>
-                )}
-              </Button>
+                  }
+                >
+                  <Trans>Next</Trans>
+                </Button>
+              )}
             </ResponsiveDialogFooter>
           </div>
         ) : (
@@ -660,15 +663,13 @@ export function CreateProjectDialog({
                 <ArrowLeft className='me-2 size-4 rtl:rotate-180' />
                 <Trans>Back</Trans>
               </Button>
-              <Button type='submit' disabled={isPending || !selectedTemplate}>
-                {isPending ? (
-                  <Trans>Creating...</Trans>
-                ) : (
-                  <>
-                    <Plus className='me-2 size-4' />
-                    <Trans>Create project</Trans>
-                  </>
-                )}
+              <Button
+                type='submit'
+                loading={isPending}
+                disabled={!selectedTemplate}
+                icon={<Plus className='me-2 size-4' />}
+              >
+                <Trans>Create project</Trans>
               </Button>
             </ResponsiveDialogFooter>
           </form>

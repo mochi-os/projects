@@ -156,9 +156,9 @@ export function RequestPanel({
             size='sm'
             className='h-7 text-xs'
             onClick={handleAdd}
-            disabled={createMutation.isPending}
+            loading={createMutation.isPending}
+            icon={<Plus className='size-3' />}
           >
-            <Plus className='size-3' />
             <Trans>Add</Trans>
           </Button>
         )}

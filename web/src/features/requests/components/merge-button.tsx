@@ -7,7 +7,7 @@ import { useState } from 'react'
 import { useMutation } from '@tanstack/react-query'
 import { Trans, useLingui } from '@lingui/react/macro'
 import { Button, ConfirmDialog, cn, getErrorMessage } from '@mochi/web'
-import { GitMerge, Loader2, CheckCircle2 } from 'lucide-react'
+import { GitMerge, CheckCircle2 } from 'lucide-react'
 import projectsApi from '@/api/projects'
 import { requestStatusTextStyles } from './request-status-styles'
 
@@ -87,20 +87,12 @@ export function MergeButton({
     <>
       <Button
         onClick={() => setShowConfirm(true)}
-        disabled={!canMerge || disabled || mergeMutation.isPending}
+        loading={mergeMutation.isPending}
+        disabled={!canMerge || disabled}
+        icon={<GitMerge className='me-2 size-4' />}
         className='flex-1'
       >
-        {mergeMutation.isPending ? (
-          <>
-            <Loader2 className='me-2 size-4 animate-spin' />
-            <Trans>Merging...</Trans>
-          </>
-        ) : (
-          <>
-            <GitMerge className='me-2 size-4' />
-            {methodLabels[method]}
-          </>
-        )}
+        {methodLabels[method]}
       </Button>
 
       {mergeMutation.isError && (

@@ -100,9 +100,21 @@ msgstr "{count, plural, one {#မိ} other {#မိ}}"
 msgid "{count, plural, one {#w} other {#w}}"
 msgstr "{count, plural, one {#ပတ်} other {#ပတ်}}"
 
+#: ../../../lib/web/src/components/calendar/tooltip.ts
+msgid "{day}, {from} to {to}"
+msgstr "{day} {from} မှ {to}"
+
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx
 msgid "{entityLabel} name"
 msgstr "{entityLabel} အမည်"
+
+#: ../../../lib/web/src/components/calendar/tooltip.ts
+msgid "{from} to {to}"
+msgstr "{from} မှ {to}"
+
+#: ../../../lib/web/src/components/calendar/month-grid.tsx
+msgid "{hidden, plural, one {+# more} other {+# more}}"
+msgstr "{hidden, plural, other {+# ခု ထပ်မံ}}"
 
 #: ../../../lib/web/src/components/game/game-draw-offer-banner.tsx
 msgid "{opponentName} offered a draw"
@@ -282,6 +294,10 @@ msgstr "ကြည့်ရှုမှု ထည့်မည်"
 #: ../../../lib/web/src/components/ui/sort-selector.tsx
 msgid "AI"
 msgstr "AI"
+
+#: ../../../lib/web/src/components/calendar/time-grid.tsx
+msgid "All day"
+msgstr "တစ်နေကုန်"
 
 #: src/components/layout/projects-layout.tsx
 msgid "All projects"
@@ -548,6 +564,11 @@ msgstr "ပြောင်းလဲခဲ့သည်"
 msgid "Changed {field}"
 msgstr "{field} ကို ပြောင်းလဲခဲ့သည်"
 
+#: ../../../lib/web/src/components/calendar/month-grid.tsx
+#: ../../../lib/web/src/components/calendar/time-grid.tsx
+msgid "Changed occurrence"
+msgstr "ပြောင်းလဲထားသော အကြိမ်"
+
 #: ../../../lib/web/src/hooks/use-field-type-labels.ts
 msgid "Checkbox"
 msgstr "checkbox"
@@ -559,6 +580,10 @@ msgstr "ပေါင်းစည်းမှု အခြေအနေ စစ်�
 #: ../../../lib/web/src/hooks/use-field-type-labels.ts
 msgid "Checklist"
 msgstr "Checklist"
+
+#: ../../../lib/web/src/components/ui/date-picker.tsx
+msgid "Choose a date"
+msgstr "ရက်စွဲ ရွေးပါ"
 
 #: ../../../lib/web/src/components/game/game-empty-state.tsx
 msgid "Choose a game from the sidebar or start a new one."
@@ -643,6 +668,7 @@ msgid "Collapse sidebar"
 msgstr "ဘေးဘား ခေါက်မည်"
 
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx
+#: ../../../lib/web/src/components/ui/create-entity-dialog.tsx
 msgid "Colour"
 msgstr "အရောင်"
 
@@ -1820,6 +1846,10 @@ msgstr "စိစစ်မှု"
 msgid "Monday"
 msgstr "တနင်္လာ"
 
+#: ../../../lib/web/src/components/calendar/date-header.tsx
+msgid "Month"
+msgstr "လ"
+
 #: ../../../lib/web/src/components/options-menu.tsx
 msgid "More options"
 msgstr "နောက်ထပ် ရွေးချယ်စရာများ"
@@ -1831,6 +1861,11 @@ msgstr "ရွှေ့ခဲ့သည်"
 #: ../../../lib/web/src/components/entity/entity-activity-list.tsx
 msgid "Moved {field}"
 msgstr "{field} ကို ရွှေ့ခဲ့သည်"
+
+#. placeholder {0}: dragging.day
+#: ../../../lib/web/src/components/calendar/month-grid.tsx
+msgid "Moving to {0}"
+msgstr "{0} သို့ ရွှေ့နေသည်"
 
 #: src/features/projects/components/create-project-dialog.tsx
 msgid "My project"
@@ -1893,6 +1928,14 @@ msgstr "ရှေ့သို့"
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx
 msgid "Next image"
 msgstr "နောက်ပုံ"
+
+#: ../../../lib/web/src/components/calendar/date-header.tsx
+msgid "Next month"
+msgstr "နောက်လ"
+
+#: ../../../lib/web/src/components/calendar/date-header.tsx
+msgid "Next year"
+msgstr "နောက်နှစ်"
 
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx
 msgid "No {parentClassNames} to add to"
@@ -2232,6 +2275,14 @@ msgstr "ရှေ့ဆက်သည် စာလုံး ၂၀ သို့မ
 msgid "Previous image"
 msgstr "ယခင်ပုံ"
 
+#: ../../../lib/web/src/components/calendar/date-header.tsx
+msgid "Previous month"
+msgstr "ယခင်လ"
+
+#: ../../../lib/web/src/components/calendar/date-header.tsx
+msgid "Previous year"
+msgstr "ယခင်နှစ်"
+
 #: ../../../lib/web/src/components/server-documents-footer.tsx
 #: ../../../lib/web/src/features/document/document-page.tsx
 msgid "Privacy"
@@ -2441,6 +2492,11 @@ msgstr "ကော်လံ အမည်ပြောင်း"
 #: ../../../lib/web/src/components/entity/entity-board-column.tsx
 msgid "Rename this board column"
 msgstr "ဤ board column ကို အမည်ပြောင်း"
+
+#: ../../../lib/web/src/components/calendar/month-grid.tsx
+#: ../../../lib/web/src/components/calendar/time-grid.tsx
+msgid "Repeats"
+msgstr "ထပ်ခါထပ်ခါ ဖြစ်သည်"
 
 #: src/routes/_authenticated/$projectId/design.tsx
 msgid "Replace design"
@@ -3241,6 +3297,10 @@ msgstr "<0>{0}</0> သို့ အတည်ပြုကုဒ် ပို့�
 #: ../../../lib/web/src/lib/preference-utils.ts
 msgid "Wednesday"
 msgstr "ဗုဒ္ဓဟူး"
+
+#: ../../../lib/web/src/components/calendar/date-header.tsx
+msgid "Year"
+msgstr "နှစ်"
 
 #: ../../../lib/web/src/features/errors/general-error.tsx
 msgid "You do not have access to this section."

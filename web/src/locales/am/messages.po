@@ -100,9 +100,21 @@ msgstr "{count, plural, one {#ደ} other {#ደ}}"
 msgid "{count, plural, one {#w} other {#w}}"
 msgstr "{count, plural, one {#ሳ} other {#ሳ}}"
 
+#: ../../../lib/web/src/components/calendar/tooltip.ts
+msgid "{day}, {from} to {to}"
+msgstr "{day}, ከ{from} እስከ {to}"
+
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx
 msgid "{entityLabel} name"
 msgstr "የ{entityLabel} ስም"
+
+#: ../../../lib/web/src/components/calendar/tooltip.ts
+msgid "{from} to {to}"
+msgstr "ከ{from} እስከ {to}"
+
+#: ../../../lib/web/src/components/calendar/month-grid.tsx
+msgid "{hidden, plural, one {+# more} other {+# more}}"
+msgstr "{hidden, plural, one {+# ተጨማሪ} other {+# ተጨማሪ}}"
 
 #: ../../../lib/web/src/components/game/game-draw-offer-banner.tsx
 msgid "{opponentName} offered a draw"
@@ -282,6 +294,10 @@ msgstr "እይታ ጨምር"
 #: ../../../lib/web/src/components/ui/sort-selector.tsx
 msgid "AI"
 msgstr "AI"
+
+#: ../../../lib/web/src/components/calendar/time-grid.tsx
+msgid "All day"
+msgstr "ሙሉ ቀን"
 
 #: src/components/layout/projects-layout.tsx
 msgid "All projects"
@@ -548,6 +564,11 @@ msgstr "ተቀይሯል"
 msgid "Changed {field}"
 msgstr "{field} ተቀይሯል"
 
+#: ../../../lib/web/src/components/calendar/month-grid.tsx
+#: ../../../lib/web/src/components/calendar/time-grid.tsx
+msgid "Changed occurrence"
+msgstr "የተቀየረ ድግግሞሽ"
+
 #: ../../../lib/web/src/hooks/use-field-type-labels.ts
 msgid "Checkbox"
 msgstr "ቼክቦክስ"
@@ -559,6 +580,10 @@ msgstr "የውህደት ሁኔታ በመፈተሽ ላይ..."
 #: ../../../lib/web/src/hooks/use-field-type-labels.ts
 msgid "Checklist"
 msgstr "ዝርዝር"
+
+#: ../../../lib/web/src/components/ui/date-picker.tsx
+msgid "Choose a date"
+msgstr "ቀን ይምረጡ"
 
 #: ../../../lib/web/src/components/game/game-empty-state.tsx
 msgid "Choose a game from the sidebar or start a new one."
@@ -643,6 +668,7 @@ msgid "Collapse sidebar"
 msgstr "የጎን አሞሌ አጥፋ"
 
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx
+#: ../../../lib/web/src/components/ui/create-entity-dialog.tsx
 msgid "Colour"
 msgstr "ቀለም"
 
@@ -1820,6 +1846,10 @@ msgstr "ቁጥጥር"
 msgid "Monday"
 msgstr "ሰኞ"
 
+#: ../../../lib/web/src/components/calendar/date-header.tsx
+msgid "Month"
+msgstr "ወር"
+
 #: ../../../lib/web/src/components/options-menu.tsx
 msgid "More options"
 msgstr "ተጨማሪ አማራጮች"
@@ -1831,6 +1861,11 @@ msgstr "ተንቀሳቅሷል"
 #: ../../../lib/web/src/components/entity/entity-activity-list.tsx
 msgid "Moved {field}"
 msgstr "{field} ተንቀሳቅሷል"
+
+#. placeholder {0}: dragging.day
+#: ../../../lib/web/src/components/calendar/month-grid.tsx
+msgid "Moving to {0}"
+msgstr "ወደ {0} በማንቀሳቀስ ላይ"
 
 #: src/features/projects/components/create-project-dialog.tsx
 msgid "My project"
@@ -1893,6 +1928,14 @@ msgstr "ቀጣይ"
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx
 msgid "Next image"
 msgstr "ቀጣይ ምስል"
+
+#: ../../../lib/web/src/components/calendar/date-header.tsx
+msgid "Next month"
+msgstr "ቀጣይ ወር"
+
+#: ../../../lib/web/src/components/calendar/date-header.tsx
+msgid "Next year"
+msgstr "ቀጣይ ዓመት"
 
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx
 msgid "No {parentClassNames} to add to"
@@ -2232,6 +2275,14 @@ msgstr "ቅድመ ቅጥያው 20 ቁምፊዎች ወይም ያነሰ መሆን 
 msgid "Previous image"
 msgstr "ቀዳሚ ምስል"
 
+#: ../../../lib/web/src/components/calendar/date-header.tsx
+msgid "Previous month"
+msgstr "ቀዳሚ ወር"
+
+#: ../../../lib/web/src/components/calendar/date-header.tsx
+msgid "Previous year"
+msgstr "ቀዳሚ ዓመት"
+
 #: ../../../lib/web/src/components/server-documents-footer.tsx
 #: ../../../lib/web/src/features/document/document-page.tsx
 msgid "Privacy"
@@ -2441,6 +2492,11 @@ msgstr "የአምድ ስም ቀይር"
 #: ../../../lib/web/src/components/entity/entity-board-column.tsx
 msgid "Rename this board column"
 msgstr "የዚህ ቦርድ አምድ ስም ቀይር"
+
+#: ../../../lib/web/src/components/calendar/month-grid.tsx
+#: ../../../lib/web/src/components/calendar/time-grid.tsx
+msgid "Repeats"
+msgstr "ይደገማል"
 
 #: src/routes/_authenticated/$projectId/design.tsx
 msgid "Replace design"
@@ -3241,6 +3297,10 @@ msgstr "የማረጋገጫ ኮድ ወደ <0>{0}</0> ልከናል። የኢሜይ
 #: ../../../lib/web/src/lib/preference-utils.ts
 msgid "Wednesday"
 msgstr "ረቡዕ"
+
+#: ../../../lib/web/src/components/calendar/date-header.tsx
+msgid "Year"
+msgstr "ዓመት"
 
 #: ../../../lib/web/src/features/errors/general-error.tsx
 msgid "You do not have access to this section."

@@ -100,9 +100,21 @@ msgstr "{count, plural, one {#წთ} other {#წთ}}"
 msgid "{count, plural, one {#w} other {#w}}"
 msgstr "{count, plural, one {#კვ} other {#კვ}}"
 
+#: ../../../lib/web/src/components/calendar/tooltip.ts
+msgid "{day}, {from} to {to}"
+msgstr "{day}, {from}-დან {to}-მდე"
+
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx
 msgid "{entityLabel} name"
 msgstr "{entityLabel}-ის სახელი"
+
+#: ../../../lib/web/src/components/calendar/tooltip.ts
+msgid "{from} to {to}"
+msgstr "{from}-დან {to}-მდე"
+
+#: ../../../lib/web/src/components/calendar/month-grid.tsx
+msgid "{hidden, plural, one {+# more} other {+# more}}"
+msgstr "{hidden, plural, one {+# სხვა} other {+# სხვა}}"
 
 #: ../../../lib/web/src/components/game/game-draw-offer-banner.tsx
 msgid "{opponentName} offered a draw"
@@ -282,6 +294,10 @@ msgstr "ხედის დამატება"
 #: ../../../lib/web/src/components/ui/sort-selector.tsx
 msgid "AI"
 msgstr "AI"
+
+#: ../../../lib/web/src/components/calendar/time-grid.tsx
+msgid "All day"
+msgstr "მთელი დღე"
 
 #: src/components/layout/projects-layout.tsx
 msgid "All projects"
@@ -548,6 +564,11 @@ msgstr "შეიცვალა"
 msgid "Changed {field}"
 msgstr "შეიცვალა {field}"
 
+#: ../../../lib/web/src/components/calendar/month-grid.tsx
+#: ../../../lib/web/src/components/calendar/time-grid.tsx
+msgid "Changed occurrence"
+msgstr "შეცვლილი გამეორება"
+
 #: ../../../lib/web/src/hooks/use-field-type-labels.ts
 msgid "Checkbox"
 msgstr "ფლაგი"
@@ -559,6 +580,10 @@ msgstr "შერწყმის სტატუსის შემოწმე�
 #: ../../../lib/web/src/hooks/use-field-type-labels.ts
 msgid "Checklist"
 msgstr "ჩამონათვალი"
+
+#: ../../../lib/web/src/components/ui/date-picker.tsx
+msgid "Choose a date"
+msgstr "აირჩიეთ თარიღი"
 
 #: ../../../lib/web/src/components/game/game-empty-state.tsx
 msgid "Choose a game from the sidebar or start a new one."
@@ -643,6 +668,7 @@ msgid "Collapse sidebar"
 msgstr "გვერდითა პანელის შეკვრა"
 
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx
+#: ../../../lib/web/src/components/ui/create-entity-dialog.tsx
 msgid "Colour"
 msgstr "ფერი"
 
@@ -1820,6 +1846,10 @@ msgstr "მოდერაცია"
 msgid "Monday"
 msgstr "ორშაბათი"
 
+#: ../../../lib/web/src/components/calendar/date-header.tsx
+msgid "Month"
+msgstr "თვე"
+
 #: ../../../lib/web/src/components/options-menu.tsx
 msgid "More options"
 msgstr "მეტი ვარიანტი"
@@ -1831,6 +1861,11 @@ msgstr "გადაადგილდა"
 #: ../../../lib/web/src/components/entity/entity-activity-list.tsx
 msgid "Moved {field}"
 msgstr "გადაადგილდა {field}"
+
+#. placeholder {0}: dragging.day
+#: ../../../lib/web/src/components/calendar/month-grid.tsx
+msgid "Moving to {0}"
+msgstr "მიმდინარეობს გადატანა {0}-ზე"
 
 #: src/features/projects/components/create-project-dialog.tsx
 msgid "My project"
@@ -1893,6 +1928,14 @@ msgstr "შემდეგი"
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx
 msgid "Next image"
 msgstr "შემდეგი სურათი"
+
+#: ../../../lib/web/src/components/calendar/date-header.tsx
+msgid "Next month"
+msgstr "შემდეგი თვე"
+
+#: ../../../lib/web/src/components/calendar/date-header.tsx
+msgid "Next year"
+msgstr "შემდეგი წელი"
 
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx
 msgid "No {parentClassNames} to add to"
@@ -2232,6 +2275,14 @@ msgstr "პრეფიქსი უნდა იყოს მაქსიმუ
 msgid "Previous image"
 msgstr "წინა სურათი"
 
+#: ../../../lib/web/src/components/calendar/date-header.tsx
+msgid "Previous month"
+msgstr "წინა თვე"
+
+#: ../../../lib/web/src/components/calendar/date-header.tsx
+msgid "Previous year"
+msgstr "წინა წელი"
+
 #: ../../../lib/web/src/components/server-documents-footer.tsx
 #: ../../../lib/web/src/features/document/document-page.tsx
 msgid "Privacy"
@@ -2441,6 +2492,11 @@ msgstr "სვეტის სახელის შეცვლა"
 #: ../../../lib/web/src/components/entity/entity-board-column.tsx
 msgid "Rename this board column"
 msgstr "ამ დაფის სვეტის სახელის შეცვლა"
+
+#: ../../../lib/web/src/components/calendar/month-grid.tsx
+#: ../../../lib/web/src/components/calendar/time-grid.tsx
+msgid "Repeats"
+msgstr "მეორდება"
 
 #: src/routes/_authenticated/$projectId/design.tsx
 msgid "Replace design"
@@ -3241,6 +3297,10 @@ msgstr "გავაგზავნეთ დამადასტურებ�
 #: ../../../lib/web/src/lib/preference-utils.ts
 msgid "Wednesday"
 msgstr "ოთხშაბათი"
+
+#: ../../../lib/web/src/components/calendar/date-header.tsx
+msgid "Year"
+msgstr "წელი"
 
 #: ../../../lib/web/src/features/errors/general-error.tsx
 msgid "You do not have access to this section."

@@ -2622,6 +2622,15 @@ def event_mention_notify(e):
 	body = mochi.app.label("notifications.body.mentioned_you", author=author, excerpt=excerpt)
 	notify("mention", project_id, title, body, url, event_id="mention:" + (object_id or project_id))
 
+# Whether a move may promote an object to the top level: one already there is
+# left as it is, and one under a parent needs a class the hierarchy allows at
+# the top level, as object/update requires for the same change.
+def promotable(project_id, object_id, obj_class):
+	row = mochi.db.row("select parent from objects where id=?", object_id)
+	if not row or not row["parent"]:
+		return True
+	return mochi.db.exists("select 1 from hierarchy where project=? and class=? and parent=''", project_id, obj_class)
+
 def would_create_cycle(object_id, new_parent_id):
 	"""Check if setting new_parent_id as parent of object_id would create a cycle."""
 	if not new_parent_id:
@@ -3151,6 +3160,9 @@ def action_object_move(a):
 	row = mochi.db.row("select id, class, rank from objects where id=? and project=?", object_id, project_id)
 	if not row:
 		a.error.label(404, "errors.object_not_found")
+		return
+	if a.input("promote") == "true" and not promotable(project_id, object_id, row["class"]):
+		a.error.label(400, "errors.parent_hierarchy_disallowed")
 		return
 
 	old_rank = row["rank"]
@@ -8233,6 +8245,8 @@ def do_object_move(project_id, project, params, user_id):
 	row = mochi.db.row("select id, class, rank from objects where id=? and project=?", object_id, project_id)
 	if not row:
 		return {"error": "errors.object_not_found", "code": 404}
+	if params.get("promote", "") == "true" and not promotable(project_id, object_id, row["class"]):
+		return {"error": "errors.parent_hierarchy_disallowed", "code": 400}
 	if check_length(params.get("value"), 10000):
 		return {"error": "errors.value_too_long", "code": 400}
 	row_field, row_value = row_input(params.get("row"))

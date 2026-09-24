@@ -100,6 +100,7 @@ msgstr "{count, plural, one {#min} other {#min}}"
 msgid "{count, plural, one {#w} other {#w}}"
 msgstr "{count, plural, one {#u} other {#u}}"
 
+#: ../../../lib/web/src/components/calendar/time-grid.tsx
 #: ../../../lib/web/src/components/calendar/tooltip.ts
 msgid "{day}, {from} to {to}"
 msgstr "{day}, {from} til {to}"
@@ -108,6 +109,7 @@ msgstr "{day}, {from} til {to}"
 msgid "{entityLabel} name"
 msgstr "{entityLabel}-navn"
 
+#: ../../../lib/web/src/components/calendar/time-grid.tsx
 #: ../../../lib/web/src/components/calendar/tooltip.ts
 msgid "{from} to {to}"
 msgstr "{from} til {to}"
@@ -296,6 +298,7 @@ msgid "AI"
 msgstr "KI"
 
 #: ../../../lib/web/src/components/calendar/time-grid.tsx
+#: ../../../lib/web/src/components/calendar/time-grid.tsx
 msgid "All day"
 msgstr "Hele dagen"
 
@@ -385,6 +388,10 @@ msgstr "Er du sikker på at du vil avslutte abonnementet på dette prosjektet?"
 #: ../../../lib/web/src/components/ui/sort-direction-button.tsx
 msgid "Ascending"
 msgstr "Stigende"
+
+#: ../../../lib/web/src/components/timezone-select.tsx
+msgid "At sea"
+msgstr "Til sjøs"
 
 #: ../../../lib/web/src/components/comment-composer.tsx
 msgid "Attach comment files"
@@ -491,6 +498,10 @@ msgstr "Nettleservarsler"
 #: src/routes/_authenticated/$projectId/design.tsx
 msgid "Built-in templates"
 msgstr "Innebygde maler"
+
+#: ../../../lib/web/src/features/accounts/types.ts
+msgid "Calendar server"
+msgstr "Kalenderserver"
 
 #: ../../../lib/web/src/lib/shell-errors.ts
 msgid "Camera permission denied"
@@ -755,6 +766,10 @@ msgstr "Fortsett"
 msgid "Continue with {label}"
 msgstr "Fortsett med {label}"
 
+#: ../../../lib/web/src/features/accounts/account-add.tsx
+msgid "Continue with {providerLabel}"
+msgstr "Fortsett med {providerLabel}"
+
 #: ../../../lib/web/src/lib/toast-utils.ts
 msgid "Copied"
 msgstr "Kopiert"
@@ -763,6 +778,10 @@ msgstr "Kopiert"
 msgid "Copied to clipboard"
 msgstr "Kopiert til utklippstavlen"
 
+#: ../../../lib/web/src/components/calendar/month-grid.tsx
+#: ../../../lib/web/src/components/calendar/month-grid.tsx
+#: ../../../lib/web/src/components/calendar/time-grid.tsx
+#: ../../../lib/web/src/components/calendar/time-grid.tsx
 #: ../../../lib/web/src/components/ui/copy-button.tsx
 msgid "Copy"
 msgstr "Kopier"
@@ -1181,6 +1200,10 @@ msgstr "E-post"
 #: ../../../lib/web/src/components/step-up-dialog.tsx
 msgid "Email code"
 msgstr "E-postkode"
+
+#: ../../../lib/web/src/components/calendar/time-grid.tsx
+msgid "Ends before it starts"
+msgstr "Slutter før den begynner"
 
 #: ../../../lib/web/src/components/banner-section.tsx
 msgid "Enter banner text (markdown supported)..."
@@ -1862,8 +1885,10 @@ msgstr "Flyttet"
 msgid "Moved {field}"
 msgstr "Flyttet {field}"
 
-#. placeholder {0}: dragging.day
+#. placeholder {0}: dayName(current.day)
+#. placeholder {0}: dayName(dragging.day)
 #: ../../../lib/web/src/components/calendar/month-grid.tsx
+#: ../../../lib/web/src/components/calendar/time-grid.tsx
 msgid "Moving to {0}"
 msgstr "Flytter til {0}"
 

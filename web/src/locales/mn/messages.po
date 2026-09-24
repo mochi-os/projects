@@ -100,6 +100,7 @@ msgstr "{count, plural, one {#мин} other {#мин}}"
 msgid "{count, plural, one {#w} other {#w}}"
 msgstr "{count, plural, one {#дол} other {#дол}}"
 
+#: ../../../lib/web/src/components/calendar/time-grid.tsx
 #: ../../../lib/web/src/components/calendar/tooltip.ts
 msgid "{day}, {from} to {to}"
 msgstr "{day}, {from} - {to}"
@@ -108,6 +109,7 @@ msgstr "{day}, {from} - {to}"
 msgid "{entityLabel} name"
 msgstr "{entityLabel} нэр"
 
+#: ../../../lib/web/src/components/calendar/time-grid.tsx
 #: ../../../lib/web/src/components/calendar/tooltip.ts
 msgid "{from} to {to}"
 msgstr "{from} - {to}"
@@ -296,6 +298,7 @@ msgid "AI"
 msgstr "AI"
 
 #: ../../../lib/web/src/components/calendar/time-grid.tsx
+#: ../../../lib/web/src/components/calendar/time-grid.tsx
 msgid "All day"
 msgstr "Өдөржин"
 
@@ -385,6 +388,10 @@ msgstr "Энэ төслийн захиалгаас гарахдаа итгэлт
 #: ../../../lib/web/src/components/ui/sort-direction-button.tsx
 msgid "Ascending"
 msgstr "Өсөхөөр"
+
+#: ../../../lib/web/src/components/timezone-select.tsx
+msgid "At sea"
+msgstr "Далайд"
 
 #: ../../../lib/web/src/components/comment-composer.tsx
 msgid "Attach comment files"
@@ -491,6 +498,10 @@ msgstr "Хөтчийн мэдэгдэл"
 #: src/routes/_authenticated/$projectId/design.tsx
 msgid "Built-in templates"
 msgstr "Дотооддоо суулгасан загварууд"
+
+#: ../../../lib/web/src/features/accounts/types.ts
+msgid "Calendar server"
+msgstr "Хуанлийн сервер"
 
 #: ../../../lib/web/src/lib/shell-errors.ts
 msgid "Camera permission denied"
@@ -755,6 +766,10 @@ msgstr "Үргэлжлүүлэх"
 msgid "Continue with {label}"
 msgstr "{label}-р үргэлжлүүлэх"
 
+#: ../../../lib/web/src/features/accounts/account-add.tsx
+msgid "Continue with {providerLabel}"
+msgstr "{providerLabel}-ээр үргэлжлүүлэх"
+
 #: ../../../lib/web/src/lib/toast-utils.ts
 msgid "Copied"
 msgstr "Хуулагдлаа"
@@ -763,6 +778,10 @@ msgstr "Хуулагдлаа"
 msgid "Copied to clipboard"
 msgstr "Хуулбарласан"
 
+#: ../../../lib/web/src/components/calendar/month-grid.tsx
+#: ../../../lib/web/src/components/calendar/month-grid.tsx
+#: ../../../lib/web/src/components/calendar/time-grid.tsx
+#: ../../../lib/web/src/components/calendar/time-grid.tsx
 #: ../../../lib/web/src/components/ui/copy-button.tsx
 msgid "Copy"
 msgstr "Хуулах"
@@ -1181,6 +1200,10 @@ msgstr "Имэйл"
 #: ../../../lib/web/src/components/step-up-dialog.tsx
 msgid "Email code"
 msgstr "Имэйл код"
+
+#: ../../../lib/web/src/components/calendar/time-grid.tsx
+msgid "Ends before it starts"
+msgstr "Эхлэхээс өмнө дуусна"
 
 #: ../../../lib/web/src/components/banner-section.tsx
 msgid "Enter banner text (markdown supported)..."
@@ -1862,8 +1885,10 @@ msgstr "Зөөсөн"
 msgid "Moved {field}"
 msgstr "{field} зөөсөн"
 
-#. placeholder {0}: dragging.day
+#. placeholder {0}: dayName(current.day)
+#. placeholder {0}: dayName(dragging.day)
 #: ../../../lib/web/src/components/calendar/month-grid.tsx
+#: ../../../lib/web/src/components/calendar/time-grid.tsx
 msgid "Moving to {0}"
 msgstr "{0} руу зөөж байна"
 

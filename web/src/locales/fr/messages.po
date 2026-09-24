@@ -100,6 +100,7 @@ msgstr "{count, plural, one {#min} other {#min}}"
 msgid "{count, plural, one {#w} other {#w}}"
 msgstr "{count, plural, one {#sem} other {#sem}}"
 
+#: ../../../lib/web/src/components/calendar/time-grid.tsx
 #: ../../../lib/web/src/components/calendar/tooltip.ts
 msgid "{day}, {from} to {to}"
 msgstr "{day}, de {from} à {to}"
@@ -108,6 +109,7 @@ msgstr "{day}, de {from} à {to}"
 msgid "{entityLabel} name"
 msgstr "Nom du {entityLabel}"
 
+#: ../../../lib/web/src/components/calendar/time-grid.tsx
 #: ../../../lib/web/src/components/calendar/tooltip.ts
 msgid "{from} to {to}"
 msgstr "de {from} à {to}"
@@ -296,6 +298,7 @@ msgid "AI"
 msgstr "IA"
 
 #: ../../../lib/web/src/components/calendar/time-grid.tsx
+#: ../../../lib/web/src/components/calendar/time-grid.tsx
 msgid "All day"
 msgstr "Toute la journée"
 
@@ -385,6 +388,10 @@ msgstr "Voulez-vous vraiment vous désabonner de ce projet ?"
 #: ../../../lib/web/src/components/ui/sort-direction-button.tsx
 msgid "Ascending"
 msgstr "Croissant"
+
+#: ../../../lib/web/src/components/timezone-select.tsx
+msgid "At sea"
+msgstr "En mer"
 
 #: ../../../lib/web/src/components/comment-composer.tsx
 msgid "Attach comment files"
@@ -491,6 +498,10 @@ msgstr "Notifications du navigateur"
 #: src/routes/_authenticated/$projectId/design.tsx
 msgid "Built-in templates"
 msgstr "Modèles intégrés"
+
+#: ../../../lib/web/src/features/accounts/types.ts
+msgid "Calendar server"
+msgstr "Serveur de calendrier"
 
 #: ../../../lib/web/src/lib/shell-errors.ts
 msgid "Camera permission denied"
@@ -755,6 +766,10 @@ msgstr "Continuer"
 msgid "Continue with {label}"
 msgstr "Continuer avec {label}"
 
+#: ../../../lib/web/src/features/accounts/account-add.tsx
+msgid "Continue with {providerLabel}"
+msgstr "Continuer avec {providerLabel}"
+
 #: ../../../lib/web/src/lib/toast-utils.ts
 msgid "Copied"
 msgstr "Copié"
@@ -763,6 +778,10 @@ msgstr "Copié"
 msgid "Copied to clipboard"
 msgstr "Copié dans le presse-papiers"
 
+#: ../../../lib/web/src/components/calendar/month-grid.tsx
+#: ../../../lib/web/src/components/calendar/month-grid.tsx
+#: ../../../lib/web/src/components/calendar/time-grid.tsx
+#: ../../../lib/web/src/components/calendar/time-grid.tsx
 #: ../../../lib/web/src/components/ui/copy-button.tsx
 msgid "Copy"
 msgstr "Copier"
@@ -1181,6 +1200,10 @@ msgstr "E-mail"
 #: ../../../lib/web/src/components/step-up-dialog.tsx
 msgid "Email code"
 msgstr "Code par e-mail"
+
+#: ../../../lib/web/src/components/calendar/time-grid.tsx
+msgid "Ends before it starts"
+msgstr "Se termine avant de commencer"
 
 #: ../../../lib/web/src/components/banner-section.tsx
 msgid "Enter banner text (markdown supported)..."
@@ -1862,8 +1885,10 @@ msgstr "Déplacé"
 msgid "Moved {field}"
 msgstr "{field} déplacé"
 
-#. placeholder {0}: dragging.day
+#. placeholder {0}: dayName(current.day)
+#. placeholder {0}: dayName(dragging.day)
 #: ../../../lib/web/src/components/calendar/month-grid.tsx
+#: ../../../lib/web/src/components/calendar/time-grid.tsx
 msgid "Moving to {0}"
 msgstr "Déplacement vers {0}"
 

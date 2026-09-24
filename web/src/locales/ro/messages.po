@@ -100,6 +100,7 @@ msgstr "{count, plural, one {#min} other {#min}}"
 msgid "{count, plural, one {#w} other {#w}}"
 msgstr "{count, plural, one {#săpt} other {#săpt}}"
 
+#: ../../../lib/web/src/components/calendar/time-grid.tsx
 #: ../../../lib/web/src/components/calendar/tooltip.ts
 msgid "{day}, {from} to {to}"
 msgstr "{day}, de la {from} la {to}"
@@ -108,6 +109,7 @@ msgstr "{day}, de la {from} la {to}"
 msgid "{entityLabel} name"
 msgstr "Numele {entityLabel}"
 
+#: ../../../lib/web/src/components/calendar/time-grid.tsx
 #: ../../../lib/web/src/components/calendar/tooltip.ts
 msgid "{from} to {to}"
 msgstr "de la {from} la {to}"
@@ -296,6 +298,7 @@ msgid "AI"
 msgstr "AI"
 
 #: ../../../lib/web/src/components/calendar/time-grid.tsx
+#: ../../../lib/web/src/components/calendar/time-grid.tsx
 msgid "All day"
 msgstr "Toată ziua"
 
@@ -385,6 +388,10 @@ msgstr "Sigur vrei să te dezabonezi de la acest proiect?"
 #: ../../../lib/web/src/components/ui/sort-direction-button.tsx
 msgid "Ascending"
 msgstr "Crescător"
+
+#: ../../../lib/web/src/components/timezone-select.tsx
+msgid "At sea"
+msgstr "Pe mare"
 
 #: ../../../lib/web/src/components/comment-composer.tsx
 msgid "Attach comment files"
@@ -491,6 +498,10 @@ msgstr "Notificări de browser"
 #: src/routes/_authenticated/$projectId/design.tsx
 msgid "Built-in templates"
 msgstr "Șabloane integrate"
+
+#: ../../../lib/web/src/features/accounts/types.ts
+msgid "Calendar server"
+msgstr "Server de calendar"
 
 #: ../../../lib/web/src/lib/shell-errors.ts
 msgid "Camera permission denied"
@@ -755,6 +766,10 @@ msgstr "Continuă"
 msgid "Continue with {label}"
 msgstr "Continuă cu {label}"
 
+#: ../../../lib/web/src/features/accounts/account-add.tsx
+msgid "Continue with {providerLabel}"
+msgstr "Continuă cu {providerLabel}"
+
 #: ../../../lib/web/src/lib/toast-utils.ts
 msgid "Copied"
 msgstr "Copiat"
@@ -763,6 +778,10 @@ msgstr "Copiat"
 msgid "Copied to clipboard"
 msgstr "Copiat în clipboard"
 
+#: ../../../lib/web/src/components/calendar/month-grid.tsx
+#: ../../../lib/web/src/components/calendar/month-grid.tsx
+#: ../../../lib/web/src/components/calendar/time-grid.tsx
+#: ../../../lib/web/src/components/calendar/time-grid.tsx
 #: ../../../lib/web/src/components/ui/copy-button.tsx
 msgid "Copy"
 msgstr "Copiază"
@@ -1181,6 +1200,10 @@ msgstr "Email"
 #: ../../../lib/web/src/components/step-up-dialog.tsx
 msgid "Email code"
 msgstr "Cod email"
+
+#: ../../../lib/web/src/components/calendar/time-grid.tsx
+msgid "Ends before it starts"
+msgstr "Se termină înainte să înceapă"
 
 #: ../../../lib/web/src/components/banner-section.tsx
 msgid "Enter banner text (markdown supported)..."
@@ -1862,8 +1885,10 @@ msgstr "Mutat"
 msgid "Moved {field}"
 msgstr "Mutat {field}"
 
-#. placeholder {0}: dragging.day
+#. placeholder {0}: dayName(current.day)
+#. placeholder {0}: dayName(dragging.day)
 #: ../../../lib/web/src/components/calendar/month-grid.tsx
+#: ../../../lib/web/src/components/calendar/time-grid.tsx
 msgid "Moving to {0}"
 msgstr "Se mută în {0}"
 

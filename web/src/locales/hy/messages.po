@@ -100,6 +100,7 @@ msgstr "{count, plural, one {#ր} other {#ր}}"
 msgid "{count, plural, one {#w} other {#w}}"
 msgstr "{count, plural, one {#շաբ} other {#շաբ}}"
 
+#: ../../../lib/web/src/components/calendar/time-grid.tsx
 #: ../../../lib/web/src/components/calendar/tooltip.ts
 msgid "{day}, {from} to {to}"
 msgstr "{day}, {from}-ից մինչև {to}"
@@ -108,6 +109,7 @@ msgstr "{day}, {from}-ից մինչև {to}"
 msgid "{entityLabel} name"
 msgstr "{entityLabel}-ի անունը"
 
+#: ../../../lib/web/src/components/calendar/time-grid.tsx
 #: ../../../lib/web/src/components/calendar/tooltip.ts
 msgid "{from} to {to}"
 msgstr "{from}-ից մինչև {to}"
@@ -296,6 +298,7 @@ msgid "AI"
 msgstr "AI"
 
 #: ../../../lib/web/src/components/calendar/time-grid.tsx
+#: ../../../lib/web/src/components/calendar/time-grid.tsx
 msgid "All day"
 msgstr "Ամբողջ օրը"
 
@@ -385,6 +388,10 @@ msgstr "Վստա՞հ եք, որ ուզում եք հրաժարվել այս նա
 #: ../../../lib/web/src/components/ui/sort-direction-button.tsx
 msgid "Ascending"
 msgstr "Աճման կարգով"
+
+#: ../../../lib/web/src/components/timezone-select.tsx
+msgid "At sea"
+msgstr "Ծովում"
 
 #: ../../../lib/web/src/components/comment-composer.tsx
 msgid "Attach comment files"
@@ -491,6 +498,10 @@ msgstr "Բրաուզերի ծանուցումներ"
 #: src/routes/_authenticated/$projectId/design.tsx
 msgid "Built-in templates"
 msgstr "Ներկառուցված ձևանմուշներ"
+
+#: ../../../lib/web/src/features/accounts/types.ts
+msgid "Calendar server"
+msgstr "Օրացույցի սերվեր"
 
 #: ../../../lib/web/src/lib/shell-errors.ts
 msgid "Camera permission denied"
@@ -755,6 +766,10 @@ msgstr "Շարունակել"
 msgid "Continue with {label}"
 msgstr "Շարունակել {label}-ով"
 
+#: ../../../lib/web/src/features/accounts/account-add.tsx
+msgid "Continue with {providerLabel}"
+msgstr "Շարունակել {providerLabel}-ով"
+
 #: ../../../lib/web/src/lib/toast-utils.ts
 msgid "Copied"
 msgstr "Պատճենվեց"
@@ -763,6 +778,10 @@ msgstr "Պատճենվեց"
 msgid "Copied to clipboard"
 msgstr "Պատճենվեց սեղմատախտակին"
 
+#: ../../../lib/web/src/components/calendar/month-grid.tsx
+#: ../../../lib/web/src/components/calendar/month-grid.tsx
+#: ../../../lib/web/src/components/calendar/time-grid.tsx
+#: ../../../lib/web/src/components/calendar/time-grid.tsx
 #: ../../../lib/web/src/components/ui/copy-button.tsx
 msgid "Copy"
 msgstr "Պատճենել"
@@ -1181,6 +1200,10 @@ msgstr "Էլ․ փոստ"
 #: ../../../lib/web/src/components/step-up-dialog.tsx
 msgid "Email code"
 msgstr "Էլ․ փոստի կոդ"
+
+#: ../../../lib/web/src/components/calendar/time-grid.tsx
+msgid "Ends before it starts"
+msgstr "Ավարտվում է նախքան սկսվելը"
 
 #: ../../../lib/web/src/components/banner-section.tsx
 msgid "Enter banner text (markdown supported)..."
@@ -1862,8 +1885,10 @@ msgstr "Տեղափոխվել է"
 msgid "Moved {field}"
 msgstr "Տեղափոխվել է {field}"
 
-#. placeholder {0}: dragging.day
+#. placeholder {0}: dayName(current.day)
+#. placeholder {0}: dayName(dragging.day)
 #: ../../../lib/web/src/components/calendar/month-grid.tsx
+#: ../../../lib/web/src/components/calendar/time-grid.tsx
 msgid "Moving to {0}"
 msgstr "Տեղափոխվում է {0}"
 

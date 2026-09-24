@@ -100,6 +100,7 @@ msgstr "{count, plural, one {#წთ} other {#წთ}}"
 msgid "{count, plural, one {#w} other {#w}}"
 msgstr "{count, plural, one {#კვ} other {#კვ}}"
 
+#: ../../../lib/web/src/components/calendar/time-grid.tsx
 #: ../../../lib/web/src/components/calendar/tooltip.ts
 msgid "{day}, {from} to {to}"
 msgstr "{day}, {from}-დან {to}-მდე"
@@ -108,6 +109,7 @@ msgstr "{day}, {from}-დან {to}-მდე"
 msgid "{entityLabel} name"
 msgstr "{entityLabel}-ის სახელი"
 
+#: ../../../lib/web/src/components/calendar/time-grid.tsx
 #: ../../../lib/web/src/components/calendar/tooltip.ts
 msgid "{from} to {to}"
 msgstr "{from}-დან {to}-მდე"
@@ -296,6 +298,7 @@ msgid "AI"
 msgstr "AI"
 
 #: ../../../lib/web/src/components/calendar/time-grid.tsx
+#: ../../../lib/web/src/components/calendar/time-grid.tsx
 msgid "All day"
 msgstr "მთელი დღე"
 
@@ -385,6 +388,10 @@ msgstr "დარწმუნებული ხართ, რომ გსუ�
 #: ../../../lib/web/src/components/ui/sort-direction-button.tsx
 msgid "Ascending"
 msgstr "ზრდადობით"
+
+#: ../../../lib/web/src/components/timezone-select.tsx
+msgid "At sea"
+msgstr "ზღვაზე"
 
 #: ../../../lib/web/src/components/comment-composer.tsx
 msgid "Attach comment files"
@@ -491,6 +498,10 @@ msgstr "ბრაუზერის შეტყობინებები"
 #: src/routes/_authenticated/$projectId/design.tsx
 msgid "Built-in templates"
 msgstr "ჩაშენებული შაბლონები"
+
+#: ../../../lib/web/src/features/accounts/types.ts
+msgid "Calendar server"
+msgstr "კალენდრის სერვერი"
 
 #: ../../../lib/web/src/lib/shell-errors.ts
 msgid "Camera permission denied"
@@ -755,6 +766,10 @@ msgstr "გაგრძელება"
 msgid "Continue with {label}"
 msgstr "გაგრძელება {label}-ით"
 
+#: ../../../lib/web/src/features/accounts/account-add.tsx
+msgid "Continue with {providerLabel}"
+msgstr "გაგრძელება {providerLabel}-ით"
+
 #: ../../../lib/web/src/lib/toast-utils.ts
 msgid "Copied"
 msgstr "დაკოპირდა"
@@ -763,6 +778,10 @@ msgstr "დაკოპირდა"
 msgid "Copied to clipboard"
 msgstr "ბუფერში დაკოპირდა"
 
+#: ../../../lib/web/src/components/calendar/month-grid.tsx
+#: ../../../lib/web/src/components/calendar/month-grid.tsx
+#: ../../../lib/web/src/components/calendar/time-grid.tsx
+#: ../../../lib/web/src/components/calendar/time-grid.tsx
 #: ../../../lib/web/src/components/ui/copy-button.tsx
 msgid "Copy"
 msgstr "კოპირება"
@@ -1181,6 +1200,10 @@ msgstr "ელფოსტა"
 #: ../../../lib/web/src/components/step-up-dialog.tsx
 msgid "Email code"
 msgstr "ელფოსტის კოდი"
+
+#: ../../../lib/web/src/components/calendar/time-grid.tsx
+msgid "Ends before it starts"
+msgstr "სრულდება დაწყებამდე"
 
 #: ../../../lib/web/src/components/banner-section.tsx
 msgid "Enter banner text (markdown supported)..."
@@ -1862,8 +1885,10 @@ msgstr "გადაადგილდა"
 msgid "Moved {field}"
 msgstr "გადაადგილდა {field}"
 
-#. placeholder {0}: dragging.day
+#. placeholder {0}: dayName(current.day)
+#. placeholder {0}: dayName(dragging.day)
 #: ../../../lib/web/src/components/calendar/month-grid.tsx
+#: ../../../lib/web/src/components/calendar/time-grid.tsx
 msgid "Moving to {0}"
 msgstr "მიმდინარეობს გადატანა {0}-ზე"
 

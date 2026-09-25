@@ -5,7 +5,7 @@
 // Mochi Application Interface Exception - see license.txt and license-exception.md.
 
 {
-	"version": "2.132",
+	"version": "2.135",
 	"label": "app.name",
 	"classes": ["project"],
 	"paths": ["projects"],
@@ -77,17 +77,17 @@
 		":project/-/objects/:object/comments/create": {"function": "action_comment_create"},
 		":project/-/objects/:object/comments/:comment/update": {"function": "action_comment_update"},
 		":project/-/objects/:object/comments/:comment/delete": {"function": "action_comment_delete"},
-		":project/-/comment/:comment/asset/:asset": {"function": "action_comment_asset", "public": true},
-		":project/-/activity/:activity/asset/:asset": {"function": "action_activity_asset", "public": true},
-		":project/-/user/:user/asset/:asset": {"function": "action_user_asset", "public": true},
+		":project/-/comment/:comment/asset/:asset": {"function": "action_comment_asset", "public": true, "asset": true},
+		":project/-/activity/:activity/asset/:asset": {"function": "action_activity_asset", "public": true, "asset": true},
+		":project/-/user/:user/asset/:asset": {"function": "action_user_asset", "public": true, "asset": true},
 
 		":project/-/objects/:object/attachments": {"function": "action_attachment_list"},
 		":project/-/objects/:object/attachments/create": {"function": "action_attachment_create"},
 		":project/-/objects/:object/attachments/:attachment/delete": {"function": "action_attachment_delete"},
 
-		":project/-/attachments/:id": {"function": "action_attachment"},
-		":project/-/attachments/:id/thumbnail": {"function": "action_attachment_thumbnail"},
-		":project/-/attachments/:id/preview": {"function": "action_attachment_preview"},
+		":project/-/attachments/:id": {"function": "action_attachment", "asset": true},
+		":project/-/attachments/:id/thumbnail": {"function": "action_attachment_thumbnail", "asset": true},
+		":project/-/attachments/:id/preview": {"function": "action_attachment_preview", "asset": true},
 
 		":project/-/objects/:object/requests": {"function": "action_request_list"},
 		":project/-/objects/:object/requests/create": {"function": "action_request_create"},

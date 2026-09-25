@@ -100,9 +100,23 @@ msgstr "{count, plural, one {#منٹ} other {#منٹ}}"
 msgid "{count, plural, one {#w} other {#w}}"
 msgstr "{count, plural, one {#ہف} other {#ہف}}"
 
+#: ../../../lib/web/src/components/calendar/time-grid.tsx
+#: ../../../lib/web/src/components/calendar/tooltip.ts
+msgid "{day}, {from} to {to}"
+msgstr "{day}، {from} سے {to} تک"
+
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx
 msgid "{entityLabel} name"
 msgstr "{entityLabel} کا نام"
+
+#: ../../../lib/web/src/components/calendar/time-grid.tsx
+#: ../../../lib/web/src/components/calendar/tooltip.ts
+msgid "{from} to {to}"
+msgstr "{from} سے {to} تک"
+
+#: ../../../lib/web/src/components/calendar/month-grid.tsx
+msgid "{hidden, plural, one {+# more} other {+# more}}"
+msgstr "{hidden, plural, one {+# مزید} other {+# مزید}}"
 
 #: ../../../lib/web/src/components/game/game-draw-offer-banner.tsx
 msgid "{opponentName} offered a draw"
@@ -283,6 +297,11 @@ msgstr "ویو شامل کریں"
 msgid "AI"
 msgstr "AI"
 
+#: ../../../lib/web/src/components/calendar/time-grid.tsx
+#: ../../../lib/web/src/components/calendar/time-grid.tsx
+msgid "All day"
+msgstr "پورا دن"
+
 #: src/components/layout/projects-layout.tsx
 msgid "All projects"
 msgstr "تمام پروجیکٹس"
@@ -369,6 +388,10 @@ msgstr "کیا آپ واقعی اس پروجیکٹ سے ان سبسکرائب ک
 #: ../../../lib/web/src/components/ui/sort-direction-button.tsx
 msgid "Ascending"
 msgstr "صعودی"
+
+#: ../../../lib/web/src/components/timezone-select.tsx
+msgid "At sea"
+msgstr "سمندر میں"
 
 #: ../../../lib/web/src/components/comment-composer.tsx
 msgid "Attach comment files"
@@ -476,6 +499,10 @@ msgstr "براؤزر نوٹیفکیشنز"
 msgid "Built-in templates"
 msgstr "بلٹ ان templates"
 
+#: ../../../lib/web/src/features/accounts/types.ts
+msgid "Calendar server"
+msgstr "کیلنڈر سرور"
+
 #: ../../../lib/web/src/lib/shell-errors.ts
 msgid "Camera permission denied"
 msgstr "کیمرے کی اجازت مسترد کر دی گئی"
@@ -548,6 +575,11 @@ msgstr "تبدیل ہوا"
 msgid "Changed {field}"
 msgstr "{field} تبدیل ہوا"
 
+#: ../../../lib/web/src/components/calendar/month-grid.tsx
+#: ../../../lib/web/src/components/calendar/time-grid.tsx
+msgid "Changed occurrence"
+msgstr "تبدیل شدہ تکرار"
+
 #: ../../../lib/web/src/hooks/use-field-type-labels.ts
 msgid "Checkbox"
 msgstr "چیک باکس"
@@ -559,6 +591,10 @@ msgstr "Merge کی حیثیت چیک ہو رہی ہے..."
 #: ../../../lib/web/src/hooks/use-field-type-labels.ts
 msgid "Checklist"
 msgstr "چیک لسٹ"
+
+#: ../../../lib/web/src/components/ui/date-picker.tsx
+msgid "Choose a date"
+msgstr "تاریخ منتخب کریں"
 
 #: ../../../lib/web/src/components/game/game-empty-state.tsx
 msgid "Choose a game from the sidebar or start a new one."
@@ -634,6 +670,7 @@ msgid "Collapse sidebar"
 msgstr "سائڈ بار سکیڑیں"
 
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx
+#: ../../../lib/web/src/components/ui/create-entity-dialog.tsx
 msgid "Colour"
 msgstr "رنگ"
 
@@ -720,6 +757,10 @@ msgstr "جاری رکھیں"
 msgid "Continue with {label}"
 msgstr "{label} کے ساتھ جاری رکھیں"
 
+#: ../../../lib/web/src/features/accounts/account-add.tsx
+msgid "Continue with {providerLabel}"
+msgstr "{providerLabel} کے ساتھ جاری رکھیں"
+
 #: ../../../lib/web/src/lib/toast-utils.ts
 msgid "Copied"
 msgstr "کاپی ہو گیا"
@@ -728,6 +769,10 @@ msgstr "کاپی ہو گیا"
 msgid "Copied to clipboard"
 msgstr "Clipboard پر کاپی ہو گیا"
 
+#: ../../../lib/web/src/components/calendar/month-grid.tsx
+#: ../../../lib/web/src/components/calendar/month-grid.tsx
+#: ../../../lib/web/src/components/calendar/time-grid.tsx
+#: ../../../lib/web/src/components/calendar/time-grid.tsx
 #: ../../../lib/web/src/components/ui/copy-button.tsx
 msgid "Copy"
 msgstr "کاپی کریں"
@@ -1145,6 +1190,10 @@ msgstr "ای میل"
 #: ../../../lib/web/src/components/step-up-dialog.tsx
 msgid "Email code"
 msgstr "ای میل کوڈ"
+
+#: ../../../lib/web/src/components/calendar/time-grid.tsx
+msgid "Ends before it starts"
+msgstr "شروع ہونے سے پہلے ختم ہو جاتا ہے"
 
 #: ../../../lib/web/src/components/banner-section.tsx
 msgid "Enter banner text (markdown supported)..."
@@ -1810,6 +1859,10 @@ msgstr "نگرانی"
 msgid "Monday"
 msgstr "پیر"
 
+#: ../../../lib/web/src/components/calendar/date-header.tsx
+msgid "Month"
+msgstr "مہینہ"
+
 #: ../../../lib/web/src/components/options-menu.tsx
 msgid "More options"
 msgstr "مزید اختیارات"
@@ -1822,9 +1875,16 @@ msgstr "منتقل ہوا"
 msgid "Moved {field}"
 msgstr "{field} منتقل ہوا"
 
+#. placeholder {0}: dayName(current.day)
+#. placeholder {0}: dayName(dragging.day)
+#: ../../../lib/web/src/components/calendar/month-grid.tsx
+#: ../../../lib/web/src/components/calendar/time-grid.tsx
+msgid "Moving to {0}"
+msgstr "{0} پر منتقل کیا جا رہا ہے"
+
 #: src/features/projects/components/create-project-dialog.tsx
 msgid "My project"
-msgstr "میرا project"
+msgstr "میرا پروجیکٹ"
 
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx
 #: ../../../lib/web/src/components/entity/entity-board-column.tsx
@@ -1883,6 +1943,14 @@ msgstr "اگلا"
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx
 msgid "Next image"
 msgstr "اگلی تصویر"
+
+#: ../../../lib/web/src/components/calendar/date-header.tsx
+msgid "Next month"
+msgstr "اگلا مہینہ"
+
+#: ../../../lib/web/src/components/calendar/date-header.tsx
+msgid "Next year"
+msgstr "اگلا سال"
 
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx
 msgid "No {parentClassNames} to add to"
@@ -1956,7 +2024,7 @@ msgstr "کوئی مقامات نہیں ملے"
 #: src/features/projects/components/inline-project-search.tsx
 #: src/routes/_authenticated/find.tsx
 msgid "No projects found"
-msgstr "کوئی projects نہیں ملے"
+msgstr "کوئی پروجیکٹس نہیں ملے"
 
 #: src/features/requests/components/repository-select.tsx
 msgid "No repositories available"
@@ -2172,7 +2240,7 @@ msgstr "لوگ"
 
 #: src/routes/_authenticated/$projectId/index.tsx
 msgid "Please add one or more classes to the project design."
-msgstr "براہ کرم project design میں ایک یا زیادہ classes شامل کریں۔"
+msgstr "براہ کرم پروجیکٹ کے ڈیزائن میں ایک یا زیادہ کلاسز شامل کریں۔"
 
 #: ../../../lib/web/src/components/comment-composer.tsx
 #: ../../../lib/web/src/features/errors/general-error.tsx
@@ -2222,6 +2290,14 @@ msgstr "prefix 20 حروف یا اس سے کم ہونا چاہیے"
 msgid "Previous image"
 msgstr "پچھلی تصویر"
 
+#: ../../../lib/web/src/components/calendar/date-header.tsx
+msgid "Previous month"
+msgstr "پچھلا مہینہ"
+
+#: ../../../lib/web/src/components/calendar/date-header.tsx
+msgid "Previous year"
+msgstr "پچھلا سال"
+
 #: ../../../lib/web/src/components/server-documents-footer.tsx
 #: ../../../lib/web/src/features/document/document-page.tsx
 msgid "Privacy"
@@ -2234,7 +2310,7 @@ msgstr "پروسیس ہو رہا ہے…"
 #: src/routes/_authenticated/$projectId/$objectId.tsx
 #: src/routes/_authenticated/$projectId/index.tsx
 msgid "Project"
-msgstr "project"
+msgstr "پروجیکٹ"
 
 #: src/features/projects/pages/projects-list-page.tsx
 msgid "Project actions"
@@ -2242,11 +2318,11 @@ msgstr "پروجیکٹ اعمال"
 
 #: src/features/projects/components/create-project-dialog.tsx
 msgid "Project created"
-msgstr "project بن گیا"
+msgstr "پروجیکٹ بن گیا"
 
 #: src/routes/_authenticated/$projectId_.settings.tsx
 msgid "Project deleted"
-msgstr "project حذف ہو گیا"
+msgstr "پروجیکٹ حذف ہو گیا"
 
 #: src/routes/_authenticated/$projectId/index.tsx
 msgid "Project link"
@@ -2258,7 +2334,7 @@ msgstr "پروجیکٹ کا نام درکار ہے"
 
 #: src/routes/_authenticated/$projectId_.settings.tsx
 msgid "Project not found"
-msgstr "project نہیں ملا"
+msgstr "پروجیکٹ نہیں ملا"
 
 #: src/routes/_authenticated/$projectId_.settings.tsx
 msgid "Project settings"
@@ -2266,16 +2342,16 @@ msgstr "پروجیکٹ کی ترتیبات"
 
 #: src/routes/_authenticated/$projectId_.settings.tsx
 msgid "Project unavailable"
-msgstr "project دستیاب نہیں"
+msgstr "پروجیکٹ دستیاب نہیں"
 
 #: src/routes/_authenticated/$projectId_.settings.tsx
 msgid "Project updated"
-msgstr "project اپ ڈیٹ ہو گیا"
+msgstr "پروجیکٹ اپ ڈیٹ ہو گیا"
 
 #: src/components/layout/projects-layout.tsx
 #: src/features/projects/pages/projects-list-page.tsx
 msgid "Projects"
-msgstr "projects"
+msgstr "پروجیکٹس"
 
 #: ../../../lib/web/src/components/ai-prompts-editor.tsx
 msgid "Prompt saved"
@@ -2319,7 +2395,7 @@ msgstr "تجویز کردہ"
 
 #: src/features/projects/components/recommended-projects.tsx
 msgid "Recommended projects"
-msgstr "تجویز کردہ projects"
+msgstr "تجویز کردہ پروجیکٹس"
 
 #: ../../../lib/web/src/lib/chat-ui.ts
 msgid "Reconnecting ({retries})..."
@@ -2432,6 +2508,11 @@ msgstr "کالم کا نام تبدیل کریں"
 #: ../../../lib/web/src/components/entity/entity-board-column.tsx
 msgid "Rename this board column"
 msgstr "اس board کالم کا نام تبدیل کریں"
+
+#: ../../../lib/web/src/components/calendar/month-grid.tsx
+#: ../../../lib/web/src/components/calendar/time-grid.tsx
+msgid "Repeats"
+msgstr "دہرایا جاتا ہے"
 
 #: src/routes/_authenticated/$projectId/design.tsx
 msgid "Replace design"
@@ -3232,6 +3313,10 @@ msgstr "ہم نے <0>{0}</0> پر ایک تصدیقی کوڈ بھیجا ہے۔ �
 #: ../../../lib/web/src/lib/preference-utils.ts
 msgid "Wednesday"
 msgstr "بدھ"
+
+#: ../../../lib/web/src/components/calendar/date-header.tsx
+msgid "Year"
+msgstr "سال"
 
 #: ../../../lib/web/src/features/errors/general-error.tsx
 msgid "You do not have access to this section."

@@ -100,9 +100,23 @@ msgstr "{count, plural, one {#min} other {#min}}"
 msgid "{count, plural, one {#w} other {#w}}"
 msgstr "{count, plural, one {#ned} other {#ned}}"
 
+#: ../../../lib/web/src/components/calendar/time-grid.tsx
+#: ../../../lib/web/src/components/calendar/tooltip.ts
+msgid "{day}, {from} to {to}"
+msgstr "{day}, no {from} līdz {to}"
+
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx
 msgid "{entityLabel} name"
 msgstr "{entityLabel} nosaukums"
+
+#: ../../../lib/web/src/components/calendar/time-grid.tsx
+#: ../../../lib/web/src/components/calendar/tooltip.ts
+msgid "{from} to {to}"
+msgstr "no {from} līdz {to}"
+
+#: ../../../lib/web/src/components/calendar/month-grid.tsx
+msgid "{hidden, plural, one {+# more} other {+# more}}"
+msgstr "{hidden, plural, zero {+# vēl} one {+# vēl} other {+# vēl}}"
 
 #: ../../../lib/web/src/components/game/game-draw-offer-banner.tsx
 msgid "{opponentName} offered a draw"
@@ -283,6 +297,11 @@ msgstr "Pievienot skatu"
 msgid "AI"
 msgstr "AI"
 
+#: ../../../lib/web/src/components/calendar/time-grid.tsx
+#: ../../../lib/web/src/components/calendar/time-grid.tsx
+msgid "All day"
+msgstr "Visu dienu"
+
 #: src/components/layout/projects-layout.tsx
 msgid "All projects"
 msgstr "Visi projekti"
@@ -369,6 +388,10 @@ msgstr "Vai tiešām vēlies atteikties no šī projekta abonēšanas?"
 #: ../../../lib/web/src/components/ui/sort-direction-button.tsx
 msgid "Ascending"
 msgstr "Augošā secībā"
+
+#: ../../../lib/web/src/components/timezone-select.tsx
+msgid "At sea"
+msgstr "Jūrā"
 
 #: ../../../lib/web/src/components/comment-composer.tsx
 msgid "Attach comment files"
@@ -476,6 +499,10 @@ msgstr "Pārlūka paziņojumi"
 msgid "Built-in templates"
 msgstr "Iebūvētās veidnes"
 
+#: ../../../lib/web/src/features/accounts/types.ts
+msgid "Calendar server"
+msgstr "Kalendāra serveris"
+
 #: ../../../lib/web/src/lib/shell-errors.ts
 msgid "Camera permission denied"
 msgstr "Kameras atļauja noraidīta"
@@ -548,6 +575,11 @@ msgstr "Mainīts"
 msgid "Changed {field}"
 msgstr "Mainīts {field}"
 
+#: ../../../lib/web/src/components/calendar/month-grid.tsx
+#: ../../../lib/web/src/components/calendar/time-grid.tsx
+msgid "Changed occurrence"
+msgstr "Mainīts atkārtojums"
+
 #: ../../../lib/web/src/hooks/use-field-type-labels.ts
 msgid "Checkbox"
 msgstr "Izvēles rūtiņa"
@@ -559,6 +591,10 @@ msgstr "Pārbauda sapludināšanas statusu..."
 #: ../../../lib/web/src/hooks/use-field-type-labels.ts
 msgid "Checklist"
 msgstr "Kontrolsaraksts"
+
+#: ../../../lib/web/src/components/ui/date-picker.tsx
+msgid "Choose a date"
+msgstr "Izvēlieties datumu"
 
 #: ../../../lib/web/src/components/game/game-empty-state.tsx
 msgid "Choose a game from the sidebar or start a new one."
@@ -634,6 +670,7 @@ msgid "Collapse sidebar"
 msgstr "Sakļaut sānu joslu"
 
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx
+#: ../../../lib/web/src/components/ui/create-entity-dialog.tsx
 msgid "Colour"
 msgstr "Krāsa"
 
@@ -720,6 +757,10 @@ msgstr "Turpināt"
 msgid "Continue with {label}"
 msgstr "Turpināt ar {label}"
 
+#: ../../../lib/web/src/features/accounts/account-add.tsx
+msgid "Continue with {providerLabel}"
+msgstr "Turpināt ar {providerLabel}"
+
 #: ../../../lib/web/src/lib/toast-utils.ts
 msgid "Copied"
 msgstr "Nokopēts"
@@ -728,6 +769,10 @@ msgstr "Nokopēts"
 msgid "Copied to clipboard"
 msgstr "Nokopēts starpliktuvē"
 
+#: ../../../lib/web/src/components/calendar/month-grid.tsx
+#: ../../../lib/web/src/components/calendar/month-grid.tsx
+#: ../../../lib/web/src/components/calendar/time-grid.tsx
+#: ../../../lib/web/src/components/calendar/time-grid.tsx
 #: ../../../lib/web/src/components/ui/copy-button.tsx
 msgid "Copy"
 msgstr "Kopēt"
@@ -1145,6 +1190,10 @@ msgstr "E-pasts"
 #: ../../../lib/web/src/components/step-up-dialog.tsx
 msgid "Email code"
 msgstr "E-pasta kods"
+
+#: ../../../lib/web/src/components/calendar/time-grid.tsx
+msgid "Ends before it starts"
+msgstr "Beidzas, pirms sākas"
 
 #: ../../../lib/web/src/components/banner-section.tsx
 msgid "Enter banner text (markdown supported)..."
@@ -1810,6 +1859,10 @@ msgstr "Moderēšana"
 msgid "Monday"
 msgstr "Pirmdiena"
 
+#: ../../../lib/web/src/components/calendar/date-header.tsx
+msgid "Month"
+msgstr "Mēnesis"
+
 #: ../../../lib/web/src/components/options-menu.tsx
 msgid "More options"
 msgstr "Vairāk opciju"
@@ -1821,6 +1874,13 @@ msgstr "Pārvietots"
 #: ../../../lib/web/src/components/entity/entity-activity-list.tsx
 msgid "Moved {field}"
 msgstr "Pārvietots {field}"
+
+#. placeholder {0}: dayName(current.day)
+#. placeholder {0}: dayName(dragging.day)
+#: ../../../lib/web/src/components/calendar/month-grid.tsx
+#: ../../../lib/web/src/components/calendar/time-grid.tsx
+msgid "Moving to {0}"
+msgstr "Pārvieto uz {0}"
 
 #: src/features/projects/components/create-project-dialog.tsx
 msgid "My project"
@@ -1883,6 +1943,14 @@ msgstr "Tālāk"
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx
 msgid "Next image"
 msgstr "Nākamais attēls"
+
+#: ../../../lib/web/src/components/calendar/date-header.tsx
+msgid "Next month"
+msgstr "Nākamais mēnesis"
+
+#: ../../../lib/web/src/components/calendar/date-header.tsx
+msgid "Next year"
+msgstr "Nākamais gads"
 
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx
 msgid "No {parentClassNames} to add to"
@@ -2222,6 +2290,14 @@ msgstr "Prefiksā drīkst būt ne vairāk kā 20 rakstzīmes"
 msgid "Previous image"
 msgstr "Iepriekšējais attēls"
 
+#: ../../../lib/web/src/components/calendar/date-header.tsx
+msgid "Previous month"
+msgstr "Iepriekšējais mēnesis"
+
+#: ../../../lib/web/src/components/calendar/date-header.tsx
+msgid "Previous year"
+msgstr "Iepriekšējais gads"
+
 #: ../../../lib/web/src/components/server-documents-footer.tsx
 #: ../../../lib/web/src/features/document/document-page.tsx
 msgid "Privacy"
@@ -2432,6 +2508,11 @@ msgstr "Pārdēvēt kolonnu"
 #: ../../../lib/web/src/components/entity/entity-board-column.tsx
 msgid "Rename this board column"
 msgstr "Pārdēvēt šo dēļa kolonnu"
+
+#: ../../../lib/web/src/components/calendar/month-grid.tsx
+#: ../../../lib/web/src/components/calendar/time-grid.tsx
+msgid "Repeats"
+msgstr "Atkārtojas"
 
 #: src/routes/_authenticated/$projectId/design.tsx
 msgid "Replace design"
@@ -3232,6 +3313,10 @@ msgstr "Nosūtījām verifikācijas kodu uz <0>{0}</0>. Ievadiet kodu zemāk, la
 #: ../../../lib/web/src/lib/preference-utils.ts
 msgid "Wednesday"
 msgstr "Trešdiena"
+
+#: ../../../lib/web/src/components/calendar/date-header.tsx
+msgid "Year"
+msgstr "Gads"
 
 #: ../../../lib/web/src/features/errors/general-error.tsx
 msgid "You do not have access to this section."

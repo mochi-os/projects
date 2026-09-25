@@ -100,9 +100,23 @@ msgstr "{count, plural, one {#min} other {#min}}"
 msgid "{count, plural, one {#w} other {#w}}"
 msgstr "{count, plural, one {#ast} other {#ast}}"
 
+#: ../../../lib/web/src/components/calendar/time-grid.tsx
+#: ../../../lib/web/src/components/calendar/tooltip.ts
+msgid "{day}, {from} to {to}"
+msgstr "{day}, {from} - {to}"
+
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx
 msgid "{entityLabel} name"
 msgstr "{entityLabel} izena"
+
+#: ../../../lib/web/src/components/calendar/time-grid.tsx
+#: ../../../lib/web/src/components/calendar/tooltip.ts
+msgid "{from} to {to}"
+msgstr "{from} - {to}"
+
+#: ../../../lib/web/src/components/calendar/month-grid.tsx
+msgid "{hidden, plural, one {+# more} other {+# more}}"
+msgstr "{hidden, plural, one {+# gehiago} other {+# gehiago}}"
 
 #: ../../../lib/web/src/components/game/game-draw-offer-banner.tsx
 msgid "{opponentName} offered a draw"
@@ -283,6 +297,11 @@ msgstr "Gehitu ikuspegia"
 msgid "AI"
 msgstr "AA"
 
+#: ../../../lib/web/src/components/calendar/time-grid.tsx
+#: ../../../lib/web/src/components/calendar/time-grid.tsx
+msgid "All day"
+msgstr "Egun osoa"
+
 #: src/components/layout/projects-layout.tsx
 msgid "All projects"
 msgstr "Proiektu guztiak"
@@ -369,6 +388,10 @@ msgstr "Ziur al zaude proiektu honetatik harpidetza kendu nahi duzula?"
 #: ../../../lib/web/src/components/ui/sort-direction-button.tsx
 msgid "Ascending"
 msgstr "Gorakorra"
+
+#: ../../../lib/web/src/components/timezone-select.tsx
+msgid "At sea"
+msgstr "Itsasoan"
 
 #: ../../../lib/web/src/components/comment-composer.tsx
 msgid "Attach comment files"
@@ -476,6 +499,10 @@ msgstr "Nabigatzaile jakinarazpenak"
 msgid "Built-in templates"
 msgstr "Barneko txantiloiak"
 
+#: ../../../lib/web/src/features/accounts/types.ts
+msgid "Calendar server"
+msgstr "Egutegi-zerbitzaria"
+
 #: ../../../lib/web/src/lib/shell-errors.ts
 msgid "Camera permission denied"
 msgstr "Kamera baimena ukatu da"
@@ -548,6 +575,11 @@ msgstr "Aldatuta"
 msgid "Changed {field}"
 msgstr "{field} aldatu da"
 
+#: ../../../lib/web/src/components/calendar/month-grid.tsx
+#: ../../../lib/web/src/components/calendar/time-grid.tsx
+msgid "Changed occurrence"
+msgstr "Aldatutako agerraldia"
+
 #: ../../../lib/web/src/hooks/use-field-type-labels.ts
 msgid "Checkbox"
 msgstr "Kontrol-laukia"
@@ -559,6 +591,10 @@ msgstr "Fusio egoera egiaztatzen..."
 #: ../../../lib/web/src/hooks/use-field-type-labels.ts
 msgid "Checklist"
 msgstr "Egiaztapen-zerrenda"
+
+#: ../../../lib/web/src/components/ui/date-picker.tsx
+msgid "Choose a date"
+msgstr "Aukeratu data"
 
 #: ../../../lib/web/src/components/game/game-empty-state.tsx
 msgid "Choose a game from the sidebar or start a new one."
@@ -634,6 +670,7 @@ msgid "Collapse sidebar"
 msgstr "Tolestu alboko barra"
 
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx
+#: ../../../lib/web/src/components/ui/create-entity-dialog.tsx
 msgid "Colour"
 msgstr "Kolorea"
 
@@ -720,6 +757,10 @@ msgstr "Jarraitu"
 msgid "Continue with {label}"
 msgstr "Jarraitu {label} erabiliz"
 
+#: ../../../lib/web/src/features/accounts/account-add.tsx
+msgid "Continue with {providerLabel}"
+msgstr "Jarraitu {providerLabel} erabiliz"
+
 #: ../../../lib/web/src/lib/toast-utils.ts
 msgid "Copied"
 msgstr "Kopiatuta"
@@ -728,6 +769,10 @@ msgstr "Kopiatuta"
 msgid "Copied to clipboard"
 msgstr "Arbelera kopiatu da"
 
+#: ../../../lib/web/src/components/calendar/month-grid.tsx
+#: ../../../lib/web/src/components/calendar/month-grid.tsx
+#: ../../../lib/web/src/components/calendar/time-grid.tsx
+#: ../../../lib/web/src/components/calendar/time-grid.tsx
 #: ../../../lib/web/src/components/ui/copy-button.tsx
 msgid "Copy"
 msgstr "Kopiatu"
@@ -1145,6 +1190,10 @@ msgstr "Posta elektronikoa"
 #: ../../../lib/web/src/components/step-up-dialog.tsx
 msgid "Email code"
 msgstr "Posta elektronikoko kodea"
+
+#: ../../../lib/web/src/components/calendar/time-grid.tsx
+msgid "Ends before it starts"
+msgstr "Hasi baino lehen amaitzen da"
 
 #: ../../../lib/web/src/components/banner-section.tsx
 msgid "Enter banner text (markdown supported)..."
@@ -1810,6 +1859,10 @@ msgstr "Moderazioa"
 msgid "Monday"
 msgstr "Astelehena"
 
+#: ../../../lib/web/src/components/calendar/date-header.tsx
+msgid "Month"
+msgstr "Hilabetea"
+
 #: ../../../lib/web/src/components/options-menu.tsx
 msgid "More options"
 msgstr "Aukera gehiago"
@@ -1821,6 +1874,13 @@ msgstr "Lekuz aldatuta"
 #: ../../../lib/web/src/components/entity/entity-activity-list.tsx
 msgid "Moved {field}"
 msgstr "{field} lekuz aldatu da"
+
+#. placeholder {0}: dayName(current.day)
+#. placeholder {0}: dayName(dragging.day)
+#: ../../../lib/web/src/components/calendar/month-grid.tsx
+#: ../../../lib/web/src/components/calendar/time-grid.tsx
+msgid "Moving to {0}"
+msgstr "Hona eramaten: {0}"
 
 #: src/features/projects/components/create-project-dialog.tsx
 msgid "My project"
@@ -1883,6 +1943,14 @@ msgstr "Hurrengoa"
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx
 msgid "Next image"
 msgstr "Hurrengo irudia"
+
+#: ../../../lib/web/src/components/calendar/date-header.tsx
+msgid "Next month"
+msgstr "Hurrengo hilabetea"
+
+#: ../../../lib/web/src/components/calendar/date-header.tsx
+msgid "Next year"
+msgstr "Hurrengo urtea"
 
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx
 msgid "No {parentClassNames} to add to"
@@ -2222,6 +2290,14 @@ msgstr "Aurrizkiak gehienez 20 karaktere izan behar ditu"
 msgid "Previous image"
 msgstr "Aurreko irudia"
 
+#: ../../../lib/web/src/components/calendar/date-header.tsx
+msgid "Previous month"
+msgstr "Aurreko hilabetea"
+
+#: ../../../lib/web/src/components/calendar/date-header.tsx
+msgid "Previous year"
+msgstr "Aurreko urtea"
+
 #: ../../../lib/web/src/components/server-documents-footer.tsx
 #: ../../../lib/web/src/features/document/document-page.tsx
 msgid "Privacy"
@@ -2432,6 +2508,11 @@ msgstr "Aldatu zutabearen izena"
 #: ../../../lib/web/src/components/entity/entity-board-column.tsx
 msgid "Rename this board column"
 msgstr "Aldatu taula honetako zutabearen izena"
+
+#: ../../../lib/web/src/components/calendar/month-grid.tsx
+#: ../../../lib/web/src/components/calendar/time-grid.tsx
+msgid "Repeats"
+msgstr "Errepikatzen da"
 
 #: src/routes/_authenticated/$projectId/design.tsx
 msgid "Replace design"
@@ -3232,6 +3313,10 @@ msgstr "Egiaztapen-kode bat bidali dugu <0>{0}</0> helbidera. Sartu kodea behean
 #: ../../../lib/web/src/lib/preference-utils.ts
 msgid "Wednesday"
 msgstr "Asteazkena"
+
+#: ../../../lib/web/src/components/calendar/date-header.tsx
+msgid "Year"
+msgstr "Urtea"
 
 #: ../../../lib/web/src/features/errors/general-error.tsx
 msgid "You do not have access to this section."

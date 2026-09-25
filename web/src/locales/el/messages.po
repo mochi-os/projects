@@ -100,9 +100,23 @@ msgstr "{count, plural, one {#λ} other {#λ}}"
 msgid "{count, plural, one {#w} other {#w}}"
 msgstr "{count, plural, one {#εβδ} other {#εβδ}}"
 
+#: ../../../lib/web/src/components/calendar/time-grid.tsx
+#: ../../../lib/web/src/components/calendar/tooltip.ts
+msgid "{day}, {from} to {to}"
+msgstr "{day}, {from} έως {to}"
+
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx
 msgid "{entityLabel} name"
 msgstr "Όνομα {entityLabel}"
+
+#: ../../../lib/web/src/components/calendar/time-grid.tsx
+#: ../../../lib/web/src/components/calendar/tooltip.ts
+msgid "{from} to {to}"
+msgstr "{from} έως {to}"
+
+#: ../../../lib/web/src/components/calendar/month-grid.tsx
+msgid "{hidden, plural, one {+# more} other {+# more}}"
+msgstr "{hidden, plural, one {+# ακόμη} other {+# ακόμη}}"
 
 #: ../../../lib/web/src/components/game/game-draw-offer-banner.tsx
 msgid "{opponentName} offered a draw"
@@ -283,6 +297,11 @@ msgstr "Προσθήκη προβολής"
 msgid "AI"
 msgstr "AI"
 
+#: ../../../lib/web/src/components/calendar/time-grid.tsx
+#: ../../../lib/web/src/components/calendar/time-grid.tsx
+msgid "All day"
+msgstr "Ολοήμερο"
+
 #: src/components/layout/projects-layout.tsx
 msgid "All projects"
 msgstr "Όλα τα έργα"
@@ -369,6 +388,10 @@ msgstr "Είστε βέβαιοι ότι θέλετε να καταργήσετ�
 #: ../../../lib/web/src/components/ui/sort-direction-button.tsx
 msgid "Ascending"
 msgstr "Αύξουσα"
+
+#: ../../../lib/web/src/components/timezone-select.tsx
+msgid "At sea"
+msgstr "Στη θάλασσα"
 
 #: ../../../lib/web/src/components/comment-composer.tsx
 msgid "Attach comment files"
@@ -476,6 +499,10 @@ msgstr "Ειδοποιήσεις προγράμματος περιήγησης"
 msgid "Built-in templates"
 msgstr "Ενσωματωμένα πρότυπα"
 
+#: ../../../lib/web/src/features/accounts/types.ts
+msgid "Calendar server"
+msgstr "Διακομιστής ημερολογίου"
+
 #: ../../../lib/web/src/lib/shell-errors.ts
 msgid "Camera permission denied"
 msgstr "Η άδεια κάμερας απορρίφθηκε"
@@ -548,6 +575,11 @@ msgstr "Άλλαξε"
 msgid "Changed {field}"
 msgstr "Άλλαξε {field}"
 
+#: ../../../lib/web/src/components/calendar/month-grid.tsx
+#: ../../../lib/web/src/components/calendar/time-grid.tsx
+msgid "Changed occurrence"
+msgstr "Τροποποιημένη επανάληψη"
+
 #: ../../../lib/web/src/hooks/use-field-type-labels.ts
 msgid "Checkbox"
 msgstr "Πλαίσιο ελέγχου"
@@ -559,6 +591,10 @@ msgstr "Έλεγχος κατάστασης συγχώνευσης..."
 #: ../../../lib/web/src/hooks/use-field-type-labels.ts
 msgid "Checklist"
 msgstr "Λίστα ελέγχου"
+
+#: ../../../lib/web/src/components/ui/date-picker.tsx
+msgid "Choose a date"
+msgstr "Επιλέξτε ημερομηνία"
 
 #: ../../../lib/web/src/components/game/game-empty-state.tsx
 msgid "Choose a game from the sidebar or start a new one."
@@ -634,6 +670,7 @@ msgid "Collapse sidebar"
 msgstr "Σύμπτυξη πλαϊνής στήλης"
 
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx
+#: ../../../lib/web/src/components/ui/create-entity-dialog.tsx
 msgid "Colour"
 msgstr "Χρώμα"
 
@@ -720,6 +757,10 @@ msgstr "Συνέχεια"
 msgid "Continue with {label}"
 msgstr "Συνέχεια με {label}"
 
+#: ../../../lib/web/src/features/accounts/account-add.tsx
+msgid "Continue with {providerLabel}"
+msgstr "Συνέχεια με {providerLabel}"
+
 #: ../../../lib/web/src/lib/toast-utils.ts
 msgid "Copied"
 msgstr "Αντιγράφηκε"
@@ -728,6 +769,10 @@ msgstr "Αντιγράφηκε"
 msgid "Copied to clipboard"
 msgstr "Αντιγράφηκε στο πρόχειρο"
 
+#: ../../../lib/web/src/components/calendar/month-grid.tsx
+#: ../../../lib/web/src/components/calendar/month-grid.tsx
+#: ../../../lib/web/src/components/calendar/time-grid.tsx
+#: ../../../lib/web/src/components/calendar/time-grid.tsx
 #: ../../../lib/web/src/components/ui/copy-button.tsx
 msgid "Copy"
 msgstr "Αντιγραφή"
@@ -1145,6 +1190,10 @@ msgstr "Email"
 #: ../../../lib/web/src/components/step-up-dialog.tsx
 msgid "Email code"
 msgstr "Κωδικός email"
+
+#: ../../../lib/web/src/components/calendar/time-grid.tsx
+msgid "Ends before it starts"
+msgstr "Λήγει πριν αρχίσει"
 
 #: ../../../lib/web/src/components/banner-section.tsx
 msgid "Enter banner text (markdown supported)..."
@@ -1810,6 +1859,10 @@ msgstr "Συντονισμός"
 msgid "Monday"
 msgstr "Δευτέρα"
 
+#: ../../../lib/web/src/components/calendar/date-header.tsx
+msgid "Month"
+msgstr "Μήνας"
+
 #: ../../../lib/web/src/components/options-menu.tsx
 msgid "More options"
 msgstr "Περισσότερες επιλογές"
@@ -1821,6 +1874,13 @@ msgstr "Μετακινήθηκε"
 #: ../../../lib/web/src/components/entity/entity-activity-list.tsx
 msgid "Moved {field}"
 msgstr "Μετακινήθηκε {field}"
+
+#. placeholder {0}: dayName(current.day)
+#. placeholder {0}: dayName(dragging.day)
+#: ../../../lib/web/src/components/calendar/month-grid.tsx
+#: ../../../lib/web/src/components/calendar/time-grid.tsx
+msgid "Moving to {0}"
+msgstr "Μετακίνηση στις {0}"
 
 #: src/features/projects/components/create-project-dialog.tsx
 msgid "My project"
@@ -1883,6 +1943,14 @@ msgstr "Επόμενο"
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx
 msgid "Next image"
 msgstr "Επόμενη εικόνα"
+
+#: ../../../lib/web/src/components/calendar/date-header.tsx
+msgid "Next month"
+msgstr "Επόμενος μήνας"
+
+#: ../../../lib/web/src/components/calendar/date-header.tsx
+msgid "Next year"
+msgstr "Επόμενο έτος"
 
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx
 msgid "No {parentClassNames} to add to"
@@ -2222,6 +2290,14 @@ msgstr "Το πρόθεμα πρέπει να έχει έως 20 χαρακτή�
 msgid "Previous image"
 msgstr "Προηγούμενη εικόνα"
 
+#: ../../../lib/web/src/components/calendar/date-header.tsx
+msgid "Previous month"
+msgstr "Προηγούμενος μήνας"
+
+#: ../../../lib/web/src/components/calendar/date-header.tsx
+msgid "Previous year"
+msgstr "Προηγούμενο έτος"
+
 #: ../../../lib/web/src/components/server-documents-footer.tsx
 #: ../../../lib/web/src/features/document/document-page.tsx
 msgid "Privacy"
@@ -2432,6 +2508,11 @@ msgstr "Μετονομασία στήλης"
 #: ../../../lib/web/src/components/entity/entity-board-column.tsx
 msgid "Rename this board column"
 msgstr "Μετονομασία αυτής της στήλης πίνακα"
+
+#: ../../../lib/web/src/components/calendar/month-grid.tsx
+#: ../../../lib/web/src/components/calendar/time-grid.tsx
+msgid "Repeats"
+msgstr "Επαναλαμβάνεται"
 
 #: src/routes/_authenticated/$projectId/design.tsx
 msgid "Replace design"
@@ -3232,6 +3313,10 @@ msgstr "Στείλαμε έναν κωδικό επαλήθευσης στο <0>
 #: ../../../lib/web/src/lib/preference-utils.ts
 msgid "Wednesday"
 msgstr "Τετάρτη"
+
+#: ../../../lib/web/src/components/calendar/date-header.tsx
+msgid "Year"
+msgstr "Έτος"
 
 #: ../../../lib/web/src/features/errors/general-error.tsx
 msgid "You do not have access to this section."

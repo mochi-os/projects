@@ -316,7 +316,7 @@ msgstr "Разрешить всем искать проект"
 
 #: src/features/editor/components/edit-dialogs.tsx
 msgid "Allow merge requests"
-msgstr "Разрешить merge-запросы"
+msgstr "Разрешить запросы на объединение"
 
 #: ../../../lib/web/src/components/entity/entity-field-dialog.tsx
 msgid "Allow sort by"
@@ -367,7 +367,7 @@ msgstr "Вы уверены, что хотите удалить этот ком�
 
 #: src/features/requests/components/request-panel.tsx
 msgid "Are you sure you want to delete this merge request?"
-msgstr "Вы уверены, что хотите удалить этот merge-запрос?"
+msgstr "Вы уверены, что хотите удалить этот запрос на объединение?"
 
 #: ../../../lib/web/src/components/sign-out-dialog.tsx
 msgid "Are you sure you want to log out? You will need to log in again to access your account."
@@ -979,7 +979,7 @@ msgstr "Удалить элемент"
 #: src/features/requests/components/request-panel.tsx
 #: src/features/requests/components/request-panel.tsx
 msgid "Delete merge request"
-msgstr "Удалить merge-запрос"
+msgstr "Удалить запрос на объединение"
 
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx
 msgid "Delete option"
@@ -1286,7 +1286,7 @@ msgstr "Не удалось создать ссылку"
 
 #: src/features/requests/components/request-panel.tsx
 msgid "Failed to create merge request"
-msgstr "Не удалось создать merge-запрос"
+msgstr "Не удалось создать запрос на объединение"
 
 #: src/features/editor/components/design-editor.tsx
 #: src/features/editor/components/design-editor.tsx
@@ -1331,7 +1331,7 @@ msgstr "Не удалось удалить ссылку"
 
 #: src/features/requests/components/request-panel.tsx
 msgid "Failed to delete merge request"
-msgstr "Не удалось удалить merge-запрос"
+msgstr "Не удалось удалить запрос на объединение"
 
 #: src/features/editor/components/design-editor.tsx
 msgid "Failed to delete option"
@@ -1513,7 +1513,7 @@ msgstr "Не удалось обновить иерархию"
 
 #: src/features/requests/components/request-panel.tsx
 msgid "Failed to update merge request"
-msgstr "Не удалось обновить merge-запрос"
+msgstr "Не удалось обновить запрос на объединение"
 
 #: src/features/editor/components/design-editor.tsx
 msgid "Failed to update option"
@@ -1930,11 +1930,15 @@ msgid "Network error"
 msgstr "Ошибка сети"
 
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx
-#: ../../../lib/web/src/components/ui/sort-selector.tsx
 #: src/routes/_authenticated/$projectId/index.tsx
 #: src/routes/_authenticated/$projectId/index.tsx
 msgid "New"
 msgstr "Новый"
+
+#: ../../../lib/web/src/components/ui/sort-selector.tsx
+msgctxt "sort order"
+msgid "New"
+msgstr "Новые"
 
 #: src/routes/_authenticated/$projectId/index.tsx
 msgid "New {className}"
@@ -2000,7 +2004,7 @@ msgstr "Комментариев пока нет"
 
 #: src/routes/$projectId.diff.tsx
 msgid "No diff available"
-msgstr "Diff недоступен"
+msgstr "Различия недоступны"
 
 #: ../../../lib/web/src/components/game/game-empty-state.tsx
 msgid "No games yet"
@@ -2132,11 +2136,15 @@ msgstr "Ничего не найдено"
 msgid "Notifications: {0}"
 msgstr "Уведомления: {0}"
 
-#: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx
-#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx
 #: ../../../lib/web/src/hooks/use-field-type-labels.ts
 msgid "Number"
 msgstr "Число"
+
+#: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx
+msgctxt "item number"
+msgid "Number"
+msgstr "Номер"
 
 #: ../../../lib/web/src/components/filter-bar.tsx
 msgid "On"
@@ -2238,7 +2246,7 @@ msgstr "Ключи доступа"
 
 #: ../../../lib/web/src/lib/shell-errors.ts
 msgid "Passkeys are not available in this browser"
-msgstr "Passkeys недоступны в этом браузере"
+msgstr "Ключи доступа недоступны в этом браузере"
 
 #: ../../../lib/web/src/components/entity/entity-field-dialog.tsx
 msgid "Pattern (regex)"
@@ -2695,7 +2703,7 @@ msgstr "Поиск..."
 
 #: ../../../lib/web/src/hooks/use-field-type-labels.ts
 msgid "Select"
-msgstr "Выбрать"
+msgstr "Выбор"
 
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx
 msgid "Select a field"
@@ -2884,7 +2892,7 @@ msgstr "Прекратить отслеживание"
 
 #: ../../../lib/web/src/features/access/access-list.tsx
 msgid "Subject"
-msgstr "Тема"
+msgstr "Пользователь или группа"
 
 #: ../../../lib/web/src/components/comment-composer.tsx
 msgid "Submit comment"
@@ -2926,9 +2934,13 @@ msgstr "Воскресенье"
 msgid "Switch to view 1-9"
 msgstr "Перейти к виду 1-9"
 
+#: ../../../lib/web/src/lib/preference-utils.ts
+#: ../../../lib/web/src/lib/preference-utils.ts
+msgid "System"
+msgstr "Система"
+
 #: ../../../lib/web/src/components/audit-timeline.tsx
-#: ../../../lib/web/src/lib/preference-utils.ts
-#: ../../../lib/web/src/lib/preference-utils.ts
+msgctxt "actor"
 msgid "System"
 msgstr "Система"
 
@@ -2985,7 +2997,7 @@ msgstr "Запрос микрофона остался без ответа"
 
 #: ../../../lib/web/src/lib/shell-errors.ts
 msgid "The passkey request was not answered"
-msgstr "Запрос passkey остался без ответа"
+msgstr "Запрос ключа доступа остался без ответа"
 
 #: ../../../lib/web/src/features/errors/general-error.tsx
 msgid "The requested content could not be found."
@@ -2997,7 +3009,7 @@ msgstr "Сервер вернул веб-страницу вместо данн�
 
 #: ../../../lib/web/src/lib/shell-errors.ts
 msgid "This app is not allowed to use your passkey. Allow it in Settings, under Permissions."
-msgstr "Этому приложению не разрешено использовать ваш passkey. Разрешите это в Настройках, в разделе Разрешения."
+msgstr "Этому приложению не разрешено использовать ваш ключ доступа. Разрешите это в Настройках, в разделе Разрешения."
 
 #. placeholder {0}: request.target
 #: src/features/requests/components/request-panel.tsx
@@ -3084,7 +3096,7 @@ msgstr "Слишком много запросов"
 
 #: ../../../lib/web/src/components/ui/sort-selector.tsx
 msgid "Top"
-msgstr "Верх"
+msgstr "Лучшее"
 
 #: src/features/editor/components/edit-dialogs.tsx
 msgid "Top level"
@@ -3290,7 +3302,7 @@ msgstr "Параметры просмотра"
 
 #: src/features/editor/components/design-editor.tsx
 msgid "Views"
-msgstr "Просмотры"
+msgstr "Виды"
 
 #: ../../../lib/web/src/lib/shell-errors.ts
 msgid "Voice recording is not supported in this browser"

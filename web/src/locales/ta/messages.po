@@ -316,7 +316,7 @@ msgstr "திட்டத்தை யாராவது தேட அனும
 
 #: src/features/editor/components/edit-dialogs.tsx
 msgid "Allow merge requests"
-msgstr "Merge requests-ஐ அனுமதி"
+msgstr "ஒன்றிணைப்பு கோரிக்கைகளை அனுமதி"
 
 #: ../../../lib/web/src/components/entity/entity-field-dialog.tsx
 msgid "Allow sort by"
@@ -367,7 +367,7 @@ msgstr "இந்த கருத்தை நீக்க விரும்ப
 
 #: src/features/requests/components/request-panel.tsx
 msgid "Are you sure you want to delete this merge request?"
-msgstr "இந்த merge request-ஐ நீக்க விரும்புகிறீர்களா?"
+msgstr "இந்த ஒன்றிணைப்பு கோரிக்கையை நீக்க விரும்புகிறீர்களா?"
 
 #: ../../../lib/web/src/components/sign-out-dialog.tsx
 msgid "Are you sure you want to log out? You will need to log in again to access your account."
@@ -586,7 +586,7 @@ msgstr "தேர்வுப் பெட்டி"
 
 #: src/features/requests/components/merge-status.tsx
 msgid "Checking merge status..."
-msgstr "Merge நிலையைச் சரிபார்க்கிறது..."
+msgstr "ஒன்றிணைப்பு நிலையைச் சரிபார்க்கிறது..."
 
 #: ../../../lib/web/src/hooks/use-field-type-labels.ts
 msgid "Checklist"
@@ -806,7 +806,7 @@ msgstr "டெம்ப்ளேட்களை ஏற்ற முடியவ�
 
 #: src/features/requests/components/diff-stats.tsx
 msgid "Could not load the diff"
-msgstr "Diff ஐ ஏற்ற முடியவில்லை"
+msgstr "வேறுபாட்டை ஏற்ற முடியவில்லை"
 
 #: ../../../lib/web/src/features/document/document-page.tsx
 msgid "Could not load this document. Please try again later."
@@ -979,7 +979,7 @@ msgstr "உருப்படியை நீக்கு"
 #: src/features/requests/components/request-panel.tsx
 #: src/features/requests/components/request-panel.tsx
 msgid "Delete merge request"
-msgstr "Merge request-ஐ நீக்கு"
+msgstr "ஒன்றிணைப்பு கோரிக்கையை நீக்கு"
 
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx
 msgid "Delete option"
@@ -1062,7 +1062,7 @@ msgstr "வலை உலாவியிலிருந்து கண்டற�
 
 #: src/features/requests/components/diff-stats.tsx
 msgid "Diff"
-msgstr "Diff"
+msgstr "வேறுபாடு"
 
 #: src/routes/$projectId.diff.tsx
 msgid "Diff: {source} → {target}"
@@ -1286,7 +1286,7 @@ msgstr "இணைப்பை உருவாக்க முடியவில�
 
 #: src/features/requests/components/request-panel.tsx
 msgid "Failed to create merge request"
-msgstr "Merge request-ஐ உருவாக்க முடியவில்லை"
+msgstr "ஒன்றிணைப்பு கோரிக்கையை உருவாக்க முடியவில்லை"
 
 #: src/features/editor/components/design-editor.tsx
 #: src/features/editor/components/design-editor.tsx
@@ -1331,7 +1331,7 @@ msgstr "இணைப்பை நீக்க முடியவில்லை"
 
 #: src/features/requests/components/request-panel.tsx
 msgid "Failed to delete merge request"
-msgstr "Merge request-ஐ நீக்க முடியவில்லை"
+msgstr "ஒன்றிணைப்பு கோரிக்கையை நீக்க முடியவில்லை"
 
 #: src/features/editor/components/design-editor.tsx
 msgid "Failed to delete option"
@@ -1513,7 +1513,7 @@ msgstr "படிநிலையைப் புதுப்பிக்க ம�
 
 #: src/features/requests/components/request-panel.tsx
 msgid "Failed to update merge request"
-msgstr "Merge request-ஐ புதுப்பிக்க முடியவில்லை"
+msgstr "ஒன்றிணைப்பு கோரிக்கையை புதுப்பிக்க முடியவில்லை"
 
 #: src/features/editor/components/design-editor.tsx
 msgid "Failed to update option"
@@ -1740,7 +1740,7 @@ msgstr "உள்ளடக்கம் ஏற்றப்படுகிறத�
 
 #: src/features/requests/components/diff-stats.tsx
 msgid "Loading diff..."
-msgstr "diff ஐ ஏற்றுகிறது..."
+msgstr "வேறுபாட்டை ஏற்றுகிறது..."
 
 #: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx
 msgid "Loading item"
@@ -1823,7 +1823,7 @@ msgstr "மெர்ஜ் கமிட்"
 
 #: src/features/requests/components/request-panel.tsx
 msgid "Merge requests"
-msgstr "Merge கோரிக்கைகள்"
+msgstr "ஒன்றிணைப்பு கோரிக்கைகள்"
 
 #: src/routes/_authenticated/$projectId/index.tsx
 msgid "Merge requests ({requestCount})"
@@ -1930,11 +1930,15 @@ msgid "Network error"
 msgstr "பிணையப் பிழை"
 
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx
-#: ../../../lib/web/src/components/ui/sort-selector.tsx
 #: src/routes/_authenticated/$projectId/index.tsx
 #: src/routes/_authenticated/$projectId/index.tsx
 msgid "New"
 msgstr "புதியது"
+
+#: ../../../lib/web/src/components/ui/sort-selector.tsx
+msgctxt "sort order"
+msgid "New"
+msgstr "சமீபத்தியவை"
 
 #: src/routes/_authenticated/$projectId/index.tsx
 msgid "New {className}"
@@ -2000,7 +2004,7 @@ msgstr "கருத்துகள் இன்னும் இல்லை"
 
 #: src/routes/$projectId.diff.tsx
 msgid "No diff available"
-msgstr "Diff கிடைக்கவில்லை"
+msgstr "வேறுபாடு கிடைக்கவில்லை"
 
 #: ../../../lib/web/src/components/game/game-empty-state.tsx
 msgid "No games yet"
@@ -2020,7 +2024,7 @@ msgstr "பொருந்தும் ஆப்ஜெக்ட்கள் இ�
 
 #: src/features/requests/components/request-panel.tsx
 msgid "No merge requests"
-msgstr "Merge கோரிக்கைகள் இல்லை"
+msgstr "ஒன்றிணைப்பு கோரிக்கைகள் இல்லை"
 
 #: ../../../lib/web/src/components/entity/entity-field-editor.tsx
 #: ../../../lib/web/src/components/person-picker.tsx
@@ -2132,9 +2136,13 @@ msgstr "எதுவும் கிடைக்கவில்லை"
 msgid "Notifications: {0}"
 msgstr "அறிவிப்புகள்: {0}"
 
+#: ../../../lib/web/src/hooks/use-field-type-labels.ts
+msgid "Number"
+msgstr "எண்"
+
 #: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx
-#: ../../../lib/web/src/hooks/use-field-type-labels.ts
+msgctxt "item number"
 msgid "Number"
 msgstr "எண்"
 
@@ -2230,7 +2238,7 @@ msgstr "கடவுக்குறி"
 #: ../../../lib/web/src/components/step-up-dialog.tsx
 #: ../../../lib/web/src/lib/shell-errors.ts
 msgid "Passkey verification failed. Please try again."
-msgstr "கடவுவிசை சரிபார்ப்பு தோல்வியடைந்தது. மீண்டும் முயற்சிக்கவும்."
+msgstr "கடவுக்குறி சரிபார்ப்பு தோல்வியடைந்தது. மீண்டும் முயற்சிக்கவும்."
 
 #: ../../../lib/web/src/components/restore-banner.tsx
 msgid "Passkeys"
@@ -2260,7 +2268,7 @@ msgstr "உங்கள் இணைய இணைப்பைச் சரிப
 
 #: src/features/projects/components/create-project-dialog.tsx
 msgid "Please select a template"
-msgstr "ஒரு template-ஐத் தேர்ந்தெடுக்கவும்"
+msgstr "ஒரு வார்ப்புருவைத் தேர்ந்தெடுக்கவும்"
 
 #: ../../../lib/web/src/features/errors/general-error.tsx
 msgid "Please try again."
@@ -2361,11 +2369,11 @@ msgstr "திட்டம் புதுப்பிக்கப்பட்�
 #: src/components/layout/projects-layout.tsx
 #: src/features/projects/pages/projects-list-page.tsx
 msgid "Projects"
-msgstr "திட்டங்கள்"
+msgstr "பிராஜெக்ட்கள்"
 
 #: ../../../lib/web/src/components/ai-prompts-editor.tsx
 msgid "Prompt saved"
-msgstr "Prompt சேமிக்கப்பட்டது"
+msgstr "தூண்டுதல் சேமிக்கப்பட்டது"
 
 #: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx
 msgid "Properties"
@@ -2389,7 +2397,7 @@ msgstr "நெடுவரிசைகளை மறுவரிசைப்ப�
 
 #: ../../../lib/web/src/components/restore-banner.tsx
 msgid "Re-register your passkeys on this server"
-msgstr "இந்த சேவையகத்தில் உங்கள் கடவுச்சாவிகளை மீண்டும் பதிவு செய்யவும்"
+msgstr "இந்த சேவையகத்தில் உங்கள் கடவுக்குறிகளை மீண்டும் பதிவு செய்யவும்"
 
 #: src/features/requests/components/merge-status.tsx
 msgid "Ready to merge"
@@ -2460,7 +2468,7 @@ msgstr "அகற்று"
 #: ../../../lib/web/src/components/filter-bar.tsx
 #: ../../../lib/web/src/components/filter-bar.tsx
 msgid "Remove {0} filter"
-msgstr "{0} filter-ஐ அகற்று"
+msgstr "{0} வடிகட்டியை அகற்று"
 
 #: ../../../lib/web/src/components/member-list.tsx
 #: ../../../lib/web/src/components/member-list.tsx
@@ -2608,7 +2616,7 @@ msgstr "RSS ஃபீட்"
 
 #: ../../../lib/web/src/components/options-menu.tsx
 msgid "RSS URL copied to clipboard"
-msgstr "RSS URL clipboard-க்கு நகலெடுக்கப்பட்டது"
+msgstr "RSS URL கிளிப்போர்டுக்கு நகலெடுக்கப்பட்டது"
 
 #: ../../../lib/web/src/lib/preference-utils.ts
 msgid "Saturday"
@@ -2695,7 +2703,7 @@ msgstr "தேடுகிறது..."
 
 #: ../../../lib/web/src/hooks/use-field-type-labels.ts
 msgid "Select"
-msgstr "தேர்ந்தெடு"
+msgstr "தேர்வு"
 
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx
 msgid "Select a field"
@@ -2719,7 +2727,7 @@ msgstr "கணக்கு வகையை தேர்ந்தெடு"
 
 #: src/features/requests/components/branch-select.tsx
 msgid "Select branch"
-msgstr "Branch-ஐ தேர்ந்தெடு"
+msgstr "கிளையைத் தேர்ந்தெடு"
 
 #: ../../../lib/web/src/features/access/access-dialog.tsx
 msgid "Select group"
@@ -2884,7 +2892,7 @@ msgstr "பார்ப்பதை நிறுத்து"
 
 #: ../../../lib/web/src/features/access/access-list.tsx
 msgid "Subject"
-msgstr "பொருள்"
+msgstr "பயனர் அல்லது குழு"
 
 #: ../../../lib/web/src/components/comment-composer.tsx
 msgid "Submit comment"
@@ -2926,9 +2934,13 @@ msgstr "ஞாயிற்றுக்கிழமை"
 msgid "Switch to view 1-9"
 msgstr "காட்சி 1-9 க்கு மாறு"
 
+#: ../../../lib/web/src/lib/preference-utils.ts
+#: ../../../lib/web/src/lib/preference-utils.ts
+msgid "System"
+msgstr "சிஸ்டம்"
+
 #: ../../../lib/web/src/components/audit-timeline.tsx
-#: ../../../lib/web/src/lib/preference-utils.ts
-#: ../../../lib/web/src/lib/preference-utils.ts
+msgctxt "actor"
 msgid "System"
 msgstr "சிஸ்டம்"
 
@@ -2985,7 +2997,7 @@ msgstr "மைக்ரோஃபோன் கோரிக்கைக்கு �
 
 #: ../../../lib/web/src/lib/shell-errors.ts
 msgid "The passkey request was not answered"
-msgstr "Passkey கோரிக்கைக்கு பதில் இல்லை"
+msgstr "கடவுக்குறி கோரிக்கைக்கு பதில் இல்லை"
 
 #: ../../../lib/web/src/features/errors/general-error.tsx
 msgid "The requested content could not be found."
@@ -2997,7 +3009,7 @@ msgstr "சேவையகம் தரவுக்குப் பதிலா�
 
 #: ../../../lib/web/src/lib/shell-errors.ts
 msgid "This app is not allowed to use your passkey. Allow it in Settings, under Permissions."
-msgstr "இந்த ஆப்ஸுக்கு உங்கள் passkey-ஐப் பயன்படுத்த அனுமதி இல்லை. அமைப்புகளில், அனுமதிகள் பிரிவில் அதை அனுமதிக்கவும்."
+msgstr "இந்த ஆப்ஸுக்கு உங்கள் கடவுக்குறியைப் பயன்படுத்த அனுமதி இல்லை. அமைப்புகளில், அனுமதிகள் பிரிவில் அதை அனுமதிக்கவும்."
 
 #. placeholder {0}: request.target
 #: src/features/requests/components/request-panel.tsx
@@ -3006,7 +3018,7 @@ msgstr "இந்த மெர்ஜ் கோரிக்கை {0} இல் �
 
 #: src/features/requests/components/request-panel.tsx
 msgid "This merge request is a draft and cannot be merged."
-msgstr "இந்த merge கோரிக்கை ஒரு வரைவு மற்றும் merge செய்ய முடியாது."
+msgstr "இந்த ஒன்றிணைப்பு கோரிக்கை ஒரு வரைவு மற்றும் ஒன்றிணைக்க முடியாது."
 
 #: ../../../lib/web/src/components/game/game-end-dialogs.tsx
 msgid "This permanently deletes the game and its chat. This cannot be undone."
@@ -3084,7 +3096,7 @@ msgstr "மிக அதிகமான கோரிக்கைகள்"
 
 #: ../../../lib/web/src/components/ui/sort-selector.tsx
 msgid "Top"
-msgstr "மேல்"
+msgstr "சிறந்தவை"
 
 #: src/features/editor/components/edit-dialogs.tsx
 msgid "Top level"
@@ -3227,13 +3239,13 @@ msgstr "பதிவேற்ற முன்னேற்றம்"
 
 #: ../../../lib/web/src/components/step-up-dialog.tsx
 msgid "Use your passkey"
-msgstr "உங்கள் கடவுவிசையைப் பயன்படுத்தவும்"
+msgstr "உங்கள் கடவுக்குறியைப் பயன்படுத்தவும்"
 
 #. placeholder {0}: prefix || 'project'
 #. placeholder {1}: prefix || 'project'
 #: src/features/projects/components/create-project-dialog.tsx
 msgid "Used for readable IDs like {0}-1, {1}-2"
-msgstr "{0}-1, {1}-2 போன்ற படிக்கக்கூடிய IDs க்கு பயன்படுகிறது"
+msgstr "{0}-1, {1}-2 போன்ற படிக்கக்கூடிய ID-களுக்கு பயன்படுகிறது"
 
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx
 #: ../../../lib/web/src/features/access/access-dialog.tsx

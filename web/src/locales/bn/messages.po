@@ -1117,7 +1117,7 @@ msgstr "কন্টেন্ট যোগ করতে কলামে ডা�
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx
 #: ../../../lib/web/src/components/ui/image-lightbox.tsx
 msgid "Download"
-msgstr "ডাউনলোড"
+msgstr "ডাউনলোড করুন"
 
 #: src/routes/_authenticated/$projectId/design.tsx
 msgid "Download backup first"
@@ -1740,7 +1740,7 @@ msgstr "কন্টেন্ট লোড হচ্ছে…"
 
 #: src/features/requests/components/diff-stats.tsx
 msgid "Loading diff..."
-msgstr "diff লোড হচ্ছে..."
+msgstr "ডিফ লোড হচ্ছে..."
 
 #: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx
 msgid "Loading item"
@@ -1930,11 +1930,15 @@ msgid "Network error"
 msgstr "নেটওয়ার্ক ত্রুটি"
 
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx
-#: ../../../lib/web/src/components/ui/sort-selector.tsx
 #: src/routes/_authenticated/$projectId/index.tsx
 #: src/routes/_authenticated/$projectId/index.tsx
 msgid "New"
 msgstr "নতুন"
+
+#: ../../../lib/web/src/components/ui/sort-selector.tsx
+msgctxt "sort order"
+msgid "New"
+msgstr "নতুনতম"
 
 #: src/routes/_authenticated/$projectId/index.tsx
 msgid "New {className}"
@@ -2000,7 +2004,7 @@ msgstr "এখনও কোনো মন্তব্য নেই"
 
 #: src/routes/$projectId.diff.tsx
 msgid "No diff available"
-msgstr "কোনো diff উপলব্ধ নেই"
+msgstr "কোনো ডিফ উপলব্ধ নেই"
 
 #: ../../../lib/web/src/components/game/game-empty-state.tsx
 msgid "No games yet"
@@ -2132,11 +2136,15 @@ msgstr "কিছুই পাওয়া যায়নি"
 msgid "Notifications: {0}"
 msgstr "বিজ্ঞপ্তি: {0}"
 
-#: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx
-#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx
 #: ../../../lib/web/src/hooks/use-field-type-labels.ts
 msgid "Number"
 msgstr "সংখ্যা"
+
+#: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx
+#: ../../../lib/web/src/components/entity/entity-view-sheet.tsx
+msgctxt "item number"
+msgid "Number"
+msgstr "নম্বর"
 
 #: ../../../lib/web/src/components/filter-bar.tsx
 msgid "On"
@@ -2361,7 +2369,7 @@ msgstr "প্রকল্প আপডেট করা হয়েছে"
 #: src/components/layout/projects-layout.tsx
 #: src/features/projects/pages/projects-list-page.tsx
 msgid "Projects"
-msgstr "প্রকল্প"
+msgstr "প্রজেক্ট"
 
 #: ../../../lib/web/src/components/ai-prompts-editor.tsx
 msgid "Prompt saved"
@@ -2695,7 +2703,7 @@ msgstr "অনুসন্ধান করা হচ্ছে..."
 
 #: ../../../lib/web/src/hooks/use-field-type-labels.ts
 msgid "Select"
-msgstr "নির্বাচন করুন"
+msgstr "নির্বাচন"
 
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx
 msgid "Select a field"
@@ -2884,7 +2892,7 @@ msgstr "দেখা বন্ধ করুন"
 
 #: ../../../lib/web/src/features/access/access-list.tsx
 msgid "Subject"
-msgstr "বিষয়"
+msgstr "ব্যবহারকারী বা গ্রুপ"
 
 #: ../../../lib/web/src/components/comment-composer.tsx
 msgid "Submit comment"
@@ -2926,9 +2934,13 @@ msgstr "রবিবার"
 msgid "Switch to view 1-9"
 msgstr "ভিউ 1-9 এ স্যুইচ করুন"
 
+#: ../../../lib/web/src/lib/preference-utils.ts
+#: ../../../lib/web/src/lib/preference-utils.ts
+msgid "System"
+msgstr "সিস্টেম"
+
 #: ../../../lib/web/src/components/audit-timeline.tsx
-#: ../../../lib/web/src/lib/preference-utils.ts
-#: ../../../lib/web/src/lib/preference-utils.ts
+msgctxt "actor"
 msgid "System"
 msgstr "সিস্টেম"
 
@@ -3006,7 +3018,7 @@ msgstr "এই মার্জ অনুরোধটি {0}-এ মার্জ 
 
 #: src/features/requests/components/request-panel.tsx
 msgid "This merge request is a draft and cannot be merged."
-msgstr "এই merge request একটি খসড়া এবং merge করা যাবে না।"
+msgstr "এই মার্জ অনুরোধটি একটি খসড়া এবং মার্জ করা যাবে না।"
 
 #: ../../../lib/web/src/components/game/game-end-dialogs.tsx
 msgid "This permanently deletes the game and its chat. This cannot be undone."
@@ -3076,7 +3088,7 @@ msgstr "ভিউ বিকল্প টগল করুন"
 #: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx
 #: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx
 msgid "Toggle watched filter"
-msgstr "watched ফিল্টার টগল করুন"
+msgstr "দেখা হচ্ছে ফিল্টার টগল করুন"
 
 #: ../../../lib/web/src/features/errors/general-error.tsx
 msgid "Too many requests"
@@ -3084,7 +3096,7 @@ msgstr "অনেক বেশি অনুরোধ"
 
 #: ../../../lib/web/src/components/ui/sort-selector.tsx
 msgid "Top"
-msgstr "উপরে"
+msgstr "সেরা"
 
 #: src/features/editor/components/edit-dialogs.tsx
 msgid "Top level"

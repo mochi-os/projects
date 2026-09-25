@@ -333,7 +333,7 @@ msgstr "Възникна неочаквана грешка"
 
 #: ../../../lib/web/src/features/accounts/types.ts
 msgid "Android push"
-msgstr "Push за Android"
+msgstr "Пуш известия за Android"
 
 #: ../../../lib/web/src/features/access/access-list.tsx
 #: ../../../lib/web/src/features/access/types.ts
@@ -408,7 +408,7 @@ msgstr "Удостоверени потребители"
 
 #: ../../../lib/web/src/components/step-up-dialog.tsx
 msgid "Authenticator code"
-msgstr "Код от authenticator"
+msgstr "Код от удостоверител"
 
 #: ../../../lib/web/src/components/entity/keyboard-shortcuts-help.tsx
 msgid "Available keyboard shortcuts"
@@ -1819,7 +1819,7 @@ msgstr "Слей {objectReadable}: {objectTitle}"
 
 #: src/features/requests/components/merge-button.tsx
 msgid "Merge commit"
-msgstr "Merge commit"
+msgstr "Комит за сливане"
 
 #: src/features/requests/components/request-panel.tsx
 msgid "Merge requests"
@@ -1930,11 +1930,15 @@ msgid "Network error"
 msgstr "Мрежова грешка"
 
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx
-#: ../../../lib/web/src/components/ui/sort-selector.tsx
 #: src/routes/_authenticated/$projectId/index.tsx
 #: src/routes/_authenticated/$projectId/index.tsx
 msgid "New"
 msgstr "Ново"
+
+#: ../../../lib/web/src/components/ui/sort-selector.tsx
+msgctxt "sort order"
+msgid "New"
+msgstr "Най-нови"
 
 #: src/routes/_authenticated/$projectId/index.tsx
 msgid "New {className}"
@@ -2000,7 +2004,7 @@ msgstr "Все още няма коментари"
 
 #: src/routes/$projectId.diff.tsx
 msgid "No diff available"
-msgstr "Няма наличен diff"
+msgstr "Няма налична разлика"
 
 #: ../../../lib/web/src/components/game/game-empty-state.tsx
 msgid "No games yet"
@@ -2020,7 +2024,7 @@ msgstr "Няма съвпадащи обекти"
 
 #: src/features/requests/components/request-panel.tsx
 msgid "No merge requests"
-msgstr "Няма merge requests"
+msgstr "Няма заявки за сливане"
 
 #: ../../../lib/web/src/components/entity/entity-field-editor.tsx
 #: ../../../lib/web/src/components/person-picker.tsx
@@ -2132,9 +2136,13 @@ msgstr "Нищо не е намерено"
 msgid "Notifications: {0}"
 msgstr "Известия: {0}"
 
+#: ../../../lib/web/src/hooks/use-field-type-labels.ts
+msgid "Number"
+msgstr "Номер"
+
 #: ../../../lib/web/src/components/entity/entity-view-options-bar.tsx
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx
-#: ../../../lib/web/src/hooks/use-field-type-labels.ts
+msgctxt "item number"
 msgid "Number"
 msgstr "Номер"
 
@@ -2238,7 +2246,7 @@ msgstr "Ключове за достъп"
 
 #: ../../../lib/web/src/lib/shell-errors.ts
 msgid "Passkeys are not available in this browser"
-msgstr "Passkeys не са налични в този браузър"
+msgstr "Ключовете за достъп не са налични в този браузър"
 
 #: ../../../lib/web/src/components/entity/entity-field-dialog.tsx
 msgid "Pattern (regex)"
@@ -2373,7 +2381,7 @@ msgstr "Свойства"
 
 #: ../../../lib/web/src/features/accounts/types.ts
 msgid "Push notification"
-msgstr "Push известие"
+msgstr "Пуш известие"
 
 #: ../../../lib/web/src/lib/preference-utils.ts
 msgid "Raised"
@@ -2393,11 +2401,11 @@ msgstr "Регистрирайте отново ключовете си за д�
 
 #: src/features/requests/components/merge-status.tsx
 msgid "Ready to merge"
-msgstr "Готов за merge"
+msgstr "Готов за сливане"
 
 #: src/features/requests/components/merge-button.tsx
 msgid "Rebase and merge"
-msgstr "Rebase и merge"
+msgstr "Пребазиране и сливане"
 
 #: ../../../lib/web/src/components/search-entity-page.tsx
 msgid "Recommended"
@@ -2638,7 +2646,7 @@ msgstr "Търсене"
 
 #: src/routes/_authenticated/find.tsx
 msgid "Search by name, ID, fingerprint, or URL..."
-msgstr "Търси по име, ID, fingerprint или URL..."
+msgstr "Търси по име, ID, отпечатък или URL..."
 
 #: ../../../lib/web/src/components/ui/command.tsx
 msgid "Search for a command to run..."
@@ -2695,7 +2703,7 @@ msgstr "Търси се..."
 
 #: ../../../lib/web/src/hooks/use-field-type-labels.ts
 msgid "Select"
-msgstr "Избери"
+msgstr "Падащ списък"
 
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx
 msgid "Select a field"
@@ -2871,7 +2879,7 @@ msgstr "Раздели"
 
 #: src/features/requests/components/merge-button.tsx
 msgid "Squash and merge"
-msgstr "Squash и сливане"
+msgstr "Обединяване и сливане"
 
 #: ../../../lib/web/src/components/entity/entity-comment-list.tsx
 msgid "Start the discussion by adding the first comment."
@@ -2884,7 +2892,7 @@ msgstr "Спри да следиш"
 
 #: ../../../lib/web/src/features/access/access-list.tsx
 msgid "Subject"
-msgstr "Тема"
+msgstr "Потребител или група"
 
 #: ../../../lib/web/src/components/comment-composer.tsx
 msgid "Submit comment"
@@ -2926,9 +2934,13 @@ msgstr "Неделя"
 msgid "Switch to view 1-9"
 msgstr "Превключи към изглед 1-9"
 
+#: ../../../lib/web/src/lib/preference-utils.ts
+#: ../../../lib/web/src/lib/preference-utils.ts
+msgid "System"
+msgstr "Система"
+
 #: ../../../lib/web/src/components/audit-timeline.tsx
-#: ../../../lib/web/src/lib/preference-utils.ts
-#: ../../../lib/web/src/lib/preference-utils.ts
+msgctxt "actor"
 msgid "System"
 msgstr "Система"
 
@@ -2985,7 +2997,7 @@ msgstr "Заявката за микрофон остана без отгово�
 
 #: ../../../lib/web/src/lib/shell-errors.ts
 msgid "The passkey request was not answered"
-msgstr "Заявката за passkey остана без отговор"
+msgstr "Заявката за ключ за достъп остана без отговор"
 
 #: ../../../lib/web/src/features/errors/general-error.tsx
 msgid "The requested content could not be found."
@@ -2997,7 +3009,7 @@ msgstr "Сървърът върна уеб страница вместо дан�
 
 #: ../../../lib/web/src/lib/shell-errors.ts
 msgid "This app is not allowed to use your passkey. Allow it in Settings, under Permissions."
-msgstr "Това приложение няма разрешение да използва вашия passkey. Разрешете го в Настройки, под Разрешения."
+msgstr "Това приложение няма разрешение да използва вашия ключ за достъп. Разрешете го в Настройки, под Разрешения."
 
 #. placeholder {0}: request.target
 #: src/features/requests/components/request-panel.tsx
@@ -3084,7 +3096,7 @@ msgstr "Твърде много заявки"
 
 #: ../../../lib/web/src/components/ui/sort-selector.tsx
 msgid "Top"
-msgstr "Най-горе"
+msgstr "Най-добри"
 
 #: src/features/editor/components/edit-dialogs.tsx
 msgid "Top level"
@@ -3290,7 +3302,7 @@ msgstr "Опции за изглед"
 
 #: src/features/editor/components/design-editor.tsx
 msgid "Views"
-msgstr "Прегледи"
+msgstr "Изгледи"
 
 #: ../../../lib/web/src/lib/shell-errors.ts
 msgid "Voice recording is not supported in this browser"

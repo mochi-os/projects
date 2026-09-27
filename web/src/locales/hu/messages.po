@@ -35,6 +35,11 @@ msgstr "(innen: {0})"
 msgid "(itself)"
 msgstr "(saját maga)"
 
+#: ../../../lib/web/src/components/calendar/event-title.tsx
+#: ../../../lib/web/src/components/calendar/tooltip.ts
+msgid "(No title)"
+msgstr "(Nincs cím)"
+
 #: ../../../lib/web/src/components/member-list.tsx
 msgid "(you)"
 msgstr "(te)"
@@ -114,13 +119,10 @@ msgid "{entityLabel} name"
 msgstr "{entityLabel} neve"
 
 #: ../../../lib/web/src/components/calendar/time-grid.tsx
+#: ../../../lib/web/src/components/calendar/time-grid.tsx
 #: ../../../lib/web/src/components/calendar/tooltip.ts
 msgid "{from} to {to}"
 msgstr "{from} és {to} között"
-
-#: ../../../lib/web/src/components/calendar/month-grid.tsx
-msgid "{hidden, plural, one {+# more} other {+# more}}"
-msgstr "{hidden, plural, one {+# további} other {+# további}}"
 
 #: ../../../lib/web/src/components/game/game-draw-offer-banner.tsx
 msgid "{opponentName} offered a draw"
@@ -552,6 +554,11 @@ msgstr "Válasz elvetése"
 #: ../../../lib/web/src/lib/shell-errors.ts
 msgid "Cancelled"
 msgstr "Visszavonva"
+
+#: ../../../lib/web/src/components/calendar/status.ts
+msgctxt "event status"
+msgid "Cancelled"
+msgstr "Lemondva"
 
 #: src/features/requests/components/merge-status.tsx
 msgid "Cannot merge automatically"
@@ -2451,6 +2458,11 @@ msgstr "Relevancia: {relevance}"
 msgid "Relevance {relevance}, interest {weight}"
 msgstr "Relevancia: {relevance}, érdeklődés: {weight}"
 
+#: ../../../lib/web/src/components/calendar/month-grid.tsx
+#: ../../../lib/web/src/components/calendar/time-grid.tsx
+msgid "Reminder"
+msgstr "Emlékeztető"
+
 #: ../../../lib/web/src/components/attachment-composer.tsx
 #: ../../../lib/web/src/components/attachment-composer.tsx
 #: ../../../lib/web/src/components/entity/add-field-dialog.tsx
@@ -2957,6 +2969,11 @@ msgstr "Címkék"
 #: src/features/requests/components/request-panel.tsx
 msgid "Target"
 msgstr "Cél"
+
+#: ../../../lib/web/src/components/calendar/status.ts
+msgctxt "event status"
+msgid "Tentative"
+msgstr "Előzetes"
 
 #: ../../../lib/web/src/components/server-documents-footer.tsx
 #: ../../../lib/web/src/features/document/document-page.tsx

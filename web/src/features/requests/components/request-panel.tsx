@@ -191,6 +191,7 @@ export function RequestPanel({
         title={t`Delete merge request`}
         desc={t`Are you sure you want to delete this merge request?`}
         confirmText={t`Delete`}
+        icon={<Trash2 className='size-4' />}
         destructive
         isLoading={deleteMutation.isPending}
         handleConfirm={() => deleteId && deleteMutation.mutate(deleteId)}

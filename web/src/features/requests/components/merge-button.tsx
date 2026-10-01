@@ -107,6 +107,7 @@ export function MergeButton({
         title={t`Merge`}
         desc={t`This will merge "${source}" into "${target}". This action cannot be undone.`}
         confirmText={methodLabels[method]}
+        icon={<GitMerge className='size-4' />}
         isLoading={mergeMutation.isPending}
         handleConfirm={handleMerge}
       >

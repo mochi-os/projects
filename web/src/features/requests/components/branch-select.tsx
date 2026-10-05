@@ -60,9 +60,14 @@ export function BranchSelect({
       disabled={disabled || isLoading || !repositoryId}
     >
       <SelectTrigger className='w-full'>
-        <div className='flex items-center gap-2'>
-          <GitBranch className='text-muted-foreground size-4' />
-          <SelectValue placeholder={placeholderText} />
+        {/* The value sits one level down, out of reach of the trigger's own
+            clamp, so a long branch name has to be cut here or it spills
+            over the arrow and out of the box. */}
+        <div className='flex min-w-0 items-center gap-2'>
+          <GitBranch className='text-muted-foreground size-4 shrink-0' />
+          <span className='truncate'>
+            <SelectValue placeholder={placeholderText} />
+          </span>
         </div>
       </SelectTrigger>
       <SelectContent>

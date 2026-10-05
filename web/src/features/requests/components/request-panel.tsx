@@ -14,6 +14,7 @@ import {
   ConfirmDialog,
   Input,
   Switch,
+  SwitchLabel,
   Textarea,
   cn,
   Tooltip,
@@ -450,7 +451,7 @@ function RequestItem({
               disabled={readOnly || isMerged}
             />
 
-            <div className='grid grid-cols-[1fr_auto_1fr] items-end gap-2'>
+            <div className='grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-end gap-2'>
               <BranchSelect
                 repositoryId={request.repository}
                 value={request.source}
@@ -469,12 +470,12 @@ function RequestItem({
             </div>
 
             {!readOnly && !isMerged && (
-              <label className='flex cursor-pointer items-center gap-2 text-sm'>
+              <SwitchLabel
+                className='text-muted-foreground'
+                label={<Trans>Draft</Trans>}
+              >
                 <Switch checked={isDraft} onCheckedChange={handleDraftToggle} />
-                <span className='text-muted-foreground'>
-                  <Trans>Draft</Trans>
-                </span>
-              </label>
+              </SwitchLabel>
             )}
           </div>
 

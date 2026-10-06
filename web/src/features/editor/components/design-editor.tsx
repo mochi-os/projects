@@ -19,6 +19,7 @@ import {
   getErrorMessage,
   AddFieldDialog,
   EntityOptionDialog as OptionDialog,
+  EntityDesignLayout,
 } from '@mochi/web'
 import { Blocks, GripVertical, Plus } from 'lucide-react'
 import projectsApi from '@/api/projects'
@@ -525,106 +526,106 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
   }
 
   return (
-    <div className='flex h-full'>
-      {/* Editor panel (left) */}
-      <div className='flex w-80 flex-col overflow-hidden border-e'>
-        <div className='flex-1 space-y-6 overflow-auto p-4'>
-          {/* Views Section */}
-          <section>
-            <div className='mb-2 flex items-center justify-between'>
-              <Label className='text-sm font-medium'>
-                <Trans>Views</Trans>
-              </Label>
-              <Button
-                variant='ghost'
-                size='sm'
-                onClick={() => setAddViewOpen(true)}
-                aria-label={t`Add view`}
-              >
-                <Plus className='size-4' />
-              </Button>
-            </div>
-            <div className='space-y-1'>
-              {project.views.map((view) => (
-                <div key={view.id}>
-                  {viewDropIndicator?.viewId === view.id &&
-                    viewDropIndicator.position === 'before' && (
-                      <div className='bg-primary mx-3 h-0.5 rounded-full' />
-                    )}
-                  <div
-                    draggable
-                    onDragStart={(e) => handleViewDragStart(e, view.id)}
-                    onDragEnd={handleViewDragEnd}
-                    onDragOver={(e) => handleViewDragOver(e, view.id)}
-                    onDragLeave={handleViewDragLeave}
-                    onDrop={(e) => handleViewDrop(e, view.id)}
-                    className={`hover:bg-hover flex cursor-grab items-center gap-2 rounded-md px-3 py-2 text-sm transition-colors ${
-                      draggedViewId === view.id ? 'opacity-50' : ''
-                    }`}
-                  >
-                    <GripVertical className='text-muted-foreground size-4 shrink-0' />
-                    <button
-                      type='button'
-                      onClick={() => handleEditView(view)}
-                      className='flex-1 text-start'
-                    >
-                      <span className='font-medium'>{view.name}</span>
-                    </button>
-                  </div>
-                  {viewDropIndicator?.viewId === view.id &&
-                    viewDropIndicator.position === 'after' && (
-                      <div className='bg-primary mx-3 h-0.5 rounded-full' />
-                    )}
-                </div>
-              ))}
-            </div>
-          </section>
-
-          <hr className='border-border' />
-
-          {/* Classes Section */}
-          <section>
-            <div className='mb-2 flex items-center justify-between'>
-              <Label className='text-sm font-medium'>
-                <Trans>Classes</Trans>
-              </Label>
-              <Button
-                variant='ghost'
-                size='sm'
-                onClick={() => setAddClassOpen(true)}
-                aria-label={t`Add class`}
-              >
-                <Plus className='size-4' />
-              </Button>
-            </div>
-            <div className='space-y-1'>
-              {project.classes.map((cls) => (
-                <button
-                  key={cls.id}
-                  onClick={() => {
-                    setSelectedClassId(cls.id)
-                    setEditClassOpen(true)
-                  }}
-                  className='hover:bg-hover flex w-full items-center gap-2 rounded-md px-3 py-2 text-start text-sm transition-colors'
+    <>
+      <EntityDesignLayout
+        labels={{ edit: t`Edit`, preview: t`Preview` }}
+        editor={
+          <>
+            {/* Views Section */}
+            <section>
+              <div className='mb-2 flex items-center justify-between'>
+                <Label className='text-sm font-medium'>
+                  <Trans>Views</Trans>
+                </Label>
+                <Button
+                  variant='ghost'
+                  size='sm'
+                  onClick={() => setAddViewOpen(true)}
+                  aria-label={t`Add view`}
                 >
-                  <Blocks className='text-muted-foreground size-4 shrink-0' />
-                  {cls.name}
-                </button>
-              ))}
-            </div>
-          </section>
-        </div>
-      </div>
+                  <Plus className='size-4' />
+                </Button>
+              </div>
+              <div className='space-y-1'>
+                {project.views.map((view) => (
+                  <div key={view.id}>
+                    {viewDropIndicator?.viewId === view.id &&
+                      viewDropIndicator.position === 'before' && (
+                        <div className='bg-primary mx-3 h-0.5 rounded-full' />
+                      )}
+                    <div
+                      draggable
+                      onDragStart={(e) => handleViewDragStart(e, view.id)}
+                      onDragEnd={handleViewDragEnd}
+                      onDragOver={(e) => handleViewDragOver(e, view.id)}
+                      onDragLeave={handleViewDragLeave}
+                      onDrop={(e) => handleViewDrop(e, view.id)}
+                      className={`hover:bg-hover flex cursor-grab items-center gap-2 rounded-md px-3 py-2 text-sm transition-colors ${
+                        draggedViewId === view.id ? 'opacity-50' : ''
+                      }`}
+                    >
+                      <GripVertical className='text-muted-foreground size-4 shrink-0' />
+                      <button
+                        type='button'
+                        onClick={() => handleEditView(view)}
+                        className='flex-1 text-start'
+                      >
+                        <span className='font-medium'>{view.name}</span>
+                      </button>
+                    </div>
+                    {viewDropIndicator?.viewId === view.id &&
+                      viewDropIndicator.position === 'after' && (
+                        <div className='bg-primary mx-3 h-0.5 rounded-full' />
+                      )}
+                  </div>
+                ))}
+              </div>
+            </section>
 
-      {/* Preview panel (right) */}
-      <div className='flex-1 overflow-hidden'>
-        <DesignPreview
-          project={project}
-          projectId={projectId}
-          objects={objects}
-          selectedClassId={selectedClassId}
-        />
-      </div>
+            <hr className='border-border' />
+
+            {/* Classes Section */}
+            <section>
+              <div className='mb-2 flex items-center justify-between'>
+                <Label className='text-sm font-medium'>
+                  <Trans>Classes</Trans>
+                </Label>
+                <Button
+                  variant='ghost'
+                  size='sm'
+                  onClick={() => setAddClassOpen(true)}
+                  aria-label={t`Add class`}
+                >
+                  <Plus className='size-4' />
+                </Button>
+              </div>
+              <div className='space-y-1'>
+                {project.classes.map((cls) => (
+                  <button
+                    key={cls.id}
+                    onClick={() => {
+                      setSelectedClassId(cls.id)
+                      setEditClassOpen(true)
+                    }}
+                    className='hover:bg-hover flex w-full items-center gap-2 rounded-md px-3 py-2 text-start text-sm transition-colors'
+                  >
+                    <Blocks className='text-muted-foreground size-4 shrink-0' />
+                    {cls.name}
+                  </button>
+                ))}
+              </div>
+            </section>
+          </>
+        }
+        preview={
+          <DesignPreview
+            project={project}
+            projectId={projectId}
+            objects={objects}
+            selectedClassId={selectedClassId}
+          />
+        }
+      />
 
       {/* Add view (create mode) */}
       <ViewSheet
@@ -856,6 +857,6 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
           }
         }}
       />
-    </div>
+    </>
   )
 }

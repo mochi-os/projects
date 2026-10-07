@@ -5,8 +5,10 @@
 // Mochi Application Interface Exception - see license.txt and license-exception.md.
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { createFileRoute } from '@tanstack/react-router'
-import { Trans, useLingui } from '@lingui/react/macro'
+import { useLingui } from '@lingui/react/macro'
 import {
+  DiffViewer,
+  DiffViewToggle,
   EmptyState,
   GeneralError,
   Main,
@@ -17,9 +19,9 @@ import {
   toast,
   getErrorMessage,
 } from '@mochi/web'
-import { Loader2, Rows3, Columns2 } from 'lucide-react'
+import { diffWords } from 'diff'
+import { Loader2, Rows3 } from 'lucide-react'
 import projectsApi from '@/api/projects'
-import { DiffViewer } from '@/features/requests/components/diff-viewer'
 
 interface DiffSearchParams {
   repository: string
@@ -87,11 +89,6 @@ function DiffPage() {
     },
   })
 
-  const toggleView = () => {
-    const next = viewStyle === 'unified' ? 'split' : 'unified'
-    prefMutation.mutate(next)
-  }
-
   if (!repository || !source || !target) {
     return (
       <GeneralError
@@ -117,32 +114,10 @@ function DiffPage() {
       <PageHeader
         title={`${source} → ${target}`}
         actions={
-          <div className='flex overflow-hidden rounded-md border text-sm'>
-            <button
-              type='button'
-              onClick={() => viewStyle !== 'unified' && toggleView()}
-              className={`flex items-center gap-1.5 px-3 py-1.5 transition-colors ${
-                viewStyle === 'unified'
-                  ? 'bg-primary text-primary-foreground'
-                  : 'hover:bg-hover'
-              }`}
-            >
-              <Rows3 className='size-3.5' />
-              <Trans>Unified</Trans>
-            </button>
-            <button
-              type='button'
-              onClick={() => viewStyle !== 'split' && toggleView()}
-              className={`flex items-center gap-1.5 border-s px-3 py-1.5 transition-colors ${
-                viewStyle === 'split'
-                  ? 'bg-primary text-primary-foreground'
-                  : 'hover:bg-hover'
-              }`}
-            >
-              <Columns2 className='size-3.5' />
-              <Trans>Split</Trans>
-            </button>
-          </div>
+          <DiffViewToggle
+            value={viewStyle}
+            onChange={(next) => prefMutation.mutate(next)}
+          />
         }
       />
       <div className='flex-1 overflow-auto px-4 pb-8 md:px-6'>
@@ -170,7 +145,7 @@ function DiffPage() {
             />
           </div>
         ) : typeof diffData === 'string' ? (
-          <DiffViewer diff={diffData} viewStyle={viewStyle} />
+          <DiffViewer diff={diffData} viewStyle={viewStyle} words={diffWords} />
         ) : diffData ? (
           <div className='text-destructive py-8 text-center text-sm'>
             {diffData.error}

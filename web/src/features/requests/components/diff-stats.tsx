@@ -6,10 +6,9 @@
 import { useMemo } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { Trans, Plural } from '@lingui/react/macro'
-import { cn } from '@mochi/web'
+import { cn, parseDiff } from '@mochi/web'
 import { FileCode2, Plus, Minus, Loader2, FileDiff } from 'lucide-react'
 import projectsApi from '@/api/projects'
-import { parseDiff } from './diff-parser'
 import {
   diffFileStatusDotStyles,
   requestStatusTextStyles,

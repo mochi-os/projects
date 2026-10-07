@@ -12,13 +12,6 @@ export const requestStateBadgeStyles = {
   open: `${statusBadgeBaseClass} border-primary/30 bg-primary/10 text-primary dark:border-primary/35 dark:bg-primary/15 dark:text-primary`,
 } as const
 
-export const diffFileStatusBadgeStyles = {
-  added: requestStateBadgeStyles.merged,
-  modified: requestStateBadgeStyles.draft,
-  deleted: `${statusBadgeBaseClass} border-destructive/30 bg-destructive/10 text-destructive dark:border-destructive/35 dark:bg-destructive/15`,
-  renamed: requestStateBadgeStyles.open,
-} as const
-
 export const requestStatusTextStyles = {
   added: 'text-success',
   deleted: 'text-destructive',

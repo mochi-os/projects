@@ -14,7 +14,7 @@ import {
   useRouter,
 } from '@tanstack/react-router'
 import type { ProjectDetails, ProjectObject } from '@/types'
-import { plural, t } from '@lingui/core/macro'
+import { t } from '@lingui/core/macro'
 import { useLingui } from '@lingui/react/macro'
 import {
   DropdownMenuItem,
@@ -244,15 +244,6 @@ export function ProjectPageContent({
               ),
             }
             return [tab]
-          }}
-          labels={{
-            // The server deletes everything under an item with it.
-            deleteWithChildren: (title, count) =>
-              t`Are you sure you want to delete "${title}" and the ${plural(count, { one: '# item', other: '# items' })} under it? This action cannot be undone.`,
-            activity: {
-              commented: t`Commented`,
-              attached: t`Attached`,
-            },
           }}
           onClose={onClose}
         />

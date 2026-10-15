@@ -26,6 +26,10 @@ export function BoardContainer({ project, ...props }: BoardContainerProps) {
           ? `${project.project.prefix}-${object.number}`
           : t`Untitled`
       }
+      collapseLabels={{
+        collapse: (columnName) => t`Collapse ${columnName}`,
+        expand: (columnName) => t`Expand ${columnName}`,
+      }}
     />
   )
 }

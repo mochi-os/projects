@@ -24,6 +24,7 @@ import {
   getErrorMessage,
   toast,
   EntityObjectDetailPanel,
+  absoluteRouteUrl,
   type EntityObjectDetailTab,
   canWrite,
 } from '@mochi/web'
@@ -120,6 +121,7 @@ export function ProjectPageContent({
 }: ProjectPageContentProps) {
   const { t } = useLingui()
   const navigate = useNavigate()
+  const router = useRouter()
   const refreshSidebar = useProjectsStore((state) => state.refresh)
 
   return (
@@ -245,6 +247,13 @@ export function ProjectPageContent({
             }
             return [tab]
           }}
+          itemUrl={(objectId) =>
+            absoluteRouteUrl(router, {
+              to: '/$projectId/$objectId',
+              params: { projectId, objectId },
+            })
+          }
+          labels={{ copyLink: t`Copy link` }}
           onClose={onClose}
         />
       )}

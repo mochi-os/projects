@@ -178,10 +178,10 @@ export function ProjectPageContent({
         unsubscribed: t`Unsubscribed`,
         unsubscribeFailed: t`Failed to unsubscribe`,
       }}
-      // Duplicate runs the backup export and the create-from-backup import as
+      // Copy runs the backup export and the create-from-backup import as
       // one step. A failed import removes the half-made copy.
       duplicate={{
-        menuAction: t`Duplicate`,
+        menuAction: t`Copy`,
         api: projectsApi,
         create: async (name, privacy) => {
           const response = await projectsApi.create({
@@ -193,7 +193,7 @@ export function ProjectPageContent({
             privacy,
           })
           const id = response.data?.fingerprint
-          if (!id) throw new Error(t`Failed to duplicate project`)
+          if (!id) throw new Error(t`Failed to copy project`)
           return id
         },
         remove: (id) => projectsApi.delete(id),
@@ -209,17 +209,17 @@ export function ProjectPageContent({
           return null
         },
         labels: {
-          title: t`Duplicate project`,
+          title: t`Copy project`,
           name: t`Name`,
           everything: t`Everything`,
           designOnly: t`Design only`,
           allowSearch: t`Allow anyone to search for project`,
           cancel: t`Cancel`,
-          confirm: t`Duplicate`,
-          duplicating: t`Duplicating project...`,
-          duplicated: t`Project duplicated`,
-          failed: t`Failed to duplicate project`,
-          defaultName: (name) => t`Duplicate of ${name}`,
+          confirm: t`Copy`,
+          duplicating: t`Copying project...`,
+          duplicated: t`Project copied`,
+          failed: t`Failed to copy project`,
+          defaultName: (name) => t`Copy of ${name}`,
           leftBehind: t`Could not remove the unfinished copy`,
         },
       }}

@@ -205,7 +205,7 @@ export function ProjectPageContent({
           {...props}
         />
       )}
-      renderDetailPanel={({ objectId, onClose }) => (
+      renderDetailPanel={({ objectId, onCopy, onClose }) => (
         <EntityObjectDetailPanel
           containerId={projectId}
           objectId={objectId}
@@ -245,6 +245,7 @@ export function ProjectPageContent({
             }
             return [tab]
           }}
+          onCopy={onCopy}
           onClose={onClose}
         />
       )}

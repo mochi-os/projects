@@ -4238,6 +4238,37 @@ def action_attachment_create(a):
 
 	return {"data": {"attachments": attachments}}
 
+# Copies attachments of objects in this project onto an object, as Create does
+# for a copy of an object. The ids arrive comma-separated.
+def action_attachment_copy(a):
+
+	project_id = resolve_project(a)
+	if not project_id:
+		a.error.label(400, "errors.project_id_required")
+		return
+
+	project = get_project(project_id)
+	if not project:
+		a.error.label(404, "errors.project_not_found")
+		return
+
+	params = {
+		"project": project_id, "object": a.input("object", ""),
+		"attachments": [id for id in a.input("attachments", "").split(",") if id],
+	}
+	if project["owner"] != 1:
+		return forward_to_owner(a, project_id, "attachment/copy", params)
+
+	if not check_project_access(a.user.identity.id, project_id, "write"):
+		a.error.label(403, "errors.access_denied")
+		return
+
+	result = do_attachment_copy(project_id, project, params, a.user.identity.id)
+	if result.get("error"):
+		a.error.label(result["code"], result["error"])
+		return
+	return {"data": result}
+
 def action_attachment_delete(a):
 
 	project_id = resolve_project(a)
@@ -7871,7 +7902,7 @@ REQUEST_LEVELS = {
 	"object/create": "write", "object/update": "write", "object/delete": "write",
 	"object/move": "write", "values/set": "write", "value/set": "write",
 	"link/create": "write", "link/delete": "write",
-	"attachment/delete": "write",
+	"attachment/delete": "write", "attachment/copy": "write",
 	"request/create": "write", "request/update": "write", "request/delete": "write",
 	"class/create": "design", "class/update": "design", "class/delete": "design",
 	"field/create": "design", "field/update": "design", "field/delete": "design",
@@ -7952,6 +7983,8 @@ def event_request(e):
 		result = do_link_delete(project_id, project, params, user_id)
 	elif action == "attachment/delete":
 		result = do_attachment_delete(project_id, project, params, user_id)
+	elif action == "attachment/copy":
+		result = do_attachment_copy(project_id, project, params, user_id)
 	elif action == "request/create":
 		result = do_request_create(project_id, project, params, user_id)
 	elif action == "request/update":
@@ -8573,6 +8606,41 @@ def do_attachment_delete(project_id, project, params, user_id):
 		"project": project_id, "attachment": attachment_id
 	})
 	return {"success": True}
+
+# Copies attachments onto an object, each bound to this project before its
+# bytes are touched, with its caption and description. The copies fan out as
+# an upload's do.
+def do_attachment_copy(project_id, project, params, user_id):
+	object_id = params.get("object")
+	if type(object_id) != "string" or not object_id:
+		return {"error": "errors.object_id_required", "code": 400}
+	if not mochi.db.exists("select 1 from objects where id=? and project=?", object_id, project_id):
+		return {"error": "errors.object_not_found", "code": 404}
+	ids = params.get("attachments")
+	if type(ids) not in ("list", "tuple") or not ids:
+		return {"error": "errors.attachment_id_required", "code": 400}
+	if len(ids) > attachment_store_maximum:
+		return {"error": "errors.invalid_data", "code": 400}
+	for id in ids:
+		if not attachment_identifier(id) or not attachment_in_project(id, project_id):
+			return {"error": "errors.attachment_not_found", "code": 404}
+	copied = []
+	for id in ids:
+		source = attachment_row(id)
+		att = attachment_copy(id, object_id, user_id, source.get("caption", ""), source.get("description", ""))
+		if att:
+			copied.append(att)
+	if not copied:
+		return {"attachments": []}
+	now = mochi.time.now()
+	object_set(object_id, {"updated": now})
+	for att in copied:
+		log_activity(object_id, user_id, "attached", "", "", att["name"])
+	broadcast_event(project_id, "attachment/add", {
+		"project": project_id, "object": object_id,
+		"attachments": [{"id": att["id"], "name": att["name"], "size": att["size"], "content_type": att.get("type", ""), "rank": att.get("rank", 0), "created": att.get("created", now)} for att in copied]
+	})
+	return {"attachments": copied}
 
 # Request helpers
 def do_request_create(project_id, project, params, user_id):

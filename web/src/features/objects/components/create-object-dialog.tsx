@@ -25,6 +25,7 @@ type CreateObjectDialogProps = Omit<
   | 'createObject'
   | 'setValue'
   | 'uploadAttachments'
+  | 'copyAttachments'
   | 'searchUsers'
 > & { projectId: string; project: ProjectDetails }
 
@@ -52,6 +53,7 @@ export function CreateObjectDialog({
       createObject={projectsApi.createObject}
       setValue={projectsApi.setValue}
       uploadAttachments={projectsApi.uploadAttachments}
+      copyAttachments={projectsApi.copyAttachments}
       searchUsers={projectsApi.searchUsers}
     />
   )

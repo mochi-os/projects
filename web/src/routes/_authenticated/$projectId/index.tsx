@@ -207,7 +207,7 @@ export function ProjectPageContent({
           {...props}
         />
       )}
-      renderDetailPanel={({ objectId, onClose }) => (
+      renderDetailPanel={({ objectId, onCopy, onClose }) => (
         <EntityObjectDetailPanel
           containerId={projectId}
           objectId={objectId}
@@ -259,6 +259,7 @@ export function ProjectPageContent({
             deleteWithChildren: (title, count) =>
               t`Are you sure you want to delete "${title}" and the ${plural(count, { one: '# item', other: '# items' })} under it? This action cannot be undone.`,
           }}
+          onCopy={onCopy}
           onClose={onClose}
         />
       )}

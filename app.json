@@ -5,7 +5,7 @@
 // Mochi Application Interface Exception - see license.txt and license-exception.md.
 
 {
-	"version": "2.138",
+	"version": "2.139",
 	"label": "app.name",
 	"classes": ["project"],
 	"paths": ["projects"],
@@ -83,6 +83,7 @@
 
 		":project/-/objects/:object/attachments": {"function": "action_attachment_list"},
 		":project/-/objects/:object/attachments/create": {"function": "action_attachment_create"},
+		":project/-/objects/:object/attachments/copy": {"function": "action_attachment_copy"},
 		":project/-/objects/:object/attachments/:attachment/delete": {"function": "action_attachment_delete"},
 
 		":project/-/attachments/:id": {"function": "action_attachment", "asset": true},

@@ -324,6 +324,7 @@ msgid "Allow anyone to search for {entityLabel}"
 msgstr "{entityLabel} ಅನ್ನು ಯಾರಾದರೂ ಹುಡುಕಲು ಅನುಮತಿಸಿ"
 
 #: src/features/projects/components/create-project-dialog.tsx
+#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Allow anyone to search for project"
 msgstr "ಯಾರಾದರೂ ಪ್ರಾಜೆಕ್ಟ್ ಹುಡುಕಲು ಅನುಮತಿಸಿ"
 
@@ -547,6 +548,7 @@ msgstr "ಇದರ ಮಗುವಾಗಿರಬಹುದು"
 #: ../../../lib/web/src/features/accounts/account-verify.tsx
 #: src/features/projects/components/create-project-dialog.tsx
 #: src/routes/_authenticated/$projectId/design.tsx
+#: src/routes/_authenticated/$projectId/index.tsx
 #: src/routes/_authenticated/$projectId/index.tsx
 msgid "Cancel"
 msgstr "ರದ್ದುಮಾಡಿ"
@@ -844,6 +846,10 @@ msgstr "ಡಿಫ್ ಲೋಡ್ ಮಾಡಲು ವಿಫಲವಾಗಿದೆ
 msgid "Could not load this document. Please try again later."
 msgstr "ಈ ಡಾಕ್ಯುಮೆಂಟ್ ಲೋಡ್ ಮಾಡಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ. ದಯವಿಟ್ಟು ನಂತರ ಪುನಃ ಪ್ರಯತ್ನಿಸಿ."
 
+#: src/routes/_authenticated/$projectId/index.tsx
+msgid "Could not remove the unfinished copy"
+msgstr ""
+
 #: ../../../lib/web/src/components/layout/notification-menu.tsx
 msgid "Couldn't load notifications"
 msgstr "ಅಧಿಸೂಚನೆಗಳನ್ನು ಲೋಡ್ ಮಾಡಲಾಗಲಿಲ್ಲ"
@@ -1073,6 +1079,10 @@ msgstr "ವಿನ್ಯಾಸ"
 msgid "Design imported"
 msgstr "ವಿನ್ಯಾಸ ಆಮದು ಮಾಡಲಾಗಿದೆ"
 
+#: src/routes/_authenticated/$projectId/index.tsx
+msgid "Design only"
+msgstr ""
+
 #: src/routes/_authenticated/$projectId_.settings.tsx
 msgid "Design, create, edit, comment, and view"
 msgstr "ವಿನ್ಯಾಸ, ರಚನೆ, ಸಂಪಾದನೆ, ಕಾಮೆಂಟ್ ಮತ್ತು ವೀಕ್ಷಣೆ"
@@ -1173,9 +1183,26 @@ msgstr "ಡ್ರಾಫ್ಟ್"
 msgid "Drag columns to re-order them"
 msgstr "ಕಾಲಮ್‌ಗಳನ್ನು ಮರು-ಆದೇಶಿಸಲು ಎಳೆಯಿರಿ"
 
+#: src/routes/_authenticated/$projectId/index.tsx
+#: src/routes/_authenticated/$projectId/index.tsx
+msgid "Duplicate"
+msgstr ""
+
+#: src/routes/_authenticated/$projectId/index.tsx
+msgid "Duplicate of {name}"
+msgstr ""
+
+#: src/routes/_authenticated/$projectId/index.tsx
+msgid "Duplicate project"
+msgstr ""
+
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx
 msgid "Duplicates"
 msgstr "ನಕಲು"
+
+#: src/routes/_authenticated/$projectId/index.tsx
+msgid "Duplicating project..."
+msgstr ""
 
 #: ../../../lib/web/src/lib/preference-utils.ts
 msgid "Dyslexia-friendly"
@@ -1260,6 +1287,10 @@ msgstr "ದೋಷ"
 #: ../../../lib/web/src/components/ui/time-picker.tsx
 msgid "Every minute"
 msgstr "ಪ್ರತಿ ನಿಮಿಷ"
+
+#: src/routes/_authenticated/$projectId/index.tsx
+msgid "Everything"
+msgstr ""
 
 #: ../../../lib/web/src/components/comment-tree-layout.tsx
 #: ../../../lib/web/src/components/comment-tree-layout.tsx
@@ -1384,6 +1415,11 @@ msgstr "ಪ್ರಾಜೆಕ್ಟ್ ಅಳಿಸಲು ವಿಫಲವಾಗ�
 #: src/features/editor/components/design-editor.tsx
 msgid "Failed to delete view"
 msgstr "ವೀಕ್ಷಣೆ ಅಳಿಸಲು ವಿಫಲವಾಗಿದೆ"
+
+#: src/routes/_authenticated/$projectId/index.tsx
+#: src/routes/_authenticated/$projectId/index.tsx
+msgid "Failed to duplicate project"
+msgstr ""
 
 #: src/routes/_authenticated/$projectId/index.tsx
 msgid "Failed to export data"
@@ -1953,12 +1989,14 @@ msgstr "ನನ್ನ ಪ್ರಾಜೆಕ್ಟ್"
 #: src/features/editor/components/edit-dialogs.tsx
 #: src/features/projects/components/create-project-dialog.tsx
 #: src/routes/_authenticated/$projectId_.settings.tsx
+#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Name"
 msgstr "ಹೆಸರು"
 
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx
 #: src/features/projects/components/create-project-dialog.tsx
 #: src/routes/_authenticated/$projectId_.settings.tsx
+#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Name cannot contain < or > characters"
 msgstr "ಹೆಸರಿನಲ್ಲಿ < ಅಥವಾ > ಅಕ್ಷರಗಳು ಇರುವಂತಿಲ್ಲ"
 
@@ -1970,6 +2008,7 @@ msgstr "ಹೆಸರು ಅಗತ್ಯವಿದೆ"
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx
 #: src/features/projects/components/create-project-dialog.tsx
 #: src/routes/_authenticated/$projectId_.settings.tsx
+#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Name must be 1000 characters or less"
 msgstr "ಹೆಸರು 1000 ಅಕ್ಷರಗಳು ಅಥವಾ ಕಡಿಮೆ ಇರಬೇಕು"
 
@@ -2390,10 +2429,15 @@ msgid "Project deleted"
 msgstr "ಪ್ರಾಜೆಕ್ಟ್ ಡಿಲೀಟ್ ಮಾಡಲಾಗಿದೆ"
 
 #: src/routes/_authenticated/$projectId/index.tsx
+msgid "Project duplicated"
+msgstr ""
+
+#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Project link"
 msgstr "ಪ್ರಾಜೆಕ್ಟ್ ಲಿಂಕ್"
 
 #: src/routes/_authenticated/$projectId_.settings.tsx
+#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Project name is required"
 msgstr "ಪ್ರಾಜೆಕ್ಟ್ ಹೆಸರು ಅಗತ್ಯವಿದೆ"
 

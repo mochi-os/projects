@@ -324,6 +324,7 @@ msgid "Allow anyone to search for {entityLabel}"
 msgstr "Hər kəsə {entityLabel} axtarmağa icazə ver"
 
 #: src/features/projects/components/create-project-dialog.tsx
+#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Allow anyone to search for project"
 msgstr "Hər kəsə layihə axtarmağa icazə ver"
 
@@ -547,6 +548,7 @@ msgstr "Övladı ola bilər"
 #: ../../../lib/web/src/features/accounts/account-verify.tsx
 #: src/features/projects/components/create-project-dialog.tsx
 #: src/routes/_authenticated/$projectId/design.tsx
+#: src/routes/_authenticated/$projectId/index.tsx
 #: src/routes/_authenticated/$projectId/index.tsx
 msgid "Cancel"
 msgstr "Ləğv et"
@@ -844,6 +846,10 @@ msgstr "Diff yüklənmədi"
 msgid "Could not load this document. Please try again later."
 msgstr "Bu sənəd yüklənə bilmədi. Daha sonra yenidən cəhd edin."
 
+#: src/routes/_authenticated/$projectId/index.tsx
+msgid "Could not remove the unfinished copy"
+msgstr ""
+
 #: ../../../lib/web/src/components/layout/notification-menu.tsx
 msgid "Couldn't load notifications"
 msgstr "Bildirişlər yüklənə bilmədi"
@@ -1073,6 +1079,10 @@ msgstr "Dizayn"
 msgid "Design imported"
 msgstr "Dizayn idxal edildi"
 
+#: src/routes/_authenticated/$projectId/index.tsx
+msgid "Design only"
+msgstr ""
+
 #: src/routes/_authenticated/$projectId_.settings.tsx
 msgid "Design, create, edit, comment, and view"
 msgstr "Dizayn, yaratma, redaktə, şərh və baxış"
@@ -1173,9 +1183,26 @@ msgstr "Qaralama"
 msgid "Drag columns to re-order them"
 msgstr "Sütunları yenidən düzmək üçün sürüşdürün"
 
+#: src/routes/_authenticated/$projectId/index.tsx
+#: src/routes/_authenticated/$projectId/index.tsx
+msgid "Duplicate"
+msgstr ""
+
+#: src/routes/_authenticated/$projectId/index.tsx
+msgid "Duplicate of {name}"
+msgstr ""
+
+#: src/routes/_authenticated/$projectId/index.tsx
+msgid "Duplicate project"
+msgstr ""
+
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx
 msgid "Duplicates"
 msgstr "Dublikatlar"
+
+#: src/routes/_authenticated/$projectId/index.tsx
+msgid "Duplicating project..."
+msgstr ""
 
 #: ../../../lib/web/src/lib/preference-utils.ts
 msgid "Dyslexia-friendly"
@@ -1260,6 +1287,10 @@ msgstr "Xəta"
 #: ../../../lib/web/src/components/ui/time-picker.tsx
 msgid "Every minute"
 msgstr "Hər dəqiqə"
+
+#: src/routes/_authenticated/$projectId/index.tsx
+msgid "Everything"
+msgstr ""
 
 #: ../../../lib/web/src/components/comment-tree-layout.tsx
 #: ../../../lib/web/src/components/comment-tree-layout.tsx
@@ -1384,6 +1415,11 @@ msgstr "Layihəni silmək alınmadı"
 #: src/features/editor/components/design-editor.tsx
 msgid "Failed to delete view"
 msgstr "Görünüşü silmək alınmadı"
+
+#: src/routes/_authenticated/$projectId/index.tsx
+#: src/routes/_authenticated/$projectId/index.tsx
+msgid "Failed to duplicate project"
+msgstr ""
 
 #: src/routes/_authenticated/$projectId/index.tsx
 msgid "Failed to export data"
@@ -1953,12 +1989,14 @@ msgstr "Mənim layihəm"
 #: src/features/editor/components/edit-dialogs.tsx
 #: src/features/projects/components/create-project-dialog.tsx
 #: src/routes/_authenticated/$projectId_.settings.tsx
+#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Name"
 msgstr "Ad"
 
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx
 #: src/features/projects/components/create-project-dialog.tsx
 #: src/routes/_authenticated/$projectId_.settings.tsx
+#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Name cannot contain < or > characters"
 msgstr "Ad < və ya > simvolları ehtiva edə bilməz"
 
@@ -1970,6 +2008,7 @@ msgstr "Ad tələb olunur"
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx
 #: src/features/projects/components/create-project-dialog.tsx
 #: src/routes/_authenticated/$projectId_.settings.tsx
+#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Name must be 1000 characters or less"
 msgstr "Ad 1000 simvol və ya daha az olmalıdır"
 
@@ -2390,10 +2429,15 @@ msgid "Project deleted"
 msgstr "Layihə silindi"
 
 #: src/routes/_authenticated/$projectId/index.tsx
+msgid "Project duplicated"
+msgstr ""
+
+#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Project link"
 msgstr "Layihə keçidi"
 
 #: src/routes/_authenticated/$projectId_.settings.tsx
+#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Project name is required"
 msgstr "Layihə adı tələb olunur"
 

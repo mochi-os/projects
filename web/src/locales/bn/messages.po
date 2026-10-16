@@ -324,6 +324,7 @@ msgid "Allow anyone to search for {entityLabel}"
 msgstr "যে কাউকে {entityLabel} খোঁজার অনুমতি দিন"
 
 #: src/features/projects/components/create-project-dialog.tsx
+#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Allow anyone to search for project"
 msgstr "যেকেউ প্রজেক্ট খুঁজতে অনুমতি দিন"
 
@@ -547,6 +548,7 @@ msgstr "এর চাইল্ড হতে পারে"
 #: ../../../lib/web/src/features/accounts/account-verify.tsx
 #: src/features/projects/components/create-project-dialog.tsx
 #: src/routes/_authenticated/$projectId/design.tsx
+#: src/routes/_authenticated/$projectId/index.tsx
 #: src/routes/_authenticated/$projectId/index.tsx
 msgid "Cancel"
 msgstr "বাতিল করুন"
@@ -844,6 +846,10 @@ msgstr "ডিফ লোড করতে ব্যর্থ"
 msgid "Could not load this document. Please try again later."
 msgstr "এই ডকুমেন্টটি লোড করা যায়নি। অনুগ্রহ করে পরে আবার চেষ্টা করুন।"
 
+#: src/routes/_authenticated/$projectId/index.tsx
+msgid "Could not remove the unfinished copy"
+msgstr ""
+
 #: ../../../lib/web/src/components/layout/notification-menu.tsx
 msgid "Couldn't load notifications"
 msgstr "বিজ্ঞপ্তি লোড করা যায়নি"
@@ -1073,6 +1079,10 @@ msgstr "ডিজাইন"
 msgid "Design imported"
 msgstr "ডিজাইন আমদানি করা হয়েছে"
 
+#: src/routes/_authenticated/$projectId/index.tsx
+msgid "Design only"
+msgstr ""
+
 #: src/routes/_authenticated/$projectId_.settings.tsx
 msgid "Design, create, edit, comment, and view"
 msgstr "ডিজাইন, তৈরি, সম্পাদনা, মন্তব্য এবং দেখুন"
@@ -1173,9 +1183,26 @@ msgstr "খসড়া"
 msgid "Drag columns to re-order them"
 msgstr "কলামগুলো পুনর্বিন্যাস করতে টেনে আনুন"
 
+#: src/routes/_authenticated/$projectId/index.tsx
+#: src/routes/_authenticated/$projectId/index.tsx
+msgid "Duplicate"
+msgstr ""
+
+#: src/routes/_authenticated/$projectId/index.tsx
+msgid "Duplicate of {name}"
+msgstr ""
+
+#: src/routes/_authenticated/$projectId/index.tsx
+msgid "Duplicate project"
+msgstr ""
+
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx
 msgid "Duplicates"
 msgstr "নকল"
+
+#: src/routes/_authenticated/$projectId/index.tsx
+msgid "Duplicating project..."
+msgstr ""
 
 #: ../../../lib/web/src/lib/preference-utils.ts
 msgid "Dyslexia-friendly"
@@ -1260,6 +1287,10 @@ msgstr "ত্রুটি"
 #: ../../../lib/web/src/components/ui/time-picker.tsx
 msgid "Every minute"
 msgstr "প্রতি মিনিট"
+
+#: src/routes/_authenticated/$projectId/index.tsx
+msgid "Everything"
+msgstr ""
 
 #: ../../../lib/web/src/components/comment-tree-layout.tsx
 #: ../../../lib/web/src/components/comment-tree-layout.tsx
@@ -1384,6 +1415,11 @@ msgstr "প্রকল্প মুছতে ব্যর্থ"
 #: src/features/editor/components/design-editor.tsx
 msgid "Failed to delete view"
 msgstr "ভিউ মুছতে ব্যর্থ"
+
+#: src/routes/_authenticated/$projectId/index.tsx
+#: src/routes/_authenticated/$projectId/index.tsx
+msgid "Failed to duplicate project"
+msgstr ""
 
 #: src/routes/_authenticated/$projectId/index.tsx
 msgid "Failed to export data"
@@ -1953,12 +1989,14 @@ msgstr "আমার প্রকল্প"
 #: src/features/editor/components/edit-dialogs.tsx
 #: src/features/projects/components/create-project-dialog.tsx
 #: src/routes/_authenticated/$projectId_.settings.tsx
+#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Name"
 msgstr "নাম"
 
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx
 #: src/features/projects/components/create-project-dialog.tsx
 #: src/routes/_authenticated/$projectId_.settings.tsx
+#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Name cannot contain < or > characters"
 msgstr "নামে < বা > অক্ষর থাকতে পারবে না"
 
@@ -1970,6 +2008,7 @@ msgstr "নাম প্রয়োজন"
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx
 #: src/features/projects/components/create-project-dialog.tsx
 #: src/routes/_authenticated/$projectId_.settings.tsx
+#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Name must be 1000 characters or less"
 msgstr "নাম অবশ্যই ১০০০ অক্ষর বা তার কম হতে হবে"
 
@@ -2390,10 +2429,15 @@ msgid "Project deleted"
 msgstr "প্রকল্প মুছে ফেলা হয়েছে"
 
 #: src/routes/_authenticated/$projectId/index.tsx
+msgid "Project duplicated"
+msgstr ""
+
+#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Project link"
 msgstr "প্রজেক্ট লিঙ্ক"
 
 #: src/routes/_authenticated/$projectId_.settings.tsx
+#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Project name is required"
 msgstr "প্রকল্পের নাম প্রয়োজন"
 

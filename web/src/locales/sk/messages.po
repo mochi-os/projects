@@ -324,6 +324,7 @@ msgid "Allow anyone to search for {entityLabel}"
 msgstr "Povoliť komukoľvek vyhľadávať {entityLabel}"
 
 #: src/features/projects/components/create-project-dialog.tsx
+#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Allow anyone to search for project"
 msgstr "Povoliť komukoľvek vyhľadávať projekt"
 
@@ -547,6 +548,7 @@ msgstr "Môže byť potomkom"
 #: ../../../lib/web/src/features/accounts/account-verify.tsx
 #: src/features/projects/components/create-project-dialog.tsx
 #: src/routes/_authenticated/$projectId/design.tsx
+#: src/routes/_authenticated/$projectId/index.tsx
 #: src/routes/_authenticated/$projectId/index.tsx
 msgid "Cancel"
 msgstr "Zrušiť"
@@ -844,6 +846,10 @@ msgstr "Nepodarilo sa načítať diff"
 msgid "Could not load this document. Please try again later."
 msgstr "Tento dokument sa nepodarilo načítať. Skúste to neskôr."
 
+#: src/routes/_authenticated/$projectId/index.tsx
+msgid "Could not remove the unfinished copy"
+msgstr ""
+
 #: ../../../lib/web/src/components/layout/notification-menu.tsx
 msgid "Couldn't load notifications"
 msgstr "Nepodarilo sa načítať oznámenia"
@@ -1073,6 +1079,10 @@ msgstr "Dizajn"
 msgid "Design imported"
 msgstr "Dizajn importovaný"
 
+#: src/routes/_authenticated/$projectId/index.tsx
+msgid "Design only"
+msgstr ""
+
 #: src/routes/_authenticated/$projectId_.settings.tsx
 msgid "Design, create, edit, comment, and view"
 msgstr "Navrhovať, vytvárať, upravovať, komentovať a zobrazovať"
@@ -1173,9 +1183,26 @@ msgstr "Koncept"
 msgid "Drag columns to re-order them"
 msgstr "Potiahnutím zmeníte poradie stĺpcov"
 
+#: src/routes/_authenticated/$projectId/index.tsx
+#: src/routes/_authenticated/$projectId/index.tsx
+msgid "Duplicate"
+msgstr ""
+
+#: src/routes/_authenticated/$projectId/index.tsx
+msgid "Duplicate of {name}"
+msgstr ""
+
+#: src/routes/_authenticated/$projectId/index.tsx
+msgid "Duplicate project"
+msgstr ""
+
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx
 msgid "Duplicates"
 msgstr "Duplikáty"
+
+#: src/routes/_authenticated/$projectId/index.tsx
+msgid "Duplicating project..."
+msgstr ""
 
 #: ../../../lib/web/src/lib/preference-utils.ts
 msgid "Dyslexia-friendly"
@@ -1260,6 +1287,10 @@ msgstr "Chyba"
 #: ../../../lib/web/src/components/ui/time-picker.tsx
 msgid "Every minute"
 msgstr "Každá minúta"
+
+#: src/routes/_authenticated/$projectId/index.tsx
+msgid "Everything"
+msgstr ""
 
 #: ../../../lib/web/src/components/comment-tree-layout.tsx
 #: ../../../lib/web/src/components/comment-tree-layout.tsx
@@ -1384,6 +1415,11 @@ msgstr "Nepodarilo sa zmazať projekt"
 #: src/features/editor/components/design-editor.tsx
 msgid "Failed to delete view"
 msgstr "Nepodarilo sa zmazať pohľad"
+
+#: src/routes/_authenticated/$projectId/index.tsx
+#: src/routes/_authenticated/$projectId/index.tsx
+msgid "Failed to duplicate project"
+msgstr ""
 
 #: src/routes/_authenticated/$projectId/index.tsx
 msgid "Failed to export data"
@@ -1953,12 +1989,14 @@ msgstr "Môj projekt"
 #: src/features/editor/components/edit-dialogs.tsx
 #: src/features/projects/components/create-project-dialog.tsx
 #: src/routes/_authenticated/$projectId_.settings.tsx
+#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Name"
 msgstr "Názov"
 
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx
 #: src/features/projects/components/create-project-dialog.tsx
 #: src/routes/_authenticated/$projectId_.settings.tsx
+#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Name cannot contain < or > characters"
 msgstr "Názov nesmie obsahovať znaky < alebo >"
 
@@ -1970,6 +2008,7 @@ msgstr "Názov je povinný"
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx
 #: src/features/projects/components/create-project-dialog.tsx
 #: src/routes/_authenticated/$projectId_.settings.tsx
+#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Name must be 1000 characters or less"
 msgstr "Názov musí mať 1000 znakov alebo menej"
 
@@ -2390,10 +2429,15 @@ msgid "Project deleted"
 msgstr "Projekt odstránený"
 
 #: src/routes/_authenticated/$projectId/index.tsx
+msgid "Project duplicated"
+msgstr ""
+
+#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Project link"
 msgstr "Odkaz na projekt"
 
 #: src/routes/_authenticated/$projectId_.settings.tsx
+#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Project name is required"
 msgstr "Názov projektu je povinný"
 

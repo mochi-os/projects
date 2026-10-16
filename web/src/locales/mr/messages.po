@@ -324,6 +324,7 @@ msgid "Allow anyone to search for {entityLabel}"
 msgstr "कोणालाही {entityLabel} शोधण्याची परवानगी द्या"
 
 #: src/features/projects/components/create-project-dialog.tsx
+#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Allow anyone to search for project"
 msgstr "कोणालाही प्रकल्प शोधण्याची परवानगी द्या"
 
@@ -547,6 +548,7 @@ msgstr "याचे चिल्ड असू शकते"
 #: ../../../lib/web/src/features/accounts/account-verify.tsx
 #: src/features/projects/components/create-project-dialog.tsx
 #: src/routes/_authenticated/$projectId/design.tsx
+#: src/routes/_authenticated/$projectId/index.tsx
 #: src/routes/_authenticated/$projectId/index.tsx
 msgid "Cancel"
 msgstr "रद्द करा"
@@ -844,6 +846,10 @@ msgstr "फरक लोड करण्यात अयशस्वी"
 msgid "Could not load this document. Please try again later."
 msgstr "हा दस्तऐवज लोड करता आला नाही. कृपया नंतर पुन्हा प्रयत्न करा."
 
+#: src/routes/_authenticated/$projectId/index.tsx
+msgid "Could not remove the unfinished copy"
+msgstr ""
+
 #: ../../../lib/web/src/components/layout/notification-menu.tsx
 msgid "Couldn't load notifications"
 msgstr "सूचना लोड करता आल्या नाहीत"
@@ -1073,6 +1079,10 @@ msgstr "डिझाइन"
 msgid "Design imported"
 msgstr "डिझाइन आयात केली"
 
+#: src/routes/_authenticated/$projectId/index.tsx
+msgid "Design only"
+msgstr ""
+
 #: src/routes/_authenticated/$projectId_.settings.tsx
 msgid "Design, create, edit, comment, and view"
 msgstr "रचना करा, तयार करा, संपादित करा, टिप्पणी द्या आणि पहा"
@@ -1173,9 +1183,26 @@ msgstr "ड्राफ्ट"
 msgid "Drag columns to re-order them"
 msgstr "कॉलम पुन्हा क्रमाने लावण्यासाठी ड्रॅग करा"
 
+#: src/routes/_authenticated/$projectId/index.tsx
+#: src/routes/_authenticated/$projectId/index.tsx
+msgid "Duplicate"
+msgstr ""
+
+#: src/routes/_authenticated/$projectId/index.tsx
+msgid "Duplicate of {name}"
+msgstr ""
+
+#: src/routes/_authenticated/$projectId/index.tsx
+msgid "Duplicate project"
+msgstr ""
+
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx
 msgid "Duplicates"
 msgstr "डुप्लिकेट करते"
+
+#: src/routes/_authenticated/$projectId/index.tsx
+msgid "Duplicating project..."
+msgstr ""
 
 #: ../../../lib/web/src/lib/preference-utils.ts
 msgid "Dyslexia-friendly"
@@ -1260,6 +1287,10 @@ msgstr "त्रुटी"
 #: ../../../lib/web/src/components/ui/time-picker.tsx
 msgid "Every minute"
 msgstr "प्रत्येक मिनिट"
+
+#: src/routes/_authenticated/$projectId/index.tsx
+msgid "Everything"
+msgstr ""
 
 #: ../../../lib/web/src/components/comment-tree-layout.tsx
 #: ../../../lib/web/src/components/comment-tree-layout.tsx
@@ -1384,6 +1415,11 @@ msgstr "प्रोजेक्ट हटवण्यात अयशस्व�
 #: src/features/editor/components/design-editor.tsx
 msgid "Failed to delete view"
 msgstr "दृश्य हटवण्यात अयशस्वी"
+
+#: src/routes/_authenticated/$projectId/index.tsx
+#: src/routes/_authenticated/$projectId/index.tsx
+msgid "Failed to duplicate project"
+msgstr ""
 
 #: src/routes/_authenticated/$projectId/index.tsx
 msgid "Failed to export data"
@@ -1953,12 +1989,14 @@ msgstr "माझा प्रोजेक्ट"
 #: src/features/editor/components/edit-dialogs.tsx
 #: src/features/projects/components/create-project-dialog.tsx
 #: src/routes/_authenticated/$projectId_.settings.tsx
+#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Name"
 msgstr "नाव"
 
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx
 #: src/features/projects/components/create-project-dialog.tsx
 #: src/routes/_authenticated/$projectId_.settings.tsx
+#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Name cannot contain < or > characters"
 msgstr "नावात < किंवा > अक्षरे असू शकत नाहीत"
 
@@ -1970,6 +2008,7 @@ msgstr "नाव आवश्यक आहे"
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx
 #: src/features/projects/components/create-project-dialog.tsx
 #: src/routes/_authenticated/$projectId_.settings.tsx
+#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Name must be 1000 characters or less"
 msgstr "नाव 1000 अक्षरे किंवा कमी असावे"
 
@@ -2390,10 +2429,15 @@ msgid "Project deleted"
 msgstr "प्रोजेक्ट हटवला"
 
 #: src/routes/_authenticated/$projectId/index.tsx
+msgid "Project duplicated"
+msgstr ""
+
+#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Project link"
 msgstr "प्रकल्प लिंक"
 
 #: src/routes/_authenticated/$projectId_.settings.tsx
+#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Project name is required"
 msgstr "प्रोजेक्टचे नाव आवश्यक आहे"
 

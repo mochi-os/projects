@@ -27,6 +27,7 @@ import {
   absoluteRouteUrl,
   type EntityObjectDetailTab,
   canWrite,
+  DISALLOWED_NAME_CHARS,
 } from '@mochi/web'
 import { FolderKanban, GitMerge, Settings, Settings2 } from 'lucide-react'
 import projectsApi from '@/api/projects'
@@ -176,6 +177,51 @@ export function ProjectPageContent({
         unsubscribing: t`Unsubscribing...`,
         unsubscribed: t`Unsubscribed`,
         unsubscribeFailed: t`Failed to unsubscribe`,
+      }}
+      // Duplicate runs the backup export and the create-from-backup import as
+      // one step. A failed import removes the half-made copy.
+      duplicate={{
+        menuAction: t`Duplicate`,
+        api: projectsApi,
+        create: async (name, privacy) => {
+          const response = await projectsApi.create({
+            name,
+            // Keeps the original's readable ids (PREFIX-1) and starts
+            // blank: the import brings the design.
+            prefix: project.project.prefix,
+            template: 'blank',
+            privacy,
+          })
+          const id = response.data?.fingerprint
+          if (!id) throw new Error(t`Failed to duplicate project`)
+          return id
+        },
+        remove: (id) => projectsApi.delete(id),
+        onDuplicated: (id) => {
+          void refreshSidebar()
+          void navigate({ to: '/$projectId', params: { projectId: id } })
+        },
+        validateName: (name) => {
+          if (!name.trim()) return t`Project name is required`
+          if (name.length > 1000) return t`Name must be 1000 characters or less`
+          if (DISALLOWED_NAME_CHARS.test(name))
+            return t`Name cannot contain < or > characters`
+          return null
+        },
+        labels: {
+          title: t`Duplicate project`,
+          name: t`Name`,
+          everything: t`Everything`,
+          designOnly: t`Design only`,
+          allowSearch: t`Allow anyone to search for project`,
+          cancel: t`Cancel`,
+          confirm: t`Duplicate`,
+          duplicating: t`Duplicating project...`,
+          duplicated: t`Project duplicated`,
+          failed: t`Failed to duplicate project`,
+          defaultName: (name) => t`Duplicate of ${name}`,
+          leftBehind: t`Could not remove the unfinished copy`,
+        },
       }}
       designMenuItem={
         <DropdownMenuItem asChild>

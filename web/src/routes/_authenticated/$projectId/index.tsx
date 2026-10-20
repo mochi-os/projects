@@ -189,6 +189,8 @@ export function ProjectPageContent({
             // Keeps the original's readable ids (PREFIX-1) and starts
             // blank: the import brings the design.
             prefix: project.project.prefix,
+            // The import does not carry the description, so it is set here.
+            description: project.project.description,
             template: 'blank',
             privacy,
           })
@@ -221,6 +223,7 @@ export function ProjectPageContent({
           failed: t`Failed to copy project`,
           defaultName: (name) => t`Copy of ${name}`,
           leftBehind: t`Could not remove the unfinished copy`,
+          incomplete: t`The copy may be incomplete. Check it before you use it.`,
         },
       }}
       designMenuItem={

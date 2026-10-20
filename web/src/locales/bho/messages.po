@@ -324,6 +324,7 @@ msgid "Allow anyone to search for {entityLabel}"
 msgstr "केहू के भी {entityLabel} खोजे के अनुमति दीं"
 
 #: src/features/projects/components/create-project-dialog.tsx
+#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Allow anyone to search for project"
 msgstr "केहू के परियोजना खोजे के अनुमति दीं"
 
@@ -365,6 +366,10 @@ msgstr "एह फीड के सब्सक्राइब कइल कव�
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx
 msgid "Are you sure you want to delete \"{0}\"?"
 msgstr "का रउआ \"{0}\" के मेटावे चाहत बानी?"
+
+#: src/routes/_authenticated/$projectId/index.tsx
+msgid "Are you sure you want to delete \"{title}\" and the {count, plural, one {# item} other {# items}} under it? This action cannot be undone."
+msgstr ""
 
 #: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx
 msgid "Are you sure you want to delete \"{title}\"? This action cannot be undone."
@@ -544,6 +549,7 @@ msgstr "एकर बच्चा हो सके"
 #: src/features/projects/components/create-project-dialog.tsx
 #: src/routes/_authenticated/$projectId/design.tsx
 #: src/routes/_authenticated/$projectId/index.tsx
+#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Cancel"
 msgstr "रद्द करीं"
 
@@ -691,6 +697,10 @@ msgstr "खोज बंद करीं"
 msgid "Collapse"
 msgstr "समेटीं"
 
+#: src/features/board/components/board-container.tsx
+msgid "Collapse {columnName}"
+msgstr ""
+
 #: ../../../lib/web/src/components/layout/app-sidebar.tsx
 msgid "Collapse sidebar"
 msgstr "साइडबार समेटीं"
@@ -803,8 +813,26 @@ msgstr "क्लिपबोर्ड पर कॉपी कइल गइल"
 #: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx
 #: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx
 #: ../../../lib/web/src/components/ui/copy-button.tsx
+#: src/routes/_authenticated/$projectId/index.tsx
+#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Copy"
 msgstr "कॉपी करीं"
+
+#: src/routes/_authenticated/$projectId/index.tsx
+msgid "Copy link"
+msgstr ""
+
+#: src/routes/_authenticated/$projectId/index.tsx
+msgid "Copy of {name}"
+msgstr ""
+
+#: src/routes/_authenticated/$projectId/index.tsx
+msgid "Copy project"
+msgstr ""
+
+#: src/routes/_authenticated/$projectId/index.tsx
+msgid "Copying project..."
+msgstr ""
 
 #: src/routes/$projectId.diff.tsx
 msgid "Could not change the view style"
@@ -831,6 +859,10 @@ msgstr "अंतर लोड करे में विफल"
 #: ../../../lib/web/src/features/document/document-page.tsx
 msgid "Could not load this document. Please try again later."
 msgstr "एह दस्तावेज के लोड ना कर सकल। बाद में फिर कोशिश करीं।"
+
+#: src/routes/_authenticated/$projectId/index.tsx
+msgid "Could not remove the unfinished copy"
+msgstr ""
 
 #: ../../../lib/web/src/components/layout/notification-menu.tsx
 msgid "Couldn't load notifications"
@@ -1061,6 +1093,10 @@ msgstr "डिज़ाइन"
 msgid "Design imported"
 msgstr "डिज़ाइन आयात कइल गइल"
 
+#: src/routes/_authenticated/$projectId/index.tsx
+msgid "Design only"
+msgstr ""
+
 #: src/routes/_authenticated/$projectId_.settings.tsx
 msgid "Design, create, edit, comment, and view"
 msgstr "डिजाइन करीं, बनाईं, संपादित करीं, टिप्पणी करीं, आ देखीं"
@@ -1249,12 +1285,20 @@ msgstr "त्रुटि"
 msgid "Every minute"
 msgstr "हर मिनट"
 
+#: src/routes/_authenticated/$projectId/index.tsx
+msgid "Everything"
+msgstr ""
+
 #: ../../../lib/web/src/components/comment-tree-layout.tsx
 #: ../../../lib/web/src/components/comment-tree-layout.tsx
 #: ../../../lib/web/src/components/tree-row.tsx
 #: ../../../lib/web/src/components/tree-row.tsx
 msgid "Expand"
 msgstr "फइलाईं"
+
+#: src/features/board/components/board-container.tsx
+msgid "Expand {columnName}"
+msgstr ""
 
 #: ../../../lib/web/src/components/layout/app-sidebar.tsx
 msgid "Expand sidebar"
@@ -1292,6 +1336,11 @@ msgstr "मर्ज स्थिति जाँचे में विफल"
 #: ../../../lib/web/src/lib/toast-utils.ts
 msgid "Failed to copy"
 msgstr "कॉपी करे में विफल"
+
+#: src/routes/_authenticated/$projectId/index.tsx
+#: src/routes/_authenticated/$projectId/index.tsx
+msgid "Failed to copy project"
+msgstr ""
 
 #: src/features/editor/components/design-editor.tsx
 msgid "Failed to create class"
@@ -1937,12 +1986,14 @@ msgstr "हमार प्रोजेक्ट"
 #: src/features/editor/components/edit-dialogs.tsx
 #: src/features/projects/components/create-project-dialog.tsx
 #: src/routes/_authenticated/$projectId_.settings.tsx
+#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Name"
 msgstr "नाम"
 
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx
 #: src/features/projects/components/create-project-dialog.tsx
 #: src/routes/_authenticated/$projectId_.settings.tsx
+#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Name cannot contain < or > characters"
 msgstr "नाम में < भा > अक्षर ना रह सके"
 
@@ -1954,6 +2005,7 @@ msgstr "नाम जरूरी बा"
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx
 #: src/features/projects/components/create-project-dialog.tsx
 #: src/routes/_authenticated/$projectId_.settings.tsx
+#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Name must be 1000 characters or less"
 msgstr "नाम 1000 अक्षर भा ओकरा से कम होखे के चाहीं"
 
@@ -2365,6 +2417,10 @@ msgstr "प्रोजेक्ट"
 msgid "Project actions"
 msgstr "परियोजना कार्रवाई"
 
+#: src/routes/_authenticated/$projectId/index.tsx
+msgid "Project copied"
+msgstr ""
+
 #: src/features/projects/components/create-project-dialog.tsx
 msgid "Project created"
 msgstr "प्रोजेक्ट बनल"
@@ -2378,6 +2434,7 @@ msgid "Project link"
 msgstr "प्रोजेक्ट लिंक"
 
 #: src/routes/_authenticated/$projectId_.settings.tsx
+#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Project name is required"
 msgstr "प्रोजेक्ट के नाम जरूरी बा"
 
@@ -3034,6 +3091,10 @@ msgstr "कैमरा पहिले से इस्तेमाल मे�
 #: ../../../lib/web/src/lib/shell-errors.ts
 msgid "The camera request was not answered"
 msgstr "कैमरा अनुरोध के जवाब ना मिलल"
+
+#: src/routes/_authenticated/$projectId/index.tsx
+msgid "The copy may be incomplete. Check it before you use it."
+msgstr ""
 
 #: ../../../lib/web/src/lib/shell-errors.ts
 msgid "The microphone request was not answered"

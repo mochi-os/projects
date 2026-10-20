@@ -324,6 +324,7 @@ msgid "Allow anyone to search for {entityLabel}"
 msgstr "ყველას შეეძლოს მოძებნოს {entityLabel}"
 
 #: src/features/projects/components/create-project-dialog.tsx
+#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Allow anyone to search for project"
 msgstr "ნებისმიერს პროექტის ძიების ნება დართე"
 
@@ -365,6 +366,10 @@ msgstr "ყველაფერი, რაც ამ არხზეა გა�
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx
 msgid "Are you sure you want to delete \"{0}\"?"
 msgstr "დარწმუნებული ხართ, რომ გსურთ „{0}“-ის წაშლა?"
+
+#: src/routes/_authenticated/$projectId/index.tsx
+msgid "Are you sure you want to delete \"{title}\" and the {count, plural, one {# item} other {# items}} under it? This action cannot be undone."
+msgstr ""
 
 #: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx
 msgid "Are you sure you want to delete \"{title}\"? This action cannot be undone."
@@ -544,6 +549,7 @@ msgstr "შეიძლება იყოს შვილი"
 #: src/features/projects/components/create-project-dialog.tsx
 #: src/routes/_authenticated/$projectId/design.tsx
 #: src/routes/_authenticated/$projectId/index.tsx
+#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Cancel"
 msgstr "გაუქმება"
 
@@ -691,6 +697,10 @@ msgstr "ძიების დახურვა"
 msgid "Collapse"
 msgstr "ჩაკეცვა"
 
+#: src/features/board/components/board-container.tsx
+msgid "Collapse {columnName}"
+msgstr ""
+
 #: ../../../lib/web/src/components/layout/app-sidebar.tsx
 msgid "Collapse sidebar"
 msgstr "გვერდითა პანელის შეკვრა"
@@ -803,8 +813,26 @@ msgstr "ბუფერში დაკოპირდა"
 #: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx
 #: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx
 #: ../../../lib/web/src/components/ui/copy-button.tsx
+#: src/routes/_authenticated/$projectId/index.tsx
+#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Copy"
 msgstr "კოპირება"
+
+#: src/routes/_authenticated/$projectId/index.tsx
+msgid "Copy link"
+msgstr ""
+
+#: src/routes/_authenticated/$projectId/index.tsx
+msgid "Copy of {name}"
+msgstr ""
+
+#: src/routes/_authenticated/$projectId/index.tsx
+msgid "Copy project"
+msgstr ""
+
+#: src/routes/_authenticated/$projectId/index.tsx
+msgid "Copying project..."
+msgstr ""
 
 #: src/routes/$projectId.diff.tsx
 msgid "Could not change the view style"
@@ -831,6 +859,10 @@ msgstr "სხვაობის ჩატვირთვა ვერ მოხ
 #: ../../../lib/web/src/features/document/document-page.tsx
 msgid "Could not load this document. Please try again later."
 msgstr "ამ დოკუმენტის ჩატვირთვა ვერ მოხერხდა. სცადეთ მოგვიანებით."
+
+#: src/routes/_authenticated/$projectId/index.tsx
+msgid "Could not remove the unfinished copy"
+msgstr ""
 
 #: ../../../lib/web/src/components/layout/notification-menu.tsx
 msgid "Couldn't load notifications"
@@ -1061,6 +1093,10 @@ msgstr "დიზაინი"
 msgid "Design imported"
 msgstr "დიზაინი იმპორტირებულია"
 
+#: src/routes/_authenticated/$projectId/index.tsx
+msgid "Design only"
+msgstr ""
+
 #: src/routes/_authenticated/$projectId_.settings.tsx
 msgid "Design, create, edit, comment, and view"
 msgstr "დიზაინი, შექმნა, რედაქტირება, კომენტირება და ნახვა"
@@ -1249,12 +1285,20 @@ msgstr "შეცდომა"
 msgid "Every minute"
 msgstr "ყოველი წუთი"
 
+#: src/routes/_authenticated/$projectId/index.tsx
+msgid "Everything"
+msgstr ""
+
 #: ../../../lib/web/src/components/comment-tree-layout.tsx
 #: ../../../lib/web/src/components/comment-tree-layout.tsx
 #: ../../../lib/web/src/components/tree-row.tsx
 #: ../../../lib/web/src/components/tree-row.tsx
 msgid "Expand"
 msgstr "გაშლა"
+
+#: src/features/board/components/board-container.tsx
+msgid "Expand {columnName}"
+msgstr ""
 
 #: ../../../lib/web/src/components/layout/app-sidebar.tsx
 msgid "Expand sidebar"
@@ -1292,6 +1336,11 @@ msgstr "შერწყმის სტატუსის შემოწმე�
 #: ../../../lib/web/src/lib/toast-utils.ts
 msgid "Failed to copy"
 msgstr "კოპირება ვერ მოხერხდა"
+
+#: src/routes/_authenticated/$projectId/index.tsx
+#: src/routes/_authenticated/$projectId/index.tsx
+msgid "Failed to copy project"
+msgstr ""
 
 #: src/features/editor/components/design-editor.tsx
 msgid "Failed to create class"
@@ -1937,12 +1986,14 @@ msgstr "ჩემი პროექტი"
 #: src/features/editor/components/edit-dialogs.tsx
 #: src/features/projects/components/create-project-dialog.tsx
 #: src/routes/_authenticated/$projectId_.settings.tsx
+#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Name"
 msgstr "სახელი"
 
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx
 #: src/features/projects/components/create-project-dialog.tsx
 #: src/routes/_authenticated/$projectId_.settings.tsx
+#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Name cannot contain < or > characters"
 msgstr "სახელი ვერ შეიცავს < ან > სიმბოლოებს"
 
@@ -1954,6 +2005,7 @@ msgstr "სახელი აუცილებელია"
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx
 #: src/features/projects/components/create-project-dialog.tsx
 #: src/routes/_authenticated/$projectId_.settings.tsx
+#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Name must be 1000 characters or less"
 msgstr "სახელი უნდა იყოს 1000 სიმბოლო ან ნაკლები"
 
@@ -2365,6 +2417,10 @@ msgstr "პროექტი"
 msgid "Project actions"
 msgstr "პროექტის მოქმედებები"
 
+#: src/routes/_authenticated/$projectId/index.tsx
+msgid "Project copied"
+msgstr ""
+
 #: src/features/projects/components/create-project-dialog.tsx
 msgid "Project created"
 msgstr "პროექტი შეიქმნა"
@@ -2378,6 +2434,7 @@ msgid "Project link"
 msgstr "პროექტის ბმული"
 
 #: src/routes/_authenticated/$projectId_.settings.tsx
+#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Project name is required"
 msgstr "პროექტის სახელი აუცილებელია"
 
@@ -3034,6 +3091,10 @@ msgstr "კამერა უკვე გამოიყენება"
 #: ../../../lib/web/src/lib/shell-errors.ts
 msgid "The camera request was not answered"
 msgstr "კამერის მოთხოვნას პასუხი არ მოჰყვა"
+
+#: src/routes/_authenticated/$projectId/index.tsx
+msgid "The copy may be incomplete. Check it before you use it."
+msgstr ""
 
 #: ../../../lib/web/src/lib/shell-errors.ts
 msgid "The microphone request was not answered"

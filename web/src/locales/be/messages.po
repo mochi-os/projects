@@ -324,6 +324,7 @@ msgid "Allow anyone to search for {entityLabel}"
 msgstr "Дазволіць усім шукаць {entityLabel}"
 
 #: src/features/projects/components/create-project-dialog.tsx
+#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Allow anyone to search for project"
 msgstr "Дазволіць усім шукаць праект"
 
@@ -365,6 +366,10 @@ msgstr "Усё, што падпісана на гэтую стужку, пера
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx
 msgid "Are you sure you want to delete \"{0}\"?"
 msgstr "Вы ўпэўнены, што хочаце выдаліць \"{0}\"?"
+
+#: src/routes/_authenticated/$projectId/index.tsx
+msgid "Are you sure you want to delete \"{title}\" and the {count, plural, one {# item} other {# items}} under it? This action cannot be undone."
+msgstr ""
 
 #: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx
 msgid "Are you sure you want to delete \"{title}\"? This action cannot be undone."
@@ -544,6 +549,7 @@ msgstr "Можа быць даччыным для"
 #: src/features/projects/components/create-project-dialog.tsx
 #: src/routes/_authenticated/$projectId/design.tsx
 #: src/routes/_authenticated/$projectId/index.tsx
+#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Cancel"
 msgstr "Адмена"
 
@@ -691,6 +697,10 @@ msgstr "Закрыць пошук"
 msgid "Collapse"
 msgstr "Згарнуць"
 
+#: src/features/board/components/board-container.tsx
+msgid "Collapse {columnName}"
+msgstr ""
+
 #: ../../../lib/web/src/components/layout/app-sidebar.tsx
 msgid "Collapse sidebar"
 msgstr "Згарнуць бакавую панэль"
@@ -803,8 +813,26 @@ msgstr "Скапіравана ў буфер абмену"
 #: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx
 #: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx
 #: ../../../lib/web/src/components/ui/copy-button.tsx
+#: src/routes/_authenticated/$projectId/index.tsx
+#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Copy"
 msgstr "Капіраваць"
+
+#: src/routes/_authenticated/$projectId/index.tsx
+msgid "Copy link"
+msgstr ""
+
+#: src/routes/_authenticated/$projectId/index.tsx
+msgid "Copy of {name}"
+msgstr ""
+
+#: src/routes/_authenticated/$projectId/index.tsx
+msgid "Copy project"
+msgstr ""
+
+#: src/routes/_authenticated/$projectId/index.tsx
+msgid "Copying project..."
+msgstr ""
 
 #: src/routes/$projectId.diff.tsx
 msgid "Could not change the view style"
@@ -831,6 +859,10 @@ msgstr "Не ўдалося загрузіць розніцу"
 #: ../../../lib/web/src/features/document/document-page.tsx
 msgid "Could not load this document. Please try again later."
 msgstr "Не атрымалася загрузіць гэты дакумент. Калі ласка, паспрабуйце пазней."
+
+#: src/routes/_authenticated/$projectId/index.tsx
+msgid "Could not remove the unfinished copy"
+msgstr ""
 
 #: ../../../lib/web/src/components/layout/notification-menu.tsx
 msgid "Couldn't load notifications"
@@ -1061,6 +1093,10 @@ msgstr "Дызайн"
 msgid "Design imported"
 msgstr "Дызайн імпартаваны"
 
+#: src/routes/_authenticated/$projectId/index.tsx
+msgid "Design only"
+msgstr ""
+
 #: src/routes/_authenticated/$projectId_.settings.tsx
 msgid "Design, create, edit, comment, and view"
 msgstr "Распрацоўка, стварэнне, рэдагаванне, каментаванне і прагляд"
@@ -1249,12 +1285,20 @@ msgstr "Памылка"
 msgid "Every minute"
 msgstr "Кожную хвіліну"
 
+#: src/routes/_authenticated/$projectId/index.tsx
+msgid "Everything"
+msgstr ""
+
 #: ../../../lib/web/src/components/comment-tree-layout.tsx
 #: ../../../lib/web/src/components/comment-tree-layout.tsx
 #: ../../../lib/web/src/components/tree-row.tsx
 #: ../../../lib/web/src/components/tree-row.tsx
 msgid "Expand"
 msgstr "Разгарнуць"
+
+#: src/features/board/components/board-container.tsx
+msgid "Expand {columnName}"
+msgstr ""
 
 #: ../../../lib/web/src/components/layout/app-sidebar.tsx
 msgid "Expand sidebar"
@@ -1292,6 +1336,11 @@ msgstr "Не ўдалося праверыць статус зліцця"
 #: ../../../lib/web/src/lib/toast-utils.ts
 msgid "Failed to copy"
 msgstr "Не ўдалося скапіяваць"
+
+#: src/routes/_authenticated/$projectId/index.tsx
+#: src/routes/_authenticated/$projectId/index.tsx
+msgid "Failed to copy project"
+msgstr ""
 
 #: src/features/editor/components/design-editor.tsx
 msgid "Failed to create class"
@@ -1937,12 +1986,14 @@ msgstr "Мой праект"
 #: src/features/editor/components/edit-dialogs.tsx
 #: src/features/projects/components/create-project-dialog.tsx
 #: src/routes/_authenticated/$projectId_.settings.tsx
+#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Name"
 msgstr "Назва"
 
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx
 #: src/features/projects/components/create-project-dialog.tsx
 #: src/routes/_authenticated/$projectId_.settings.tsx
+#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Name cannot contain < or > characters"
 msgstr "Назва не можа змяшчаць сімвалы < або >"
 
@@ -1954,6 +2005,7 @@ msgstr "Назва абавязковая"
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx
 #: src/features/projects/components/create-project-dialog.tsx
 #: src/routes/_authenticated/$projectId_.settings.tsx
+#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Name must be 1000 characters or less"
 msgstr "Назва павінна быць не больш за 1000 сімвалаў"
 
@@ -2365,6 +2417,10 @@ msgstr "Праект"
 msgid "Project actions"
 msgstr "Дзеянні праекта"
 
+#: src/routes/_authenticated/$projectId/index.tsx
+msgid "Project copied"
+msgstr ""
+
 #: src/features/projects/components/create-project-dialog.tsx
 msgid "Project created"
 msgstr "Праект створаны"
@@ -2378,6 +2434,7 @@ msgid "Project link"
 msgstr "Спасылка праекта"
 
 #: src/routes/_authenticated/$projectId_.settings.tsx
+#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Project name is required"
 msgstr "Назва праекта абавязковая"
 
@@ -3034,6 +3091,10 @@ msgstr "Камера ўжо выкарыстоўваецца"
 #: ../../../lib/web/src/lib/shell-errors.ts
 msgid "The camera request was not answered"
 msgstr "Запыт камеры застаўся без адказу"
+
+#: src/routes/_authenticated/$projectId/index.tsx
+msgid "The copy may be incomplete. Check it before you use it."
+msgstr ""
 
 #: ../../../lib/web/src/lib/shell-errors.ts
 msgid "The microphone request was not answered"

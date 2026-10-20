@@ -324,6 +324,7 @@ msgid "Allow anyone to search for {entityLabel}"
 msgstr "Islendik adama {entityLabel} gözlemäge rugsat ber"
 
 #: src/features/projects/components/create-project-dialog.tsx
+#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Allow anyone to search for project"
 msgstr "Islendik adamyň proýekt gözlemegine rugsat bermek"
 
@@ -365,6 +366,10 @@ msgstr "Bu akyma ýazylan ähli zat ony almagy bes eder. Soňra täze URL göç�
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx
 msgid "Are you sure you want to delete \"{0}\"?"
 msgstr "\"{0}\" pozmak isleýändigiňize ynamlymy?"
+
+#: src/routes/_authenticated/$projectId/index.tsx
+msgid "Are you sure you want to delete \"{title}\" and the {count, plural, one {# item} other {# items}} under it? This action cannot be undone."
+msgstr ""
 
 #: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx
 msgid "Are you sure you want to delete \"{title}\"? This action cannot be undone."
@@ -544,6 +549,7 @@ msgstr "Çaga bolup biler"
 #: src/features/projects/components/create-project-dialog.tsx
 #: src/routes/_authenticated/$projectId/design.tsx
 #: src/routes/_authenticated/$projectId/index.tsx
+#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Cancel"
 msgstr "Ýatyrmak"
 
@@ -691,6 +697,10 @@ msgstr "Gözlegi ýapmak"
 msgid "Collapse"
 msgstr "Ýygnamak"
 
+#: src/features/board/components/board-container.tsx
+msgid "Collapse {columnName}"
+msgstr ""
+
 #: ../../../lib/web/src/components/layout/app-sidebar.tsx
 msgid "Collapse sidebar"
 msgstr "Gapdal paneli ýygyrmak"
@@ -803,8 +813,26 @@ msgstr "Aralyk buferine nusgalandy"
 #: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx
 #: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx
 #: ../../../lib/web/src/components/ui/copy-button.tsx
+#: src/routes/_authenticated/$projectId/index.tsx
+#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Copy"
 msgstr "Nusgalamak"
+
+#: src/routes/_authenticated/$projectId/index.tsx
+msgid "Copy link"
+msgstr ""
+
+#: src/routes/_authenticated/$projectId/index.tsx
+msgid "Copy of {name}"
+msgstr ""
+
+#: src/routes/_authenticated/$projectId/index.tsx
+msgid "Copy project"
+msgstr ""
+
+#: src/routes/_authenticated/$projectId/index.tsx
+msgid "Copying project..."
+msgstr ""
 
 #: src/routes/$projectId.diff.tsx
 msgid "Could not change the view style"
@@ -831,6 +859,10 @@ msgstr "Diff ýüklenmedi"
 #: ../../../lib/web/src/features/document/document-page.tsx
 msgid "Could not load this document. Please try again later."
 msgstr "Bu resminamany ýüklemedi. Soň gaýtadan synanyşyň."
+
+#: src/routes/_authenticated/$projectId/index.tsx
+msgid "Could not remove the unfinished copy"
+msgstr ""
 
 #: ../../../lib/web/src/components/layout/notification-menu.tsx
 msgid "Couldn't load notifications"
@@ -1061,6 +1093,10 @@ msgstr "Dizaýn"
 msgid "Design imported"
 msgstr "Dizaýn import edildi"
 
+#: src/routes/_authenticated/$projectId/index.tsx
+msgid "Design only"
+msgstr ""
+
 #: src/routes/_authenticated/$projectId_.settings.tsx
 msgid "Design, create, edit, comment, and view"
 msgstr "Dizaýn etmek, döretmek, redaktirlemek, teswir ýazmak we görmek"
@@ -1249,12 +1285,20 @@ msgstr "Ýalňyşlyk"
 msgid "Every minute"
 msgstr "Her minut"
 
+#: src/routes/_authenticated/$projectId/index.tsx
+msgid "Everything"
+msgstr ""
+
 #: ../../../lib/web/src/components/comment-tree-layout.tsx
 #: ../../../lib/web/src/components/comment-tree-layout.tsx
 #: ../../../lib/web/src/components/tree-row.tsx
 #: ../../../lib/web/src/components/tree-row.tsx
 msgid "Expand"
 msgstr "Giňeltmek"
+
+#: src/features/board/components/board-container.tsx
+msgid "Expand {columnName}"
+msgstr ""
 
 #: ../../../lib/web/src/components/layout/app-sidebar.tsx
 msgid "Expand sidebar"
@@ -1292,6 +1336,11 @@ msgstr "Birleşdirme ýagdaýy barlanmady"
 #: ../../../lib/web/src/lib/toast-utils.ts
 msgid "Failed to copy"
 msgstr "Göçürilmedi"
+
+#: src/routes/_authenticated/$projectId/index.tsx
+#: src/routes/_authenticated/$projectId/index.tsx
+msgid "Failed to copy project"
+msgstr ""
 
 #: src/features/editor/components/design-editor.tsx
 msgid "Failed to create class"
@@ -1937,12 +1986,14 @@ msgstr "Meniň taslamam"
 #: src/features/editor/components/edit-dialogs.tsx
 #: src/features/projects/components/create-project-dialog.tsx
 #: src/routes/_authenticated/$projectId_.settings.tsx
+#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Name"
 msgstr "At"
 
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx
 #: src/features/projects/components/create-project-dialog.tsx
 #: src/routes/_authenticated/$projectId_.settings.tsx
+#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Name cannot contain < or > characters"
 msgstr "At < ýa-da > nyşanlaryny saklap bilmez"
 
@@ -1954,6 +2005,7 @@ msgstr "At hökmandyr"
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx
 #: src/features/projects/components/create-project-dialog.tsx
 #: src/routes/_authenticated/$projectId_.settings.tsx
+#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Name must be 1000 characters or less"
 msgstr "At 1000 nyşandan az bolmaly"
 
@@ -2365,6 +2417,10 @@ msgstr "Taslama"
 msgid "Project actions"
 msgstr "Taslama hereketleri"
 
+#: src/routes/_authenticated/$projectId/index.tsx
+msgid "Project copied"
+msgstr ""
+
 #: src/features/projects/components/create-project-dialog.tsx
 msgid "Project created"
 msgstr "Taslama döredildi"
@@ -2378,6 +2434,7 @@ msgid "Project link"
 msgstr "Taslama baglanyşygy"
 
 #: src/routes/_authenticated/$projectId_.settings.tsx
+#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Project name is required"
 msgstr "Taslamanyň ady hökmandyr"
 
@@ -3034,6 +3091,10 @@ msgstr "Kamera eýýäm ulanylýar"
 #: ../../../lib/web/src/lib/shell-errors.ts
 msgid "The camera request was not answered"
 msgstr "Kamera haýyşyna jogap berilmedi"
+
+#: src/routes/_authenticated/$projectId/index.tsx
+msgid "The copy may be incomplete. Check it before you use it."
+msgstr ""
 
 #: ../../../lib/web/src/lib/shell-errors.ts
 msgid "The microphone request was not answered"

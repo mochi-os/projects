@@ -324,6 +324,7 @@ msgid "Allow anyone to search for {entityLabel}"
 msgstr "Dopusti svima da traže {entityLabel}"
 
 #: src/features/projects/components/create-project-dialog.tsx
+#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Allow anyone to search for project"
 msgstr "Dopusti svima pretraživanje projekta"
 
@@ -365,6 +366,10 @@ msgstr "Sve što je pretplaćeno na ovaj kanal prestat će ga primati. Zatim mo�
 #: ../../../lib/web/src/components/entity/entity-object-attachments.tsx
 msgid "Are you sure you want to delete \"{0}\"?"
 msgstr "Jeste li sigurni da želite obrisati \"{0}\"?"
+
+#: src/routes/_authenticated/$projectId/index.tsx
+msgid "Are you sure you want to delete \"{title}\" and the {count, plural, one {# item} other {# items}} under it? This action cannot be undone."
+msgstr ""
 
 #: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx
 msgid "Are you sure you want to delete \"{title}\"? This action cannot be undone."
@@ -544,6 +549,7 @@ msgstr "Može biti dijete od"
 #: src/features/projects/components/create-project-dialog.tsx
 #: src/routes/_authenticated/$projectId/design.tsx
 #: src/routes/_authenticated/$projectId/index.tsx
+#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Cancel"
 msgstr "Odustani"
 
@@ -691,6 +697,10 @@ msgstr "Zatvori pretragu"
 msgid "Collapse"
 msgstr "Sažmi"
 
+#: src/features/board/components/board-container.tsx
+msgid "Collapse {columnName}"
+msgstr ""
+
 #: ../../../lib/web/src/components/layout/app-sidebar.tsx
 msgid "Collapse sidebar"
 msgstr "Sažmi bočnu traku"
@@ -803,8 +813,26 @@ msgstr "Kopirano u međuspremnik"
 #: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx
 #: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx
 #: ../../../lib/web/src/components/ui/copy-button.tsx
+#: src/routes/_authenticated/$projectId/index.tsx
+#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Copy"
 msgstr "Kopiraj"
+
+#: src/routes/_authenticated/$projectId/index.tsx
+msgid "Copy link"
+msgstr ""
+
+#: src/routes/_authenticated/$projectId/index.tsx
+msgid "Copy of {name}"
+msgstr ""
+
+#: src/routes/_authenticated/$projectId/index.tsx
+msgid "Copy project"
+msgstr ""
+
+#: src/routes/_authenticated/$projectId/index.tsx
+msgid "Copying project..."
+msgstr ""
 
 #: src/routes/$projectId.diff.tsx
 msgid "Could not change the view style"
@@ -831,6 +859,10 @@ msgstr "Učitavanje razlike nije uspjelo"
 #: ../../../lib/web/src/features/document/document-page.tsx
 msgid "Could not load this document. Please try again later."
 msgstr "Nije moguće učitati ovaj dokument. Pokušajte ponovno kasnije."
+
+#: src/routes/_authenticated/$projectId/index.tsx
+msgid "Could not remove the unfinished copy"
+msgstr ""
 
 #: ../../../lib/web/src/components/layout/notification-menu.tsx
 msgid "Couldn't load notifications"
@@ -1061,6 +1093,10 @@ msgstr "Dizajn"
 msgid "Design imported"
 msgstr "Dizajn uvezen"
 
+#: src/routes/_authenticated/$projectId/index.tsx
+msgid "Design only"
+msgstr ""
+
 #: src/routes/_authenticated/$projectId_.settings.tsx
 msgid "Design, create, edit, comment, and view"
 msgstr "Oblikuj, izradi, uredi, komentiraj i pregledaj"
@@ -1249,12 +1285,20 @@ msgstr "Greška"
 msgid "Every minute"
 msgstr "Svaka minuta"
 
+#: src/routes/_authenticated/$projectId/index.tsx
+msgid "Everything"
+msgstr ""
+
 #: ../../../lib/web/src/components/comment-tree-layout.tsx
 #: ../../../lib/web/src/components/comment-tree-layout.tsx
 #: ../../../lib/web/src/components/tree-row.tsx
 #: ../../../lib/web/src/components/tree-row.tsx
 msgid "Expand"
 msgstr "Proširi"
+
+#: src/features/board/components/board-container.tsx
+msgid "Expand {columnName}"
+msgstr ""
 
 #: ../../../lib/web/src/components/layout/app-sidebar.tsx
 msgid "Expand sidebar"
@@ -1292,6 +1336,11 @@ msgstr "Provjera statusa spajanja nije uspjela"
 #: ../../../lib/web/src/lib/toast-utils.ts
 msgid "Failed to copy"
 msgstr "Kopiranje nije uspjelo"
+
+#: src/routes/_authenticated/$projectId/index.tsx
+#: src/routes/_authenticated/$projectId/index.tsx
+msgid "Failed to copy project"
+msgstr ""
 
 #: src/features/editor/components/design-editor.tsx
 msgid "Failed to create class"
@@ -1937,12 +1986,14 @@ msgstr "Moj projekt"
 #: src/features/editor/components/edit-dialogs.tsx
 #: src/features/projects/components/create-project-dialog.tsx
 #: src/routes/_authenticated/$projectId_.settings.tsx
+#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Name"
 msgstr "Naziv"
 
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx
 #: src/features/projects/components/create-project-dialog.tsx
 #: src/routes/_authenticated/$projectId_.settings.tsx
+#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Name cannot contain < or > characters"
 msgstr "Naziv ne smije sadržavati znakove < ili >"
 
@@ -1954,6 +2005,7 @@ msgstr "Naziv je obavezan"
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx
 #: src/features/projects/components/create-project-dialog.tsx
 #: src/routes/_authenticated/$projectId_.settings.tsx
+#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Name must be 1000 characters or less"
 msgstr "Naziv mora imati 1000 znakova ili manje"
 
@@ -2365,6 +2417,10 @@ msgstr "Projekt"
 msgid "Project actions"
 msgstr "Radnje projekta"
 
+#: src/routes/_authenticated/$projectId/index.tsx
+msgid "Project copied"
+msgstr ""
+
 #: src/features/projects/components/create-project-dialog.tsx
 msgid "Project created"
 msgstr "Projekt kreiran"
@@ -2378,6 +2434,7 @@ msgid "Project link"
 msgstr "Poveznica projekta"
 
 #: src/routes/_authenticated/$projectId_.settings.tsx
+#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Project name is required"
 msgstr "Naziv projekta je obavezan"
 
@@ -3034,6 +3091,10 @@ msgstr "Kamera se već koristi"
 #: ../../../lib/web/src/lib/shell-errors.ts
 msgid "The camera request was not answered"
 msgstr "Na zahtjev za kameru nije odgovoreno"
+
+#: src/routes/_authenticated/$projectId/index.tsx
+msgid "The copy may be incomplete. Check it before you use it."
+msgstr ""
 
 #: ../../../lib/web/src/lib/shell-errors.ts
 msgid "The microphone request was not answered"

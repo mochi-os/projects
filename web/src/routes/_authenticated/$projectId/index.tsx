@@ -14,7 +14,7 @@ import {
   useRouter,
 } from '@tanstack/react-router'
 import type { ProjectDetails, ProjectObject } from '@/types'
-import { t } from '@lingui/core/macro'
+import { plural, t } from '@lingui/core/macro'
 import { useLingui } from '@lingui/react/macro'
 import {
   DropdownMenuItem,
@@ -24,8 +24,10 @@ import {
   getErrorMessage,
   toast,
   EntityObjectDetailPanel,
+  absoluteRouteUrl,
   type EntityObjectDetailTab,
   canWrite,
+  DISALLOWED_NAME_CHARS,
 } from '@mochi/web'
 import { FolderKanban, GitMerge, Settings, Settings2 } from 'lucide-react'
 import projectsApi from '@/api/projects'
@@ -120,6 +122,7 @@ export function ProjectPageContent({
 }: ProjectPageContentProps) {
   const { t } = useLingui()
   const navigate = useNavigate()
+  const router = useRouter()
   const refreshSidebar = useProjectsStore((state) => state.refresh)
 
   return (
@@ -174,6 +177,54 @@ export function ProjectPageContent({
         unsubscribing: t`Unsubscribing...`,
         unsubscribed: t`Unsubscribed`,
         unsubscribeFailed: t`Failed to unsubscribe`,
+      }}
+      // Copy runs the backup export and the create-from-backup import as
+      // one step. A failed import removes the half-made copy.
+      duplicate={{
+        menuAction: t`Copy`,
+        api: projectsApi,
+        create: async (name, privacy) => {
+          const response = await projectsApi.create({
+            name,
+            // Keeps the original's readable ids (PREFIX-1) and starts
+            // blank: the import brings the design.
+            prefix: project.project.prefix,
+            // The import does not carry the description, so it is set here.
+            description: project.project.description,
+            template: 'blank',
+            privacy,
+          })
+          const id = response.data?.fingerprint
+          if (!id) throw new Error(t`Failed to copy project`)
+          return id
+        },
+        remove: (id) => projectsApi.delete(id),
+        onDuplicated: (id) => {
+          void refreshSidebar()
+          void navigate({ to: '/$projectId', params: { projectId: id } })
+        },
+        validateName: (name) => {
+          if (!name.trim()) return t`Project name is required`
+          if (name.length > 1000) return t`Name must be 1000 characters or less`
+          if (DISALLOWED_NAME_CHARS.test(name))
+            return t`Name cannot contain < or > characters`
+          return null
+        },
+        labels: {
+          title: t`Copy project`,
+          name: t`Name`,
+          everything: t`Everything`,
+          designOnly: t`Design only`,
+          allowSearch: t`Allow anyone to search for project`,
+          cancel: t`Cancel`,
+          confirm: t`Copy`,
+          duplicating: t`Copying project...`,
+          duplicated: t`Project copied`,
+          failed: t`Failed to copy project`,
+          defaultName: (name) => t`Copy of ${name}`,
+          leftBehind: t`Could not remove the unfinished copy`,
+          incomplete: t`The copy may be incomplete. Check it before you use it.`,
+        },
       }}
       designMenuItem={
         <DropdownMenuItem asChild>
@@ -244,6 +295,18 @@ export function ProjectPageContent({
               ),
             }
             return [tab]
+          }}
+          itemUrl={(objectId) =>
+            absoluteRouteUrl(router, {
+              to: '/$projectId/$objectId',
+              params: { projectId, objectId },
+            })
+          }
+          labels={{
+            copyLink: t`Copy link`,
+            // The server deletes everything under an item with it.
+            deleteWithChildren: (title, count) =>
+              t`Are you sure you want to delete "${title}" and the ${plural(count, { one: '# item', other: '# items' })} under it? This action cannot be undone.`,
           }}
           onCopy={onCopy}
           onClose={onClose}

@@ -15,6 +15,7 @@ import {
   getAppBasepath,
   createAppHistory,
   I18nProvider,
+  startRoutePrefetch,
   type Catalogs,
 } from '@mochi/web'
 // Generated Routes
@@ -150,6 +151,9 @@ const router = createRouter({
   defaultPreload: false,
   defaultErrorComponent: GeneralError,
 })
+
+// Fetch page code on hover, press or focus; never route data
+startRoutePrefetch(router)
 
 // Register the router instance for type safety
 declare module '@tanstack/react-router' {

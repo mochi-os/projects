@@ -113,8 +113,8 @@ def broadcast_event(project_id, event, data, exclude=None):
 
 # Drop every subscriber that no longer passes the view check (access comes via
 # groups and wildcards, so a revoked subject does not map to rows) and send each
-# an access/revoke so its server purges the replica. The owner's identity is
-# always kept: it anchors get_owner_identity.
+# an access/revoke so its server purges the replica. The owner's own row is
+# always kept.
 def subscribers_revalidate(project_id):
 	owner = get_owner_identity(project_id)
 	removed = False
@@ -139,9 +139,7 @@ def subscribers_revalidate(project_id):
 
 def subscriber_drop(entity):
 	"""Drop a subscriber from every project that has one, except where that row
-	is the project's owner anchor. get_owner_identity reads the first
-	subscribers row, so removing the owner's own row silently repoints it at
-	the next subscriber - which is what subscribers_revalidate exempts too."""
+	is the project owner's own, which subscribers_revalidate keeps too."""
 	for row in mochi.db.rows("select project from subscribers where id=?", entity) or []:
 		if get_owner_identity(row["project"]) == entity:
 			continue
@@ -408,7 +406,7 @@ def database_upgrade(version):
 		mochi.db.execute("create index if not exists links_project on links(project)")
 		columns = [c["name"] for c in mochi.db.table("projects")]
 		# The owner identity was inferred from subscriber ordering; it is now
-		# recorded, backfilled from the row that anchored it until now.
+		# recorded, backfilled from core's record of the project's creator.
 		if "identity" not in columns:
 			mochi.db.execute("alter table projects add column identity text not null default ''")
 		# The access level the owner last confirmed, so a replica stays
@@ -416,9 +414,9 @@ def database_upgrade(version):
 		if "access" not in columns:
 			mochi.db.execute("alter table projects add column access text not null default ''")
 		for row in mochi.db.rows("select id from projects where owner=1 and identity=''") or []:
-			first = mochi.db.row("select id from subscribers where project=? order by subscribed, rowid limit 1", row["id"])
-			if first:
-				mochi.db.execute("update projects set identity=? where id=?", first["id"], row["id"])
+			creator = project_creator(row["id"])
+			if creator:
+				mochi.db.execute("update projects set identity=? where id=?", creator, row["id"])
 
 # Create database with all 16 tables
 def database_create():
@@ -2531,15 +2529,20 @@ def log_activity(object_id, user, action, field="", oldvalue="", newvalue=""):
 			"oldvalue": str(oldvalue), "newvalue": str(newvalue), "created": now,
 		})
 
+def project_creator(project_id):
+	"""The identity that created the project, as core records it: the project
+	entity's parent. Empty where this account does not hold the entity."""
+	rows = mochi.entity.get(project_id)
+	return rows[0]["parent"] if rows else ""
+
 def get_owner_identity(project_id):
-	"""The identity that created the project, recorded on its row. A row from
-	before that column falls back to the first subscriber, which is what the
-	migration backfilled from."""
+	"""The identity that created the project, recorded on its row. A row with
+	none recorded asks core; the earliest subscriber is no stand-in, since an
+	owner need not be subscribed."""
 	row = mochi.db.row("select identity from projects where id=?", project_id)
 	if row and row["identity"]:
 		return row["identity"]
-	row = mochi.db.row("select id from subscribers where project=? order by subscribed, rowid limit 1", project_id)
-	return row["id"] if row else ""
+	return project_creator(project_id)
 
 def get_object_display(project, obj, object_id):
 	"""Build display title: '<project name> - <object title>'."""

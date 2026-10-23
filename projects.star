@@ -5653,10 +5653,14 @@ def action_repositories_diff(a):
 		a.error.label(400, "errors.repository_base_and_head_required")
 		return
 
+	# From where head left base, as a merge would bring it: compared as they
+	# stand, a target branch that moved on showed its new work in the request,
+	# reversed, as deletions the request does not make.
 	result = mochi.service.call("repositories", "diff", {
 		"repo": repo_id,
 		"base": base,
-		"head": head
+		"head": head,
+		"mode": "diverged"
 	})
 
 	if result == None:

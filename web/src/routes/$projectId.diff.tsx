@@ -19,7 +19,6 @@ import {
   toast,
   getErrorMessage,
 } from '@mochi/web'
-import { diffWords } from 'diff'
 import { Loader2, Rows3 } from 'lucide-react'
 import projectsApi from '@/api/projects'
 
@@ -145,7 +144,7 @@ function DiffPage() {
             />
           </div>
         ) : typeof diffData === 'string' ? (
-          <DiffViewer diff={diffData} viewStyle={viewStyle} words={diffWords} />
+          <DiffViewer diff={diffData} viewStyle={viewStyle} />
         ) : diffData ? (
           <div className='text-destructive py-8 text-center text-sm'>
             {diffData.error}

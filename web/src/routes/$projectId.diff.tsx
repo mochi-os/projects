@@ -18,6 +18,7 @@ import {
   isInShell,
   toast,
   getErrorMessage,
+  optimistic,
 } from '@mochi/web'
 import { diffWords } from 'diff'
 import { Loader2, Rows3 } from 'lucide-react'
@@ -79,12 +80,21 @@ function DiffPage() {
 
   const viewStyle = (prefData?.style as 'unified' | 'split') || 'unified'
 
+  // The view switches on the click and back if the server refuses.
+  const prefPatch = optimistic(queryClient, (style: string) => [
+    {
+      filters: { queryKey: ['diff-preference'], exact: true },
+      update: (old: { style?: string }) => ({ ...old, style }),
+    },
+  ])
   const prefMutation = useMutation({
     mutationFn: (style: string) => projectsApi.setDiffPreference(style),
+    onMutate: prefPatch.onMutate,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['diff-preference'] })
     },
-    onError: (error) => {
+    onError: (error, _style, context) => {
+      prefPatch.rollback(context)
       toast.error(getErrorMessage(error, t`Could not change the view style`))
     },
   })

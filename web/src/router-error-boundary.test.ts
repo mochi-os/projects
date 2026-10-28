@@ -19,6 +19,6 @@ describe('app router', () => {
       path.resolve(process.cwd(), 'src/main.tsx'),
       'utf8'
     )
-    expect(source).toMatch(/defaultErrorComponent:\s*GeneralError/)
+    expect(source).toMatch(/defaultErrorComponent:\s*RouteError/)
   })
 })

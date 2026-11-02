@@ -16,6 +16,7 @@ function ProjectsLayoutInner() {
   const isLoading = useProjectsStore((state) => state.isLoading)
   const error = useProjectsStore((state) => state.error)
   const refresh = useProjectsStore((state) => state.refresh)
+  const load = useProjectsStore((state) => state.load)
   const { createDialogOpen, openCreateDialog, closeCreateDialog } =
     useEntitySidebarContext()
 
@@ -25,6 +26,7 @@ function ProjectsLayoutInner() {
       isLoading={isLoading}
       error={error}
       refresh={refresh}
+      load={load}
       icon={FolderKanban}
       onCreate={openCreateDialog}
       viewUrl={APP_ROUTES.PROJECTS.VIEW}

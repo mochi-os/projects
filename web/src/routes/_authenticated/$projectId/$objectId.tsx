@@ -17,6 +17,8 @@ import {
   extractStatus,
   getErrorMessage,
   toast,
+  entityObjectsQuery,
+  entityPeopleQuery,
 } from '@mochi/web'
 import { FolderKanban } from 'lucide-react'
 import projectsApi from '@/api/projects'
@@ -30,7 +32,15 @@ export const Route = createFileRoute('/_authenticated/$projectId/$objectId')({
   validateSearch: (search: Record<string, unknown>): SearchParams => ({
     view: typeof search.view === 'string' ? search.view : undefined,
   }),
-  loader: async ({ params }) => {
+  loader: async ({ params, context }) => {
+    // The items and people need only the address, so they start beside the
+    // details rather than after them; the page's queries join them.
+    void context.queryClient.prefetchQuery(
+      entityObjectsQuery(projectsApi.listObjects, params.projectId)
+    )
+    void context.queryClient.prefetchQuery(
+      entityPeopleQuery(projectsApi.listPeople, params.projectId)
+    )
     try {
       const projectResponse = await projectsApi.get(params.projectId)
       return { project: projectResponse.data, loaderError: null }

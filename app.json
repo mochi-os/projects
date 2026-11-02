@@ -12,11 +12,11 @@
 	"services": ["projects"],
 
 	"architecture": {"engine": "starlark", "version": 4},
-	"execute": ["lib/attachments.star", "projects.star"],
-	"require": {"version": {"minimum": "0.4.231"}},
+	"execute": ["lib/attachments.star", "lib/assets.star", "lib/recommendations.star", "projects.star"],
+	"require": {"version": {"minimum": "0.4.244"}},
 
 	"database": {
-		"schema": 6,
+		"schema": 7,
 		"file": "projects.db",
 		"create": {"function": "database_create"},
 		"upgrade": {"function": "database_upgrade"},

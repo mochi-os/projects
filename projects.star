@@ -237,14 +237,15 @@ def request_resync(project_id):
 	peer = ""
 	if server:
 		peer = mochi.remote.peer(server)
-	schema = remote_dict(mochi.remote.request(project_id, "projects", "schema", {}, peer))
+	# What the replica holds before the first part is read: only those rows may
+	# be pruned once the pull completes.
+	held = schema_holdings(project_id)
+	schema = schema_fetch(project_id, peer, SCHEMA_START)
 	if not schema or schema.get("error"):
 		return False
-	insert_schema(project_id, schema)
-	mochi.broadcast.touch(project_id)
-	fp = mochi.entity.fingerprint(project_id)
-	if fp:
-		mochi.websocket.write(fp, {"type": "project/resynced", "project": project_id})
+	if not insert_schema(project_id, schema, peer, now, held):
+		return False
+	schema_completed(project_id)
 	return True
 
 # Re-subscribe an idle project (idle_resync_age) with its owner; event_subscribe
@@ -465,8 +466,12 @@ def database_upgrade(version):
 		# column list.
 		if "checked" not in [c["name"] for c in mochi.db.table("projects")]:
 			mochi.db.execute("alter table projects add column checked integer not null default 0")
+	if version == 8:
+		# The chunks of an owner's sync batch a subscriber holds, so it marks a
+		# replica populated only once every chunk of one sync has landed.
+		mochi.db.execute("create table if not exists chunks ( project text not null, sync text not null, chunk integer not null, created integer not null default 0, primary key ( project, sync, chunk ) )")
 
-# Create database with all 16 tables
+# Create database with all 17 tables
 def database_create():
 	# 1. projects - the container, a Mochi entity
 	mochi.db.execute("""create table if not exists projects (
@@ -698,6 +703,9 @@ def database_create():
 	)""")
 	mochi.db.execute("create index if not exists requests_object on requests(object)")
 
+	# 17. chunks - the chunks of an owner's sync batch a subscriber holds
+	mochi.db.execute("create table if not exists chunks ( project text not null, sync text not null, chunk integer not null, created integer not null default 0, primary key ( project, sync, chunk ) )")
+
 	# Attachments now live in this database, owned by the shared library.
 	attachment_schema_create()
 
@@ -845,6 +853,7 @@ def purge_project(project_id):
 	mochi.db.execute("delete from hierarchy where project=?", project_id)
 	mochi.db.execute("delete from classes where project=?", project_id)
 	mochi.db.execute("delete from subscribers where project=?", project_id)
+	mochi.db.execute("delete from chunks where project=?", project_id)
 	mochi.db.execute("delete from projects where id=?", project_id)
 
 # ============================================================================
@@ -3798,6 +3807,7 @@ def action_comment_asset(a):
 	# Bind the comment to the route project (via its object) so this can't
 	# resolve a comment author in a project the URL doesn't name.
 	row = mochi.db.row("select c.author from comments c join objects o on c.object=o.id where c.id=? and o.project=?", a.input("comment"), project_id)
+	# attachment-ok: asset_project checks view access (a signed-in holder for a replica), and the comment is bound to the routed project
 	return asset_serve(a, row["author"] if row else "", "people", asset)
 
 def action_activity_asset(a):
@@ -3811,6 +3821,7 @@ def action_activity_asset(a):
 		return
 	# Bind the activity to the route project (via its object).
 	row = mochi.db.row("select a2.user from activity a2 join objects o on a2.object=o.id where a2.id=? and o.project=?", a.input("activity"), project_id)
+	# attachment-ok: asset_project checks view access (a signed-in holder for a replica), and the activity is bound to the routed project
 	return asset_serve(a, row["user"] if row else "", "people", asset)
 
 def action_user_asset(a):
@@ -3836,6 +3847,7 @@ def action_user_asset(a):
 	if not known:
 		a.error.label(404, "errors.unknown_asset")
 		return
+	# attachment-ok: asset_project checks view access (a signed-in holder for a replica), and the subject must subscribe to the routed project
 	return asset_serve(a, subject, "people", asset)
 
 # ============================================================================
@@ -6026,6 +6038,7 @@ def action_share(a): # projects_share
 
 def action_subscribe(a):
 	user_id = a.user.identity.id
+	started = mochi.time.now()
 
 	project_id = a.input("project")
 	server = a.input("server")
@@ -6060,7 +6073,7 @@ def action_subscribe(a):
 		project_desc = response.get("description", "")
 		project_prefix = response.get("prefix", "PROJ")
 		# Fetch schema so it is available before the frontend navigates
-		schema = remote_dict(mochi.remote.request(project_id, "projects", "schema", {}, peer))
+		schema = schema_fetch(project_id, peer, SCHEMA_START)
 	else:
 		# Use directory lookup when no server specified
 		directory = mochi.directory.get(project_id)
@@ -6080,30 +6093,33 @@ def action_subscribe(a):
 					project_name = response.get("name", project_name)
 					project_desc = response.get("description", "")
 					project_prefix = response.get("prefix", "PROJ")
-				schema = remote_dict(mochi.remote.request(project_id, "projects", "schema", {}, peer))
+				schema = schema_fetch(project_id, peer, SCHEMA_START)
 
 	now = mochi.time.now()
 	fp = mochi.entity.fingerprint(project_id) or ""
 
 	# Insert the remote project
-	# populated=0: the schema is fetched synchronously below, but the bulk
-	# object data arrives asynchronously via the owner's sync/batch. The board
-	# shows a loading state until event_sync_batch flips this to 1.
+	# populated=0: the board shows a loading state until the schema pull below
+	# reaches its last part, or every chunk of the owner's sync/batch has landed
+	# (event_sync_batch), whichever is first.
 	row_merge("projects", ["id"], {"id": project_id, "name": project_name, "description": project_desc, "prefix": project_prefix, "owner": 0, "server": ("p2p/" + pin) if pin else (server or ""), "fingerprint": fp, "created": now, "updated": now, "populated": 0})
-
-	# Insert schema so the project page has content immediately
-	if schema and not schema.get("error"):
-		insert_schema(project_id, schema)
 
 	# Send P2P subscribe message to project owner. A private project is not in
 	# the directory, so when the subscription came via a share link, pin that
 	# peer - here and, as the stored "p2p/<peer>" server, for every later
-	# resync, re-subscribe and unsubscribe (see registration_send).
+	# resync, re-subscribe and unsubscribe (see registration_send). It goes
+	# before the schema is applied, so a pull that stops short still leaves a
+	# subscription the owner's sync batch fills.
 	if peer:
 		mochi.message.send.peer(peer, p2p_headers(user_id, project_id, "subscribe"), {"name": a.user.identity.name})
 	else:
 		mochi.message.send(p2p_headers(user_id, project_id, "subscribe"), {"name": a.user.identity.name})
 	mochi.broadcast.touch(project_id)
+
+	# Insert schema so the project page has content immediately, for as long
+	# as the pull's time allows; a continuation takes the rest.
+	if schema and not schema.get("error"):
+		insert_schema(project_id, schema, peer, started)
 
 	return {"data": {"fingerprint": fp}}
 
@@ -6246,6 +6262,170 @@ def project_dump(project_id):
 	dump["links"] = mochi.db.rows("select l.source, l.target, l.linktype from links l join objects o on l.source = o.id where o.project=?", project_id) or []
 	return dump
 
+# Core decodes at most 10,000 elements in one array and 100 MB on one stream,
+# each read within 30 seconds, so a large project's schema cannot travel as one
+# reply. A request carrying `part` (a cursor) is answered with one bounded part:
+# at most SCHEMA_ROWS rows and about SCHEMA_BYTES bytes, taken in key order from
+# the flat lists in SCHEMA_LISTS, with `next` naming the cursor of the part
+# after it. The last part carries no `next`. A request without `part` gets the
+# whole schema in the nested shape, as owners before parts answered every one.
+SCHEMA_ROWS = 1000
+SCHEMA_BYTES = 8388608
+SCHEMA_START = {"list": "classes", "after": []}
+SCHEMA_LISTS = ["classes", "fields", "options", "hierarchy", "views", "objects", "values", "comments", "activity", "attachments", "links"]
+# The most parts one pull follows, across its continuations. Core allows an
+# app 600 remote calls a minute to one target.
+SCHEMA_PARTS = 500
+# The most bytes a cursor key holds. A row whose key is longer could not be
+# resumed after, so the owner never pages one.
+SCHEMA_KEY = 256
+# The seconds a pull runs before it leaves the rest to a continuation, well
+# under the time limit of the action or event it runs in.
+SCHEMA_TIME = 60
+# How many times in a row a continuation whose part went unanswered is tried
+# again before the pull waits for the next resync.
+SCHEMA_RETRIES = 3
+
+# Each list: the columns a part sends, the rows it reads (bound to the project
+# by `scope` parameters), the key it is ordered and resumed by, and what a row
+# costs in bytes beyond a fixed allowance.
+SCHEMA_SPECS = {
+	"classes": {"columns": "id, name, rank, requests, title", "source": "classes where project=?", "scope": 1, "keys": ["id"], "size": "length(cast(name as blob)) + length(cast(title as blob)) + length(cast(requests as blob))"},
+	"fields": {"columns": "class, id, name, fieldtype, flags, multi, rank, card, position, rows", "source": "fields where project=?", "scope": 1, "keys": ["class", "id"], "size": "length(cast(name as blob)) + length(cast(flags as blob)) + length(cast(position as blob))"},
+	"options": {"columns": "class, field, id, name, colour, icon, rank", "source": "options where project=?", "scope": 1, "keys": ["class", "field", "id"], "size": "length(cast(name as blob)) + length(cast(icon as blob))"},
+	"hierarchy": {"columns": "class, parent", "source": "hierarchy where project=?", "scope": 1, "keys": ["class", "parent"], "size": "0"},
+	"views": {"columns": "id, name, viewtype, filter, columns, rows, sort, direction, rank, border", "source": "views where project=?", "scope": 1, "keys": ["id"], "size": "length(cast(name as blob)) + length(cast(filter as blob)) + length(cast(columns as blob)) + length(cast(rows as blob)) + length(cast(sort as blob))"},
+	"objects": {"columns": "id, class, number, parent, rank, created, updated", "source": "objects where project=?", "scope": 1, "keys": ["id"], "size": "0"},
+	"values": {"columns": "v.object as object, v.field as field, v.value as value", "source": "\"values\" v join objects o on o.id=v.object where o.project=?", "scope": 1, "keys": ["v.object", "v.field"], "size": "length(cast(v.value as blob))"},
+	"comments": {"columns": "c.object as object, c.id as id, c.parent as parent, c.author as author, c.name as name, c.content as content, c.created as created, c.edited as edited", "source": "comments c join objects o on o.id=c.object where o.project=?", "scope": 1, "keys": ["c.id"], "size": "length(cast(c.content as blob)) + length(cast(c.name as blob))"},
+	"activity": {"columns": "a.object as object, a.id as id, a.user as user, a.action as action, a.field as field, a.oldvalue as oldvalue, a.newvalue as newvalue, a.created as created", "source": "activity a join objects o on o.id=a.object where o.project=?", "scope": 1, "keys": ["a.id"], "size": "length(cast(a.oldvalue as blob)) + length(cast(a.newvalue as blob))"},
+	"attachments": {"columns": "*", "source": "attachments where (object in (select id from objects where project=?) or object in (select c.id from comments c join objects o on o.id=c.object where o.project=?))", "scope": 2, "keys": ["id"], "size": "960"},
+	"links": {"columns": "l.source as source, l.target as target, l.linktype as linktype", "source": "links l join objects o on o.id=l.source where o.project=?", "scope": 1, "keys": ["l.source", "l.target", "l.linktype"], "size": "0"},
+}
+
+# schema_cursor(value) -> bool: whether value is a part cursor: the list the
+# part starts in, and the key of the last row already sent from it (empty at the
+# start of the list).
+def schema_cursor(value):
+	if type(value) != "dict" or len(value) != 2:
+		return False
+	if value.get("list") not in SCHEMA_LISTS:
+		return False
+	after = value.get("after")
+	if type(after) not in ["list", "tuple"]:
+		return False
+	if after and len(after) != len(SCHEMA_SPECS[value["list"]]["keys"]):
+		return False
+	for key in after:
+		if type(key) != "string" or len(key) > SCHEMA_KEY:
+			return False
+	return True
+
+# schema_compare(keys, values, last) -> (condition, args): rows whose key sorts
+# after values, or, with last, at or before them.
+def schema_compare(keys, values, last=False):
+	clauses = []
+	args = []
+	for index in range(len(keys)):
+		terms = []
+		for earlier in range(index):
+			terms.append(keys[earlier] + "=?")
+			args.append(values[earlier])
+		final = index == len(keys) - 1
+		terms.append(keys[index] + ("<=?" if last and final else ("<?" if last else ">?")))
+		args.append(values[index])
+		clauses.append("(" + " and ".join(terms) + ")")
+	return "(" + " or ".join(clauses) + ")", args
+
+# schema_window(sizes, budget) -> how many of sizes (rows in key order, each
+# with its size in bytes) fit the part, charging them to the budget. The part's
+# first row always fits, so a row larger than the byte budget travels alone.
+def schema_window(sizes, budget):
+	count = 0
+	for row in sizes:
+		if budget["rows"] <= 0:
+			break
+		if budget["taken"] > 0 and row["size"] > budget["bytes"]:
+			break
+		budget["rows"] -= 1
+		budget["bytes"] -= row["size"]
+		budget["taken"] += 1
+		count += 1
+	return count
+
+# schema_list(project_id, name, after, budget) -> (rows, key): one list's share
+# of a part, and the key to resume it from, or None when the list is done. The
+# resume key is the last row sent, not the last row sized, so a row written
+# between the two queries is never stepped over, and the list is done only when
+# every row sized was sent. A row whose key a cursor cannot carry is never paged.
+def schema_list(project_id, name, after, budget):
+	if budget["rows"] <= 0:
+		return [], list(after)
+	spec = SCHEMA_SPECS[name]
+	scope = [project_id] * spec["scope"]
+	names = [k.split(".")[-1] for k in spec["keys"]]
+	beyond, beyond_args = ("1=1", []) if not after else schema_compare(spec["keys"], after)
+	fits = " and ".join(["length(cast(" + k + " as blob))<=?" for k in spec["keys"]])
+	fits_args = [SCHEMA_KEY] * len(spec["keys"])
+	order = ", ".join(spec["keys"])
+	selected = ", ".join([k + " as " + n for k, n in zip(spec["keys"], names)])
+	sizes = mochi.db.rows("select " + selected + ", 64 + " + spec["size"] + " as size from " + spec["source"] + " and " + beyond + " and " + fits + " order by " + order + " limit ?", *(scope + beyond_args + fits_args + [budget["rows"] + 1])) or []
+	count = schema_window(sizes, budget)
+	rows = []
+	if count:
+		upto, upto_args = schema_compare(spec["keys"], [sizes[count - 1][n] for n in names], True)
+		rows = list(mochi.db.rows("select " + spec["columns"] + " from " + spec["source"] + " and " + beyond + " and " + upto + " and " + fits + " order by " + order + " limit ?", *(scope + beyond_args + upto_args + fits_args + [count])) or [])
+	if count >= len(sizes) and len(rows) >= count:
+		last = None
+	elif rows:
+		last = [str(rows[-1][n]) for n in names]
+	elif count:
+		last = [str(sizes[count - 1][n]) for n in names]
+	else:
+		last = list(after)
+	return schema_shape(project_id, name, rows), last
+
+# schema_shape(project_id, name, rows) -> rows in the shape design_merge and
+# schema_merge read: hierarchy as {class, parents}, views with their field and
+# class lists, attachments as the library maps them.
+def schema_shape(project_id, name, rows):
+	if name == "hierarchy":
+		return [{"class": r["class"], "parents": [r["parent"]]} for r in rows]
+	if name == "views" and rows:
+		ids = [v["id"] for v in rows]
+		marks = ",".join(["?" for _ in ids])
+		fields = {}
+		for vf in mochi.db.rows("select view, field from view_fields where project=? and view in (" + marks + ") order by rank", project_id, *ids) or []:
+			fields.setdefault(vf["view"], []).append(vf["field"])
+		classes = {}
+		for vc in mochi.db.rows("select vc.view as view, vc.class as class from view_classes vc join classes c on c.project=vc.project and c.id=vc.class where vc.project=? and vc.view in (" + marks + ")", project_id, *ids) or []:
+			classes.setdefault(vc["view"], []).append(vc["class"])
+		for v in rows:
+			v["fields"] = ",".join(fields.get(v["id"], []))
+			v["classes"] = ",".join(classes.get(v["id"], []))
+		return rows
+	if name == "attachments":
+		prefix = mochi.app.url()
+		return [attachment_map(row, prefix, project_id) for row in rows]
+	return rows
+
+# schema_part(project_id, cursor) -> (lists, next): one bounded part of the
+# schema from cursor on, and the cursor of the part after it, or None after the
+# last.
+def schema_part(project_id, cursor):
+	budget = {"rows": SCHEMA_ROWS, "bytes": SCHEMA_BYTES, "taken": 0}
+	lists = {}
+	for name in SCHEMA_LISTS:
+		lists[name] = []
+	after = list(cursor["after"])
+	for name in SCHEMA_LISTS[SCHEMA_LISTS.index(cursor["list"]):]:
+		rows, last = schema_list(project_id, name, after, budget)
+		lists[name] = rows
+		if last != None:
+			return lists, {"list": name, "after": last}
+		after = []
+	return lists, None
+
 # Return the full project schema (classes, fields, options, hierarchy, views)
 def event_schema(e):
 	project_id = e.header("to")
@@ -6261,16 +6441,34 @@ def event_schema(e):
 		e.stream.write({"error": "errors.access_denied"})
 		return
 
+	# Project row first so subscribers can reconcile metadata (name /
+	# description / prefix) on resync without waiting for a project/update
+	# broadcast that might never come.
+	metadata = {
+		"name": project.get("name", ""),
+		"description": project.get("description", ""),
+		"prefix": project.get("prefix", "PROJ"),
+	}
+
+	# One part of the schema. The gate above runs for every part, so a peer
+	# that loses view access stops at its next part; the part echoes its
+	# cursor, which tells the requester the reply is held to SCHEMA_ROWS.
+	part = e.content("part")
+	if part != None:
+		if not schema_cursor(part):
+			e.stream.write({"error": "errors.invalid_data"})
+			return
+		lists, next = schema_part(project_id, part)
+		reply = {"project": metadata, "part": part}
+		reply.update(lists)
+		if next:
+			reply["next"] = next
+		e.stream.write(reply)
+		return
+
 	dump = project_dump(project_id)
 	e.stream.write({
-		# Project row first so subscribers can reconcile metadata
-		# (name / description / prefix) on resync without waiting
-		# for a project/update broadcast that might never come.
-		"project": {
-			"name": project.get("name", ""),
-			"description": project.get("description", ""),
-			"prefix": project.get("prefix", "PROJ"),
-		},
+		"project": metadata,
 		"classes": dump["classes"],
 		"fields": dump["fields"],
 		"options": dump["options"],
@@ -6323,12 +6521,17 @@ def design_merge(project_id, schema):
 					# (project, view, class) has no payload columns.
 					row_merge("view_classes", ["project", "view", "class"], {"project": project_id, "view": view_id, "class": class_id})
 
-# design_prune(project_id, schema) removes every design row the dump does not
-# name: the dump is the owner's whole design, so a local row absent from it was
-# deleted owner-side. Children go before parents. A class that objects still
-# reference is kept - objects carry a foreign key to it and SQLite checks that
-# per deleted row - and goes on the resync that removes those objects.
-def design_prune(project_id, schema):
+# design_prune(project_id, schema, held) removes every design row the dump does
+# not name: the dump is the owner's whole design, so a local row absent from it
+# was deleted owner-side. With held (schema_holdings' design), only rows the
+# replica held before the pull began are candidates, since a part read before a
+# row existed could not name it. Children go before parents. A class that
+# objects still reference is kept - objects carry a foreign key to it and SQLite
+# checks that per deleted row - and goes on the resync that removes those
+# objects.
+def design_prune(project_id, schema, held=None):
+	def stray(table, key, named):
+		return key not in named and (held == None or key in held[table])
 	class_survivors = {}
 	for c in sequence(schema.get("classes")):
 		if type(c) == "dict":
@@ -6363,127 +6566,314 @@ def design_prune(project_id, schema):
 			if class_id:
 				view_class_survivors[(view_id, class_id)] = True
 	for row in (mochi.db.rows("select view, field from view_fields where project=?", project_id) or []):
-		if (row["view"], row["field"]) not in view_field_survivors:
+		if stray("view_fields", (row["view"], row["field"]), view_field_survivors):
 			row_remove("view_fields", "project=? and view=? and field=?", [project_id, row["view"], row["field"]])
 	for row in (mochi.db.rows("select view, class from view_classes where project=?", project_id) or []):
-		if (row["view"], row["class"]) not in view_class_survivors:
+		if stray("view_classes", (row["view"], row["class"]), view_class_survivors):
 			row_remove("view_classes", "project=? and view=? and class=?", [project_id, row["view"], row["class"]])
 	for row in (mochi.db.rows("select id from views where project=?", project_id) or []):
-		if row["id"] not in view_survivors:
+		if stray("views", row["id"], view_survivors):
 			row_remove("views", "project=? and id=?", [project_id, row["id"]])
 	for row in (mochi.db.rows("select class, field, id from options where project=?", project_id) or []):
-		if (row["class"], row["field"], row["id"]) not in option_survivors:
+		if stray("options", (row["class"], row["field"], row["id"]), option_survivors):
 			row_remove("options", "project=? and class=? and field=? and id=?", [project_id, row["class"], row["field"], row["id"]])
 	for row in (mochi.db.rows("select class, id from fields where project=?", project_id) or []):
-		if (row["class"], row["id"]) not in field_survivors:
+		if stray("fields", (row["class"], row["id"]), field_survivors):
 			row_remove("fields", "project=? and class=? and id=?", [project_id, row["class"], row["id"]])
 	for row in (mochi.db.rows("select class, parent from hierarchy where project=?", project_id) or []):
-		if (row["class"], row["parent"]) not in hierarchy_survivors:
+		if stray("hierarchy", (row["class"], row["parent"]), hierarchy_survivors):
 			row_remove("hierarchy", "project=? and class=? and parent=?", [project_id, row["class"], row["parent"]])
 	for row in (mochi.db.rows("select id from classes where project=?", project_id) or []):
-		if row["id"] not in class_survivors and not mochi.db.exists("select 1 from objects where project=? and class=?", project_id, row["id"]):
+		if stray("classes", row["id"], class_survivors) and not mochi.db.exists("select 1 from objects where project=? and class=?", project_id, row["id"]):
 			row_remove("classes", "project=? and id=?", [project_id, row["id"]])
 
-# Apply a schema dump to the local database. Editable tables are upserted in
-# place so child foreign keys survive; append-only and natural-key tables
-# (activity, links, view_classes, view_fields, hierarchy) stay insert or ignore.
-def insert_schema(project_id, schema):
+# schema_fetch(project_id, peer, part) -> one part of the owner's schema, or
+# None. An owner that predates parts ignores `part` and answers the whole schema,
+# which carries no `next` and so is complete on its own.
+def schema_fetch(project_id, peer, part):
+	return remote_dict(mochi.remote.request(project_id, "projects", "schema", {"part": part}, peer))
+
+# A part (a reply echoing its cursor) is held to the rows a part may carry,
+# across all its lists. A whole schema from an owner that predates parts is not.
+def schema_bounded(schema):
+	if schema.get("part") == None:
+		return True
+	rows = 0
+	for name in SCHEMA_LISTS:
+		value = schema.get(name)
+		if value != None and type(value) not in ["list", "tuple"]:
+			return False
+		rows += len(value or [])
+	return rows <= SCHEMA_ROWS
+
+# Apply a schema to the local database: schema is a part already received, or
+# a whole schema, and the parts after it are pulled from the owner and applied
+# in turn until SCHEMA_TIME has passed since started; parts counts the parts the
+# pull took before this one. Editable tables are upserted in place so child
+# foreign keys survive; append-only and natural-key tables (activity, links,
+# view_classes, view_fields, hierarchy) stay insert or ignore. Returns whether
+# the last part arrived, and the replica is then populated.
+#
+# held is what the replica held before the pull began (schema_holdings), or
+# None for a pull that does not prune. Once the last part has landed, a held row
+# the pull did not name was deleted owner-side and goes; a row that arrived
+# while the pull ran is never pruned, since a part read before it existed could
+# not name it. A pull that stops early prunes nothing: it names too little. One
+# that runs out of time is continued by schedule_schema, and one whose part goes
+# unanswered is tried again a few times.
+def insert_schema(project_id, schema, peer="", started=None, held=None, parts=0):
+	if started == None:
+		started = mochi.time.now()
+	survivors = {"design": {"classes": [], "fields": [], "options": [], "hierarchy": [], "views": []},
+		"objects": {}, "comments": {}, "values": {}, "attachments": {}, "links": {}}
+	for _ in range(SCHEMA_PARTS):
+		if parts >= SCHEMA_PARTS:
+			break
+		parts += 1
+		if not schema_bounded(schema):
+			return False
+		schema_merge(project_id, schema, survivors)
+		next = schema.get("next")
+		if next == None:
+			if held != None:
+				schema_prune(project_id, survivors, held)
+			row_set("projects", "id=? and owner=0", [project_id], {"populated": 1})
+			return True
+		if not schema_cursor(next):
+			return False
+		if mochi.time.now() - started >= SCHEMA_TIME:
+			schema_resume(project_id, "stopped", next, parts)
+			return False
+		schema = schema_fetch(project_id, peer, next)
+		if not schema or schema.get("error"):
+			schema_resume(project_id, schema_outcome(schema), next, parts)
+			return False
+	return False
+
+# schema_outcome(reply) -> "unanswered" when a part could not be fetched at all,
+# "failed" when the owner answered with a refusal.
+def schema_outcome(reply):
+	return "unanswered" if not reply or reply.get("transport") else "failed"
+
+# schema_resume(project_id, outcome, cursor, parts, attempt) leaves the rest of a
+# pull that stopped short to a continuation: at once when its time ran out, and
+# after a pause when a part went unanswered, SCHEMA_RETRIES times in a row at
+# most. A pull the owner refused waits for the next resync.
+def schema_resume(project_id, outcome, cursor, parts, attempt=0):
+	data = {"project": project_id, "cursor": cursor, "parts": parts}
+	if outcome == "stopped":
+		data["attempt"] = 0
+		mochi.schedule.after("schedule_schema", data, 0)
+	elif outcome == "unanswered" and attempt < SCHEMA_RETRIES:
+		data["attempt"] = attempt + 1
+		mochi.schedule.after("schedule_schema", data, 60 * (attempt + 1) * (attempt + 1))
+
+# schema_completed(project_id): a pull reached the last part, so the replica
+# holds the owner's state and its idle timer starts again.
+def schema_completed(project_id):
+	mochi.broadcast.touch(project_id)
+	fp = mochi.entity.fingerprint(project_id)
+	if fp:
+		mochi.websocket.write(fp, {"type": "project/resynced", "project": project_id})
+
+# schedule_schema(e): a continuation of a pull schema_resume left, taking the
+# parts from its cursor on, within its own time. It prunes nothing: its
+# survivors are only the parts it took.
+def schedule_schema(e):
+	if e.source != "schedule":
+		return
+	project_id = e.data.get("project", "")
+	cursor = e.data.get("cursor")
+	if not mochi.text.valid(project_id, "entity") or not schema_cursor(cursor):
+		return
+	row = mochi.db.row("select server from projects where id=? and owner=0", project_id)
+	if not row:
+		return
+	parts = schema_count(e.data.get("parts"))
+	attempt = schema_count(e.data.get("attempt"))
+	started = mochi.time.now()
+	row_set("projects", "id=?", [project_id], {"synced": started})
+	server = row["server"] or ""
+	peer = mochi.remote.peer(server) if server else ""
+	schema = schema_fetch(project_id, peer, cursor)
+	if not schema or schema.get("error"):
+		schema_resume(project_id, schema_outcome(schema), cursor, parts, attempt)
+		return
+	if insert_schema(project_id, schema, peer, started, None, parts):
+		schema_completed(project_id)
+
+# schema_count(value) -> a count carried in a schedule's data, or 0.
+def schema_count(value):
+	if type(value) in ["int", "float"] and value > 0:
+		return int(value)
+	return 0
+
+# schema_holdings(project_id) -> what the replica holds of the project, keyed
+# as schema_prune and design_prune compare it: the rows a complete pull may
+# prune.
+def schema_holdings(project_id):
+	held = {"objects": {}, "comments": {}, "values": {}, "attachments": {}, "links": {},
+		"design": {"classes": {}, "fields": {}, "options": {}, "hierarchy": {}, "views": {}, "view_fields": {}, "view_classes": {}}}
+	for row in mochi.db.rows("select id from objects where project=?", project_id) or []:
+		held["objects"][row["id"]] = True
+	for row in mochi.db.rows("select c.id as id from comments c join objects o on c.object=o.id where o.project=?", project_id) or []:
+		held["comments"][row["id"]] = True
+	for row in mochi.db.rows("select v.object as object, v.field as field from \"values\" v join objects o on o.id=v.object where o.project=?", project_id) or []:
+		held["values"][(row["object"], row["field"])] = True
+	for row in mochi.db.rows("select id from attachments where entity!='' and (object in (select id from objects where project=?) or object in (select c.id from comments c join objects o on o.id=c.object where o.project=?))", project_id, project_id) or []:
+		held["attachments"][row["id"]] = True
+	for row in mochi.db.rows("select source, target, linktype from links where project=?", project_id) or []:
+		held["links"][(row["source"], row["target"], row["linktype"])] = True
+	design = held["design"]
+	for row in mochi.db.rows("select id from classes where project=?", project_id) or []:
+		design["classes"][row["id"]] = True
+	for row in mochi.db.rows("select class, id from fields where project=?", project_id) or []:
+		design["fields"][(row["class"], row["id"])] = True
+	for row in mochi.db.rows("select class, field, id from options where project=?", project_id) or []:
+		design["options"][(row["class"], row["field"], row["id"])] = True
+	for row in mochi.db.rows("select class, parent from hierarchy where project=?", project_id) or []:
+		design["hierarchy"][(row["class"], row["parent"])] = True
+	for row in mochi.db.rows("select id from views where project=?", project_id) or []:
+		design["views"][row["id"]] = True
+	for row in mochi.db.rows("select view, field from view_fields where project=?", project_id) or []:
+		design["view_fields"][(row["view"], row["field"])] = True
+	for row in mochi.db.rows("select view, class from view_classes where project=?", project_id) or []:
+		design["view_classes"][(row["view"], row["class"])] = True
+	return held
+
+# schema_merge(project_id, schema, survivors) applies one part, or a whole
+# schema, recording every row it names in survivors. A whole schema from an
+# owner that predates parts nests values, comments, activity and attachments in
+# each object; a part sends them as flat lists of their own.
+def schema_merge(project_id, schema, survivors):
 	# Reconcile the project row itself (name / description / prefix).
 	# UPDATE only - the project row was created at subscribe time and
 	# we never want to flip owner away from 0 on a resync. Idempotent
 	# when the subscriber's row already matches.
 	project_data = schema.get("project")
-	if project_data:
+	if type(project_data) == "dict":
 		row_set("projects", "id=? and owner=0", [project_id], {"name": project_data.get("name", ""), "description": project_data.get("description", ""), "prefix": project_data.get("prefix", "PROJ")})
 	design_merge(project_id, schema)
-	for obj in (schema.get("objects") or []):
+	for name in survivors["design"]:
+		survivors["design"][name].extend(sequence(schema.get(name)))
+	for obj in sequence(schema.get("objects")):
+		if type(obj) != "dict":
+			continue
+		identifier = obj.get("id", "")
+		survivors["objects"][identifier] = True
 		# Never adopt/reassign an object that already belongs to another project -
 		# a malicious owner's dump could otherwise hijack our other projects' rows.
-		if foreign_object(obj.get("id", ""), project_id):
+		if foreign_object(identifier, project_id):
 			continue
-		object_merge({"id": obj.get("id", ""), "project": project_id, "class": obj.get("class", ""), "number": obj.get("number", 0), "parent": obj.get("parent", ""), "rank": obj.get("rank", 0), "created": obj.get("created", 0), "updated": obj.get("updated", 0)})
-		obj_atts = obj.get("attachments") or []
-		if obj_atts:
-			attachment_store(obj_atts, project_id, obj.get("id", ""))
+		object_merge({"id": identifier, "project": project_id, "class": obj.get("class", ""), "number": obj.get("number", 0), "parent": obj.get("parent", ""), "rank": obj.get("rank", 0), "created": obj.get("created", 0), "updated": obj.get("updated", 0)})
+		schema_attachments(project_id, survivors, identifier, obj.get("attachments"))
 		values = obj.get("values")
-		if values:
+		if type(values) == "dict":
 			for field in values:
-				value_merge(obj.get("id", ""), field, values[field])
-		for c in (obj.get("comments") or []):
-			# Skip a comment id that already belongs to another project's object.
-			if foreign_comment(c.get("id", ""), project_id):
-				continue
-			comment_merge({"id": c.get("id", ""), "object": obj.get("id", ""), "parent": c.get("parent", ""), "author": c.get("author", ""), "name": c.get("name", ""), "content": c.get("content", ""), "created": c.get("created", ""), "edited": c.get("edited", 0)})
-			c_atts = c.get("attachments") or []
-			if c_atts:
-				attachment_store(c_atts, project_id, c.get("id", ""))
-		for act in (obj.get("activity") or []):
-			# Activity is append-only; ignore is correct.
-			mochi.db.execute(
-				"insert or ignore into activity (id, object, user, action, field, oldvalue, newvalue, created) values (?, ?, ?, ?, ?, ?, ?, ?)",
-				act.get("id", ""), obj.get("id", ""), act.get("user", ""),
-				act.get("action", ""), act.get("field", ""),
-				act.get("oldvalue", ""), act.get("newvalue", ""),
-				act.get("created", 0)
-			)
-	for l in (schema.get("links") or []):
+				schema_value(project_id, survivors, {"object": identifier, "field": field, "value": values[field]})
+		for c in sequence(obj.get("comments")):
+			if type(c) == "dict":
+				schema_comment(project_id, survivors, dict(c, object=identifier))
+		for act in sequence(obj.get("activity")):
+			if type(act) == "dict":
+				schema_activity(project_id, dict(act, object=identifier))
+	for v in sequence(schema.get("values")):
+		if type(v) == "dict":
+			schema_value(project_id, survivors, v)
+	for c in sequence(schema.get("comments")):
+		if type(c) == "dict":
+			schema_comment(project_id, survivors, c)
+	for act in sequence(schema.get("activity")):
+		if type(act) == "dict":
+			schema_activity(project_id, act)
+	containers = {}
+	for att in sequence(schema.get("attachments")):
+		if type(att) == "dict" and type(att.get("object")) == "string":
+			containers.setdefault(att["object"], []).append(att)
+	for container in containers:
+		schema_attachments(project_id, survivors, container, containers[container])
+	for l in sequence(schema.get("links")):
+		if type(l) != "dict":
+			continue
+		survivors["links"][(l.get("source", ""), l.get("target", ""), l.get("linktype", ""))] = True
 		# (project, source, target, linktype) is the full key; links
 		# are created/deleted, never edited in place.
 		if not link_endpoints_bound(project_id, l.get("source", ""), l.get("target", "")):
 			continue
 		row_merge("links", ["source", "target", "linktype"], {"project": project_id, "source": l.get("source", ""), "target": l.get("target", ""), "linktype": l.get("linktype", ""), "created": 0})
 
-	# The dump is the owner's full state, so any local row it does not name was
-	# deleted owner-side. Strays go children before parents. Watchers, requests and
-	# activity are not in the dump and are cleaned only through the stray-object
-	# cascade.
-	object_survivors = {}
-	comment_survivors = {}
-	for obj in (schema.get("objects") or []):
-		object_survivors[obj.get("id", "")] = True
-		for c in (obj.get("comments") or []):
-			comment_survivors[c.get("id", "")] = True
+# A value, comment or activity row lands only on an object of this project.
+def schema_value(project_id, survivors, v):
+	field = v.get("field")
+	if type(field) != "string" or not field:
+		return
+	survivors["values"][(v.get("object", ""), field)] = True
+	if not object_bound(project_id, v.get("object", "")):
+		return
+	value_merge(v["object"], field, v.get("value", ""))
+
+def schema_comment(project_id, survivors, c):
+	identifier = c.get("id", "")
+	survivors["comments"][identifier] = True
+	# Skip a comment id that already belongs to another project's object.
+	if foreign_comment(identifier, project_id):
+		return
+	if not object_bound(project_id, c.get("object", "")):
+		return
+	comment_merge({"id": identifier, "object": c["object"], "parent": c.get("parent", ""), "author": c.get("author", ""), "name": c.get("name", ""), "content": c.get("content", ""), "created": c.get("created", ""), "edited": c.get("edited", 0)})
+	schema_attachments(project_id, survivors, identifier, c.get("attachments"))
+
+def schema_activity(project_id, act):
+	if not object_bound(project_id, act.get("object", "")):
+		return
+	# Activity is append-only; ignore is correct.
+	mochi.db.execute(
+		"insert or ignore into activity (id, object, user, action, field, oldvalue, newvalue, created) values (?, ?, ?, ?, ?, ?, ?, ?)",
+		act.get("id", ""), act["object"], act.get("user", ""),
+		act.get("action", ""), act.get("field", ""),
+		act.get("oldvalue", ""), act.get("newvalue", ""),
+		act.get("created", 0)
+	)
+
+# Attachments land only on an object or comment of this project.
+def schema_attachments(project_id, survivors, container, rows):
+	rows = sequence(rows)
+	if not rows:
+		return
+	for att in rows:
+		if type(att) == "dict":
+			survivors["attachments"][att.get("id", "")] = True
+	if not object_bound(project_id, container) and not mochi.db.exists("select 1 from comments c join objects o on o.id=c.object where c.id=? and o.project=?", container, project_id):
+		return
+	attachment_store(rows, project_id, container)
+
+# schema_prune(project_id, survivors, held) removes what a complete schema did
+# not name of what the replica held before the pull began: the schema is the
+# owner's full state, so a held row it does not name was deleted owner-side.
+# Strays go children before parents. Watchers, requests and activity are not
+# in the schema and are cleaned only through the stray-object cascade.
+def schema_prune(project_id, survivors, held):
 	for row in (mochi.db.rows("select id from objects where project=?", project_id) or []):
-		if row["id"] not in object_survivors:
+		if row["id"] in held["objects"] and row["id"] not in survivors["objects"]:
 			delete_object_local(project_id, row["id"], True)
 	for row in (mochi.db.rows("select c.id from comments c join objects o on c.object=o.id where o.project=?", project_id) or []):
-		if row["id"] not in comment_survivors:
+		if row["id"] in held["comments"] and row["id"] not in survivors["comments"]:
 			prune_attachments(row["id"], project_id, True)
 			comment_remove(row["id"])
-	for obj in (schema.get("objects") or []):
-		identifier = obj.get("id", "")
-		if not identifier or foreign_object(identifier, project_id):
-			continue
-		# Values the owner cleared, and attachments the owner deleted, on
-		# surviving objects and comments.
-		values = obj.get("values") or {}
-		for row in (mochi.db.rows("select field from \"values\" where object=?", identifier) or []):
-			if row["field"] not in values:
-				value_remove(identifier, row["field"])
-		remaining = {}
-		for att in (obj.get("attachments") or []):
-			remaining[att.get("id", "")] = True
-		for att in (attachment_list(identifier, project_id) or []):
-			# Only drop references to files hosted elsewhere; never this
-			# replica's own uploads (see prune_attachments).
-			if att["id"] not in remaining and att["entity"]:
-				attachment_delete(att["id"])
-		for c in (obj.get("comments") or []):
-			comment_id = c.get("id", "")
-			if not comment_id or foreign_comment(comment_id, project_id):
-				continue
-			remaining = {}
-			for att in (c.get("attachments") or []):
-				remaining[att.get("id", "")] = True
-			for att in (attachment_list(comment_id, project_id) or []):
-				if att["id"] not in remaining and att["entity"]:
-					attachment_delete(att["id"])
-	link_survivors = {}
-	for l in (schema.get("links") or []):
-		link_survivors[(l.get("source", ""), l.get("target", ""), l.get("linktype", ""))] = True
-	design_prune(project_id, schema)
+	# Values the owner cleared, and attachments the owner deleted, on surviving
+	# objects and comments. Only references to files hosted elsewhere go; never
+	# this replica's own uploads (see prune_attachments).
+	for row in (mochi.db.rows("select v.object as object, v.field as field from \"values\" v join objects o on o.id=v.object where o.project=?", project_id) or []):
+		key = (row["object"], row["field"])
+		if key in held["values"] and key not in survivors["values"]:
+			value_remove(row["object"], row["field"])
+	for row in (mochi.db.rows("select id from attachments where entity!='' and (object in (select id from objects where project=?) or object in (select c.id from comments c join objects o on o.id=c.object where o.project=?))", project_id, project_id) or []):
+		if row["id"] in held["attachments"] and row["id"] not in survivors["attachments"]:
+			attachment_delete(row["id"])
+	design_prune(project_id, survivors["design"], held["design"])
 	for row in (mochi.db.rows("select source, target, linktype from links where project=?", project_id) or []):
-		if (row["source"], row["target"], row["linktype"]) not in link_survivors:
+		key = (row["source"], row["target"], row["linktype"])
+		if key in held["links"] and key not in survivors["links"]:
 			row_remove("links", "project=? and source=? and target=? and linktype=?", [project_id, row["source"], row["target"], row["linktype"]])
 
 # Send all existing project data to a new subscriber
@@ -6505,17 +6895,144 @@ def send_project_data(project_id, subscriber_id):
 		if (f["class"], f["id"]) in options_map:
 			field_data["options"] = options_map[(f["class"], f["id"])]
 		fields_map.setdefault(f["class"], []).append(field_data)
-	batch = {"project": project_id, "classes": [], "views": dump["views"], "objects": [], "links": dump["links"]}
+	classes = []
 	for t in dump["classes"]:
 		class_data = {"id": t["id"], "name": t["name"], "rank": t["rank"], "requests": t["requests"], "title": t["title"], "fields": fields_map.get(t["id"], [])}
 		if t["id"] in parents_map:
 			class_data["parents"] = parents_map[t["id"]]
-		batch["classes"].append(class_data)
-	for obj in dump["objects"]:
-		for c in obj.get("comments") or []:
-			c["attachments"] = c.get("attachments") or []
-		batch["objects"].append(obj)
-	mochi.message.send(h, batch)
+		classes.append(class_data)
+	# Core refuses a message over 16 MB and decodes at most 10,000 elements in
+	# one array, so the objects go in bounded chunks and the links after them.
+	# Every chunk carries the whole design: a subscriber that predates counting
+	# prunes its design against each batch, so a chunk without it would empty
+	# that subscriber's design. event_sync_batch applies the design from every
+	# chunk, and prunes against it and marks the replica populated only once
+	# every chunk of the sync has landed.
+	chunks = batch_chunks(dump["objects"], dump["links"])
+	sync = mochi.uid()
+	for index, chunk in enumerate(chunks):
+		mochi.message.send(h, {
+			"project": project_id,
+			"classes": classes,
+			"views": dump["views"],
+			"objects": chunk["objects"],
+			"links": chunk["links"],
+			"chunk": batch_chunk(sync, index, len(chunks)),
+		})
+
+# batch_fragments(obj) -> [(fragment, rows, bytes)]: an object of project_dump
+# cut into pieces of at most SCHEMA_ROWS rows and about SCHEMA_BYTES bytes, each
+# piece carrying the object's own row and a share of its values, comments and
+# activity, so an object with a long history still travels. A subscriber merges
+# every piece onto the one object. Attachments stay behind: a batch never
+# applied them, and the schema carries them.
+def batch_fragments(obj):
+	base = {"id": obj["id"], "class": obj["class"], "number": obj["number"], "parent": obj["parent"], "rank": obj["rank"], "created": obj["created"], "updated": obj["updated"]}
+	items = []
+	values = obj.get("values") or {}
+	for field in values:
+		items.append(("values", (field, values[field]), 64 + len(str(values[field]))))
+	for c in obj.get("comments") or []:
+		items.append(("comments", {k: c[k] for k in c if k != "attachments"}, 64 + len(c.get("content", ""))))
+	for act in obj.get("activity") or []:
+		items.append(("activity", act, 64 + len(act.get("oldvalue", "")) + len(act.get("newvalue", ""))))
+	fragments = []
+	current = dict(base)
+	rows = 1
+	size = 64
+	for kind, item, cost in items:
+		if rows > 1 and (rows >= SCHEMA_ROWS or size + cost > SCHEMA_BYTES):
+			fragments.append((current, rows, size))
+			current = dict(base)
+			rows = 1
+			size = 64
+		if kind == "values":
+			current.setdefault("values", {})[item[0]] = item[1]
+		else:
+			current.setdefault(kind, []).append(item)
+		rows += 1
+		size += cost
+	fragments.append((current, rows, size))
+	return fragments
+
+# batch_chunks(objects, links) -> [{objects, links}]: the sync batch cut into
+# chunks within SCHEMA_ROWS rows and about SCHEMA_BYTES bytes, objects first,
+# then the links once every object they join has gone. Always at least one.
+def batch_chunks(objects, links):
+	chunks = []
+	current = []
+	rows = 0
+	size = 0
+	for obj in objects:
+		for fragment, fragment_rows, fragment_size in batch_fragments(obj):
+			if current and (rows + fragment_rows > SCHEMA_ROWS or size + fragment_size > SCHEMA_BYTES):
+				chunks.append({"objects": current, "links": []})
+				current = []
+				rows = 0
+				size = 0
+			current.append(fragment)
+			rows += fragment_rows
+			size += fragment_size
+	if current or not chunks:
+		chunks.append({"objects": current, "links": []})
+	# Messages may arrive in any order, and a link lands only between objects
+	# the subscriber holds, so each chunk of links carries the rows of the
+	# objects it joins, at most two per link.
+	rows = {}
+	for obj in objects:
+		rows[obj["id"]] = batch_fragments({k: obj[k] for k in obj if k not in ["values", "comments", "activity", "attachments"]})[0][0]
+	step = SCHEMA_ROWS // 3 or 1
+	for start in range(0, len(links), step):
+		chunk = links[start:start + step]
+		ends = {}
+		for l in chunk:
+			for end in [l["source"], l["target"]]:
+				if end in rows:
+					ends[end] = rows[end]
+		chunks.append({"objects": list(ends.values()), "links": chunk})
+	return chunks
+
+# The most chunks one sync batch may name.
+BATCH_CHUNKS = 100000
+# How long a sync's chunks are held waiting for the rest. A sync that has not
+# completed in that time lost a chunk; its rows go when the next chunk of the
+# project arrives.
+BATCH_AGE = 86400
+
+# batch_chunk(sync, index, total) -> the chunk marker of one message of a sync
+# batch: which sync it belongs to, where it falls, and how many there are.
+# final names the sync's last chunk by index, for a reader that does not count:
+# a CRM subscriber before counting marks its replica populated on it. A projects
+# subscriber before counting reads none of the marker and marks its replica
+# populated on every chunk.
+def batch_chunk(sync, index, total):
+	return {"sync": sync, "index": index, "total": total, "final": index == total - 1}
+
+# batch_complete(key, chunk) -> whether this batch completes the owner's sync,
+# recording it among the chunks held for key. Messages may arrive in any order,
+# so a replica is complete only once it holds every chunk of one sync; chunks
+# of another sync, an earlier or a later one, never count toward it, and
+# completing one clears only its own rows. A marker without a total is taken
+# at its final flag, and an owner that predates chunks sends one batch.
+def batch_complete(key, chunk):
+	if type(chunk) != "dict":
+		return True
+	total = chunk.get("total")
+	if total == None:
+		return chunk.get("final", True) == True
+	index = chunk.get("index")
+	sync = chunk.get("sync")
+	if type(total) != "int" or type(index) != "int" or total < 1 or total > BATCH_CHUNKS or index < 0 or index >= total:
+		return False
+	if type(sync) != "string" or not mochi.text.valid(sync, "id"):
+		return False
+	now = mochi.time.now()
+	mochi.db.execute("delete from chunks where project=? and sync!=? and created<?", key, sync, now - BATCH_AGE)
+	mochi.db.execute("insert or ignore into chunks ( project, sync, chunk, created ) values ( ?, ?, ?, ? )", key, sync, index, now)
+	if mochi.db.row("select count(*) as held from chunks where project=? and sync=?", key, sync)["held"] < total:
+		return False
+	mochi.db.execute("delete from chunks where project=? and sync=?", key, sync)
+	return True
 
 # Handle subscribe event from a remote user
 def event_subscribe(e):
@@ -6669,8 +7186,8 @@ def event_sync_batch(e):
 		return
 	now = mochi.time.now()
 
-	# The batch is the owner's whole design: apply it, and after the objects
-	# below, drop what it no longer names (a design-replacing import).
+	# The batch is the owner's whole design: apply it, and once the sync is
+	# complete, drop what it no longer names (a design-replacing import).
 	schema = sync_design(e)
 	design_merge(project_id, schema)
 	# Process objects
@@ -6718,11 +7235,14 @@ def event_sync_batch(e):
 			continue
 		row_merge("links", ["source", "target", "linktype"], {"project": project_id, "source": l["source"], "target": l["target"], "linktype": l.get("linktype", "relates"), "created": now})
 
-	design_prune(project_id, schema)
-
-	# Mark the subscription's initial bulk content as arrived so the board stops
-	# showing its loading state and renders the now-complete data.
-	row_set("projects", "id=? and owner=0", [project_id], {"populated": 1})
+	# Once every chunk of the sync has landed, whatever order they arrived in:
+	# drop the design rows the batch no longer names, and mark the
+	# subscription's initial bulk content as arrived so the board stops showing
+	# its loading state. Pruning on every chunk instead let a chunk delivered
+	# after a design change take that change away again.
+	if batch_complete(project_id, e.content("chunk")):
+		design_prune(project_id, schema)
+		row_set("projects", "id=? and owner=0", [project_id], {"populated": 1})
 	# Notify UI
 	fp = mochi.entity.fingerprint(project_id)
 	if fp:
@@ -9270,6 +9790,7 @@ def do_view_reorder(project_id, project, params):
 # Returns {"fingerprint": fp, "subscribed": bool} or {"error": key, "code": N}.
 def _subscribe_to_project(user, project_id, server):
 	user_id = user.identity.id
+	started = mochi.time.now()
 
 	if not mochi.text.valid(project_id, "entity"):
 		return {"error": "errors.invalid_project_id", "code": 400}
@@ -9297,7 +9818,7 @@ def _subscribe_to_project(user, project_id, server):
 		project_name = response.get("name", "")
 		project_desc = response.get("description", "")
 		project_prefix = response.get("prefix", "PROJ")
-		schema = remote_dict(mochi.remote.request(project_id, "projects", "schema", {}, peer))
+		schema = schema_fetch(project_id, peer, SCHEMA_START)
 	else:
 		directory = mochi.directory.get(project_id)
 		if directory == None or len(directory) == 0:
@@ -9312,20 +9833,22 @@ def _subscribe_to_project(user, project_id, server):
 					project_name = response.get("name", project_name)
 					project_desc = response.get("description", "")
 					project_prefix = response.get("prefix", "PROJ")
-				schema = remote_dict(mochi.remote.request(project_id, "projects", "schema", {}, peer))
+				schema = schema_fetch(project_id, peer, SCHEMA_START)
 
 	now = mochi.time.now()
 	fp = mochi.entity.fingerprint(project_id) or ""
 
-	# populated=0: schema fetched synchronously above, objects arrive async via
-	# the owner's sync/batch (set 1 by event_sync_batch).
+	# populated=0 until the schema pull below reaches its last part, or every
+	# chunk of the owner's sync/batch has landed (event_sync_batch).
 	row_merge("projects", ["id"], {"id": project_id, "name": project_name, "description": project_desc, "prefix": project_prefix, "owner": 0, "server": server or "", "fingerprint": fp, "created": now, "updated": now, "populated": 0})
 
-	if schema and not schema.get("error"):
-		insert_schema(project_id, schema)
-
+	# Subscribe before the schema is applied, so a pull that stops short still
+	# leaves a subscription the owner's sync batch fills.
 	mochi.message.send(p2p_headers(user_id, project_id, "subscribe"), {"name": user.identity.name})
 	mochi.broadcast.touch(project_id)
+
+	if schema and not schema.get("error"):
+		insert_schema(project_id, schema, peer, started)
 
 	return {"fingerprint": fp, "subscribed": False}
 

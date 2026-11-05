@@ -20,6 +20,7 @@ import {
   AddFieldDialog,
   EntityOptionDialog as OptionDialog,
   EntityDesignLayout,
+  optimistic,
 } from '@mochi/web'
 import { Blocks, GripVertical, Plus } from 'lucide-react'
 import projectsApi from '@/api/projects'
@@ -30,6 +31,16 @@ import {
   EditFieldDialog,
   type PendingField,
 } from './edit-dialogs'
+
+// The list in the order given. Anything the order leaves out keeps its place
+// at the end rather than vanishing from the screen.
+function inOrder<T extends { id: string }>(list: T[], order: string[]) {
+  const place = (id: string) => {
+    const index = order.indexOf(id)
+    return index === -1 ? order.length : index
+  }
+  return [...list].sort((a, b) => place(a.id) - place(b.id))
+}
 
 interface DesignEditorProps {
   projectId: string
@@ -251,11 +262,34 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
     },
   })
 
+  // Fields and views take their new order on the drop, and go back if the
+  // server refuses. The refetch on success replaces the guess either way.
+  const designFilters = { queryKey: ['project', projectId], exact: true }
+  const fieldsPatch = optimistic(
+    queryClient,
+    ({ classId, order }: { classId: string; order: string[] }) => [
+      {
+        filters: designFilters,
+        update: (old: ProjectDetails) =>
+          old.fields[classId]
+            ? {
+                ...old,
+                fields: {
+                  ...old.fields,
+                  [classId]: inOrder(old.fields[classId], order),
+                },
+              }
+            : old,
+      },
+    ]
+  )
   const reorderFieldsMutation = useMutation({
     mutationFn: ({ classId, order }: { classId: string; order: string[] }) =>
       projectsApi.reorderFields(projectId, classId, order),
+    onMutate: fieldsPatch.onMutate,
     onSuccess: invalidateProject,
-    onError: (error) => {
+    onError: (error, _variables, context) => {
+      fieldsPatch.rollback(context)
       toast.error(getErrorMessage(error, t`Failed to reorder fields`))
     },
   })
@@ -406,10 +440,21 @@ export function DesignEditor({ projectId, project }: DesignEditorProps) {
     },
   })
 
+  const viewsPatch = optimistic(queryClient, (order: string[]) => [
+    {
+      filters: designFilters,
+      update: (old: ProjectDetails) => ({
+        ...old,
+        views: inOrder(old.views, order),
+      }),
+    },
+  ])
   const reorderViewsMutation = useMutation({
     mutationFn: (order: string[]) => projectsApi.reorderViews(projectId, order),
+    onMutate: viewsPatch.onMutate,
     onSuccess: invalidateProject,
-    onError: (error) => {
+    onError: (error, _order, context) => {
+      viewsPatch.rollback(context)
       toast.error(getErrorMessage(error, t`Failed to reorder views`))
     },
   })

@@ -218,17 +218,28 @@ def error_broadcast_gap(e):
 # after a long idle). Matches core's broadcast_log_age.
 idle_resync_age = 7 * 86400
 
-def request_resync(project_id, repeat=False):
+def request_resync(project_id, repeat=False, budget=None, force=False):
 	"""Returns True iff a fresh schema was actually fetched and applied.
 	Returns False when we're not a subscriber, the throttle window blocks
 	the call, or the remote request fails — so callers don't lie about
 	convergence. repeat marks the fresh pull a pull that skipped late rows
-	asked for (schedule_resync)."""
+	asked for (schedule_resync). budget is the seconds the call may spend on
+	parts after the first, SCHEMA_TIME when None (it is defined after this).
+	force, for a resync the user asks for, starts it at once whatever is under
+	way."""
 	row = mochi.db.row("select server, synced from projects where id=? and owner=0", project_id)
 	if not row:
 		return False
 	now = mochi.time.now()
-	if row["synced"] and now - row["synced"] < 60:
+	# A pull under way, its continuation pending, finishes first: one started
+	# beside it would replace it and take the project again from the start,
+	# and with steady events nothing would ever be pruned. One within the last
+	# minute stands. What asked for this one - a gap, an event naming what is
+	# not held - may need what they read before it, so it runs after them
+	# rather than not at all.
+	pending = schema_continuing(project_id)
+	if not force and (pending or (row["synced"] and now - row["synced"] < 60)):
+		resync_defer(project_id, repeat, 61 if pending else 61 - (now - row["synced"]))
 		return False
 	# Stamp the throttle window even before the request completes — a
 	# slow owner shouldn't let concurrent events queue up duplicate
@@ -248,20 +259,45 @@ def request_resync(project_id, repeat=False):
 		schema_end(project_id, pull)
 		return False
 	schema_claim(project_id, pull)
-	if not insert_schema(project_id, schema, peer, now, held, 0, SCHEMA_TIME, pull):
+	if not insert_schema(project_id, schema, peer, now, held, 0, SCHEMA_TIME if budget == None else budget, pull):
 		return False
 	schema_completed(project_id)
 	return True
 
+# schema_continuing(project_id) -> bool: whether a continuation of the project's own
+# pull is pending. One of a pull replaced since, or of a subscription dropped,
+# does nothing when it comes due, and holds no resync off.
+def schema_continuing(project_id):
+	for scheduled in mochi.schedule.list():
+		if scheduled.event == "schedule_schema" and scheduled.data.get("project") == project_id and schema_current(project_id, schema_pull(scheduled.data.get("pull"))):
+			return True
+	return False
+
+# schema_pending(project_id, event) -> bool: whether a scheduled event of the
+# project is pending.
+def schema_pending(project_id, event):
+	for scheduled in mochi.schedule.list():
+		if scheduled.event == event and scheduled.data.get("project") == project_id:
+			return True
+	return False
+
+# resync_defer(project_id, repeat, wait) puts off a resync request_resync could not
+# start for wait seconds, once a project however often it is asked for
+# meanwhile.
+def resync_defer(project_id, repeat, wait):
+	if not schema_pending(project_id, "schedule_resync"):
+		mochi.schedule.after("schedule_resync", {"project": project_id, "repeat": repeat}, wait)
+
 # schedule_resync(e): the fresh pull a pull that skipped late rows asked for,
-# once request_resync's throttle has passed. It asks for none after it.
+# once request_resync's throttle has passed, which asks for none after it; or a
+# resync put off (resync_defer), put off again while a pull still runs.
 def schedule_resync(e):
 	if e.source != "schedule":
 		return
 	project_id = e.data.get("project", "")
 	if not mochi.text.valid(project_id, "entity"):
 		return
-	request_resync(project_id, True)
+	request_resync(project_id, e.data.get("repeat", True) != False)
 
 # Re-subscribe an idle project (idle_resync_age) with its owner; event_subscribe
 # is idempotent and pushes catch-up. touch() stamps the timer so this fires once
@@ -2253,9 +2289,12 @@ def action_project_resync(a):
 	if row["owner"] != 0:
 		# Owners are the canonical source; nothing to resync from.
 		return {"data": {"synced": False}}
-	# Reset the throttle so an explicit user request always runs.
-	row_set("projects", "id=?", [project_id], {"synced": 0})
-	synced = request_resync(project_id)
+	# An explicit user request starts at once, whatever pull is under way or
+	# ran in the last minute. Answered after the first part, as a subscribe is:
+	# each further part may take 30 seconds to arrive, past what a client
+	# waits. A continuation takes the rest, and synced says whether the first
+	# was the last.
+	synced = request_resync(project_id, False, 0, True)
 	return {"data": {"synced": synced}}
 
 # Delete project
@@ -6760,6 +6799,9 @@ def insert_schema(project_id, schema, peer="", started=None, held=None, parts=0,
 			schema_keep(project_id, survivors, held, pull)
 			schema_resume(project_id, "stopped", next, parts, 0, pull)
 			return False
+		# The pull is under way for as long as it fetches: request_resync
+		# starts no second one beside it.
+		row_set("projects", "id=?", [project_id], {"synced": mochi.time.now()})
 		schema = schema_fetch(project_id, peer, next)
 		if not schema or schema.get("error"):
 			outcome = schema_outcome(schema)

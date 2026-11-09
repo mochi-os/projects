@@ -38,7 +38,7 @@ function FindProjectsPage() {
       }
       labels={{
         title: t`Find projects`,
-        placeholder: t`Search by name, ID, fingerprint, or URL...`,
+        placeholder: t`Search by name, ID, fingerprint, or URL`,
         emptyMessage: t`No projects found`,
         subscribing: t`Subscribing...`,
         subscribed: t`Subscribed`,

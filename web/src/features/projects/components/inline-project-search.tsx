@@ -80,7 +80,7 @@ export function InlineProjectSearch({
       probe={probe}
       onSubscribe={handleSubscribe}
       icon={FolderKanban}
-      placeholder={t`Search for projects...`}
+      placeholder={t`Search for projects`}
       emptyMessage={t`No projects found`}
       searchErrorMessage={t`Failed to search projects`}
       subscribeLabel={t`Subscribe`}

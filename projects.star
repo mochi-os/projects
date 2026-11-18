@@ -526,6 +526,13 @@ def database_upgrade(version):
 		# the replica held before the pull began that no part has named yet, so
 		# the continuation that takes its last part reconciles deletions.
 		mochi.db.execute("create table if not exists holdings ( project text not null, pull text not null, list text not null, key text not null, primary key ( project, pull, list, key ) )")
+	if version == 10:
+		# Attachment rows name the kind of thing they belong to; the rows filed
+		# on a comment's id become the comment's. An id an object holds too came
+		# from a peer's choice, as did the comment's author and any remote row's
+		# creator, so its rows stay the object's.
+		attachment_schema_kind()
+		mochi.db.execute("update attachments set kind='comment' where object in (select id from comments) and object not in (select id from objects)")
 
 # Create database with all 18 tables
 def database_create():
@@ -767,6 +774,7 @@ def database_create():
 
 	# Attachments now live in this database, owned by the shared library.
 	attachment_schema_create()
+	attachment_schema_kind()
 
 # Row write helpers: merge upserts, set partially updates, remove deletes.
 # set/remove/rekey take a raw WHERE clause (no "where" keyword) + args. handle
@@ -843,17 +851,34 @@ def object_bound(project_id, object_id):
 	otherwise have our own update rewrite or delete that row."""
 	return bool(object_id) and mochi.db.exists("select 1 from objects where id=? and project=?", object_id, project_id)
 
+# An object or comment id is also foreign when the other table holds it, in any
+# project: attachments and everything else keyed on a bare id would treat the
+# new row as that one.
 def foreign_object(object_id, project_id):
 	if not object_id:
 		return False
+	if mochi.db.exists("select 1 from comments where id=?", object_id):
+		return True
 	row = mochi.db.row("select project from objects where id=?", object_id)
 	return row != None and row["project"] != project_id
 
 def foreign_comment(comment_id, project_id):
 	if not comment_id:
 		return False
+	if mochi.db.exists("select 1 from objects where id=?", comment_id):
+		return True
 	row = mochi.db.row("select o.project from comments c join objects o on c.object=o.id where c.id=?", comment_id)
 	return row != None and row["project"] != project_id
+
+# Whether value is an id in the shape mochi.uid() mints.
+def identifier(value):
+	return type(value) == "string" and mochi.text.valid(value, "id")
+
+# Whether an object or a comment, in any project of this database, holds id.
+# A new comment under such an id would be treated as that row by attachments
+# and everything else keyed on a bare id.
+def identifier_held(id):
+	return mochi.db.exists("select 1 from objects where id=? union all select 1 from comments where id=?", id, id)
 
 def foreign_request(request_id, project_id):
 	if not request_id:
@@ -878,18 +903,26 @@ def link_endpoints_bound(project_id, source, target):
 		return False
 	return mochi.db.exists("select 1 from objects where id=? and project=?", target, project_id)
 
-# attachment_delete keys on the attachment id alone, across every project in
-# this database, so the id is not proof of anything on its own. Resolve the
-# attachment's own container and require it to sit in this project - an
-# attachment hangs off either an object or a comment.
-def attachment_in_project(attachment_id, project_id):
-	attachment = attachment_get(attachment_id)
-	container = attachment.get("object") if attachment else ""
+# Whether an attachment owner, container of that kind, sits in this project:
+# an object of it, or a comment on one of its objects. A comment's attachments
+# are never judged as an object's, or the reverse.
+def container_in_project(container, kind, project_id):
 	if not container:
 		return False
-	if mochi.db.exists("select 1 from objects where id=? and project=?", container, project_id):
-		return True
-	return mochi.db.exists("select 1 from comments c join objects o on o.id=c.object where c.id=? and o.project=?", container, project_id)
+	if kind == "object":
+		return mochi.db.exists("select 1 from objects where id=? and project=?", container, project_id)
+	if kind == "comment":
+		return mochi.db.exists("select 1 from comments c join objects o on o.id=c.object where c.id=? and o.project=?", container, project_id)
+	return False
+
+# attachment_delete keys on the attachment id alone, across every project in
+# this database, so the id is not proof of anything on its own. Resolve the
+# attachment's own owner and require it to sit in this project.
+def attachment_in_project(attachment_id, project_id):
+	attachment = attachment_row(attachment_id)
+	if not attachment:
+		return False
+	return container_in_project(attachment["object"], attachment.get("kind", "object"), project_id)
 
 def values_remove_object(object_id):
 	mochi.db.execute("delete from \"values\" where object=?", object_id)
@@ -918,7 +951,7 @@ def purge_project(project_id):
 	# The attachments a part stored after the clearing above go here too.
 	handle = mochi.db.transaction()
 	handle.execute("delete from holdings where project=?", project_id)
-	handle.execute("delete from attachments where entity!='' and (object in (select id from objects where project=?) or object in (select c.id from comments c join objects o on o.id=c.object where o.project=?))", project_id, project_id)
+	handle.execute("delete from attachments where entity!='' and ((kind='object' and object in (select id from objects where project=?)) or (kind='comment' and object in (select c.id from comments c join objects o on o.id=c.object where o.project=?)))", project_id, project_id)
 	handle.execute("delete from requests where object in (select id from objects where project=?)", project_id)
 	handle.execute("delete from watchers where object in (select id from objects where project=?)", project_id)
 	handle.execute("delete from activity where object in (select id from objects where project=?)", project_id)
@@ -1470,11 +1503,12 @@ def action_design_import(a):
 
 	return {"data": {"success": True}}
 
-# Collect attachments with base64 bytes for export; one whose bytes cannot be
-# read is skipped rather than failing the export.
-def export_attachments(object_id, project_id, frm, entries):
+# Collect an object's (or, with kind "comment", a comment's) attachments with
+# base64 bytes for export; one whose bytes cannot be read is skipped rather
+# than failing the export.
+def export_attachments(object_id, project_id, frm, entries, kind="object"):
 	result = []
-	for att in attachment_list(object_id, project_id) or []:
+	for att in attachment_list(object_id, project_id, kind) or []:
 		name = "files/" + att["id"]
 		entry = attachment_entry(att["id"], name, frm)
 		if entry == None:
@@ -1503,7 +1537,7 @@ def action_data_export_warm(a):
 		for att in attachment_list(row["id"], project_id) or []:
 			identifiers.append(att["id"])
 		for c in mochi.db.rows("select id from comments where object=?", row["id"]) or []:
-			for att in attachment_list(c["id"], project_id) or []:
+			for att in attachment_list(c["id"], project_id, "comment") or []:
 				identifiers.append(att["id"])
 
 	start = mochi.time.now()
@@ -1590,7 +1624,7 @@ def action_data_export(a):
 				comment["parent"] = c["parent"]
 			if c["edited"]:
 				comment["edited"] = c["edited"]
-			attachments = export_attachments(c["id"], project_id, a.user.identity.id, entries)
+			attachments = export_attachments(c["id"], project_id, a.user.identity.id, entries, "comment")
 			if attachments:
 				comment["attachments"] = attachments
 			comments.append(comment)
@@ -1697,16 +1731,18 @@ def import_staging_sweep():
 		if age != None and age > 3600:
 			mochi.file.delete("imports/" + name)
 
-# Store one imported attachment, returning whether it landed. Format 3 streams
-# from the archive, format 2 has the bytes in hand; an entry missing from the
-# archive stores nothing and must not be counted.
-def import_attachment_store(archive, object_id, att):
+# Store one imported attachment of object_id, a thing of that kind, returning
+# whether it landed. Format 3 streams from the archive, format 2 has the bytes
+# in hand; an entry missing from the archive stores nothing and must not be
+# counted. The file nests a comment's attachments in the comment, which is how
+# the caller knows the kind.
+def import_attachment_store(archive, object_id, att, kind="object"):
 	if archive and type(att.get("entry")) == "string":
 		return attachment_extract(archive, att["entry"], object_id, att["name"],
-			att.get("content_type") or "", att.get("caption") or "", att.get("description") or "") != None
+			att.get("content_type") or "", att.get("caption") or "", att.get("description") or "", kind=kind) != None
 	if att.get("data") != None:
 		attachment_create(object_id, att["name"], att["data"], att.get("content_type") or "",
-			att.get("caption") or "", att.get("description") or "")
+			att.get("caption") or "", att.get("description") or "", kind=kind)
 		return True
 	return False
 
@@ -1965,7 +2001,7 @@ def action_data_import(a):
 			row_merge("comments", ["id"], {"id": comment_ids[i], "object": object_id, "parent": comment_parent, "author": c.get("author") or user, "name": c.get("name") or a.user.identity.name, "content": str(c["content"]), "created": safe_int(c.get("created")) or now, "edited": safe_int(c.get("edited"))})
 			comment_count += 1
 			for att in (c.get("attachments") or []):
-				if import_attachment_store(archive, comment_ids[i], att):
+				if import_attachment_store(archive, comment_ids[i], att, "comment"):
 					attachment_count += 1
 		for att in (o.get("attachments") or []):
 			if import_attachment_store(archive, object_id, att):
@@ -2858,12 +2894,13 @@ def delete_object_cascade(project_id, object_id, user=""):
 	# Broadcast delete event for each object
 	broadcast_event(project_id, "object/delete", {"project": project_id, "id": object_id, "user": user})
 
-# Delete an object's attachments. `preserve` keeps rows whose bytes live here
-# (entity == ""): resync repair may drop references to files hosted elsewhere
-# but must never destroy this replica's own uploads, which may be the only copy.
-def prune_attachments(object_id, project_id, preserve):
+# Delete an object's attachments, or with kind "comment" a comment's. `preserve`
+# keeps rows whose bytes live here (entity == ""): resync repair may drop
+# references to files hosted elsewhere but must never destroy this replica's
+# own uploads, which may be the only copy.
+def prune_attachments(object_id, project_id, preserve, kind="object"):
 	kept = 0
-	for att in (attachment_list(object_id, project_id) or []):
+	for att in (attachment_list(object_id, project_id, kind) or []):
 		if preserve and not att["entity"]:
 			kept += 1
 			continue
@@ -2880,6 +2917,34 @@ def delete_object_local(project_id, object_id, preserve=False):
 	values_remove_object(object_id)
 	row_remove("links", "source=? or target=?", [object_id, object_id])
 	row_remove("objects", "id=? and project=?", [object_id, project_id])
+
+# object_replicate(project_id, answer, obj_class, parent, title, title_field,
+# user_id) writes the replica's copy of an object the owner has just created
+# for this user, from the owner's answer, and returns whether it did. The owner
+# names the id: one not in the shape mochi.uid() mints, or one naming a comment
+# or another project's object, is refused, since the title, the watcher and any
+# values the caller sets next would otherwise land on that row. The canonical
+# number, rank and timestamps are taken from the answer so every subscriber
+# agrees on the order, reduced to their types; an old owner replying without
+# them gets local now().
+def object_replicate(project_id, answer, obj_class, parent, title, title_field, user_id):
+	if type(answer) != "dict":
+		return False
+	object_id = answer.get("id")
+	if not identifier(object_id) or foreign_object(object_id, project_id):
+		return False
+	now = mochi.time.now()
+	rank = answer.get("rank")
+	if not rank_canonical(rank):
+		rank = safe_int(rank)
+	if not mochi.db.exists("select 1 from objects where id=?", object_id):
+		object_merge({"id": object_id, "project": project_id, "class": obj_class, "number": safe_int(answer.get("number")), "parent": parent, "rank": rank, "created": safe_int(answer.get("created")) or now, "updated": safe_int(answer.get("updated")) or now})
+	if title and title_field:
+		value_merge(object_id, title_field, title)
+	row_set("projects", "id=?", [project_id], {"updated": now})
+	# Auto-watch creator locally so subscriber gets notifications
+	row_merge("watchers", ["object", "user"], {"object": object_id, "user": user_id, "created": now})
+	return True
 
 # ============================================================================
 # Object Actions
@@ -2972,22 +3037,9 @@ def action_object_create(a):
 			"title": title, "parent": parent,
 		})
 		if result and result.get("data"):
-			d = result["data"]
-			if d.get("id"):
-				# Use the canonical rank/timestamps from the owner's response so
-				# every subscriber agrees on the order. Falling back to local now()
-				# only if an old owner is replying without these fields.
-				now = mochi.time.now()
-				rank = d.get("rank", 0)
-				created = d.get("created") or now
-				updated = d.get("updated") or now
-				if not mochi.db.exists("select 1 from objects where id=?", d["id"]):
-					object_merge({"id": d["id"], "project": project_id, "class": obj_class, "number": d.get("number", 0), "parent": parent, "rank": rank, "created": created, "updated": updated})
-				if title and title_field:
-					value_merge(d["id"], title_field, title)
-				row_set("projects", "id=?", [project_id], {"updated": now})
-				# Auto-watch creator locally so subscriber gets notifications
-				row_merge("watchers", ["object", "user"], {"object": d["id"], "user": a.user.identity.id, "created": now})
+			if not object_replicate(project_id, result["data"], obj_class, parent, title, title_field, a.user.identity.id):
+				a.error.label(502, "errors.no_object_returned")
+				return
 		return result
 
 	if not check_project_access(a.user.identity.id, project_id, "write"):
@@ -3803,7 +3855,7 @@ def object_comments(project_id, object_id, parent_id, depth):
 		"select id, parent, author, name, content, created, edited from comments where object=? order by created desc",
 		object_id
 	) or []
-	attachments = attachments_many([row["id"] for row in rows], project_id)
+	attachments = attachments_many([row["id"] for row in rows], project_id, "comment")
 	children = {}
 	for row in rows:
 		key = row["parent"] or ""
@@ -3830,7 +3882,7 @@ def delete_comment_tree(comment_id, project_id):
 	children = mochi.db.rows("select id from comments where parent=?", comment_id) or []
 	for child in children:
 		delete_comment_tree(child["id"], project_id)
-	for att in (attachment_list(comment_id, project_id) or []):
+	for att in (attachment_list(comment_id, project_id, "comment") or []):
 		attachment_delete(att["id"])
 	comment_remove(comment_id)
 
@@ -3838,7 +3890,7 @@ def delete_comment_tree(comment_id, project_id):
 def delete_object_comments(object_id, project_id, preserve=False):
 	comments = mochi.db.rows("select id from comments where object=?", object_id) or []
 	for c in comments:
-		prune_attachments(c["id"], project_id, preserve)
+		prune_attachments(c["id"], project_id, preserve, "comment")
 	comments_remove_object(object_id)
 
 # Delete all comment attachments for all objects in a project
@@ -3847,7 +3899,7 @@ def delete_project_comment_attachments(project_id):
 		"select c.id from comments c join objects o on c.object=o.id where o.project=?", project_id
 	) or []
 	for c in comments:
-		for att in (attachment_list(c["id"], project_id) or []):
+		for att in (attachment_list(c["id"], project_id, "comment") or []):
 			attachment_delete(att["id"])
 
 # ============================================================================
@@ -3996,7 +4048,7 @@ def action_comment_create(a):
 		# Save locally for optimistic UI
 		comment_merge({"id": comment_id, "object": object_id, "parent": parent, "author": a.user.identity.id, "name": a.user.identity.name, "content": content.strip(), "created": now, "edited": 0})
 		# Save attachments locally
-		attachments = attachment_save(a, comment_id)
+		attachments = attachment_save(a, comment_id, kind="comment")
 		# Fire-and-forget to project owner with attachment metadata
 		submit_data = {"id": comment_id, "object": object_id, "parent": parent,
 			 "content": content.strip(), "name": a.user.identity.name, "created": now}
@@ -4012,7 +4064,7 @@ def action_comment_create(a):
 			"id": comment_id, "parent": parent,
 			"author": a.user.identity.id, "name": a.user.identity.name,
 			"content": content.strip(), "created": now, "edited": 0,
-			"children": [], "attachments": attachment_list(comment_id, project_id) or [],
+			"children": [], "attachments": attachment_list(comment_id, project_id, "comment") or [],
 		}}
 
 	if not check_project_access(a.user.identity.id, project_id, "comment"):
@@ -4042,7 +4094,7 @@ def action_comment_create(a):
 
 	comment_merge({"id": comment_id, "object": object_id, "parent": parent, "author": a.user.identity.id, "name": a.user.identity.name, "content": content.strip(), "created": now, "edited": 0})
 
-	attachments = attachment_save(a, comment_id) or []
+	attachments = attachment_save(a, comment_id, kind="comment") or []
 
 	object_set(object_id, {"updated": now})
 	log_activity(object_id, a.user.identity.id, "commented")
@@ -4223,10 +4275,8 @@ def serve_attachment(a, variant):
 	# The binding runs for subscribed projects too: a replica whose access was
 	# revoked keeps a locally cached copy, so "the owner enforces on pull" is not
 	# enough.
-	def in_project(obj):
-		if mochi.db.exists("select 1 from objects where id=? and project=?", obj, project_id):
-			return True
-		return mochi.db.exists("select 1 from comments c join objects o on o.id=c.object where c.id=? and o.project=?", obj, project_id)
+	def in_project(object, kind):
+		return container_in_project(object, kind, project_id)
 
 	# The owner adopts legacy remote-provenance rows on first serve, taking
 	# the bytes in so the project's canonical host serves its own file from
@@ -4242,22 +4292,22 @@ def event_attachment_fetch(e):
 	# `to` is routing only - the entity the puller dialled to reach these
 	# bytes. For a subscriber-held upload that is this user's own identity,
 	# not a project, so the container comes from the requested row: the
-	# attachment's object, resolved to the project it belongs to here.
+	# attachment's object or comment, as its kind says, resolved to the project
+	# it belongs to here.
 	id = e.content("id")
 	project_id = ""
 	if attachment_identifier(id):
 		row = attachment_row(id)
 		if row:
-			obj = mochi.db.row("select project from objects where id=?", row["object"])
-			if not obj:
-				obj = mochi.db.row("select o.project from comments c join objects o on o.id=c.object where c.id=?", row["object"])
-			if obj:
-				project_id = obj["project"]
+			if row.get("kind") == "comment":
+				owner = mochi.db.row("select o.project from comments c join objects o on o.id=c.object where c.id=?", row["object"])
+			else:
+				owner = mochi.db.row("select project from objects where id=?", row["object"])
+			if owner:
+				project_id = owner["project"]
 
-	def in_project(obj):
-		if mochi.db.exists("select 1 from objects where id=? and project=?", obj, project_id):
-			return True
-		return mochi.db.exists("select 1 from comments c join objects o on o.id=c.object where c.id=? and o.project=?", obj, project_id)
+	def in_project(object, kind):
+		return container_in_project(object, kind, project_id)
 
 	# The project's own entity may always fetch bytes bound to it - that is
 	# the owner taking a subscriber's upload in (attachment_accept / adopt).
@@ -6276,12 +6326,13 @@ def event_information(e):
 		"fingerprint": entity.get("fingerprint", mochi.entity.fingerprint(project_id)),
 	})
 
-# attachments_many(ids, project_id) -> {id: [attachment]}: attachment_list_many
-# over any number of ids, chunked to stay under SQLite's parameter cap.
-def attachments_many(ids, project_id):
+# attachments_many(ids, project_id, kind) -> {id: [attachment]}:
+# attachment_list_many over any number of ids, all things of that kind, chunked
+# to stay under SQLite's parameter cap.
+def attachments_many(ids, project_id, kind="object"):
 	result = {}
 	for start in range(0, len(ids), IN_CHUNK):
-		result.update(attachment_list_many(ids[start:start + IN_CHUNK], project_id))
+		result.update(attachment_list_many(ids[start:start + IN_CHUNK], project_id, kind))
 	return result
 
 # design_dump(project_id) -> dict: the design tables of one project in the flat
@@ -6332,13 +6383,14 @@ def project_dump(project_id):
 			comment_ids.append(c["id"])
 		for act in rows_in("select object, id, user, action, field, oldvalue, newvalue, created from activity where object in (", ids, ") order by created"):
 			activity_map.setdefault(act["object"], []).append(act)
-	attachments = attachments_many(ids + comment_ids, project_id)
+	attachments = attachments_many(ids, project_id)
+	comment_attachments = attachments_many(comment_ids, project_id, "comment")
 	for obj in objects:
 		if obj["id"] in values_map:
 			obj["values"] = values_map[obj["id"]]
 		if obj["id"] in comments_map:
 			for c in comments_map[obj["id"]]:
-				c_atts = attachments.get(c["id"])
+				c_atts = comment_attachments.get(c["id"])
 				if c_atts:
 					c["attachments"] = c_atts
 			obj["comments"] = comments_map[obj["id"]]
@@ -6399,7 +6451,7 @@ SCHEMA_SPECS = {
 	"values": {"columns": "v.object as object, v.field as field, v.value as value", "source": "\"values\" v join objects o on o.id=v.object where o.project=?", "scope": 1, "keys": ["v.object", "v.field"], "size": "length(cast(v.value as blob))"},
 	"comments": {"columns": "c.object as object, c.id as id, c.parent as parent, c.author as author, c.name as name, c.content as content, c.created as created, c.edited as edited", "source": "comments c join objects o on o.id=c.object where o.project=?", "scope": 1, "keys": ["c.id"], "size": "length(cast(c.content as blob)) + length(cast(c.name as blob))"},
 	"activity": {"columns": "a.object as object, a.id as id, a.user as user, a.action as action, a.field as field, a.oldvalue as oldvalue, a.newvalue as newvalue, a.created as created", "source": "activity a join objects o on o.id=a.object where o.project=?", "scope": 1, "keys": ["a.id"], "size": "length(cast(a.oldvalue as blob)) + length(cast(a.newvalue as blob))"},
-	"attachments": {"columns": "*", "source": "attachments where (object in (select id from objects where project=?) or object in (select c.id from comments c join objects o on o.id=c.object where o.project=?))", "scope": 2, "keys": ["id"], "size": "960"},
+	"attachments": {"columns": "*", "source": "attachments where ((kind='object' and object in (select id from objects where project=?)) or (kind='comment' and object in (select c.id from comments c join objects o on o.id=c.object where o.project=?)))", "scope": 2, "keys": ["id"], "size": "960"},
 	"links": {"columns": "l.source as source, l.target as target, l.linktype as linktype", "source": "links l join objects o on o.id=l.source where o.project=?", "scope": 1, "keys": ["l.source", "l.target", "l.linktype"], "size": "0"},
 }
 
@@ -6944,7 +6996,7 @@ def schema_stray(survivors):
 	ids = [id for id in survivors["attachments"] if type(id) == "string" and id]
 	for start in range(0, len(ids), SCHEMA_BATCH):
 		batch = ids[start:start + SCHEMA_BATCH]
-		mochi.db.execute("delete from attachments where entity!='' and id in (" + ", ".join(["?"] * len(batch)) + ") and object not in (select id from objects) and object not in (select id from comments)", batch)
+		mochi.db.execute("delete from attachments where entity!='' and id in (" + ", ".join(["?"] * len(batch)) + ") and ((kind='object' and object not in (select id from objects)) or (kind='comment' and object not in (select id from comments)))", batch)
 
 # schema_outcome(reply) -> "unanswered" when a part could not be fetched at all,
 # "failed" when the owner answered with a refusal.
@@ -7050,7 +7102,7 @@ def schema_holdings(project_id):
 		held["comments"][row["id"]] = True
 	for row in mochi.db.rows("select v.object as object, v.field as field from \"values\" v join objects o on o.id=v.object where o.project=?", project_id) or []:
 		held["values"][(row["object"], row["field"])] = True
-	for row in mochi.db.rows("select id from attachments where entity!='' and (object in (select id from objects where project=?) or object in (select c.id from comments c join objects o on o.id=c.object where o.project=?))", project_id, project_id) or []:
+	for row in mochi.db.rows("select id from attachments where entity!='' and ((kind='object' and object in (select id from objects where project=?)) or (kind='comment' and object in (select c.id from comments c join objects o on o.id=c.object where o.project=?)))", project_id, project_id) or []:
 		held["attachments"][row["id"]] = True
 	for row in mochi.db.rows("select source, target, linktype from links where project=?", project_id) or []:
 		held["links"][(row["source"], row["target"], row["linktype"])] = True
@@ -7092,29 +7144,30 @@ def schema_merge(project_id, schema, survivors):
 	for obj in sequence(schema.get("objects")):
 		if type(obj) != "dict":
 			continue
-		identifier = obj.get("id", "")
-		survivors["objects"][identifier] = True
-		# Never adopt/reassign an object that already belongs to another project -
-		# a malicious owner's dump could otherwise hijack our other projects' rows.
-		if foreign_object(identifier, project_id):
+		object_id = obj.get("id", "")
+		survivors["objects"][object_id] = True
+		# Never adopt/reassign an object that already belongs to another
+		# project, or an id a comment holds - a malicious owner's dump could
+		# otherwise hijack our other projects' rows.
+		if foreign_object(object_id, project_id):
 			continue
 		# A late object is skipped; the rows nested in it below are still
 		# named, and land only on an object the replica holds.
 		if schema_class(project_id, obj.get("class", "")):
-			object_merge({"id": identifier, "project": project_id, "class": obj.get("class", ""), "number": obj.get("number", 0), "parent": obj.get("parent", ""), "rank": obj.get("rank", 0), "created": obj.get("created", 0), "updated": obj.get("updated", 0)}, schema_guard("classes", "project=? and id=?", project_id, obj.get("class", "")))
+			object_merge({"id": object_id, "project": project_id, "class": obj.get("class", ""), "number": obj.get("number", 0), "parent": obj.get("parent", ""), "rank": obj.get("rank", 0), "created": obj.get("created", 0), "updated": obj.get("updated", 0)}, schema_guard("classes", "project=? and id=?", project_id, obj.get("class", "")))
 		else:
 			late = True
-		schema_attachments(project_id, survivors, identifier, obj.get("attachments"))
+		schema_attachments(project_id, survivors, object_id, obj.get("attachments"), "object")
 		values = obj.get("values")
 		if type(values) == "dict":
 			for field in values:
-				schema_value(project_id, survivors, {"object": identifier, "field": field, "value": values[field]})
+				schema_value(project_id, survivors, {"object": object_id, "field": field, "value": values[field]})
 		for c in sequence(obj.get("comments")):
 			if type(c) == "dict":
-				schema_comment(project_id, survivors, dict(c, object=identifier))
+				schema_comment(project_id, survivors, dict(c, object=object_id))
 		for act in sequence(obj.get("activity")):
 			if type(act) == "dict":
-				schema_activity(project_id, dict(act, object=identifier))
+				schema_activity(project_id, dict(act, object=object_id))
 	for v in sequence(schema.get("values")):
 		if type(v) == "dict":
 			schema_value(project_id, survivors, v)
@@ -7129,7 +7182,10 @@ def schema_merge(project_id, schema, survivors):
 		if type(att) == "dict" and type(att.get("object")) == "string":
 			containers.setdefault(att["object"], []).append(att)
 	for container in containers:
-		schema_attachments(project_id, survivors, container, containers[container])
+		# The table holding the container decides its kind, never the row's
+		# claim; an id both tables hold in the project answers to neither.
+		kinds = [kind for kind in attachment_kinds if container_in_project(container, kind, project_id)]
+		schema_attachments(project_id, survivors, container, containers[container], kinds[0] if len(kinds) == 1 else None)
 	for l in sequence(schema.get("links")):
 		if type(l) != "dict":
 			continue
@@ -7154,15 +7210,16 @@ def schema_value(project_id, survivors, v):
 	row_merge("values", ["object", "field"], {"object": v["object"], "field": field, "value": v.get("value", "")}, None, schema_guard("objects", "id=?", v["object"]))
 
 def schema_comment(project_id, survivors, c):
-	identifier = c.get("id", "")
-	survivors["comments"][identifier] = True
-	# Skip a comment id that already belongs to another project's object.
-	if foreign_comment(identifier, project_id):
+	comment_id = c.get("id", "")
+	survivors["comments"][comment_id] = True
+	# Skip a comment id that already belongs to another project's object, or
+	# that an object holds.
+	if foreign_comment(comment_id, project_id):
 		return
 	if not object_bound(project_id, c.get("object", "")):
 		return
-	comment_merge({"id": identifier, "object": c["object"], "parent": c.get("parent", ""), "author": c.get("author", ""), "name": c.get("name", ""), "content": c.get("content", ""), "created": c.get("created", ""), "edited": c.get("edited", 0)}, schema_guard("objects", "id=?", c["object"]))
-	schema_attachments(project_id, survivors, identifier, c.get("attachments"))
+	comment_merge({"id": comment_id, "object": c["object"], "parent": c.get("parent", ""), "author": c.get("author", ""), "name": c.get("name", ""), "content": c.get("content", ""), "created": c.get("created", ""), "edited": c.get("edited", 0)}, schema_guard("objects", "id=?", c["object"]))
+	schema_attachments(project_id, survivors, comment_id, c.get("attachments"), "comment")
 
 def schema_activity(project_id, act):
 	if not object_bound(project_id, act.get("object", "")):
@@ -7177,17 +7234,18 @@ def schema_activity(project_id, act):
 		act.get("created", 0), act["object"]
 	)
 
-# Attachments land only on an object or comment of this project.
-def schema_attachments(project_id, survivors, container, rows):
+# Attachments land only on an object or comment of this project, as the kind
+# the caller knows container to be; None stores nothing.
+def schema_attachments(project_id, survivors, container, rows, kind):
 	rows = sequence(rows)
 	if not rows:
 		return
 	for att in rows:
 		if type(att) == "dict":
 			survivors["attachments"][att.get("id", "")] = True
-	if not object_bound(project_id, container) and not mochi.db.exists("select 1 from comments c join objects o on o.id=c.object where c.id=? and o.project=?", container, project_id):
+	if not kind or not container_in_project(container, kind, project_id):
 		return
-	attachment_store(rows, project_id, container)
+	attachment_store(rows, project_id, container, kind)
 
 # schema_prune(project_id, survivors, held, pull) removes what a complete
 # schema did not name of what the replica held before the pull began: the
@@ -7214,7 +7272,7 @@ def schema_prune(project_id, survivors, held, pull):
 			delete_object_local(project_id, row["id"], True)
 	for row in (mochi.db.rows("select c.id from comments c join objects o on c.object=o.id where o.project=?", project_id) or []):
 		if row["id"] in held["comments"] and row["id"] not in survivors["comments"] and permitted():
-			prune_attachments(row["id"], project_id, True)
+			prune_attachments(row["id"], project_id, True, "comment")
 			comment_remove(row["id"])
 	# Values the owner cleared, and attachments the owner deleted, on surviving
 	# objects and comments. Only references to files hosted elsewhere go; never
@@ -7223,7 +7281,7 @@ def schema_prune(project_id, survivors, held, pull):
 		key = (row["object"], row["field"])
 		if key in held["values"] and key not in survivors["values"]:
 			row_remove("values", "object=? and field=? and " + permit[0], [row["object"], row["field"]] + permit[1])
-	for row in (mochi.db.rows("select id from attachments where entity!='' and (object in (select id from objects where project=?) or object in (select c.id from comments c join objects o on o.id=c.object where o.project=?))", project_id, project_id) or []):
+	for row in (mochi.db.rows("select id from attachments where entity!='' and ((kind='object' and object in (select id from objects where project=?)) or (kind='comment' and object in (select c.id from comments c join objects o on o.id=c.object where o.project=?)))", project_id, project_id) or []):
 		if row["id"] in held["attachments"] and row["id"] not in survivors["attachments"] and permitted():
 			attachment_delete(row["id"])
 	design_prune(project_id, survivors["design"], held["design"], permit)
@@ -7553,9 +7611,10 @@ def event_sync_batch(e):
 		if not sync_element(obj, ["id"]):
 			continue
 		# Never adopt/reassign an object that already belongs to another
-		# project - a hijacking owner's batch could otherwise write values,
-		# comments and activity onto our other projects' rows via a colliding
-		# id (mirrors insert_schema's foreign_object guard).
+		# project, or an id a comment holds - a hijacking owner's batch could
+		# otherwise write values, comments and activity onto our other
+		# projects' rows via a colliding id (mirrors insert_schema's
+		# foreign_object guard).
 		if foreign_object(obj["id"], project_id):
 			continue
 		if not mochi.db.exists("select 1 from objects where id=?", obj["id"]):
@@ -7569,7 +7628,8 @@ def event_sync_batch(e):
 		for c in sequence(obj.get("comments")):
 			if not sync_element(c, ["id"]):
 				continue
-			# Skip a comment id already owned by another project's object.
+			# Skip a comment id already owned by another project's object, or
+			# held by an object.
 			if foreign_comment(c["id"], project_id):
 				continue
 			if not mochi.db.exists("select 1 from comments where id=?", c["id"]):
@@ -7673,10 +7733,12 @@ def event_object_create(e):
 	if not project_id:
 		return
 	object_id = e.content("id")
-	# A colliding global id that already belongs to another project is a
-	# hijack attempt by the sending owner - never let its payload (values,
-	# watcher, notification) touch our other projects' rows. Mirrors
-	# insert_schema's foreign_object guard.
+	if type(object_id) != "string" or not object_id:
+		return
+	# A colliding global id that already belongs to another project, or to a
+	# comment, is a hijack attempt by the sending owner - never let its payload
+	# (values, watcher, notification) touch that row. Mirrors insert_schema's
+	# foreign_object guard.
 	if foreign_object(object_id, project_id):
 		return
 	class_id = e.content("class") or ""
@@ -7919,7 +7981,7 @@ def event_comment_submit(e):
 	object_id = e.content("object")
 	# The submitter minted the id with mochi.uid on its host; anything else is
 	# a hand-built frame, and the id becomes a primary key and a URL segment.
-	if type(comment_id) != "string" or not mochi.text.valid(comment_id, "id"):
+	if not identifier(comment_id):
 		return
 	if type(object_id) != "string" or not object_id:
 		return
@@ -7948,19 +8010,25 @@ def event_comment_submit(e):
 	claimed = e.content("created")
 	if type(claimed) == "int" and claimed <= now + 300 and claimed >= now - 300:
 		now = claimed
-	if not mochi.db.exists("select 1 from comments where id=?", comment_id):
-		comment_merge({"id": comment_id, "object": object_id, "parent": parent, "author": sender, "name": name, "content": content.strip(), "created": now, "edited": 0})
-	# The existence test above is idempotence for a redelivered submission, and
-	# on its own it is also the way in: an id that already belongs to another
-	# project's comment skips the insert and then names that comment below.
-	# The object was checked against this project, so agreeing with it is proof.
-	if not comment_bound(comment_id, object_id):
+	# The id is the sender's choice, so it must be one no row holds: an object's
+	# or another comment's, in any project, would make this comment that row
+	# and its attachments this comment's. The one row it may name is this
+	# sender's own comment on this object: a redelivery after a failure past
+	# the insert, which carries on with what follows rather than leave the
+	# comment unannounced.
+	landed = mochi.db.row("select object, author from comments where id=?", comment_id)
+	if landed:
+		if landed["object"] != object_id or landed["author"] != sender:
+			return
+	elif identifier_held(comment_id):
 		return
+	else:
+		comment_merge({"id": comment_id, "object": object_id, "parent": parent, "author": sender, "name": name, "content": content.strip(), "created": now, "edited": 0})
 	# Store the submission's attachment metadata and take the bytes in from
 	# the sender now, while it is online; a pull that fails heals on serve.
 	attachments = e.content("attachments") or []
 	if attachments:
-		attachment_accept(attachments, sender, comment_id, project_id)
+		attachment_accept(attachments, sender, comment_id, project_id, kind="comment")
 	object_set(object_id, {"updated": now})
 	log_activity(object_id, sender, "commented")
 	row_merge("watchers", ["object", "user"], {"object": object_id, "user": sender, "created": now})
@@ -8042,17 +8110,10 @@ def event_attachment_remove(e):
 	if not project_id:
 		return
 	attachment_id = e.content("attachment")
-	if attachment_id:
-		# Bind the attachment to an object/comment in this project before deleting
-		# so a colliding id can't reach another project's attachment.
-		att = attachment_get(attachment_id)
-		if att:
-			obj = att.get("object")
-			in_project = mochi.db.exists("select 1 from objects where id=? and project=?", obj, project_id)
-			if not in_project:
-				in_project = mochi.db.exists("select 1 from comments c join objects o on o.id=c.object where c.id=? and o.project=?", obj, project_id)
-			if in_project:
-				attachment_delete(attachment_id)
+	# Bind the attachment to an object/comment in this project before deleting
+	# so a colliding id can't reach another project's attachment.
+	if attachment_id and attachment_in_project(attachment_id, project_id):
+		attachment_delete(attachment_id)
 	fp = mochi.entity.fingerprint(project_id)
 	if fp:
 		mochi.websocket.write(fp, {"type": "attachment/delete", "project": project_id, "attachment": attachment_id})
@@ -8064,6 +8125,10 @@ def event_comment_create(e):
 		return
 	comment_id = e.content("id")
 	object_id = e.content("object") or ""
+	# The owner chose the id: one an object holds, or one of another project's
+	# comments, is refused.
+	if type(comment_id) != "string" or not comment_id or foreign_comment(comment_id, project_id):
+		return
 	# Skip when the comment's object isn't local yet — comments.object FK
 	# would otherwise abort the handler and the comment would be lost.
 	if not object_id or not mochi.db.exists("select 1 from objects where id=? and project=?", object_id, project_id):
@@ -8079,7 +8144,7 @@ def event_comment_create(e):
 	# Store attachment metadata from the event
 	attachments = e.content("attachments") or []
 	if attachments:
-		attachment_store(attachments, e.header("from"), comment_id)
+		attachment_store(attachments, e.header("from"), comment_id, kind="comment")
 	fp = mochi.entity.fingerprint(project_id)
 	if fp:
 		mochi.websocket.write(fp, {"type": "comment/create", "project": project_id, "object": e.content("object")})
@@ -8995,21 +9060,17 @@ def do_comment_create(project_id, project, params, user_id, user_name):
 	# thread is stored, broadcast, and rendered nowhere.
 	if parent and not mochi.db.exists("select 1 from comments where id=? and object=?", parent, object_id):
 		return {"error": "errors.parent_comment_not_found", "code": 404}
-	comment_id = params.get("id") or mochi.uid()
+	# Minted here and returned, never the caller's: a chosen id could name an
+	# object's or another comment's row, and everything keyed on it.
+	comment_id = mochi.uid()
 	now = mochi.time.now()
-	if not mochi.db.exists("select 1 from comments where id=?", comment_id):
-		comment_merge({"id": comment_id, "object": object_id, "parent": parent, "author": user_id, "name": user_name, "content": content.strip(), "created": now, "edited": 0})
-	# The existence test is global: a supplied id belonging to another project's
-	# comment skips the insert and attachment_list would then broadcast that
-	# comment's metadata.
-	if not comment_bound(comment_id, object_id):
-		return {"error": "errors.comment_not_found", "code": 404}
+	comment_merge({"id": comment_id, "object": object_id, "parent": parent, "author": user_id, "name": user_name, "content": content.strip(), "created": now, "edited": 0})
 	object_set(object_id, {"updated": now})
 	log_activity(object_id, user_id, "commented")
 	# Auto-watch commenter on owner's server
 	row_merge("watchers", ["object", "user"], {"object": object_id, "user": user_id, "created": now})
 	# Include attachments in broadcast
-	comment_attachments = attachment_list(comment_id, project_id) or []
+	comment_attachments = attachment_list(comment_id, project_id, "comment") or []
 	comment_event = {
 		"project": project_id, "object": object_id, "id": comment_id,
 		"parent": parent, "author": user_id, "name": user_name,
@@ -10284,19 +10345,8 @@ def _create_project_object(user, project_id, obj_class, title, parent="", values
 			return {"error": forward_result["error"], "code": forward_result["code"]}
 
 		d = forward_result.get("data", {})
-		if not d.get("id"):
+		if not object_replicate(project_id, d, obj_class, parent, title, title_field, user.identity.id):
 			return {"error": "errors.no_object_returned", "code": 502}
-
-		now = mochi.time.now()
-		rank = d.get("rank", 0)
-		created = d.get("created") or now
-		updated = d.get("updated") or now
-		if not mochi.db.exists("select 1 from objects where id=?", d["id"]):
-			object_merge({"id": d["id"], "project": project_id, "class": obj_class, "number": d.get("number", 0), "parent": parent, "rank": rank, "created": created, "updated": updated})
-		if title and title_field:
-			value_merge(d["id"], title_field, title)
-		row_set("projects", "id=?", [project_id], {"updated": now})
-		row_merge("watchers", ["object", "user"], {"object": d["id"], "user": user.identity.id, "created": now})
 	# Fill every required enumerated field the caller omitted with its lowest-rank
 	# option, as the SPA create dialog does; otherwise the object lands without a
 	# status and hides from status-grouped views.

@@ -87,4 +87,36 @@ describe('endpoints.projects', () => {
       )
     })
   })
+
+  // A project, object, request or repository id comes from the route or from
+  // another server, so each goes in through path: one holding `../delete`, a
+  // query or a slash would otherwise aim the request at another action. Core
+  // routes on the decoded path, so a slash is refused rather than encoded.
+  describe('hostile ids', () => {
+    const REFUSED = ['../delete', 'a/b', '.', '..', '']
+
+    it('are refused by every builder', () => {
+      for (const id of REFUSED) {
+        expect(() => endpoints.projects.requests(id, 'obj1')).toThrow()
+        expect(() => endpoints.projects.requests('proj1', id)).toThrow()
+        expect(() =>
+          endpoints.projects.requestUpdate('proj1', 'obj1', id)
+        ).toThrow()
+        expect(() =>
+          endpoints.projects.requestDelete('proj1', id, 'req1')
+        ).toThrow()
+        expect(() => endpoints.projects.repositoryBranches(id)).toThrow()
+        expect(() => endpoints.projects.repositoryMerge(id)).toThrow()
+      }
+    })
+
+    it('keep a query inside its segment', () => {
+      expect(endpoints.projects.requestDelete('proj1', 'obj1', 'x?y=1')).toBe(
+        'proj1/-/objects/obj1/requests/x%3Fy%3D1/delete'
+      )
+      expect(endpoints.projects.repositoryDiff('x#y')).toBe(
+        '-/repositories/x%23y/diff'
+      )
+    })
+  })
 })

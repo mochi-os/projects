@@ -6,7 +6,7 @@
 // request.ts. The shared object/class/field routes come from @mochi/web; what
 // is spelled out below is what only this app has — templates, merge requests,
 // and the repository integration behind them.
-import { entityEndpoints } from '@mochi/web'
+import { entityEndpoints, path } from '@mochi/web'
 
 const endpoints = {
   projects: {
@@ -16,13 +16,13 @@ const endpoints = {
 
     // Request endpoints
     requests: (projectId: string, objectId: string) =>
-      `${projectId}/-/objects/${objectId}/requests`,
+      path`${projectId}/-/objects/${objectId}/requests`,
     requestCreate: (projectId: string, objectId: string) =>
-      `${projectId}/-/objects/${objectId}/requests/create`,
+      path`${projectId}/-/objects/${objectId}/requests/create`,
     requestUpdate: (projectId: string, objectId: string, requestId: string) =>
-      `${projectId}/-/objects/${objectId}/requests/${requestId}/update`,
+      path`${projectId}/-/objects/${objectId}/requests/${requestId}/update`,
     requestDelete: (projectId: string, objectId: string, requestId: string) =>
-      `${projectId}/-/objects/${objectId}/requests/${requestId}/delete`,
+      path`${projectId}/-/objects/${objectId}/requests/${requestId}/delete`,
 
     // Diff preference endpoints
     diffPreference: '-/diff/preference',
@@ -31,13 +31,13 @@ const endpoints = {
     // Repository integration endpoints (for merge requests)
     repositories: '-/repositories',
     repositoryBranches: (repositoryId: string) =>
-      `-/repositories/${repositoryId}/branches`,
+      path`-/repositories/${repositoryId}/branches`,
     repositoryMergeCheck: (repositoryId: string) =>
-      `-/repositories/${repositoryId}/merge/check`,
+      path`-/repositories/${repositoryId}/merge/check`,
     repositoryDiff: (repositoryId: string) =>
-      `-/repositories/${repositoryId}/diff`,
+      path`-/repositories/${repositoryId}/diff`,
     repositoryMerge: (repositoryId: string) =>
-      `-/repositories/${repositoryId}/merge`,
+      path`-/repositories/${repositoryId}/merge`,
   },
 } as const
 

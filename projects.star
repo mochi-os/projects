@@ -79,10 +79,24 @@ def schedule_access(e):
 	if fingerprint:
 		mochi.websocket.write(fingerprint, {"type": "project/update", "project": project_id})
 
+# remote_status is the status a far end's refusal is answered with here: its
+# own code when that is an error status, else [code]. A 401 becomes 502: to
+# every client of this server 401 means the caller's own session has ended,
+# and a peer's answer says nothing about that session.
+def remote_status(response, code=502):
+	status = response.get("code", code)
+	if type(status) == "float":
+		status = int(status)
+	if type(status) != "int" or status < 400 or status > 599:
+		return code
+	if status == 401:
+		return 502
+	return status
+
 # remote_error surfaces a failed mochi.remote.request: core-authored
 # transport failures (marked "transport") become a translated generic
 # error with the detail kept in the server log; far-end app answers
-# pass through unchanged.
+# pass through with their label, under remote_status.
 def remote_error(a, response, code=502):
 	# response is None when remote_dict refused the far end's shape; that is a
 	# transport-class failure as far as the caller is concerned.
@@ -91,10 +105,10 @@ def remote_error(a, response, code=502):
 		return
 	if response.get("transport"):
 		mochi.log.info("Remote transport error: %s", response.get("error", ""))
-		a.error.label(response.get("code", code), "errors.remote")
+		a.error.label(remote_status(response, code), "errors.remote")
 	else:
 		# The remote sends a stable label key; localise it in the caller's language.
-		a.error.label(response.get("code", code), response.get("error", "errors.remote"))
+		a.error.label(remote_status(response, code), response.get("error", "errors.remote"))
 
 def notify(topic, object="", title="", body="", url="", event_id=""):
 	mochi.service.call("notifications", "send", topic, object, title, body, url, mochi.app.label("notifications.topic." + topic.replace("/", ".")), "", "", None, event_id)
@@ -2472,10 +2486,10 @@ def forward_to_owner(a, project_id, action, params, handled=None):
 		return None
 	if result.get("error"):
 		if handled and result["error"] in handled:
-			return {"error": result["error"], "code": result.get("code", 500), "args": result.get("args")}
+			return {"error": result["error"], "code": remote_status(result, 500), "args": result.get("args")}
 		# The error field is a label key; resolve it in the requester's language,
 		# with any ICU args the owner returned alongside it.
-		a.error.label(result.get("code", 500), result["error"], **(result.get("args") or {}))
+		a.error.label(remote_status(result, 500), result["error"], **(result.get("args") or {}))
 		return None
 	return {"data": result}
 
@@ -5824,7 +5838,7 @@ def action_repositories_merge(a):
 			a.error.label(502, "errors.could_not_reach_project_owner")
 			return
 		if result.get("error"):
-			a.error.label(result.get("code", 500), result["error"], **(result.get("args") or {}))
+			a.error.label(remote_status(result, 500), result["error"], **(result.get("args") or {}))
 			return
 		return {"data": result}
 
@@ -10283,8 +10297,8 @@ def _subscribe_to_project(user, project_id, server):
 			return {"error": "errors.remote", "code": 502}
 		if response.get("error"):
 			if response.get("transport"):
-				return {"error": "errors.remote", "code": response.get("code", 502)}
-			return {"error": response["error"], "code": response.get("code", 404)}
+				return {"error": "errors.remote", "code": remote_status(response, 502)}
+			return {"error": response["error"], "code": remote_status(response, 404)}
 		project_name = response.get("name", "")
 		project_desc = response.get("description", "")
 		project_prefix = response.get("prefix", "PROJ")
@@ -10342,7 +10356,7 @@ def _forward_to_owner(user, project_id, action_name, params):
 	if not result:
 		return {"error": "errors.could_not_reach_project_owner", "code": 502}
 	if result.get("error"):
-		return {"error": result["error"], "code": result.get("code", 500)}
+		return {"error": result["error"], "code": remote_status(result, 500)}
 	return {"data": result}
 
 # Internal: create an object in `project_id`, subscriber-side. Optional `values`
@@ -10483,8 +10497,8 @@ def _check_project(user, project_id):
 		return {"error": "errors.remote", "code": 502}
 	if access.get("error"):
 		if access.get("transport"):
-			return {"error": "errors.remote", "code": access.get("code", 502)}
-		return {"error": access["error"], "code": access.get("code", 502)}
+			return {"error": "errors.remote", "code": remote_status(access, 502)}
+		return {"error": access["error"], "code": remote_status(access, 502)}
 	if not access.get("write", False):
 		return {"error": "errors.access_denied", "code": 403}
 

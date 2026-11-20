@@ -1525,7 +1525,7 @@ def export_attachments(object_id, project_id, frm, entries, kind="object"):
 
 # Warm the local attachment cache for a remote project before data/export:
 # pulling every attachment over P2P cannot fit one action's time budget. Runs up
-# to a minute and reports how many remain; callers loop until zero.
+# to 20 seconds and reports how many remain; callers loop until zero.
 def action_data_export_warm(a):
 
 	project_id, project = require_project(a, "view")
@@ -1542,7 +1542,8 @@ def action_data_export_warm(a):
 
 	start = mochi.time.now()
 	for i, identifier in enumerate(identifiers):
-		if mochi.time.now() - start > 60:
+		# Under the Android client's 30-second read timeout.
+		if mochi.time.now() - start > 20:
 			return {"data": {"attachments": len(identifiers), "remaining": len(identifiers) - i}}
 		attachment_fetch(identifier, a.user.identity.id)
 
@@ -2926,7 +2927,8 @@ def delete_object_local(project_id, object_id, preserve=False):
 # values the caller sets next would otherwise land on that row. The canonical
 # number, rank and timestamps are taken from the answer so every subscriber
 # agrees on the order, reduced to their types; an old owner replying without
-# them gets local now().
+# them gets local now(). The values the owner stored with it are its answer's
+# values, not the ones this server sent.
 def object_replicate(project_id, answer, obj_class, parent, title, title_field, user_id):
 	if type(answer) != "dict":
 		return False
@@ -2941,6 +2943,12 @@ def object_replicate(project_id, answer, obj_class, parent, title, title_field, 
 		object_merge({"id": object_id, "project": project_id, "class": obj_class, "number": safe_int(answer.get("number")), "parent": parent, "rank": rank, "created": safe_int(answer.get("created")) or now, "updated": safe_int(answer.get("updated")) or now})
 	if title and title_field:
 		value_merge(object_id, title_field, title)
+	values = answer.get("values")
+	if type(values) == "dict" and object_bound(project_id, object_id):
+		for field, value in values.items():
+			if type(field) != "string" or type(value) != "string" or value_refused(project_id, object_id, field, value):
+				continue
+			value_merge(object_id, field, value)
 	row_set("projects", "id=?", [project_id], {"updated": now})
 	# Auto-watch creator locally so subscriber gets notifications
 	row_merge("watchers", ["object", "user"], {"object": object_id, "user": user_id, "created": now})
@@ -3027,6 +3035,12 @@ def action_object_create(a):
 		a.error.label(400, "errors.title_too_long")
 		return
 
+	# A JSON body's object arrives as its JSON text; a form sends the text.
+	values, problem = create_values(a.input("values"))
+	if problem:
+		a.error.label(400, problem)
+		return
+
 	# Look up the title field for this class
 	title_field_row = mochi.db.row("select title from classes where project=? and id=?", project_id, obj_class)
 	title_field = title_field_row["title"] if title_field_row else ""
@@ -3034,7 +3048,7 @@ def action_object_create(a):
 	if project["owner"] != 1:
 		result = forward_to_owner(a, project_id, "object/create", {
 			"project": project_id, "class": obj_class,
-			"title": title, "parent": parent,
+			"title": title, "parent": parent, "values": values,
 		})
 		if result and result.get("data"):
 			if not object_replicate(project_id, result["data"], obj_class, parent, title, title_field, a.user.identity.id):
@@ -3046,65 +3060,17 @@ def action_object_create(a):
 		a.error.label(403, "errors.access_denied")
 		return
 
-	if not obj_class:
-		a.error.label(400, "errors.class_is_required")
+	# The same helper a forwarded object/create reaches.
+	created = do_object_create(project_id, project, {"class": obj_class, "parent": parent, "title": title, "values": values}, a.user.identity.id)
+	if "error" in created:
+		a.error.label(created.get("code", 500), created["error"], **(created.get("args") or {}))
 		return
-
-	# Verify class exists
-	class_row = mochi.db.row("select id from classes where project=? and id=?", project_id, obj_class)
-	if not class_row:
-		a.error.label(400, "errors.invalid_class")
-		return
-
-	# Check hierarchy rules
-	parent_class = ""
-	if parent:
-		parent_row = mochi.db.row("select class from objects where id=? and project=?", parent, project_id)
-		if not parent_row:
-			a.error.label(404, "errors.parent_object_not_found")
-			return
-		parent_class = parent_row["class"]
-	allowed = mochi.db.exists("select 1 from hierarchy where project=? and class=? and parent=?", project_id, obj_class, parent_class)
-	if not allowed:
-		a.error.label(400, "errors.hierarchy_disallowed")
-		return
-
-	# Derive the next per-project number from the objects log (replication-safe;
-	# no mutated shared counter). The objects(project, number) index makes the
-	# max() an index seek.
-	new_counter = mochi.db.row("select coalesce(max(number), 0) + 1 as next from objects where project=?", project_id)["next"]
-	row_set("projects", "id=?", [project_id], {"updated": mochi.time.now()})
-	# Calculate initial rank (add to end of parent or project)
-	initial_rank = rank_after_all(project_id, None)
-
-	# Create object
-	object_id = mochi.uid()
-	now = mochi.time.now()
-
-	object_merge({"id": object_id, "project": project_id, "class": obj_class, "number": new_counter, "parent": parent, "rank": initial_rank, "created": now, "updated": now})
-
-	# Set title if provided
-	values = {}
-	if title and title_field:
-		value_merge(object_id, title_field, title)
-		values[title_field] = title
-
-	# Log activity
-	log_activity(object_id, a.user.identity.id, "created")
-
-	# Auto-watch creator
-	row_merge("watchers", ["object", "user"], {"object": object_id, "user": a.user.identity.id, "created": now})
-	# Broadcast to subscribers
-	broadcast_event(project_id, "object/create", {
-		"project": project_id, "id": object_id, "class": obj_class,
-		"number": new_counter, "parent": parent, "rank": initial_rank, "values": values,
-		"created": now, "updated": now, "user": a.user.identity.id
-	})
 
 	return {"data": {
-		"id": object_id,
-		"number": new_counter,
-		"readable": project["prefix"] + "-" + str(new_counter)
+		"id": created["id"],
+		"number": created["number"],
+		"readable": created["readable"],
+		"values": created["values"],
 	}}
 
 def action_object_get(a):
@@ -3376,24 +3342,11 @@ def action_object_move(a):
 	value = a.input("value")  # New column value
 	new_rank = a.input("rank")
 
-	if field and len(field) > 100:
-		a.error.label(400, "errors.field_name_too_long")
-		return
-
-	if field and not mochi.db.exists("select 1 from fields where project=? and class=? and id=?", project_id, obj_class, field):
-		a.error.label(400, "errors.field_not_found")
-		return
-
-	# A value with no field would land under the empty field name and cascade
-	# there; every guard above is "if field and ...", so nothing else stops it.
-	# An empty value means "keep the current one", and a reorder within a parent
-	# sends exactly that with no field.
-	if value and not field:
-		a.error.label(400, "errors.field_not_found")
-		return
-
-	if value and len(str(value)) > 10000:
-		a.error.label(400, "errors.value_too_long")
+	# Every value the move writes is checked before it changes anything.
+	row_field, row_value = row_input(a.input("row"))
+	invalid = move_check(project_id, obj_class, field, value, row_field, row_value)
+	if invalid:
+		a.error.label(400, invalid["key"], **(invalid.get("args") or {}))
 		return
 
 	# A drop into another parent's children at a position: the new parent and
@@ -3440,16 +3393,6 @@ def action_object_move(a):
 		object_set(object_id, {"rank": new_key})
 
 	# Handle row field change (for swimlane drag-drop)
-	row_field, row_value = row_input(a.input("row"))
-	if row_field and len(row_field) > 100:
-		a.error.label(400, "errors.field_name_too_long")
-		return
-	if row_field and not mochi.db.exists("select 1 from fields where project=? and class=? and id=?", project_id, obj_class, row_field):
-		a.error.label(400, "errors.field_not_found")
-		return
-	if row_value and len(str(row_value)) > 10000:
-		a.error.label(400, "errors.value_too_long")
-		return
 	row_changed = False
 	if row_field:
 		old_row_row = mochi.db.row("select value from \"values\" where object=? and field=?", object_id, row_field)
@@ -3576,7 +3519,7 @@ def action_values_set(a):
 		if a.input(field_id) == None:
 			continue
 		new_value = a.input(field_id)
-		if len(str(new_value)) > 10000:
+		if len(str(new_value)) > 50000:
 			a.error.label(400, "errors.value_too_long")
 			return
 		invalid = validate_field_value(project_id, row["class"], field_id, new_value)
@@ -3662,7 +3605,7 @@ def action_value_set(a):
 		return
 
 	new_value = a.input("value") or ""
-	if len(new_value) > 10000:
+	if len(new_value) > 50000:
 		a.error.label(400, "errors.value_too_long")
 		return
 
@@ -7757,6 +7700,8 @@ def event_object_create(e):
 	values = e.content("values") or {}
 	if values and mochi.db.exists("select 1 from objects where id=? and project=?", object_id, project_id):
 		for field, value in values.items():
+			if value_refused(project_id, object_id, field, value):
+				continue
 			value_merge(object_id, field, value)
 	user = e.content("user") or ""
 	# Activity history arrives separately via the activity/log broadcast,
@@ -9146,6 +9091,9 @@ def do_object_create(project_id, project, params, user_id):
 	title = params.get("title", "")
 	if check_length(title, 500):
 		return {"error": "errors.title_too_long", "code": 400}
+	submitted, problem = create_values(params.get("values"))
+	if problem:
+		return {"error": problem, "code": 400}
 
 	# Check hierarchy rules
 	parent_class = ""
@@ -9157,6 +9105,10 @@ def do_object_create(project_id, project, params, user_id):
 	allowed = mochi.db.exists("select 1 from hierarchy where project=? and class=? and parent=?", project_id, obj_class, parent_class)
 	if not allowed:
 		return {"error": "errors.hierarchy_disallowed", "code": 400}
+
+	kept, invalid = create_values_check(project_id, obj_class, submitted)
+	if invalid:
+		return {"error": invalid["key"], "args": invalid.get("args"), "code": 400}
 
 	title_field_row = mochi.db.row("select title from classes where project=? and id=?", project_id, obj_class)
 	title_field = title_field_row["title"] if title_field_row else ""
@@ -9170,16 +9122,25 @@ def do_object_create(project_id, project, params, user_id):
 	now = mochi.time.now()
 	object_merge({"id": object_id, "project": project_id, "class": obj_class, "number": new_counter, "parent": parent, "rank": initial_rank, "created": now, "updated": now})
 	values = {}
+	for field, value in kept.items():
+		value_merge(object_id, field, value)
+		values[field] = value
 	if title and title_field:
 		value_merge(object_id, title_field, title)
 		values[title_field] = title
-	log_activity(object_id, user_id, "created")
 	row_merge("watchers", ["object", "user"], {"object": object_id, "user": user_id, "created": now})
+	# Auto-watch assigned users, as a value set does
+	for f in mochi.db.rows("select id from fields where project=? and class=? and fieldtype='user'", project_id, obj_class) or []:
+		if values.get(f["id"]):
+			row_merge("watchers", ["object", "user"], {"object": object_id, "user": values[f["id"]], "created": now})
 	broadcast_event(project_id, "object/create", {
 		"project": project_id, "id": object_id, "class": obj_class,
 		"number": new_counter, "parent": parent, "rank": initial_rank, "values": values,
 		"created": now, "updated": now, "user": user_id
 	})
+	# After the broadcast: a subscriber sent the activity first holds no object
+	# for it yet, and pulls the whole schema again to find one.
+	log_activity(object_id, user_id, "created")
 	# Notify owner when subscriber creates an object
 	owner_id = get_owner_identity(project_id)
 	if owner_id and owner_id != user_id:
@@ -9190,7 +9151,7 @@ def do_object_create(project_id, project, params, user_id):
 		notify("update/created", project_id, display, mochi.app.label("notifications.body.created"), url, event_id="update/created:" + object_id)
 	return {"id": object_id, "number": new_counter, "rank": initial_rank,
 			"created": now, "updated": now,
-			"readable": project["prefix"] + "-" + str(new_counter)}
+			"readable": project["prefix"] + "-" + str(new_counter), "values": values}
 
 def do_object_update(project_id, project, params, user_id):
 	object_id = params.get("object")
@@ -9247,26 +9208,19 @@ def do_object_move(project_id, project, params, user_id):
 		return {"error": "errors.object_not_found", "code": 404}
 	if params.get("promote", "") == "true" and not promotable(project_id, object_id, row["class"]):
 		return {"error": "errors.parent_hierarchy_disallowed", "code": 400}
-	if check_length(params.get("value"), 10000):
-		return {"error": "errors.value_too_long", "code": 400}
-	row_field, row_value = row_input(params.get("row"))
-	if check_length(row_value, 10000):
-		return {"error": "errors.value_too_long", "code": 400}
 	old_rank = row["rank"]
 	obj_class = row["class"]
 	field = params.get("field", "")
 	if type(field) != "string":
 		return {"error": "errors.invalid_value", "code": 400}
-	if check_length(field, 100):
-		return {"error": "errors.field_name_too_long", "code": 400}
-	if field and not mochi.db.exists("select 1 from fields where project=? and class=? and id=?", project_id, obj_class, field):
-		return {"error": "errors.field_not_found", "code": 400}
-	# Same as the HTTP twin: a value with no field is not a move.
-	if params.get("value") and not field:
-		return {"error": "errors.field_not_found", "code": 400}
 	value = params.get("value")
 	if value != None and type(value) != "string":
 		return {"error": "errors.invalid_value", "code": 400}
+	# Same as the HTTP twin: every value is checked before anything changes.
+	row_field, row_value = row_input(params.get("row"))
+	invalid = move_check(project_id, obj_class, field, value, row_field, row_value)
+	if invalid:
+		return {"error": invalid["key"], "args": invalid.get("args"), "code": 400}
 	new_rank = params.get("rank")
 	# Reachable over P2P from any subscriber with write access: int() on a
 	# non-integer would abort the owner-side handler, so answer a clean 400.
@@ -9305,10 +9259,6 @@ def do_object_move(project_id, project, params, user_id):
 		# rank_after_all); project-max >= the column's last, so it still lands last.
 		new_key = rank_after_all(project_id, object_id)
 		object_set(object_id, {"rank": new_key})
-	if check_length(row_field, 100):
-		return {"error": "errors.field_name_too_long", "code": 400}
-	if row_field and not mochi.db.exists("select 1 from fields where project=? and class=? and id=?", project_id, obj_class, row_field):
-		return {"error": "errors.field_not_found", "code": 400}
 	row_changed = False
 	if row_field:
 		old_row_row = mochi.db.row("select value from \"values\" where object=? and field=?", object_id, row_field)
@@ -9450,6 +9400,88 @@ def validate_field_value(project_id, class_id, field_id, value):
 		if not mochi.text.valid(value, "entity"):
 			return {"key": "errors.invalid_value"}
 
+	elif ftype == "checklist":
+		if not checklist_valid(value):
+			return {"key": "errors.invalid_value"}
+
+	return None
+
+# Whether value is a checklist as clients write one: a JSON list of objects,
+# each with a non-empty string id, a string text and a bool done. Lists stored
+# before this check are repaired by the clients on read.
+def checklist_valid(value):
+	items = json.decode(value, None)
+	if type(items) != "list":
+		return False
+	for item in items:
+		if type(item) != "dict":
+			return False
+		if type(item.get("id")) != "string" or not item["id"]:
+			return False
+		if type(item.get("text")) != "string" or type(item.get("done")) != "bool":
+			return False
+	return True
+
+# create_values(raw) -> (values, error key): the field values an object create
+# carries, a JSON object of field id to string or its JSON text. None or "" is
+# no values.
+def create_values(raw):
+	if raw == None or raw == "":
+		return {}, None
+	if type(raw) == "string":
+		raw = json.decode(raw, None)
+	if type(raw) != "dict":
+		return None, "errors.invalid_value"
+	for field, value in raw.items():
+		if type(field) != "string" or type(value) != "string":
+			return None, "errors.invalid_value"
+	return raw, None
+
+# create_values_check(project_id, class_id, values) -> (kept, problem): the
+# values of a new object that name a field of its class and are not empty, or
+# the first that cannot be stored as {"key", "args"}. Runs before the object
+# row is written, so a refusal creates nothing.
+def create_values_check(project_id, class_id, values):
+	for value in values.values():
+		if len(value) > 50000:
+			return None, {"key": "errors.value_too_long"}
+	fields = {}
+	for f in mochi.db.rows("select id from fields where project=? and class=?", project_id, class_id) or []:
+		fields[f["id"]] = True
+	kept = {}
+	for field, value in values.items():
+		if field not in fields or value == "":
+			continue
+		invalid = validate_field_value(project_id, class_id, field, value)
+		if invalid:
+			return None, invalid
+		kept[field] = value
+	return kept, None
+
+# move_check(project_id, class_id, field, value, row_field, row_value) -> the
+# first value a move may not write as {"key", "args"}, or None. A value is the
+# column of field the object moves into and a row value its lane of row_field;
+# an empty one keeps or clears it. Runs before the move changes anything, so a
+# refused move changes nothing.
+def move_check(project_id, class_id, field, value, row_field, row_value):
+	for name in (field, row_field):
+		if len(name) > 100:
+			return {"key": "errors.field_name_too_long"}
+		if name and not mochi.db.exists("select 1 from fields where project=? and class=? and id=?", project_id, class_id, name):
+			return {"key": "errors.field_not_found"}
+	# A value with no field would land under the empty field name and cascade
+	# there. An empty value means "keep the current one", and a reorder within a
+	# parent sends exactly that with no field.
+	if value and not field:
+		return {"key": "errors.field_not_found"}
+	for name, written in ((field, value), (row_field, row_value)):
+		if not written:
+			continue
+		if len(written) > 50000:
+			return {"key": "errors.value_too_long"}
+		invalid = validate_field_value(project_id, class_id, name, written)
+		if invalid:
+			return invalid
 	return None
 
 # Value helpers
@@ -10314,12 +10346,14 @@ def _forward_to_owner(user, project_id, action_name, params):
 	return {"data": result}
 
 # Internal: create an object in `project_id`, subscriber-side. Optional `values`
-# dict sets additional field values via per-field "value/set" forwards after
-# creation (used by help to set category="bug" / "feature" on tickets).
-# Returns {"id", "number", "readable", "fingerprint"} or {"error", "code"}.
+# dict of field id to string travels with the create (used by help to set
+# category="bug" / "feature" on tickets); a value the owner refuses creates
+# nothing. Returns {"id", "number", "readable", "fingerprint"} or {"error", "code"}.
 def _create_project_object(user, project_id, obj_class, title, parent="", values={}):
 	if len(title) > 500:
 		return {"error": "errors.title_too_long", "code": 400}
+	if type(values) != "dict":
+		return {"error": "errors.invalid_value", "code": 400}
 
 	project = get_project(project_id)
 	if not project:
@@ -10329,28 +10363,13 @@ def _create_project_object(user, project_id, obj_class, title, parent="", values
 	title_field_row = mochi.db.row("select title from classes where project=? and id=?", project_id, obj_class)
 	title_field = title_field_row["title"] if title_field_row else ""
 
-	if owner:
-		# Our own project: create here through the same helper a forwarded
-		# object/create reaches, under the same write gate.
-		if not check_project_access(user.identity.id, project_id, "write"):
-			return {"error": "errors.access_denied", "code": 403}
-		d = do_object_create(project_id, project, {"class": obj_class, "title": title, "parent": parent}, user.identity.id)
-		if "error" in d:
-			return {"error": d["error"], "code": d.get("code", 500)}
-	else:
-		forward_result = _forward_to_owner(user, project_id, "object/create", {
-			"project": project_id, "class": obj_class, "title": title, "parent": parent,
-		})
-		if "error" in forward_result:
-			return {"error": forward_result["error"], "code": forward_result["code"]}
-
-		d = forward_result.get("data", {})
-		if not object_replicate(project_id, d, obj_class, parent, title, title_field, user.identity.id):
-			return {"error": "errors.no_object_returned", "code": 502}
 	# Fill every required enumerated field the caller omitted with its lowest-rank
 	# option, as the SPA create dialog does; otherwise the object lands without a
-	# status and hides from status-grouped views.
-	filled = dict(values)
+	# status and hides from status-grouped views. Empty values are not sent.
+	filled = {}
+	for field_id, field_value in values.items():
+		if field_value:
+			filled[field_id] = field_value
 	required_enums = mochi.db.rows(
 		"select id from fields where project=? and class=? and fieldtype='enumerated' and flags like '%required%'",
 		project_id, obj_class,
@@ -10366,20 +10385,24 @@ def _create_project_object(user, project_id, obj_class, title, parent="", values
 		if first:
 			filled[fid] = first["id"]
 
-	# One set per field. Failures are non-fatal — the ticket still got
-	# created; the field stays at its default and the user can adjust it later.
-	for field_id, field_value in filled.items():
-		if not field_value:
-			continue
-		if owner:
-			do_value_set(project_id, project, {"object": d["id"], "field": field_id, "value": field_value}, user.identity.id)
-			continue
-		set_result = _forward_to_owner(user, project_id, "value/set", {
-			"project": project_id, "object": d["id"],
-			"field": field_id, "value": field_value,
+	if owner:
+		# Our own project: create here through the same helper a forwarded
+		# object/create reaches, under the same write gate.
+		if not check_project_access(user.identity.id, project_id, "write"):
+			return {"error": "errors.access_denied", "code": 403}
+		d = do_object_create(project_id, project, {"class": obj_class, "title": title, "parent": parent, "values": filled}, user.identity.id)
+		if "error" in d:
+			return {"error": d["error"], "code": d.get("code", 500)}
+	else:
+		forward_result = _forward_to_owner(user, project_id, "object/create", {
+			"project": project_id, "class": obj_class, "title": title, "parent": parent, "values": filled,
 		})
-		if "error" not in set_result:
-			value_merge(d["id"], field_id, field_value)
+		if "error" in forward_result:
+			return {"error": forward_result["error"], "code": forward_result["code"]}
+
+		d = forward_result.get("data", {})
+		if not object_replicate(project_id, d, obj_class, parent, title, title_field, user.identity.id):
+			return {"error": "errors.no_object_returned", "code": 502}
 
 	return {
 		"id": d["id"],

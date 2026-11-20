@@ -225,7 +225,7 @@ export function ProjectPageContent({
           name: t`Name`,
           everything: t`Everything`,
           designOnly: t`Design only`,
-          allowSearch: t`Allow anyone to search for project`,
+          allowSearch: t`Allow anyone to view and comment on project`,
           cancel: t`Cancel`,
           confirm: t`Copy`,
           duplicating: t`Copying project...`,

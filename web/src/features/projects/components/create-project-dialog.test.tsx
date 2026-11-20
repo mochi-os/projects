@@ -136,3 +136,72 @@ describe('CreateProjectDialog import selection', () => {
     release({ data: { id: 'p1', fingerprint: 'fp1' } })
   })
 })
+
+describe('CreateProjectDialog privacy', () => {
+  const label = 'Allow anyone to view and comment on project'
+
+  beforeEach(() => {
+    vi.clearAllMocks()
+    api.templates.mockResolvedValue({
+      data: {
+        templates: [
+          { id: 'blank', name: 'Blank', description: '', classes: [] },
+        ],
+      },
+    } as never)
+    api.create.mockResolvedValue({ data: { fingerprint: 'fp1' } } as never)
+  })
+
+  async function create() {
+    fireEvent.click(screen.getByRole('button', { name: /next/i }))
+    fireEvent.click(await screen.findByText('Blank'))
+    fireEvent.click(screen.getByRole('button', { name: /create project/i }))
+  }
+
+  it('creates a private project unless the switch is turned on', async () => {
+    render(<CreateProjectDialog open onOpenChange={() => {}} hideTrigger />)
+
+    fireEvent.change(await screen.findByLabelText(/name/i), {
+      target: { value: 'Quiet' },
+    })
+    expect(screen.getByRole('switch', { name: label })).not.toBeChecked()
+    await create()
+
+    await waitFor(() =>
+      expect(api.create).toHaveBeenCalledWith(
+        expect.objectContaining({ privacy: 'private' })
+      )
+    )
+  })
+
+  it('creates a public project with the switch on', async () => {
+    render(<CreateProjectDialog open onOpenChange={() => {}} hideTrigger />)
+
+    fireEvent.change(await screen.findByLabelText(/name/i), {
+      target: { value: 'Open' },
+    })
+    fireEvent.click(screen.getByRole('switch', { name: label }))
+    await create()
+
+    await waitFor(() =>
+      expect(api.create).toHaveBeenCalledWith(
+        expect.objectContaining({ privacy: 'public' })
+      )
+    )
+  })
+
+  it('turns the switch off again when the dialog closes', async () => {
+    const { rerender } = render(
+      <CreateProjectDialog open onOpenChange={() => {}} hideTrigger />
+    )
+    fireEvent.click(await screen.findByRole('switch', { name: label }))
+    expect(screen.getByRole('switch', { name: label })).toBeChecked()
+
+    rerender(
+      <CreateProjectDialog open={false} onOpenChange={() => {}} hideTrigger />
+    )
+    rerender(<CreateProjectDialog open onOpenChange={() => {}} hideTrigger />)
+
+    expect(await screen.findByRole('switch', { name: label })).not.toBeChecked()
+  })
+})

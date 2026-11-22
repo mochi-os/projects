@@ -816,6 +816,7 @@ msgid "Copied"
 msgstr "Đã sao chép"
 
 #: ../../../lib/web/src/components/comment-share-button.tsx
+#: ../../../lib/web/src/components/share-menu.tsx
 #: ../../../lib/web/src/components/ui/copy-button.tsx
 msgid "Copied to clipboard"
 msgstr "Đã sao chép vào bộ nhớ tạm"
@@ -833,6 +834,7 @@ msgstr "Đã sao chép vào bộ nhớ tạm"
 msgid "Copy"
 msgstr "Sao chép"
 
+#: src/lib/share-labels.ts
 #: src/routes/_authenticated/$projectId/index.tsx
 msgid "Copy link"
 msgstr "Sao chép liên kết"
@@ -1345,6 +1347,7 @@ msgid "Failed to check merge status"
 msgstr "Không kiểm tra trạng thái hợp nhất được"
 
 #: ../../../lib/web/src/components/comment-share-button.tsx
+#: ../../../lib/web/src/components/share-menu.tsx
 #: ../../../lib/web/src/components/ui/copy-button.tsx
 #: ../../../lib/web/src/lib/toast-utils.ts
 msgid "Failed to copy"
@@ -1365,8 +1368,7 @@ msgid "Failed to create field"
 msgstr "Không tạo trường được"
 
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx
-#: ../../../lib/web/src/components/options-menu.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: ../../../lib/web/src/components/share-menu.tsx
 msgid "Failed to create link"
 msgstr "Không tạo liên kết được"
 
@@ -1811,11 +1813,6 @@ msgstr "Chỉ chữ cái, chữ số, dấu cách, dấu gạch nối và dấu 
 #: ../../../lib/web/src/lib/preference-utils.ts
 msgid "Light"
 msgstr "Sáng"
-
-#: ../../../lib/web/src/components/options-menu.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
-msgid "Link"
-msgstr "Liên kết"
 
 #: ../../../lib/web/src/components/entity/entity-activity-list.tsx
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx
@@ -2376,6 +2373,10 @@ msgstr "Vui lòng thử lại."
 msgid "Please wait a moment and try again."
 msgstr "Vui lòng đợi một lát rồi thử lại."
 
+#: src/lib/share-labels.ts
+msgid "Post to a feed"
+msgstr "Đăng lên một nguồn cấp"
+
 #: ../../../lib/web/src/components/options-menu.tsx
 msgid "Posts"
 msgstr "Bài viết"
@@ -2447,10 +2448,6 @@ msgstr "Đã tạo dự án"
 #: src/routes/_authenticated/$projectId_.settings.tsx
 msgid "Project deleted"
 msgstr "Đã xoá dự án"
-
-#: src/routes/_authenticated/$projectId/index.tsx
-msgid "Project link"
-msgstr "Liên kết dự án"
 
 #: src/routes/_authenticated/$projectId_.settings.tsx
 #: src/routes/_authenticated/$projectId/index.tsx
@@ -2861,6 +2858,10 @@ msgstr "Gửi lại"
 msgid "Send email"
 msgstr "Gửi email"
 
+#: src/lib/share-labels.ts
+msgid "Send in a chat"
+msgstr "Gửi trong cuộc trò chuyện"
+
 #: ../../../lib/web/src/components/game/game-chat-input.tsx
 #: ../../../lib/web/src/components/game/game-chat-input.tsx
 msgid "Send message"
@@ -2906,6 +2907,7 @@ msgstr "Cài đặt"
 
 #: ../../../lib/web/src/components/comment-share-button.tsx
 #: ../../../lib/web/src/components/comment-share-button.tsx
+#: ../../../lib/web/src/components/share-menu.tsx
 msgid "Share"
 msgstr "Chia sẻ"
 

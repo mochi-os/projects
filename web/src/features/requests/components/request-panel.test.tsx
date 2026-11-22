@@ -2,7 +2,13 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 // This file is part of Mochi, licensed under the GNU AGPL v3 with the
 // Mochi Application Interface Exception - see license.txt and license-exception.md.
-import { render, waitFor } from '@/test/test-utils'
+import {
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+  within,
+} from '@/test/test-utils'
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import projectsApi from '@/api/projects'
 import { RequestPanel } from './request-panel'
@@ -15,6 +21,9 @@ vi.mock('@/api/projects', () => ({
     createRequest: vi.fn(),
     deleteRequest: vi.fn(),
     checkMerge: vi.fn(),
+    getDiff: vi.fn(),
+    merge: vi.fn(),
+    listRepositories: vi.fn(),
   },
 }))
 
@@ -132,6 +141,66 @@ describe('RequestPanel target seeding', () => {
       'object1',
       'request1',
       expect.anything()
+    )
+  })
+})
+
+// The merge names its request, and the server records it merged in the same
+// call; only an answer that does not say so leaves the client to record it.
+describe('RequestPanel merging', () => {
+  const ready = request({ source: 'feature', target: 'trunk' })
+
+  beforeEach(() => {
+    vi.clearAllMocks()
+    // An expanded request scrolls itself into view, which jsdom lacks.
+    Element.prototype.scrollIntoView = vi.fn()
+    vi.mocked(projectsApi.updateRequest).mockResolvedValue({ data: ready })
+    vi.mocked(projectsApi.getRepositoryBranches).mockResolvedValue({
+      data: { branches: [] },
+    } as never)
+    vi.mocked(projectsApi.listRepositories).mockResolvedValue({
+      data: { repositories: [] },
+    } as never)
+    vi.mocked(projectsApi.getDiff).mockResolvedValue({ data: '' })
+    vi.mocked(projectsApi.checkMerge).mockResolvedValue({
+      data: { mergeable: true, conflicts: [], ahead: 1, behind: 0 },
+    })
+  })
+
+  async function merge() {
+    fireEvent.click(await screen.findByText('A merge request'))
+    const button = await screen.findByRole('button', { name: 'Merge commit' })
+    await waitFor(() => expect(button).toBeEnabled())
+    fireEvent.click(button)
+    const dialog = await screen.findByRole('dialog')
+    fireEvent.click(within(dialog).getByRole('button', { name: 'Merge commit' }))
+    await waitFor(() => expect(projectsApi.merge).toHaveBeenCalled())
+  }
+
+  it('records the request merged in the merge itself', async () => {
+    vi.mocked(projectsApi.merge).mockResolvedValue({
+      data: { success: true, commit: 'c', message: 'm', recorded: true },
+    })
+    render(panel([ready]))
+    await merge()
+    expect(vi.mocked(projectsApi.merge).mock.calls[0][6]).toBe('request1')
+    await screen.findByText('Merged successfully')
+    expect(projectsApi.updateRequest).not.toHaveBeenCalled()
+  })
+
+  it('records it with a second call when the answer does not say it did', async () => {
+    vi.mocked(projectsApi.merge).mockResolvedValue({
+      data: { success: true, commit: 'c', message: 'm' },
+    })
+    render(panel([ready]))
+    await merge()
+    await waitFor(() =>
+      expect(projectsApi.updateRequest).toHaveBeenCalledWith(
+        'project1',
+        'object1',
+        'request1',
+        { status: 'merged' }
+      )
     )
   })
 })

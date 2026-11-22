@@ -178,6 +178,11 @@ export function RequestPanel({
           expanded={expandedId === req.id}
           onToggle={() => setExpandedId(expandedId === req.id ? null : req.id)}
           onUpdate={(data) => handleUpdate(req.id, data)}
+          onMerged={() =>
+            queryClient.invalidateQueries({
+              queryKey: ['object', projectId, objectId],
+            })
+          }
           onDelete={() => setDeleteId(req.id)}
           objectTitle={objectTitle}
           objectReadable={objectReadable}
@@ -214,6 +219,8 @@ interface RequestItemProps {
     description?: string
     draft?: string
   }) => void
+  /** The server recorded the request merged: read it again. */
+  onMerged: () => void
   onDelete: () => void
   objectTitle: string
   objectReadable: string
@@ -226,6 +233,7 @@ function RequestItem({
   expanded,
   onToggle,
   onUpdate,
+  onMerged,
   onDelete,
   objectTitle,
   objectReadable,
@@ -322,8 +330,14 @@ function RequestItem({
     onUpdate({ target: value })
   }
 
-  const handleMergeComplete = () => {
-    onUpdate({ status: 'merged' })
+  // The merge names its request, so the server records it merged in the same
+  // call; one that did not say so (an older server) is recorded here.
+  const handleMergeComplete = (recorded: boolean) => {
+    if (recorded) {
+      onMerged()
+    } else {
+      onUpdate({ status: 'merged' })
+    }
   }
 
   const handleTitleBlur = () => {
@@ -519,6 +533,7 @@ function RequestItem({
                       objectTitle={objectTitle}
                       objectReadable={objectReadable}
                       projectId={projectId}
+                      requestId={request.id}
                       onMergeComplete={handleMergeComplete}
                       disabled={readOnly || isDraft}
                     />

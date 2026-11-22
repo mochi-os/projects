@@ -21,7 +21,10 @@ interface MergeButtonProps {
   objectTitle: string
   objectReadable: string
   projectId?: string
-  onMergeComplete?: () => void
+  /** The merge request the merge completes, which the server records merged. */
+  requestId?: string
+  /** Called with whether the server recorded the request merged itself. */
+  onMergeComplete?: (recorded: boolean) => void
   disabled?: boolean
 }
 
@@ -33,6 +36,7 @@ export function MergeButton({
   objectTitle,
   objectReadable,
   projectId,
+  requestId,
   onMergeComplete,
   disabled,
 }: MergeButtonProps) {
@@ -49,13 +53,14 @@ export function MergeButton({
         target,
         message,
         projectId,
-        method
+        method,
+        requestId
       )
       return response.data
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
       setShowConfirm(false)
-      onMergeComplete?.()
+      onMergeComplete?.(data?.recorded === true)
     },
   })
 

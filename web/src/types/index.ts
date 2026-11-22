@@ -112,22 +112,20 @@ export interface BranchListResponse {
   }
 }
 
+// A check or diff the repositories service could not make answers an error
+// status with the reason, never one of these.
 export interface MergeCheckResponse {
   data: {
     mergeable: boolean
     conflicts: string[]
     ahead: number
     behind: number
-    // The action's own answer when the repositories service is unavailable;
-    // mergeable is false then, but not because of the branches.
-    error?: string
   }
 }
 
 export interface DiffResponse {
-  // The unified diff, or the action's fallback when the repositories service
-  // is unavailable. Consumers branch on typeof before parsing.
-  data: string | { diff: null; error: string }
+  // The unified diff.
+  data: string
 }
 
 export interface MergeResponse {
@@ -135,5 +133,7 @@ export interface MergeResponse {
     success: boolean
     commit: string
     message: string
+    // True when the merge named its request and recorded it merged.
+    recorded?: boolean
   }
 }

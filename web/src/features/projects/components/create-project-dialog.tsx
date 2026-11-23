@@ -81,6 +81,7 @@ export function CreateProjectDialog({
   const [templatesError, setTemplatesError] = useState(false)
   const [isLoadingTemplates, setIsLoadingTemplates] = useState(false)
   const [allowSearch, setAllowSearch] = useState(false)
+  const [readable, setReadable] = useState(false)
   const [importData, setImportData] = useState<Record<string, unknown> | null>(
     null
   )
@@ -133,6 +134,7 @@ export function CreateProjectDialog({
       setPrefix('')
       setSelectedTemplate('')
       setAllowSearch(false)
+      setReadable(false)
       clearImport()
       prefixDirty.current = false
     }
@@ -181,6 +183,7 @@ export function CreateProjectDialog({
           prefix: prefix.trim().toLowerCase() || 'project',
           template: importDesign || importArchive ? 'blank' : selectedTemplate,
           privacy: allowSearch ? 'public' : 'private',
+          readable: readable ? 'true' : 'false',
         }),
         {
           loading: t`Creating project...`,
@@ -482,12 +485,26 @@ export function CreateProjectDialog({
                 htmlFor='allow-search'
                 className='cursor-pointer text-sm font-medium'
               >
-                <Trans>Allow anyone to view and comment on project</Trans>
+                <Trans>Allow anyone to search for project</Trans>
               </Label>
               <Switch
                 id='allow-search'
                 checked={allowSearch}
                 onCheckedChange={setAllowSearch}
+              />
+            </div>
+
+            <div className='flex items-center justify-between rounded-lg border px-4 py-3'>
+              <Label
+                htmlFor='readable'
+                className='cursor-pointer text-sm font-medium'
+              >
+                <Trans>Allow anyone to view project</Trans>
+              </Label>
+              <Switch
+                id='readable'
+                checked={readable}
+                onCheckedChange={setReadable}
               />
             </div>
 

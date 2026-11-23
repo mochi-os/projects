@@ -29,7 +29,10 @@ interface CreateProjectRequest {
   description?: string
   template: string
   prefix?: string
+  /** Whether the directory lists the project; nothing else. */
   privacy?: 'public' | 'private'
+  /** Whether anyone may view it; members only when absent. */
+  readable?: 'true' | 'false'
 }
 
 interface UpdateProjectRequest {

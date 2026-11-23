@@ -138,7 +138,8 @@ describe('CreateProjectDialog import selection', () => {
 })
 
 describe('CreateProjectDialog privacy', () => {
-  const label = 'Allow anyone to view and comment on project'
+  const label = 'Allow anyone to search for project'
+  const view = 'Allow anyone to view project'
 
   beforeEach(() => {
     vi.clearAllMocks()
@@ -165,16 +166,17 @@ describe('CreateProjectDialog privacy', () => {
       target: { value: 'Quiet' },
     })
     expect(screen.getByRole('switch', { name: label })).not.toBeChecked()
+    expect(screen.getByRole('switch', { name: view })).not.toBeChecked()
     await create()
 
     await waitFor(() =>
       expect(api.create).toHaveBeenCalledWith(
-        expect.objectContaining({ privacy: 'private' })
+        expect.objectContaining({ privacy: 'private', readable: 'false' })
       )
     )
   })
 
-  it('creates a public project with the switch on', async () => {
+  it('lists the project with the search switch on, still for members only', async () => {
     render(<CreateProjectDialog open onOpenChange={() => {}} hideTrigger />)
 
     fireEvent.change(await screen.findByLabelText(/name/i), {
@@ -185,7 +187,23 @@ describe('CreateProjectDialog privacy', () => {
 
     await waitFor(() =>
       expect(api.create).toHaveBeenCalledWith(
-        expect.objectContaining({ privacy: 'public' })
+        expect.objectContaining({ privacy: 'public', readable: 'false' })
+      )
+    )
+  })
+
+  it('lets anyone view the project with the view switch on, unlisted', async () => {
+    render(<CreateProjectDialog open onOpenChange={() => {}} hideTrigger />)
+
+    fireEvent.change(await screen.findByLabelText(/name/i), {
+      target: { value: 'Read' },
+    })
+    fireEvent.click(screen.getByRole('switch', { name: view }))
+    await create()
+
+    await waitFor(() =>
+      expect(api.create).toHaveBeenCalledWith(
+        expect.objectContaining({ privacy: 'private', readable: 'true' })
       )
     )
   })
@@ -195,7 +213,9 @@ describe('CreateProjectDialog privacy', () => {
       <CreateProjectDialog open onOpenChange={() => {}} hideTrigger />
     )
     fireEvent.click(await screen.findByRole('switch', { name: label }))
+    fireEvent.click(screen.getByRole('switch', { name: view }))
     expect(screen.getByRole('switch', { name: label })).toBeChecked()
+    expect(screen.getByRole('switch', { name: view })).toBeChecked()
 
     rerender(
       <CreateProjectDialog open={false} onOpenChange={() => {}} hideTrigger />
@@ -203,5 +223,6 @@ describe('CreateProjectDialog privacy', () => {
     rerender(<CreateProjectDialog open onOpenChange={() => {}} hideTrigger />)
 
     expect(await screen.findByRole('switch', { name: label })).not.toBeChecked()
+    expect(screen.getByRole('switch', { name: view })).not.toBeChecked()
   })
 })

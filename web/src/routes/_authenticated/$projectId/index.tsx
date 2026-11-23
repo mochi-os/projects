@@ -199,7 +199,7 @@ export function ProjectPageContent({
       duplicate={{
         menuAction: t`Copy`,
         api: projectsApi,
-        create: async (name, privacy) => {
+        create: async (name, privacy, readable) => {
           const response = await projectsApi.create({
             name,
             // Keeps the original's readable ids (PREFIX-1) and starts
@@ -209,6 +209,7 @@ export function ProjectPageContent({
             description: project.project.description,
             template: 'blank',
             privacy,
+            readable: readable ? 'true' : 'false',
           })
           const id = response.data?.fingerprint
           if (!id) throw new Error(t`Failed to copy project`)
@@ -231,7 +232,8 @@ export function ProjectPageContent({
           name: t`Name`,
           everything: t`Everything`,
           designOnly: t`Design only`,
-          allowSearch: t`Allow anyone to view and comment on project`,
+          allowSearch: t`Allow anyone to search for project`,
+          readable: t`Allow anyone to view project`,
           cancel: t`Cancel`,
           confirm: t`Copy`,
           duplicating: t`Copying project...`,

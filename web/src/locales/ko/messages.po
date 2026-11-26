@@ -260,7 +260,7 @@ msgstr "체크리스트 항목 추가"
 msgid "Add class"
 msgstr "클래스 추가"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Add column"
 msgstr "컬럼 추가"
 
@@ -328,7 +328,7 @@ msgid "Allow anyone to search for {entityLabel}"
 msgstr "누구나 {entityLabel} 검색을 허용"
 
 #: src/features/projects/components/create-project-dialog.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Allow anyone to view and comment on project"
 msgstr "누구나 프로젝트를 보고 댓글을 달 수 있도록 허용"
 
@@ -371,7 +371,7 @@ msgstr "이 피드를 구독 중인 모든 것이 수신을 중단합니다. 이
 msgid "Are you sure you want to delete \"{0}\"?"
 msgstr "\"{0}\"을(를) 삭제할까요?"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Are you sure you want to delete \"{title}\" and the {count, plural, one {# item} other {# items}} under it? This action cannot be undone."
 msgstr "\"{title}\" 및 그 아래의 항목 {count, plural, one {# 개} other {# 개}}를 삭제할까요? 이 작업은 되돌릴 수 없어요."
 
@@ -553,9 +553,9 @@ msgstr "다음의 하위가 될 수 있음"
 #: ../../../lib/web/src/features/accounts/account-add.tsx
 #: ../../../lib/web/src/features/accounts/account-verify.tsx
 #: src/features/projects/components/create-project-dialog.tsx
+#: src/features/projects/pages/project-page.tsx
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId/design.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Cancel"
 msgstr "취소"
 
@@ -829,25 +829,25 @@ msgstr "클립보드에 복사되었어요"
 #: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx
 #: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx
 #: ../../../lib/web/src/components/ui/copy-button.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Copy"
 msgstr "복사"
 
+#: src/features/projects/pages/project-page.tsx
 #: src/lib/share-labels.ts
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Copy link"
 msgstr "링크 복사"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Copy of {name}"
 msgstr "{name} 사본"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Copy project"
 msgstr "프로젝트 복사"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Copying project..."
 msgstr "프로젝트 복사 중..."
 
@@ -877,7 +877,7 @@ msgstr "차이를 불러오지 못했어요"
 msgid "Could not load this document. Please try again later."
 msgstr "이 문서를 불러올 수 없었습니다. 잠시 후 다시 시도해 주세요."
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Could not remove the unfinished copy"
 msgstr "완료되지 않은 사본을 삭제하지 못했어요"
 
@@ -1099,9 +1099,9 @@ msgstr "내림차순"
 msgid "Description"
 msgstr "설명"
 
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId/design.tsx
 #: src/routes/_authenticated/$projectId/design.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Design"
 msgstr "디자인"
 
@@ -1110,7 +1110,7 @@ msgstr "디자인"
 msgid "Design imported"
 msgstr "디자인을 가져왔어요"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Design only"
 msgstr "디자인만"
 
@@ -1163,7 +1163,7 @@ msgstr "연결 끊김"
 msgid "Dismiss"
 msgstr "닫기"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Dismiss board hint"
 msgstr "보드 힌트 닫기"
 
@@ -1181,7 +1181,7 @@ msgstr "필요한 패턴과 일치하지 않습니다"
 msgid "Done"
 msgstr "완료"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Double click on a column to add content"
 msgstr "열을 두 번 클릭하여 내용을 추가하세요"
 
@@ -1200,8 +1200,8 @@ msgstr "먼저 백업을 다운로드하세요"
 msgid "Download failed"
 msgstr "다운로드 실패"
 
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId/design.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Downloaded {filename}"
 msgstr "{filename}을(를) 다운로드했어요"
 
@@ -1210,7 +1210,7 @@ msgstr "{filename}을(를) 다운로드했어요"
 msgid "Draft"
 msgstr "초안"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Drag columns to re-order them"
 msgstr "열을 드래그하여 순서를 변경하세요"
 
@@ -1295,7 +1295,7 @@ msgstr "오류"
 msgid "Every minute"
 msgstr "1분 단위"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Everything"
 msgstr "모두"
 
@@ -1318,7 +1318,7 @@ msgstr "모두 펼치기"
 msgid "Expand sidebar"
 msgstr "사이드바 펼치기"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Export data"
 msgstr "데이터 내보내기"
 
@@ -1338,7 +1338,7 @@ msgstr "아주 크게"
 msgid "Failed to add account"
 msgstr "계정 추가에 실패했어요"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Failed to add column"
 msgstr "열을 추가하지 못했습니다"
 
@@ -1353,8 +1353,8 @@ msgstr "병합 상태 확인에 실패했어요"
 msgid "Failed to copy"
 msgstr "복사에 실패했어요"
 
-#: src/routes/_authenticated/$projectId/index.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Failed to copy project"
 msgstr "프로젝트 복사에 실패했어요"
 
@@ -1368,6 +1368,7 @@ msgid "Failed to create field"
 msgstr "필드 생성에 실패했어요"
 
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx
+#: ../../../lib/web/src/components/share-menu.tsx
 #: ../../../lib/web/src/components/share-menu.tsx
 msgid "Failed to create link"
 msgstr "링크 생성에 실패했어요"
@@ -1401,7 +1402,7 @@ msgstr "첨부 파일 삭제에 실패했어요"
 msgid "Failed to delete class"
 msgstr "클래스 삭제에 실패했어요"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Failed to delete column"
 msgstr "열을 삭제하지 못했습니다"
 
@@ -1433,7 +1434,7 @@ msgstr "프로젝트 삭제에 실패했어요"
 msgid "Failed to delete view"
 msgstr "뷰 삭제에 실패했어요"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Failed to export data"
 msgstr "데이터를 내보내지 못했습니다"
 
@@ -1512,7 +1513,7 @@ msgid "Failed to merge"
 msgstr "병합에 실패했어요"
 
 #: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Failed to move"
 msgstr "이동 실패"
 
@@ -1520,7 +1521,7 @@ msgstr "이동 실패"
 msgid "Failed to post comment"
 msgstr "댓글 게시에 실패했어요"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Failed to re-order columns"
 msgstr "열 순서를 변경하지 못했습니다"
 
@@ -1533,7 +1534,7 @@ msgstr "파일 읽기에 실패했어요"
 msgid "Failed to remove access"
 msgstr "접근 권한 제거에 실패했어요"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Failed to rename column"
 msgstr "열 이름을 변경하지 못했습니다"
 
@@ -1575,8 +1576,8 @@ msgstr "접근 레벨 설정에 실패했어요"
 msgid "Failed to subscribe"
 msgstr "구독에 실패했어요"
 
+#: src/features/projects/pages/project-page.tsx
 #: src/features/projects/pages/projects-list-page.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Failed to unsubscribe"
 msgstr "구독 해지에 실패했어요"
 
@@ -1852,7 +1853,7 @@ msgid "Loading templates..."
 msgstr "템플릿 로딩 중..."
 
 #: ../../../lib/web/src/features/document/document-page.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Loading..."
 msgstr "로딩 중..."
 
@@ -1922,7 +1923,7 @@ msgstr "병합 커밋"
 msgid "Merge requests"
 msgstr "머지 리퀘스트"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Merge requests ({requestCount})"
 msgstr "병합 요청 ({requestCount})"
 
@@ -1996,15 +1997,15 @@ msgstr "내 프로젝트"
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx
 #: src/features/editor/components/edit-dialogs.tsx
 #: src/features/projects/components/create-project-dialog.tsx
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId_.settings.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Name"
 msgstr "이름"
 
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx
 #: src/features/projects/components/create-project-dialog.tsx
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId_.settings.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Name cannot contain < or > characters"
 msgstr "이름에는 < 또는 > 문자를 사용할 수 없어요"
 
@@ -2015,8 +2016,8 @@ msgstr "이름은 필수예요"
 
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx
 #: src/features/projects/components/create-project-dialog.tsx
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId_.settings.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Name must be 1000 characters or less"
 msgstr "이름은 1000자 이하여야 해요"
 
@@ -2026,8 +2027,8 @@ msgid "Network error"
 msgstr "네트워크 오류"
 
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "New"
 msgstr "새로 만들기"
 
@@ -2036,7 +2037,7 @@ msgctxt "sort order"
 msgid "New"
 msgstr "최신순"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "New {className}"
 msgstr "새 {className}"
 
@@ -2283,7 +2284,7 @@ msgstr "내비게이션 열기"
 msgid "Open option actions"
 msgstr "옵션 작업 열기"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Open page actions"
 msgstr "페이지 작업 열기"
 
@@ -2350,7 +2351,7 @@ msgstr "패턴 (정규식)"
 msgid "People"
 msgstr "사람"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Please add one or more classes to the project design."
 msgstr "프로젝트 디자인에 하나 이상의 클래스를 추가해 주세요."
 
@@ -2437,7 +2438,7 @@ msgstr "프로젝트"
 msgid "Project actions"
 msgstr "프로젝트 작업"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Project copied"
 msgstr "프로젝트가 복사되었어요"
 
@@ -2449,8 +2450,8 @@ msgstr "프로젝트가 만들어졌어요"
 msgid "Project deleted"
 msgstr "프로젝트가 삭제되었어요"
 
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId_.settings.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Project name is required"
 msgstr "프로젝트 이름은 필수예요"
 
@@ -2495,7 +2496,7 @@ msgstr "돌출"
 msgid "Re-link your accounts on this server"
 msgstr "이 서버에서 계정 다시 연결"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Re-order columns"
 msgstr "열 순서 변경"
 
@@ -2742,7 +2743,7 @@ msgstr "토요일"
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx
 #: ../../../lib/web/src/components/ui/editable-field-row.tsx
 #: ../../../lib/web/src/components/ui/secret-field.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Save"
 msgstr "저장"
 
@@ -2900,8 +2901,8 @@ msgstr "접근 권한 설정 중..."
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx
 #: ../../../lib/web/src/components/options-menu.tsx
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId_.settings.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Settings"
 msgstr "설정"
 
@@ -3093,7 +3094,7 @@ msgstr "카메라가 이미 사용 중입니다"
 msgid "The camera request was not answered"
 msgstr "카메라 요청에 응답이 없었습니다"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "The copy may be incomplete. Check it before you use it."
 msgstr "사본이 불완전할 수 있어요. 사용하기 전에 확인하세요."
 
@@ -3147,7 +3148,7 @@ msgid "This will permanently delete \"{projectName}\" and all its objects, comme
 msgstr "\"{projectName}\"과(와) 모든 개체, 댓글, 첨부 파일이 영구적으로 삭제돼요. 이 작업은 되돌릴 수 없어요."
 
 #. placeholder {0}: project.project.name
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "This will remove \"{0}\" from your sidebar and stop updates for this project."
 msgstr "\"{0}\"이(가) 사이드바에서 제거되고 이 프로젝트의 업데이트가 중단돼요."
 
@@ -3283,22 +3284,22 @@ msgid "Unknown"
 msgstr "알 수 없음"
 
 #: ../../../lib/web/src/components/options-menu.tsx
+#: src/features/projects/pages/project-page.tsx
 #: src/features/projects/pages/projects-list-page.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Unsubscribe"
 msgstr "구독 해지"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Unsubscribe from project?"
 msgstr "프로젝트 구독을 해지할까요?"
 
+#: src/features/projects/pages/project-page.tsx
 #: src/features/projects/pages/projects-list-page.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Unsubscribed"
 msgstr "구독이 해지되었어요"
 
+#: src/features/projects/pages/project-page.tsx
 #: src/features/projects/pages/projects-list-page.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Unsubscribing..."
 msgstr "구독 해지 중..."
 
@@ -3399,7 +3400,7 @@ msgstr "보기 컨트롤"
 msgid "View only"
 msgstr "보기 전용"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "View options"
 msgstr "보기 옵션"
 

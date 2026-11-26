@@ -260,7 +260,7 @@ msgstr "項目を追加"
 msgid "Add class"
 msgstr "クラスを追加"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Add column"
 msgstr "列を追加"
 
@@ -328,7 +328,7 @@ msgid "Allow anyone to search for {entityLabel}"
 msgstr "誰でも{entityLabel}を検索できるようにする"
 
 #: src/features/projects/components/create-project-dialog.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Allow anyone to view and comment on project"
 msgstr "誰でもプロジェクトを閲覧してコメントできるようにする"
 
@@ -371,7 +371,7 @@ msgstr "このフィードを購読しているものはすべて受信しなく
 msgid "Are you sure you want to delete \"{0}\"?"
 msgstr "「{0}」を削除しますか？"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Are you sure you want to delete \"{title}\" and the {count, plural, one {# item} other {# items}} under it? This action cannot be undone."
 msgstr "「{title}」とその下にある{count, plural, one {# 件} other {# 件}}の項目を削除しますか？この操作は取り消せません。"
 
@@ -553,9 +553,9 @@ msgstr "親にできるもの"
 #: ../../../lib/web/src/features/accounts/account-add.tsx
 #: ../../../lib/web/src/features/accounts/account-verify.tsx
 #: src/features/projects/components/create-project-dialog.tsx
+#: src/features/projects/pages/project-page.tsx
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId/design.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Cancel"
 msgstr "キャンセル"
 
@@ -829,25 +829,25 @@ msgstr "クリップボードにコピーしました"
 #: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx
 #: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx
 #: ../../../lib/web/src/components/ui/copy-button.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Copy"
 msgstr "コピー"
 
+#: src/features/projects/pages/project-page.tsx
 #: src/lib/share-labels.ts
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Copy link"
 msgstr "リンクをコピー"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Copy of {name}"
 msgstr "{name} のコピー"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Copy project"
 msgstr "プロジェクトをコピー"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Copying project..."
 msgstr "プロジェクトをコピーしています..."
 
@@ -877,7 +877,7 @@ msgstr "差分の読み込みに失敗しました"
 msgid "Could not load this document. Please try again later."
 msgstr "このドキュメントを読み込めませんでした。後ほどもう一度お試しください。"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Could not remove the unfinished copy"
 msgstr "未完了のコピーを削除できませんでした"
 
@@ -1099,9 +1099,9 @@ msgstr "降順"
 msgid "Description"
 msgstr "説明"
 
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId/design.tsx
 #: src/routes/_authenticated/$projectId/design.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Design"
 msgstr "デザイン"
 
@@ -1110,7 +1110,7 @@ msgstr "デザイン"
 msgid "Design imported"
 msgstr "デザインをインポートしました"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Design only"
 msgstr "デザインのみ"
 
@@ -1163,7 +1163,7 @@ msgstr "切断済み"
 msgid "Dismiss"
 msgstr "閉じる"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Dismiss board hint"
 msgstr "ボードのヒントを閉じる"
 
@@ -1181,7 +1181,7 @@ msgstr "必要なパターンと一致しません"
 msgid "Done"
 msgstr "完了"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Double click on a column to add content"
 msgstr "列をダブルクリックして内容を追加"
 
@@ -1200,8 +1200,8 @@ msgstr "先にバックアップをダウンロード"
 msgid "Download failed"
 msgstr "ダウンロードに失敗しました"
 
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId/design.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Downloaded {filename}"
 msgstr "{filename} をダウンロードしました"
 
@@ -1210,7 +1210,7 @@ msgstr "{filename} をダウンロードしました"
 msgid "Draft"
 msgstr "下書き"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Drag columns to re-order them"
 msgstr "列をドラッグして並べ替えます"
 
@@ -1295,7 +1295,7 @@ msgstr "エラー"
 msgid "Every minute"
 msgstr "1分ごと"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Everything"
 msgstr "すべて"
 
@@ -1318,7 +1318,7 @@ msgstr "すべて展開"
 msgid "Expand sidebar"
 msgstr "サイドバーを展開"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Export data"
 msgstr "データをエクスポート"
 
@@ -1338,7 +1338,7 @@ msgstr "特大"
 msgid "Failed to add account"
 msgstr "アカウントの追加に失敗しました"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Failed to add column"
 msgstr "列を追加できませんでした"
 
@@ -1353,8 +1353,8 @@ msgstr "マージ状態の確認に失敗しました"
 msgid "Failed to copy"
 msgstr "コピーに失敗しました"
 
-#: src/routes/_authenticated/$projectId/index.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Failed to copy project"
 msgstr "プロジェクトのコピーに失敗しました"
 
@@ -1368,6 +1368,7 @@ msgid "Failed to create field"
 msgstr "フィールドの作成に失敗しました"
 
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx
+#: ../../../lib/web/src/components/share-menu.tsx
 #: ../../../lib/web/src/components/share-menu.tsx
 msgid "Failed to create link"
 msgstr "リンクの作成に失敗しました"
@@ -1401,7 +1402,7 @@ msgstr "添付ファイルの削除に失敗しました"
 msgid "Failed to delete class"
 msgstr "クラスの削除に失敗しました"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Failed to delete column"
 msgstr "列を削除できませんでした"
 
@@ -1433,7 +1434,7 @@ msgstr "プロジェクトの削除に失敗しました"
 msgid "Failed to delete view"
 msgstr "ビューの削除に失敗しました"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Failed to export data"
 msgstr "データのエクスポートに失敗しました"
 
@@ -1512,7 +1513,7 @@ msgid "Failed to merge"
 msgstr "マージに失敗しました"
 
 #: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Failed to move"
 msgstr "移動に失敗しました"
 
@@ -1520,7 +1521,7 @@ msgstr "移動に失敗しました"
 msgid "Failed to post comment"
 msgstr "コメントの投稿に失敗しました"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Failed to re-order columns"
 msgstr "列を並べ替えられませんでした"
 
@@ -1533,7 +1534,7 @@ msgstr "ファイルの読み取りに失敗しました"
 msgid "Failed to remove access"
 msgstr "アクセスの削除に失敗しました"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Failed to rename column"
 msgstr "列の名前を変更できませんでした"
 
@@ -1575,8 +1576,8 @@ msgstr "アクセスレベルの設定に失敗しました"
 msgid "Failed to subscribe"
 msgstr "購読に失敗しました"
 
+#: src/features/projects/pages/project-page.tsx
 #: src/features/projects/pages/projects-list-page.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Failed to unsubscribe"
 msgstr "購読解除に失敗しました"
 
@@ -1852,7 +1853,7 @@ msgid "Loading templates..."
 msgstr "テンプレートを読み込み中..."
 
 #: ../../../lib/web/src/features/document/document-page.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Loading..."
 msgstr "読み込み中..."
 
@@ -1922,7 +1923,7 @@ msgstr "マージコミット"
 msgid "Merge requests"
 msgstr "マージリクエスト"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Merge requests ({requestCount})"
 msgstr "マージリクエスト ({requestCount})"
 
@@ -1996,15 +1997,15 @@ msgstr "マイプロジェクト"
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx
 #: src/features/editor/components/edit-dialogs.tsx
 #: src/features/projects/components/create-project-dialog.tsx
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId_.settings.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Name"
 msgstr "名前"
 
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx
 #: src/features/projects/components/create-project-dialog.tsx
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId_.settings.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Name cannot contain < or > characters"
 msgstr "名前に < または > 文字を含めることはできません"
 
@@ -2015,8 +2016,8 @@ msgstr "名前が必要です"
 
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx
 #: src/features/projects/components/create-project-dialog.tsx
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId_.settings.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Name must be 1000 characters or less"
 msgstr "名前は1000文字以下にしてください"
 
@@ -2026,8 +2027,8 @@ msgid "Network error"
 msgstr "ネットワークエラー"
 
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "New"
 msgstr "新規"
 
@@ -2036,7 +2037,7 @@ msgctxt "sort order"
 msgid "New"
 msgstr "新着"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "New {className}"
 msgstr "新しい{className}"
 
@@ -2283,7 +2284,7 @@ msgstr "ナビゲーションを開く"
 msgid "Open option actions"
 msgstr "オプションのアクションを開く"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Open page actions"
 msgstr "ページ操作を開く"
 
@@ -2350,7 +2351,7 @@ msgstr "パターン (正規表現)"
 msgid "People"
 msgstr "ピープル"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Please add one or more classes to the project design."
 msgstr "まずプロジェクトの設計に1つ以上のクラスを追加してください。"
 
@@ -2437,7 +2438,7 @@ msgstr "プロジェクト"
 msgid "Project actions"
 msgstr "プロジェクトの操作"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Project copied"
 msgstr "プロジェクトをコピーしました"
 
@@ -2449,8 +2450,8 @@ msgstr "プロジェクトを作成しました"
 msgid "Project deleted"
 msgstr "プロジェクトを削除しました"
 
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId_.settings.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Project name is required"
 msgstr "プロジェクト名が必要です"
 
@@ -2495,7 +2496,7 @@ msgstr "浮き出し"
 msgid "Re-link your accounts on this server"
 msgstr "このサーバーでアカウントを再リンクする"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Re-order columns"
 msgstr "列を並べ替え"
 
@@ -2742,7 +2743,7 @@ msgstr "土曜日"
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx
 #: ../../../lib/web/src/components/ui/editable-field-row.tsx
 #: ../../../lib/web/src/components/ui/secret-field.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Save"
 msgstr "保存"
 
@@ -2900,8 +2901,8 @@ msgstr "アクセスを設定しています..."
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx
 #: ../../../lib/web/src/components/options-menu.tsx
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId_.settings.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Settings"
 msgstr "設定"
 
@@ -3093,7 +3094,7 @@ msgstr "カメラは既に使用中です"
 msgid "The camera request was not answered"
 msgstr "カメラの要求に応答がありませんでした"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "The copy may be incomplete. Check it before you use it."
 msgstr "コピーが不完全な可能性があります。使用する前に確認してください。"
 
@@ -3147,7 +3148,7 @@ msgid "This will permanently delete \"{projectName}\" and all its objects, comme
 msgstr "「{projectName}」とそのすべてのオブジェクト、コメント、添付ファイルが完全に削除されます。この操作は元に戻せません。"
 
 #. placeholder {0}: project.project.name
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "This will remove \"{0}\" from your sidebar and stop updates for this project."
 msgstr "「{0}」がサイドバーから削除され、このプロジェクトの更新が停止されます。"
 
@@ -3283,22 +3284,22 @@ msgid "Unknown"
 msgstr "不明"
 
 #: ../../../lib/web/src/components/options-menu.tsx
+#: src/features/projects/pages/project-page.tsx
 #: src/features/projects/pages/projects-list-page.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Unsubscribe"
 msgstr "購読解除"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Unsubscribe from project?"
 msgstr "プロジェクトの購読を解除しますか？"
 
+#: src/features/projects/pages/project-page.tsx
 #: src/features/projects/pages/projects-list-page.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Unsubscribed"
 msgstr "購読を解除しました"
 
+#: src/features/projects/pages/project-page.tsx
 #: src/features/projects/pages/projects-list-page.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Unsubscribing..."
 msgstr "購読解除中..."
 
@@ -3399,7 +3400,7 @@ msgstr "ビューコントロール"
 msgid "View only"
 msgstr "閲覧のみ"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "View options"
 msgstr "表示オプション"
 

@@ -260,7 +260,7 @@ msgstr "Добавить пункт чек-листа"
 msgid "Add class"
 msgstr "Добавить класс"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Add column"
 msgstr "Добавить колонку"
 
@@ -328,7 +328,7 @@ msgid "Allow anyone to search for {entityLabel}"
 msgstr "Разрешить всем искать {entityLabel}"
 
 #: src/features/projects/components/create-project-dialog.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Allow anyone to view and comment on project"
 msgstr "Разрешить всем просматривать и комментировать проект"
 
@@ -371,7 +371,7 @@ msgstr "Всё, что подписано на эту ленту, переста
 msgid "Are you sure you want to delete \"{0}\"?"
 msgstr "Вы уверены, что хотите удалить «{0}»?"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Are you sure you want to delete \"{title}\" and the {count, plural, one {# item} other {# items}} under it? This action cannot be undone."
 msgstr "Вы уверены, что хотите удалить «{title}» и {count, plural, one {# вложенный элемент} few {# вложенных элемента} many {# вложенных элементов} other {# вложенного элемента}}? Это действие необратимо."
 
@@ -553,9 +553,9 @@ msgstr "Может быть дочерним для"
 #: ../../../lib/web/src/features/accounts/account-add.tsx
 #: ../../../lib/web/src/features/accounts/account-verify.tsx
 #: src/features/projects/components/create-project-dialog.tsx
+#: src/features/projects/pages/project-page.tsx
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId/design.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Cancel"
 msgstr "Отмена"
 
@@ -829,25 +829,25 @@ msgstr "Скопировано в буфер обмена"
 #: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx
 #: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx
 #: ../../../lib/web/src/components/ui/copy-button.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Copy"
 msgstr "Копировать"
 
+#: src/features/projects/pages/project-page.tsx
 #: src/lib/share-labels.ts
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Copy link"
 msgstr "Копировать ссылку"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Copy of {name}"
 msgstr "Копия {name}"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Copy project"
 msgstr "Копировать проект"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Copying project..."
 msgstr "Копирование проекта..."
 
@@ -877,7 +877,7 @@ msgstr "Не удалось загрузить различия"
 msgid "Could not load this document. Please try again later."
 msgstr "Не удалось загрузить этот документ. Пожалуйста, попробуйте позже."
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Could not remove the unfinished copy"
 msgstr "Не удалось удалить незавершённую копию"
 
@@ -1099,9 +1099,9 @@ msgstr "По убыванию"
 msgid "Description"
 msgstr "Описание"
 
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId/design.tsx
 #: src/routes/_authenticated/$projectId/design.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Design"
 msgstr "Дизайн"
 
@@ -1110,7 +1110,7 @@ msgstr "Дизайн"
 msgid "Design imported"
 msgstr "Дизайн импортирован"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Design only"
 msgstr "Только дизайн"
 
@@ -1163,7 +1163,7 @@ msgstr "Отключено"
 msgid "Dismiss"
 msgstr "Закрыть"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Dismiss board hint"
 msgstr "Закрыть подсказку доски"
 
@@ -1181,7 +1181,7 @@ msgstr "Не соответствует требуемому шаблону"
 msgid "Done"
 msgstr "Готово"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Double click on a column to add content"
 msgstr "Дважды щёлкните по столбцу, чтобы добавить содержимое"
 
@@ -1200,8 +1200,8 @@ msgstr "Сначала скачайте резервную копию"
 msgid "Download failed"
 msgstr "Не удалось скачать"
 
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId/design.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Downloaded {filename}"
 msgstr "Файл {filename} скачан"
 
@@ -1210,7 +1210,7 @@ msgstr "Файл {filename} скачан"
 msgid "Draft"
 msgstr "Черновик"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Drag columns to re-order them"
 msgstr "Перетащите столбцы, чтобы изменить их порядок"
 
@@ -1295,7 +1295,7 @@ msgstr "Ошибка"
 msgid "Every minute"
 msgstr "Каждая минута"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Everything"
 msgstr "Всё"
 
@@ -1318,7 +1318,7 @@ msgstr "Развернуть все"
 msgid "Expand sidebar"
 msgstr "Развернуть боковую панель"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Export data"
 msgstr "Экспортировать данные"
 
@@ -1338,7 +1338,7 @@ msgstr "Очень крупный"
 msgid "Failed to add account"
 msgstr "Не удалось добавить аккаунт"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Failed to add column"
 msgstr "Не удалось добавить столбец"
 
@@ -1353,8 +1353,8 @@ msgstr "Не удалось проверить статус слияния"
 msgid "Failed to copy"
 msgstr "Не удалось скопировать"
 
-#: src/routes/_authenticated/$projectId/index.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Failed to copy project"
 msgstr "Не удалось скопировать проект"
 
@@ -1368,6 +1368,7 @@ msgid "Failed to create field"
 msgstr "Не удалось создать поле"
 
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx
+#: ../../../lib/web/src/components/share-menu.tsx
 #: ../../../lib/web/src/components/share-menu.tsx
 msgid "Failed to create link"
 msgstr "Не удалось создать ссылку"
@@ -1401,7 +1402,7 @@ msgstr "Не удалось удалить вложение"
 msgid "Failed to delete class"
 msgstr "Не удалось удалить класс"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Failed to delete column"
 msgstr "Не удалось удалить столбец"
 
@@ -1433,7 +1434,7 @@ msgstr "Не удалось удалить проект"
 msgid "Failed to delete view"
 msgstr "Не удалось удалить вид"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Failed to export data"
 msgstr "Не удалось экспортировать данные"
 
@@ -1512,7 +1513,7 @@ msgid "Failed to merge"
 msgstr "Не удалось выполнить слияние"
 
 #: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Failed to move"
 msgstr "Не удалось переместить"
 
@@ -1520,7 +1521,7 @@ msgstr "Не удалось переместить"
 msgid "Failed to post comment"
 msgstr "Не удалось опубликовать комментарий"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Failed to re-order columns"
 msgstr "Не удалось изменить порядок столбцов"
 
@@ -1533,7 +1534,7 @@ msgstr "Не удалось прочитать файл"
 msgid "Failed to remove access"
 msgstr "Не удалось удалить доступ"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Failed to rename column"
 msgstr "Не удалось переименовать столбец"
 
@@ -1575,8 +1576,8 @@ msgstr "Не удалось установить уровень доступа"
 msgid "Failed to subscribe"
 msgstr "Не удалось подписаться"
 
+#: src/features/projects/pages/project-page.tsx
 #: src/features/projects/pages/projects-list-page.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Failed to unsubscribe"
 msgstr "Не удалось отписаться"
 
@@ -1852,7 +1853,7 @@ msgid "Loading templates..."
 msgstr "Загрузка шаблонов..."
 
 #: ../../../lib/web/src/features/document/document-page.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Loading..."
 msgstr "Загрузка..."
 
@@ -1922,7 +1923,7 @@ msgstr "Коммит слияния"
 msgid "Merge requests"
 msgstr "Запросы на объединение"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Merge requests ({requestCount})"
 msgstr "Запросы на слияние ({requestCount})"
 
@@ -1996,15 +1997,15 @@ msgstr "Мой проект"
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx
 #: src/features/editor/components/edit-dialogs.tsx
 #: src/features/projects/components/create-project-dialog.tsx
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId_.settings.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Name"
 msgstr "Название"
 
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx
 #: src/features/projects/components/create-project-dialog.tsx
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId_.settings.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Name cannot contain < or > characters"
 msgstr "Название не может содержать символы < или >"
 
@@ -2015,8 +2016,8 @@ msgstr "Требуется название"
 
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx
 #: src/features/projects/components/create-project-dialog.tsx
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId_.settings.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Name must be 1000 characters or less"
 msgstr "Название должно быть не длиннее 1000 символов"
 
@@ -2026,8 +2027,8 @@ msgid "Network error"
 msgstr "Ошибка сети"
 
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "New"
 msgstr "Новый"
 
@@ -2036,7 +2037,7 @@ msgctxt "sort order"
 msgid "New"
 msgstr "Новые"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "New {className}"
 msgstr "Новый {className}"
 
@@ -2283,7 +2284,7 @@ msgstr "Открыть навигацию"
 msgid "Open option actions"
 msgstr "Открыть действия параметра"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Open page actions"
 msgstr "Открыть действия страницы"
 
@@ -2350,7 +2351,7 @@ msgstr "Шаблон (регулярное выражение)"
 msgid "People"
 msgstr "Люди"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Please add one or more classes to the project design."
 msgstr "Пожалуйста, добавьте один или несколько классов в дизайн проекта."
 
@@ -2437,7 +2438,7 @@ msgstr "Проект"
 msgid "Project actions"
 msgstr "Действия проекта"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Project copied"
 msgstr "Проект скопирован"
 
@@ -2449,8 +2450,8 @@ msgstr "Проект создан"
 msgid "Project deleted"
 msgstr "Проект удалён"
 
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId_.settings.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Project name is required"
 msgstr "Требуется название проекта"
 
@@ -2495,7 +2496,7 @@ msgstr "Приподнятый"
 msgid "Re-link your accounts on this server"
 msgstr "Повторно привяжите свои аккаунты на этом сервере"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Re-order columns"
 msgstr "Изменить порядок столбцов"
 
@@ -2742,7 +2743,7 @@ msgstr "Суббота"
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx
 #: ../../../lib/web/src/components/ui/editable-field-row.tsx
 #: ../../../lib/web/src/components/ui/secret-field.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Save"
 msgstr "Сохранить"
 
@@ -2900,8 +2901,8 @@ msgstr "Установка доступа..."
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx
 #: ../../../lib/web/src/components/options-menu.tsx
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId_.settings.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Settings"
 msgstr "Настройки"
 
@@ -3093,7 +3094,7 @@ msgstr "Камера уже используется"
 msgid "The camera request was not answered"
 msgstr "Запрос камеры остался без ответа"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "The copy may be incomplete. Check it before you use it."
 msgstr "Копия может быть неполной. Проверьте её перед использованием."
 
@@ -3147,7 +3148,7 @@ msgid "This will permanently delete \"{projectName}\" and all its objects, comme
 msgstr "Это навсегда удалит «{projectName}» и все его объекты, комментарии и вложения. Это действие нельзя отменить."
 
 #. placeholder {0}: project.project.name
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "This will remove \"{0}\" from your sidebar and stop updates for this project."
 msgstr "Это удалит «{0}» из вашей боковой панели и остановит обновления для этого проекта."
 
@@ -3283,22 +3284,22 @@ msgid "Unknown"
 msgstr "Неизвестно"
 
 #: ../../../lib/web/src/components/options-menu.tsx
+#: src/features/projects/pages/project-page.tsx
 #: src/features/projects/pages/projects-list-page.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Unsubscribe"
 msgstr "Отписаться"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Unsubscribe from project?"
 msgstr "Отписаться от проекта?"
 
+#: src/features/projects/pages/project-page.tsx
 #: src/features/projects/pages/projects-list-page.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Unsubscribed"
 msgstr "Отписан"
 
+#: src/features/projects/pages/project-page.tsx
 #: src/features/projects/pages/projects-list-page.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Unsubscribing..."
 msgstr "Отписка..."
 
@@ -3399,7 +3400,7 @@ msgstr "Элементы управления просмотром"
 msgid "View only"
 msgstr "Только просмотр"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "View options"
 msgstr "Параметры просмотра"
 

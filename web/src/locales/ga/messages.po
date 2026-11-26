@@ -260,7 +260,7 @@ msgstr "Cuir mír seicliosta leis"
 msgid "Add class"
 msgstr "Cuir rang leis"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Add column"
 msgstr "Cuir colún leis"
 
@@ -328,7 +328,7 @@ msgid "Allow anyone to search for {entityLabel}"
 msgstr "Ceadaigh d'aon duine {entityLabel} a chuardach"
 
 #: src/features/projects/components/create-project-dialog.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Allow anyone to view and comment on project"
 msgstr "Ceadaigh d'aon duine an tionscadal a fheiceáil agus nótaí tráchta a chur air"
 
@@ -371,7 +371,7 @@ msgstr "Stopfaidh aon rud atá liostáilte leis an bhfotha seo á fháil. Is fé
 msgid "Are you sure you want to delete \"{0}\"?"
 msgstr "An bhfuil tú cinnte gur mian leat \"{0}\" a scriosadh?"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Are you sure you want to delete \"{title}\" and the {count, plural, one {# item} other {# items}} under it? This action cannot be undone."
 msgstr "An bhfuil tú cinnte gur mian leat \"{title}\" agus an {count, plural, one {# mhír} two {# mhír} few {# mhír} many {# mír} other {# mír}} faoi a scriosadh? Ní féidir an gníomh seo a chealú."
 
@@ -553,9 +553,9 @@ msgstr "Is féidir a bheith ina leanbh de"
 #: ../../../lib/web/src/features/accounts/account-add.tsx
 #: ../../../lib/web/src/features/accounts/account-verify.tsx
 #: src/features/projects/components/create-project-dialog.tsx
+#: src/features/projects/pages/project-page.tsx
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId/design.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Cancel"
 msgstr "Cealaigh"
 
@@ -829,25 +829,25 @@ msgstr "Cóipeáilte chuig an ngearrthaisce"
 #: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx
 #: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx
 #: ../../../lib/web/src/components/ui/copy-button.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Copy"
 msgstr "Cóipeáil"
 
+#: src/features/projects/pages/project-page.tsx
 #: src/lib/share-labels.ts
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Copy link"
 msgstr "Cóipeáil an nasc"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Copy of {name}"
 msgstr "Cóip de {name}"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Copy project"
 msgstr "Cóipeáil tionscadal"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Copying project..."
 msgstr "Tionscadal á chóipeáil..."
 
@@ -877,7 +877,7 @@ msgstr "Theip ar luchtú an diff"
 msgid "Could not load this document. Please try again later."
 msgstr "Níorbh fhéidir an cháipéis seo a luchtú. Bain triail eile as ar ball."
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Could not remove the unfinished copy"
 msgstr "Níorbh fhéidir an chóip neamhchríochnaithe a bhaint"
 
@@ -1099,9 +1099,9 @@ msgstr "Íslitheach"
 msgid "Description"
 msgstr "Cur síos"
 
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId/design.tsx
 #: src/routes/_authenticated/$projectId/design.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Design"
 msgstr "Dearadh"
 
@@ -1110,7 +1110,7 @@ msgstr "Dearadh"
 msgid "Design imported"
 msgstr "Dearadh iompórtáilte"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Design only"
 msgstr "Dearadh amháin"
 
@@ -1163,7 +1163,7 @@ msgstr "Dícheangailte"
 msgid "Dismiss"
 msgstr "Dún"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Dismiss board hint"
 msgstr "Dífhostaigh leid an chláir"
 
@@ -1181,7 +1181,7 @@ msgstr "Ní mheaitseálann sé an patrún riachtanach"
 msgid "Done"
 msgstr "Críochnaithe"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Double click on a column to add content"
 msgstr "Cliceáil faoi dhó ar cholún chun ábhar a chur leis"
 
@@ -1200,8 +1200,8 @@ msgstr "Íoslódáil cúltaca ar dtús"
 msgid "Download failed"
 msgstr "Theip ar an íoslódáil"
 
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId/design.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Downloaded {filename}"
 msgstr "{filename} íoslódáilte"
 
@@ -1210,7 +1210,7 @@ msgstr "{filename} íoslódáilte"
 msgid "Draft"
 msgstr "Dréacht"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Drag columns to re-order them"
 msgstr "Tarraing colúin chun iad a athordú"
 
@@ -1295,7 +1295,7 @@ msgstr "Earráid"
 msgid "Every minute"
 msgstr "Gach nóiméad"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Everything"
 msgstr "Gach rud"
 
@@ -1318,7 +1318,7 @@ msgstr "Leathnaigh gach ceann"
 msgid "Expand sidebar"
 msgstr "Leathnaigh barra taoibh"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Export data"
 msgstr "Easpórtáil sonraí"
 
@@ -1338,7 +1338,7 @@ msgstr "Breise mór"
 msgid "Failed to add account"
 msgstr "Theip ar chuntas a chur leis"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Failed to add column"
 msgstr "Theip ar an gcolún a chur leis"
 
@@ -1353,8 +1353,8 @@ msgstr "Theip ar stádas an chumaisc a sheiceáil"
 msgid "Failed to copy"
 msgstr "Theip ar chóipeáil"
 
-#: src/routes/_authenticated/$projectId/index.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Failed to copy project"
 msgstr "Theip ar thionscadal a chóipeáil"
 
@@ -1368,6 +1368,7 @@ msgid "Failed to create field"
 msgstr "Theip ar réimse a chruthú"
 
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx
+#: ../../../lib/web/src/components/share-menu.tsx
 #: ../../../lib/web/src/components/share-menu.tsx
 msgid "Failed to create link"
 msgstr "Theip ar nasc a chruthú"
@@ -1401,7 +1402,7 @@ msgstr "Theip ar cheangaltán a scriosadh"
 msgid "Failed to delete class"
 msgstr "Theip ar rang a scriosadh"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Failed to delete column"
 msgstr "Theip ar an gcolún a scriosadh"
 
@@ -1433,7 +1434,7 @@ msgstr "Theip ar thionscadal a scriosadh"
 msgid "Failed to delete view"
 msgstr "Theip ar amharc a scriosadh"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Failed to export data"
 msgstr "Theip ar easpórtáil sonraí"
 
@@ -1512,7 +1513,7 @@ msgid "Failed to merge"
 msgstr "Theip ar chumasc"
 
 #: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Failed to move"
 msgstr "Theip ar an mbogadh"
 
@@ -1520,7 +1521,7 @@ msgstr "Theip ar an mbogadh"
 msgid "Failed to post comment"
 msgstr "Theip ar nóta tráchta a phostáil"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Failed to re-order columns"
 msgstr "Theip ar na colúin a atheagrú"
 
@@ -1533,7 +1534,7 @@ msgstr "Theip ar léamh comhaid"
 msgid "Failed to remove access"
 msgstr "Theip ar bhaint rochtana"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Failed to rename column"
 msgstr "Theip ar an gcolún a athainmniú"
 
@@ -1575,8 +1576,8 @@ msgstr "Theip ar shocrú leibhéal rochtana"
 msgid "Failed to subscribe"
 msgstr "Theip ar shíntiús"
 
+#: src/features/projects/pages/project-page.tsx
 #: src/features/projects/pages/projects-list-page.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Failed to unsubscribe"
 msgstr "Theip ar dhíshíntiús"
 
@@ -1852,7 +1853,7 @@ msgid "Loading templates..."
 msgstr "Teimpléid á luchtú..."
 
 #: ../../../lib/web/src/features/document/document-page.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Loading..."
 msgstr "Á luchtú..."
 
@@ -1922,7 +1923,7 @@ msgstr "Tiomantas cumaisc"
 msgid "Merge requests"
 msgstr "Iarratais ar chumasc"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Merge requests ({requestCount})"
 msgstr "Iarratais ar chumasc ({requestCount})"
 
@@ -1996,15 +1997,15 @@ msgstr "Mo thionscadal"
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx
 #: src/features/editor/components/edit-dialogs.tsx
 #: src/features/projects/components/create-project-dialog.tsx
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId_.settings.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Name"
 msgstr "Ainm"
 
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx
 #: src/features/projects/components/create-project-dialog.tsx
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId_.settings.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Name cannot contain < or > characters"
 msgstr "Ní féidir le hainm na carachtair < nó > a bheith ann"
 
@@ -2015,8 +2016,8 @@ msgstr "Tá ainm riachtanach"
 
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx
 #: src/features/projects/components/create-project-dialog.tsx
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId_.settings.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Name must be 1000 characters or less"
 msgstr "Caithfidh an t-ainm a bheith 1000 carachtar nó níos lú"
 
@@ -2026,8 +2027,8 @@ msgid "Network error"
 msgstr "Earráid líonra"
 
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "New"
 msgstr "Nua"
 
@@ -2036,7 +2037,7 @@ msgctxt "sort order"
 msgid "New"
 msgstr "Is nuaí"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "New {className}"
 msgstr "{className} nua"
 
@@ -2283,7 +2284,7 @@ msgstr "Oscail nascleanúint"
 msgid "Open option actions"
 msgstr "Oscail gníomhartha rogha"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Open page actions"
 msgstr "Oscail gníomhartha leathanaigh"
 
@@ -2350,7 +2351,7 @@ msgstr "Patrún (regex)"
 msgid "People"
 msgstr "Daoine"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Please add one or more classes to the project design."
 msgstr "Cuir rang amháin nó níos mó le dearadh an tionscadail."
 
@@ -2437,7 +2438,7 @@ msgstr "Tionscadal"
 msgid "Project actions"
 msgstr "Gníomhartha tionscadail"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Project copied"
 msgstr "Tionscadal cóipeáilte"
 
@@ -2449,8 +2450,8 @@ msgstr "Tionscadal cruthaithe"
 msgid "Project deleted"
 msgstr "Tionscadal scriosta"
 
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId_.settings.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Project name is required"
 msgstr "Tá ainm tionscadail riachtanach"
 
@@ -2495,7 +2496,7 @@ msgstr "Ardaithe"
 msgid "Re-link your accounts on this server"
 msgstr "Athnasc do chuntais ar an bhfreastalaí seo"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Re-order columns"
 msgstr "Athordaigh colúin"
 
@@ -2742,7 +2743,7 @@ msgstr "Dé Sathairn"
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx
 #: ../../../lib/web/src/components/ui/editable-field-row.tsx
 #: ../../../lib/web/src/components/ui/secret-field.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Save"
 msgstr "Sábháil"
 
@@ -2900,8 +2901,8 @@ msgstr "Rochtain á socrú..."
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx
 #: ../../../lib/web/src/components/options-menu.tsx
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId_.settings.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Settings"
 msgstr "Socruithe"
 
@@ -3093,7 +3094,7 @@ msgstr "Tá an ceamara in úsáid cheana féin"
 msgid "The camera request was not answered"
 msgstr "Níor freagraíodh an t-iarratas ceamara"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "The copy may be incomplete. Check it before you use it."
 msgstr "D'fhéadfadh nach bhfuil an chóip iomlán. Seiceáil í sula n-úsáideann tú í."
 
@@ -3147,7 +3148,7 @@ msgid "This will permanently delete \"{projectName}\" and all its objects, comme
 msgstr "Scriosfaidh sé seo \"{projectName}\" agus a réada, nótaí tráchta agus ceangaltáin uile go buan. Ní féidir an gníomh seo a chealú."
 
 #. placeholder {0}: project.project.name
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "This will remove \"{0}\" from your sidebar and stop updates for this project."
 msgstr "Bainfidh sé seo \"{0}\" ó do thaobh-bharra agus stopfaidh sé nuashonruithe don tionscadal seo."
 
@@ -3283,22 +3284,22 @@ msgid "Unknown"
 msgstr "Anaithnid"
 
 #: ../../../lib/web/src/components/options-menu.tsx
+#: src/features/projects/pages/project-page.tsx
 #: src/features/projects/pages/projects-list-page.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Unsubscribe"
 msgstr "Díliostáil"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Unsubscribe from project?"
 msgstr "Díliostáil ón tionscadal?"
 
+#: src/features/projects/pages/project-page.tsx
 #: src/features/projects/pages/projects-list-page.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Unsubscribed"
 msgstr "Díliostáilte"
 
+#: src/features/projects/pages/project-page.tsx
 #: src/features/projects/pages/projects-list-page.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Unsubscribing..."
 msgstr "Á dhíliostáil..."
 
@@ -3399,7 +3400,7 @@ msgstr "Rialuithe radhairc"
 msgid "View only"
 msgstr "Féach amháin"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "View options"
 msgstr "Roghanna radhairc"
 

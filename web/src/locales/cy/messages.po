@@ -260,7 +260,7 @@ msgstr "Ychwanegu eitem rhestr wirio"
 msgid "Add class"
 msgstr "Ychwanegu dosbarth"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Add column"
 msgstr "Ychwanegu colofn"
 
@@ -328,7 +328,7 @@ msgid "Allow anyone to search for {entityLabel}"
 msgstr "Caniatáu i unrhyw un chwilio am {entityLabel}"
 
 #: src/features/projects/components/create-project-dialog.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Allow anyone to view and comment on project"
 msgstr "Caniatáu i unrhyw un weld y prosiect a rhoi sylwadau arno"
 
@@ -371,7 +371,7 @@ msgstr "Bydd unrhyw beth sydd wedi tanysgrifio i'r porthiant hwn yn peidio â'i 
 msgid "Are you sure you want to delete \"{0}\"?"
 msgstr "Ydych chi'n siŵr eich bod am ddileu \"{0}\"?"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Are you sure you want to delete \"{title}\" and the {count, plural, one {# item} other {# items}} under it? This action cannot be undone."
 msgstr "Ydych chi'n siŵr eich bod am ddileu \"{title}\" a'r {count, plural, zero {# eitem} one {# eitem} two {# eitem} few {# eitem} many {# eitem} other {# eitem}} oddi tano? Ni ellir dadwneud y weithred hon."
 
@@ -553,9 +553,9 @@ msgstr "Gall fod yn blentyn i"
 #: ../../../lib/web/src/features/accounts/account-add.tsx
 #: ../../../lib/web/src/features/accounts/account-verify.tsx
 #: src/features/projects/components/create-project-dialog.tsx
+#: src/features/projects/pages/project-page.tsx
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId/design.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Cancel"
 msgstr "Canslo"
 
@@ -829,25 +829,25 @@ msgstr "Wedi'i gopïo i'r clipfwrdd"
 #: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx
 #: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx
 #: ../../../lib/web/src/components/ui/copy-button.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Copy"
 msgstr "Copïo"
 
+#: src/features/projects/pages/project-page.tsx
 #: src/lib/share-labels.ts
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Copy link"
 msgstr "Copïo'r ddolen"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Copy of {name}"
 msgstr "Copi o {name}"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Copy project"
 msgstr "Copïo prosiect"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Copying project..."
 msgstr "Yn copïo prosiect..."
 
@@ -877,7 +877,7 @@ msgstr "Methwyd llwytho'r diff"
 msgid "Could not load this document. Please try again later."
 msgstr "Methwyd llwytho'r ddogfen hon. Rhowch gynnig arni eto yn nes ymlaen."
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Could not remove the unfinished copy"
 msgstr "Methwyd tynnu'r copi anorffenedig"
 
@@ -1099,9 +1099,9 @@ msgstr "Disgynnol"
 msgid "Description"
 msgstr "Disgrifiad"
 
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId/design.tsx
 #: src/routes/_authenticated/$projectId/design.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Design"
 msgstr "Dyluniad"
 
@@ -1110,7 +1110,7 @@ msgstr "Dyluniad"
 msgid "Design imported"
 msgstr "Dyluniad wedi'i fewnforio"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Design only"
 msgstr "Dyluniad yn unig"
 
@@ -1163,7 +1163,7 @@ msgstr "Wedi datgysylltu"
 msgid "Dismiss"
 msgstr "Diystyru"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Dismiss board hint"
 msgstr "Diystyru awgrym bwrdd"
 
@@ -1181,7 +1181,7 @@ msgstr "Nid yw'n cyfateb i'r patrwm gofynnol"
 msgid "Done"
 msgstr "Wedi gorffen"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Double click on a column to add content"
 msgstr "Cliciwch ddwywaith ar golofn i ychwanegu cynnwys"
 
@@ -1200,8 +1200,8 @@ msgstr "Lawrlwythwch y copi wrth gefn yn gyntaf"
 msgid "Download failed"
 msgstr "Methwyd â lawrlwytho"
 
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId/design.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Downloaded {filename}"
 msgstr "Lawrlwythwyd {filename}"
 
@@ -1210,7 +1210,7 @@ msgstr "Lawrlwythwyd {filename}"
 msgid "Draft"
 msgstr "Drafft"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Drag columns to re-order them"
 msgstr "Llusgwch golofnau i'w hailosod"
 
@@ -1295,7 +1295,7 @@ msgstr "Gwall"
 msgid "Every minute"
 msgstr "Pob munud"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Everything"
 msgstr "Popeth"
 
@@ -1318,7 +1318,7 @@ msgstr "Ehangu'r cyfan"
 msgid "Expand sidebar"
 msgstr "Ehangu'r bar ochr"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Export data"
 msgstr "Allforio data"
 
@@ -1338,7 +1338,7 @@ msgstr "Ychwanegol o fawr"
 msgid "Failed to add account"
 msgstr "Methwyd ychwanegu cyfrif"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Failed to add column"
 msgstr "Methwyd ychwanegu colofn"
 
@@ -1353,8 +1353,8 @@ msgstr "Methwyd gwirio statws cyfuno"
 msgid "Failed to copy"
 msgstr "Methwyd copïo"
 
-#: src/routes/_authenticated/$projectId/index.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Failed to copy project"
 msgstr "Methwyd copïo'r prosiect"
 
@@ -1368,6 +1368,7 @@ msgid "Failed to create field"
 msgstr "Methwyd creu maes"
 
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx
+#: ../../../lib/web/src/components/share-menu.tsx
 #: ../../../lib/web/src/components/share-menu.tsx
 msgid "Failed to create link"
 msgstr "Methwyd creu dolen"
@@ -1401,7 +1402,7 @@ msgstr "Methwyd dileu'r atodiad"
 msgid "Failed to delete class"
 msgstr "Methwyd dileu'r dosbarth"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Failed to delete column"
 msgstr "Methwyd dileu colofn"
 
@@ -1433,7 +1434,7 @@ msgstr "Methwyd dileu'r prosiect"
 msgid "Failed to delete view"
 msgstr "Methwyd dileu'r olwg"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Failed to export data"
 msgstr "Methwyd ag allforio'r data"
 
@@ -1512,7 +1513,7 @@ msgid "Failed to merge"
 msgstr "Methwyd cyfuno"
 
 #: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Failed to move"
 msgstr "Methwyd symud"
 
@@ -1520,7 +1521,7 @@ msgstr "Methwyd symud"
 msgid "Failed to post comment"
 msgstr "Methwyd postio sylw"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Failed to re-order columns"
 msgstr "Methwyd aildrefnu'r colofnau"
 
@@ -1533,7 +1534,7 @@ msgstr "Methwyd darllen y ffeil"
 msgid "Failed to remove access"
 msgstr "Methwyd dileu mynediad"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Failed to rename column"
 msgstr "Methwyd ailenwi colofn"
 
@@ -1575,8 +1576,8 @@ msgstr "Methwyd gosod lefel mynediad"
 msgid "Failed to subscribe"
 msgstr "Methwyd tanysgrifio"
 
+#: src/features/projects/pages/project-page.tsx
 #: src/features/projects/pages/projects-list-page.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Failed to unsubscribe"
 msgstr "Methwyd dad-danysgrifio"
 
@@ -1852,7 +1853,7 @@ msgid "Loading templates..."
 msgstr "Yn llwytho templedi..."
 
 #: ../../../lib/web/src/features/document/document-page.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Loading..."
 msgstr "Yn llwytho..."
 
@@ -1922,7 +1923,7 @@ msgstr "Cyfuno ymrwymiad"
 msgid "Merge requests"
 msgstr "Ceisiadau cyfuno"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Merge requests ({requestCount})"
 msgstr "Ceisiadau cyfuno ({requestCount})"
 
@@ -1996,15 +1997,15 @@ msgstr "Fy mhrosiect"
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx
 #: src/features/editor/components/edit-dialogs.tsx
 #: src/features/projects/components/create-project-dialog.tsx
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId_.settings.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Name"
 msgstr "Enw"
 
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx
 #: src/features/projects/components/create-project-dialog.tsx
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId_.settings.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Name cannot contain < or > characters"
 msgstr "Ni all yr enw gynnwys nodau < neu >"
 
@@ -2015,8 +2016,8 @@ msgstr "Mae angen enw"
 
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx
 #: src/features/projects/components/create-project-dialog.tsx
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId_.settings.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Name must be 1000 characters or less"
 msgstr "Rhaid i'r enw fod yn 1000 o nodau neu lai"
 
@@ -2026,8 +2027,8 @@ msgid "Network error"
 msgstr "Gwall rhwydwaith"
 
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "New"
 msgstr "Newydd"
 
@@ -2036,7 +2037,7 @@ msgctxt "sort order"
 msgid "New"
 msgstr "Diweddaraf"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "New {className}"
 msgstr "{className} newydd"
 
@@ -2283,7 +2284,7 @@ msgstr "Agor llywio"
 msgid "Open option actions"
 msgstr "Agor camau gweithredu opsiwn"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Open page actions"
 msgstr "Agor camau gweithredu tudalen"
 
@@ -2350,7 +2351,7 @@ msgstr "Patrwm (regex)"
 msgid "People"
 msgstr "Pobl"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Please add one or more classes to the project design."
 msgstr "Ychwanegwch un neu fwy o ddosbarthiadau at ddyluniad y prosiect."
 
@@ -2437,7 +2438,7 @@ msgstr "Prosiect"
 msgid "Project actions"
 msgstr "Camau'r prosiect"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Project copied"
 msgstr "Prosiect wedi'i gopïo"
 
@@ -2449,8 +2450,8 @@ msgstr "Prosiect wedi'i greu"
 msgid "Project deleted"
 msgstr "Prosiect wedi'i ddileu"
 
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId_.settings.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Project name is required"
 msgstr "Mae angen enw prosiect"
 
@@ -2495,7 +2496,7 @@ msgstr "Wedi codi"
 msgid "Re-link your accounts on this server"
 msgstr "Ail-gysylltwch eich cyfrifon ar y gweinydd hwn"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Re-order columns"
 msgstr "Aildrefnu colofnau"
 
@@ -2742,7 +2743,7 @@ msgstr "Dydd Sadwrn"
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx
 #: ../../../lib/web/src/components/ui/editable-field-row.tsx
 #: ../../../lib/web/src/components/ui/secret-field.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Save"
 msgstr "Cadw"
 
@@ -2900,8 +2901,8 @@ msgstr "Yn gosod mynediad..."
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx
 #: ../../../lib/web/src/components/options-menu.tsx
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId_.settings.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Settings"
 msgstr "Gosodiadau"
 
@@ -3093,7 +3094,7 @@ msgstr "Mae'r camera eisoes yn cael ei ddefnyddio"
 msgid "The camera request was not answered"
 msgstr "Ni chafodd y cais camera ei ateb"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "The copy may be incomplete. Check it before you use it."
 msgstr "Efallai fod y copi'n anghyflawn. Gwiriwch ef cyn ei ddefnyddio."
 
@@ -3147,7 +3148,7 @@ msgid "This will permanently delete \"{projectName}\" and all its objects, comme
 msgstr "Bydd hyn yn dileu \"{projectName}\" a'i holl wrthrychau, sylwadau ac atodiadau yn barhaol. Ni ellir dadwneud y weithred hon."
 
 #. placeholder {0}: project.project.name
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "This will remove \"{0}\" from your sidebar and stop updates for this project."
 msgstr "Bydd hyn yn tynnu \"{0}\" o'ch bar ochr ac yn stopio diweddariadau ar gyfer y prosiect hwn."
 
@@ -3283,22 +3284,22 @@ msgid "Unknown"
 msgstr "Anhysbys"
 
 #: ../../../lib/web/src/components/options-menu.tsx
+#: src/features/projects/pages/project-page.tsx
 #: src/features/projects/pages/projects-list-page.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Unsubscribe"
 msgstr "Dad-danysgrifio"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Unsubscribe from project?"
 msgstr "Dad-danysgrifio o brosiect?"
 
+#: src/features/projects/pages/project-page.tsx
 #: src/features/projects/pages/projects-list-page.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Unsubscribed"
 msgstr "Wedi dad-danysgrifio"
 
+#: src/features/projects/pages/project-page.tsx
 #: src/features/projects/pages/projects-list-page.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Unsubscribing..."
 msgstr "Yn dad-danysgrifio..."
 
@@ -3399,7 +3400,7 @@ msgstr "Rheolaethau golwg"
 msgid "View only"
 msgstr "Gweld yn unig"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "View options"
 msgstr "Opsiynau golwg"
 

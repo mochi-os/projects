@@ -260,7 +260,7 @@ msgstr "د چک لیست توکی اضافه کړئ"
 msgid "Add class"
 msgstr "ټولګی اضافه کړئ"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Add column"
 msgstr "کالم اضافه کړئ"
 
@@ -328,7 +328,7 @@ msgid "Allow anyone to search for {entityLabel}"
 msgstr "هر چا ته اجازه ورکړئ چې {entityLabel} ولټوي"
 
 #: src/features/projects/components/create-project-dialog.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Allow anyone to view and comment on project"
 msgstr "هر چا ته اجازه ورکړئ چې پروژه وګوري او پر هغې تبصره وکړي"
 
@@ -371,7 +371,7 @@ msgstr "هر څه چې دې فیډ ته ګډون کړی، ترلاسه کول ب
 msgid "Are you sure you want to delete \"{0}\"?"
 msgstr "ایا تاسو ډاډه یاست چې غواړئ \"{0}\" ړنګ کړئ؟"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Are you sure you want to delete \"{title}\" and the {count, plural, one {# item} other {# items}} under it? This action cannot be undone."
 msgstr "ایا تاسو ډاډه یاست چې غواړئ \"{title}\" او د هغه لاندې {count, plural, one {# توکی} other {# توکي}} ړنګ کړئ؟ دا کړنه نشي بیرته اخیستل کیدلی."
 
@@ -553,9 +553,9 @@ msgstr "د دې اولاد کیدلی شي"
 #: ../../../lib/web/src/features/accounts/account-add.tsx
 #: ../../../lib/web/src/features/accounts/account-verify.tsx
 #: src/features/projects/components/create-project-dialog.tsx
+#: src/features/projects/pages/project-page.tsx
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId/design.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Cancel"
 msgstr "لغوه کول"
 
@@ -829,25 +829,25 @@ msgstr "په کلیپ بورډ کاپي شو"
 #: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx
 #: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx
 #: ../../../lib/web/src/components/ui/copy-button.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Copy"
 msgstr "کاپي کړئ"
 
+#: src/features/projects/pages/project-page.tsx
 #: src/lib/share-labels.ts
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Copy link"
 msgstr "لینک کاپي کړئ"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Copy of {name}"
 msgstr "د {name} کاپي"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Copy project"
 msgstr "پروژه کاپي کړئ"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Copying project..."
 msgstr "پروژه کاپي کیږي..."
 
@@ -877,7 +877,7 @@ msgstr "د توپیر بار کول پاتې راغلل"
 msgid "Could not load this document. Please try again later."
 msgstr "دا سند نشي پورته کیدلی. مهرباني وکړئ وروسته بیا هڅه وکړئ."
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Could not remove the unfinished copy"
 msgstr "نابشپړه کاپي لرې نشوه"
 
@@ -1099,9 +1099,9 @@ msgstr "د ډېر څخه کم"
 msgid "Description"
 msgstr "تفصیل"
 
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId/design.tsx
 #: src/routes/_authenticated/$projectId/design.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Design"
 msgstr "ډیزاین"
 
@@ -1110,7 +1110,7 @@ msgstr "ډیزاین"
 msgid "Design imported"
 msgstr "ډیزاین وارد شو"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Design only"
 msgstr "یوازې ډیزاین"
 
@@ -1163,7 +1163,7 @@ msgstr "پرېکړل شوی"
 msgid "Dismiss"
 msgstr "وتړئ"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Dismiss board hint"
 msgstr "د تختې اشاره وردکړه"
 
@@ -1181,7 +1181,7 @@ msgstr "د اړین نمونې سره سمون نه خوري"
 msgid "Done"
 msgstr "ترسره شو"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Double click on a column to add content"
 msgstr "د منځپانګې اضافه کولو لپاره په کالم دوه ځله کلیک وکړئ"
 
@@ -1200,8 +1200,8 @@ msgstr "لومړی بیک اپ ډاونلوډ کړئ"
 msgid "Download failed"
 msgstr "ډاونلوډ ناکام شو"
 
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId/design.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Downloaded {filename}"
 msgstr "{filename} ډاونلوډ شو"
 
@@ -1210,7 +1210,7 @@ msgstr "{filename} ډاونلوډ شو"
 msgid "Draft"
 msgstr "مسوده"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Drag columns to re-order them"
 msgstr "د بیا تنظیمولو لپاره کالمونه راکش کړئ"
 
@@ -1295,7 +1295,7 @@ msgstr "تېروتنه"
 msgid "Every minute"
 msgstr "هره دقیقه"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Everything"
 msgstr "هر څه"
 
@@ -1318,7 +1318,7 @@ msgstr "ټول وغځوئ"
 msgid "Expand sidebar"
 msgstr "څنګلوري لیست خلاص کړئ"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Export data"
 msgstr "ډاټا صادرول"
 
@@ -1338,7 +1338,7 @@ msgstr "ډېر لوی"
 msgid "Failed to add account"
 msgstr "د حساب اضافه کولو پاتې راغلل"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Failed to add column"
 msgstr "کالم زیاتول ناکام شول"
 
@@ -1353,8 +1353,8 @@ msgstr "د یوځای کولو حالت کتلو پاتې راغلل"
 msgid "Failed to copy"
 msgstr "د کاپي کولو پاتې راغلل"
 
-#: src/routes/_authenticated/$projectId/index.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Failed to copy project"
 msgstr "د پروژې کاپي کولو پاتې راغلل"
 
@@ -1368,6 +1368,7 @@ msgid "Failed to create field"
 msgstr "د ساحې جوړولو پاتې راغلل"
 
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx
+#: ../../../lib/web/src/components/share-menu.tsx
 #: ../../../lib/web/src/components/share-menu.tsx
 msgid "Failed to create link"
 msgstr "د لینک جوړولو پاتې راغلل"
@@ -1401,7 +1402,7 @@ msgstr "د ضمیمې حذف کولو پاتې راغلل"
 msgid "Failed to delete class"
 msgstr "د ټولګي حذف کولو پاتې راغلل"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Failed to delete column"
 msgstr "کالم ړنګول ناکام شول"
 
@@ -1433,7 +1434,7 @@ msgstr "د پروژې حذف کولو پاتې راغلل"
 msgid "Failed to delete view"
 msgstr "د لید حذف کولو پاتې راغلل"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Failed to export data"
 msgstr "ډاټا صادره نشوه"
 
@@ -1512,7 +1513,7 @@ msgid "Failed to merge"
 msgstr "د یوځای کولو پاتې راغلل"
 
 #: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Failed to move"
 msgstr "لیږدول ناکام شول"
 
@@ -1520,7 +1521,7 @@ msgstr "لیږدول ناکام شول"
 msgid "Failed to post comment"
 msgstr "د تبصرې پوسټ کولو پاتې راغلل"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Failed to re-order columns"
 msgstr "د کالمونو بیا ترتیبول ناکام شول"
 
@@ -1533,7 +1534,7 @@ msgstr "د فایل لوستلو پاتې راغلل"
 msgid "Failed to remove access"
 msgstr "د لاسرسي لیرې کولو پاتې راغلل"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Failed to rename column"
 msgstr "د کالم نوم بدلول ناکام شول"
 
@@ -1575,8 +1576,8 @@ msgstr "د لاسرسي د کچې ټاکلو پاتې راغلل"
 msgid "Failed to subscribe"
 msgstr "د ګډون پاتې راغلل"
 
+#: src/features/projects/pages/project-page.tsx
 #: src/features/projects/pages/projects-list-page.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Failed to unsubscribe"
 msgstr "له ګډون وتل ناکام شول"
 
@@ -1852,7 +1853,7 @@ msgid "Loading templates..."
 msgstr "ټیمپلیټونه بار کیږي..."
 
 #: ../../../lib/web/src/features/document/document-page.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Loading..."
 msgstr "بار کیږي..."
 
@@ -1922,7 +1923,7 @@ msgstr "د یوځای کولو کمیټ"
 msgid "Merge requests"
 msgstr "د یوځای کولو غوښتنې"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Merge requests ({requestCount})"
 msgstr "د یوځای کولو غوښتنې ({requestCount})"
 
@@ -1996,15 +1997,15 @@ msgstr "زما پروژه"
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx
 #: src/features/editor/components/edit-dialogs.tsx
 #: src/features/projects/components/create-project-dialog.tsx
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId_.settings.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Name"
 msgstr "نوم"
 
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx
 #: src/features/projects/components/create-project-dialog.tsx
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId_.settings.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Name cannot contain < or > characters"
 msgstr "نوم نشي کولی < یا > تورې ولري"
 
@@ -2015,8 +2016,8 @@ msgstr "نوم اړین دی"
 
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx
 #: src/features/projects/components/create-project-dialog.tsx
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId_.settings.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Name must be 1000 characters or less"
 msgstr "نوم باید 1000 توري یا لږ وي"
 
@@ -2026,8 +2027,8 @@ msgid "Network error"
 msgstr "د شبکې تېروتنه"
 
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "New"
 msgstr "نوی"
 
@@ -2036,7 +2037,7 @@ msgctxt "sort order"
 msgid "New"
 msgstr "تر ټولو نوي"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "New {className}"
 msgstr "نوی {className}"
 
@@ -2283,7 +2284,7 @@ msgstr "نیویګیشن خلاص کړئ"
 msgid "Open option actions"
 msgstr "د اختیار کړنې خلاصې کړئ"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Open page actions"
 msgstr "د پاڼې کړنې خلاصې کړئ"
 
@@ -2350,7 +2351,7 @@ msgstr "نمونه (regex)"
 msgid "People"
 msgstr "خلک"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Please add one or more classes to the project design."
 msgstr "مهرباني وکړئ د پروژې ډیزاین ته یو یا ډیر ټولګي اضافه کړئ."
 
@@ -2437,7 +2438,7 @@ msgstr "پروژه"
 msgid "Project actions"
 msgstr "د پروژې کړنې"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Project copied"
 msgstr "پروژه کاپي شوه"
 
@@ -2449,8 +2450,8 @@ msgstr "پروژه جوړه شوه"
 msgid "Project deleted"
 msgstr "پروژه حذف شوه"
 
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId_.settings.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Project name is required"
 msgstr "د پروژې نوم اړین دی"
 
@@ -2495,7 +2496,7 @@ msgstr "پورته شوی"
 msgid "Re-link your accounts on this server"
 msgstr "پر دې سرور خپل حسابونه بیا وصل کړئ"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Re-order columns"
 msgstr "کالمونه بیا تنظیم کړئ"
 
@@ -2742,7 +2743,7 @@ msgstr "شنبه"
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx
 #: ../../../lib/web/src/components/ui/editable-field-row.tsx
 #: ../../../lib/web/src/components/ui/secret-field.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Save"
 msgstr "خوندي کول"
 
@@ -2900,8 +2901,8 @@ msgstr "د لاسرسي ټاکل..."
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx
 #: ../../../lib/web/src/components/options-menu.tsx
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId_.settings.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Settings"
 msgstr "تنظیمات"
 
@@ -3093,7 +3094,7 @@ msgstr "کیمره لا دمخه کارول کیږي"
 msgid "The camera request was not answered"
 msgstr "د کیمرې غوښتنې ته ځواب ورنکړل شو"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "The copy may be incomplete. Check it before you use it."
 msgstr "کاپي ښايي نابشپړه وي. د کارولو دمخه یې وګورئ."
 
@@ -3147,7 +3148,7 @@ msgid "This will permanently delete \"{projectName}\" and all its objects, comme
 msgstr "دا به \"{projectName}\" او ټول یې اعتراضونه، تبصرې، او ضمیمې دایمي ډول حذف کړي. دا کړنه نشي بېرته راګرځیدلی."
 
 #. placeholder {0}: project.project.name
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "This will remove \"{0}\" from your sidebar and stop updates for this project."
 msgstr "دا به \"{0}\" له ستاسو سایډبار څخه لرې کړي او د دې پروژې لپاره به تازه معلومات ودروي."
 
@@ -3283,22 +3284,22 @@ msgid "Unknown"
 msgstr "نامعلوم"
 
 #: ../../../lib/web/src/components/options-menu.tsx
+#: src/features/projects/pages/project-page.tsx
 #: src/features/projects/pages/projects-list-page.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Unsubscribe"
 msgstr "له ګډون وتل"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Unsubscribe from project?"
 msgstr "د پروژې له ګډون وتل؟"
 
+#: src/features/projects/pages/project-page.tsx
 #: src/features/projects/pages/projects-list-page.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Unsubscribed"
 msgstr "له ګډون ووتلئ"
 
+#: src/features/projects/pages/project-page.tsx
 #: src/features/projects/pages/projects-list-page.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Unsubscribing..."
 msgstr "له ګډون وتل روان دي..."
 
@@ -3399,7 +3400,7 @@ msgstr "د کنټرول لیدل"
 msgid "View only"
 msgstr "یوازې لیدل"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "View options"
 msgstr "د لیدلو اختیارونه"
 

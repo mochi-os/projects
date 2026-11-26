@@ -260,7 +260,7 @@ msgstr "Дадаць пункт спіса"
 msgid "Add class"
 msgstr "Дадаць клас"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Add column"
 msgstr "Дадаць слупок"
 
@@ -328,7 +328,7 @@ msgid "Allow anyone to search for {entityLabel}"
 msgstr "Дазволіць усім шукаць {entityLabel}"
 
 #: src/features/projects/components/create-project-dialog.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Allow anyone to view and comment on project"
 msgstr "Дазволіць усім праглядаць і каментаваць праект"
 
@@ -371,7 +371,7 @@ msgstr "Усё, што падпісана на гэтую стужку, пера
 msgid "Are you sure you want to delete \"{0}\"?"
 msgstr "Вы ўпэўнены, што хочаце выдаліць \"{0}\"?"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Are you sure you want to delete \"{title}\" and the {count, plural, one {# item} other {# items}} under it? This action cannot be undone."
 msgstr "Вы ўпэўнены, што хочаце выдаліць \"{title}\" і {count, plural, one {# элемент} few {# элементы} many {# элементаў} other {# элемента}} пад ім? Гэтае дзеянне нельга адмяніць."
 
@@ -553,9 +553,9 @@ msgstr "Можа быць даччыным для"
 #: ../../../lib/web/src/features/accounts/account-add.tsx
 #: ../../../lib/web/src/features/accounts/account-verify.tsx
 #: src/features/projects/components/create-project-dialog.tsx
+#: src/features/projects/pages/project-page.tsx
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId/design.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Cancel"
 msgstr "Адмена"
 
@@ -829,25 +829,25 @@ msgstr "Скапіравана ў буфер абмену"
 #: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx
 #: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx
 #: ../../../lib/web/src/components/ui/copy-button.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Copy"
 msgstr "Капіраваць"
 
+#: src/features/projects/pages/project-page.tsx
 #: src/lib/share-labels.ts
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Copy link"
 msgstr "Капіраваць спасылку"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Copy of {name}"
 msgstr "Копія {name}"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Copy project"
 msgstr "Капіраваць праект"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Copying project..."
 msgstr "Капіраванне праекта..."
 
@@ -877,7 +877,7 @@ msgstr "Не ўдалося загрузіць розніцу"
 msgid "Could not load this document. Please try again later."
 msgstr "Не атрымалася загрузіць гэты дакумент. Калі ласка, паспрабуйце пазней."
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Could not remove the unfinished copy"
 msgstr "Не ўдалося выдаліць незавершаную копію"
 
@@ -1099,9 +1099,9 @@ msgstr "Па ўбыванні"
 msgid "Description"
 msgstr "Апісанне"
 
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId/design.tsx
 #: src/routes/_authenticated/$projectId/design.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Design"
 msgstr "Дызайн"
 
@@ -1110,7 +1110,7 @@ msgstr "Дызайн"
 msgid "Design imported"
 msgstr "Дызайн імпартаваны"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Design only"
 msgstr "Толькі дызайн"
 
@@ -1163,7 +1163,7 @@ msgstr "Адключана"
 msgid "Dismiss"
 msgstr "Закрыць"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Dismiss board hint"
 msgstr "Закрыць падказку дошкі"
 
@@ -1181,7 +1181,7 @@ msgstr "Не адпавядае патрэбнаму шаблону"
 msgid "Done"
 msgstr "Гатова"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Double click on a column to add content"
 msgstr "Двойчы націсніце на калонку, каб дадаць змесціва"
 
@@ -1200,8 +1200,8 @@ msgstr "Спачатку спампуйце рэзервовую копію"
 msgid "Download failed"
 msgstr "Не ўдалося спампаваць"
 
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId/design.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Downloaded {filename}"
 msgstr "Спампавана {filename}"
 
@@ -1210,7 +1210,7 @@ msgstr "Спампавана {filename}"
 msgid "Draft"
 msgstr "Чарнавік"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Drag columns to re-order them"
 msgstr "Перацягвайце калонкі, каб змяніць іх парадак"
 
@@ -1295,7 +1295,7 @@ msgstr "Памылка"
 msgid "Every minute"
 msgstr "Кожную хвіліну"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Everything"
 msgstr "Усё"
 
@@ -1318,7 +1318,7 @@ msgstr "Разгарнуць усё"
 msgid "Expand sidebar"
 msgstr "Разгарнуць бакавую панэль"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Export data"
 msgstr "Экспартаваць даныя"
 
@@ -1338,7 +1338,7 @@ msgstr "Вельмі вялікі"
 msgid "Failed to add account"
 msgstr "Не ўдалося дадаць акаўнт"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Failed to add column"
 msgstr "Не ўдалося дадаць слупок"
 
@@ -1353,8 +1353,8 @@ msgstr "Не ўдалося праверыць статус зліцця"
 msgid "Failed to copy"
 msgstr "Не ўдалося скапіяваць"
 
-#: src/routes/_authenticated/$projectId/index.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Failed to copy project"
 msgstr "Не ўдалося скапіяваць праект"
 
@@ -1368,6 +1368,7 @@ msgid "Failed to create field"
 msgstr "Не ўдалося стварыць поле"
 
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx
+#: ../../../lib/web/src/components/share-menu.tsx
 #: ../../../lib/web/src/components/share-menu.tsx
 msgid "Failed to create link"
 msgstr "Не ўдалося стварыць спасылку"
@@ -1401,7 +1402,7 @@ msgstr "Не ўдалося выдаліць укладанне"
 msgid "Failed to delete class"
 msgstr "Не ўдалося выдаліць клас"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Failed to delete column"
 msgstr "Не ўдалося выдаліць слупок"
 
@@ -1433,7 +1434,7 @@ msgstr "Не ўдалося выдаліць праект"
 msgid "Failed to delete view"
 msgstr "Не ўдалося выдаліць выгляд"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Failed to export data"
 msgstr "Не ўдалося экспартаваць даныя"
 
@@ -1512,7 +1513,7 @@ msgid "Failed to merge"
 msgstr "Не ўдалося аб'яднаць"
 
 #: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Failed to move"
 msgstr "Не ўдалося перамясціць"
 
@@ -1520,7 +1521,7 @@ msgstr "Не ўдалося перамясціць"
 msgid "Failed to post comment"
 msgstr "Не ўдалося апублікаваць каментарый"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Failed to re-order columns"
 msgstr "Не ўдалося змяніць парадак слупкоў"
 
@@ -1533,7 +1534,7 @@ msgstr "Не ўдалося прачытаць файл"
 msgid "Failed to remove access"
 msgstr "Не ўдалося выдаліць доступ"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Failed to rename column"
 msgstr "Не ўдалося перайменаваць слупок"
 
@@ -1575,8 +1576,8 @@ msgstr "Не ўдалося ўсталяваць узровень доступу
 msgid "Failed to subscribe"
 msgstr "Не ўдалося падпісацца"
 
+#: src/features/projects/pages/project-page.tsx
 #: src/features/projects/pages/projects-list-page.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Failed to unsubscribe"
 msgstr "Не ўдалося адпісацца"
 
@@ -1852,7 +1853,7 @@ msgid "Loading templates..."
 msgstr "Загрузка шаблонаў..."
 
 #: ../../../lib/web/src/features/document/document-page.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Loading..."
 msgstr "Загрузка..."
 
@@ -1922,7 +1923,7 @@ msgstr "Коміт зліцця"
 msgid "Merge requests"
 msgstr "Запыты на зліццё"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Merge requests ({requestCount})"
 msgstr "Запыты на зліццё ({requestCount})"
 
@@ -1996,15 +1997,15 @@ msgstr "Мой праект"
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx
 #: src/features/editor/components/edit-dialogs.tsx
 #: src/features/projects/components/create-project-dialog.tsx
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId_.settings.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Name"
 msgstr "Назва"
 
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx
 #: src/features/projects/components/create-project-dialog.tsx
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId_.settings.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Name cannot contain < or > characters"
 msgstr "Назва не можа змяшчаць сімвалы < або >"
 
@@ -2015,8 +2016,8 @@ msgstr "Назва абавязковая"
 
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx
 #: src/features/projects/components/create-project-dialog.tsx
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId_.settings.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Name must be 1000 characters or less"
 msgstr "Назва павінна быць не больш за 1000 сімвалаў"
 
@@ -2026,8 +2027,8 @@ msgid "Network error"
 msgstr "Памылка сеткі"
 
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "New"
 msgstr "Новы"
 
@@ -2036,7 +2037,7 @@ msgctxt "sort order"
 msgid "New"
 msgstr "Новае"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "New {className}"
 msgstr "Новы {className}"
 
@@ -2283,7 +2284,7 @@ msgstr "Адкрыць навігацыю"
 msgid "Open option actions"
 msgstr "Адкрыць дзеянні параметру"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Open page actions"
 msgstr "Адкрыць дзеянні старонкі"
 
@@ -2350,7 +2351,7 @@ msgstr "Шаблон (рэгулярны выраз)"
 msgid "People"
 msgstr "Людзі"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Please add one or more classes to the project design."
 msgstr "Дадайце адзін або больш класаў у дызайн праекта."
 
@@ -2437,7 +2438,7 @@ msgstr "Праект"
 msgid "Project actions"
 msgstr "Дзеянні праекта"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Project copied"
 msgstr "Праект скапіяваны"
 
@@ -2449,8 +2450,8 @@ msgstr "Праект створаны"
 msgid "Project deleted"
 msgstr "Праект выдалены"
 
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId_.settings.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Project name is required"
 msgstr "Назва праекта абавязковая"
 
@@ -2495,7 +2496,7 @@ msgstr "Узняты"
 msgid "Re-link your accounts on this server"
 msgstr "Паўторна прывяжыце свае акаўнты на гэтым серверы"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Re-order columns"
 msgstr "Перапарадкаваць слупкі"
 
@@ -2742,7 +2743,7 @@ msgstr "Субота"
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx
 #: ../../../lib/web/src/components/ui/editable-field-row.tsx
 #: ../../../lib/web/src/components/ui/secret-field.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Save"
 msgstr "Захаваць"
 
@@ -2900,8 +2901,8 @@ msgstr "Усталяванне доступу..."
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx
 #: ../../../lib/web/src/components/options-menu.tsx
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId_.settings.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Settings"
 msgstr "Налады"
 
@@ -3093,7 +3094,7 @@ msgstr "Камера ўжо выкарыстоўваецца"
 msgid "The camera request was not answered"
 msgstr "Запыт камеры застаўся без адказу"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "The copy may be incomplete. Check it before you use it."
 msgstr "Копія можа быць няпоўнай. Праверце яе перад выкарыстаннем."
 
@@ -3147,7 +3148,7 @@ msgid "This will permanently delete \"{projectName}\" and all its objects, comme
 msgstr "Гэта незваротна выдаліць «{projectName}» і ўсе яго аб'екты, каментарыі і ўкладанні. Гэта дзеянне нельга адмяніць."
 
 #. placeholder {0}: project.project.name
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "This will remove \"{0}\" from your sidebar and stop updates for this project."
 msgstr "Гэта выдаліць «{0}» з вашай бакавой панэлі і спыніць абнаўленні для гэтага праекта."
 
@@ -3283,22 +3284,22 @@ msgid "Unknown"
 msgstr "Невядома"
 
 #: ../../../lib/web/src/components/options-menu.tsx
+#: src/features/projects/pages/project-page.tsx
 #: src/features/projects/pages/projects-list-page.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Unsubscribe"
 msgstr "Адпісацца"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Unsubscribe from project?"
 msgstr "Адпісацца ад праекта?"
 
+#: src/features/projects/pages/project-page.tsx
 #: src/features/projects/pages/projects-list-page.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Unsubscribed"
 msgstr "Адпісана"
 
+#: src/features/projects/pages/project-page.tsx
 #: src/features/projects/pages/projects-list-page.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Unsubscribing..."
 msgstr "Адпіска..."
 
@@ -3399,7 +3400,7 @@ msgstr "Элементы кіравання выглядам"
 msgid "View only"
 msgstr "Толькі прагляд"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "View options"
 msgstr "Параметры выгляду"
 

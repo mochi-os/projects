@@ -260,7 +260,7 @@ msgstr "ചെക്ക്‌ലിസ്റ്റ് ഇനം ചേർക്�
 msgid "Add class"
 msgstr "ക്ലാസ് ചേർക്കുക"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Add column"
 msgstr "കോളം ചേർക്കുക"
 
@@ -328,7 +328,7 @@ msgid "Allow anyone to search for {entityLabel}"
 msgstr "{entityLabel} ആർക്കും തിരയാൻ അനുവദിക്കുക"
 
 #: src/features/projects/components/create-project-dialog.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Allow anyone to view and comment on project"
 msgstr "ആർക്കും പ്രോജക്റ്റ് കാണാനും അതിൽ അഭിപ്രായം പറയാനും അനുവദിക്കുക"
 
@@ -371,7 +371,7 @@ msgstr "ഈ ഫീഡ് സബ്‌സ്‌ക്രൈബ് ചെയ്ത
 msgid "Are you sure you want to delete \"{0}\"?"
 msgstr "\"{0}\" ഇല്ലാതാക്കണമെന്ന് നിങ്ങൾക്ക് ഉറപ്പാണോ?"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Are you sure you want to delete \"{title}\" and the {count, plural, one {# item} other {# items}} under it? This action cannot be undone."
 msgstr "\"{title}\", അതിന് കീഴിലുള്ള {count, plural, one {# ഇനം} other {# ഇനങ്ങൾ}} എന്നിവ ഇല്ലാതാക്കണമെന്ന് നിങ്ങൾക്ക് ഉറപ്പാണോ? ഈ പ്രവർത്തനം പഴയപടിയാക്കാൻ കഴിയില്ല."
 
@@ -553,9 +553,9 @@ msgstr "ഇതിന്റെ ചൈൽഡ് ആകാൻ കഴിയും"
 #: ../../../lib/web/src/features/accounts/account-add.tsx
 #: ../../../lib/web/src/features/accounts/account-verify.tsx
 #: src/features/projects/components/create-project-dialog.tsx
+#: src/features/projects/pages/project-page.tsx
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId/design.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Cancel"
 msgstr "റദ്ദാക്കുക"
 
@@ -829,25 +829,25 @@ msgstr "ക്ലിപ്പ്ബോർഡിലേക്ക് പകർത�
 #: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx
 #: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx
 #: ../../../lib/web/src/components/ui/copy-button.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Copy"
 msgstr "പകർത്തുക"
 
+#: src/features/projects/pages/project-page.tsx
 #: src/lib/share-labels.ts
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Copy link"
 msgstr "ലിങ്ക് പകർത്തുക"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Copy of {name}"
 msgstr "{name} ന്റെ പകർപ്പ്"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Copy project"
 msgstr "പ്രോജക്റ്റ് പകർത്തുക"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Copying project..."
 msgstr "പ്രോജക്റ്റ് പകർത്തുന്നു..."
 
@@ -877,7 +877,7 @@ msgstr "വ്യത്യാസം ലോഡുചെയ്യുന്നത�
 msgid "Could not load this document. Please try again later."
 msgstr "ഈ ഡോക്യുമെന്റ് ലോഡ് ചെയ്യാൻ കഴിഞ്ഞില്ല. ദയവായി പിന്നീട് വീണ്ടും ശ്രമിക്കുക."
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Could not remove the unfinished copy"
 msgstr "പൂർത്തിയാകാത്ത പകർപ്പ് നീക്കം ചെയ്യാൻ കഴിഞ്ഞില്ല"
 
@@ -1099,9 +1099,9 @@ msgstr "അവരോഹണ ക്രമം"
 msgid "Description"
 msgstr "വിവരണം"
 
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId/design.tsx
 #: src/routes/_authenticated/$projectId/design.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Design"
 msgstr "ഡിസൈൻ"
 
@@ -1110,7 +1110,7 @@ msgstr "ഡിസൈൻ"
 msgid "Design imported"
 msgstr "ഡിസൈൻ ഇറക്കുമതി ചെയ്തു"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Design only"
 msgstr "ഡിസൈൻ മാത്രം"
 
@@ -1163,7 +1163,7 @@ msgstr "വിച്ഛേദിച്ചു"
 msgid "Dismiss"
 msgstr "ഒഴിവാക്കുക"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Dismiss board hint"
 msgstr "ബോർഡ് സൂചന ഒഴിവാക്കുക"
 
@@ -1181,7 +1181,7 @@ msgstr "ആവശ്യമായ മാതൃകയുമായി പൊരു�
 msgid "Done"
 msgstr "പൂർത്തിയായി"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Double click on a column to add content"
 msgstr "ഉള്ളടക്കം ചേർക്കാൻ കോളത്തിൽ ഡബിൾ ക്ലിക്ക് ചെയ്യുക"
 
@@ -1200,8 +1200,8 @@ msgstr "ആദ്യം ബാക്കപ്പ് ഡൗൺലോഡ് ചെ
 msgid "Download failed"
 msgstr "ഡൗൺലോഡ് പരാജയപ്പെട്ടു"
 
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId/design.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Downloaded {filename}"
 msgstr "{filename} ഡൗൺലോഡ് ചെയ്തു"
 
@@ -1210,7 +1210,7 @@ msgstr "{filename} ഡൗൺലോഡ് ചെയ്തു"
 msgid "Draft"
 msgstr "ഡ്രാഫ്റ്റ്"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Drag columns to re-order them"
 msgstr "പുനഃക്രമീകരിക്കാൻ കോളങ്ങൾ വലിച്ചിടുക"
 
@@ -1295,7 +1295,7 @@ msgstr "പിശക്"
 msgid "Every minute"
 msgstr "ഓരോ മിനിറ്റും"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Everything"
 msgstr "എല്ലാം"
 
@@ -1318,7 +1318,7 @@ msgstr "എല്ലാം വികസിപ്പിക്കുക"
 msgid "Expand sidebar"
 msgstr "സൈഡ്‌ബാർ വികസിപ്പിക്കുക"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Export data"
 msgstr "ഡാറ്റ എക്സ്പോർട്ട് ചെയ്യുക"
 
@@ -1338,7 +1338,7 @@ msgstr "അധിക വലുത്"
 msgid "Failed to add account"
 msgstr "അക്കൗണ്ട് ചേർക്കുന്നതിൽ പരാജയപ്പെട്ടു"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Failed to add column"
 msgstr "കോളം ചേർക്കാനായില്ല"
 
@@ -1353,8 +1353,8 @@ msgstr "മെർജ് സ്റ്റാറ്റസ് പരിശോധി�
 msgid "Failed to copy"
 msgstr "പകർത്തുന്നതിൽ പരാജയപ്പെട്ടു"
 
-#: src/routes/_authenticated/$projectId/index.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Failed to copy project"
 msgstr "പ്രോജക്റ്റ് പകർത്തുന്നതിൽ പരാജയപ്പെട്ടു"
 
@@ -1368,6 +1368,7 @@ msgid "Failed to create field"
 msgstr "ഫീൽഡ് സൃഷ്ടിക്കുന്നതിൽ പരാജയപ്പെട്ടു"
 
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx
+#: ../../../lib/web/src/components/share-menu.tsx
 #: ../../../lib/web/src/components/share-menu.tsx
 msgid "Failed to create link"
 msgstr "ലിങ്ക് സൃഷ്ടിക്കുന്നതിൽ പരാജയപ്പെട്ടു"
@@ -1401,7 +1402,7 @@ msgstr "അറ്റാച്ച്മെന്റ് ഇല്ലാതാക�
 msgid "Failed to delete class"
 msgstr "ക്ലാസ് ഇല്ലാതാക്കുന്നതിൽ പരാജയപ്പെട്ടു"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Failed to delete column"
 msgstr "കോളം ഇല്ലാതാക്കാനായില്ല"
 
@@ -1433,7 +1434,7 @@ msgstr "പ്രോജക്റ്റ് ഇല്ലാതാക്കുന�
 msgid "Failed to delete view"
 msgstr "വ്യൂ ഇല്ലാതാക്കുന്നതിൽ പരാജയപ്പെട്ടു"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Failed to export data"
 msgstr "ഡാറ്റ എക്സ്പോർട്ട് ചെയ്യാനായില്ല"
 
@@ -1512,7 +1513,7 @@ msgid "Failed to merge"
 msgstr "മെർജ് ചെയ്യുന്നതിൽ പരാജയപ്പെട്ടു"
 
 #: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Failed to move"
 msgstr "നീക്കാനായില്ല"
 
@@ -1520,7 +1521,7 @@ msgstr "നീക്കാനായില്ല"
 msgid "Failed to post comment"
 msgstr "അഭിപ്രായം പോസ്റ്റുചെയ്യുന്നതിൽ പരാജയപ്പെട്ടു"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Failed to re-order columns"
 msgstr "കോളങ്ങൾ പുനഃക്രമീകരിക്കാനായില്ല"
 
@@ -1533,7 +1534,7 @@ msgstr "ഫയൽ വായിക്കുന്നതിൽ പരാജയപ�
 msgid "Failed to remove access"
 msgstr "ആക്സസ് നീക്കം ചെയ്യുന്നതിൽ പരാജയപ്പെട്ടു"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Failed to rename column"
 msgstr "കോളത്തിന്റെ പേര് മാറ്റാനായില്ല"
 
@@ -1575,8 +1576,8 @@ msgstr "ആക്സസ് ലെവൽ സജ്ജമാക്കുന്ന�
 msgid "Failed to subscribe"
 msgstr "സബ്സ്ക്രൈബ് ചെയ്യുന്നതിൽ പരാജയപ്പെട്ടു"
 
+#: src/features/projects/pages/project-page.tsx
 #: src/features/projects/pages/projects-list-page.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Failed to unsubscribe"
 msgstr "അൺസബ്സ്ക്രൈബ് ചെയ്യുന്നതിൽ പരാജയപ്പെട്ടു"
 
@@ -1852,7 +1853,7 @@ msgid "Loading templates..."
 msgstr "ടെംപ്ലേറ്റുകൾ ലോഡുചെയ്യുന്നു..."
 
 #: ../../../lib/web/src/features/document/document-page.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Loading..."
 msgstr "ലോഡുചെയ്യുന്നു..."
 
@@ -1922,7 +1923,7 @@ msgstr "ലയന കമ്മിറ്റ്"
 msgid "Merge requests"
 msgstr "മെർജ് റിക്വസ്റ്റുകൾ"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Merge requests ({requestCount})"
 msgstr "ലയന അഭ്യർത്ഥനകൾ ({requestCount})"
 
@@ -1996,15 +1997,15 @@ msgstr "എന്റെ പ്രോജക്റ്റ്"
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx
 #: src/features/editor/components/edit-dialogs.tsx
 #: src/features/projects/components/create-project-dialog.tsx
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId_.settings.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Name"
 msgstr "പേര്"
 
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx
 #: src/features/projects/components/create-project-dialog.tsx
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId_.settings.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Name cannot contain < or > characters"
 msgstr "പേരിൽ < അല്ലെങ്കിൽ > പ്രതീകങ്ങൾ ഉണ്ടാകാൻ പാടില്ല"
 
@@ -2015,8 +2016,8 @@ msgstr "പേര് നൽകേണ്ടത് ആവശ്യമാണ്"
 
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx
 #: src/features/projects/components/create-project-dialog.tsx
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId_.settings.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Name must be 1000 characters or less"
 msgstr "പേര് 1000 പ്രതീകങ്ങൾ അല്ലെങ്കിൽ അതിൽ കുറവായിരിക്കണം"
 
@@ -2026,8 +2027,8 @@ msgid "Network error"
 msgstr "നെറ്റ്‌വർക്ക് പിശക്"
 
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "New"
 msgstr "പുതിയത്"
 
@@ -2036,7 +2037,7 @@ msgctxt "sort order"
 msgid "New"
 msgstr "ഏറ്റവും പുതിയത്"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "New {className}"
 msgstr "പുതിയ {className}"
 
@@ -2283,7 +2284,7 @@ msgstr "നാവിഗേഷൻ തുറക്കുക"
 msgid "Open option actions"
 msgstr "ഓപ്ഷൻ പ്രവർത്തനങ്ങൾ തുറക്കുക"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Open page actions"
 msgstr "പേജ് പ്രവർത്തനങ്ങൾ തുറക്കുക"
 
@@ -2350,7 +2351,7 @@ msgstr "പാറ്റേൺ (regex)"
 msgid "People"
 msgstr "ആളുകൾ"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Please add one or more classes to the project design."
 msgstr "പ്രോജക്റ്റ് ഡിസൈനിൽ ഒന്നോ അതിലധികമോ ക്ലാസുകൾ ചേർക്കുക."
 
@@ -2437,7 +2438,7 @@ msgstr "പ്രോജക്റ്റ്"
 msgid "Project actions"
 msgstr "പ്രോജക്റ്റ് പ്രവർത്തനങ്ങൾ"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Project copied"
 msgstr "പ്രോജക്റ്റ് പകർത്തി"
 
@@ -2449,8 +2450,8 @@ msgstr "പ്രോജക്റ്റ് ഇല്ലാതാക്കി"
 msgid "Project deleted"
 msgstr "പ്രോജക്റ്റ് കണ്ടെത്തിയില്ല"
 
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId_.settings.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Project name is required"
 msgstr "പ്രോജക്റ്റിന്റെ പേര് നൽകേണ്ടത് ആവശ്യമാണ്"
 
@@ -2495,7 +2496,7 @@ msgstr "ഉയർന്നത്"
 msgid "Re-link your accounts on this server"
 msgstr "ഈ സെർവറിൽ നിങ്ങളുടെ അക്കൗണ്ടുകൾ വീണ്ടും ലിങ്ക് ചെയ്യുക"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Re-order columns"
 msgstr "കോളങ്ങൾ പുനഃക്രമീകരിക്കുക"
 
@@ -2742,7 +2743,7 @@ msgstr "ശനിയാഴ്ച"
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx
 #: ../../../lib/web/src/components/ui/editable-field-row.tsx
 #: ../../../lib/web/src/components/ui/secret-field.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Save"
 msgstr "സേവ് ചെയ്യുക"
 
@@ -2900,8 +2901,8 @@ msgstr "ആക്സസ് സജ്ജമാക്കുന്നു..."
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx
 #: ../../../lib/web/src/components/options-menu.tsx
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId_.settings.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Settings"
 msgstr "ക്രമീകരണങ്ങൾ"
 
@@ -3093,7 +3094,7 @@ msgstr "ക്യാമറ ഇതിനകം ഉപയോഗത്തിലാ�
 msgid "The camera request was not answered"
 msgstr "ക്യാമറ അഭ്യർത്ഥനയ്ക്ക് മറുപടി ലഭിച്ചില്ല"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "The copy may be incomplete. Check it before you use it."
 msgstr "പകർപ്പ് അപൂർണ്ണമായിരിക്കാം. ഉപയോഗിക്കുന്നതിന് മുമ്പ് അത് പരിശോധിക്കുക."
 
@@ -3147,7 +3148,7 @@ msgid "This will permanently delete \"{projectName}\" and all its objects, comme
 msgstr "ഇത് \"{projectName}\"-ഉം അതിന്റെ എല്ലാ ഒബ്ജക്ടുകൾ, കമന്റുകൾ, അറ്റാച്ച്മെന്റുകൾ എന്നിവയും സ്ഥിരമായി ഇല്ലാതാക്കും. ഈ പ്രവർത്തനം പഴയപടിയാക്കാൻ കഴിയില്ല."
 
 #. placeholder {0}: project.project.name
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "This will remove \"{0}\" from your sidebar and stop updates for this project."
 msgstr "ഇത് നിങ്ങളുടെ സൈഡ്ബാറിൽ നിന്ന് \"{0}\" നീക്കും, ഈ പ്രോജക്ടിനുള്ള അപ്ഡേറ്റുകൾ നിർത്തും."
 
@@ -3283,22 +3284,22 @@ msgid "Unknown"
 msgstr "അജ്ഞാതം"
 
 #: ../../../lib/web/src/components/options-menu.tsx
+#: src/features/projects/pages/project-page.tsx
 #: src/features/projects/pages/projects-list-page.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Unsubscribe"
 msgstr "അൺസബ്സ്ക്രൈബ് ചെയ്യുക"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Unsubscribe from project?"
 msgstr "പ്രോജക്ടിൽ നിന്ന് അൺസബ്സ്ക്രൈബ് ചെയ്യണോ?"
 
+#: src/features/projects/pages/project-page.tsx
 #: src/features/projects/pages/projects-list-page.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Unsubscribed"
 msgstr "അൺസബ്സ്ക്രൈബ് ചെയ്തു"
 
+#: src/features/projects/pages/project-page.tsx
 #: src/features/projects/pages/projects-list-page.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Unsubscribing..."
 msgstr "അൺസബ്സ്ക്രൈബ് ചെയ്യുന്നു..."
 
@@ -3399,7 +3400,7 @@ msgstr "നിയന്ത്രണങ്ങൾ കാണുക"
 msgid "View only"
 msgstr "കാണുക മാത്രം"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "View options"
 msgstr "ഓപ്ഷനുകൾ കാണുക"
 

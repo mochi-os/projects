@@ -260,7 +260,7 @@ msgstr "ჩამონათვალის ერთეულის დამ�
 msgid "Add class"
 msgstr "კლასის დამატება"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Add column"
 msgstr "სვეტის დამატება"
 
@@ -328,7 +328,7 @@ msgid "Allow anyone to search for {entityLabel}"
 msgstr "ყველას შეეძლოს მოძებნოს {entityLabel}"
 
 #: src/features/projects/components/create-project-dialog.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Allow anyone to view and comment on project"
 msgstr "ნებისმიერს პროექტის ნახვისა და კომენტირების ნება დართე"
 
@@ -371,7 +371,7 @@ msgstr "ყველაფერი, რაც ამ არხზეა გა�
 msgid "Are you sure you want to delete \"{0}\"?"
 msgstr "დარწმუნებული ხართ, რომ გსურთ „{0}“-ის წაშლა?"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Are you sure you want to delete \"{title}\" and the {count, plural, one {# item} other {# items}} under it? This action cannot be undone."
 msgstr "დარწმუნებული ხართ, რომ გსურთ „{title}“-ის და მის ქვეშ არსებული {count, plural, other {# ერთეულის}} წაშლა? მოქმედება შეუქცევადია."
 
@@ -553,9 +553,9 @@ msgstr "შეიძლება იყოს შვილი"
 #: ../../../lib/web/src/features/accounts/account-add.tsx
 #: ../../../lib/web/src/features/accounts/account-verify.tsx
 #: src/features/projects/components/create-project-dialog.tsx
+#: src/features/projects/pages/project-page.tsx
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId/design.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Cancel"
 msgstr "გაუქმება"
 
@@ -829,25 +829,25 @@ msgstr "ბუფერში დაკოპირდა"
 #: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx
 #: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx
 #: ../../../lib/web/src/components/ui/copy-button.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Copy"
 msgstr "კოპირება"
 
+#: src/features/projects/pages/project-page.tsx
 #: src/lib/share-labels.ts
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Copy link"
 msgstr "ბმულის კოპირება"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Copy of {name}"
 msgstr "{name}-ის ასლი"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Copy project"
 msgstr "პროექტის კოპირება"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Copying project..."
 msgstr "პროექტის კოპირება..."
 
@@ -877,7 +877,7 @@ msgstr "სხვაობის ჩატვირთვა ვერ მოხ
 msgid "Could not load this document. Please try again later."
 msgstr "ამ დოკუმენტის ჩატვირთვა ვერ მოხერხდა. სცადეთ მოგვიანებით."
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Could not remove the unfinished copy"
 msgstr "დაუსრულებელი ასლის წაშლა ვერ მოხერხდა"
 
@@ -1099,9 +1099,9 @@ msgstr "კლებადობით"
 msgid "Description"
 msgstr "აღწერა"
 
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId/design.tsx
 #: src/routes/_authenticated/$projectId/design.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Design"
 msgstr "დიზაინი"
 
@@ -1110,7 +1110,7 @@ msgstr "დიზაინი"
 msgid "Design imported"
 msgstr "დიზაინი იმპორტირებულია"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Design only"
 msgstr "მხოლოდ დიზაინი"
 
@@ -1163,7 +1163,7 @@ msgstr "გათიშულია"
 msgid "Dismiss"
 msgstr "დახურვა"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Dismiss board hint"
 msgstr "დაფის მინიშნების უარყოფა"
 
@@ -1181,7 +1181,7 @@ msgstr "არ შეესაბამება საჭირო შაბლ
 msgid "Done"
 msgstr "მზადაა"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Double click on a column to add content"
 msgstr "ორჯერ დააწკაპუნეთ სვეტზე შინაარსის დასამატებლად"
 
@@ -1200,8 +1200,8 @@ msgstr "ჯერ ჩამოტვირთეთ სარეზერვო 
 msgid "Download failed"
 msgstr "ჩამოტვირთვა ვერ მოხერხდა"
 
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId/design.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Downloaded {filename}"
 msgstr "ჩამოტვირთულია {filename}"
 
@@ -1210,7 +1210,7 @@ msgstr "ჩამოტვირთულია {filename}"
 msgid "Draft"
 msgstr "მონახაზი"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Drag columns to re-order them"
 msgstr "ჩავლებით გადააადგილეთ სვეტები მათი რიგის შესაცვლელად"
 
@@ -1295,7 +1295,7 @@ msgstr "შეცდომა"
 msgid "Every minute"
 msgstr "ყოველი წუთი"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Everything"
 msgstr "ყველაფერი"
 
@@ -1318,7 +1318,7 @@ msgstr "ყველას გაშლა"
 msgid "Expand sidebar"
 msgstr "გვერდითი პანელის გაშლა"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Export data"
 msgstr "მონაცემების ექსპორტი"
 
@@ -1338,7 +1338,7 @@ msgstr "ძალიან დიდი"
 msgid "Failed to add account"
 msgstr "ანგარიშის დამატება ვერ მოხერხდა"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Failed to add column"
 msgstr "სვეტის დამატება ვერ მოხერხდა"
 
@@ -1353,8 +1353,8 @@ msgstr "შერწყმის სტატუსის შემოწმე�
 msgid "Failed to copy"
 msgstr "კოპირება ვერ მოხერხდა"
 
-#: src/routes/_authenticated/$projectId/index.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Failed to copy project"
 msgstr "პროექტის კოპირება ვერ მოხერხდა"
 
@@ -1368,6 +1368,7 @@ msgid "Failed to create field"
 msgstr "ველის შექმნა ვერ მოხერხდა"
 
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx
+#: ../../../lib/web/src/components/share-menu.tsx
 #: ../../../lib/web/src/components/share-menu.tsx
 msgid "Failed to create link"
 msgstr "ბმულის შექმნა ვერ მოხერხდა"
@@ -1401,7 +1402,7 @@ msgstr "დანართის წაშლა ვერ მოხერხდ
 msgid "Failed to delete class"
 msgstr "კლასის წაშლა ვერ მოხერხდა"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Failed to delete column"
 msgstr "სვეტის წაშლა ვერ მოხერხდა"
 
@@ -1433,7 +1434,7 @@ msgstr "პროექტის წაშლა ვერ მოხერხდ
 msgid "Failed to delete view"
 msgstr "ხედის წაშლა ვერ მოხერხდა"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Failed to export data"
 msgstr "მონაცემების ექსპორტი ვერ მოხერხდა"
 
@@ -1512,7 +1513,7 @@ msgid "Failed to merge"
 msgstr "შერწყმა ვერ მოხერხდა"
 
 #: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Failed to move"
 msgstr "გადატანა ვერ მოხერხდა"
 
@@ -1520,7 +1521,7 @@ msgstr "გადატანა ვერ მოხერხდა"
 msgid "Failed to post comment"
 msgstr "კომენტარის გამოქვეყნება ვერ მოხერხდა"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Failed to re-order columns"
 msgstr "სვეტების გადალაგება ვერ მოხერხდა"
 
@@ -1533,7 +1534,7 @@ msgstr "ფაილის წაკითხვა ვერ მოხერხ
 msgid "Failed to remove access"
 msgstr "წვდომის წაშლა ვერ მოხერხდა"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Failed to rename column"
 msgstr "სვეტის გადარქმევა ვერ მოხერხდა"
 
@@ -1575,8 +1576,8 @@ msgstr "წვდომის დონის დაყენება ვერ
 msgid "Failed to subscribe"
 msgstr "გამოწერა ვერ მოხერხდა"
 
+#: src/features/projects/pages/project-page.tsx
 #: src/features/projects/pages/projects-list-page.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Failed to unsubscribe"
 msgstr "გამოწერის შეწყვეტა ვერ მოხერხდა"
 
@@ -1852,7 +1853,7 @@ msgid "Loading templates..."
 msgstr "შაბლონების ჩატვირთვა..."
 
 #: ../../../lib/web/src/features/document/document-page.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Loading..."
 msgstr "იტვირთება..."
 
@@ -1922,7 +1923,7 @@ msgstr "შერწყმის კომიტი"
 msgid "Merge requests"
 msgstr "შერწყმის მოთხოვნები"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Merge requests ({requestCount})"
 msgstr "შერწყმის მოთხოვნები ({requestCount})"
 
@@ -1996,15 +1997,15 @@ msgstr "ჩემი პროექტი"
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx
 #: src/features/editor/components/edit-dialogs.tsx
 #: src/features/projects/components/create-project-dialog.tsx
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId_.settings.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Name"
 msgstr "სახელი"
 
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx
 #: src/features/projects/components/create-project-dialog.tsx
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId_.settings.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Name cannot contain < or > characters"
 msgstr "სახელი ვერ შეიცავს < ან > სიმბოლოებს"
 
@@ -2015,8 +2016,8 @@ msgstr "სახელი აუცილებელია"
 
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx
 #: src/features/projects/components/create-project-dialog.tsx
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId_.settings.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Name must be 1000 characters or less"
 msgstr "სახელი უნდა იყოს 1000 სიმბოლო ან ნაკლები"
 
@@ -2026,8 +2027,8 @@ msgid "Network error"
 msgstr "ქსელის შეცდომა"
 
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "New"
 msgstr "ახალი"
 
@@ -2036,7 +2037,7 @@ msgctxt "sort order"
 msgid "New"
 msgstr "უახლესი"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "New {className}"
 msgstr "ახალი {className}"
 
@@ -2283,7 +2284,7 @@ msgstr "ნავიგაციის გახსნა"
 msgid "Open option actions"
 msgstr "ვარიანტის მოქმედებების გახსნა"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Open page actions"
 msgstr "გვერდის მოქმედებების გახსნა"
 
@@ -2350,7 +2351,7 @@ msgstr "შაბლონი (regex)"
 msgid "People"
 msgstr "ადამიანები"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Please add one or more classes to the project design."
 msgstr "გთხოვთ, დაამატოთ ერთი ან მეტი კლასი პროექტის დიზაინში."
 
@@ -2437,7 +2438,7 @@ msgstr "პროექტი"
 msgid "Project actions"
 msgstr "პროექტის მოქმედებები"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Project copied"
 msgstr "პროექტი დაკოპირდა"
 
@@ -2449,8 +2450,8 @@ msgstr "პროექტი შეიქმნა"
 msgid "Project deleted"
 msgstr "პროექტი წაიშალა"
 
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId_.settings.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Project name is required"
 msgstr "პროექტის სახელი აუცილებელია"
 
@@ -2495,7 +2496,7 @@ msgstr "აწეული"
 msgid "Re-link your accounts on this server"
 msgstr "ხელახლა დააკავშირეთ თქვენი ანგარიშები ამ სერვერზე"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Re-order columns"
 msgstr "სვეტების გადაწყობა"
 
@@ -2742,7 +2743,7 @@ msgstr "შაბათი"
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx
 #: ../../../lib/web/src/components/ui/editable-field-row.tsx
 #: ../../../lib/web/src/components/ui/secret-field.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Save"
 msgstr "შენახვა"
 
@@ -2900,8 +2901,8 @@ msgstr "წვდომის დაყენება..."
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx
 #: ../../../lib/web/src/components/options-menu.tsx
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId_.settings.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Settings"
 msgstr "პარამეტრები"
 
@@ -3093,7 +3094,7 @@ msgstr "კამერა უკვე გამოიყენება"
 msgid "The camera request was not answered"
 msgstr "კამერის მოთხოვნას პასუხი არ მოჰყვა"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "The copy may be incomplete. Check it before you use it."
 msgstr "ასლი შეიძლება არასრული იყოს. გამოყენებამდე შეამოწმეთ."
 
@@ -3147,7 +3148,7 @@ msgid "This will permanently delete \"{projectName}\" and all its objects, comme
 msgstr "ეს სამუდამოდ წაშლის \"{projectName}\"-ს და მის ყველა ობიექტს, კომენტარს და დანართს. ეს მოქმედება ვერ გაუქმდება."
 
 #. placeholder {0}: project.project.name
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "This will remove \"{0}\" from your sidebar and stop updates for this project."
 msgstr "ეს წაშლის \"{0}\"-ს თქვენი გვერდითი პანელიდან და გააჩერებს ამ პროექტის განახლებებს."
 
@@ -3283,22 +3284,22 @@ msgid "Unknown"
 msgstr "უცნობი"
 
 #: ../../../lib/web/src/components/options-menu.tsx
+#: src/features/projects/pages/project-page.tsx
 #: src/features/projects/pages/projects-list-page.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Unsubscribe"
 msgstr "გამოწერის შეწყვეტა"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Unsubscribe from project?"
 msgstr "პროექტის გამოწერის შეწყვეტა?"
 
+#: src/features/projects/pages/project-page.tsx
 #: src/features/projects/pages/projects-list-page.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Unsubscribed"
 msgstr "გამოწერა შეწყვეტილია"
 
+#: src/features/projects/pages/project-page.tsx
 #: src/features/projects/pages/projects-list-page.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Unsubscribing..."
 msgstr "გამოწერის შეწყვეტა მიმდინარეობს..."
 
@@ -3399,7 +3400,7 @@ msgstr "ხედის მართვა"
 msgid "View only"
 msgstr "მხოლოდ ნახვა"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "View options"
 msgstr "ხედის პარამეტრები"
 

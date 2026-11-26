@@ -260,7 +260,7 @@ msgstr "הוסף פריט לרשימת משימות"
 msgid "Add class"
 msgstr "הוסף מחלקה"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Add column"
 msgstr "הוסף עמודה"
 
@@ -328,7 +328,7 @@ msgid "Allow anyone to search for {entityLabel}"
 msgstr "לאפשר לכל אחד לחפש {entityLabel}"
 
 #: src/features/projects/components/create-project-dialog.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Allow anyone to view and comment on project"
 msgstr "אפשר לכולם לצפות בפרויקט ולהגיב עליו"
 
@@ -371,7 +371,7 @@ msgstr "כל מה שרשום להזנה הזו יפסיק לקבל אותה. א�
 msgid "Are you sure you want to delete \"{0}\"?"
 msgstr "האם אתה בטוח שברצונך למחוק את \"{0}\"?"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Are you sure you want to delete \"{title}\" and the {count, plural, one {# item} other {# items}} under it? This action cannot be undone."
 msgstr "האם אתה בטוח שברצונך למחוק את \"{title}\" ואת {count, plural, one {הפריט האחד} two {שני הפריטים} many {# הפריטים} other {# הפריטים}} שמתחתיו? לא ניתן לבטל פעולה זו."
 
@@ -553,9 +553,9 @@ msgstr "יכול להיות צאצא של"
 #: ../../../lib/web/src/features/accounts/account-add.tsx
 #: ../../../lib/web/src/features/accounts/account-verify.tsx
 #: src/features/projects/components/create-project-dialog.tsx
+#: src/features/projects/pages/project-page.tsx
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId/design.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Cancel"
 msgstr "ביטול"
 
@@ -829,25 +829,25 @@ msgstr "הועתק ללוח"
 #: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx
 #: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx
 #: ../../../lib/web/src/components/ui/copy-button.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Copy"
 msgstr "העתק"
 
+#: src/features/projects/pages/project-page.tsx
 #: src/lib/share-labels.ts
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Copy link"
 msgstr "העתק קישור"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Copy of {name}"
 msgstr "עותק של {name}"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Copy project"
 msgstr "העתק פרויקט"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Copying project..."
 msgstr "מעתיק פרויקט..."
 
@@ -877,7 +877,7 @@ msgstr "טעינת ההשוואה נכשלה"
 msgid "Could not load this document. Please try again later."
 msgstr "לא ניתן היה לטעון מסמך זה. אנא נסה שוב מאוחר יותר."
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Could not remove the unfinished copy"
 msgstr "לא ניתן היה להסיר את העותק שלא הושלם"
 
@@ -1099,9 +1099,9 @@ msgstr "סדר יורד"
 msgid "Description"
 msgstr "תיאור"
 
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId/design.tsx
 #: src/routes/_authenticated/$projectId/design.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Design"
 msgstr "עיצוב"
 
@@ -1110,7 +1110,7 @@ msgstr "עיצוב"
 msgid "Design imported"
 msgstr "העיצוב יובא"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Design only"
 msgstr "עיצוב בלבד"
 
@@ -1163,7 +1163,7 @@ msgstr "מנותק"
 msgid "Dismiss"
 msgstr "סגור"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Dismiss board hint"
 msgstr "סגור רמז לוח"
 
@@ -1181,7 +1181,7 @@ msgstr "לא תואם לתבנית הנדרשת"
 msgid "Done"
 msgstr "בוצע"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Double click on a column to add content"
 msgstr "לחץ פעמיים על עמודה כדי להוסיף תוכן"
 
@@ -1200,8 +1200,8 @@ msgstr "הורד גיבוי תחילה"
 msgid "Download failed"
 msgstr "ההורדה נכשלה"
 
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId/design.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Downloaded {filename}"
 msgstr "{filename} הורד"
 
@@ -1210,7 +1210,7 @@ msgstr "{filename} הורד"
 msgid "Draft"
 msgstr "טיוטה"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Drag columns to re-order them"
 msgstr "גרור עמודות כדי לשנות את סדרן"
 
@@ -1295,7 +1295,7 @@ msgstr "שגיאה"
 msgid "Every minute"
 msgstr "כל דקה"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Everything"
 msgstr "הכול"
 
@@ -1318,7 +1318,7 @@ msgstr "הרחבת הכול"
 msgid "Expand sidebar"
 msgstr "הרחב סרגל צד"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Export data"
 msgstr "ייצוא נתונים"
 
@@ -1338,7 +1338,7 @@ msgstr "גדול במיוחד"
 msgid "Failed to add account"
 msgstr "הוספת החשבון נכשלה"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Failed to add column"
 msgstr "הוספת העמודה נכשלה"
 
@@ -1353,8 +1353,8 @@ msgstr "בדיקת מצב המיזוג נכשלה"
 msgid "Failed to copy"
 msgstr "ההעתקה נכשלה"
 
-#: src/routes/_authenticated/$projectId/index.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Failed to copy project"
 msgstr "העתקת הפרויקט נכשלה"
 
@@ -1368,6 +1368,7 @@ msgid "Failed to create field"
 msgstr "יצירת השדה נכשלה"
 
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx
+#: ../../../lib/web/src/components/share-menu.tsx
 #: ../../../lib/web/src/components/share-menu.tsx
 msgid "Failed to create link"
 msgstr "יצירת הקישור נכשלה"
@@ -1401,7 +1402,7 @@ msgstr "מחיקת הקובץ המצורף נכשלה"
 msgid "Failed to delete class"
 msgstr "מחיקת המחלקה נכשלה"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Failed to delete column"
 msgstr "מחיקת העמודה נכשלה"
 
@@ -1433,7 +1434,7 @@ msgstr "מחיקת הפרויקט נכשלה"
 msgid "Failed to delete view"
 msgstr "מחיקת התצוגה נכשלה"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Failed to export data"
 msgstr "ייצוא הנתונים נכשל"
 
@@ -1512,7 +1513,7 @@ msgid "Failed to merge"
 msgstr "המיזוג נכשל"
 
 #: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Failed to move"
 msgstr "ההעברה נכשלה"
 
@@ -1520,7 +1521,7 @@ msgstr "ההעברה נכשלה"
 msgid "Failed to post comment"
 msgstr "פרסום התגובה נכשל"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Failed to re-order columns"
 msgstr "שינוי סדר העמודות נכשל"
 
@@ -1533,7 +1534,7 @@ msgstr "קריאת הקובץ נכשלה"
 msgid "Failed to remove access"
 msgstr "הסרת הגישה נכשלה"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Failed to rename column"
 msgstr "שינוי שם העמודה נכשל"
 
@@ -1575,8 +1576,8 @@ msgstr "הגדרת רמת הגישה נכשלה"
 msgid "Failed to subscribe"
 msgstr "ההרשמה נכשלה"
 
+#: src/features/projects/pages/project-page.tsx
 #: src/features/projects/pages/projects-list-page.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Failed to unsubscribe"
 msgstr "ביטול ההרשמה נכשל"
 
@@ -1852,7 +1853,7 @@ msgid "Loading templates..."
 msgstr "טוען תבניות..."
 
 #: ../../../lib/web/src/features/document/document-page.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Loading..."
 msgstr "טוען..."
 
@@ -1922,7 +1923,7 @@ msgstr "קומיט מיזוג"
 msgid "Merge requests"
 msgstr "בקשות מיזוג"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Merge requests ({requestCount})"
 msgstr "בקשות מיזוג ({requestCount})"
 
@@ -1996,15 +1997,15 @@ msgstr "הפרויקט שלי"
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx
 #: src/features/editor/components/edit-dialogs.tsx
 #: src/features/projects/components/create-project-dialog.tsx
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId_.settings.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Name"
 msgstr "שם"
 
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx
 #: src/features/projects/components/create-project-dialog.tsx
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId_.settings.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Name cannot contain < or > characters"
 msgstr "השם לא יכול להכיל את התווים < או >"
 
@@ -2015,8 +2016,8 @@ msgstr "שם נדרש"
 
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx
 #: src/features/projects/components/create-project-dialog.tsx
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId_.settings.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Name must be 1000 characters or less"
 msgstr "השם חייב להיות 1000 תווים או פחות"
 
@@ -2026,8 +2027,8 @@ msgid "Network error"
 msgstr "שגיאת רשת"
 
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "New"
 msgstr "חדש"
 
@@ -2036,7 +2037,7 @@ msgctxt "sort order"
 msgid "New"
 msgstr "חדשים"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "New {className}"
 msgstr "{className} חדש"
 
@@ -2283,7 +2284,7 @@ msgstr "פתח ניווט"
 msgid "Open option actions"
 msgstr "פתח פעולות אפשרות"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Open page actions"
 msgstr "פתח פעולות דף"
 
@@ -2350,7 +2351,7 @@ msgstr "תבנית (ביטוי רגולרי)"
 msgid "People"
 msgstr "אנשים"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Please add one or more classes to the project design."
 msgstr "הוסף מחלקה אחת או יותר לעיצוב הפרויקט."
 
@@ -2437,7 +2438,7 @@ msgstr "פרויקט"
 msgid "Project actions"
 msgstr "פעולות פרויקט"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Project copied"
 msgstr "הפרויקט הועתק"
 
@@ -2449,8 +2450,8 @@ msgstr "הפרויקט נוצר"
 msgid "Project deleted"
 msgstr "הפרויקט נמחק"
 
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId_.settings.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Project name is required"
 msgstr "שם פרויקט נדרש"
 
@@ -2495,7 +2496,7 @@ msgstr "מורם"
 msgid "Re-link your accounts on this server"
 msgstr "קשר מחדש את חשבונותיך בשרת זה"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Re-order columns"
 msgstr "סדר מחדש עמודות"
 
@@ -2742,7 +2743,7 @@ msgstr "שבת"
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx
 #: ../../../lib/web/src/components/ui/editable-field-row.tsx
 #: ../../../lib/web/src/components/ui/secret-field.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Save"
 msgstr "שמור"
 
@@ -2900,8 +2901,8 @@ msgstr "מגדיר גישה..."
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx
 #: ../../../lib/web/src/components/options-menu.tsx
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId_.settings.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Settings"
 msgstr "הגדרות"
 
@@ -3093,7 +3094,7 @@ msgstr "המצלמה כבר בשימוש"
 msgid "The camera request was not answered"
 msgstr "בקשת המצלמה לא נענתה"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "The copy may be incomplete. Check it before you use it."
 msgstr "ייתכן שהעותק אינו שלם. בדוק אותו לפני השימוש."
 
@@ -3147,7 +3148,7 @@ msgid "This will permanently delete \"{projectName}\" and all its objects, comme
 msgstr "פעולה זו תמחק לצמיתות את \"{projectName}\" ואת כל הפריטים, התגובות והקבצים המצורפים שלו. לא ניתן לבטל פעולה זו."
 
 #. placeholder {0}: project.project.name
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "This will remove \"{0}\" from your sidebar and stop updates for this project."
 msgstr "פעולה זו תסיר את \"{0}\" מסרגל הצד שלך ותעצור עדכונים עבור פרויקט זה."
 
@@ -3283,22 +3284,22 @@ msgid "Unknown"
 msgstr "לא ידוע"
 
 #: ../../../lib/web/src/components/options-menu.tsx
+#: src/features/projects/pages/project-page.tsx
 #: src/features/projects/pages/projects-list-page.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Unsubscribe"
 msgstr "בטל הרשמה"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Unsubscribe from project?"
 msgstr "לבטל הרשמה מהפרויקט?"
 
+#: src/features/projects/pages/project-page.tsx
 #: src/features/projects/pages/projects-list-page.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Unsubscribed"
 msgstr "ההרשמה בוטלה"
 
+#: src/features/projects/pages/project-page.tsx
 #: src/features/projects/pages/projects-list-page.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Unsubscribing..."
 msgstr "מבטל הרשמה..."
 
@@ -3399,7 +3400,7 @@ msgstr "פקדי תצוגה"
 msgid "View only"
 msgstr "תצוגה בלבד"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "View options"
 msgstr "אפשרויות תצוגה"
 

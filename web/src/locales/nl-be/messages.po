@@ -260,7 +260,7 @@ msgstr "Checklist-item toevoegen"
 msgid "Add class"
 msgstr "Klasse toevoegen"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Add column"
 msgstr "Kolom toevoegen"
 
@@ -328,7 +328,7 @@ msgid "Allow anyone to search for {entityLabel}"
 msgstr "Iedereen toelaten om te zoeken naar {entityLabel}"
 
 #: src/features/projects/components/create-project-dialog.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Allow anyone to view and comment on project"
 msgstr "Iedereen toestaan om het project te bekijken en erop te reageren"
 
@@ -371,7 +371,7 @@ msgstr "Alles wat op deze feed is geabonneerd, ontvangt deze niet meer. Je kunt 
 msgid "Are you sure you want to delete \"{0}\"?"
 msgstr "Weet u zeker dat u \"{0}\" wilt verwijderen?"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Are you sure you want to delete \"{title}\" and the {count, plural, one {# item} other {# items}} under it? This action cannot be undone."
 msgstr "Weet u zeker dat u \"{title}\" en {count, plural, one {het # item} other {de # items}} eronder wilt verwijderen? Deze actie kan niet ongedaan worden gemaakt."
 
@@ -553,9 +553,9 @@ msgstr "Kan kind zijn van"
 #: ../../../lib/web/src/features/accounts/account-add.tsx
 #: ../../../lib/web/src/features/accounts/account-verify.tsx
 #: src/features/projects/components/create-project-dialog.tsx
+#: src/features/projects/pages/project-page.tsx
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId/design.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Cancel"
 msgstr "Annuleren"
 
@@ -829,25 +829,25 @@ msgstr "Gekopieerd naar klembord"
 #: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx
 #: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx
 #: ../../../lib/web/src/components/ui/copy-button.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Copy"
 msgstr "Kopiëren"
 
+#: src/features/projects/pages/project-page.tsx
 #: src/lib/share-labels.ts
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Copy link"
 msgstr "Link kopiëren"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Copy of {name}"
 msgstr "Kopie van {name}"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Copy project"
 msgstr "Project kopiëren"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Copying project..."
 msgstr "Project kopiëren..."
 
@@ -877,7 +877,7 @@ msgstr "Diff laden mislukt"
 msgid "Could not load this document. Please try again later."
 msgstr "Kon dit document niet laden. Probeer het later opnieuw."
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Could not remove the unfinished copy"
 msgstr "De onvoltooide kopie kon niet worden verwijderd"
 
@@ -1099,9 +1099,9 @@ msgstr "Aflopend"
 msgid "Description"
 msgstr "Beschrijving"
 
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId/design.tsx
 #: src/routes/_authenticated/$projectId/design.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Design"
 msgstr "Ontwerp"
 
@@ -1110,7 +1110,7 @@ msgstr "Ontwerp"
 msgid "Design imported"
 msgstr "Ontwerp geïmporteerd"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Design only"
 msgstr "Alleen ontwerp"
 
@@ -1163,7 +1163,7 @@ msgstr "Verbinding verbroken"
 msgid "Dismiss"
 msgstr "Sluiten"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Dismiss board hint"
 msgstr "Bordhint sluiten"
 
@@ -1181,7 +1181,7 @@ msgstr "Komt niet overeen met het vereiste patroon"
 msgid "Done"
 msgstr "Klaar"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Double click on a column to add content"
 msgstr "Dubbelklik op een kolom om inhoud toe te voegen"
 
@@ -1200,8 +1200,8 @@ msgstr "Eerst back-up downloaden"
 msgid "Download failed"
 msgstr "Download mislukt"
 
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId/design.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Downloaded {filename}"
 msgstr "{filename} gedownload"
 
@@ -1210,7 +1210,7 @@ msgstr "{filename} gedownload"
 msgid "Draft"
 msgstr "Concept"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Drag columns to re-order them"
 msgstr "Sleep kolommen om ze te herschikken"
 
@@ -1295,7 +1295,7 @@ msgstr "Fout"
 msgid "Every minute"
 msgstr "Elke minuut"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Everything"
 msgstr "Alles"
 
@@ -1318,7 +1318,7 @@ msgstr "Alles uitklappen"
 msgid "Expand sidebar"
 msgstr "Zijbalk uitvouwen"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Export data"
 msgstr "Gegevens exporteren"
 
@@ -1338,7 +1338,7 @@ msgstr "Extra groot"
 msgid "Failed to add account"
 msgstr "Account toevoegen mislukt"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Failed to add column"
 msgstr "Kon kolom niet toevoegen"
 
@@ -1353,8 +1353,8 @@ msgstr "Mergestatus controleren mislukt"
 msgid "Failed to copy"
 msgstr "Kopiëren mislukt"
 
-#: src/routes/_authenticated/$projectId/index.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Failed to copy project"
 msgstr "Project kopiëren mislukt"
 
@@ -1368,6 +1368,7 @@ msgid "Failed to create field"
 msgstr "Veld aanmaken mislukt"
 
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx
+#: ../../../lib/web/src/components/share-menu.tsx
 #: ../../../lib/web/src/components/share-menu.tsx
 msgid "Failed to create link"
 msgstr "Link aanmaken mislukt"
@@ -1401,7 +1402,7 @@ msgstr "Bijlage verwijderen mislukt"
 msgid "Failed to delete class"
 msgstr "Klasse verwijderen mislukt"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Failed to delete column"
 msgstr "Kon kolom niet verwijderen"
 
@@ -1433,7 +1434,7 @@ msgstr "Project verwijderen mislukt"
 msgid "Failed to delete view"
 msgstr "Weergave verwijderen mislukt"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Failed to export data"
 msgstr "Exporteren van gegevens mislukt"
 
@@ -1512,7 +1513,7 @@ msgid "Failed to merge"
 msgstr "Mergen mislukt"
 
 #: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Failed to move"
 msgstr "Verplaatsen mislukt"
 
@@ -1520,7 +1521,7 @@ msgstr "Verplaatsen mislukt"
 msgid "Failed to post comment"
 msgstr "Reactie plaatsen mislukt"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Failed to re-order columns"
 msgstr "Kon kolommen niet herschikken"
 
@@ -1533,7 +1534,7 @@ msgstr "Bestand lezen mislukt"
 msgid "Failed to remove access"
 msgstr "Toegang verwijderen mislukt"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Failed to rename column"
 msgstr "Kon kolom niet hernoemen"
 
@@ -1575,8 +1576,8 @@ msgstr "Toegangsniveau instellen mislukt"
 msgid "Failed to subscribe"
 msgstr "Abonneren mislukt"
 
+#: src/features/projects/pages/project-page.tsx
 #: src/features/projects/pages/projects-list-page.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Failed to unsubscribe"
 msgstr "Afmelden mislukt"
 
@@ -1852,7 +1853,7 @@ msgid "Loading templates..."
 msgstr "Templates laden..."
 
 #: ../../../lib/web/src/features/document/document-page.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Loading..."
 msgstr "Laden..."
 
@@ -1922,7 +1923,7 @@ msgstr "Merge-commit"
 msgid "Merge requests"
 msgstr "Merge requests"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Merge requests ({requestCount})"
 msgstr "Merge-aanvragen ({requestCount})"
 
@@ -1996,15 +1997,15 @@ msgstr "Mijn project"
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx
 #: src/features/editor/components/edit-dialogs.tsx
 #: src/features/projects/components/create-project-dialog.tsx
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId_.settings.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Name"
 msgstr "Naam"
 
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx
 #: src/features/projects/components/create-project-dialog.tsx
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId_.settings.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Name cannot contain < or > characters"
 msgstr "Naam mag geen < of > tekens bevatten"
 
@@ -2015,8 +2016,8 @@ msgstr "Naam is verplicht"
 
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx
 #: src/features/projects/components/create-project-dialog.tsx
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId_.settings.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Name must be 1000 characters or less"
 msgstr "Naam mag maximaal 1000 tekens bevatten"
 
@@ -2026,8 +2027,8 @@ msgid "Network error"
 msgstr "Netwerkfout"
 
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "New"
 msgstr "Nieuw"
 
@@ -2036,7 +2037,7 @@ msgctxt "sort order"
 msgid "New"
 msgstr "Nieuwste"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "New {className}"
 msgstr "Nieuw(e) {className}"
 
@@ -2283,7 +2284,7 @@ msgstr "Navigatie openen"
 msgid "Open option actions"
 msgstr "Optieacties openen"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Open page actions"
 msgstr "Pagina-acties openen"
 
@@ -2350,7 +2351,7 @@ msgstr "Patroon (regex)"
 msgid "People"
 msgstr "Personen"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Please add one or more classes to the project design."
 msgstr "Voeg een of meer klassen toe aan het project-design."
 
@@ -2437,7 +2438,7 @@ msgstr "Project"
 msgid "Project actions"
 msgstr "Projectacties"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Project copied"
 msgstr "Project gekopieerd"
 
@@ -2449,8 +2450,8 @@ msgstr "Project aangemaakt"
 msgid "Project deleted"
 msgstr "Project verwijderd"
 
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId_.settings.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Project name is required"
 msgstr "Projectnaam is verplicht"
 
@@ -2495,7 +2496,7 @@ msgstr "Verhoogd"
 msgid "Re-link your accounts on this server"
 msgstr "Uw accounts opnieuw koppelen op deze server"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Re-order columns"
 msgstr "Kolommen herschikken"
 
@@ -2742,7 +2743,7 @@ msgstr "Zaterdag"
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx
 #: ../../../lib/web/src/components/ui/editable-field-row.tsx
 #: ../../../lib/web/src/components/ui/secret-field.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Save"
 msgstr "Opslaan"
 
@@ -2900,8 +2901,8 @@ msgstr "Toegang instellen..."
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx
 #: ../../../lib/web/src/components/options-menu.tsx
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId_.settings.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Settings"
 msgstr "Instellingen"
 
@@ -3093,7 +3094,7 @@ msgstr "De camera is al in gebruik"
 msgid "The camera request was not answered"
 msgstr "Het cameraverzoek is niet beantwoord"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "The copy may be incomplete. Check it before you use it."
 msgstr "De kopie is mogelijk onvolledig. Controleer deze voordat u hem gebruikt."
 
@@ -3147,7 +3148,7 @@ msgid "This will permanently delete \"{projectName}\" and all its objects, comme
 msgstr "Dit zal \"{projectName}\" en alle objecten, reacties en bijlagen permanent verwijderen. Deze actie kan niet ongedaan gemaakt worden."
 
 #. placeholder {0}: project.project.name
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "This will remove \"{0}\" from your sidebar and stop updates for this project."
 msgstr "Dit zal \"{0}\" uit uw zijbalk verwijderen en updates voor dit project stoppen."
 
@@ -3283,22 +3284,22 @@ msgid "Unknown"
 msgstr "Onbekend"
 
 #: ../../../lib/web/src/components/options-menu.tsx
+#: src/features/projects/pages/project-page.tsx
 #: src/features/projects/pages/projects-list-page.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Unsubscribe"
 msgstr "Uitschrijven"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Unsubscribe from project?"
 msgstr "Uitschrijven van project?"
 
+#: src/features/projects/pages/project-page.tsx
 #: src/features/projects/pages/projects-list-page.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Unsubscribed"
 msgstr "Uitgeschreven"
 
+#: src/features/projects/pages/project-page.tsx
 #: src/features/projects/pages/projects-list-page.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Unsubscribing..."
 msgstr "Uitschrijven..."
 
@@ -3399,7 +3400,7 @@ msgstr "Weergaveopties"
 msgid "View only"
 msgstr "Alleen-lezen"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "View options"
 msgstr "Weergaveopties"
 

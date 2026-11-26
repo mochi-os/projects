@@ -260,7 +260,7 @@ msgstr "Magdagdag ng checklist item"
 msgid "Add class"
 msgstr "Magdagdag ng class"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Add column"
 msgstr "Magdagdag ng column"
 
@@ -328,7 +328,7 @@ msgid "Allow anyone to search for {entityLabel}"
 msgstr "Payagan ang sinuman na maghanap ng {entityLabel}"
 
 #: src/features/projects/components/create-project-dialog.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Allow anyone to view and comment on project"
 msgstr "Payagan ang sinuman na tingnan at magkomento sa project"
 
@@ -371,7 +371,7 @@ msgstr "Titigil sa pagtanggap nito ang lahat ng naka-subscribe sa feed na ito. M
 msgid "Are you sure you want to delete \"{0}\"?"
 msgstr "Sigurado ka bang gusto mong i-delete ang \"{0}\"?"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Are you sure you want to delete \"{title}\" and the {count, plural, one {# item} other {# items}} under it? This action cannot be undone."
 msgstr "Sigurado ka bang gusto mong i-delete ang \"{title}\" at ang {count, plural, one {# item} other {# na item}} sa ilalim nito? Hindi na ito maibabalik."
 
@@ -553,9 +553,9 @@ msgstr "Maaaring maging child ng"
 #: ../../../lib/web/src/features/accounts/account-add.tsx
 #: ../../../lib/web/src/features/accounts/account-verify.tsx
 #: src/features/projects/components/create-project-dialog.tsx
+#: src/features/projects/pages/project-page.tsx
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId/design.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Cancel"
 msgstr "Kanselahin"
 
@@ -829,25 +829,25 @@ msgstr "Nakopya sa clipboard"
 #: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx
 #: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx
 #: ../../../lib/web/src/components/ui/copy-button.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Copy"
 msgstr "Kopyahin"
 
+#: src/features/projects/pages/project-page.tsx
 #: src/lib/share-labels.ts
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Copy link"
 msgstr "Kopyahin ang link"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Copy of {name}"
 msgstr "Kopya ng {name}"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Copy project"
 msgstr "Kopyahin ang project"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Copying project..."
 msgstr "Kinokopya ang project..."
 
@@ -877,7 +877,7 @@ msgstr "Nabigong i-load ang diff"
 msgid "Could not load this document. Please try again later."
 msgstr "Hindi ma-load ang document na ito. Subukan muli mamaya."
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Could not remove the unfinished copy"
 msgstr "Hindi maalis ang hindi pa tapos na kopya"
 
@@ -1099,9 +1099,9 @@ msgstr "Pababa"
 msgid "Description"
 msgstr "Paglalarawan"
 
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId/design.tsx
 #: src/routes/_authenticated/$projectId/design.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Design"
 msgstr "Disenyo"
 
@@ -1110,7 +1110,7 @@ msgstr "Disenyo"
 msgid "Design imported"
 msgstr "Na-import ang disenyo"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Design only"
 msgstr "Disenyo lang"
 
@@ -1163,7 +1163,7 @@ msgstr "Nadiskonekta"
 msgid "Dismiss"
 msgstr "I-dismiss"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Dismiss board hint"
 msgstr "I-dismiss ang board hint"
 
@@ -1181,7 +1181,7 @@ msgstr "Hindi tumutugma sa kinakailangang pattern"
 msgid "Done"
 msgstr "Tapos na"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Double click on a column to add content"
 msgstr "I-double click ang isang column para magdagdag ng content"
 
@@ -1200,8 +1200,8 @@ msgstr "I-download muna ang backup"
 msgid "Download failed"
 msgstr "Nabigo ang pag-download"
 
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId/design.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Downloaded {filename}"
 msgstr "Na-download ang {filename}"
 
@@ -1210,7 +1210,7 @@ msgstr "Na-download ang {filename}"
 msgid "Draft"
 msgstr "Draft"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Drag columns to re-order them"
 msgstr "I-drag ang mga column para i-reorder"
 
@@ -1295,7 +1295,7 @@ msgstr "Error"
 msgid "Every minute"
 msgstr "Bawat minuto"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Everything"
 msgstr "Lahat"
 
@@ -1318,7 +1318,7 @@ msgstr "Palawakin lahat"
 msgid "Expand sidebar"
 msgstr "I-expand ang sidebar"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Export data"
 msgstr "I-export ang data"
 
@@ -1338,7 +1338,7 @@ msgstr "Sobrang laki"
 msgid "Failed to add account"
 msgstr "Nabigong magdagdag ng account"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Failed to add column"
 msgstr "Nabigong magdagdag ng column"
 
@@ -1353,8 +1353,8 @@ msgstr "Nabigong i-check ang merge status"
 msgid "Failed to copy"
 msgstr "Nabigong kumopya"
 
-#: src/routes/_authenticated/$projectId/index.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Failed to copy project"
 msgstr "Nabigong kopyahin ang project"
 
@@ -1368,6 +1368,7 @@ msgid "Failed to create field"
 msgstr "Nabigong gumawa ng field"
 
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx
+#: ../../../lib/web/src/components/share-menu.tsx
 #: ../../../lib/web/src/components/share-menu.tsx
 msgid "Failed to create link"
 msgstr "Nabigong gumawa ng link"
@@ -1401,7 +1402,7 @@ msgstr "Nabigong magdelete ng attachment"
 msgid "Failed to delete class"
 msgstr "Nabigong magdelete ng class"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Failed to delete column"
 msgstr "Nabigong tanggalin ang column"
 
@@ -1433,7 +1434,7 @@ msgstr "Nabigong magdelete ng project"
 msgid "Failed to delete view"
 msgstr "Nabigong magdelete ng view"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Failed to export data"
 msgstr "Hindi na-export ang data"
 
@@ -1512,7 +1513,7 @@ msgid "Failed to merge"
 msgstr "Nabigong i-merge"
 
 #: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Failed to move"
 msgstr "Nabigong ilipat"
 
@@ -1520,7 +1521,7 @@ msgstr "Nabigong ilipat"
 msgid "Failed to post comment"
 msgstr "Nabigong mag-post ng comment"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Failed to re-order columns"
 msgstr "Nabigong baguhin ang pagkakasunod-sunod ng mga column"
 
@@ -1533,7 +1534,7 @@ msgstr "Nabigong basahin ang file"
 msgid "Failed to remove access"
 msgstr "Nabigong tanggalin ang access"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Failed to rename column"
 msgstr "Nabigong palitan ang pangalan ng column"
 
@@ -1575,8 +1576,8 @@ msgstr "Nabigong i-set ang access level"
 msgid "Failed to subscribe"
 msgstr "Nabigong mag-subscribe"
 
+#: src/features/projects/pages/project-page.tsx
 #: src/features/projects/pages/projects-list-page.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Failed to unsubscribe"
 msgstr "Nabigong mag-unsubscribe"
 
@@ -1852,7 +1853,7 @@ msgid "Loading templates..."
 msgstr "Nilo-load ang mga template..."
 
 #: ../../../lib/web/src/features/document/document-page.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Loading..."
 msgstr "Nilo-load..."
 
@@ -1922,7 +1923,7 @@ msgstr "Merge commit"
 msgid "Merge requests"
 msgstr "Mga merge request"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Merge requests ({requestCount})"
 msgstr "Mga kahilingan sa pagsasama ({requestCount})"
 
@@ -1996,15 +1997,15 @@ msgstr "Aking proyekto"
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx
 #: src/features/editor/components/edit-dialogs.tsx
 #: src/features/projects/components/create-project-dialog.tsx
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId_.settings.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Name"
 msgstr "Pangalan"
 
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx
 #: src/features/projects/components/create-project-dialog.tsx
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId_.settings.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Name cannot contain < or > characters"
 msgstr "Hindi maaaring maglaman ng < o > na karakter ang pangalan"
 
@@ -2015,8 +2016,8 @@ msgstr "Kailangan ang pangalan"
 
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx
 #: src/features/projects/components/create-project-dialog.tsx
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId_.settings.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Name must be 1000 characters or less"
 msgstr "Ang pangalan ay dapat 1000 karakter o mas mababa"
 
@@ -2026,8 +2027,8 @@ msgid "Network error"
 msgstr "Error sa network"
 
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "New"
 msgstr "Bago"
 
@@ -2036,7 +2037,7 @@ msgctxt "sort order"
 msgid "New"
 msgstr "Pinakabago"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "New {className}"
 msgstr "Bagong {className}"
 
@@ -2283,7 +2284,7 @@ msgstr "Buksan ang navigation"
 msgid "Open option actions"
 msgstr "Buksan ang mga aksyon ng opsyon"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Open page actions"
 msgstr "Buksan ang mga aksyon ng pahina"
 
@@ -2350,7 +2351,7 @@ msgstr "Pattern (regex)"
 msgid "People"
 msgstr "Mga Tao"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Please add one or more classes to the project design."
 msgstr "Mangyaring magdagdag ng isa o higit pang class sa project design."
 
@@ -2437,7 +2438,7 @@ msgstr "Proyekto"
 msgid "Project actions"
 msgstr "Mga aksyon sa proyekto"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Project copied"
 msgstr "Nakopya ang proyekto"
 
@@ -2449,8 +2450,8 @@ msgstr "Nagawa ang proyekto"
 msgid "Project deleted"
 msgstr "Natanggal ang proyekto"
 
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId_.settings.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Project name is required"
 msgstr "Kailangan ang pangalan ng proyekto"
 
@@ -2495,7 +2496,7 @@ msgstr "Nakaangat"
 msgid "Re-link your accounts on this server"
 msgstr "I-relink ang iyong mga account sa server na ito"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Re-order columns"
 msgstr "Muling ayusin ang mga column"
 
@@ -2742,7 +2743,7 @@ msgstr "Sabado"
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx
 #: ../../../lib/web/src/components/ui/editable-field-row.tsx
 #: ../../../lib/web/src/components/ui/secret-field.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Save"
 msgstr "I-save"
 
@@ -2900,8 +2901,8 @@ msgstr "Itinatakda ang access..."
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx
 #: ../../../lib/web/src/components/options-menu.tsx
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId_.settings.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Settings"
 msgstr "Mga setting"
 
@@ -3093,7 +3094,7 @@ msgstr "Ginagamit na ang camera"
 msgid "The camera request was not answered"
 msgstr "Hindi nasagot ang kahilingan sa camera"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "The copy may be incomplete. Check it before you use it."
 msgstr "Maaaring hindi kumpleto ang kopya. Suriin ito bago gamitin."
 
@@ -3147,7 +3148,7 @@ msgid "This will permanently delete \"{projectName}\" and all its objects, comme
 msgstr "Permanenteng tatanggalin nito ang \"{projectName}\" at lahat ng object, komento, at attachment nito. Hindi maaaring bawiin ang aksyong ito."
 
 #. placeholder {0}: project.project.name
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "This will remove \"{0}\" from your sidebar and stop updates for this project."
 msgstr "Tatanggalin nito ang \"{0}\" mula sa iyong sidebar at ihihinto ang mga update para sa project na ito."
 
@@ -3283,22 +3284,22 @@ msgid "Unknown"
 msgstr "Hindi alam"
 
 #: ../../../lib/web/src/components/options-menu.tsx
+#: src/features/projects/pages/project-page.tsx
 #: src/features/projects/pages/projects-list-page.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Unsubscribe"
 msgstr "Mag-unsubscribe"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Unsubscribe from project?"
 msgstr "Mag-unsubscribe sa project?"
 
+#: src/features/projects/pages/project-page.tsx
 #: src/features/projects/pages/projects-list-page.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Unsubscribed"
 msgstr "Hindi na naka-subscribe"
 
+#: src/features/projects/pages/project-page.tsx
 #: src/features/projects/pages/projects-list-page.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Unsubscribing..."
 msgstr "Nag-a-unsubscribe..."
 
@@ -3399,7 +3400,7 @@ msgstr "Mga view control"
 msgid "View only"
 msgstr "Tingnan lamang"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "View options"
 msgstr "Mga opsyon ng view"
 

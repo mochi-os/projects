@@ -22,7 +22,7 @@ import {
 } from '@mochi/web'
 import { FolderKanban } from 'lucide-react'
 import projectsApi from '@/api/projects'
-import { ProjectPageContent } from './index'
+import { ProjectPageContent } from '@/features/projects/pages'
 
 interface SearchParams {
   view?: string

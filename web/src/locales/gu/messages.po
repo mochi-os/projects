@@ -260,7 +260,7 @@ msgstr "ચેકલિસ્ટ આઇટમ ઉમેરો"
 msgid "Add class"
 msgstr "ક્લાસ ઉમેરો"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Add column"
 msgstr "કૉલમ ઉમેરો"
 
@@ -328,7 +328,7 @@ msgid "Allow anyone to search for {entityLabel}"
 msgstr "કોઈપણને {entityLabel} શોધવાની મંજૂરી આપો"
 
 #: src/features/projects/components/create-project-dialog.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Allow anyone to view and comment on project"
 msgstr "કોઈને પણ પ્રોજેક્ટ જોવાની અને તેના પર ટિપ્પણી કરવાની મંજૂરી આપો"
 
@@ -371,7 +371,7 @@ msgstr "આ ફીડ પર સબ્સ્ક્રાઇબ થયેલુ�
 msgid "Are you sure you want to delete \"{0}\"?"
 msgstr "શું તમે ખરેખર \"{0}\" કાઢી નાખવા માંગો છો?"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Are you sure you want to delete \"{title}\" and the {count, plural, one {# item} other {# items}} under it? This action cannot be undone."
 msgstr "શું તમે ખરેખર \"{title}\" અને તેની નીચેની {count, plural, one {# વસ્તુ} other {# વસ્તુઓ}} કાઢી નાખવા માંગો છો? આ ક્રિયા પૂર્વવત્ કરી શકાતી નથી."
 
@@ -553,9 +553,9 @@ msgstr "આનું સંતાન બની શકે"
 #: ../../../lib/web/src/features/accounts/account-add.tsx
 #: ../../../lib/web/src/features/accounts/account-verify.tsx
 #: src/features/projects/components/create-project-dialog.tsx
+#: src/features/projects/pages/project-page.tsx
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId/design.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Cancel"
 msgstr "રદ કરો"
 
@@ -829,25 +829,25 @@ msgstr "ક્લિપબોર્ડ પર કૉપિ કર્યું"
 #: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx
 #: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx
 #: ../../../lib/web/src/components/ui/copy-button.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Copy"
 msgstr "કૉપિ કરો"
 
+#: src/features/projects/pages/project-page.tsx
 #: src/lib/share-labels.ts
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Copy link"
 msgstr "લિંક કૉપિ કરો"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Copy of {name}"
 msgstr "{name} ની કૉપિ"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Copy project"
 msgstr "પ્રોજેક્ટ કૉપિ કરો"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Copying project..."
 msgstr "પ્રોજેક્ટ કૉપિ કરી રહ્યું છે..."
 
@@ -877,7 +877,7 @@ msgstr "ડિફ લોડ કરવામાં નિષ્ફળ"
 msgid "Could not load this document. Please try again later."
 msgstr "આ દસ્તાવેજ લોડ કરી શક્યા નહીં. કૃપા કરીને પછીથી ફરી પ્રયાસ કરો."
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Could not remove the unfinished copy"
 msgstr "અધૂરી કૉપિ દૂર કરી શકાઈ નહીં"
 
@@ -1099,9 +1099,9 @@ msgstr "ઊતરતો ક્રમ"
 msgid "Description"
 msgstr "વર્ણન"
 
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId/design.tsx
 #: src/routes/_authenticated/$projectId/design.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Design"
 msgstr "ડિઝાઇન"
 
@@ -1110,7 +1110,7 @@ msgstr "ડિઝાઇન"
 msgid "Design imported"
 msgstr "ડિઝાઇન આયાત કરી"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Design only"
 msgstr "માત્ર ડિઝાઇન"
 
@@ -1163,7 +1163,7 @@ msgstr "ડિસ્કનેક્ટેડ"
 msgid "Dismiss"
 msgstr "રદ કરો"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Dismiss board hint"
 msgstr "બોર્ડ સંકેત રદ કરો"
 
@@ -1181,7 +1181,7 @@ msgstr "જરૂરી પેટર્ન સાથે મેળ ખાતુ�
 msgid "Done"
 msgstr "થઈ ગયું"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Double click on a column to add content"
 msgstr "કૉલમમાં સામગ્રી ઉમેરવા માટે ડબલ ક્લિક કરો"
 
@@ -1200,8 +1200,8 @@ msgstr "પહેલા બેકઅપ ડાઉનલોડ કરો"
 msgid "Download failed"
 msgstr "ડાઉનલોડ નિષ્ફળ"
 
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId/design.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Downloaded {filename}"
 msgstr "{filename} ડાઉનલોડ કર્યું"
 
@@ -1210,7 +1210,7 @@ msgstr "{filename} ડાઉનલોડ કર્યું"
 msgid "Draft"
 msgstr "ડ્રાફ્ટ"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Drag columns to re-order them"
 msgstr "કૉલમ્સ ફરીથી ગોઠવવા માટે ખેંચો"
 
@@ -1295,7 +1295,7 @@ msgstr "ભૂલ"
 msgid "Every minute"
 msgstr "દર મિનિટે"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Everything"
 msgstr "બધું"
 
@@ -1318,7 +1318,7 @@ msgstr "બધું વિસ્તારો"
 msgid "Expand sidebar"
 msgstr "સાઇડબાર વિસ્તૃત કરો"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Export data"
 msgstr "ડેટા એક્સપોર્ટ કરો"
 
@@ -1338,7 +1338,7 @@ msgstr "વધારાનું મોટું"
 msgid "Failed to add account"
 msgstr "એકાઉન્ટ ઉમેરવામાં નિષ્ફળ"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Failed to add column"
 msgstr "કૉલમ ઉમેરવામાં નિષ્ફળ"
 
@@ -1353,8 +1353,8 @@ msgstr "મર્જ સ્ટેટસ ચેક કરવામાં નિ�
 msgid "Failed to copy"
 msgstr "કૉપિ કરવામાં નિષ્ફળ"
 
-#: src/routes/_authenticated/$projectId/index.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Failed to copy project"
 msgstr "પ્રોજેક્ટ કૉપિ કરવામાં નિષ્ફળ"
 
@@ -1368,6 +1368,7 @@ msgid "Failed to create field"
 msgstr "ફીલ્ડ બનાવવામાં નિષ્ફળ"
 
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx
+#: ../../../lib/web/src/components/share-menu.tsx
 #: ../../../lib/web/src/components/share-menu.tsx
 msgid "Failed to create link"
 msgstr "લિંક બનાવવામાં નિષ્ફળ"
@@ -1401,7 +1402,7 @@ msgstr "એટેચમેન્ટ કાઢી નાખવામાં નિ
 msgid "Failed to delete class"
 msgstr "ક્લાસ કાઢી નાખવામાં નિષ્ફળ"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Failed to delete column"
 msgstr "કૉલમ કાઢી નાખવામાં નિષ્ફળ"
 
@@ -1433,7 +1434,7 @@ msgstr "પ્રોજેક્ટ કાઢી નાખવામાં નિ
 msgid "Failed to delete view"
 msgstr "વ્યૂ કાઢી નાખવામાં નિષ્ફળ"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Failed to export data"
 msgstr "ડેટા એક્સપોર્ટ કરવામાં નિષ્ફળ"
 
@@ -1512,7 +1513,7 @@ msgid "Failed to merge"
 msgstr "મર્જ કરવામાં નિષ્ફળ"
 
 #: ../../../lib/web/src/components/entity/entity-object-detail-panel.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Failed to move"
 msgstr "ખસેડવામાં નિષ્ફળ"
 
@@ -1520,7 +1521,7 @@ msgstr "ખસેડવામાં નિષ્ફળ"
 msgid "Failed to post comment"
 msgstr "કમેન્ટ પોસ્ટ કરવામાં નિષ્ફળ"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Failed to re-order columns"
 msgstr "કૉલમનો ક્રમ બદલવામાં નિષ્ફળ"
 
@@ -1533,7 +1534,7 @@ msgstr "ફાઇલ વાંચવામાં નિષ્ફળ"
 msgid "Failed to remove access"
 msgstr "ઍક્સેસ દૂર કરવામાં નિષ્ફળ"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Failed to rename column"
 msgstr "કૉલમનું નામ બદલવામાં નિષ્ફળ"
 
@@ -1575,8 +1576,8 @@ msgstr "ઍક્સેસ લેવલ સેટ કરવામાં નિ�
 msgid "Failed to subscribe"
 msgstr "સબ્સ્ક્રાઇબ કરવામાં નિષ્ફળ"
 
+#: src/features/projects/pages/project-page.tsx
 #: src/features/projects/pages/projects-list-page.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Failed to unsubscribe"
 msgstr "અનસબ્સ્ક્રાઇબ કરવામાં નિષ્ફળ"
 
@@ -1852,7 +1853,7 @@ msgid "Loading templates..."
 msgstr "ટેમ્પ્લેટ્સ લોડ થઈ રહ્યા છે..."
 
 #: ../../../lib/web/src/features/document/document-page.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Loading..."
 msgstr "લોડ થઈ રહ્યું છે..."
 
@@ -1922,7 +1923,7 @@ msgstr "મર્જ કમિટ"
 msgid "Merge requests"
 msgstr "મર્જ વિનંતીઓ"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Merge requests ({requestCount})"
 msgstr "મર્જ વિનંતીઓ ({requestCount})"
 
@@ -1996,15 +1997,15 @@ msgstr "મારો પ્રોજેક્ટ"
 #: ../../../lib/web/src/components/entity/entity-view-sheet.tsx
 #: src/features/editor/components/edit-dialogs.tsx
 #: src/features/projects/components/create-project-dialog.tsx
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId_.settings.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Name"
 msgstr "નામ"
 
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx
 #: src/features/projects/components/create-project-dialog.tsx
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId_.settings.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Name cannot contain < or > characters"
 msgstr "નામમાં < અથવા > અક્ષરો ન હોઈ શકે"
 
@@ -2015,8 +2016,8 @@ msgstr "નામ આવશ્યક છે"
 
 #: ../../../lib/web/src/components/ui/create-entity-dialog.tsx
 #: src/features/projects/components/create-project-dialog.tsx
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId_.settings.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Name must be 1000 characters or less"
 msgstr "નામ 1000 અક્ષરો અથવા તેથી ઓછું હોવું જોઈએ"
 
@@ -2026,8 +2027,8 @@ msgid "Network error"
 msgstr "નેટવર્ક ભૂલ"
 
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "New"
 msgstr "નવું"
 
@@ -2036,7 +2037,7 @@ msgctxt "sort order"
 msgid "New"
 msgstr "નવીનતમ"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "New {className}"
 msgstr "નવું {className}"
 
@@ -2283,7 +2284,7 @@ msgstr "નેવિગેશન ખોલો"
 msgid "Open option actions"
 msgstr "વિકલ્પ ક્રિયાઓ ખોલો"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Open page actions"
 msgstr "પેજ ક્રિયાઓ ખોલો"
 
@@ -2350,7 +2351,7 @@ msgstr "પૅટર્ન (regex)"
 msgid "People"
 msgstr "લોકો"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Please add one or more classes to the project design."
 msgstr "કૃપા કરીને પ્રોજેક્ટ ડિઝાઇનમાં એક અથવા વધુ ક્લાસ ઉમેરો."
 
@@ -2437,7 +2438,7 @@ msgstr "પ્રોજેક્ટ"
 msgid "Project actions"
 msgstr "પ્રોજેક્ટ ક્રિયાઓ"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Project copied"
 msgstr "પ્રોજેક્ટ કૉપિ થયો"
 
@@ -2449,8 +2450,8 @@ msgstr "પ્રોજેક્ટ બનાવ્યો"
 msgid "Project deleted"
 msgstr "પ્રોજેક્ટ ડિલીટ થયો"
 
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId_.settings.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Project name is required"
 msgstr "પ્રોજેક્ટનું નામ આવશ્યક છે"
 
@@ -2495,7 +2496,7 @@ msgstr "ઊંચું"
 msgid "Re-link your accounts on this server"
 msgstr "આ સર્વર પર તમારા ખાતાઓ ફરીથી જોડો"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Re-order columns"
 msgstr "કૉલમ્સ ફરીથી ગોઠવો"
 
@@ -2742,7 +2743,7 @@ msgstr "શનિવાર"
 #: ../../../lib/web/src/components/entity/entity-option-dialog.tsx
 #: ../../../lib/web/src/components/ui/editable-field-row.tsx
 #: ../../../lib/web/src/components/ui/secret-field.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Save"
 msgstr "સાચવો"
 
@@ -2900,8 +2901,8 @@ msgstr "ઍક્સેસ સેટ કરી રહ્યું છે..."
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx
 #: ../../../lib/web/src/components/layout/mochi-menu.tsx
 #: ../../../lib/web/src/components/options-menu.tsx
+#: src/features/projects/pages/project-page.tsx
 #: src/routes/_authenticated/$projectId_.settings.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Settings"
 msgstr "સેટિંગ્સ"
 
@@ -3093,7 +3094,7 @@ msgstr "કૅમેરા પહેલેથી ઉપયોગમાં છે
 msgid "The camera request was not answered"
 msgstr "કૅમેરા વિનંતીનો જવાબ મળ્યો નથી"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "The copy may be incomplete. Check it before you use it."
 msgstr "કૉપિ અધૂરી હોઈ શકે છે. તેનો ઉપયોગ કરતા પહેલાં તેને તપાસો."
 
@@ -3147,7 +3148,7 @@ msgid "This will permanently delete \"{projectName}\" and all its objects, comme
 msgstr "આ \"{projectName}\" અને તેના તમામ ઑબ્જેક્ટ્સ, ટિપ્પણીઓ અને જોડાણોને કાયમ માટે કાઢી નાખશે. આ ક્રિયા પૂર્વવત્ કરી શકાતી નથી."
 
 #. placeholder {0}: project.project.name
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "This will remove \"{0}\" from your sidebar and stop updates for this project."
 msgstr "આ તમારા સાઇડબારમાંથી \"{0}\" દૂર કરશે અને આ પ્રોજેક્ટ માટે અપડેટ્સ બંધ કરશે."
 
@@ -3283,22 +3284,22 @@ msgid "Unknown"
 msgstr "અજાણ્યું"
 
 #: ../../../lib/web/src/components/options-menu.tsx
+#: src/features/projects/pages/project-page.tsx
 #: src/features/projects/pages/projects-list-page.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Unsubscribe"
 msgstr "અનસબ્સ્ક્રાઇબ કરો"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "Unsubscribe from project?"
 msgstr "પ્રોજેક્ટ માંથી અનસબ્સ્ક્રાઇબ કરવું છે?"
 
+#: src/features/projects/pages/project-page.tsx
 #: src/features/projects/pages/projects-list-page.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Unsubscribed"
 msgstr "અનસબ્સ્ક્રાઇબ કર્યું"
 
+#: src/features/projects/pages/project-page.tsx
 #: src/features/projects/pages/projects-list-page.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
 msgid "Unsubscribing..."
 msgstr "અનસબ્સ્ક્રાઇબ કરી રહ્યું છે..."
 
@@ -3399,7 +3400,7 @@ msgstr "નિયંત્રણો જુઓ"
 msgid "View only"
 msgstr "ફક્ત જુઓ"
 
-#: src/routes/_authenticated/$projectId/index.tsx
+#: src/features/projects/pages/project-page.tsx
 msgid "View options"
 msgstr "વ્યૂ વિકલ્પો"
 

@@ -1292,7 +1292,7 @@ def object_bound(project_id, object_id):
 	owner's answer into the local replica by object id alone; an owner who
 	mints an id colliding with one of our own projects' objects could
 	otherwise have our own update rewrite or delete that row."""
-	return bool(object_id) and mochi.db.exists("select 1 from objects where id=? and project=?", object_id, project_id)
+	return type(object_id) == "string" and object_id != "" and mochi.db.exists("select 1 from objects where id=? and project=?", object_id, project_id)
 
 # An object or comment id is also foreign when the other table holds it, in any
 # project: attachments and everything else keyed on a bare id would treat the
@@ -8416,6 +8416,8 @@ def schema_merge(project_id, schema, survivors):
 		if type(obj) != "dict":
 			continue
 		object_id = obj.get("id", "")
+		if not identifier(object_id):
+			continue
 		survivors["objects"][object_id] = True
 		# Never adopt/reassign an object that already belongs to another
 		# project, or an id a comment holds - a malicious owner's dump could
@@ -8429,8 +8431,8 @@ def schema_merge(project_id, schema, survivors):
 		# (version_take), checked in the same statement as the write.
 		version = owner_version(obj.get("version"))
 		if schema_class(project_id, obj.get("class", "")):
-			row = {"id": object_id, "project": project_id, "class": obj.get("class", ""), "number": obj.get("number", 0), "parent": obj.get("parent", ""), "rank": rank_copy(obj.get("rank")), "created": obj.get("created", 0), "updated": obj.get("updated", 0)}
-			guard = schema_guard("classes", "project=? and id=?", project_id, obj.get("class", ""))
+			row = {"id": object_id, "project": project_id, "class": obj["class"], "number": number(obj.get("number")), "parent": text(obj.get("parent")), "rank": rank_copy(obj.get("rank")), "created": number(obj.get("created")), "updated": number(obj.get("updated"))}
+			guard = schema_guard("classes", "project=? and id=?", project_id, obj["class"])
 			if version != None:
 				row["version"] = version
 				guard = (guard[0] + " and not exists (select 1 from objects where id=? and version>?)", guard[1] + [object_id, version])
@@ -8469,12 +8471,19 @@ def schema_merge(project_id, schema, survivors):
 	for l in sequence(schema.get("links")):
 		if type(l) != "dict":
 			continue
-		survivors["links"][(l.get("source", ""), l.get("target", ""), l.get("linktype", ""))] = True
+		source = text(l.get("source"))
+		target = text(l.get("target"))
+		# A type the link handlers do not know is read as the sync batch reads
+		# it: a link stored under it could not be matched by a delete.
+		linktype = l.get("linktype")
+		if linktype not in ["blocks", "relates", "duplicates"]:
+			linktype = "relates"
+		survivors["links"][(source, target, linktype)] = True
 		# (project, source, target, linktype) is the full key; links
 		# are created/deleted, never edited in place.
-		if not link_endpoints_bound(project_id, l.get("source", ""), l.get("target", "")):
+		if not link_endpoints_bound(project_id, source, target):
 			continue
-		row_merge("links", ["source", "target", "linktype"], {"project": project_id, "source": l.get("source", ""), "target": l.get("target", ""), "linktype": l.get("linktype", ""), "created": 0}, None, schema_guard("objects s join objects t on t.project=s.project", "s.project=? and s.id=? and t.id=?", project_id, l.get("source", ""), l.get("target", "")))
+		row_merge("links", ["source", "target", "linktype"], {"project": project_id, "source": source, "target": target, "linktype": linktype, "created": 0}, None, schema_guard("objects s join objects t on t.project=s.project", "s.project=? and s.id=? and t.id=?", project_id, source, target))
 	return late
 
 # owner_record(project_id, owner): a replica records which member of the roster
@@ -8509,7 +8518,7 @@ def schema_value(project_id, survivors, v):
 	field = v.get("field")
 	if type(field) != "string" or not field:
 		return
-	survivors["values"][(v.get("object", ""), field)] = True
+	survivors["values"][(text(v.get("object")), field)] = True
 	if not object_bound(project_id, v.get("object", "")):
 		return
 	# A value read at the object's version lands only on a copy not past it, in
@@ -8540,7 +8549,7 @@ def schema_comment(project_id, survivors, c):
 		return False
 	if parent == False:
 		return True
-	comment_merge({"id": comment_id, "object": c["object"], "parent": parent, "author": c.get("author", ""), "name": c.get("name", ""), "content": c.get("content", ""), "created": c.get("created", ""), "edited": c.get("edited", 0)}, schema_guard("objects", "id=?", c["object"]))
+	comment_merge({"id": comment_id, "object": c["object"], "parent": parent, "author": text(c.get("author")), "name": text(c.get("name")), "content": text(c.get("content")), "created": number(c.get("created")), "edited": number(c.get("edited"))}, schema_guard("objects", "id=?", c["object"]))
 	schema_attachments(project_id, survivors, comment_id, c.get("attachments"), "comment")
 	return False
 
@@ -8581,16 +8590,18 @@ def comment_parent(comment_id, object_id, parent):
 	return parent
 
 def schema_activity(project_id, act):
+	if not identifier(act.get("id")):
+		return
 	if not object_bound(project_id, act.get("object", "")):
 		return
 	# Activity is append-only; ignore is correct. Written while its object is
 	# held, as schema_guard writes the other rows.
 	mochi.db.execute(
 		"insert or ignore into activity (id, object, user, action, field, oldvalue, newvalue, created) select ?, ?, ?, ?, ?, ?, ?, ? where exists (select 1 from objects where id=?)",
-		act.get("id", ""), act["object"], act.get("user", ""),
-		act.get("action", ""), act.get("field", ""),
-		act.get("oldvalue", ""), act.get("newvalue", ""),
-		act.get("created", 0), act["object"]
+		act["id"], act["object"], text(act.get("user")),
+		text(act.get("action")), text(act.get("field")),
+		text(act.get("oldvalue")), text(act.get("newvalue")),
+		number(act.get("created")), act["object"]
 	)
 
 # Attachments land only on an object or comment of this project, as the kind
@@ -8981,6 +8992,10 @@ def event_member_remove(e):
 def sequence(value):
 	return value if type(value) in ["list", "tuple"] else []
 
+# text(value, default="") -> value when it is a string, else default.
+def text(value, default=""):
+	return value if type(value) == "string" else default
+
 # number(value, default=0) -> value as a whole number: an integer, or a float
 # with no fraction (a JSON round trip turns one into the other), within what a
 # column binds; else default.
@@ -9058,7 +9073,7 @@ def event_sync_batch(e):
 	late = False
 	# Process objects
 	for obj in sequence(e.content("objects")):
-		if not sync_element(obj, ["id"]) or type(obj["id"]) != "string":
+		if not sync_element(obj, ["id"]) or not identifier(obj["id"]):
 			continue
 		# Never adopt/reassign an object that already belongs to another
 		# project, or an id a comment holds - a hijacking owner's batch could
@@ -9072,8 +9087,13 @@ def event_sync_batch(e):
 		# no later change has reached it first. From an owner that predates
 		# versions, an object held already keeps its row.
 		version = owner_version(obj.get("version"))
-		row = {"id": obj["id"], "project": project_id, "class": obj.get("class", ""), "number": obj.get("number", 0), "parent": obj.get("parent", ""), "rank": rank_copy(obj.get("rank")), "created": obj.get("created", now), "updated": obj.get("updated", now), "version": version or 0}
+		row = {"id": obj["id"], "project": project_id, "class": text(obj.get("class")), "number": number(obj.get("number")), "parent": text(obj.get("parent")), "rank": rank_copy(obj.get("rank")), "created": number(obj.get("created"), now), "updated": number(obj.get("updated"), now), "version": version or 0}
 		if not mochi.db.exists("select 1 from objects where id=?", obj["id"]):
+			# A class the replica does not hold would fail the row's foreign
+			# key and abort the batch; the pull below brings both.
+			if not schema_class(project_id, row["class"]):
+				late = True
+				continue
 			object_merge(row)
 		elif version != None and schema_class(project_id, row["class"]):
 			row_set("objects", "id=? and project=? and version<?", [obj["id"], project_id, version], {k: row[k] for k in row if k not in ["id", "project"]})
@@ -9105,29 +9125,34 @@ def event_sync_batch(e):
 				if parent == False:
 					later.append(c)
 				elif parent != None:
-					comment_merge({"id": c["id"], "object": obj["id"], "parent": parent, "author": c.get("author", ""), "name": c.get("name", ""), "content": c.get("content", ""), "created": c.get("created", now), "edited": c.get("edited", 0)})
+					comment_merge({"id": c["id"], "object": obj["id"], "parent": parent, "author": text(c.get("author")), "name": text(c.get("name")), "content": text(c.get("content")), "created": number(c.get("created")) or now, "edited": number(c.get("edited"))})
 			if len(later) == len(pending):
 				late = True
 				break
 			pending = later
 		# Activity history
 		for act in sequence(obj.get("activity")):
-			if not sync_element(act, ["id"]):
+			if not sync_element(act, ["id"]) or not identifier(act["id"]):
+				continue
+			if not mochi.db.exists("select 1 from objects where id=? and project=?", obj["id"], project_id):
 				continue
 			mochi.db.execute(
 				"insert or ignore into activity (id, object, user, action, field, oldvalue, newvalue, created) values (?, ?, ?, ?, ?, ?, ?, ?)",
-				act["id"], obj["id"], act.get("user", ""), act.get("action", ""),
-				act.get("field", ""), act.get("oldvalue", ""), act.get("newvalue", ""),
-				act.get("created", now)
+				act["id"], obj["id"], text(act.get("user")), text(act.get("action")),
+				text(act.get("field")), text(act.get("oldvalue")), text(act.get("newvalue")),
+				number(act.get("created"), now)
 			)
 
 	# Process links
 	for l in sequence(e.content("links")):
 		if not sync_element(l, ["source", "target"]):
 			continue
-		if not link_endpoints_bound(project_id, l["source"], l["target"]):
+		if not link_endpoints_bound(project_id, text(l["source"]), text(l["target"])):
 			continue
-		row_merge("links", ["source", "target", "linktype"], {"project": project_id, "source": l["source"], "target": l["target"], "linktype": l.get("linktype", "relates"), "created": now})
+		linktype = l.get("linktype")
+		if linktype not in ["blocks", "relates", "duplicates"]:
+			linktype = "relates"
+		row_merge("links", ["source", "target", "linktype"], {"project": project_id, "source": l["source"], "target": l["target"], "linktype": linktype, "created": number(l.get("created")) or now})
 
 	# Once every chunk of the sync has landed, whatever order they arrived in:
 	# drop the design rows the batch no longer names, and mark the
@@ -9266,7 +9291,7 @@ def event_object_create(e):
 	# Auto-watch creator locally (safety net for when forward_to_owner response is lost)
 	local_id = e.header("to")
 	if user and user == local_id:
-		row_merge("watchers", ["object", "user"], {"object": object_id, "user": local_id, "created": e.content("created") or mochi.time.now()})
+		row_merge("watchers", ["object", "user"], {"object": object_id, "user": local_id, "created": number(e.content("created")) or mochi.time.now()})
 	# Notify local user about new object
 	if local_id and local_id != user:
 		project = get_project(project_id)
@@ -9532,7 +9557,10 @@ def event_activity_log(e):
 		return
 	activity_id = e.content("id")
 	object_id = e.content("object")
-	if not activity_id or not object_id:
+	# Each column is reduced to its type before it is bound: a list is spread
+	# over the placeholders after it, so an id that is one would bind its second
+	# entry as the object, another project's.
+	if not identifier(activity_id) or type(object_id) != "string" or not object_id:
 		return
 	if not mochi.db.exists("select 1 from objects where id=? and project=?", object_id, project_id):
 		request_resync(project_id)
@@ -9544,9 +9572,9 @@ def event_activity_log(e):
 		created = int(created)
 	mochi.db.execute(
 		"insert or ignore into activity (id, object, user, action, field, oldvalue, newvalue, created) values (?, ?, ?, ?, ?, ?, ?, ?)",
-		activity_id, object_id, e.content("user") or "",
-		e.content("action") or "", e.content("field") or "",
-		e.content("oldvalue") or "", e.content("newvalue") or "",
+		activity_id, object_id, text(e.content("user")),
+		text(e.content("action")), text(e.content("field")),
+		text(e.content("oldvalue")), text(e.content("newvalue")),
 		created
 	)
 	fp = mochi.entity.fingerprint(project_id)
@@ -9731,7 +9759,7 @@ def event_comment_create(e):
 		if parent == False:
 			request_resync(project_id)
 			return
-		comment_merge({"id": comment_id, "object": object_id, "parent": parent, "author": e.content("author") or "", "name": e.content("name") or "", "content": e.content("content") or "", "created": e.content("created") or mochi.time.now(), "edited": 0})
+		comment_merge({"id": comment_id, "object": object_id, "parent": parent, "author": text(e.content("author")), "name": text(e.content("name")), "content": text(e.content("content")), "created": number(e.content("created")) or mochi.time.now(), "edited": 0})
 	# The object was checked against this project; the id was not. Without this
 	# the owner of a project we subscribe to names a comment in a different
 	# project, and its attachments then resolve to bytes held by that owner.
@@ -9752,9 +9780,9 @@ def event_comment_create(e):
 		if object_id and local_id:
 			# Auto-watch commenter locally (safety net for when forward_to_owner response is lost)
 			if user and user == local_id:
-				row_merge("watchers", ["object", "user"], {"object": object_id, "user": local_id, "created": e.content("created") or mochi.time.now()})
-			name = e.content("name") or mochi.app.label("notifications.mention.author_unknown")
-			excerpt = (e.content("content") or "")[:80]
+				row_merge("watchers", ["object", "user"], {"object": object_id, "user": local_id, "created": number(e.content("created")) or mochi.time.now()})
+			name = text(e.content("name")) or mochi.app.label("notifications.mention.author_unknown")
+			excerpt = text(e.content("content"))[:80]
 			notify_watchers(object_id, project_id, local_id, user, name + ": " + excerpt)
 
 # The object a comment belongs to, so a comment push can name it - the
@@ -9804,8 +9832,8 @@ def event_link_create(e):
 	project_id = verify_subscription(e)
 	if not project_id:
 		return
-	source = e.content("source") or ""
-	target = e.content("target") or ""
+	source = text(e.content("source"))
+	target = text(e.content("target"))
 	# Skip when either endpoint isn't local yet — links FKs would abort.
 	if not source or not target:
 		return
@@ -9818,7 +9846,7 @@ def event_link_create(e):
 		not mochi.db.exists("select 1 from objects where id=? and project=?", target, project_id):
 		request_resync(project_id)
 		return
-	row_merge("links", ["source", "target", "linktype"], {"project": project_id, "source": source, "target": target, "linktype": linktype, "created": e.content("created") or mochi.time.now()})
+	row_merge("links", ["source", "target", "linktype"], {"project": project_id, "source": source, "target": target, "linktype": linktype, "created": number(e.content("created")) or mochi.time.now()})
 	fp = mochi.entity.fingerprint(project_id)
 	if fp:
 		mochi.websocket.write(fp, {"type": "link/create", "project": project_id})

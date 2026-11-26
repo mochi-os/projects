@@ -329,8 +329,8 @@ msgstr "Baimendu edonork {entityLabel} bilatzea"
 
 #: src/features/projects/components/create-project-dialog.tsx
 #: src/routes/_authenticated/$projectId/index.tsx
-msgid "Allow anyone to search for project"
-msgstr "Baimendu edonori proiektua bilatzea"
+msgid "Allow anyone to view and comment on project"
+msgstr "Baimendu edonori proiektua ikustea eta iruzkintzea"
 
 #: src/features/editor/components/edit-dialogs.tsx
 msgid "Allow merge requests"
@@ -486,6 +486,7 @@ msgstr "Fitxategi bitarra ez da erakusten"
 msgid "Block {name}"
 msgstr "Blokeatu {name}"
 
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx
 msgid "Blocked by"
@@ -496,6 +497,7 @@ msgstr "Blokeatzailea"
 msgid "Blocked navigation to untrusted link"
 msgstr "Konfiantzazkoa ez den estekarako nabigazioa blokeatu da"
 
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx
 msgid "Blocks"
 msgstr "Blokeak"
@@ -601,6 +603,10 @@ msgstr "Aldatuta"
 #: ../../../lib/web/src/components/entity/entity-activity-list.tsx
 msgid "Changed {field}"
 msgstr "{field} aldatu da"
+
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
+msgid "Changed class"
+msgstr "Klasea aldatuta"
 
 #: ../../../lib/web/src/components/calendar/month-grid.tsx
 #: ../../../lib/web/src/components/calendar/time-grid.tsx
@@ -810,6 +816,7 @@ msgid "Copied"
 msgstr "Kopiatuta"
 
 #: ../../../lib/web/src/components/comment-share-button.tsx
+#: ../../../lib/web/src/components/share-menu.tsx
 #: ../../../lib/web/src/components/ui/copy-button.tsx
 msgid "Copied to clipboard"
 msgstr "Arbelera kopiatu da"
@@ -827,6 +834,7 @@ msgstr "Arbelera kopiatu da"
 msgid "Copy"
 msgstr "Kopiatu"
 
+#: src/lib/share-labels.ts
 #: src/routes/_authenticated/$projectId/index.tsx
 msgid "Copy link"
 msgstr "Kopiatu esteka"
@@ -1206,6 +1214,7 @@ msgstr "Zirriborroa"
 msgid "Drag columns to re-order them"
 msgstr "Arrastatu zutabeak ordena aldatzeko"
 
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx
 msgid "Duplicates"
 msgstr "Bikoiztuak"
@@ -1338,6 +1347,7 @@ msgid "Failed to check merge status"
 msgstr "Ezin izan da bateratze-egoera egiaztatu"
 
 #: ../../../lib/web/src/components/comment-share-button.tsx
+#: ../../../lib/web/src/components/share-menu.tsx
 #: ../../../lib/web/src/components/ui/copy-button.tsx
 #: ../../../lib/web/src/lib/toast-utils.ts
 msgid "Failed to copy"
@@ -1358,8 +1368,7 @@ msgid "Failed to create field"
 msgstr "Ezin izan da eremua sortu"
 
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx
-#: ../../../lib/web/src/components/options-menu.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: ../../../lib/web/src/components/share-menu.tsx
 msgid "Failed to create link"
 msgstr "Ezin izan da esteka sortu"
 
@@ -1805,11 +1814,7 @@ msgstr "Letrak, zenbakiak, zuriuneak, marratxoak eta barrak soilik"
 msgid "Light"
 msgstr "Argia"
 
-#: ../../../lib/web/src/components/options-menu.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
-msgid "Link"
-msgstr "Esteka"
-
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx
 msgid "Links"
 msgstr "Estekak"
@@ -1973,10 +1978,6 @@ msgstr "Aukera gehiago"
 msgid "Moved"
 msgstr "Lekuz aldatuta"
 
-#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
-msgid "Moved {field}"
-msgstr "{field} lekuz aldatu da"
-
 #. placeholder {0}: dayName(dragging.day)
 #. placeholder {0}: dayName(opening(current, format.zonedDay))
 #: ../../../lib/web/src/components/calendar/month-grid.tsx
@@ -2060,6 +2061,10 @@ msgstr "Hurrengo hilabetea"
 #: ../../../lib/web/src/components/calendar/date-header.tsx
 msgid "Next year"
 msgstr "Hurrengo urtea"
+
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
+msgid "No"
+msgstr "Ez"
 
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx
 msgid "No {parentClassNames} to add to"
@@ -2368,6 +2373,10 @@ msgstr "Saiatu berriro."
 msgid "Please wait a moment and try again."
 msgstr "Itxaron pixka bat eta saiatu berriro."
 
+#: src/lib/share-labels.ts
+msgid "Post to a feed"
+msgstr "Argitaratu jario batean"
+
 #: ../../../lib/web/src/components/options-menu.tsx
 msgid "Posts"
 msgstr "Argitalpenak"
@@ -2439,10 +2448,6 @@ msgstr "Proiektua sortu da"
 #: src/routes/_authenticated/$projectId_.settings.tsx
 msgid "Project deleted"
 msgstr "Proiektua ezabatu da"
-
-#: src/routes/_authenticated/$projectId/index.tsx
-msgid "Project link"
-msgstr "Proiektuaren esteka"
 
 #: src/routes/_authenticated/$projectId_.settings.tsx
 #: src/routes/_authenticated/$projectId/index.tsx
@@ -2535,6 +2540,7 @@ msgstr "Saio-hasierara birbideratzen."
 msgid "Reduce interest"
 msgstr "Murriztu interesa"
 
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx
 msgid "Relates"
 msgstr "Erlazionatuta dago"
@@ -2856,6 +2862,10 @@ msgstr "Bidali berriz"
 msgid "Send email"
 msgstr "Bidali emaila"
 
+#: src/lib/share-labels.ts
+msgid "Send in a chat"
+msgstr "Bidali txat batean"
+
 #: ../../../lib/web/src/components/game/game-chat-input.tsx
 #: ../../../lib/web/src/components/game/game-chat-input.tsx
 msgid "Send message"
@@ -2901,6 +2911,7 @@ msgstr "Ezarpenak"
 
 #: ../../../lib/web/src/components/comment-share-button.tsx
 #: ../../../lib/web/src/components/comment-share-button.tsx
+#: ../../../lib/web/src/components/share-menu.tsx
 msgid "Share"
 msgstr "Partekatu"
 
@@ -3196,6 +3207,7 @@ msgstr "Eskaera gehiegi"
 msgid "Top"
 msgstr "Onenak"
 
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
 #: src/features/editor/components/edit-dialogs.tsx
 msgid "Top level"
 msgstr "Goi-maila"
@@ -3261,6 +3273,11 @@ msgid "United States"
 msgstr "Estatu Batuak"
 
 #: ../../../lib/web/src/components/audit-timeline.tsx
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
+#: ../../../lib/web/src/components/entity/entity-board-card.tsx
 #: ../../../lib/web/src/components/entity/entity-field-dialog.tsx
 #: ../../../lib/web/src/components/tree-row.tsx
 #: ../../../lib/web/src/components/tree-row.tsx
@@ -3428,6 +3445,10 @@ msgstr "Asteazkena"
 #: ../../../lib/web/src/components/calendar/date-header.tsx
 msgid "Year"
 msgstr "Urtea"
+
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
+msgid "Yes"
+msgstr "Bai"
 
 #: ../../../lib/web/src/features/errors/general-error.tsx
 msgid "You do not have access to this section."

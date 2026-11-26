@@ -329,8 +329,8 @@ msgstr "ອະນຸຍາດໃຫ້ທຸກຄົນຄົ້ນຫາ {enti
 
 #: src/features/projects/components/create-project-dialog.tsx
 #: src/routes/_authenticated/$projectId/index.tsx
-msgid "Allow anyone to search for project"
-msgstr "ອະນຸຍາດໃຫ້ໃຜກໍຕາມຊອກຫາໂຄງການ"
+msgid "Allow anyone to view and comment on project"
+msgstr "ອະນຸຍາດໃຫ້ໃຜກໍຕາມເບິ່ງ ແລະ ສະແດງຄຳເຫັນໃນໂຄງການ"
 
 #: src/features/editor/components/edit-dialogs.tsx
 msgid "Allow merge requests"
@@ -486,6 +486,7 @@ msgstr "ບໍ່ສະແດງໄຟລ໌ຖານສອງ"
 msgid "Block {name}"
 msgstr "ບລັອກ {name}"
 
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx
 msgid "Blocked by"
@@ -496,6 +497,7 @@ msgstr "ຖືກບລັອກໂດຍ"
 msgid "Blocked navigation to untrusted link"
 msgstr "ບລັອກການນຳທາງໄປຫາລິ້ງທີ່ບໍ່ເຊື່ອຖື"
 
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx
 msgid "Blocks"
 msgstr "ບລັອກ"
@@ -601,6 +603,10 @@ msgstr "ປ່ຽນແລ້ວ"
 #: ../../../lib/web/src/components/entity/entity-activity-list.tsx
 msgid "Changed {field}"
 msgstr "ປ່ຽນ {field} ແລ້ວ"
+
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
+msgid "Changed class"
+msgstr "ປ່ຽນຄລາສແລ້ວ"
 
 #: ../../../lib/web/src/components/calendar/month-grid.tsx
 #: ../../../lib/web/src/components/calendar/time-grid.tsx
@@ -810,6 +816,7 @@ msgid "Copied"
 msgstr "ສຳເນົາແລ້ວ"
 
 #: ../../../lib/web/src/components/comment-share-button.tsx
+#: ../../../lib/web/src/components/share-menu.tsx
 #: ../../../lib/web/src/components/ui/copy-button.tsx
 msgid "Copied to clipboard"
 msgstr "ສຳເນົາໄປຄລິບບອດແລ້ວ"
@@ -827,6 +834,7 @@ msgstr "ສຳເນົາໄປຄລິບບອດແລ້ວ"
 msgid "Copy"
 msgstr "ສຳເນົາ"
 
+#: src/lib/share-labels.ts
 #: src/routes/_authenticated/$projectId/index.tsx
 msgid "Copy link"
 msgstr "ສຳເນົາລິ້ງ"
@@ -1206,6 +1214,7 @@ msgstr "ສະບັບຮ່າງ"
 msgid "Drag columns to re-order them"
 msgstr "ລາກຖັນເພື່ອຈັດລຽງຄືນໃໝ່"
 
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx
 msgid "Duplicates"
 msgstr "ຊ້ຳກັນ"
@@ -1338,6 +1347,7 @@ msgid "Failed to check merge status"
 msgstr "ກວດສອບສະຖານະການລວມລົ້ມເຫຼວ"
 
 #: ../../../lib/web/src/components/comment-share-button.tsx
+#: ../../../lib/web/src/components/share-menu.tsx
 #: ../../../lib/web/src/components/ui/copy-button.tsx
 #: ../../../lib/web/src/lib/toast-utils.ts
 msgid "Failed to copy"
@@ -1358,8 +1368,7 @@ msgid "Failed to create field"
 msgstr "ສ້າງຊ່ອງລົ້ມເຫຼວ"
 
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx
-#: ../../../lib/web/src/components/options-menu.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: ../../../lib/web/src/components/share-menu.tsx
 msgid "Failed to create link"
 msgstr "ສ້າງລິ້ງລົ້ມເຫຼວ"
 
@@ -1805,11 +1814,7 @@ msgstr "ໃຊ້ໄດ້ສະເພາະຕົວອັກສອນ ຕົ�
 msgid "Light"
 msgstr "ສະຫວ່າງ"
 
-#: ../../../lib/web/src/components/options-menu.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
-msgid "Link"
-msgstr "ລິ້ງ"
-
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx
 msgid "Links"
 msgstr "ລິ້ງ"
@@ -1973,10 +1978,6 @@ msgstr "ຕົວເລືອກເພີ່ມເຕີມ"
 msgid "Moved"
 msgstr "ຍ້າຍແລ້ວ"
 
-#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
-msgid "Moved {field}"
-msgstr "ຍ້າຍ {field} ແລ້ວ"
-
 #. placeholder {0}: dayName(dragging.day)
 #. placeholder {0}: dayName(opening(current, format.zonedDay))
 #: ../../../lib/web/src/components/calendar/month-grid.tsx
@@ -2060,6 +2061,10 @@ msgstr "ເດືອນໜ້າ"
 #: ../../../lib/web/src/components/calendar/date-header.tsx
 msgid "Next year"
 msgstr "ປີໜ້າ"
+
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
+msgid "No"
+msgstr "ບໍ່"
 
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx
 msgid "No {parentClassNames} to add to"
@@ -2368,6 +2373,10 @@ msgstr "ກະລຸນາລອງໃໝ່."
 msgid "Please wait a moment and try again."
 msgstr "ກະລຸນາລໍຖ້າຈັກໜ້ອຍ ແລ້ວລອງໃໝ່ອີກຄັ້ງ."
 
+#: src/lib/share-labels.ts
+msgid "Post to a feed"
+msgstr "ໂພສໄປທີ່ຟີດ"
+
 #: ../../../lib/web/src/components/options-menu.tsx
 msgid "Posts"
 msgstr "ໂພສ"
@@ -2439,10 +2448,6 @@ msgstr "ສ້າງໂຄງການແລ້ວ"
 #: src/routes/_authenticated/$projectId_.settings.tsx
 msgid "Project deleted"
 msgstr "ລຶບໂຄງການແລ້ວ"
-
-#: src/routes/_authenticated/$projectId/index.tsx
-msgid "Project link"
-msgstr "ລິ້ງໂຄງການ"
 
 #: src/routes/_authenticated/$projectId_.settings.tsx
 #: src/routes/_authenticated/$projectId/index.tsx
@@ -2535,6 +2540,7 @@ msgstr "ກຳລັງປ່ຽນເສັ້ນທາງໄປຫາການ
 msgid "Reduce interest"
 msgstr "ຫຼຸດຄວາມສົນໃຈ"
 
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx
 msgid "Relates"
 msgstr "ກ່ຽວຂ້ອງ"
@@ -2856,6 +2862,10 @@ msgstr "ສົ່ງອີກຄັ້ງ"
 msgid "Send email"
 msgstr "ສົ່ງອີເມວ"
 
+#: src/lib/share-labels.ts
+msgid "Send in a chat"
+msgstr "ສົ່ງໃນການສົນທະນາ"
+
 #: ../../../lib/web/src/components/game/game-chat-input.tsx
 #: ../../../lib/web/src/components/game/game-chat-input.tsx
 msgid "Send message"
@@ -2901,6 +2911,7 @@ msgstr "ການຕັ້ງຄ່າ"
 
 #: ../../../lib/web/src/components/comment-share-button.tsx
 #: ../../../lib/web/src/components/comment-share-button.tsx
+#: ../../../lib/web/src/components/share-menu.tsx
 msgid "Share"
 msgstr "ແບ່ງປັນ"
 
@@ -3196,6 +3207,7 @@ msgstr "ມີຄຳຮ້ອງຂໍຫຼາຍເກີນໄປ"
 msgid "Top"
 msgstr "ຍອດນິຍົມ"
 
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
 #: src/features/editor/components/edit-dialogs.tsx
 msgid "Top level"
 msgstr "ລະດັບເທິງສຸດ"
@@ -3261,6 +3273,11 @@ msgid "United States"
 msgstr "ສະຫະລັດອາເມລິກາ"
 
 #: ../../../lib/web/src/components/audit-timeline.tsx
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
+#: ../../../lib/web/src/components/entity/entity-board-card.tsx
 #: ../../../lib/web/src/components/entity/entity-field-dialog.tsx
 #: ../../../lib/web/src/components/tree-row.tsx
 #: ../../../lib/web/src/components/tree-row.tsx
@@ -3428,6 +3445,10 @@ msgstr "ວັນພຸດ"
 #: ../../../lib/web/src/components/calendar/date-header.tsx
 msgid "Year"
 msgstr "ປີ"
+
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
+msgid "Yes"
+msgstr "ແມ່ນ"
 
 #: ../../../lib/web/src/features/errors/general-error.tsx
 msgid "You do not have access to this section."

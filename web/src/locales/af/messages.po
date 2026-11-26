@@ -329,8 +329,8 @@ msgstr "Laat enigiemand toe om na {entityLabel} te soek"
 
 #: src/features/projects/components/create-project-dialog.tsx
 #: src/routes/_authenticated/$projectId/index.tsx
-msgid "Allow anyone to search for project"
-msgstr "Laat enigiemand toe om vir projek te soek"
+msgid "Allow anyone to view and comment on project"
+msgstr "Laat enigiemand toe om die projek te bekyk en kommentaar te lewer"
 
 #: src/features/editor/components/edit-dialogs.tsx
 msgid "Allow merge requests"
@@ -486,6 +486,7 @@ msgstr "Binêre lêer word nie gewys nie"
 msgid "Block {name}"
 msgstr "Blokkeer {name}"
 
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx
 msgid "Blocked by"
@@ -496,6 +497,7 @@ msgstr "Geblokkeer deur"
 msgid "Blocked navigation to untrusted link"
 msgstr "Navigasie na onvertroude skakel geblokkeer"
 
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx
 msgid "Blocks"
 msgstr "Blokkeer"
@@ -601,6 +603,10 @@ msgstr "Verander"
 #: ../../../lib/web/src/components/entity/entity-activity-list.tsx
 msgid "Changed {field}"
 msgstr "{field} verander"
+
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
+msgid "Changed class"
+msgstr "Klas verander"
 
 #: ../../../lib/web/src/components/calendar/month-grid.tsx
 #: ../../../lib/web/src/components/calendar/time-grid.tsx
@@ -810,6 +816,7 @@ msgid "Copied"
 msgstr "Gekopieer"
 
 #: ../../../lib/web/src/components/comment-share-button.tsx
+#: ../../../lib/web/src/components/share-menu.tsx
 #: ../../../lib/web/src/components/ui/copy-button.tsx
 msgid "Copied to clipboard"
 msgstr "Gekopieer na knipbord"
@@ -827,6 +834,7 @@ msgstr "Gekopieer na knipbord"
 msgid "Copy"
 msgstr "Kopieer"
 
+#: src/lib/share-labels.ts
 #: src/routes/_authenticated/$projectId/index.tsx
 msgid "Copy link"
 msgstr "Kopieer skakel"
@@ -1206,6 +1214,7 @@ msgstr "Konsep"
 msgid "Drag columns to re-order them"
 msgstr "Sleep kolomme om hulle te herrangskik"
 
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx
 msgid "Duplicates"
 msgstr "Dupliseer"
@@ -1338,6 +1347,7 @@ msgid "Failed to check merge status"
 msgstr "Kon nie samevoegingstatus nagaan nie"
 
 #: ../../../lib/web/src/components/comment-share-button.tsx
+#: ../../../lib/web/src/components/share-menu.tsx
 #: ../../../lib/web/src/components/ui/copy-button.tsx
 #: ../../../lib/web/src/lib/toast-utils.ts
 msgid "Failed to copy"
@@ -1358,8 +1368,7 @@ msgid "Failed to create field"
 msgstr "Kon nie veld skep nie"
 
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx
-#: ../../../lib/web/src/components/options-menu.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: ../../../lib/web/src/components/share-menu.tsx
 msgid "Failed to create link"
 msgstr "Kon nie skakel skep nie"
 
@@ -1805,11 +1814,7 @@ msgstr "Slegs letters, syfers, spasies, koppeltekens en skuinsstrepe"
 msgid "Light"
 msgstr "Lig"
 
-#: ../../../lib/web/src/components/options-menu.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
-msgid "Link"
-msgstr "Skakel"
-
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx
 msgid "Links"
 msgstr "Skakels"
@@ -1973,10 +1978,6 @@ msgstr "Meer opsies"
 msgid "Moved"
 msgstr "Geskuif"
 
-#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
-msgid "Moved {field}"
-msgstr "{field} geskuif"
-
 #. placeholder {0}: dayName(dragging.day)
 #. placeholder {0}: dayName(opening(current, format.zonedDay))
 #: ../../../lib/web/src/components/calendar/month-grid.tsx
@@ -2060,6 +2061,10 @@ msgstr "Volgende maand"
 #: ../../../lib/web/src/components/calendar/date-header.tsx
 msgid "Next year"
 msgstr "Volgende jaar"
+
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
+msgid "No"
+msgstr "Nee"
 
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx
 msgid "No {parentClassNames} to add to"
@@ -2368,6 +2373,10 @@ msgstr "Probeer asseblief weer."
 msgid "Please wait a moment and try again."
 msgstr "Wag asseblief 'n oomblik en probeer weer."
 
+#: src/lib/share-labels.ts
+msgid "Post to a feed"
+msgstr "Plaas op 'n voer"
+
 #: ../../../lib/web/src/components/options-menu.tsx
 msgid "Posts"
 msgstr "Plasings"
@@ -2439,10 +2448,6 @@ msgstr "Projek geskep"
 #: src/routes/_authenticated/$projectId_.settings.tsx
 msgid "Project deleted"
 msgstr "Projek verwyder"
-
-#: src/routes/_authenticated/$projectId/index.tsx
-msgid "Project link"
-msgstr "Projekskakel"
 
 #: src/routes/_authenticated/$projectId_.settings.tsx
 #: src/routes/_authenticated/$projectId/index.tsx
@@ -2535,6 +2540,7 @@ msgstr "Besig om na aanmelding te herlei."
 msgid "Reduce interest"
 msgstr "Verminder belangstelling"
 
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx
 msgid "Relates"
 msgstr "Verband"
@@ -2856,6 +2862,10 @@ msgstr "Stuur weer"
 msgid "Send email"
 msgstr "Stuur e-pos"
 
+#: src/lib/share-labels.ts
+msgid "Send in a chat"
+msgstr "Stuur in 'n geselsie"
+
 #: ../../../lib/web/src/components/game/game-chat-input.tsx
 #: ../../../lib/web/src/components/game/game-chat-input.tsx
 msgid "Send message"
@@ -2901,6 +2911,7 @@ msgstr "Instellings"
 
 #: ../../../lib/web/src/components/comment-share-button.tsx
 #: ../../../lib/web/src/components/comment-share-button.tsx
+#: ../../../lib/web/src/components/share-menu.tsx
 msgid "Share"
 msgstr "Deel"
 
@@ -3196,6 +3207,7 @@ msgstr "Te veel versoeke"
 msgid "Top"
 msgstr "Beste"
 
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
 #: src/features/editor/components/edit-dialogs.tsx
 msgid "Top level"
 msgstr "Boonste vlak"
@@ -3261,6 +3273,11 @@ msgid "United States"
 msgstr "Verenigde State"
 
 #: ../../../lib/web/src/components/audit-timeline.tsx
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
+#: ../../../lib/web/src/components/entity/entity-board-card.tsx
 #: ../../../lib/web/src/components/entity/entity-field-dialog.tsx
 #: ../../../lib/web/src/components/tree-row.tsx
 #: ../../../lib/web/src/components/tree-row.tsx
@@ -3428,6 +3445,10 @@ msgstr "Woensdag"
 #: ../../../lib/web/src/components/calendar/date-header.tsx
 msgid "Year"
 msgstr "Jaar"
+
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
+msgid "Yes"
+msgstr "Ja"
 
 #: ../../../lib/web/src/features/errors/general-error.tsx
 msgid "You do not have access to this section."

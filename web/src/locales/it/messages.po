@@ -329,8 +329,8 @@ msgstr "Consenti a chiunque di cercare {entityLabel}"
 
 #: src/features/projects/components/create-project-dialog.tsx
 #: src/routes/_authenticated/$projectId/index.tsx
-msgid "Allow anyone to search for project"
-msgstr "Consenti a chiunque di cercare il progetto"
+msgid "Allow anyone to view and comment on project"
+msgstr "Consenti a chiunque di visualizzare e commentare il progetto"
 
 #: src/features/editor/components/edit-dialogs.tsx
 msgid "Allow merge requests"
@@ -486,6 +486,7 @@ msgstr "File binario non mostrato"
 msgid "Block {name}"
 msgstr "Blocca {name}"
 
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx
 msgid "Blocked by"
@@ -496,6 +497,7 @@ msgstr "Bloccato da"
 msgid "Blocked navigation to untrusted link"
 msgstr "Navigazione verso link non attendibile bloccata"
 
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx
 msgid "Blocks"
 msgstr "Blocca"
@@ -601,6 +603,10 @@ msgstr "Modificato"
 #: ../../../lib/web/src/components/entity/entity-activity-list.tsx
 msgid "Changed {field}"
 msgstr "Modificato {field}"
+
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
+msgid "Changed class"
+msgstr "Classe cambiata"
 
 #: ../../../lib/web/src/components/calendar/month-grid.tsx
 #: ../../../lib/web/src/components/calendar/time-grid.tsx
@@ -810,6 +816,7 @@ msgid "Copied"
 msgstr "Copiato"
 
 #: ../../../lib/web/src/components/comment-share-button.tsx
+#: ../../../lib/web/src/components/share-menu.tsx
 #: ../../../lib/web/src/components/ui/copy-button.tsx
 msgid "Copied to clipboard"
 msgstr "Copiato negli appunti"
@@ -827,6 +834,7 @@ msgstr "Copiato negli appunti"
 msgid "Copy"
 msgstr "Copia"
 
+#: src/lib/share-labels.ts
 #: src/routes/_authenticated/$projectId/index.tsx
 msgid "Copy link"
 msgstr "Copia link"
@@ -1206,6 +1214,7 @@ msgstr "Bozza"
 msgid "Drag columns to re-order them"
 msgstr "Trascina le colonne per riordinarle"
 
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx
 msgid "Duplicates"
 msgstr "Duplica"
@@ -1338,6 +1347,7 @@ msgid "Failed to check merge status"
 msgstr "Impossibile verificare lo stato del merge"
 
 #: ../../../lib/web/src/components/comment-share-button.tsx
+#: ../../../lib/web/src/components/share-menu.tsx
 #: ../../../lib/web/src/components/ui/copy-button.tsx
 #: ../../../lib/web/src/lib/toast-utils.ts
 msgid "Failed to copy"
@@ -1358,8 +1368,7 @@ msgid "Failed to create field"
 msgstr "Impossibile creare il campo"
 
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx
-#: ../../../lib/web/src/components/options-menu.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: ../../../lib/web/src/components/share-menu.tsx
 msgid "Failed to create link"
 msgstr "Impossibile creare il link"
 
@@ -1805,11 +1814,7 @@ msgstr "Solo lettere, numeri, spazi, trattini e barre"
 msgid "Light"
 msgstr "Chiaro"
 
-#: ../../../lib/web/src/components/options-menu.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
-msgid "Link"
-msgstr "Link"
-
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx
 msgid "Links"
 msgstr "Link"
@@ -1973,10 +1978,6 @@ msgstr "Altre opzioni"
 msgid "Moved"
 msgstr "Spostato"
 
-#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
-msgid "Moved {field}"
-msgstr "Spostato {field}"
-
 #. placeholder {0}: dayName(dragging.day)
 #. placeholder {0}: dayName(opening(current, format.zonedDay))
 #: ../../../lib/web/src/components/calendar/month-grid.tsx
@@ -2060,6 +2061,10 @@ msgstr "Mese successivo"
 #: ../../../lib/web/src/components/calendar/date-header.tsx
 msgid "Next year"
 msgstr "Anno successivo"
+
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
+msgid "No"
+msgstr "No"
 
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx
 msgid "No {parentClassNames} to add to"
@@ -2368,6 +2373,10 @@ msgstr "Riprova."
 msgid "Please wait a moment and try again."
 msgstr "Attendi qualche istante e riprova."
 
+#: src/lib/share-labels.ts
+msgid "Post to a feed"
+msgstr "Pubblica in un feed"
+
 #: ../../../lib/web/src/components/options-menu.tsx
 msgid "Posts"
 msgstr "Post"
@@ -2439,10 +2448,6 @@ msgstr "Progetto creato"
 #: src/routes/_authenticated/$projectId_.settings.tsx
 msgid "Project deleted"
 msgstr "Progetto eliminato"
-
-#: src/routes/_authenticated/$projectId/index.tsx
-msgid "Project link"
-msgstr "Link al progetto"
 
 #: src/routes/_authenticated/$projectId_.settings.tsx
 #: src/routes/_authenticated/$projectId/index.tsx
@@ -2535,6 +2540,7 @@ msgstr "Reindirizzamento all'accesso."
 msgid "Reduce interest"
 msgstr "Riduci interesse"
 
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx
 msgid "Relates"
 msgstr "Si riferisce a"
@@ -2856,6 +2862,10 @@ msgstr "Invia di nuovo"
 msgid "Send email"
 msgstr "Invia email"
 
+#: src/lib/share-labels.ts
+msgid "Send in a chat"
+msgstr "Invia in una chat"
+
 #: ../../../lib/web/src/components/game/game-chat-input.tsx
 #: ../../../lib/web/src/components/game/game-chat-input.tsx
 msgid "Send message"
@@ -2901,6 +2911,7 @@ msgstr "Impostazioni"
 
 #: ../../../lib/web/src/components/comment-share-button.tsx
 #: ../../../lib/web/src/components/comment-share-button.tsx
+#: ../../../lib/web/src/components/share-menu.tsx
 msgid "Share"
 msgstr "Condividi"
 
@@ -3196,6 +3207,7 @@ msgstr "Troppe richieste"
 msgid "Top"
 msgstr "Migliori"
 
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
 #: src/features/editor/components/edit-dialogs.tsx
 msgid "Top level"
 msgstr "Livello superiore"
@@ -3261,6 +3273,11 @@ msgid "United States"
 msgstr "Stati Uniti"
 
 #: ../../../lib/web/src/components/audit-timeline.tsx
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
+#: ../../../lib/web/src/components/entity/entity-board-card.tsx
 #: ../../../lib/web/src/components/entity/entity-field-dialog.tsx
 #: ../../../lib/web/src/components/tree-row.tsx
 #: ../../../lib/web/src/components/tree-row.tsx
@@ -3428,6 +3445,10 @@ msgstr "Mercoledì"
 #: ../../../lib/web/src/components/calendar/date-header.tsx
 msgid "Year"
 msgstr "Anno"
+
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
+msgid "Yes"
+msgstr "Sì"
 
 #: ../../../lib/web/src/features/errors/general-error.tsx
 msgid "You do not have access to this section."

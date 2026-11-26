@@ -329,8 +329,8 @@ msgstr "केहू के भी {entityLabel} खोजे के अनु�
 
 #: src/features/projects/components/create-project-dialog.tsx
 #: src/routes/_authenticated/$projectId/index.tsx
-msgid "Allow anyone to search for project"
-msgstr "केहू के परियोजना खोजे के अनुमति दीं"
+msgid "Allow anyone to view and comment on project"
+msgstr "केहू के परियोजना देखे आ ओपर टिप्पणी करे के अनुमति दीं"
 
 #: src/features/editor/components/edit-dialogs.tsx
 msgid "Allow merge requests"
@@ -486,6 +486,7 @@ msgstr "बाइनरी फाइल ना देखावल गइल"
 msgid "Block {name}"
 msgstr "{name} के ब्लॉक करीं"
 
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx
 msgid "Blocked by"
@@ -496,6 +497,7 @@ msgstr "द्वारा अवरुद्ध"
 msgid "Blocked navigation to untrusted link"
 msgstr "अविश्वसनीय लिंक प नेविगेशन अवरुद्ध"
 
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx
 msgid "Blocks"
 msgstr "ब्लॉक"
@@ -601,6 +603,10 @@ msgstr "बदलल गइल"
 #: ../../../lib/web/src/components/entity/entity-activity-list.tsx
 msgid "Changed {field}"
 msgstr "{field} बदलल गइल"
+
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
+msgid "Changed class"
+msgstr "वर्ग बदलल गइल"
 
 #: ../../../lib/web/src/components/calendar/month-grid.tsx
 #: ../../../lib/web/src/components/calendar/time-grid.tsx
@@ -810,6 +816,7 @@ msgid "Copied"
 msgstr "कॉपी हो गइल"
 
 #: ../../../lib/web/src/components/comment-share-button.tsx
+#: ../../../lib/web/src/components/share-menu.tsx
 #: ../../../lib/web/src/components/ui/copy-button.tsx
 msgid "Copied to clipboard"
 msgstr "क्लिपबोर्ड पर कॉपी कइल गइल"
@@ -827,6 +834,7 @@ msgstr "क्लिपबोर्ड पर कॉपी कइल गइल"
 msgid "Copy"
 msgstr "कॉपी करीं"
 
+#: src/lib/share-labels.ts
 #: src/routes/_authenticated/$projectId/index.tsx
 msgid "Copy link"
 msgstr "लिंक कॉपी करीं"
@@ -1206,6 +1214,7 @@ msgstr "ड्राफ्ट"
 msgid "Drag columns to re-order them"
 msgstr "कॉलम के दोबारा क्रमबद्ध करे खातिर खींचीं"
 
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx
 msgid "Duplicates"
 msgstr "नकल"
@@ -1338,6 +1347,7 @@ msgid "Failed to check merge status"
 msgstr "मर्ज स्थिति जाँचे में विफल"
 
 #: ../../../lib/web/src/components/comment-share-button.tsx
+#: ../../../lib/web/src/components/share-menu.tsx
 #: ../../../lib/web/src/components/ui/copy-button.tsx
 #: ../../../lib/web/src/lib/toast-utils.ts
 msgid "Failed to copy"
@@ -1358,8 +1368,7 @@ msgid "Failed to create field"
 msgstr "फील्ड बनावे में विफल"
 
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx
-#: ../../../lib/web/src/components/options-menu.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: ../../../lib/web/src/components/share-menu.tsx
 msgid "Failed to create link"
 msgstr "लिंक बनावे में विफल"
 
@@ -1805,11 +1814,7 @@ msgstr "खाली अक्षर, अंक, खाली जगह, हा�
 msgid "Light"
 msgstr "हल्का"
 
-#: ../../../lib/web/src/components/options-menu.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
-msgid "Link"
-msgstr "लिंक"
-
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx
 msgid "Links"
 msgstr "लिंक"
@@ -1973,10 +1978,6 @@ msgstr "अउरी विकल्प"
 msgid "Moved"
 msgstr "खिसकावल गइल"
 
-#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
-msgid "Moved {field}"
-msgstr "{field} खिसकावल गइल"
-
 #. placeholder {0}: dayName(dragging.day)
 #. placeholder {0}: dayName(opening(current, format.zonedDay))
 #: ../../../lib/web/src/components/calendar/month-grid.tsx
@@ -2060,6 +2061,10 @@ msgstr "अगिला महीना"
 #: ../../../lib/web/src/components/calendar/date-header.tsx
 msgid "Next year"
 msgstr "अगिला साल"
+
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
+msgid "No"
+msgstr "नाहीं"
 
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx
 msgid "No {parentClassNames} to add to"
@@ -2368,6 +2373,10 @@ msgstr "कृपया फेर से कोशिश करीं।"
 msgid "Please wait a moment and try again."
 msgstr "कृपया तनी देर रुकीं आ फेर से कोशिश करीं।"
 
+#: src/lib/share-labels.ts
+msgid "Post to a feed"
+msgstr "फीड पर पोस्ट करीं"
+
 #: ../../../lib/web/src/components/options-menu.tsx
 msgid "Posts"
 msgstr "पोस्ट"
@@ -2439,10 +2448,6 @@ msgstr "प्रोजेक्ट बनल"
 #: src/routes/_authenticated/$projectId_.settings.tsx
 msgid "Project deleted"
 msgstr "प्रोजेक्ट मिटावल गइल"
-
-#: src/routes/_authenticated/$projectId/index.tsx
-msgid "Project link"
-msgstr "प्रोजेक्ट लिंक"
 
 #: src/routes/_authenticated/$projectId_.settings.tsx
 #: src/routes/_authenticated/$projectId/index.tsx
@@ -2535,6 +2540,7 @@ msgstr "लॉगिन पर रीडायरेक्ट कर रहल �
 msgid "Reduce interest"
 msgstr "रुचि कम करीं"
 
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx
 msgid "Relates"
 msgstr "संबंधित बा"
@@ -2856,6 +2862,10 @@ msgstr "फेरु भेजीं"
 msgid "Send email"
 msgstr "ईमेल भेजीं"
 
+#: src/lib/share-labels.ts
+msgid "Send in a chat"
+msgstr "चैट में भेजीं"
+
 #: ../../../lib/web/src/components/game/game-chat-input.tsx
 #: ../../../lib/web/src/components/game/game-chat-input.tsx
 msgid "Send message"
@@ -2901,6 +2911,7 @@ msgstr "सेटिंग सब"
 
 #: ../../../lib/web/src/components/comment-share-button.tsx
 #: ../../../lib/web/src/components/comment-share-button.tsx
+#: ../../../lib/web/src/components/share-menu.tsx
 msgid "Share"
 msgstr "साझा करीं"
 
@@ -3196,6 +3207,7 @@ msgstr "बहुते जादा अनुरोध"
 msgid "Top"
 msgstr "टॉप"
 
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
 #: src/features/editor/components/edit-dialogs.tsx
 msgid "Top level"
 msgstr "शीर्ष स्तर"
@@ -3261,6 +3273,11 @@ msgid "United States"
 msgstr "संयुक्त राज्य अमेरिका"
 
 #: ../../../lib/web/src/components/audit-timeline.tsx
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
+#: ../../../lib/web/src/components/entity/entity-board-card.tsx
 #: ../../../lib/web/src/components/entity/entity-field-dialog.tsx
 #: ../../../lib/web/src/components/tree-row.tsx
 #: ../../../lib/web/src/components/tree-row.tsx
@@ -3428,6 +3445,10 @@ msgstr "बुधवार"
 #: ../../../lib/web/src/components/calendar/date-header.tsx
 msgid "Year"
 msgstr "साल"
+
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
+msgid "Yes"
+msgstr "हाँ"
 
 #: ../../../lib/web/src/features/errors/general-error.tsx
 msgid "You do not have access to this section."

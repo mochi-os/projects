@@ -329,8 +329,8 @@ msgstr "Бардыгы {entityLabel} издей алсын"
 
 #: src/features/projects/components/create-project-dialog.tsx
 #: src/routes/_authenticated/$projectId/index.tsx
-msgid "Allow anyone to search for project"
-msgstr "Долбоорду издөөгө ар кимге уруксат берүү"
+msgid "Allow anyone to view and comment on project"
+msgstr "Ар кимге долбоорду көрүүгө жана ага комментарий жазууга уруксат берүү"
 
 #: src/features/editor/components/edit-dialogs.tsx
 msgid "Allow merge requests"
@@ -486,6 +486,7 @@ msgstr "Экилик файл көрсөтүлбөйт"
 msgid "Block {name}"
 msgstr "{name} бөгөттөө"
 
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx
 msgid "Blocked by"
@@ -496,6 +497,7 @@ msgstr "Тарабынан бөгөттөлгөн"
 msgid "Blocked navigation to untrusted link"
 msgstr "Ишенимсиз шилтемеге өтүү бөгөттөлдү"
 
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx
 msgid "Blocks"
 msgstr "Блоктор"
@@ -601,6 +603,10 @@ msgstr "Өзгөртүлдү"
 #: ../../../lib/web/src/components/entity/entity-activity-list.tsx
 msgid "Changed {field}"
 msgstr "{field} өзгөртүлдү"
+
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
+msgid "Changed class"
+msgstr "Класс өзгөртүлдү"
 
 #: ../../../lib/web/src/components/calendar/month-grid.tsx
 #: ../../../lib/web/src/components/calendar/time-grid.tsx
@@ -810,6 +816,7 @@ msgid "Copied"
 msgstr "Көчүрүлдү"
 
 #: ../../../lib/web/src/components/comment-share-button.tsx
+#: ../../../lib/web/src/components/share-menu.tsx
 #: ../../../lib/web/src/components/ui/copy-button.tsx
 msgid "Copied to clipboard"
 msgstr "Алмашуу буферине көчүрүлдү"
@@ -827,6 +834,7 @@ msgstr "Алмашуу буферине көчүрүлдү"
 msgid "Copy"
 msgstr "Көчүрүү"
 
+#: src/lib/share-labels.ts
 #: src/routes/_authenticated/$projectId/index.tsx
 msgid "Copy link"
 msgstr "Шилтемени көчүрүү"
@@ -1206,6 +1214,7 @@ msgstr "Долбоор"
 msgid "Drag columns to re-order them"
 msgstr "Тилкелерди иретин өзгөртүү үчүн сүйрөңүз"
 
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx
 msgid "Duplicates"
 msgstr "Кайталоолор"
@@ -1338,6 +1347,7 @@ msgid "Failed to check merge status"
 msgstr "Бириктирүү абалын текшерүү ишке ашкан жок"
 
 #: ../../../lib/web/src/components/comment-share-button.tsx
+#: ../../../lib/web/src/components/share-menu.tsx
 #: ../../../lib/web/src/components/ui/copy-button.tsx
 #: ../../../lib/web/src/lib/toast-utils.ts
 msgid "Failed to copy"
@@ -1358,8 +1368,7 @@ msgid "Failed to create field"
 msgstr "Талаа түзүү ишке ашкан жок"
 
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx
-#: ../../../lib/web/src/components/options-menu.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: ../../../lib/web/src/components/share-menu.tsx
 msgid "Failed to create link"
 msgstr "Шилтеме түзүү ишке ашкан жок"
 
@@ -1805,11 +1814,7 @@ msgstr "Тамгалар, сандар, боштуктар, дефистер ж�
 msgid "Light"
 msgstr "Жарык"
 
-#: ../../../lib/web/src/components/options-menu.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
-msgid "Link"
-msgstr "Шилтеме"
-
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx
 msgid "Links"
 msgstr "Шилтемелер"
@@ -1973,10 +1978,6 @@ msgstr "Кошумча параметрлер"
 msgid "Moved"
 msgstr "Жылдырылды"
 
-#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
-msgid "Moved {field}"
-msgstr "{field} жылдырылды"
-
 #. placeholder {0}: dayName(dragging.day)
 #. placeholder {0}: dayName(opening(current, format.zonedDay))
 #: ../../../lib/web/src/components/calendar/month-grid.tsx
@@ -2060,6 +2061,10 @@ msgstr "Кийинки ай"
 #: ../../../lib/web/src/components/calendar/date-header.tsx
 msgid "Next year"
 msgstr "Кийинки жыл"
+
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
+msgid "No"
+msgstr "Жок"
 
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx
 msgid "No {parentClassNames} to add to"
@@ -2368,6 +2373,10 @@ msgstr "Кайра аракет кылыңыз."
 msgid "Please wait a moment and try again."
 msgstr "Бир аз күтүп, кайра аракет кылыңыз."
 
+#: src/lib/share-labels.ts
+msgid "Post to a feed"
+msgstr "Лентага жарыялоо"
+
 #: ../../../lib/web/src/components/options-menu.tsx
 msgid "Posts"
 msgstr "Посттор"
@@ -2439,10 +2448,6 @@ msgstr "Долбоор түзүлдү"
 #: src/routes/_authenticated/$projectId_.settings.tsx
 msgid "Project deleted"
 msgstr "Долбоор өчүрүлдү"
-
-#: src/routes/_authenticated/$projectId/index.tsx
-msgid "Project link"
-msgstr "Долбоор шилтемеси"
 
 #: src/routes/_authenticated/$projectId_.settings.tsx
 #: src/routes/_authenticated/$projectId/index.tsx
@@ -2535,6 +2540,7 @@ msgstr "Кирүүгө кайра багытталууда."
 msgid "Reduce interest"
 msgstr "Кызыгууну азайтуу"
 
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx
 msgid "Relates"
 msgstr "Тиешелүү"
@@ -2856,6 +2862,10 @@ msgstr "Кайра жөнөтүү"
 msgid "Send email"
 msgstr "Электрондук почта жөнөтүү"
 
+#: src/lib/share-labels.ts
+msgid "Send in a chat"
+msgstr "Чатта жөнөтүү"
+
 #: ../../../lib/web/src/components/game/game-chat-input.tsx
 #: ../../../lib/web/src/components/game/game-chat-input.tsx
 msgid "Send message"
@@ -2901,6 +2911,7 @@ msgstr "Жөндөөлөр"
 
 #: ../../../lib/web/src/components/comment-share-button.tsx
 #: ../../../lib/web/src/components/comment-share-button.tsx
+#: ../../../lib/web/src/components/share-menu.tsx
 msgid "Share"
 msgstr "Бөлүшүү"
 
@@ -3196,6 +3207,7 @@ msgstr "Суроо-талаптар өтө көп"
 msgid "Top"
 msgstr "Эң мыктылар"
 
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
 #: src/features/editor/components/edit-dialogs.tsx
 msgid "Top level"
 msgstr "Жогорку деңгээл"
@@ -3261,6 +3273,11 @@ msgid "United States"
 msgstr "Кошмо Штаттар"
 
 #: ../../../lib/web/src/components/audit-timeline.tsx
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
+#: ../../../lib/web/src/components/entity/entity-board-card.tsx
 #: ../../../lib/web/src/components/entity/entity-field-dialog.tsx
 #: ../../../lib/web/src/components/tree-row.tsx
 #: ../../../lib/web/src/components/tree-row.tsx
@@ -3428,6 +3445,10 @@ msgstr "Шаршемби"
 #: ../../../lib/web/src/components/calendar/date-header.tsx
 msgid "Year"
 msgstr "Жыл"
+
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
+msgid "Yes"
+msgstr "Ооба"
 
 #: ../../../lib/web/src/features/errors/general-error.tsx
 msgid "You do not have access to this section."

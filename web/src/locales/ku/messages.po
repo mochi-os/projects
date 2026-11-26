@@ -329,8 +329,8 @@ msgstr "Destûrê bide her kesî ku li {entityLabel} bigere"
 
 #: src/features/projects/components/create-project-dialog.tsx
 #: src/routes/_authenticated/$projectId/index.tsx
-msgid "Allow anyone to search for project"
-msgstr "Destûr bide her kesî ku li proje bigere"
+msgid "Allow anyone to view and comment on project"
+msgstr "Destûr bide her kesî ku projeyê bibîne û şîrove li ser bike"
 
 #: src/features/editor/components/edit-dialogs.tsx
 msgid "Allow merge requests"
@@ -486,6 +486,7 @@ msgstr "Pelê binar nayê nîşandan"
 msgid "Block {name}"
 msgstr "{name} asteng bike"
 
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx
 msgid "Blocked by"
@@ -496,6 +497,7 @@ msgstr "Hat astengkirin ji aliyê"
 msgid "Blocked navigation to untrusted link"
 msgstr "Gihîştin bo girêdaneke nebawer hat astengkirin"
 
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx
 msgid "Blocks"
 msgstr "Blok"
@@ -601,6 +603,10 @@ msgstr "Hate guhertin"
 #: ../../../lib/web/src/components/entity/entity-activity-list.tsx
 msgid "Changed {field}"
 msgstr "{field} hate guhertin"
+
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
+msgid "Changed class"
+msgstr "Pol hate guhertin"
 
 #: ../../../lib/web/src/components/calendar/month-grid.tsx
 #: ../../../lib/web/src/components/calendar/time-grid.tsx
@@ -810,6 +816,7 @@ msgid "Copied"
 msgstr "Hat kopîkirin"
 
 #: ../../../lib/web/src/components/comment-share-button.tsx
+#: ../../../lib/web/src/components/share-menu.tsx
 #: ../../../lib/web/src/components/ui/copy-button.tsx
 msgid "Copied to clipboard"
 msgstr "Hat kopîkirin li clipboard"
@@ -827,6 +834,7 @@ msgstr "Hat kopîkirin li clipboard"
 msgid "Copy"
 msgstr "Kopî bike"
 
+#: src/lib/share-labels.ts
 #: src/routes/_authenticated/$projectId/index.tsx
 msgid "Copy link"
 msgstr "Girêdanê kopî bike"
@@ -1206,6 +1214,7 @@ msgstr "Reşnivîs"
 msgid "Drag columns to re-order them"
 msgstr "Stûnan ji nû ve rêz bikin"
 
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx
 msgid "Duplicates"
 msgstr "Dubare"
@@ -1338,6 +1347,7 @@ msgid "Failed to check merge status"
 msgstr "Kontrolkirina rewşa hevbendiyê neserkeftî bû"
 
 #: ../../../lib/web/src/components/comment-share-button.tsx
+#: ../../../lib/web/src/components/share-menu.tsx
 #: ../../../lib/web/src/components/ui/copy-button.tsx
 #: ../../../lib/web/src/lib/toast-utils.ts
 msgid "Failed to copy"
@@ -1358,8 +1368,7 @@ msgid "Failed to create field"
 msgstr "Çêkirina qadê neserkeftî bû"
 
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx
-#: ../../../lib/web/src/components/options-menu.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: ../../../lib/web/src/components/share-menu.tsx
 msgid "Failed to create link"
 msgstr "Çêkirina lînkê neserkeftî bû"
 
@@ -1805,11 +1814,7 @@ msgstr "Tenê tîp, hejmar, valahî, kêşan û xêzikên paldayî"
 msgid "Light"
 msgstr "Ronî"
 
-#: ../../../lib/web/src/components/options-menu.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
-msgid "Link"
-msgstr "Girêdan"
-
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx
 msgid "Links"
 msgstr "Girêdan"
@@ -1973,10 +1978,6 @@ msgstr "Vebijarkên zêdetir"
 msgid "Moved"
 msgstr "Hate guhastin"
 
-#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
-msgid "Moved {field}"
-msgstr "{field} hate guhastin"
-
 #. placeholder {0}: dayName(dragging.day)
 #. placeholder {0}: dayName(opening(current, format.zonedDay))
 #: ../../../lib/web/src/components/calendar/month-grid.tsx
@@ -2060,6 +2061,10 @@ msgstr "Meha bê"
 #: ../../../lib/web/src/components/calendar/date-header.tsx
 msgid "Next year"
 msgstr "Sala bê"
+
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
+msgid "No"
+msgstr "Na"
 
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx
 msgid "No {parentClassNames} to add to"
@@ -2368,6 +2373,10 @@ msgstr "Ji kerema xwe dîsa biceribîne."
 msgid "Please wait a moment and try again."
 msgstr "Ji kerema xwe kêliyekê bisekine û dîsa biceribîne."
 
+#: src/lib/share-labels.ts
+msgid "Post to a feed"
+msgstr "Li feedekê biweşîne"
+
 #: ../../../lib/web/src/components/options-menu.tsx
 msgid "Posts"
 msgstr "Poste"
@@ -2439,10 +2448,6 @@ msgstr "Proje hate afirandin"
 #: src/routes/_authenticated/$projectId_.settings.tsx
 msgid "Project deleted"
 msgstr "Proje hate jêbirin"
-
-#: src/routes/_authenticated/$projectId/index.tsx
-msgid "Project link"
-msgstr "Girêdana projeyê"
 
 #: src/routes/_authenticated/$projectId_.settings.tsx
 #: src/routes/_authenticated/$projectId/index.tsx
@@ -2535,6 +2540,7 @@ msgstr "Beralîkirin ber bi têketinê ve."
 msgid "Reduce interest"
 msgstr "Balkêşî kêm bike"
 
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx
 msgid "Relates"
 msgstr "Pêwendîdar e"
@@ -2856,6 +2862,10 @@ msgstr "Dîsa bişîne"
 msgid "Send email"
 msgstr "E-nameyê bişîne"
 
+#: src/lib/share-labels.ts
+msgid "Send in a chat"
+msgstr "Di chatekê de bişîne"
+
 #: ../../../lib/web/src/components/game/game-chat-input.tsx
 #: ../../../lib/web/src/components/game/game-chat-input.tsx
 msgid "Send message"
@@ -2901,6 +2911,7 @@ msgstr "Mîheng"
 
 #: ../../../lib/web/src/components/comment-share-button.tsx
 #: ../../../lib/web/src/components/comment-share-button.tsx
+#: ../../../lib/web/src/components/share-menu.tsx
 msgid "Share"
 msgstr "Parve bike"
 
@@ -3196,6 +3207,7 @@ msgstr "Daxwazên pir zêde"
 msgid "Top"
 msgstr "Çêtirîn"
 
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
 #: src/features/editor/components/edit-dialogs.tsx
 msgid "Top level"
 msgstr "Asta jor"
@@ -3261,6 +3273,11 @@ msgid "United States"
 msgstr "Dewletên Yekbûyî"
 
 #: ../../../lib/web/src/components/audit-timeline.tsx
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
+#: ../../../lib/web/src/components/entity/entity-board-card.tsx
 #: ../../../lib/web/src/components/entity/entity-field-dialog.tsx
 #: ../../../lib/web/src/components/tree-row.tsx
 #: ../../../lib/web/src/components/tree-row.tsx
@@ -3428,6 +3445,10 @@ msgstr "Çarşem"
 #: ../../../lib/web/src/components/calendar/date-header.tsx
 msgid "Year"
 msgstr "Sal"
+
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
+msgid "Yes"
+msgstr "Erê"
 
 #: ../../../lib/web/src/features/errors/general-error.tsx
 msgid "You do not have access to this section."

@@ -329,8 +329,8 @@ msgstr "{entityLabel} ആർക്കും തിരയാൻ അനുവദ�
 
 #: src/features/projects/components/create-project-dialog.tsx
 #: src/routes/_authenticated/$projectId/index.tsx
-msgid "Allow anyone to search for project"
-msgstr "ആർക്കും പ്രോജക്റ്റ് തിരയാൻ അനുവദിക്കുക"
+msgid "Allow anyone to view and comment on project"
+msgstr "ആർക്കും പ്രോജക്റ്റ് കാണാനും അതിൽ അഭിപ്രായം പറയാനും അനുവദിക്കുക"
 
 #: src/features/editor/components/edit-dialogs.tsx
 msgid "Allow merge requests"
@@ -486,6 +486,7 @@ msgstr "ബൈനറി ഫയൽ കാണിച്ചിട്ടില്ല"
 msgid "Block {name}"
 msgstr "{name} ബ്ലോക്ക് ചെയ്യുക"
 
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx
 msgid "Blocked by"
@@ -496,6 +497,7 @@ msgstr "തടഞ്ഞത്"
 msgid "Blocked navigation to untrusted link"
 msgstr "വിശ്വസനീയമല്ലാത്ത ലിങ്കിലേക്കുള്ള നാവിഗേഷൻ തടഞ്ഞു"
 
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx
 msgid "Blocks"
 msgstr "തടയുന്നു"
@@ -601,6 +603,10 @@ msgstr "മാറ്റി"
 #: ../../../lib/web/src/components/entity/entity-activity-list.tsx
 msgid "Changed {field}"
 msgstr "{field} മാറ്റി"
+
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
+msgid "Changed class"
+msgstr "ക്ലാസ് മാറ്റി"
 
 #: ../../../lib/web/src/components/calendar/month-grid.tsx
 #: ../../../lib/web/src/components/calendar/time-grid.tsx
@@ -810,6 +816,7 @@ msgid "Copied"
 msgstr "പകർത്തി"
 
 #: ../../../lib/web/src/components/comment-share-button.tsx
+#: ../../../lib/web/src/components/share-menu.tsx
 #: ../../../lib/web/src/components/ui/copy-button.tsx
 msgid "Copied to clipboard"
 msgstr "ക്ലിപ്പ്ബോർഡിലേക്ക് പകർത്തി"
@@ -827,6 +834,7 @@ msgstr "ക്ലിപ്പ്ബോർഡിലേക്ക് പകർത�
 msgid "Copy"
 msgstr "പകർത്തുക"
 
+#: src/lib/share-labels.ts
 #: src/routes/_authenticated/$projectId/index.tsx
 msgid "Copy link"
 msgstr "ലിങ്ക് പകർത്തുക"
@@ -1206,6 +1214,7 @@ msgstr "ഡ്രാഫ്റ്റ്"
 msgid "Drag columns to re-order them"
 msgstr "പുനഃക്രമീകരിക്കാൻ കോളങ്ങൾ വലിച്ചിടുക"
 
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx
 msgid "Duplicates"
 msgstr "ഡ്യൂപ്ലിക്കേറ്റ്"
@@ -1338,6 +1347,7 @@ msgid "Failed to check merge status"
 msgstr "മെർജ് സ്റ്റാറ്റസ് പരിശോധിക്കുന്നതിൽ പരാജയപ്പെട്ടു"
 
 #: ../../../lib/web/src/components/comment-share-button.tsx
+#: ../../../lib/web/src/components/share-menu.tsx
 #: ../../../lib/web/src/components/ui/copy-button.tsx
 #: ../../../lib/web/src/lib/toast-utils.ts
 msgid "Failed to copy"
@@ -1358,8 +1368,7 @@ msgid "Failed to create field"
 msgstr "ഫീൽഡ് സൃഷ്ടിക്കുന്നതിൽ പരാജയപ്പെട്ടു"
 
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx
-#: ../../../lib/web/src/components/options-menu.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: ../../../lib/web/src/components/share-menu.tsx
 msgid "Failed to create link"
 msgstr "ലിങ്ക് സൃഷ്ടിക്കുന്നതിൽ പരാജയപ്പെട്ടു"
 
@@ -1805,11 +1814,7 @@ msgstr "അക്ഷരങ്ങൾ, അക്കങ്ങൾ, സ്പേസ�
 msgid "Light"
 msgstr "ലൈറ്റ്"
 
-#: ../../../lib/web/src/components/options-menu.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
-msgid "Link"
-msgstr "ലിങ്ക്"
-
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx
 msgid "Links"
 msgstr "ലിങ്കുകൾ"
@@ -1973,10 +1978,6 @@ msgstr "കൂടുതൽ ഓപ്ഷനുകൾ"
 msgid "Moved"
 msgstr "നീക്കി"
 
-#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
-msgid "Moved {field}"
-msgstr "{field} നീക്കി"
-
 #. placeholder {0}: dayName(dragging.day)
 #. placeholder {0}: dayName(opening(current, format.zonedDay))
 #: ../../../lib/web/src/components/calendar/month-grid.tsx
@@ -2060,6 +2061,10 @@ msgstr "അടുത്ത മാസം"
 #: ../../../lib/web/src/components/calendar/date-header.tsx
 msgid "Next year"
 msgstr "അടുത്ത വർഷം"
+
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
+msgid "No"
+msgstr "ഇല്ല"
 
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx
 msgid "No {parentClassNames} to add to"
@@ -2368,6 +2373,10 @@ msgstr "ദയവായി വീണ്ടും ശ്രമിക്കുക.
 msgid "Please wait a moment and try again."
 msgstr "അൽപ്പനേരം കാത്തിരുന്ന് വീണ്ടും ശ്രമിക്കുക."
 
+#: src/lib/share-labels.ts
+msgid "Post to a feed"
+msgstr "ഫീഡിലേക്ക് പോസ്റ്റ് ചെയ്യുക"
+
 #: ../../../lib/web/src/components/options-menu.tsx
 msgid "Posts"
 msgstr "പോസ്റ്റുകൾ"
@@ -2439,10 +2448,6 @@ msgstr "പ്രോജക്റ്റ് ഇല്ലാതാക്കി"
 #: src/routes/_authenticated/$projectId_.settings.tsx
 msgid "Project deleted"
 msgstr "പ്രോജക്റ്റ് കണ്ടെത്തിയില്ല"
-
-#: src/routes/_authenticated/$projectId/index.tsx
-msgid "Project link"
-msgstr "പ്രോജക്റ്റ് ലിങ്ക്"
 
 #: src/routes/_authenticated/$projectId_.settings.tsx
 #: src/routes/_authenticated/$projectId/index.tsx
@@ -2535,6 +2540,7 @@ msgstr "ലോഗിനിലേക്ക് തിരിച്ചുവിട�
 msgid "Reduce interest"
 msgstr "താൽപ്പര്യം കുറയ്ക്കുക"
 
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx
 msgid "Relates"
 msgstr "ബന്ധപ്പെട്ടത്"
@@ -2856,6 +2862,10 @@ msgstr "വീണ്ടും അയയ്ക്കുക"
 msgid "Send email"
 msgstr "ഇമെയിൽ അയയ്ക്കുക"
 
+#: src/lib/share-labels.ts
+msgid "Send in a chat"
+msgstr "ചാറ്റിൽ അയയ്ക്കുക"
+
 #: ../../../lib/web/src/components/game/game-chat-input.tsx
 #: ../../../lib/web/src/components/game/game-chat-input.tsx
 msgid "Send message"
@@ -2901,6 +2911,7 @@ msgstr "ക്രമീകരണങ്ങൾ"
 
 #: ../../../lib/web/src/components/comment-share-button.tsx
 #: ../../../lib/web/src/components/comment-share-button.tsx
+#: ../../../lib/web/src/components/share-menu.tsx
 msgid "Share"
 msgstr "പങ്കിടുക"
 
@@ -3196,6 +3207,7 @@ msgstr "വളരെയധികം അഭ്യർത്ഥനകൾ"
 msgid "Top"
 msgstr "മികച്ചവ"
 
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
 #: src/features/editor/components/edit-dialogs.tsx
 msgid "Top level"
 msgstr "ഏറ്റവും മുകളിലുള്ള ലെവൽ"
@@ -3261,6 +3273,11 @@ msgid "United States"
 msgstr "യുണൈറ്റഡ് സ്റ്റേറ്റ്സ്"
 
 #: ../../../lib/web/src/components/audit-timeline.tsx
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
+#: ../../../lib/web/src/components/entity/entity-board-card.tsx
 #: ../../../lib/web/src/components/entity/entity-field-dialog.tsx
 #: ../../../lib/web/src/components/tree-row.tsx
 #: ../../../lib/web/src/components/tree-row.tsx
@@ -3428,6 +3445,10 @@ msgstr "ബുധനാഴ്ച"
 #: ../../../lib/web/src/components/calendar/date-header.tsx
 msgid "Year"
 msgstr "വർഷം"
+
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
+msgid "Yes"
+msgstr "അതെ"
 
 #: ../../../lib/web/src/features/errors/general-error.tsx
 msgid "You do not have access to this section."

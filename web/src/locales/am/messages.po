@@ -329,8 +329,8 @@ msgstr "ማንኛውም ሰው {entityLabel} እንዲፈልግ ፍቀድ"
 
 #: src/features/projects/components/create-project-dialog.tsx
 #: src/routes/_authenticated/$projectId/index.tsx
-msgid "Allow anyone to search for project"
-msgstr "ማንኛውም ሰው ፕሮጀክት እንዲፈልግ ፍቀድ"
+msgid "Allow anyone to view and comment on project"
+msgstr "ማንኛውም ሰው ፕሮጀክቱን እንዲያይ እና አስተያየት እንዲሰጥ ፍቀድ"
 
 #: src/features/editor/components/edit-dialogs.tsx
 msgid "Allow merge requests"
@@ -486,6 +486,7 @@ msgstr "ሁለትዮሽ ፋይል አይታይም"
 msgid "Block {name}"
 msgstr "{name}ን አግድ"
 
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx
 msgid "Blocked by"
@@ -496,6 +497,7 @@ msgstr "የታገደው በ"
 msgid "Blocked navigation to untrusted link"
 msgstr "ወደማይታመን አገናኝ ማሰስ ተከልክሏል"
 
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx
 msgid "Blocks"
 msgstr "ይገድባል"
@@ -601,6 +603,10 @@ msgstr "ተቀይሯል"
 #: ../../../lib/web/src/components/entity/entity-activity-list.tsx
 msgid "Changed {field}"
 msgstr "{field} ተቀይሯል"
+
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
+msgid "Changed class"
+msgstr "ክፍል ተቀይሯል"
 
 #: ../../../lib/web/src/components/calendar/month-grid.tsx
 #: ../../../lib/web/src/components/calendar/time-grid.tsx
@@ -810,6 +816,7 @@ msgid "Copied"
 msgstr "ተቀድቷል"
 
 #: ../../../lib/web/src/components/comment-share-button.tsx
+#: ../../../lib/web/src/components/share-menu.tsx
 #: ../../../lib/web/src/components/ui/copy-button.tsx
 msgid "Copied to clipboard"
 msgstr "ወደ ቅንጥብ ሰሌዳ ተቀድቷል"
@@ -827,6 +834,7 @@ msgstr "ወደ ቅንጥብ ሰሌዳ ተቀድቷል"
 msgid "Copy"
 msgstr "ቅዳ"
 
+#: src/lib/share-labels.ts
 #: src/routes/_authenticated/$projectId/index.tsx
 msgid "Copy link"
 msgstr "አገናኝ ቅዳ"
@@ -1206,6 +1214,7 @@ msgstr "ረቂቅ"
 msgid "Drag columns to re-order them"
 msgstr "ለማስተካከል አምዶችን ይጎትቱ"
 
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx
 msgid "Duplicates"
 msgstr "ይባዛል"
@@ -1338,6 +1347,7 @@ msgid "Failed to check merge status"
 msgstr "የመዋሃድ ሁኔታን ማረጋገጥ አልተሳካም"
 
 #: ../../../lib/web/src/components/comment-share-button.tsx
+#: ../../../lib/web/src/components/share-menu.tsx
 #: ../../../lib/web/src/components/ui/copy-button.tsx
 #: ../../../lib/web/src/lib/toast-utils.ts
 msgid "Failed to copy"
@@ -1358,8 +1368,7 @@ msgid "Failed to create field"
 msgstr "መስክ መፍጠር አልተሳካም"
 
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx
-#: ../../../lib/web/src/components/options-menu.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: ../../../lib/web/src/components/share-menu.tsx
 msgid "Failed to create link"
 msgstr "አገናኝ መፍጠር አልተሳካም"
 
@@ -1805,11 +1814,7 @@ msgstr "ፊደላት፣ ቁጥሮች፣ ክፍተቶች፣ ሰረዞች እና �
 msgid "Light"
 msgstr "ብርሃን"
 
-#: ../../../lib/web/src/components/options-menu.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
-msgid "Link"
-msgstr "አገናኝ"
-
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx
 msgid "Links"
 msgstr "አገናኞች"
@@ -1973,10 +1978,6 @@ msgstr "ተጨማሪ አማራጮች"
 msgid "Moved"
 msgstr "ተንቀሳቅሷል"
 
-#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
-msgid "Moved {field}"
-msgstr "{field} ተንቀሳቅሷል"
-
 #. placeholder {0}: dayName(dragging.day)
 #. placeholder {0}: dayName(opening(current, format.zonedDay))
 #: ../../../lib/web/src/components/calendar/month-grid.tsx
@@ -2060,6 +2061,10 @@ msgstr "ቀጣይ ወር"
 #: ../../../lib/web/src/components/calendar/date-header.tsx
 msgid "Next year"
 msgstr "ቀጣይ ዓመት"
+
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
+msgid "No"
+msgstr "አይ"
 
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx
 msgid "No {parentClassNames} to add to"
@@ -2368,6 +2373,10 @@ msgstr "እባክዎ እንደገና ይሞክሩ።"
 msgid "Please wait a moment and try again."
 msgstr "እባክዎ ትንሽ ይጠብቁና እንደገና ይሞክሩ።"
 
+#: src/lib/share-labels.ts
+msgid "Post to a feed"
+msgstr "ወደ ፊድ ለጥፍ"
+
 #: ../../../lib/web/src/components/options-menu.tsx
 msgid "Posts"
 msgstr "ልጥፎች"
@@ -2439,10 +2448,6 @@ msgstr "ፕሮጀክት ተፈጥሯል"
 #: src/routes/_authenticated/$projectId_.settings.tsx
 msgid "Project deleted"
 msgstr "ፕሮጀክት ተሰርዟል"
-
-#: src/routes/_authenticated/$projectId/index.tsx
-msgid "Project link"
-msgstr "የፕሮጀክት አገናኝ"
 
 #: src/routes/_authenticated/$projectId_.settings.tsx
 #: src/routes/_authenticated/$projectId/index.tsx
@@ -2535,6 +2540,7 @@ msgstr "ወደ መግቢያ በማዘዋወር ላይ።"
 msgid "Reduce interest"
 msgstr "ፍላጎትን ቀንስ"
 
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx
 msgid "Relates"
 msgstr "ይዛመዳል"
@@ -2856,6 +2862,10 @@ msgstr "እንደገና ላክ"
 msgid "Send email"
 msgstr "ኢሜይል ላክ"
 
+#: src/lib/share-labels.ts
+msgid "Send in a chat"
+msgstr "በውይይት ውስጥ ላክ"
+
 #: ../../../lib/web/src/components/game/game-chat-input.tsx
 #: ../../../lib/web/src/components/game/game-chat-input.tsx
 msgid "Send message"
@@ -2901,6 +2911,7 @@ msgstr "ቅንብሮች"
 
 #: ../../../lib/web/src/components/comment-share-button.tsx
 #: ../../../lib/web/src/components/comment-share-button.tsx
+#: ../../../lib/web/src/components/share-menu.tsx
 msgid "Share"
 msgstr "አጋራ"
 
@@ -3196,6 +3207,7 @@ msgstr "በጣም ብዙ ጥያቄዎች"
 msgid "Top"
 msgstr "ምርጥ"
 
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
 #: src/features/editor/components/edit-dialogs.tsx
 msgid "Top level"
 msgstr "ላይኛው ደረጃ"
@@ -3261,6 +3273,11 @@ msgid "United States"
 msgstr "ዩናይትድ ስቴትስ"
 
 #: ../../../lib/web/src/components/audit-timeline.tsx
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
+#: ../../../lib/web/src/components/entity/entity-board-card.tsx
 #: ../../../lib/web/src/components/entity/entity-field-dialog.tsx
 #: ../../../lib/web/src/components/tree-row.tsx
 #: ../../../lib/web/src/components/tree-row.tsx
@@ -3428,6 +3445,10 @@ msgstr "ረቡዕ"
 #: ../../../lib/web/src/components/calendar/date-header.tsx
 msgid "Year"
 msgstr "ዓመት"
+
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
+msgid "Yes"
+msgstr "አዎ"
 
 #: ../../../lib/web/src/features/errors/general-error.tsx
 msgid "You do not have access to this section."

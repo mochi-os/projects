@@ -329,8 +329,8 @@ msgstr "{entityLabel} కోసం వెతకడానికి ఎవరి�
 
 #: src/features/projects/components/create-project-dialog.tsx
 #: src/routes/_authenticated/$projectId/index.tsx
-msgid "Allow anyone to search for project"
-msgstr "ప్రాజెక్ట్ కోసం ఎవరైనా శోధించడానికి అనుమతించండి"
+msgid "Allow anyone to view and comment on project"
+msgstr "ప్రాజెక్ట్‌ను ఎవరైనా చూడటానికి మరియు దానిపై వ్యాఖ్యానించడానికి అనుమతించండి"
 
 #: src/features/editor/components/edit-dialogs.tsx
 msgid "Allow merge requests"
@@ -486,6 +486,7 @@ msgstr "బైనరీ ఫైల్ చూపబడలేదు"
 msgid "Block {name}"
 msgstr "{name}ని బ్లాక్ చేయండి"
 
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx
 msgid "Blocked by"
@@ -496,6 +497,7 @@ msgstr "నిరోధించినది"
 msgid "Blocked navigation to untrusted link"
 msgstr "నమ్మదగని లింక్‌కి నావిగేషన్ నిరోధించబడింది"
 
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx
 msgid "Blocks"
 msgstr "నిరోధిస్తుంది"
@@ -601,6 +603,10 @@ msgstr "మార్చబడింది"
 #: ../../../lib/web/src/components/entity/entity-activity-list.tsx
 msgid "Changed {field}"
 msgstr "{field} మార్చబడింది"
+
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
+msgid "Changed class"
+msgstr "తరగతి మార్చబడింది"
 
 #: ../../../lib/web/src/components/calendar/month-grid.tsx
 #: ../../../lib/web/src/components/calendar/time-grid.tsx
@@ -810,6 +816,7 @@ msgid "Copied"
 msgstr "కాపీ అయింది"
 
 #: ../../../lib/web/src/components/comment-share-button.tsx
+#: ../../../lib/web/src/components/share-menu.tsx
 #: ../../../lib/web/src/components/ui/copy-button.tsx
 msgid "Copied to clipboard"
 msgstr "క్లిప్‌బోర్డ్‌కి కాపీ చేయబడింది"
@@ -827,6 +834,7 @@ msgstr "క్లిప్‌బోర్డ్‌కి కాపీ చేయ�
 msgid "Copy"
 msgstr "కాపీ చేయండి"
 
+#: src/lib/share-labels.ts
 #: src/routes/_authenticated/$projectId/index.tsx
 msgid "Copy link"
 msgstr "లింక్‌ను కాపీ చేయండి"
@@ -1206,6 +1214,7 @@ msgstr "డ్రాఫ్ట్"
 msgid "Drag columns to re-order them"
 msgstr "కాలమ్‌లను తిరిగి అమర్చడానికి వాటిని డ్రాగ్ చేయండి"
 
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx
 msgid "Duplicates"
 msgstr "నకలు చేస్తుంది"
@@ -1338,6 +1347,7 @@ msgid "Failed to check merge status"
 msgstr "మెర్జ్ స్థితిని తనిఖీ చేయడంలో విఫలమైంది"
 
 #: ../../../lib/web/src/components/comment-share-button.tsx
+#: ../../../lib/web/src/components/share-menu.tsx
 #: ../../../lib/web/src/components/ui/copy-button.tsx
 #: ../../../lib/web/src/lib/toast-utils.ts
 msgid "Failed to copy"
@@ -1358,8 +1368,7 @@ msgid "Failed to create field"
 msgstr "ఫీల్డ్‌ను సృష్టించడంలో విఫలమైంది"
 
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx
-#: ../../../lib/web/src/components/options-menu.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
+#: ../../../lib/web/src/components/share-menu.tsx
 msgid "Failed to create link"
 msgstr "లింక్‌ను సృష్టించడంలో విఫలమైంది"
 
@@ -1805,11 +1814,7 @@ msgstr "అక్షరాలు, సంఖ్యలు, ఖాళీలు, హ
 msgid "Light"
 msgstr "లైట్"
 
-#: ../../../lib/web/src/components/options-menu.tsx
-#: src/routes/_authenticated/$projectId/index.tsx
-msgid "Link"
-msgstr "లింక్"
-
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx
 msgid "Links"
 msgstr "లింక్‌లు"
@@ -1973,10 +1978,6 @@ msgstr "మరిన్ని ఎంపికలు"
 msgid "Moved"
 msgstr "తరలించబడింది"
 
-#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
-msgid "Moved {field}"
-msgstr "{field} తరలించబడింది"
-
 #. placeholder {0}: dayName(dragging.day)
 #. placeholder {0}: dayName(opening(current, format.zonedDay))
 #: ../../../lib/web/src/components/calendar/month-grid.tsx
@@ -2060,6 +2061,10 @@ msgstr "తదుపరి నెల"
 #: ../../../lib/web/src/components/calendar/date-header.tsx
 msgid "Next year"
 msgstr "తదుపరి సంవత్సరం"
+
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
+msgid "No"
+msgstr "కాదు"
 
 #: ../../../lib/web/src/components/entity/entity-create-object-dialog.tsx
 msgid "No {parentClassNames} to add to"
@@ -2368,6 +2373,10 @@ msgstr "దయచేసి మళ్లీ ప్రయత్నించండ�
 msgid "Please wait a moment and try again."
 msgstr "కాసేపు వేచి ఉండి, మళ్లీ ప్రయత్నించండి."
 
+#: src/lib/share-labels.ts
+msgid "Post to a feed"
+msgstr "ఫీడ్‌లో పోస్ట్ చేయండి"
+
 #: ../../../lib/web/src/components/options-menu.tsx
 msgid "Posts"
 msgstr "పోస్ట్‌లు"
@@ -2439,10 +2448,6 @@ msgstr "ప్రాజెక్ట్ సృష్టించబడింద�
 #: src/routes/_authenticated/$projectId_.settings.tsx
 msgid "Project deleted"
 msgstr "ప్రాజెక్ట్ డిలీట్ చేయబడింది"
-
-#: src/routes/_authenticated/$projectId/index.tsx
-msgid "Project link"
-msgstr "ప్రాజెక్ట్ లింక్"
 
 #: src/routes/_authenticated/$projectId_.settings.tsx
 #: src/routes/_authenticated/$projectId/index.tsx
@@ -2535,6 +2540,7 @@ msgstr "లాగిన్‌కు రీడైరెక్ట్ చేస్�
 msgid "Reduce interest"
 msgstr "ఆసక్తిని తగ్గించండి"
 
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
 #: ../../../lib/web/src/components/entity/entity-object-links.tsx
 msgid "Relates"
 msgstr "సంబంధితం"
@@ -2856,6 +2862,10 @@ msgstr "మళ్ళీ పంపండి"
 msgid "Send email"
 msgstr "ఇమెయిల్ పంపండి"
 
+#: src/lib/share-labels.ts
+msgid "Send in a chat"
+msgstr "చాట్‌లో పంపండి"
+
 #: ../../../lib/web/src/components/game/game-chat-input.tsx
 #: ../../../lib/web/src/components/game/game-chat-input.tsx
 msgid "Send message"
@@ -2901,6 +2911,7 @@ msgstr "సెట్టింగ్‌లు"
 
 #: ../../../lib/web/src/components/comment-share-button.tsx
 #: ../../../lib/web/src/components/comment-share-button.tsx
+#: ../../../lib/web/src/components/share-menu.tsx
 msgid "Share"
 msgstr "పంచుకోండి"
 
@@ -3196,6 +3207,7 @@ msgstr "చాలా ఎక్కువ అభ్యర్థనలు"
 msgid "Top"
 msgstr "ఉత్తమమైనవి"
 
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
 #: src/features/editor/components/edit-dialogs.tsx
 msgid "Top level"
 msgstr "టాప్ లెవల్"
@@ -3261,6 +3273,11 @@ msgid "United States"
 msgstr "యునైటెడ్ స్టేట్స్"
 
 #: ../../../lib/web/src/components/audit-timeline.tsx
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
+#: ../../../lib/web/src/components/entity/entity-board-card.tsx
 #: ../../../lib/web/src/components/entity/entity-field-dialog.tsx
 #: ../../../lib/web/src/components/tree-row.tsx
 #: ../../../lib/web/src/components/tree-row.tsx
@@ -3428,6 +3445,10 @@ msgstr "బుధవారం"
 #: ../../../lib/web/src/components/calendar/date-header.tsx
 msgid "Year"
 msgstr "సంవత్సరం"
+
+#: ../../../lib/web/src/components/entity/entity-activity-list.tsx
+msgid "Yes"
+msgstr "అవును"
 
 #: ../../../lib/web/src/features/errors/general-error.tsx
 msgid "You do not have access to this section."

@@ -155,10 +155,6 @@ function DiffPage() {
           </div>
         ) : typeof diffData === 'string' ? (
           <DiffViewer diff={diffData} viewStyle={viewStyle} />
-        ) : diffData ? (
-          <div className='text-destructive py-8 text-center text-sm'>
-            {diffData.error}
-          </div>
         ) : (
           <div className='py-8'>
             <EmptyState

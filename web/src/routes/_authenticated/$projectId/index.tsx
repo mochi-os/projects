@@ -34,6 +34,7 @@ import {
 import { FolderKanban, GitMerge, Settings, Settings2 } from 'lucide-react'
 import projectsApi from '@/api/projects'
 import { useProjectsStore } from '@/stores/projects-store'
+import { useShareLabels } from '@/lib/share-labels'
 import { ViewOptionsBar } from '@/components/view-options-bar'
 import { BoardContainer } from '@/features/board/components'
 import { CreateObjectDialog } from '@/features/objects/components'
@@ -134,6 +135,7 @@ export function ProjectPageContent({
   const navigate = useNavigate()
   const router = useRouter()
   const refreshSidebar = useProjectsStore((state) => state.refresh)
+  const share = useShareLabels()
 
   return (
     <EntityObjectsPage<ProjectObject>
@@ -150,6 +152,12 @@ export function ProjectPageContent({
       backupSlug='projects'
       refreshSidebar={refreshSidebar}
       onLeave={() => void navigate({ to: '/' })}
+      shareUrl={() =>
+        absoluteRouteUrl(router, {
+          to: '/$projectId',
+          params: { projectId },
+        })
+      }
       labels={{
         pageActions: t`Open page actions`,
         createShort: t`New`,
@@ -173,9 +181,7 @@ export function ProjectPageContent({
         loading: t`Loading...`,
         downloaded: (filename) => t`Downloaded ${filename}`,
         exportFailed: t`Failed to export data`,
-        shareAction: t`Link`,
-        shareTitle: t`Project link`,
-        shareFailed: t`Failed to create link`,
+        share,
         moveFailed: t`Failed to move`,
         columnCreateFailed: t`Failed to add column`,
         columnRenameFailed: t`Failed to rename column`,
@@ -225,7 +231,7 @@ export function ProjectPageContent({
           name: t`Name`,
           everything: t`Everything`,
           designOnly: t`Design only`,
-          allowSearch: t`Allow anyone to search for project`,
+          allowSearch: t`Allow anyone to view and comment on project`,
           cancel: t`Cancel`,
           confirm: t`Copy`,
           duplicating: t`Copying project...`,

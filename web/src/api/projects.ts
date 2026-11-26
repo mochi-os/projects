@@ -236,18 +236,27 @@ const projectsApi = {
     )
   },
 
-  // Perform merge
+  // Perform merge. Naming the merge request has the server record it merged
+  // in the same call, which the answer's `recorded` says it did.
   merge: async (
     repositoryId: string,
     source: string,
     target: string,
     message: string,
     projectId?: string,
-    method?: string
+    method?: string,
+    requestId?: string
   ): Promise<MergeResponse> => {
     return projectsRequest.post<MergeResponse>(
       endpoints.projects.repositoryMerge(repositoryId),
-      { source, target, message, project: projectId, method }
+      {
+        source,
+        target,
+        message,
+        project: projectId,
+        method,
+        request: requestId,
+      }
     )
   },
 }

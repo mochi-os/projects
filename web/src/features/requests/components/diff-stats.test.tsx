@@ -58,17 +58,20 @@ describe('DiffStats', () => {
     expect(screen.queryByText(/diff truncated/)).not.toBeInTheDocument()
   })
 
-  it("renders the service's own error when the repositories app is unavailable", async () => {
-    // The action answers an object, not a diff; parsing it threw inside the
-    // memo and unmounted the whole object panel.
-    vi.mocked(projectsApi.getDiff).mockResolvedValue({
-      data: { diff: null, error: 'Repositories service unavailable' },
-    } as never)
+  it('renders the reason a diff could not be made', async () => {
+    // The action answers an error status with the reason, which is shown in
+    // place of the generic failure.
+    vi.mocked(projectsApi.getDiff).mockRejectedValue(
+      new Error('Repositories service unavailable')
+    )
     render(<DiffStats repositoryId='repo1' base='main' head='feature' />)
     expect(
       await screen.findByText('Repositories service unavailable')
     ).toBeInTheDocument()
     expect(screen.queryByText(/files? changed/)).not.toBeInTheDocument()
+    expect(
+      screen.queryByText('Could not load the diff')
+    ).not.toBeInTheDocument()
   })
 
   it('should return null when repositoryId is empty', () => {

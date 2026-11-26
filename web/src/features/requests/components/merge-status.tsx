@@ -5,7 +5,7 @@
 // Mochi Application Interface Exception - see license.txt and license-exception.md.
 import { useQuery } from '@tanstack/react-query'
 import { Trans, useLingui } from '@lingui/react/macro'
-import { cn } from '@mochi/web'
+import { cn, getErrorMessage } from '@mochi/web'
 import { CheckCircle2, XCircle, AlertCircle, Loader2 } from 'lucide-react'
 import projectsApi from '@/api/projects'
 import { requestStatusTextStyles } from './request-status-styles'
@@ -48,28 +48,20 @@ export function MergeStatus({
     )
   }
 
+  // A check that could not compare the branches answers an error with the
+  // reason, as the repositories service gave it, so say what happened rather
+  // than that the branches cannot merge.
   if (error) {
     return (
       <div className='text-destructive flex items-center gap-2 text-sm'>
         <AlertCircle className='size-4' />
-        <Trans>Failed to check merge status</Trans>
+        {getErrorMessage(error, t`Failed to check merge status`)}
       </div>
     )
   }
 
   if (!data) {
     return null
-  }
-
-  // The service answered for the repositories app: mergeable is false, but
-  // the branches were never compared, so say what actually happened.
-  if (data.error) {
-    return (
-      <div className='text-destructive flex items-center gap-2 text-sm'>
-        <AlertCircle className='size-4' />
-        {data.error}
-      </div>
-    )
   }
 
   return (

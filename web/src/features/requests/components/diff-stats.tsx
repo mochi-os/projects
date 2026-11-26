@@ -5,8 +5,8 @@
 // Mochi Application Interface Exception - see license.txt and license-exception.md.
 import { useMemo } from 'react'
 import { useQuery } from '@tanstack/react-query'
-import { Trans, Plural } from '@lingui/react/macro'
-import { cn, parseDiff } from '@mochi/web'
+import { Trans, Plural, useLingui } from '@lingui/react/macro'
+import { cn, getErrorMessage, parseDiff } from '@mochi/web'
 import { FileCode2, Plus, Minus, Loader2, FileDiff } from 'lucide-react'
 import projectsApi from '@/api/projects'
 import {
@@ -27,10 +27,11 @@ export function DiffStats({
   head,
   diffUrl,
 }: DiffStatsProps) {
+  const { t } = useLingui()
   const {
     data: diffData,
     isLoading,
-    isError,
+    error,
   } = useQuery({
     queryKey: ['diff', repositoryId, base, head],
     queryFn: async () => {
@@ -40,12 +41,9 @@ export function DiffStats({
     enabled: !!repositoryId && !!base && !!head,
   })
 
-  // The action answers {diff: null, error} when the repositories service is
-  // unavailable. Parsing that object threw inside the memo and took the whole
-  // object panel down with it.
+  // A diff the repositories service could not make answers an error status
+  // with the reason. Anything but text is no diff, never parsed as one.
   const rawDiff = typeof diffData === 'string' ? diffData : ''
-  const unavailable =
-    diffData && typeof diffData !== 'string' ? diffData.error : null
   const { files, truncated } = useMemo(
     () => (rawDiff ? parseDiff(rawDiff) : { files: [], truncated: 0 }),
     [rawDiff]
@@ -67,10 +65,10 @@ export function DiffStats({
     )
   }
 
-  if (isError || unavailable) {
+  if (error) {
     return (
       <div className='text-destructive text-sm'>
-        {unavailable ?? <Trans>Could not load the diff</Trans>}
+        {getErrorMessage(error, t`Could not load the diff`)}
       </div>
     )
   }

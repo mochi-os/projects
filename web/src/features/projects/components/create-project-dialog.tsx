@@ -80,7 +80,7 @@ export function CreateProjectDialog({
   const [templates, setTemplates] = useState<ProjectTemplate[]>([])
   const [templatesError, setTemplatesError] = useState(false)
   const [isLoadingTemplates, setIsLoadingTemplates] = useState(false)
-  const [allowSearch, setAllowSearch] = useState(true)
+  const [allowSearch, setAllowSearch] = useState(false)
   const [importData, setImportData] = useState<Record<string, unknown> | null>(
     null
   )
@@ -132,7 +132,7 @@ export function CreateProjectDialog({
       setName('')
       setPrefix('')
       setSelectedTemplate('')
-      setAllowSearch(true)
+      setAllowSearch(false)
       clearImport()
       prefixDirty.current = false
     }
@@ -482,7 +482,7 @@ export function CreateProjectDialog({
                 htmlFor='allow-search'
                 className='cursor-pointer text-sm font-medium'
               >
-                <Trans>Allow anyone to search for project</Trans>
+                <Trans>Allow anyone to view and comment on project</Trans>
               </Label>
               <Switch
                 id='allow-search'

@@ -16,7 +16,7 @@
 	"require": {"version": {"minimum": "2.0.19"}},
 
 	"database": {
-		"schema": 12,
+		"schema": 14,
 		"file": "projects.db",
 		"create": {"function": "database_create"},
 		"upgrade": {"function": "database_upgrade"},
@@ -162,6 +162,8 @@
 		"access/revoke": {"function": "event_access_revoke"},
 		"sync/batch": {"function": "event_sync_batch"},
 		"design/replace": {"function": "event_design_replace"},
+		"member/add": {"function": "event_member_add"},
+		"member/remove": {"function": "event_member_remove"},
 		"mention/notify": {"function": "event_mention_notify"},
 
 		"project/update": {"function": "event_project_update"},

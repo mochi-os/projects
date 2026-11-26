@@ -152,55 +152,97 @@ def rows_in(before, ids, after=""):
 		out.extend(mochi.db.rows(before + placeholders + after, *chunk) or [])
 	return out
 
-def broadcast_event(project_id, event, data, exclude=None):
+# broadcast_event(project_id, event, data, exclude=None, handle=None) -> whether a
+# subscriber failed the view check. Within a transaction (handle) the
+# subscribers are read through it, and dropping one that failed is left to the
+# caller once it commits (events_commit), since that writes and sends. There
+# the event goes out when the transaction commits, where core can send it then,
+# so a change rolled back after a refusal sends none of its events; an older
+# core sends it at once.
+def broadcast_event(project_id, event, data, exclude=None, handle=None):
 	if not project_id:
-		return
-	subscribers = mochi.db.rows("select id from subscribers where project=?", project_id)
+		return False
+	allowed, stale = recipients(project_id, handle)
+	ids = [s["id"] for s in allowed]
+	if handle and hasattr(handle, "broadcast"):
+		handle.broadcast(project_id, project_id, ids, "projects", event, data, exclude or "")
+	else:
+		mochi.broadcast.send(project_id, project_id, ids, "projects", event, data, exclude or "")
+	return stale
+
+# recipients(project_id, handle=None) -> (rows, stale): the members of a project
+# this user owns that a fan-out may reach, each {id, name}: the subscribers that
+# still pass the view check, without the owner's own identity, which a message
+# sent to it would deliver back here. stale says a row failed the check: access
+# comes via groups and wildcards, so a revocation the app never saw leaves a
+# row. Outside a transaction the rows that failed are dropped at once
+# (subscribers_revalidate); within one (handle), where the rows are read, that
+# is left to the caller once it commits (events_commit). A replica holds its
+# owner's roster in the same table and answers none: only the owner sends.
+def recipients(project_id, handle=None):
+	database = handle or mochi.db
+	if not database.exists("select 1 from projects where id=? and owner=1", project_id):
+		return [], False
+	owner = get_owner_identity(project_id, handle)
 	allowed = []
 	stale = False
-	for s in subscribers:
+	for s in database.rows("select id, name from subscribers where project=?", project_id) or []:
+		if s["id"] == owner:
+			continue
 		if check_project_access(s["id"], project_id, "view"):
-			allowed.append(s["id"])
+			allowed.append(s)
 		else:
 			stale = True
-	if stale:
+	if stale and not handle:
 		subscribers_revalidate(project_id)
-	mochi.broadcast.send(project_id, project_id, allowed, "projects", event, data, exclude or "")
+	return allowed, stale
 
 # Drop every subscriber that no longer passes the view check (access comes via
 # groups and wildcards, so a revoked subject does not map to rows) and send each
 # an access/revoke so its server purges the replica. The owner's own row is
-# always kept.
+# always kept. Every row goes before the remaining members are told, so the
+# member/remove broadcasts find no row left to fail the check.
 def subscribers_revalidate(project_id):
+	if not mochi.db.exists("select 1 from projects where id=? and owner=1", project_id):
+		return
 	owner = get_owner_identity(project_id)
-	removed = False
-	for s in mochi.db.rows("select id from subscribers where project=?", project_id):
+	removed = []
+	for s in mochi.db.rows("select id from subscribers where project=?", project_id) or []:
 		if s["id"] == owner or check_project_access(s["id"], project_id, "view"):
 			continue
 		mochi.message.send(p2p_headers(project_id, s["id"], "access/revoke"), {})
-		row_remove("watchers", "user=? and object in (select id from objects where project=?)", [s["id"], project_id])
-		mochi.db.execute("delete from activity where user=? and object in (select id from objects where project=?)", s["id"], project_id)
-		row_remove("subscribers", "project=? and id=?", [project_id, s["id"]])
-		# Dropping them from the fan-out list stops new events but not replay:
-		# core keeps a subscription record so a lagging subscriber can resync,
-		# and it lives on the log's own clock. Without this a revoked subject
-		# could still pull events created after their access was withdrawn.
-		mochi.broadcast.subscriber.remove(project_id, s["id"])
-		removed = True
+		subscriber_remove(project_id, s["id"])
+		removed.append(s["id"])
 	if removed:
+		for member in removed:
+			broadcast_event(project_id, "member/remove", {"project": project_id, "id": member})
 		row_set("projects", "id=?", [project_id], {"updated": mochi.time.now()})
 		fingerprint = mochi.entity.fingerprint(project_id)
 		if fingerprint:
 			mochi.websocket.write(fingerprint, {"type": "project/update", "project": project_id})
 
+# subscriber_remove(project_id, member): a member leaves a project this user owns -
+# their watcher rows, their subscriber row and core's record of them for
+# replay. Dropping them from the fan-out list stops new events but not replay:
+# core keeps a subscription record so a lagging subscriber can resync, on the
+# log's own clock, so without it a member who left, or whose access was
+# withdrawn, could still pull the events made after. Their activity stays: it
+# is the project's history, which replicas and exports keep too. Telling the
+# remaining members (member/remove) is the caller's, once every row has gone.
+def subscriber_remove(project_id, member):
+	row_remove("watchers", "user=? and object in (select id from objects where project=?)", [member, project_id])
+	row_remove("subscribers", "project=? and id=?", [project_id, member])
+	mochi.broadcast.subscriber.remove(project_id, member)
+
 def subscriber_drop(entity):
-	"""Drop a subscriber from every project that has one, except where that row
-	is the project owner's own, which subscribers_revalidate keeps too."""
-	for row in mochi.db.rows("select project from subscribers where id=?", entity) or []:
+	"""Drop a subscriber from every project this user owns that has one, except
+	where that row is the project owner's own, which subscribers_revalidate
+	keeps too. A replica's rows are its owner's roster, never dropped here."""
+	for row in mochi.db.rows("select s.project as project from subscribers s join projects p on p.id=s.project where s.id=? and p.owner=1", entity) or []:
 		if get_owner_identity(row["project"]) == entity:
 			continue
-		row_remove("subscribers", "project=? and id=?", [row["project"], entity])
-		mochi.broadcast.subscriber.remove(row["project"], entity)
+		subscriber_remove(row["project"], entity)
+		broadcast_event(row["project"], "member/remove", {"project": row["project"], "id": entity})
 
 # error_message_timeout: core calls this when a fan-out to a subscriber aged
 # out undelivered. Remove them only when the directory shows no host left
@@ -214,9 +256,22 @@ def error_message_timeout(e):
 # error_subscriber_unreachable: core suspended this subscriber - every
 # delivery across the whole evict window failed with no contradicting
 # success - and asks us to drop them so fan-out stops paying for a dead
-# host. If they return, they re-subscribe.
+# host. If they return, they re-subscribe. Core asks from inside the broadcast
+# that found them suspended, which a change sends before its transaction
+# commits (events_commit), so the drop, which writes, is left to a scheduled
+# task: written here, it would wait on the lock that transaction holds until it
+# timed out.
 def error_subscriber_unreachable(e):
-	subscriber_drop(e.entity)
+	mochi.schedule.after("schedule_drop", {"entity": e.entity}, 0)
+
+# schedule_drop(e): the drop error_subscriber_unreachable put off.
+def schedule_drop(e):
+	if e.source != "schedule":
+		return
+	entity = e.data.get("entity", "")
+	if not mochi.text.valid(entity, "entity"):
+		return
+	subscriber_drop(entity)
 # error_broadcast_gap: core calls this when an unfillable broadcast gap was
 # skipped and events were permanently lost. broadcast/resync can't replay a
 # pruned gap, so pull a fresh full snapshot.
@@ -314,8 +369,9 @@ def schedule_resync(e):
 	request_resync(project_id, e.data.get("repeat", True) != False)
 
 # Re-subscribe an idle project (idle_resync_age) with its owner; event_subscribe
-# is idempotent and pushes catch-up. touch() stamps the timer so this fires once
-# per window.
+# is idempotent and pushes catch-up to a member it has not sent the project to
+# within snapshot_seconds, far less than the idle age. touch() stamps the timer
+# so this fires once per window.
 def maybe_resubscribe(a, project_id):
 	user_id = a.user.identity.id if a.user else None
 	if not user_id:
@@ -521,14 +577,30 @@ def rank_transaction(object_id):
 	handle.execute("update objects set rank=rank where id=?", object_id)
 	return handle
 
-def rank_neighbours(project_id, object_id, field, target_value, scope_parent, pos, handle):
-	# The objects either side of 1-based position `pos` within a scope (a column,
-	# or a parent's children), as (after, before) ids, for a client that sends a
-	# position rather than the neighbour it dropped beside.
-	if scope_parent != None:
-		others = handle.rows("select id from objects where project=? and parent=? and id!=? order by rank asc, created desc, id desc", project_id, scope_parent, object_id) or []
-	else:
-		others = handle.rows("select o.id from objects o left join \"values\" v on v.object = o.id and v.field=? where o.project=? and coalesce(v.value, '')=? and o.id!=? order by o.rank asc, o.created desc, o.id desc", field, project_id, target_value, object_id) or []
+# version_take(versions, object_id, handle) -> the version object_id takes in the
+# change whose transaction handle is. An owner counts in an object's version
+# every change it makes to the object - its values, parent, class and key, a key
+# it unties or spreads again included - raised once in the change's own
+# transaction, and every event and answer that writes the object carries it, so
+# a copy orders two changes made in one second, and keeps a later key over an
+# earlier answer's. versions holds what the change has taken, {id: version}, so
+# each object it changes is raised once however many of its rows it writes.
+def version_take(versions, object_id, handle):
+	if object_id not in versions:
+		handle.execute("update objects set version=version+1 where id=?", object_id)
+		row = handle.row("select version from objects where id=?", object_id)
+		versions[object_id] = row["version"] if row else 0
+	return versions[object_id]
+
+def rank_neighbours(project_id, object_id, scope, pos, handle):
+	# The objects either side of 1-based position `pos` within the move's scope,
+	# as (after, before) ids, for a client that sends a position rather than the
+	# neighbour it dropped beside. They are counted in the scope rank_member
+	# holds a neighbour to - the column, the lane and the parent alike - since a
+	# neighbour counted elsewhere would be refused there, and the move would do
+	# nothing.
+	joins, conditions, joined, conditioned = rank_scope(scope)
+	others = handle.rows("select o.id as id from objects o" + joins + " where o.project=? and o.id!=?" + conditions + " order by o.rank asc, o.created desc, o.id desc", *(joined + [project_id, object_id] + conditioned)) or []
 	n = len(others)
 	if pos < 1:
 		pos = 1
@@ -550,10 +622,11 @@ def rank_beside(project_id, exclude_id, key, after, handle):
 	row = handle.row("select max(rank) as r from objects where project=? and id!=? and rank<?", project_id, exclude_id, key)
 	return rank_between(row["r"] if row else None, key)
 
-def rank_untie(project_id, exclude_id, anchor, ranks, handle):
+def rank_untie(project_id, exclude_id, anchor, ranks, versions, handle):
 	# The anchor's key, after giving each object that shares it one of its own,
 	# spread through the gap around it in the order lists show them. Each new key
-	# is appended to ranks as {id, rank}. None if the anchor is not in the
+	# is appended to ranks as {id, rank, version}, the object's version raised
+	# for it (version_take). None if the anchor is not in the
 	# project, or holds a key from before keys were canonical: such a key has no
 	# place on the scale, and one minted beside it would sort after every such
 	# key and could be one another object holds.
@@ -569,7 +642,7 @@ def rank_untie(project_id, exclude_id, anchor, ranks, handle):
 	keys = rank_spread(low["r"] if low else None, high["r"] if high else None, len(tied))
 	for t, k in zip(tied, keys):
 		handle.execute("update objects set rank=? where id=?", k, t["id"])
-		ranks.append({"id": t["id"], "rank": k})
+		ranks.append({"id": t["id"], "rank": k, "version": version_take(versions, t["id"], handle)})
 		if t["id"] == anchor:
 			key = k
 	return key
@@ -587,22 +660,27 @@ def move_place_check(object_id, after, before):
 
 # rank_scope(scope) -> (joins, conditions, join arguments, condition arguments):
 # the SQL that keeps, of the objects o of a statement, those in a move's scope
-# (see move_rank).
+# (see move_rank). The column or the lane for no value holds, beside the
+# objects with none, those whose value no option of the field has for the
+# moved object's class (scope's class), as clients draw them there: a deleted
+# option's, or another class's.
 def rank_scope(scope):
 	joins = ""
 	conditions = ""
 	joined = []
 	conditioned = []
-	if scope["field"]:
-		joins += " left join \"values\" c on c.object=o.id and c.field=?"
-		joined.append(scope["field"])
-		conditions += " and coalesce(c.value, '')=?"
-		conditioned.append(scope["value"])
-	if scope["lane"]:
-		joins += " left join \"values\" l on l.object=o.id and l.field=?"
-		joined.append(scope["lane"])
-		conditions += " and coalesce(l.value, '')=?"
-		conditioned.append(scope["row"])
+	for field, value, alias in [(scope["field"], scope["value"], "c"), (scope["lane"], scope["row"], "l")]:
+		if not field:
+			continue
+		joins += " left join \"values\" " + alias + " on " + alias + ".object=o.id and " + alias + ".field=?"
+		joined.append(field)
+		if value:
+			conditions += " and coalesce(" + alias + ".value, '')=?"
+			conditioned.append(value)
+		else:
+			conditions += (" and (coalesce(" + alias + ".value, '')='' or (exists (select 1 from fields f where f.project=o.project and f.class=? and f.id=? and f.fieldtype='enumerated')"
+				+ " and not exists (select 1 from options n where n.project=o.project and n.class=? and n.field=? and n.id=" + alias + ".value)))")
+			conditioned += [scope["class"], field, scope["class"], field]
 	if scope["parent"] != None:
 		conditions += " and o.parent=?"
 		conditioned.append(scope["parent"])
@@ -646,99 +724,131 @@ def rank_bound(key):
 		return True
 	return rank_valid(key) or key < "A" or key >= "{"
 
-# rank_respread(project_id, ranks, handle): when a key in ranks, the keys a move
-# wrote as {id, rank}, is past RANK_SPREAD, give the objects around them new
-# keys spread evenly through a wider gap, in the order lists show them (rank
-# asc, created desc, id desc), so none is past half of RANK_SPREAD. Repeated
-# drops into one gap halve it each time, and a key there grows by a character
-# every six or so; past RANK_LENGTH a copy takes none, and would show the object
-# first. The objects taken are those between the lowest and highest key in
-# ranks and as many either side, from eight, doubling until the spread is short
-# enough, which it always is once they reach both ends of the project. Each key
-# rewritten is added to ranks, or replaces the one there for its object. Runs in
-# the move's transaction (rank_transaction).
-def rank_respread(project_id, ranks, handle):
-	if not ranks or max([len(r["rank"]) for r in ranks]) <= RANK_SPREAD:
-		return
-	keys = [r["rank"] for r in ranks]
-	lowest = min(keys)
-	highest = max(keys)
-	middle = handle.rows("select id, rank from objects where project=? and rank>=? and rank<=? order by rank asc, created desc, id desc", project_id, lowest, highest) or []
-	width = 8
-	window = None
-	spread = None
-	for _ in range(64):
-		below = handle.rows("select id, rank from objects where project=? and rank<? order by rank desc, created asc, id asc limit ?", project_id, lowest, width + 1) or []
-		above = handle.rows("select id, rank from objects where project=? and rank>? order by rank asc, created desc, id desc limit ?", project_id, highest, width + 1) or []
-		low = below[width]["rank"] if len(below) > width else None
-		high = above[width]["rank"] if len(above) > width else None
-		if rank_bound(low) and rank_bound(high):
-			window = list(reversed(below[:width])) + list(middle) + list(above[:width])
-			spread = rank_spread(low if rank_valid(low) else None, high if rank_valid(high) else None, len(window))
-			if (low == None and high == None) or max([len(k) for k in spread]) <= RANK_SPREAD // 2:
-				break
-		width *= 2
-	if not window:
-		return
-	written = {}
-	for i, r in enumerate(ranks):
-		written[r["id"]] = i
-	for o, k in zip(window, spread):
-		if o["rank"] == k:
+# rank_crowded(key) -> whether a spread must reach past key, the first key beyond
+# one side of its window: one that cannot be bisected (rank_bound), or one past
+# half of RANK_SPREAD, which lies among the long keys the drops grew there, so a
+# spread stopping at it would be as long.
+def rank_crowded(key):
+	if key == None or type(key) != "string":
+		return False
+	return not rank_bound(key) or len(key) > RANK_SPREAD // 2
+
+# rank_respread(project_id, ranks, versions, handle): when a key in ranks, the
+# keys a move wrote as {id, rank, version}, is past RANK_SPREAD, give the
+# objects around it new keys spread evenly through a wider gap, in the order
+# lists show them (rank asc, created desc, id desc), so none is past half of
+# RANK_SPREAD. Repeated drops into one gap halve it each time, and a key there
+# grows by a character every six or so; past RANK_LENGTH a copy takes none, and
+# would show the object first. Each long key is spread around on its own, since
+# a move's keys may lie far apart - a neighbour's untie beside one, the moved
+# object at the project's end - and the objects between them need no new keys.
+# The objects taken are those holding the key and eight either side, a side
+# doubling while the key just past it is crowded (rank_crowded), so a cluster
+# of long keys on one side does not widen the other, and both doubling while
+# the spread is still too long; a side stops at the project's end. Each key
+# rewritten is added to ranks, or replaces the one there for its object, with
+# the object's version raised for it (version_take). Runs in the move's
+# transaction (rank_transaction).
+def rank_respread(project_id, ranks, versions, handle):
+	limit = RANK_SPREAD // 2
+	for key in sorted([r["rank"] for r in ranks if type(r["rank"]) == "string" and len(r["rank"]) > RANK_SPREAD]):
+		# An earlier key's spread may have taken this one too.
+		middle = handle.rows("select id, rank from objects where project=? and rank=? order by created desc, id desc", project_id, key) or []
+		if not middle:
 			continue
-		handle.execute("update objects set rank=? where id=?", k, o["id"])
-		if o["id"] in written:
-			ranks[written[o["id"]]]["rank"] = k
-		else:
-			written[o["id"]] = len(ranks)
-			ranks.append({"id": o["id"], "rank": k})
+		lower = 8
+		upper = 8
+		window = None
+		spread = None
+		for _ in range(64):
+			below = handle.rows("select id, rank from objects where project=? and rank<? order by rank desc, created asc, id asc limit ?", project_id, key, lower + 1) or []
+			above = handle.rows("select id, rank from objects where project=? and rank>? order by rank asc, created desc, id desc limit ?", project_id, key, upper + 1) or []
+			low = below[lower]["rank"] if len(below) > lower else None
+			high = above[upper]["rank"] if len(above) > upper else None
+			widen = rank_crowded(low)
+			deepen = rank_crowded(high)
+			if not widen and not deepen:
+				window = list(reversed(below[:lower])) + list(middle) + list(above[:upper])
+				spread = rank_spread(low if rank_valid(low) else None, high if rank_valid(high) else None, len(window))
+				if (low == None and high == None) or max([len(k) for k in spread]) <= limit:
+					break
+				widen = low != None
+				deepen = high != None
+			if widen:
+				lower *= 2
+			if deepen:
+				upper *= 2
+		if not window:
+			continue
+		written = {}
+		for i, r in enumerate(ranks):
+			written[r["id"]] = i
+		for o, k in zip(window, spread):
+			if o["rank"] == k:
+				continue
+			handle.execute("update objects set rank=? where id=?", k, o["id"])
+			version = version_take(versions, o["id"], handle)
+			if o["id"] in written:
+				ranks[written[o["id"]]]["rank"] = k
+				ranks[written[o["id"]]]["version"] = version
+			else:
+				written[o["id"]] = len(ranks)
+				ranks.append({"id": o["id"], "rank": k, "version": version})
 
-# rank_broadcast(project_id, ranks, now, user_id): tell subscribers the keys a
-# move wrote, at most RANK_CHUNK in one object/ranks event, with the owner's
-# time for the move, which a copy holding a later change of an object skips.
-def rank_broadcast(project_id, ranks, now, user_id):
+# rank_broadcast(project_id, ranks, now, user_id, events): add to events, for
+# events_commit, the object/ranks events that tell subscribers the keys a move
+# wrote, at most RANK_CHUNK in each, with the owner's time for the move. Each
+# entry carries its object's version, and a copy holding a later change of the
+# object skips it.
+def rank_broadcast(project_id, ranks, now, user_id, events):
 	for start in range(0, len(ranks), RANK_CHUNK):
-		broadcast_event(project_id, "object/ranks", {
+		events.append({"event": "object/ranks", "data": {
 			"project": project_id, "ranks": ranks[start:start + RANK_CHUNK], "user": user_id, "updated": now,
-		})
+		}})
 
-# move_rank(project_id, object_id, scope, place, moved, handle) -> every key the
-# move writes, as {id, rank} rows: object_id's, any a neighbour's tie took and
-# any spread again around them. scope is where the move puts the object, as
-# {"field", "value", "lane", "row", "parent"}: the board's field and the value
-# it takes there, its lane field and that value, each "" where the move names
-# none, and the parent whose children it goes among, None for none. place holds
-# after and before, the objects it was dropped directly after and before, and
-# the key goes beside the first of them still in that scope: one deleted or
-# moved elsewhere since the board was read leaves the other. Beside the scope's
-# last object, or above its first, it goes past the project's last key or below
-# its first (rank_edge). A client that predates them sends rank, a 1-based
-# position within scope. With no neighbour, a move to another column (moved)
-# goes to the end, and anything else keeps its key. Every read and write is the
-# move's transaction's (handle).
-def move_rank(project_id, object_id, scope, place, moved, handle):
+# move_rank(project_id, object_id, scope, place, moved, versions, handle) ->
+# every key the move writes, as {id, rank, version} rows: object_id's, any a
+# neighbour's tie took and any spread again around them, each with its
+# object's version for the move (version_take). scope is where the move puts
+# the object, as {"field", "value", "lane", "row", "parent", "class"}: the
+# board's field and the value it takes there, its lane field and that value,
+# each "" where the move names none, the parent whose children it goes among,
+# None for none, and the object's class, whose options say which values the
+# column or lane for no value holds (rank_scope). place holds after and
+# before, the objects it was dropped directly
+# after and before, and the key goes beside the first of them still in that
+# scope: one deleted or moved elsewhere since the board was read leaves the
+# other. Beside the scope's last object, or above its first, it goes past the
+# project's last key or below its first (rank_edge), but only when the drop
+# named no neighbour on the far side: a list that draws other scopes' objects
+# between its own, a filtered or grouped one, sends both, and the object goes
+# between them. A client that predates them sends rank, a 1-based position
+# within scope. With no neighbour, a move to another column (moved) goes to
+# the end, and anything else keeps its key. Every read and write is the move's
+# transaction's (handle).
+def move_rank(project_id, object_id, scope, place, moved, versions, handle):
 	after = place.get("after") or None
 	before = place.get("before") or None
 	rank = place.get("rank")
 	if after == None and before == None and rank != None:
-		after, before = rank_neighbours(project_id, object_id, scope["field"], scope["value"], scope["parent"], int(rank), handle)
+		after, before = rank_neighbours(project_id, object_id, scope, int(rank), handle)
 		if after == None and before == None:
 			moved = True
 	ranks = []
 	key = None
-	for anchor, beside in [(after, True), (before, False)]:
+	for anchor, beside, far in [(after, True, before), (before, False, after)]:
 		if anchor == None or not rank_member(project_id, anchor, scope, handle):
 			continue
-		found = rank_untie(project_id, object_id, anchor, ranks, handle)
+		found = rank_untie(project_id, object_id, anchor, ranks, versions, handle)
 		if found != None:
-			key = rank_edge(project_id, object_id, found, scope, beside, handle) or rank_beside(project_id, object_id, found, beside, handle)
+			key = (rank_edge(project_id, object_id, found, scope, beside, handle) if far == None else None) or rank_beside(project_id, object_id, found, beside, handle)
 			break
 	if key == None and moved:
 		key = rank_after_all(project_id, object_id, handle)
 	if key != None:
 		handle.execute("update objects set rank=? where id=?", key, object_id)
-		ranks.append({"id": object_id, "rank": key})
-	rank_respread(project_id, ranks, handle)
+		ranks.append({"id": object_id, "rank": key, "version": version_take(versions, object_id, handle)})
+	rank_respread(project_id, ranks, versions, handle)
 	return ranks
 
 def rank_after_all(project_id, exclude_id, handle):
@@ -813,6 +923,23 @@ def database_upgrade(version):
 		# the rank alone, each read scanned the project's rows.
 		mochi.db.execute("drop index if exists objects_rank")
 		mochi.db.execute("create index if not exists objects_rank on objects(project, rank)")
+	if version == 13:
+		# Each object counts the changes its owner makes to it (version_take),
+		# which every event and answer that writes the object carries, so a
+		# copy orders two changes made in one second and a key re-spread
+		# after an answer was read. Rows from before start at none.
+		if "version" not in [c["name"] for c in mochi.db.table("objects")]:
+			mochi.db.execute("alter table objects add column version integer not null default 0")
+		# A group's "No access" is one "*" deny, which core takes as a veto over
+		# every group's grant on the project (access_ceiling).
+		for row in mochi.db.rows("select id from projects where owner=1") or []:
+			access_veto("project/" + row["id"])
+	if version == 14:
+		# When each subscriber was last sent the whole project, so a repeated
+		# subscribe inside snapshot_seconds is not answered with another
+		# (event_subscribe). Rows from before were sent none.
+		if "sent" not in [c["name"] for c in mochi.db.table("subscribers")]:
+			mochi.db.execute("alter table subscribers add column sent integer not null default 0")
 
 # Create database with all 18 tables
 def database_create():
@@ -837,12 +964,14 @@ def database_create():
 	)""")
 	mochi.db.execute("create index if not exists projects_fingerprint on projects(fingerprint)")
 
-	# 2. subscribers - subscribers to owned projects
+	# 2. subscribers - subscribers to owned projects, and on a replica its
+	# owner's roster
 	mochi.db.execute("""create table if not exists subscribers (
 		project text not null references projects(id),
 		id text not null,
 		name text not null default '',
 		subscribed integer not null,
+		sent integer not null default 0,
 		primary key (project, id)
 	)""")
 	mochi.db.execute("create index if not exists subscribers_id on subscribers(id)")
@@ -958,6 +1087,7 @@ def database_create():
 		rank integer not null default 0,
 		created integer not null,
 		updated integer not null,
+		version integer not null default 0,
 		foreign key (project, class) references classes(project, id)
 	)""")
 	mochi.db.execute("create index if not exists objects_project on objects(project)")
@@ -1065,6 +1195,12 @@ def database_create():
 # checked in the same statement: a pull's part names the parent a row's foreign
 # key needs, and a purge beside it could remove that parent between a separate
 # check and the write.
+#
+# Each answers whether it wrote. One whose values include a list, a tuple or a
+# dict writes nothing: core spreads a sequence over the placeholders, so a
+# peer's array (decoded as a tuple, a json.decode'd one as a list) in a row
+# would shift every value after it into the next column, the project's
+# included, and land the row in another project.
 def row_merge(table, keys, row, handle=None, guard=None):
 	cols = list(row)
 	fields = [c for c in cols if c not in keys]
@@ -1075,26 +1211,50 @@ def row_merge(table, keys, row, handle=None, guard=None):
 		params = params + list(guard[1])
 	else:
 		values = "values (" + ", ".join(["?" for c in cols]) + ")"
+	if not flat(table, params):
+		return False
 	sql = "insert into \"" + table + "\" (" + ", ".join(["\"" + c + "\"" for c in cols]) + ") " + values + " on conflict (" + ", ".join(["\"" + k + "\"" for k in keys]) + ") " + conflict
 	if handle:
 		handle.execute(sql, *params)
 	else:
 		mochi.db.execute(sql, *params)
+	return True
 
 def row_set(table, where, args, updates, handle=None):
 	fields = list(updates)
-	(handle or mochi.db).execute("update \"" + table + "\" set " + ", ".join(["\"" + c + "\"=?" for c in fields]) + " where (" + where + ")", *([updates[c] for c in fields] + list(args)))
+	params = [updates[c] for c in fields] + list(args)
+	if not flat(table, params):
+		return False
+	(handle or mochi.db).execute("update \"" + table + "\" set " + ", ".join(["\"" + c + "\"=?" for c in fields]) + " where (" + where + ")", *params)
+	return True
 
 def row_remove(table, where, args, handle=None):
+	if not flat(table, args):
+		return False
 	sql = "delete from \"" + table + "\" where (" + where + ")"
 	if handle:
 		handle.execute(sql, *args)
 	else:
 		mochi.db.execute(sql, *args)
+	return True
 
 def row_rekey(table, where, args, newkeys):
 	fields = list(newkeys)
-	mochi.db.execute("update \"" + table + "\" set " + ", ".join(["\"" + c + "\"=?" for c in fields]) + " where (" + where + ")", *([newkeys[c] for c in fields] + list(args)))
+	params = [newkeys[c] for c in fields] + list(args)
+	if not flat(table, params):
+		return False
+	mochi.db.execute("update \"" + table + "\" set " + ", ".join(["\"" + c + "\"=?" for c in fields]) + " where (" + where + ")", *params)
+	return True
+
+# flat(table, parameters) -> whether every parameter binds one placeholder: none
+# is a list, a tuple or a dict. One that is not is logged and the statement
+# refused.
+def flat(table, parameters):
+	for value in parameters:
+		if type(value) in ("list", "tuple", "dict"):
+			mochi.log.debug("Refusing a write to %s: a %s parameter", table, type(value))
+			return False
+	return True
 
 def object_merge(row, guard=None):
 	row_merge("objects", ["id"], row, None, guard)
@@ -1106,7 +1266,10 @@ def object_remove(object_id):
 	mochi.db.execute("delete from objects where id=?", object_id)
 
 def value_merge(object_id, field, value, handle=None):
+	if not flat("values", [object_id, field, value]):
+		return False
 	(handle or mochi.db).execute("insert into \"values\" ( object, field, value ) values ( ?, ?, ? ) on conflict ( object, field ) do update set value=excluded.value", object_id, field, value)
+	return True
 
 def value_remove(object_id, field):
 	mochi.db.execute("delete from \"values\" where object=? and field=?", object_id, field)
@@ -1592,12 +1755,15 @@ def action_design_export(a):
 
 # Replace a project's design with data; deletes run in foreign-key order.
 # template_id resolves {labels.X} placeholders; literal names pass through
-# unchanged.
-def design_replace(project_id, data, lang, template_id):
+# unchanged. Within the caller's transaction (handle) every statement goes
+# through it and the caller commits; else the replacement is its own.
+def design_replace(project_id, data, lang, template_id, handle=None):
 	# One transaction, so a failure between the deletes and apply_template leaves
 	# the old design in place. An uncommitted handle rolls back when the thread
 	# tears down.
-	handle = mochi.db.transaction()
+	own = handle == None
+	if own:
+		handle = mochi.db.transaction()
 	row_remove("view_fields", "project=?", [project_id], handle)
 	row_remove("view_classes", "project=?", [project_id], handle)
 	row_remove("views", "project=?", [project_id], handle)
@@ -1613,7 +1779,39 @@ def design_replace(project_id, data, lang, template_id):
 		if row["id"] not in keep:
 			row_remove("classes", "project=? and id=?", [project_id, row["id"]], handle)
 	apply_template(project_id, template_id, data, lang, handle)
-	handle.commit()
+	if own:
+		handle.commit()
+
+# The values the single-item actions allow for a field's type, a view's type and
+# a view's sort direction, which an imported design is held to as well.
+FIELD_TYPES = ["text", "number", "date", "enumerated", "user", "object", "checkbox", "checklist"]
+VIEW_TYPES = ["board", "list"]
+DIRECTIONS = ["asc", "desc"]
+
+# Every column of a field row, in the order design_dump, the schema's parts and
+# the sync batch carry them: the class and id, then the attributes, which a
+# replica reduces on the way in (field_row) to text (FIELD_TEXT) or a whole
+# number (FIELD_NUMBER).
+FIELD_COLUMNS = ["class", "id", "name", "fieldtype", "flags", "multi", "rank", "card", "position", "rows", "min", "max", "pattern", "minlength", "maxlength", "prefix", "suffix", "format"]
+FIELD_TEXT = ["name", "fieldtype", "flags", "position", "min", "max", "pattern", "prefix", "suffix", "format"]
+FIELD_NUMBER = ["multi", "rank", "card", "rows", "minlength", "maxlength"]
+
+# The string attributes of each part of a design, which the database refuses as
+# a list or a dict part-way through design_replace.
+DESIGN_TEXT = {
+	"classes": ["requests", "title"],
+	"fields": ["flags", "position", "min", "max", "pattern", "prefix", "suffix", "format"],
+	"options": ["colour", "icon"],
+	"views": ["filter", "columns", "rows", "sort", "border", "fields"],
+}
+
+# design_text(item, part) -> whether every string attribute of part that item
+# carries is a string.
+def design_text(item, part):
+	for key in DESIGN_TEXT[part]:
+		if item.get(key) != None and type(item[key]) != "string":
+			return False
+	return True
 
 # design_id: is value an id the design editor could have produced? Ids are
 # URL segments and members of the comma-separated view lists, so only what
@@ -1641,16 +1839,21 @@ def design_invalid(data):
 	for c in data.get("classes", []):
 		if type(c) != "dict" or not design_id(c.get("id")) or type(c.get("name")) != "string":
 			return "errors.invalid_design"
-		if not design_integer(c.get("rank")):
+		if not design_integer(c.get("rank")) or not design_text(c, "classes"):
 			return "errors.invalid_design"
 	for parents in data.get("hierarchy", {}).values():
 		if type(parents) not in ["list", "tuple"]:
 			return "errors.invalid_design"
+		for parent in parents:
+			if type(parent) != "string":
+				return "errors.invalid_design"
 	for fields in data.get("fields", {}).values():
 		if type(fields) not in ["list", "tuple"]:
 			return "errors.invalid_design"
 		for f in fields:
 			if type(f) != "dict" or not design_id(f.get("id")) or type(f.get("name")) != "string":
+				return "errors.invalid_design"
+			if f.get("fieldtype", "text") not in FIELD_TYPES or not design_text(f, "fields"):
 				return "errors.invalid_design"
 			for key in ["rank", "multi", "card", "rows", "minlength", "maxlength"]:
 				if not design_integer(f.get(key)):
@@ -1664,16 +1867,16 @@ def design_invalid(data):
 			for opt in field_options:
 				if type(opt) != "dict" or not design_id(opt.get("id")) or type(opt.get("name")) != "string":
 					return "errors.invalid_design"
-				if not design_integer(opt.get("rank")):
+				if not design_integer(opt.get("rank")) or not design_text(opt, "options"):
 					return "errors.invalid_design"
 	for v in data.get("views", []):
 		if type(v) != "dict" or not design_id(v.get("id")) or type(v.get("name")) != "string":
 			return "errors.invalid_design"
-		if not design_integer(v.get("rank")):
+		if not design_integer(v.get("rank")) or not design_text(v, "views"):
+			return "errors.invalid_design"
+		if v.get("viewtype", "board") not in VIEW_TYPES or v.get("direction", "asc") not in DIRECTIONS:
 			return "errors.invalid_design"
 		if type(v.get("classes", [])) not in ["list", "tuple"]:
-			return "errors.invalid_design"
-		if type(v.get("fields", "")) != "string":
 			return "errors.invalid_design"
 	return None
 
@@ -1792,15 +1995,19 @@ def action_design_import(a):
 
 	return {"data": {"success": True}}
 
-# Collect an object's (or, with kind "comment", a comment's) attachments with
-# base64 bytes for export; one whose bytes cannot be read is skipped rather
-# than failing the export.
-def export_attachments(object_id, project_id, frm, entries, kind="object"):
+# Collect an object's (or, with kind "comment", a comment's) attachments for
+# export, each naming its archive entry and its size, which the import holds
+# the entry to. One whose bytes cannot be read (a remote copy whose pull failed
+# or is backing off) is not exported, and is listed in skipped, {id, name},
+# for the manifest to name, rather than failing the export.
+def export_attachments(object_id, project_id, frm, entries, kind="object", skipped=None):
 	result = []
 	for att in attachment_list(object_id, project_id, kind) or []:
 		name = "files/" + att["id"]
 		entry = attachment_entry(att["id"], name, frm)
 		if entry == None:
+			if skipped != None:
+				skipped.append({"id": att["id"], "name": att["name"]})
 			continue
 		entries.append(entry)
 		result.append({
@@ -1809,12 +2016,15 @@ def export_attachments(object_id, project_id, frm, entries, kind="object"):
 			"caption": att.get("caption", ""),
 			"description": att.get("description", ""),
 			"entry": name,
+			"size": att["size"],
 		})
 	return result
 
 # Warm the local attachment cache for a remote project before data/export:
 # pulling every attachment over P2P cannot fit one action's time budget. Runs up
-# to 20 seconds and reports how many remain; callers loop until zero.
+# to 20 seconds and reports how many remain, and how many of those it tried it
+# could not fetch (failed), which the export then leaves out; callers loop
+# until none remain.
 def action_data_export_warm(a):
 
 	project_id, project = require_project(a, "view")
@@ -1830,13 +2040,15 @@ def action_data_export_warm(a):
 				identifiers.append(att["id"])
 
 	start = mochi.time.now()
+	failed = 0
 	for i, identifier in enumerate(identifiers):
 		# Under the Android client's 30-second read timeout.
 		if mochi.time.now() - start > 20:
-			return {"data": {"attachments": len(identifiers), "remaining": len(identifiers) - i}}
-		attachment_fetch(identifier, a.user.identity.id)
+			return {"data": {"attachments": len(identifiers), "remaining": len(identifiers) - i, "failed": failed}}
+		if not attachment_fetch(identifier, a.user.identity.id):
+			failed += 1
 
-	return {"data": {"attachments": len(identifiers), "remaining": 0}}
+	return {"data": {"attachments": len(identifiers), "remaining": 0, "failed": failed}}
 
 # Export the project's data as JSON (format 2) with a design snapshot, so the
 # file alone reproduces the project. Watchers are not included. Objects whose
@@ -1855,6 +2067,9 @@ def action_data_export(a):
 	# by a third, in memory at once, and an attachment may be as large as the
 	# uploader's remaining quota.
 	entries = []
+	# The attachments whose bytes could not be read, named in the manifest so
+	# the file says what it lacks.
+	skipped = []
 
 	# Values are filtered against the design snapshot: a field removed from
 	# the design can leave orphan value rows, which the app never renders -
@@ -1914,13 +2129,13 @@ def action_data_export(a):
 				comment["parent"] = c["parent"]
 			if c["edited"]:
 				comment["edited"] = c["edited"]
-			attachments = export_attachments(c["id"], project_id, a.user.identity.id, entries, "comment")
+			attachments = export_attachments(c["id"], project_id, a.user.identity.id, entries, "comment", skipped)
 			if attachments:
 				comment["attachments"] = attachments
 			comments.append(comment)
 		if comments:
 			object["comments"] = comments
-		attachments = export_attachments(row["id"], project_id, a.user.identity.id, entries)
+		attachments = export_attachments(row["id"], project_id, a.user.identity.id, entries, "object", skipped)
 		if attachments:
 			object["attachments"] = attachments
 		activity = []
@@ -1972,6 +2187,8 @@ def action_data_export(a):
 	}
 	if links:
 		result["links"] = links
+	if skipped:
+		result["skipped"] = skipped
 
 	# Built in cache and deleted once served: an export is a download, not stored
 	# state, and cache resolves for the requesting user where file storage reads as
@@ -1982,6 +2199,12 @@ def action_data_export(a):
 	mochi.archive.write(archive, entries, cache=True)
 	a.write.cache(archive, content_type="application/zip")
 	mochi.cache.delete(archive)
+
+# The most an import reads into memory - a format 2 upload, or a format 3
+# archive's manifest - checked against the file's or the entry's own size
+# before it is read. Far above any real export's manifest, and core's own
+# ceiling on mochi.archive.read (64 MiB), past which the read itself fails.
+IMPORT_MAXIMUM = 67108864
 
 # Validate and decode a container's attachment list in place for an import:
 # each entry must be a dict with a name and base64 data, and "data" is
@@ -1995,9 +2218,13 @@ def import_attachments_decode(container):
 		if type(att) != "dict" or not att.get("name"):
 			return False
 		# Format 3 names an entry in the archive; the bytes go straight from
-		# there to their resting place and are never a value here. Format 2
-		# carried them base64-encoded inline, and still imports.
+		# there to their resting place and are never a value here, held to the
+		# size the export recorded beside it. Format 2 carried them
+		# base64-encoded inline, and still imports.
 		if type(att.get("entry")) == "string":
+			size = att.get("size")
+			if size != None and (type(size) != "int" or size < 0):
+				return False
 			continue
 		if type(att.get("data")) != "string":
 			return False
@@ -2021,20 +2248,61 @@ def import_staging_sweep():
 		if age != None and age > 3600:
 			mochi.file.delete("imports/" + name)
 
-# Store one imported attachment of object_id, a thing of that kind, returning
-# whether it landed. Format 3 streams from the archive, format 2 has the bytes
-# in hand; an entry missing from the archive stores nothing and must not be
-# counted. The file nests a comment's attachments in the comment, which is how
-# the caller knows the kind.
-def import_attachment_store(archive, object_id, att, kind="object"):
-	if archive and type(att.get("entry")) == "string":
-		return attachment_extract(archive, att["entry"], object_id, att["name"],
-			att.get("content_type") or "", att.get("caption") or "", att.get("description") or "", kind=kind) != None
+# import_attachment_stage(archive, att, sizes) -> the file of one imported
+# attachment, put down with no row (attachment_unpack, attachment_stage), or
+# None when it cannot be. Format 3 streams from the archive, held to the size
+# the manifest records for the entry, or, in a file from before the manifest
+# recorded one, to the size the archive's own listing gives it (sizes, entry ->
+# size): an entry cut short, or absent, fails rather than landing as a
+# whole-looking attachment. Format 2 has the bytes in hand.
+def import_attachment_stage(archive, att, sizes):
+	if type(att.get("entry")) == "string":
+		if not archive:
+			return None
+		size = att.get("size")
+		if size == None:
+			size = sizes.get(att["entry"])
+			if size == None:
+				return None
+		return attachment_unpack(archive, att["entry"], att["name"], att.get("content_type") or "", size)
 	if att.get("data") != None:
-		attachment_create(object_id, att["name"], att["data"], att.get("content_type") or "",
-			att.get("caption") or "", att.get("description") or "", kind=kind)
-		return True
+		return attachment_stage(att["name"], att["data"], att.get("content_type") or "")
+	return None
+
+# import_discard(archive, staged): an import that stops leaves nothing behind -
+# the uploaded archive, and every attachment file it had put down (staged, the
+# dicts import_attachment_stage answered), none of which any row names.
+def import_discard(archive, staged):
+	for file in staged:
+		mochi.file.delete(attachment_filename(file["id"], file["name"]))
+	if archive:
+		mochi.file.delete(archive)
+
+# import_cycle(parents) -> whether the parent links of a file's objects (id ->
+# parent id) loop: an object its own parent, or two or more naming each other.
+# Each object is walked once, so a long chain costs no more than its length.
+def import_cycle(parents):
+	done = {}
+	for start in parents:
+		if start in done:
+			continue
+		path = {}
+		current = start
+		for _ in range(len(parents) + 1):
+			if current in path:
+				return True
+			if current in done or current not in parents:
+				break
+			path[current] = True
+			current = parents[current]
+		for key in path:
+			done[key] = True
 	return False
+
+# import_text(value) -> whether value may stand for a text column: absent, or a
+# string.
+def import_text(value):
+	return value == None or type(value) == "string"
 
 # import_author(value, importer) -> the author an imported comment is given:
 # its own when a well-formed identity id, since that decides who may edit or
@@ -2095,31 +2363,58 @@ def action_data_import(a):
 	# An upload streams to disk rather than becoming a value: a format 3
 	# archive carries the attachment bytes, and reading those into memory to
 	# find the manifest would undo what the container is for. A format 2 file
-	# is JSON all through and is read as before.
+	# is JSON all through and is read as before. Either is bounded before it is
+	# read (IMPORT_MAXIMUM): checked after, it would already be in memory.
 	archive = ""
+	sizes = {}
 	data_string = a.input("data")
 	if not data_string and a.files("file"):
 		import_staging_sweep()
-		staged = "imports/" + mochi.uid()
-		a.upload("file", staged)
-		if mochi.archive.list(staged) != None:
-			archive = staged
-			data_string = str(mochi.archive.read(staged, "manifest.json") or "")
+		upload = "imports/" + mochi.uid()
+		a.upload("file", upload)
+		listing = mochi.archive.list(upload)
+		if listing != None:
+			archive = upload
+			# Each entry's size as the archive lists it, the first of a name,
+			# which is the one mochi.archive.read and extract take.
+			for entry in listing:
+				if entry["name"] not in sizes:
+					sizes[entry["name"]] = entry["size"]
+			if sizes.get("manifest.json", 0) > IMPORT_MAXIMUM:
+				import_discard(archive, [])
+				a.error.label(400, "errors.data_too_large")
+				return
+			data_string = str(mochi.archive.read(upload, "manifest.json") or "")
 		else:
-			data_string = str(mochi.file.read(staged) or "")
-			mochi.file.delete(staged)
+			content = mochi.file.read(upload, maximum=IMPORT_MAXIMUM)
+			mochi.file.delete(upload)
+			if content == None:
+				a.error.label(400, "errors.data_too_large")
+				return
+			data_string = str(content)
 	if not data_string:
+		import_discard(archive, [])
 		a.error.label(400, "errors.data_is_required")
 		return
-	if len(data_string) > 1000000000:
+	if len(data_string) > IMPORT_MAXIMUM:
+		import_discard(archive, [])
 		a.error.label(400, "errors.data_too_large")
 		return
 	data = json.decode(data_string, None)
 	if type(data) != "dict":
-		if archive:
-			mochi.file.delete(archive)
+		import_discard(archive, [])
 		a.error.label(400, "errors.invalid_data")
 		return
+
+	# The attachment files the import has put down, which a refusal deletes
+	# with the archive (import_discard).
+	staged = []
+
+	# refuse(status, key, **arguments): answer a refusal of the import, leaving
+	# nothing it put down behind.
+	def refuse(status, key, **arguments):
+		import_discard(archive, staged)
+		a.error.label(status, key, **arguments)
 
 	# A container carries the design its objects were validated against; applying
 	# it here restores a backup in one upload (the client cannot parse
@@ -2128,31 +2423,25 @@ def action_data_import(a):
 	if a.input("design") and type(data.get("design")) == "dict":
 		problem = design_invalid(data["design"])
 		if problem:
-			if archive:
-				mochi.file.delete(archive)
-			a.error.label(400, problem)
+			refuse(400, problem)
 			return
 		dangling = design_references_missing(data["design"])
 		if dangling:
-			if archive:
-				mochi.file.delete(archive)
-			a.error.label(400, "errors.design_reference_unknown", references=", ".join(dangling))
+			refuse(400, "errors.design_reference_unknown", references=", ".join(dangling))
 			return
 		missing = design_classes_missing(project_id, data["design"])
 		if missing:
-			if archive:
-				mochi.file.delete(archive)
-			a.error.label(400, "errors.design_class_in_use", classes=", ".join(missing))
+			refuse(400, "errors.design_class_in_use", classes=", ".join(missing))
 			return
 		design = data["design"]
 
 	objects = data.get("objects") or []
 	links = data.get("links") or []
 	if type(objects) != "list" or type(links) != "list":
-		a.error.label(400, "errors.invalid_data")
+		refuse(400, "errors.invalid_data")
 		return
 	if not objects and not links:
-		a.error.label(400, "errors.nothing_to_import")
+		refuse(400, "errors.nothing_to_import")
 		return
 
 	# The design the objects are validated against: the file's own when it is
@@ -2160,18 +2449,28 @@ def action_data_import(a):
 	# file has passed, so a refused import leaves the design as it was.
 	classes, fields, hierarchy = import_design(project_id, design)
 
-	# File-local object ids, for remapping and parent class lookups
+	# File-local object ids, for remapping and parent class lookups, and the
+	# parent each names. The text a row binds is a string or absent, so no
+	# statement meets a value it cannot bind part-way through the write.
 	imported = {}
+	parents = {}
 	for o in objects:
-		if type(o) != "dict" or not o.get("id") or not o.get("class"):
-			a.error.label(400, "errors.invalid_data")
+		if type(o) != "dict" or type(o.get("id")) != "string" or not o["id"] or type(o.get("class")) != "string" or not o["class"] or not import_text(o.get("parent")):
+			refuse(400, "errors.invalid_data")
 			return
 		imported[o["id"]] = o["class"]
+		parents[o["id"]] = o.get("parent") or ""
+
+	# An object that is its own parent, or objects that name each other, would
+	# sit in no tree, and deleting one would walk the loop.
+	if import_cycle(parents):
+		refuse(400, "errors.cannot_set_parent_would_create_a_cycle")
+		return
 
 	# Validate everything before writing anything
 	for o in objects:
 		if o["class"] not in classes:
-			a.error.label(400, "errors.unknown_class", name=o["class"])
+			refuse(400, "errors.unknown_class", name=o["class"])
 			return
 		parent = o.get("parent") or ""
 		parent_class = ""
@@ -2181,60 +2480,86 @@ def action_data_import(a):
 			else:
 				row = mochi.db.row("select class from objects where id=? and project=?", parent, project_id)
 				if not row:
-					a.error.label(404, "errors.parent_object_not_found")
+					refuse(404, "errors.parent_object_not_found")
 					return
 				parent_class = row["class"]
 		if (o["class"] + "/" + parent_class) not in hierarchy:
-			a.error.label(400, "errors.hierarchy_disallowed")
+			refuse(400, "errors.hierarchy_disallowed")
 			return
 		values = o.get("values") or {}
 		if type(values) != "dict":
-			a.error.label(400, "errors.invalid_data")
+			refuse(400, "errors.invalid_data")
 			return
 		comments = o.get("comments") or []
 		if type(comments) != "list":
-			a.error.label(400, "errors.invalid_data")
+			refuse(400, "errors.invalid_data")
 			return
+		# A comment's parent is a comment earlier in the same object's list, so a
+		# thread can hold no loop.
+		earlier = {}
 		for c in comments:
 			if type(c) != "dict" or not c.get("content"):
-				a.error.label(400, "errors.invalid_data")
+				refuse(400, "errors.invalid_data")
 				return
+			if not import_text(c.get("id")) or not import_text(c.get("parent")) or not import_text(c.get("name")):
+				refuse(400, "errors.invalid_data")
+				return
+			if c.get("parent") and c["parent"] not in earlier:
+				refuse(400, "errors.parent_comment_not_found")
+				return
+			if c.get("id"):
+				earlier[c["id"]] = True
 			if not import_attachments_decode(c):
-				a.error.label(400, "errors.invalid_data")
+				refuse(400, "errors.invalid_data")
 				return
 		if not import_attachments_decode(o):
-			a.error.label(400, "errors.invalid_data")
+			refuse(400, "errors.invalid_data")
 			return
 		activity = o.get("activity") or []
 		if type(activity) != "list":
-			a.error.label(400, "errors.invalid_data")
+			refuse(400, "errors.invalid_data")
 			return
 		for act in activity:
-			if type(act) != "dict" or not act.get("action"):
-				a.error.label(400, "errors.invalid_data")
+			if type(act) != "dict" or not act.get("action") or not import_text(act.get("user")):
+				refuse(400, "errors.invalid_data")
 				return
 		requests = o.get("requests") or []
 		if type(requests) != "list":
-			a.error.label(400, "errors.invalid_data")
+			refuse(400, "errors.invalid_data")
 			return
 		for r in requests:
 			if type(r) != "dict":
-				a.error.label(400, "errors.invalid_data")
+				refuse(400, "errors.invalid_data")
 				return
 	for l in links:
-		if type(l) != "dict" or not l.get("source") or not l.get("target") or not l.get("linktype"):
-			a.error.label(400, "errors.invalid_data")
+		if type(l) != "dict" or type(l.get("source")) != "string" or not l["source"] or type(l.get("target")) != "string" or not l["target"] or not l.get("linktype"):
+			refuse(400, "errors.invalid_data")
 			return
 		for end in [l["source"], l["target"]]:
 			if end not in imported and not mochi.db.exists("select 1 from objects where id=? and project=?", end, project_id):
-				a.error.label(400, "errors.invalid_link")
+				refuse(400, "errors.invalid_link")
 				return
 
-	if design != None:
-		design_replace(project_id, design, user_language(a), "")
+	# Every attachment's file goes down before any row is written: one an entry
+	# cannot fill (absent, or not the size the file records) refuses the import
+	# having written no row, and the files go with the refusal. A store that
+	# fails outright (the storage quota) ends the handler with no row written
+	# either; the files it had put down are the orphan sweep's
+	# (attachment_sweep), since no row names them.
+	for o in objects:
+		for container in [o] + (o.get("comments") or []):
+			for att in container.get("attachments") or []:
+				file = import_attachment_stage(archive, att, sizes)
+				if file == None:
+					if type(att.get("entry")) == "string":
+						refuse(400, "errors.import_attachment_damaged", name=attachment_name(att["name"]))
+					else:
+						refuse(400, "errors.data_too_large")
+					return
+				staged.append(file)
+				att["staged"] = file
 
 	now = mochi.time.now()
-	user = a.user.identity.id
 
 	# Fresh ids for every imported object, assigned up front so forward
 	# references (a parent later in the file) remap correctly
@@ -2242,14 +2567,52 @@ def action_data_import(a):
 	for o in objects:
 		remap[o["id"]] = mochi.uid()
 
-	# The objects' keys and numbers are read and their rows written under one
-	# lock (rank_transaction), so a move or a create during the import cannot
-	# mint a key or take a number the import also writes. They append below the
-	# project-wide maximum key, in file order (see rank_after_all), and number
-	# on from the project's highest, not a shared counter. The rest of each
-	# object is written after, outside the lock.
+	# The design replacement and every row of the file go in one transaction,
+	# committed once the last is written: a refusal part-way, or an abort, leaves
+	# the project as it was, its old design and none of the file's rows. It
+	# holds the write lock from its start, so a move or a create during the
+	# import cannot mint a key or take a number the import also writes.
+	handle = mochi.db.transaction()
+	counts = import_write(handle, project_id, design, user_language(a), objects, links, remap, fields, a.user.identity.id, a.user.identity.name, now)
+	if counts == None:
+		handle.rollback()
+		refuse(400, "errors.invalid_data")
+		return
+	handle.commit()
+
+	if archive:
+		mochi.file.delete(archive)
+
+	# Replicas hold the design too: a design/replace prunes what the new one
+	# dropped, as action_design_import's does.
+	if design != None:
+		broadcast_event(project_id, "design/replace", {"project": project_id, "design": design_dump(project_id)})
+
+	# A full snapshot, built once, to every member who may still see the project
+	# (recipients), never to the owner's own identity, which mochi.message.send
+	# would deliver back here. event_sync_batch applies it idempotently, so it
+	# replaces per-record broadcasts for bulk changes.
+	allowed, _ = recipients(project_id)
+	if allowed:
+		chunks = project_batch(project_id)
+		for s in allowed:
+			batch_send(project_id, s["id"], chunks)
+
+	return {"data": {"objects": len(objects), "comments": counts["comments"], "attachments": counts["attachments"], "links": len(links)}}
+
+# import_write(handle, project_id, design, language, objects, links, remap,
+# fields, user, name, now) -> {comments, attachments}, the counts written, or
+# None when a row was refused: writes a validated import through handle - the
+# design when one is applied, then every object, value, comment, attachment
+# row (each file put down already, att["staged"]), activity entry, request and
+# link. The objects append below the project-wide maximum key, in file order
+# (see rank_after_all), and number on from the project's highest, not a shared
+# counter. Every read that must see the import's writes goes through handle.
+def import_write(handle, project_id, design, language, objects, links, remap, fields, user, name, now):
+	if design != None:
+		design_replace(project_id, design, language, "", handle)
+
 	if objects:
-		handle = rank_transaction(remap[objects[0]["id"]])
 		row = handle.row("select max(rank) as r from objects where project=?", project_id)
 		previous = row["r"] if (row and row["r"]) else None
 		number = handle.row("select coalesce(max(number), 0) as n from objects where project=?", project_id)["n"]
@@ -2278,11 +2641,11 @@ def action_data_import(a):
 				object_number = number
 			created = safe_int(o.get("created")) or now
 			updated = safe_int(o.get("updated")) or now
-			row_merge("objects", ["id"], {"id": remap[o["id"]], "project": project_id, "class": o["class"], "number": object_number, "parent": remap.get(parent, parent), "rank": previous, "created": created, "updated": updated}, handle)
-		handle.commit()
+			if not row_merge("objects", ["id"], {"id": remap[o["id"]], "project": project_id, "class": o["class"], "number": object_number, "parent": remap.get(parent, parent), "rank": previous, "created": created, "updated": updated}, handle):
+				return None
 
-	comment_count = 0
-	attachment_count = 0
+	comments = 0
+	attachments = 0
 	for o in objects:
 		object_id = remap[o["id"]]
 		# Values for fields the design doesn't declare are skipped, not
@@ -2290,58 +2653,58 @@ def action_data_import(a):
 		# were later removed from the design, and the app never renders them.
 		for field, value in (o.get("values") or {}).items():
 			if value != "" and (o["class"] + "/" + field) in fields:
-				row_merge("values", ["object", "field"], {"object": object_id, "field": field, "value": str(value)})
+				if not row_merge("values", ["object", "field"], {"object": object_id, "field": field, "value": str(value)}, handle):
+					return None
 		file_comments = o.get("comments") or []
 		comment_ids = []
 		comment_remap = {}
 		for c in file_comments:
 			comment_id = mochi.uid()
 			comment_ids.append(comment_id)
-			if c.get("id"):
+			# A parent names the first comment holding its id, which validation
+			# found earlier in the list.
+			if c.get("id") and c["id"] not in comment_remap:
 				comment_remap[c["id"]] = comment_id
 		for i, c in enumerate(file_comments):
 			comment_parent = comment_remap.get(c.get("parent") or "", "")
-			row_merge("comments", ["id"], {"id": comment_ids[i], "object": object_id, "parent": comment_parent, "author": import_author(c.get("author"), user), "name": c.get("name") or a.user.identity.name, "content": str(c["content"]), "created": safe_int(c.get("created")) or now, "edited": safe_int(c.get("edited"))})
-			comment_count += 1
+			if not row_merge("comments", ["id"], {"id": comment_ids[i], "object": object_id, "parent": comment_parent, "author": import_author(c.get("author"), user), "name": c.get("name") or name, "content": str(c["content"]), "created": safe_int(c.get("created")) or now, "edited": safe_int(c.get("edited"))}, handle):
+				return None
+			comments += 1
 			for att in (c.get("attachments") or []):
-				if import_attachment_store(archive, comment_ids[i], att, "comment"):
-					attachment_count += 1
+				attachment_insert(handle, comment_ids[i], att["staged"], att.get("caption") or "", att.get("description") or "", "comment")
+				attachments += 1
 		for att in (o.get("attachments") or []):
-			if import_attachment_store(archive, object_id, att):
-				attachment_count += 1
+			attachment_insert(handle, object_id, att["staged"], att.get("caption") or "", att.get("description") or "", "object")
+			attachments += 1
 		file_activity = o.get("activity") or []
 		if file_activity:
 			for act in file_activity:
-				mochi.db.execute(
+				handle.execute(
 					"insert into activity (id, object, user, action, field, oldvalue, newvalue, created) values (?, ?, ?, ?, ?, ?, ?, ?)",
 					mochi.uid(), object_id, act.get("user") or user, str(act["action"]), str(act.get("field") or ""), str(act.get("oldvalue") or ""), str(act.get("newvalue") or ""), safe_int(act.get("created")) or now
 				)
 		else:
-			mochi.db.execute(
+			handle.execute(
 				"insert into activity (id, object, user, action, field, oldvalue, newvalue, created) values (?, ?, ?, 'created', '', '', '', ?)",
 				mochi.uid(), object_id, user, now
 			)
 		for r in (o.get("requests") or []):
-			row_merge("requests", ["id"], {"id": mochi.uid(), "object": object_id, "type": str(r.get("type") or ""), "repository": str(r.get("repository") or ""), "source": str(r.get("source") or ""), "target": str(r.get("target") or ""), "status": str(r.get("status") or "open"), "title": str(r.get("title") or ""), "description": str(r.get("description") or ""), "draft": safe_int(r.get("draft")), "created": safe_int(r.get("created")) or now, "updated": safe_int(r.get("updated")) or now})
+			if not row_merge("requests", ["id"], {"id": mochi.uid(), "object": object_id, "type": str(r.get("type") or ""), "repository": str(r.get("repository") or ""), "source": str(r.get("source") or ""), "target": str(r.get("target") or ""), "status": str(r.get("status") or "open"), "title": str(r.get("title") or ""), "description": str(r.get("description") or ""), "draft": safe_int(r.get("draft")), "created": safe_int(r.get("created")) or now, "updated": safe_int(r.get("updated")) or now}, handle):
+				return None
 
+	# Both ends in this project, read through the handle, which holds the
+	# objects just written: links are keyed without the project, so a foreign
+	# end would overwrite another project's link.
 	for l in links:
 		source = remap.get(l["source"], l["source"])
 		target = remap.get(l["target"], l["target"])
-		if not link_endpoints_bound(project_id, source, target):
+		if not handle.exists("select 1 from objects where id=? and project=?", source, project_id) or not handle.exists("select 1 from objects where id=? and project=?", target, project_id):
 			continue
-		row_merge("links", ["source", "target", "linktype"], {"project": project_id, "source": source, "target": target, "linktype": str(l["linktype"]), "created": safe_int(l.get("created")) or now})
+		if not row_merge("links", ["source", "target", "linktype"], {"project": project_id, "source": source, "target": target, "linktype": str(l["linktype"]), "created": safe_int(l.get("created")) or now}, handle):
+			return None
 
-	if archive:
-		mochi.file.delete(archive)
-
-	row_set("projects", "id=?", [project_id], {"updated": now})
-
-	# Push a full snapshot to every subscriber - event_sync_batch applies it
-	# idempotently, so this replaces per-record broadcasts for bulk changes
-	for s in mochi.db.rows("select id from subscribers where project=?", project_id) or []:
-		send_project_data(project_id, s["id"])
-
-	return {"data": {"objects": len(objects), "comments": comment_count, "attachments": attachment_count, "links": len(links)}}
+	row_set("projects", "id=?", [project_id], {"updated": now}, handle)
+	return {"comments": comments, "attachments": attachments}
 
 # ============================================================================
 # Project Actions
@@ -2354,8 +2717,10 @@ def action_templates(a):
 # List user's projects
 def action_project_list(a):
 
+	# The owner's name is their row in the roster, which a replica holds too,
+	# found by the owner's identity (project_owner_name).
 	rows = mochi.db.rows("""select p.id, p.name, p.description, p.prefix, p.owner, p.server, p.created, p.updated,
-		(select s.name from subscribers s where s.project=p.id order by s.subscribed asc limit 1) as ownername
+		coalesce((select s.name from subscribers s where s.project=p.id and s.id=p.identity), case when p.owner=1 then (select s.name from subscribers s where s.project=p.id order by s.subscribed asc limit 1) end) as ownername
 		from projects p order by p.updated desc""")
 	projects = []
 	for row in rows or []:
@@ -2471,7 +2836,7 @@ def action_project_get(a):
 
 	# Get all fields in one query, group by class
 	fields = {}
-	all_fields = mochi.db.rows("select class, id, name, fieldtype, flags, multi, rank, card, position, rows, min, max, pattern, minlength, maxlength from fields where project=? order by class, rank", project_id) or []
+	all_fields = mochi.db.rows("select " + ", ".join(FIELD_COLUMNS) + " from fields where project=? order by class, rank", project_id) or []
 	for f in all_fields:
 		fields.setdefault(f["class"], []).append(f)
 
@@ -2673,9 +3038,12 @@ def action_project_delete(a):
 	# Notify subscribers that project is being deleted (before purging the
 	# subscriber list). Send from the project entity so receivers can verify
 	# the sender, matching broadcast_event and the verify_subscription check.
-	subscribers = mochi.db.rows("select id from subscribers where project=?", project_id)
+	# Core's replay record of each goes with the rows, as when one leaves
+	# (subscriber_remove).
+	subscribers = mochi.db.rows("select id from subscribers where project=?", project_id) or []
 	for sub in subscribers:
 		mochi.message.send(p2p_headers(project_id, sub["id"], "deleted"), {"project": project_id})
+		mochi.broadcast.subscriber.remove(project_id, sub["id"])
 
 	purge_project(project_id)
 	# Delete entity
@@ -2759,21 +3127,44 @@ def check_project_access(user_id, project_id, level):
 # subject may do on resource. Its rules are replaced by an allow for every
 # operation the level includes and a deny for each level above it ("none"
 # denies all four), so its own rows decide every operation before a group's,
-# "+"'s or "*"'s broader grant is reached.
+# "+"'s or "*"'s broader grant is reached. A group's "none" is a single "*"
+# deny instead: core takes a group's "*" deny as a veto over every group's
+# grant on the resource, where its denies of the four levels would lose to
+# another group's allow, and a member of a group the owner gave no access
+# would keep what another of their groups gives.
 def access_ceiling(subject, resource, level, granter):
 	included = ACCESS_LEVELS[ACCESS_LEVELS.index(level):] if level in ACCESS_LEVELS else []
+	if subject.startswith("@") and level == "none":
+		rules = {"*": False}
+	else:
+		rules = {op: op in included for op in ACCESS_LEVELS}
 	# In one write where core offers it, so a failure part way cannot leave the
 	# subject with some of its rules or none.
 	if hasattr(mochi.access, "replace"):
-		mochi.access.replace(subject, resource, {op: op in included for op in ACCESS_LEVELS}, granter)
+		mochi.access.replace(subject, resource, rules, granter)
 		return
 	for op in ACCESS_LEVELS + ["*"]:
 		mochi.access.revoke(subject, resource, op)
-	for op in ACCESS_LEVELS:
-		if op in included:
+	for op, grant in rules.items():
+		if grant:
 			mochi.access.allow(subject, resource, op, granter)
 		else:
 			mochi.access.deny(subject, resource, op, granter)
+
+# access_veto(resource): give each group whose rules on resource allow nothing
+# the single "*" deny a group's "No access" is (access_ceiling).
+def access_veto(resource):
+	groups = {}
+	for rule in mochi.access.list.resource(resource) or []:
+		subject = rule.get("subject") or ""
+		if subject.startswith("@"):
+			groups.setdefault(subject, []).append(rule)
+	for subject, rules in groups.items():
+		if [rule for rule in rules if rule.get("grant")]:
+			continue
+		if len(rules) == 1 and rules[0].get("operation") == "*":
+			continue
+		access_ceiling(subject, resource, "none", rules[0].get("granter") or "")
 
 # access_widen(resource): after "*" is given a level, drop the deny of view "+"
 # holds when that is all it holds, as a project made without readable has it.
@@ -2844,8 +3235,19 @@ def row_input(value):
 	row_value = value.get("value")
 	return (field if type(field) == "string" else "", row_value if type(row_value) == "string" else "")
 
-# Display name of the project's owner: the anchor subscriber row.
+# Display name of the project's owner: their row in the roster, found by the
+# owner's identity, which an owner records at creation and a replica takes from
+# the owner's schema and sync batch. An owned project from before the identity
+# was recorded falls back on the anchor subscriber row; a replica that has not
+# heard it yet names nobody, since the roster's order there says nothing.
 def project_owner_name(project_id):
+	owner = get_owner_identity(project_id)
+	if owner:
+		row = mochi.db.row("select name from subscribers where project=? and id=?", project_id, owner)
+		if row:
+			return row["name"] or ""
+	if not mochi.db.exists("select 1 from projects where id=? and owner=1", project_id):
+		return ""
 	row = mochi.db.row("select name from subscribers where project=? order by subscribed, rowid limit 1", project_id)
 	return (row["name"] if row else "") or ""
 
@@ -3076,7 +3478,7 @@ def log_activity(object_id, user, action, field="", oldvalue="", newvalue="", ha
 	when this host owns the project. Subscribers insert the same row by UID
 	so the activity table stays a converged append-only log. Within a
 	transaction (handle) the entry is written through it and its broadcast
-	added to events, for events_broadcast once it commits."""
+	added to events, for events_commit."""
 	database = handle or mochi.db
 	activity_id = mochi.uid()
 	now = mochi.time.now()
@@ -3099,11 +3501,25 @@ def log_activity(object_id, user, action, field="", oldvalue="", newvalue="", ha
 		else:
 			broadcast_event(owned["project"], "activity/log", data)
 
-# events_broadcast(project_id, events): send subscribers the events a
-# transaction gathered, in order, once it has committed.
-def events_broadcast(project_id, events):
+# events_commit(project_id, events, handle): send subscribers the events a change
+# gathered ({event, data}, in order) with its transaction (handle), then commit
+# it. They are handed over while the transaction holds the write lock every
+# change of an object takes its version under (version_take), so the project's
+# broadcasts, which core numbers and each subscriber applies in turn, follow the
+# order of its versions. Sent after the commit, a later change's could go
+# first, and a copy holding its version would drop the earlier change, fields
+# only that one wrote included. Core sends them as the transaction commits, in
+# commit order, and none for a change rolled back; an older core sends each at
+# once (broadcast_event). A subscriber failing the view check is dropped
+# (subscribers_revalidate) once the change has committed.
+def events_commit(project_id, events, handle):
+	stale = False
 	for event in events:
-		broadcast_event(project_id, event["event"], event["data"])
+		if broadcast_event(project_id, event["event"], event["data"], None, handle):
+			stale = True
+	handle.commit()
+	if stale:
+		subscribers_revalidate(project_id)
 
 def project_creator(project_id):
 	"""The identity that created the project, as core records it: the project
@@ -3111,11 +3527,12 @@ def project_creator(project_id):
 	rows = mochi.entity.get(project_id)
 	return rows[0]["parent"] if rows else ""
 
-def get_owner_identity(project_id):
-	"""The identity that created the project, recorded on its row. A row with
-	none recorded asks core; the earliest subscriber is no stand-in, since an
-	owner need not be subscribed."""
-	row = mochi.db.row("select identity from projects where id=?", project_id)
+def get_owner_identity(project_id, handle=None):
+	"""The identity that created the project, recorded on its row (on a
+	replica, the one its owner names). A row with none recorded asks core; the
+	earliest subscriber is no stand-in, since an owner need not be subscribed.
+	Within a transaction (handle) the row is read through it."""
+	row = (handle or mochi.db).row("select identity from projects where id=?", project_id)
 	if row and row["identity"]:
 		return row["identity"]
 	return project_creator(project_id)
@@ -3158,11 +3575,12 @@ def notify_mentions(object_id, project_id, content, author_id, author_name):
 	notify() writes into the calling principal's notification store - there is
 	no recipient argument - so raising it here would tell the comment's author
 	that they had been mentioned and tell the mentioned subscriber nothing.
-	Same shape as forums and feeds: one message per recipient."""
+	Same shape as forums and feeds: one message per recipient, each a member
+	who may still see the project (recipients), since the excerpt is the
+	comment's own text."""
 	content_lower = content.lower()
-	subscribers = mochi.db.rows(
-		"select id, name from subscribers where project=? and id!=?",
-		project_id, author_id)
+	allowed, _ = recipients(project_id)
+	subscribers = [s for s in allowed if s["id"] != author_id]
 	if not subscribers:
 		return
 	project = get_project(project_id)
@@ -3201,14 +3619,14 @@ def event_mention_notify(e):
 	body = mochi.app.label("notifications.body.mentioned_you", author=author, excerpt=excerpt)
 	notify("mention", project_id, title, body, url, event_id="mention:" + (object_id or project_id))
 
-# Whether a move may promote an object to the top level: one already there is
-# left as it is, and one under a parent needs a class the hierarchy allows at
-# the top level, as object/update requires for the same change.
-def promotable(project_id, object_id, obj_class):
-	row = mochi.db.row("select parent from objects where id=?", object_id)
-	if not row or not row["parent"]:
+# Whether a move may promote the object in row (its id, class and parent, read
+# under the move's lock) to the top level: one already there is left as it is,
+# and one under a parent needs a class the hierarchy allows at the top level,
+# as object/update requires for the same change. Reads go through handle.
+def promotable(project_id, row, handle):
+	if not row["parent"]:
 		return True
-	return mochi.db.exists("select 1 from hierarchy where project=? and class=? and parent=''", project_id, obj_class)
+	return handle.exists("select 1 from hierarchy where project=? and class=? and parent=''", project_id, row["class"])
 
 def would_create_cycle(object_id, new_parent_id, handle=None):
 	"""Check if setting new_parent_id as parent of object_id would create a cycle."""
@@ -3235,24 +3653,22 @@ def would_create_cycle(object_id, new_parent_id, handle=None):
 # Answers an error label and status, or None once the parent is set or when it
 # was that one already. The values written are added to changes, which the
 # caller passes to values_broadcast after telling subscribers of the parent.
-# Every read and write goes through handle, the caller's open transaction, and
-# the activity entry's broadcast is added to events (log_activity).
-def object_reparent(project_id, row, parent, user, now, changes, handle, events):
+# Every read and write goes through handle, the caller's open transaction, each
+# object it changes takes its version for the change from versions
+# (version_take), and the activity entry's broadcast is added to events
+# (log_activity).
+def object_reparent(project_id, row, parent, user, now, changes, versions, handle, events):
 	object_id = row["id"]
 	old_parent = row["parent"]
 	if parent == old_parent:
 		return None
 	if parent and would_create_cycle(object_id, parent, handle):
 		return ("errors.cannot_set_parent_would_create_a_cycle", 400)
-	parent_class = ""
-	if parent:
-		parent_row = handle.row("select class from objects where id=? and project=?", parent, project_id)
-		if not parent_row:
-			return ("errors.parent_object_not_found", 404)
-		parent_class = parent_row["class"]
-	if not handle.exists("select 1 from hierarchy where project=? and class=? and parent=?", project_id, row["class"], parent_class):
-		return ("errors.parent_hierarchy_disallowed", 400)
+	problem = hierarchy_check(project_id, row["class"], parent, handle)
+	if problem:
+		return problem
 	object_set(object_id, {"parent": parent, "updated": now}, handle)
+	version_take(versions, object_id, handle)
 	log_activity(object_id, user, "moved", "parent", old_parent, parent, handle, events)
 	if parent:
 		parent_values = handle.rows('select field, value from "values" where object=?', parent) or []
@@ -3264,48 +3680,74 @@ def object_reparent(project_id, row, parent, user, now, changes, handle, events)
 				sync_fields[view["columns"]] = parent_val_map.get(view["columns"], "")
 			if view["rows"]:
 				sync_fields[view["rows"]] = parent_val_map.get(view["rows"], "")
-		values_cascade(project_id, [object_id] + get_all_descendants(object_id, 0, handle), sync_fields, now, changes, handle)
+		values_cascade(project_id, [object_id] + get_all_descendants(object_id, 0, handle), sync_fields, now, changes, versions, handle)
 	return None
 
-# values_cascade(project_id, ids, values, now, changes, handle): give each
-# object of ids those of values ({field: value}) its own class has the field for
-# and accepts, and leave it the rest. Fields are per class, so a child of another
-# class may lack the field, or not offer the option, its parent's move names.
-# Each object whose values change is added to changes as {"id", "values"}.
-# Within a transaction (handle) every read and write goes through it.
-def values_cascade(project_id, ids, values, now, changes, handle=None):
-	database = handle or mochi.db
+# hierarchy_check(project_id, obj_class, parent, handle) -> an error label and
+# status, or None when the hierarchy allows an object of obj_class under parent,
+# "" being the top level, judged on the parent's class as handle reads it.
+def hierarchy_check(project_id, obj_class, parent, handle):
+	parent_class = ""
+	if parent:
+		parent_row = handle.row("select class from objects where id=? and project=?", parent, project_id)
+		if not parent_row:
+			return ("errors.parent_object_not_found", 404)
+		parent_class = parent_row["class"]
+	if not handle.exists("select 1 from hierarchy where project=? and class=? and parent=?", project_id, obj_class, parent_class):
+		return ("errors.parent_hierarchy_disallowed", 400)
+	return None
+
+# children_check(project_id, object_id, obj_class, handle) -> (key, code) or
+# None: whether each of the object's children may stay under it once it is of
+# obj_class, read through handle, the change's transaction. A class change must
+# not leave children the hierarchy no longer allows under it.
+def children_check(project_id, object_id, obj_class, handle):
+	for child in handle.rows("select distinct class from objects where project=? and parent=?", project_id, object_id) or []:
+		if not handle.exists("select 1 from hierarchy where project=? and class=? and parent=?", project_id, child["class"], obj_class):
+			return ("errors.class_hierarchy_disallowed", 400)
+	return None
+
+# values_cascade(project_id, ids, values, now, changes, versions, handle): give
+# each object of ids those of values ({field: value}) its own class has the
+# field for and accepts, and leave it the rest. Fields are per class, so a child
+# of another class may lack the field, or not offer the option, its parent's
+# move names. Each object whose values change is added to changes as {"id",
+# "values", "updated", "version"}, its version for the change taken from
+# versions (version_take). Every read and write goes through handle, the
+# change's transaction.
+def values_cascade(project_id, ids, values, now, changes, versions, handle):
 	accepted = {}
 	for object_id in ids:
-		row = database.row("select class from objects where id=? and project=?", object_id, project_id)
+		row = handle.row("select class from objects where id=? and project=?", object_id, project_id)
 		if not row:
 			continue
 		taken = {}
 		for field, value in values.items():
 			key = (row["class"], field)
 			if key not in accepted:
-				accepted[key] = database.exists("select 1 from fields where project=? and class=? and id=?", project_id, row["class"], field) and validate_field_value(project_id, row["class"], field, value, handle) == None
+				accepted[key] = handle.exists("select 1 from fields where project=? and class=? and id=?", project_id, row["class"], field) and validate_field_value(project_id, row["class"], field, value, handle) == None
 			if not accepted[key]:
 				continue
-			current = database.row("select value from \"values\" where object=? and field=?", object_id, field)
+			current = handle.row("select value from \"values\" where object=? and field=?", object_id, field)
 			if (current["value"] if current else "") == value:
 				continue
 			value_merge(object_id, field, value, handle)
 			taken[field] = value
 		if taken:
 			object_set(object_id, {"updated": now}, handle)
-			changes.append({"id": object_id, "values": taken, "updated": now})
+			changes.append({"id": object_id, "values": taken, "updated": now, "version": version_take(versions, object_id, handle)})
 
-# values_broadcast(project_id, changes, user): tell subscribers the values
-# values_cascade wrote, one values/update per object, with the owner's time.
-# Marked sync, as the owner notifies no watcher of an object a cascade reached
-# either.
-def values_broadcast(project_id, changes, user):
+# values_broadcast(project_id, changes, user, events): add to events, for
+# events_commit, the values/update events that tell subscribers the values
+# values_cascade wrote, one per object, with the owner's time and the object's
+# version. Marked sync, as the owner notifies no watcher of an object a cascade
+# reached either.
+def values_broadcast(project_id, changes, user, events):
 	for change in changes:
-		broadcast_event(project_id, "values/update", {
+		events.append({"event": "values/update", "data": {
 			"project": project_id, "id": change["id"], "updated": change["updated"],
-			"values": change["values"], "user": user, "sync": True,
-		})
+			"values": change["values"], "user": user, "sync": True, "version": change["version"],
+		}})
 
 def get_all_descendants(object_id, depth=0, handle=None):
 	"""Get all descendant object IDs recursively, through handle when one is
@@ -3320,24 +3762,42 @@ def get_all_descendants(object_id, depth=0, handle=None):
 	return result
 
 def delete_object_cascade(project_id, object_id, user=""):
-	"""Delete an object and all its children recursively."""
-	# First, recursively delete all children
-	children = mochi.db.rows("select id from objects where parent=?", object_id) or []
-	for child in children:
-		delete_object_cascade(project_id, child["id"], user)
+	"""Delete an object and every object of the project under it, children
+	before their parents, each with a broadcast."""
+	for current in reversed(tree_collect(object_id, "select id from objects where parent=? and project=?", project_id, "select count(*) as count from objects where project=?", project_id)):
+		row_remove("requests", "object=?", [current])
+		attachment_clear(current)
+		row_remove("watchers", "object=?", [current])
+		mochi.db.execute("delete from activity where object=?", current)
+		delete_object_comments(current, project_id)
+		values_remove_object(current)
+		row_remove("links", "source=? or target=?", [current, current])
+		object_remove(current)
+		broadcast_event(project_id, "object/delete", {"project": project_id, "id": current, "user": user})
 
-	# Then delete this object's related data
-	row_remove("requests", "object=?", [object_id])
-	attachment_clear(object_id)
-	row_remove("watchers", "object=?", [object_id])
-	mochi.db.execute("delete from activity where object=?", object_id)
-	delete_object_comments(object_id, project_id)
-	values_remove_object(object_id)
-	row_remove("links", "source=? or target=?", [object_id, object_id])
-	object_remove(object_id)
-
-	# Broadcast delete event for each object
-	broadcast_event(project_id, "object/delete", {"project": project_id, "id": object_id, "user": user})
+# tree_collect(root, children, scope, size, bound) -> root and every row under
+# it, breadth-first, each once: children is the query answering a row's
+# children (its parent, then scope), size the one counting the rows there may
+# be (bound). Collected over a visited set before anything is deleted, so a
+# parent loop - an object or a comment its own parent, or two naming each
+# other, which an owner can send a replica - ends rather than recursing
+# without end.
+def tree_collect(root, children, scope, size, bound):
+	order = [root]
+	seen = {root: True}
+	level = [root]
+	for _ in range(mochi.db.row(size, bound)["count"] + 1):
+		following = []
+		for parent in level:
+			for child in mochi.db.rows(children, parent, scope) or []:
+				if child["id"] not in seen:
+					seen[child["id"]] = True
+					following.append(child["id"])
+		if not following:
+			break
+		order.extend(following)
+		level = following
+	return order
 
 # Delete an object's attachments, or with kind "comment" a comment's. `preserve`
 # keeps rows whose bytes live here (entity == ""): resync repair may drop
@@ -3380,16 +3840,18 @@ def object_replicate(project_id, answer, obj_class, parent, title, title_field, 
 	if not identifier(object_id) or foreign_object(object_id, project_id):
 		return False
 	now = mochi.time.now()
+	version = owner_version(answer.get("version")) or 0
 	if not mochi.db.exists("select 1 from objects where id=?", object_id):
-		object_merge({"id": object_id, "project": project_id, "class": obj_class, "number": safe_int(answer.get("number")), "parent": parent, "rank": rank_copy(answer.get("rank")), "created": safe_int(answer.get("created")) or now, "updated": safe_int(answer.get("updated")) or now})
-	if title and title_field:
-		value_merge(object_id, title_field, title)
-	values = answer.get("values")
-	if type(values) == "dict" and object_bound(project_id, object_id):
-		for field, value in values.items():
-			if type(field) != "string" or type(value) != "string" or value_refused(project_id, object_id, field, value):
-				continue
-			value_merge(object_id, field, value)
+		object_merge({"id": object_id, "project": project_id, "class": obj_class, "number": safe_int(answer.get("number")), "parent": parent, "rank": rank_copy(answer.get("rank")), "created": safe_int(answer.get("created")) or now, "updated": safe_int(answer.get("updated")) or now, "version": version})
+	# The create's broadcast, and a later change's, may have landed first: the
+	# values of a copy past the answer's version then stand.
+	if not mochi.db.exists("select 1 from objects where id=? and version>?", object_id, version):
+		if title and title_field:
+			value_merge(object_id, title_field, title)
+		values = answer.get("values")
+		if type(values) == "dict" and object_bound(project_id, object_id):
+			for field, value in values.items():
+				value_write(project_id, object_id, field, value)
 	row_set("projects", "id=?", [project_id], {"updated": now})
 	# Auto-watch creator locally so subscriber gets notifications
 	row_merge("watchers", ["object", "user"], {"object": object_id, "user": user_id, "created": now})
@@ -3576,78 +4038,122 @@ def action_object_get(a):
 	}}
 
 # object_update(project_id, row, parent, new_class, user_id) -> the answer, or
-# {"error", "code"}: give the object in row (the whole row) the parent (None
-# keeps it) and class (None or "" keeps it) an update action or a forwarded one
-# asks for. A new parent names no place among its children, so the object goes
-# after the last of them, under the write lock that mints its key, with the
-# values the reparent cascades, in one transaction; subscribers are told after
-# it commits. The answer names the parent, class and keys written, with the
-# owner's time for them, which the subscriber that forwarded the update writes.
+# {"error", "code"}: give the object in row the parent (None keeps it) and class
+# (None or "" keeps it) an update action or a forwarded one asks for. The
+# object's id, class and parent are read again under the lock, since a move or
+# an update beside this one may have changed them since row was read, and the
+# hierarchy, whether anything changes and the activity's old values are judged
+# on what it holds then. The hierarchy is judged on the class and parent the
+# object ends with: a new class under the parent it keeps, or under the one it
+# takes, which the reparent judges. The class is written first, so the
+# reparent's cascade gives the object the values its new class holds. A new
+# parent names no place among its children, so the object goes after the last
+# of them, under the write lock that mints its key, with the values the
+# reparent cascades, in one transaction; subscribers are told before it commits
+# (events_commit). The answer names the parent, class and keys written, with
+# the owner's time and the object's version for them (version_take), which the
+# subscriber that forwarded the update writes.
 def object_update(project_id, row, parent, new_class, user_id):
 	object_id = row["id"]
 	now = mochi.time.now()
 	changes = []
 	events = []
 	ranks = []
+	versions = {}
 	handle = rank_transaction(object_id)
-	if parent != None:
-		problem = object_reparent(project_id, row, parent, user_id, now, changes, handle, events)
+	row = handle.row("select id, class, parent from objects where id=? and project=?", object_id, project_id)
+	if not row:
+		handle.rollback()
+		return {"error": "errors.object_not_found", "code": 404}
+	target = new_class if new_class else row["class"]
+	moved = parent != None and parent != row["parent"]
+	if target != row["class"]:
+		problem = None if moved else hierarchy_check(project_id, target, row["parent"], handle)
+		if problem and problem[1] == 400:
+			problem = ("errors.class_hierarchy_disallowed", 400)
+		if not problem:
+			problem = children_check(project_id, object_id, target, handle)
 		if problem:
 			handle.rollback()
 			return {"error": problem[0], "code": problem[1]}
-		if parent != row["parent"]:
-			key = rank_after_all(project_id, object_id, handle)
-			handle.execute("update objects set rank=? where id=?", key, object_id)
-			ranks.append({"id": object_id, "rank": key, "updated": now})
-	if new_class and new_class != row["class"]:
-		object_set(object_id, {"class": new_class}, handle)
-		log_activity(object_id, user_id, "updated", "class", row["class"], new_class, handle, events)
+		object_set(object_id, {"class": target}, handle)
+		log_activity(object_id, user_id, "updated", "class", row["class"], target, handle, events)
+	if moved:
+		problem = object_reparent(project_id, {"id": object_id, "class": target, "parent": row["parent"]}, parent, user_id, now, changes, versions, handle, events)
+		if problem:
+			handle.rollback()
+			return {"error": problem[0], "code": problem[1]}
+		key = rank_after_all(project_id, object_id, handle)
+		handle.execute("update objects set rank=? where id=?", key, object_id)
+		ranks.append({"id": object_id, "rank": key, "updated": now})
 	object_set(object_id, {"updated": now}, handle)
-	handle.commit()
+	version = version_take(versions, object_id, handle)
+	for r in ranks:
+		r["version"] = version
 
-	events_broadcast(project_id, events)
 	parent = parent if parent != None else row["parent"]
-	new_class = new_class if new_class else row["class"]
-	broadcast_event(project_id, "object/update", {
-		"project": project_id, "id": object_id, "parent": parent, "class": new_class,
+	events.append({"event": "object/update", "data": {
+		"project": project_id, "id": object_id, "parent": parent, "class": target, "version": version,
 		"user": user_id, "updated": now,
-	})
+	}})
 	# After the parent: a value names an object, which a subscriber pulls the
 	# project for when it lacks one.
-	values_broadcast(project_id, changes, user_id)
-	rank_broadcast(project_id, ranks, now, user_id)
-	return {"success": True, "updated": now, "parent": parent, "class": new_class, "ranks": ranks}
+	values_broadcast(project_id, changes, user_id, events)
+	rank_broadcast(project_id, ranks, now, user_id, events)
+	events_commit(project_id, events, handle)
+	return {"success": True, "updated": now, "version": version, "parent": parent, "class": target, "ranks": ranks}
 
 # update_answer(project_id, object_id, answer, parent, new_class): write to this
 # copy what the owner's answer to a forwarded update says it wrote, with the
 # owner's time, so this copy's updated does not run ahead of the owner's next
-# object/update and drop it at the LWW gate. An answer older than this copy's
-# time, which a later change the owner broadcast has already reached, changes
-# nothing. An owner that predates naming the parent and class it wrote is taken
-# to have written those asked for (parent and new_class). A class this copy
-# does not hold yet, from a class event that has not landed, would fail the
-# write's foreign key after the owner made the change, so it is left to a pull
-# of the project, which brings both.
+# object/update. An answer carrying the object's version is written only past
+# the copy's (answer_claim); one from an owner that predates versions, only
+# when no older than the copy's time. An owner that predates naming the parent
+# and class it wrote is taken to have written those asked for (parent and
+# new_class). A class this copy does not hold yet, from a class event that has
+# not landed, would fail the write's foreign key after the owner made the
+# change, so it is left to a pull of the project, which brings both, put off
+# past the request (resync_defer): a pull runs for up to SCHEMA_TIME, longer
+# than a client waits.
 def update_answer(project_id, object_id, answer, parent, new_class):
 	answer = answer if type(answer) == "dict" else {}
 	now = owner_time(answer.get("updated")) or mochi.time.now()
+	version = owner_version(answer.get("version"))
 	if type(answer.get("parent")) == "string":
 		parent = answer["parent"]
 	if type(answer.get("class")) == "string":
 		new_class = answer["class"]
-	local = mochi.db.row("select updated from objects where id=? and project=?", object_id, project_id)
-	if not local or (local["updated"] or 0) > now:
-		return
 	changes = {"updated": now}
 	if parent != None:
 		changes["parent"] = parent
+	pull = False
 	if new_class:
 		if mochi.db.exists("select 1 from classes where project=? and id=?", project_id, new_class):
 			changes["class"] = new_class
 		else:
-			request_resync(project_id)
-	object_set(object_id, changes)
-	ranks_apply(project_id, answer.get("ranks"), now)
+			pull = True
+	handle = mochi.db.transaction()
+	missing = False
+	if version != None:
+		# A class left to the pull leaves the copy short of the change, so its
+		# version is not recorded and the broadcast still lands.
+		if answer_claim(project_id, object_id, version, not pull, handle):
+			for r in sequence(answer.get("ranks")):
+				if type(r) == "dict" and r.get("id") == object_id and rank_valid(r.get("rank")):
+					changes["rank"] = r["rank"]
+			object_set(object_id, changes, handle)
+	else:
+		local = handle.row("select updated from objects where id=? and project=?", object_id, project_id)
+		if not local or (local["updated"] or 0) > now:
+			handle.rollback()
+			if pull:
+				resync_defer(project_id, False, 0)
+			return
+		object_set(object_id, changes, handle)
+		missing = ranks_apply(project_id, answer.get("ranks"), now, True, handle)[1]
+	handle.commit()
+	if pull or missing:
+		resync_defer(project_id, False, 0)
 
 def action_object_update(a):
 
@@ -3811,22 +4317,13 @@ def action_object_move(a):
 	if not row:
 		a.error.label(404, "errors.object_not_found")
 		return
-	if a.input("promote") == "true" and not promotable(project_id, object_id, row["class"]):
-		a.error.label(400, "errors.parent_hierarchy_disallowed")
-		return
 
 	field = a.input("field") or ""
 	value = a.input("value")  # New column value
 	# A drop on the column for no value clears the field: an empty value
 	# keeps it, as a reorder sends.
 	clear = a.input("clear") == "true"
-
-	# Every value the move writes is checked before it changes anything.
 	row_field, row_value = row_input(a.input("row"))
-	invalid = move_check(project_id, row["class"], field, value, row_field, row_value, clear) or move_place_check(object_id, a.input("after"), a.input("before"))
-	if invalid:
-		a.error.label(400, invalid["key"], **(invalid.get("args") or {}))
-		return
 
 	# A drop into another parent's children at a position: the new parent and
 	# the place among its children go in one move, not an update and then a
@@ -3842,22 +4339,28 @@ def action_object_move(a):
 		"after": a.input("after"), "before": a.input("before"), "rank": a.input("rank"),
 	}, a.user.identity.id)
 	if answer.get("error"):
-		a.error.label(answer["code"], answer["error"])
+		a.error.label(answer["code"], answer["error"], **(answer.get("args") or {}))
 		return
 	return {"data": answer}
 
 # object_move(project_id, row, move, user_id, notify=False) -> the answer, or
-# {"error", "code"}: move the object in row (its id, class and parent) as a move
-# action or a forwarded one asks, once its inputs are checked. move holds the
-# field and value of the column it goes into (clear empties it, an empty value
-# keeps it), its lane as lane and row, the parent it goes under (None keeps it)
-# or promote to the top level, and its place (move_rank): after and before, the
-# objects it was dropped between, or rank, a position within scope, which is
-# the parent when none is named. The parent, the values, the lane and the keys
-# are written in one transaction, under the write lock its keys are minted
+# {"error", "code", "args"}: move the object row names (its id) as a move action
+# or a forwarded one asks. move holds the field and value of the column it goes
+# into (clear empties it, an empty value keeps it), its lane as lane and row,
+# the parent it goes under (None keeps it) or promote to the top level, and its
+# place (move_rank): after and before, the objects it was dropped between, or
+# rank, a position within scope, which is the parent when none is named. The
+# object's id, class and parent are read again under the lock, since a move or
+# an update beside this one may have changed them since row was read, and the
+# promote's hierarchy, every value the move writes (move_check), whether the
+# parent changes and the activity's old values are judged on what it holds
+# then, before anything is written. The parent, the values, the lane and the
+# keys are written in one transaction, under the write lock its keys are minted
 # under, so a failure leaves no change subscribers are not told of; they are
-# told after it commits. notify tells the owner when watching. The answer names
-# the parent and values the move wrote and every key, with the owner's time.
+# told before it commits (events_commit). notify tells the owner when watching,
+# once it has. The answer names
+# the parent and values the move wrote and every key, with the owner's time and
+# the object's version for the move (version_take).
 def object_move(project_id, row, move, user_id, notify=False):
 	object_id = row["id"]
 	field = move["field"]
@@ -3867,9 +4370,21 @@ def object_move(project_id, row, move, user_id, notify=False):
 	changes = []
 	events = []
 	handle = rank_transaction(object_id)
+	versions = {}
+	row = handle.row("select id, class, parent from objects where id=? and project=?", object_id, project_id)
+	if not row:
+		handle.rollback()
+		return {"error": "errors.object_not_found", "code": 404}
+	if move["promote"] and not promotable(project_id, row, handle):
+		handle.rollback()
+		return {"error": "errors.parent_hierarchy_disallowed", "code": 400}
+	invalid = move_check(project_id, row["class"], field, move["value"], move["lane"], move["row"], move["clear"], handle) or move_place_check(object_id, move["after"], move["before"])
+	if invalid:
+		handle.rollback()
+		return {"error": invalid["key"], "args": invalid.get("args"), "code": 400}
 	parent_changed = False
 	if parent != None:
-		problem = object_reparent(project_id, row, parent, user_id, now, changes, handle, events)
+		problem = object_reparent(project_id, row, parent, user_id, now, changes, versions, handle, events)
 		if problem:
 			handle.rollback()
 			return {"error": problem[0], "code": problem[1]}
@@ -3907,8 +4422,8 @@ def object_move(project_id, row, move, user_id, notify=False):
 			parent_changed = True
 
 	ranks = move_rank(project_id, object_id, {
-		"field": field, "value": target_value, "lane": lane, "row": move["row"], "parent": scope,
-	}, {"after": move["after"], "before": move["before"], "rank": move["rank"]}, value_changed, handle)
+		"field": field, "value": target_value, "lane": lane, "row": move["row"], "parent": scope, "class": row["class"],
+	}, {"after": move["after"], "before": move["before"], "rank": move["rank"]}, value_changed, versions, handle)
 
 	# Cascade the column and lane to the descendants that take them
 	updated_values = {}
@@ -3917,33 +4432,34 @@ def object_move(project_id, row, move, user_id, notify=False):
 	if lane_changed:
 		updated_values[lane] = move["row"]
 	if updated_values:
-		values_cascade(project_id, get_all_descendants(object_id, 0, handle), updated_values, now, changes, handle)
+		values_cascade(project_id, get_all_descendants(object_id, 0, handle), updated_values, now, changes, versions, handle)
 	object_set(object_id, {"updated": now}, handle)
+	# A move counts as a change of the object whatever it wrote, as its time
+	# moves on.
+	version = version_take(versions, object_id, handle)
 	final = handle.row("select parent from objects where id=?", object_id)
-	handle.commit()
 
-	events_broadcast(project_id, events)
 	# Subscribers learn a new parent the way object/update tells them of one.
 	if parent_changed:
-		broadcast_event(project_id, "object/update", {
+		events.append({"event": "object/update", "data": {
 			"project": project_id, "id": object_id, "parent": final["parent"],
-			"class": row["class"], "user": user_id, "updated": now,
-		})
-	values_broadcast(project_id, changes, user_id)
+			"class": row["class"], "user": user_id, "updated": now, "version": version,
+		}})
+	values_broadcast(project_id, changes, user_id, events)
 	if updated_values:
-		broadcast_event(project_id, "values/update", {
+		events.append({"event": "values/update", "data": {
 			"project": project_id, "id": object_id, "updated": now,
-			"values": updated_values, "user": user_id
-		})
-		if notify:
-			notify_watchers(object_id, project_id, get_owner_identity(project_id), user_id, mochi.app.label("notifications.body.updated"))
-
+			"values": updated_values, "user": user_id, "version": version,
+		}})
 	# The keys the move wrote: the moved object's, with the time it changed, and
 	# any a tied neighbour or a spread took.
 	for r in ranks:
 		if r["id"] == object_id:
 			r["updated"] = now
-	rank_broadcast(project_id, ranks, now, user_id)
+	rank_broadcast(project_id, ranks, now, user_id, events)
+	events_commit(project_id, events, handle)
+	if updated_values and notify:
+		notify_watchers(object_id, project_id, get_owner_identity(project_id), user_id, mochi.app.label("notifications.body.updated"))
 
 	# The values the move wrote on the object, those its new parent gave it
 	# first, for the subscriber that forwarded it to write as they are.
@@ -3955,31 +4471,73 @@ def object_move(project_id, row, move, user_id, notify=False):
 		written[field] = target_value
 	if lane:
 		written[lane] = move["row"]
-	return {"success": True, "ranks": ranks, "updated": now, "parent": final["parent"], "values": written}
+	return {"success": True, "ranks": ranks, "updated": now, "parent": final["parent"], "values": written, "version": version}
 
 # move_answer(project_id, object_id, answer): write to this copy what the
 # owner's answer to a forwarded move says it wrote: the object's parent and
 # values and every key, with the owner's time, so this copy's updated does not
-# run ahead of the owner's next object/update and drop it at the LWW gate. An
-# answer older than this copy's time for the object, which a later change the
-# owner broadcast has already reached, changes nothing of it. An owner that
-# predates naming the parent and values it wrote may not have written those
-# asked for, so nothing is written and the project is pulled again.
+# run ahead of the owner's next object/update. With the object's version, each
+# object is written only past the copy's version for it (answer_claim, and
+# ranks_apply for the keys of the others); from an owner that predates
+# versions, only when the answer is no older than the copy's time. An owner
+# that predates naming the parent and values it wrote may not have written
+# those asked for, so nothing is written: its broadcasts bring the move.
 def move_answer(project_id, object_id, answer):
 	answer = answer if type(answer) == "dict" else {}
 	now = owner_time(answer.get("updated"))
 	if not now or type(answer.get("parent")) != "string" or type(answer.get("values")) != "dict":
-		request_resync(project_id)
 		return
-	local = mochi.db.row("select updated from objects where id=? and project=?", object_id, project_id)
-	if local and (local["updated"] or 0) <= now:
-		for field, value in answer["values"].items():
-			if type(field) == "string" and type(value) == "string" and not value_refused(project_id, object_id, field, value):
-				value_merge(object_id, field, value)
-		object_set(object_id, {"parent": answer["parent"], "updated": now})
-	# The keys the owner wrote, the moved object's and any it untied or spread,
-	# so this copy orders the objects as the owner does.
-	ranks_apply(project_id, answer.get("ranks"), now)
+	version = owner_version(answer.get("version"))
+	handle = mochi.db.transaction()
+	if version != None:
+		ranks = []
+		changes = {"parent": answer["parent"], "updated": now}
+		for r in sequence(answer.get("ranks")):
+			if type(r) == "dict" and r.get("id") == object_id:
+				if rank_valid(r.get("rank")):
+					changes["rank"] = r["rank"]
+			else:
+				ranks.append(r)
+		if answer_claim(project_id, object_id, version, True, handle):
+			answer_values(project_id, object_id, answer["values"], handle)
+			object_set(object_id, changes, handle)
+	else:
+		ranks = answer.get("ranks")
+		local = handle.row("select updated from objects where id=? and project=?", object_id, project_id)
+		if local and (local["updated"] or 0) <= now:
+			answer_values(project_id, object_id, answer["values"], handle)
+			object_set(object_id, {"parent": answer["parent"], "updated": now}, handle)
+	# The keys the owner wrote, any it untied or spread, so this copy orders the
+	# objects as the owner does.
+	missing = ranks_apply(project_id, ranks, now, True, handle)[1]
+	handle.commit()
+	if missing:
+		resync_defer(project_id, False, 0)
+
+# answer_values(project_id, object_id, values, handle): write the values an
+# owner's answer names for object_id, each a string a field may hold
+# (value_refused), through handle.
+def answer_values(project_id, object_id, values, handle):
+	for field, value in values.items():
+		value_write(project_id, object_id, field, value, handle)
+
+# answer_claim(project_id, object_id, version, record, handle) -> whether this
+# copy takes what an owner's answer to a forwarded change says it wrote of
+# object_id at version: only when the copy's version is not past it, since a
+# later change's broadcast may have landed first. At the version itself, one of
+# the change's own events has landed, and the answer, the whole of what the
+# change wrote of the object, brings what the others carry. With record, the
+# copy keeps the version only when it is the next after its own: it then holds
+# every change before it, where one still on its way would be dropped as
+# older. An answer further ahead is written without it, and the broadcasts
+# between bring the copy up to it. Reads and writes go through handle.
+def answer_claim(project_id, object_id, version, record, handle):
+	local = handle.row("select version from objects where id=? and project=?", object_id, project_id)
+	if not local or (local["version"] or 0) > version:
+		return False
+	if record and (local["version"] or 0) == version - 1:
+		object_set(object_id, {"version": version}, handle)
+	return True
 
 # ============================================================================
 # Value Actions
@@ -4025,18 +4583,15 @@ def action_values_set(a):
 			"project": project_id, "object": object_id, "values": values,
 		})
 		if result and object_bound(project_id, object_id):
-			for field_id, value in values.items():
-				value_merge(object_id, field_id, value)
+			values_answer(project_id, object_id, result.get("data"), values)
 		return result
 
 	if not check_project_access(a.user.identity.id, project_id, "write"):
 		a.error.label(403, "errors.access_denied")
 		return
 
-	now = mochi.time.now()
-	changes = []
-
-	# Process each field from input
+	# Every value is checked before any is written, so a refusal writes none.
+	values = {}
 	for field_id in valid_fields:
 		if a.input(field_id) == None:
 			continue
@@ -4048,35 +4603,11 @@ def action_values_set(a):
 		if invalid:
 			a.error.label(400, invalid["key"], **(invalid.get("args") or {}))
 			return
-		# Get old value
-		old_row = mochi.db.row("select value from \"values\" where object=? and field=?", object_id, field_id)
-		old_value = old_row["value"] if old_row else ""
+		values[field_id] = str(new_value)
 
-		if str(new_value) != old_value:
-			value_merge(object_id, field_id, str(new_value))
-			log_activity(object_id, a.user.identity.id, "updated", field_id, old_value, str(new_value))
-			changes.append(field_id)
-
-	if changes:
-		object_set(object_id, {"updated": now})
-		# Collect changed values for broadcast
-		changed_values = {}
-		for fid in changes:
-			val = mochi.db.row("select value from \"values\" where object=? and field=?", object_id, fid)
-			if val:
-				changed_values[fid] = val["value"]
-		broadcast_event(project_id, "values/update", {
-			"project": project_id, "id": object_id, "values": changed_values,
-			"user": a.user.identity.id, "updated": now
-		})
-		# Auto-watch assigned users
-		for fid in changes:
-			if field_types.get(fid) == "user":
-				assigned = mochi.db.row("select value from \"values\" where object=? and field=?", object_id, fid)
-				if assigned and assigned["value"]:
-					row_merge("watchers", ["object", "user"], {"object": object_id, "user": assigned["value"], "created": now})
-
-	return {"data": {"success": True, "changed": changes}}
+	written, _, now = values_write(project_id, object_id, values, a.user.identity.id)
+	values_watch(object_id, written, field_types, now)
+	return {"data": {"success": True, "changed": list(written)}}
 
 def action_value_set(a):
 	"""Set a single field value."""
@@ -4098,7 +4629,7 @@ def action_value_set(a):
 		})
 		if result and object_bound(project_id, a.input("object")):
 			# Update local cache so subsequent reads reflect the change
-			value_merge(a.input("object"), a.input("field"), a.input("value") or "")
+			values_answer(project_id, a.input("object"), result.get("data"), {a.input("field"): a.input("value") or ""})
 		return result
 
 	if not check_project_access(a.user.identity.id, project_id, "write"):
@@ -4136,24 +4667,68 @@ def action_value_set(a):
 		a.error.label(400, invalid["key"], **(invalid.get("args") or {}))
 		return
 
-	# Get old value
-	old_row = mochi.db.row("select value from \"values\" where object=? and field=?", object_id, field_id)
-	old_value = old_row["value"] if old_row else ""
-
-	if str(new_value) != old_value:
-		value_merge(object_id, field_id, str(new_value))
-		now = mochi.time.now()
-		object_set(object_id, {"updated": now})
-		log_activity(object_id, a.user.identity.id, "updated", field_id, old_value, str(new_value))
-		broadcast_event(project_id, "values/update", {
-			"project": project_id, "id": object_id,
-			"values": {field_id: str(new_value)}, "user": a.user.identity.id, "updated": now
-		})
-		# Auto-watch assigned user
-		if field_row["fieldtype"] == "user" and str(new_value):
-			row_merge("watchers", ["object", "user"], {"object": object_id, "user": str(new_value), "created": now})
-
+	written, _, now = values_write(project_id, object_id, {field_id: str(new_value)}, a.user.identity.id)
+	values_watch(object_id, written, {field_id: field_row["fieldtype"]}, now)
 	return {"data": {"success": True}}
+
+# values_write(project_id, object_id, values, user_id) -> (written, version,
+# now): write values ({field: value}, each checked already) to the object in one
+# transaction, logging each that changes and raising the object's version once
+# for the change (version_take); subscribers are told before it commits
+# (events_commit), in one values/update with the owner's time and the version.
+# written holds the values that changed, and version is None when none did.
+def values_write(project_id, object_id, values, user_id):
+	now = mochi.time.now()
+	events = []
+	written = {}
+	version = None
+	handle = mochi.db.transaction()
+	for field, value in values.items():
+		old = handle.row("select value from \"values\" where object=? and field=?", object_id, field)
+		old_value = old["value"] if old else ""
+		if value == old_value:
+			continue
+		value_merge(object_id, field, value, handle)
+		log_activity(object_id, user_id, "updated", field, old_value, value, handle, events)
+		written[field] = value
+	if written:
+		object_set(object_id, {"updated": now}, handle)
+		version = version_take({}, object_id, handle)
+		events.append({"event": "values/update", "data": {
+			"project": project_id, "id": object_id, "values": written,
+			"user": user_id, "updated": now, "version": version,
+		}})
+	events_commit(project_id, events, handle)
+	return written, version, now
+
+# values_watch(object_id, written, types, now): have each user a value set
+# assigns, in a user field ({field: fieldtype} in types), watch the object.
+def values_watch(object_id, written, types, now):
+	for field, value in written.items():
+		if types.get(field) == "user" and value:
+			row_merge("watchers", ["object", "user"], {"object": object_id, "user": value, "created": now})
+
+# values_answer(project_id, object_id, answer, sent): write to this copy what
+# the owner's answer to a forwarded value set says it wrote, past the copy's
+# version for the object (answer_claim) with the owner's time. An owner that
+# predates naming them is taken to have written the values sent.
+def values_answer(project_id, object_id, answer, sent):
+	answer = answer if type(answer) == "dict" else {}
+	written = answer.get("values")
+	if type(written) != "dict":
+		for field, value in sent.items():
+			value_merge(object_id, field, value)
+		return
+	version = owner_version(answer.get("version"))
+	if version == None:
+		return
+	handle = mochi.db.transaction()
+	if answer_claim(project_id, object_id, version, True, handle):
+		answer_values(project_id, object_id, written, handle)
+		updated = owner_time(answer.get("updated"))
+		if updated:
+			object_set(object_id, {"updated": updated}, handle)
+	handle.commit()
 
 # ============================================================================
 # Link Actions
@@ -4337,19 +4912,18 @@ def comment_tree(children, parent_id, depth):
 		out.append(row)
 	return out
 
-# Recursively delete a comment and all its children and attachments
+# Delete a comment and every reply under it, with their attachments, children
+# before their parents, each once (tree_collect).
 def delete_comment_tree(comment_id, project_id):
 	# Only ever touch a comment whose object is in this project - guards every
 	# caller (event_comment_delete, do_comment_delete) against a cross-project
 	# comment id or a cross-project parent pointer dragging in foreign comments.
 	if not mochi.db.exists("select 1 from comments c join objects o on c.object=o.id where c.id=? and o.project=?", comment_id, project_id):
 		return
-	children = mochi.db.rows("select id from comments where parent=?", comment_id) or []
-	for child in children:
-		delete_comment_tree(child["id"], project_id)
-	for att in (attachment_list(comment_id, project_id, "comment") or []):
-		attachment_delete(att["id"])
-	comment_remove(comment_id)
+	for current in reversed(tree_collect(comment_id, "select c.id as id from comments c join objects o on c.object=o.id where c.parent=? and o.project=?", project_id, "select count(*) as count from comments c join objects o on c.object=o.id where o.project=?", project_id)):
+		for att in (attachment_list(current, project_id, "comment") or []):
+			attachment_delete(att["id"])
+		comment_remove(current)
 
 # Delete all comments and their attachments for an object
 def delete_object_comments(object_id, project_id, preserve=False):
@@ -5256,7 +5830,7 @@ def action_view_create(a):
 			return
 
 	viewtype = a.input("viewtype") or "board"
-	if viewtype not in ["board", "list"]:
+	if viewtype not in VIEW_TYPES:
 		a.error.label(400, "errors.invalid_view_type")
 		return
 
@@ -5278,6 +5852,9 @@ def action_view_create(a):
 	fields = a.input("fields") or "title,priority,owner,due"
 	sort = a.input("sort") or ""
 	direction = a.input("direction") or "asc"
+	if direction not in DIRECTIONS:
+		a.error.label(400, "errors.invalid_direction")
+		return
 	border = a.input("border") or ""
 
 	# Assign next rank
@@ -5297,12 +5874,9 @@ def action_view_create(a):
 		for cls_id in [c.strip() for c in view_classes.split(",") if c.strip()]:
 			row_merge("view_classes", ["project", "view", "class"], {"project": project_id, "view": view_id, "class": cls_id})
 
-	broadcast_event(project_id, "view/create", {
-		"project": project_id, "id": view_id, "name": name.strip(),
-		"viewtype": viewtype, "filter": filter_str, "columns": columns,
-		"rows": rows, "fields": fields, "sort": sort, "direction": direction,
-		"border": border
-	})
+	payload = view_payload(project_id, view_id)
+	if payload:
+		broadcast_event(project_id, "view/create", payload)
 
 	return {"data": {
 		"id": view_id,
@@ -5363,7 +5937,7 @@ def action_view_update(a):
 	if a.input("name") != None and name.strip() != "":
 		row_set("views", "project=? and id=?", [project_id, view_id], {"name": name.strip()})
 	if a.input("viewtype") != None and viewtype != "":
-		if viewtype not in ["board", "list"]:
+		if viewtype not in VIEW_TYPES:
 			a.error.label(400, "errors.invalid_view_type")
 			return
 		row_set("views", "project=? and id=?", [project_id, view_id], {"viewtype": viewtype})
@@ -5382,7 +5956,7 @@ def action_view_update(a):
 	if a.input("sort") != None:
 		row_set("views", "project=? and id=?", [project_id, view_id], {"sort": sort})
 	if a.input("direction") != None and direction != "":
-		if direction not in ["asc", "desc"]:
+		if direction not in DIRECTIONS:
 			a.error.label(400, "errors.invalid_direction")
 			return
 		row_set("views", "project=? and id=?", [project_id, view_id], {"direction": direction})
@@ -5400,20 +5974,10 @@ def action_view_update(a):
 			for cls_id in cls_ids:
 				row_merge("view_classes", ["project", "view", "class"], {"project": project_id, "view": view_id, "class": cls_id})
 
-	# Read back updated view for broadcast
-	updated = mochi.db.row("select * from views where project=? and id=?", project_id, view_id)
-	if updated:
-		# Get fields from junction table
-		view_fields = mochi.db.rows("select field from view_fields where project=? and view=? order by rank", project_id, view_id) or []
-		updated_fields = ",".join([vf["field"] for vf in view_fields])
-		broadcast_event(project_id, "view/update", {
-			"project": project_id, "id": view_id,
-			"name": updated["name"], "viewtype": updated["viewtype"],
-			"filter": updated["filter"], "columns": updated["columns"],
-			"rows": updated["rows"], "fields": updated_fields,
-			"sort": updated["sort"], "direction": updated["direction"],
-			"rank": updated["rank"], "border": updated["border"]
-		})
+	# The view as it now stands, read back, for the broadcast
+	payload = view_payload(project_id, view_id)
+	if payload:
+		broadcast_event(project_id, "view/update", payload)
 
 	return {"data": {"success": True}}
 
@@ -5751,10 +6315,16 @@ def action_hierarchy_set(a):
 		row_merge("hierarchy", ["project", "class", "parent"], {"project": project_id, "class": class_id, "parent": parent})
 
 	broadcast_event(project_id, "hierarchy/set", {
-		"project": project_id, "class": class_id, "parents": parents
+		"project": project_id, "class": class_id, "parents": hierarchy_parents(project_id, class_id)
 	})
 
 	return {"data": {"success": True}}
+
+# hierarchy_parents(project_id, class_id) -> the parents the project holds for a
+# class, read back after a hierarchy/set wrote them, so subscribers are sent
+# what was stored rather than what was asked for.
+def hierarchy_parents(project_id, class_id):
+	return [row["parent"] for row in mochi.db.rows("select parent from hierarchy where project=? and class=?", project_id, class_id) or []]
 
 # ============================================================================
 # Field Actions
@@ -5821,7 +6391,7 @@ def action_field_create(a):
 		return
 
 	fieldtype = a.input("fieldtype") or "text"
-	if fieldtype not in ["text", "number", "date", "enumerated", "user", "object", "checkbox", "checklist"]:
+	if fieldtype not in FIELD_TYPES:
 		a.error.label(400, "errors.invalid_field_type")
 		return
 
@@ -6806,32 +7376,33 @@ def action_subscribe(a):
 		# Fetch schema so it is available before the frontend navigates
 		schema = schema_fetch(project_id, peer, SCHEMA_START)
 	else:
-		# Use directory lookup when no server specified
+		# Use directory lookup when no server specified. An entry of another
+		# class - a person, a feed - is no project to subscribe to.
 		directory = mochi.directory.get(project_id)
-		if directory == None or len(directory) == 0:
+		if directory == None or len(directory) == 0 or directory.get("class") != "project":
 			a.error.label(404, "errors.unable_to_find_project_in_directory")
 			return
 		project_name = directory.get("name", "")
 		project_desc = ""
 		project_prefix = "PROJ"
 		server = directory.get("location", "")
-		# Fetch full info and schema from the resolved server
+		# Fetch full info and schema from the resolved server. It stops where
+		# the branch with a server does: a listing grants nothing, so an owner
+		# that refuses, or cannot be reached, leaves no replica that never
+		# fills.
 		if server:
 			peer = mochi.remote.peer(server)
-			if peer:
-				response = remote_dict(mochi.remote.request(project_id, "projects", "information", {"project": project_id}, peer))
-				# The owner answered and refused: a listing grants nothing, so
-				# a project kept to its members is refused here rather than
-				# left as a replica that never fills. An owner out of reach
-				# still leaves the subscription to complete later.
-				if response and response.get("error") and not response.get("transport"):
-					remote_error(a, response, 404)
-					return
-				if response and not response.get("error"):
-					project_name = response.get("name", project_name)
-					project_desc = response.get("description", "")
-					project_prefix = response.get("prefix", "PROJ")
-				schema = schema_fetch(project_id, peer, SCHEMA_START)
+			if not peer:
+				a.error.label(502, "errors.unable_to_connect_to_server")
+				return
+			response = remote_dict(mochi.remote.request(project_id, "projects", "information", {"project": project_id}, peer))
+			if not response or response.get("error"):
+				remote_error(a, response, 404)
+				return
+			project_name = response.get("name", project_name)
+			project_desc = response.get("description", "")
+			project_prefix = response.get("prefix", "PROJ")
+			schema = schema_fetch(project_id, peer, SCHEMA_START)
 
 	now = mochi.time.now()
 	fp = mochi.entity.fingerprint(project_id) or ""
@@ -6862,8 +7433,17 @@ def action_subscribe(a):
 		pull = schema_begin(project_id, False)
 		schema_claim(project_id, pull)
 		insert_schema(project_id, schema, peer, started, None, 0, 0, pull)
+	else:
+		subscribe_pull(project_id)
 
 	return {"data": {"fingerprint": fp}}
+
+# subscribe_pull(project_id): a new replica whose first part could not be read
+# at once pulls the project itself shortly after (schedule_resync) rather than
+# wait on the owner's sync batch, which an owner holds back from a member it
+# sent one to within snapshot_seconds (event_subscribe).
+def subscribe_pull(project_id):
+	resync_defer(project_id, False, SCHEMA_LATE)
 
 # Unsubscribe from a remote project
 def action_unsubscribe(a):
@@ -6944,7 +7524,7 @@ def attachments_many(ids, project_id, kind="object"):
 # and class lists. Six queries, whatever the size of the design.
 def design_dump(project_id):
 	classes = mochi.db.rows("select id, name, rank, requests, title from classes where project=? order by rank", project_id) or []
-	fields = mochi.db.rows("select class, id, name, fieldtype, flags, multi, rank, card, position, rows, min, max, pattern, minlength, maxlength from fields where project=? order by class, rank", project_id) or []
+	fields = mochi.db.rows("select " + ", ".join(FIELD_COLUMNS) + " from fields where project=? order by class, rank", project_id) or []
 	options = mochi.db.rows("select class, field, id, name, colour, icon, rank from options where project=? order by class, field, rank", project_id) or []
 	hierarchy = []
 	hierarchy_map = {}
@@ -6952,17 +7532,41 @@ def design_dump(project_id):
 		hierarchy_map.setdefault(h["class"], []).append(h["parent"])
 	for cls, parents in hierarchy_map.items():
 		hierarchy.append({"class": cls, "parents": parents})
-	views = mochi.db.rows("select id, name, viewtype, filter, columns, rows, sort, direction, rank, border from views where project=? order by rank, name", project_id) or []
+	return {"classes": classes, "fields": fields, "options": options, "hierarchy": hierarchy, "views": views_dump(project_id)}
+
+# views_dump(project_id, view_id=None) -> the project's views, or the one view
+# view_id names, in design_dump's shape: each row with its rank and its field
+# and class lists comma-joined.
+def views_dump(project_id, view_id=None):
+	if view_id == None:
+		views = mochi.db.rows("select id, name, viewtype, filter, columns, rows, sort, direction, rank, border from views where project=? order by rank, name", project_id) or []
+		fields = mochi.db.rows("select view, field from view_fields where project=? order by rank", project_id) or []
+		classes = mochi.db.rows("select vc.view as view, vc.class as class from view_classes vc join classes c on c.project=vc.project and c.id=vc.class where vc.project=?", project_id) or []
+	else:
+		views = mochi.db.rows("select id, name, viewtype, filter, columns, rows, sort, direction, rank, border from views where project=? and id=?", project_id, view_id) or []
+		fields = mochi.db.rows("select view, field from view_fields where project=? and view=? order by rank", project_id, view_id) or []
+		classes = mochi.db.rows("select vc.view as view, vc.class as class from view_classes vc join classes c on c.project=vc.project and c.id=vc.class where vc.project=? and vc.view=?", project_id, view_id) or []
 	vf_map = {}
-	for vf in mochi.db.rows("select view, field from view_fields where project=? order by rank", project_id) or []:
+	for vf in fields:
 		vf_map.setdefault(vf["view"], []).append(vf["field"])
 	vc_map = {}
-	for vc in mochi.db.rows("select vc.view as view, vc.class as class from view_classes vc join classes c on c.project=vc.project and c.id=vc.class where vc.project=?", project_id) or []:
+	for vc in classes:
 		vc_map.setdefault(vc["view"], []).append(vc["class"])
 	for v in views:
 		v["fields"] = ",".join(vf_map.get(v["id"], []))
 		v["classes"] = ",".join(vc_map.get(v["id"], []))
-	return {"classes": classes, "fields": fields, "options": options, "hierarchy": hierarchy, "views": views}
+	return views
+
+# view_payload(project_id, view_id) -> the view/create and view/update broadcast:
+# the view as design_dump gives it, with its project, so the live event and a
+# resync cannot differ. None when the project holds no such view.
+def view_payload(project_id, view_id):
+	views = views_dump(project_id, view_id)
+	if not views:
+		return None
+	payload = dict(views[0])
+	payload["project"] = project_id
+	return payload
 
 # project_dump(project_id) -> dict: the design plus every object with its
 # values, comments (each with attachments), activity and attachments, and the
@@ -6972,7 +7576,7 @@ def design_dump(project_id):
 # send_project_data reshapes it into the sync/batch form.
 def project_dump(project_id):
 	dump = design_dump(project_id)
-	objects = mochi.db.rows("select id, class, number, parent, rank, created, updated from objects where project=?", project_id) or []
+	objects = mochi.db.rows("select id, class, number, parent, rank, created, updated, version from objects where project=?", project_id) or []
 	ids = [obj["id"] for obj in objects]
 	values_map = {}
 	comments_map = {}
@@ -7004,7 +7608,15 @@ def project_dump(project_id):
 			obj["attachments"] = obj_atts
 	dump["objects"] = objects
 	dump["links"] = mochi.db.rows("select l.source, l.target, l.linktype from links l join objects o on l.source = o.id where o.project=?", project_id) or []
+	dump["members"] = members_dump(project_id)
 	return dump
+
+# members_dump(project_id) -> the project's roster, {id, name} each, the owner's
+# own row among them: what a replica holds as its subscribers, so its people
+# list, owner name and member avatars read what the owner's do. Every member
+# with view access is sent it.
+def members_dump(project_id):
+	return mochi.db.rows("select id, name from subscribers where project=? order by id", project_id) or []
 
 # Core decodes at most 10,000 elements in one array and 100 MB on one stream,
 # each read within 30 seconds, so a large project's schema cannot travel as one
@@ -7016,7 +7628,9 @@ def project_dump(project_id):
 SCHEMA_ROWS = 1000
 SCHEMA_BYTES = 8388608
 SCHEMA_START = {"list": "classes", "after": []}
-SCHEMA_LISTS = ["classes", "fields", "options", "hierarchy", "views", "objects", "values", "comments", "activity", "attachments", "links"]
+# The roster (members) goes last: a replica from before it reads the parts
+# before and ignores the list.
+SCHEMA_LISTS = ["classes", "fields", "options", "hierarchy", "views", "objects", "values", "comments", "activity", "attachments", "links", "members"]
 # The most parts one pull follows, across its continuations. Core allows an
 # app 600 remote calls a minute to one target.
 SCHEMA_PARTS = 500
@@ -7036,7 +7650,7 @@ SCHEMA_BATCH = 200
 # (schema_holdings): the design's under held["design"], the rest at the top,
 # each keyed as schema_named keys what a pull named.
 SCHEMA_DESIGN = ["classes", "fields", "options", "hierarchy", "views", "view_fields", "view_classes"]
-SCHEMA_HELD = ["objects", "comments", "values", "attachments", "links"] + SCHEMA_DESIGN
+SCHEMA_HELD = ["objects", "comments", "values", "attachments", "links", "members"] + SCHEMA_DESIGN
 # How many times in a row a continuation whose part went unanswered is tried
 # again before the pull waits for the next resync.
 SCHEMA_RETRIES = 3
@@ -7046,16 +7660,17 @@ SCHEMA_RETRIES = 3
 # costs in bytes beyond a fixed allowance.
 SCHEMA_SPECS = {
 	"classes": {"columns": "id, name, rank, requests, title", "source": "classes where project=?", "scope": 1, "keys": ["id"], "size": "length(cast(name as blob)) + length(cast(title as blob)) + length(cast(requests as blob))"},
-	"fields": {"columns": "class, id, name, fieldtype, flags, multi, rank, card, position, rows, min, max, pattern, minlength, maxlength", "source": "fields where project=?", "scope": 1, "keys": ["class", "id"], "size": "length(cast(name as blob)) + length(cast(flags as blob)) + length(cast(position as blob)) + length(cast(min as blob)) + length(cast(max as blob)) + length(cast(pattern as blob))"},
+	"fields": {"columns": ", ".join(FIELD_COLUMNS), "source": "fields where project=?", "scope": 1, "keys": ["class", "id"], "size": "length(cast(name as blob)) + length(cast(flags as blob)) + length(cast(position as blob)) + length(cast(min as blob)) + length(cast(max as blob)) + length(cast(pattern as blob)) + length(cast(prefix as blob)) + length(cast(suffix as blob)) + length(cast(format as blob))"},
 	"options": {"columns": "class, field, id, name, colour, icon, rank", "source": "options where project=?", "scope": 1, "keys": ["class", "field", "id"], "size": "length(cast(name as blob)) + length(cast(icon as blob))"},
 	"hierarchy": {"columns": "class, parent", "source": "hierarchy where project=?", "scope": 1, "keys": ["class", "parent"], "size": "0"},
 	"views": {"columns": "id, name, viewtype, filter, columns, rows, sort, direction, rank, border", "source": "views where project=?", "scope": 1, "keys": ["id"], "size": "length(cast(name as blob)) + length(cast(filter as blob)) + length(cast(columns as blob)) + length(cast(rows as blob)) + length(cast(sort as blob))"},
-	"objects": {"columns": "id, class, number, parent, rank, created, updated", "source": "objects where project=?", "scope": 1, "keys": ["id"], "size": "0"},
-	"values": {"columns": "v.object as object, v.field as field, v.value as value", "source": "\"values\" v join objects o on o.id=v.object where o.project=?", "scope": 1, "keys": ["v.object", "v.field"], "size": "length(cast(v.value as blob))"},
+	"objects": {"columns": "id, class, number, parent, rank, created, updated, version", "source": "objects where project=?", "scope": 1, "keys": ["id"], "size": "0"},
+	"values": {"columns": "v.object as object, v.field as field, v.value as value, o.version as version", "source": "\"values\" v join objects o on o.id=v.object where o.project=?", "scope": 1, "keys": ["v.object", "v.field"], "size": "length(cast(v.value as blob))"},
 	"comments": {"columns": "c.object as object, c.id as id, c.parent as parent, c.author as author, c.name as name, c.content as content, c.created as created, c.edited as edited", "source": "comments c join objects o on o.id=c.object where o.project=?", "scope": 1, "keys": ["c.id"], "size": "length(cast(c.content as blob)) + length(cast(c.name as blob))"},
 	"activity": {"columns": "a.object as object, a.id as id, a.user as user, a.action as action, a.field as field, a.oldvalue as oldvalue, a.newvalue as newvalue, a.created as created", "source": "activity a join objects o on o.id=a.object where o.project=?", "scope": 1, "keys": ["a.id"], "size": "length(cast(a.oldvalue as blob)) + length(cast(a.newvalue as blob))"},
 	"attachments": {"columns": "*", "source": "attachments where ((kind='object' and object in (select id from objects where project=?)) or (kind='comment' and object in (select c.id from comments c join objects o on o.id=c.object where o.project=?)))", "scope": 2, "keys": ["id"], "size": "960"},
 	"links": {"columns": "l.source as source, l.target as target, l.linktype as linktype", "source": "links l join objects o on o.id=l.source where o.project=?", "scope": 1, "keys": ["l.source", "l.target", "l.linktype"], "size": "0"},
+	"members": {"columns": "id, name", "source": "subscribers where project=?", "scope": 1, "keys": ["id"], "size": "length(cast(name as blob))"},
 }
 
 # schema_cursor(value) -> bool: whether value is a part cursor: the list the
@@ -7184,6 +7799,11 @@ def schema_part(project_id, cursor):
 # Return the full project schema (classes, fields, options, hierarchy, views)
 def event_schema(e):
 	project_id = e.header("to")
+	# A change's events go out before its transaction commits (events_commit),
+	# so a pull one of them set going can arrive while it is still open. Taking
+	# the write lock, which it holds until then, waits for it, so what is read
+	# below holds the change.
+	mochi.db.transaction().commit()
 	# Include the project row's name/description/prefix: a directory rename via
 	# mochi.entity.update fires no project/update, so only the resync carries it.
 	project = mochi.db.row("select id, name, description, prefix from projects where id=? and owner=1", project_id)
@@ -7198,11 +7818,13 @@ def event_schema(e):
 
 	# Project row first so subscribers can reconcile metadata (name /
 	# description / prefix) on resync without waiting for a project/update
-	# broadcast that might never come.
+	# broadcast that might never come. owner names the member of the roster
+	# (the members list) who owns the project, so a replica names its owner.
 	metadata = {
 		"name": project.get("name", ""),
 		"description": project.get("description", ""),
 		"prefix": project.get("prefix", "PROJ"),
+		"owner": get_owner_identity(project_id),
 	}
 
 	# One part of the schema. The gate above runs for every part, so a peer
@@ -7231,25 +7853,46 @@ def event_schema(e):
 		"views": dump["views"],
 		"objects": dump["objects"],
 		"links": dump["links"],
+		"members": dump["members"],
 	})
 
-# field_limits(field) -> dict: the validation limits a field row from the owner
-# carries - min, max and pattern as text, minlength and maxlength as whole
-# numbers - each only when present and of its type, so a row without them
-# leaves the replica's own.
-def field_limits(field):
-	limits = {}
-	for name in ("min", "max", "pattern"):
+# field_row(project_id, field) -> the row a field from the owner is written as,
+# every column of FIELD_COLUMNS reduced to its type on the way in: the name and
+# type as text, always present, and each other attribute only when present as
+# text (FIELD_TEXT) or a whole number (FIELD_NUMBER), so a row without it
+# leaves the replica's own and a new row takes the table's default. None for a
+# field whose class or id is not a string.
+def field_row(project_id, field):
+	if type(field.get("class")) != "string" or type(field.get("id")) != "string":
+		return None
+	row = {"project": project_id, "class": field["class"], "id": field["id"], "name": "", "fieldtype": "text"}
+	for name in FIELD_TEXT:
 		value = field.get(name)
 		if type(value) == "string" and len(value) <= 1000:
-			limits[name] = value
-	for name in ("minlength", "maxlength"):
+			row[name] = value
+	for name in FIELD_NUMBER:
 		value = field.get(name)
 		if type(value) == "float" and value >= 0 and value < 1000000000 and value == int(value):
 			value = int(value)
 		if type(value) == "int" and value >= 0 and value < 1000000000:
-			limits[name] = value
-	return limits
+			row[name] = value
+	return row
+
+# field_write(project_id, row, guard=None) -> whether it wrote a field row
+# (field_row) to a replica. A field the write makes a user field, from any
+# other type or none, keeps only the values that are entity ids: a client
+# builds a person's address from the value, and fetches it with the session,
+# so a value written while the owner had the field as text must not become one
+# (value_write refuses the same values as they arrive).
+def field_write(project_id, row, guard=None):
+	previous = mochi.db.row("select fieldtype from fields where project=? and class=? and id=?", project_id, row["class"], row["id"])
+	if not row_merge("fields", ["project", "class", "id"], row, None, guard):
+		return False
+	if row["fieldtype"] == "user" and (not previous or previous["fieldtype"] != "user"):
+		for value in mochi.db.rows("select v.object as object, v.value as value from \"values\" v join objects o on o.id=v.object where o.project=? and o.class=? and v.field=? and v.value!=''", project_id, row["class"], row["id"]) or []:
+			if not mochi.text.valid(value["value"], "entity"):
+				row_remove("values", "object=? and field=?", [value["object"], row["id"]])
+	return True
 
 # design_merge(project_id, schema) -> whether it skipped a late row: upserts the
 # design tables from a dump in event_schema's flat shape. Editable rows are
@@ -7263,16 +7906,17 @@ def design_merge(project_id, schema):
 	for c in sequence(schema.get("classes")):
 		if type(c) != "dict":
 			continue
-		row_merge("classes", ["project", "id"], {"id": c.get("id", ""), "project": project_id, "name": c.get("name", ""), "rank": c.get("rank", 0), "requests": c.get("requests", ""), "title": c.get("title", "title")}, None, schema_guard("projects", "id=? and owner=0", project_id))
+		row_merge("classes", ["project", "id"], {"project": project_id, "id": c.get("id", ""), "name": c.get("name", ""), "rank": c.get("rank", 0), "requests": c.get("requests", ""), "title": c.get("title", "title")}, None, schema_guard("projects", "id=? and owner=0", project_id))
 	for f in sequence(schema.get("fields")):
 		if type(f) != "dict":
 			continue
-		if not schema_class(project_id, f.get("class", "")):
+		field = field_row(project_id, f)
+		if not field:
+			continue
+		if not schema_class(project_id, field["class"]):
 			late = True
 			continue
-		field = {"project": project_id, "class": f.get("class", ""), "id": f.get("id", ""), "name": f.get("name", ""), "fieldtype": f.get("fieldtype", "text"), "flags": f.get("flags", ""), "multi": f.get("multi", 0), "rank": f.get("rank", 0), "card": f.get("card", 1), "position": f.get("position", ""), "rows": f.get("rows", 1)}
-		field.update(field_limits(f))
-		row_merge("fields", ["project", "class", "id"], field, None, schema_guard("classes", "project=? and id=?", project_id, f.get("class", "")))
+		field_write(project_id, field, schema_guard("classes", "project=? and id=?", project_id, field["class"]))
 	for o in sequence(schema.get("options")):
 		if type(o) != "dict":
 			continue
@@ -7294,7 +7938,7 @@ def design_merge(project_id, schema):
 		if type(v) != "dict":
 			continue
 		view_id = v.get("id", "")
-		row_merge("views", ["project", "id"], {"id": view_id, "project": project_id, "name": v.get("name", ""), "viewtype": v.get("viewtype", "board"), "filter": v.get("filter", ""), "columns": v.get("columns", ""), "rows": v.get("rows", ""), "sort": v.get("sort", ""), "direction": v.get("direction", "asc"), "rank": v.get("rank", 0), "border": v.get("border", "")}, None, schema_guard("projects", "id=? and owner=0", project_id))
+		row_merge("views", ["project", "id"], {"project": project_id, "id": view_id, "name": v.get("name", ""), "viewtype": v.get("viewtype", "board"), "filter": v.get("filter", ""), "columns": v.get("columns", ""), "rows": v.get("rows", ""), "sort": v.get("sort", ""), "direction": v.get("direction", "asc"), "rank": v.get("rank", 0), "border": v.get("border", "")}, None, schema_guard("projects", "id=? and owner=0", project_id))
 		fields_csv = v.get("fields", "")
 		if type(fields_csv) == "string" and fields_csv:
 			rank = 0
@@ -7448,7 +8092,7 @@ def insert_schema(project_id, schema, peer="", started=None, held=None, parts=0,
 		started = mochi.time.now()
 	pull = schema_pull(pull)
 	survivors = {"design": {"classes": [], "fields": [], "options": [], "hierarchy": [], "views": []},
-		"objects": {}, "comments": {}, "values": {}, "attachments": {}, "links": {}}
+		"objects": {}, "comments": {}, "values": {}, "attachments": {}, "links": {}, "members": {}}
 	for _ in range(SCHEMA_PARTS):
 		if parts >= SCHEMA_PARTS:
 			break
@@ -7729,6 +8373,8 @@ def schema_holdings(project_id):
 		held["attachments"][row["id"]] = True
 	for row in mochi.db.rows("select source, target, linktype from links where project=?", project_id) or []:
 		held["links"][(row["source"], row["target"], row["linktype"])] = True
+	for row in mochi.db.rows("select id from subscribers where project=?", project_id) or []:
+		held["members"][row["id"]] = True
 	design = held["design"]
 	for row in mochi.db.rows("select id from classes where project=?", project_id) or []:
 		design["classes"][row["id"]] = True
@@ -7761,7 +8407,9 @@ def schema_merge(project_id, schema, survivors):
 	project_data = schema.get("project")
 	if type(project_data) == "dict":
 		row_set("projects", "id=? and owner=0", [project_id], {"name": project_data.get("name", ""), "description": project_data.get("description", ""), "prefix": project_data.get("prefix", "PROJ")})
+		owner_record(project_id, project_data.get("owner"))
 	late = design_merge(project_id, schema)
+	members_merge(project_id, schema.get("members"), survivors["members"])
 	for name in survivors["design"]:
 		survivors["design"][name].extend(sequence(schema.get(name)))
 	for obj in sequence(schema.get("objects")):
@@ -7775,19 +8423,28 @@ def schema_merge(project_id, schema, survivors):
 		if foreign_object(object_id, project_id):
 			continue
 		# A late object is skipped; the rows nested in it below are still
-		# named, and land only on an object the replica holds.
+		# named, and land only on an object the replica holds. One the replica
+		# holds at a later version than the part's, which a change broadcast
+		# since the owner read the part has reached, keeps its row
+		# (version_take), checked in the same statement as the write.
+		version = owner_version(obj.get("version"))
 		if schema_class(project_id, obj.get("class", "")):
-			object_merge({"id": object_id, "project": project_id, "class": obj.get("class", ""), "number": obj.get("number", 0), "parent": obj.get("parent", ""), "rank": rank_copy(obj.get("rank")), "created": obj.get("created", 0), "updated": obj.get("updated", 0)}, schema_guard("classes", "project=? and id=?", project_id, obj.get("class", "")))
+			row = {"id": object_id, "project": project_id, "class": obj.get("class", ""), "number": obj.get("number", 0), "parent": obj.get("parent", ""), "rank": rank_copy(obj.get("rank")), "created": obj.get("created", 0), "updated": obj.get("updated", 0)}
+			guard = schema_guard("classes", "project=? and id=?", project_id, obj.get("class", ""))
+			if version != None:
+				row["version"] = version
+				guard = (guard[0] + " and not exists (select 1 from objects where id=? and version>?)", guard[1] + [object_id, version])
+			object_merge(row, guard)
 		else:
 			late = True
 		schema_attachments(project_id, survivors, object_id, obj.get("attachments"), "object")
 		values = obj.get("values")
 		if type(values) == "dict":
 			for field in values:
-				schema_value(project_id, survivors, {"object": object_id, "field": field, "value": values[field]})
+				schema_value(project_id, survivors, {"object": object_id, "field": field, "value": values[field], "version": version})
 		for c in sequence(obj.get("comments")):
-			if type(c) == "dict":
-				schema_comment(project_id, survivors, dict(c, object=object_id))
+			if type(c) == "dict" and schema_comment(project_id, survivors, dict(c, object=object_id)):
+				late = True
 		for act in sequence(obj.get("activity")):
 			if type(act) == "dict":
 				schema_activity(project_id, dict(act, object=object_id))
@@ -7795,8 +8452,8 @@ def schema_merge(project_id, schema, survivors):
 		if type(v) == "dict":
 			schema_value(project_id, survivors, v)
 	for c in sequence(schema.get("comments")):
-		if type(c) == "dict":
-			schema_comment(project_id, survivors, c)
+		if type(c) == "dict" and schema_comment(project_id, survivors, c):
+			late = True
 	for act in sequence(schema.get("activity")):
 		if type(act) == "dict":
 			schema_activity(project_id, act)
@@ -7820,6 +8477,33 @@ def schema_merge(project_id, schema, survivors):
 		row_merge("links", ["source", "target", "linktype"], {"project": project_id, "source": l.get("source", ""), "target": l.get("target", ""), "linktype": l.get("linktype", ""), "created": 0}, None, schema_guard("objects s join objects t on t.project=s.project", "s.project=? and s.id=? and t.id=?", project_id, l.get("source", ""), l.get("target", "")))
 	return late
 
+# owner_record(project_id, owner): a replica records which member of the roster
+# owns the project, as the owner names it, so the owner-name readers
+# (project_owner_name, the project list) name the right person.
+def owner_record(project_id, owner):
+	if type(owner) == "string" and mochi.text.valid(owner, "entity"):
+		row_set("projects", "id=? and owner=0", [project_id], {"identity": owner})
+
+# members_merge(project_id, members, survivors) writes the owner's roster
+# (members_dump) into a replica's subscribers, recording each member it names
+# in survivors (a dict) for the prune. A row whose id is not an entity is
+# skipped; a name that is not a line of text is kept empty.
+def members_merge(project_id, members, survivors):
+	now = mochi.time.now()
+	for m in sequence(members):
+		if type(m) != "dict" or type(m.get("id")) != "string" or not mochi.text.valid(m["id"], "entity"):
+			continue
+		if survivors != None:
+			survivors[m["id"]] = True
+		member_write(project_id, m["id"], m.get("name"), now)
+
+# member_write(project_id, member, name, now) records one member of the owner's
+# roster on a replica, updating the name of one it holds.
+def member_write(project_id, member, name, now):
+	if type(name) != "string" or not mochi.text.valid(name, "line"):
+		name = ""
+	mochi.db.execute("insert into subscribers (project, id, name, subscribed) select ?, ?, ?, ? where exists (select 1 from projects where id=? and owner=0) on conflict (project, id) do update set name=excluded.name", project_id, member, name, now, project_id)
+
 # A value, comment or activity row lands only on an object of this project.
 def schema_value(project_id, survivors, v):
 	field = v.get("field")
@@ -7828,21 +8512,73 @@ def schema_value(project_id, survivors, v):
 	survivors["values"][(v.get("object", ""), field)] = True
 	if not object_bound(project_id, v.get("object", "")):
 		return
-	if value_refused(project_id, v["object"], field, v.get("value", "")):
-		return
-	row_merge("values", ["object", "field"], {"object": v["object"], "field": field, "value": v.get("value", "")}, None, schema_guard("objects", "id=?", v["object"]))
+	# A value read at the object's version lands only on a copy not past it, in
+	# the same statement: a change broadcast since the owner read the part
+	# stands (version_take). From an owner that predates versions, every value
+	# lands.
+	version = owner_version(v.get("version"))
+	guard = schema_guard("objects", "id=?", v["object"]) if version == None else schema_guard("objects", "id=? and version<=?", v["object"], version)
+	value_write(project_id, v["object"], field, v.get("value", ""), None, guard)
 
+# schema_comment(project_id, survivors, c) -> whether the comment is late: its
+# parent is a comment the replica does not hold yet, which a later part or a
+# fresh pull brings. A comment that is its own parent, or whose parent is
+# anything but a comment of the same object, is refused (comment_parent).
 def schema_comment(project_id, survivors, c):
 	comment_id = c.get("id", "")
+	if type(comment_id) != "string" or not comment_id or type(c.get("object", "")) != "string":
+		return False
 	survivors["comments"][comment_id] = True
 	# Skip a comment id that already belongs to another project's object, or
 	# that an object holds.
 	if foreign_comment(comment_id, project_id):
-		return
+		return False
 	if not object_bound(project_id, c.get("object", "")):
-		return
-	comment_merge({"id": comment_id, "object": c["object"], "parent": c.get("parent", ""), "author": c.get("author", ""), "name": c.get("name", ""), "content": c.get("content", ""), "created": c.get("created", ""), "edited": c.get("edited", 0)}, schema_guard("objects", "id=?", c["object"]))
+		return False
+	parent = comment_parent(comment_id, c["object"], c.get("parent", ""))
+	if parent == None:
+		return False
+	if parent == False:
+		return True
+	comment_merge({"id": comment_id, "object": c["object"], "parent": parent, "author": c.get("author", ""), "name": c.get("name", ""), "content": c.get("content", ""), "created": c.get("created", ""), "edited": c.get("edited", 0)}, schema_guard("objects", "id=?", c["object"]))
 	schema_attachments(project_id, survivors, comment_id, c.get("attachments"), "comment")
+	return False
+
+# comment_parent(comment_id, object_id, parent) -> the parent a comment from the
+# owner is written with: "" for none, or a comment of the same object that is
+# not the comment itself nor one of its own replies, so a thread holds no loop
+# and a delete walks no cycle; False when the parent is not held yet (a later
+# part, chunk or event may bring it); None when it can never stand - not a
+# string, the comment itself, a comment of another object, an object's id, or
+# a reply of the comment, which would close a loop.
+def comment_parent(comment_id, object_id, parent):
+	if parent == None or parent == "":
+		return ""
+	if type(parent) != "string" or parent == comment_id:
+		return None
+	row = mochi.db.row("select object from comments where id=?", parent)
+	if not row:
+		if mochi.db.exists("select 1 from objects where id=?", parent):
+			return None
+		return False
+	if row["object"] != object_id:
+		return None
+	# Walk up from the parent: a chain that reaches the comment would close a
+	# loop. None can unless some comment already names this one as its parent.
+	# Bounded by the object's comments, each visited once.
+	if not mochi.db.exists("select 1 from comments where parent=?", comment_id):
+		return parent
+	seen = {}
+	current = parent
+	for _ in range(mochi.db.row("select count(*) as count from comments where object=?", object_id)["count"] + 1):
+		if current == comment_id:
+			return None
+		if not current or current in seen:
+			break
+		seen[current] = True
+		above = mochi.db.row("select parent from comments where id=? and object=?", current, object_id)
+		current = above["parent"] if above else ""
+	return parent
 
 def schema_activity(project_id, act):
 	if not object_bound(project_id, act.get("object", "")):
@@ -7912,11 +8648,26 @@ def schema_prune(project_id, survivors, held, pull):
 		key = (row["source"], row["target"], row["linktype"])
 		if key in held["links"] and key not in survivors["links"]:
 			row_remove("links", "project=? and source=? and target=? and linktype=? and " + permit[0], [project_id, row["source"], row["target"], row["linktype"]] + permit[1])
+	# Members who left while no member/remove reached this replica.
+	for row in (mochi.db.rows("select id from subscribers where project=?", project_id) or []):
+		if row["id"] in held["members"] and row["id"] not in survivors["members"]:
+			row_remove("subscribers", "project=? and id=? and " + permit[0], [project_id, row["id"]] + permit[1])
 
 # Send all existing project data to a new subscriber
 def send_project_data(project_id, subscriber_id):
-	h = p2p_headers(project_id, subscriber_id, "sync/batch")
+	batch_send(project_id, subscriber_id, project_batch(project_id))
 
+# batch_send(project_id, subscriber_id, chunks): the chunks of one sync batch
+# (project_batch) to one member, so a batch built once can go to many.
+def batch_send(project_id, subscriber_id, chunks):
+	h = p2p_headers(project_id, subscriber_id, "sync/batch")
+	for chunk in chunks:
+		mochi.message.send(h, chunk)
+
+# project_batch(project_id) -> the messages of a sync batch: the whole project,
+# in chunks, each with the design, the roster (members) and the owner's
+# identity (owner).
+def project_batch(project_id):
 	# One batched read, reshaped: classes carry their fields (with options)
 	# and parents, so the subscriber can apply them top-down.
 	dump = project_dump(project_id)
@@ -7928,7 +8679,7 @@ def send_project_data(project_id, subscriber_id):
 		options_map.setdefault((o["class"], o["field"]), []).append({"id": o["id"], "name": o["name"], "colour": o["colour"], "icon": o["icon"], "rank": o["rank"]})
 	fields_map = {}
 	for f in dump["fields"]:
-		field_data = {"id": f["id"], "name": f["name"], "fieldtype": f["fieldtype"], "flags": f["flags"], "multi": f["multi"], "rank": f["rank"], "card": f["card"], "position": f["position"], "rows": f["rows"], "min": f["min"], "max": f["max"], "pattern": f["pattern"], "minlength": f["minlength"], "maxlength": f["maxlength"]}
+		field_data = {name: f[name] for name in FIELD_COLUMNS if name != "class"}
 		if (f["class"], f["id"]) in options_map:
 			field_data["options"] = options_map[(f["class"], f["id"])]
 		fields_map.setdefault(f["class"], []).append(field_data)
@@ -7944,18 +8695,23 @@ def send_project_data(project_id, subscriber_id):
 	# prunes its design against each batch, so a chunk without it would empty
 	# that subscriber's design. event_sync_batch applies the design from every
 	# chunk, and prunes against it and marks the replica populated only once
-	# every chunk of the sync has landed.
+	# every chunk of the sync has landed. The roster travels the same way.
 	chunks = batch_chunks(dump["objects"], dump["links"])
 	sync = mochi.uid()
+	owner = get_owner_identity(project_id)
+	messages = []
 	for index, chunk in enumerate(chunks):
-		mochi.message.send(h, {
+		messages.append({
 			"project": project_id,
+			"owner": owner,
 			"classes": classes,
 			"views": dump["views"],
+			"members": dump["members"],
 			"objects": chunk["objects"],
 			"links": chunk["links"],
 			"chunk": batch_chunk(sync, index, len(chunks)),
 		})
+	return messages
 
 # batch_fragments(obj) -> [(fragment, rows, bytes)]: an object of project_dump
 # cut into pieces of at most SCHEMA_ROWS rows and about SCHEMA_BYTES bytes, each
@@ -7964,7 +8720,7 @@ def send_project_data(project_id, subscriber_id):
 # every piece onto the one object. Attachments stay behind: a batch never
 # applied them, and the schema carries them.
 def batch_fragments(obj):
-	base = {"id": obj["id"], "class": obj["class"], "number": obj["number"], "parent": obj["parent"], "rank": obj["rank"], "created": obj["created"], "updated": obj["updated"]}
+	base = {"id": obj["id"], "class": obj["class"], "number": obj["number"], "parent": obj["parent"], "rank": obj["rank"], "created": obj["created"], "updated": obj["updated"], "version": obj["version"]}
 	items = []
 	values = obj.get("values") or {}
 	for field in values:
@@ -8080,7 +8836,9 @@ def event_subscribe(e):
 		return
 
 	subscriber_id = e.header("from")
-	if not mochi.text.valid(subscriber_id, "entity"):
+	# The owner's own identity is no member: its row anchors the owner's name,
+	# which a subscribe from it would rewrite (event_unsubscribe refuses it too).
+	if not mochi.text.valid(subscriber_id, "entity") or subscriber_id == get_owner_identity(project_id):
 		return
 
 	# Check subscriber has at least view access
@@ -8092,6 +8850,7 @@ def event_subscribe(e):
 		return
 
 	now = mochi.time.now()
+	existing = mochi.db.row("select name, sent from subscribers where project=? and id=?", project_id, subscriber_id)
 	row_merge("subscribers", ["project", "id"], {"project": project_id, "id": subscriber_id, "name": name, "subscribed": now})
 	# Record them for replay now rather than waiting for the next broadcast to
 	# do it, so a gap opening before that can still be healed.
@@ -8104,8 +8863,22 @@ def event_subscribe(e):
 	if fingerprint:
 		mochi.websocket.write(fingerprint, {"type": "project/update", "project": project_id})
 
-	# Sync all existing project data to the new subscriber
-	send_project_data(project_id, subscriber_id)
+	# The other members hold the roster too: a new member, or a new name.
+	if not existing or existing["name"] != name:
+		broadcast_event(project_id, "member/add", {"project": project_id, "id": subscriber_id, "name": name})
+
+	# Sync all existing project data to a new subscriber, or to one last sent it
+	# longer ago than snapshot_seconds: each subscribe reads and queues the
+	# whole project, so a member repeating the event would otherwise have it
+	# read and sent again each time. A replica that needs it sooner pulls the
+	# schema's parts itself, which are bounded and checked part by part.
+	if not existing or now - (existing["sent"] or 0) >= snapshot_seconds:
+		row_set("subscribers", "project=? and id=?", [project_id, subscriber_id], {"sent": now})
+		send_project_data(project_id, subscriber_id)
+
+# snapshot_seconds: the shortest time between two whole-project snapshots
+# event_subscribe sends one subscriber.
+snapshot_seconds = 3600
 
 # Handle unsubscribe event from a remote user
 def event_unsubscribe(e):
@@ -8116,17 +8889,19 @@ def event_unsubscribe(e):
 		return
 
 	subscriber_id = e.header("from")
+	# The owner's own identity is no member to remove: its row anchors the
+	# owner's name, and a message it sent itself (a stale-subscription notice
+	# from its own sync batch) would otherwise take it off the roster.
+	if not mochi.text.valid(subscriber_id, "entity") or subscriber_id == get_owner_identity(project_id):
+		return
 
-	# Clean up watchers created by this subscriber
-	row_remove("watchers", "user=? and object in (select id from objects where project=?)", [subscriber_id, project_id])
-	# Clean up activity records by this subscriber
-	mochi.db.execute("delete from activity where user=? and object in (select id from objects where project=?)", subscriber_id, project_id)
-
-	# Remove subscriber. Dropped from the fan-out list, and from replay: core
-	# keeps a record for resync, and without this an ex-member could keep
-	# pulling events created after they left.
-	row_remove("subscribers", "project=? and id=?", [project_id, subscriber_id])
-	mochi.broadcast.subscriber.remove(project_id, subscriber_id)
+	# Their watcher rows, their subscriber row and core's replay record go;
+	# their activity stays, the project's history (subscriber_remove). The
+	# remaining members are told only of a member who was one.
+	member = mochi.db.exists("select 1 from subscribers where project=? and id=?", project_id, subscriber_id)
+	subscriber_remove(project_id, subscriber_id)
+	if member:
+		broadcast_event(project_id, "member/remove", {"project": project_id, "id": subscriber_id})
 	# Update project timestamp
 	row_set("projects", "id=?", [project_id], {"updated": mochi.time.now()})
 	# Send websocket notification
@@ -8164,6 +8939,34 @@ def event_access_revoke(e):
 
 	# purge_project clears the attachments, object and comment alike.
 	purge_project(project_id)
+
+# A member joined the owner's project, or was renamed: the replica's copy of the
+# roster (members_dump) takes them, for its people list, owner name and member
+# avatars.
+def event_member_add(e):
+	project_id = verify_subscription(e)
+	if not project_id:
+		return
+	member = e.content("id")
+	if type(member) != "string" or not mochi.text.valid(member, "entity"):
+		return
+	member_write(project_id, member, e.content("name"), mochi.time.now())
+	fp = mochi.entity.fingerprint(project_id)
+	if fp:
+		mochi.websocket.write(fp, {"type": "project/update", "project": project_id})
+
+# A member left the owner's project, or lost access to it.
+def event_member_remove(e):
+	project_id = verify_subscription(e)
+	if not project_id:
+		return
+	member = e.content("id")
+	if type(member) != "string" or not mochi.text.valid(member, "entity"):
+		return
+	row_remove("subscribers", "project=? and id=?", [project_id, member])
+	fp = mochi.entity.fingerprint(project_id)
+	if fp:
+		mochi.websocket.write(fp, {"type": "project/update", "project": project_id})
 # ============================================================================
 # Content Sync Event Handlers (received by subscribers)
 # ============================================================================
@@ -8171,12 +8974,24 @@ def event_access_revoke(e):
 # sync_element: is this batch element a dict carrying every key? A peer chooses
 # each element's shape, and a raised subscript ends the whole handler,
 # truncating the batch.
-# sequence(value): a peer-supplied sequence, or empty. Iterating a string
-# yields its characters and a dict its keys, both of which reach the element
-# checks looking like data; an int aborts the handler outright. Both list and
-# tuple, because core decodes a wire array to a tuple.
+# sequence(value): a peer-supplied sequence, or empty. Iterating a string or
+# an int raises, ending the handler, and a dict yields its keys, which reach
+# the element checks looking like data. Both list and tuple, because core
+# decodes a wire array to a tuple.
 def sequence(value):
 	return value if type(value) in ["list", "tuple"] else []
+
+# number(value, default=0) -> value as a whole number: an integer, or a float
+# with no fraction (a JSON round trip turns one into the other), within what a
+# column binds; else default.
+def number(value, default=0):
+	if type(value) == "float":
+		if value != value or value <= -1000000000000000 or value >= 1000000000000000 or value != int(value):
+			return default
+		return int(value)
+	if type(value) == "int" and value > -1000000000000000 and value < 1000000000000000:
+		return value
+	return default
 
 # sync_design(e): the design tables of a sync/batch in event_schema's flat
 # shape, so one reconciliation serves the resync dump and the batch alike.
@@ -8190,8 +9005,11 @@ def sync_design(e):
 		for f in sequence(t.get("fields")):
 			if not sync_element(f, ["id", "name", "fieldtype"]):
 				continue
-			field = {"class": t["id"], "id": f["id"], "name": f["name"], "fieldtype": f["fieldtype"], "flags": f.get("flags", ""), "multi": f.get("multi", 0), "rank": f.get("rank", 0), "card": f.get("card", ""), "position": f.get("position", ""), "rows": f.get("rows", 0)}
-			field.update(field_limits(f))
+			# Every column (FIELD_COLUMNS), reduced to its type in design_merge
+			# (field_row).
+			field = dict(f)
+			field["class"] = t["id"]
+			field.pop("options", None)
 			schema["fields"].append(field)
 			for o in sequence(f.get("options")):
 				if not sync_element(o, ["id", "name"]):
@@ -8228,12 +9046,19 @@ def event_sync_batch(e):
 	now = mochi.time.now()
 
 	# The batch is the owner's whole design: apply it, and once the sync is
-	# complete, drop what it no longer names (a design-replacing import).
+	# complete, drop what it no longer names (a design-replacing import). The
+	# roster and the owner's identity likewise.
 	schema = sync_design(e)
 	design_merge(project_id, schema)
+	owner_record(project_id, e.content("owner"))
+	members = e.content("members")
+	named = {}
+	members_merge(project_id, members, named)
+	# Comments whose parent this chunk does not bring, nor the replica hold
+	late = False
 	# Process objects
 	for obj in sequence(e.content("objects")):
-		if not sync_element(obj, ["id"]):
+		if not sync_element(obj, ["id"]) or type(obj["id"]) != "string":
 			continue
 		# Never adopt/reassign an object that already belongs to another
 		# project, or an id a comment holds - a hijacking owner's batch could
@@ -8242,23 +9067,49 @@ def event_sync_batch(e):
 		# foreign_object guard).
 		if foreign_object(obj["id"], project_id):
 			continue
+		# The object's version (version_take): a copy of an object the batch
+		# carries at a later version takes its row, and its values only while
+		# no later change has reached it first. From an owner that predates
+		# versions, an object held already keeps its row.
+		version = owner_version(obj.get("version"))
+		row = {"id": obj["id"], "project": project_id, "class": obj.get("class", ""), "number": obj.get("number", 0), "parent": obj.get("parent", ""), "rank": rank_copy(obj.get("rank")), "created": obj.get("created", now), "updated": obj.get("updated", now), "version": version or 0}
 		if not mochi.db.exists("select 1 from objects where id=?", obj["id"]):
-			object_merge({"id": obj["id"], "project": project_id, "class": obj.get("class", ""), "number": obj.get("number", 0), "parent": obj.get("parent", ""), "rank": rank_copy(obj.get("rank")), "created": obj.get("created", now), "updated": obj.get("updated", now)})
-		# Values
+			object_merge(row)
+		elif version != None and schema_class(project_id, row["class"]):
+			row_set("objects", "id=? and project=? and version<?", [obj["id"], project_id, version], {k: row[k] for k in row if k not in ["id", "project"]})
+		# Values, each through the replica's value writer (value_write)
 		values = obj.get("values")
-		if values:
+		if type(values) == "dict" and values and (version == None or mochi.db.exists("select 1 from objects where id=? and project=? and version<=?", obj["id"], project_id, version)):
 			for field, value in values.items():
-				value_merge(obj["id"], field, value)
-		# Comments
+				value_write(project_id, obj["id"], field, value)
+		# Comments, each under a parent the replica holds (comment_parent). A
+		# reply the batch carries before the comment it answers waits for the
+		# next pass over the object's comments; one whose parent is in another
+		# chunk, or nowhere, waits for a resync.
+		pending = []
 		for c in sequence(obj.get("comments")):
-			if not sync_element(c, ["id"]):
+			if not sync_element(c, ["id"]) or type(c["id"]) != "string":
 				continue
 			# Skip a comment id already owned by another project's object, or
 			# held by an object.
 			if foreign_comment(c["id"], project_id):
 				continue
 			if not mochi.db.exists("select 1 from comments where id=?", c["id"]):
-				comment_merge({"id": c["id"], "object": obj["id"], "parent": c.get("parent", ""), "author": c.get("author", ""), "name": c.get("name", ""), "content": c.get("content", ""), "created": c.get("created", now), "edited": c.get("edited", 0)})
+				pending.append(c)
+		for _ in range(len(pending) + 1):
+			if not pending or not object_bound(project_id, obj["id"]):
+				break
+			later = []
+			for c in pending:
+				parent = comment_parent(c["id"], obj["id"], c.get("parent", ""))
+				if parent == False:
+					later.append(c)
+				elif parent != None:
+					comment_merge({"id": c["id"], "object": obj["id"], "parent": parent, "author": c.get("author", ""), "name": c.get("name", ""), "content": c.get("content", ""), "created": c.get("created", now), "edited": c.get("edited", 0)})
+			if len(later) == len(pending):
+				late = True
+				break
+			pending = later
 		# Activity history
 		for act in sequence(obj.get("activity")):
 			if not sync_element(act, ["id"]):
@@ -8285,7 +9136,14 @@ def event_sync_batch(e):
 	# after a design change take that change away again.
 	if batch_complete(project_id, e.content("chunk")):
 		design_prune(project_id, schema)
+		# Members the owner's roster no longer names, when it carries one
+		if type(members) in ("list", "tuple"):
+			for row in mochi.db.rows("select id from subscribers where project=?", project_id) or []:
+				if row["id"] not in named:
+					row_remove("subscribers", "project=? and id=?", [project_id, row["id"]])
 		row_set("projects", "id=? and owner=0", [project_id], {"populated": 1})
+	if late:
+		request_resync(project_id)
 	# Notify UI
 	fp = mochi.entity.fingerprint(project_id)
 	if fp:
@@ -8310,11 +9168,19 @@ def event_design_replace(e):
 # project we no longer hold: subscribe writes the local row before notifying the
 # owner, so a missing row is always a stale roster entry. Headers invert:
 # from=project, to=this member.
+#
+# A project this user owns is no stale subscription: a message from it to one of
+# this user's identities (the owner's own, which a direct send delivers back
+# here) is the owner's own traffic, and an unsubscribe would take the owner off
+# its own roster.
 def unsubscribe_stale(e):
 	project_id = e.header("from")
 	member_id = e.header("to")
-	if project_id and member_id:
-		mochi.message.send(p2p_headers(member_id, project_id, "unsubscribe"), {})
+	if not project_id or not member_id:
+		return
+	if mochi.db.exists("select 1 from projects where id=? and owner=1", project_id):
+		return
+	mochi.message.send(p2p_headers(member_id, project_id, "unsubscribe"), {})
 
 def verify_subscription(e):
 	# Broadcasts are sent from the project entity itself (broadcast_event uses
@@ -8367,6 +9233,8 @@ def event_object_create(e):
 	if foreign_object(object_id, project_id):
 		return
 	class_id = e.content("class") or ""
+	if type(class_id) != "string":
+		return
 	# Skip when the class isn't local yet — objects(project,class) FK would
 	# otherwise abort the handler. Happens when the owner adds a new class
 	# (or option-value, etc.) after the subscriber's last sync; resync
@@ -8374,17 +9242,20 @@ def event_object_create(e):
 	if class_id and not mochi.db.exists("select 1 from classes where project=? and id=?", project_id, class_id):
 		request_resync(project_id)
 		return
+	version = owner_version(e.content("version"))
 	if not mochi.db.exists("select 1 from objects where id=?", object_id):
-		object_merge({"id": object_id, "project": project_id, "class": class_id, "number": e.content("number") or 0, "parent": e.content("parent") or "", "rank": rank_copy(e.content("rank")), "created": e.content("created") or mochi.time.now(), "updated": e.content("updated") or mochi.time.now()})
+		# Each column in its type, or its default: one of another type would
+		# have the whole row refused (flat) and the object lost.
+		parent = e.content("parent")
+		object_merge({"id": object_id, "project": project_id, "class": class_id, "number": number(e.content("number")), "parent": parent if type(parent) == "string" else "", "rank": rank_copy(e.content("rank")), "created": number(e.content("created")) or mochi.time.now(), "updated": number(e.content("updated")) or mochi.time.now(), "version": version or 0})
 	# Store field values included in the broadcast - only for an object that
 	# belongs to this project (the create above no-ops on a pre-existing id,
-	# which could be a foreign object).
+	# which could be a foreign object), and not over a later change of it that
+	# landed first.
 	values = e.content("values") or {}
-	if values and mochi.db.exists("select 1 from objects where id=? and project=?", object_id, project_id):
+	if type(values) == "dict" and values and mochi.db.exists("select 1 from objects where id=? and project=? and version<=?", object_id, project_id, version or 0):
 		for field, value in values.items():
-			if value_refused(project_id, object_id, field, value):
-				continue
-			value_merge(object_id, field, value)
+			value_write(project_id, object_id, field, value)
 	user = e.content("user") or ""
 	# Activity history arrives separately via the activity/log broadcast,
 	# so we don't insert a local row here (it would have a different UID
@@ -8423,18 +9294,23 @@ def event_object_update(e):
 		request_resync(project_id)
 		return
 
-	# LWW gate: drop events whose `updated` is no newer than the local
-	# row's. Concurrent reparenting / reclass on the same object from
-	# different subscriber hosts converge on the higher timestamp.
-	# Backwards-compatible with senders that don't yet include `updated`.
+	# The owner's version of the object for the change (version_take): one no
+	# newer than this copy's, which a later change or a pull has reached, is
+	# dropped. The events of one change carry one version, so a copy at it takes
+	# them all. From an owner that predates versions, events are ordered by the
+	# owner's time instead, an update no newer than the copy's dropped.
 	now = mochi.time.now()
+	version = owner_version(e.content("version"))
 	incoming = str(e.content("updated", "0"))
 	if mochi.text.valid(incoming, "integer"):
 		incoming = int(incoming)
 	else:
 		incoming = 0
-	if incoming:
-		local = mochi.db.row("select updated from objects where id=? and project=?", object_id, project_id)
+	local = mochi.db.row("select updated, version from objects where id=? and project=?", object_id, project_id)
+	if version != None:
+		if local and (local["version"] or 0) > version:
+			return
+	elif incoming:
 		if local and local["updated"] and incoming <= local["updated"]:
 			return
 
@@ -8452,8 +9328,13 @@ def event_object_update(e):
 		updates["class"] = class_id
 	if parent != None:
 		updates["parent"] = parent
-	# Guard on project so a subscription to one project can't mutate another's object.
-	if mochi.db.exists("select 1 from objects where id=? and project=?", object_id, project_id):
+	# Guard on project so a subscription to one project can't mutate another's
+	# object, and on the version in the same statement, so an answer landing
+	# since the read is not undone.
+	if version != None:
+		updates["version"] = version
+		row_set("objects", "id=? and project=? and version<=?", [object_id, project_id, version], updates)
+	elif mochi.db.exists("select 1 from objects where id=? and project=?", object_id, project_id):
 		object_set(object_id, updates)
 	fp = mochi.entity.fingerprint(project_id)
 	if fp:
@@ -8471,20 +9352,32 @@ def owner_time(value):
 	value = str(value) if value != None else ""
 	return int(value) if mochi.text.valid(value, "integer") else None
 
-# ranks_apply(project_id, ranks, time=None) -> whether any: write the owner's
-# keys, a list of {id, rank}, to the project's objects they name, with the
-# owner's updated time on the one the move changed. An object the owner only
-# re-keyed keeps its time: this server's clock would run ahead of the owner's
-# and drop the owner's next object/update for it at the LWW gate. A key no owner
-# mints, one not canonical or past RANK_LENGTH, is skipped, as object_replicate
-# takes only a canonical one. An entry is skipped too when this copy's time for
-# its object is later than the owner's for the key, the entry's own or the
-# move's (time): a forwarded move's answer can land after the owner's broadcast
-# of a later move of the same object, and would put it back. An object this
-# copy does not hold has the project pulled again, as values/update does.
-def ranks_apply(project_id, ranks, time=None):
+# owner_version(value) -> int or None: an object's version as an owner's event
+# or answer carries it (version_take), an integer or its string; None from an
+# owner that predates versions, whose changes are ordered by its time instead.
+def owner_version(value):
+	return owner_time(value)
+
+# ranks_apply(project_id, ranks, time=None, answer=False, handle=None) ->
+# (whether any, whether one names an object this copy lacks): write the owner's
+# keys, a list of {id, rank, version}, to the project's objects they name, with
+# the owner's updated time on the one the move changed. An object the owner
+# only re-keyed keeps its time. A key no owner mints, one not canonical or past
+# RANK_LENGTH, is skipped, as object_replicate takes only a canonical one. An
+# entry with its object's version is skipped when the copy's version is past
+# it: an answer can land after the broadcast of a later change, a re-key
+# included, and would put it back. With answer, the entries of the owner's
+# answer to a forwarded move, the version is kept only when it is the next
+# after the copy's (answer_claim). An entry from an owner that predates
+# versions is skipped when the copy's time for its object is later than the
+# owner's for the key, the entry's own or the move's (time).
+# The caller pulls the project for an object this copy does not hold, as
+# values/update does. Within a transaction (handle) every read and write goes
+# through it.
+def ranks_apply(project_id, ranks, time=None, answer=False, handle=None):
+	database = handle or mochi.db
 	if type(ranks) not in ("list", "tuple") or not ranks:
-		return False
+		return False, False
 	missing = False
 	for r in ranks:
 		if type(r) != "dict":
@@ -8493,21 +9386,28 @@ def ranks_apply(project_id, ranks, time=None):
 		rank = r.get("rank")
 		if type(obj_id) != "string" or not obj_id or not rank_valid(rank):
 			continue
-		local = mochi.db.row("select updated from objects where id=? and project=?", obj_id, project_id)
+		local = database.row("select updated, version from objects where id=? and project=?", obj_id, project_id)
 		if not local:
 			missing = True
 			continue
 		updated = owner_time(r.get("updated"))
-		since = updated or time
-		if since and (local["updated"] or 0) > since:
-			continue
+		version = owner_version(r.get("version"))
 		changes = {"rank": rank}
 		if updated:
 			changes["updated"] = updated
-		object_set(obj_id, changes)
-	if missing:
-		request_resync(project_id)
-	return True
+		if version != None:
+			held = local["version"] or 0
+			if held > version:
+				continue
+			if not answer or held >= version - 1:
+				changes["version"] = version
+			row_set("objects", "id=? and project=? and version=?", [obj_id, project_id, held], changes, handle)
+			continue
+		since = updated or time
+		if since and (local["updated"] or 0) > since:
+			continue
+		object_set(obj_id, changes, handle)
+	return True, missing
 
 # The keys a move wrote, applied under the same subscription check and websocket
 # notice as object/update, each unless this copy holds a later change of its
@@ -8516,7 +9416,10 @@ def event_object_ranks(e):
 	project_id = verify_subscription(e)
 	if not project_id:
 		return
-	if not ranks_apply(project_id, e.content("ranks"), owner_time(e.content("updated"))):
+	applied, missing = ranks_apply(project_id, e.content("ranks"), owner_time(e.content("updated")))
+	if missing:
+		request_resync(project_id)
+	if not applied:
 		return
 	fp = mochi.entity.fingerprint(project_id)
 	if fp:
@@ -8555,7 +9458,7 @@ def event_values_update(e):
 	if not object_id:
 		return
 	values = e.content("values")
-	if not values:
+	if type(values) != "dict" or not values or type(object_id) != "string":
 		return
 	# Skip when the referenced object isn't local yet. The values.object FK
 	# would otherwise abort the handler and the update would be lost
@@ -8564,16 +9467,28 @@ def event_values_update(e):
 	if not mochi.db.exists("select 1 from objects where id=? and project=?", object_id, project_id):
 		request_resync(project_id)
 		return
-	for field in values:
-		if value_refused(project_id, object_id, field, values[field]):
-			continue
-		value_merge(object_id, field, values[field])
 	# The owner's time for the change, as object/update and object/ranks carry
 	# it: this server's own would run ahead of the owner's after a change that
-	# wrote no key, and drop the owner's next object/update at the LWW gate. An
-	# owner that predates sending it leaves the copy's time as it was.
+	# wrote no key. An owner that predates sending it leaves the copy's time as
+	# it was. With the object's version, the values are written only when the
+	# copy's is not past it (event_object_update), the version kept with them in
+	# one transaction, so an answer landing beside them does not interleave.
 	updated = owner_time(e.content("updated"))
-	if updated and mochi.db.exists("select 1 from objects where id=? and project=?", object_id, project_id):
+	version = owner_version(e.content("version"))
+	handle = mochi.db.transaction() if version != None else None
+	if handle:
+		changes = {"version": version}
+		if updated:
+			changes["updated"] = updated
+		row_set("objects", "id=? and project=? and version<=?", [object_id, project_id, version], changes, handle)
+		if not handle.exists("select 1 from objects where id=? and project=? and version=?", object_id, project_id, version):
+			handle.rollback()
+			return
+	for field in values:
+		value_write(project_id, object_id, field, values[field], handle)
+	if handle:
+		handle.commit()
+	elif updated and mochi.db.exists("select 1 from objects where id=? and project=?", object_id, project_id):
 		object_set(object_id, {"updated": updated})
 	fp = mochi.entity.fingerprint(project_id)
 	if fp:
@@ -8803,11 +9718,20 @@ def event_comment_create(e):
 		return
 	# Skip when the comment's object isn't local yet — comments.object FK
 	# would otherwise abort the handler and the comment would be lost.
-	if not object_id or not mochi.db.exists("select 1 from objects where id=? and project=?", object_id, project_id):
+	if type(object_id) != "string" or not object_id or not mochi.db.exists("select 1 from objects where id=? and project=?", object_id, project_id):
 		request_resync(project_id)
 		return
 	if not mochi.db.exists("select 1 from comments where id=?", comment_id):
-		comment_merge({"id": comment_id, "object": object_id, "parent": e.content("parent") or "", "author": e.content("author") or "", "name": e.content("name") or "", "content": e.content("content") or "", "created": e.content("created") or mochi.time.now(), "edited": 0})
+		# A parent that is the comment itself, or anything but a comment of the
+		# same object, is refused, as the owner refuses it; one not held yet,
+		# delivered out of order, comes with the resync.
+		parent = comment_parent(comment_id, object_id, e.content("parent") or "")
+		if parent == None:
+			return
+		if parent == False:
+			request_resync(project_id)
+			return
+		comment_merge({"id": comment_id, "object": object_id, "parent": parent, "author": e.content("author") or "", "name": e.content("name") or "", "content": e.content("content") or "", "created": e.content("created") or mochi.time.now(), "edited": 0})
 	# The object was checked against this project; the id was not. Without this
 	# the owner of a project we subscribe to names a comment in a different
 	# project, and its attachments then resolve to bytes held by that owner.
@@ -8924,7 +9848,13 @@ def event_view_create(e):
 	view_id = e.content("id")
 	if not view_id:
 		return
-	row_merge("views", ["project", "id"], {"id": view_id, "project": project_id, "name": e.content("name") or "", "viewtype": e.content("viewtype") or "board", "filter": e.content("filter") or "", "columns": e.content("columns") or "", "rows": e.content("rows") or "", "sort": e.content("sort") or "", "direction": e.content("direction") or "asc", "rank": e.content("rank") or 0, "border": e.content("border") or ""})
+	# Each attribute a string, the field and class lists comma-joined, the rank
+	# a whole number: anything else is the wrong shape, and the view waits for
+	# a resync rather than ending the handler part-way.
+	if not view_shape(e):
+		request_resync(project_id)
+		return
+	row_merge("views", ["project", "id"], {"project": project_id, "id": view_id, "name": e.content("name") or "", "viewtype": e.content("viewtype") or "board", "filter": e.content("filter") or "", "columns": e.content("columns") or "", "rows": e.content("rows") or "", "sort": e.content("sort") or "", "direction": e.content("direction") or "asc", "rank": e.content("rank") or 0, "border": e.content("border") or ""})
 	# Sync view fields
 	fields_csv = e.content("fields") or ""
 	if fields_csv:
@@ -8933,15 +9863,26 @@ def event_view_create(e):
 			if field_id:
 				row_merge("view_fields", ["project", "view", "field"], {"project": project_id, "view": view_id, "field": field_id, "rank": rank})
 				rank += 1
-	# Sync view classes
+	# Sync view classes, each one the replica holds (view_classes' foreign key)
 	classes_csv = e.content("classes") or ""
 	if classes_csv:
 		for class_id in classes_csv.split(","):
-			if class_id:
+			if schema_class(project_id, class_id):
 				row_merge("view_classes", ["project", "view", "class"], {"project": project_id, "view": view_id, "class": class_id})
 	fp = mochi.entity.fingerprint(project_id)
 	if fp:
 		mochi.websocket.write(fp, {"type": "view/create", "project": project_id, "id": view_id})
+
+# view_shape(e) -> whether a view/create or view/update carries each attribute
+# it has in its type: text, the field and class lists comma-joined, and the
+# rank a whole number.
+def view_shape(e):
+	for key in ["name", "viewtype", "filter", "columns", "rows", "sort", "direction", "border", "fields", "classes"]:
+		value = e.content(key)
+		if value != None and type(value) != "string":
+			return False
+	rank = e.content("rank")
+	return rank == None or type(rank) == "int"
 
 # View updated
 def event_view_update(e):
@@ -8951,6 +9892,12 @@ def event_view_update(e):
 	view_id = e.content("id")
 	if not view_id:
 		return
+	if not view_shape(e):
+		request_resync(project_id)
+		return
+	rank = e.content("rank")
+	if rank != None:
+		row_set("views", "id=? and project=?", [view_id, project_id], {"rank": rank})
 	name = e.content("name")
 	viewtype = e.content("viewtype")
 	filter_val = e.content("filter")
@@ -8989,7 +9936,7 @@ def event_view_update(e):
 	if classes_csv != None:
 		row_remove("view_classes", "project=? and view=?", [project_id, view_id])
 		for class_id in classes_csv.split(","):
-			if class_id:
+			if schema_class(project_id, class_id):
 				row_merge("view_classes", ["project", "view", "class"], {"project": project_id, "view": view_id, "class": class_id})
 	fp = mochi.entity.fingerprint(project_id)
 	if fp:
@@ -9071,11 +10018,22 @@ def event_hierarchy_set(e):
 	parents = e.content("parents")
 	if not class_id:
 		return
+	# The rules hang off a class the replica holds (their foreign key); one not
+	# held yet comes with a pull.
+	if not schema_class(project_id, class_id):
+		request_resync(project_id)
+		return
+	# A list, whose every entry is "" (a top-level object) or a class the
+	# replica holds. Anything else - a string would raise when iterated - is
+	# the wrong shape, and the class keeps its rules until a resync.
+	if parents != None and type(parents) not in ("list", "tuple"):
+		request_resync(project_id)
+		return
 	# Clear existing hierarchy for this class
 	row_remove("hierarchy", "project=? and class=?", [project_id, class_id])
 	# Insert new parents
-	if parents:
-		for parent in parents:
+	for parent in sequence(parents):
+		if parent == "" or schema_class(project_id, parent):
 			row_merge("hierarchy", ["project", "class", "parent"], {"project": project_id, "class": class_id, "parent": parent})
 	fp = mochi.entity.fingerprint(project_id)
 	if fp:
@@ -9086,7 +10044,19 @@ def event_field_create(e):
 	project_id = verify_subscription(e)
 	if not project_id:
 		return
-	row_merge("fields", ["project", "class", "id"], {"project": project_id, "class": e.content("class") or "", "id": e.content("id") or "", "name": e.content("name") or "", "fieldtype": e.content("fieldtype") or "text", "flags": e.content("flags") or "", "multi": e.content("multi") or 0, "rank": e.content("rank") or 0, "card": e.content("card") or 1, "position": e.content("position") or "", "rows": e.content("rows") or 1})
+	# Written as a sync's fields are (field_row, field_write): a field that
+	# becomes a user field keeps only values that are entity ids.
+	field = {}
+	for name in FIELD_COLUMNS:
+		if e.content(name) != None:
+			field[name] = e.content(name)
+	row = field_row(project_id, field)
+	if not row or not row["id"]:
+		return
+	if not schema_class(project_id, row["class"]):
+		request_resync(project_id)
+		return
+	field_write(project_id, row)
 	fp = mochi.entity.fingerprint(project_id)
 	if fp:
 		mochi.websocket.write(fp, {"type": "field/create", "project": project_id, "class": e.content("class"), "id": e.content("id")})
@@ -9098,56 +10068,31 @@ def event_field_update(e):
 		return
 	class_id = e.content("class")
 	field_id = e.content("id")
-	if not class_id or not field_id:
+	if type(class_id) != "string" or not class_id or type(field_id) != "string" or not field_id:
 		return
-	# Handle field ID rename
+	# Handle field ID rename: previous is the id the field had, a string, and
+	# the new id one the replica does not hold, as the owner's own rename
+	# requires; a rename onto a held field would fail on the fields key.
 	previous = e.content("previous")
-	if previous != None:
+	if type(previous) == "string" and not mochi.db.exists("select 1 from fields where project=? and class=? and id=?", project_id, class_id, field_id):
 		rename_field_id(project_id, class_id, previous, field_id)
 	# The rename has already happened, so attribute changes address the new id.
-	current_id = field_id
-	name = e.content("name")
-	flags = e.content("flags")
-	multi = e.content("multi")
-	card = e.content("card")
-	min_val = e.content("min")
-	max_val = e.content("max")
-	pattern = e.content("pattern")
-	minlength = e.content("minlength")
-	maxlength = e.content("maxlength")
-	prefix = e.content("prefix")
-	suffix = e.content("suffix")
-	format_str = e.content("format")
-	position = e.content("position")
-	rows_val = e.content("rows")
-	if name != None:
-		row_set("fields", "project=? and class=? and id=?", [project_id, class_id, current_id], {"name": name})
-	if flags != None:
-		row_set("fields", "project=? and class=? and id=?", [project_id, class_id, current_id], {"flags": flags})
-	if multi != None:
-		row_set("fields", "project=? and class=? and id=?", [project_id, class_id, current_id], {"multi": multi})
-	if card != None:
-		row_set("fields", "project=? and class=? and id=?", [project_id, class_id, current_id], {"card": card})
-	if min_val != None:
-		row_set("fields", "project=? and class=? and id=?", [project_id, class_id, current_id], {"min": min_val})
-	if max_val != None:
-		row_set("fields", "project=? and class=? and id=?", [project_id, class_id, current_id], {"max": max_val})
-	if pattern != None:
-		row_set("fields", "project=? and class=? and id=?", [project_id, class_id, current_id], {"pattern": pattern})
-	if minlength != None:
-		row_set("fields", "project=? and class=? and id=?", [project_id, class_id, current_id], {"minlength": minlength})
-	if maxlength != None:
-		row_set("fields", "project=? and class=? and id=?", [project_id, class_id, current_id], {"maxlength": maxlength})
-	if prefix != None:
-		row_set("fields", "project=? and class=? and id=?", [project_id, class_id, current_id], {"prefix": prefix})
-	if suffix != None:
-		row_set("fields", "project=? and class=? and id=?", [project_id, class_id, current_id], {"suffix": suffix})
-	if format_str != None:
-		row_set("fields", "project=? and class=? and id=?", [project_id, class_id, current_id], {"format": format_str})
-	if position != None:
-		row_set("fields", "project=? and class=? and id=?", [project_id, class_id, current_id], {"position": position})
-	if rows_val != None:
-		row_set("fields", "project=? and class=? and id=?", [project_id, class_id, current_id], {"rows": rows_val})
+	# Each attribute the event carries in its type (FIELD_TEXT, FIELD_NUMBER) is
+	# written; one of another type is skipped. The type is not among them: a
+	# field keeps the type it was created with.
+	updates = {}
+	for name in FIELD_TEXT:
+		value = e.content(name)
+		if name != "fieldtype" and type(value) == "string" and len(value) <= 1000:
+			updates[name] = value
+	for name in FIELD_NUMBER:
+		value = e.content(name)
+		if type(value) == "float" and value >= 0 and value < 1000000000 and value == int(value):
+			value = int(value)
+		if name != "rank" and type(value) == "int" and value >= 0 and value < 1000000000:
+			updates[name] = value
+	if updates:
+		row_set("fields", "project=? and class=? and id=?", [project_id, class_id, field_id], updates)
 	fp = mochi.entity.fingerprint(project_id)
 	if fp:
 		mochi.websocket.write(fp, {"type": "field/update", "project": project_id, "class": class_id, "id": field_id})
@@ -9173,7 +10118,9 @@ def event_field_reorder(e):
 	if not project_id:
 		return
 	class_id = e.content("class")
-	order = e.content("order")
+	# A list of ids: anything else reorders nothing (sequence), and an entry
+	# that is not an id is one row_set refuses.
+	order = sequence(e.content("order"))
 	if not class_id or not order:
 		return
 	for i, field_id in enumerate(order):
@@ -9187,7 +10134,7 @@ def event_view_reorder(e):
 	project_id = verify_subscription(e)
 	if not project_id:
 		return
-	order = e.content("order")
+	order = sequence(e.content("order"))
 	if not order:
 		return
 	for i, view_id in enumerate(order):
@@ -9251,7 +10198,7 @@ def event_option_reorder(e):
 		return
 	class_id = e.content("class")
 	field_id = e.content("field")
-	order = e.content("order")
+	order = sequence(e.content("order"))
 	if not class_id or not field_id or not order:
 		return
 	for i, option_id in enumerate(order):
@@ -9822,53 +10769,51 @@ def do_object_create(project_id, project, params, user_id):
 	if problem:
 		return {"error": problem, "code": 400}
 
-	# Check hierarchy rules
-	parent_class = ""
-	if parent:
-		parent_row = mochi.db.row("select class from objects where id=? and project=?", parent, project_id)
-		if not parent_row:
-			return {"error": "errors.parent_object_not_found", "code": 404}
-		parent_class = parent_row["class"]
-	allowed = mochi.db.exists("select 1 from hierarchy where project=? and class=? and parent=?", project_id, obj_class, parent_class)
-	if not allowed:
-		return {"error": "errors.hierarchy_disallowed", "code": 400}
-
 	kept, invalid = create_values_check(project_id, obj_class, submitted)
 	if invalid:
 		return {"error": invalid["key"], "args": invalid.get("args"), "code": 400}
 
 	title_field_row = mochi.db.row("select title from classes where project=? and id=?", project_id, obj_class)
 	title_field = title_field_row["title"] if title_field_row else ""
-	row_set("projects", "id=?", [project_id], {"updated": mochi.time.now()})
 	object_id = mochi.uid()
 	now = mochi.time.now()
 	# The key and the number are read and the row written under one lock, so a
 	# move or another create beside this one cannot mint the same key, and no
 	# other create can take the same number. The number is the next after the
 	# project's highest (the objects(project, number) index makes the max() a
-	# seek), not a shared counter.
+	# seek), not a shared counter. The hierarchy is judged under the same lock,
+	# on the parent's class as it stands, so a class change or a reparent of the
+	# parent committing first cannot leave the object under a parent its class
+	# may not have.
 	handle = rank_transaction(object_id)
+	problem = hierarchy_check(project_id, obj_class, parent, handle)
+	if problem:
+		handle.rollback()
+		return {"error": "errors.hierarchy_disallowed" if problem[1] == 400 else problem[0], "code": problem[1]}
+	row_set("projects", "id=?", [project_id], {"updated": now}, handle)
 	new_counter = handle.row("select coalesce(max(number), 0) + 1 as next from objects where project=?", project_id)["next"]
 	initial_rank = rank_after_all(project_id, None, handle)
-	row_merge("objects", ["id"], {"id": object_id, "project": project_id, "class": obj_class, "number": new_counter, "parent": parent, "rank": initial_rank, "created": now, "updated": now}, handle)
-	handle.commit()
+	# Its first version, with its values in the same transaction: the create is
+	# the object's first change (version_take).
+	row_merge("objects", ["id"], {"id": object_id, "project": project_id, "class": obj_class, "number": new_counter, "parent": parent, "rank": initial_rank, "created": now, "updated": now, "version": 1}, handle)
 	values = {}
 	for field, value in kept.items():
-		value_merge(object_id, field, value)
+		value_merge(object_id, field, value, handle)
 		values[field] = value
 	if title and title_field:
-		value_merge(object_id, title_field, title)
+		value_merge(object_id, title_field, title, handle)
 		values[title_field] = title
+	# Before the commit, as each later change of the object is (events_commit).
+	events_commit(project_id, [{"event": "object/create", "data": {
+		"project": project_id, "id": object_id, "class": obj_class,
+		"number": new_counter, "parent": parent, "rank": initial_rank, "values": values,
+		"created": now, "updated": now, "user": user_id, "version": 1,
+	}}], handle)
 	row_merge("watchers", ["object", "user"], {"object": object_id, "user": user_id, "created": now})
 	# Auto-watch assigned users, as a value set does
 	for f in mochi.db.rows("select id from fields where project=? and class=? and fieldtype='user'", project_id, obj_class) or []:
 		if values.get(f["id"]):
 			row_merge("watchers", ["object", "user"], {"object": object_id, "user": values[f["id"]], "created": now})
-	broadcast_event(project_id, "object/create", {
-		"project": project_id, "id": object_id, "class": obj_class,
-		"number": new_counter, "parent": parent, "rank": initial_rank, "values": values,
-		"created": now, "updated": now, "user": user_id
-	})
 	# After the broadcast: a subscriber sent the activity first holds no object
 	# for it yet, and pulls the whole schema again to find one.
 	log_activity(object_id, user_id, "created")
@@ -9881,7 +10826,7 @@ def do_object_create(project_id, project, params, user_id):
 		url = "/projects/" + fp + "/" + object_id if fp else "/projects"
 		notify("update/created", project_id, display, mochi.app.label("notifications.body.created"), url, event_id="update/created:" + object_id)
 	return {"id": object_id, "number": new_counter, "rank": initial_rank,
-			"created": now, "updated": now,
+			"created": now, "updated": now, "version": 1,
 			"readable": project["prefix"] + "-" + str(new_counter), "values": values}
 
 def do_object_update(project_id, project, params, user_id):
@@ -9930,8 +10875,6 @@ def do_object_move(project_id, project, params, user_id):
 	row = mochi.db.row("select id, class, parent from objects where id=? and project=?", object_id, project_id)
 	if not row:
 		return {"error": "errors.object_not_found", "code": 404}
-	if params.get("promote", "") == "true" and not promotable(project_id, object_id, row["class"]):
-		return {"error": "errors.parent_hierarchy_disallowed", "code": 400}
 	field = params.get("field", "")
 	if type(field) != "string":
 		return {"error": "errors.invalid_value", "code": 400}
@@ -9939,11 +10882,9 @@ def do_object_move(project_id, project, params, user_id):
 	if value != None and type(value) != "string":
 		return {"error": "errors.invalid_value", "code": 400}
 	clear = params.get("clear", "") == "true"
-	# Same as the HTTP twin: every value is checked before anything changes.
+	# Same as the HTTP twin: every value is checked, under the move's lock,
+	# before anything changes (object_move).
 	row_field, row_value = row_input(params.get("row"))
-	invalid = move_check(project_id, row["class"], field, value, row_field, row_value, clear) or move_place_check(object_id, params.get("after"), params.get("before"))
-	if invalid:
-		return {"error": invalid["key"], "args": invalid.get("args"), "code": 400}
 	new_rank = params.get("rank")
 	# Reachable over P2P from any subscriber with write access: int() on a
 	# non-integer would abort the owner-side handler, so answer a clean 400.
@@ -9959,11 +10900,18 @@ def do_object_move(project_id, project, params, user_id):
 		return {"error": "errors.invalid_value", "code": 400}
 	# The subscriber that asked for the move writes what the answer names, and
 	# the owner is told when watching.
-	return object_move(project_id, row, {
+	answer = object_move(project_id, row, {
 		"field": field, "value": value, "clear": clear, "lane": row_field, "row": row_value,
 		"parent": parent, "promote": params.get("promote", "") == "true", "scope": params.get("scope"),
 		"after": params.get("after"), "before": params.get("before"), "rank": new_rank,
 	}, user_id, True)
+	# Core decodes at most 10,000 elements in one array of a stream, so the
+	# answer carries the moved object's key first and at most RANK_CHUNK in
+	# all; the broadcasts, in chunks, bring the rest of a large spread, and the
+	# clients reload on the object/ranks each lands as.
+	if answer.get("ranks"):
+		answer["ranks"] = ([r for r in answer["ranks"] if r["id"] == object_id] + [r for r in answer["ranks"] if r["id"] != object_id])[:RANK_CHUNK]
+	return answer
 
 # Validate a YYYY-MM-DD calendar date.
 def is_iso_date(value):
@@ -9982,12 +10930,28 @@ def is_iso_date(value):
 # value_refused(project_id, object_id, field, value) -> whether a value a peer sent
 # for a field of an object cannot be one. A user field holds an entity id or
 # nothing: clients build the person's avatar address from it, and fetch it with
-# the session, so a path there would name another action.
-def value_refused(project_id, object_id, field, value):
+# the session, so a path there would name another action. Within a transaction
+# (handle) the read goes through it.
+def value_refused(project_id, object_id, field, value, handle=None):
 	if value == None or str(value) == "":
 		return False
-	row = mochi.db.row("select f.fieldtype as fieldtype from objects o join fields f on f.project=o.project and f.class=o.class and f.id=? where o.id=? and o.project=?", field, object_id, project_id)
+	row = (handle or mochi.db).row("select f.fieldtype as fieldtype from objects o join fields f on f.project=o.project and f.class=o.class and f.id=? where o.id=? and o.project=?", field, object_id, project_id)
 	return row != None and row["fieldtype"] == "user" and not mochi.text.valid(str(value), "entity")
+
+# value_write(project_id, object_id, field, value, handle=None, guard=None) ->
+# whether it wrote one value the owner sent to a replica's copy of an object.
+# Every path that writes the owner's values - the events, the schema's parts,
+# the sync batch and the answers to forwarded changes - goes through it, so no
+# choice of path skips a check: the field is a non-empty string, the value a
+# string, and a user field takes only an entity id (value_refused). Within a
+# transaction (handle) the read and the write go through it; guard is
+# row_merge's.
+def value_write(project_id, object_id, field, value, handle=None, guard=None):
+	if type(field) != "string" or not field or type(value) != "string":
+		return False
+	if value_refused(project_id, object_id, field, value, handle):
+		return False
+	return row_merge("values", ["object", "field"], {"object": object_id, "field": field, "value": value}, handle, guard)
 
 # First violation of a field's type and constraints as {"key", "args"}, or None.
 # Empty values always pass ("required" is checked elsewhere); the regex
@@ -10103,12 +11067,12 @@ def create_values_check(project_id, class_id, values):
 # the column of field the object moves into, which an empty one keeps and
 # clear empties, and a row value its lane of row_field, which an empty one
 # clears. Runs before the move changes anything, so a refused move changes
-# nothing.
-def move_check(project_id, class_id, field, value, row_field, row_value, clear=False):
+# nothing, under the move's lock, its reads through handle.
+def move_check(project_id, class_id, field, value, row_field, row_value, clear, handle):
 	for name in (field, row_field):
 		if len(name) > 100:
 			return {"key": "errors.field_name_too_long"}
-		if name and not mochi.db.exists("select 1 from fields where project=? and class=? and id=?", project_id, class_id, name):
+		if name and not handle.exists("select 1 from fields where project=? and class=? and id=?", project_id, class_id, name):
 			return {"key": "errors.field_not_found"}
 	# A value with no field would land under the empty field name and cascade
 	# there. An empty value means "keep the current one", and a reorder within a
@@ -10123,7 +11087,7 @@ def move_check(project_id, class_id, field, value, row_field, row_value, clear=F
 			continue
 		if len(written) > 50000:
 			return {"key": "errors.value_too_long"}
-		invalid = validate_field_value(project_id, class_id, name, written)
+		invalid = validate_field_value(project_id, class_id, name, written, handle)
 		if invalid:
 			return invalid
 	return None
@@ -10142,12 +11106,14 @@ def do_values_set(project_id, project, params, user_id):
 	for f in field_rows:
 		valid_fields[f["id"]] = f["name"]
 		field_types[f["id"]] = f["fieldtype"]
-	now = mochi.time.now()
-	changes = []
 	values = params.get("values", {})
+	if type(values) != "dict":
+		return {"error": "errors.invalid_value", "code": 400}
 	for v in values.values():
 		if check_length(v, 50000):
 			return {"error": "errors.value_too_long", "code": 400}
+	# Every value is checked before any is written, so a refusal writes none.
+	checked = {}
 	for field_id in values:
 		if field_id not in valid_fields:
 			continue
@@ -10155,32 +11121,19 @@ def do_values_set(project_id, project, params, user_id):
 		invalid = validate_field_value(project_id, row["class"], field_id, new_value)
 		if invalid:
 			return {"error": invalid["key"], "args": invalid.get("args"), "code": 400}
-		old_row = mochi.db.row("select value from \"values\" where object=? and field=?", object_id, field_id)
-		old_value = old_row["value"] if old_row else ""
-		if str(new_value) != old_value:
-			value_merge(object_id, field_id, str(new_value))
-			log_activity(object_id, user_id, "updated", field_id, old_value, str(new_value))
-			changes.append(field_id)
-	if changes:
-		object_set(object_id, {"updated": now})
-		changed_values = {}
-		for fid in changes:
-			val = mochi.db.row("select value from \"values\" where object=? and field=?", object_id, fid)
-			if val:
-				changed_values[fid] = val["value"]
-		broadcast_event(project_id, "values/update", {
-			"project": project_id, "id": object_id, "values": changed_values, "user": user_id, "updated": now
-		})
+		checked[field_id] = str(new_value)
+	written, version, now = values_write(project_id, object_id, checked, user_id)
+	if written:
 		# Notify owner if watching
 		owner_id = get_owner_identity(project_id)
 		notify_watchers(object_id, project_id, owner_id, user_id, mochi.app.label("notifications.body.updated"))
-		# Auto-watch assigned users
-		for fid in changes:
-			if field_types.get(fid) == "user":
-				assigned = mochi.db.row("select value from \"values\" where object=? and field=?", object_id, fid)
-				if assigned and assigned["value"]:
-					row_merge("watchers", ["object", "user"], {"object": object_id, "user": assigned["value"], "created": now})
-	return {"success": True, "changed": changes}
+		values_watch(object_id, written, field_types, now)
+	# What it wrote, with its time and the object's version, which the
+	# subscriber that forwarded it writes (values_answer).
+	answer = {"success": True, "changed": list(written), "values": written, "updated": now}
+	if version != None:
+		answer["version"] = version
+	return answer
 
 def do_value_set(project_id, project, params, user_id):
 	object_id = params.get("object")
@@ -10201,24 +11154,17 @@ def do_value_set(project_id, project, params, user_id):
 	invalid = validate_field_value(project_id, row["class"], field_id, new_value)
 	if invalid:
 		return {"error": invalid["key"], "args": invalid.get("args"), "code": 400}
-	old_row = mochi.db.row("select value from \"values\" where object=? and field=?", object_id, field_id)
-	old_value = old_row["value"] if old_row else ""
-	if str(new_value) != old_value:
-		value_merge(object_id, field_id, str(new_value))
-		now = mochi.time.now()
-		object_set(object_id, {"updated": now})
-		log_activity(object_id, user_id, "updated", field_id, old_value, str(new_value))
-		broadcast_event(project_id, "values/update", {
-			"project": project_id, "id": object_id,
-			"values": {field_id: str(new_value)}, "user": user_id, "updated": now
-		})
+	written, version, now = values_write(project_id, object_id, {field_id: str(new_value)}, user_id)
+	if written:
 		# Notify owner if watching
 		owner_id = get_owner_identity(project_id)
 		notify_watchers(object_id, project_id, owner_id, user_id, mochi.app.label("notifications.body.updated"))
-		# Auto-watch assigned user
-		if field_row["fieldtype"] == "user" and str(new_value):
-			row_merge("watchers", ["object", "user"], {"object": object_id, "user": str(new_value), "created": now})
-	return {"success": True}
+		values_watch(object_id, written, {field_id: field_row["fieldtype"]}, now)
+	# What it wrote, as do_values_set answers.
+	answer = {"success": True, "values": written, "updated": now}
+	if version != None:
+		answer["version"] = version
+	return answer
 
 # Link helpers
 def do_link_create(project_id, project, params, user_id):
@@ -10510,7 +11456,7 @@ def do_field_create(project_id, project, params):
 	if check_length(params.get("flags"), 200):
 		return {"error": "errors.value_too_long", "code": 400}
 	fieldtype = params.get("fieldtype", "text")
-	if fieldtype not in ["text", "number", "date", "enumerated", "user", "object", "checkbox", "checklist"]:
+	if fieldtype not in FIELD_TYPES:
 		return {"error": "errors.invalid_field_type", "code": 400}
 	field_id = structural_id(name)
 	existing = mochi.db.exists("select 1 from fields where project=? and class=? and id=?", project_id, class_id, field_id)
@@ -10780,7 +11726,7 @@ def do_hierarchy_set(project_id, project, params):
 				continue
 		row_merge("hierarchy", ["project", "class", "parent"], {"project": project_id, "class": class_id, "parent": parent})
 	broadcast_event(project_id, "hierarchy/set", {
-		"project": project_id, "class": class_id, "parents": parents
+		"project": project_id, "class": class_id, "parents": hierarchy_parents(project_id, class_id)
 	})
 	return {"success": True}
 
@@ -10795,7 +11741,7 @@ def do_view_create(project_id, project, params):
 		if check_length(params.get(vf), 10000):
 			return {"error": "errors.value_too_long", "code": 400}
 	viewtype = params.get("viewtype", "board")
-	if viewtype not in ["board", "list"]:
+	if viewtype not in VIEW_TYPES:
 		return {"error": "errors.invalid_view_type", "code": 400}
 	view_id = structural_id(name)
 	existing = mochi.db.exists("select 1 from views where project=? and id=?", project_id, view_id)
@@ -10809,6 +11755,8 @@ def do_view_create(project_id, project, params):
 	fields = params.get("fields", "title,priority,owner,due")
 	sort = params.get("sort", "")
 	direction = params.get("direction", "asc")
+	if direction not in DIRECTIONS:
+		return {"error": "errors.invalid_direction", "code": 400}
 	border = params.get("border", "")
 	next_rank = mochi.db.row("select coalesce(max(rank), -1) + 1 as r from views where project=?", project_id)
 	rank = next_rank["r"] if next_rank else 0
@@ -10820,12 +11768,9 @@ def do_view_create(project_id, project, params):
 	if view_classes:
 		for cls_id in [c.strip() for c in view_classes.split(",") if c.strip()]:
 			row_merge("view_classes", ["project", "view", "class"], {"project": project_id, "view": view_id, "class": cls_id})
-	broadcast_event(project_id, "view/create", {
-		"project": project_id, "id": view_id, "name": name.strip(),
-		"viewtype": viewtype, "filter": filter_str, "columns": columns,
-		"rows": rows, "fields": fields, "sort": sort, "direction": direction,
-		"border": border
-	})
+	payload = view_payload(project_id, view_id)
+	if payload:
+		broadcast_event(project_id, "view/create", payload)
 	return {"id": view_id, "name": name.strip(), "viewtype": viewtype}
 
 def do_view_update(project_id, project, params):
@@ -10851,7 +11796,7 @@ def do_view_update(project_id, project, params):
 	if name != None and name.strip() != "":
 		row_set("views", "project=? and id=?", [project_id, view_id], {"name": name.strip()})
 	if viewtype != None and viewtype != "":
-		if viewtype not in ["board", "list"]:
+		if viewtype not in VIEW_TYPES:
 			return {"error": "errors.invalid_view_type", "code": 400}
 		row_set("views", "project=? and id=?", [project_id, view_id], {"viewtype": viewtype})
 	if filter_str != None:
@@ -10868,7 +11813,7 @@ def do_view_update(project_id, project, params):
 	if sort != None:
 		row_set("views", "project=? and id=?", [project_id, view_id], {"sort": sort})
 	if direction != None and direction != "":
-		if direction not in ["asc", "desc"]:
+		if direction not in DIRECTIONS:
 			return {"error": "errors.invalid_direction", "code": 400}
 		row_set("views", "project=? and id=?", [project_id, view_id], {"direction": direction})
 	border = params.get("border")
@@ -10881,18 +11826,9 @@ def do_view_update(project_id, project, params):
 			cls_ids = [c.strip() for c in view_classes_input.split(",") if c.strip()]
 			for cls_id in cls_ids:
 				row_merge("view_classes", ["project", "view", "class"], {"project": project_id, "view": view_id, "class": cls_id})
-	updated = mochi.db.row("select * from views where project=? and id=?", project_id, view_id)
-	if updated:
-		view_fields = mochi.db.rows("select field from view_fields where project=? and view=? order by rank", project_id, view_id) or []
-		updated_fields = ",".join([vf["field"] for vf in view_fields])
-		broadcast_event(project_id, "view/update", {
-			"project": project_id, "id": view_id,
-			"name": updated["name"], "viewtype": updated["viewtype"],
-			"filter": updated["filter"], "columns": updated["columns"],
-			"rows": updated["rows"], "fields": updated_fields,
-			"sort": updated["sort"], "direction": updated["direction"],
-			"rank": updated["rank"], "border": updated["border"]
-		})
+	payload = view_payload(project_id, view_id)
+	if payload:
+		broadcast_event(project_id, "view/update", payload)
 	return {"success": True}
 
 def do_view_delete(project_id, project, params):
@@ -10950,24 +11886,29 @@ def _subscribe_to_project(user, project_id, server):
 		project_prefix = response.get("prefix", "PROJ")
 		schema = schema_fetch(project_id, peer, SCHEMA_START)
 	else:
+		# An entry of another class is no project, as in action_subscribe.
 		directory = mochi.directory.get(project_id)
-		if directory == None or len(directory) == 0:
+		if directory == None or len(directory) == 0 or directory.get("class") != "project":
 			return {"error": "errors.unable_to_find_project_in_directory", "code": 404}
 		project_name = directory.get("name", "")
 		server = directory.get("location", "")
+		# Stopped on a refusal or an owner out of reach, as action_subscribe
+		# is: a listing grants nothing.
 		if server:
 			peer = mochi.remote.peer(server)
-			if peer:
-				response = remote_dict(mochi.remote.request(project_id, "projects", "information", {"project": project_id}, peer))
-				# Refused by the owner, as action_subscribe is: a listing
-				# grants nothing.
-				if response and response.get("error") and not response.get("transport"):
-					return {"error": response["error"], "code": remote_status(response, 404)}
-				if response and not response.get("error"):
-					project_name = response.get("name", project_name)
-					project_desc = response.get("description", "")
-					project_prefix = response.get("prefix", "PROJ")
-				schema = schema_fetch(project_id, peer, SCHEMA_START)
+			if not peer:
+				return {"error": "errors.unable_to_connect_to_server", "code": 502}
+			response = remote_dict(mochi.remote.request(project_id, "projects", "information", {"project": project_id}, peer))
+			if not response:
+				return {"error": "errors.remote", "code": 502}
+			if response.get("error"):
+				if response.get("transport"):
+					return {"error": "errors.remote", "code": remote_status(response, 502)}
+				return {"error": response["error"], "code": remote_status(response, 404)}
+			project_name = response.get("name", project_name)
+			project_desc = response.get("description", "")
+			project_prefix = response.get("prefix", "PROJ")
+			schema = schema_fetch(project_id, peer, SCHEMA_START)
 
 	now = mochi.time.now()
 	fp = mochi.entity.fingerprint(project_id) or ""
@@ -10988,6 +11929,8 @@ def _subscribe_to_project(user, project_id, server):
 		pull = schema_begin(project_id, False)
 		schema_claim(project_id, pull)
 		insert_schema(project_id, schema, peer, started, None, 0, 0, pull)
+	else:
+		subscribe_pull(project_id)
 
 	return {"fingerprint": fp, "subscribed": False}
 
